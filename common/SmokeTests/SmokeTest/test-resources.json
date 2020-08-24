@@ -30,45 +30,13 @@
     },
     "variables": {
         "keyVaultName": "[format('kv-smk-{0}', parameters('baseName'))]",
+        "iotHubName": "[format('iot-smoke-{0}', parameters('baseName'))]",
         "eventHubNamespaceName": "[format('eh-smoke-{0}', parameters('baseName'))]",
         "eventHubName": "myeventhub",
         "eventHubAuthorizationRuleName": "RootManageSharedAccessKey",
-        "storageAccountName": "[format('stsmoke{0}', parameters('baseName'))]",
-        "cosmosDbAccountName": "[format('co-smoke-{0}', parameters('baseName'))]"
+        "storageAccountName": "[format('stsmoke{0}', parameters('baseName'))]"
     },
     "resources": [
-        {
-            "type": "Microsoft.DocumentDB/databaseAccounts",
-            "apiVersion": "2019-12-12",
-            "name": "[variables('cosmosDbAccountName')]",
-            "location": "[parameters('location')]",
-            "tags": {
-                "defaultExperience": "Core (SQL)"
-            },
-            "kind": "GlobalDocumentDB",
-            "properties": {
-                "enableAutomaticFailover": false,
-                "enableMultipleWriteLocations": false,
-                "isVirtualNetworkFilterEnabled": false,
-                "virtualNetworkRules": [],
-                "disableKeyBasedMetadataWriteAccess": false,
-                "databaseAccountOfferType": "Standard",
-                "consistencyPolicy": {
-                    "defaultConsistencyLevel": "Session",
-                    "maxIntervalInSeconds": 5,
-                    "maxStalenessPrefix": 100
-                },
-                "locations": [
-                    {
-                        "locationName": "[parameters('location')]",
-                        "provisioningState": "Succeeded",
-                        "failoverPriority": 0,
-                        "isZoneRedundant": false
-                    }
-                ],
-                "capabilities": []
-            }
-        },
         {
             "type": "Microsoft.EventHub/namespaces",
             "apiVersion": "2018-01-01-preview",
@@ -84,6 +52,22 @@
                 "isAutoInflateEnabled": false,
                 "maximumThroughputUnits": 0,
                 "kafkaEnabled": false
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2017-05-10",
+            "name": "sample-IotHubConnectionString",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri":"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/samples/iothub-connect-to-eventhubs/sample-resources.json",
+                    "contentVersion":"1.0.0.0"
+                },
+                "parameters": {
+                    "hubname": {"value": "[variables('iotHubName')]" },
+                    "location": {"value": "[parameters('location')]" }
+                }
             }
         },
         {
@@ -298,13 +282,9 @@
             "type": "string",
             "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2019-06-01').keys[0].value, ';EndpointSuffix=', parameters('storageEndpointSuffix'))]"
         },
-        "COSMOS_AUTH_KEY": {
+        "IOTHUB_CONNECTION_STRING": {
             "type": "string",
-            "value": "[listKeys(variables('cosmosDbAccountName'), '2019-12-12').primaryMasterKey]"
-        },
-        "COSMOS_URI": {
-            "type": "string",
-            "value": "[reference(variables('cosmosDbAccountName')).documentEndpoint]"
+            "value": "[reference('sample-IotHubConnectionString').outputs.IoTHubConnectionString.value]"
         }
     }
 }

@@ -3,22 +3,25 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Sas;
+using NUnit.Framework;
 
 namespace Azure.Storage.Test.Shared
 {
     [ClientTestFixture(
         BlobClientOptions.ServiceVersion.V2019_02_02,
-        BlobClientOptions.ServiceVersion.V2019_07_07)]
+        BlobClientOptions.ServiceVersion.V2019_07_07,
+        BlobClientOptions.ServiceVersion.V2019_12_12)]
     public abstract class BlobTestBase : StorageTestBase
     {
         protected readonly BlobClientOptions.ServiceVersion _serviceVersion;
@@ -45,6 +48,7 @@ namespace Azure.Storage.Test.Shared
         public string GetNewContainerName() => $"test-container-{Recording.Random.NewGuid()}";
         public string GetNewBlobName() => $"test-blob-{Recording.Random.NewGuid()}";
         public string GetNewBlockName() => $"test-block-{Recording.Random.NewGuid()}";
+        public string GetNewNonAsciiBlobName() => $"test-β£©þ‽%3A-{Recording.Random.NewGuid()}";
 
         public BlobClientOptions GetOptions(bool parallelRange = false)
         {
@@ -70,11 +74,12 @@ namespace Azure.Storage.Test.Shared
 
         public BlobClientOptions GetFaultyBlobConnectionOptions(
             int raiseAt = default,
-            Exception raise = default)
+            Exception raise = default,
+            Action onFault = default)
         {
-            raise = raise ?? new Exception("Simulated connection fault");
+            raise = raise ?? new IOException("Simulated connection fault");
             BlobClientOptions options = GetOptions();
-            options.AddPolicy(new FaultyDownloadPipelinePolicy(raiseAt, raise), HttpPipelinePosition.PerCall);
+            options.AddPolicy(new FaultyDownloadPipelinePolicy(raiseAt, raise, onFault), HttpPipelinePosition.PerCall);
             return options;
         }
 
@@ -166,12 +171,18 @@ namespace Azure.Storage.Test.Shared
         public BlobServiceClient GetServiceClient_ManagedDisk() =>
             GetServiceClientFromSharedKeyConfig(TestConfigManagedDisk);
 
+        public BlobServiceClient GetServiceClient_Hns() =>
+            GetServiceClientFromSharedKeyConfig(TestConfigHierarchicalNamespace);
+
+        public BlobServiceClient GetServiceClient_SoftDelete() =>
+            GetServiceClientFromSharedKeyConfig(TestConfigSoftDelete);
+
         public BlobServiceClient GetServiceClient_AccountSas(
             StorageSharedKeyCredential sharedKeyCredentials = default,
             BlobSasQueryParameters sasCredentials = default)
             => InstrumentClient(
                 new BlobServiceClient(
-                    new Uri($"{TestConfigDefault.BlobServiceEndpoint}?{sasCredentials ?? GetNewAccountSasCredentials(sharedKeyCredentials ?? GetNewSharedKeyCredentials())}"),
+                    new Uri($"{TestConfigDefault.BlobServiceEndpoint}?{sasCredentials ?? GetNewAccountSas(sharedKeyCredentials: sharedKeyCredentials)}"),
                     GetOptions()));
 
         public BlobServiceClient GetServiceClient_BlobServiceSas_Container(
@@ -223,6 +234,23 @@ namespace Azure.Storage.Test.Shared
                     new Uri($"{TestConfigDefault.BlobServiceEndpoint}?{sasCredentials ?? GetNewBlobServiceSasCredentialsSnapshot(containerName: containerName, blobName: blobName, snapshot: snapshot, sharedKeyCredentials: sharedKeyCredentials ?? GetNewSharedKeyCredentials())}"),
                     GetOptions()));
 
+        public Security.KeyVault.Keys.KeyClient GetKeyClient_TargetKeyClient()
+            => GetKeyClient(TestConfigurations.DefaultTargetKeyVault);
+
+        public TokenCredential GetTokenCredential_TargetKeyClient()
+            => GetKeyClientTokenCredential(TestConfigurations.DefaultTargetKeyVault);
+
+        private static Security.KeyVault.Keys.KeyClient GetKeyClient(KeyVaultConfiguration config)
+            => new Security.KeyVault.Keys.KeyClient(
+                new Uri(config.VaultEndpoint),
+                GetKeyClientTokenCredential(config));
+
+        private static TokenCredential GetKeyClientTokenCredential(KeyVaultConfiguration config)
+            => new Identity.ClientSecretCredential(
+                config.ActiveDirectoryTenantId,
+                config.ActiveDirectoryApplicationId,
+                config.ActiveDirectoryApplicationSecret);
+
         public async Task<DisposingContainer> GetTestContainerAsync(
             BlobServiceClient service = default,
             string containerName = default,
@@ -250,70 +278,42 @@ namespace Azure.Storage.Test.Shared
                     TestConfigDefault.AccountName,
                     TestConfigDefault.AccountKey);
 
-        public SasQueryParameters GetNewAccountSasCredentials(StorageSharedKeyCredential sharedKeyCredentials = default)
+        public SasQueryParameters GetNewAccountSas(
+            AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.All,
+            AccountSasPermissions permissions = AccountSasPermissions.All,
+            StorageSharedKeyCredential sharedKeyCredentials = default)
         {
             var builder = new AccountSasBuilder
             {
                 Protocol = SasProtocol.None,
                 Services = AccountSasServices.Blobs,
-                ResourceTypes = AccountSasResourceTypes.Container | AccountSasResourceTypes.Object,
+                ResourceTypes = resourceTypes,
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
                 IPRange = new SasIPRange(IPAddress.None, IPAddress.None),
                 Version = ToSasVersion(_serviceVersion)
             };
-            builder.SetPermissions(
-                AccountSasPermissions.Read |
-                AccountSasPermissions.Add |
-                AccountSasPermissions.Create |
-                AccountSasPermissions.Write |
-                AccountSasPermissions.Delete |
-                AccountSasPermissions.List);
-            return builder.ToSasQueryParameters(sharedKeyCredentials);
+            builder.SetPermissions(permissions);
+            return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
         }
 
         public BlobSasQueryParameters GetNewBlobServiceSasCredentialsContainer(string containerName, StorageSharedKeyCredential sharedKeyCredentials = default)
         {
-            var builder = new BlobSasBuilder
-            {
-                BlobContainerName = containerName,
-                Protocol = SasProtocol.None,
-                StartsOn = Recording.UtcNow.AddHours(-1),
-                ExpiresOn = Recording.UtcNow.AddHours(+1),
-                IPRange = new SasIPRange(IPAddress.None, IPAddress.None),
-                Version = ToSasVersion(_serviceVersion)
-            };
+            var builder = GetBlobSasBuilder(containerName);
             builder.SetPermissions(BlobContainerSasPermissions.All);
             return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
         }
 
         public BlobSasQueryParameters GetNewBlobServiceIdentitySasCredentialsContainer(string containerName, UserDelegationKey userDelegationKey, string accountName)
         {
-            var builder = new BlobSasBuilder
-            {
-                BlobContainerName = containerName,
-                Protocol = SasProtocol.None,
-                StartsOn = Recording.UtcNow.AddHours(-1),
-                ExpiresOn = Recording.UtcNow.AddHours(+1),
-                IPRange = new SasIPRange(IPAddress.None, IPAddress.None),
-                Version = ToSasVersion(_serviceVersion)
-            };
+            var builder = GetBlobSasBuilder(containerName);
             builder.SetPermissions(BlobContainerSasPermissions.All);
             return builder.ToSasQueryParameters(userDelegationKey, accountName);
         }
 
         public BlobSasQueryParameters GetNewBlobServiceSasCredentialsBlob(string containerName, string blobName, StorageSharedKeyCredential sharedKeyCredentials = default)
         {
-            var builder = new BlobSasBuilder
-            {
-                BlobContainerName = containerName,
-                BlobName = blobName,
-                Protocol = SasProtocol.None,
-                StartsOn = Recording.UtcNow.AddHours(-1),
-                ExpiresOn = Recording.UtcNow.AddHours(+1),
-                IPRange = new SasIPRange(IPAddress.None, IPAddress.None),
-                Version = ToSasVersion(_serviceVersion)
-            };
+            BlobSasBuilder builder = GetBlobSasBuilder(containerName, blobName);
             builder.SetPermissions(
                 BlobSasPermissions.Read |
                 BlobSasPermissions.Add |
@@ -323,18 +323,130 @@ namespace Azure.Storage.Test.Shared
             return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
         }
 
-        public BlobSasQueryParameters GetNewBlobServiceIdentitySasCredentialsBlob(string containerName, string blobName, UserDelegationKey userDelegationKey, string accountName)
+        public BlobSasQueryParameters GetBlobSas(
+            string containerName,
+            string blobName,
+            BlobSasPermissions permissions,
+            StorageSharedKeyCredential sharedKeyCredential = default,
+            string sasVersion = default)
         {
-            var builder = new BlobSasBuilder
+            BlobSasBuilder sasBuilder = GetBlobSasBuilder(containerName, blobName, sasVersion: sasVersion);
+            sasBuilder.SetPermissions(permissions);
+            return sasBuilder.ToSasQueryParameters(sharedKeyCredential ?? GetNewSharedKeyCredentials());
+        }
+
+        public BlobSasQueryParameters GetBlobIdentitySas(
+            string containerName,
+            string blobName,
+            BlobSasPermissions permissions,
+            UserDelegationKey userDelegationKey,
+            string accountName,
+            string sasVersion = default)
+        {
+            BlobSasBuilder sasBuilder = GetBlobSasBuilder(containerName, blobName, sasVersion: sasVersion);
+            sasBuilder.SetPermissions(permissions);
+            return sasBuilder.ToSasQueryParameters(userDelegationKey, accountName);
+        }
+
+        public BlobSasQueryParameters GetContainerSas(
+            string containerName,
+            BlobContainerSasPermissions permissions,
+            StorageSharedKeyCredential sharedKeyCredential = default,
+            string sasVersion = default)
+        {
+            BlobSasBuilder sasBuilder = GetBlobSasBuilder(containerName, sasVersion: sasVersion);
+            sasBuilder.SetPermissions(permissions);
+            return sasBuilder.ToSasQueryParameters(sharedKeyCredential ?? GetNewSharedKeyCredentials());
+        }
+
+        public BlobSasQueryParameters GetContainerIdentitySas(
+            string containerName,
+            BlobContainerSasPermissions permissions,
+            UserDelegationKey userDelegationKey,
+            string accountName,
+            string sasVersion = default)
+        {
+            BlobSasBuilder sasBuilder = GetBlobSasBuilder(containerName, sasVersion: sasVersion);
+            sasBuilder.SetPermissions(permissions);
+            return sasBuilder.ToSasQueryParameters(userDelegationKey, accountName);
+        }
+
+        public BlobSasQueryParameters GetSnapshotSas(
+            string containerName,
+            string blobName,
+            string snapshot,
+            SnapshotSasPermissions permissions,
+            StorageSharedKeyCredential sharedKeyCredential = default,
+            string sasVersion = default)
+        {
+            BlobSasBuilder sasBuilder = GetBlobSasBuilder(containerName, blobName, snapshot: snapshot, sasVersion: sasVersion);
+            sasBuilder.SetPermissions(permissions);
+            return sasBuilder.ToSasQueryParameters(sharedKeyCredential ?? GetNewSharedKeyCredentials());
+        }
+
+        public BlobSasQueryParameters GetSnapshotIdentitySas(
+            string containerName,
+            string blobName,
+            string snapshot,
+            SnapshotSasPermissions permissions,
+            UserDelegationKey userDelegationKey,
+            string accountName,
+            string sasVersion = default)
+        {
+            BlobSasBuilder sasBuilder = GetBlobSasBuilder(containerName, blobName, snapshot: snapshot, sasVersion: sasVersion);
+            sasBuilder.SetPermissions(permissions);
+            return sasBuilder.ToSasQueryParameters(userDelegationKey, accountName);
+        }
+
+        public BlobSasQueryParameters GetBlobVersionSas(
+            string containerName,
+            string blobName,
+            string blobVersion,
+            BlobVersionSasPermissions permissions,
+            StorageSharedKeyCredential sharedKeyCredential = default,
+            string sasVersion = default)
+        {
+            BlobSasBuilder sasBuilder = GetBlobSasBuilder(containerName, blobName, blobVersion: blobVersion, sasVersion: sasVersion);
+            sasBuilder.SetPermissions(permissions);
+            return sasBuilder.ToSasQueryParameters(sharedKeyCredential ?? GetNewSharedKeyCredentials());
+        }
+
+        public BlobSasQueryParameters GetBlobVersionIdentitySas(
+            string containerName,
+            string blobName,
+            string blobVersion,
+            BlobVersionSasPermissions permissions,
+            UserDelegationKey userDelegationKey,
+            string accountName,
+            string sasVersion = default)
+        {
+            BlobSasBuilder sasBuilder = GetBlobSasBuilder(containerName, blobName, blobVersion: blobVersion, sasVersion: sasVersion);
+            sasBuilder.SetPermissions(permissions);
+            return sasBuilder.ToSasQueryParameters(userDelegationKey, accountName);
+        }
+
+        private BlobSasBuilder GetBlobSasBuilder(
+            string containerName,
+            string blobName = default,
+            string snapshot = default,
+            string blobVersion = default,
+            string sasVersion = default)
+            => new BlobSasBuilder
             {
                 BlobContainerName = containerName,
                 BlobName = blobName,
+                Snapshot = snapshot,
+                BlobVersionId = blobVersion,
                 Protocol = SasProtocol.None,
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
                 IPRange = new SasIPRange(IPAddress.None, IPAddress.None),
-                Version = ToSasVersion(_serviceVersion)
+                Version = sasVersion ?? ToSasVersion(_serviceVersion)
             };
+
+        public BlobSasQueryParameters GetNewBlobServiceIdentitySasCredentialsBlob(string containerName, string blobName, UserDelegationKey userDelegationKey, string accountName)
+        {
+            var builder = GetBlobSasBuilder(containerName, blobName);
             builder.SetPermissions(
                 BlobSasPermissions.Read |
                 BlobSasPermissions.Add |
@@ -361,17 +473,15 @@ namespace Azure.Storage.Test.Shared
             return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
         }
 
-        private static string ToSasVersion(BlobClientOptions.ServiceVersion serviceVersion)
+        public static string ToSasVersion(BlobClientOptions.ServiceVersion serviceVersion)
         {
-            switch (serviceVersion)
+            return serviceVersion switch
             {
-                case BlobClientOptions.ServiceVersion.V2019_02_02:
-                    return "2019-02-02";
-                case BlobClientOptions.ServiceVersion.V2019_07_07:
-                    return "2019-07-07";
-                default:
-                    throw new ArgumentException("Invalid service version");
-            }
+                BlobClientOptions.ServiceVersion.V2019_02_02 => "2019-02-02",
+                BlobClientOptions.ServiceVersion.V2019_07_07 => "2019-07-07",
+                BlobClientOptions.ServiceVersion.V2019_12_12 => "2019-12-12",
+                _ => throw new ArgumentException("Invalid service version"),
+            };
         }
 
         public async Task<PageBlobClient> CreatePageBlobClientAsync(BlobContainerClient container, long size)
@@ -448,8 +558,8 @@ namespace Azure.Storage.Test.Shared
                     Id = GetNewString(),
                     AccessPolicy = new BlobAccessPolicy()
                     {
-                        StartsOn = Recording.UtcNow.AddHours(-1),
-                        ExpiresOn = Recording.UtcNow.AddHours(1),
+                        PolicyStartsOn = Recording.UtcNow.AddHours(-1),
+                        PolicyExpiresOn = Recording.UtcNow.AddHours(1),
                         Permissions = "rw"
                     }
                 }
@@ -522,6 +632,12 @@ namespace Azure.Storage.Test.Shared
             } while (properties.Value.DeleteRetentionPolicy.Enabled);
         }
 
+        public Dictionary<string, string> BuildTags()
+            => new Dictionary<string, string>
+            {
+                { "tagKey0", "tagValue0" },
+                { "tagKey1", "tagValue1" }
+            };
 
         public class DisposingContainer : IAsyncDisposable
         {
@@ -546,6 +662,24 @@ namespace Azure.Storage.Test.Shared
                         // swallow the exception to avoid hiding another test failure
                     }
                 }
+            }
+        }
+
+        public class BlobQueryErrorHandler
+        {
+            private readonly BlobQueryError _expectedBlobQueryError;
+
+            public BlobQueryErrorHandler(BlobQueryError expected)
+            {
+                _expectedBlobQueryError = expected;
+            }
+
+            public void Handle(BlobQueryError blobQueryError)
+            {
+                Assert.AreEqual(_expectedBlobQueryError.IsFatal, blobQueryError.IsFatal);
+                Assert.AreEqual(_expectedBlobQueryError.Name, blobQueryError.Name);
+                Assert.AreEqual(_expectedBlobQueryError.Description, blobQueryError.Description);
+                Assert.AreEqual(_expectedBlobQueryError.Position, blobQueryError.Position);
             }
         }
     }

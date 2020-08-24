@@ -11,8 +11,27 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		CHANGELOG.md = CHANGELOG.md
 		CONTRIBUTING.md = CONTRIBUTING.md
+		MigrationGuide.md = MigrationGuide.md
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{4A864BCB-6AD7-4F89-8778-C2953379EAAC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{8B8C7CA6-452C-4041-A66D-78DC6F762C62}"
+	ProjectSection(SolutionItems) = preProject
+		samples\README.md = samples\README.md
+		samples\Sample01_HelloWorld.md = samples\Sample01_HelloWorld.md
+		samples\Sample02_MessageSettlement.md = samples\Sample02_MessageSettlement.md
+		samples\Sample03_SendReceiveSessions.md = samples\Sample03_SendReceiveSessions.md
+		samples\Sample04_Processor.md = samples\Sample04_Processor.md
+		samples\Sample05_SessionProcessor.md = samples\Sample05_SessionProcessor.md
+		samples\Sample06_Transactions.md = samples\Sample06_Transactions.md
+		samples\Sample07_CrudOperations.md = samples\Sample07_CrudOperations.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Experimental", "..\..\core\Azure.Core.Experimental\src\Azure.Core.Experimental.csproj", "{5871D9C6-F2DF-4F05-B29A-6C0D8709784A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\..\core\Azure.Core\src\Azure.Core.csproj", "{9CD1905A-19B9-4F71-8BE6-D25CF49DA5B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,9 +47,24 @@ Global
 		{CF960215-F783-4EA6-88F8-25C06F9D598E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF960215-F783-4EA6-88F8-25C06F9D598E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF960215-F783-4EA6-88F8-25C06F9D598E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A864BCB-6AD7-4F89-8778-C2953379EAAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A864BCB-6AD7-4F89-8778-C2953379EAAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A864BCB-6AD7-4F89-8778-C2953379EAAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A864BCB-6AD7-4F89-8778-C2953379EAAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5871D9C6-F2DF-4F05-B29A-6C0D8709784A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5871D9C6-F2DF-4F05-B29A-6C0D8709784A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5871D9C6-F2DF-4F05-B29A-6C0D8709784A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5871D9C6-F2DF-4F05-B29A-6C0D8709784A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CD1905A-19B9-4F71-8BE6-D25CF49DA5B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CD1905A-19B9-4F71-8BE6-D25CF49DA5B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CD1905A-19B9-4F71-8BE6-D25CF49DA5B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CD1905A-19B9-4F71-8BE6-D25CF49DA5B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8B8C7CA6-452C-4041-A66D-78DC6F762C62} = {C066CBDD-BCD3-4F29-9F6E-57AE3DC5D876}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {268B4547-5A22-4E5B-85E9-47AF3F00B421}

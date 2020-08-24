@@ -25,7 +25,8 @@ namespace Microsoft.Azure.Management.StorageCache
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of Cache.
+        /// Name of Cache. Length of name must be not greater than 80 and chars
+        /// must be in list of [-0-9a-zA-Z_] char class.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -55,7 +56,8 @@ namespace Microsoft.Azure.Management.StorageCache
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of Cache.
+        /// Name of Cache. Length of name must be not greater than 80 and chars
+        /// must be in list of [-0-9a-zA-Z_] char class.
         /// </param>
         /// <param name='storageTargetName'>
         /// Name of Storage Target.
@@ -83,10 +85,12 @@ namespace Microsoft.Azure.Management.StorageCache
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of Cache.
+        /// Name of Cache. Length of name must be not greater than 80 and chars
+        /// must be in list of [-0-9a-zA-Z_] char class.
         /// </param>
         /// <param name='storageTargetName'>
-        /// Name of the Storage Target.
+        /// Name of the Storage Target. Length of name must be not greater than
+        /// 80 and chars must be in list of [-0-9a-zA-Z_] char class.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -114,10 +118,12 @@ namespace Microsoft.Azure.Management.StorageCache
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of Cache.
+        /// Name of Cache. Length of name must be not greater than 80 and chars
+        /// must be in list of [-0-9a-zA-Z_] char class.
         /// </param>
         /// <param name='storageTargetName'>
-        /// Name of the Storage Target.
+        /// Name of the Storage Target. Length of name must be not greater than
+        /// 80 and chars must be in list of [-0-9a-zA-Z_] char class.
         /// </param>
         /// <param name='storagetarget'>
         /// Object containing the definition of a Storage Target.

@@ -23,9 +23,9 @@ namespace Azure.Messaging.ServiceBus.Tests
         {
             try
             {
-                if (TestEnvironment.ShouldRemoveNamespaceAfterTestRunCompletion)
+                if (ServiceBusTestEnvironment.Instance.ShouldRemoveNamespaceAfterTestRunCompletion)
                 {
-                    ServiceBusScope.DeleteNamespaceAsync(TestEnvironment.ServiceBusNamespace).GetAwaiter().GetResult();
+                    ServiceBusScope.DeleteNamespaceAsync(ServiceBusTestEnvironment.Instance.ServiceBusNamespace).GetAwaiter().GetResult();
                 }
             }
             catch

@@ -30,7 +30,6 @@
         },
         "testApplicationOid": {
             "type": "string",
-            "defaultValue": "b3653439-8136-4cd5-aac3-2a9460871ca6",
             "metadata": {
                 "description": "The client OID to grant access to test resources."
             }
@@ -41,33 +40,100 @@
             "metadata": {
                 "description": "The location of the resource. By default, this is the same as the resource group."
             }
+        },
+        "searchSku": {
+            "type": "string",
+            "defaultValue": "free",
+            "allowedValues": [
+                "free",
+                "basic",
+                "standard"
+            ],
+            "metadata": {
+                "description": "The Search service SKU to create."
+            }
         }
     },
-    "resources": [],
+    "variables": {
+        "searchServiceName": "[concat('azs-net-', parameters('baseName'))]",
+        "searchApiVersion": "2020-03-13",
+        "storageAccountName": "[concat(parameters('baseName'), 'stg')]",
+        "storageApiVersion": "2019-06-01",
+        "cognitiveServicesAccountName": "[concat(parameters('baseName'), 'cog')]",
+        "cognitiveServicesApiVersion": "2017-04-18"
+    },
+    "resources": [
+        {
+            "name": "[variables('searchServiceName')]",
+            "type": "Microsoft.Search/searchServices",
+            "apiVersion": "[variables('searchApiVersion')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "[parameters('searchSku')]"
+            },
+            "properties": {
+                "replicaCount": 1,
+                "partitionCount": 1,
+                "hostingMode": "Default",
+                "publicNetworkAccess": "Enabled",
+                "networkRuleSet": {
+                    "ipRules": []
+                }
+            }
+        },
+        {
+            "name": "[variables('storageAccountName')]",
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "[variables('storageApiVersion')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "accessTier": "Hot",
+                "supportsHttpsTrafficOnly": true
+            },
+            "sku": {
+                "name": "Standard_LRS"
+            },
+            "kind": "BlobStorage"
+        },
+        {
+            "name": "[variables('cognitiveServicesAccountName')]",
+            "type": "Microsoft.CognitiveServices/accounts",
+            "apiVersion": "[variables('cognitiveServicesApiVersion')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "S0"
+            },
+            "kind": "CognitiveServices",
+            "properties": {
+                "apiProperties": { },
+                "publicNetworkAccess": "Enabled"
+            }
+        }
+    ],
     "outputs": {
-        "AZURE_TENANT_ID": {
+        "SEARCH_SERVICE_NAME": {
             "type": "string",
-            "value": "[parameters('tenantId')]"
+            "value": "[variables('searchServiceName')]"
         },
-        "AZURE_CLIENT_ID": {
+        "SEARCH_ADMIN_API_KEY": {
             "type": "string",
-            "value": "[parameters('testApplicationId')]"
+            "value": "[listAdminKeys(variables('searchServiceName'), variables('searchApiVersion')).primaryKey]"
         },
-        "AZURE_CLIENT_SECRET": {
+        "SEARCH_QUERY_API_KEY": {
             "type": "string",
-            "value": "[parameters('testApplicationSecret')]"
+            "value": "[listQueryKeys(variables('searchServiceName'), variables('searchApiVersion')).value[0].key]"
         },
-        "AZURE_SUBSCRIPTION_ID": {
+        "SEARCH_STORAGE_NAME": {
             "type": "string",
-            "value": "[subscription().subscriptionId]"
+            "value": "[variables('storageAccountName')]"
         },
-        "AZURE_RESOURCE_GROUP": {
+        "SEARCH_STORAGE_KEY": {
             "type": "string",
-            "value": "[resourceGroup().name]"
+            "value": "[listKeys(variables('storageAccountName'), variables('storageApiVersion')).keys[0].value]"
         },
-        "AZURE_LOCATION": {
+        "SEARCH_COGNITIVE_KEY": {
             "type": "string",
-            "value": "[parameters('location')]"
+            "value": "[listKeys(variables('cognitiveServicesAccountName'), variables('cognitiveServicesApiVersion')).key1]"
         }
     }
 }

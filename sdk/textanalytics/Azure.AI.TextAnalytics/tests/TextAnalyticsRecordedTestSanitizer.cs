@@ -3,28 +3,13 @@
 
 using System.Collections.Generic;
 
-namespace Azure.Core.Testing
+namespace Azure.Core.TestFramework
 {
     public class TextAnalyticsRecordedTestSanitizer : RecordedTestSanitizer
     {
-        public override void SanitizeHeaders(IDictionary<string, string[]> headers)
+        public TextAnalyticsRecordedTestSanitizer()
         {
-            const string key = "Ocp-Apim-Subscription-Key";
-            if (headers.ContainsKey(key))
-            {
-                headers[key] = new[] { SanitizeValue };
-            }
-
-            base.SanitizeHeaders(headers);
-        }
-
-        public override string SanitizeVariable(string variableName, string environmentVariableValue)
-        {
-            return variableName switch
-            {
-                "TEXT_ANALYTICS_API_KEY" => SanitizeValue,
-                _ => base.SanitizeVariable(variableName, environmentVariableValue)
-            };
+            SanitizedHeaders.Add("Ocp-Apim-Subscription-Key");
         }
     }
 }

@@ -127,8 +127,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/clusters/ofertestforclient/databases/databasetest/dataConnections/eventGridConnection2443?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL29mZXJ0ZXN0Z3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy9vZmVydGVzdGZvcmNsaWVudC9kYXRhYmFzZXMvZGF0YWJhc2V0ZXN0L2RhdGFDb25uZWN0aW9ucy9ldmVudEdyaWRDb25uZWN0aW9uMjQ0Mz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/clusters/ofertestforclient/databases/databasetest/dataConnections/eventGridConnection2443?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL29mZXJ0ZXN0Z3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy9vZmVydGVzdGZvcmNsaWVudC9kYXRhYmFzZXMvZGF0YWJhc2V0ZXN0L2RhdGFDb25uZWN0aW9ucy9ldmVudEdyaWRDb25uZWN0aW9uMjQ0Mz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"kind\": \"EventGrid\",\r\n  \"properties\": {\r\n    \"storageAccountResourceId\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Storage/storageAccounts/foreventgridtest\",\r\n    \"eventHubResourceId\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.EventHub/namespaces/eventHubNamespaceForClients/eventhubs/eventhubtest\",\r\n    \"consumerGroup\": \"$Default\",\r\n    \"tableName\": \"MyTest\",\r\n    \"dataFormat\": \"CSV\"\r\n  },\r\n  \"location\": \"Central US\"\r\n}",
       "RequestHeaders": {
@@ -165,7 +165,7 @@
           "fe228919-45e8-4bd3-a98b-6a5508549c5f"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central US/operationResults/ef03284c-7e25-4a90-8a7b-f75a5867bc30?api-version=2020-02-15"
+          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central US/operationResults/ef03284c-7e25-4a90-8a7b-f75a5867bc30?api-version=2020-06-14"
         ],
         "Set-Cookie": [
           "ARRAffinity=20a1717378e36ca6eef5d7a9ef01b04cdb43003687b1d2f915704ceec819965a;Path=/;HttpOnly;Domain=rp-kustorpcus-website.azurewebsites.net"
@@ -205,8 +205,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/clusters/ofertestforclient/databases/databasetest/dataConnections/eventGridConnection2443?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL29mZXJ0ZXN0Z3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy9vZmVydGVzdGZvcmNsaWVudC9kYXRhYmFzZXMvZGF0YWJhc2V0ZXN0L2RhdGFDb25uZWN0aW9ucy9ldmVudEdyaWRDb25uZWN0aW9uMjQ0Mz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/clusters/ofertestforclient/databases/databasetest/dataConnections/eventGridConnection2443?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL29mZXJ0ZXN0Z3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy9vZmVydGVzdGZvcmNsaWVudC9kYXRhYmFzZXMvZGF0YWJhc2V0ZXN0L2RhdGFDb25uZWN0aW9ucy9ldmVudEdyaWRDb25uZWN0aW9uMjQ0Mz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"kind\": \"EventGrid\",\r\n  \"properties\": {\r\n    \"storageAccountResourceId\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Storage/storageAccounts/foreventgridtest\",\r\n    \"eventHubResourceId\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.EventHub/namespaces/eventHubNamespaceForClients/eventhubs/eventhubtest\",\r\n    \"consumerGroup\": \"$Default\",\r\n    \"tableName\": \"MyTest\",\r\n    \"dataFormat\": \"CSV\"\r\n  },\r\n  \"location\": \"Central US\"\r\n}",
       "RequestHeaders": {
@@ -249,7 +249,7 @@
           "440f428c-6c33-4ecb-9df7-9f06163388a4"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central US/operationResults/a575cc38-e16d-41e3-895c-e45669aa16f2?api-version=2020-02-15"
+          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central US/operationResults/a575cc38-e16d-41e3-895c-e45669aa16f2?api-version=2020-06-14"
         ],
         "Set-Cookie": [
           "ARRAffinity=c9dee28e3e3457cbf1e222381dd78e467e126e29c300542bdf3e490b49857b8b;Path=/;HttpOnly;Domain=rp-kustorpcus-website.azurewebsites.net"
@@ -286,8 +286,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/ef03284c-7e25-4a90-8a7b-f75a5867bc30?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2VmMDMyODRjLTdlMjUtNGE5MC04YTdiLWY3NWE1ODY3YmMzMD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/ef03284c-7e25-4a90-8a7b-f75a5867bc30?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2VmMDMyODRjLTdlMjUtNGE5MC04YTdiLWY3NWE1ODY3YmMzMD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -349,8 +349,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/clusters/ofertestforclient/databases/databasetest/dataConnections/eventGridConnection2443?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL29mZXJ0ZXN0Z3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy9vZmVydGVzdGZvcmNsaWVudC9kYXRhYmFzZXMvZGF0YWJhc2V0ZXN0L2RhdGFDb25uZWN0aW9ucy9ldmVudEdyaWRDb25uZWN0aW9uMjQ0Mz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/clusters/ofertestforclient/databases/databasetest/dataConnections/eventGridConnection2443?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL29mZXJ0ZXN0Z3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy9vZmVydGVzdGZvcmNsaWVudC9kYXRhYmFzZXMvZGF0YWJhc2V0ZXN0L2RhdGFDb25uZWN0aW9ucy9ldmVudEdyaWRDb25uZWN0aW9uMjQ0Mz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -415,8 +415,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/clusters/ofertestforclient/databases/databasetest/dataConnections/eventGridConnection2443?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL29mZXJ0ZXN0Z3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy9vZmVydGVzdGZvcmNsaWVudC9kYXRhYmFzZXMvZGF0YWJhc2V0ZXN0L2RhdGFDb25uZWN0aW9ucy9ldmVudEdyaWRDb25uZWN0aW9uMjQ0Mz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/clusters/ofertestforclient/databases/databasetest/dataConnections/eventGridConnection2443?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL29mZXJ0ZXN0Z3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy9vZmVydGVzdGZvcmNsaWVudC9kYXRhYmFzZXMvZGF0YWJhc2V0ZXN0L2RhdGFDb25uZWN0aW9ucy9ldmVudEdyaWRDb25uZWN0aW9uMjQ0Mz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -487,8 +487,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/clusters/ofertestforclient/databases/databasetest/dataConnections/eventGridConnection2443?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL29mZXJ0ZXN0Z3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy9vZmVydGVzdGZvcmNsaWVudC9kYXRhYmFzZXMvZGF0YWJhc2V0ZXN0L2RhdGFDb25uZWN0aW9ucy9ldmVudEdyaWRDb25uZWN0aW9uMjQ0Mz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/clusters/ofertestforclient/databases/databasetest/dataConnections/eventGridConnection2443?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL29mZXJ0ZXN0Z3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy9vZmVydGVzdGZvcmNsaWVudC9kYXRhYmFzZXMvZGF0YWJhc2V0ZXN0L2RhdGFDb25uZWN0aW9ucy9ldmVudEdyaWRDb25uZWN0aW9uMjQ0Mz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -553,8 +553,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/clusters/ofertestforclient/databases/databasetest/dataConnections/eventGridConnection2443?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL29mZXJ0ZXN0Z3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy9vZmVydGVzdGZvcmNsaWVudC9kYXRhYmFzZXMvZGF0YWJhc2V0ZXN0L2RhdGFDb25uZWN0aW9ucy9ldmVudEdyaWRDb25uZWN0aW9uMjQ0Mz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/clusters/ofertestforclient/databases/databasetest/dataConnections/eventGridConnection2443?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL29mZXJ0ZXN0Z3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy9vZmVydGVzdGZvcmNsaWVudC9kYXRhYmFzZXMvZGF0YWJhc2V0ZXN0L2RhdGFDb25uZWN0aW9ucy9ldmVudEdyaWRDb25uZWN0aW9uMjQ0Mz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -619,8 +619,8 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a575cc38-e16d-41e3-895c-e45669aa16f2?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E1NzVjYzM4LWUxNmQtNDFlMy04OTVjLWU0NTY2OWFhMTZmMj9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/a575cc38-e16d-41e3-895c-e45669aa16f2?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzL2E1NzVjYzM4LWUxNmQtNDFlMy04OTVjLWU0NTY2OWFhMTZmMj9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -682,8 +682,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/clusters/ofertestforclient/databases/databasetest/dataConnections/eventGridConnection2443?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL29mZXJ0ZXN0Z3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy9vZmVydGVzdGZvcmNsaWVudC9kYXRhYmFzZXMvZGF0YWJhc2V0ZXN0L2RhdGFDb25uZWN0aW9ucy9ldmVudEdyaWRDb25uZWN0aW9uMjQ0Mz9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/clusters/ofertestforclient/databases/databasetest/dataConnections/eventGridConnection2443?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL29mZXJ0ZXN0Z3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy9vZmVydGVzdGZvcmNsaWVudC9kYXRhYmFzZXMvZGF0YWJhc2V0ZXN0L2RhdGFDb25uZWN0aW9ucy9ldmVudEdyaWRDb25uZWN0aW9uMjQ0Mz9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -708,10 +708,10 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/37d97758-18af-4b71-8a2d-da266dd2d9f2?api-version=2020-02-15&operationResultResponseType=Location"
+          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/37d97758-18af-4b71-8a2d-da266dd2d9f2?api-version=2020-06-14&operationResultResponseType=Location"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central US/operationResults/37d97758-18af-4b71-8a2d-da266dd2d9f2?api-version=2020-02-15"
+          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central US/operationResults/37d97758-18af-4b71-8a2d-da266dd2d9f2?api-version=2020-06-14"
         ],
         "Set-Cookie": [
           "ARRAffinity=d71ae3625c12d14134c0a2e899d455e231504416eaf6a0a7988dffe7819d0c42;Path=/;HttpOnly;Domain=rp-kustorpcus-website.azurewebsites.net"
@@ -751,8 +751,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/37d97758-18af-4b71-8a2d-da266dd2d9f2?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzM3ZDk3NzU4LTE4YWYtNGI3MS04YTJkLWRhMjY2ZGQyZDlmMj9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/37d97758-18af-4b71-8a2d-da266dd2d9f2?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzM3ZDk3NzU4LTE4YWYtNGI3MS04YTJkLWRhMjY2ZGQyZDlmMj9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -814,8 +814,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/37d97758-18af-4b71-8a2d-da266dd2d9f2?api-version=2020-02-15&operationResultResponseType=Location",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzM3ZDk3NzU4LTE4YWYtNGI3MS04YTJkLWRhMjY2ZGQyZDlmMj9hcGktdmVyc2lvbj0yMDIwLTAyLTE1Jm9wZXJhdGlvblJlc3VsdFJlc3BvbnNlVHlwZT1Mb2NhdGlvbg==",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/37d97758-18af-4b71-8a2d-da266dd2d9f2?api-version=2020-06-14&operationResultResponseType=Location",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzM3ZDk3NzU4LTE4YWYtNGI3MS04YTJkLWRhMjY2ZGQyZDlmMj9hcGktdmVyc2lvbj0yMDIwLTA2LTE0Jm9wZXJhdGlvblJlc3VsdFJlc3BvbnNlVHlwZT1Mb2NhdGlvbg==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {

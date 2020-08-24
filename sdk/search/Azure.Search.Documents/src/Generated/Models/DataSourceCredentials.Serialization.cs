@@ -8,14 +8,14 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class DataSourceCredentials : IUtf8JsonSerializable
+    internal partial class DataSourceCredentials : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ConnectionString != null)
+            if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString");
                 writer.WriteStringValue(ConnectionString);
@@ -25,20 +25,16 @@ namespace Azure.Search.Documents.Models
 
         internal static DataSourceCredentials DeserializeDataSourceCredentials(JsonElement element)
         {
-            string connectionString = default;
+            Optional<string> connectionString = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectionString"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     connectionString = property.Value.GetString();
                     continue;
                 }
             }
-            return new DataSourceCredentials(connectionString);
+            return new DataSourceCredentials(connectionString.Value);
         }
     }
 }

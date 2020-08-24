@@ -42,11 +42,16 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// belongs to.</param>
         /// <param name="privateLinkServiceConnectionState">Connection State of
         /// the Private Endpoint Connection.</param>
-        public PrivateEndpointConnection(string id = default(string), string name = default(string), string type = default(string), PrivateEndpointProperty privateEndpoint = default(PrivateEndpointProperty), PrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState = default(PrivateLinkServiceConnectionStateProperty))
+        /// <param name="groupId">Group id of the private endpoint.</param>
+        /// <param name="provisioningState">Provisioning state of the private
+        /// endpoint.</param>
+        public PrivateEndpointConnection(string id = default(string), string name = default(string), string type = default(string), PrivateEndpointProperty privateEndpoint = default(PrivateEndpointProperty), PrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState = default(PrivateLinkServiceConnectionStateProperty), string groupId = default(string), string provisioningState = default(string))
             : base(id, name, type)
         {
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            GroupId = groupId;
+            ProvisioningState = provisioningState;
             CustomInit();
         }
 
@@ -66,6 +71,18 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateLinkServiceConnectionState")]
         public PrivateLinkServiceConnectionStateProperty PrivateLinkServiceConnectionState { get; set; }
+
+        /// <summary>
+        /// Gets or sets group id of the private endpoint.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.groupId")]
+        public string GroupId { get; set; }
+
+        /// <summary>
+        /// Gets or sets provisioning state of the private endpoint.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; set; }
 
     }
 }

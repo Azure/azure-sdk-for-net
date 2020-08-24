@@ -96,9 +96,9 @@ namespace Azure.Core.Samples
 
             #region Snippet:AsyncPageable
             // call a service method, which returns AsyncPageable<T>
-            AsyncPageable<SecretProperties> response = client.GetPropertiesOfSecretsAsync();
+            AsyncPageable<SecretProperties> allSecretProperties = client.GetPropertiesOfSecretsAsync();
 
-            await foreach (SecretProperties secretProperties in response)
+            await foreach (SecretProperties secretProperties in allSecretProperties)
             {
                 Console.WriteLine(secretProperties.Name);
             }
@@ -114,9 +114,9 @@ namespace Azure.Core.Samples
 
             #region Snippet:AsyncPageableLoop
             // call a service method, which returns AsyncPageable<T>
-            AsyncPageable<SecretProperties> response = client.GetPropertiesOfSecretsAsync();
+            AsyncPageable<SecretProperties> allSecretProperties = client.GetPropertiesOfSecretsAsync();
 
-            IAsyncEnumerator<SecretProperties> enumerator = response.GetAsyncEnumerator();
+            IAsyncEnumerator<SecretProperties> enumerator = allSecretProperties.GetAsyncEnumerator();
             try
             {
                 while (await enumerator.MoveNextAsync())
@@ -141,9 +141,9 @@ namespace Azure.Core.Samples
 
             #region Snippet:AsyncPageableAsPages
             // call a service method, which returns AsyncPageable<T>
-            AsyncPageable<SecretProperties> response = client.GetPropertiesOfSecretsAsync();
+            AsyncPageable<SecretProperties> allSecretProperties = client.GetPropertiesOfSecretsAsync();
 
-            await foreach (Page<SecretProperties> page in response.AsPages())
+            await foreach (Page<SecretProperties> page in allSecretProperties.AsPages())
             {
                 // enumerate through page items
                 foreach (SecretProperties secretProperties in page.Values)
@@ -166,9 +166,9 @@ namespace Azure.Core.Samples
 
             #region Snippet:Pageable
             // call a service method, which returns Pageable<T>
-            Pageable<SecretProperties> response = client.GetPropertiesOfSecrets();
+            Pageable<SecretProperties> allSecretProperties = client.GetPropertiesOfSecrets();
 
-            foreach (SecretProperties secretProperties in response)
+            foreach (SecretProperties secretProperties in allSecretProperties)
             {
                 Console.WriteLine(secretProperties.Name);
             }
@@ -186,7 +186,7 @@ namespace Azure.Core.Samples
             #region Snippet:RequestFailedException
             try
             {
-                KeyVaultSecret properties = client.GetSecret("NonexistentSecret");
+                KeyVaultSecret secret = client.GetSecret("NonexistentSecret");
             }
             // handle exception with status code 404
             catch (RequestFailedException e) when (e.Status == 404)

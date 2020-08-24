@@ -1,8 +1,91 @@
 # Release History
 
-## 5.1.0-preview.2 (Unreleased)
+## 5.2.0-preview.3 (Unreleased)
 
-Changes will be detailed prior to release
+
+## 5.2.0-preview.3 (2020-08-18)
+
+### Fixed
+- Bug in TaskExtensions.EnsureCompleted method that causes it to unconditionally throw an exception in the environments with synchronization context
+
+## 5.2.0-preview.2 (2020-08-10)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
+
+### Changes
+
+#### Bug fixes and foundation
+
+- The underlying AMQP library has been enhanced for more efficient resource usage; this will result in a noticeable reduction in memory use in common consuming scenarios.  (A community contribution, courtesy of _[danielmarbach](https://github.com/danielmarbach))_
+
+- All clients will now perform an eager validation of connection strings upon creation.  Previously, validation was performed just before a service operation in some scenarios which made debugging difficult.
+
+- Fixed an issue where failure to create an AMQP link would lead to an AMQP session not being explicitly closed, causing connections to the Event Hubs service to remain open until a garbage collection pass was performed.
+
+## 5.2.0-preview.1 (2020-07-06)
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
+
+### Changes
+
+#### Consuming events
+
+- The `ReadEventOptions` used with the `EventHubConsumerClient` now support setting a `PrefetchCount` and `CacheEventCount` for performance tuning.  More details about each can be found in the associated [documentation](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.consumer.readeventoptions?view=azure-dotnet).
+
+- The `EventHubConsumerClient` pipeline for reading events from a single partition was reworked to improve efficiency and make use of the new configuration options for `PrefetchCount` and `CacheEventCount`.
+
+#### Processing events
+
+- The `EventProcessor<TPartition>` now supports a configurable strategy for load balancing, allowing control over whether it claims ownership of partitions in a balanced manner _(default)_ or more aggressively.  The strategy may be set in the `EventProcessorOptions` when creating the processor.  More details about strategies can be found in the associated [documentation](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.processor.loadbalancingstrategy?view=azure-dotnet).
+
+- The `EventProcessorClientOptions` now support setting a `PrefetchCount` and `CacheEventCount` for performance tuning.  More details about each can be found in the associated [documentation](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventprocessorclientoptions?view=azure-dotnet).
+
+#### Diagnostics
+
+- Logging for the core send and receive operations against the Event Hubs service can now be correlated by an `OperationId` in the logs and detail the number of retries attempted for the operation.
+
+#### Bug fixes and foundation
+
+- Surfacing of exceptions has been fixed to consistently preserve the stack trace in cases where it was previously lost.  (A community contribution, courtesy of _[danielmarbach](https://github.com/danielmarbach))_
+
+- An additional level of resilience was added to some corner case scenarios where establishing an AMQP link failed with what may be a transient issue.
+
+- A cleanup sweep was performed to tune small areas to be more efficient and perform fewer allocations.
+
+## 5.1.0
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Alberto De Natale _([GitHub](https://github.com/albertodenatale))_
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
+
+### Changes
+
+#### General availability of preview features
+
+- The set of features from v5.1.0-preview.1 are now generally available.  This includes the `EventProcessor<TPartition>` and `PartitionReceiver` types which focus on advanced application scenarios which require greater low-level control. 
+
+#### Publishing events
+
+- A set of events may now be published without an explicit batch; a batched approach will be used when communicating with the Event Hubs service, with an implicit batch created on the sender's behalf.
+
+#### Bug fixes and foundation
+
+- The transport producers used for sending events to a specific partition are now managed by a pool with sliding expiration to enable more efficient resource use and cleanup.  _(A community contribution, courtesy of [albertodenatale](https://github.com/albertodenatale))_
+	
+- Timing operations have been refactored to make use of a more efficient approach with fewer allocations.  (A community contribution, courtesy of _[danielmarbach](https://github.com/albertodenatale))_
+
+- Fixed a bug with EventDataBatch; it is now thread-safe.
+
+- Minor enhancements to reduce allocations and improve efficiency
 
 ## 5.1.0-preview.1
 
@@ -12,6 +95,8 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - Alberto De Natale _([GitHub](https://github.com/albertodenatale))_
 - Christopher Scott _([GitHub](https://github.com/christothes))_
+
+### Changes
 
 #### Consuming events
 
@@ -29,7 +114,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - Validation for the Event Hubs fully qualified namespace has been improved, allowing for more deterministic failures when creating clients.
 
-- The diagnostic scope for activities will now complete in a more deterministic manner.  (A community contribution, courtesy of [christothes]((https://github.com/christothes)))
+- The diagnostic scope for activities will now complete in a more deterministic manner.  (A community contribution, courtesy of [christothes](https://github.com/christothes))
 
 - Diagnostic activities have been extended with additional information about events being processed and with additional environmental context.
 

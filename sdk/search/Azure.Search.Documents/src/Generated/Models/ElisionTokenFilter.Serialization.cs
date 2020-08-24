@@ -9,14 +9,14 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class ElisionTokenFilter : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Articles != null)
+            if (Optional.IsCollectionDefined(Articles))
             {
                 writer.WritePropertyName("articles");
                 writer.WriteStartArray();
@@ -35,17 +35,13 @@ namespace Azure.Search.Documents.Models
 
         internal static ElisionTokenFilter DeserializeElisionTokenFilter(JsonElement element)
         {
-            IList<string> articles = default;
-            string odatatype = default;
+            Optional<IList<string>> articles = default;
+            string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("articles"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -56,7 +52,7 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    odatatype = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -65,7 +61,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new ElisionTokenFilter(odatatype, name, articles);
+            return new ElisionTokenFilter(odataType, name, Optional.ToList(articles));
         }
     }
 }

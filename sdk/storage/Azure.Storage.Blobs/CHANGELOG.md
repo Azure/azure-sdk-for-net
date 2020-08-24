@@ -1,7 +1,57 @@
 # Release History
 
-## 12.5.0-preview.1 (Unreleased)
+## 12.6.0-preview.1 (Unreleased)
 
+## 12.5.1 (2020-08-18)
+- Bug in TaskExtensions.EnsureCompleted method that causes it to unconditionally throw an exception in the environments with synchronization context
+
+## 12.5.0 (2020-08-13)
+- Includes all features from 12.5.0-preview.1 through 12.5.0-preview.6.
+- Added support for custom local emulator hostname for blob storage endpoints.
+- Fixed bug where BlobContainerClient.SetAccessPolicy() sends DateTimeOffset.MinValue when StartsOn and ExpiresOn when not set in BlobAccessPolicy
+- Added nullable properties, PolicyStartsOn and PolicyExpiresOn to BlobAccessPolicy
+- Added BlockBlobClient.OpenWrite(), AppendBlobClient.OpenWrite(), and PageBlobClient.OpenWrite()
+
+## 12.5.0-preview.6 (2020-07-27)
+- Fixed bug where BlockBlobClient and PageBlobClient would throw NullReferenceExceptions when using Uri constructor.
+- Fixed bug where .WithSnapshot() and .WithVersion() would URL-encode the name of the new clients.
+- Updated BlobSasBuilder to correctly order raw string permissions and make the permissions lowercase.
+- Fixed bug where BlockBlobClient.Query() failed when query response was > ~200 MB.
+- Added BlobBaseClient.OpenRead().
+- Fixed bug where BlockBlobClient.Query() would buffer the query response before parsing the Avro contents.
+
+## 12.5.0-preview.5 (2020-07-03)
+- Added support for service version 2019-12-12.
+- Added support for Blob Tags.
+- Added support for Blob Version.
+- Added support for Object Replication Service.
+- Added support for Append Seal.
+- Added support for Jumbo Blobs.
+- Added support for setting Access Tier on Blob Snapshots and Versions.
+- Added support for BlobServiceProperties.StaticWebsite.DefaultIndexDocumentPath.
+- Added RehydratePriority to BlobProperties and BlobItemProperties.
+- Fixed bug where BlobBaseClient.DownloadTo() was throwing an exception when downloading blobs of size 0.
+- Fixed bug where BlobBaseClient.DownloadTo() was not disposing the network stream.
+- Fixed bug where all BlobModelFactory.BlobProperties() parameters were required.
+- Fixed bug where BlobBaseClient.BlobName was encoded, affecting SAS generation.
+- Fixed bug where AccountType enum was missing BlockBlobStorage and FileStorage
+
+## 12.5.0-preview.4 (2020-06)
+- This preview contains bug fixes to improve quality.
+
+## 12.5.0-preview.1 (2020-06)
+- This preview adds support for client-side encryption, compatible with data uploaded in previous major versions.
+
+## 12.4.4 (2020-06)
+- This release contains bug fixes to improve quality.
+
+## 12.4.3 (2020-06)
+- Fixed bug where copy from URL did not handle non-ASCII characters correctly
+- Fixed bug where download could hang indefinietly on .NET Framework
+
+## 12.4.2 (2020-05)
+- Fixed bug where blob, file and directory names were not URL encoded.
+- Fixed bug where BlobBaseClient.DownloadAsync() could download data incorrectly if intermittent network failure occurs.
 
 ## 12.4.1 (2020-04)
 - Fixed bug where BlobContainerClient.DeleteIfExistsAsync() would throw an exception if hierarchical namespace was enabled, and the underlying container didn't exist.

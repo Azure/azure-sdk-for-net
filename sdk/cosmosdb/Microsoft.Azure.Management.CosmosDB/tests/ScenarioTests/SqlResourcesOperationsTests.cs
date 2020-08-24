@@ -12,10 +12,10 @@ namespace CosmosDB.Tests.ScenarioTests
 {
     public class SqlResourcesOperationsTests
     {
-        const string location = "EAST US";
+        const string location = "EAST US 2";
 
         // using an existing DB account, since Account provisioning takes 10-15 minutes
-        const string resourceGroupName = "CosmosDBResourceGroup822";
+        const string resourceGroupName = "CosmosDBResourceGroup3668";
         const string databaseAccountName = "db9934";
 
         const string databaseName = "databaseName";
@@ -57,9 +57,12 @@ namespace CosmosDB.Tests.ScenarioTests
                     {
                         Location = location,
                         Kind = DatabaseAccountKind.GlobalDocumentDB,
-                        Locations = new List<Location>()
+                        Properties = new DefaultRequestDatabaseAccountCreateUpdateProperties
                         {
-                            {new Location(locationName: location) }
+                            Locations = new List<Location>()
+                            {
+                                {new Location(locationName: location) }
+                            }
                         }
                 };
 
@@ -70,10 +73,7 @@ namespace CosmosDB.Tests.ScenarioTests
                 SqlDatabaseCreateUpdateParameters sqlDatabaseCreateUpdateParameters = new SqlDatabaseCreateUpdateParameters
                 {
                     Resource = new SqlDatabaseResource { Id = databaseName },
-                    Options = new CreateUpdateOptions
-                    {
-                        AdditionalProperties = additionalProperties
-                    }
+                    Options = new CreateUpdateOptions()
                 };
 
                 SqlDatabaseGetResults sqlDatabaseGetResults = cosmosDBManagementClient.SqlResources.CreateUpdateSqlDatabaseWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, sqlDatabaseCreateUpdateParameters).GetAwaiter().GetResult().Body;
@@ -93,7 +93,7 @@ namespace CosmosDB.Tests.ScenarioTests
                     Resource = new SqlDatabaseResource { Id = databaseName2 },
                     Options = new CreateUpdateOptions
                     {
-                        Throughput = sampleThroughput.ToString()
+                        Throughput = sampleThroughput
                     }
                 };
 
@@ -147,7 +147,7 @@ namespace CosmosDB.Tests.ScenarioTests
                     },
                     Options = new CreateUpdateOptions
                     {
-                        Throughput = sampleThroughput.ToString()
+                        Throughput = sampleThroughput
                     }
                 };
 
@@ -167,10 +167,7 @@ namespace CosmosDB.Tests.ScenarioTests
                         "response.setBody('Hello, World');" +
                         "}"
                     },
-                    Options = new CreateUpdateOptions
-                    {
-                        AdditionalProperties = additionalProperties
-                    }
+                    Options = new CreateUpdateOptions()
                 };
 
                 SqlStoredProcedureGetResults sqlStoredProcedureGetResults = cosmosDBManagementClient.SqlResources.CreateUpdateSqlStoredProcedureWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, containerName, storedProcedureName, sqlStoredProcedureCreateUpdateParameters).GetAwaiter().GetResult().Body;
@@ -195,10 +192,7 @@ namespace CosmosDB.Tests.ScenarioTests
                         "response.setBody('Hello, World');" +
                         "}"
                     },
-                    Options = new CreateUpdateOptions
-                    {
-                        AdditionalProperties = additionalProperties
-                    }
+                    Options = new CreateUpdateOptions()
                 };
 
                 SqlUserDefinedFunctionGetResults sqlUserDefinedFunctionGetResults = cosmosDBManagementClient.SqlResources.CreateUpdateSqlUserDefinedFunctionWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, containerName, userDefinedFunctionName, sqlUserDefinedFunctionCreateUpdateParameters).GetAwaiter().GetResult().Body;
@@ -226,10 +220,7 @@ namespace CosmosDB.Tests.ScenarioTests
                         "response.setBody('Hello, World');" +
                         "}"
                     },
-                    Options = new CreateUpdateOptions
-                    {
-                        AdditionalProperties = additionalProperties
-                    }
+                    Options = new CreateUpdateOptions()
                 };
 
                 SqlTriggerGetResults sqlTriggerGetResults = cosmosDBManagementClient.SqlResources.CreateUpdateSqlTriggerWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, containerName, triggerName, sqlTriggerCreateUpdateParameters).GetAwaiter().GetResult().Body;

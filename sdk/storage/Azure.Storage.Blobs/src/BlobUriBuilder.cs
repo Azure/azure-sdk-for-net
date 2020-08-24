@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Net;
 using System.Text;
 using Azure.Core;
 using Azure.Storage.Sas;
+using Azure.Storage.Shared;
 
 namespace Azure.Storage.Blobs
 {
@@ -14,7 +16,9 @@ namespace Azure.Storage.Blobs
     /// modify the contents of a <see cref="System.Uri"/> instance to point to
     /// different Azure Storage resources like an account, container, or blob.
     ///
-    /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/naming-and-referencing-containers--blobs--and-metadata" />.
+    /// For more information, see
+    /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/naming-and-referencing-containers--blobs--and-metadata">
+    /// Naming and Referencing Containers, Blobs, and Metadata</see>.
     /// </summary>
     public class BlobUriBuilder
     {
@@ -26,10 +30,15 @@ namespace Azure.Storage.Blobs
         private Uri _uri;
 
         /// <summary>
-        /// Whether the Uri is an IP Uri as determined by
-        /// <see cref="UriExtensions.IsHostIPEndPointStyle"/>.
+        /// Whether the Uri is a path-style Uri (i.e. it is an IP Uri or the domain includes a port that is used by the local emulator).
         /// </summary>
-        private readonly bool _isIPStyleUri;
+        private readonly bool _isPathStyleUri;
+
+        /// <summary>
+        /// List of ports used for path style addressing.
+        /// Copied from Microsoft.Azure.Storage.Core.Util
+        /// </summary>
+        private static readonly int[] PathStylePorts = { 10000, 10001, 10002, 10003, 10004, 10100, 10101, 10102, 10103, 10104, 11000, 11001, 11002, 11003, 11004, 11100, 11101, 11102, 11103, 11104 };
 
         /// <summary>
         /// Gets or sets the scheme name of the URI.
@@ -109,6 +118,17 @@ namespace Azure.Storage.Blobs
         }
         private string _snapshot;
 
+        /// <summary>
+        /// Gets or sets the name of a blob version.  The value defaults to
+        /// <see cref="string.Empty"/> if not present in the <see cref="System.Uri"/>.
+        /// </summary>
+        public string VersionId
+        {
+            get => _versionId;
+            set { ResetUri(); _versionId = value; }
+        }
+        private string _versionId;
+
         ///// <summary>
         ///// Gets or sets the VersionId.  The value defaults to
         ///// <see cref="String.Empty"/> if not present in the <see cref="Uri"/>.
@@ -162,7 +182,7 @@ namespace Azure.Storage.Blobs
             BlobName = "";
 
             Snapshot = "";
-            //this.VersionId = "";
+            VersionId = "";
             Sas = null;
             Query = "";
 
@@ -173,9 +193,9 @@ namespace Azure.Storage.Blobs
 
                 var startIndex = 0;
 
-                if (uri.IsHostIPEndPointStyle())
+                _isPathStyleUri = uri.IsHostIPEndPointStyle() || PathStylePorts.Contains(uri.Port);
+                if (_isPathStyleUri)
                 {
-                    _isIPStyleUri = true;
                     var accountEndIndex = path.IndexOf("/", StringComparison.InvariantCulture);
 
                     // Slash not found; path has account name & no container name
@@ -204,7 +224,7 @@ namespace Azure.Storage.Blobs
                 else
                 {
                     BlobContainerName = path.Substring(startIndex, containerEndIndex - startIndex); // The container name is the part between the slashes
-                    BlobName = path.Substring(containerEndIndex + 1);   // The blob name is after the container slash
+                    BlobName = path.Substring(containerEndIndex + 1).UnescapePath();   // The blob name is after the container slash
                 }
             }
 
@@ -219,13 +239,18 @@ namespace Azure.Storage.Blobs
                 paramsMap.Remove(Constants.SnapshotParameterName);
             }
 
-            //if(paramsMap.TryGetValue(VersionIdParameterName, out var versionId))
-            //{
-            //    this.VersionId = versionId;
+            if (paramsMap.TryGetValue(Constants.VersionIdParameterName, out var versionId))
+            {
+                VersionId = versionId;
 
-            //    // If we recognized the query parameter, remove it from the map
-            //    paramsMap.Remove(VersionIdParameterName);
-            //}
+                // If we recognized the query parameter, remove it from the map
+                paramsMap.Remove(Constants.VersionIdParameterName);
+            }
+
+            if (!string.IsNullOrEmpty(Snapshot) && !string.IsNullOrEmpty(VersionId))
+            {
+                throw new ArgumentException("Snapshot and VersionId cannot both be set.");
+            }
 
             if (paramsMap.ContainsKey(Constants.Sas.Parameters.Version))
             {
@@ -278,16 +303,16 @@ namespace Azure.Storage.Blobs
             var path = new StringBuilder("");
             // only append the account name to the path for Ip style Uri.
             // regular style Uri will already have account name in domain
-            if (_isIPStyleUri && !string.IsNullOrWhiteSpace(AccountName))
+            if (_isPathStyleUri && !string.IsNullOrWhiteSpace(AccountName))
             {
                 path.Append("/").Append(AccountName);
             }
             if (!string.IsNullOrWhiteSpace(BlobContainerName))
             {
                 path.Append("/").Append(BlobContainerName);
-                if (!String.IsNullOrWhiteSpace(BlobName))
+                if (BlobName != null && BlobName.Length > 0)
                 {
-                    path.Append("/").Append(BlobName);
+                    path.Append("/").Append(Uri.EscapeDataString(BlobName));
                 }
             }
 
@@ -299,11 +324,12 @@ namespace Azure.Storage.Blobs
                 { query.Append("&"); }
                 query.Append(Constants.SnapshotParameterName).Append("=").Append(Snapshot);
             }
-            //if (!String.IsNullOrWhiteSpace(this.VersionId))
-            //{
-            //    if (query.Length > 0) { query += "&"; }
-            //    query.Append(VersionIdParameterName).Append("=").Append(this.VersionId);
-            //}
+            if (!string.IsNullOrWhiteSpace(VersionId))
+            {
+                if (query.Length > 0)
+                { query.Append("&"); }
+                query.Append(Constants.VersionIdParameterName).Append("=").Append(VersionId);
+            }
             var sas = Sas?.ToString();
             if (!string.IsNullOrWhiteSpace(sas))
             {

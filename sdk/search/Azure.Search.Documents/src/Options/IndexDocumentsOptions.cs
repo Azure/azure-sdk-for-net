@@ -6,9 +6,9 @@ using System;
 namespace Azure.Search.Documents
 {
     /// <summary>
-    /// Options for <see cref="SearchIndexClient.IndexDocumentsAsync(Models.IndexDocumentsBatch{Models.SearchDocument}, IndexDocumentsOptions, System.Threading.CancellationToken)"/>.
+    /// Options for <see cref="SearchClient.IndexDocumentsAsync{T}(Models.IndexDocumentsBatch{T}, IndexDocumentsOptions, System.Threading.CancellationToken)"/>.
     /// </summary>
-    public class IndexDocumentsOptions : SearchRequestOptions
+    public class IndexDocumentsOptions
     {
         /// <summary>
         /// Gets or sets a value indicating whether to throw an exception on

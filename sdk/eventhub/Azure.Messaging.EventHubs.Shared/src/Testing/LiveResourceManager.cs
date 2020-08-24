@@ -62,7 +62,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                   string resourceGroupName,
                                                                   string subscriptionId)
         {
-            using (var client = new ResourceManagementClient(new TokenCredentials(accessToken)) { SubscriptionId = subscriptionId })
+            using (var client = new ResourceManagementClient(new Uri(EventHubsTestEnvironment.Instance.ResourceManagerUrl), new TokenCredentials(accessToken)) { SubscriptionId = subscriptionId })
             {
                 ResourceGroup resourceGroup = await CreateRetryPolicy<ResourceGroup>().ExecuteAsync(() => client.ResourceGroups.GetAsync(resourceGroupName)).ConfigureAwait(false);
                 return resourceGroup.Location;
@@ -86,9 +86,9 @@ namespace Azure.Messaging.EventHubs.Tests
 
             if ((token == null) || (token.ExpiresOn <= DateTimeOffset.UtcNow.Add(CredentialRefreshBuffer)))
             {
-                var credential = new ClientCredential(TestEnvironment.EventHubsClient, TestEnvironment.EventHubsSecret);
-                var context = new AuthenticationContext($"https://login.windows.net/{ TestEnvironment.EventHubsTenant }");
-                AuthenticationResult result = await context.AcquireTokenAsync("https://management.core.windows.net/", credential).ConfigureAwait(false);
+                var credential = new ClientCredential(EventHubsTestEnvironment.Instance.ClientId, EventHubsTestEnvironment.Instance.ClientSecret);
+                var context = new AuthenticationContext($"{ EventHubsTestEnvironment.Instance.AuthorityHostUrl }{ EventHubsTestEnvironment.Instance.TenantId }");
+                var result = await context.AcquireTokenAsync(EventHubsTestEnvironment.Instance.ServiceManagementUrl, credential).ConfigureAwait(false);
 
                 if ((string.IsNullOrEmpty(result?.AccessToken)))
                 {

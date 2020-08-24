@@ -1,40 +1,41 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-amyysbpg.search.windows.net/indexes(\u0027gerhvwda\u0027)/docs/search.post.search?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-pakrysearch.search.windows.net/indexes(\u0027aypqybvw\u0027)/docs/search.post.search?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "Content-Length": "74",
+        "Content-Length": "39",
         "Content-Type": "application/json",
-        "traceparent": "00-ac7725ba9f982c4f9edb74992e17ddbb-80518801d18d2d4e-00",
+        "traceparent": "00-5ea0d6dddae5284990b9c2d891f385e8-e7d8a8d7d64e6345-00",
         "User-Agent": [
-          "azsdk-net-Search/11.0.0-dev.20200311.1",
-          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Search.Documents/11.1.0-dev.20200717.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "bf8cc4a405e089e0f690d708880c3947",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "facets": [],
         "queryType": "full",
-        "scoringParameters": [],
         "search": "/.*/.*/"
       },
       "StatusCode": 400,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
+        "client-request-id": "bf8cc4a4-05e0-89e0-f690-d708880c3947",
         "Content-Language": "en",
         "Content-Length": "148",
-        "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Wed, 11 Mar 2020 18:39:36 GMT",
-        "elapsed-time": "27",
+        "Content-Type": "application/json; odata.metadata=none",
+        "Date": "Fri, 17 Jul 2020 20:28:12 GMT",
+        "elapsed-time": "18",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
         "request-id": "bf8cc4a4-05e0-89e0-f690-d708880c3947",
-        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "bf8cc4a4-05e0-89e0-f690-d708880c3947"
       },
       "ResponseBody": {
         "error": {
@@ -46,7 +47,8 @@
   ],
   "Variables": {
     "RandomSeed": "1564667618",
-    "SearchIndexName": "gerhvwda",
-    "SearchServiceName": "azs-net-amyysbpg"
+    "SearchIndexName": "aypqybvw",
+    "SEARCH_QUERY_API_KEY": "Sanitized",
+    "SEARCH_SERVICE_NAME": "azs-net-pakrysearch"
   }
 }

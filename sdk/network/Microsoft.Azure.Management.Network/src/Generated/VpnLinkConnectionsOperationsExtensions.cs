@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Network
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name of the VpnGateway.
+            /// The resource group name of the vpn gateway.
             /// </param>
             /// <param name='gatewayName'>
             /// The name of the gateway.
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Network
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name of the VpnGateway.
+            /// The resource group name of the vpn gateway.
             /// </param>
             /// <param name='gatewayName'>
             /// The name of the gateway.

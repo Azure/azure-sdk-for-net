@@ -49,8 +49,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             await using (EventHubScope eventHubScope = await EventHubScope.CreateAsync(2))
             await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
-                var eventHubsConnectionString = TestEnvironment.EventHubsConnectionString;
-                var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
+                var eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+                var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
 
                 Assert.That(async () => await sample.RunAsync(eventHubsConnectionString, eventHubScope.EventHubName, storageConnectionString, storageScope.ContainerName), Throws.Nothing);
             }

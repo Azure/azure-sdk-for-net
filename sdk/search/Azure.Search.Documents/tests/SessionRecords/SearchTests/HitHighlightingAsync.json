@@ -1,95 +1,51 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-knxpatht.search.windows.net/indexes(\u0027etamstct\u0027)/docs/search.post.search?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-pakrysearch.search.windows.net/indexes(\u0027aypqybvw\u0027)/docs/search.post.search?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "Content-Length": "188",
+        "Content-Length": "153",
         "Content-Type": "application/json",
-        "traceparent": "00-9af91eece5ecca4c92724019b596b22a-2cb583d39f8fd843-00",
+        "traceparent": "00-01a220b7ac1bc841977a97dd70996a2c-cbc751ee7f85924e-00",
         "User-Agent": [
-          "azsdk-net-Search/11.0.0-dev.20200311.1",
-          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Search.Documents/11.1.0-dev.20200717.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "72baba7db5f6ee4f1f027196fc81deab",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "facets": [],
         "filter": "rating eq 5",
         "highlight": "description,category",
         "highlightPostTag": "\u003C/b\u003E",
         "highlightPreTag": "\u003Cb\u003E",
-        "scoringParameters": [],
         "search": "luxury hotel"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1257",
-        "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Wed, 11 Mar 2020 19:45:49 GMT",
-        "elapsed-time": "9",
+        "client-request-id": "72baba7d-b5f6-ee4f-1f02-7196fc81deab",
+        "Content-Length": "1156",
+        "Content-Type": "application/json; odata.metadata=none",
+        "Date": "Fri, 17 Jul 2020 20:26:43 GMT",
+        "elapsed-time": "10",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
         "request-id": "72baba7d-b5f6-ee4f-1f02-7196fc81deab",
-        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "72baba7d-b5f6-ee4f-1f02-7196fc81deab"
       },
-      "ResponseBody": {
-        "@odata.context": "https://azs-net-knxpatht.search.windows.net/indexes(\u0027etamstct\u0027)/$metadata#docs(*)",
-        "value": [
-          {
-            "@search.score": 0.6247139,
-            "@search.highlights": {
-              "category": [
-                "\u003Cb\u003ELuxury\u003C/b\u003E"
-              ],
-              "description": [
-                "Best \u003Cb\u003Ehotel\u003C/b\u003E in town if you like \u003Cb\u003Eluxury\u003C/b\u003E \u003Cb\u003Ehotels\u003C/b\u003E.",
-                "We highly recommend this \u003Cb\u003Ehotel\u003C/b\u003E."
-              ]
-            },
-            "hotelId": "1",
-            "hotelName": "Fancy Stay",
-            "description": "Best hotel in town if you like luxury hotels. They have an amazing infinity pool, a spa, and a really helpful concierge. The location is perfect -- right downtown, close to all the tourist attractions. We highly recommend this hotel.",
-            "descriptionFr": "Meilleur h\u00F4tel en ville si vous aimez les h\u00F4tels de luxe. Ils ont une magnifique piscine \u00E0 d\u00E9bordement, un spa et un concierge tr\u00E8s utile. L\u0027emplacement est parfait \u2013 en plein centre, \u00E0 proximit\u00E9 de toutes les attractions touristiques. Nous recommandons fortement cet h\u00F4tel.",
-            "category": "Luxury",
-            "tags": [
-              "pool",
-              "view",
-              "wifi",
-              "concierge"
-            ],
-            "parkingIncluded": false,
-            "smokingAllowed": false,
-            "lastRenovationDate": "2010-06-27T00:00:00Z",
-            "rating": 5,
-            "location": {
-              "type": "Point",
-              "coordinates": [
-                -122.131577,
-                47.678581
-              ],
-              "crs": {
-                "type": "name",
-                "properties": {
-                  "name": "EPSG:4326"
-                }
-              }
-            },
-            "address": null,
-            "rooms": []
-          }
-        ]
-      }
+      "ResponseBody": "{\u0022value\u0022:[{\u0022@search.score\u0022:3.8240385,\u0022@search.highlights\u0022:{\u0022category\u0022:[\u0022\u003Cb\u003ELuxury\u003C/b\u003E\u0022],\u0022description\u0022:[\u0022Best \u003Cb\u003Ehotel\u003C/b\u003E in town if you like \u003Cb\u003Eluxury\u003C/b\u003E \u003Cb\u003Ehotels\u003C/b\u003E.\u0022,\u0022We highly recommend this \u003Cb\u003Ehotel\u003C/b\u003E.\u0022]},\u0022hotelId\u0022:\u00221\u0022,\u0022hotelName\u0022:\u0022Fancy Stay\u0022,\u0022description\u0022:\u0022Best hotel in town if you like luxury hotels. They have an amazing infinity pool, a spa, and a really helpful concierge. The location is perfect -- right downtown, close to all the tourist attractions. We highly recommend this hotel.\u0022,\u0022descriptionFr\u0022:\u0022Meilleur h\\u00f4tel en ville si vous aimez les h\\u00f4tels de luxe. Ils ont une magnifique piscine \\u00e0 d\\u00e9bordement, un spa et un concierge tr\\u00e8s utile. L\u0027emplacement est parfait \\u2013 en plein centre, \\u00e0 proximit\\u00e9 de toutes les attractions touristiques. Nous recommandons fortement cet h\\u00f4tel.\u0022,\u0022category\u0022:\u0022Luxury\u0022,\u0022tags\u0022:[\u0022pool\u0022,\u0022view\u0022,\u0022wifi\u0022,\u0022concierge\u0022],\u0022parkingIncluded\u0022:false,\u0022smokingAllowed\u0022:false,\u0022lastRenovationDate\u0022:\u00222010-06-27T00:00:00Z\u0022,\u0022rating\u0022:5,\u0022location\u0022:{\u0022type\u0022:\u0022Point\u0022,\u0022coordinates\u0022:[-122.131577,47.678581],\u0022crs\u0022:{\u0022type\u0022:\u0022name\u0022,\u0022properties\u0022:{\u0022name\u0022:\u0022EPSG:4326\u0022}}},\u0022address\u0022:null,\u0022rooms\u0022:[]}]}"
     }
   ],
   "Variables": {
     "RandomSeed": "1321798646",
-    "SearchIndexName": "etamstct",
-    "SearchServiceName": "azs-net-knxpatht"
+    "SearchIndexName": "aypqybvw",
+    "SEARCH_QUERY_API_KEY": "Sanitized",
+    "SEARCH_SERVICE_NAME": "azs-net-pakrysearch"
   }
 }

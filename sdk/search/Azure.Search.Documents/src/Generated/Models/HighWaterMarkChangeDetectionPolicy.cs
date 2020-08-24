@@ -7,13 +7,14 @@
 
 using System;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines a data change detection policy that captures changes based on the value of a high water mark column. </summary>
     public partial class HighWaterMarkChangeDetectionPolicy : DataChangeDetectionPolicy
     {
         /// <summary> Initializes a new instance of HighWaterMarkChangeDetectionPolicy. </summary>
         /// <param name="highWaterMarkColumnName"> The name of the high water mark column. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="highWaterMarkColumnName"/> is null. </exception>
         public HighWaterMarkChangeDetectionPolicy(string highWaterMarkColumnName)
         {
             if (highWaterMarkColumnName == null)
@@ -35,6 +36,6 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The name of the high water mark column. </summary>
-        public string HighWaterMarkColumnName { get; }
+        public string HighWaterMarkColumnName { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -16,8 +16,8 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public void ExtractKeyPhrasesBatch()
         {
-            string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
 
             // Instantiate a client that will be used to call the service.
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
@@ -54,7 +54,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
                 if (result.HasError)
                 {
-                    Debug.WriteLine($"    Document error: {result.Error.Code}.");
+                    Debug.WriteLine($"    Document error: {result.Error.ErrorCode}.");
                     Debug.WriteLine($"    Message: {result.Error.Message}.");
                 }
                 else
@@ -67,7 +67,7 @@ namespace Azure.AI.TextAnalytics.Samples
                     }
 
                     Debug.WriteLine($"    Document statistics:");
-                    Debug.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.GraphemeCount}");
+                    Debug.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.CharacterCount}");
                     Debug.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
                     Debug.WriteLine("");
                 }

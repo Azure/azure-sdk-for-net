@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
     /// <summary>
     /// The types of conditions for a multi resource alert.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("MultiMetricCriteria")]
     public partial class MultiMetricCriteria
     {
         /// <summary>

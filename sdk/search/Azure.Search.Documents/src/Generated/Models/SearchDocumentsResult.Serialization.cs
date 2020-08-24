@@ -16,38 +16,26 @@ namespace Azure.Search.Documents.Models
     {
         internal static SearchDocumentsResult DeserializeSearchDocumentsResult(JsonElement element)
         {
-            long? odatacount = default;
-            double? searchcoverage = default;
-            IReadOnlyDictionary<string, IList<FacetResult>> searchfacets = default;
-            SearchOptions searchnextPageParameters = default;
+            Optional<long> odataCount = default;
+            Optional<double> searchCoverage = default;
+            Optional<IReadOnlyDictionary<string, IList<FacetResult>>> searchFacets = default;
+            Optional<SearchOptions> searchNextPageParameters = default;
             IReadOnlyList<SearchResult> value = default;
-            string odatanextLink = default;
+            Optional<string> odataNextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.count"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    odatacount = property.Value.GetInt64();
+                    odataCount = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("@search.coverage"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    searchcoverage = property.Value.GetDouble();
+                    searchCoverage = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("@search.facets"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, IList<FacetResult>> dictionary = new Dictionary<string, IList<FacetResult>>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -58,16 +46,12 @@ namespace Azure.Search.Documents.Models
                         }
                         dictionary.Add(property0.Name, array);
                     }
-                    searchfacets = dictionary;
+                    searchFacets = dictionary;
                     continue;
                 }
                 if (property.NameEquals("@search.nextPageParameters"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    searchnextPageParameters = SearchOptions.DeserializeSearchOptions(property.Value);
+                    searchNextPageParameters = SearchOptions.DeserializeSearchOptions(property.Value);
                     continue;
                 }
                 if (property.NameEquals("value"))
@@ -82,15 +66,11 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("@odata.nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    odatanextLink = property.Value.GetString();
+                    odataNextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new SearchDocumentsResult(odatacount, searchcoverage, searchfacets, searchnextPageParameters, value, odatanextLink);
+            return new SearchDocumentsResult(Optional.ToNullable(odataCount), Optional.ToNullable(searchCoverage), Optional.ToDictionary(searchFacets), searchNextPageParameters.Value, value, odataNextLink.Value);
         }
     }
 }

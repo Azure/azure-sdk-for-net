@@ -199,5 +199,65 @@ namespace Microsoft.Azure.Management.Synapse
         /// </summary>
         IWorkspaceManagedIdentitySqlControlSettingsOperations WorkspaceManagedIdentitySqlControlSettings { get; }
 
+        /// <summary>
+        /// Gets the IIntegrationRuntimesOperations.
+        /// </summary>
+        IIntegrationRuntimesOperations IntegrationRuntimes { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeNodeIpAddressOperations.
+        /// </summary>
+        IIntegrationRuntimeNodeIpAddressOperations IntegrationRuntimeNodeIpAddress { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeObjectMetadataOperations.
+        /// </summary>
+        IIntegrationRuntimeObjectMetadataOperations IntegrationRuntimeObjectMetadata { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeNodesOperations.
+        /// </summary>
+        IIntegrationRuntimeNodesOperations IntegrationRuntimeNodes { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeCredentialsOperations.
+        /// </summary>
+        IIntegrationRuntimeCredentialsOperations IntegrationRuntimeCredentials { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeConnectionInfosOperations.
+        /// </summary>
+        IIntegrationRuntimeConnectionInfosOperations IntegrationRuntimeConnectionInfos { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeAuthKeysOperations.
+        /// </summary>
+        IIntegrationRuntimeAuthKeysOperations IntegrationRuntimeAuthKeys { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeMonitoringDataOperations.
+        /// </summary>
+        IIntegrationRuntimeMonitoringDataOperations IntegrationRuntimeMonitoringData { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeStatusOperations.
+        /// </summary>
+        IIntegrationRuntimeStatusOperations IntegrationRuntimeStatus { get; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        IPrivateLinkResourcesOperations PrivateLinkResources { get; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkHubsOperations.
+        /// </summary>
+        IPrivateLinkHubsOperations PrivateLinkHubs { get; }
+
     }
 }

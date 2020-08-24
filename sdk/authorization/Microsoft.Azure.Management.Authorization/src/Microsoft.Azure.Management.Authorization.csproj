@@ -6,13 +6,13 @@
 	<PropertyGroup>
 		<Description>Provides capabilities to query Microsoft Azure Management Authorization.</Description>
 		<AssemblyTitle>Authorization Library for Microsoft Azure Management Authorization</AssemblyTitle>
-		<Version>2.11.0-preview</Version>
+		<Version>2.12.0-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.Authorization</AssemblyName>
 		<PackageId>Microsoft.Azure.Management.Authorization</PackageId>
 		<PackageTags>Microsoft Azure Management;Authorization;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-			This is a public preview release of the Azure Authorization SDK. This release removes RoleAssignmentProperties, RoleDefinitionProperties, and ClassicAdministratorProperties, and adds PrincipalType to RA Properties.
+			This is a public preview release of the Azure Authorization SDK. This release adds properties to RoleAssignments and related methods
 			]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

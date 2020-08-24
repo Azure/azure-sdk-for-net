@@ -1,7 +1,12 @@
 # Release History
+## 4.1.4 (2020-08-05)
+- Setting sessionId to be same as partition key and adding validation
 
-## 4.2.0-preview.1 (Unreleased)
-
+## 4.1.3 (2020-04-17)
+- Add `GetQueuesRuntimeInfoAsync`, `GetTopicsRuntimeInfoAsync` and `GetSubscriptionsRuntimeInfoAsync` to `ManagementClient` to allow retrieval of batched entity runtime information. [PR 10261](https://github.com/Azure/azure-sdk-for-net/pull/10261)
+- Increase version range allowed for `System.IdentityModel.Tokens.Jwt` [PR 10885](https://github.com/Azure/azure-sdk-for-net/pull/10885)
+- Improved XML API-documentation [PR 11028](https://github.com/Azure/azure-sdk-for-net/pull/11028)
+- Bugfix - `ForwardTo` should not error on 260 character name [PR 11059](https://github.com/Azure/azure-sdk-for-net/pull/11059)
 
 ## 4.1.2
 - Same as version 4.1.1 but has pdb symbols published

@@ -5,6 +5,8 @@
     <IncludeTests Condition="'$(IncludeTests)' == ''">true</IncludeTests>
     <IncludeSrc Condition="'$(IncludeSrc)' == ''">true</IncludeSrc>
     <IncludeSamples Condition="'$(IncludeSamples)' == ''">true</IncludeSamples>
+    <IncludeSamplesApplications Condition="'$(IncludeSamplesApplications)' == ''">true</IncludeSamplesApplications>
+    <IncludeSamplesApplications Condition="'$(ServiceDirectory)' != '*' or '$(IncludeSamples)' == 'false'">false</IncludeSamplesApplications>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,7 +17,7 @@
     <SrcProjects Include="..\sdk\$(ServiceDirectory)\**\*.csproj" Exclude="@(TestProjects);@(SamplesProjects)"/>
     <ProjectReference Include="@(TestProjects)" Exclude="@(ExcludeMgmtLib)" Condition="'$(IncludeTests)' == 'true'" />
     <ProjectReference Include="@(SamplesProjects)" Exclude="@(ExcludeMgmtLib)" Condition="'$(IncludeSamples)' == 'true'" />
-    <ProjectReference Include="@(SampleApplications)" Exclude="@(ExcludeMgmtLib)" Condition="'$(IncludeSamples)' == 'true'"/>
+    <ProjectReference Include="@(SampleApplications)" Exclude="@(ExcludeMgmtLib)" Condition="'$(IncludeSamplesApplications)' == 'true'"/>
     <ProjectReference Include="@(SrcProjects)" Exclude="@(ExcludeMgmtLib)" Condition="'$(IncludeSrc)' == 'true'" />
   </ItemGroup>
 
@@ -34,5 +36,4 @@
              SkipNonexistentProjects="false"
              SkipNonexistentTargets="true" />
   </Target>
-
 </Project>

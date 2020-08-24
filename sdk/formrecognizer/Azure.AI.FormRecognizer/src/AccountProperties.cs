@@ -1,26 +1,41 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
+using Azure.AI.FormRecognizer.Models;
 
 namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
+    /// Contains general information about a Cognitive Services Account, such as the number
+    /// of models and account limits.
     /// </summary>
     public class AccountProperties
     {
-        internal AccountProperties(ModelsSummary_internal summary)
+        internal AccountProperties(ModelsSummary summary)
         {
             CustomModelCount = summary.Count;
             CustomModelLimit = summary.Limit;
-            LastUpdatedOn = summary.LastUpdatedDateTime;
         }
 
-        /// <summary> Current count of trained custom models. </summary>
-        public int CustomModelCount { get; internal set; }
-        /// <summary> Max number of models that can be trained for this subscription. </summary>
-        public int CustomModelLimit { get; internal set; }
-        /// <summary> Date and time (UTC) when the summary was last updated. </summary>
-        internal DateTimeOffset LastUpdatedOn { get; set; }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AccountProperties"/> class.
+        /// </summary>
+        /// <param name="customModelCount">The current count of trained custom models.</param>
+        /// <param name="customModelLimit">The maximum number of models that can be trained for this subscription.</param>
+        internal AccountProperties(int customModelCount, int customModelLimit)
+        {
+            CustomModelCount = customModelCount;
+            CustomModelLimit = customModelLimit;
+        }
+
+        /// <summary>
+        /// The current count of trained custom models.
+        /// </summary>
+        public int CustomModelCount { get; }
+
+        /// <summary>
+        /// The maximum number of models that can be trained for this subscription.
+        /// </summary>
+        public int CustomModelLimit { get; }
     }
 }

@@ -1,0 +1,155 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "baseName": {
+      "type": "string",
+      "minLength": 6,
+      "maxLength": 50,
+      "defaultValue": "[resourceGroup().name]",
+      "metadata": {
+        "description": "The base resource name."
+      }
+    },
+    "testApplicationOid": {
+      "type": "string",
+      "metadata": {
+        "description": "The client OID to grant access to test resources."
+      }
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "The location of the resource. By default, this is the same as the resource group."
+      }
+    }
+  },
+  "variables": {
+    "digitalTwinInstanceResourceId": "[resourceId('Microsoft.DigitalTwins/digitalTwinsInstances', parameters('baseName'))]",
+    "namespaceResourceId": "[resourceId('Microsoft.EventHub/namespaces', parameters('baseName'))]",
+    "eventHubResourceId": "[resourceId('Microsoft.EventHub/namespaces/eventhubs', parameters('baseName'), parameters('baseName'))]",
+    "eventHubAuthorizationResourceId": "[resourceId('Microsoft.EventHub/namespaces/eventhubs/authorizationRules', parameters('baseName'), parameters('baseName'), 'owner')]",
+    "rbacOwnerRoleDefinitionId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', '8e3af657-a8ff-443c-a75c-2fe8c4bcb635')]",
+    "AdtOwnerRoleDefinitionId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', 'bcd981a7-7f74-457b-83e1-cceb9e632ffe')]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Authorization/roleAssignments",
+      "apiVersion": "2018-09-01-preview",
+      "name": "[guid(resourceGroup().id)]",
+      "properties": {
+        "roleDefinitionId": "[variables('rbacOwnerRoleDefinitionId')]",
+        "principalId": "[parameters('testApplicationOid')]"
+      }
+    },
+    {
+      "type": "Microsoft.DigitalTwins/digitalTwinsInstances",
+      "apiVersion": "2020-03-01-preview",
+      "name": "[parameters('baseName')]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "S1"
+      },
+      "properties": {}
+    },
+    {
+      "type": "Microsoft.DigitalTwins/digitalTwinsInstances/providers/roleAssignments",
+      "apiVersion": "2020-03-01-preview",
+      "name": "[concat(parameters('baseName'),'/Microsoft.Authorization/', guid(uniqueString(parameters('baseName'))))]",
+      "properties": {
+        "roleDefinitionId": "[variables('AdtOwnerRoleDefinitionId')]",
+        "principalId": "[parameters('testApplicationOid')]"
+      },
+      "dependsOn": [
+        "[variables('digitalTwinInstanceResourceId')]"
+      ]
+    },
+    {
+      "type": "Microsoft.EventHub/namespaces",
+      "apiVersion": "2018-01-01-preview",
+      "name": "[parameters('baseName')]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "Standard",
+        "tier": "Standard",
+        "capacity": 1
+      },
+      "properties": {
+        "zoneRedundant": false,
+        "isAutoInflateEnabled": false,
+        "maximumThroughputUnits": 0,
+        "kafkaEnabled": true
+      }
+    },
+    {
+      "type": "Microsoft.EventHub/namespaces/eventhubs",
+      "apiVersion": "2017-04-01",
+      "name": "[concat(parameters('baseName'), '/', parameters('baseName'))]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[variables('namespaceResourceId')]"
+      ],
+      "properties": {
+        "messageRetentionInDays": 7,
+        "partitionCount": 4,
+        "status": "Active"
+      }
+    },
+    {
+      "type": "Microsoft.EventHub/namespaces/AuthorizationRules",
+      "apiVersion": "2017-04-01",
+      "name": "[concat(parameters('baseName'), '/RootManageSharedAccessKey')]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[variables('namespaceResourceId')]"
+      ],
+      "properties": {
+        "rights": [
+          "Listen",
+          "Manage",
+          "Send"
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.EventHub/namespaces/eventhubs/authorizationRules",
+      "apiVersion": "2017-04-01",
+      "name": "[concat(parameters('baseName'), '/', parameters('baseName'), '/owner')]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[variables('namespaceResourceId')]",
+        "[variables('eventHubResourceId')]"
+      ],
+      "properties": {
+        "rights": [
+          "Manage",
+          "Send",
+          "Listen"
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.DigitalTwins/digitalTwinsInstances/endpoints",
+      "apiVersion": "2020-03-01-preview",
+      "name": "[concat(parameters('baseName'), '/someEventHubEndpoint')]",
+      "dependsOn": [
+        "[variables('digitalTwinInstanceResourceId')]",
+        "[variables('namespaceResourceId')]",
+        "[variables('eventHubResourceId')]",
+        "[variables('eventHubAuthorizationResourceId')]"
+      ],
+      "properties": {
+        "endpointType": "EventHub",
+        "connectionString-PrimaryKey": "[listKeys(variables('eventHubAuthorizationResourceId'),'2017-04-01').primaryConnectionString]",
+        "connectionString-SecondaryKey": "[listKeys(variables('eventHubAuthorizationResourceId'),'2017-04-01').secondaryConnectionString]"
+      }
+    }
+  ],
+  "outputs": {
+    "DIGITALTWINS_URL": {
+      "type": "string",
+      "value": "[concat('https://', reference(variables('digitalTwinInstanceResourceId'), '2020-03-01-preview').hostName)]"
+    }
+  }
+}

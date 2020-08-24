@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Utilities
         /// <summary>
         /// Default region for resource group.
         /// </summary>
-        public const string DefaultRegion = "eastus";
+        public const string DefaultRegion = "centraluseuap";
 
         /// <summary>
         /// Default API version of storage cache client.

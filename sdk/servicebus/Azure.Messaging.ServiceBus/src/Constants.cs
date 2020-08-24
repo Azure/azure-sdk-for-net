@@ -17,7 +17,7 @@ namespace Azure.Messaging.ServiceBus
 
         public const int RuleNameMaximumLength = 50;
 
-        public const int MaximumSqlFilterStatementLength = 1024;
+        public const int MaximumSqlRuleFilterStatementLength = 1024;
 
         public const int MaximumSqlRuleActionStatementLength = 1024;
 
@@ -25,7 +25,7 @@ namespace Azure.Messaging.ServiceBus
 
         public const int MaxDeadLetterReasonLength = 4096;
 
-        public static readonly long DefaultLastPeekedSequenceNumber = 0;
+        public const long DefaultLastPeekedSequenceNumber = 0;
 
         public static readonly TimeSpan DefaultOperationTimeout = TimeSpan.FromMinutes(1);
 
@@ -47,5 +47,7 @@ namespace Azure.Messaging.ServiceBus
         public static readonly DateTime EpochTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
 
         public const int WellKnownPublicPortsLimit = 1023;
+
+        public const string DefaultScope = "https://servicebus.azure.net/.default";
     }
 }

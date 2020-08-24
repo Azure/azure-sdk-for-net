@@ -23,17 +23,18 @@ namespace Azure.Identity
         internal const string NoMatchingAccountsInCacheMessage = "SharedTokenCacheCredential authentication unavailable. No account matching the specified{0}{1} was found in the cache.";
         internal const string MultipleMatchingAccountsInCacheMessage = "SharedTokenCacheCredential authentication unavailable. Multiple accounts matching the specified{0}{1} were found in the cache.";
 
+        private static readonly ITokenCacheOptions s_DefaultCacheOptions = new SharedTokenCacheCredentialOptions();
         private readonly MsalPublicClient _client;
         private readonly CredentialPipeline _pipeline;
         private readonly string _tenantId;
         private readonly string _username;
+        private readonly AuthenticationRecord _record;
         private readonly Lazy<Task<IAccount>> _account;
-
         /// <summary>
         /// Creates a new <see cref="SharedTokenCacheCredential"/> which will authenticate users signed in through developer tools supporting Azure single sign on.
         /// </summary>
         public SharedTokenCacheCredential()
-            : this(null, null, CredentialPipeline.GetInstance(null))
+            : this(null, null, null, null, null)
         {
 
         }
@@ -43,7 +44,7 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="options">The client options for the newly created <see cref="SharedTokenCacheCredential"/></param>
         public SharedTokenCacheCredential(SharedTokenCacheCredentialOptions options)
-            : this(options?.TenantId, options?.Username, CredentialPipeline.GetInstance(options))
+            : this(options?.TenantId, options?.Username, options, null, null)
         {
         }
 
@@ -53,24 +54,26 @@ namespace Azure.Identity
         /// <param name="username">The username of the user to authenticate</param>
         /// <param name="options">The client options for the newly created <see cref="SharedTokenCacheCredential"/></param>
         public SharedTokenCacheCredential(string username, TokenCredentialOptions options = default)
-            : this(tenantId: null, username: username, pipeline: CredentialPipeline.GetInstance(options))
+            : this(null, username, options, null, null)
         {
         }
 
-        internal SharedTokenCacheCredential(string tenantId, string username, CredentialPipeline pipeline)
-            : this(tenantId: tenantId, username: username, pipeline: pipeline, client: pipeline.CreateMsalPublicClient(Constants.DeveloperSignOnClientId, tenantId: tenantId, attachSharedCache: true))
+        internal SharedTokenCacheCredential(string tenantId, string username, TokenCredentialOptions options, CredentialPipeline pipeline)
+            : this(tenantId, username, options, pipeline, null)
         {
         }
 
-        internal SharedTokenCacheCredential(string tenantId, string username, CredentialPipeline pipeline, MsalPublicClient client)
+        internal SharedTokenCacheCredential(string tenantId, string username, TokenCredentialOptions options, CredentialPipeline pipeline, MsalPublicClient client)
         {
             _tenantId = tenantId;
 
             _username = username;
 
-            _pipeline = pipeline;
+            _record = (options as SharedTokenCacheCredentialOptions)?.AuthenticationRecord;
 
-            _client = client;
+            _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
+
+            _client = client ?? new MsalPublicClient(_pipeline, tenantId, Constants.DeveloperSignOnClientId, null, (options as ITokenCacheOptions) ?? s_DefaultCacheOptions);
 
             _account = new Lazy<Task<IAccount>>(GetAccountAsync);
         }
@@ -116,24 +119,31 @@ namespace Azure.Identity
             }
             catch (MsalUiRequiredException)
             {
-                throw scope.Failed(new CredentialUnavailableException($"{nameof(SharedTokenCacheCredential)} authentication unavailable. Token acquisition failed for user {_username}. Ensure that you have authenticated with a developer tool that supports Azure single sign on."));
-            }
-            catch (OperationCanceledException e)
-            {
-                scope.Failed(e);
-                throw;
+                throw scope.FailWrapAndThrow(new CredentialUnavailableException($"{nameof(SharedTokenCacheCredential)} authentication unavailable. Token acquisition failed for user {_username}. Ensure that you have authenticated with a developer tool that supports Azure single sign on."));
             }
             catch (Exception e)
             {
-                throw scope.FailAndWrap(e);
+                throw scope.FailWrapAndThrow(e);
             }
         }
 
         private async Task<IAccount> GetAccountAsync()
         {
+            if (_record != null)
+            {
+                return new AuthenticationAccount(_record);
+            }
+
             List<IAccount> accounts = (await _client.GetAccountsAsync().ConfigureAwait(false)).ToList();
 
-            List<IAccount> filteredAccounts = accounts.Where(a => (string.IsNullOrEmpty(_username) || a.Username == _username) && (string.IsNullOrEmpty(_tenantId) || a.HomeAccountId?.TenantId == _tenantId)).ToList();
+            // filter the accounts to those matching the specified user and tenant
+            List<IAccount> filteredAccounts = accounts.Where(a =>
+                // if _username is specified it must match the account
+                (string.IsNullOrEmpty(_username) || string.Compare(a.Username, _username, StringComparison.OrdinalIgnoreCase) == 0)
+                &&
+                //if _tenantId is specified it must match the account
+                (string.IsNullOrEmpty(_tenantId) || string.Compare(a.HomeAccountId?.TenantId, _tenantId, StringComparison.OrdinalIgnoreCase) == 0)
+            ).ToList();
 
             if (filteredAccounts.Count != 1)
             {

@@ -1,11 +1,43 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 4.11.0
+###  Feature Additions
+- Added support for Trigger Run Cancel API
+- Added column delimiter for SAP Table/open hub
+- Added azureCloudType for Aad Auth
+- Added snapshot to Azure File Storage linked service
+- Support HDFS for delete activity and deleteFilesAfterCompletion feature in copy activity
+- Added support for managed Virtual Network and managed private endpoint CRUD APIs
+- Added Support for Query EC List API
+- Added more options on XML and CosmosDbSqlApi copy source
+- Fix bug: Added AzureFileStorageWriteSettings
+
+## Version 4.10.0
+###  Feature Additions
+- Added connectionProperties property to QuickBooks, Square, Xero, Zoho, SalesforceMarketingCloud linked service
+- Added support of Message server connecting from SAP Open Hub
+- Enable Sql Sources (AzureSqlDatabase, SqlSever, Synapse, SqlMI) read in parallel, support partition by dynamic range and sql built-in partitions.
+- Added Rest as Sink Type in Copy Sink
+- Added NewClusterLogDestination property to Azure Databricks linked service
+- Support expression (object) type for data flow staging folder path
+- Add new type "AzPowerShellSetup" to parameter "ExpressCustomSetup" for "AzureRmDataFactoryV2IntegrationRuntime" cmd to install Azure PowerShell
+
 ## Version 4.9.0
 ###  Feature Additions
+- Added support for specifying a linked service as a Data Flow source and sink type
+- Added support for providing a schema linked service reference within Data Flow sources and sinks
+- Added support for xml dataset in ADF
+- Added support for excel dataset in ADF
+- Added new type conversion support in Copy activity
 - Added support for copying data to and from Snowflake using copy activity
 - Added package store support for Azure-SSIS integration runtime
 - Added httpRequestTimeout for ODataSource, SapEccSource, SapCloudForCustomerSource, SapCloudForCustomerSink, DynamicsAXSource
 - Added SharePointOnlineListConnector
+- Added auth by accountKey/SASuri to azure file connector
+- Added prefix filter to azure file source
+- Added fileFilter to file server source
+- Added partitionRootPath to binary connector
+- Added an option to support unzip file directly to target folder
 
 ## Version 4.8.0
 ###  Feature Additions

@@ -3,10 +3,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Services.AppAuthentication.TestCommon;
+using Microsoft.Azure.Services.AppAuthentication.Unit.Tests.Mocks;
 using Xunit;
 
 namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
@@ -24,7 +27,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             // Delete environment variables
             Environment.SetEnvironmentVariable(Constants.TestCertUrlEnv, null);
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, null);
-            Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, null);
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceHeaderEnv, null);
         }
 
         /// <summary>
@@ -44,7 +47,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             // ManualResetEvent will enable testing of SemaphoreSlim used in AzureServiceTokenProvider.
             ManualResetEvent manualResetEvent = new ManualResetEvent(false);
-            
+
             // Use AzureServiceTokenProviders to get tokens in parallel.
             for (int i = 0; i < 5; i++)
             {
@@ -94,9 +97,9 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             // AppAuthResultCache should not return this, since it is about to expire. 
             var tokenResponse = TokenResponse.Parse(TokenHelper.GetUserTokenResponse(5 * 60 - 2));
             var authResult = AppAuthenticationResult.Create(tokenResponse);
-            AppAuthResultCache.AddOrUpdate("ConnectionString:;Authority:;Resource:https://vault.azure.net/", 
+            AppAuthResultCache.AddOrUpdate("ConnectionString:;Authority:;Resource:https://vault.azure.net/",
                 new Tuple<AppAuthenticationResult, Principal>(authResult, null));
-            
+
             // Get the token again. 
             for (int i = 0; i < 5; i++)
             {
@@ -107,6 +110,39 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             // Hit count should be 2 now, since new token should have been aquired. 
             Assert.Equal(2, mockProcessManager.HitCount);
+        }
+
+        /// <summary>
+        /// Test that the force refresh works as expected.
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task GetAppAuthResultForceRefreshTest()
+        {
+            // Create two instances of AzureServiceTokenProvider based on AzureCliAccessTokenProvider. 
+            MockProcessManager mockProcessManager = new MockProcessManager(MockProcessManager.MockProcessManagerRequestType.Success);
+            AzureCliAccessTokenProvider azureCliAccessTokenProvider = new AzureCliAccessTokenProvider(mockProcessManager);
+            AzureServiceTokenProvider azureServiceTokenProvider = new AzureServiceTokenProvider(azureCliAccessTokenProvider);
+            AzureServiceTokenProvider azureServiceTokenProvider1 = new AzureServiceTokenProvider(azureCliAccessTokenProvider);
+
+            // Part 1: Verify force refresh of sequential requests will request new tokens.
+            await azureServiceTokenProvider.GetAccessTokenAsync(Constants.KeyVaultResourceId);
+            Assert.Equal(1, mockProcessManager.HitCount);
+
+            await azureServiceTokenProvider.GetAccessTokenAsync(Constants.KeyVaultResourceId);
+            Assert.Equal(1, mockProcessManager.HitCount); // cache hit.
+
+            await azureServiceTokenProvider.GetAccessTokenAsync(Constants.KeyVaultResourceId, forceRefresh: true);
+            Assert.Equal(2, mockProcessManager.HitCount); // force refresh hit.
+
+            await azureServiceTokenProvider1.GetAccessTokenAsync(Constants.KeyVaultResourceId);
+            Assert.Equal(2, mockProcessManager.HitCount); // cache hit.
+
+            await azureServiceTokenProvider1.GetAccessTokenAsync(Constants.KeyVaultResourceId, forceRefresh: true);
+            Assert.Equal(3, mockProcessManager.HitCount); // force refresh hit.
+
+            // Part 2: Verify parallel force-refreshes re-use the same fetched token.
+            // TODO: current system does not allow for controlling this flow, test would be non-deterministic and intermitently fail.
         }
 
         /// <summary>
@@ -143,8 +179,8 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         [Fact]
         public void InvalidAzureAdInstanceTest()
         {
-            var exception = Assert.Throws<ArgumentException>(() =>  new AzureServiceTokenProvider(azureAdInstance:"http://aadinstance/"));
-            
+            var exception = Assert.Throws<ArgumentException>(() => new AzureServiceTokenProvider(azureAdInstance: "http://aadinstance/"));
+
             Assert.Contains(Constants.MustUseHttpsError, exception.ToString());
         }
 
@@ -193,7 +229,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         {
             // Set environment variable AzureServicesAuthConnectionString
             Environment.SetEnvironmentVariable(Constants.ConnectionStringEnvironmentVariableName, Constants.AzureCliConnectionString);
-           
+
             var provider = new AzureServiceTokenProvider();
 
             Assert.NotNull(provider);
@@ -216,7 +252,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             // set env vars so MsiAccessTokenProvider assumes App Service environment and not VM environment
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, Constants.MsiEndpoint);
-            Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, Constants.ClientSecret);
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceHeaderEnv, Constants.ClientSecret);
 
             // AzureServiceTokenProvider is being asked to use two providers, and return token from the first that succeeds.  
             var providers = new List<NonInteractiveAzureServiceTokenProviderBase> { azureCliAccessTokenProvider, msiAccessTokenProvider };
@@ -247,10 +283,10 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             // set env vars so MsiAccessTokenProvider assumes App Service environment and not VM environment
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, Constants.MsiEndpoint);
-            Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, Constants.ClientSecret);
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceHeaderEnv, Constants.ClientSecret);
 
             // AzureServiceTokenProvider is being asked to use two providers, and return token from the first that succeeds.  
-            var providers = new List<NonInteractiveAzureServiceTokenProviderBase>{azureCliAccessTokenProvider, msiAccessTokenProvider};
+            var providers = new List<NonInteractiveAzureServiceTokenProviderBase> { azureCliAccessTokenProvider, msiAccessTokenProvider };
             AzureServiceTokenProvider azureServiceTokenProvider = new AzureServiceTokenProvider(providers);
 
             var token = await azureServiceTokenProvider.GetAccessTokenAsync(Constants.GraphResourceId, Constants.TenantId);
@@ -266,7 +302,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         }
 
         /// <summary>
-        /// If token could not be aquired through any of the specified providers, an exception should be thrown
+        /// If token could not be acquired through any of the specified providers, an exception should be thrown
         /// </summary>
         [Fact]
         public void DiscoveryTestBothFail()
@@ -279,10 +315,10 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             MockMsi mockMsi = new MockMsi(MockMsi.MsiTestType.MsiAppServicesFailure);
             HttpClient httpClient = new HttpClient(mockMsi);
             MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(httpClient);
-        
+
             // set env vars so MsiAccessTokenProvider assumes App Service environment and not VM environment
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, Constants.MsiEndpoint);
-            Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, Constants.ClientSecret);
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceHeaderEnv, Constants.ClientSecret);
 
             // use test hook to expedite test
             MsiRetryHelper.WaitBeforeRetry = false;
@@ -301,8 +337,8 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             Assert.Equal(5, mockMsi.HitCount);
 
             // Clean up environment variables
-            Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv,null);
-            Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, null);
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, null);
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceHeaderEnv, null);
         }
 
         /// <summary>
@@ -312,6 +348,82 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         public void RemainMockable()
         {
             MockUtil.AssertPublicMethodsAreVirtual<AzureServiceTokenProvider>();
+        }
+
+        /// <summary>
+        /// Injects an HTTP factory.
+        /// </summary>
+        [Fact]
+        public async Task InjectHttpFactory()
+        {
+            var factory = new MockHttpClientFactory();
+
+            // create a client secret token provider
+            var azureServiceTokenProvider = new AzureServiceTokenProvider(Constants.ClientSecretConnString, Constants.AzureAdInstance, factory);
+
+            // trying to use the provider should fail because the http factory isn't implemented. We can verify it was used though.
+            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() =>
+                azureServiceTokenProvider.GetAccessTokenAsync(Constants.GraphResourceId, Constants.TenantId));
+
+            Assert.EndsWith(MockHttpClientFactory.ExceptionMessage, exception.Message);
+        }
+
+        /// <summary>
+        /// Side load an HTTP factory.
+        /// </summary>
+        [Fact]
+        public async Task SideLoadHttpFactory()
+        {
+            MockHttpClientFactory factory = new MockHttpClientFactory();
+
+            // create a client secret token provider
+            AzureServiceTokenProvider.HttpClientFactory = factory;
+            var azureServiceTokenProvider = new AzureServiceTokenProvider(Constants.ClientSecretConnString, Constants.AzureAdInstance);
+
+            // trying to use the provider should fail because the http factory isn't implemented. We can verify it was used though.
+            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() =>
+                azureServiceTokenProvider.GetAccessTokenAsync(Constants.GraphResourceId, Constants.TenantId));
+
+            Assert.EndsWith(MockHttpClientFactory.ExceptionMessage, exception.Message);
+        }
+
+        /// <summary>
+        /// Verify backwards compatibility with constructor and method signatures
+        /// </summary>
+        [Fact]
+        public void VerifyPublicSignatures()
+        {
+            var KnownPublicCtors = new List<string>()
+            {
+                "Void .ctor(System.String, System.String)",
+                "Void .ctor(System.String, System.String, Microsoft.IdentityModel.Clients.ActiveDirectory.IHttpClientFactory)"
+            };
+
+            var KnownPublicMethods = new List<string>()
+            {
+                "Microsoft.IdentityModel.Clients.ActiveDirectory.IHttpClientFactory get_HttpClientFactory()",
+                "Void set_HttpClientFactory(Microsoft.IdentityModel.Clients.ActiveDirectory.IHttpClientFactory)",
+                "TokenCallback get_KeyVaultTokenCallback()",
+                "Microsoft.Azure.Services.AppAuthentication.Principal get_PrincipalUsed()",
+                "System.Threading.Tasks.Task`1[System.String] GetAccessTokenAsync(System.String, System.String, Boolean, System.Threading.CancellationToken)",
+                "System.Threading.Tasks.Task`1[System.String] GetAccessTokenAsync(System.String, Boolean, System.Threading.CancellationToken)",
+                "System.Threading.Tasks.Task`1[System.String] GetAccessTokenAsync(System.String, System.String, System.Threading.CancellationToken)",
+                "System.Threading.Tasks.Task`1[System.String] GetAccessTokenAsync(System.String, System.String)",
+                "System.Threading.Tasks.Task`1[Microsoft.Azure.Services.AppAuthentication.AppAuthenticationResult] GetAuthenticationResultAsync(System.String, System.String, Boolean, System.Threading.CancellationToken)",
+                "System.Threading.Tasks.Task`1[Microsoft.Azure.Services.AppAuthentication.AppAuthenticationResult] GetAuthenticationResultAsync(System.String, Boolean, System.Threading.CancellationToken)",
+                "System.Threading.Tasks.Task`1[Microsoft.Azure.Services.AppAuthentication.AppAuthenticationResult] GetAuthenticationResultAsync(System.String, System.String, System.Threading.CancellationToken)",
+                "System.Threading.Tasks.Task`1[Microsoft.Azure.Services.AppAuthentication.AppAuthenticationResult] GetAuthenticationResultAsync(System.String, System.String)",
+                "Boolean Equals(System.Object)",
+                "Int32 GetHashCode()",
+                "System.Type GetType()",
+                "System.String ToString()"
+            };
+
+            var publicCtorSignatures = typeof(AzureServiceTokenProvider).GetConstructors().Select(o => o.ToString()).ToList();
+            var publicMethodSignatures = typeof(AzureServiceTokenProvider).GetMethods().Select(o => o.ToString()).ToList();
+
+            Assert.True(Enumerable.SequenceEqual(KnownPublicCtors.OrderBy(i => i), publicCtorSignatures.OrderBy(i => i)));
+            Assert.True(Enumerable.SequenceEqual(KnownPublicMethods.OrderBy(i => i), publicMethodSignatures.OrderBy(i => i)));
         }
     }
 }

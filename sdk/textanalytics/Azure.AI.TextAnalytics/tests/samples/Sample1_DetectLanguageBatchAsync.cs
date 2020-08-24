@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -15,8 +15,8 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public async Task DetectLanguageBatchAsync()
         {
-            string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
 
             // Instantiate a client that will be used to call the service.
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
@@ -55,15 +55,15 @@ namespace Azure.AI.TextAnalytics.Samples
 
                 if (result.HasError)
                 {
-                    Console.WriteLine($"    Document error code: {result.Error.Code}.");
+                    Console.WriteLine($"    Document error code: {result.Error.ErrorCode}.");
                     Console.WriteLine($"    Message: {result.Error.Message}.");
                 }
                 else
                 {
-                    Console.WriteLine($"    Detected language {result.PrimaryLanguage.Name} with confidence {result.PrimaryLanguage.Score}.");
+                    Console.WriteLine($"    Detected language {result.PrimaryLanguage.Name} with confidence score {result.PrimaryLanguage.ConfidenceScore}.");
 
                     Console.WriteLine($"    Document statistics:");
-                    Console.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.GraphemeCount}");
+                    Console.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.CharacterCount}");
                     Console.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
                     Console.WriteLine("");
                 }

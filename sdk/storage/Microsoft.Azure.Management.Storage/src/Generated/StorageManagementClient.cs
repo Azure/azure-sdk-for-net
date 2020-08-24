@@ -110,6 +110,11 @@ namespace Microsoft.Azure.Management.Storage
         public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
 
         /// <summary>
+        /// Gets the IObjectReplicationPoliciesOperations.
+        /// </summary>
+        public virtual IObjectReplicationPoliciesOperations ObjectReplicationPolicies { get; private set; }
+
+        /// <summary>
         /// Gets the IEncryptionScopesOperations.
         /// </summary>
         public virtual IEncryptionScopesOperations EncryptionScopes { get; private set; }
@@ -133,6 +138,26 @@ namespace Microsoft.Azure.Management.Storage
         /// Gets the IFileSharesOperations.
         /// </summary>
         public virtual IFileSharesOperations FileShares { get; private set; }
+
+        /// <summary>
+        /// Gets the IQueueServicesOperations.
+        /// </summary>
+        public virtual IQueueServicesOperations QueueServices { get; private set; }
+
+        /// <summary>
+        /// Gets the IQueueOperations.
+        /// </summary>
+        public virtual IQueueOperations Queue { get; private set; }
+
+        /// <summary>
+        /// Gets the ITableServicesOperations.
+        /// </summary>
+        public virtual ITableServicesOperations TableServices { get; private set; }
+
+        /// <summary>
+        /// Gets the ITableOperations.
+        /// </summary>
+        public virtual ITableOperations Table { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the StorageManagementClient class.
@@ -382,11 +407,16 @@ namespace Microsoft.Azure.Management.Storage
             ManagementPolicies = new ManagementPoliciesOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
+            ObjectReplicationPolicies = new ObjectReplicationPoliciesOperations(this);
             EncryptionScopes = new EncryptionScopesOperations(this);
             BlobServices = new BlobServicesOperations(this);
             BlobContainers = new BlobContainersOperations(this);
             FileServices = new FileServicesOperations(this);
             FileShares = new FileSharesOperations(this);
+            QueueServices = new QueueServicesOperations(this);
+            Queue = new QueueOperations(this);
+            TableServices = new TableServicesOperations(this);
+            Table = new TableOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2019-06-01";
             AcceptLanguage = "en-US";

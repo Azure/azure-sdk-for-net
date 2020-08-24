@@ -10,12 +10,12 @@ using Azure.Search.Documents.Models;
 namespace Azure.Search.Documents
 {
     /// <summary>
-    /// Options for <see cref="SearchIndexClient.SearchAsync"/> that
+    /// Options for <see cref="SearchClient.SearchAsync"/> that
     /// allow specifying filtering, sorting, faceting, paging, and other search
     /// query behaviors.
     /// </summary>
     [CodeGenModel("SearchRequest")]
-    public partial class SearchOptions : SearchRequestOptions
+    public partial class SearchOptions
     {
         /// <summary>
         /// Initializes a new instance of SearchOptions from a continuation
@@ -25,7 +25,7 @@ namespace Azure.Search.Documents
         /// Encapsulates the state required to fetch the next page of search
         /// results from the index.
         /// </param>
-        public SearchOptions(string continuationToken) =>
+        internal SearchOptions(string continuationToken) =>
             Copy(SearchContinuationToken.Deserialize(continuationToken), this);
 
         /// <summary>
@@ -189,7 +189,6 @@ namespace Azure.Search.Documents
             destination.ScoringProfile = source.ScoringProfile;
             destination.SearchMode = source.SearchMode;
             destination.Skip = source.Skip;
-            destination.ClientRequestId = source.ClientRequestId;
         }
 
         /// <summary>

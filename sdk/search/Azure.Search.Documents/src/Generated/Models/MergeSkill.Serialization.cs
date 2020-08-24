@@ -9,36 +9,36 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class MergeSkill : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (InsertPreTag != null)
+            if (Optional.IsDefined(InsertPreTag))
             {
                 writer.WritePropertyName("insertPreTag");
                 writer.WriteStringValue(InsertPreTag);
             }
-            if (InsertPostTag != null)
+            if (Optional.IsDefined(InsertPostTag))
             {
                 writer.WritePropertyName("insertPostTag");
                 writer.WriteStringValue(InsertPostTag);
             }
             writer.WritePropertyName("@odata.type");
             writer.WriteStringValue(ODataType);
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (Context != null)
+            if (Optional.IsDefined(Context))
             {
                 writer.WritePropertyName("context");
                 writer.WriteStringValue(Context);
@@ -52,9 +52,9 @@ namespace Azure.Search.Documents.Models
             writer.WriteEndArray();
             writer.WritePropertyName("outputs");
             writer.WriteStartArray();
-            foreach (var item0 in Outputs)
+            foreach (var item in Outputs)
             {
-                writer.WriteObjectValue(item0);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -62,63 +62,43 @@ namespace Azure.Search.Documents.Models
 
         internal static MergeSkill DeserializeMergeSkill(JsonElement element)
         {
-            string insertPreTag = default;
-            string insertPostTag = default;
-            string odatatype = default;
-            string name = default;
-            string description = default;
-            string context = default;
+            Optional<string> insertPreTag = default;
+            Optional<string> insertPostTag = default;
+            string odataType = default;
+            Optional<string> name = default;
+            Optional<string> description = default;
+            Optional<string> context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("insertPreTag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     insertPreTag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("insertPostTag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     insertPostTag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    odatatype = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("context"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     context = property.Value.GetString();
                     continue;
                 }
@@ -143,7 +123,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new MergeSkill(odatatype, name, description, context, inputs, outputs, insertPreTag, insertPostTag);
+            return new MergeSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, insertPreTag.Value, insertPostTag.Value);
         }
     }
 }

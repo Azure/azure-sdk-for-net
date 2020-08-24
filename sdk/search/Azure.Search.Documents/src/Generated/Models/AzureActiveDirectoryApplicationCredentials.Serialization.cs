@@ -8,16 +8,16 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class AzureActiveDirectoryApplicationCredentials : IUtf8JsonSerializable
+    internal partial class AzureActiveDirectoryApplicationCredentials : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("applicationId");
             writer.WriteStringValue(ApplicationId);
-            if (ApplicationSecret != null)
+            if (Optional.IsDefined(ApplicationSecret))
             {
                 writer.WritePropertyName("applicationSecret");
                 writer.WriteStringValue(ApplicationSecret);
@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Models
         internal static AzureActiveDirectoryApplicationCredentials DeserializeAzureActiveDirectoryApplicationCredentials(JsonElement element)
         {
             string applicationId = default;
-            string applicationSecret = default;
+            Optional<string> applicationSecret = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("applicationId"))
@@ -38,15 +38,11 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("applicationSecret"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     applicationSecret = property.Value.GetString();
                     continue;
                 }
             }
-            return new AzureActiveDirectoryApplicationCredentials(applicationId, applicationSecret);
+            return new AzureActiveDirectoryApplicationCredentials(applicationId, applicationSecret.Value);
         }
     }
 }

@@ -7,7 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Test;
@@ -69,6 +69,27 @@ namespace Azure.Storage.Blobs.Test
 
             Assert.AreEqual(accountName, builder1.AccountName);
             Assert.AreEqual(accountName, builder2.AccountName);
+        }
+
+        [Test]
+        public void Ctor_UriNonIpStyle()
+        {
+            // Arrange
+            string accountName = "accountname";
+            string containerName = GetNewContainerName();
+            string blobName = GetNewBlobName();
+
+            Uri uri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{blobName}");
+
+            // Act
+            BlobClient blobClient = new BlobClient(uri);
+
+            // Assert
+            BlobUriBuilder builder = new BlobUriBuilder(blobClient.Uri);
+
+            Assert.AreEqual(containerName, builder.BlobContainerName);
+            Assert.AreEqual(blobName, builder.BlobName);
+            Assert.AreEqual(accountName, builder.AccountName);
         }
 
         [Test]
@@ -142,6 +163,33 @@ namespace Azure.Storage.Blobs.Test
             using var actual = new MemoryStream();
             await download.Value.Content.CopyToAsync(actual);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task UploadAsync_Stream_Tags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            var name = GetNewBlobName();
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(name));
+            var data = GetRandomBuffer(Constants.KB);
+            IDictionary<string, string> tags = BuildTags();
+            BlobUploadOptions options = new BlobUploadOptions
+            {
+                Tags = tags
+            };
+
+            // Act
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream, options);
+            }
+
+            Response<GetBlobTagResult> response = await blob.GetTagsAsync();
+
+            // Assert
+            AssertDictionaryEquality(tags, response.Value.Tags);
         }
 
         [Test]
@@ -241,7 +289,7 @@ namespace Azure.Storage.Blobs.Test
                 // Check if the correct param name that is causing the error is being returned
                 await TestHelper.AssertExpectedExceptionAsync<ArgumentNullException>(
                     blob.UploadAsync(stream),
-                    e => Assert.AreEqual("body", e.ParamName));
+                    e => Assert.AreEqual("content", e.ParamName));
             }
         }
 
@@ -286,6 +334,52 @@ namespace Azure.Storage.Blobs.Test
             using var actual = new MemoryStream();
             await download.Value.Content.CopyToAsync(actual);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task UploadAsync_File_Tags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            var name = GetNewBlobName();
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(name));
+            var data = GetRandomBuffer(Constants.KB);
+            IDictionary<string, string> tags = BuildTags();
+            BlobUploadOptions options = new BlobUploadOptions
+            {
+                Tags = tags
+            };
+
+            using (var stream = new MemoryStream(data))
+            {
+                var path = Path.GetTempFileName();
+
+                try
+                {
+                    File.WriteAllBytes(path, data);
+
+                    // Test that we can upload a read-only file.
+                    File.SetAttributes(path, FileAttributes.ReadOnly);
+
+                    // Act
+                    await blob.UploadAsync(path, options);
+
+                }
+                finally
+                {
+                    if (File.Exists(path))
+                    {
+                        File.SetAttributes(path, FileAttributes.Normal);
+                        File.Delete(path);
+                    }
+                }
+            }
+
+            Response<GetBlobTagResult> response = await blob.GetTagsAsync();
+
+            // Assert
+            AssertDictionaryEquality(tags, response.Value.Tags);
         }
 
         [Test]
@@ -494,13 +588,12 @@ namespace Azure.Storage.Blobs.Test
             var credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
             blob = InstrumentClient(new BlobClient(blob.Uri, credential, GetOptions(true)));
 
-            await blob.StagedUploadAsync(
+            await blob.StagedUploadInternal(
                 content: stream,
-                blobHttpHeaders: default,
-                metadata: default,
-                conditions: default,
-                progressHandler: default,
-                transferOptions: transferOptions,
+                new BlobUploadOptions
+                {
+                    TransferOptions = transferOptions
+                },
                 async: true);
 
             await DownloadAndAssertAsync(stream, blob);
@@ -530,13 +623,12 @@ namespace Azure.Storage.Blobs.Test
                 var credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
                 blob = InstrumentClient(new BlobClient(blob.Uri, credential, GetOptions(true)));
 
-                await blob.StagedUploadAsync(
+                await blob.StagedUploadInternal(
                     path: path,
-                    blobHttpHeaders: default,
-                    metadata: default,
-                    conditions: default,
-                    progressHandler: default,
-                    transferOptions: transferOptions,
+                    new BlobUploadOptions
+                    {
+                        TransferOptions = transferOptions
+                    },
                     async: true);
 
                 await DownloadAndAssertAsync(stream, blob);
@@ -820,7 +912,7 @@ namespace Azure.Storage.Blobs.Test
                 MaximumTransferLength = Constants.MB,
                 MaximumConcurrency = 16
             };
-            int size = Constants.Blob.Block.MaxUploadBytes + 1; // ensure that the Parallel upload code path is hit
+            long size = new Specialized.BlockBlobClient(new Uri("")).BlockBlobMaxUploadBlobBytes + 1; // ensure that the Parallel upload code path is hit
             using var stream = new MemoryStream(GetRandomBuffer(size));
 
             // Act
@@ -936,6 +1028,64 @@ namespace Azure.Storage.Blobs.Test
                         destination: downloadStream,
                         cancellationToken: token));
             }
+        }
+
+        [Test]
+        public void WithSnapshot()
+        {
+            // Arrange
+            string accountName = "accountname";
+            string containerName = GetNewContainerName();
+            string blobName = "my/blob/name";
+            string snapshot = "2020-07-03T12:45:46.1234567Z";
+            Uri uri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{Uri.EscapeDataString(blobName)}");
+            Uri snapshotUri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{Uri.EscapeDataString(blobName)}?snapshot={snapshot}");
+
+            // Act
+            BlobClient blobClient = new BlobClient(uri);
+            BlobClient snapshotBlobClient = blobClient.WithSnapshot(snapshot);
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(snapshotBlobClient.Uri);
+
+            // Assert
+            Assert.AreEqual(accountName, snapshotBlobClient.AccountName);
+            Assert.AreEqual(containerName, snapshotBlobClient.BlobContainerName);
+            Assert.AreEqual(blobName, snapshotBlobClient.Name);
+            Assert.AreEqual(snapshotUri, snapshotBlobClient.Uri);
+
+            Assert.AreEqual(accountName, blobUriBuilder.AccountName);
+            Assert.AreEqual(containerName, blobUriBuilder.BlobContainerName);
+            Assert.AreEqual(blobName, blobUriBuilder.BlobName);
+            Assert.AreEqual(snapshot, blobUriBuilder.Snapshot);
+            Assert.AreEqual(snapshotUri, blobUriBuilder.ToUri());
+        }
+
+        [Test]
+        public void WithVersion()
+        {
+            // Arrange
+            string accountName = "accountname";
+            string containerName = GetNewContainerName();
+            string blobName = "my/blob/name";
+            string versionId = "2020-07-03T12:45:46.1234567Z";
+            Uri uri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{Uri.EscapeDataString(blobName)}");
+            Uri versionUri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{Uri.EscapeDataString(blobName)}?versionid={versionId}");
+
+            // Act
+            BlobClient blobClient = new BlobClient(uri);
+            BlobClient versionBlobClient = blobClient.WithVersion(versionId);
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(versionBlobClient.Uri);
+
+            // Assert
+            Assert.AreEqual(accountName, versionBlobClient.AccountName);
+            Assert.AreEqual(containerName, versionBlobClient.BlobContainerName);
+            Assert.AreEqual(blobName, versionBlobClient.Name);
+            Assert.AreEqual(versionUri, versionBlobClient.Uri);
+
+            Assert.AreEqual(accountName, blobUriBuilder.AccountName);
+            Assert.AreEqual(containerName, blobUriBuilder.BlobContainerName);
+            Assert.AreEqual(blobName, blobUriBuilder.BlobName);
+            Assert.AreEqual(versionId, blobUriBuilder.VersionId);
+            Assert.AreEqual(versionUri, blobUriBuilder.ToUri());
         }
     }
 }

@@ -8,22 +8,22 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class LengthTokenFilter : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Min != null)
+            if (Optional.IsDefined(MinLength))
             {
                 writer.WritePropertyName("min");
-                writer.WriteNumberValue(Min.Value);
+                writer.WriteNumberValue(MinLength.Value);
             }
-            if (Max != null)
+            if (Optional.IsDefined(MaxLength))
             {
                 writer.WritePropertyName("max");
-                writer.WriteNumberValue(Max.Value);
+                writer.WriteNumberValue(MaxLength.Value);
             }
             writer.WritePropertyName("@odata.type");
             writer.WriteStringValue(ODataType);
@@ -34,33 +34,25 @@ namespace Azure.Search.Documents.Models
 
         internal static LengthTokenFilter DeserializeLengthTokenFilter(JsonElement element)
         {
-            int? min = default;
-            int? max = default;
-            string odatatype = default;
+            Optional<int> min = default;
+            Optional<int> max = default;
+            string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("min"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     min = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("max"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     max = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    odatatype = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -69,7 +61,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new LengthTokenFilter(odatatype, name, min, max);
+            return new LengthTokenFilter(odataType, name, Optional.ToNullable(min), Optional.ToNullable(max));
         }
     }
 }

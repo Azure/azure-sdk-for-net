@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The language codes supported for input text by KeyPhraseExtractionSkill. </summary>
     public readonly partial struct KeyPhraseExtractionSkillLanguage : IEquatable<KeyPhraseExtractionSkillLanguage>
@@ -16,6 +16,7 @@ namespace Azure.Search.Documents.Models
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="KeyPhraseExtractionSkillLanguage"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KeyPhraseExtractionSkillLanguage(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
@@ -32,7 +33,7 @@ namespace Azure.Search.Documents.Models
         private const string KoValue = "ko";
         private const string NoValue = "no";
         private const string PlValue = "pl";
-        private const string PtValue = "pt-PT";
+        private const string PtPTValue = "pt-PT";
         private const string PtBRValue = "pt-BR";
         private const string RuValue = "ru";
         private const string EsValue = "es";
@@ -61,7 +62,7 @@ namespace Azure.Search.Documents.Models
         /// <summary> Polish. </summary>
         public static KeyPhraseExtractionSkillLanguage Pl { get; } = new KeyPhraseExtractionSkillLanguage(PlValue);
         /// <summary> Portuguese (Portugal). </summary>
-        public static KeyPhraseExtractionSkillLanguage Pt { get; } = new KeyPhraseExtractionSkillLanguage(PtValue);
+        public static KeyPhraseExtractionSkillLanguage PtPT { get; } = new KeyPhraseExtractionSkillLanguage(PtPTValue);
         /// <summary> Portuguese (Brazil). </summary>
         public static KeyPhraseExtractionSkillLanguage PtBR { get; } = new KeyPhraseExtractionSkillLanguage(PtBRValue);
         /// <summary> Russian. </summary>
@@ -81,7 +82,7 @@ namespace Azure.Search.Documents.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KeyPhraseExtractionSkillLanguage other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(KeyPhraseExtractionSkillLanguage other) => string.Equals(_value, other._value, StringComparison.Ordinal);
+        public bool Equals(KeyPhraseExtractionSkillLanguage other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

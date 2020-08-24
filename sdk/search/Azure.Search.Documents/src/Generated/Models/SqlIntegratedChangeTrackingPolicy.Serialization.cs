@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class SqlIntegratedChangeTrackingPolicy : IUtf8JsonSerializable
     {
@@ -22,16 +22,16 @@ namespace Azure.Search.Documents.Models
 
         internal static SqlIntegratedChangeTrackingPolicy DeserializeSqlIntegratedChangeTrackingPolicy(JsonElement element)
         {
-            string odatatype = default;
+            string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.type"))
                 {
-                    odatatype = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
             }
-            return new SqlIntegratedChangeTrackingPolicy(odatatype);
+            return new SqlIntegratedChangeTrackingPolicy(odataType);
         }
     }
 }

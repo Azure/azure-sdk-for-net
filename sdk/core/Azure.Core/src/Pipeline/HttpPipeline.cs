@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -103,6 +103,28 @@ namespace Azure.Core.Pipeline
             HttpMessage message = new HttpMessage(request, ResponseClassifier);
             Send(message, cancellationToken);
             return message.Response;
+        }
+
+        /// <summary>
+        /// Creates a scope in which all outgoing requests would use the provided
+        /// </summary>
+        /// <param name="clientRequestId">The client request id value to be sent with request.</param>
+        /// <returns>The <see cref="IDisposable"/> instance that needs to be disposed when client request id shouldn't be sent anymore.</returns>
+        /// <example>
+        /// Sample usage:
+        /// <code snippet="Snippet:ClientRequestId">
+        /// var secretClient = new SecretClient(new Uri(&quot;http://example.com&quot;), new DefaultAzureCredential());
+        ///
+        /// using (HttpPipeline.CreateClientRequestIdScope(&quot;&lt;custom-client-request-id&gt;&quot;))
+        /// {
+        ///     // The HTTP request resulting from the client call would have x-ms-client-request-id value set to &lt;custom-client-request-id&gt;
+        ///     secretClient.GetSecret(&quot;&lt;secret-name&gt;&quot;);
+        /// }
+        /// </code>
+        /// </example>
+        public static IDisposable CreateClientRequestIdScope(string? clientRequestId)
+        {
+            return ReadClientRequestIdPolicy.StartScope(clientRequestId);
         }
     }
 }

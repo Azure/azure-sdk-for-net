@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class DictionaryDecompounderTokenFilter : IUtf8JsonSerializable
     {
@@ -23,22 +23,22 @@ namespace Azure.Search.Documents.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (MinWordSize != null)
+            if (Optional.IsDefined(MinWordSize))
             {
                 writer.WritePropertyName("minWordSize");
                 writer.WriteNumberValue(MinWordSize.Value);
             }
-            if (MinSubwordSize != null)
+            if (Optional.IsDefined(MinSubwordSize))
             {
                 writer.WritePropertyName("minSubwordSize");
                 writer.WriteNumberValue(MinSubwordSize.Value);
             }
-            if (MaxSubwordSize != null)
+            if (Optional.IsDefined(MaxSubwordSize))
             {
                 writer.WritePropertyName("maxSubwordSize");
                 writer.WriteNumberValue(MaxSubwordSize.Value);
             }
-            if (OnlyLongestMatch != null)
+            if (Optional.IsDefined(OnlyLongestMatch))
             {
                 writer.WritePropertyName("onlyLongestMatch");
                 writer.WriteBooleanValue(OnlyLongestMatch.Value);
@@ -53,11 +53,11 @@ namespace Azure.Search.Documents.Models
         internal static DictionaryDecompounderTokenFilter DeserializeDictionaryDecompounderTokenFilter(JsonElement element)
         {
             IList<string> wordList = default;
-            int? minWordSize = default;
-            int? minSubwordSize = default;
-            int? maxSubwordSize = default;
-            bool? onlyLongestMatch = default;
-            string odatatype = default;
+            Optional<int> minWordSize = default;
+            Optional<int> minSubwordSize = default;
+            Optional<int> maxSubwordSize = default;
+            Optional<bool> onlyLongestMatch = default;
+            string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -73,43 +73,27 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("minWordSize"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     minWordSize = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("minSubwordSize"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     minSubwordSize = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("maxSubwordSize"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     maxSubwordSize = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("onlyLongestMatch"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     onlyLongestMatch = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    odatatype = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -118,7 +102,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new DictionaryDecompounderTokenFilter(odatatype, name, wordList, minWordSize, minSubwordSize, maxSubwordSize, onlyLongestMatch);
+            return new DictionaryDecompounderTokenFilter(odataType, name, wordList, Optional.ToNullable(minWordSize), Optional.ToNullable(minSubwordSize), Optional.ToNullable(maxSubwordSize), Optional.ToNullable(onlyLongestMatch));
         }
     }
 }

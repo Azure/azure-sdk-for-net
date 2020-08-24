@@ -8,24 +8,24 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class PatternTokenizer : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Pattern != null)
+            if (Optional.IsDefined(Pattern))
             {
                 writer.WritePropertyName("pattern");
                 writer.WriteStringValue(Pattern);
             }
-            if (Flags != null)
+            if (Optional.IsDefined(FlagsInternal))
             {
                 writer.WritePropertyName("flags");
-                writer.WriteStringValue(Flags.Value.ToString());
+                writer.WriteStringValue(FlagsInternal);
             }
-            if (Group != null)
+            if (Optional.IsDefined(Group))
             {
                 writer.WritePropertyName("group");
                 writer.WriteNumberValue(Group.Value);
@@ -39,43 +39,31 @@ namespace Azure.Search.Documents.Models
 
         internal static PatternTokenizer DeserializePatternTokenizer(JsonElement element)
         {
-            string pattern = default;
-            RegexFlags? flags = default;
-            int? group = default;
-            string odatatype = default;
+            Optional<string> pattern = default;
+            Optional<string> flags = default;
+            Optional<int> group = default;
+            string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pattern"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     pattern = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("flags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    flags = new RegexFlags(property.Value.GetString());
+                    flags = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("group"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     group = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    odatatype = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -84,7 +72,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new PatternTokenizer(odatatype, name, pattern, flags, group);
+            return new PatternTokenizer(odataType, name, pattern.Value, flags.Value, Optional.ToNullable(group));
         }
     }
 }

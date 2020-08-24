@@ -69,6 +69,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
 
 
         /// <summary>
+        /// Gets the IBMSPrepareDataMoveOperationResultOperations.
+        /// </summary>
+        IBMSPrepareDataMoveOperationResultOperations BMSPrepareDataMoveOperationResult { get; }
+
+        /// <summary>
         /// Gets the IPrivateEndpointConnectionOperations.
         /// </summary>
         IPrivateEndpointConnectionOperations PrivateEndpointConnection { get; }
@@ -147,6 +152,46 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Gets the IBackupProtectedItemsOperations.
         /// </summary>
         IBackupProtectedItemsOperations BackupProtectedItems { get; }
+
+        /// <summary>
+        /// Gets the IAadPropertiesOperations.
+        /// </summary>
+        IAadPropertiesOperations AadProperties { get; }
+
+        /// <summary>
+        /// Gets the ICrossRegionRestoreOperations.
+        /// </summary>
+        ICrossRegionRestoreOperations CrossRegionRestore { get; }
+
+        /// <summary>
+        /// Gets the IBackupCrrJobDetailsOperations.
+        /// </summary>
+        IBackupCrrJobDetailsOperations BackupCrrJobDetails { get; }
+
+        /// <summary>
+        /// Gets the IBackupCrrJobsOperations.
+        /// </summary>
+        IBackupCrrJobsOperations BackupCrrJobs { get; }
+
+        /// <summary>
+        /// Gets the ICrrOperationResultsOperations.
+        /// </summary>
+        ICrrOperationResultsOperations CrrOperationResults { get; }
+
+        /// <summary>
+        /// Gets the ICrrOperationStatusOperations.
+        /// </summary>
+        ICrrOperationStatusOperations CrrOperationStatus { get; }
+
+        /// <summary>
+        /// Gets the IRecoveryPointsCrrOperations.
+        /// </summary>
+        IRecoveryPointsCrrOperations RecoveryPointsCrr { get; }
+
+        /// <summary>
+        /// Gets the IBackupProtectedItemsCrrOperations.
+        /// </summary>
+        IBackupProtectedItemsCrrOperations BackupProtectedItemsCrr { get; }
 
         /// <summary>
         /// Gets the IOperationOperations.
@@ -264,6 +309,68 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         IOperations Operations { get; }
 
         /// <summary>
+        /// Fetches operation status for data move operation on vault
+        /// </summary>
+        /// <param name='vaultName'>
+        /// The name of the recovery services vault.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group where the recovery services vault is
+        /// present.
+        /// </param>
+        /// <param name='operationId'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<OperationStatus>> GetOperationStatusWithHttpMessagesAsync(string vaultName, string resourceGroupName, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Prepares source vault for Data Move operation
+        /// </summary>
+        /// <param name='vaultName'>
+        /// The name of the recovery services vault.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group where the recovery services vault is
+        /// present.
+        /// </param>
+        /// <param name='parameters'>
+        /// Prepare data move request
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse> BMSPrepareDataMoveWithHttpMessagesAsync(string vaultName, string resourceGroupName, PrepareDataMoveRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Triggers Data Move Operation on target vault
+        /// </summary>
+        /// <param name='vaultName'>
+        /// The name of the recovery services vault.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group where the recovery services vault is
+        /// present.
+        /// </param>
+        /// <param name='parameters'>
+        /// Trigger data move request
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse> BMSTriggerDataMoveWithHttpMessagesAsync(string vaultName, string resourceGroupName, TriggerDataMoveRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
         /// Gets the operation status for a private endpoint connection.
         /// </summary>
         /// <param name='vaultName'>
@@ -285,7 +392,49 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<OperationStatus>> GetOperationStatusWithHttpMessagesAsync(string vaultName, string resourceGroupName, string privateEndpointConnectionName, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<OperationStatus>> GetOperationStatus1WithHttpMessagesAsync(string vaultName, string resourceGroupName, string privateEndpointConnectionName, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Prepares source vault for Data Move operation
+        /// </summary>
+        /// <param name='vaultName'>
+        /// The name of the recovery services vault.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group where the recovery services vault is
+        /// present.
+        /// </param>
+        /// <param name='parameters'>
+        /// Prepare data move request
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse> BeginBMSPrepareDataMoveWithHttpMessagesAsync(string vaultName, string resourceGroupName, PrepareDataMoveRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Triggers Data Move Operation on target vault
+        /// </summary>
+        /// <param name='vaultName'>
+        /// The name of the recovery services vault.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group where the recovery services vault is
+        /// present.
+        /// </param>
+        /// <param name='parameters'>
+        /// Trigger data move request
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse> BeginBMSTriggerDataMoveWithHttpMessagesAsync(string vaultName, string resourceGroupName, TriggerDataMoveRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

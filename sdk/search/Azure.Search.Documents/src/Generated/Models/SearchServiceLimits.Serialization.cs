@@ -8,22 +8,23 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class SearchServiceLimits
     {
         internal static SearchServiceLimits DeserializeSearchServiceLimits(JsonElement element)
         {
-            int? maxFieldsPerIndex = default;
-            int? maxFieldNestingDepthPerIndex = default;
-            int? maxComplexCollectionFieldsPerIndex = default;
-            int? maxComplexObjectsInCollectionsPerDocument = default;
+            Optional<int?> maxFieldsPerIndex = default;
+            Optional<int?> maxFieldNestingDepthPerIndex = default;
+            Optional<int?> maxComplexCollectionFieldsPerIndex = default;
+            Optional<int?> maxComplexObjectsInCollectionsPerDocument = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxFieldsPerIndex"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        maxFieldsPerIndex = null;
                         continue;
                     }
                     maxFieldsPerIndex = property.Value.GetInt32();
@@ -33,6 +34,7 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        maxFieldNestingDepthPerIndex = null;
                         continue;
                     }
                     maxFieldNestingDepthPerIndex = property.Value.GetInt32();
@@ -42,6 +44,7 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        maxComplexCollectionFieldsPerIndex = null;
                         continue;
                     }
                     maxComplexCollectionFieldsPerIndex = property.Value.GetInt32();
@@ -51,13 +54,14 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        maxComplexObjectsInCollectionsPerDocument = null;
                         continue;
                     }
                     maxComplexObjectsInCollectionsPerDocument = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new SearchServiceLimits(maxFieldsPerIndex, maxFieldNestingDepthPerIndex, maxComplexCollectionFieldsPerIndex, maxComplexObjectsInCollectionsPerDocument);
+            return new SearchServiceLimits(Optional.ToNullable(maxFieldsPerIndex), Optional.ToNullable(maxFieldNestingDepthPerIndex), Optional.ToNullable(maxComplexCollectionFieldsPerIndex), Optional.ToNullable(maxComplexObjectsInCollectionsPerDocument));
         }
     }
 }

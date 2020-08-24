@@ -3,6 +3,7 @@
 
 using System;
 using System.Text;
+using Azure.Core;
 using Azure.Messaging.ServiceBus.Amqp;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Framing;
@@ -10,7 +11,6 @@ using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Amqp
 {
-
     public class AmqpConverterTests : ServiceBusTestBase
     {
         [Test]
@@ -23,7 +23,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             var amqpMessage = AmqpMessage.Create(data);
 
             var sbMessage = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
-            Assert.AreEqual(messageBody, sbMessage.Body.ToArray());
+            ReadOnlyMemory<byte> sbBody = sbMessage.Body;
+            Assert.AreEqual(messageBody, sbBody.ToArray());
         }
 
         [Test]
@@ -62,7 +63,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             var convertedSbMessage = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
 
             Assert.AreEqual("SomeUserProperty", convertedSbMessage.Properties["UserProperty"]);
-            Assert.AreEqual(messageBody, convertedSbMessage.Body.ToArray());
+            Assert.AreEqual(messageBody, convertedSbMessage.Body.Bytes.ToArray());
             Assert.AreEqual(messageId, convertedSbMessage.MessageId);
             Assert.AreEqual(partitionKey, convertedSbMessage.PartitionKey);
             Assert.AreEqual(viaPartitionKey, convertedSbMessage.ViaPartitionKey);

@@ -3,8 +3,6 @@
 
 using System.ComponentModel;
 using Azure.Core;
-using Azure.Messaging.ServiceBus.Core;
-using Azure.Messaging.ServiceBus.Primitives;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -16,7 +14,7 @@ namespace Azure.Messaging.ServiceBus
     {
         /// <summary>
         /// The number of messages that will be eagerly requested from Queues or Subscriptions and queued locally without regard to
-        /// whether a processing is currently active, intended to help maximize throughput by allowing the receiver to receive
+        /// whether the receiver is actively receiving, intended to help maximize throughput by allowing the receiver to receive
         /// from a local cache rather than waiting on a service request.
         /// </summary>
         public int PrefetchCount
@@ -27,10 +25,7 @@ namespace Azure.Messaging.ServiceBus
             }
             set
             {
-                if (value < 0)
-                {
-                    throw Fx.Exception.ArgumentOutOfRange(nameof(PrefetchCount), value, "Value cannot be less than 0.");
-                }
+                Argument.AssertAtLeast(value, 0, nameof(PrefetchCount));
                 _prefetchCount = value;
             }
         }

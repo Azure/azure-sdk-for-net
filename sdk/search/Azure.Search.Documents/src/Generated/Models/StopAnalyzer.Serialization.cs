@@ -9,14 +9,14 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class StopAnalyzer : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Stopwords != null)
+            if (Optional.IsCollectionDefined(Stopwords))
             {
                 writer.WritePropertyName("stopwords");
                 writer.WriteStartArray();
@@ -35,17 +35,13 @@ namespace Azure.Search.Documents.Models
 
         internal static StopAnalyzer DeserializeStopAnalyzer(JsonElement element)
         {
-            IList<string> stopwords = default;
-            string odatatype = default;
+            Optional<IList<string>> stopwords = default;
+            string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("stopwords"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -56,7 +52,7 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    odatatype = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -65,7 +61,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new StopAnalyzer(odatatype, name, stopwords);
+            return new StopAnalyzer(odataType, name, Optional.ToList(stopwords));
         }
     }
 }

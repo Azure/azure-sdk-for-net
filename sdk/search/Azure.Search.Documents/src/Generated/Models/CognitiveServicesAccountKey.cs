@@ -7,13 +7,14 @@
 
 using System;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A cognitive service resource provisioned with a key that is attached to a skillset. </summary>
     public partial class CognitiveServicesAccountKey : CognitiveServicesAccount
     {
         /// <summary> Initializes a new instance of CognitiveServicesAccountKey. </summary>
         /// <param name="key"> The key used to provision the cognitive service resource attached to a skillset. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public CognitiveServicesAccountKey(string key)
         {
             if (key == null)
@@ -36,6 +37,6 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The key used to provision the cognitive service resource attached to a skillset. </summary>
-        public string Key { get; }
+        public string Key { get; set; }
     }
 }

@@ -8,19 +8,19 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class LimitTokenFilter : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (MaxTokenCount != null)
+            if (Optional.IsDefined(MaxTokenCount))
             {
                 writer.WritePropertyName("maxTokenCount");
                 writer.WriteNumberValue(MaxTokenCount.Value);
             }
-            if (ConsumeAllTokens != null)
+            if (Optional.IsDefined(ConsumeAllTokens))
             {
                 writer.WritePropertyName("consumeAllTokens");
                 writer.WriteBooleanValue(ConsumeAllTokens.Value);
@@ -34,33 +34,25 @@ namespace Azure.Search.Documents.Models
 
         internal static LimitTokenFilter DeserializeLimitTokenFilter(JsonElement element)
         {
-            int? maxTokenCount = default;
-            bool? consumeAllTokens = default;
-            string odatatype = default;
+            Optional<int> maxTokenCount = default;
+            Optional<bool> consumeAllTokens = default;
+            string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxTokenCount"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     maxTokenCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("consumeAllTokens"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     consumeAllTokens = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    odatatype = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -69,7 +61,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new LimitTokenFilter(odatatype, name, maxTokenCount, consumeAllTokens);
+            return new LimitTokenFilter(odataType, name, Optional.ToNullable(maxTokenCount), Optional.ToNullable(consumeAllTokens));
         }
     }
 }

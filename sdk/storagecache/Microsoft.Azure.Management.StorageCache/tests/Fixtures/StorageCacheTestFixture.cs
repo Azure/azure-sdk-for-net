@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
                 try
                 {
                     StorageCacheManagementClient storagecacheMgmtClient = this.Context.GetClient<StorageCacheManagementClient>();
-                    storagecacheMgmtClient.ApiVersion = Constants.DefaultAPIVersion;
+                    storagecacheMgmtClient.ApiVersion = StorageCacheTestEnvironmentUtilities.APIVersion;
 
                     if (string.IsNullOrEmpty(StorageCacheTestEnvironmentUtilities.ResourceGroupName) &&
                         string.IsNullOrEmpty(StorageCacheTestEnvironmentUtilities.CacheName))
@@ -101,7 +101,17 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
                     if (this.Cache == null)
                     {
                         this.Cache = null;
-                        this.Cache = this.CacheHelper.Create(this.cacheName, sku, int_size);
+                        CacheIdentity cacheIdentity;
+                        if (StorageCacheTestEnvironmentUtilities.APIVersion == "2019-11-01")
+                        {
+                            cacheIdentity = new CacheIdentity() { Type = CacheIdentityType.None };
+                        }
+                        else
+                        {
+                            cacheIdentity = new CacheIdentity() { Type = CacheIdentityType.SystemAssigned };
+                        }
+
+                        this.Cache = this.CacheHelper.Create(this.cacheName, sku, int_size, identity: cacheIdentity);
                         if (HttpMockServer.Mode == HttpRecorderMode.Record)
                         {
                             this.CacheHelper.CheckCacheState(this.cacheName);

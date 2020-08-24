@@ -8,19 +8,19 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class SoftDeleteColumnDeletionDetectionPolicy : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (SoftDeleteColumnName != null)
+            if (Optional.IsDefined(SoftDeleteColumnName))
             {
                 writer.WritePropertyName("softDeleteColumnName");
                 writer.WriteStringValue(SoftDeleteColumnName);
             }
-            if (SoftDeleteMarkerValue != null)
+            if (Optional.IsDefined(SoftDeleteMarkerValue))
             {
                 writer.WritePropertyName("softDeleteMarkerValue");
                 writer.WriteStringValue(SoftDeleteMarkerValue);
@@ -32,36 +32,28 @@ namespace Azure.Search.Documents.Models
 
         internal static SoftDeleteColumnDeletionDetectionPolicy DeserializeSoftDeleteColumnDeletionDetectionPolicy(JsonElement element)
         {
-            string softDeleteColumnName = default;
-            string softDeleteMarkerValue = default;
-            string odatatype = default;
+            Optional<string> softDeleteColumnName = default;
+            Optional<string> softDeleteMarkerValue = default;
+            string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("softDeleteColumnName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     softDeleteColumnName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("softDeleteMarkerValue"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     softDeleteMarkerValue = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    odatatype = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
             }
-            return new SoftDeleteColumnDeletionDetectionPolicy(odatatype, softDeleteColumnName, softDeleteMarkerValue);
+            return new SoftDeleteColumnDeletionDetectionPolicy(odataType, softDeleteColumnName.Value, softDeleteMarkerValue.Value);
         }
     }
 }
