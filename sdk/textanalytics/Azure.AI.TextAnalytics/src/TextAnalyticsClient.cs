@@ -154,7 +154,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     // only one document, so we can ignore the id and grab the first error message.
                     var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
-                    throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error));
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error)).ConfigureAwait(false);
                 }
 
                 return Response.FromValue(Transforms.ConvertToDetectedLanguage(result.Value.Documents[0]), response);
@@ -352,15 +352,9 @@ namespace Azure.AI.TextAnalytics
                 Response<LanguageResult> result = await _serviceRestClient.LanguagesAsync(batchInput, options.ModelVersion, options.IncludeStatistics, cancellationToken).ConfigureAwait(false);
                 var response = result.GetRawResponse();
 
-                switch (response.Status)
-                {
-                    case 200:
-                        IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
-                        DetectLanguageResultCollection results = Transforms.ConvertToDetectLanguageResultCollection(result.Value, map);
-                        return Response.FromValue(results, response);
-                    default:
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
-                }
+                IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
+                DetectLanguageResultCollection results = Transforms.ConvertToDetectLanguageResultCollection(result.Value, map);
+                return Response.FromValue(results, response);
             }
             catch (Exception e)
             {
@@ -379,15 +373,9 @@ namespace Azure.AI.TextAnalytics
                 Response<LanguageResult> result = _serviceRestClient.Languages(batchInput, options.ModelVersion, options.IncludeStatistics, cancellationToken);
                 var response = result.GetRawResponse();
 
-                switch (response.Status)
-                {
-                    case 200:
-                        IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
-                        DetectLanguageResultCollection results = Transforms.ConvertToDetectLanguageResultCollection(result.Value, map);
-                        return Response.FromValue(results, response);
-                    default:
-                        throw _clientDiagnostics.CreateRequestFailedException(response);
-                }
+                IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
+                DetectLanguageResultCollection results = Transforms.ConvertToDetectLanguageResultCollection(result.Value, map);
+                return Response.FromValue(results, response);
             }
             catch (Exception e)
             {
@@ -729,7 +717,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     // only one document, so we can ignore the id and grab the first error message.
                     var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
-                    throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error));
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error)).ConfigureAwait(false);
                 }
 
                 return Response.FromValue(new DocumentSentiment(result.Value.Documents[0]), response);
@@ -925,15 +913,9 @@ namespace Azure.AI.TextAnalytics
                 Response<SentimentResponse> result = await _serviceRestClient.SentimentAsync(batchInput, options.ModelVersion, options.IncludeStatistics, null, cancellationToken).ConfigureAwait(false);
                 var response = result.GetRawResponse();
 
-                switch (response.Status)
-                {
-                    case 200:
-                        IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
-                        AnalyzeSentimentResultCollection results = Transforms.ConvertToAnalyzeSentimentResultCollection(result.Value, map);
-                        return Response.FromValue(results, response);
-                    default:
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
-                }
+                IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
+                AnalyzeSentimentResultCollection results = Transforms.ConvertToAnalyzeSentimentResultCollection(result.Value, map);
+                return Response.FromValue(results, response);
             }
             catch (Exception e)
             {
@@ -952,15 +934,9 @@ namespace Azure.AI.TextAnalytics
                 Response<SentimentResponse> result = _serviceRestClient.Sentiment(batchInput, options.ModelVersion, options.IncludeStatistics, null, cancellationToken);
                 var response = result.GetRawResponse();
 
-                switch (response.Status)
-                {
-                    case 200:
-                        IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
-                        AnalyzeSentimentResultCollection results = Transforms.ConvertToAnalyzeSentimentResultCollection(result.Value, map);
-                        return Response.FromValue(results, response);
-                    default:
-                        throw _clientDiagnostics.CreateRequestFailedException(response);
-                }
+                IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
+                AnalyzeSentimentResultCollection results = Transforms.ConvertToAnalyzeSentimentResultCollection(result.Value, map);
+                return Response.FromValue(results, response);
             }
             catch (Exception e)
             {
@@ -1014,7 +990,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     // only one document, so we can ignore the id and grab the first error message.
                     var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
-                    throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error));
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error)).ConfigureAwait(false);
                 }
 
                 return Response.FromValue(Transforms.ConvertToKeyPhraseCollection(result.Value.Documents[0]), response);
@@ -1552,9 +1528,6 @@ namespace Azure.AI.TextAnalytics
 
             return map;
         }
-
-        internal virtual TextDocumentInput ConvertToDocumentInput(string document, string language, int id = 0)
-            => new TextDocumentInput($"{id}", document) { Language = language ?? _options.DefaultLanguage };
 
         private MultiLanguageInput ConvertToMultiLanguageInput(string document, string language, int id = 0)
             => new MultiLanguageInput($"{id}", document) { Language = language ?? _options.DefaultLanguage};

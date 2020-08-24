@@ -58,7 +58,7 @@ namespace Azure.AI.TextAnalytics
         /// <returns>A new instance of <see cref="TextAnalytics.TextAnalyticsWarning"/> for mocking purposes.</returns>
         public static TextAnalyticsWarning TextAnalyticsWarning(string code, string message)
         {
-            return new TextAnalyticsWarning(code, message);
+            return new TextAnalyticsWarning(new TextAnalyticsWarningInternal(code, message));
         }
 
         #endregion Common
@@ -206,7 +206,7 @@ namespace Azure.AI.TextAnalytics
         /// <returns>A new instance of <see cref="TextAnalytics.CategorizedEntity"/> for mocking purposes.</returns>
         public static CategorizedEntity CategorizedEntity(string text, string category, string subCategory, double score)
         {
-            return new CategorizedEntity(text, category, subCategory, score);
+            return new CategorizedEntity(new Entity(text, category, subCategory, default, default, score));
         }
 
         /// <summary>
