@@ -34,17 +34,7 @@ namespace Azure.Core.TestFramework
                 _headers[name] = values = new List<string>();
             }
 
-            // System.Net.Http.MediaTypeHeaderValue Parses addional parameters by adding a space delimiter.
-            // Adding this special case prevents recordings mismatches where Content-Type headers with params are serialized.
-
-            if (name == HttpHeader.Names.ContentType && value.Contains(";"))
-            {
-                values.Add(string.Join("; ", value.Split(';').Select(part => part.Trim())));
-            }
-            else
-            {
-                values.Add(value);
-            }
+            values.Add(value);
         }
 
         protected override bool TryGetHeader(string name, out string value)
