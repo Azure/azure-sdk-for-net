@@ -70,6 +70,33 @@ namespace Migrate.RegionMove.Tests
         }
 
         [Fact]
+        public async Task UpdateMoveCollectionAsync()
+        {
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                this.TestHelper.Initialize(context);
+                var client = this.TestHelper.RegionMoveServiceClient;
+
+                var updateMoveCollectionRequest = new UpdateMoveCollectionRequest()
+                {
+                    Tags = new Dictionary<string, string>()
+                    {
+                        { "Key1", "Value1 " }
+                    }
+                };
+
+                var moveCollection =
+                    (await client.MoveCollections.UpdateWithHttpMessagesAsync(
+                        MoveCollectionResourceGroup,
+                        MoveCollectionName,
+                        updateMoveCollectionRequest)).Body;
+                Assert.True(
+                    moveCollection.Tags.Keys.Count == 1,
+                    "Move collection should contain the updated tag.");
+            }
+        }
+
+        [Fact]
         public async Task GetMoveCollectionAsync()
         {
             using (var context = MockContext.Start(this.GetType()))
