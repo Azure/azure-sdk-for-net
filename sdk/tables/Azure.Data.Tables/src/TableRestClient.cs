@@ -16,10 +16,6 @@ namespace Azure.Data.Tables
 {
     internal partial class TableRestClient
     {
-        private const string CteHeaderName = "Content-Transfer-Encoding";
-        private const string Binary = "binary";
-        private const string ApplicationHttp = "application/http";
-
         internal ClientDiagnostics clientDiagnostics => _clientDiagnostics;
         internal string endpoint => url;
         internal string clientVersion => version;
@@ -58,7 +54,21 @@ namespace Azure.Data.Tables
         internal HttpMessage AddInsertEntityRequest(MultipartContent changeset, string table, int? timeout, string requestId, ResponseFormat? responsePreference, IDictionary<string, object> tableEntityProperties, QueryOptions queryOptions)
         {
             var message = CreateInsertEntityRequest(table, timeout, requestId, responsePreference, tableEntityProperties, queryOptions);
-            changeset.Add(new RequestRequestContent(message.Request), new Dictionary<string, string> { { HttpHeader.Names.ContentType, ApplicationHttp }, { CteHeaderName, Binary } });
+            changeset.AddContent(new RequestRequestContent(message.Request));
+            return message;
+        }
+
+        internal HttpMessage AddUpdateEntityRequest(MultipartContent changeset, string table, string partitionKey, string rowKey, int? timeout, string requestId, string ifMatch, IDictionary<string, object> tableEntityProperties, QueryOptions queryOptions)
+        {
+            var message = CreateUpdateEntityRequest(table, partitionKey, rowKey, timeout, requestId, ifMatch, tableEntityProperties, queryOptions);
+            changeset.AddContent(new RequestRequestContent(message.Request));
+            return message;
+        }
+
+        internal HttpMessage AddDeleteEntityRequest(MultipartContent changeset, string table, string partitionKey, string rowKey, string ifMatch, int? timeout, string requestId, QueryOptions queryOptions)
+        {
+            var message = CreateDeleteEntityRequest(table, partitionKey, rowKey, ifMatch, timeout, requestId, queryOptions);
+            changeset.AddContent(new RequestRequestContent(message.Request));
             return message;
         }
 

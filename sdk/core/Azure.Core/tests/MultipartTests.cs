@@ -249,7 +249,6 @@ namespace Azure.Core.Tests
                 $"{HttpHeader.Names.ContentType}: {ApplicationJsonOdata}\r\n" +
                 $"{HttpHeader.Names.Accept}: {ApplicationJson}\r\n" +
                 $"{DataServiceVersion}: {Three0}\r\n" +
-                $"{HttpHeader.Names.ContentLength}: 75\r\n" +
                 $"\r\n" +
                 $"{post1Body}\r\n" +
                 $"--changeset_{changesetGuid}\r\n" +
@@ -261,7 +260,6 @@ namespace Azure.Core.Tests
                 $"{HttpHeader.Names.ContentType}: {ApplicationJsonOdata}\r\n" +
                 $"{HttpHeader.Names.Accept}: {ApplicationJson}\r\n" +
                 $"{DataServiceVersion}: {Three0}\r\n" +
-                $"{HttpHeader.Names.ContentLength}: 75\r\n" +
                 $"\r\n" +
                 $"{post2Body}\r\n" +
                 $"--changeset_{changesetGuid}\r\n" +
@@ -273,7 +271,6 @@ namespace Azure.Core.Tests
                 $"{HttpHeader.Names.ContentType}: {ApplicationJsonOdata}\r\n" +
                 $"{HttpHeader.Names.Accept}: {ApplicationJson}\r\n" +
                 $"{DataServiceVersion}: {Three0}\r\n" +
-                $"{HttpHeader.Names.ContentLength}: 82\r\n" +
                 $"\r\n" +
                 $"{patchBody}\r\n" +
                 $"--changeset_{changesetGuid}--\r\n" +

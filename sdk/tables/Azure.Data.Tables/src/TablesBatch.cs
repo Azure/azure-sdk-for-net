@@ -24,7 +24,7 @@ namespace Azure.Data.Tables
         internal MultipartContent _batch;
         internal Guid _batchGuid = default;
         internal Guid _changesetGuid = default;
-        internal ConcurrentDictionary<(string PartitionKey, string RowKey), HttpMessage> _addMessages = new ConcurrentDictionary<(string PartitionKey, string RowKey), HttpMessage>();
+        internal ConcurrentDictionary<string, HttpMessage> _addMessages = new ConcurrentDictionary<string, HttpMessage>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TablesBatch"/> class.
@@ -63,53 +63,74 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Placeholder for batch operations. This is just being used for testing.
+        /// Add a collection of AddEntity requests to the batch.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="entities"></param>
-        internal virtual void BatchTest<T>(IEnumerable<T> entities) where T : class, ITableEntity, new()
+        public virtual void AddEntities<T>(IEnumerable<T> entities) where T : class, ITableEntity, new()
         {
-
-            foreach (var entity in entities)
+            foreach (T entity in entities)
             {
-                _tableOperations.AddInsertEntityRequest(
-                    _changeset,
-                    _table,
-                    null,
-                    null,
-                    null,
-                    tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                    queryOptions: new QueryOptions() { Format = _format });
+                AddEntity(entity);
             }
+        }
+
+        /// <summary>
+        /// Add an AddEntity requests to the batch.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="entity"></param>
+        public virtual void AddEntity<T>(T entity) where T : class, ITableEntity, new()
+        {
+            _addMessages[entity.RowKey] = _batchOperations.AddInsertEntityRequest(
+                _changeset,
+                _table,
+                null,
+                null,
+                _returnNoContent,
+                tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                queryOptions: new QueryOptions() { Format = _format });
+        }
+
+        public virtual void UpdateEntity<T>(T entity, ETag ifMatch, TableUpdateMode mode = TableUpdateMode.Merge) where T : class, ITableEntity, new()
+        {
+            _batchOperations.AddUpdateEntityRequest(
+                _changeset,
+                _table,
+                entity.PartitionKey,
+                entity.RowKey,
+                null,
+                null,
+                ifMatch.ToString(),
+                tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                queryOptions: new QueryOptions() { Format = _format });
+        }
+
+        public virtual void DeleteEntity(string partitionKey, string rowKey, ETag ifMatch = default)
+        {
+            _batchOperations.AddDeleteEntityRequest(
+                _changeset,
+                _table,
+                partitionKey,
+                rowKey,
+                ifMatch.ToString(),
+                null,
+                null,
+                queryOptions: new QueryOptions() { Format = _format });
         }
 
         /// <summary>
         /// Placeholder for batch operations. This is just being used for testing.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="entities"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        internal virtual async Task<Response<List<Response>>> BatchTestAsync<T>(IEnumerable<T> entities, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+        public virtual async Task<Response<List<Response>>> SubmitBatchAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(BatchTest)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(SubmitBatch)}");
             scope.Start();
             try
             {
-                var batch = TableRestClient.CreateBatchContent(_batchGuid);
-                var changeset = batch.AddChangeset(_changesetGuid);
-                foreach (var entity in entities)
-                {
-                    _addMessages[(entity.PartitionKey, entity.RowKey)] = _batchOperations.AddInsertEntityRequest(
-                        changeset,
-                        _table,
-                        null,
-                        _returnNoContent.ToString(),
-                        null,
-                        tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                        queryOptions: new QueryOptions() { Format = _format });
-                }
-                return await _tableOperations.SendBatchRequestAsync(_tableOperations.CreateBatchRequest(batch, null, null), cancellationToken).ConfigureAwait(false);
+                return await _tableOperations.SendBatchRequestAsync(_tableOperations.CreateBatchRequest(_batch, null, null), cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -122,29 +143,14 @@ namespace Azure.Data.Tables
         /// Placeholder for batch operations. This is just being used for testing.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="entities"></param>
-        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        internal virtual Response<List<Response>> BatchTest<T>(IEnumerable<T> entities, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+        public virtual Response<List<Response>> SubmitBatch<T>(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(BatchTest)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(SubmitBatch)}");
             scope.Start();
             try
             {
-                var batch = TableRestClient.CreateBatchContent(_batchGuid);
-                var changeset = batch.AddChangeset(_changesetGuid);
-                foreach (var entity in entities)
-                {
-                    _batchOperations.AddInsertEntityRequest(
-                        changeset,
-                        _table,
-                        null,
-                        _returnNoContent.ToString(),
-                        null,
-                        tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                        queryOptions: new QueryOptions() { Format = _format });
-                }
-                return _tableOperations.SendBatchRequest(_tableOperations.CreateBatchRequest(batch, null, null), cancellationToken);
+                return _tableOperations.SendBatchRequest(_tableOperations.CreateBatchRequest(_batch, null, null), cancellationToken);
             }
             catch (Exception ex)
             {
