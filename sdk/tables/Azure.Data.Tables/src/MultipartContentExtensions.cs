@@ -10,9 +10,10 @@ namespace Azure.Data.Tables
 {
     internal static class MultipartContentExtensions
     {
-        internal static MultipartContent AddChangeset(this MultipartContent batch)
+        internal static MultipartContent AddChangeset(this MultipartContent batch, Guid changesetGuid)
         {
-            var changeset = new MultipartContent("mixed", $"changeset_{Guid.NewGuid()}");
+            var guid = changesetGuid == default ? Guid.NewGuid() : changesetGuid;
+            var changeset = new MultipartContent("mixed", $"changeset_{guid}");
             batch.Add(changeset, changeset._headers);
             return changeset;
         }

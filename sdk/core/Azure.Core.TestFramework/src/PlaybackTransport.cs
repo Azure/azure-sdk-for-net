@@ -66,6 +66,9 @@ namespace Azure.Core.TestFramework
                 message.Request.Content.TryComputeLength(out long length) &&
                 length > 0)
             {
+                // Set a Content-Length header if one doesn't exist
+                message.Request.Headers.SetValue("Content-Length", length.ToString());
+
                 using (MemoryStream stream = new MemoryStream((int)length))
                 {
                     await message.Request.Content.WriteToAsync(stream, message.CancellationToken).ConfigureAwait(false);

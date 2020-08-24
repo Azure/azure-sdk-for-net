@@ -915,7 +915,6 @@ namespace Azure.Data.Tables.Tests
         /// Validates the functionality of the TableClient.
         /// </summary>
         [Test]
-        [LiveOnly]
         public async Task BatchInsert()
         {
             if (_endpointType == TableEndpointType.CosmosTable)
@@ -925,8 +924,11 @@ namespace Azure.Data.Tables.Tests
             var entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 20);
 
             // Create the new entities.
+            var batch = client.CreateBatch();
 
-            var responses = await client.BatchTestAsync(entitiesToCreate).ConfigureAwait(false);
+            batch.SetBatchGuids(Recording.Random.NewGuid(), Recording.Random.NewGuid());
+
+            var responses = await batch.BatchTestAsync(entitiesToCreate).ConfigureAwait(false);
 
             foreach (var response in responses.Value)
             {

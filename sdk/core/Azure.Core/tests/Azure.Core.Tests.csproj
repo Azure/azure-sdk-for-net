@@ -24,8 +24,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\src\Shared\Multipart\*.cs" />
-    <!-- <Compile Remove="..\src\Shared\Multipart\MemoryResponse.cs" />
-    <Compile Remove="..\src\Shared\Multipart\Multipart.cs" /> -->
     <Compile Include="..\src\Shared\ArrayBufferWriter.cs" />
     <Compile Include="..\src\Shared\AzureResourceProviderNamespaceAttribute.cs" />
     <Compile Include="..\src\Shared\ConnectionString.cs" />

@@ -23,15 +23,6 @@ namespace Azure.Core.TestFramework
             get { return base.Content; }
             set
             {
-                if (value != null && value.TryComputeLength(out long length))
-                {
-                    _headers["Content-Length"] = new List<string> { length.ToString() };
-
-                }
-                else
-                {
-                    _headers.Remove("Content-Length");
-                }
                 base.Content = value;
             }
         }
@@ -43,7 +34,17 @@ namespace Azure.Core.TestFramework
                 _headers[name] = values = new List<string>();
             }
 
-            values.Add(value);
+            // System.Net.Http.MediaTypeHeaderValue Parses addional parameters by adding a space delimiter.
+            // Adding this special case prevents recordings mismatches where Content-Type headers with params are serialized.
+
+            if (name == HttpHeader.Names.ContentType && value.Contains(";"))
+            {
+                values.Add(string.Join("; ", value.Split(';').Select(part => part.Trim())));
+            }
+            else
+            {
+                values.Add(value);
+            }
         }
 
         protected override bool TryGetHeader(string name, out string value)

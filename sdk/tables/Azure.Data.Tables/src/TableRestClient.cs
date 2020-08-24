@@ -39,21 +39,23 @@ namespace Azure.Data.Tables
             {
                 request.Headers.Add("Prefer", responsePreference.Value.ToString());
             }
-            //request.Headers.Add("Accept", "application/json");
+
             request.Content = content;
             content.ApplyToRequest(request);
             return message;
         }
 
-        internal static MultipartContent CreateBatchContent()
+        internal static MultipartContent CreateBatchContent(Guid batchGuid)
         {
-            return new MultipartContent("mixed", $"batch_{Guid.NewGuid()}");
+            var guid = batchGuid == default ? Guid.NewGuid() : batchGuid;
+            return new MultipartContent("mixed", $"batch_{guid}");
         }
 
-        internal void AddInsertEntityRequest(MultipartContent changeset, string table, int? timeout, string requestId, ResponseFormat? responsePreference, IDictionary<string, object> tableEntityProperties, QueryOptions queryOptions)
+        internal HttpMessage AddInsertEntityRequest(MultipartContent changeset, string table, int? timeout, string requestId, ResponseFormat? responsePreference, IDictionary<string, object> tableEntityProperties, QueryOptions queryOptions)
         {
             var message = CreateInsertEntityRequest(table, timeout, requestId, responsePreference, tableEntityProperties, queryOptions);
             changeset.Add(new RequestRequestContent(message.Request), new Dictionary<string, string> { { HttpHeader.Names.ContentType, ApplicationHttp }, { CteHeaderName, Binary } });
+            return message;
         }
 
         /// <summary> Insert entity in a table. </summary>
