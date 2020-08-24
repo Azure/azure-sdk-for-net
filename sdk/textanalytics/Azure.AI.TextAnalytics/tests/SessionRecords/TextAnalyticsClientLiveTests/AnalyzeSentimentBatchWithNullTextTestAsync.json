@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://t0a14a15674c54c18-textanalytics.cognitiveservices.azure.com/text/analytics/v3.1-preview.1/sentiment?showStats=false",
+      "RequestUri": "https://azsdknet-test-ta.cognitiveservices.azure.com/text/analytics/v3.1-preview.1/sentiment?showStats=false\u0026opinionMining=false",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": [
@@ -11,12 +11,12 @@
         "Content-Length": "54",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-7262c52c5056284988a717eceac071d6-e3996bfbd46e2c4b-00",
+        "traceparent": "00-e2a2b6dec4e2d04f8f130e34bc9f0725-cbfa38ecc29c3441-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200825.3",
-          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200825.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
         ],
-        "x-ms-client-request-id": "f10ac49aef8ff66365ecb4f9e6429525",
+        "x-ms-client-request-id": "6b40e209e3f10531937f48e2e6fa453c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -30,9 +30,9 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "29af0197-0ca4-4ab5-87c7-81f1342cbda3",
+        "apim-request-id": "b9c60594-ed47-4f53-9eea-9b50f5fe5085",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 25 Aug 2020 18:49:51 GMT",
+        "Date": "Tue, 25 Aug 2020 19:39:20 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
@@ -58,7 +58,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "298076068",
+    "RandomSeed": "4341640",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
     "TEXT_ANALYTICS_ENDPOINT": "https://t0a14a15674c54c18-textanalytics.cognitiveservices.azure.com"
   }
