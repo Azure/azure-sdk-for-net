@@ -26,6 +26,29 @@ namespace Azure.Data.Tables.Tests
         public TableServiceClientLiveTests(bool isAsync, TableEndpointType endpointType) : base(isAsync, endpointType /* To record tests, add this argument, RecordedTestMode.Record */)
         { }
 
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [Test]
+        public async Task CreateTableIfNotExists()
+        {
+            // Call CreateTableIfNotExists when the table already exists.
+            Assert.That(async () => await CosmosThrottleWrapper(async () => await service.CreateTableIfNotExistsAsync(tableName).ConfigureAwait(false)), Throws.Nothing);
+
+            // Call CreateTableIfNotExists when the table does not already exists.
+            var newTableName = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
+            try
+            {
+                TableItem table = await CosmosThrottleWrapper(async () => await service.CreateTableIfNotExistsAsync(newTableName).ConfigureAwait(false));
+                Assert.That(table.TableName, Is.EqualTo(newTableName));
+            }
+            finally
+            {
+                // Delete the table using the TableClient method.
+                await CosmosThrottleWrapper(async () => await service.DeleteTableAsync(newTableName).ConfigureAwait(false));
+            }
+        }
+
         [Test]
         public void ValidateAccountSasCredentialsWithPermissions()
         {
@@ -147,8 +170,8 @@ namespace Azure.Data.Tables.Tests
                 for (int i = 0; i < 10; i++)
                 {
                     var table = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
-                    await CosmosThrottleWrapper(async () => await service.CreateTableAsync(table).ConfigureAwait(false));
                     createdTables.Add(table);
+                    await CosmosThrottleWrapper(async () => await service.CreateTableAsync(table).ConfigureAwait(false));
                 }
 
                 // Get the table list.
@@ -236,7 +259,7 @@ namespace Azure.Data.Tables.Tests
 
             // Test each property
 
-            CompareTableServiceProperties(responseToChange, changedResponse);
+            CompareServiceProperties(responseToChange, changedResponse);
         }
 
         [Test]
@@ -256,7 +279,7 @@ namespace Azure.Data.Tables.Tests
             Assert.AreEqual(new TableGeoReplicationStatus("live"), stats.GeoReplication.Status);
         }
 
-        private void CompareTableServiceProperties(TableServiceProperties expected, TableServiceProperties actual)
+        private void CompareServiceProperties(TableServiceProperties expected, TableServiceProperties actual)
         {
             Assert.AreEqual(expected.Logging.Read, actual.Logging.Read);
             Assert.AreEqual(expected.Logging.Version, actual.Logging.Version);

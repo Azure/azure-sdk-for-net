@@ -40,6 +40,7 @@ namespace Azure.Management.Network
         /// <summary> List network usages for a subscription. </summary>
         /// <param name="location"> The location where resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public virtual AsyncPageable<Usage> ListAsync(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -83,6 +84,7 @@ namespace Azure.Management.Network
         /// <summary> List network usages for a subscription. </summary>
         /// <param name="location"> The location where resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public virtual Pageable<Usage> List(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)

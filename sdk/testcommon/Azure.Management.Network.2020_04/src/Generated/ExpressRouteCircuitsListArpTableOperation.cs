@@ -54,27 +54,13 @@ namespace Azure.Management.Network
         ExpressRouteCircuitsArpTableListResult IOperationSource<ExpressRouteCircuitsArpTableListResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return ExpressRouteCircuitsArpTableListResult.DeserializeExpressRouteCircuitsArpTableListResult(document.RootElement);
-            }
+            return ExpressRouteCircuitsArpTableListResult.DeserializeExpressRouteCircuitsArpTableListResult(document.RootElement);
         }
 
         async ValueTask<ExpressRouteCircuitsArpTableListResult> IOperationSource<ExpressRouteCircuitsArpTableListResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return ExpressRouteCircuitsArpTableListResult.DeserializeExpressRouteCircuitsArpTableListResult(document.RootElement);
-            }
+            return ExpressRouteCircuitsArpTableListResult.DeserializeExpressRouteCircuitsArpTableListResult(document.RootElement);
         }
     }
 }

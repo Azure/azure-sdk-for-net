@@ -10,8 +10,7 @@ namespace Azure.Core.Tests
 {
     public class ClientOptionsTests
     {
-// TODO: Uncomment after release
-#if true || NETCOREAPP
+#if NETCOREAPP
         [Test]
         public void DefaultTransportIsHttpClientTransport()
         {

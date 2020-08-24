@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ExpressRouteCircuit. </summary>
         public ExpressRouteCircuit()
         {
+            Authorizations = new ChangeTrackingList<ExpressRouteCircuitAuthorization>();
+            Peerings = new ChangeTrackingList<ExpressRouteCircuitPeering>();
         }
 
         /// <summary> Initializes a new instance of ExpressRouteCircuit. </summary>
@@ -70,9 +73,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The ServiceProviderProvisioningState state of the resource. </summary>
         public ServiceProviderProvisioningState? ServiceProviderProvisioningState { get; set; }
         /// <summary> The list of authorizations. </summary>
-        public IList<ExpressRouteCircuitAuthorization> Authorizations { get; set; }
+        public IList<ExpressRouteCircuitAuthorization> Authorizations { get; }
         /// <summary> The list of peerings. </summary>
-        public IList<ExpressRouteCircuitPeering> Peerings { get; set; }
+        public IList<ExpressRouteCircuitPeering> Peerings { get; }
         /// <summary> The ServiceKey. </summary>
         public string ServiceKey { get; set; }
         /// <summary> The ServiceProviderNotes. </summary>

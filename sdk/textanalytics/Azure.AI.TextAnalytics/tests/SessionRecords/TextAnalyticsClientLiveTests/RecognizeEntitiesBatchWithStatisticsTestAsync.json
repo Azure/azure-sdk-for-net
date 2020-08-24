@@ -7,10 +7,10 @@
         "Content-Length": "188",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-7ecf8d8a8ac2624393c1fda73cb4ef1d-fe76a73dfd29d54b-00",
+        "traceparent": "00-8dc714c23b97b7418c7f5ee786fee99c-e1169182d0463d4d-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/1.1.0-dev.20200706.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200819.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "0d99a72c2fff12d7dbc5c35fbc35fc7e",
         "x-ms-return-client-request-id": "true"
@@ -18,27 +18,27 @@
       "RequestBody": {
         "documents": [
           {
-            "language": "en",
             "id": "1",
-            "text": "Microsoft was founded by Bill Gates and Paul Allen."
+            "text": "Microsoft was founded by Bill Gates and Paul Allen.",
+            "language": "en"
           },
           {
-            "language": "es",
             "id": "2",
-            "text": "Mi perro y mi gato tienen que ir al veterinario."
+            "text": "Mi perro y mi gato tienen que ir al veterinario.",
+            "language": "es"
           }
         ]
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "cc185f44-2480-405d-b790-d564f409ecc3",
+        "apim-request-id": "c79cfc0f-10c2-4cbb-8ef4-c90fc28a28af",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
-        "Date": "Mon, 06 Jul 2020 22:03:56 GMT",
+        "Date": "Thu, 20 Aug 2020 00:09:52 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "85"
+        "x-envoy-upstream-service-time": "99"
       },
       "ResponseBody": {
         "statistics": {

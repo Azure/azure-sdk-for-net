@@ -61,6 +61,7 @@ namespace Azure.Core
         {
             Bytes = data;
         }
+
         /// <summary>
         /// Creates a binary data instance from a string by converting
         /// the string to bytes using UTF-8 encoding.
@@ -71,6 +72,24 @@ namespace Azure.Core
         public BinaryData(string data)
         {
             Bytes = s_encoding.GetBytes(data);
+        }
+
+        /// <summary>
+        /// Creates a binary data instance from an object and serializes it
+        /// using the provided <see cref="ObjectSerializer"/>. If no <see cref="ObjectSerializer"/>
+        /// is specified, <see cref="JsonObjectSerializer"/> will be used.
+        /// </summary>
+        /// <param name="data">The data that will be serialized.</param>
+        /// <param name="type">The type of the data.</param>
+        /// <param name="serializer">The serializer to serialize
+        /// the data.</param>
+        /// <returns>A <see cref="BinaryData"/> instance.</returns>
+        public BinaryData(object data, Type type, ObjectSerializer? serializer = default)
+        {
+            using var memoryStream = new MemoryStream();
+            serializer ??= new JsonObjectSerializer();
+            serializer.Serialize(memoryStream, data, type, CancellationToken.None);
+            Bytes = memoryStream.ToArray();
         }
 
         /// <summary>

@@ -120,6 +120,7 @@ namespace Azure.Management.Network
         /// <summary> Lists all Network Virtual Appliances in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual AsyncPageable<NetworkVirtualAppliance> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -163,6 +164,7 @@ namespace Azure.Management.Network
         /// <summary> Lists all Network Virtual Appliances in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual Pageable<NetworkVirtualAppliance> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -281,6 +283,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkVirtualApplianceName"> The name of Network Virtual Appliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkVirtualApplianceName"/> is null. </exception>
         public virtual async Task<NetworkVirtualAppliancesDeleteOperation> StartDeleteAsync(string resourceGroupName, string networkVirtualApplianceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -310,6 +313,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkVirtualApplianceName"> The name of Network Virtual Appliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkVirtualApplianceName"/> is null. </exception>
         public virtual NetworkVirtualAppliancesDeleteOperation StartDelete(string resourceGroupName, string networkVirtualApplianceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -340,6 +344,7 @@ namespace Azure.Management.Network
         /// <param name="networkVirtualApplianceName"> The name of Network Virtual Appliance. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Network Virtual Appliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkVirtualApplianceName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual async Task<NetworkVirtualAppliancesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string networkVirtualApplianceName, NetworkVirtualAppliance parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -374,6 +379,7 @@ namespace Azure.Management.Network
         /// <param name="networkVirtualApplianceName"> The name of Network Virtual Appliance. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Network Virtual Appliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkVirtualApplianceName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual NetworkVirtualAppliancesCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string networkVirtualApplianceName, NetworkVirtualAppliance parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://allkimprim.table.core.windows.net/Tables?$format=application%2Fjson%3Bodata%3Dfullmetadata",
+      "RequestUri": "https://chrissscratch.table.core.windows.net/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -9,13 +9,13 @@
         "Content-Length": "33",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-143867714f935d4fb2c8fb4db9c04123-1b941339d2136140-00",
+        "traceparent": "00-d572e32f1c3ed74ab960a3df0e49f1f9-43898c50c228d643-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200724.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Data.Tables/1.0.0-dev.20200821.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "0d9fe3f6c64567f79f48300c3cc81e11",
-        "x-ms-date": "Mon, 27 Jul 2020 17:26:54 GMT",
+        "x-ms-date": "Fri, 21 Aug 2020 15:59:45 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -25,9 +25,9 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Mon, 27 Jul 2020 17:26:53 GMT",
-        "Location": "https://allkimprim.table.core.windows.net/Tables(\u0027testtabledwac9mdv\u0027)",
+        "Content-Type": "application/json; odata=minimalmetadata; streaming=true; charset=utf-8",
+        "Date": "Fri, 21 Aug 2020 15:59:45 GMT",
+        "Location": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtabledwac9mdv\u0027)",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
@@ -35,19 +35,16 @@
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "0d9fe3f6c64567f79f48300c3cc81e11",
-        "x-ms-request-id": "41589139-5002-002d-5f3b-642c9e000000",
+        "x-ms-request-id": "b2412759-3002-006c-36d4-776f3b000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
-        "odata.metadata": "https://allkimprim.table.core.windows.net/$metadata#Tables/@Element",
-        "odata.type": "allkimprim.Tables",
-        "odata.id": "https://allkimprim.table.core.windows.net/Tables(\u0027testtabledwac9mdv\u0027)",
-        "odata.editLink": "Tables(\u0027testtabledwac9mdv\u0027)",
+        "odata.metadata": "https://chrissscratch.table.core.windows.net/$metadata#Tables/@Element",
         "TableName": "testtabledwac9mdv"
       }
     },
     {
-      "RequestUri": "https://allkimprim.table.core.windows.net/testtabledwac9mdv?$format=application%2Fjson%3Bodata%3Dfullmetadata",
+      "RequestUri": "https://chrissscratch.table.core.windows.net/testtabledwac9mdv?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -55,13 +52,14 @@
         "Content-Length": "614",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-779f435e3710da479d215088c661008b-ee2851fc5d59e944-00",
+        "Prefer": "return-no-content",
+        "traceparent": "00-c5ff75dfb53d7442921b953cd32153c8-b5ea91520599e645-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200724.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Data.Tables/1.0.0-dev.20200821.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "0d071b69a913453eb175d57aa4428854",
-        "x-ms-date": "Mon, 27 Jul 2020 17:26:54 GMT",
+        "x-ms-date": "Fri, 21 Aug 2020 15:59:45 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -83,33 +81,66 @@
         "SomeDoubleProperty1@odata.type": "Edm.Double",
         "SomeIntProperty": 1
       },
-      "StatusCode": 201,
+      "StatusCode": 204,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Mon, 27 Jul 2020 17:26:54 GMT",
-        "ETag": "W/\u0022datetime\u00272020-07-27T17%3A26%3A54.3692176Z\u0027\u0022",
-        "Location": "https://allkimprim.table.core.windows.net/testtabledwac9mdv(PartitionKey=\u0027somPartition\u0027,RowKey=\u002701\u0027)",
+        "Content-Length": "0",
+        "DataServiceId": "https://chrissscratch.table.core.windows.net/testtabledwac9mdv(PartitionKey=\u0027somPartition\u0027,RowKey=\u002701\u0027)",
+        "Date": "Fri, 21 Aug 2020 15:59:45 GMT",
+        "ETag": "W/\u0022datetime\u00272020-08-21T15%3A59%3A45.7627883Z\u0027\u0022",
+        "Location": "https://chrissscratch.table.core.windows.net/testtabledwac9mdv(PartitionKey=\u0027somPartition\u0027,RowKey=\u002701\u0027)",
+        "Preference-Applied": "return-no-content",
+        "Server": [
+          "Windows-Azure-Table/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "0d071b69a913453eb175d57aa4428854",
+        "x-ms-request-id": "b2412767-3002-006c-43d4-776f3b000000",
+        "x-ms-version": "2019-02-02"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://chrissscratch.table.core.windows.net/testtabledwac9mdv(PartitionKey=\u0027somPartition\u0027,RowKey=\u002701\u0027)?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "DataServiceVersion": "3.0",
+        "traceparent": "00-597f670b5b39444bb798336ed09841ce-22e5ffdf65d91f4a-00",
+        "User-Agent": [
+          "azsdk-net-Data.Tables/1.0.0-dev.20200821.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "3369034bd9fc4e0b7f219aaa067c6b04",
+        "x-ms-date": "Fri, 21 Aug 2020 15:59:45 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-02-02"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Type": "application/json; odata=minimalmetadata; streaming=true; charset=utf-8",
+        "Date": "Fri, 21 Aug 2020 15:59:45 GMT",
+        "ETag": "W/\u0022datetime\u00272020-08-21T15%3A59%3A45.7627883Z\u0027\u0022",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "0d071b69a913453eb175d57aa4428854",
-        "x-ms-request-id": "4158913c-5002-002d-613b-642c9e000000",
+        "x-ms-client-request-id": "3369034bd9fc4e0b7f219aaa067c6b04",
+        "x-ms-request-id": "b2412770-3002-006c-4cd4-776f3b000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
-        "odata.metadata": "https://allkimprim.table.core.windows.net/$metadata#testtabledwac9mdv/@Element",
-        "odata.type": "allkimprim.testtabledwac9mdv",
-        "odata.id": "https://allkimprim.table.core.windows.net/testtabledwac9mdv(PartitionKey=\u0027somPartition\u0027,RowKey=\u002701\u0027)",
-        "odata.etag": "W/\u0022datetime\u00272020-07-27T17%3A26%3A54.3692176Z\u0027\u0022",
-        "odata.editLink": "testtabledwac9mdv(PartitionKey=\u0027somPartition\u0027,RowKey=\u002701\u0027)",
+        "odata.metadata": "https://chrissscratch.table.core.windows.net/$metadata#testtabledwac9mdv/@Element",
+        "odata.etag": "W/\u0022datetime\u00272020-08-21T15%3A59%3A45.7627883Z\u0027\u0022",
         "PartitionKey": "somPartition",
         "RowKey": "01",
-        "Timestamp@odata.type": "Edm.DateTime",
-        "Timestamp": "2020-07-27T17:26:54.3692176Z",
+        "Timestamp": "2020-08-21T15:59:45.7627883Z",
         "SomeStringProperty": "This is table entity number 01",
         "SomeDateProperty@odata.type": "Edm.DateTime",
         "SomeDateProperty": "2020-01-01T01:02:00Z",
@@ -125,18 +156,18 @@
       }
     },
     {
-      "RequestUri": "https://allkimprim.table.core.windows.net/Tables(\u0027testtabledwac9mdv\u0027)",
+      "RequestUri": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtabledwac9mdv\u0027)",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-86436dd36eec9c46be5b8df1863eba2b-c3c81d3e1202b14a-00",
+        "traceparent": "00-0985cffd02d00e43a59632d4d5c54c09-9aa8212b849b0f47-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200724.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Data.Tables/1.0.0-dev.20200821.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "3369034bd9fc4e0b7f219aaa067c6b04",
-        "x-ms-date": "Mon, 27 Jul 2020 17:26:54 GMT",
+        "x-ms-client-request-id": "e5839afe2af94c45a5595bcff07dc25c",
+        "x-ms-date": "Fri, 21 Aug 2020 15:59:45 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -145,14 +176,14 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Mon, 27 Jul 2020 17:26:54 GMT",
+        "Date": "Fri, 21 Aug 2020 15:59:45 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "3369034bd9fc4e0b7f219aaa067c6b04",
-        "x-ms-request-id": "4158913d-5002-002d-623b-642c9e000000",
+        "x-ms-client-request-id": "e5839afe2af94c45a5595bcff07dc25c",
+        "x-ms-request-id": "b2412775-3002-006c-51d4-776f3b000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
@@ -160,7 +191,7 @@
   ],
   "Variables": {
     "RandomSeed": "904687787",
-    "TABLES_PRIMARY_STORAGE_ACCOUNT_KEY": "",
-    "TABLES_STORAGE_ACCOUNT_NAME": "allkimprim"
+    "TABLES_PRIMARY_STORAGE_ACCOUNT_KEY": "Kg==",
+    "TABLES_STORAGE_ACCOUNT_NAME": "chrissscratch"
   }
 }

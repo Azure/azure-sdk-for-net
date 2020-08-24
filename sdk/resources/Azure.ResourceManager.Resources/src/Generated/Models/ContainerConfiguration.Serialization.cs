@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ContainerGroupName != null)
+            if (Optional.IsDefined(ContainerGroupName))
             {
                 writer.WritePropertyName("containerGroupName");
                 writer.WriteStringValue(ContainerGroupName);
@@ -25,20 +25,16 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ContainerConfiguration DeserializeContainerConfiguration(JsonElement element)
         {
-            string containerGroupName = default;
+            Optional<string> containerGroupName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("containerGroupName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     containerGroupName = property.Value.GetString();
                     continue;
                 }
             }
-            return new ContainerConfiguration(containerGroupName);
+            return new ContainerConfiguration(containerGroupName.Value);
         }
     }
 }

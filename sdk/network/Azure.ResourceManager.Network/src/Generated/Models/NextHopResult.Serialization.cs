@@ -14,40 +14,28 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static NextHopResult DeserializeNextHopResult(JsonElement element)
         {
-            NextHopType? nextHopType = default;
-            string nextHopIpAddress = default;
-            string routeTableId = default;
+            Optional<NextHopType> nextHopType = default;
+            Optional<string> nextHopIpAddress = default;
+            Optional<string> routeTableId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextHopType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextHopType = new NextHopType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("nextHopIpAddress"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextHopIpAddress = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("routeTableId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     routeTableId = property.Value.GetString();
                     continue;
                 }
             }
-            return new NextHopResult(nextHopType, nextHopIpAddress, routeTableId);
+            return new NextHopResult(Optional.ToNullable(nextHopType), nextHopIpAddress.Value, routeTableId.Value);
         }
     }
 }

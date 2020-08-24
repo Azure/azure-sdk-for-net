@@ -7,10 +7,10 @@
         "Content-Length": "180",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-7ce07a4b4036a64593d20f58e7e28637-153408ff6c41c44f-00",
+        "traceparent": "00-db2c0e50cf96d04289ddcbd6e76776b4-65e0caa8e403d645-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/1.1.0-dev.20200706.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200818.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "c1114d59d0530dcf755150fc283a2537",
         "x-ms-return-client-request-id": "true"
@@ -18,22 +18,22 @@
       "RequestBody": {
         "documents": [
           {
-            "language": "es",
             "id": "0",
-            "text": "Anthony runs his own personal training business so thisisaverylongtokenwhichwillbetruncatedtoshowushowwarningsareemittedintheapi"
+            "text": "Anthony runs his own personal training business so thisisaverylongtokenwhichwillbetruncatedtoshowushowwarningsareemittedintheapi",
+            "language": "es"
           }
         ]
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "072f5e5d-49e3-4f44-a00e-f13002014534",
+        "apim-request-id": "a10581b8-8e3c-4b1f-94ba-d52a71d79542",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1",
-        "Date": "Mon, 06 Jul 2020 22:03:45 GMT",
+        "Date": "Wed, 19 Aug 2020 02:51:22 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "7"
+        "x-envoy-upstream-service-time": "16"
       },
       "ResponseBody": {
         "documents": [
@@ -53,7 +53,7 @@
           }
         ],
         "errors": [],
-        "modelVersion": "2019-10-01"
+        "modelVersion": "2020-07-01"
       }
     }
   ],

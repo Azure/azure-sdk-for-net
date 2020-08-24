@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         /// <summary> Initializes a new instance of IPRule. </summary>
         /// <param name="iPAddressOrRange"> Specifies the IP or IP range in CIDR format. Only IPV4 address is allowed. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="iPAddressOrRange"/> is null. </exception>
         public IPRule(string iPAddressOrRange)
         {
             if (iPAddressOrRange == null)

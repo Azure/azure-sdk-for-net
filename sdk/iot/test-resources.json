@@ -21,11 +21,41 @@
             "metadata": {
               "description": "The location of the resource. By default, this is the same as the resource group."
             }
+        },
+        "storageAccountName": {
+            "type": "string",
+            "metadata": {
+              "description": "The storage account used to test import export jobs."
+            },
+            "defaultValue": "[uniqueString(toLower(resourceGroup().name))]"
+        },
+        "blobContainerName": {
+          "type": "string",
+          "metadata": {
+            "description": "The container to store import export jobs data."
+          },
+          "defaultValue": "importexportjobs"
+        },
+        "signedStart": {
+          "type": "string",
+          "metadata": {
+            "description": "The sas token signed start time."
+          },
+          "defaultValue": "[utcNow('yyyy-MM-ddTHH:mm:ssZ')]"
         }
     },
     "variables": {
         "iotHubResourceId": "[resourceId('Microsoft.Devices/IotHubs', parameters('baseName'))]",
-        "rbacOwnerRoleDefinitionId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', '8e3af657-a8ff-443c-a75c-2fe8c4bcb635')]"
+        "rbacOwnerRoleDefinitionId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', '8e3af657-a8ff-443c-a75c-2fe8c4bcb635')]",
+        "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
+        "serviceSasProperties": {
+          "canonicalizedResource": "[concat('/blob/', parameters('storageAccountName'),'/',parameters('blobContainerName'))]",
+          "signedResource": "c",
+          "signedPermission": "rwdl",
+          "signedstart":"[parameters('signedStart')]",
+          "signedExpiry": "[dateTimeAdd(parameters('signedStart'), 'PT1H')]",
+          "signedversion": "2015-04-05"
+      }
     },
     "resources": [
         {
@@ -55,16 +85,57 @@
                 },
                 "features": "None"
             }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "2019-06-01",
+            "name": "[parameters('storageAccountName')]",
+            "location": "[parameters('location')]",
+            "sku": {
+              "name": "Standard_LRS",
+              "tier": "Standard"
+            },
+            "kind": "Storage",
+            "properties": {
+              "supportsHttpsTrafficOnly": true,
+              "encryption": {
+                "services": {
+                  "file": {
+                    "keyType": "Account",
+                    "enabled": true
+                  },
+                  "blob": {
+                    "keyType": "Account",
+                    "enabled": true
+                  }
+                },
+                "keySource": "Microsoft.Storage"
+              }
+            },
+            "resources": [
+            {
+                "type": "blobServices/containers",
+                "apiVersion": "2019-06-01",
+                "name": "[concat('default/', parameters('blobContainerName'))]",
+                "dependsOn": [
+                    "[parameters('storageAccountName')]"
+                ]
+            }
+          ]
         }
     ],
     "outputs": {
-        "IOT_HUB_ENDPOINT_URL": {
+        "iot_hub_endpoint_url": {
           "type": "string",
           "value": "[concat('https://', reference(variables('iotHubResourceId'), '2020-03-01').hostName)]"
         },
-        "IOT_HUB_CONNECTION_STRING":{
+        "iot_hub_connection_string":{
             "type": "string",
             "value": "[concat('HostName=', reference(resourceId('Microsoft.Devices/IoTHubs', parameters('baseName')), '2020-03-01').hostName, ';SharedAccessKeyName=iothubowner;SharedAccessKey=', listKeys(resourceId('Microsoft.Devices/IotHubs', parameters('baseName')), '2020-03-01').value[0].primaryKey)]"
+        },
+        "STORAGE_SAS_TOKEN":{
+          "type": "string",    
+          "value": "[concat('https://',parameters('storageAccountName'),'.blob.core.windows.net/',parameters('blobContainerName'),'?',listServiceSas(variables('storageAccountId'), '2018-07-01', variables('serviceSasProperties')).serviceSasToken)]"
         }
     }
 }

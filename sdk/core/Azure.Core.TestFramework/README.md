@@ -69,7 +69,7 @@ public class AppConfigurationTestEnvironment : TestEnvironment
 
     // Variables retrieved using GetRecordedVariable will be recorded in recorded tests
     // Argument is the output name in the test-resources.json
-    public string ConnectionString => GetRecordedVariable("APPCONFIGURATION_CONNECTION_STRING");
+    public string Endpoint => GetRecordedVariable("APPCONFIGURATION_ENDPOINT");
     // Variables retrieved using GetVariable will not be recorded but the method will throw if the variable is not set
     public string SystemAssignedVault => GetVariable("IDENTITYTEST_IMDSTEST_SYSTEMASSIGNEDVAULT");
     // Variables retrieved using GetOptionalVariable will not be recorded and the method will return null if variable is not set
@@ -78,6 +78,24 @@ public class AppConfigurationTestEnvironment : TestEnvironment
 ```
 
 **NOTE:** Make sure that variables containing secret values are not recorded or are sanitized.
+
+To sanitize variables use the `options` parameter of `GetRecordedVariable`:
+
+``` C#
+    // HasSecretConnectionStringParameter would ensure the right connection string parameter is sanitized before storing the record
+    public string ConnectionString => GetRecordedVariable("APPCONFIGURATION_CONNECTION_STRING", options => options.HasSecretConnectionStringParameter("secret"));
+    // IsSecret would ensure the entire value is sanitized before storage
+    public string Key => GetRecordedVariable("APPCONFIGURATION_KEY", options => options.IsSecret());
+```
+
+If the client expects a Base64 secret value use the `SanitizedValue` parameter to use a Base64 compatible replacement value:
+
+``` C#
+    // Connection string parameter would be replaced with Kg==
+    public string ConnectionString => GetRecordedVariable("APPCONFIGURATION_CONNECTION_STRING", options => options.HasSecretConnectionStringParameter("secret", SanitizedValue.Base64));
+    // Secret value would be replaced with Kg==
+    public string Key => GetRecordedVariable("APPCONFIGURATION_KEY", options => options.IsSecret(SanitizedValue.Base64));
+```
 
 You can now retrieve these values in tests:
 
@@ -192,58 +210,29 @@ For example:
 ``` C#
     public class ConfigurationRecordedTestSanitizer : RecordedTestSanitizer
     {
-        public override string SanitizeVariable(string variableName, string environmentVariableValue) =>
-            variableName switch
-            {
-                "APPCONFIGURATION_CONNECTION_STRING" => SanitizeConnectionString(environmentVariableValue),
-                _ => base.SanitizeVariable(variableName, environmentVariableValue)
-            };
-
-        private static string SanitizeConnectionString(string connectionString)
+        public ConfigurationRecordedTestSanitizer()
         {
-            const string secretKey = "secret";
-            var parsed = ConnectionString.Parse(connectionString, allowEmptyValues: true);
+            // Add headers that might contain secrets
+            SanitizedHeaders.Add("My-Custom-Auth-Header");
+        }
 
-            // Configuration client expects secret to be base64 encoded so we can't use the placeholder
-            parsed.Replace(secretKey, string.Empty);
-            return parsed.ToString();
+        public override string SanitizeUri(string uri)
+        {
+            // sanitize url
         }
     }
 ```
-The above example also illustrates a common pattern where you need to sanitize the connection string, but you must ensure that the account key is base64 encoded or else the test will fail your connection string validation when run in Playback mode. In such cases, you need to override the default placeholder that is used to ensure the value is base64.
 
 Another sanitizer property that is available for sanitizing Json payloads is the `JsonPathSanitizers`. This property contains a list of [Json Path](https://www.newtonsoft.com/json/help/html/QueryJsonSelectToken.htm) format strings that will be validated against the body. If a match exists, the value will be sanitized.
 
 ```c#
     public class FormRecognizerRecordedTestSanitizer : RecordedTestSanitizer
     {
-        private const string SanitizedSasUri = "https://sanitized.blob.core.windows.net";
-
         public FormRecognizerRecordedTestSanitizer()
             : base()
         {
             JsonPathSanitizers.Add("$..accessToken");
             JsonPathSanitizers.Add("$..source");
-        }
-
-        public override void SanitizeHeaders(IDictionary<string, string[]> headers)
-        {
-            if (headers.ContainsKey(Constants.AuthorizationHeader))
-            {
-                headers[Constants.AuthorizationHeader] = new[] { SanitizeValue };
-            }
-
-            base.SanitizeHeaders(headers);
-        }
-
-        public override string SanitizeVariable(string variableName, string environmentVariableValue)
-        {
-            return variableName switch
-            {
-                FormRecognizerTestEnvironment.ApiKeyEnvironmentVariableName => SanitizeValue,
-                FormRecognizerTestEnvironment.BlobContainerSasUrlEnvironmentVariableName => SanitizedSasUri,
-                _ => base.SanitizeVariable(variableName, environmentVariableValue)
-            };
         }
     }
 ```
@@ -380,3 +369,27 @@ For example:
 
 ## Management libraries
 Testing of management libraries uses the Test Framework and should generally be very similar to tests that you write for data plane libraries. There is an intermediate test class that you will likely want to derive from that lives within the management code base - [ManagementRecordedTestBase](https://github.com/Azure/azure-sdk-for-net/blob/babee31b3151e4512ac5a77a55c426c136335fbb/common/ManagementTestShared/ManagementRecordedTestBase.cs). To see examples of Track 2 Management tests using the Test Framework, take a look at the [Storage tests](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.ResourceManager.Storage/tests/Tests).
+
+## Recording tests on CI
+
+Test framework provides an ability to re-record tests remotely using an Azure DevOps test pipeline. To re-record tests you need to have an open GitHub pull request.
+
+To start recording invoke the `Start-DevOpsRecordings.ps1` script passing the PR number and sdk directories to re-record:
+
+```powershell
+> .\eng\scripts\Start-DevOpsRecordings.ps1 14153 storage iot tables
+```
+
+The `Start-DevOpsRecordings.ps1` would cancel all active recording runs unless `-NoCancel` switch is used.
+
+After runs finish an artifact with recordings will be published.
+
+To download and unpack all artifacts use the `Download-DevOpsRecordings.ps1` script passing the PR number.
+
+```powershell
+> .\eng\scripts\Download-DevOpsRecordings.ps1 14153
+```
+
+The `Download-DevOpsRecordings.ps1` would wait for active runs to finish before retrieving artifacts unless `-NoWait` switch is used.
+
+**NOTE:** these scripts require being signed in with Azure CLI (https://docs.microsoft.com/en-us/cli/azure/authenticate-azure-cli?view=azure-cli-latest) and access to the internal DevOps project (https://dev.azure.com/azure-sdk/internal/) 

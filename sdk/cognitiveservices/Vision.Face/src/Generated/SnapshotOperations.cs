@@ -123,7 +123,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationHeaderResponse<SnapshotTakeHeaders>> TakeWithHttpMessagesAsync(SnapshotObjectType type, string objectId, IList<System.Guid> applyScope, string userData = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationHeaderResponse<SnapshotTakeHeaders>> TakeWithHttpMessagesAsync(SnapshotObjectType type, string objectId, IList<System.Guid?> applyScope, string userData = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
@@ -133,27 +133,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "objectId");
             }
-            if (objectId != null)
-            {
-                if (objectId.Length > 64)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "objectId", 64);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(objectId, "^[a-z0-9-_]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "objectId", "^[a-z0-9-_]+$");
-                }
-            }
             if (applyScope == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "applyScope");
-            }
-            if (userData != null)
-            {
-                if (userData.Length > 16384)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "userData", 16384);
-                }
             }
             TakeSnapshotRequest body = new TakeSnapshotRequest();
             if (objectId != null || applyScope != null || userData != null)
@@ -314,7 +296,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<Snapshot>>> ListWithHttpMessagesAsync(SnapshotObjectType? type = default(SnapshotObjectType?), IList<System.Guid> applyScope = default(IList<System.Guid>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<Snapshot>>> ListWithHttpMessagesAsync(SnapshotObjectType? type = default(SnapshotObjectType?), IList<System.Guid?> applyScope = default(IList<System.Guid?>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
@@ -635,18 +617,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> UpdateWithHttpMessagesAsync(System.Guid snapshotId, IList<System.Guid> applyScope = default(IList<System.Guid>), string userData = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> UpdateWithHttpMessagesAsync(System.Guid snapshotId, IList<System.Guid?> applyScope = default(IList<System.Guid?>), string userData = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
-            }
-            if (userData != null)
-            {
-                if (userData.Length > 16384)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "userData", 16384);
-                }
             }
             UpdateSnapshotRequest body = new UpdateSnapshotRequest();
             if (applyScope != null || userData != null)
@@ -969,17 +944,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             if (objectId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "objectId");
-            }
-            if (objectId != null)
-            {
-                if (objectId.Length > 64)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "objectId", 64);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(objectId, "^[a-z0-9-_]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "objectId", "^[a-z0-9-_]+$");
-                }
             }
             ApplySnapshotRequest body = new ApplySnapshotRequest();
             if (objectId != null)

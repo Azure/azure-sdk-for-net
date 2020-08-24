@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of KeyVaultAndSecretReference. </summary>
         /// <param name="sourceVault"> Resource id of the KeyVault containing the key or secret. </param>
         /// <param name="secretUrl"> Url pointing to a key or secret in KeyVault. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceVault"/> or <paramref name="secretUrl"/> is null. </exception>
         public KeyVaultAndSecretReference(SourceVault sourceVault, string secretUrl)
         {
             if (sourceVault == null)

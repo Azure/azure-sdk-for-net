@@ -14,50 +14,34 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static AvailableServiceAlias DeserializeAvailableServiceAlias(JsonElement element)
         {
-            string name = default;
-            string id = default;
-            string type = default;
-            string resourceName = default;
+            Optional<string> name = default;
+            Optional<string> id = default;
+            Optional<string> type = default;
+            Optional<string> resourceName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("resourceName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     resourceName = property.Value.GetString();
                     continue;
                 }
             }
-            return new AvailableServiceAlias(name, id, type, resourceName);
+            return new AvailableServiceAlias(name.Value, id.Value, type.Value, resourceName.Value);
         }
     }
 }

@@ -88,10 +88,14 @@ namespace EventHub.Tests.ScenarioTests
                     var netWorkRuleSet = EventHubManagementClient.Namespaces.CreateOrUpdateNetworkRuleSet(resourceGroup, namespaceName, new NetworkRuleSet() { DefaultAction = DefaultAction.Deny, VirtualNetworkRules = VNetRules, IpRules = IPRules });
 
                     var getNetworkRuleSet = EventHubManagementClient.Namespaces.GetNetworkRuleSet(resourceGroup, namespaceName);
-
-                    var netWorkRuleSet1 = EventHubManagementClient.Namespaces.CreateOrUpdateNetworkRuleSet(resourceGroup, namespaceName, new NetworkRuleSet() { DefaultAction = "Allow" });
+                    Assert.Equal<int>(IPRules.Count, getNetworkRuleSet.IpRules.Count);
+                    Assert.Equal<int>(VNetRules.Count, getNetworkRuleSet.VirtualNetworkRules.Count);
+                    
+                    var netWorkRuleSet1 = EventHubManagementClient.Namespaces.CreateOrUpdateNetworkRuleSet(resourceGroup, namespaceName, new NetworkRuleSet() { DefaultAction = "Allow", TrustedServiceAccessEnabled = true});
 
                     var getNetworkRuleSet1 = EventHubManagementClient.Namespaces.GetNetworkRuleSet(resourceGroup, namespaceName);
+                    Assert.True(getNetworkRuleSet1.TrustedServiceAccessEnabled);
+                    
 
                     TestUtilities.Wait(TimeSpan.FromSeconds(5));
                 }

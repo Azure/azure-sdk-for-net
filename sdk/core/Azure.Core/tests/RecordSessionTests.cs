@@ -256,6 +256,9 @@ namespace Azure.Core.Tests
         }
 
         [TestCase("*", "invalid json", "invalid json")]
+        [TestCase("..secret",
+                "[{\"secret\":\"I should be sanitized\"},{\"secret\":\"I should be sanitized\"}]",
+                "[{\"secret\":\"Sanitized\"},{\"secret\":\"Sanitized\"}]")]
         [TestCase("$..secret",
                 "{\"secret\":\"I should be sanitized\",\"level\":{\"key\":\"value\",\"secret\":\"I should be sanitized\"}}",
                 "{\"secret\":\"Sanitized\",\"level\":{\"key\":\"value\",\"secret\":\"Sanitized\"}}")]

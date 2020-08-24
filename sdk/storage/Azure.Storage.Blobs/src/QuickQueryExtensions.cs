@@ -15,7 +15,7 @@ namespace Azure.Storage.Blobs
     internal static class QuickQueryExtensions
     {
         internal static QuerySerialization ToQuickQuerySerialization(
-            this IBlobQueryTextOptions textConfiguration)
+            this BlobQueryTextOptions textConfiguration)
         {
             if (textConfiguration == default)
             {

@@ -249,22 +249,25 @@ namespace Azure.Data.Tables.Tests
         protected async Task<TResult> CosmosThrottleWrapper<TResult>(Func<Task<TResult>> action)
         {
             int retryCount = 0;
-            int delay = 500;
+            int delay = 1500;
             while (true)
             {
                 try
                 {
                     return await action().ConfigureAwait(false);
                 }
-                // Disable retry throttling in Playback mode.
-                catch (RequestFailedException ex) when (ex.Status == 429 && Mode != RecordedTestMode.Playback)
+                catch (RequestFailedException ex) when (ex.Status == 429)
                 {
                     if (++retryCount > 6)
                     {
                         throw;
                     }
-                    await Task.Delay(delay);
-                    delay *= 2;
+                    // Disable retry throttling in Playback mode.
+                    if (Mode != RecordedTestMode.Playback)
+                    {
+                        await Task.Delay(delay);
+                        delay *= 2;
+                    }
                 }
             }
         }
@@ -273,7 +276,7 @@ namespace Azure.Data.Tables.Tests
         {
             foreach (var entity in entitiesToCreate)
             {
-                await CosmosThrottleWrapper(async () => await client.CreateEntityAsync<T>(entity).ConfigureAwait(false));
+                await CosmosThrottleWrapper(async () => await client.AddEntityAsync<T>(entity).ConfigureAwait(false));
             }
         }
 
@@ -281,7 +284,7 @@ namespace Azure.Data.Tables.Tests
         {
             foreach (var entity in entitiesToCreate)
             {
-                await CosmosThrottleWrapper(async () => await client.CreateEntityAsync(entity).ConfigureAwait(false));
+                await CosmosThrottleWrapper(async () => await client.AddEntityAsync(entity).ConfigureAwait(false));
             }
         }
 
@@ -313,7 +316,7 @@ namespace Azure.Data.Tables.Tests
             public string PartitionKey { get; set; }
             public string RowKey { get; set; }
             public DateTimeOffset? Timestamp { get; set; }
-            public string ETag { get; set; }
+            public ETag ETag { get; set; }
         }
 
         public class SimpleTestEntity : ITableEntity
@@ -322,7 +325,7 @@ namespace Azure.Data.Tables.Tests
             public string PartitionKey { get; set; }
             public string RowKey { get; set; }
             public DateTimeOffset? Timestamp { get; set; }
-            public string ETag { get; set; }
+            public ETag ETag { get; set; }
         }
 
         public class ComplexEntity : ITableEntity
@@ -451,7 +454,7 @@ namespace Azure.Data.Tables.Tests
 
             public DateTimeOffset? Timestamp { get; set; }
 
-            public string ETag { get; set; }
+            public ETag ETag { get; set; }
 
             public static void AssertEquality(ComplexEntity a, ComplexEntity b)
             {

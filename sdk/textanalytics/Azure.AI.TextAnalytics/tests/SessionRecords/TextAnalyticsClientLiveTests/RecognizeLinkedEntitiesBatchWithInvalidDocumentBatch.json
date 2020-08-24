@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azsdknet-test-ta.cognitiveservices.azure.com/text/analytics/v3.1-preview.1/entities/linking",
+      "RequestUri": "https://azsdknet-test-ta.cognitiveservices.azure.com/text/analytics/v3.1-preview.1/entities/linking?showStats=false",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Content-Length": "561",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-8b7feb0a968c5941ba95411196a4f4b2-2fa1d12c9c654e43-00",
+        "traceparent": "00-4771fb96a697df42a49652214213ff65-1520b60c072dc246-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200804.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200821.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "4d779a7a51313f9b3c0edbedb23fc9e2",
         "x-ms-return-client-request-id": "true"
@@ -18,46 +18,46 @@
       "RequestBody": {
         "documents": [
           {
-            "language": "en",
             "id": "0",
-            "text": "Microsoft was founded by Bill Gates and Paul Allen."
+            "text": "Microsoft was founded by Bill Gates and Paul Allen.",
+            "language": "en"
           },
           {
-            "language": "en",
             "id": "1",
-            "text": "Hello world"
+            "text": "Hello world",
+            "language": "en"
           },
           {
-            "language": "en",
             "id": "2",
-            "text": "Pike place market is my favorite Seattle attraction."
+            "text": "Pike place market is my favorite Seattle attraction.",
+            "language": "en"
           },
           {
-            "language": "en",
             "id": "3",
-            "text": "I had a wonderful trip to Seattle last week and even visited the Space Needle 2 times!"
+            "text": "I had a wonderful trip to Seattle last week and even visited the Space Needle 2 times!",
+            "language": "en"
           },
           {
-            "language": "en",
             "id": "4",
-            "text": "Unfortunately, it rained during my entire trip to Seattle. I didn\u0027t even get to visit the Space Needle"
+            "text": "Unfortunately, it rained during my entire trip to Seattle. I didn\u0027t even get to visit the Space Needle",
+            "language": "en"
           },
           {
-            "language": "en",
             "id": "5",
-            "text": "This should fail!"
+            "text": "This should fail!",
+            "language": "en"
           }
         ]
       },
       "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "102efbac-4f2e-4fee-850f-ade2c56e655d",
+        "apim-request-id": "c0d064f0-c6e8-40a3-95c3-5abe1edb979b",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 04 Aug 2020 17:15:30 GMT",
+        "Date": "Fri, 21 Aug 2020 20:16:54 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "5"
+        "x-envoy-upstream-service-time": "7"
       },
       "ResponseBody": {
         "error": {

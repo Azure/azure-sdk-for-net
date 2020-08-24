@@ -37,7 +37,7 @@ public class OfficeSupplyEntity : ITableEntity
     public string PartitionKey { get; set; }
     public string RowKey { get; set; }
     public DateTimeOffset? Timestamp { get; set; }
-    public string ETag { get; set; }
+    public ETag ETag { get; set; }
 }
 ```
 
@@ -79,7 +79,7 @@ To add the entity to the table, invoke `CreateEntity` and pass in the newly crea
 
 ```C# Snippet:TablesSample2AddEntity
 // Add the newly created entity.
-tableClient.CreateEntity(entity);
+tableClient.AddEntity(entity);
 ```
 
 ## Delete an entity
