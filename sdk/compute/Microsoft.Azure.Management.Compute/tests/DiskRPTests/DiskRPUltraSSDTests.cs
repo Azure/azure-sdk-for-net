@@ -21,10 +21,16 @@ namespace Compute.Tests.DiskRPTests
         [Fact]
         public void UltraSSD_CRUD_EmptyDiskShared()
         {
-            UltraSSD_CRUD_Helper(location: "eastus2euap", methodName: "UltraSSD_CRUD_EmptyDiskShared", sharedDisks: true);
+            UltraSSD_CRUD_Helper(location: "eastus", methodName: "UltraSSD_CRUD_EmptyDiskShared", sharedDisks: true);
         }
 
-        private void UltraSSD_CRUD_Helper(string location, string methodName, bool useZones = false, bool sharedDisks = false)
+        [Fact]
+        public void UltraSSD_CRUD_LogicalSectorSize()
+        {
+            UltraSSD_CRUD_Helper(location: "eastus2euap", methodName: "UltraSSD_CRUD_LogicalSectorSize", enable512E: true);
+        }
+
+        private void UltraSSD_CRUD_Helper(string location, string methodName, bool useZones = false, bool sharedDisks = false, bool enable512E = false)
         {
             using (MockContext context = MockContext.Start(this.GetType(), methodName))
             {
@@ -49,6 +55,10 @@ namespace Compute.Tests.DiskRPTests
                     disk.DiskMBpsReadOnly = 8;
                     disk.MaxShares = 2;
                 }
+                if (enable512E)
+                {
+                    disk.CreationData.LogicalSectorSize = 512;
+                }
                 try
                 {
                     m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = location });
@@ -60,7 +70,14 @@ namespace Compute.Tests.DiskRPTests
                     // Get
                     diskOut = m_CrpClient.Disks.Get(rgName, diskName);
                     Validate(disk, diskOut, location);
-
+                    if (enable512E)
+                    {
+                        Assert.Equal(512, diskOut.CreationData.LogicalSectorSize);
+                    }
+                    else
+                    {
+                        Assert.Equal(4096, diskOut.CreationData.LogicalSectorSize);
+                    }
                     // Patch
                     const string tagKey = "tagKey";
                     var updatedisk = new DiskUpdate();
@@ -96,7 +113,14 @@ namespace Compute.Tests.DiskRPTests
                         Assert.Equal(updatedisk.DiskMBpsReadOnly, diskOut.DiskMBpsReadOnly);
                         Assert.Equal(updatedisk.MaxShares, diskOut.MaxShares);
                     }
-
+                    if (enable512E)
+                    {
+                        Assert.Equal(512, diskOut.CreationData.LogicalSectorSize);
+                    }
+                    else
+                    {
+                        Assert.Equal(4096, diskOut.CreationData.LogicalSectorSize);
+                    }
                     // Delete
                     m_CrpClient.Disks.Delete(rgName, diskName);
 
