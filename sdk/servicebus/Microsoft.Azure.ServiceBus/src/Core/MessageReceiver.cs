@@ -1344,6 +1344,8 @@ namespace Microsoft.Azure.ServiceBus.Core
                     {
                         this.receivePumpCancellationTokenSource.Cancel();
                         this.receivePumpCancellationTokenSource.Dispose();
+                        //this.runningTaskCancellationTokenSource.Cancel();
+                        //this.runningTaskCancellationTokenSource.Dispose();
                         this.receivePump = null;
                     }
                 }
