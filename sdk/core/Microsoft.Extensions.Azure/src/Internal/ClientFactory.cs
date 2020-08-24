@@ -16,10 +16,21 @@ namespace Microsoft.Extensions.Azure
     internal static class ClientFactory
     {
         private const string ServiceVersionParameterTypeName = "ServiceVersion";
+        private const string ConnectionStringParameterName = "connectionString";
 
         public static object CreateClient(Type clientType, Type optionsType, object options, IConfiguration configuration, TokenCredential credential)
         {
             List<object> arguments = new List<object>();
+            if (configuration is IConfigurationSection section && section.Value != null)
+            {
+                var connectionString = section.Value;
+                configuration = new ConfigurationBuilder()
+                    .AddInMemoryCollection(new[]
+                    {
+                        new KeyValuePair<string, string>(ConnectionStringParameterName, connectionString)
+                    })
+                    .Build();
+            }
             foreach (var constructor in clientType.GetConstructors().OrderByDescending(c => c.GetParameters().Length))
             {
                 if (!IsApplicableConstructor(constructor, optionsType))

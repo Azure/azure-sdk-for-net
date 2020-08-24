@@ -17,8 +17,7 @@ namespace Azure.Extensions.WebJobs
         {
             builder.Services.AddAzureClients(builder =>
                 builder.SetConfigurationRoot(provider => provider.GetRequiredService<IConfiguration>()
-                    .GetWebJobsRootConfiguration()
-                    .GetSection("azure")));
+                    .GetWebJobsRootConfiguration()));
             builder.AddAzureClients();
         }
      }

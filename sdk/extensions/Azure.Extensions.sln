@@ -29,10 +29,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.Azure"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.Azure.Tests", "..\core\Microsoft.Extensions.Azure\tests\Microsoft.Extensions.Azure.Tests.csproj", "{439AD388-D698-4A82-B509-D79D511624F5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebJobs.Host", "..\..\..\azure-webjobs-sdk\src\Microsoft.Azure.WebJobs.Host\WebJobs.Host.csproj", "{C7F85171-4DBB-4E91-8EBB-5BCA24D6BE82}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebJobs", "..\..\..\azure-webjobs-sdk\src\Microsoft.Azure.WebJobs\WebJobs.csproj", "{424AD6CB-B5F8-492A-97A5-F988945713CF}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Extensions.WebJobs.Samples", "Azure.Extensions.WebJobs\samples\Azure.Extensions.WebJobs.Samples.csproj", "{F05E7AC4-C794-4425-89F4-FBE71F9BF1CA}"
 EndProject
 Global
@@ -168,30 +164,6 @@ Global
 		{439AD388-D698-4A82-B509-D79D511624F5}.Release|x64.Build.0 = Release|Any CPU
 		{439AD388-D698-4A82-B509-D79D511624F5}.Release|x86.ActiveCfg = Release|Any CPU
 		{439AD388-D698-4A82-B509-D79D511624F5}.Release|x86.Build.0 = Release|Any CPU
-		{C7F85171-4DBB-4E91-8EBB-5BCA24D6BE82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C7F85171-4DBB-4E91-8EBB-5BCA24D6BE82}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C7F85171-4DBB-4E91-8EBB-5BCA24D6BE82}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{C7F85171-4DBB-4E91-8EBB-5BCA24D6BE82}.Debug|x64.Build.0 = Debug|Any CPU
-		{C7F85171-4DBB-4E91-8EBB-5BCA24D6BE82}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{C7F85171-4DBB-4E91-8EBB-5BCA24D6BE82}.Debug|x86.Build.0 = Debug|Any CPU
-		{C7F85171-4DBB-4E91-8EBB-5BCA24D6BE82}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C7F85171-4DBB-4E91-8EBB-5BCA24D6BE82}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C7F85171-4DBB-4E91-8EBB-5BCA24D6BE82}.Release|x64.ActiveCfg = Release|Any CPU
-		{C7F85171-4DBB-4E91-8EBB-5BCA24D6BE82}.Release|x64.Build.0 = Release|Any CPU
-		{C7F85171-4DBB-4E91-8EBB-5BCA24D6BE82}.Release|x86.ActiveCfg = Release|Any CPU
-		{C7F85171-4DBB-4E91-8EBB-5BCA24D6BE82}.Release|x86.Build.0 = Release|Any CPU
-		{424AD6CB-B5F8-492A-97A5-F988945713CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{424AD6CB-B5F8-492A-97A5-F988945713CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{424AD6CB-B5F8-492A-97A5-F988945713CF}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{424AD6CB-B5F8-492A-97A5-F988945713CF}.Debug|x64.Build.0 = Debug|Any CPU
-		{424AD6CB-B5F8-492A-97A5-F988945713CF}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{424AD6CB-B5F8-492A-97A5-F988945713CF}.Debug|x86.Build.0 = Debug|Any CPU
-		{424AD6CB-B5F8-492A-97A5-F988945713CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{424AD6CB-B5F8-492A-97A5-F988945713CF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{424AD6CB-B5F8-492A-97A5-F988945713CF}.Release|x64.ActiveCfg = Release|Any CPU
-		{424AD6CB-B5F8-492A-97A5-F988945713CF}.Release|x64.Build.0 = Release|Any CPU
-		{424AD6CB-B5F8-492A-97A5-F988945713CF}.Release|x86.ActiveCfg = Release|Any CPU
-		{424AD6CB-B5F8-492A-97A5-F988945713CF}.Release|x86.Build.0 = Release|Any CPU
 		{F05E7AC4-C794-4425-89F4-FBE71F9BF1CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F05E7AC4-C794-4425-89F4-FBE71F9BF1CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F05E7AC4-C794-4425-89F4-FBE71F9BF1CA}.Debug|x64.ActiveCfg = Debug|Any CPU

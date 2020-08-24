@@ -335,6 +335,22 @@ namespace Azure.Core.Extensions.Tests
         }
 
         [Test]
+        public void CanCreateClientWithoutRegistrationUsingConnectionString()
+        {
+            var configuration = GetConfiguration(
+                new KeyValuePair<string, string>("TestClient", "http://localhost/"));
+
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddAzureClients(builder => builder.SetConfigurationRoot(_ => configuration));
+
+            ServiceProvider provider = serviceCollection.BuildServiceProvider();
+            IAzureClientFactory<TestClient> factory = provider.GetService<IAzureClientFactory<TestClient>>();
+            TestClient client = factory.CreateClient("TestClient");
+
+            Assert.AreEqual("http://localhost/", client.ConnectionString);
+        }
+
+        [Test]
         public void SupportsSettingVersion()
         {
             var serviceCollection = new ServiceCollection();

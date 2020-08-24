@@ -16,7 +16,7 @@ namespace Azure.Extensions.WebJobs.Sample
         [FunctionName("Function1")]
         public static IActionResult Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
-            [AzureClient("MyClientWithCreds")] BlobServiceClient client,
+            [AzureClient("AzureWebJobsStorage")] BlobServiceClient client,
             ILogger log)
         {
             return new OkObjectResult(client.GetBlobContainers().ToArray());
