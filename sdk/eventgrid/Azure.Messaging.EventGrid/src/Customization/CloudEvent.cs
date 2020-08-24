@@ -41,7 +41,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="type"> Type of event related to the originating occurrence. For example, "Contoso.Items.ItemReceived". </param>
         /// <param name="data"> Event data specific to the event type. </param>
         /// <param name="dataContentType"> Content type of the payload. A content type different from "application/json" should be specified if payload is not JSON. </param>
-        public CloudEvent(string source, string type, object data, string dataContentType = null)
+        public CloudEvent(string source, string type, object data, string dataContentType = default)
         {
             Argument.AssertNotNull(source, nameof(source));
             Argument.AssertNotNull(type, nameof(type));
@@ -73,7 +73,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="type"> Type of event related to the originating occurrence. For example, "Contoso.Items.ItemReceived". </param>
         /// <param name="data"> Event data specific to the event type. </param>
         /// <param name="dataContentType"> Content type of the payload. A content type different from "application/json" should be specified when sending binary data. </param>
-        public CloudEvent(string source, string type, BinaryData data, string dataContentType = null)
+        public CloudEvent(string source, string type, BinaryData data, string dataContentType = default)
         {
             Argument.AssertNotNull(source, nameof(source));
             Argument.AssertNotNull(type, nameof(type));
