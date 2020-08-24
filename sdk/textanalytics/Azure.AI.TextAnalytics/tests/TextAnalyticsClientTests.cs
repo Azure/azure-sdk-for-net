@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.TextAnalytics.Models;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;

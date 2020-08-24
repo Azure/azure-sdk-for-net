@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Azure.AI.TextAnalytics.Tests
@@ -38,7 +37,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [Test]
         public async Task RecognizeEntitiesResultsSorted_NoErrors()
         {
-            using var Stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
                 {
                     ""documents"": [
                         {
@@ -89,7 +88,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 }"));
 
             var mockResponse = new MockResponse(200);
-            mockResponse.ContentStream = Stream;
+            mockResponse.ContentStream = stream;
 
             var mockTransport = new MockTransport(new[] { mockResponse });
             var client = CreateTestClient(mockTransport);
@@ -110,7 +109,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [Test]
         public async Task RecognizeEntitiesResultsSorted_WithErrors()
         {
-            using var Stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
                 {
                     ""documents"": [
                         {
@@ -184,7 +183,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 }"));
 
             var mockResponse = new MockResponse(200);
-            mockResponse.ContentStream = Stream;
+            mockResponse.ContentStream = stream;
 
             var mockTransport = new MockTransport(new[] { mockResponse });
             var client = CreateTestClient(mockTransport);
@@ -209,7 +208,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [Test]
         public async Task DetectedLanguageNullName()
         {
-            using var Stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
                 {
                     ""documents"": [
                     {
@@ -227,7 +226,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 }"));
 
             var mockResponse = new MockResponse(200);
-            mockResponse.ContentStream = Stream;
+            mockResponse.ContentStream = stream;
 
             var mockTransport = new MockTransport(new[] { mockResponse });
             var client = CreateTestClient(mockTransport);
@@ -250,7 +249,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [Test]
         public async Task DetectedLanguageNullIso6391Name()
         {
-            using var Stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
                 {
                     ""documents"": [
                     {
@@ -268,7 +267,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 }"));
 
             var mockResponse = new MockResponse(200);
-            mockResponse.ContentStream = Stream;
+            mockResponse.ContentStream = stream;
 
             var mockTransport = new MockTransport(new[] { mockResponse });
             var client = CreateTestClient(mockTransport);
@@ -293,7 +292,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [Test]
         public async Task AnalyzeSentimentNullText()
         {
-            using var Stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
                 {
                     ""documents"": [
                         {
@@ -325,7 +324,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 }"));
 
             var mockResponse = new MockResponse(200);
-            mockResponse.ContentStream = Stream;
+            mockResponse.ContentStream = stream;
 
             var mockTransport = new MockTransport(new[] { mockResponse });
             var client = CreateTestClient(mockTransport);
@@ -338,7 +337,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [Test]
         public void AnalyzeSentimentNotSupportedSentenceSentiment()
         {
-            using var Stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
                 {
                     ""documents"": [
                         {
@@ -370,7 +369,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 }"));
 
             var mockResponse = new MockResponse(200);
-            mockResponse.ContentStream = Stream;
+            mockResponse.ContentStream = stream;
 
             var mockTransport = new MockTransport(new[] { mockResponse });
             var client = CreateTestClient(mockTransport);
@@ -381,7 +380,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [Test]
         public async Task AnalyzeSentimentMixedSentenceSentiment()
         {
-            using var Stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
                 {
                     ""documents"": [
                         {
@@ -413,7 +412,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 }"));
 
             var mockResponse = new MockResponse(200);
-            mockResponse.ContentStream = Stream;
+            mockResponse.ContentStream = stream;
 
             var mockTransport = new MockTransport(new[] { mockResponse });
             var client = CreateTestClient(mockTransport);
@@ -426,7 +425,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [Test]
         public async Task RecognizeEntitiesNullCategory()
         {
-            using var Stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
                 {
                     ""documents"": [
                         {
@@ -448,7 +447,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 }"));
 
             var mockResponse = new MockResponse(200);
-            mockResponse.ContentStream = Stream;
+            mockResponse.ContentStream = stream;
 
             var mockTransport = new MockTransport(new[] { mockResponse });
             var client = CreateTestClient(mockTransport);
@@ -461,7 +460,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [Test]
         public async Task RecognizeLinkedEntitiesNullText()
         {
-            using var Stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
                 {
                     ""documents"": [
                         {
@@ -491,7 +490,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 }"));
 
             var mockResponse = new MockResponse(200);
-            mockResponse.ContentStream = Stream;
+            mockResponse.ContentStream = stream;
 
             var mockTransport = new MockTransport(new[] { mockResponse });
             var client = CreateTestClient(mockTransport);
@@ -506,7 +505,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [Test]
         public async Task DeserializeTextAnalyticsError()
         {
-            using var Stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
                 {
                     ""documents"": [
                         {
@@ -532,7 +531,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 }"));
 
             var mockResponse = new MockResponse(200);
-            mockResponse.ContentStream = Stream;
+            mockResponse.ContentStream = stream;
 
             var mockTransport = new MockTransport(new[] { mockResponse });
             var client = CreateTestClient(mockTransport);

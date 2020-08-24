@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics
     {
         internal CategorizedEntity(Entity entity)
         {
-            // We shipped TA 5.0.0 Text == string.Empty if the service returned a null value for Text.
+            // We shipped TA 5.0.0 Category == string.Empty if the service returned a null value for Category.
             // Because we don't want to introduce a breaking change, we are transforming that null to string.Empty
             Category = entity.Category ?? string.Empty;
             Text = entity.Text;
