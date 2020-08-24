@@ -148,11 +148,11 @@ namespace Azure.Messaging.ServiceBus
     public partial class ServiceBusMessage
     {
         public ServiceBusMessage() { }
-        public ServiceBusMessage(Azure.Core.BinaryData body) { }
+        public ServiceBusMessage(Azure.BinaryData body) { }
         public ServiceBusMessage(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage receivedMessage) { }
         public ServiceBusMessage(System.ReadOnlyMemory<byte> body) { }
         public ServiceBusMessage(string body) { }
-        public Azure.Core.BinaryData Body { get { throw null; } set { } }
+        public Azure.BinaryData Body { get { throw null; } set { } }
         public string ContentType { get { throw null; } set { } }
         public string CorrelationId { get { throw null; } set { } }
         public string Label { get { throw null; } set { } }
@@ -181,7 +181,7 @@ namespace Azure.Messaging.ServiceBus
     public static partial class ServiceBusModelFactory
     {
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static Azure.Messaging.ServiceBus.ServiceBusReceivedMessage ServiceBusReceivedMessage(Azure.Core.BinaryData body = default(Azure.Core.BinaryData), string messageId = null, string partitionKey = null, string viaPartitionKey = null, string sessionId = null, string replyToSessionId = null, System.TimeSpan timeToLive = default(System.TimeSpan), string correlationId = null, string label = null, string to = null, string contentType = null, string replyTo = null, System.DateTimeOffset scheduledEnqueueTime = default(System.DateTimeOffset), System.Collections.Generic.IDictionary<string, object> properties = null, System.Guid lockTokenGuid = default(System.Guid), int deliveryCount = 0, System.DateTimeOffset lockedUntil = default(System.DateTimeOffset), long sequenceNumber = (long)-1, string deadLetterSource = null, long enqueuedSequenceNumber = (long)0, System.DateTimeOffset enqueuedTime = default(System.DateTimeOffset)) { throw null; }
+        public static Azure.Messaging.ServiceBus.ServiceBusReceivedMessage ServiceBusReceivedMessage(Azure.BinaryData body = default(Azure.BinaryData), string messageId = null, string partitionKey = null, string viaPartitionKey = null, string sessionId = null, string replyToSessionId = null, System.TimeSpan timeToLive = default(System.TimeSpan), string correlationId = null, string label = null, string to = null, string contentType = null, string replyTo = null, System.DateTimeOffset scheduledEnqueueTime = default(System.DateTimeOffset), System.Collections.Generic.IDictionary<string, object> properties = null, System.Guid lockTokenGuid = default(System.Guid), int deliveryCount = 0, System.DateTimeOffset lockedUntil = default(System.DateTimeOffset), long sequenceNumber = (long)-1, string deadLetterSource = null, long enqueuedSequenceNumber = (long)0, System.DateTimeOffset enqueuedTime = default(System.DateTimeOffset)) { throw null; }
     }
     public partial class ServiceBusProcessor
     {
@@ -225,7 +225,7 @@ namespace Azure.Messaging.ServiceBus
     public partial class ServiceBusReceivedMessage
     {
         internal ServiceBusReceivedMessage() { }
-        public Azure.Core.BinaryData Body { get { throw null; } }
+        public Azure.BinaryData Body { get { throw null; } }
         public string ContentType { get { throw null; } }
         public string CorrelationId { get { throw null; } }
         public string DeadLetterErrorDescription { get { throw null; } }
