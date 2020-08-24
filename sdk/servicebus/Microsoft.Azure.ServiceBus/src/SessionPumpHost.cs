@@ -12,6 +12,7 @@ namespace Microsoft.Azure.ServiceBus
         readonly object syncLock;
         SessionReceivePump sessionReceivePump;
         CancellationTokenSource sessionPumpCancellationTokenSource;
+        CancellationTokenSource runningTaskCancellationTokenSource;
         readonly Uri endpoint;
 
         public SessionPumpHost(string clientId, ReceiveMode receiveMode, ISessionClient sessionClient, Uri endpoint)
@@ -35,6 +36,9 @@ namespace Microsoft.Azure.ServiceBus
             {
                 this.sessionPumpCancellationTokenSource?.Cancel();
                 this.sessionPumpCancellationTokenSource?.Dispose();
+                // For back-compatibility 
+                this.runningTaskCancellationTokenSource?.Cancel();
+                this.runningTaskCancellationTokenSource?.Dispose();
                 this.sessionReceivePump = null;
             }
         }
@@ -53,6 +57,13 @@ namespace Microsoft.Azure.ServiceBus
                 }
 
                 this.sessionPumpCancellationTokenSource = new CancellationTokenSource();
+
+                // Running task cancellation token source can be reused if previously UnregisterSessionHandlerAsync was called
+                if (this.runningTaskCancellationTokenSource == null)
+                {
+                    this.runningTaskCancellationTokenSource = new CancellationTokenSource();
+                }
+
                 this.sessionReceivePump = new SessionReceivePump(
                     this.ClientId,
                     this.SessionClient,
@@ -60,7 +71,8 @@ namespace Microsoft.Azure.ServiceBus
                     sessionHandlerOptions,
                     callback,
                     this.endpoint,
-                    this.sessionPumpCancellationTokenSource.Token);
+                    this.sessionPumpCancellationTokenSource.Token,
+                    this.runningTaskCancellationTokenSource.Token);
             }
 
             try
@@ -101,7 +113,8 @@ namespace Microsoft.Azure.ServiceBus
             while (this.sessionReceivePump != null
                 && (this.sessionReceivePump.maxConcurrentSessionsSemaphoreSlim.CurrentCount < 
                     this.sessionReceivePump.sessionHandlerOptions.MaxConcurrentSessions
-                || this.sessionReceivePump.maxPendingAcceptSessionsSemaphoreSlim.CurrentCount <           this.sessionReceivePump.sessionHandlerOptions.MaxConcurrentAcceptSessionCalls))
+                || this.sessionReceivePump.maxPendingAcceptSessionsSemaphoreSlim.CurrentCount <           
+                this.sessionReceivePump.sessionHandlerOptions.MaxConcurrentAcceptSessionCalls))
             {
                 await Task.Delay(10).ConfigureAwait(false);
             }

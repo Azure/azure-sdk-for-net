@@ -1321,7 +1321,13 @@ namespace Microsoft.Azure.ServiceBus.Core
                 }
 
                 this.receivePumpCancellationTokenSource = new CancellationTokenSource();
-                this.runningTaskCancellationTokenSource = new CancellationTokenSource();
+
+                // Running task cancellation token source can be reused if previously UnregisterMessageHandlerAsync was called
+                if (this.runningTaskCancellationTokenSource == null)
+                {
+                    this.runningTaskCancellationTokenSource = new CancellationTokenSource();
+                }
+
                 this.receivePump = new MessageReceivePump(this, registerHandlerOptions, callback, this.ServiceBusConnection.Endpoint, this.receivePumpCancellationTokenSource.Token, this.runningTaskCancellationTokenSource.Token);
             }
 
