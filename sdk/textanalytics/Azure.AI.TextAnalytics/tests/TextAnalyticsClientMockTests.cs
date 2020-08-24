@@ -362,6 +362,42 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(TextSentiment.Mixed, response.Sentences.FirstOrDefault().Sentiment);
         }
 
+        [Test]
+        public async Task recognizeEntitiesNullCategory()
+        {
+
+            using var Stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
+                {
+                    ""documents"": [
+                        {
+                            ""id"": ""0"",
+                            ""entities"": [
+                                {
+                                ""text"": ""Microsoft"",
+                                    ""category"": null,
+                                    ""offset"": 0,
+                                    ""length"": 9,
+                                    ""confidenceScore"": 0.81
+                                }
+                            ],
+                            ""warnings"": []
+                        }
+                    ],
+                    ""errors"": [],
+                    ""modelVersion"": ""2020 -04-01""
+                }"));
+
+            var mockResponse = new MockResponse(200);
+            mockResponse.ContentStream = Stream;
+
+            var mockTransport = new MockTransport(new[] { mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            CategorizedEntityCollection response = await client.RecognizeEntitiesAsync("Microsoft was founded");
+
+            Assert.IsNotNull(response.FirstOrDefault().Category);
+        }
+
         private void SerializeRecognizeEntitiesResultCollection(ref Utf8JsonWriter json, RecognizeEntitiesResultCollection resultCollection)
         {
             json.WriteStartObject();

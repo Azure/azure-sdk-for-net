@@ -1,0 +1,539 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://shivangitest.cognitiveservices.azure.com/anomalydetector/v1.0/timeseries/entire/detect",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Content-Length": "2429",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-b4f57ead054f3545a09fb8c36d277658-5cb32433d02cbf42-00",
+        "User-Agent": [
+          "azsdk-net-AI.AnomalyDetector/3.0.0-dev.20200821.1",
+          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "fc8cc01ebd85e1263451573c9e1f11b4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "series": [
+          {
+            "timestamp": "1972-01-01T00:00:00Z",
+            "value": 826
+          },
+          {
+            "timestamp": "1972-02-01T00:00:00Z",
+            "value": 799
+          },
+          {
+            "timestamp": "1972-03-01T00:00:00Z",
+            "value": 890
+          },
+          {
+            "timestamp": "1972-04-01T00:00:00Z",
+            "value": 900
+          },
+          {
+            "timestamp": "1972-05-01T00:00:00Z",
+            "value": 961
+          },
+          {
+            "timestamp": "1972-06-01T00:00:00Z",
+            "value": 935
+          },
+          {
+            "timestamp": "1972-07-01T00:00:00Z",
+            "value": 894
+          },
+          {
+            "timestamp": "1972-08-01T00:00:00Z",
+            "value": 855
+          },
+          {
+            "timestamp": "1972-09-01T00:00:00Z",
+            "value": 809
+          },
+          {
+            "timestamp": "1972-10-01T00:00:00Z",
+            "value": 810
+          },
+          {
+            "timestamp": "1972-11-01T00:00:00Z",
+            "value": 766
+          },
+          {
+            "timestamp": "1972-12-01T00:00:00Z",
+            "value": 805
+          },
+          {
+            "timestamp": "1973-01-01T00:00:00Z",
+            "value": 821
+          },
+          {
+            "timestamp": "1973-02-01T00:00:00Z",
+            "value": 773
+          },
+          {
+            "timestamp": "1973-03-01T00:00:00Z",
+            "value": 883
+          },
+          {
+            "timestamp": "1973-04-01T00:00:00Z",
+            "value": 898
+          },
+          {
+            "timestamp": "1973-05-01T00:00:00Z",
+            "value": 957
+          },
+          {
+            "timestamp": "1973-06-01T00:00:00Z",
+            "value": 924
+          },
+          {
+            "timestamp": "1973-07-01T00:00:00Z",
+            "value": 881
+          },
+          {
+            "timestamp": "1973-08-01T00:00:00Z",
+            "value": 837
+          },
+          {
+            "timestamp": "1973-09-01T00:00:00Z",
+            "value": 784
+          },
+          {
+            "timestamp": "1973-10-01T00:00:00Z",
+            "value": 791
+          },
+          {
+            "timestamp": "1973-11-01T00:00:00Z",
+            "value": 760
+          },
+          {
+            "timestamp": "1973-12-01T00:00:00Z",
+            "value": 802
+          },
+          {
+            "timestamp": "1974-01-01T00:00:00Z",
+            "value": 828
+          },
+          {
+            "timestamp": "1974-02-01T00:00:00Z",
+            "value": 1030
+          },
+          {
+            "timestamp": "1974-03-01T00:00:00Z",
+            "value": 889
+          },
+          {
+            "timestamp": "1974-04-01T00:00:00Z",
+            "value": 902
+          },
+          {
+            "timestamp": "1974-05-01T00:00:00Z",
+            "value": 969
+          },
+          {
+            "timestamp": "1974-06-01T00:00:00Z",
+            "value": 947
+          },
+          {
+            "timestamp": "1974-07-01T00:00:00Z",
+            "value": 908
+          },
+          {
+            "timestamp": "1974-08-01T00:00:00Z",
+            "value": 867
+          },
+          {
+            "timestamp": "1974-09-01T00:00:00Z",
+            "value": 815
+          },
+          {
+            "timestamp": "1974-10-01T00:00:00Z",
+            "value": 812
+          },
+          {
+            "timestamp": "1974-11-01T00:00:00Z",
+            "value": 773
+          },
+          {
+            "timestamp": "1974-12-01T00:00:00Z",
+            "value": 813
+          },
+          {
+            "timestamp": "1975-01-01T00:00:00Z",
+            "value": 834
+          },
+          {
+            "timestamp": "1975-02-01T00:00:00Z",
+            "value": 782
+          },
+          {
+            "timestamp": "1975-03-01T00:00:00Z",
+            "value": 892
+          },
+          {
+            "timestamp": "1975-04-01T00:00:00Z",
+            "value": 903
+          },
+          {
+            "timestamp": "1975-05-01T00:00:00Z",
+            "value": 966
+          },
+          {
+            "timestamp": "1975-06-01T00:00:00Z",
+            "value": 937
+          },
+          {
+            "timestamp": "1975-07-01T00:00:00Z",
+            "value": 896
+          },
+          {
+            "timestamp": "1975-08-01T00:00:00Z",
+            "value": 858
+          },
+          {
+            "timestamp": "1975-09-01T00:00:00Z",
+            "value": 817
+          },
+          {
+            "timestamp": "1975-10-01T00:00:00Z",
+            "value": 827
+          },
+          {
+            "timestamp": "1975-11-01T00:00:00Z",
+            "value": 797
+          },
+          {
+            "timestamp": "1975-12-01T00:00:00Z",
+            "value": 843
+          }
+        ],
+        "granularity": "monthly",
+        "maxAnomalyRatio": 0.25,
+        "sensitivity": 95
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "e7258eca-0de1-47b5-84c8-52ac1ab579af",
+        "Content-Length": "3659",
+        "Content-Type": "application/json",
+        "csp-billing-usage": "CognitiveServices.AnomalyDetector.DataPoints=1",
+        "Date": "Fri, 21 Aug 2020 19:31:22 GMT",
+        "model-id": "10",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "29"
+      },
+      "ResponseBody": {
+        "expectedValues": [
+          827.79409082439679,
+          798.91337746719273,
+          888.60584318071892,
+          900.5606407986661,
+          962.83894263783043,
+          933.25916063069542,
+          891.07841047996658,
+          856.17816013636968,
+          809.89872279089411,
+          807.375129007505,
+          764.31966824485175,
+          803.933498594564,
+          823.59006208830579,
+          794.09056413342876,
+          883.164245249282,
+          894.84190006909535,
+          956.84305911012575,
+          927.62850551901136,
+          885.812983784303,
+          851.7622285698933,
+          806.3322863536049,
+          804.8024303608446,
+          762.74070738882,
+          804.0251702513732,
+          825.35236625795585,
+          798.04041887249764,
+          889.30165055776979,
+          902.4226124345937,
+          965.867078532635,
+          937.21136279317909,
+          895.95467891012936,
+          862.00873684136559,
+          816.46623420974231,
+          814.42977455247092,
+          771.8614479159354,
+          811.859271346729,
+          831.89982792155206,
+          802.947544797165,
+          892.56844074350829,
+          904.54882145338092,
+          966.85270638447071,
+          937.31683910030426,
+          895.180003672544,
+          860.36495963566347,
+          814.17072859690427,
+          812.08305003448015,
+          769.46350449279191,
+          809.74336545898166
+        ],
+        "isAnomaly": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "isNegativeAnomaly": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "isPositiveAnomaly": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "lowerMargins": [
+          41.389704541219885,
+          38.913377467192731,
+          44.430292159035957,
+          45.02803203993335,
+          48.14194713189147,
+          46.6629580315348,
+          44.553920523998386,
+          42.808908006818456,
+          40.494936139544734,
+          40.368756450375258,
+          4.3196682448517549,
+          40.196674929728147,
+          41.179503104415289,
+          34.090564133428757,
+          44.158212262464076,
+          44.742095003454779,
+          47.842152955506322,
+          46.381425275950619,
+          44.290649189215173,
+          42.5881114284947,
+          40.316614317680205,
+          40.2401215180422,
+          2.7407073888200557,
+          40.201258512568643,
+          41.267618312897753,
+          38.040418872497639,
+          44.465082527888512,
+          45.121130621729662,
+          48.293353926631767,
+          46.860568139658994,
+          44.797733945506479,
+          43.100436842068234,
+          40.823311710487133,
+          40.721488727623523,
+          11.8614479159354,
+          40.592963567336483,
+          41.5949913960776,
+          40.1473772398582,
+          44.628422037175369,
+          45.22744107266908,
+          48.342635319223518,
+          46.865841955015185,
+          44.759000183627222,
+          43.018247981783134,
+          40.708536429845253,
+          40.604152501724,
+          9.4635044927919125,
+          40.487168272949134
+        ],
+        "period": 12,
+        "upperMargins": [
+          41.389704541219885,
+          39.945668873359637,
+          44.430292159035957,
+          45.02803203993335,
+          48.14194713189147,
+          46.6629580315348,
+          44.553920523998386,
+          42.808908006818456,
+          40.494936139544734,
+          40.368756450375258,
+          38.215983412242622,
+          40.196674929728147,
+          41.179503104415289,
+          39.7045282066714,
+          44.158212262464076,
+          44.742095003454779,
+          47.842152955506322,
+          46.381425275950619,
+          44.290649189215173,
+          42.5881114284947,
+          40.316614317680205,
+          40.2401215180422,
+          38.137035369441037,
+          40.201258512568643,
+          41.267618312897753,
+          39.902020943624848,
+          44.465082527888512,
+          45.121130621729662,
+          48.293353926631767,
+          46.860568139658994,
+          44.797733945506479,
+          43.100436842068234,
+          40.823311710487133,
+          40.721488727623523,
+          38.593072395796753,
+          40.592963567336483,
+          41.5949913960776,
+          40.1473772398582,
+          44.628422037175369,
+          45.22744107266908,
+          48.342635319223518,
+          46.865841955015185,
+          44.759000183627222,
+          43.018247981783134,
+          40.708536429845253,
+          40.604152501724,
+          38.47317522463959,
+          40.487168272949134
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "ANOMALY_DETECTOR_API_KEY": "Sanitized",
+    "ANOMALY_DETECTOR_ENDPOINT": "https://shivangitest.cognitiveservices.azure.com/",
+    "RandomSeed": "1998048122"
+  }
+}

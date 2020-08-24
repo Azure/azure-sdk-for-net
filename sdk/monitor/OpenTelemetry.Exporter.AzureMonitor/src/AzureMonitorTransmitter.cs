@@ -79,8 +79,8 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             }
 
             // TODO: "ai.location.ip"
-
-            envelope.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = "dotnet5:ot0.4.0-beta:ext1.0.0-alpha.1"; // {language}{sdkVersion}:ot{OpenTelemetryVersion}:ext{ExporterVersion}
+            // TODO: Handle exception
+            envelope.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.SdkVersion;
 
             return envelope;
         }

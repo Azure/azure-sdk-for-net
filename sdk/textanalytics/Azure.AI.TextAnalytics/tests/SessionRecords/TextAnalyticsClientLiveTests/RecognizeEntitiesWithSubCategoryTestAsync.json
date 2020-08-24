@@ -7,10 +7,10 @@
         "Content-Length": "96",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-97671213ffa8164fae4cdc7ecc8ea49c-adeeeaff17fbc643-00",
+        "traceparent": "00-45c447d562133047a7f1ba76ea295adc-5e17d57d8c743c43-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200820.2",
-          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200820.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "1e1bd581c2eac5df2fe8a3e72b124e2c",
         "x-ms-return-client-request-id": "true"
@@ -18,22 +18,22 @@
       "RequestBody": {
         "documents": [
           {
-            "language": "en",
             "id": "0",
-            "text": "I had a wonderful trip to Seattle last week."
+            "text": "I had a wonderful trip to Seattle last week.",
+            "language": "en"
           }
         ]
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "0ccd003d-da9e-49e9-8c1c-fa685b24391f",
+        "apim-request-id": "5c984968-be07-4690-bb91-ec914c4113b3",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1",
-        "Date": "Thu, 20 Aug 2020 23:13:03 GMT",
+        "Date": "Fri, 21 Aug 2020 02:45:03 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "71"
+        "x-envoy-upstream-service-time": "77"
       },
       "ResponseBody": {
         "documents": [
