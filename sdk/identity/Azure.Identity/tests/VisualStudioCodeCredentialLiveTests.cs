@@ -27,7 +27,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        [RunOnlyOnPlatforms(Windows = true, OSX = true)] // Comment this attribute to run this tests on Linux with Libsecret enabled
+        [RunOnlyOnPlatforms(Windows = true, OSX = true, ContainerNames = new[] { "ubuntu_netcore2_keyring" })]
         public async Task AuthenticateWithVscCredential()
         {
             var cloudName = Guid.NewGuid().ToString();
@@ -82,7 +82,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        [RunOnlyOnPlatforms(Windows = true, OSX = true)] // Comment this attribute to run this tests on Linux with Libsecret enabled
+        [RunOnlyOnPlatforms(Windows = true, OSX = true, ContainerNames = new[] { "ubuntu_netcore2_keyring" })]
         public async Task AuthenticateWithVscCredential_TenantInSettings()
         {
             var cloudName = Guid.NewGuid().ToString();
@@ -98,7 +98,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        [RunOnlyOnPlatforms(Windows = true, OSX = true)]
+        [RunOnlyOnPlatforms(Windows = true, OSX = true, ContainerNames = new[] { "ubuntu_netcore2_keyring" })]
         public void AuthenticateWithVscCredential_NoVscInstalled()
         {
             var cloudName = Guid.NewGuid().ToString();
