@@ -55,11 +55,6 @@ namespace Microsoft.Azure.Management.KeyVault
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Client Api Version.
-        /// </summary>
-        public string ApiVersion { get; private set; }
-
-        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
@@ -96,11 +91,6 @@ namespace Microsoft.Azure.Management.KeyVault
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
-
-        /// <summary>
-        /// Gets the ISecretsOperations.
-        /// </summary>
-        public virtual ISecretsOperations Secrets { get; private set; }
 
         /// <summary>
         /// Gets the IManagedHsmsOperations.
@@ -352,10 +342,8 @@ namespace Microsoft.Azure.Management.KeyVault
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             Operations = new Operations(this);
-            Secrets = new SecretsOperations(this);
             ManagedHsms = new ManagedHsmsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-04-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
