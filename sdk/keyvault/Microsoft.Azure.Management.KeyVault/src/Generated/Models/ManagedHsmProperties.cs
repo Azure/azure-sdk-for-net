@@ -34,9 +34,6 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// <param name="tenantId">The Azure Active Directory tenant ID that
         /// should be used for authenticating requests to the managed HSM
         /// pool.</param>
-        /// <param name="securityDomainId">The security domain id that should
-        /// be used for restoring data from this managed HSM pool to a new
-        /// managed hsm pool.</param>
         /// <param name="initialAdminObjectIds">Array of initial administrators
         /// object ids for this managed hsm pool.</param>
         /// <param name="hsmPoolUri">The URI of the managed hsm pool for
@@ -63,10 +60,9 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// include: 'Succeeded', 'Provisioning', 'Failed', 'Updating',
         /// 'Deleting', 'Activated', 'SecurityDomainRestore',
         /// 'Restoring'</param>
-        public ManagedHsmProperties(System.Guid? tenantId = default(System.Guid?), System.Guid? securityDomainId = default(System.Guid?), IList<string> initialAdminObjectIds = default(IList<string>), string hsmPoolUri = default(string), bool? enableSoftDelete = default(bool?), int? softDeleteRetentionInDays = default(int?), bool? enablePurgeProtection = default(bool?), CreateMode? createMode = default(CreateMode?), string statusMessage = default(string), string provisioningState = default(string))
+        public ManagedHsmProperties(System.Guid? tenantId = default(System.Guid?), IList<string> initialAdminObjectIds = default(IList<string>), string hsmPoolUri = default(string), bool? enableSoftDelete = default(bool?), int? softDeleteRetentionInDays = default(int?), bool? enablePurgeProtection = default(bool?), CreateMode? createMode = default(CreateMode?), string statusMessage = default(string), string provisioningState = default(string))
         {
             TenantId = tenantId;
-            SecurityDomainId = securityDomainId;
             InitialAdminObjectIds = initialAdminObjectIds;
             HsmPoolUri = hsmPoolUri;
             EnableSoftDelete = enableSoftDelete;
@@ -89,14 +85,6 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// </summary>
         [JsonProperty(PropertyName = "tenantId")]
         public System.Guid? TenantId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the security domain id that should be used for
-        /// restoring data from this managed HSM pool to a new managed hsm
-        /// pool.
-        /// </summary>
-        [JsonProperty(PropertyName = "securityDomainId")]
-        public System.Guid? SecurityDomainId { get; set; }
 
         /// <summary>
         /// Gets or sets array of initial administrators object ids for this
