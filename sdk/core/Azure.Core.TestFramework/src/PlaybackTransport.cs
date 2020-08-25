@@ -35,13 +35,22 @@ namespace Azure.Core.TestFramework
             // verify their Progress handling) so we'll just copy it to a
             // MemoryStream
             if (message.Request.Content != null &&
-                message.Request.Content.TryComputeLength(out long length) &&
-                length > 0)
+                message.Request.Content.TryComputeLength(out long length))
             {
-                using (MemoryStream stream = new MemoryStream((int)length))
+                // Set a Content-Length header if TryComputeLength succeeds.
+                message.Request.Headers.SetValue("Content-Length", length.ToString());
+
+                if (length > 0)
                 {
-                    message.Request.Content.WriteTo(stream, message.CancellationToken);
+                    using (MemoryStream stream = new MemoryStream((int)length))
+                    {
+                        message.Request.Content.WriteTo(stream, message.CancellationToken);
+                    }
                 }
+            }
+            else
+            {
+                message.Request.Headers.Remove("Content-Length");
             }
 
             var requestEntry = RecordTransport.CreateEntry(message.Request, null);
@@ -63,16 +72,22 @@ namespace Azure.Core.TestFramework
             // verify their Progress handling) so we'll just copy it to a
             // MemoryStream asynchronously
             if (message.Request.Content != null &&
-                message.Request.Content.TryComputeLength(out long length) &&
-                length > 0)
+                message.Request.Content.TryComputeLength(out long length))
             {
-                // Set a Content-Length header if one doesn't exist
+                // Set a Content-Length header if TryComputeLength succeeds.
                 message.Request.Headers.SetValue("Content-Length", length.ToString());
 
-                using (MemoryStream stream = new MemoryStream((int)length))
+                if (length > 0)
                 {
-                    await message.Request.Content.WriteToAsync(stream, message.CancellationToken).ConfigureAwait(false);
+                    using (MemoryStream stream = new MemoryStream((int)length))
+                    {
+                        await message.Request.Content.WriteToAsync(stream, message.CancellationToken).ConfigureAwait(false);
+                    }
                 }
+            }
+            else
+            {
+                message.Request.Headers.Remove("Content-Length");
             }
 
             var requestEntry = RecordTransport.CreateEntry(message.Request, null);
