@@ -24,7 +24,7 @@ $commonParameters =  $invokeParameter + @( "--project", "internal")
 
 $builds = az pipelines runs list @commonParameters --tags Recording --branch "refs/pull/$PR/merge" --query-order FinishTimeDesc | ConvertFrom-Json;
 $cancelPatchFile = New-TemporaryFile;
-    "{`"status`": `"Cancelling`"}" > $cancelPatchFile;
+"{`"status`": `"Cancelling`"}" > $cancelPatchFile;
 
 foreach ($sdk in $SDKs)
 {
