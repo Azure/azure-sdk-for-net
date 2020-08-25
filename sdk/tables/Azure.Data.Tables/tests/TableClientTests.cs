@@ -120,25 +120,16 @@ namespace Azure.Tables.Tests
         /// Validates the functionality of the TableClient.
         /// </summary>
         [Test]
-        public async Task CreatedEnumPropertiesAreSerializedProperly()
+        public void CreatedEnumPropertiesAreSerializedProperly()
         {
             var entity = new EnumEntity { PartitionKey = "partitionKey", RowKey = "01", Timestamp = DateTime.Now, MyFoo = Foo.Two, ETag = ETag.All };
 
             // Create the new entities.
-            var _diagnostics = new ClientDiagnostics(new TableClientOptions());
-            var restClient = new TableRestClient(_diagnostics, new HttpPipeline(new MockTransport()), "https://example.com");
+            var dictEntity = entity.ToOdataAnnotatedDictionary();
 
-            // Create the message.
-            var message = restClient.CreateInsertEntityRequest("table", null, null, null, entity.ToOdataAnnotatedDictionary(), null);
-
-            using var memStream = new MemoryStream();
-            await message.Request.Content.WriteToAsync(memStream, default);
-            memStream.Position = 0;
-            using var reader = new StreamReader(memStream);
-            var content = await reader.ReadToEndAsync();
-
-            // Check that the enum value was serialized as expected.
-            Assert.That(content.Contains("\"MyFoo\":\"Two\""));
+            Assert.That(dictEntity["PartitionKey"], Is.EqualTo(entity.PartitionKey), "The entities should be equivalent");
+            Assert.That(dictEntity["RowKey"], Is.EqualTo(entity.RowKey), "The entities should be equivalent");
+            Assert.That(dictEntity["MyFoo"], Is.EqualTo(entity.MyFoo.ToString()), "The entities should be equivalent");
         }
 
         public class EnumEntity : ITableEntity
