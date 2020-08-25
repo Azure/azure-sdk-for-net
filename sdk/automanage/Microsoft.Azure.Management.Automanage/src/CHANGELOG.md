@@ -2,7 +2,7 @@
 
 ## Changes in 0.6.0-preview
 ### Features
-Provides Microsoft Azure Automanage operations including the ability to create, update and get Automanage configuration assignments, compliance statuses, and Automanage assignment reports.
+Provides Microsoft Azure Automanage management operations including the ability to create, update and get Automanaged profile assignments, compliance statuses, automation accounts, and other related artifacts.
 
 ### Bug fixes
 None
