@@ -66,7 +66,6 @@ namespace Azure.Search.Documents
                 request.Headers.Add("x-ms-client-request-id", xMsClientRequestId.Value);
             }
             request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -131,7 +130,6 @@ namespace Azure.Search.Documents
                 request.Headers.Add("x-ms-client-request-id", xMsClientRequestId.Value);
             }
             request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -206,7 +204,6 @@ namespace Azure.Search.Documents
             request.Headers.Add("Prefer", "return=representation");
             request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             request.Headers.Add("Content-Type", "application/json");
-            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(indexer);
             request.Content = content;
@@ -308,7 +305,6 @@ namespace Azure.Search.Documents
                 request.Headers.Add("If-None-Match", ifNoneMatch);
             }
             request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -379,7 +375,6 @@ namespace Azure.Search.Documents
                 request.Headers.Add("x-ms-client-request-id", xMsClientRequestId.Value);
             }
             request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -456,7 +451,6 @@ namespace Azure.Search.Documents
                 request.Headers.Add("x-ms-client-request-id", xMsClientRequestId.Value);
             }
             request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -518,7 +512,6 @@ namespace Azure.Search.Documents
             }
             request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             request.Headers.Add("Content-Type", "application/json");
-            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(indexer);
             request.Content = content;
@@ -596,7 +589,6 @@ namespace Azure.Search.Documents
                 request.Headers.Add("x-ms-client-request-id", xMsClientRequestId.Value);
             }
             request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
