@@ -18,12 +18,9 @@ steps:
         --kusto-database-var KUSTO_DB `
         --kusto-table-var KUSTO_TABLE `
         --identity "$(Build.QueuedBy)"
-      $resolvedIdentity = $result[-1] | ConvertFrom-Json
-
-      Write-Host $resolvedIdentity
-
-      Write-Output "##vso[task.setvariable variable=${{ parameters.TargetVariable }}]$($resolvedIdentity.GithubUserName)"
+        --vsoVariable "${{ parameters.TargetVariable }}"
     displayName: 'Resolving Queuing User'
+    continueOnError: true
     workingDirectory: $(Build.SourcesDirectory)/tools_repo/tools/notification-configuration/identity-resolver
     env:
       APP_ID: $(notification-aad-app-id)
@@ -37,10 +34,12 @@ steps:
       Remove-Item -Force -Recurse $(Build.SourcesDirectory)/tools_repo
     displayName: Clean Up Cloned Tools Repo
 
-  - pwsh: |
-      $originalValue = "$(${{ parameters.TargetVariable }})"
-      $result = $(Build.SourcesDirectory)/eng/common/scripts/get-codeowners.ps1 -TargetDirectory /sdk/${{ parameters.ServiceDirectory }}/ -RootDirectory $(Build.SourcesDirectory)
-      if ($result) {
-        Write-Output "##vso[task.setvariable variable=${{ parameters.TargetVariable }}]$originalValue,$result"
-      }
+  - task: PowerShell@2
     displayName: Add CodeOwners if Present
+    inputs:
+      pwsh: true
+      filePath: $(Build.SourcesDirectory)/eng/common/scripts/get-codeowners.ps1
+      arguments: >
+        -TargetDirectory "/sdk/${{ parameters.ServiceDirectory }}/"
+        -RootDirectory "$(Build.SourcesDirectory)"
+        -VsoVariable "${{ parameters.TargetVariable }}"
