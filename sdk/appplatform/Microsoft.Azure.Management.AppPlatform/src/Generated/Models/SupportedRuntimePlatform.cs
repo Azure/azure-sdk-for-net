@@ -12,12 +12,11 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
 {
 
     /// <summary>
-    /// Defines values for RuntimeVersion.
+    /// Defines values for SupportedRuntimePlatform.
     /// </summary>
-    public static class RuntimeVersion
+    public static class SupportedRuntimePlatform
     {
-        public const string Java8 = "Java_8";
-        public const string Java11 = "Java_11";
-        public const string NetCore31 = "NetCore_31";
+        public const string Java = "Java";
+        public const string NETCore = ".NET Core";
     }
 }
