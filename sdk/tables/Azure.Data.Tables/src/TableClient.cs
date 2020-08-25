@@ -27,7 +27,7 @@ namespace Azure.Data.Tables
         private readonly TableRestClient _tableOperations;
         private readonly string _version;
         private readonly bool _isPremiumEndpoint;
-        private ResponseFormat _returnNoContent = ResponseFormat.ReturnNoContent;
+        private readonly ResponseFormat _returnNoContent = ResponseFormat.ReturnNoContent;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TableClient"/>.

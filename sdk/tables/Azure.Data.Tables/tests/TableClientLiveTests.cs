@@ -865,7 +865,7 @@ namespace Azure.Data.Tables.Tests
         /// Validates the functionality of the TableClient.
         /// </summary>
         [Test]
-        public async Task CreatedEnumEntitiesAreRoundtrippedProprly()
+        public async Task CreatedEnumEntitiesAreRoundtrippedProperly()
         {
             List<EnumEntity> entityResults;
             var entitiesToCreate = new[]
