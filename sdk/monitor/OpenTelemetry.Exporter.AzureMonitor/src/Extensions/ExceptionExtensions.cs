@@ -5,7 +5,7 @@ using System;
 using System.Globalization;
 using System.Threading;
 
-namespace OpenTelemetry.Exporter.AzureMonitor
+namespace OpenTelemetry.Exporter.AzureMonitor.Extensions
 {
     internal static class ExceptionExtensions
     {
