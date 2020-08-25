@@ -915,7 +915,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task BatchInsert()
         {
             if (_endpointType == TableEndpointType.CosmosTable)
@@ -949,7 +949,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task BatchInsertAndMergeAndDelete()
         {
             const string updatedString = "the was updated!";
