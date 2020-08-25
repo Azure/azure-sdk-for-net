@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Insights.Tests.BasicTests
 {
-    public class AlertsTests : InsightsManagementClientBase
+    public class AlertsTests : InsightsManagementClientMockedBase
     {
         private static readonly string RuleName = "r1";
         private static readonly string IncidentName = "i1";
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
                 ruleName: RuleName,
                 incidentName: IncidentName);
 
-            AreEqual(expectedIncident, actualIncident);
+            AssertHelpers.AreEqual(expectedIncident, actualIncident);
         }
 
         private static List<Incident> GetIncidents()
