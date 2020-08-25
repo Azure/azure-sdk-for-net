@@ -24,10 +24,6 @@ namespace Azure.Messaging.EventGrid.Tests
         public const string CustomEventTopicKeyEnvironmentVariableName = "EVENT_GRID_CUSTOM_EVENT_TOPIC_KEY";
         public const string CustomEventTopicEndpointEnvironmentVariableName = "EVENT_GRID_CUSTOM_EVENT_TOPIC_ENDPOINT";
 
-        public const string ServiceBusConnectionStringEnvironmentVariableName = "SB_CONNECTIONSTRING";
-        public const string ServiceBusQueueEnvironmentVariableName = "SB_QUEUENAME";
-
-
         public string TopicHost => GetRecordedVariable(TopicEndpointEnvironmentVariableName);
         public string TopicKey => GetRecordedVariable(TopicKeyEnvironmentVariableName, options => options.IsSecret(SanitizedValue.Base64));
 
@@ -39,8 +35,5 @@ namespace Azure.Messaging.EventGrid.Tests
 
         public string CustomEventTopicHost => GetRecordedVariable(CustomEventTopicEndpointEnvironmentVariableName);
         public string CustomEventTopicKey => GetRecordedVariable(CustomEventTopicKeyEnvironmentVariableName, options => options.IsSecret(SanitizedValue.Base64));
-
-        public string ServiceBusConnectionString => GetRecordedVariable(ServiceBusConnectionStringEnvironmentVariableName, options => options.IsSecret(SanitizedValue.Base64));
-        public string ServiceBusQueueName => GetRecordedVariable(ServiceBusQueueName);
     }
 }
