@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://t3e47e3647795488e-textanalytics.cognitiveservices.azure.com/text/analytics/v3.1-preview.1/sentiment",
+      "RequestUri": "https://t0a14a15674c54c18-textanalytics.cognitiveservices.azure.com/text/analytics/v3.1-preview.1/sentiment",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": [
@@ -11,9 +11,9 @@
         "Content-Length": "76",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-39cfe0a9705a9140a4bf59b562c3be29-410550ac0450664c-00",
+        "traceparent": "00-abfe0f147bd8794d8a0326003353d083-322c85d85cf2d942-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200825.2",
+          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200825.3",
           "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "f4cd73140416ebb6ebdc26116b39a234",
@@ -30,14 +30,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "610e0c61-105f-4609-bcdc-bd1fb1085531",
+        "apim-request-id": "6d702f22-fa71-45d2-a535-1edca4ef08b3",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1",
-        "Date": "Tue, 25 Aug 2020 18:27:49 GMT",
+        "Date": "Tue, 25 Aug 2020 18:49:48 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "115"
+        "x-envoy-upstream-service-time": "143"
       },
       "ResponseBody": {
         "documents": [
@@ -73,6 +73,6 @@
   "Variables": {
     "RandomSeed": "324602469",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://t3e47e3647795488e-textanalytics.cognitiveservices.azure.com"
+    "TEXT_ANALYTICS_ENDPOINT": "https://t0a14a15674c54c18-textanalytics.cognitiveservices.azure.com"
   }
 }
