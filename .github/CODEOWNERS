@@ -57,7 +57,8 @@
 /sdk/servicebus/Microsoft.*/                    @nemakam
 
 # PRLabel: %Storage
-/sdk/storage/                                   @amishra-dev @seanmcc-msft @amnguye @kasobol-msft @tg-msft
+/sdk/storage/                                   @tg-msft
+/sdk/storage/Azure.Storage.*/                   @amishra-dev @seanmcc-msft @amnguye @kasobol-msft
 
 # PRLabel: %Tables
 /sdk/tables/                                    @christothes
