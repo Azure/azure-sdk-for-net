@@ -42,13 +42,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="tags">Resource tags</param>
         /// <param name="mountTargetId">mountTargetId</param>
         /// <param name="ipAddress">ipAddress</param>
-        /// <param name="subnet">subnet</param>
-        /// <param name="startIp">startIp</param>
-        /// <param name="endIp">endIp</param>
-        /// <param name="gateway">gateway</param>
-        /// <param name="netmask">netmask</param>
         /// <param name="smbServerFqdn">smbServerFQDN</param>
-        public MountTarget(string location, string fileSystemId, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string mountTargetId = default(string), string ipAddress = default(string), string subnet = default(string), string startIp = default(string), string endIp = default(string), string gateway = default(string), string netmask = default(string), string smbServerFqdn = default(string))
+        public MountTarget(string location, string fileSystemId, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string mountTargetId = default(string), string ipAddress = default(string), string smbServerFqdn = default(string))
         {
             Location = location;
             Id = id;
@@ -58,11 +53,6 @@ namespace Microsoft.Azure.Management.NetApp.Models
             MountTargetId = mountTargetId;
             FileSystemId = fileSystemId;
             IpAddress = ipAddress;
-            Subnet = subnet;
-            StartIp = startIp;
-            EndIp = endIp;
-            Gateway = gateway;
-            Netmask = netmask;
             SmbServerFqdn = smbServerFqdn;
             CustomInit();
         }
@@ -128,55 +118,6 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </remarks>
         [JsonProperty(PropertyName = "properties.ipAddress")]
         public string IpAddress { get; private set; }
-
-        /// <summary>
-        /// Gets or sets subnet
-        /// </summary>
-        /// <remarks>
-        /// The subnet
-        /// </remarks>
-        [JsonProperty(PropertyName = "properties.subnet")]
-        public string Subnet { get; set; }
-
-        /// <summary>
-        /// Gets or sets startIp
-        /// </summary>
-        /// <remarks>
-        /// The start of IPv4 address range to use when creating a new mount
-        /// target
-        /// </remarks>
-        [JsonProperty(PropertyName = "properties.startIp")]
-        public string StartIp { get; set; }
-
-        /// <summary>
-        /// Gets or sets endIp
-        /// </summary>
-        /// <remarks>
-        /// The end of IPv4 address range to use when creating a new mount
-        /// target
-        /// </remarks>
-        [JsonProperty(PropertyName = "properties.endIp")]
-        public string EndIp { get; set; }
-
-        /// <summary>
-        /// Gets or sets gateway
-        /// </summary>
-        /// <remarks>
-        /// The gateway of the IPv4 address range to use when creating a new
-        /// mount target
-        /// </remarks>
-        [JsonProperty(PropertyName = "properties.gateway")]
-        public string Gateway { get; set; }
-
-        /// <summary>
-        /// Gets or sets netmask
-        /// </summary>
-        /// <remarks>
-        /// The netmask of the IPv4 address range to use when creating a new
-        /// mount target
-        /// </remarks>
-        [JsonProperty(PropertyName = "properties.netmask")]
-        public string Netmask { get; set; }
 
         /// <summary>
         /// Gets or sets smbServerFQDN
