@@ -10,11 +10,13 @@
 			Development of this library has shifted focus to the Azure Unified SDK. The future development will be focused on "Azure.ResourceManager.Network" (https://www.nuget.org/packages/Azure.ResourceManager.Network/). Please see the package changelog for more information.
 		</Description>
 		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-		<Version>20.0.4-preview</Version>
+		<Version>20.1.0</Version>
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>
 		<PackageReleaseNotes>
 		<![CDATA[
-            - Fix incorrect type of Context in HopLink
+            - Added new api version 2020-06-01
+			- Added new BrasilSE region support
+			- Fixed several issues
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

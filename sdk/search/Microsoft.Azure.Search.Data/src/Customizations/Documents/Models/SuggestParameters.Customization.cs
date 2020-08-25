@@ -11,11 +11,11 @@ namespace Microsoft.Azure.Search.Models
     public partial class SuggestParameters
     {
         /// <summary>
-        /// Returns this instance if it has a non-null <c cref="SuggestParameters.Select">Select</c> property,
+        /// Returns this instance if it has a non-null <see cref="SuggestParameters.Select" /> property,
         /// or a new instance with Select set to "*" otherwise.
         /// </summary>
-        /// <returns>A <c cref="SuggestParameters">SuggestParameters</c> instance that has a
-        /// non-null <c cref="SuggestParameters.Select">Select</c> property</returns>
+        /// <returns>A <see cref="SuggestParameters" /> instance that has a
+        /// non-null <see cref="SuggestParameters.Select" /> property</returns>
         public SuggestParameters EnsureSelect()
         {
             IList<string> newSelect = EnsureSelect(Select);

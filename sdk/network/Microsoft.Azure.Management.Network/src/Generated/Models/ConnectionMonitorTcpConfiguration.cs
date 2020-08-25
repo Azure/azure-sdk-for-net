@@ -34,10 +34,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="port">The port to connect to.</param>
         /// <param name="disableTraceRoute">Value indicating whether path
         /// evaluation with trace route should be disabled.</param>
-        public ConnectionMonitorTcpConfiguration(int? port = default(int?), bool? disableTraceRoute = default(bool?))
+        /// <param name="destinationPortBehavior">Destination port behavior.
+        /// Possible values include: 'None', 'ListenIfAvailable'</param>
+        public ConnectionMonitorTcpConfiguration(int? port = default(int?), bool? disableTraceRoute = default(bool?), string destinationPortBehavior = default(string))
         {
             Port = port;
             DisableTraceRoute = disableTraceRoute;
+            DestinationPortBehavior = destinationPortBehavior;
             CustomInit();
         }
 
@@ -58,6 +61,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "disableTraceRoute")]
         public bool? DisableTraceRoute { get; set; }
+
+        /// <summary>
+        /// Gets or sets destination port behavior. Possible values include:
+        /// 'None', 'ListenIfAvailable'
+        /// </summary>
+        [JsonProperty(PropertyName = "destinationPortBehavior")]
+        public string DestinationPortBehavior { get; set; }
 
     }
 }

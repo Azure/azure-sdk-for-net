@@ -36,11 +36,11 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// <param name="source">Uploaded source information of the
         /// deployment.</param>
         /// <param name="appName">App name of the deployment</param>
+        /// <param name="deploymentSettings">Deployment settings of the
+        /// Deployment</param>
         /// <param name="provisioningState">Provisioning state of the
         /// Deployment. Possible values include: 'Creating', 'Updating',
         /// 'Succeeded', 'Failed'</param>
-        /// <param name="deploymentSettings">Deployment settings of the
-        /// Deployment</param>
         /// <param name="status">Status of the Deployment. Possible values
         /// include: 'Unknown', 'Stopped', 'Running', 'Failed', 'Allocating',
         /// 'Upgrading', 'Compiling'</param>
@@ -50,12 +50,12 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// created</param>
         /// <param name="instances">Collection of instances belong to the
         /// Deployment</param>
-        public DeploymentResourceProperties(UserSourceInfo source = default(UserSourceInfo), string appName = default(string), string provisioningState = default(string), DeploymentSettings deploymentSettings = default(DeploymentSettings), string status = default(string), bool? active = default(bool?), System.DateTime? createdTime = default(System.DateTime?), IList<DeploymentInstance> instances = default(IList<DeploymentInstance>))
+        public DeploymentResourceProperties(UserSourceInfo source = default(UserSourceInfo), string appName = default(string), DeploymentSettings deploymentSettings = default(DeploymentSettings), string provisioningState = default(string), string status = default(string), bool? active = default(bool?), System.DateTime? createdTime = default(System.DateTime?), IList<DeploymentInstance> instances = default(IList<DeploymentInstance>))
         {
             Source = source;
             AppName = appName;
-            ProvisioningState = provisioningState;
             DeploymentSettings = deploymentSettings;
+            ProvisioningState = provisioningState;
             Status = status;
             Active = active;
             CreatedTime = createdTime;
@@ -81,17 +81,17 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         public string AppName { get; private set; }
 
         /// <summary>
+        /// Gets or sets deployment settings of the Deployment
+        /// </summary>
+        [JsonProperty(PropertyName = "deploymentSettings")]
+        public DeploymentSettings DeploymentSettings { get; set; }
+
+        /// <summary>
         /// Gets provisioning state of the Deployment. Possible values include:
         /// 'Creating', 'Updating', 'Succeeded', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; private set; }
-
-        /// <summary>
-        /// Gets or sets deployment settings of the Deployment
-        /// </summary>
-        [JsonProperty(PropertyName = "deploymentSettings")]
-        public DeploymentSettings DeploymentSettings { get; set; }
 
         /// <summary>
         /// Gets status of the Deployment. Possible values include: 'Unknown',
@@ -119,18 +119,5 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         [JsonProperty(PropertyName = "instances")]
         public IList<DeploymentInstance> Instances { get; private set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (DeploymentSettings != null)
-            {
-                DeploymentSettings.Validate();
-            }
-        }
     }
 }

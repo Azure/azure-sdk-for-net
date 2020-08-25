@@ -11,7 +11,7 @@ namespace Azure.AI.TextAnalytics
     {
         #region Common
 
-        internal static TextAnalyticsError ConvertToError(TextAnalyticsError_internal error)
+        internal static TextAnalyticsError ConvertToError(TextAnalyticsErrorInternal error)
         {
             string errorCode = error.Code;
             string message = error.Message;
@@ -27,10 +27,10 @@ namespace Azure.AI.TextAnalytics
             return new TextAnalyticsError(errorCode, message, target);
         }
 
-        internal static List<TextAnalyticsWarning> ConvertToWarnings(IReadOnlyList<TextAnalyticsWarning_internal> internalWarnings)
+        internal static List<TextAnalyticsWarning> ConvertToWarnings(IReadOnlyList<TextAnalyticsWarningInternal> internalWarnings)
         {
             var warnings = new List<TextAnalyticsWarning>();
-            foreach (TextAnalyticsWarning_internal warning in internalWarnings)
+            foreach (TextAnalyticsWarningInternal warning in internalWarnings)
             {
                 warnings.Add(new TextAnalyticsWarning(warning));
             }
@@ -90,6 +90,99 @@ namespace Azure.AI.TextAnalytics
             analyzedSentiments = SortHeterogeneousCollection(analyzedSentiments, idToIndexMap);
 
             return new AnalyzeSentimentResultCollection(analyzedSentiments, results.Statistics, results.ModelVersion);
+        }
+
+        #endregion
+
+        #region KeyPhrases
+
+        internal static KeyPhraseCollection ConvertToKeyPhraseCollection(DocumentKeyPhrases documentKeyPhrases)
+        {
+            return new KeyPhraseCollection(documentKeyPhrases.KeyPhrases.ToList(), ConvertToWarnings(documentKeyPhrases.Warnings));
+        }
+
+        internal static ExtractKeyPhrasesResultCollection ConvertToExtractKeyPhrasesResultCollection(KeyPhraseResult results, IDictionary<string, int> idToIndexMap)
+        {
+            var keyPhrases = new List<ExtractKeyPhrasesResult>();
+
+            //Read errors
+            foreach (DocumentError error in results.Errors)
+            {
+                keyPhrases.Add(new ExtractKeyPhrasesResult(error.Id, ConvertToError(error.Error)));
+            }
+
+            //Read Key phrases
+            foreach (DocumentKeyPhrases docKeyPhrases in results.Documents)
+            {
+                keyPhrases.Add(new ExtractKeyPhrasesResult(docKeyPhrases.Id, docKeyPhrases.Statistics ?? default, ConvertToKeyPhraseCollection(docKeyPhrases)));
+            }
+
+            keyPhrases = SortHeterogeneousCollection(keyPhrases, idToIndexMap);
+
+            return new ExtractKeyPhrasesResultCollection(keyPhrases, results.Statistics, results.ModelVersion);
+        }
+
+        #endregion
+
+        #region Recognize Entities
+
+        internal static List<CategorizedEntity> ConvertToCategorizedEntityList(List<Entity> entities)
+            => entities.Select((entity) => new CategorizedEntity(entity)).ToList();
+
+        internal static CategorizedEntityCollection ConvertToCategorizedEntityCollection(DocumentEntities documentEntities)
+        {
+            return new CategorizedEntityCollection(ConvertToCategorizedEntityList(documentEntities.Entities.ToList()), ConvertToWarnings(documentEntities.Warnings));
+        }
+
+        internal static RecognizeEntitiesResultCollection ConvertToRecognizeEntitiesResultCollection(EntitiesResult results, IDictionary<string, int> idToIndexMap)
+        {
+            var recognizeEntities = new List<RecognizeEntitiesResult>();
+
+            //Read errors
+            foreach (DocumentError error in results.Errors)
+            {
+                recognizeEntities.Add(new RecognizeEntitiesResult(error.Id, ConvertToError(error.Error)));
+            }
+
+            //Read document entities
+            foreach (DocumentEntities docEntities in results.Documents)
+            {
+                recognizeEntities.Add(new RecognizeEntitiesResult(docEntities.Id, docEntities.Statistics ?? default, ConvertToCategorizedEntityCollection(docEntities)));
+            }
+
+            recognizeEntities = SortHeterogeneousCollection(recognizeEntities, idToIndexMap);
+
+            return new RecognizeEntitiesResultCollection(recognizeEntities, results.Statistics, results.ModelVersion);
+        }
+
+        #endregion
+
+        #region Recognize Linked Entities
+
+        internal static LinkedEntityCollection ConvertToLinkedEntityCollection(DocumentLinkedEntities documentEntities)
+        {
+            return new LinkedEntityCollection(documentEntities.Entities.ToList(), ConvertToWarnings(documentEntities.Warnings));
+        }
+
+        internal static RecognizeLinkedEntitiesResultCollection ConvertToRecognizeLinkedEntitiesResultCollection(EntityLinkingResult results, IDictionary<string, int> idToIndexMap)
+        {
+            var recognizeEntities = new List<RecognizeLinkedEntitiesResult>();
+
+            //Read errors
+            foreach (DocumentError error in results.Errors)
+            {
+                recognizeEntities.Add(new RecognizeLinkedEntitiesResult(error.Id, ConvertToError(error.Error)));
+            }
+
+            //Read document linked entities
+            foreach (DocumentLinkedEntities docEntities in results.Documents)
+            {
+                recognizeEntities.Add(new RecognizeLinkedEntitiesResult(docEntities.Id, docEntities.Statistics ?? default, ConvertToLinkedEntityCollection(docEntities)));
+            }
+
+            recognizeEntities = SortHeterogeneousCollection(recognizeEntities, idToIndexMap);
+
+            return new RecognizeLinkedEntitiesResultCollection(recognizeEntities, results.Statistics, results.ModelVersion);
         }
 
         #endregion

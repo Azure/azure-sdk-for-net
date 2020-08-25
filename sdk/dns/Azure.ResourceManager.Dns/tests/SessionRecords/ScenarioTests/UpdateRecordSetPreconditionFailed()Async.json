@@ -1,0 +1,98 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-Dns-2148/providers/Microsoft.Network/dnsZones/azure.ameredmond.dns/CNAME/record1?api-version=2018-05-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "104",
+        "Content-Type": "application/json",
+        "traceparent": "00-8cff98372cebf04ca0b7e73ea20233aa-fc8996ed7ab9dd47-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Dns/1.0.0-dev.20200818.1",
+          "(.NET Core 4.6.29130.01; Linux 4.19.104-microsoft-standard #1 SMP Wed Feb 19 06:37:35 UTC 2020)"
+        ],
+        "x-ms-client-request-id": "ffe8168ece131baefe5b3ab69e027a30",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "metadata": {
+            "tag1": "value1"
+          },
+          "TTL": 60,
+          "CNAMERecord": {
+            "cname": "www.contoso.example.com"
+          }
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "private",
+        "Content-Length": "475",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 18 Aug 2020 19:00:27 GMT",
+        "ETag": "ab30a1d3-6942-4fa8-9521-37d32c74a5a1",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "53c1465c-c69a-46f8-a57c-5fba8299f7b2",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "11999",
+        "x-ms-request-id": "ffe8168e-ce13-1bae-fe5b-3ab69e027a30",
+        "x-ms-routing-request-id": "WESTUS2:20200818T190028Z:53c1465c-c69a-46f8-a57c-5fba8299f7b2",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": "{\u0022id\u0022:\u0022\\/subscriptions\\/db1ab6f0-4769-4b27-930e-01e2ef9c123c\\/resourceGroups\\/Default-Dns-2148\\/providers\\/Microsoft.Network\\/dnszones\\/azure.ameredmond.dns\\/CNAME\\/record1\u0022,\u0022name\u0022:\u0022record1\u0022,\u0022type\u0022:\u0022Microsoft.Network\\/dnszones\\/CNAME\u0022,\u0022etag\u0022:\u0022ab30a1d3-6942-4fa8-9521-37d32c74a5a1\u0022,\u0022properties\u0022:{\u0022metadata\u0022:{\u0022tag1\u0022:\u0022value1\u0022},\u0022fqdn\u0022:\u0022record1.azure.ameredmond.dns.\u0022,\u0022TTL\u0022:60,\u0022CNAMERecord\u0022:{\u0022cname\u0022:\u0022www.contoso.example.com\u0022},\u0022targetResource\u0022:{},\u0022provisioningState\u0022:\u0022Succeeded\u0022}}"
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-Dns-2148/providers/Microsoft.Network/dnsZones/azure.ameredmond.dns/CNAME/record1?api-version=2018-05-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "104",
+        "Content-Type": "application/json",
+        "If-Match": "somegibberish",
+        "traceparent": "00-caf5c07c934f404399e3579e3144a4c9-6f32c2722d157b43-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Dns/1.0.0-dev.20200818.1",
+          "(.NET Core 4.6.29130.01; Linux 4.19.104-microsoft-standard #1 SMP Wed Feb 19 06:37:35 UTC 2020)"
+        ],
+        "x-ms-client-request-id": "f7660e4b551045845a36d857c1c7da19",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "metadata": {
+            "tag1": "value1"
+          },
+          "TTL": 60,
+          "CNAMERecord": {
+            "cname": "www.contoso.example.com"
+          }
+        }
+      },
+      "StatusCode": 412,
+      "ResponseHeaders": {
+        "Cache-Control": "private",
+        "Content-Length": "99",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 18 Aug 2020 19:00:28 GMT",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "6b55d473-7c30-4de0-9a4b-4bc9bcd644a9",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "11998",
+        "x-ms-request-id": "f7660e4b-5510-4584-5a36-d857c1c7da19",
+        "x-ms-routing-request-id": "WESTUS2:20200818T190029Z:6b55d473-7c30-4de0-9a4b-4bc9bcd644a9",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "code": "PreconditionFailed",
+        "message": "The Record set record1 has been modified (etag mismatch)."
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1303732328"
+  }
+}

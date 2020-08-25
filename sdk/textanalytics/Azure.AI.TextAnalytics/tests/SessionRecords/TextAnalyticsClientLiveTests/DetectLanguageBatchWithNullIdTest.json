@@ -4,12 +4,12 @@
       "RequestUri": "https://azsdknet-test-ta.cognitiveservices.azure.com/text/analytics/v3.1-preview.1/languages?model-version=2019-10-01\u0026showStats=false",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Content-Length": "48",
+        "Content-Length": "67",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-901c09f18ea227429f3886bd9b61aaad-de63af437422b24c-00",
+        "traceparent": "00-ff86a28a63463e40b95714edea245742-b7609708a13bc045-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200814.1",
+          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200818.1",
           "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "7f6f73c6d06dd1a82275221d1a0c6d59",
@@ -19,19 +19,20 @@
         "documents": [
           {
             "id": null,
-            "text": "Hello world"
+            "text": "Hello world",
+            "countryHint": "us"
           }
         ]
       },
       "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "9ccf1dd6-9db5-4fcc-b385-576996313a40",
+        "apim-request-id": "b111165e-1f12-4545-bdf9-6d342b7969db",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 14 Aug 2020 19:56:52 GMT",
+        "Date": "Wed, 19 Aug 2020 03:21:02 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "799"
+        "x-envoy-upstream-service-time": "5"
       },
       "ResponseBody": {
         "error": {

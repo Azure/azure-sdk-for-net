@@ -16,5 +16,11 @@ namespace Azure.Iot.Hub.Service.Samples
 
         [Option('e', "endpoint", Required = true, HelpText = "Iot Hub endpoint")]
         public Uri Endpoint { get; set; }
+
+        [Option('d', "isDeviceSampleRunning", Required = false, Default = false, HelpText = "Is the sample dependent on the device sample to be running")]
+        public bool IsDeviceSampleRunning { get; set; }
+
+        [Option('s', "storageAccountConnectionString", Required = true, HelpText = "Storage account connection string")]
+        public string StorageAccountConnectionString { get; set; }
     }
 }

@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Search.Models.Internal
     using System.Linq;
 
     /// <summary>
-    /// Compares two <c cref="SearchContinuationToken">SearchContinuationToken</c> instances for equality.
+    /// Compares two <see cref="SearchContinuationToken" /> instances for equality.
     /// </summary>
     /// <para>
     /// This class is part of the internal implementation of the Azure Cognitive Search .NET SDK. It is not intended to be used directly by

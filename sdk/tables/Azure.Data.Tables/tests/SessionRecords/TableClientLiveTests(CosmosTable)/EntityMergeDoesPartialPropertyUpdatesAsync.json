@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://allkimprim.table.cosmos.azure.com/Tables?$format=application%2Fjson%3Bodata%3Dfullmetadata",
+      "RequestUri": "https://chrissprim.table.cosmos.azure.com/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -9,13 +9,13 @@
         "Content-Length": "33",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-258e9e9bbb3b404bbae14c68ad968bac-7954fa86ba0ec443-00",
+        "traceparent": "00-0ab5393108e418488b79f3e5fa63e042-a104ec70afc17043-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200724.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Data.Tables/1.0.0-dev.20200821.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "2895f2c10eb768788ca1852056aa272d",
-        "x-ms-date": "Mon, 27 Jul 2020 17:39:43 GMT",
+        "x-ms-client-request-id": "f6950a7018c06dc84d20ba185363dd55",
+        "x-ms-date": "Fri, 21 Aug 2020 15:57:03 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -25,31 +25,31 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Mon, 27 Jul 2020 17:39:43 GMT",
-        "ETag": "W/\u0022datetime\u00272020-07-27T17%3A39%3A43.7051912Z\u0027\u0022",
-        "Location": "https://allkimprim.table.cosmos.azure.com/Tables(\u0027testtable8l6hz07y\u0027)",
+        "Date": "Fri, 21 Aug 2020 15:57:02 GMT",
+        "ETag": "W/\u0022datetime\u00272020-08-21T15%3A57%3A03.2085512Z\u0027\u0022",
+        "Location": "https://chrissprim.table.cosmos.azure.com/Tables(\u0027testtable8l6hz07y\u0027)",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "2895f2c1-0eb7-6878-8ca1-852056aa272d"
+        "x-ms-request-id": "f6950a70-18c0-6dc8-4d20-ba185363dd55"
       },
       "ResponseBody": {
         "TableName": "testtable8l6hz07y",
-        "odata.metadata": "https://allkimprim.table.cosmos.azure.com/$metadata#Tables/@Element"
+        "odata.metadata": "https://chrissprim.table.cosmos.azure.com/$metadata#Tables/@Element"
       }
     },
     {
-      "RequestUri": "https://allkimprim.table.cosmos.azure.com/Tables(\u0027testtable8l6hz07y\u0027)",
+      "RequestUri": "https://chrissprim.table.cosmos.azure.com/Tables(\u0027testtable8l6hz07y\u0027)",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-9a6815b794d18d4e9c4d0dce0c9643ef-dd3d1c618a817946-00",
+        "traceparent": "00-257a5f67c049434a912975995ddf2834-8f5db08582790548-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200724.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Data.Tables/1.0.0-dev.20200821.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "f6950a7018c06dc84d20ba185363dd55",
-        "x-ms-date": "Mon, 27 Jul 2020 17:39:44 GMT",
+        "x-ms-client-request-id": "340cccda4a56e7117decac594172c999",
+        "x-ms-date": "Fri, 21 Aug 2020 15:57:03 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -57,16 +57,16 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 27 Jul 2020 17:39:44 GMT",
+        "Date": "Fri, 21 Aug 2020 15:57:03 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "f6950a70-18c0-6dc8-4d20-ba185363dd55"
+        "x-ms-request-id": "340cccda-4a56-e711-7dec-ac594172c999"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
     "RandomSeed": "1355505478",
-    "TABLES_COSMOS_ACCOUNT_NAME": "allkimprim",
-    "TABLES_PRIMARY_COSMOS_ACCOUNT_KEY": ""
+    "TABLES_COSMOS_ACCOUNT_NAME": "chrissprim",
+    "TABLES_PRIMARY_COSMOS_ACCOUNT_KEY": "Kg=="
   }
 }

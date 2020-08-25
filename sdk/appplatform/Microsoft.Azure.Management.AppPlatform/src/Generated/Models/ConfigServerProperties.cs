@@ -29,15 +29,15 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// <summary>
         /// Initializes a new instance of the ConfigServerProperties class.
         /// </summary>
-        /// <param name="state">State of the config server. Possible values
-        /// include: 'NotAvailable', 'Deleted', 'Failed', 'Succeeded',
-        /// 'Updating'</param>
+        /// <param name="provisioningState">State of the config server.
+        /// Possible values include: 'NotAvailable', 'Deleted', 'Failed',
+        /// 'Succeeded', 'Updating'</param>
         /// <param name="error">Error when apply config server
         /// settings.</param>
         /// <param name="configServer">Settings of config server.</param>
-        public ConfigServerProperties(string state = default(string), Error error = default(Error), ConfigServerSettings configServer = default(ConfigServerSettings))
+        public ConfigServerProperties(string provisioningState = default(string), Error error = default(Error), ConfigServerSettings configServer = default(ConfigServerSettings))
         {
-            State = state;
+            ProvisioningState = provisioningState;
             Error = error;
             ConfigServer = configServer;
             CustomInit();
@@ -52,8 +52,8 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// Gets state of the config server. Possible values include:
         /// 'NotAvailable', 'Deleted', 'Failed', 'Succeeded', 'Updating'
         /// </summary>
-        [JsonProperty(PropertyName = "state")]
-        public string State { get; private set; }
+        [JsonProperty(PropertyName = "provisioningState")]
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets error when apply config server settings.

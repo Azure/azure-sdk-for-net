@@ -5,7 +5,7 @@
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.Files.Shares client library</AssemblyTitle>
     <Version>12.4.0-preview.1</Version>
-    <ApiCompatVersion>12.3.0</ApiCompatVersion>
+    <ApiCompatVersion>12.3.1</ApiCompatVersion>
     <DefineConstants>FileSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Storage Files;Microsoft;Azure;File;Files;Storage;StorageScalable;$(PackageCommonTags)</PackageTags>
     <Description>

@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3Awifi%3B173948219?includeModelDefinition=true\u0026api-version=2020-05-31-preview",
+      "RequestUri": "https://https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3Awifi%3B173948219?includeModelDefinition=true\u0026api-version=2020-05-31-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200728.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200820.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "f991ef6850b4d6f05168f7c990ed177b",
         "x-ms-return-client-request-id": "true"
@@ -17,7 +17,7 @@
       "ResponseHeaders": {
         "Content-Length": "212",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Jul 2020 23:45:28 GMT",
+        "Date": "Thu, 20 Aug 2020 22:33:03 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -28,13 +28,13 @@
       }
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3Awifiroom%3B11736?includeModelDefinition=true\u0026api-version=2020-05-31-preview",
+      "RequestUri": "https://https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3Awifiroom%3B11736?includeModelDefinition=true\u0026api-version=2020-05-31-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200728.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200820.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "419e2f1fb2c82734e25bf07265983212",
         "x-ms-return-client-request-id": "true"
@@ -44,7 +44,7 @@
       "ResponseHeaders": {
         "Content-Length": "212",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Jul 2020 23:45:28 GMT",
+        "Date": "Thu, 20 Aug 2020 22:33:04 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -55,13 +55,13 @@
       }
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomWithWifiTwin1154827759?api-version=2020-05-31-preview",
+      "RequestUri": "https://https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomWithWifiTwin1154827759?api-version=2020-05-31-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200728.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200820.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "1b321d03cf1ffab0612711b9316e789d",
         "x-ms-return-client-request-id": "true"
@@ -71,7 +71,7 @@
       "ResponseHeaders": {
         "Content-Length": "279",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Jul 2020 23:45:28 GMT",
+        "Date": "Thu, 20 Aug 2020 22:33:04 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -82,15 +82,15 @@
       }
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/eventroutes/someEventRouteId-567112595?api-version=2020-05-31-preview",
+      "RequestUri": "https://https://fakeHost.api.wus2.digitaltwins.azure.net/eventroutes/someEventRouteId-567112595?api-version=2020-05-31-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "150",
         "Content-Type": "application/json",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200728.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200820.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "15ca6fc23ca0d25dd1f5ff64eccfc5b7",
         "x-ms-return-client-request-id": "true"
@@ -102,21 +102,22 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Tue, 28 Jul 2020 23:45:28 GMT",
+        "Date": "Thu, 20 Aug 2020 22:33:04 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models?api-version=2020-05-31-preview",
+      "RequestUri": "https://https://fakeHost.api.wus2.digitaltwins.azure.net/models?api-version=2020-05-31-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "1139",
         "Content-Type": "application/json; charset=utf-8",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200728.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200820.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "49fae9a10072ed5f47678b226db1ec78",
         "x-ms-return-client-request-id": "true"
@@ -124,23 +125,23 @@
       "RequestBody": "[{    \u0022@id\u0022: \u0022dtmi:example:wifiroom;11736\u0022,    \u0022@type\u0022: \u0022Interface\u0022,    \u0022displayName\u0022: \u0022RoomWithWifi\u0022,    \u0022contents\u0022: [        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022Temperature\u0022,            \u0022schema\u0022: \u0022double\u0022        },        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022Humidity\u0022,            \u0022schema\u0022: \u0022double\u0022        },        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022IsOccupied\u0022,            \u0022schema\u0022: \u0022boolean\u0022        },        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022EmployeeId\u0022,            \u0022schema\u0022: \u0022string\u0022        },        {            \u0022@type\u0022: \u0022Component\u0022,            \u0022name\u0022: \u0022wifiAccessPoint\u0022,            \u0022schema\u0022: \u0022dtmi:example:wifi;173948219\u0022        }    ],    \u0022@context\u0022: \u0022dtmi:dtdl:context;2\u0022},{    \u0022@id\u0022: \u0022dtmi:example:wifi;173948219\u0022,    \u0022@type\u0022: \u0022Interface\u0022,    \u0022@context\u0022: \u0022dtmi:dtdl:context;2\u0022,    \u0022displayName\u0022: \u0022Wifi\u0022,    \u0022contents\u0022: [        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022RouterName\u0022,            \u0022schema\u0022: \u0022string\u0022        },        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022Network\u0022,            \u0022schema\u0022: \u0022string\u0022        }    ]}]",
       "StatusCode": 201,
       "ResponseHeaders": {
-        "Content-Length": "317",
+        "Content-Length": "314",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Jul 2020 23:45:29 GMT",
+        "Date": "Thu, 20 Aug 2020 22:33:05 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
-      "ResponseBody": "[{\u0022id\u0022:\u0022dtmi:example:wifiroom;11736\u0022,\u0022description\u0022:{},\u0022displayName\u0022:{\u0022en\u0022:\u0022RoomWithWifi\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-07-28T23:45:29.2999063\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:wifi;173948219\u0022,\u0022description\u0022:{},\u0022displayName\u0022:{\u0022en\u0022:\u0022Wifi\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-07-28T23:45:29.3000938\u002B00:00\u0022}]"
+      "ResponseBody": "[{\u0022id\u0022:\u0022dtmi:example:wifiroom;11736\u0022,\u0022description\u0022:{},\u0022displayName\u0022:{\u0022en\u0022:\u0022RoomWithWifi\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-08-20T22:33:05.42405\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:wifi;173948219\u0022,\u0022description\u0022:{},\u0022displayName\u0022:{\u0022en\u0022:\u0022Wifi\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-08-20T22:33:05.424218\u002B00:00\u0022}]"
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomWithWifiTwin1154827759?api-version=2020-05-31-preview",
+      "RequestUri": "https://https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomWithWifiTwin1154827759?api-version=2020-05-31-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "267",
         "Content-Type": "application/json; charset=utf-8",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200728.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200820.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "c2d5d2d4d947e063d4494edab1957457",
         "x-ms-return-client-request-id": "true"
@@ -150,13 +151,13 @@
       "ResponseHeaders": {
         "Content-Length": "970",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Jul 2020 23:45:29 GMT",
-        "ETag": "W/\u00220b54643e-9131-464e-ada0-1791384508f3\u0022",
+        "Date": "Thu, 20 Aug 2020 22:33:05 GMT",
+        "ETag": "W/\u0022b7910cd5-8adf-47cc-be0e-086382b7ca0d\u0022",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
         "$dtId": "roomWithWifiTwin1154827759",
-        "$etag": "W/\u00220b54643e-9131-464e-ada0-1791384508f3\u0022",
+        "$etag": "W/\u0022b7910cd5-8adf-47cc-be0e-086382b7ca0d\u0022",
         "Temperature": 80,
         "Humidity": 25,
         "IsOccupied": true,
@@ -215,17 +216,18 @@
       }
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomWithWifiTwin1154827759/telemetry?api-version=2020-05-31-preview",
+      "RequestUri": "https://https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomWithWifiTwin1154827759/telemetry?api-version=2020-05-31-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "17",
         "Content-Type": "application/json",
         "dt-id": "8490024c-537e-c221-10dd-ce38b13a6420",
         "dt-timestamp": "01/01/01 0:00:00 \u002B00:00",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200728.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200820.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "1a90870802fac76f85197428b1853bb1",
         "x-ms-return-client-request-id": "true"
@@ -234,23 +236,24 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Tue, 28 Jul 2020 23:45:29 GMT",
+        "Date": "Thu, 20 Aug 2020 22:33:05 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomWithWifiTwin1154827759/components/wifiAccessPoint/telemetry?api-version=2020-05-31-preview",
+      "RequestUri": "https://https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomWithWifiTwin1154827759/components/wifiAccessPoint/telemetry?api-version=2020-05-31-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "25",
         "Content-Type": "application/json",
         "dt-id": "6ad533f2-6821-80f9-b012-b26a0b2a2f99",
         "dt-timestamp": "01/01/01 0:00:00 \u002B00:00",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200728.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200820.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "29d12de45a05495d92c8fe64dff8108a",
         "x-ms-return-client-request-id": "true"
@@ -261,19 +264,19 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Tue, 28 Jul 2020 23:45:29 GMT",
+        "Date": "Thu, 20 Aug 2020 22:33:05 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/eventroutes/someEventRouteId-567112595?api-version=2020-05-31-preview",
+      "RequestUri": "https://https://fakeHost.api.wus2.digitaltwins.azure.net/eventroutes/someEventRouteId-567112595?api-version=2020-05-31-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200728.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200820.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "7d461da1f965a0ff8d0f69e75005bc5a",
         "x-ms-return-client-request-id": "true"
@@ -282,19 +285,19 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Tue, 28 Jul 2020 23:45:29 GMT",
+        "Date": "Thu, 20 Aug 2020 22:33:05 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomWithWifiTwin1154827759?api-version=2020-05-31-preview",
+      "RequestUri": "https://https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomWithWifiTwin1154827759?api-version=2020-05-31-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200728.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200820.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "8343daea12b397abd68bd8586995a1b8",
         "x-ms-return-client-request-id": "true"
@@ -303,19 +306,19 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Tue, 28 Jul 2020 23:45:29 GMT",
+        "Date": "Thu, 20 Aug 2020 22:33:05 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3Awifiroom%3B11736?api-version=2020-05-31-preview",
+      "RequestUri": "https://https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3Awifiroom%3B11736?api-version=2020-05-31-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200728.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200820.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "edc82802b1e4eb342e319cf6f176f98d",
         "x-ms-return-client-request-id": "true"
@@ -324,19 +327,19 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Tue, 28 Jul 2020 23:45:29 GMT",
+        "Date": "Thu, 20 Aug 2020 22:33:05 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3Awifi%3B173948219?api-version=2020-05-31-preview",
+      "RequestUri": "https://https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3Awifi%3B173948219?api-version=2020-05-31-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200728.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200820.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "047aa40b8db48fd671afa7d921a637f8",
         "x-ms-return-client-request-id": "true"
@@ -345,7 +348,7 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Tue, 28 Jul 2020 23:45:30 GMT",
+        "Date": "Thu, 20 Aug 2020 22:33:05 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []

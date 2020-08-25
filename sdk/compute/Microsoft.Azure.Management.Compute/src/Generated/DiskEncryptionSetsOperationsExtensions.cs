@@ -281,6 +281,52 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
+            /// Lists all resources that are encrypted with this disk encryption set.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='diskEncryptionSetName'>
+            /// The name of the disk encryption set that is being created. The name can't
+            /// be changed after the disk encryption set is created. Supported characters
+            /// for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80
+            /// characters.
+            /// </param>
+            public static IPage<string> ListAssociatedResources(this IDiskEncryptionSetsOperations operations, string resourceGroupName, string diskEncryptionSetName)
+            {
+                return operations.ListAssociatedResourcesAsync(resourceGroupName, diskEncryptionSetName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists all resources that are encrypted with this disk encryption set.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='diskEncryptionSetName'>
+            /// The name of the disk encryption set that is being created. The name can't
+            /// be changed after the disk encryption set is created. Supported characters
+            /// for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80
+            /// characters.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<string>> ListAssociatedResourcesAsync(this IDiskEncryptionSetsOperations operations, string resourceGroupName, string diskEncryptionSetName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListAssociatedResourcesWithHttpMessagesAsync(resourceGroupName, diskEncryptionSetName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Creates or updates a disk encryption set
             /// </summary>
             /// <param name='operations'>
@@ -494,6 +540,40 @@ namespace Microsoft.Azure.Management.Compute
             public static async Task<IPage<DiskEncryptionSet>> ListNextAsync(this IDiskEncryptionSetsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists all resources that are encrypted with this disk encryption set.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<string> ListAssociatedResourcesNext(this IDiskEncryptionSetsOperations operations, string nextPageLink)
+            {
+                return operations.ListAssociatedResourcesNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists all resources that are encrypted with this disk encryption set.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<string>> ListAssociatedResourcesNextAsync(this IDiskEncryptionSetsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListAssociatedResourcesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

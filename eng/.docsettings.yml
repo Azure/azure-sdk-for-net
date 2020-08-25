@@ -123,6 +123,7 @@ known_presence_issues:
 known_content_issues:
   - ['README.md','Root readme']
   - ['doc/README.md','Doc readme']
+  - ['sdk/anomalydetector/Azure.AI.AnomalyDetector/README.md', '#5499']
   - ['sdk/core/Azure.Core/README.md', '#5499']
   - ['sdk/core/Azure.Core.Experimental/README.md', '#5499']
   - ['sdk/core/Microsoft.Extensions.Azure/README.md','#5499']

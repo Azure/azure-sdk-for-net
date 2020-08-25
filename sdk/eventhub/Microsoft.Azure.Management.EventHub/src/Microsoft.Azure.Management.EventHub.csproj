@@ -9,13 +9,14 @@
 			Provides developers with a library to create and manage all Azure Event Hubs resources. Note: This client library is for EventHub under Azure Resource Manager.
 			Development of this library has shifted focus to the Azure Unified SDK. The future development will be focused on "Azure.ResourceManager.EventHubs" (https://www.nuget.org/packages/Azure.ResourceManager.EventHubs/). Please see the package changelog for more information.
 		</Description>
-		<Version>2.7.1</Version>
+		<Version>2.7.2</Version>
 		<AssemblyName>Microsoft.Azure.Management.EventHub</AssemblyName>
 		<PackageTags>Microsoft Azure EventHubs Management;Event Hubs;Event Hubs management;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
 		Event Hubs:
-    1) Fixed the Cluster put API
+    1) Increased EventHub name length to 256 chars
+    2) Added the Optional property TrustedServiceAccessEnabled in NetworkRuleset
 	  ]]>
 		</PackageReleaseNotes>
 		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>

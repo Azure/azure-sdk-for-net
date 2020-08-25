@@ -11,7 +11,7 @@ namespace Azure.Data.AppConfiguration
         {
         }
 
-        public string ConnectionString => GetRecordedVariable("APPCONFIGURATION_CONNECTION_STRING");
+        public string ConnectionString => GetRecordedVariable("APPCONFIGURATION_CONNECTION_STRING", options => options.HasSecretConnectionStringParameter("secret"));
         public string Endpoint => GetRecordedVariable("APPCONFIGURATION_ENDPOINT_STRING");
     }
 }

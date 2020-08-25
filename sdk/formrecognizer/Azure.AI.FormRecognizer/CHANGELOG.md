@@ -1,10 +1,24 @@
 # Release History
 
-## 3.0.0-preview.2 (Unreleased)
+## 3.1.0-preview.1 (Unreleased)
+
+
+## 3.0.0 (2020-08-20)
+
+- First stable release of the Azure.AI.FormRecognizer package.
+
+### Breaking changes
+
+- Renamed the model `BoundingBox` to `FieldBoundingBox`.
 
 ### New Features
 
 - Added `FormRecognizerModelFactory` static class to support mocking model types.
+
+## 3.0.0-preview.2 (2020-08-18)
+
+### Fixed
+- Bug in TaskExtensions.EnsureCompleted method that causes it to unconditionally throw an exception in the environments with synchronization context
 
 ## 3.0.0-preview.1 (2020-08-11)
 
