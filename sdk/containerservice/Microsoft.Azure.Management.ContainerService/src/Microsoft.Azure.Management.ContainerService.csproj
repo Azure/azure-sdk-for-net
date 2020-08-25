@@ -6,11 +6,11 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.ContainerService</PackageId>
     <Description>Provides developers with a library to create and manage all Azure Kubernetes Service resources. </Description>
-    <Version>1.0.0</Version>
+    <Version>1.1.0</Version>
     <AssemblyName>Microsoft.Azure.Management.ContainerService</AssemblyName>
     <PackageTags>Microsoft Azure Kubernetes Service; Microsoft Azure ContainerService;</PackageTags>
     <PackageReleaseNotes><![CDATA[
-    This release reflects the package-2019-10 implementation of the ContainerService REST specfication.
+    This release reflects the package-2020-07 implementation of the ContainerService REST specfication.
     ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
