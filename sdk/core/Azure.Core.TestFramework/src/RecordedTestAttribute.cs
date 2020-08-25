@@ -53,7 +53,7 @@ namespace Azure.Core.TestFramework
                     // If the recording succeeded, set a warning result.
                     if (!IsTestFailedWithRecordingMismatch(context))
                     {
-                        context.CurrentResult.SetResult(ResultState.Error, "Test failed palyback, but was successfully re-recorded (it should pass if re-run). Please copy updated recording to SessionFiles.");
+                        context.CurrentResult.SetResult(ResultState.Error, "Test failed playback, but was successfully re-recorded (it should pass if re-run). Please copy updated recording to SessionFiles.");
                     }
 
                     // revert RecordTestMode to Playback

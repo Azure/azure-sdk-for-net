@@ -167,14 +167,28 @@ By default tests are run in playback mode. To change the mode use the `AZURE_TES
 
 In development scenarios where it's required to change mode quickly without restarting the Visual Studio use the two-parameter constructor of `RecordedTestBase` to change the mode:
 
+Recorded tests can be attributed with the `RecordedTestAttribute` in lieu of the standard `TestAttribute` to enable functionality to automatically re-record tests that fail due to recording session file mismatches.
+Tests that are auto-rerecorded will fail with the following error and succeed if re-run.
+
+```
+Error Message:
+   Test failed playback, but was successfully re-recorded (it should pass if re-run). Please copy updated recording to SessionFiles.
+```
+
 ``` C#
 public class ConfigurationLiveTests: RecordedTestBase<AppConfigurationTestEnvironment>
 {
     public ConfigurationLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
     {
+        [RecordedTest]
+        public void MyTest()
+        {
+            //...
+        }
     }
 }
 ```
+
 
 ## Recording
 
