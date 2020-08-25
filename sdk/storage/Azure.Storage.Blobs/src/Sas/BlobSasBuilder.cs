@@ -349,6 +349,9 @@ namespace Azure.Storage.Sas
                 signedExpiry,
                 userDelegationKey.SignedService,
                 userDelegationKey.SignedVersion,
+                null, // authorized aad object id
+                null, // unauthorized add object id
+                null, // correlation id
                 IPRange.ToString(),
                 SasExtensions.ToProtocolString(Protocol),
                 Version,

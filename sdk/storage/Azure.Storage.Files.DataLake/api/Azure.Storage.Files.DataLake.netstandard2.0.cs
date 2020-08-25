@@ -834,10 +834,13 @@ namespace Azure.Storage.Sas
         public string ContentEncoding { get { throw null; } set { } }
         public string ContentLanguage { get { throw null; } set { } }
         public string ContentType { get { throw null; } set { } }
+        public string CorrelationId { get { throw null; } set { } }
+        public uint? DirectoryDepth { get { throw null; } set { } }
         public System.DateTimeOffset ExpiresOn { get { throw null; } set { } }
         public string FileSystemName { get { throw null; } set { } }
         public string Identifier { get { throw null; } set { } }
         public Azure.Storage.Sas.SasIPRange IPRange { get { throw null; } set { } }
+        public bool? IsDirectory { get { throw null; } set { } }
         public string Path { get { throw null; } set { } }
         public string Permissions { get { throw null; } }
         public Azure.Storage.Sas.SasProtocol Protocol { get { throw null; } set { } }
@@ -848,6 +851,7 @@ namespace Azure.Storage.Sas
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
+        public void SetObjectId(string objectId, bool performPosixCheck) { }
         public void SetPermissions(Azure.Storage.Sas.DataLakeAccountSasPermissions permissions) { }
         public void SetPermissions(Azure.Storage.Sas.DataLakeFileSystemSasPermissions permissions) { }
         public void SetPermissions(Azure.Storage.Sas.DataLakeSasPermissions permissions) { }
@@ -867,6 +871,11 @@ namespace Azure.Storage.Sas
         Create = 4,
         Write = 8,
         Delete = 16,
+        List = 32,
+        Move = 64,
+        Execute = 128,
+        Ownership = 256,
+        Permissions = 512,
     }
     public sealed partial class DataLakeSasQueryParameters : Azure.Storage.Sas.SasQueryParameters
     {

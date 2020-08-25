@@ -91,6 +91,15 @@ namespace Azure.Storage.Sas
         public string Path { get; set; }
 
         /// <summary>
+        /// Defines whether or not the path is a directory. If set to true,
+        /// the path will be assumed to be a directory for a directory SAS.
+        /// If set to false or default, the path will be assumed as a path
+        /// for a path SAS. If <see cref="Path"/> is empty, we assume a
+        /// for a file ssytem SAS.
+        /// </summary>
+        public bool? IsDirectory { get; set; }
+
+        /// <summary>
         /// Specifies which resources are accessible via the shared access
         /// signature.
         ///
@@ -105,6 +114,11 @@ namespace Azure.Storage.Sas
         /// is a blob snapshot.  This grants access to the content and
         /// metadata of the specific snapshot, but not the corresponding root
         /// blob.
+        ///
+        /// Beginning in version 2020-02-10, specify "d" if the shared resource
+        /// is a DataLake directory. This grants access to the paths in the
+        /// directory and to list the paths in the directory. When "d" is
+        /// specified, the sdd query parameter is also required.
         /// </summary>
         public string Resource { get; set; }
 
@@ -133,6 +147,45 @@ namespace Azure.Storage.Sas
         /// Override the value returned for Cache-Type response header.
         /// </summary>
         public string ContentType { get; set; }
+
+        /// <summary>
+        /// Optional. Beginning in version 2020-02-10, this value will be used for
+        /// the AAD Object ID of a user authorized by the owner of the
+        /// User Delegation Key to perform the action granted by the SAS.
+        /// The Azure Storage service will ensure that the owner of the
+        /// user delegation key has the required permissions before granting access.
+        /// If <see cref="_performPosixCheck"/> is enabled, the Azure Storage Service
+        /// will perform an additional POSIX ACL check to determine if the user is
+        /// authorized to perform the requested operation. If not enabled no additional
+        /// permission check for the user specified in this value will be performed.
+        /// This cannot be used in conjuction with. This is only used with generating
+        /// User Delegation SAS.
+        /// </summary>
+        private string _agentObjectId { get; set; }
+
+        /// <summary>
+        /// Optional. If enabled, the Azure Storage Service
+        /// will perform an additional POSIX ACL check to determine if the user,
+        /// <see cref="_agentObjectId"/> is authorized to perform the requested operation.
+        /// </summary>
+        private bool _performPosixCheck { get; set; }
+
+        /// <summary>
+        /// Optional. Beginning in version 2020-02-10, this value will be used for
+        /// to correlate the storage audit logs with the audit logs used by the
+        /// principal generating and distributing SAS. This is only used for
+        /// User Delegation SAS.
+        /// </summary>
+        public string CorrelationId { get; set; }
+
+        /// <summary>
+        /// Optional. Required when <see cref="Resource"/> is set to d to indicate the
+        /// depth of the directory specified in the canonicalizedresource field of the
+        /// string-to-sign to indicate the depth of the directory specified in the
+        /// canonicalizedresource field of the string-to-sign. This is only used for
+        /// User Delegation SAS.
+        /// </summary>
+        public uint? DirectoryDepth { get; set; }
 
         /// <summary>
         /// Sets the permissions for a file SAS.
@@ -199,6 +252,36 @@ namespace Azure.Storage.Sas
             Permissions = rawPermissions;
         }
 
+        /// <summary>
+        /// Optional. Beginning in version 2020-02-10, this value will be used for
+        /// the AAD Object ID of a user authorized by the owner of the
+        /// User Delegation Key to perform the action granted by the SAS.
+        /// The Azure Storage service will ensure that the owner of the
+        /// user delegation key has the required permissions before granting access.
+        /// If the performPosicCheck is enabled, the Azure Storage Service
+        /// will perform an additional POSIX ACL check to determine if the user is
+        /// authorized to perform the requested operation. If not enabled no additional
+        /// permission check for the user specified in this value will be performed.
+        /// This cannot be used in conjuction with. This is only used with generating
+        /// User Delegation SAS.
+        /// </summary>
+        /// <param name="objectId">
+        /// This value witll be used for the AAD Object of a user authorized by the
+        /// owner of the UserDelegationKey to perform the action granted by the SAS.
+        /// </param>
+        /// <param name="performPosixCheck">
+        /// This will enable the Azure Storage Service to perform an additional
+        /// POSIX ACL check to determine if the user is authorized to perform the
+        /// requested operation.
+        /// </param>
+        public void SetObjectId(
+            string objectId,
+            bool performPosixCheck)
+        {
+            _agentObjectId = objectId;
+            _performPosixCheck = performPosixCheck;
+        }
+
         private static readonly List<char> s_validPermissionsInOrder = new List<char>
         {
             Constants.Sas.Permissions.Read,
@@ -206,11 +289,11 @@ namespace Azure.Storage.Sas
             Constants.Sas.Permissions.Create,
             Constants.Sas.Permissions.Write,
             Constants.Sas.Permissions.Delete,
-            Constants.Sas.Permissions.DeleteBlobVersion,
             Constants.Sas.Permissions.List,
-            Constants.Sas.Permissions.Tag,
-            Constants.Sas.Permissions.Update,
-            Constants.Sas.Permissions.Process
+            Constants.Sas.Permissions.Move,
+            Constants.Sas.Permissions.Execute,
+            Constants.Sas.Permissions.Ownership,
+            Constants.Sas.Permissions.Permission,
         };
 
         /// <summary>
@@ -310,6 +393,9 @@ namespace Azure.Storage.Sas
                 signedExpiry,
                 userDelegationKey.SignedService,
                 userDelegationKey.SignedVersion,
+                _performPosixCheck ? null : _agentObjectId,
+                _performPosixCheck ? _agentObjectId : null,
+                CorrelationId,
                 IPRange.ToString(),
                 SasExtensions.ToProtocolString(Protocol),
                 Version,
@@ -345,7 +431,11 @@ namespace Azure.Storage.Sas
                 contentDisposition: ContentDisposition,
                 contentEncoding: ContentEncoding,
                 contentLanguage: ContentLanguage,
-                contentType: ContentType);
+                contentType: ContentType,
+                authorizedAadObjectId: _performPosixCheck ? null : _agentObjectId,
+                unauthorizedAadObjectId: _performPosixCheck ? _agentObjectId : null,
+                correlationId: CorrelationId,
+                directoryDepth: DirectoryDepth);
             return p;
         }
 
@@ -404,12 +494,19 @@ namespace Azure.Storage.Sas
             {
                 Resource = Constants.Sas.Resource.Container;
             }
-
             // Path
             else
             {
-                Resource = Constants.Sas.Resource.Blob;
+                if (IsDirectory != true)
+                {
+                    Resource = Constants.Sas.Resource.Blob;
+                }
+                else
+                {
+                    Resource = Constants.Sas.Resource.Directory;
+                }
             }
+
             if (string.IsNullOrEmpty(Version))
             {
                 Version = SasQueryParameters.DefaultSasVersion;

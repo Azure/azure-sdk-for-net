@@ -11,6 +11,7 @@ namespace Azure.Storage
         public const int MB = KB * 1024;
         public const int GB = MB * 1024;
         public const long TB = GB * 1024L;
+        public const int Base16 = 16;
 
         public const int MaxReliabilityRetries = 5;
 
@@ -420,6 +421,10 @@ namespace Azure.Storage
                 public const char Create = 'c';
                 public const char Tag = 't';
                 public const char FilterByTags = 'f';
+                public const char Move = 'm';
+                public const char Execute = 'e';
+                public const char Ownership = 'o';
+                public const char Permission = 'p';
             }
 
             internal static class Parameters
@@ -468,6 +473,14 @@ namespace Azure.Storage
                 public const string ContentLanguageUpper = "RSCL";
                 public const string ContentType = "rsct";
                 public const string ContentTypeUpper = "RSCT";
+                public const string AuthorizedAadObjectId = "saoid";
+                public const string AuthorizedAadObjectIdUpper = "SAOID";
+                public const string UnauthorizedAadObjectId = "suoid";
+                public const string UnauthorizedAadObjectIdUpper = "SUOID";
+                public const string CorrelationId = "scid";
+                public const string CorrelationIdUpper = "SCID";
+                public const string DirectoryDepth = "sdd";
+                public const string DirectoryDepthUpper = "SDD";
             }
 
             internal static class Resource
@@ -478,6 +491,7 @@ namespace Azure.Storage
                 public const string Container = "c";
                 public const string File = "f";
                 public const string Share = "s";
+                public const string Directory = "d";
             }
 
             internal static class AccountServices
