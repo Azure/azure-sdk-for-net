@@ -29,7 +29,7 @@ namespace Azure.Messaging.EventGrid.Models
             if (Optional.IsDefined(DataBase64))
             {
                 writer.WritePropertyName("data_base64");
-                writer.WriteStringValue(DataBase64);
+                writer.WriteBase64StringValue(DataBase64);
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
@@ -68,7 +68,7 @@ namespace Azure.Messaging.EventGrid.Models
             string id = default;
             string source = default;
             Optional<JsonElement> data = default;
-            Optional<string> dataBase64 = default;
+            Optional<byte[]> dataBase64 = default;
             string type = default;
             Optional<DateTimeOffset> time = default;
             string specversion = default;
@@ -96,7 +96,7 @@ namespace Azure.Messaging.EventGrid.Models
                 }
                 if (property.NameEquals("data_base64"))
                 {
-                    dataBase64 = property.Value.GetString();
+                    dataBase64 = property.Value.GetBytesFromBase64();
                     continue;
                 }
                 if (property.NameEquals("type"))
