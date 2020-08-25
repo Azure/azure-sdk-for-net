@@ -153,7 +153,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "diskAccessName");
             }
-            string apiVersion = "2020-05-01";
+            string apiVersion = "2020-06-30";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -365,7 +365,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            string apiVersion = "2020-05-01";
+            string apiVersion = "2020-06-30";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -543,7 +543,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2020-05-01";
+            string apiVersion = "2020-06-30";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -736,7 +736,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "diskAccessName");
             }
-            string apiVersion = "2020-05-01";
+            string apiVersion = "2020-06-30";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -944,7 +944,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 diskAccess.Validate();
             }
-            string apiVersion = "2020-05-01";
+            string apiVersion = "2020-06-30";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1169,7 +1169,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "diskAccessName");
             }
-            string apiVersion = "2020-05-01";
+            string apiVersion = "2020-06-30";
             DiskAccessUpdate diskAccess = new DiskAccessUpdate();
             if (tags != null)
             {
@@ -1393,7 +1393,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "diskAccessName");
             }
-            string apiVersion = "2020-05-01";
+            string apiVersion = "2020-06-30";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

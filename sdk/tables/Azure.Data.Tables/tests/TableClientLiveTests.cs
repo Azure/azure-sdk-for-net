@@ -538,11 +538,12 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public async Task CreateEntityReturnsEntitiesWithoutOdataAnnoations()
         {
-            List<TableEntity> entitiesToCreate = CreateTableEntities(PartitionKeyValue, 1);
+            TableEntity entityToCreate = CreateTableEntities(PartitionKeyValue, 1).First();
 
             // Create an entity.
 
-            var createdEntity = (await client.AddEntityAsync(entitiesToCreate.First()).ConfigureAwait(false)).Value;
+            await client.AddEntityAsync(entityToCreate).ConfigureAwait(false);
+            TableEntity createdEntity = await client.GetEntityAsync<TableEntity>(entityToCreate.PartitionKey, entityToCreate.RowKey).ConfigureAwait(false);
 
             Assert.That(createdEntity.Keys.Count(k => k.EndsWith(TableConstants.Odata.OdataTypeString)), Is.Zero, "The entity should not containt any odata data annotation properties");
         }

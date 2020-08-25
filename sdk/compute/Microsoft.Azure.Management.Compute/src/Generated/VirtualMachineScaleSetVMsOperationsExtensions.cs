@@ -713,7 +713,7 @@ namespace Microsoft.Azure.Management.Compute
 
             /// <summary>
             /// The operation to simulate the eviction of spot virtual machine in a VM
-            /// scale set. The eviction will occur within 30 minutes of calling the API
+            /// scale set.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -734,7 +734,7 @@ namespace Microsoft.Azure.Management.Compute
 
             /// <summary>
             /// The operation to simulate the eviction of spot virtual machine in a VM
-            /// scale set. The eviction will occur within 30 minutes of calling the API
+            /// scale set.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

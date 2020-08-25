@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.TextAnalytics;
+using Azure.AI.TextAnalytics.Models;
 
 #nullable enable
 
@@ -40,7 +41,7 @@ namespace Azure.Core.Pipeline
                     using JsonDocument doc = JsonDocument.Parse(content);
                     if (doc.RootElement.TryGetProperty("error", out JsonElement errorElement))
                     {
-                        TextAnalyticsError error = TextAnalyticsServiceSerializer.ReadTextAnalyticsError(errorElement);
+                        TextAnalyticsError error = Transforms.ConvertToError(TextAnalyticsErrorInternal.DeserializeTextAnalyticsErrorInternal(errorElement));
                         message = error.Message;
                         errorCode = error.ErrorCode.ToString();
                     }

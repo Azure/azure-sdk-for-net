@@ -202,8 +202,8 @@ namespace Azure.Data.AppConfiguration
 
             int beginingToken = afterIndex + After.Length;
             int endToken = headerValue.IndexOf(">", StringComparison.Ordinal);
-            int tokenLenght = endToken - beginingToken;
-            afterValue = headerValue.Substring(beginingToken, tokenLenght);
+            int tokenLength = endToken - beginingToken;
+            afterValue = headerValue.Substring(beginingToken, tokenLength);
             return true;
         }
     }
