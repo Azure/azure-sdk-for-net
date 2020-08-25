@@ -15,8 +15,7 @@ Use the client library for Azure Event Grid to:
 
 Install the client library from NuGet:
 
-```PowerShell
-dotnet add package ___
+```
 ```
 
 ### Prerequisites
@@ -33,7 +32,7 @@ You can find the endpoint for your Event Grid topic either in the [Azure Portal]
 az eventgrid topic show --name <your-resource-name> --resource-group <your-resource-group-name> --query "endpoint"
 ```
 
-The access key can also be found through the portal, or using the Azure CLI snippet below:
+The access key can also be found through the portal, or by using the Azure CLI snippet below:
 ```bash
 az eventgrid topic key list --name <your-resource-name> --resource-group <your-resource-group-name> --query "key1"
 ```
@@ -46,11 +45,11 @@ EventGridPublisherClient client = new EventGridPublisherClient(
     "<endpoint>",
     new AzureKeyCredential("<access-key>"));
 ```
-You can also create a Shared Access Signature to authenticate the client using the same access key, instead passing in the `EventGridSharedAccessSignatureCredential` type:
+You can also create a **Shared Access Signature** to authenticate the client using the same access key, instead passing in the `EventGridSharedAccessSignatureCredential` type:
 ```csharp
 string sasToken = EventGridPublisherClient.BuildSharedAccessSignature(
     "<endpoint>",
-    tokenExpirationTime,
+    <tokenExpirationTime>,
     new AzureKeyCredential("<access-key>"));
 
 EventGridPublisherClient client = new EventGridPublisherClient(
@@ -63,10 +62,10 @@ EventGridPublisherClient client = new EventGridPublisherClient(
 For information about general Event Grid concepts: [Concepts in Azure Event Grid](https://docs.microsoft.com/en-us/azure/event-grid/concepts).
 
 ### EventGridPublisherClient
-A **publisher** is the user or organization that decides to send events to Event Grid. Microsoft publishes events for several Azure services. You can publish events from your own application using the `EventGridPublisherClient`.
+A **publisher** sends events to Event Grid. Microsoft publishes events for several Azure services. You can publish events from your own application using the `EventGridPublisherClient`.
 
 ### Event schemas
-An **event** is the smallest amount of information that fully describes something that happened in the system. Event Grid supports multiple schemas for encoding events. When a Custom Topic or Domain is created, you specify the schema that will be used when publishing events. While you may configure your topic to use a custom schema, it is more common to use the already-defined [Event Grid schema](https://docs.microsoft.com/en-us/azure/event-grid/event-schema) or [CloudEvents 1.0 schema](https://docs.microsoft.com/en-us/azure/event-grid/cloud-event-schema). [CloudEvents](https://cloudevents.io/) is a Cloud Native Computing Foundation project which produces a specification for describing event data in a common way.
+An **event** is the smallest amount of information that fully describes something that happened in the system. Event Grid supports multiple schemas for encoding events. When a custom topic or domain is created, you specify the schema that will be used when publishing events. While you may configure your topic to use a custom schema, it is more common to use the already-defined [Event Grid schema](https://docs.microsoft.com/en-us/azure/event-grid/event-schema) or [CloudEvents 1.0 schema](https://docs.microsoft.com/en-us/azure/event-grid/cloud-event-schema). [CloudEvents](https://cloudevents.io/) is a Cloud Native Computing Foundation project which produces a specification for describing event data in a common way.
 
 Regardless of what schema your topic or domain is configured to use, `EventGridPublisherClient` will be used to publish events to it.
 
@@ -74,16 +73,8 @@ Regardless of what schema your topic or domain is configured to use, `EventGridP
 Events delivered to consumers by Event Grid are *delivered as JSON*. Depending on the type of consumer being delivered to, the Event Grid service may deliver one or more events as part of a single payload. Handling events will be different based on which schema the event was delivered as. However, the general pattern will remain the same:
 - Parse events from JSON into individual events. Based on the event schema (Event Grid or CloudEvents), you can now access basic information about the event on the envelope (properties that are present for all events, like event time and type).
 - Deserialize the event data. Given an `EventGridEvent` or `CloudEvent`, the user can attempt to access the event payload, or data, by deserializing to a specific type. Note that you can supply a custom serializer at this point to correctly decode the data.
-- Information about returning BinaryData or system events?
 
 ## Examples
-
-Include code snippets and short descriptions for each task you listed in the [Introduction](#introduction) (the bulleted list). Briefly explain each operation, but include enough clarity to explain complex or otherwise tricky operations.
-
-If possible, use the same example snippets that your in-code documentation uses. For example, use the snippets in your `examples.py` that Sphinx ingests via its [literalinclude](https://www.sphinx-doc.org/en/1.5/markup/code.html?highlight=code%20examples#includes) directive. The `examples.py` file containing the snippets should reside alongside your package's code, and should be tested in an automated fashion.
-
-Each example in the *Examples* section starts with an H3 that describes the example. At the top of this section, just under the *Examples* H2, add a bulleted list linking to each example H3. Each example should deep-link to the types and/or members used in the example.
-
 * [Publish Event Grid events to an Event Grid Topic](#publish-event-grid-events-to-an-event-grid-topic)
 * [Publish CloudEvents to an Event Grid Topic](#publish-cloudevents-to-an-event-grid-topic)
 * [Publish Event Grid events to an Event Grid Domain](#publish-event-grid-events-to-an-event-grid-domain)
@@ -182,7 +173,7 @@ EventGridEvent egEvent = EventGridEvent.Parse(receivedMessage.Body)[0];
 // Another approach for parsing an event from a Service Bus message is to call `ToEventGridEvent` on the message body
 EventGridEvent egEventExtra = receivedMessage.Body.ToEventGridEvent();
 ```
-From here, one can access the event data by deserializing to a specific type using `GetData<T>()`, passing in a custom serializer if necessary. Calling `GetData()` will either return a deserialized system event (an event generated by an Azure service), or the payload wrapped in `BinaryData`, which represents the serialized JSON payload as bytes. Below is an example calling `GetData()`:
+From here, one can access the event data by deserializing to a specific type using `GetData<T>()`, passing in a custom serializer if necessary. Calling `GetData()` will either return a deserialized **system event** (an event generated by an Azure service), or the payload wrapped in `BinaryData`, which represents the serialized JSON payload as bytes. Below is an example calling `GetData()`:
 ```csharp Snippet:DeserializePayloadUsingNonGenericGetData
 // If the event is a system event, GetData() should return the correct system event type
 switch (egEvent.GetData())
@@ -226,13 +217,13 @@ switch (egEvent.EventType)
 `SendEvents()` returns a HTTP response code from the service. A `RequestFailedException` is thrown as a service response for any unsuccessful requests. The exception contains information about what response code was returned from the service.
 
 #### Deserializing Event Data
-An `InvalidCastException` will be thrown during `GetData<T>()` if the event data cannot be cast to the specified type.
+- An `InvalidCastException` will be thrown during `GetData<T>()` if the event data cannot be cast to the specified type.
 
-An `InvalidOperationException` will be thrown during `GetData<T>()` if a custom serializer is passed into `GetData<T>()` with non-serialized event data (for example, if the event was created by the user and not created by parsing from JSON).
+- An `InvalidOperationException` will be thrown during `GetData<T>()` if a custom serializer is passed into `GetData<T>()` with non-serialized event data (for example, if the event was created by the user and not created by parsing from JSON).
 
 ## Next steps
 
-View the full code samples for the provided examples here: [Samples](tests/Samples)
+View the full code samples for the provided examples here: [Event Grid code samples](tests/Samples)
 
 ## Contributing
 
