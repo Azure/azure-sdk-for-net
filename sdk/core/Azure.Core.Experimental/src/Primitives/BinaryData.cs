@@ -97,7 +97,7 @@ namespace Azure
         {
             using var memoryStream = new MemoryStream();
             serializer ??= s_jsonSerializer;
-            serializer.Serialize(memoryStream, serializable, type ?? serializable.GetType(), CancellationToken.None);
+            serializer.Serialize(memoryStream, serializable, type ?? serializable?.GetType() ?? typeof(object), CancellationToken.None);
             Bytes = memoryStream.ToArray();
         }
 

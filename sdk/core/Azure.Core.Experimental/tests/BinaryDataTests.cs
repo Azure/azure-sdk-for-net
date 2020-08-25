@@ -167,6 +167,15 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void CanSerializeNullData()
+        {
+            var data = new BinaryData(jsonSerializable: null);
+            Assert.IsNull(data.ToObject<object>());
+            data = BinaryData.FromObject<object>(null);
+            Assert.IsNull(data.ToObject<object>());
+        }
+
+        [Test]
         public void FromObjectThrowsOnNullSerializer()
         {
             var payload = new TestModel { A = "value", B = 5, C = true };
