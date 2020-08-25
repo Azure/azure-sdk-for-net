@@ -864,7 +864,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task CreatedEnumEntitiesAreRoundtrippedProperly()
         {
             List<EnumEntity> entityResults;
@@ -946,7 +946,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [RecordedTest]
         [LiveOnly]
         public async Task BatchInsert()
         {
