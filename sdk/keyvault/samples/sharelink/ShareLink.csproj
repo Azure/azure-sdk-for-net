@@ -8,7 +8,7 @@
 
   <PropertyGroup Condition="'$(IsClientLibrary)' != 'true'">
     <!-- Define properties when not generating source -->
-    <AzureCoreSharedSources>$(MSBuildThisFileDirectory)\..\..\sdk\core\Azure.Core\src\Shared\</AzureCoreSharedSources>
+    <AzureCoreSharedSources>$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Shared\</AzureCoreSharedSources>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,12 +28,12 @@
     <PackageReference Update="System.Text.Json" Version="4.6.0" />
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(IsSample)' == 'true'">
     <!-- Link files needed for Key Vault -->
-    <Compile Include="..\..\sdk\keyvault\Azure.Security.KeyVault.Shared\src\ChallengeBasedAuthenticationPolicy.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="..\..\Azure.Security.KeyVault.Shared\src\ChallengeBasedAuthenticationPolicy.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(IsSample)' == 'true'">
     <!-- Link files needed by the source generator -->
     <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
@@ -45,7 +45,7 @@
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(IsClientLibrary)' != 'true'">
+  <ItemGroup Condition="'$(IsClientLibrary)' != 'true' and '$(IsSample)' == 'true'">
     <!-- Include required sources when not generating source -->
     <Compile Include="$(AzureCoreSharedSources)AutoRest/**/*.cs" Link="Shared\AutoRest\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
