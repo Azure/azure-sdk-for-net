@@ -1001,6 +1001,29 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
+        public void RecognizeLinkedEntitiesBatchWithNullIdTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var documents = new List<TextDocumentInput> { new TextDocumentInput(null, "Hello world") };
+
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.RecognizeLinkedEntitiesBatchAsync(documents));
+            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, ex.ErrorCode);
+        }
+
+        [Test]
+        public async Task RecognizeLinkedEntitiesBatchWithNullTextTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var documents = new List<TextDocumentInput> { new TextDocumentInput("1", null) };
+
+            RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(documents);
+            var exceptionMessage = "Cannot access result for document 1, due to error InvalidDocument: Document text is empty.";
+            Assert.IsTrue(results[0].HasError);
+            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => results[0].Entities.Count());
+            Assert.AreEqual(exceptionMessage, ex.Message);
+        }
+
+        [Test]
         [Ignore("Tracked by issue: https://github.com/Azure/azure-sdk-for-net/issues/11571")]
         public async Task RecognizeEntitiesCategories()
         {

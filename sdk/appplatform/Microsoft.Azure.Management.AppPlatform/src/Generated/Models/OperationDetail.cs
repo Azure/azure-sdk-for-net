@@ -30,15 +30,15 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// Initializes a new instance of the OperationDetail class.
         /// </summary>
         /// <param name="name">Name of the operation</param>
-        /// <param name="dataAction">Indicates whether the operation is a data
-        /// action</param>
+        /// <param name="isDataAction">Indicates whether the operation is a
+        /// data action</param>
         /// <param name="display">Display of the operation</param>
         /// <param name="origin">Origin of the operation</param>
         /// <param name="properties">Properties of the operation</param>
-        public OperationDetail(string name = default(string), bool? dataAction = default(bool?), OperationDisplay display = default(OperationDisplay), string origin = default(string), OperationProperties properties = default(OperationProperties))
+        public OperationDetail(string name = default(string), bool? isDataAction = default(bool?), OperationDisplay display = default(OperationDisplay), string origin = default(string), OperationProperties properties = default(OperationProperties))
         {
             Name = name;
-            DataAction = dataAction;
+            IsDataAction = isDataAction;
             Display = display;
             Origin = origin;
             Properties = properties;
@@ -59,8 +59,8 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// <summary>
         /// Gets or sets indicates whether the operation is a data action
         /// </summary>
-        [JsonProperty(PropertyName = "dataAction")]
-        public bool? DataAction { get; set; }
+        [JsonProperty(PropertyName = "isDataAction")]
+        public bool? IsDataAction { get; set; }
 
         /// <summary>
         /// Gets or sets display of the operation

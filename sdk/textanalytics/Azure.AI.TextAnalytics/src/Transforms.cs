@@ -157,6 +157,36 @@ namespace Azure.AI.TextAnalytics
 
         #endregion
 
+        #region Recognize Linked Entities
+
+        internal static LinkedEntityCollection ConvertToLinkedEntityCollection(DocumentLinkedEntities documentEntities)
+        {
+            return new LinkedEntityCollection(documentEntities.Entities.ToList(), ConvertToWarnings(documentEntities.Warnings));
+        }
+
+        internal static RecognizeLinkedEntitiesResultCollection ConvertToRecognizeLinkedEntitiesResultCollection(EntityLinkingResult results, IDictionary<string, int> idToIndexMap)
+        {
+            var recognizeEntities = new List<RecognizeLinkedEntitiesResult>();
+
+            //Read errors
+            foreach (DocumentError error in results.Errors)
+            {
+                recognizeEntities.Add(new RecognizeLinkedEntitiesResult(error.Id, ConvertToError(error.Error)));
+            }
+
+            //Read document linked entities
+            foreach (DocumentLinkedEntities docEntities in results.Documents)
+            {
+                recognizeEntities.Add(new RecognizeLinkedEntitiesResult(docEntities.Id, docEntities.Statistics ?? default, ConvertToLinkedEntityCollection(docEntities)));
+            }
+
+            recognizeEntities = SortHeterogeneousCollection(recognizeEntities, idToIndexMap);
+
+            return new RecognizeLinkedEntitiesResultCollection(recognizeEntities, results.Statistics, results.ModelVersion);
+        }
+
+        #endregion
+
         private static List<T> SortHeterogeneousCollection<T>(List<T> collection, IDictionary<string, int> idToIndexMap) where T : TextAnalyticsResult
         {
             return collection.OrderBy(result => idToIndexMap[result.Id]).ToList();

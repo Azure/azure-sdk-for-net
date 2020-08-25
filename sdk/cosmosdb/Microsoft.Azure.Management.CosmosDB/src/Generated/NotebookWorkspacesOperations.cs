@@ -131,7 +131,7 @@ namespace Microsoft.Azure.Management.CosmosDB
                     throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-z0-9]+(-[a-z0-9]+)*");
                 }
             }
-            string apiVersion = "2020-06-01-preview";
+            string apiVersion = "2020-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -357,7 +357,7 @@ namespace Microsoft.Azure.Management.CosmosDB
                     throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-z0-9]+(-[a-z0-9]+)*");
                 }
             }
-            string apiVersion = "2020-06-01-preview";
+            string apiVersion = "2020-04-01";
             string notebookWorkspaceName = "default";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -630,7 +630,7 @@ namespace Microsoft.Azure.Management.CosmosDB
                     throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-z0-9]+(-[a-z0-9]+)*");
                 }
             }
-            string apiVersion = "2020-06-01-preview";
+            string apiVersion = "2020-04-01";
             string notebookWorkspaceName = "default";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -903,7 +903,7 @@ namespace Microsoft.Azure.Management.CosmosDB
                     throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-z0-9]+(-[a-z0-9]+)*");
                 }
             }
-            string apiVersion = "2020-06-01-preview";
+            string apiVersion = "2020-04-01";
             string notebookWorkspaceName = "default";
             NotebookWorkspaceCreateUpdateParameters notebookCreateUpdateParameters = new NotebookWorkspaceCreateUpdateParameters();
             // Tracing
@@ -1137,7 +1137,7 @@ namespace Microsoft.Azure.Management.CosmosDB
                     throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-z0-9]+(-[a-z0-9]+)*");
                 }
             }
-            string apiVersion = "2020-06-01-preview";
+            string apiVersion = "2020-04-01";
             string notebookWorkspaceName = "default";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1345,7 +1345,7 @@ namespace Microsoft.Azure.Management.CosmosDB
                     throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-z0-9]+(-[a-z0-9]+)*");
                 }
             }
-            string apiVersion = "2020-06-01-preview";
+            string apiVersion = "2020-04-01";
             string notebookWorkspaceName = "default";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1553,7 +1553,7 @@ namespace Microsoft.Azure.Management.CosmosDB
                     throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-z0-9]+(-[a-z0-9]+)*");
                 }
             }
-            string apiVersion = "2020-06-01-preview";
+            string apiVersion = "2020-04-01";
             string notebookWorkspaceName = "default";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
