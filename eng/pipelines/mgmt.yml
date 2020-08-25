@@ -113,6 +113,7 @@ pr:
     - sdk/recoveryservices-backup/Microsoft.Azure.Management.RecoveryServices.Backup
     - sdk/recoveryservices-siterecovery/Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     - sdk/redis/Microsoft.Azure.Management.RedisCache
+    - sdk/regionmove/Microsoft.Azure.Management.Migrate
     - sdk/relay/Microsoft.Azure.Management.Relay
     - sdk/reservations/Microsoft.Azure.Management.Reservations
     - sdk/resourcegraph/Microsoft.Azure.Management.ResourceGraph
