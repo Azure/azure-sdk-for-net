@@ -8,7 +8,7 @@
     <Description>Automanage.Tests Class Library</Description>
     <AssemblyName>Automanage.Tests</AssemblyName>
     <VersionPrefix>1.0.0</VersionPrefix>
-    <RootNamespace>Microsoft.Azure.Management.Automanage.Tests</RootNamespace>
+    <RootNamespace>Microsoft.Azure.Management.AutoManage.Tests</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <None Update="SessionRecords\OperationsTests\ListOperationsTest.json">
@@ -18,7 +18,7 @@
   
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />    
-    <ProjectReference Include="..\src\Microsoft.Azure.Management.Automanage.csproj" />
+    <ProjectReference Include="..\src\Microsoft.Azure.Management.AutoManage.csproj" />
   </ItemGroup>
   
   <ItemGroup>

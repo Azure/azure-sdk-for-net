@@ -5,8 +5,8 @@
   
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyName>Microsoft.Azure.Management.Automanage</AssemblyName>
-    <RootNameSpace>Microsoft.Azure.Management.Automanage</RootNameSpace>
+    <AssemblyName>Microsoft.Azure.Management.AutoManage</AssemblyName>
+    <RootNameSpace>Microsoft.Azure.Management.AutoManage</RootNameSpace>
     <PackageReleaseNotes>For detailed release notes, see: https://github.com/Azure/azure-sdk-for-net/blob/psSdkJson6/src/SDKs/Automanage/Management.Automanage/changelog.md</PackageReleaseNotes>
   </PropertyGroup>
 
