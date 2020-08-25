@@ -45,7 +45,14 @@ namespace Azure.Core.TestFramework
                     }
                     break;
                 case RecordedTestMode.Playback:
-                    _session = Load();
+                    try
+                    {
+                        _session = Load();
+                    }
+                    catch (FileNotFoundException ex)
+                    {
+                        throw new TestRecordingMismatchException(ex.Message, ex);
+                    }
                     break;
             }
         }
@@ -244,10 +251,10 @@ namespace Azure.Core.TestFramework
         public string GenerateId(string prefix, int maxLength)
         {
             var id = $"{prefix}{Random.Next()}";
-            return id.Length > maxLength ? id.Substring(0, maxLength): id;
+            return id.Length > maxLength ? id.Substring(0, maxLength) : id;
         }
 
-        public string GenerateAssetName(string prefix, [CallerMemberName]string callerMethodName = "testframework_failed")
+        public string GenerateAssetName(string prefix, [CallerMemberName] string callerMethodName = "testframework_failed")
         {
             if (Mode == RecordedTestMode.Playback && IsTrack1SessionRecord())
             {

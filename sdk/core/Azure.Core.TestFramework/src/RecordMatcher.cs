@@ -121,7 +121,7 @@ namespace Azure.Core.TestFramework
                 }
             }
 
-            throw new InvalidOperationException(GenerateException(request, bestScoreEntry));
+            throw new TestRecordingMismatchException(GenerateException(request, bestScoreEntry));
         }
 
         private int CompareBodies(byte[] requestBody, byte[] responseBody, StringBuilder descriptionBuilder = null)
