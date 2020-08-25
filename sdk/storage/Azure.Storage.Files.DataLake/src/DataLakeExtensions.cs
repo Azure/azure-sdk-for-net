@@ -344,8 +344,8 @@ namespace Azure.Storage.Files.DataLake
 
             BlobQueryOptions blobQueryOptions = new BlobQueryOptions
             {
-                InputTextConfiguration = options.InputTextConfiguration.ToBlobQueryTextConfiguration(),
-                OutputTextConfiguration = options.OutputTextConfiguration.ToBlobQueryTextConfiguration(),
+                InputTextConfiguration = options.InputTextConfiguration.ToBlobQueryTextConfiguration(isInput: true),
+                OutputTextConfiguration = options.OutputTextConfiguration.ToBlobQueryTextConfiguration(isInput: false),
                 Conditions = options.Conditions.ToBlobRequestConditions(),
                 ProgressHandler = options.ProgressHandler
             };
@@ -358,7 +358,9 @@ namespace Azure.Storage.Files.DataLake
             return blobQueryOptions;
         }
 
-        internal static BlobQueryTextOptions ToBlobQueryTextConfiguration(this DataLakeQueryTextOptions textConfiguration)
+        internal static BlobQueryTextOptions ToBlobQueryTextConfiguration(
+            this DataLakeQueryTextOptions textConfiguration,
+            bool isInput)
         {
             if (textConfiguration == null)
             {
@@ -377,6 +379,11 @@ namespace Azure.Storage.Files.DataLake
 
             if (textConfiguration.GetType() == typeof(DataLakeQueryArrowOptions))
             {
+                if (isInput)
+                {
+                    throw new ArgumentException($"{nameof(DataLakeQueryArrowOptions)} can only be used for output serialization.");
+                }
+
                 return ((DataLakeQueryArrowOptions)textConfiguration).ToBlobQueryArrowOptions();
             }
 

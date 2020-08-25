@@ -15,7 +15,8 @@ namespace Azure.Storage.Blobs
     internal static class QuickQueryExtensions
     {
         internal static QuerySerialization ToQuickQuerySerialization(
-            this BlobQueryTextOptions textConfiguration)
+            this BlobQueryTextOptions textConfiguration,
+            bool isInput)
         {
             if (textConfiguration == default)
             {
@@ -29,6 +30,7 @@ namespace Azure.Storage.Blobs
 
             serialization.Format.DelimitedTextConfiguration = default;
             serialization.Format.JsonTextConfiguration = default;
+            serialization.Format.ArrowConfiguration = default;
 
             if (textConfiguration.GetType() == typeof(BlobQueryCsvTextOptions))
             {
@@ -54,6 +56,11 @@ namespace Azure.Storage.Blobs
             }
             else if (textConfiguration.GetType() == typeof(BlobQueryArrowOptions))
             {
+                if (isInput)
+                {
+                    throw new ArgumentException($"{nameof(BlobQueryArrowOptions)} can only be used for output serialization.");
+                }
+
                 BlobQueryArrowOptions arrowConfiguration = textConfiguration as BlobQueryArrowOptions;
                 serialization.Format.Type = QueryFormatType.Arrow;
                 serialization.Format.ArrowConfiguration = new ArrowTextConfigurationInternal
