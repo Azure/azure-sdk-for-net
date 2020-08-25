@@ -5,8 +5,8 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    [CodeGenModel("SentenceAspectSentiment")]
-    internal partial struct SentenceAspectSentiment
+    [CodeGenModel("StringIndexType")]
+    internal partial struct StringIndexType
     {
     }
 }

@@ -639,7 +639,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                Response<EntitiesResult> result = await _serviceRestClient.EntitiesRecognitionGeneralAsync(batchInput, options.ModelVersion, options.IncludeStatistics, cancellationToken).ConfigureAwait(false);
+                Response<EntitiesResult> result = await _serviceRestClient.EntitiesRecognitionGeneralAsync(batchInput, options.ModelVersion, options.IncludeStatistics, null, cancellationToken).ConfigureAwait(false);
                 var response = result.GetRawResponse();
 
                 IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
@@ -660,7 +660,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                Response<EntitiesResult> result = _serviceRestClient.EntitiesRecognitionGeneral(batchInput, options.ModelVersion, options.IncludeStatistics, cancellationToken);
+                Response<EntitiesResult> result = _serviceRestClient.EntitiesRecognitionGeneral(batchInput, options.ModelVersion, options.IncludeStatistics, null, cancellationToken);
                 var response = result.GetRawResponse();
 
                 IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
@@ -773,6 +773,7 @@ namespace Azure.AI.TextAnalytics
                     options.ModelVersion,
                     options.IncludeStatistics,
                     options.IncludeOpinionMining,
+                    null,
                     cancellationToken).ConfigureAwait(false);
                 Response response = result.GetRawResponse();
 
@@ -832,6 +833,7 @@ namespace Azure.AI.TextAnalytics
                     options.ModelVersion,
                     options.IncludeStatistics,
                     options.IncludeOpinionMining,
+                    null,
                     cancellationToken);
                 Response response = result.GetRawResponse();
 
@@ -1104,7 +1106,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                Response<SentimentResponse> result = await _serviceRestClient.SentimentAsync(batchInput, options.ModelVersion, options.IncludeStatistics, options.IncludeOpinionMining, cancellationToken).ConfigureAwait(false);
+                Response<SentimentResponse> result = await _serviceRestClient.SentimentAsync(batchInput, options.ModelVersion, options.IncludeStatistics, options.IncludeOpinionMining, null, cancellationToken).ConfigureAwait(false);
                 var response = result.GetRawResponse();
 
                 IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
@@ -1125,7 +1127,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                Response<SentimentResponse> result = _serviceRestClient.Sentiment(batchInput, options.ModelVersion, options.IncludeStatistics, options.IncludeOpinionMining, cancellationToken);
+                Response<SentimentResponse> result = _serviceRestClient.Sentiment(batchInput, options.ModelVersion, options.IncludeStatistics, options.IncludeOpinionMining, null, cancellationToken);
                 var response = result.GetRawResponse();
 
                 IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
@@ -1664,7 +1666,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                Response<EntityLinkingResult> result = await _serviceRestClient.EntitiesLinkingAsync(batchInput, options.ModelVersion, options.IncludeStatistics, cancellationToken).ConfigureAwait(false);
+                Response<EntityLinkingResult> result = await _serviceRestClient.EntitiesLinkingAsync(batchInput, options.ModelVersion, options.IncludeStatistics, null, cancellationToken).ConfigureAwait(false);
                 var response = result.GetRawResponse();
 
                 IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
@@ -1685,7 +1687,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                Response<EntityLinkingResult> result = _serviceRestClient.EntitiesLinking(batchInput, options.ModelVersion, options.IncludeStatistics, cancellationToken);
+                Response<EntityLinkingResult> result = _serviceRestClient.EntitiesLinking(batchInput, options.ModelVersion, options.IncludeStatistics, null, cancellationToken);
                 var response = result.GetRawResponse();
 
                 IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);

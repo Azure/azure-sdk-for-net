@@ -2,7 +2,7 @@
 
 ## 5.1.0-beta.1 (Unreleased)
 ### Breaking changes
-- It defaults to the latest supported API version, which currently is `3.1-preview.1`.
+- It defaults to the latest supported API version, which currently is `3.1-preview.2`.
 
 ### New Features
 - `ErrorCode` value returned from the service is now surfaced in `RequestFailedException`.

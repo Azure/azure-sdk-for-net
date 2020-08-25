@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://t0a14a15674c54c18-textanalytics.cognitiveservices.azure.com/text/analytics/v3.1-preview.1/entities/linking?showStats=false",
+      "RequestUri": "https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.2/entities/linking?showStats=false",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": [
@@ -11,10 +11,10 @@
         "Content-Length": "229",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-8b6cb24e2fb0b840914b9317bb7188e1-0f6ca1e4caed8f4c-00",
+        "traceparent": "00-04797cf1fbb795419a96bbbe067882e5-613e0778b77a9142-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200825.3",
-          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200827.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "a31c6139014927c10b81c58c3423ed27",
         "x-ms-return-client-request-id": "true"
@@ -40,14 +40,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "d3745b87-ba71-4c53-bb62-fcc697f9d3ae",
+        "apim-request-id": "7f47ea5f-81ba-45c2-8cc3-437850d9f271",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
-        "Date": "Tue, 25 Aug 2020 18:49:54 GMT",
+        "Date": "Thu, 27 Aug 2020 23:17:22 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "20"
+        "x-envoy-upstream-service-time": "19"
       },
       "ResponseBody": {
         "documents": [
@@ -55,6 +55,7 @@
             "id": "0",
             "entities": [
               {
+                "bingId": "0d47c987-0042-5576-15e8-97af601614fa",
                 "name": "Bill Gates",
                 "matches": [
                   {
@@ -70,6 +71,7 @@
                 "dataSource": "Wikipedia"
               },
               {
+                "bingId": "df2c4376-9923-6a54-893f-2ee5a5badbc7",
                 "name": "Paul Allen",
                 "matches": [
                   {
@@ -85,6 +87,7 @@
                 "dataSource": "Wikipedia"
               },
               {
+                "bingId": "a093e9b9-90f5-a3d5-c4b8-5855e1b01f85",
                 "name": "Microsoft",
                 "matches": [
                   {
@@ -106,6 +109,7 @@
             "id": "2",
             "entities": [
               {
+                "bingId": "38b9431e-cf91-93be-0584-c42a3ecbfdc7",
                 "name": "Pike Place Market",
                 "matches": [
                   {
@@ -121,6 +125,7 @@
                 "dataSource": "Wikipedia"
               },
               {
+                "bingId": "5fbba6b8-85e1-4d41-9444-d9055436e473",
                 "name": "Seattle",
                 "matches": [
                   {
@@ -159,6 +164,6 @@
   "Variables": {
     "RandomSeed": "35415180",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://t0a14a15674c54c18-textanalytics.cognitiveservices.azure.com"
+    "TEXT_ANALYTICS_ENDPOINT": "https://cognitiveusw2dev.azure-api.net"
   }
 }

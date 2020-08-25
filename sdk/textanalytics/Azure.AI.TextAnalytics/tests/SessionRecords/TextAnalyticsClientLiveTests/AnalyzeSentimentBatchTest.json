@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azsdknet-test-ta.cognitiveservices.azure.com/text/analytics/v3.1-preview.1/sentiment?showStats=false\u0026opinionMining=false",
+      "RequestUri": "https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.2/sentiment?showStats=false\u0026opinionMining=false",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": [
@@ -11,9 +11,9 @@
         "Content-Length": "224",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-ce3f9f8b19cefc4b80c8c92e2b8e0c16-9fcbf9c4cd2e4045-00",
+        "traceparent": "00-093f738e337592458d2c92fbb36f0a05-6b3551bcbbcacf41-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200826.1",
+          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200827.1",
           "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "8479acead5457b0ebd6d7bff6dd0a798",
@@ -35,14 +35,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "7d4f2520-754f-4102-9dfb-49068dc2bb4b",
+        "apim-request-id": "239af802-9497-4e47-afe7-29c933b2e4d9",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
-        "Date": "Wed, 26 Aug 2020 16:48:06 GMT",
+        "Date": "Thu, 27 Aug 2020 23:17:10 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "89"
+        "x-envoy-upstream-service-time": "109"
       },
       "ResponseBody": {
         "documents": [
@@ -123,6 +123,6 @@
   "Variables": {
     "RandomSeed": "92020506",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://azsdknet-test-ta.cognitiveservices.azure.com/"
+    "TEXT_ANALYTICS_ENDPOINT": "https://cognitiveusw2dev.azure-api.net"
   }
 }

@@ -377,7 +377,7 @@ namespace Azure.AI.TextAnalytics
         /// <returns>A new instance of <see cref="TextAnalytics.LinkedEntity"/> for mocking purposes.</returns>
         public static LinkedEntity LinkedEntity(string name, string dataSourceEntityId, string language, string dataSource, Uri url, IEnumerable<LinkedEntityMatch> matches)
         {
-            return new LinkedEntity(name, matches, language, dataSourceEntityId, url.AbsoluteUri, dataSource);
+            return new LinkedEntity(name, matches, language, dataSourceEntityId, url.AbsoluteUri, dataSource, default);
         }
 
         /// <summary>
