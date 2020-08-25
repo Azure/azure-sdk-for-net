@@ -74,7 +74,7 @@ namespace Azure.Core.TestFramework
             RepositoryRoot = directoryInfo?.Parent?.FullName;
         }
 
-        public RecordedTestMode? Mode { get; set; }
+        internal RecordedTestMode? Mode { get; set; }
 
         /// <summary>
         ///   The name of the Azure subscription containing the resource group to be used for Live tests. Recorded.
