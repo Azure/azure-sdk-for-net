@@ -1186,6 +1186,7 @@
             "type": "object",
             "properties": {
                 "name": {
+                    "description": "The name of the key.",
                     "type": "string",
                     "readOnly": true
                 }
@@ -1195,18 +1196,23 @@
             "type": "object",
             "properties": {
                 "key": {
+                    "description": "The unique name of the key-value.",
                     "type": "string"
                 },
                 "label": {
+                    "description": "The label of the key-value.",
                     "type": "string"
                 },
                 "content_type": {
+                    "description": "The content type of the key-value.",
                     "type": "string"
                 },
                 "value": {
+                    "description": "The value of the key-value.",
                     "type": "string"
                 },
                 "last_modified": {
+                    "description": "The time the key-value was last modified.",
                     "format": "date-time",
                     "type": "string"
                 },
@@ -1217,9 +1223,11 @@
                     }
                 },
                 "locked": {
+                    "description": "Indicates whether or not this key-value is readonly.",
                     "type": "boolean"
                 },
                 "etag": {
+                    "description": "The entity-tag of the key-value.",
                     "type": "string"
                 }
             }
@@ -1228,6 +1236,7 @@
             "type": "object",
             "properties": {
                 "name": {
+                    "description": "The name of the label.",
                     "type": "string",
                     "readOnly": true
                 }

@@ -5,7 +5,6 @@
     <Version></Version>
     <PackageTags></PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <NoWarn>CS1591;AZC0012;CA1308</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,9 +24,5 @@
   </ItemGroup>
 
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
-
-  <ItemGroup>
-    <Compile Remove="C:\src\azure-sdk-for-net\eng\..\sdk\core\Azure.Core\src\Shared\AutoRest\ArmOperationHelpers.cs" />
-  </ItemGroup>
 
 </Project>

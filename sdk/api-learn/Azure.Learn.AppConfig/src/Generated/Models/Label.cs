@@ -16,12 +16,13 @@ namespace Azure.Learn.AppConfig.Models
         }
 
         /// <summary> Initializes a new instance of Label. </summary>
-        /// <param name="name"> . </param>
+        /// <param name="name"> The name of the label. </param>
         internal Label(string name)
         {
             Name = name;
         }
 
+        /// <summary> The name of the label. </summary>
         public string Name { get; }
     }
 }
