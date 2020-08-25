@@ -35,13 +35,13 @@ namespace Azure.Identity
             _ensureInitAsync = new Lazy<Task>(InitializeAsync);
         }
 
-        protected string TenantId { get; }
+        internal string TenantId { get; }
 
-        protected string ClientId { get; }
+        internal string ClientId { get; }
 
-        protected bool EnablePersistentCache { get; }
+        internal bool EnablePersistentCache { get; }
 
-        protected bool AllowUnencryptedCache { get; }
+        internal bool AllowUnencryptedCache { get; }
 
         protected CredentialPipeline Pipeline { get; }
 
