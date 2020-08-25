@@ -74,9 +74,9 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// supported only for MongoDB API.</param>
         /// <param name="enableAnalyticalStorage">Flag to indicate whether to
         /// enable storage analytics.</param>
-        /// <param name="backupPolicy">The object representing the policy for
-        /// taking backups on an account.</param>
-        public DatabaseAccountUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), ConsistencyPolicy consistencyPolicy = default(ConsistencyPolicy), IList<Location> locations = default(IList<Location>), IList<IpAddressOrRange> ipRules = default(IList<IpAddressOrRange>), bool? isVirtualNetworkFilterEnabled = default(bool?), bool? enableAutomaticFailover = default(bool?), IList<Capability> capabilities = default(IList<Capability>), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), bool? enableMultipleWriteLocations = default(bool?), bool? enableCassandraConnector = default(bool?), string connectorOffer = default(string), bool? disableKeyBasedMetadataWriteAccess = default(bool?), string keyVaultKeyUri = default(string), string publicNetworkAccess = default(string), bool? enableFreeTier = default(bool?), ApiProperties apiProperties = default(ApiProperties), bool? enableAnalyticalStorage = default(bool?), BackupPolicy backupPolicy = default(BackupPolicy))
+        /// <param name="cors">The CORS policy for the Cosmos DB database
+        /// account.</param>
+        public DatabaseAccountUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), ConsistencyPolicy consistencyPolicy = default(ConsistencyPolicy), IList<Location> locations = default(IList<Location>), IList<IpAddressOrRange> ipRules = default(IList<IpAddressOrRange>), bool? isVirtualNetworkFilterEnabled = default(bool?), bool? enableAutomaticFailover = default(bool?), IList<Capability> capabilities = default(IList<Capability>), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), bool? enableMultipleWriteLocations = default(bool?), bool? enableCassandraConnector = default(bool?), string connectorOffer = default(string), bool? disableKeyBasedMetadataWriteAccess = default(bool?), string keyVaultKeyUri = default(string), string publicNetworkAccess = default(string), bool? enableFreeTier = default(bool?), ApiProperties apiProperties = default(ApiProperties), bool? enableAnalyticalStorage = default(bool?), IList<CorsPolicy> cors = default(IList<CorsPolicy>))
         {
             Tags = tags;
             Location = location;
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
             EnableFreeTier = enableFreeTier;
             ApiProperties = apiProperties;
             EnableAnalyticalStorage = enableAnalyticalStorage;
-            BackupPolicy = backupPolicy;
+            Cors = cors;
             CustomInit();
         }
 
@@ -226,11 +226,10 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         public bool? EnableAnalyticalStorage { get; set; }
 
         /// <summary>
-        /// Gets or sets the object representing the policy for taking backups
-        /// on an account.
+        /// Gets or sets the CORS policy for the Cosmos DB database account.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.backupPolicy")]
-        public BackupPolicy BackupPolicy { get; set; }
+        [JsonProperty(PropertyName = "properties.cors")]
+        public IList<CorsPolicy> Cors { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -251,6 +250,16 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
                     if (element != null)
                     {
                         element.Validate();
+                    }
+                }
+            }
+            if (Cors != null)
+            {
+                foreach (var element1 in Cors)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
                     }
                 }
             }
