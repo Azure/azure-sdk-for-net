@@ -44,7 +44,7 @@ namespace Azure.Identity
         public virtual async ValueTask<List<IAccount>> GetAccountsAsync(bool async, CancellationToken cancellationToken)
         {
             IPublicClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
-            return await AcquireTokenSilent(client, async).ConfigureAwait(false);
+            return await GetAccountsAsync(client, async).ConfigureAwait(false);
         }
 
         public virtual async ValueTask<AuthenticationResult> AcquireTokenSilentAsync(string[] scopes, IAccount account, bool async, CancellationToken cancellationToken)
@@ -77,7 +77,7 @@ namespace Azure.Identity
             return await ((IByRefreshToken)client).AcquireTokenByRefreshToken(scopes, refreshToken).WithAuthority(azureCloudInstance, tenant).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
         }
 
-        private static async ValueTask<List<IAccount>> AcquireTokenSilent(IPublicClientApplication client, bool async)
+        private static async ValueTask<List<IAccount>> GetAccountsAsync(IPublicClientApplication client, bool async)
         {
             var result = async
                 ? await client.GetAccountsAsync().ConfigureAwait(false)
