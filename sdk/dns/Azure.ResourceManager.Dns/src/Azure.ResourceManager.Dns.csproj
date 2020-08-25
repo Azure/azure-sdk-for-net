@@ -8,6 +8,7 @@
     </Description>
     <Description>Azure Resource Manager client SDK for Azure resource provider Microsoft.Dns</Description>
     <PackageTags>azure;management;arm;resource manager;dns</PackageTags>
+    <TemporaryUsePreviousGeneratorVersion>true</TemporaryUsePreviousGeneratorVersion>
   </PropertyGroup>
 
   <PropertyGroup>
