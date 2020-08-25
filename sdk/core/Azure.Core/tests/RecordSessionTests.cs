@@ -124,7 +124,7 @@ namespace Azure.Core.Tests
                 }
             };
 
-            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => matcher.FindMatch(requestEntry, entries));
+            TestRecordingMismatchException exception = Assert.Throws<TestRecordingMismatchException>(() => matcher.FindMatch(requestEntry, entries));
             Assert.AreEqual(
                 "Unable to find a record for the request HEAD http://localhost/" + Environment.NewLine +
                 "Method doesn't match, request <HEAD> record <PUT>" + Environment.NewLine +
@@ -217,7 +217,7 @@ namespace Azure.Core.Tests
             }
             else
             {
-                Assert.Throws<InvalidOperationException>(() => matcher.FindMatch(mockRequest, entries));
+                Assert.Throws<TestRecordingMismatchException>(() => matcher.FindMatch(mockRequest, entries));
             }
         }
 
@@ -234,7 +234,7 @@ namespace Azure.Core.Tests
 
             RecordEntry[] entries = { };
 
-            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => matcher.FindMatch(mockRequest, entries));
+            TestRecordingMismatchException exception = Assert.Throws<TestRecordingMismatchException>(() => matcher.FindMatch(mockRequest, entries));
             Assert.AreEqual(
                 "Unable to find a record for the request HEAD http://localhost/" + Environment.NewLine +
                 "No records to match." + Environment.NewLine,
@@ -323,7 +323,33 @@ namespace Azure.Core.Tests
 
             var matcher = new RecordMatcher();
             var requestEntry = RecordTransport.CreateEntry(originalRequest, null);
-            var entry = RecordTransport.CreateEntry(originalRequest, new MockResponse(200));
+            var entry = RecordTransport.CreateEntry(playbackRequest, new MockResponse(200));
+
+            Assert.NotNull(matcher.FindMatch(requestEntry, new[] { entry }));
+        }
+
+        [Theory]
+        [TestCase("Content-Type")]
+        [TestCase("Accept")]
+        [TestCase("Random-Header")]
+        public void SpecialHeadersNormalizedForMatchingMultiValue(string name)
+        {
+            // Use HttpClientTransport as it does header normalization
+            var originalRequest = new HttpClientTransport().CreateRequest();
+            originalRequest.Method = RequestMethod.Get;
+            originalRequest.Uri.Reset(new Uri("http://localhost"));
+            originalRequest.Headers.Add(name, "application/json, text/json");
+            originalRequest.Headers.Add("Date", "This should be ignored");
+
+            var playbackRequest = new MockTransport().CreateRequest();
+            playbackRequest.Method = RequestMethod.Get;
+            playbackRequest.Uri.Reset(new Uri("http://localhost"));
+            playbackRequest.Headers.Add(name, "application/json, text/json");
+            playbackRequest.Headers.Add("Date", "It doesn't match");
+
+            var matcher = new RecordMatcher();
+            var requestEntry = RecordTransport.CreateEntry(originalRequest, null);
+            var entry = RecordTransport.CreateEntry(playbackRequest, new MockResponse(200));
 
             Assert.NotNull(matcher.FindMatch(requestEntry, new[] { entry }));
         }
@@ -380,7 +406,7 @@ namespace Azure.Core.Tests
             playbackTransport.Process(message);
 
             skipRequestBody = false;
-            Assert.Throws<InvalidOperationException>(() => playbackTransport.Process(message));
+            Assert.Throws<TestRecordingMismatchException>(() => playbackTransport.Process(message));
         }
 
         private class TestSanitizer : RecordedTestSanitizer
