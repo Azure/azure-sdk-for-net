@@ -122,16 +122,18 @@ namespace Azure.Messaging.EventGrid
                     JsonDocument data;
                     if (egEvent.Data is BinaryData binaryEventData)
                     {
-                        data = JsonDocument.Parse(binaryEventData);
+                        try
+                        {
+                            data = JsonDocument.Parse(binaryEventData);
+                        }
+                        catch (JsonException)
+                        {
+                            data = SerializeObjectToJsonDocument(binaryEventData.ToString(), typeof(string), cancellationToken);
+                        }
                     }
                     else
                     {
-                        using (MemoryStream stream = new MemoryStream())
-                        {
-                            _dataSerializer.Serialize(stream, egEvent.Data, egEvent.Data.GetType(), cancellationToken);
-                            stream.Position = 0;
-                            data = JsonDocument.Parse(stream);
-                        }
+                        data = SerializeObjectToJsonDocument(egEvent.Data, egEvent.Data.GetType(), cancellationToken);
                     }
 
                     EventGridEventInternal newEGEvent = new EventGridEventInternal(
@@ -334,6 +336,16 @@ namespace Azure.Messaging.EventGrid
                 string signedSas = $"{unsignedSas}&{Signature}={encodedSignature}";
 
                 return signedSas;
+            }
+        }
+
+        private JsonDocument SerializeObjectToJsonDocument(object data, Type type, CancellationToken cancellationToken)
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                _dataSerializer.Serialize(stream, data, type, cancellationToken);
+                stream.Position = 0;
+                return JsonDocument.Parse(stream);
             }
         }
     }

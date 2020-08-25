@@ -96,6 +96,35 @@ namespace Azure.Messaging.EventGrid.Tests
         }
 
         [Test]
+        public async Task CanPublishEventWithNonJsonSerializedBinaryData()
+        {
+            EventGridPublisherClientOptions options = Recording.InstrumentClientOptions(new EventGridPublisherClientOptions());
+            EventGridPublisherClient client = InstrumentClient(
+                new EventGridPublisherClient(
+                    new Uri(TestEnvironment.TopicHost),
+                    new AzureKeyCredential(TestEnvironment.TopicKey),
+                    options));
+
+            List<EventGridEvent> eventsList = new List<EventGridEvent>();
+
+            for (int i = 0; i < 10; i++)
+            {
+                eventsList.Add(
+                    new EventGridEvent(
+                        new BinaryData("data"),
+                        $"Subject-{i}",
+                        "Microsoft.MockPublisher.TestEvent",
+                        "1.0")
+                    {
+                        Id = Recording.Random.NewGuid().ToString(),
+                        EventTime = Recording.Now
+                    });
+            }
+
+            await client.SendEventsAsync(eventsList);
+        }
+
+        [Test]
         public async Task CanPublishEventToDomain()
         {
             EventGridPublisherClientOptions options = Recording.InstrumentClientOptions(new EventGridPublisherClientOptions());
