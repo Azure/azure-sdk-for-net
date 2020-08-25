@@ -6,6 +6,7 @@ parameters:
 steps:
   - task: PythonScript@0
     displayName: Analyze Path Lengths
+    condition: ne(variables['Skip.VerifyPathLength'], 'true')
     inputs:
       scriptSource: inline
       script: |

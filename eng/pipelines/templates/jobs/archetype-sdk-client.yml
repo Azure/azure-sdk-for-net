@@ -83,13 +83,12 @@ jobs:
       - template: /eng/common/pipelines/templates/steps/verify-links.yml
         parameters:
           Directory: sdk/${{ parameters.ServiceDirectory }}
-        condition: ne(variables['Skip.Analyze.VerifyLinks'], 'true')
       - script: |
           pip install setuptools wheel
           pip install doc-warden==$(DocWardenVersion)
           ward scan -d $(Build.SourcesDirectory) -c $(Build.SourcesDirectory)/eng/.docsettings.yml
         displayName: "Verify Readmes"
-        condition: ne(variables['Skip.Analyze.VerifyReadmes'], 'true')
+        condition: ne(variables['Skip.VerifyReadmes'], 'true')
       - task: DownloadPipelineArtifact@2
         displayName: "Download Build Artifacts"
         condition: succeededOrFailed()
@@ -100,7 +99,6 @@ jobs:
       - template: /eng/common/pipelines/templates/steps/verify-path-length.yml
         parameters:
           SourceDirectory: $(Build.SourcesDirectory)
-        condition: ne(variables['Skip.Analyze.VerifyPathLength'], 'true')
       - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
         displayName: "Component Detection"
         # ComponentGovernance is currently unable to run on pull requests of public projects.  Running on
@@ -119,7 +117,7 @@ jobs:
           arguments: -ServiceDirectory ${{parameters.ServiceToBuild}}
           pwsh: true
           failOnStderr:  false
-        condition: ne(variables['Skip.Analyze.VerifyGeneratedCode'], 'true')
+        condition: ne(variables['Skip.VerifyGeneratedCode'], 'true')
   - job: "Test"
     condition: ne(variables['Skip.Test'], true)
     variables:

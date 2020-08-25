@@ -5,6 +5,7 @@ parameters:
 steps:
 - task: PowerShell@2
   displayName: Link verification check
+  condition: ne(variables['Skip.VerifyLinks'], 'true')
   inputs:
     pwsh: true
     workingDirectory: $(Build.SourcesDirectory)/${{ parameters.Directory }}
