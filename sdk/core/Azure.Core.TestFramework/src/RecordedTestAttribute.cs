@@ -10,7 +10,11 @@ using NUnit.Framework.Internal.Commands;
 namespace Azure.Core.TestFramework
 {
     [AttributeUsage(AttributeTargets.Method)]
-    public class AutoRerecordingTestAttribute : TestAttribute, IWrapSetUpTearDown
+    /// <summary>
+    /// This attribute replaces the [Test] attribute and will dynamically re-record recorded tests on failure.
+    /// Tests that are re-recorded will complete with a error status and indicate that copying the updated recording to SessionRecords is needed.
+    /// </summary>
+    public class RecordedTestAttribute : TestAttribute, IWrapSetUpTearDown
     {
         public TestCommand Wrap(TestCommand command)
         {
@@ -39,7 +43,7 @@ namespace Azure.Core.TestFramework
                 context.CurrentResult = innerCommand.Execute(context);
 
                 // Check the result
-                if (IsTestFailed(context))
+                if (IsTestFailedWithRecordingMismatch(context))
                 {
                     context.CurrentResult = context.CurrentTest.MakeTestResult();
                     // Run the test again after setting the RecordedTestMode to Record
@@ -47,7 +51,7 @@ namespace Azure.Core.TestFramework
                     context.CurrentResult = innerCommand.Execute(context);
 
                     // If the recording succeeded, set a warning result.
-                    if (!IsTestFailed(context))
+                    if (!IsTestFailedWithRecordingMismatch(context))
                     {
                         context.CurrentResult.SetResult(ResultState.Error, "Test failed palyback, but was successfully re-recorded (it should pass if re-run). Please copy updated recording to SessionFiles.");
                     }
@@ -58,14 +62,16 @@ namespace Azure.Core.TestFramework
                 return context.CurrentResult;
             }
 
-            private static bool IsTestFailed(TestExecutionContext context)
+            private static bool IsTestFailedWithRecordingMismatch(TestExecutionContext context)
             {
-                return context.CurrentResult.ResultState.Status switch
+                var failed = context.CurrentResult.ResultState.Status switch
                 {
                     TestStatus.Passed => false,
                     TestStatus.Skipped => false,
                     _ => true
                 };
+
+                return failed && context.CurrentResult.Message.StartsWith(typeof(TestRecordingMismatchException).FullName);
             }
         }
 

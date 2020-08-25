@@ -29,7 +29,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [AutoRerecordingTest]
+        [RecordedTest]
         public async Task CreateTableIfNotExists()
         {
             // Call CreateTableIfNotExists when the table already exists.
@@ -49,7 +49,7 @@ namespace Azure.Data.Tables.Tests
             }
         }
 
-        [AutoRerecordingTest]
+        [RecordedTest]
         public void ValidateAccountSasCredentialsWithPermissions()
         {
             // Create a SharedKeyCredential that we can use to sign the SAS token
@@ -97,7 +97,7 @@ namespace Azure.Data.Tables.Tests
             Assert.That(async () => await sasAuthedServiceDelete.DeleteTableAsync(sasTableName).ConfigureAwait(false), Throws.Nothing);
         }
 
-        [AutoRerecordingTest]
+        [RecordedTest]
         public void ValidateAccountSasCredentialsWithResourceTypes()
         {
             // Create a SharedKeyCredential that we can use to sign the SAS token
@@ -156,7 +156,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableServiceClient.
         /// </summary>
-        [AutoRerecordingTest]
+        [RecordedTest]
         [TestCase(null)]
         [TestCase(5)]
         public async Task GetTablesReturnsTablesWithAndWithoutPagination(int? pageCount)
@@ -193,7 +193,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableServiceClient.
         /// </summary>
-        [AutoRerecordingTest]
+        [RecordedTest]
         public async Task GetTablesReturnsTablesWithFilter()
         {
             var createdTables = new List<string>();
@@ -225,7 +225,7 @@ namespace Azure.Data.Tables.Tests
             }
         }
 
-        [AutoRerecordingTest]
+        [RecordedTest]
         public async Task GetPropertiesReturnsProperties()
         {
             if (_endpointType == TableEndpointType.CosmosTable)
@@ -262,7 +262,7 @@ namespace Azure.Data.Tables.Tests
             CompareServiceProperties(responseToChange, changedResponse);
         }
 
-        [AutoRerecordingTest]
+        [RecordedTest]
         public async Task GetTableServiceStatsReturnsStats()
         {
             if (_endpointType == TableEndpointType.CosmosTable)
