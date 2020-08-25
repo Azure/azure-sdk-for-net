@@ -12,14 +12,11 @@ namespace Microsoft.Azure.Management.IotHub.Models
 {
 
     /// <summary>
-    /// Defines values for EndpointHealthStatus.
+    /// Defines values for PublicNetworkAccess.
     /// </summary>
-    public static class EndpointHealthStatus
+    public static class PublicNetworkAccess
     {
-        public const string Unknown = "unknown";
-        public const string Healthy = "healthy";
-        public const string Degraded = "degraded";
-        public const string Unhealthy = "unhealthy";
-        public const string Dead = "dead";
+        public const string Enabled = "Enabled";
+        public const string Disabled = "Disabled";
     }
 }
