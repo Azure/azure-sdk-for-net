@@ -4,7 +4,7 @@ Commencing code generation
 Generating CSharp code
 Executing AutoRest command
 cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/keyvault/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp.output-folder=C:\Users\yeliu\isra-fel\azure-sdk-for-net\sdk\keyvault\Microsoft.Azure.Management.KeyVault\src\Generated
-2020-08-25 07:40:12 UTC
+2020-08-25 07:58:48 UTC
 Azure-rest-api-specs repository information
 GitHub fork: Azure
 Branch:      master
