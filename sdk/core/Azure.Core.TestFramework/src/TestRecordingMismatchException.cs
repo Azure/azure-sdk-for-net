@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 namespace Azure.Core.TestFramework
 {
     [Serializable]
-    internal class TestRecordingMismatchException : Exception
+    public class TestRecordingMismatchException : Exception
     {
         public TestRecordingMismatchException()
         {

@@ -124,7 +124,7 @@ namespace Azure.Core.Tests
                 }
             };
 
-            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => matcher.FindMatch(requestEntry, entries));
+            TestRecordingMismatchException exception = Assert.Throws<TestRecordingMismatchException>(() => matcher.FindMatch(requestEntry, entries));
             Assert.AreEqual(
                 "Unable to find a record for the request HEAD http://localhost/" + Environment.NewLine +
                 "Method doesn't match, request <HEAD> record <PUT>" + Environment.NewLine +
@@ -217,7 +217,7 @@ namespace Azure.Core.Tests
             }
             else
             {
-                Assert.Throws<InvalidOperationException>(() => matcher.FindMatch(mockRequest, entries));
+                Assert.Throws<TestRecordingMismatchException>(() => matcher.FindMatch(mockRequest, entries));
             }
         }
 
@@ -234,7 +234,7 @@ namespace Azure.Core.Tests
 
             RecordEntry[] entries = { };
 
-            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => matcher.FindMatch(mockRequest, entries));
+            TestRecordingMismatchException exception = Assert.Throws<TestRecordingMismatchException>(() => matcher.FindMatch(mockRequest, entries));
             Assert.AreEqual(
                 "Unable to find a record for the request HEAD http://localhost/" + Environment.NewLine +
                 "No records to match." + Environment.NewLine,
@@ -377,7 +377,7 @@ namespace Azure.Core.Tests
             playbackTransport.Process(message);
 
             skipRequestBody = false;
-            Assert.Throws<InvalidOperationException>(() => playbackTransport.Process(message));
+            Assert.Throws<TestRecordingMismatchException>(() => playbackTransport.Process(message));
         }
 
         private class TestSanitizer : RecordedTestSanitizer
