@@ -14,7 +14,7 @@ namespace Azure.Security.KeyVault.Administration.Models
     public partial class RoleDefinition
     {
         /// <summary> Initializes a new instance of RoleDefinition. </summary>
-        internal RoleDefinition()
+        public RoleDefinition()
         {
             Permissions = new ChangeTrackingList<KeyVaultPermission>();
             AssignableScopes = new ChangeTrackingList<string>();
@@ -48,10 +48,14 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <summary> The role definition type. </summary>
         public string Type { get; }
         /// <summary> The role name. </summary>
-        public string RoleName { get; }
+        public string RoleName { get; set; }
         /// <summary> The role definition description. </summary>
-        public string Description { get; }
+        public string Description { get; set; }
         /// <summary> The role type. </summary>
-        public string RoleType { get; }
+        public string RoleType { get; set; }
+        /// <summary> Role definition permissions. </summary>
+        public IList<KeyVaultPermission> Permissions { get; }
+        /// <summary> Role definition assignable scopes. </summary>
+        public IList<string> AssignableScopes { get; }
     }
 }

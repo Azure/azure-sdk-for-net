@@ -30,13 +30,11 @@ namespace Azure.Security.KeyVault.Administration.Tests
         {
             recording ??= Recording;
 
-
-
-            // return InstrumentClient
-            //     (new KeyVaultBackupClient(
-            //         new Uri(TestEnvironment.KeyVaultUrl),
-            //         TestEnvironment.Credential,
-            //         recording.InstrumentClientOptions(new KeyVaultBackupClientOptions())));
+            return InstrumentClient
+                (new KeyVaultBackupClient(
+                    new Uri(TestEnvironment.KeyVaultUrl),
+                    TestEnvironment.Credential,
+                    recording.InstrumentClientOptions(new KeyVaultBackupClientOptions())));
 
         }
 

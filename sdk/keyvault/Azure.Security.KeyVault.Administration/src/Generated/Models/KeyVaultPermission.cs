@@ -14,7 +14,7 @@ namespace Azure.Security.KeyVault.Administration.Models
     public partial class KeyVaultPermission
     {
         /// <summary> Initializes a new instance of KeyVaultPermission. </summary>
-        internal KeyVaultPermission()
+        public KeyVaultPermission()
         {
             Actions = new ChangeTrackingList<string>();
             NotActions = new ChangeTrackingList<string>();
@@ -34,5 +34,14 @@ namespace Azure.Security.KeyVault.Administration.Models
             DataActions = dataActions;
             NotDataActions = notDataActions;
         }
+
+        /// <summary> Allowed actions. </summary>
+        public IList<string> Actions { get; }
+        /// <summary> Denied actions. </summary>
+        public IList<string> NotActions { get; }
+        /// <summary> Allowed Data actions. </summary>
+        public IList<string> DataActions { get; }
+        /// <summary> Denied Data actions. </summary>
+        public IList<string> NotDataActions { get; }
     }
 }

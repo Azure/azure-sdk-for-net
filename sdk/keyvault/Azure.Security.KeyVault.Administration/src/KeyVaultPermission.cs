@@ -7,15 +7,7 @@ using Azure.Core;
 namespace Azure.Security.KeyVault.Administration.Models
 {
     /// <inheritdoc/>
+    [CodeGenModel("Permission", Usage = new[]{"input", "output"})]
     public partial class KeyVaultPermission
-    {
-        /// <inheritdoc/>
-        public IList<string> Actions { get; }
-        /// <inheritdoc/>
-        public IList<string> NotActions { get; }
-        /// <inheritdoc/>
-        public IList<string> DataActions { get; }
-        /// <inheritdoc/>
-        public IList<string> NotDataActions { get; }
-    }
+    { }
 }
