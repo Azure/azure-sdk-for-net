@@ -89,7 +89,7 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
                     break;
                 case "MyApp.Models.CustomEventType":
                     // One can also specify a custom ObjectSerializer as needed to deserialize the payload correctly
-                    TestPayload testPayload = await egEvent.GetDataAsync<TestPayload>(myCustomSerializer);
+                    TestPayload testPayload = await egEvent.GetDataAsync<TestPayload>(_myCustomSerializer);
                     Console.WriteLine(testPayload.Name);
                     break;
                 case "Microsoft.EventGrid.SubscriptionValidationEvent":
