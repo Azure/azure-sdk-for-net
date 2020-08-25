@@ -48,10 +48,6 @@ namespace Azure.Core.TestFramework
                     }
                 }
             }
-            else
-            {
-                message.Request.Headers.Remove("Content-Length");
-            }
 
             var requestEntry = RecordTransport.CreateEntry(message.Request, null);
 
@@ -84,10 +80,6 @@ namespace Azure.Core.TestFramework
                         await message.Request.Content.WriteToAsync(stream, message.CancellationToken).ConfigureAwait(false);
                     }
                 }
-            }
-            else
-            {
-                message.Request.Headers.Remove("Content-Length");
             }
 
             var requestEntry = RecordTransport.CreateEntry(message.Request, null);
