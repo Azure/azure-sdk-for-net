@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Azure.Core;
 using NUnit.Framework;
 
@@ -17,7 +18,7 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
         }
 
         [Test]
-        public async void SendEventGridEventsToTopic()
+        public async Task SendEventGridEventsToTopic()
         {
             string topicEndpoint = TestEnvironment.TopicHost;
             string topicAccessKey = TestEnvironment.TopicKey;
@@ -45,7 +46,7 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
         }
 
         [Test]
-        public async void SendCloudEventsToTopic()
+        public async Task SendCloudEventsToTopic()
         {
             string topicEndpoint = TestEnvironment.CloudEventTopicHost;
             string topicAccessKey = TestEnvironment.CloudEventTopicKey;
@@ -78,7 +79,7 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
         }
 
         [Test]
-        public async void SendEventsToDomain()
+        public async Task SendEventsToDomain()
         {
             string domainEndpoint = TestEnvironment.DomainHost;
             string domainAccessKey = TestEnvironment.DomainKey;

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Serialization;
 using Azure.Messaging.EventGrid.SystemEvents;
@@ -15,7 +16,7 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
 {
     public partial class EventGridSamples : EventGridLiveTestBase
     {
-        private JsonObjectSerializer myCustomSerializer = new JsonObjectSerializer(
+        private readonly JsonObjectSerializer _myCustomSerializer = new JsonObjectSerializer(
             new JsonSerializerOptions()
             {
                 AllowTrailingCommas = true,
@@ -23,13 +24,14 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
             });
 
         [Test]
-        public async void ReceiveAndDeserializeEventGridEvents()
+        public async Task ReceiveAndDeserializeEventGridEvents()
         {
             // Create the ServiceBus client and receiver
-            ServiceBusClient serviceBusClient = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-            ServiceBusReceiver serviceBusReceiver = serviceBusClient.CreateReceiver(TestEnvironment.ServiceBusQueueName);
+            ServiceBusClient serviceBusClient = new ServiceBusClient("SERVICE BUS CONNECTION STRING");
+            ServiceBusReceiver serviceBusReceiver = serviceBusClient.CreateReceiver("SERVICE BUS QUEUE NAME");
 
             ServiceBusReceivedMessage receivedMessage = await serviceBusReceiver.ReceiveMessageAsync();
+            await serviceBusReceiver.CompleteMessageAsync(receivedMessage);
 
             #region Snippet:ParseJson
             // Event Grid delivers a single event per message when routing events to a Service Bus Queue or Topic
@@ -58,6 +60,7 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
                     // An unrecognized event type - GetData() returns BinaryData with the serialized JSON payload
                     // You can use BinaryData methods to deserialize the payload
                     TestPayload deserializedEventData = await unknownType.DeserializeAsync<TestPayload>();
+                    Console.WriteLine(deserializedEventData.Name);
                     break;
             }
             #endregion
@@ -72,7 +75,7 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
                     break;
                 case "MyApp.Models.CustomEventType":
                     // One can also specify a custom ObjectSerializer as needed to deserialize the payload correctly
-                    TestPayload testPayload = await egEvent.GetDataAsync<TestPayload>(myCustomSerializer);
+                    TestPayload testPayload = await egEvent.GetDataAsync<TestPayload>(_myCustomSerializer);
                     Console.WriteLine(testPayload.Name);
                     break;
                 case "Microsoft.EventGrid.SubscriptionValidationEvent":
