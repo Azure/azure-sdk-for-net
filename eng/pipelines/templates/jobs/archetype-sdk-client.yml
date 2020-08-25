@@ -66,14 +66,6 @@ jobs:
         displayName: "Use Python 3.6"
         inputs:
           versionSpec: "3.6"
-      - template: /eng/common/pipelines/templates/steps/verify-links.yml
-        parameters:
-          Directory: sdk/${{ parameters.ServiceDirectory }}
-      - script: |
-          pip install setuptools wheel
-          pip install doc-warden==$(DocWardenVersion)
-          ward scan -d $(Build.SourcesDirectory) -c $(Build.SourcesDirectory)/eng/.docsettings.yml
-        displayName: "Verify Readmes"
       - task: UseDotNet@2
         displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
         inputs:
@@ -83,6 +75,21 @@ jobs:
         inputs:
           packageType: runtime
           version: "$(DotNetCoreRuntimeVersion)"
+      - task: NodeTool@0
+        inputs:
+          # AutoRest doesn't work with versions 12.x
+          versionSpec: '10.15.0'
+        displayName: 'Install NodeJS'
+      - template: /eng/common/pipelines/templates/steps/verify-links.yml
+        parameters:
+          Directory: sdk/${{ parameters.ServiceDirectory }}
+        condition: ne(variables['Skip.Analyze.VerifyLinks'], 'true')
+      - script: |
+          pip install setuptools wheel
+          pip install doc-warden==$(DocWardenVersion)
+          ward scan -d $(Build.SourcesDirectory) -c $(Build.SourcesDirectory)/eng/.docsettings.yml
+        displayName: "Verify Readmes"
+        condition: ne(variables['Skip.Analyze.VerifyReadmes'], 'true')
       - task: DownloadPipelineArtifact@2
         displayName: "Download Build Artifacts"
         condition: succeededOrFailed()
@@ -93,6 +100,7 @@ jobs:
       - template: /eng/common/pipelines/templates/steps/verify-path-length.yml
         parameters:
           SourceDirectory: $(Build.SourcesDirectory)
+        condition: ne(variables['Skip.Analyze.VerifyPathLength'], 'true')
       - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
         displayName: "Component Detection"
         # ComponentGovernance is currently unable to run on pull requests of public projects.  Running on
@@ -100,11 +108,6 @@ jobs:
         inputs:
           ignoreDirectories: "sdk/storage/Azure.Storage.Common/swagger/Generator"
         condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
-      - task: NodeTool@0
-        inputs:
-          # AutoRest doesn't work with versions 12.x
-          versionSpec: '10.15.0'
-        displayName: 'Install NodeJS'
       - task: PowerShell@2
         displayName: "Verify generated code"
         env:
@@ -116,6 +119,7 @@ jobs:
           arguments: -ServiceDirectory ${{parameters.ServiceToBuild}}
           pwsh: true
           failOnStderr:  false
+        condition: ne(variables['Skip.Analyze.VerifyGeneratedCode'], 'true')
   - job: "Test"
     condition: ne(variables['Skip.Test'], true)
     variables:
