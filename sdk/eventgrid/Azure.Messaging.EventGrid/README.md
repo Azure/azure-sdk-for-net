@@ -1,47 +1,80 @@
-# README.md template
+# Azure Event Grid client library for .NET
 
-Use the guidelines in each section of this template to ensure consistency and readability of your README. The README resides in your package's GitHub repository at the root of its directory within the repo. It's also used as the package distribution page (NuGet, PyPi, npm, etc.) and as a Quickstart on docs.microsoft.com. See [Azure.Template/README.md](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/template/Azure.Template/README.md) for an example following this template.
+Azure Event Grid allows you to easily build applications with event-based architectures. The Event Grid service fully manages all routing of events from any source, to any destination, for any application. Azure service events and custom events can be published directly to the service, where the events can then be filtered and sent to various recipients, such as built-in handlers or custom webhooks. To learn more about Azure Event Grid: [What is Event Grid?](https://docs.microsoft.com/en-us/azure/event-grid/overview)
 
-**Title**: The H1 of your README should be in the format: `# [Product Name] client library for [Language]`
+Use the client library for Azure Event Grid to:
+- Publish events to the Event Grid service using the Event Grid Event, Cloud Event 1.0, or custom schemas
+- Consume events that have been delivered to event handlers
+- Generate SAS tokens to authenticate the client publishing events to Azure Event Grid topics
 
-This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html) which provide a number of core capabilities that are shared amongst all Azure SDKs, including the intuitive Azure Identity library, an HTTP Pipeline with custom policies, error-handling, distributed tracing, and much more.
-
-# Azure Template client library for .NET
-
-**Introduction**: The introduction appears directly under the title (H1) of your README.
-
-* **DO NOT** use an "Introduction" or "Overview" heading (H2) for this section.
-* First sentence: **Describe the service** briefly. You can usually use the first line of the service's docs landing page for this (Example: [Cosmos DB docs landing page](https://docs.microsoft.com/azure/cosmos-db/)).
-* Next, add a **bulleted list** of the **most common tasks** supported by the package or library, prefaced with "Use the client library for [Product Name] to:". Then, provide code snippets for these tasks in the [Examples](#examples) section later in the document. Keep the task list short but include those tasks most developers need to perform with your package.
-* Include this single line of links targeting your product's content at the bottom of the introduction, making any adjustments as necessary (for example, NuGet instead of PyPi):
-
-  [Source code](https://github.com/Azure/azure-sdk-for-python/tree/master/sdk/batch/azure-batch) | [Package (PyPi)](https://pypi.org/project/azure-batch/) | [API reference documentation](https://docs.microsoft.com/python/api/overview/azure/batch?view=azure-python) | [Product documentation](https://docs.microsoft.com/azure/batch/)
-
-> TIP: Your README should be as **brief** as possible but **no more brief** than necessary to get a developer new to Azure, the service, or the package up and running quickly. Keep it brief, but include everything a developer needs to make their first API call successfully.
+  [Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventgrid/Azure.Messaging.EventGrid) | [Package (NuGet)]() | [API reference documentation](https://azure.github.io/azure-sdk-for-net/eventgrid.html) | [Product documentation](https://docs.microsoft.com/en-us/azure/event-grid/)
 
 ## Getting started
 
-This section should include everything a developer needs to do to install and create their first client connection *very quickly*.
-
 ### Install the package
 
-First, provide instruction for obtaining and installing the package or library. This section might include only a single line of code, like `pip install package-name`, but should enable a developer to successfully install the package from NuGet, pip, npm, Maven, or even cloning a GitHub repository.
+Install the client library from NuGet:
+
+```PowerShell
+dotnet add package ___
+```
 
 ### Prerequisites
 
-Include a section after the install command that details any requirements that must be satisfied before a developer can [authenticate](#authenticate-the-client) and test all of the snippets in the [Examples](#examples) section. For example, for Cosmos DB:
+You must have an [Azure subscription](https://azure.microsoft.com/free/) and an Azure resource group with a custom Event Grid topic or domain. Follow this [step-by-step tutorial](https://docs.microsoft.com/en-us/azure/event-grid/custom-event-quickstart-portal) to register the Event Grid resource provider and create Event Grid topics using the [Azure portal](https://portal.azure.com/). The [same tutorial](https://docs.microsoft.com/en-us/azure/event-grid/custom-event-quickstart) can be found using [Azure CLI](https://docs.microsoft.com/cli/azure).
 
-> You must have an [Azure subscription](https://azure.microsoft.com/free/), [Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/account-overview) (SQL API), and [Python 3.6+](https://www.python.org/downloads/) to use this package.
+### Authenticate the Client
 
-### Authenticate the client
+In order for the client library to interact with a topic or domain, you will need the `endpoint` of the Event Grid topic and a `credential`, which can be created using the topic's access key.
 
-If your library requires authentication for use, such as for Azure services, include instructions and example code needed for initializing and authenticating.
+You can find the endpoint for your Event Grid topic either in the [Azure Portal](https://portal.azure.com/) or by using the [Azure CLI](https://docs.microsoft.com/cli/azure) snippet below:
 
-For example, include details on obtaining an account key and endpoint URI, setting environment variables for each, and initializing the client object.
+```bash
+az eventgrid topic show --name <your-resource-name> --resource-group <your-resource-group-name> --query "endpoint"
+```
+
+The access key can also be found through the portal, or using the Azure CLI snippet below:
+```bash
+az eventgrid topic key list --name <your-resource-name> --resource-group <your-resource-group-name> --query "key1"
+```
+
+#### Creating and Authenticating `EventGridPublisherClient`
+
+Once you have your access key and topic endpoint, you can create the publisher client as follows:
+```csharp
+EventGridPublisherClient client = new EventGridPublisherClient(
+    "<endpoint>",
+    new AzureKeyCredential("<access-key>"));
+```
+You can also create a Shared Access Signature to authenticate the client using the same access key, instead passing in the `EventGridSharedAccessSignatureCredential` type:
+```csharp
+string sasToken = EventGridPublisherClient.BuildSharedAccessSignature(
+    "<endpoint>",
+    tokenExpirationTime,
+    new AzureKeyCredential("<access-key>"));
+
+EventGridPublisherClient client = new EventGridPublisherClient(
+    "<endpoint>",
+    new EventGridSharedAccessSignatureCredential(sasToken));
+```
 
 ## Key concepts
 
-The *Key concepts* section should describe the functionality of the main classes. Point out the most important and useful classes in the package (with links to their reference pages) and explain how those classes work together. Feel free to use bulleted lists, tables, code blocks, or even diagrams for clarity.
+For information about general Event Grid concepts: [Concepts in Azure Event Grid](https://docs.microsoft.com/en-us/azure/event-grid/concepts).
+
+### EventGridPublisherClient
+A **publisher** is the user or organization that decides to send events to Event Grid. Microsoft publishes events for several Azure services. You can publish events from your own application using the `EventGridPublisherClient`.
+
+### Event schemas
+An **event** is the smallest amount of information that fully describes something that happened in the system. Event Grid supports multiple schemas for encoding events. When a Custom Topic or Domain is created, you specify the schema that will be used when publishing events. While you may configure your topic to use a custom schema, it is more common to use the already-defined [Event Grid schema](https://docs.microsoft.com/en-us/azure/event-grid/event-schema) or [CloudEvents 1.0 schema](https://docs.microsoft.com/en-us/azure/event-grid/cloud-event-schema). [CloudEvents](https://cloudevents.io/) is a Cloud Native Computing Foundation project which produces a specification for describing event data in a common way.
+
+Regardless of what schema your topic or domain is configured to use, `EventGridPublisherClient` will be used to publish events to it.
+
+### Event delivery
+Events delivered to consumers by Event Grid are *delivered as JSON*. Depending on the type of consumer being delivered to, the Event Grid service may deliver one or more events as part of a single payload. Handling events will be different based on which schema the event was delivered as. However, the general pattern will remain the same:
+- Parse events from JSON into individual events. Based on the event schema (Event Grid or CloudEvents), you can now access basic information about the event on the envelope (properties that are present for all events, like event time and type).
+- Deserialize the event data. Given an `EventGridEvent` or `CloudEvent`, the user can attempt to access the event payload, or data, by deserializing to a specific type. Note that you can supply a custom serializer at this point to correctly decode the data.
+- Information about returning BinaryData or system events?
 
 ## Examples
 
@@ -51,40 +84,167 @@ If possible, use the same example snippets that your in-code documentation uses.
 
 Each example in the *Examples* section starts with an H3 that describes the example. At the top of this section, just under the *Examples* H2, add a bulleted list linking to each example H3. Each example should deep-link to the types and/or members used in the example.
 
-* [Create the thing](#create-the-thing)
-* [Get the thing](#get-the-thing)
-* [List the things](#list-the-things)
+* [Publish Event Grid events to an Event Grid Topic](#publish-event-grid-events-to-an-event-grid-topic)
+* [Publish CloudEvents to an Event Grid Topic](#publish-cloudevents-to-an-event-grid-topic)
+* [Publish Event Grid events to an Event Grid Domain](#publish-event-grid-events-to-an-event-grid-domain)
+* [Receiving and Deserializing Events](#receiving-and-deserializing-events)
 
-### Create the thing
+### Publish Event Grid events to an Event Grid Topic
+Publishing events to Event Grid is performed using the `EventGridPublisherClient`. Use the provided `SendEvents` method to publish events to the topic.
+```csharp Snippet:SendEGEventsToTopic
+// Create the publisher client using an AzureKeyCredential
+// Custom topic should be configured to accept events of the Event Grid schema
+EventGridPublisherClient client = new EventGridPublisherClient(
+    new Uri(topicEndpoint),
+    new AzureKeyCredential(topicAccessKey));
 
-Use the `create_thing` method to create a Thing reference; this method does not make a network call. To persist the Thing in the service, call `Thing.save`.
+// Add EventGridEvents to a list to publish to the topic
+List<EventGridEvent> eventsList = new List<EventGridEvent>
+{
+    new EventGridEvent(
+        "This is the event data",
+        "ExampleEventSubject",
+        "Example.EventType",
+        "1.0")
+};
 
-```Python
-thing = client.create_thing(id, name)
-thing.save()
+// Send the events
+await client.SendEventsAsync(eventsList);
+```
+### Publish CloudEvents to an Event Grid Topic
+Publishing events to Event Grid is performed using the `EventGridPublisherClient`. Use the provided `SendEvents` method to publish events to the topic.
+```csharp Snippet:SendCloudEventsToTopic
+// Create the publisher client using an AzureKeyCredential
+// Custom topic should be configured to accept events of the CloudEvents 1.0 schema
+EventGridPublisherClient client = new EventGridPublisherClient(
+    new Uri(topicEndpoint),
+    new AzureKeyCredential(topicAccessKey));
+
+// Add CloudEvents to a list to publish to the topic
+List<CloudEvent> eventsList = new List<CloudEvent>
+{
+    new CloudEvent(
+        "/cloudevents/example/source",
+        "Example.EventType",
+        "This is the event data"),
+
+    // CloudEvents also supports sending binary-valued data
+    new CloudEvent(
+        "/cloudevents/example/binarydata",
+        "Example.EventType",
+        new BinaryData("This is binary data"),
+        "example/binary")};
+
+// Send the events
+await client.SendEventsAsync(eventsList);
 ```
 
-### Get the thing
+### Publish Event Grid events to an Event Grid Domain
+An **event domain** is a management tool for large numbers of Event Grid topics related to the same application. You can think of it as a meta-topic that can have thousands of individual topics. When you create an event domain, you're given a publishing endpoint similar to if you had created a topic in Event Grid.
 
-The `get_thing` method retrieves a Thing from the service. The `id` parameter is the unique ID of the Thing, not its "name" property.
+To publish events to any topic in an Event Domain, push the events to the domain's endpoint the same way you would for a custom topic. The only difference is that you must specify the topic you'd like the event to be delivered to.
+```csharp Snippet:SendEventsToDomain
+// Create the publisher client using an AzureKeyCredential
+// Domain should be configured to accept events of the Event Grid schema
+EventGridPublisherClient client = new EventGridPublisherClient(
+    new Uri(domainEndpoint),
+    new AzureKeyCredential(domainAccessKey));
 
+// Add EventGridEvents to a list to publish to the domain
+// Don't forget to specify the topic you want the event to be delivered to!
+List<EventGridEvent> eventsList = new List<EventGridEvent>
+{
+    new EventGridEvent(
+        "This is the event data",
+        "ExampleEventSubject",
+        "Example.EventType",
+        "1.0")
+    {
+        Topic = "MyTopic"
+    }
+};
+
+// Send the events
+await client.SendEventsAsync(eventsList);
+```
+
+### Receiving and Deserializing Events
+There are several different Azure services that act as [event handlers](https://docs.microsoft.com/en-us/azure/event-grid/event-handlers) - in this example, events of the Event Grid schema have been routed to a Service Bus queue.
+
+Note: if using Webhooks to for event delivery, Event Grid requires you to prove ownership of your Webhook endpoint before it starts delivering events to that endpoint. At the time of event subscription creation, Event Grid sends a subscription validation event to your endpoint, as seen below. Learn more about completing the handshake here: [Webhook event delivery](https://docs.microsoft.com/en-us/azure/event-grid/webhook-event-delivery)
+
+Using the Service Bus SDK, we receive messages from the Service Bus queue and then parse the JSON payload into list of events.
+```csharp Snippet:ParseJson
+// Event Grid delivers a single event per message when routing events to a Service Bus Queue or Topic
+// So egEvents should only have one event
+EventGridEvent egEvent = EventGridEvent.Parse(receivedMessage.Body)[0];
+
+// Another approach for parsing an event from a Service Bus message is to call `ToEventGridEvent` on the message body
+EventGridEvent egEventExtra = receivedMessage.Body.ToEventGridEvent();
+```
+From here, one can access the event data by deserializing to a specific type using `GetData<T>()`, passing in a custom serializer if necessary. Calling `GetData()` will either return a deserialized system event (an event generated by an Azure service), or the payload wrapped in `BinaryData`, which represents the serialized JSON payload as bytes. Below is an example calling `GetData()`:
+```csharp Snippet:DeserializePayloadUsingNonGenericGetData
+// If the event is a system event, GetData() should return the correct system event type
+switch (egEvent.GetData())
+{
+    case SubscriptionValidationEventData subscriptionValidated:
+        Console.WriteLine(subscriptionValidated.ValidationCode);
+        break;
+    case StorageBlobCreatedEventData blobCreated:
+        Console.WriteLine(blobCreated.BlobType);
+        break;
+    case BinaryData unknownType:
+        // An unrecognized event type - GetData() returns BinaryData with the serialized JSON payload
+        // You can use BinaryData methods to deserialize the payload
+        TestPayload deserializedEventData = await unknownType.DeserializeAsync<TestPayload>();
+        break;
+}
+```
+Here is an example calling `GetData<T>()`. In order to deserialize to the correct type, the `EventType` property helps distinguish between different events.
+```csharp Snippet:DeserializePayloadUsingGenericGetData
+switch (egEvent.EventType)
+{
+    case "Contoso.Items.ItemReceived":
+        ContosoItemReceivedEventData itemReceived = egEvent.GetData<ContosoItemReceivedEventData>();
+        Console.WriteLine(itemReceived.ItemSku);
+        break;
+    case "MyApp.Models.CustomEventType":
+        // One can also specify a custom ObjectSerializer as needed to deserialize the payload correctly
+        TestPayload testPayload = egEvent.GetData<TestPayload>(myCustomSerializer);
+        Console.WriteLine(testPayload.Name);
+        break;
+    case "Microsoft.EventGrid.SubscriptionValidationEvent":
+        SubscriptionValidationEventData subscriptionValidated = egEvent.GetData<SubscriptionValidationEventData>();
+        Console.WriteLine(subscriptionValidated.ValidationCode);
+        break;
+}
+```
 
 ## Troubleshooting
 
-Describe common errors and exceptions, how to "unpack" them if necessary, and include guidance for graceful handling and recovery.
+#### Service Responses
+`SendEvents()` returns a HTTP response code from the service. A `RequestFailedException` is thrown as a service response for any unsuccessful requests. The exception contains information about what response code was returned from the service.
 
-Provide information to help developers avoid throttling or other service-enforced errors they might encounter. For example, provide guidance and examples for using retry or connection policies in the API.
+#### Deserializing Event Data
+An `InvalidCastException` will be thrown during `GetData<T>()` if the event data cannot be cast to the specified type.
 
-If the package or a related package supports it, include tips for logging or enabling instrumentation to help them debug their code.
+An `InvalidOperationException` will be thrown during `GetData<T>()` if a custom serializer is passed into `GetData<T>()` with non-serialized event data (for example, if the event was created by the user and not created by parsing from JSON).
 
 ## Next steps
 
-* Provide a link to additional code examples, ideally to those sitting alongside the README in the package's `/samples` directory.
-* If appropriate, point users to other packages that might be useful.
-* If you think there's a good chance that developers might stumble across your package in error (because they're searching for specific functionality and mistakenly think the package provides that functionality), point them to the packages they might be looking for.
+View the full code samples for the provided examples here: [Samples](tests/Samples)
 
 ## Contributing
 
-This is a template, but your SDK readme should include details on how to contribute code to the repo/package.
+This project welcomes contributions and suggestions.
+Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution.
+For details, visit <https://cla.microsoft.com.>
+
+When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment).
+Simply follow the instructions provided by the bot.
+You will only need to do this once across all repos using our CLA.
+
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
+For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftemplate%2FAzure.Template%2FREADME.png)
