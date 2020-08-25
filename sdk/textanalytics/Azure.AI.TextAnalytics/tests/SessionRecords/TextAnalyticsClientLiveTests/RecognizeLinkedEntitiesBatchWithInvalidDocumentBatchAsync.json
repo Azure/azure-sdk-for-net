@@ -1,16 +1,20 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azsdknet-test-ta.cognitiveservices.azure.com/text/analytics/v3.1-preview.1/entities/linking?showStats=false",
+      "RequestUri": "https://tda93f4a80c424e1d-textanalytics.cognitiveservices.azure.com/text/analytics/v3.1-preview.1/entities/linking?showStats=false",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
         "Content-Length": "561",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-96d9ccb8042bc14f8e2530feb659fb7b-3ca9faa8e467584e-00",
+        "traceparent": "00-28fbf009d177ca49b9a3478bf36188c1-f52bba8892c8ad49-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200821.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200825.1",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "2d29a5a97696fc299d613cb7e5e8b6cd",
         "x-ms-return-client-request-id": "true"
@@ -51,9 +55,9 @@
       },
       "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "0712df7e-35ad-42dd-a658-a4ecf0c23ddf",
+        "apim-request-id": "526a725f-aee2-4bf8-b6a6-b5bd174847d9",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 21 Aug 2020 20:16:57 GMT",
+        "Date": "Tue, 25 Aug 2020 16:20:43 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
@@ -74,6 +78,6 @@
   "Variables": {
     "RandomSeed": "538775678",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://azsdknet-test-ta.cognitiveservices.azure.com/"
+    "TEXT_ANALYTICS_ENDPOINT": "https://tda93f4a80c424e1d-textanalytics.cognitiveservices.azure.com"
   }
 }

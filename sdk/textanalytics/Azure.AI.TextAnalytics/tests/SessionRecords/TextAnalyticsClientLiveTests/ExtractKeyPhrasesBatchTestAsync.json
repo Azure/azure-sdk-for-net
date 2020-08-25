@@ -1,16 +1,20 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azsdknet-test-ta.cognitiveservices.azure.com/text/analytics/v3.1-preview.1/keyPhrases?showStats=false",
+      "RequestUri": "https://tda93f4a80c424e1d-textanalytics.cognitiveservices.azure.com/text/analytics/v3.1-preview.1/keyPhrases?showStats=false",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
         "Content-Length": "188",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-4087d29b5263304b87622a130e66c10c-afe0f2bd70daf74e-00",
+        "traceparent": "00-c39404cd1daf5a4aaa30f5e25bf0d057-409b734e69452348-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200818.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200825.1",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "63cb82583c2a88285d4ae8d7e739b3b0",
         "x-ms-return-client-request-id": "true"
@@ -31,14 +35,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "6cd8ed24-1dfc-4a6a-b832-8c8731182802",
+        "apim-request-id": "6372675e-a84b-4d0d-b4d6-f07c554a494c",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
-        "Date": "Wed, 19 Aug 2020 02:51:22 GMT",
+        "Date": "Tue, 25 Aug 2020 16:20:40 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "9"
+        "x-envoy-upstream-service-time": "11"
       },
       "ResponseBody": {
         "documents": [
@@ -69,6 +73,6 @@
   "Variables": {
     "RandomSeed": "2048089664",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://azsdknet-test-ta.cognitiveservices.azure.com/"
+    "TEXT_ANALYTICS_ENDPOINT": "https://tda93f4a80c424e1d-textanalytics.cognitiveservices.azure.com"
   }
 }
