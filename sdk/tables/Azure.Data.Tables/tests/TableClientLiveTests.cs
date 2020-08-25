@@ -862,6 +862,37 @@ namespace Azure.Data.Tables.Tests
         }
 
         /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [Test]
+        public async Task CreatedEnumEntitiesAreRoundtrippedProprly()
+        {
+            List<EnumEntity> entityResults;
+            var entitiesToCreate = new[]
+            {
+                new EnumEntity{ PartitionKey = PartitionKeyValue, RowKey = "01", MyFoo = Foo.Two}
+            };
+
+            // Create the new entities.
+
+            foreach (var entity in entitiesToCreate)
+            {
+                await client.AddEntityAsync(entity).ConfigureAwait(false);
+            }
+
+            // Query the entities with a filter specifying that to RowKey value must be greater than or equal to '10'.
+
+            entityResults = await client.QueryAsync<EnumEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '01'").ToEnumerableAsync().ConfigureAwait(false);
+
+            for (int i = 0; i < entityResults.Count; i++)
+            {
+                Assert.That(entityResults[i].PartitionKey, Is.EqualTo(entitiesToCreate[i].PartitionKey), "The entities should be equivalent");
+                Assert.That(entityResults[i].RowKey, Is.EqualTo(entitiesToCreate[i].RowKey), "The entities should be equivalent");
+                Assert.That(entityResults[i].MyFoo, Is.EqualTo(entitiesToCreate[i].MyFoo), "The entities should be equivalent");
+            }
+        }
+
+        /// <summary>
         /// Validates the functionality of the TableServiceClient.
         /// </summary>
         [Test]

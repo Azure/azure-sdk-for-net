@@ -98,5 +98,24 @@ namespace Azure.Tables.Tests
             Assert.That(sas.Permissions, Is.EqualTo(permissions.ToPermissionsString()));
             Assert.That(sas.ExpiresOn, Is.EqualTo(expiry));
         }
+
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [Test]
+        public void CreatedTableEntityEnumEntitiesThrowNotSupported()
+        {
+            var entityToCreate = new TableEntity { PartitionKey = "partitionKey", RowKey = "01" };
+            entityToCreate["MyFoo"] = Foo.Two;
+
+            // Create the new entities.
+            Assert.ThrowsAsync<NotSupportedException>(async () => await client_Instrumented.AddEntityAsync(entityToCreate).ConfigureAwait(false));
+        }
+
+        private enum Foo
+        {
+            One,
+            Two
+        }
     }
 }
