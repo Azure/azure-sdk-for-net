@@ -1,13 +1,10 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.core.windows.net/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrissscratch.table.core.windows.net/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json; odata=minimalmetadata"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "33",
         "Content-Type": "application/json; odata=nometadata",
@@ -42,20 +39,17 @@
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
-        "odata.metadata": "https://t1acd88e4a1c34b8dprim.table.core.windows.net/$metadata#Tables/@Element",
+        "odata.metadata": "https://chrissscratch.table.core.windows.net/$metadata#Tables/@Element",
         "TableName": "testtable3rgiegyq"
       }
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.core.windows.net/testtable3rgiegyq?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrissscratch.table.core.windows.net/testtable3rgiegyq?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json; odata=minimalmetadata"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "1675",
+        "Content-Length": "1663",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
@@ -128,8 +122,7 @@
         "String": "0001",
         "PartitionKey": "somPartition",
         "RowKey": "0001",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 204,
       "ResponseHeaders": {
@@ -152,15 +145,12 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.core.windows.net/testtable3rgiegyq?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrissscratch.table.core.windows.net/testtable3rgiegyq?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json; odata=minimalmetadata"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "1673",
+        "Content-Length": "1661",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
@@ -233,8 +223,7 @@
         "String": "0002",
         "PartitionKey": "somPartition",
         "RowKey": "0002",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 204,
       "ResponseHeaders": {
@@ -257,15 +246,12 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.core.windows.net/testtable3rgiegyq?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrissscratch.table.core.windows.net/testtable3rgiegyq?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json; odata=minimalmetadata"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "1731",
+        "Content-Length": "1719",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
@@ -338,8 +324,7 @@
         "String": "0003",
         "PartitionKey": "somPartition",
         "RowKey": "0003",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 204,
       "ResponseHeaders": {
@@ -362,15 +347,12 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.core.windows.net/testtable3rgiegyq?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrissscratch.table.core.windows.net/testtable3rgiegyq?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json; odata=minimalmetadata"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "1673",
+        "Content-Length": "1661",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
@@ -443,8 +425,7 @@
         "String": "0004",
         "PartitionKey": "somPartition",
         "RowKey": "0004",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 204,
       "ResponseHeaders": {
@@ -467,13 +448,10 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.core.windows.net/testtable3rgiegyq()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=%28PartitionKey%20eq%20%27somPartition%27%29%20and%20%28not%20%28RowKey%20eq%20%270001%27%29%29",
+      "RequestUri": "https://chrissscratch.table.core.windows.net/testtable3rgiegyq()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=%28PartitionKey%20eq%20%27somPartition%27%29%20and%20%28not%20%28RowKey%20eq%20%270001%27%29%29",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json; odata=minimalmetadata"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
         "User-Agent": [
@@ -502,7 +480,7 @@
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
-        "odata.metadata": "https://t1acd88e4a1c34b8dprim.table.core.windows.net/$metadata#testtable3rgiegyq",
+        "odata.metadata": "https://chrissscratch.table.core.windows.net/$metadata#testtable3rgiegyq",
         "value": [
           {
             "odata.etag": "W/\u0022datetime\u00272020-08-21T16%3A26%3A09.7143766Z\u0027\u0022",
@@ -643,13 +621,10 @@
       }
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.core.windows.net/testtable3rgiegyq()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=%28PartitionKey%20eq%20%27somPartition%27%29%20and%20%28Int32%20lt%205%29",
+      "RequestUri": "https://chrissscratch.table.core.windows.net/testtable3rgiegyq()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=%28PartitionKey%20eq%20%27somPartition%27%29%20and%20%28Int32%20lt%205%29",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json; odata=minimalmetadata"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
         "User-Agent": [
@@ -678,7 +653,7 @@
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
-        "odata.metadata": "https://t1acd88e4a1c34b8dprim.table.core.windows.net/$metadata#testtable3rgiegyq",
+        "odata.metadata": "https://chrissscratch.table.core.windows.net/$metadata#testtable3rgiegyq",
         "value": [
           {
             "odata.etag": "W/\u0022datetime\u00272020-08-21T16%3A26%3A09.6723415Z\u0027\u0022",
@@ -864,13 +839,10 @@
       }
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.core.windows.net/testtable3rgiegyq()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=%28PartitionKey%20eq%20%27somPartition%27%29%20and%20%28Int32%20gt%20-1%29",
+      "RequestUri": "https://chrissscratch.table.core.windows.net/testtable3rgiegyq()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=%28PartitionKey%20eq%20%27somPartition%27%29%20and%20%28Int32%20gt%20-1%29",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json; odata=minimalmetadata"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
         "User-Agent": [
@@ -899,7 +871,7 @@
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
-        "odata.metadata": "https://t1acd88e4a1c34b8dprim.table.core.windows.net/$metadata#testtable3rgiegyq",
+        "odata.metadata": "https://chrissscratch.table.core.windows.net/$metadata#testtable3rgiegyq",
         "value": [
           {
             "odata.etag": "W/\u0022datetime\u00272020-08-21T16%3A26%3A09.6723415Z\u0027\u0022",
@@ -1085,13 +1057,10 @@
       }
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.core.windows.net/Tables(\u0027testtable3rgiegyq\u0027)",
+      "RequestUri": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable3rgiegyq\u0027)",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "traceparent": "00-d27248aa65abc240ab31232132e6eb75-41766bd319c87a4e-00",
         "User-Agent": [

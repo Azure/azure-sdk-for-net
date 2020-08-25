@@ -1,13 +1,10 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.cosmos.azure.com/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrissprim.table.cosmos.azure.com/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json; odata=minimalmetadata"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "33",
         "Content-Type": "application/json; odata=nometadata",
@@ -37,19 +34,16 @@
       },
       "ResponseBody": {
         "TableName": "testtable70pb9xu0",
-        "odata.metadata": "https://t1acd88e4a1c34b8dprim.table.cosmos.azure.com/$metadata#Tables/@Element"
+        "odata.metadata": "https://chrissprim.table.cosmos.azure.com/$metadata#Tables/@Element"
       }
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.cosmos.azure.com/testtable70pb9xu0?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrissprim.table.cosmos.azure.com/testtable70pb9xu0?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json; odata=minimalmetadata"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "677",
+        "Content-Length": "665",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
@@ -80,8 +74,7 @@
         "IntTypeProperty": 1,
         "PartitionKey": "somPartition",
         "RowKey": "01",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 204,
       "ResponseHeaders": {
@@ -96,15 +89,12 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.cosmos.azure.com/testtable70pb9xu0?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrissprim.table.cosmos.azure.com/testtable70pb9xu0?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json; odata=minimalmetadata"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "677",
+        "Content-Length": "665",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
@@ -135,8 +125,7 @@
         "IntTypeProperty": 2,
         "PartitionKey": "somPartition",
         "RowKey": "02",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 204,
       "ResponseHeaders": {
@@ -151,15 +140,12 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.cosmos.azure.com/testtable70pb9xu0?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrissprim.table.cosmos.azure.com/testtable70pb9xu0?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json; odata=minimalmetadata"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "677",
+        "Content-Length": "665",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
@@ -190,8 +176,7 @@
         "IntTypeProperty": 3,
         "PartitionKey": "somPartition",
         "RowKey": "03",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 204,
       "ResponseHeaders": {
@@ -206,15 +191,12 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.cosmos.azure.com/testtable70pb9xu0?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrissprim.table.cosmos.azure.com/testtable70pb9xu0?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json; odata=minimalmetadata"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "677",
+        "Content-Length": "665",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
@@ -245,8 +227,7 @@
         "IntTypeProperty": 4,
         "PartitionKey": "somPartition",
         "RowKey": "04",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 204,
       "ResponseHeaders": {
@@ -261,15 +242,12 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.cosmos.azure.com/testtable70pb9xu0?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrissprim.table.cosmos.azure.com/testtable70pb9xu0?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json; odata=minimalmetadata"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "677",
+        "Content-Length": "665",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
@@ -300,8 +278,7 @@
         "IntTypeProperty": 5,
         "PartitionKey": "somPartition",
         "RowKey": "05",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 204,
       "ResponseHeaders": {
@@ -316,15 +293,12 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.cosmos.azure.com/testtable70pb9xu0?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrissprim.table.cosmos.azure.com/testtable70pb9xu0?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json; odata=minimalmetadata"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "677",
+        "Content-Length": "665",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
@@ -355,8 +329,7 @@
         "IntTypeProperty": 6,
         "PartitionKey": "somPartition",
         "RowKey": "06",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 204,
       "ResponseHeaders": {
@@ -371,15 +344,12 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.cosmos.azure.com/testtable70pb9xu0?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrissprim.table.cosmos.azure.com/testtable70pb9xu0?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json; odata=minimalmetadata"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "677",
+        "Content-Length": "665",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
@@ -410,8 +380,7 @@
         "IntTypeProperty": 7,
         "PartitionKey": "somPartition",
         "RowKey": "07",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 204,
       "ResponseHeaders": {
@@ -426,15 +395,12 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.cosmos.azure.com/testtable70pb9xu0?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrissprim.table.cosmos.azure.com/testtable70pb9xu0?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json; odata=minimalmetadata"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "677",
+        "Content-Length": "665",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
@@ -465,8 +431,7 @@
         "IntTypeProperty": 8,
         "PartitionKey": "somPartition",
         "RowKey": "08",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 204,
       "ResponseHeaders": {
@@ -481,15 +446,12 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.cosmos.azure.com/testtable70pb9xu0?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrissprim.table.cosmos.azure.com/testtable70pb9xu0?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json; odata=minimalmetadata"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "677",
+        "Content-Length": "665",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
@@ -520,8 +482,7 @@
         "IntTypeProperty": 9,
         "PartitionKey": "somPartition",
         "RowKey": "09",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 204,
       "ResponseHeaders": {
@@ -536,15 +497,12 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.cosmos.azure.com/testtable70pb9xu0?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrissprim.table.cosmos.azure.com/testtable70pb9xu0?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json; odata=minimalmetadata"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "680",
+        "Content-Length": "668",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
@@ -575,8 +533,7 @@
         "IntTypeProperty": 10,
         "PartitionKey": "somPartition",
         "RowKey": "10",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 204,
       "ResponseHeaders": {
@@ -591,15 +548,12 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.cosmos.azure.com/testtable70pb9xu0?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrissprim.table.cosmos.azure.com/testtable70pb9xu0?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json; odata=minimalmetadata"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "680",
+        "Content-Length": "668",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
@@ -630,8 +584,7 @@
         "IntTypeProperty": 11,
         "PartitionKey": "somPartition",
         "RowKey": "11",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 204,
       "ResponseHeaders": {
@@ -646,15 +599,12 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.cosmos.azure.com/testtable70pb9xu0?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrissprim.table.cosmos.azure.com/testtable70pb9xu0?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json; odata=minimalmetadata"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "680",
+        "Content-Length": "668",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
@@ -685,8 +635,7 @@
         "IntTypeProperty": 12,
         "PartitionKey": "somPartition",
         "RowKey": "12",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 204,
       "ResponseHeaders": {
@@ -701,15 +650,12 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.cosmos.azure.com/testtable70pb9xu0?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrissprim.table.cosmos.azure.com/testtable70pb9xu0?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json; odata=minimalmetadata"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "680",
+        "Content-Length": "668",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
@@ -740,8 +686,7 @@
         "IntTypeProperty": 13,
         "PartitionKey": "somPartition",
         "RowKey": "13",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 204,
       "ResponseHeaders": {
@@ -756,15 +701,12 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.cosmos.azure.com/testtable70pb9xu0?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrissprim.table.cosmos.azure.com/testtable70pb9xu0?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json; odata=minimalmetadata"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "680",
+        "Content-Length": "668",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
@@ -795,8 +737,7 @@
         "IntTypeProperty": 14,
         "PartitionKey": "somPartition",
         "RowKey": "14",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 204,
       "ResponseHeaders": {
@@ -811,15 +752,12 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.cosmos.azure.com/testtable70pb9xu0?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrissprim.table.cosmos.azure.com/testtable70pb9xu0?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json; odata=minimalmetadata"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "680",
+        "Content-Length": "668",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
@@ -850,8 +788,7 @@
         "IntTypeProperty": 15,
         "PartitionKey": "somPartition",
         "RowKey": "15",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 204,
       "ResponseHeaders": {
@@ -866,15 +803,12 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.cosmos.azure.com/testtable70pb9xu0?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrissprim.table.cosmos.azure.com/testtable70pb9xu0?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json; odata=minimalmetadata"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "680",
+        "Content-Length": "668",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
@@ -905,8 +839,7 @@
         "IntTypeProperty": 16,
         "PartitionKey": "somPartition",
         "RowKey": "16",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 204,
       "ResponseHeaders": {
@@ -921,15 +854,12 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.cosmos.azure.com/testtable70pb9xu0?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrissprim.table.cosmos.azure.com/testtable70pb9xu0?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json; odata=minimalmetadata"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "680",
+        "Content-Length": "668",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
@@ -960,8 +890,7 @@
         "IntTypeProperty": 17,
         "PartitionKey": "somPartition",
         "RowKey": "17",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 204,
       "ResponseHeaders": {
@@ -976,15 +905,12 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.cosmos.azure.com/testtable70pb9xu0?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrissprim.table.cosmos.azure.com/testtable70pb9xu0?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json; odata=minimalmetadata"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "680",
+        "Content-Length": "668",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
@@ -1015,8 +941,7 @@
         "IntTypeProperty": 18,
         "PartitionKey": "somPartition",
         "RowKey": "18",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 204,
       "ResponseHeaders": {
@@ -1031,15 +956,12 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.cosmos.azure.com/testtable70pb9xu0?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrissprim.table.cosmos.azure.com/testtable70pb9xu0?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json; odata=minimalmetadata"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "680",
+        "Content-Length": "668",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
@@ -1070,8 +992,7 @@
         "IntTypeProperty": 19,
         "PartitionKey": "somPartition",
         "RowKey": "19",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 204,
       "ResponseHeaders": {
@@ -1086,15 +1007,12 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.cosmos.azure.com/testtable70pb9xu0?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrissprim.table.cosmos.azure.com/testtable70pb9xu0?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json; odata=minimalmetadata"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "680",
+        "Content-Length": "668",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "Prefer": "return-no-content",
@@ -1125,8 +1043,7 @@
         "IntTypeProperty": 20,
         "PartitionKey": "somPartition",
         "RowKey": "20",
-        "Timestamp": null,
-        "ETag": null
+        "Timestamp": null
       },
       "StatusCode": 204,
       "ResponseHeaders": {
@@ -1141,13 +1058,10 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.cosmos.azure.com/testtable70pb9xu0()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=PartitionKey%20eq%20%27somPartition%27%20and%20RowKey%20gt%20%2710%27",
+      "RequestUri": "https://chrissprim.table.cosmos.azure.com/testtable70pb9xu0()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=PartitionKey%20eq%20%27somPartition%27%20and%20RowKey%20gt%20%2710%27",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json; odata=minimalmetadata"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
         "User-Agent": [
@@ -1374,13 +1288,10 @@
       }
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.cosmos.azure.com/Tables(\u0027testtable70pb9xu0\u0027)",
+      "RequestUri": "https://chrissprim.table.cosmos.azure.com/Tables(\u0027testtable70pb9xu0\u0027)",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "traceparent": "00-c883af3471f44f49aab7f918738b318b-fbc184256dc0824d-00",
         "User-Agent": [

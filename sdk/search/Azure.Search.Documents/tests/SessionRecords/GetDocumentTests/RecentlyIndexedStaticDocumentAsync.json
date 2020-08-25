@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-t50d8619e0b774b52.search.windows.net/indexes(\u0027swppjmyo\u0027)/docs/search.index?api-version=2020-06-30",
+      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexes(\u0027despnwor\u0027)/docs/search.index?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
         "Content-Length": "962",
         "Content-Type": "application/json",
-        "traceparent": "00-4329348f9d8f884aa950aed025ef739a-547106705d5ca74e-00",
+        "traceparent": "00-4a8874fe2f655641ac550ba0fdbb2f03-bd0d29fa358e7f42-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.2.0-dev.20200820.2",
-          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Search.Documents/11.0.0-dev.20200625.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "aa5f713be58bf17803b0715e17f2aff2",
         "x-ms-return-client-request-id": "true"
@@ -53,8 +53,8 @@
         "client-request-id": "aa5f713b-e58b-f178-03b0-715e17f2aff2",
         "Content-Length": "74",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Thu, 20 Aug 2020 18:06:22 GMT",
-        "elapsed-time": "127",
+        "Date": "Fri, 26 Jun 2020 06:04:37 GMT",
+        "elapsed-time": "84",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -75,18 +75,15 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-t50d8619e0b774b52.search.windows.net/indexes(\u0027swppjmyo\u0027)/docs(\u00271\u0027)?api-version=2020-06-30",
+      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexes(\u0027despnwor\u0027)/docs(\u00271\u0027)?api-version=2020-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": [
-          "application/json; odata.metadata=none",
-          "application/json"
-        ],
+        "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "traceparent": "00-85e60ae86891734cae09859c640b6394-e12d6bdc7b2d9f4a-00",
+        "traceparent": "00-290d6f961ff5564e872a586e4621bb0e-d0ce4a8a1b175641-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.2.0-dev.20200820.2",
-          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Search.Documents/11.0.0-dev.20200625.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "93de715e8cce15b225b9af5b7103eb25",
         "x-ms-return-client-request-id": "true"
@@ -98,8 +95,8 @@
         "client-request-id": "93de715e-8cce-15b2-25b9-af5b7103eb25",
         "Content-Length": "940",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Thu, 20 Aug 2020 18:06:24 GMT",
-        "elapsed-time": "10",
+        "Date": "Fri, 26 Jun 2020 06:04:39 GMT",
+        "elapsed-time": "9",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -111,18 +108,15 @@
       "ResponseBody": "{\u0022hotelId\u0022:\u00221\u0022,\u0022hotelName\u0022:\u0022Fancy Stay\u0022,\u0022description\u0022:\u0022Best hotel in town if you like luxury hotels. They have an amazing infinity pool, a spa, and a really helpful concierge. The location is perfect -- right downtown, close to all the tourist attractions. We highly recommend this hotel.\u0022,\u0022descriptionFr\u0022:\u0022Meilleur h\\u00f4tel en ville si vous aimez les h\\u00f4tels de luxe. Ils ont une magnifique piscine \\u00e0 d\\u00e9bordement, un spa et un concierge tr\\u00e8s utile. L\u0027emplacement est parfait \\u2013 en plein centre, \\u00e0 proximit\\u00e9 de toutes les attractions touristiques. Nous recommandons fortement cet h\\u00f4tel.\u0022,\u0022category\u0022:\u0022Luxury\u0022,\u0022tags\u0022:[\u0022pool\u0022,\u0022view\u0022,\u0022wifi\u0022,\u0022concierge\u0022],\u0022parkingIncluded\u0022:false,\u0022smokingAllowed\u0022:false,\u0022lastRenovationDate\u0022:\u00222010-06-27T00:00:00Z\u0022,\u0022rating\u0022:5,\u0022location\u0022:{\u0022type\u0022:\u0022Point\u0022,\u0022coordinates\u0022:[-122.131577,47.678581],\u0022crs\u0022:{\u0022type\u0022:\u0022name\u0022,\u0022properties\u0022:{\u0022name\u0022:\u0022EPSG:4326\u0022}}},\u0022address\u0022:null,\u0022rooms\u0022:[]}"
     },
     {
-      "RequestUri": "https://azs-net-t50d8619e0b774b52.search.windows.net/indexes(\u0027swppjmyo\u0027)?api-version=2020-06-30",
+      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexes(\u0027despnwor\u0027)?api-version=2020-06-30",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
-        "Accept": [
-          "application/json; odata.metadata=minimal",
-          "application/json"
-        ],
+        "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-8120573c60603d48ba2e0dc68d17b062-c731ab951e934543-00",
+        "traceparent": "00-2b4fd0ec9e402b49b9f136c4a7e849b2-129b1290b8d67c4b-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.2.0-dev.20200820.2",
-          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Search.Documents/11.0.0-dev.20200625.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "3c0735ca040bd9897a3c734084c58a72",
         "x-ms-return-client-request-id": "true"
@@ -132,8 +126,8 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "3c0735ca-040b-d989-7a3c-734084c58a72",
-        "Date": "Thu, 20 Aug 2020 18:06:25 GMT",
-        "elapsed-time": "498",
+        "Date": "Fri, 26 Jun 2020 06:04:39 GMT",
+        "elapsed-time": "219",
         "Expires": "-1",
         "Pragma": "no-cache",
         "request-id": "3c0735ca-040b-d989-7a3c-734084c58a72",
@@ -145,9 +139,9 @@
   ],
   "Variables": {
     "RandomSeed": "1353165967",
-    "SearchIndexName": "swppjmyo",
+    "SearchIndexName": "despnwor",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
     "SEARCH_QUERY_API_KEY": "Sanitized",
-    "SEARCH_SERVICE_NAME": "azs-net-t50d8619e0b774b52"
+    "SEARCH_SERVICE_NAME": "azs-net-heathsrchtst"
   }
 }

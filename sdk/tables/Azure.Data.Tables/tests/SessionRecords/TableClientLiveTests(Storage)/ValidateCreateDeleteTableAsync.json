@@ -1,13 +1,10 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.core.windows.net/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrissscratch.table.core.windows.net/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json; odata=minimalmetadata"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "33",
         "Content-Type": "application/json; odata=nometadata",
@@ -42,18 +39,15 @@
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
-        "odata.metadata": "https://t1acd88e4a1c34b8dprim.table.core.windows.net/$metadata#Tables/@Element",
+        "odata.metadata": "https://chrissscratch.table.core.windows.net/$metadata#Tables/@Element",
         "TableName": "testtableceee76ve"
       }
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.core.windows.net/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrissscratch.table.core.windows.net/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json; odata=minimalmetadata"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "33",
         "Content-Type": "application/json; odata=nometadata",
@@ -88,18 +82,15 @@
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
-        "odata.metadata": "https://t1acd88e4a1c34b8dprim.table.core.windows.net/$metadata#Tables/@Element",
+        "odata.metadata": "https://chrissscratch.table.core.windows.net/$metadata#Tables/@Element",
         "TableName": "testtablee7z4otrx"
       }
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.core.windows.net/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=TableName%20eq%20%27testtablee7z4otrx%27",
+      "RequestUri": "https://chrissscratch.table.core.windows.net/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=TableName%20eq%20%27testtablee7z4otrx%27",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json; odata=minimalmetadata"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
         "User-Agent": [
@@ -128,7 +119,7 @@
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
-        "odata.metadata": "https://t1acd88e4a1c34b8dprim.table.core.windows.net/$metadata#Tables",
+        "odata.metadata": "https://chrissscratch.table.core.windows.net/$metadata#Tables",
         "value": [
           {
             "TableName": "testtablee7z4otrx"
@@ -137,13 +128,10 @@
       }
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.core.windows.net/Tables(\u0027testtablee7z4otrx\u0027)",
+      "RequestUri": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtablee7z4otrx\u0027)",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "traceparent": "00-253fe3b83b48534daa9f647dc1cb6251-c2b99144c5985b45-00",
         "User-Agent": [
@@ -173,13 +161,10 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.core.windows.net/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=TableName%20eq%20%27testtablee7z4otrx%27",
+      "RequestUri": "https://chrissscratch.table.core.windows.net/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=TableName%20eq%20%27testtablee7z4otrx%27",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json; odata=minimalmetadata"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
         "User-Agent": [
@@ -208,18 +193,15 @@
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
-        "odata.metadata": "https://t1acd88e4a1c34b8dprim.table.core.windows.net/$metadata#Tables",
+        "odata.metadata": "https://chrissscratch.table.core.windows.net/$metadata#Tables",
         "value": []
       }
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.core.windows.net/Tables(\u0027testtableceee76ve\u0027)",
+      "RequestUri": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtableceee76ve\u0027)",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "traceparent": "00-e3157559d016f846888498c9f4b20f0b-9867768523ab4f45-00",
         "User-Agent": [

@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://t822ba17aa8b34513-textanalytics.cognitiveservices.azure.com/text/analytics/v3.1-preview.1/keyPhrases",
+      "RequestUri": "https://azsdknet-test-ta.cognitiveservices.azure.com/text/analytics/v3.1-preview.1/keyPhrases",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Content-Length": "180",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-7b7b4d44bead684b9cafb5d787890117-6c8d987fbedcd94a-00",
+        "traceparent": "00-694a2695e9eaf448ad96d150fa020c86-00f1cd598a417446-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200820.2",
-          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200818.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "e7b0961d52b4de12c6b417fac3e9c57f",
         "x-ms-return-client-request-id": "true"
@@ -18,18 +18,18 @@
       "RequestBody": {
         "documents": [
           {
-            "language": "es",
             "id": "0",
-            "text": "Anthony runs his own personal training business so thisisaverylongtokenwhichwillbetruncatedtoshowushowwarningsareemittedintheapi"
+            "text": "Anthony runs his own personal training business so thisisaverylongtokenwhichwillbetruncatedtoshowushowwarningsareemittedintheapi",
+            "language": "es"
           }
         ]
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "990d3da5-1266-44d1-a5c9-2c988321005e",
+        "apim-request-id": "b3cdf32b-69bf-47fc-a042-7a736dbe2265",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1",
-        "Date": "Thu, 20 Aug 2020 23:13:02 GMT",
+        "Date": "Wed, 19 Aug 2020 02:51:23 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
@@ -60,6 +60,6 @@
   "Variables": {
     "RandomSeed": "1254603912",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://t822ba17aa8b34513-textanalytics.cognitiveservices.azure.com"
+    "TEXT_ANALYTICS_ENDPOINT": "https://azsdknet-test-ta.cognitiveservices.azure.com/"
   }
 }

@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://t822ba17aa8b34513-textanalytics.cognitiveservices.azure.com/text/analytics/v3.1-preview.1/entities/recognition/general?showStats=true",
+      "RequestUri": "https://azsdknet-test-ta.cognitiveservices.azure.com/text/analytics/v3.1-preview.1/entities/recognition/general?showStats=true",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Content-Length": "191",
@@ -105,6 +105,6 @@
   "Variables": {
     "RandomSeed": "1538596289",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://t822ba17aa8b34513-textanalytics.cognitiveservices.azure.com"
+    "TEXT_ANALYTICS_ENDPOINT": "https://azsdknet-test-ta.cognitiveservices.azure.com/"
   }
 }

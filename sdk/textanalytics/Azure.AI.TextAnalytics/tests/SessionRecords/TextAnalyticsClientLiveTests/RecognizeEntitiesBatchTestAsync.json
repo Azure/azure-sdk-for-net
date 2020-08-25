@@ -107,6 +107,6 @@
   "Variables": {
     "RandomSeed": "1947220539",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://t822ba17aa8b34513-textanalytics.cognitiveservices.azure.com"
+    "TEXT_ANALYTICS_ENDPOINT": "https://azsdknet-test-ta.cognitiveservices.azure.com/"
   }
 }

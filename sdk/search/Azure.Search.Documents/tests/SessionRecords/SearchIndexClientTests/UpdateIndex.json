@@ -1,20 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-t50d8619e0b774b52.search.windows.net/indexes?api-version=2020-06-30",
+      "RequestUri": "https://azs-net-pakrymsearch2.search.windows.net/indexes?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json; odata.metadata=minimal",
-          "application/json"
-        ],
+        "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
         "Content-Length": "4032",
         "Content-Type": "application/json",
-        "traceparent": "00-ac04ee55fa34b04db202afdda12892c5-911c588a4b38a042-00",
+        "traceparent": "00-b2479108e9952e4b8b0207240727ea70-6fd3f839318abf46-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.2.0-dev.20200820.2",
-          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Search.Documents/11.1.0-dev.20200717.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "26f7066d315f5ab3f827c83cbd605a50",
         "x-ms-return-client-request-id": "true"
@@ -311,13 +308,13 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "26f7066d-315f-5ab3-f827-c83cbd605a50",
-        "Content-Length": "6238",
+        "Content-Length": "6234",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Thu, 20 Aug 2020 18:24:48 GMT",
-        "elapsed-time": "1315",
-        "ETag": "W/\u00220x8D84536522AE512\u0022",
+        "Date": "Fri, 17 Jul 2020 21:45:55 GMT",
+        "elapsed-time": "1067",
+        "ETag": "W/\u00220x8D82A9AC952C584\u0022",
         "Expires": "-1",
-        "Location": "https://azs-net-t50d8619e0b774b52.search.windows.net/indexes(\u0027ptbgbued\u0027)?api-version=2020-06-30",
+        "Location": "https://azs-net-pakrymsearch2.search.windows.net/indexes(\u0027ptbgbued\u0027)?api-version=2020-06-30",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
@@ -326,8 +323,8 @@
         "x-ms-client-request-id": "26f7066d-315f-5ab3-f827-c83cbd605a50"
       },
       "ResponseBody": {
-        "@odata.context": "https://azs-net-t50d8619e0b774b52.search.windows.net/$metadata#indexes/$entity",
-        "@odata.etag": "\u00220x8D84536522AE512\u0022",
+        "@odata.context": "https://azs-net-pakrymsearch2.search.windows.net/$metadata#indexes/$entity",
+        "@odata.etag": "\u00220x8D82A9AC952C584\u0022",
         "name": "ptbgbued",
         "defaultScoringProfile": null,
         "fields": [
@@ -726,22 +723,19 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-t50d8619e0b774b52.search.windows.net/indexes(\u0027ptbgbued\u0027)?allowIndexDowntime=true\u0026api-version=2020-06-30",
+      "RequestUri": "https://azs-net-pakrymsearch2.search.windows.net/indexes(\u0027ptbgbued\u0027)?allowIndexDowntime=true\u0026api-version=2020-06-30",
       "RequestMethod": "PUT",
       "RequestHeaders": {
-        "Accept": [
-          "application/json; odata.metadata=minimal",
-          "application/json"
-        ],
+        "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
         "Content-Length": "4994",
         "Content-Type": "application/json",
-        "If-Match": "\u00220x8D84536522AE512\u0022",
+        "If-Match": "\u00220x8D82A9AC952C584\u0022",
         "Prefer": "return=representation",
-        "traceparent": "00-88b41c3c5a48fe4990fee53da5819b2d-a7f8c61de09f054c-00",
+        "traceparent": "00-cac761f7f0974b448a168ec5af7e3a80-c4cbfe86ccfb3c45-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.2.0-dev.20200820.2",
-          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Search.Documents/11.1.0-dev.20200717.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "5c92b4cdda72b9dbb6ec10cb1f481d99",
         "x-ms-return-client-request-id": "true"
@@ -1088,17 +1082,17 @@
         "similarity": {
           "@odata.type": "#Microsoft.Azure.Search.BM25Similarity"
         },
-        "@odata.etag": "\u00220x8D84536522AE512\u0022"
+        "@odata.etag": "\u00220x8D82A9AC952C584\u0022"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "5c92b4cd-da72-b9db-b6ec-10cb1f481d99",
-        "Content-Length": "6657",
+        "Content-Length": "6653",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Thu, 20 Aug 2020 18:24:50 GMT",
-        "elapsed-time": "2464",
-        "ETag": "W/\u00220x8D8453653B0F9B6\u0022",
+        "Date": "Fri, 17 Jul 2020 21:45:58 GMT",
+        "elapsed-time": "1831",
+        "ETag": "W/\u00220x8D82A9ACA6CF3F7\u0022",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -1108,8 +1102,8 @@
         "x-ms-client-request-id": "5c92b4cd-da72-b9db-b6ec-10cb1f481d99"
       },
       "ResponseBody": {
-        "@odata.context": "https://azs-net-t50d8619e0b774b52.search.windows.net/$metadata#indexes/$entity",
-        "@odata.etag": "\u00220x8D8453653B0F9B6\u0022",
+        "@odata.context": "https://azs-net-pakrymsearch2.search.windows.net/$metadata#indexes/$entity",
+        "@odata.etag": "\u00220x8D82A9ACA6CF3F7\u0022",
         "name": "ptbgbued",
         "defaultScoringProfile": null,
         "fields": [
@@ -1535,18 +1529,15 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-t50d8619e0b774b52.search.windows.net/indexes(\u0027ptbgbued\u0027)?api-version=2020-06-30",
+      "RequestUri": "https://azs-net-pakrymsearch2.search.windows.net/indexes(\u0027ptbgbued\u0027)?api-version=2020-06-30",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
-        "Accept": [
-          "application/json; odata.metadata=minimal",
-          "application/json"
-        ],
+        "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-0bc0c128364da940a516360844707409-86d05579d90a554d-00",
+        "traceparent": "00-de309c7515b2844088b439fa08d05f19-e5a101709041234b-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.2.0-dev.20200820.2",
-          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Search.Documents/11.1.0-dev.20200717.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "bcb37215e67e50e3b4d10c4369758711",
         "x-ms-return-client-request-id": "true"
@@ -1556,8 +1547,8 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "bcb37215-e67e-50e3-b4d1-0c4369758711",
-        "Date": "Thu, 20 Aug 2020 18:24:51 GMT",
-        "elapsed-time": "1007",
+        "Date": "Fri, 17 Jul 2020 21:45:58 GMT",
+        "elapsed-time": "865",
         "Expires": "-1",
         "Pragma": "no-cache",
         "request-id": "bcb37215-e67e-50e3-b4d1-0c4369758711",
@@ -1571,6 +1562,6 @@
     "RandomSeed": "1669853055",
     "SearchIndexName": "ptbgbued",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
-    "SEARCH_SERVICE_NAME": "azs-net-t50d8619e0b774b52"
+    "SEARCH_SERVICE_NAME": "azs-net-pakrymsearch2"
   }
 }

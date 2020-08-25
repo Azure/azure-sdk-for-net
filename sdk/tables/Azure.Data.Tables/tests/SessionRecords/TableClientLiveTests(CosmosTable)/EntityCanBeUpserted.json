@@ -1,13 +1,10 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.cosmos.azure.com/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrissprim.table.cosmos.azure.com/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json; odata=minimalmetadata"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "33",
         "Content-Type": "application/json; odata=nometadata",
@@ -33,21 +30,18 @@
         "Location": "https://chrissprim.table.cosmos.azure.com/Tables(\u0027testtable0d5myo2r\u0027)",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "73962def-bd44-fec8-6760-fb621a7dfdec"
+        "x-ms-request-id": "e4936c7e-3a19-7b74-1be6-4db399df5754"
       },
       "ResponseBody": {
         "TableName": "testtable0d5myo2r",
-        "odata.metadata": "https://t1acd88e4a1c34b8dprim.table.cosmos.azure.com/$metadata#Tables/@Element"
+        "odata.metadata": "https://chrissprim.table.cosmos.azure.com/$metadata#Tables/@Element"
       }
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.cosmos.azure.com/testtable0d5myo2r(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrissprim.table.cosmos.azure.com/testtable0d5myo2r(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "PUT",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "88",
         "Content-Type": "application/json",
@@ -74,18 +68,15 @@
         "Date": "Fri, 21 Aug 2020 15:53:54 GMT",
         "ETag": "W/\u0022datetime\u00272020-08-21T15%3A53%3A55.1951880Z\u0027\u0022",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "19e4936c-743a-1b7b-e64d-b399df575476"
+        "x-ms-request-id": "2b4dc4b7-073d-6d19-7cf8-8cebf3b948e6"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.cosmos.azure.com/testtable0d5myo2r()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=PartitionKey%20eq%20%27somPartition%27%20and%20RowKey%20eq%20%271%27",
+      "RequestUri": "https://chrissprim.table.cosmos.azure.com/testtable0d5myo2r()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=PartitionKey%20eq%20%27somPartition%27%20and%20RowKey%20eq%20%271%27",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json; odata=minimalmetadata"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
         "User-Agent": [
@@ -104,7 +95,7 @@
         "Date": "Fri, 21 Aug 2020 15:53:54 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "2b4dc4b7-073d-6d19-7cf8-8cebf3b948e6"
+        "x-ms-request-id": "abb21dae-c8fe-b9b5-1b57-5e7015658709"
       },
       "ResponseBody": {
         "value": [
@@ -120,13 +111,10 @@
       }
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.cosmos.azure.com/testtable0d5myo2r(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrissprim.table.cosmos.azure.com/testtable0d5myo2r(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "PUT",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "256",
         "Content-Type": "application/json",
@@ -156,18 +144,15 @@
         "Date": "Fri, 21 Aug 2020 15:53:55 GMT",
         "ETag": "W/\u0022datetime\u00272020-08-21T15%3A53%3A55.3497096Z\u0027\u0022",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "abb21dae-c8fe-b9b5-1b57-5e7015658709"
+        "x-ms-request-id": "b863eba7-c0af-6540-7a77-9c41e78f282d"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.cosmos.azure.com/testtable0d5myo2r()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=PartitionKey%20eq%20%27somPartition%27%20and%20RowKey%20eq%20%271%27",
+      "RequestUri": "https://chrissprim.table.cosmos.azure.com/testtable0d5myo2r()?$format=application%2Fjson%3Bodata%3Dminimalmetadata\u0026$filter=PartitionKey%20eq%20%27somPartition%27%20and%20RowKey%20eq%20%271%27",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json; odata=minimalmetadata"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
         "User-Agent": [
@@ -186,7 +171,7 @@
         "Date": "Fri, 21 Aug 2020 15:53:55 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "b863eba7-c0af-6540-7a77-9c41e78f282d"
+        "x-ms-request-id": "c2ebcc05-a8a5-ee77-0f93-10e6a9a85817"
       },
       "ResponseBody": {
         "value": [
@@ -202,13 +187,10 @@
       }
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.cosmos.azure.com/Tables(\u0027testtable0d5myo2r\u0027)",
+      "RequestUri": "https://chrissprim.table.cosmos.azure.com/Tables(\u0027testtable0d5myo2r\u0027)",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "traceparent": "00-f1d69f1ef0633f4fb9ee35137fd2793b-1ebe69462d980e4f-00",
         "User-Agent": [
@@ -226,7 +208,7 @@
         "Content-Length": "0",
         "Date": "Fri, 21 Aug 2020 15:53:55 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "c2ebcc05-a8a5-ee77-0f93-10e6a9a85817"
+        "x-ms-request-id": "07448371-8f55-ed37-dd4c-31872b73d28b"
       },
       "ResponseBody": []
     }

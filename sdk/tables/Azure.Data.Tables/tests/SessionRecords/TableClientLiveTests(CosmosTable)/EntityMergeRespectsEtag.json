@@ -1,13 +1,10 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.cosmos.azure.com/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrissprim.table.cosmos.azure.com/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json; odata=minimalmetadata"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "33",
         "Content-Type": "application/json; odata=nometadata",
@@ -33,21 +30,18 @@
         "Location": "https://chrissprim.table.cosmos.azure.com/Tables(\u0027testtableq6v37yiv\u0027)",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "d6ba7705-190c-35e8-8dae-9a4284c6532c"
+        "x-ms-request-id": "6b47853d-f2c2-3cfd-47ff-10ce40799ecf"
       },
       "ResponseBody": {
         "TableName": "testtableq6v37yiv",
-        "odata.metadata": "https://t1acd88e4a1c34b8dprim.table.cosmos.azure.com/$metadata#Tables/@Element"
+        "odata.metadata": "https://chrissprim.table.cosmos.azure.com/$metadata#Tables/@Element"
       }
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.cosmos.azure.com/Tables(\u0027testtableq6v37yiv\u0027)",
+      "RequestUri": "https://chrissprim.table.cosmos.azure.com/Tables(\u0027testtableq6v37yiv\u0027)",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "traceparent": "00-96891764db72714ea693b6aa5630d175-de68ccdaab8ff54d-00",
         "User-Agent": [
@@ -65,7 +59,7 @@
         "Content-Length": "0",
         "Date": "Fri, 21 Aug 2020 15:53:58 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "6b47853d-f2c2-3cfd-47ff-10ce40799ecf"
+        "x-ms-request-id": "a0354472-adf1-5158-40ff-21ebc62e73df"
       },
       "ResponseBody": []
     }

@@ -1,13 +1,10 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.cosmos.azure.com/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrissprim.table.cosmos.azure.com/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json; odata=minimalmetadata"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "33",
         "Content-Type": "application/json; odata=nometadata",
@@ -33,21 +30,18 @@
         "Location": "https://chrissprim.table.cosmos.azure.com/Tables(\u0027testtablewumpudvf\u0027)",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "bfe95ab7-3b73-11d9-1f9f-6b3eebdcc436"
+        "x-ms-request-id": "a7ed91a0-6b59-0428-41c8-1b5f6fc9b6ab"
       },
       "ResponseBody": {
         "TableName": "testtablewumpudvf",
-        "odata.metadata": "https://t1acd88e4a1c34b8dprim.table.cosmos.azure.com/$metadata#Tables/@Element"
+        "odata.metadata": "https://chrissprim.table.cosmos.azure.com/$metadata#Tables/@Element"
       }
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.cosmos.azure.com/testtablewumpudvf?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrissprim.table.cosmos.azure.com/testtablewumpudvf?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json; odata=minimalmetadata"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "614",
         "Content-Type": "application/json; odata=nometadata",
@@ -118,7 +112,7 @@
         "ETag": "W/\u0022datetime\u00272020-08-21T15%3A53%3A48.1284616Z\u0027\u0022",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "a7ed91a0-6b59-0428-41c8-1b5f6fc9b6ab"
+        "x-ms-request-id": "109cd4bd-fd2c-9af1-81df-623db5a39e5d"
       },
       "ResponseBody": {
         "odata.metadata": "https://chrissprim.table.cosmos.azure.com/testtablewumpudvf/$metadata#testtablewumpudvf/@Element",
@@ -142,13 +136,10 @@
       }
     },
     {
-      "RequestUri": "https://t1acd88e4a1c34b8dprim.table.cosmos.azure.com/Tables(\u0027testtablewumpudvf\u0027)",
+      "RequestUri": "https://chrissprim.table.cosmos.azure.com/Tables(\u0027testtablewumpudvf\u0027)",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "application/json"
-        ],
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "traceparent": "00-a06d23ff45bebb4f8b19daee2200a7db-dff483743abccb48-00",
         "User-Agent": [
@@ -166,7 +157,7 @@
         "Content-Length": "0",
         "Date": "Fri, 21 Aug 2020 15:53:48 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "109cd4bd-fd2c-9af1-81df-623db5a39e5d"
+        "x-ms-request-id": "cbbb2a3e-7f5c-4b98-32e5-7daa1f79a255"
       },
       "ResponseBody": []
     }
