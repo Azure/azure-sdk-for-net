@@ -1,0 +1,185 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/e80eb9fa-c996-4435-aa32-5af6f3d3077c/resourceGroups/moveCollectionRg/providers/Microsoft.Migrate/moveCollections/RegionMove-eastus-westus2/moveResources/2784cefb-8202-42ee-ba82-bbbb499885c5?api-version=2019-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTgwZWI5ZmEtYzk5Ni00NDM1LWFhMzItNWFmNmYzZDMwNzdjL3Jlc291cmNlR3JvdXBzL21vdmVDb2xsZWN0aW9uUmcvcHJvdmlkZXJzL01pY3Jvc29mdC5NaWdyYXRlL21vdmVDb2xsZWN0aW9ucy9SZWdpb25Nb3ZlLWVhc3R1cy13ZXN0dXMyL21vdmVSZXNvdXJjZXMvMjc4NGNlZmItODIwMi00MmVlLWJhODItYmJiYjQ5OTg4NWM1P2FwaS12ZXJzaW9uPTIwMTktMTAtMDEtcHJldmlldw==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"sourceId\": \"/subscriptions/e80eb9fa-c996-4435-aa32-5af6f3d3077c/resourceGroups/NETSdkEastUS/providers/Microsoft.Compute/virtualMachines/vm1\",\r\n    \"resourceSettings\": {\r\n      \"resourceType\": \"Microsoft.Compute/virtualMachines\",\r\n      \"targetAvailabilityZone\": \"1\",\r\n      \"targetResourceName\": \"targetVm1\"\r\n    },\r\n    \"dependsOnOverrides\": [\r\n      {\r\n        \"id\": \"/subscriptions/e80eb9fa-c996-4435-aa32-5af6f3d3077c/resourceGroups/NETSdkEastUS/providers/Microsoft.Compute/availabilitySets/AvailabilitySet1\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "18da4d56-7e52-4feb-ad12-6163be470043"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Migrate.RegionMoveServiceAPIClient/1.0.0.preview"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "563"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 18 Aug 2020 06:34:40 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-request-id": [
+          "3d23b440-6bea-418b-b0c8-29f7b4ae6c88"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/e80eb9fa-c996-4435-aa32-5af6f3d3077c/resourceGroups/moveCollectionRg/providers/Microsoft.Migrate/MoveCollections/RegionMove-eastus-westus2/operations/529354ab-caea-4ac1-9d3c-295a65995b00?api-version=2019-10-01-preview"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "10092c87-69e3-4214-bd4c-789b4644668c"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTINDIA:20200818T063440Z:10092c87-69e3-4214-bd4c-789b4644668c"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/e80eb9fa-c996-4435-aa32-5af6f3d3077c/resourceGroups/moveCollectionRg/providers/Microsoft.Migrate/MoveCollections/RegionMove-eastus-westus2/operations/529354ab-caea-4ac1-9d3c-295a65995b00?api-version=2019-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTgwZWI5ZmEtYzk5Ni00NDM1LWFhMzItNWFmNmYzZDMwNzdjL3Jlc291cmNlR3JvdXBzL21vdmVDb2xsZWN0aW9uUmcvcHJvdmlkZXJzL01pY3Jvc29mdC5NaWdyYXRlL01vdmVDb2xsZWN0aW9ucy9SZWdpb25Nb3ZlLWVhc3R1cy13ZXN0dXMyL29wZXJhdGlvbnMvNTI5MzU0YWItY2FlYS00YWMxLTlkM2MtMjk1YTY1OTk1YjAwP2FwaS12ZXJzaW9uPTIwMTktMTAtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Migrate.RegionMoveServiceAPIClient/1.0.0.preview"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 18 Aug 2020 06:34:56 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "f3eb1db6-1b94-4f75-8171-4786d4de4909"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-correlation-request-id": [
+          "6b4a2438-27e1-4397-8fc2-9c0cf458d34b"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTINDIA:20200818T063456Z:6b4a2438-27e1-4397-8fc2-9c0cf458d34b"
+        ],
+        "Content-Length": [
+          "374"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e80eb9fa-c996-4435-aa32-5af6f3d3077c/resourceGroups/moveCollectionRg/providers/Microsoft.Migrate/MoveCollections/RegionMove-eastus-westus2/operations/529354ab-caea-4ac1-9d3c-295a65995b00\",\r\n  \"name\": \"529354ab-caea-4ac1-9d3c-295a65995b00\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"8/18/2020 6:34:40 AM\",\r\n  \"endTime\": \"8/18/2020 6:34:45 AM\",\r\n  \"error\": null,\r\n  \"properties\": {}\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e80eb9fa-c996-4435-aa32-5af6f3d3077c/resourceGroups/moveCollectionRg/providers/Microsoft.Migrate/moveCollections/RegionMove-eastus-westus2/moveResources/2784cefb-8202-42ee-ba82-bbbb499885c5?api-version=2019-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTgwZWI5ZmEtYzk5Ni00NDM1LWFhMzItNWFmNmYzZDMwNzdjL3Jlc291cmNlR3JvdXBzL21vdmVDb2xsZWN0aW9uUmcvcHJvdmlkZXJzL01pY3Jvc29mdC5NaWdyYXRlL21vdmVDb2xsZWN0aW9ucy9SZWdpb25Nb3ZlLWVhc3R1cy13ZXN0dXMyL21vdmVSZXNvdXJjZXMvMjc4NGNlZmItODIwMi00MmVlLWJhODItYmJiYjQ5OTg4NWM1P2FwaS12ZXJzaW9uPTIwMTktMTAtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Migrate.RegionMoveServiceAPIClient/1.0.0.preview"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 18 Aug 2020 06:34:56 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "c12497f1-bb87-4118-8dce-52d0e05bd6fc"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "x-ms-correlation-request-id": [
+          "07d5fc1f-aade-4344-bc7f-8a429207a57f"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTINDIA:20200818T063456Z:07d5fc1f-aade-4344-bc7f-8a429207a57f"
+        ],
+        "Content-Length": [
+          "1618"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"2784cefb-8202-42ee-ba82-bbbb499885c5\",\r\n  \"id\": \"/subscriptions/e80eb9fa-c996-4435-aa32-5af6f3d3077c/resourceGroups/moveCollectionRg/providers/Microsoft.Migrate/MoveCollections/RegionMove-eastus-westus2/MoveResources/2784cefb-8202-42ee-ba82-bbbb499885c5\",\r\n  \"type\": null,\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"isResolveRequired\": \"False\",\r\n    \"sourceId\": \"/subscriptions/e80eb9fa-c996-4435-aa32-5af6f3d3077c/resourceGroups/NETSdkEastUS/providers/Microsoft.Compute/virtualMachines/vm1\",\r\n    \"targetId\": null,\r\n    \"existingTargetId\": null,\r\n    \"resourceSettings\": {\r\n      \"resourceType\": \"Microsoft.Compute/virtualMachines\",\r\n      \"targetAvailabilityZone\": \"1\",\r\n      \"targetAvailabilitySetId\": null,\r\n      \"targetVmSize\": null,\r\n      \"targetResourceName\": \"targetVm1\"\r\n    },\r\n    \"moveStatus\": {\r\n      \"moveState\": \"PreparePending\",\r\n      \"jobStatus\": null,\r\n      \"errors\": {\r\n        \"properties\": {\r\n          \"code\": \"DependencyComputationPending\",\r\n          \"message\": \"The dependency computation is not completed for resource - /subscriptions/e80eb9fa-c996-4435-aa32-5af6f3d3077c/resourceGroups/NETSdkEastUS/providers/Microsoft.Compute/virtualMachines/vm1'.\\n    Possible Causes: Dependency computation is pending for resource.\\n    Recommended Action: Validate dependencies to compute the dependencies.\\n    \",\r\n          \"details\": []\r\n        }\r\n      }\r\n    },\r\n    \"dependsOn\": [],\r\n    \"dependsOnOverrides\": [\r\n      {\r\n        \"id\": \"/subscriptions/e80eb9fa-c996-4435-aa32-5af6f3d3077c/resourceGroups/NETSdkEastUS/providers/Microsoft.Compute/availabilitySets/AvailabilitySet1\",\r\n        \"targetId\": null\r\n      }\r\n    ],\r\n    \"errors\": null,\r\n    \"sourceResourceSettings\": {\r\n      \"resourceType\": \"Microsoft.Compute/virtualMachines\",\r\n      \"targetAvailabilityZone\": \"na\",\r\n      \"targetAvailabilitySetId\": null,\r\n      \"targetVmSize\": \"Standard_B2s\",\r\n      \"targetResourceName\": \"vm1\"\r\n    }\r\n  }\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "e80eb9fa-c996-4435-aa32-5af6f3d3077c"
+  }
+}

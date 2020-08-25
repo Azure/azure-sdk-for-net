@@ -1,0 +1,125 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/e80eb9fa-c996-4435-aa32-5af6f3d3077c/resourceGroups/moveCollectionRg/providers/Microsoft.Migrate/moveCollections/RegionMove-eastus-westus2/moveResources/2784cefb-8202-42ee-ba82-bbbb499885c5?api-version=2019-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTgwZWI5ZmEtYzk5Ni00NDM1LWFhMzItNWFmNmYzZDMwNzdjL3Jlc291cmNlR3JvdXBzL21vdmVDb2xsZWN0aW9uUmcvcHJvdmlkZXJzL01pY3Jvc29mdC5NaWdyYXRlL21vdmVDb2xsZWN0aW9ucy9SZWdpb25Nb3ZlLWVhc3R1cy13ZXN0dXMyL21vdmVSZXNvdXJjZXMvMjc4NGNlZmItODIwMi00MmVlLWJhODItYmJiYjQ5OTg4NWM1P2FwaS12ZXJzaW9uPTIwMTktMTAtMDEtcHJldmlldw==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "9deb4855-747b-4aa6-9041-fe43f097b478"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Migrate.RegionMoveServiceAPIClient/1.0.0.preview"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 17 Aug 2020 08:38:34 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-request-id": [
+          "ff950632-0c14-4b80-808d-7e8d0f0df73e"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/e80eb9fa-c996-4435-aa32-5af6f3d3077c/resourceGroups/moveCollectionRg/providers/Microsoft.Migrate/MoveCollections/RegionMove-eastus-westus2/operations/7539b9e9-713e-45fb-a5a0-5efcb525a49d?api-version=2019-10-01-preview"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
+        ],
+        "x-ms-correlation-request-id": [
+          "6e15afdd-8508-46f2-a796-9fd1f8ae26f4"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTINDIA:20200817T083835Z:6e15afdd-8508-46f2-a796-9fd1f8ae26f4"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/e80eb9fa-c996-4435-aa32-5af6f3d3077c/resourceGroups/moveCollectionRg/providers/Microsoft.Migrate/MoveCollections/RegionMove-eastus-westus2/operations/7539b9e9-713e-45fb-a5a0-5efcb525a49d?api-version=2019-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTgwZWI5ZmEtYzk5Ni00NDM1LWFhMzItNWFmNmYzZDMwNzdjL3Jlc291cmNlR3JvdXBzL21vdmVDb2xsZWN0aW9uUmcvcHJvdmlkZXJzL01pY3Jvc29mdC5NaWdyYXRlL01vdmVDb2xsZWN0aW9ucy9SZWdpb25Nb3ZlLWVhc3R1cy13ZXN0dXMyL29wZXJhdGlvbnMvNzUzOWI5ZTktNzEzZS00NWZiLWE1YTAtNWVmY2I1MjVhNDlkP2FwaS12ZXJzaW9uPTIwMTktMTAtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Migrate.RegionMoveServiceAPIClient/1.0.0.preview"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 17 Aug 2020 08:38:49 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "050ee06b-c6bd-4224-bbac-7f27ac6e8122"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-correlation-request-id": [
+          "cf4cf425-ef2a-4511-af54-81c49641f111"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTINDIA:20200817T083850Z:cf4cf425-ef2a-4511-af54-81c49641f111"
+        ],
+        "Content-Length": [
+          "374"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e80eb9fa-c996-4435-aa32-5af6f3d3077c/resourceGroups/moveCollectionRg/providers/Microsoft.Migrate/MoveCollections/RegionMove-eastus-westus2/operations/7539b9e9-713e-45fb-a5a0-5efcb525a49d\",\r\n  \"name\": \"7539b9e9-713e-45fb-a5a0-5efcb525a49d\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"8/17/2020 8:38:34 AM\",\r\n  \"endTime\": \"8/17/2020 8:38:36 AM\",\r\n  \"error\": null,\r\n  \"properties\": {}\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "e80eb9fa-c996-4435-aa32-5af6f3d3077c"
+  }
+}
