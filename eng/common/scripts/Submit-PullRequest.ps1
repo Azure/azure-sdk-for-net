@@ -42,6 +42,7 @@ param(
 
   [Parameter(Mandatory = $true)]
   [string]$PRTitle,
+
   $PRBody = $PRTitle,
 
   [Parameter(Mandatory = $false)]

@@ -74,6 +74,7 @@ steps:
 - task: PowerShell@2
   displayName: Tag a Reviewer on PR
   condition: and(succeeded(), eq(variables['HasChanges'], 'true'))
+  continueOnError: true
   inputs:
     pwsh: true
     workingDirectory: ${{ parameters.WorkingDirectory }}
