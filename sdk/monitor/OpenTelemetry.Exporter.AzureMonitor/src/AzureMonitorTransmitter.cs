@@ -9,6 +9,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+
+using OpenTelemetry.Exporter.AzureMonitor.ConnectionString;
 using OpenTelemetry.Exporter.AzureMonitor.Models;
 using OpenTelemetry.Trace;
 
@@ -18,6 +20,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
     {
         private readonly ServiceRestClient serviceRestClient;
         private readonly AzureMonitorExporterOptions options;
+        private readonly string ikey;
 
         private static readonly IReadOnlyDictionary<TelemetryType, string> Telemetry_Base_Type_Mapping = new Dictionary<TelemetryType, string>
         {
@@ -37,8 +40,11 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
         public AzureMonitorTransmitter(AzureMonitorExporterOptions exporterOptions)
         {
+            ConnectionStringParser.GetValues(exporterOptions.ConnectionString, out string ikey, out string endpoint);
+            this.ikey = ikey;
+
             options = exporterOptions;
-            serviceRestClient = new ServiceRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options));
+            serviceRestClient = new ServiceRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), endpoint: endpoint);
         }
 
         internal async ValueTask<int> AddBatchActivityAsync(IEnumerable<Activity> batchActivity, CancellationToken cancellationToken)
@@ -54,6 +60,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             foreach (var activity in batchActivity)
             {
                 telemetryItem = GeneratePartAEnvelope(activity);
+                telemetryItem.IKey = this.ikey;
                 telemetryItem.Data = GenerateTelemetryData(activity);
                 telemetryItems.Add(telemetryItem);
             }
@@ -67,8 +74,6 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         {
             // TODO: Get TelemetryEnvelope name changed in swagger
             TelemetryEnvelope envelope = new TelemetryEnvelope(PartA_Name_Mapping[activity.GetTelemetryType()], activity.StartTimeUtc);
-            // TODO: Extract IKey from connectionstring
-            envelope.IKey = "IKey";
             // TODO: Validate if Azure SDK has common function to generate role instance
             envelope.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = "testRoleInstance";
 
