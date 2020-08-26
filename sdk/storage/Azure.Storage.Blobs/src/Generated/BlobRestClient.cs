@@ -15381,6 +15381,120 @@ namespace Azure.Storage.Blobs
 }
 #endregion enum ArchiveStatus
 
+#region class ArrowFieldInternal
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// field of an arrow schema
+    /// </summary>
+    internal partial class ArrowFieldInternal
+    {
+        /// <summary>
+        /// Type
+        /// </summary>
+        public string Type { get; set; }
+
+        /// <summary>
+        /// Name
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Precision
+        /// </summary>
+        public int? Precision { get; set; }
+
+        /// <summary>
+        /// Scale
+        /// </summary>
+        public int? Scale { get; set; }
+
+        /// <summary>
+        /// Creates a new ArrowFieldInternal instance
+        /// </summary>
+        public ArrowFieldInternal() { }
+
+        /// <summary>
+        /// Serialize a ArrowFieldInternal instance as XML.
+        /// </summary>
+        /// <param name="value">The ArrowFieldInternal instance to serialize.</param>
+        /// <param name="name">An optional name to use for the root element instead of "Field".</param>
+        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
+        /// <returns>The serialized XML element.</returns>
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Blobs.Models.ArrowFieldInternal value, string name = "Field", string ns = "")
+        {
+            System.Diagnostics.Debug.Assert(value != null);
+            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("Type", ""),
+                value.Type));
+            if (value.Name != null)
+            {
+                _element.Add(new System.Xml.Linq.XElement(
+                    System.Xml.Linq.XName.Get("Name", ""),
+                    value.Name));
+            }
+            if (value.Precision != null)
+            {
+                _element.Add(new System.Xml.Linq.XElement(
+                    System.Xml.Linq.XName.Get("Precision", ""),
+                    value.Precision.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)));
+            }
+            if (value.Scale != null)
+            {
+                _element.Add(new System.Xml.Linq.XElement(
+                    System.Xml.Linq.XName.Get("Scale", ""),
+                    value.Scale.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)));
+            }
+            return _element;
+        }
+    }
+}
+#endregion class ArrowFieldInternal
+
+#region class ArrowTextConfigurationInternal
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// arrow configuration
+    /// </summary>
+    internal partial class ArrowTextConfigurationInternal
+    {
+        /// <summary>
+        /// Schema
+        /// </summary>
+        public System.Collections.Generic.IList<Azure.Storage.Blobs.Models.ArrowFieldInternal> Schema { get; internal set; }
+
+        /// <summary>
+        /// Creates a new ArrowTextConfigurationInternal instance
+        /// </summary>
+        public ArrowTextConfigurationInternal()
+        {
+            Schema = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.ArrowFieldInternal>();
+        }
+
+        /// <summary>
+        /// Serialize a ArrowTextConfigurationInternal instance as XML.
+        /// </summary>
+        /// <param name="value">The ArrowTextConfigurationInternal instance to serialize.</param>
+        /// <param name="name">An optional name to use for the root element instead of "ArrowConfiguration".</param>
+        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
+        /// <returns>The serialized XML element.</returns>
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Blobs.Models.ArrowTextConfigurationInternal value, string name = "ArrowConfiguration", string ns = "")
+        {
+            System.Diagnostics.Debug.Assert(value != null);
+            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
+            System.Xml.Linq.XElement _elements = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get("Schema", ""));
+            foreach (Azure.Storage.Blobs.Models.ArrowFieldInternal _child in value.Schema)
+            {
+                _elements.Add(Azure.Storage.Blobs.Models.ArrowFieldInternal.ToXml(_child));
+            }
+            _element.Add(_elements);return _element;
+        }
+    }
+}
+#endregion class ArrowTextConfigurationInternal
+
 #region class BlobGetAccessControlResult
 namespace Azure.Storage.Blobs.Models
 {
@@ -22319,12 +22433,18 @@ namespace Azure.Storage.Blobs.Models
         public Azure.Storage.Blobs.Models.JsonTextConfigurationInternal JsonTextConfiguration { get; set; }
 
         /// <summary>
+        /// arrow configuration
+        /// </summary>
+        public Azure.Storage.Blobs.Models.ArrowTextConfigurationInternal ArrowConfiguration { get; set; }
+
+        /// <summary>
         /// Creates a new QueryFormat instance
         /// </summary>
         public QueryFormat()
         {
             DelimitedTextConfiguration = new Azure.Storage.Blobs.Models.DelimitedTextConfigurationInternal();
             JsonTextConfiguration = new Azure.Storage.Blobs.Models.JsonTextConfigurationInternal();
+            ArrowConfiguration = new Azure.Storage.Blobs.Models.ArrowTextConfigurationInternal();
         }
 
         /// <summary>
@@ -22352,6 +22472,10 @@ namespace Azure.Storage.Blobs.Models
             {
                 _element.Add(Azure.Storage.Blobs.Models.JsonTextConfigurationInternal.ToXml(value.JsonTextConfiguration, "JsonTextConfiguration", ""));
             }
+            if (value.ArrowConfiguration != null)
+            {
+                _element.Add(Azure.Storage.Blobs.Models.ArrowTextConfigurationInternal.ToXml(value.ArrowConfiguration, "ArrowConfiguration", ""));
+            }
             return _element;
         }
     }
@@ -22374,7 +22498,12 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// json
         /// </summary>
-        Json
+        Json,
+
+        /// <summary>
+        /// arrow
+        /// </summary>
+        Arrow
     }
 }
 
@@ -22390,6 +22519,7 @@ namespace Azure.Storage.Blobs
                 {
                     Azure.Storage.Blobs.Models.QueryFormatType.Delimited => "delimited",
                     Azure.Storage.Blobs.Models.QueryFormatType.Json => "json",
+                    Azure.Storage.Blobs.Models.QueryFormatType.Arrow => "arrow",
                     _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.QueryFormatType value.")
                 };
             }
@@ -22400,6 +22530,7 @@ namespace Azure.Storage.Blobs
                 {
                     "delimited" => Azure.Storage.Blobs.Models.QueryFormatType.Delimited,
                     "json" => Azure.Storage.Blobs.Models.QueryFormatType.Json,
+                    "arrow" => Azure.Storage.Blobs.Models.QueryFormatType.Arrow,
                     _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.QueryFormatType value.")
                 };
             }

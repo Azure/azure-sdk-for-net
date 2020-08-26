@@ -431,6 +431,28 @@ namespace Azure.Storage.Files.DataLake.Models
         public static Azure.Storage.Files.DataLake.Models.PathProperties PathProperties(System.DateTimeOffset lastModified, System.DateTimeOffset creationTime, System.Collections.Generic.IDictionary<string, string> metadata, System.DateTimeOffset copyCompletionTime, string copyStatusDescription, string copyId, string copyProgress, System.Uri copySource, Azure.Storage.Files.DataLake.Models.CopyStatus copyStatus, bool isIncrementalCopy, Azure.Storage.Files.DataLake.Models.DataLakeLeaseDuration leaseDuration, Azure.Storage.Files.DataLake.Models.DataLakeLeaseState leaseState, Azure.Storage.Files.DataLake.Models.DataLakeLeaseStatus leaseStatus, long contentLength, string contentType, Azure.ETag eTag, byte[] contentHash, string contentEncoding, string contentDisposition, string contentLanguage, string cacheControl, string acceptRanges, bool isServerEncrypted, string encryptionKeySha256, string accessTier, string archiveStatus, System.DateTimeOffset accessTierChangeTime, bool isDirectory) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.UserDelegationKey UserDelegationKey(string signedObjectId, string signedTenantId, System.DateTimeOffset signedStart, System.DateTimeOffset signedExpiry, string signedService, string signedVersion, string value) { throw null; }
     }
+    public partial class DataLakeQueryArrowField
+    {
+        public DataLakeQueryArrowField() { }
+        public string Name { get { throw null; } set { } }
+        public int Precision { get { throw null; } set { } }
+        public int Scale { get { throw null; } set { } }
+        public Azure.Storage.Files.DataLake.Models.DataLakeQueryArrowFieldType Type { get { throw null; } set { } }
+    }
+    public enum DataLakeQueryArrowFieldType
+    {
+        Int64 = 0,
+        Bool = 1,
+        Timestamp = 2,
+        String = 3,
+        Double = 4,
+        Decimal = 5,
+    }
+    public partial class DataLakeQueryArrowOptions : Azure.Storage.Files.DataLake.Models.DataLakeQueryTextOptions
+    {
+        public DataLakeQueryArrowOptions() { }
+        public System.Collections.Generic.List<Azure.Storage.Files.DataLake.Models.DataLakeQueryArrowField> Schema { get { throw null; } set { } }
+    }
     public partial class DataLakeQueryCsvTextOptions : Azure.Storage.Files.DataLake.Models.DataLakeQueryTextOptions
     {
         public DataLakeQueryCsvTextOptions() { }

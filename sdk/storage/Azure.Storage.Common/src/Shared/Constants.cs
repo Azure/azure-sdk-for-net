@@ -393,11 +393,12 @@ namespace Azure.Storage
             public const string ErrorRecordName = "com.microsoft.azure.storage.queryBlobContents.error";
             public const string EndRecordName = "com.microsoft.azure.storage.queryBlobContents.end";
 
-            internal static class Errors
-            {
-                public const string InvalidTextConfigurationType
-                    = "Invalid text configuration type.  Must be CvsTextConfiguration or JsonTextConfiguration.";
-            }
+            public const string ArrowFieldTypeInt64 = "int64";
+            public const string ArrowFieldTypeBool = "bool";
+            public const string ArrowFieldTypeTimestamp = "timestamp[ms]";
+            public const string ArrowFieldTypeString = "string";
+            public const string ArrowFieldTypeDouble = "double";
+            public const string ArrowFieldTypeDecimal = "decimal";
         }
 
         /// <summary>

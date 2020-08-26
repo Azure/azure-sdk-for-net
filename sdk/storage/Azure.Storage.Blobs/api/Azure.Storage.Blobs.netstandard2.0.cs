@@ -707,6 +707,28 @@ namespace Azure.Storage.Blobs.Models
         public long TagCount { get { throw null; } }
         public string VersionId { get { throw null; } }
     }
+    public partial class BlobQueryArrowField
+    {
+        public BlobQueryArrowField() { }
+        public string Name { get { throw null; } set { } }
+        public int Precision { get { throw null; } set { } }
+        public int Scale { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.BlobQueryArrowFieldType Type { get { throw null; } set { } }
+    }
+    public enum BlobQueryArrowFieldType
+    {
+        Int64 = 0,
+        Bool = 1,
+        Timestamp = 2,
+        String = 3,
+        Double = 4,
+        Decimal = 5,
+    }
+    public partial class BlobQueryArrowOptions : Azure.Storage.Blobs.Models.BlobQueryTextOptions
+    {
+        public BlobQueryArrowOptions() { }
+        public System.Collections.Generic.List<Azure.Storage.Blobs.Models.BlobQueryArrowField> Schema { get { throw null; } set { } }
+    }
     public partial class BlobQueryCsvTextOptions : Azure.Storage.Blobs.Models.BlobQueryTextOptions
     {
         public BlobQueryCsvTextOptions() { }
