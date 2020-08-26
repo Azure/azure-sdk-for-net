@@ -46,9 +46,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="vmNics">The list of NIC details.</param>
         /// <param name="licenseType">The license type. Possible values
         /// include: 'NotSpecified', 'NoLicenseType', 'WindowsServer'</param>
-        /// <param name="performAutoResync">A value indicating whether auto
-        /// resync is to be done.</param>
-        public VMwareCbtUpdateMigrationItemInput(string targetVmName = default(string), string targetVmSize = default(string), string targetResourceGroupId = default(string), string targetAvailabilitySetId = default(string), string targetBootDiagnosticsStorageAccountId = default(string), string targetNetworkId = default(string), IList<VMwareCbtNicInput> vmNics = default(IList<VMwareCbtNicInput>), string licenseType = default(string), string performAutoResync = default(string))
+        public VMwareCbtUpdateMigrationItemInput(string targetVmName = default(string), string targetVmSize = default(string), string targetResourceGroupId = default(string), string targetAvailabilitySetId = default(string), string targetBootDiagnosticsStorageAccountId = default(string), string targetNetworkId = default(string), IList<VMwareCbtNicInput> vmNics = default(IList<VMwareCbtNicInput>), string licenseType = default(string))
         {
             TargetVmName = targetVmName;
             TargetVmSize = targetVmSize;
@@ -58,7 +56,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             TargetNetworkId = targetNetworkId;
             VmNics = vmNics;
             LicenseType = licenseType;
-            PerformAutoResync = performAutoResync;
             CustomInit();
         }
 
@@ -115,12 +112,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "licenseType")]
         public string LicenseType { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether auto resync is to be done.
-        /// </summary>
-        [JsonProperty(PropertyName = "performAutoResync")]
-        public string PerformAutoResync { get; set; }
 
     }
 }

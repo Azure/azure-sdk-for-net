@@ -573,8 +573,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ReplicationProviderSpecificSettings>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ReplicationProviderSpecificUpdateContainerMappingInput>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ReplicationProviderSpecificUpdateContainerMappingInput>("instanceType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ResyncProviderSpecificInput>("instanceType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ResyncProviderSpecificInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ReverseReplicationProviderSpecificInput>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ReverseReplicationProviderSpecificInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<SwitchProtectionProviderSpecificInput>("instanceType"));
