@@ -119,7 +119,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
         internal static bool TryGetNonRequiredValue(this Azure.Core.ConnectionString connectionString, string key, out string value)
         {
             value = connectionString.GetNonRequired(key);
-            return value == null;
+            return value != null;
         }
     }
 }

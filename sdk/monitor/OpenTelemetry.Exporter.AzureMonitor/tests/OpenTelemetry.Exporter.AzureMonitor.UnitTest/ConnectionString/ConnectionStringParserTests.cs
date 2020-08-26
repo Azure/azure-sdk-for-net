@@ -31,8 +31,8 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
         public void TestEndpointSuffix_WithExplicitOverride()
         {
             RunTest(
-                connectionString: "InstrumentationKey=00000000-0000-0000-0000-000000000000;EndpointSuffix=ai.contoso.com;ProfilerEndpoint=https://custom.profiler.contoso.com:444/",
-                expectedIngestionEndpoint: "https://dc.ai.contoso.com/",
+                connectionString: "InstrumentationKey=00000000-0000-0000-0000-000000000000;EndpointSuffix=ai.contoso.com;IngestionEndpoint=https://custom.profiler.contoso.com:444/",
+                expectedIngestionEndpoint: "https://custom.profiler.contoso.com:444/",
                 expectedInstrumentationKey: "00000000-0000-0000-0000-000000000000");
         }
 
@@ -49,8 +49,8 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
         public void TestEndpointSuffix_WithLocation_WithExplicitOverride()
         {
             RunTest(
-                connectionString: "InstrumentationKey=00000000-0000-0000-0000-000000000000;EndpointSuffix=ai.contoso.com;Location=westus2;ProfilerEndpoint=https://custom.profiler.contoso.com:444/",
-                expectedIngestionEndpoint: "https://westus2.dc.ai.contoso.com/",
+                connectionString: "InstrumentationKey=00000000-0000-0000-0000-000000000000;EndpointSuffix=ai.contoso.com;Location=westus2;IngestionEndpoint=https://custom.profiler.contoso.com:444/",
+                expectedIngestionEndpoint: "https://custom.profiler.contoso.com:444/",
                 expectedInstrumentationKey: "00000000-0000-0000-0000-000000000000");
         }
 
@@ -58,8 +58,8 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
         public void TestExpliticOverride_PreservesSchema()
         {
             RunTest(
-                connectionString: "InstrumentationKey=00000000-0000-0000-0000-000000000000;ProfilerEndpoint=http://custom.profiler.contoso.com:444/",
-                expectedIngestionEndpoint: Constants.DefaultIngestionEndpoint,
+                connectionString: "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=http://custom.profiler.contoso.com:444/",
+                expectedIngestionEndpoint: "http://custom.profiler.contoso.com:444/",
                 expectedInstrumentationKey: "00000000-0000-0000-0000-000000000000");
         }
 
@@ -133,16 +133,6 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
                 connectionString: "key1=value1;key2=value2;key3=value3",
                 expectedIngestionEndpoint: null,
                 expectedInstrumentationKey: null));
-        }
-
-        [Test]
-        public void TestEndpointProvider_NoConnectionStringShouldReturnDefaultEndpoints()
-        {
-            RunTest(
-                connectionString: "",
-                expectedIngestionEndpoint: Constants.DefaultIngestionEndpoint,
-                expectedInstrumentationKey: "00000000-0000-0000-0000-000000000000");
-
         }
 
         private void RunTest(string connectionString, string expectedIngestionEndpoint, string expectedInstrumentationKey)
