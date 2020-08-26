@@ -19,6 +19,8 @@ Install the client library from NuGet:
 // Hasn't been released yet!
 ```
 
+You can currently access the Event Grid library by creating a fork of the azure-sdk-for-net repo, and adding a project reference to Azure.Messaging.EventGrid.csproj within your own solution.
+
 ### Prerequisites
 
 You must have an [Azure subscription](https://azure.microsoft.com/free/) and an Azure resource group with a custom Event Grid topic or domain. Follow this [step-by-step tutorial](https://docs.microsoft.com/en-us/azure/event-grid/custom-event-quickstart-portal) to register the Event Grid resource provider and create Event Grid topics using the [Azure portal](https://portal.azure.com/).
