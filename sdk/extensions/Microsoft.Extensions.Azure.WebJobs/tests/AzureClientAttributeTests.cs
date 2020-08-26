@@ -6,7 +6,7 @@ using NUnit.Framework;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Extensions.WebJobs;
-using Azure.Security.KeyVault.Keys;
+using Azure.Security.KeyVault.Secrets;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -19,16 +19,18 @@ namespace Microsoft.Extensions.Azure.WebJobs.Tests
         {
         }
 
-        [Test]
-        public async Task A()
+        [RecordedTest]
+        public async Task CanInjectKeyVaultClient()
         {
             var host = new HostBuilder()
-                .ConfigureServices(services => services.AddAzureClients(builder => builder.ConfigureDefaults(options => Recording.InstrumentClientOptions(options))))
+                .ConfigureServices(services => services.AddAzureClients(builder => builder
+                    .ConfigureDefaults(options => Recording.InstrumentClientOptions(options))
+                    .UseCredential(TestEnvironment.Credential)))
                 .ConfigureAppConfiguration(config =>
                 {
                     config.AddInMemoryCollection(new Dictionary<string, string>
                     {
-                        { "Connection:vaultUri", TestEnvironment.KeyVaultUrl }
+                        { "AzureWebJobs:Connection:vaultUri", TestEnvironment.KeyVaultUrl }
                     });
                 })
                 .ConfigureDefaultTestHost<FunctionWithAzureClient>(builder =>
@@ -42,8 +44,9 @@ namespace Microsoft.Extensions.Azure.WebJobs.Tests
 
         public class FunctionWithAzureClient
         {
-            public void Run([AzureClient("Connection")] KeyClient serviceClient)
+            public async Task Run([AzureClient("Connection")] SecretClient keyClient)
             {
+                await keyClient.SetSecretAsync("TestSecret", "Secret value");
             }
         }
     }

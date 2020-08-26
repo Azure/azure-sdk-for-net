@@ -51,7 +51,7 @@ namespace Azure.Core.TestFramework
                     context.CurrentResult = innerCommand.Execute(context);
 
                     // If the recording succeeded, set a warning result.
-                    if (!IsTestFailedWithRecordingMismatch(context))
+                    if (context.CurrentResult.ResultState.Status == TestStatus.Passed)
                     {
                         context.CurrentResult.SetResult(ResultState.Error, "Test failed playback, but was successfully re-recorded (it should pass if re-run). Please copy updated recording to SessionFiles.");
                     }
@@ -71,7 +71,7 @@ namespace Azure.Core.TestFramework
                     _ => true
                 };
 
-                return failed && context.CurrentResult.Message.StartsWith(typeof(TestRecordingMismatchException).FullName);
+                return failed && context.CurrentResult.Message.Contains(typeof(TestRecordingMismatchException).FullName);
             }
         }
 
