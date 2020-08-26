@@ -8,7 +8,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 using System;
-using System.Collections.Concurrent;
 
 namespace Microsoft.Extensions.Azure
 {
@@ -26,7 +25,7 @@ namespace Microsoft.Extensions.Azure
             _serviceCollection = serviceCollection;
             _serviceCollection.AddOptions();
             _serviceCollection.TryAddSingleton<EventSourceLogForwarder>();
-            _serviceCollection.TryAddSingleton( typeof(IAzureClientFactory<>), typeof(FallbackAzureClientFactory<>));
+            _serviceCollection.TryAddSingleton(typeof(IAzureClientFactory<>), typeof(FallbackAzureClientFactory<>));
         }
 
         IAzureClientBuilder<TClient, TOptions> IAzureClientFactoryBuilder.RegisterClientFactory<TClient, TOptions>(Func<TOptions, TClient> clientFactory)

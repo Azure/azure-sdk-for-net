@@ -21,6 +21,7 @@ namespace Microsoft.Extensions.Azure
         public static object CreateClient(Type clientType, Type optionsType, object options, IConfiguration configuration, TokenCredential credential)
         {
             List<object> arguments = new List<object>();
+            // Handle single values as connection strings
             if (configuration is IConfigurationSection section && section.Value != null)
             {
                 var connectionString = section.Value;

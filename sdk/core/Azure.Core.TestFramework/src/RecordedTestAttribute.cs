@@ -45,6 +45,7 @@ namespace Azure.Core.TestFramework
                 // Check the result
                 if (IsTestFailedWithRecordingMismatch(context))
                 {
+                    var originalResult = context.CurrentResult;
                     context.CurrentResult = context.CurrentTest.MakeTestResult();
                     // Run the test again after setting the RecordedTestMode to Record
                     SetRecordMode(context.TestObject as RecordedTestBase, RecordedTestMode.Record);
@@ -54,6 +55,10 @@ namespace Azure.Core.TestFramework
                     if (context.CurrentResult.ResultState.Status == TestStatus.Passed)
                     {
                         context.CurrentResult.SetResult(ResultState.Error, "Test failed playback, but was successfully re-recorded (it should pass if re-run). Please copy updated recording to SessionFiles.");
+                    }
+                    else
+                    {
+                        context.CurrentResult.SetResult(context.CurrentResult.ResultState, context.CurrentResult.Message + Environment.NewLine + "Original error: " + originalResult.Message, context.CurrentResult.Message);
                     }
 
                     // revert RecordTestMode to Playback
