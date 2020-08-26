@@ -12,7 +12,7 @@ using Azure.Data.Tables.Models;
 
 namespace Azure.Data.Tables
 {
-    public class TablesBatch
+    internal class TablesBatch
     {
         private readonly TableRestClient _tableOperations;
         private readonly TableRestClient _batchOperations;

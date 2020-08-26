@@ -919,7 +919,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="partitionKey">The partitionKey context for the batch.</param>
         /// <returns></returns>
-        public virtual TablesBatch CreateBatch(string partitionKey)
+        internal virtual TablesBatch CreateBatch(string partitionKey)
         {
             return new TablesBatch(_table, _tableOperations, _format);
         }
