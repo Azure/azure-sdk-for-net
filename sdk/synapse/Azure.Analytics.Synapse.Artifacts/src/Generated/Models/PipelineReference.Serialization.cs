@@ -16,10 +16,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type");
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("referenceName");
             writer.WriteStringValue(ReferenceName);
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
@@ -29,14 +29,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static PipelineReference DeserializePipelineReference(JsonElement element)
         {
-            string type = default;
+            PipelineReferenceType type = default;
             string referenceName = default;
-            string name = default;
+            Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new PipelineReferenceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("referenceName"))
@@ -46,15 +46,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
             }
-            return new PipelineReference(type, referenceName, name);
+            return new PipelineReference(type, referenceName, name.Value);
         }
     }
 }

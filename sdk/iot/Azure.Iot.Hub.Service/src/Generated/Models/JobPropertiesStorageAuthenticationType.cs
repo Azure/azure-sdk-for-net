@@ -10,12 +10,13 @@ using System.ComponentModel;
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    /// <summary> Specifies authentication type being used for connecting to storage account. </summary>
+    /// <summary> The authentication type used for connecting to the storage account. </summary>
     public readonly partial struct JobPropertiesStorageAuthenticationType : IEquatable<JobPropertiesStorageAuthenticationType>
     {
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="JobPropertiesStorageAuthenticationType"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public JobPropertiesStorageAuthenticationType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

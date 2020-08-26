@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using Tags = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -687,12 +688,21 @@ namespace Azure.Storage.Blobs.Models
             };
 
         /// <summary>
+        /// Creates a new GetBlobTagResult instance for mocking.
+        /// </summary>
+        public static GetBlobTagResult GetBlobTagResult(Tags tags)
+            => new GetBlobTagResult
+            {
+                Tags = tags
+            };
+
+        /// <summary>
         /// Creates a new BlobTagItem instance for mocking.
         /// </summary>
-        public static BlobTagItem BlobTagItem(
+        public static TaggedBlobItem TaggedBlobItem(
             string blobName = default,
             string blobContainerName = default)
-            => new BlobTagItem
+            => new TaggedBlobItem
             {
                 BlobName = blobName,
                 BlobContainerName = blobContainerName

@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -17,7 +18,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of TriggerRun. </summary>
         internal TriggerRun()
         {
-            AdditionalProperties = new Dictionary<string, object>();
+            Properties = new ChangeTrackingDictionary<string, string>();
+            TriggeredPipelines = new ChangeTrackingDictionary<string, string>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of TriggerRun. </summary>
@@ -40,7 +43,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Message = message;
             Properties = properties;
             TriggeredPipelines = triggeredPipelines;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> Trigger run id. </summary>

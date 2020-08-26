@@ -15,6 +15,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Models
         /// <summary> Initializes a new instance of ErrorDetail. </summary>
         /// <param name="code"> . </param>
         /// <param name="message"> . </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
         internal ErrorDetail(string code, string message)
         {
             if (code == null)

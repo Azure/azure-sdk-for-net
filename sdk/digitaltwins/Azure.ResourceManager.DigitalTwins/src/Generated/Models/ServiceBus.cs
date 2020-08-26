@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <summary> Initializes a new instance of ServiceBus. </summary>
         /// <param name="primaryConnectionString"> PrimaryConnectionString of the endpoint. Will be obfuscated during read. </param>
         /// <param name="secondaryConnectionString"> SecondaryConnectionString of the endpoint. Will be obfuscated during read. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="primaryConnectionString"/> or <paramref name="secondaryConnectionString"/> is null. </exception>
         public ServiceBus(string primaryConnectionString, string secondaryConnectionString)
         {
             if (primaryConnectionString == null)

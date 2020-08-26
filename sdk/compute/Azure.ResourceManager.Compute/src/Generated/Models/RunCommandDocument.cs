@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -21,6 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="label"> The VM run command label. </param>
         /// <param name="description"> The VM run command description. </param>
         /// <param name="script"> The script to be executed. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="schema"/>, <paramref name="id"/>, <paramref name="label"/>, <paramref name="description"/>, or <paramref name="script"/> is null. </exception>
         internal RunCommandDocument(string schema, string id, OperatingSystemTypes osType, string label, string description, IEnumerable<string> script) : base(schema, id, osType, label, description)
         {
             if (schema == null)
@@ -44,7 +46,8 @@ namespace Azure.ResourceManager.Compute.Models
                 throw new ArgumentNullException(nameof(script));
             }
 
-            Script = script.ToArray();
+            Script = script.ToList();
+            Parameters = new ChangeTrackingList<RunCommandParameterDefinition>();
         }
 
         /// <summary> Initializes a new instance of RunCommandDocument. </summary>
@@ -55,6 +58,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="description"> The VM run command description. </param>
         /// <param name="script"> The script to be executed. </param>
         /// <param name="parameters"> The parameters used by the script. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="schema"/>, <paramref name="id"/>, <paramref name="label"/>, or <paramref name="description"/> is null. </exception>
         internal RunCommandDocument(string schema, string id, OperatingSystemTypes osType, string label, string description, IReadOnlyList<string> script, IReadOnlyList<RunCommandParameterDefinition> parameters) : base(schema, id, osType, label, description)
         {
             if (schema == null)
@@ -74,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
                 throw new ArgumentNullException(nameof(description));
             }
 
-            Script = script ?? new List<string>();
+            Script = script;
             Parameters = parameters;
         }
 

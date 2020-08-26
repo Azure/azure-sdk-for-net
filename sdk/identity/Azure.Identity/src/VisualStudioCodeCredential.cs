@@ -30,24 +30,19 @@ namespace Azure.Identity
         /// <summary>
         /// Creates a new instance of the <see cref="VisualStudioCodeCredential"/>.
         /// </summary>
-        public VisualStudioCodeCredential() : this(null) { }
+        public VisualStudioCodeCredential() : this(default, default, default, default, default) { }
 
         /// <summary>
         /// Creates a new instance of the <see cref="VisualStudioCodeCredential"/> with the specified options.
         /// </summary>
         /// <param name="options">Options for configuring the credential.</param>
-        public VisualStudioCodeCredential(VisualStudioCodeCredentialOptions options) : this(options?.TenantId, CredentialPipeline.GetInstance(options), default, default) { }
+        public VisualStudioCodeCredential(VisualStudioCodeCredentialOptions options) : this(options, default, default, default, default) { }
 
-        internal VisualStudioCodeCredential(string tenantId, CredentialPipeline pipeline, IFileSystemService fileSystem, IVisualStudioCodeAdapter vscAdapter)
-            : this(tenantId, pipeline, default, fileSystem, vscAdapter)
+        internal VisualStudioCodeCredential(VisualStudioCodeCredentialOptions options, CredentialPipeline pipeline, MsalPublicClient client, IFileSystemService fileSystem, IVisualStudioCodeAdapter vscAdapter)
         {
-        }
-
-        internal VisualStudioCodeCredential(string tenantId, CredentialPipeline pipeline, MsalPublicClient client, IFileSystemService fileSystem, IVisualStudioCodeAdapter vscAdapter)
-        {
-            _tenantId = tenantId ?? "common";
-            _pipeline = pipeline;
-            _client = client ?? pipeline.CreateMsalPublicClient(ClientId);
+            _tenantId = options?.TenantId ?? "common";
+            _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
+            _client = client ?? new MsalPublicClient(_pipeline, options?.TenantId, ClientId, null, null);
             _fileSystem = fileSystem ?? FileSystemService.Default;
             _vscAdapter = vscAdapter ?? GetVscAdapter();
         }

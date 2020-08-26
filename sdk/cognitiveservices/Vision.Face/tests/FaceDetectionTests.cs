@@ -13,7 +13,7 @@ namespace FaceSDK.Tests
     {
         private static readonly string detectionModel = DetectionModel.Detection01;
 
-        private static readonly string recognitionModel = RecognitionModel.Recognition02;
+        private static readonly string recognitionModel = RecognitionModel.Recognition03;
 
         [Fact]
         public void FaceDetectionWithAttributes()
@@ -29,7 +29,7 @@ namespace FaceSDK.Tests
                         stream,
                         true,
                         true,
-                        new List<FaceAttributeType>()
+                        new List<FaceAttributeType?>()
                             {
                             FaceAttributeType.Accessories,
                             FaceAttributeType.Age,
@@ -182,7 +182,7 @@ namespace FaceSDK.Tests
                 Sadness = 0.03,
                 Surprise = 0.01
             };
-            
+
             // Act
             var rankedList = emotions.ToRankedList().ToList();
 

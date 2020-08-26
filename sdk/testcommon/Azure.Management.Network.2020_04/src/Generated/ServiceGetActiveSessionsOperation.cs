@@ -57,14 +57,7 @@ namespace Azure.Management.Network
         {
             BastionActiveSessionListResult firstPageResult;
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                firstPageResult = null;
-            }
-            else
-            {
-                firstPageResult = BastionActiveSessionListResult.DeserializeBastionActiveSessionListResult(document.RootElement);
-            }
+            firstPageResult = BastionActiveSessionListResult.DeserializeBastionActiveSessionListResult(document.RootElement);
             Page<BastionActiveSession> firstPage = Page.FromValues(firstPageResult.Value, firstPageResult.NextLink, response);
 
             return PageableHelpers.CreateAsyncEnumerable(_ => Task.FromResult(firstPage), (nextLink, _) => GetNextPage(nextLink, cancellationToken));
@@ -74,14 +67,7 @@ namespace Azure.Management.Network
         {
             BastionActiveSessionListResult firstPageResult;
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                firstPageResult = null;
-            }
-            else
-            {
-                firstPageResult = BastionActiveSessionListResult.DeserializeBastionActiveSessionListResult(document.RootElement);
-            }
+            firstPageResult = BastionActiveSessionListResult.DeserializeBastionActiveSessionListResult(document.RootElement);
             Page<BastionActiveSession> firstPage = Page.FromValues(firstPageResult.Value, firstPageResult.NextLink, response);
 
             return PageableHelpers.CreateAsyncEnumerable(_ => Task.FromResult(firstPage), (nextLink, _) => GetNextPage(nextLink, cancellationToken));
@@ -92,14 +78,7 @@ namespace Azure.Management.Network
             Response response = await _nextPageFunc(nextLink).ConfigureAwait(false);
             BastionActiveSessionListResult nextPageResult;
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                nextPageResult = null;
-            }
-            else
-            {
-                nextPageResult = BastionActiveSessionListResult.DeserializeBastionActiveSessionListResult(document.RootElement);
-            }
+            nextPageResult = BastionActiveSessionListResult.DeserializeBastionActiveSessionListResult(document.RootElement);
             return Page.FromValues(nextPageResult.Value, nextPageResult.NextLink, response);
         }
     }

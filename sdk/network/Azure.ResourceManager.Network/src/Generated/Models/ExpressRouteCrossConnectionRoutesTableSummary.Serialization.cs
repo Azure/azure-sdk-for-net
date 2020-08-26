@@ -14,50 +14,34 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ExpressRouteCrossConnectionRoutesTableSummary DeserializeExpressRouteCrossConnectionRoutesTableSummary(JsonElement element)
         {
-            string neighbor = default;
-            int? asn = default;
-            string upDown = default;
-            string stateOrPrefixesReceived = default;
+            Optional<string> neighbor = default;
+            Optional<int> asn = default;
+            Optional<string> upDown = default;
+            Optional<string> stateOrPrefixesReceived = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("neighbor"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     neighbor = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("asn"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     asn = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("upDown"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     upDown = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("stateOrPrefixesReceived"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     stateOrPrefixesReceived = property.Value.GetString();
                     continue;
                 }
             }
-            return new ExpressRouteCrossConnectionRoutesTableSummary(neighbor, asn, upDown, stateOrPrefixesReceived);
+            return new ExpressRouteCrossConnectionRoutesTableSummary(neighbor.Value, Optional.ToNullable(asn), upDown.Value, stateOrPrefixesReceived.Value);
         }
     }
 }

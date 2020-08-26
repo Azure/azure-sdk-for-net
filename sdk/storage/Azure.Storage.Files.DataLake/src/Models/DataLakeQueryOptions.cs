@@ -15,12 +15,12 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// Optional input text configuration.
         /// </summary>
-        public DataLakeQueryTextConfiguration InputTextConfiguration { get; set; }
+        public DataLakeQueryTextOptions InputTextConfiguration { get; set; }
 
         /// <summary>
         /// Optional output text configuration.
         /// </summary>
-        public DataLakeQueryTextConfiguration OutputTextConfiguration { get; set; }
+        public DataLakeQueryTextOptions OutputTextConfiguration { get; set; }
 
         /// <summary>
         /// Lock for ErrorHandler add and remove.

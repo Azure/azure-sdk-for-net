@@ -16,6 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Initializes a new instance of ListDataSourcesResult. </summary>
         /// <param name="dataSources"> The datasources in the Search service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataSources"/> is null. </exception>
         internal ListDataSourcesResult(IEnumerable<SearchIndexerDataSourceConnection> dataSources)
         {
             if (dataSources == null)
@@ -23,14 +24,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new ArgumentNullException(nameof(dataSources));
             }
 
-            DataSources = dataSources.ToArray();
+            DataSources = dataSources.ToList();
         }
 
         /// <summary> Initializes a new instance of ListDataSourcesResult. </summary>
         /// <param name="dataSources"> The datasources in the Search service. </param>
         internal ListDataSourcesResult(IReadOnlyList<SearchIndexerDataSourceConnection> dataSources)
         {
-            DataSources = dataSources ?? new List<SearchIndexerDataSourceConnection>();
+            DataSources = dataSources;
         }
 
         /// <summary> The datasources in the Search service. </summary>

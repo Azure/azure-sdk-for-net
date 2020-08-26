@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (IpTagType != null)
+            if (Optional.IsDefined(IpTagType))
             {
                 writer.WritePropertyName("ipTagType");
                 writer.WriteStringValue(IpTagType);
             }
-            if (Tag != null)
+            if (Optional.IsDefined(Tag))
             {
                 writer.WritePropertyName("tag");
                 writer.WriteStringValue(Tag);
@@ -30,30 +30,22 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static IpTag DeserializeIpTag(JsonElement element)
         {
-            string ipTagType = default;
-            string tag = default;
+            Optional<string> ipTagType = default;
+            Optional<string> tag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipTagType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     ipTagType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     tag = property.Value.GetString();
                     continue;
                 }
             }
-            return new IpTag(ipTagType, tag);
+            return new IpTag(ipTagType.Value, tag.Value);
         }
     }
 }

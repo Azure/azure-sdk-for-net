@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Tests;
@@ -818,6 +819,153 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                     sequenceNumber: 20);
 
                 Assert.That(async () => await checkpointStore.UpdateCheckpointAsync(checkpoint, mockEvent, default), Throws.InstanceOf<RequestFailedException>());
+            }
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="BlobsCheckpointStore.UpdateCheckpointAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CheckpointUpdateCreatesTheBlobOnFirstCall()
+        {
+            await using (StorageScope storageScope = await StorageScope.CreateAsync())
+            {
+                var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
+                var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
+                var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
+
+                var checkpoint = new EventProcessorCheckpoint
+                {
+                    FullyQualifiedNamespace = "namespace",
+                    EventHubName = "eventHubName",
+                    ConsumerGroup = "consumerGroup",
+                    PartitionId = "partitionId"
+                };
+
+                var mockEvent = new MockEventData(
+                    eventBody: Array.Empty<byte>(),
+                    offset: 10,
+                    sequenceNumber: 20);
+
+                // There should be no blobs or checkpoints before the first call.
+
+                var blobCount = 0;
+                var storedCheckpoints = await checkpointStore.ListCheckpointsAsync(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, default);
+
+                await foreach (var blob in containerClient.GetBlobsAsync())
+                {
+                    ++blobCount;
+                    break;
+                }
+
+                Assert.That(blobCount, Is.EqualTo(0));
+                Assert.That(storedCheckpoints, Is.Not.Null);
+                Assert.That(storedCheckpoints.Count, Is.EqualTo(0));
+
+                // Calling update should create the checkpoint.
+
+                await checkpointStore.UpdateCheckpointAsync(checkpoint, mockEvent, default);
+                storedCheckpoints = storedCheckpoints = await checkpointStore.ListCheckpointsAsync(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, default);
+
+                Assert.That(storedCheckpoints, Is.Not.Null);
+                Assert.That(storedCheckpoints.Count, Is.EqualTo(1));
+                Assert.That(storedCheckpoints.First().StartingPosition, Is.EqualTo(EventPosition.FromOffset(mockEvent.Offset, false)));
+
+                // There should be a single blob in the container.
+
+                blobCount = 0;
+
+                await foreach (var blob in containerClient.GetBlobsAsync())
+                {
+                    ++blobCount;
+
+                    if (blobCount > 1)
+                    {
+                        break;
+                    }
+                }
+
+                Assert.That(blobCount, Is.EqualTo(1));
+            }
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="BlobsCheckpointStore.UpdateCheckpointAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CheckpointUpdatesAnExistingBlob()
+        {
+            await using (StorageScope storageScope = await StorageScope.CreateAsync())
+            {
+                var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
+                var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
+                var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
+
+                var checkpoint = new EventProcessorCheckpoint
+                {
+                    FullyQualifiedNamespace = "namespace",
+                    EventHubName = "eventHubName",
+                    ConsumerGroup = "consumerGroup",
+                    PartitionId = "partitionId"
+                };
+
+                var mockEvent = new MockEventData(
+                    eventBody: Array.Empty<byte>(),
+                    offset: 10,
+                    sequenceNumber: 20);
+
+                // Calling update should create the checkpoint.
+
+                await checkpointStore.UpdateCheckpointAsync(checkpoint, mockEvent, default);
+
+                var blobCount = 0;
+                var storedCheckpoints = await checkpointStore.ListCheckpointsAsync(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, default);
+
+                await foreach (var blob in containerClient.GetBlobsAsync())
+                {
+                    ++blobCount;
+
+                    if (blobCount > 1)
+                    {
+                        break;
+                    }
+                }
+
+                Assert.That(blobCount, Is.EqualTo(1));
+                Assert.That(storedCheckpoints, Is.Not.Null);
+                Assert.That(storedCheckpoints.Count, Is.EqualTo(1));
+                Assert.That(storedCheckpoints.First().StartingPosition, Is.EqualTo(EventPosition.FromOffset(mockEvent.Offset, false)));
+
+                // Calling update again should update the existing checkpoint.
+
+                mockEvent = new MockEventData(
+                    eventBody: Array.Empty<byte>(),
+                    offset: 50,
+                    sequenceNumber: 60);
+
+                await checkpointStore.UpdateCheckpointAsync(checkpoint, mockEvent, default);
+
+                blobCount = 0;
+                storedCheckpoints = await checkpointStore.ListCheckpointsAsync(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, default);
+
+                await foreach (var blob in containerClient.GetBlobsAsync())
+                {
+                    ++blobCount;
+
+                    if (blobCount > 1)
+                    {
+                        break;
+                    }
+                }
+
+                Assert.That(blobCount, Is.EqualTo(1));
+                Assert.That(storedCheckpoints, Is.Not.Null);
+                Assert.That(storedCheckpoints.Count, Is.EqualTo(1));
+                Assert.That(storedCheckpoints.First().StartingPosition, Is.EqualTo(EventPosition.FromOffset(mockEvent.Offset, false)));
             }
         }
 

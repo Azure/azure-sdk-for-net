@@ -16,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of AmazonRedshiftLinkedService. </summary>
         /// <param name="server"> The name of the Amazon Redshift server. Type: string (or Expression with resultType string). </param>
         /// <param name="database"> The database name of the Amazon Redshift source. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="server"/> or <paramref name="database"/> is null. </exception>
         public AmazonRedshiftLinkedService(object server, object database)
         {
             if (server == null)

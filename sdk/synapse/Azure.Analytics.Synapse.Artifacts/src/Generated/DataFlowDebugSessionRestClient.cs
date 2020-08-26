@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
         public DataFlowDebugSessionRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2019-06-01-preview")
         {
             if (endpoint == null)
@@ -66,6 +66,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Creates a data flow debug session. </summary>
         /// <param name="request"> Data flow debug session definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
         public async Task<ResponseWithHeaders<DataFlowDebugSessionCreateDataFlowDebugSessionHeaders>> CreateDataFlowDebugSessionAsync(CreateDataFlowDebugSessionRequest request, CancellationToken cancellationToken = default)
         {
             if (request == null)
@@ -89,6 +90,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Creates a data flow debug session. </summary>
         /// <param name="request"> Data flow debug session definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
         public ResponseWithHeaders<DataFlowDebugSessionCreateDataFlowDebugSessionHeaders> CreateDataFlowDebugSession(CreateDataFlowDebugSessionRequest request, CancellationToken cancellationToken = default)
         {
             if (request == null)
@@ -134,14 +136,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         QueryDataFlowDebugSessionsResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = QueryDataFlowDebugSessionsResponse.DeserializeQueryDataFlowDebugSessionsResponse(document.RootElement);
-                        }
+                        value = QueryDataFlowDebugSessionsResponse.DeserializeQueryDataFlowDebugSessionsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -161,14 +156,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         QueryDataFlowDebugSessionsResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = QueryDataFlowDebugSessionsResponse.DeserializeQueryDataFlowDebugSessionsResponse(document.RootElement);
-                        }
+                        value = QueryDataFlowDebugSessionsResponse.DeserializeQueryDataFlowDebugSessionsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -196,6 +184,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Add a data flow into debug session. </summary>
         /// <param name="request"> Data flow debug session definition with debug content. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
         public async Task<Response<AddDataFlowToDebugSessionResponse>> AddDataFlowAsync(DataFlowDebugPackage request, CancellationToken cancellationToken = default)
         {
             if (request == null)
@@ -211,14 +200,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         AddDataFlowToDebugSessionResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AddDataFlowToDebugSessionResponse.DeserializeAddDataFlowToDebugSessionResponse(document.RootElement);
-                        }
+                        value = AddDataFlowToDebugSessionResponse.DeserializeAddDataFlowToDebugSessionResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -229,6 +211,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Add a data flow into debug session. </summary>
         /// <param name="request"> Data flow debug session definition with debug content. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
         public Response<AddDataFlowToDebugSessionResponse> AddDataFlow(DataFlowDebugPackage request, CancellationToken cancellationToken = default)
         {
             if (request == null)
@@ -244,14 +227,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         AddDataFlowToDebugSessionResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AddDataFlowToDebugSessionResponse.DeserializeAddDataFlowToDebugSessionResponse(document.RootElement);
-                        }
+                        value = AddDataFlowToDebugSessionResponse.DeserializeAddDataFlowToDebugSessionResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -279,6 +255,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Deletes a data flow debug session. </summary>
         /// <param name="request"> Data flow debug session definition for deletion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
         public async Task<Response> DeleteDataFlowDebugSessionAsync(DeleteDataFlowDebugSessionRequest request, CancellationToken cancellationToken = default)
         {
             if (request == null)
@@ -300,6 +277,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Deletes a data flow debug session. </summary>
         /// <param name="request"> Data flow debug session definition for deletion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
         public Response DeleteDataFlowDebugSession(DeleteDataFlowDebugSessionRequest request, CancellationToken cancellationToken = default)
         {
             if (request == null)
@@ -338,6 +316,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Execute a data flow debug command. </summary>
         /// <param name="request"> Data flow debug command definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
         public async Task<ResponseWithHeaders<DataFlowDebugSessionExecuteCommandHeaders>> ExecuteCommandAsync(DataFlowDebugCommandRequest request, CancellationToken cancellationToken = default)
         {
             if (request == null)
@@ -361,6 +340,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Execute a data flow debug command. </summary>
         /// <param name="request"> Data flow debug command definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
         public ResponseWithHeaders<DataFlowDebugSessionExecuteCommandHeaders> ExecuteCommand(DataFlowDebugCommandRequest request, CancellationToken cancellationToken = default)
         {
             if (request == null)
@@ -396,6 +376,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Query all active data flow debug sessions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<QueryDataFlowDebugSessionsResponse>> QueryDataFlowDebugSessionsByWorkspaceNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -411,14 +392,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         QueryDataFlowDebugSessionsResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = QueryDataFlowDebugSessionsResponse.DeserializeQueryDataFlowDebugSessionsResponse(document.RootElement);
-                        }
+                        value = QueryDataFlowDebugSessionsResponse.DeserializeQueryDataFlowDebugSessionsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -429,6 +403,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Query all active data flow debug sessions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<QueryDataFlowDebugSessionsResponse> QueryDataFlowDebugSessionsByWorkspaceNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -444,14 +419,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         QueryDataFlowDebugSessionsResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = QueryDataFlowDebugSessionsResponse.DeserializeQueryDataFlowDebugSessionsResponse(document.RootElement);
-                        }
+                        value = QueryDataFlowDebugSessionsResponse.DeserializeQueryDataFlowDebugSessionsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

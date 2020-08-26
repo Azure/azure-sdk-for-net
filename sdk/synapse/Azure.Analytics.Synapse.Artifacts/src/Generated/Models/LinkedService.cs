@@ -7,6 +7,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -16,7 +17,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of LinkedService. </summary>
         public LinkedService()
         {
-            AdditionalProperties = new Dictionary<string, object>();
+            Parameters = new ChangeTrackingDictionary<string, ParameterSpecification>();
+            Annotations = new ChangeTrackingList<object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
             Type = "LinkedService";
         }
 
@@ -34,7 +37,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Description = description;
             Parameters = parameters;
             Annotations = annotations;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> Type of linked service. </summary>
@@ -44,9 +47,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Linked service description. </summary>
         public string Description { get; set; }
         /// <summary> Parameters for linked service. </summary>
-        public IDictionary<string, ParameterSpecification> Parameters { get; set; }
+        public IDictionary<string, ParameterSpecification> Parameters { get; }
         /// <summary> List of tags that can be used for describing the linked service. </summary>
-        public IList<object> Annotations { get; set; }
+        public IList<object> Annotations { get; }
         internal IDictionary<string, object> AdditionalProperties { get; }
         /// <inheritdoc />
         public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => AdditionalProperties.GetEnumerator();

@@ -18,17 +18,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
-            if (ConnectVia != null)
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia");
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (Parameters != null)
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters");
                 writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Annotations != null)
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations");
                 writer.WriteStartArray();
@@ -53,52 +53,52 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("host");
             writer.WriteObjectValue(Host);
-            if (Port != null)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port");
                 writer.WriteObjectValue(Port);
             }
-            if (AuthenticationType != null)
+            if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType");
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
-            if (UserName != null)
+            if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName");
                 writer.WriteObjectValue(UserName);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password");
                 writer.WriteObjectValue(Password);
             }
-            if (EncryptedCredential != null)
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential");
                 writer.WriteObjectValue(EncryptedCredential);
             }
-            if (PrivateKeyPath != null)
+            if (Optional.IsDefined(PrivateKeyPath))
             {
                 writer.WritePropertyName("privateKeyPath");
                 writer.WriteObjectValue(PrivateKeyPath);
             }
-            if (PrivateKeyContent != null)
+            if (Optional.IsDefined(PrivateKeyContent))
             {
                 writer.WritePropertyName("privateKeyContent");
                 writer.WriteObjectValue(PrivateKeyContent);
             }
-            if (PassPhrase != null)
+            if (Optional.IsDefined(PassPhrase))
             {
                 writer.WritePropertyName("passPhrase");
                 writer.WriteObjectValue(PassPhrase);
             }
-            if (SkipHostKeyValidation != null)
+            if (Optional.IsDefined(SkipHostKeyValidation))
             {
                 writer.WritePropertyName("skipHostKeyValidation");
                 writer.WriteObjectValue(SkipHostKeyValidation);
             }
-            if (HostKeyFingerprint != null)
+            if (Optional.IsDefined(HostKeyFingerprint))
             {
                 writer.WritePropertyName("hostKeyFingerprint");
                 writer.WriteObjectValue(HostKeyFingerprint);
@@ -115,23 +115,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static SftpServerLinkedService DeserializeSftpServerLinkedService(JsonElement element)
         {
             string type = default;
-            IntegrationRuntimeReference connectVia = default;
-            string description = default;
-            IDictionary<string, ParameterSpecification> parameters = default;
-            IList<object> annotations = default;
+            Optional<IntegrationRuntimeReference> connectVia = default;
+            Optional<string> description = default;
+            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
+            Optional<IList<object>> annotations = default;
             object host = default;
-            object port = default;
-            SftpAuthenticationType? authenticationType = default;
-            object userName = default;
-            SecretBase password = default;
-            object encryptedCredential = default;
-            object privateKeyPath = default;
-            SecretBase privateKeyContent = default;
-            SecretBase passPhrase = default;
-            object skipHostKeyValidation = default;
-            object hostKeyFingerprint = default;
+            Optional<object> port = default;
+            Optional<SftpAuthenticationType> authenticationType = default;
+            Optional<object> userName = default;
+            Optional<SecretBase> password = default;
+            Optional<object> encryptedCredential = default;
+            Optional<object> privateKeyPath = default;
+            Optional<SecretBase> privateKeyContent = default;
+            Optional<SecretBase> passPhrase = default;
+            Optional<object> skipHostKeyValidation = default;
+            Optional<object> hostKeyFingerprint = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -141,60 +141,30 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("connectVia"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("parameters"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, ParameterSpecification> dictionary = new Dictionary<string, ParameterSpecification>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, ParameterSpecification.DeserializeParameterSpecification(property0.Value));
-                        }
+                        dictionary.Add(property0.Name, ParameterSpecification.DeserializeParameterSpecification(property0.Value));
                     }
                     parameters = dictionary;
                     continue;
                 }
                 if (property.NameEquals("annotations"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<object> array = new List<object>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetObject());
-                        }
+                        array.Add(item.GetObject());
                     }
                     annotations = array;
                     continue;
@@ -210,109 +180,61 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("port"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             port = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("authenticationType"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             authenticationType = new SftpAuthenticationType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("userName"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             userName = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("password"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             password = SecretBase.DeserializeSecretBase(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             encryptedCredential = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("privateKeyPath"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             privateKeyPath = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("privateKeyContent"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             privateKeyContent = SecretBase.DeserializeSecretBase(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("passPhrase"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             passPhrase = SecretBase.DeserializeSecretBase(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("skipHostKeyValidation"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             skipHostKeyValidation = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("hostKeyFingerprint"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             hostKeyFingerprint = property0.Value.GetObject();
                             continue;
                         }
                     }
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    additionalPropertiesDictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SftpServerLinkedService(type, connectVia, description, parameters, annotations, additionalProperties, host, port, authenticationType, userName, password, encryptedCredential, privateKeyPath, privateKeyContent, passPhrase, skipHostKeyValidation, hostKeyFingerprint);
+            return new SftpServerLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, host, port.Value, Optional.ToNullable(authenticationType), userName.Value, password.Value, encryptedCredential.Value, privateKeyPath.Value, privateKeyContent.Value, passPhrase.Value, skipHostKeyValidation.Value, hostKeyFingerprint.Value);
         }
     }
 }

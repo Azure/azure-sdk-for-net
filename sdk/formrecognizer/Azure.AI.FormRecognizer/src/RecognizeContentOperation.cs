@@ -168,37 +168,48 @@ namespace Azure.AI.FormRecognizer.Models
         {
             if (!_hasCompleted)
             {
-                Response<AnalyzeOperationResult_internal> update = async
-                    ? await _serviceClient.GetAnalyzeLayoutResultAsync(new Guid(Id), cancellationToken).ConfigureAwait(false)
-                    : _serviceClient.GetAnalyzeLayoutResult(new Guid(Id), cancellationToken);
+                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(RecognizeContentOperation)}.{nameof(UpdateStatus)}");
+                scope.Start();
 
-                _response = update.GetRawResponse();
-
-                if (update.Value.Status == OperationStatus.Succeeded)
+                try
                 {
-                    // we need to first assign a vaue and then mark the operation as completed to avoid race conditions
-                    _value = ConvertValue(update.Value.AnalyzeResult.PageResults, update.Value.AnalyzeResult.ReadResults);
-                    _hasCompleted = true;
+                    Response<AnalyzeOperationResult> update = async
+                        ? await _serviceClient.GetAnalyzeLayoutResultAsync(new Guid(Id), cancellationToken).ConfigureAwait(false)
+                        : _serviceClient.GetAnalyzeLayoutResult(new Guid(Id), cancellationToken);
+
+                    _response = update.GetRawResponse();
+
+                    if (update.Value.Status == OperationStatus.Succeeded)
+                    {
+                        // we need to first assign a vaue and then mark the operation as completed to avoid race conditions
+                        _value = ConvertValue(update.Value.AnalyzeResult.PageResults, update.Value.AnalyzeResult.ReadResults);
+                        _hasCompleted = true;
+                    }
+                    else if (update.Value.Status == OperationStatus.Failed)
+                    {
+                        _requestFailedException = await ClientCommon
+                            .CreateExceptionForFailedOperationAsync(async, _diagnostics, _response, update.Value.AnalyzeResult.Errors)
+                            .ConfigureAwait(false);
+                        _hasCompleted = true;
+                        throw _requestFailedException;
+                    }
                 }
-                else if (update.Value.Status == OperationStatus.Failed)
+                catch (Exception e)
                 {
-                    _requestFailedException = await ClientCommon
-                        .CreateExceptionForFailedOperationAsync(async, _diagnostics, _response, update.Value.AnalyzeResult.Errors)
-                        .ConfigureAwait(false);
-                    _hasCompleted = true;
-                    throw _requestFailedException;
+                    scope.Failed(e);
+                    throw;
                 }
             }
 
             return GetRawResponse();
         }
 
-        private static FormPageCollection ConvertValue(IReadOnlyList<PageResult_internal> pageResults, IReadOnlyList<ReadResult_internal> readResults)
+        private static FormPageCollection ConvertValue(IReadOnlyList<PageResult> pageResults, IReadOnlyList<ReadResult> readResults)
         {
             Debug.Assert(pageResults.Count == readResults.Count);
 
             List<FormPage> pages = new List<FormPage>();
-            List<ReadResult_internal> rawPages = readResults.ToList();
+            List<ReadResult> rawPages = readResults.ToList();
 
             for (var pageIndex = 0; pageIndex < pageResults.Count; pageIndex++)
             {

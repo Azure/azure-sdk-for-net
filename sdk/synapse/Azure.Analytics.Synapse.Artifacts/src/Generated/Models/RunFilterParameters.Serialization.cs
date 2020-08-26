@@ -15,7 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ContinuationToken != null)
+            if (Optional.IsDefined(ContinuationToken))
             {
                 writer.WritePropertyName("continuationToken");
                 writer.WriteStringValue(ContinuationToken);
@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(LastUpdatedAfter, "O");
             writer.WritePropertyName("lastUpdatedBefore");
             writer.WriteStringValue(LastUpdatedBefore, "O");
-            if (Filters != null)
+            if (Optional.IsCollectionDefined(Filters))
             {
                 writer.WritePropertyName("filters");
                 writer.WriteStartArray();
@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (OrderBy != null)
+            if (Optional.IsCollectionDefined(OrderBy))
             {
                 writer.WritePropertyName("orderBy");
                 writer.WriteStartArray();

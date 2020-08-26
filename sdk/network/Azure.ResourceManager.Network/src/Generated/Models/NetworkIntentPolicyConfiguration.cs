@@ -15,15 +15,6 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkIntentPolicyConfiguration. </summary>
-        /// <param name="networkIntentPolicyName"> The name of the Network Intent Policy for storing in target subscription. </param>
-        /// <param name="sourceNetworkIntentPolicy"> Source network intent policy. </param>
-        internal NetworkIntentPolicyConfiguration(string networkIntentPolicyName, NetworkIntentPolicy sourceNetworkIntentPolicy)
-        {
-            NetworkIntentPolicyName = networkIntentPolicyName;
-            SourceNetworkIntentPolicy = sourceNetworkIntentPolicy;
-        }
-
         /// <summary> The name of the Network Intent Policy for storing in target subscription. </summary>
         public string NetworkIntentPolicyName { get; set; }
         /// <summary> Source network intent policy. </summary>

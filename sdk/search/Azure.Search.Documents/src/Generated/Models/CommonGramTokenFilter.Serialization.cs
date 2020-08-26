@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
@@ -17,26 +16,19 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (CommonWords.Any())
+            writer.WritePropertyName("commonWords");
+            writer.WriteStartArray();
+            foreach (var item in CommonWords)
             {
-                writer.WritePropertyName("commonWords");
-                writer.WriteStartArray();
-                foreach (var item in CommonWords)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WriteStringValue(item);
             }
-            else
-            {
-                writer.WriteNull("commonWords");
-            }
-            if (IgnoreCase != null)
+            writer.WriteEndArray();
+            if (Optional.IsDefined(IgnoreCase))
             {
                 writer.WritePropertyName("ignoreCase");
                 writer.WriteBooleanValue(IgnoreCase.Value);
             }
-            if (UseQueryMode != null)
+            if (Optional.IsDefined(UseQueryMode))
             {
                 writer.WritePropertyName("queryMode");
                 writer.WriteBooleanValue(UseQueryMode.Value);
@@ -51,8 +43,8 @@ namespace Azure.Search.Documents.Indexes.Models
         internal static CommonGramTokenFilter DeserializeCommonGramTokenFilter(JsonElement element)
         {
             IList<string> commonWords = default;
-            bool? ignoreCase = default;
-            bool? queryMode = default;
+            Optional<bool> ignoreCase = default;
+            Optional<bool> queryMode = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -62,33 +54,18 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     commonWords = array;
                     continue;
                 }
                 if (property.NameEquals("ignoreCase"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     ignoreCase = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("queryMode"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     queryMode = property.Value.GetBoolean();
                     continue;
                 }
@@ -103,7 +80,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new CommonGramTokenFilter(odataType, name, commonWords, ignoreCase, queryMode);
+            return new CommonGramTokenFilter(odataType, name, commonWords, Optional.ToNullable(ignoreCase), Optional.ToNullable(queryMode));
         }
     }
 }

@@ -16,9 +16,18 @@ namespace SnippetGenerator
 
         public void OnExecuteAsync()
         {
-            foreach (var sdkDir in Directory.GetDirectories(BasePath))
+            var baseDirectory = new DirectoryInfo(BasePath).Name;
+            var baseDirParent = Directory.GetParent(BasePath).Name;
+            if (baseDirectory.Equals("sdk") || baseDirParent.Equals("sdk"))
             {
-                new DirectoryProcessor(sdkDir).Process();
+                foreach (var sdkDir in Directory.GetDirectories(BasePath))
+                {
+                    new DirectoryProcessor(sdkDir).Process();
+                }
+            }
+            else 
+            {
+                new DirectoryProcessor(BasePath).Process();
             }
         }
 

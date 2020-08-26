@@ -22,7 +22,8 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Initializes a new instance of the <see cref="OperationsLiveTests"/> class.
         /// </summary>
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
-        public OperationsLiveTests(bool isAsync) : base(isAsync)
+        public OperationsLiveTests(bool isAsync)
+            : base(isAsync)
         {
         }
 
@@ -111,11 +112,11 @@ namespace Azure.AI.FormRecognizer.Tests
             // making the test fail.
 
             var client = CreateFormTrainingClient(skipInstrumenting: true);
-            var resourceID = TestEnvironment.TargetResourceId;
+            var resourceId = TestEnvironment.TargetResourceId;
             var region = TestEnvironment.TargetResourceRegion;
 
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: false);
-            CopyAuthorization targetAuth = await client.GetCopyAuthorizationAsync(resourceID, region);
+            CopyAuthorization targetAuth = await client.GetCopyAuthorizationAsync(resourceId, region);
 
             var operation = await client.StartCopyModelAsync(trainedModel.ModelId, targetAuth);
 

@@ -15,6 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of SqlServerLinkedService. </summary>
         /// <param name="connectionString"> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         public SqlServerLinkedService(object connectionString)
         {
             if (connectionString == null)

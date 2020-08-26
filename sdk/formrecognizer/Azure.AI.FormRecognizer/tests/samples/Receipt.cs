@@ -22,7 +22,7 @@ namespace Azure.AI.FormRecognizer.Samples
         public Receipt(RecognizedForm recognizedForm)
         {
             // To see the list of the supported fields returned by service and its corresponding types, consult:
-            // https://westus2.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2-preview/operations/GetAnalyzeReceiptResult
+            // https://aka.ms/formrecognizer/receiptfields
 
             ReceiptType = ConvertStringField("ReceiptType", recognizedForm.Fields);
             MerchantAddress = ConvertStringField("MerchantAddress", recognizedForm.Fields);
@@ -109,7 +109,7 @@ namespace Azure.AI.FormRecognizer.Samples
             {
                 foreach (FormField itemField in itemsField.Value.AsList())
                 {
-                    if (itemField.Value.Type == FieldValueType.Dictionary)
+                    if (itemField.Value.ValueType == FieldValueType.Dictionary)
                     {
                         IReadOnlyDictionary<string, FormField> itemPropertyFields = itemField.Value.AsDictionary();
 

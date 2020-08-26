@@ -15,37 +15,37 @@ namespace Azure.Iot.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (JobId != null)
+            if (Optional.IsDefined(JobId))
             {
                 writer.WritePropertyName("jobId");
                 writer.WriteStringValue(JobId);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type.Value.ToString());
             }
-            if (CloudToDeviceMethod != null)
+            if (Optional.IsDefined(CloudToDeviceMethod))
             {
                 writer.WritePropertyName("cloudToDeviceMethod");
                 writer.WriteObjectValue(CloudToDeviceMethod);
             }
-            if (UpdateTwin != null)
+            if (Optional.IsDefined(UpdateTwin))
             {
                 writer.WritePropertyName("updateTwin");
                 writer.WriteObjectValue(UpdateTwin);
             }
-            if (QueryCondition != null)
+            if (Optional.IsDefined(QueryCondition))
             {
                 writer.WritePropertyName("queryCondition");
                 writer.WriteStringValue(QueryCondition);
             }
-            if (StartTime != null)
+            if (Optional.IsDefined(StartTime))
             {
                 writer.WritePropertyName("startTime");
                 writer.WriteStringValue(StartTime.Value, "O");
             }
-            if (MaxExecutionTimeInSeconds != null)
+            if (Optional.IsDefined(MaxExecutionTimeInSeconds))
             {
                 writer.WritePropertyName("maxExecutionTimeInSeconds");
                 writer.WriteNumberValue(MaxExecutionTimeInSeconds.Value);

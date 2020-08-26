@@ -3,6 +3,7 @@
 
 using System;
 using System.Text.Json;
+using Azure.AI.FormRecognizer.Models;
 
 namespace Azure.AI.FormRecognizer.Training
 {

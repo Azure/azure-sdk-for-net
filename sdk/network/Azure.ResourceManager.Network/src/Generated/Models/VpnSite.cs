@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VpnSite. </summary>
         public VpnSite()
         {
+            VpnSiteLinks = new ChangeTrackingList<VpnSiteLink>();
         }
 
         /// <summary> Initializes a new instance of VpnSite. </summary>
@@ -66,6 +68,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> IsSecuritySite flag. </summary>
         public bool? IsSecuritySite { get; set; }
         /// <summary> List of all vpn site links. </summary>
-        public IList<VpnSiteLink> VpnSiteLinks { get; set; }
+        public IList<VpnSiteLink> VpnSiteLinks { get; }
     }
 }

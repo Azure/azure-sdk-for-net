@@ -44,7 +44,6 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string route1Name = Recording.GenerateAssetName("azsmnet");
             string route2Name = Recording.GenerateAssetName("azsmnet");
             RouteTable routeTable = new RouteTable() { Location = location, };
-            routeTable.Routes = new List<Route>();
 
             // Add a route
             Route route1 = new Route()
@@ -157,7 +156,6 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string route4Name = Recording.GenerateAssetName("azsmnet");
 
             RouteTable routeTable = new RouteTable() { Location = location, };
-            routeTable.Routes = new List<Route>();
 
             // Add a route
             Route route1 = new Route()

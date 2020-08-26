@@ -16,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of MongoDbV2CollectionDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="collection"> The collection name of the MongoDB database. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="collection"/> is null. </exception>
         public MongoDbV2CollectionDataset(LinkedServiceReference linkedServiceName, object collection) : base(linkedServiceName)
         {
             if (linkedServiceName == null)

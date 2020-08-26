@@ -94,12 +94,11 @@ namespace Azure.Identity.Tests
 
         [TestCase(true)]
         [TestCase(false)]
-        public async Task VerifyClientCertificateCredentialExceptionAsync(bool usePemFile)
+        public void VerifyClientCertificateCredentialException(bool usePemFile)
         {
             string expectedInnerExMessage = Guid.NewGuid().ToString();
 
             var mockMsalClient = new MockMsalConfidentialClient(new MockClientException(expectedInnerExMessage));
-
 
             var expectedTenantId = Guid.NewGuid().ToString();
 
@@ -110,7 +109,7 @@ namespace Azure.Identity.Tests
             var mockCert = new X509Certificate2(certificatePath);
 
             ClientCertificateCredential credential = InstrumentClient(
-                usePemFile ? new ClientCertificateCredential(expectedTenantId, expectedClientId, certificatePathPem, CredentialPipeline.GetInstance(null), mockMsalClient) : new ClientCertificateCredential(expectedTenantId, expectedClientId, mockCert, CredentialPipeline.GetInstance(null), mockMsalClient)
+                usePemFile ? new ClientCertificateCredential(expectedTenantId, expectedClientId, certificatePathPem, default, default, mockMsalClient) : new ClientCertificateCredential(expectedTenantId, expectedClientId, mockCert, default, default, mockMsalClient)
             );
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
@@ -120,8 +119,6 @@ namespace Azure.Identity.Tests
             Assert.IsInstanceOf(typeof(MockClientException), ex.InnerException);
 
             Assert.AreEqual(expectedInnerExMessage, ex.InnerException.Message);
-
-            await Task.CompletedTask;
         }
     }
 }

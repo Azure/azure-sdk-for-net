@@ -55,17 +55,18 @@ namespace Azure.ResourceManager.Compute.Tests
                     vm.DiagnosticsProfile = GetDiagnosticsProfile(storageAccountForBootDiagnosticsName);
                 });
             inputVM = returnTwoVm.Item2;
-            VirtualMachine getVMWithInstanceViewResponse = await VirtualMachinesOperations.GetAsync(resourceGroupName, inputVM.Name);
+            string inputVMName = returnTwoVm.Item3;
+            VirtualMachine getVMWithInstanceViewResponse = await VirtualMachinesOperations.GetAsync(resourceGroupName, inputVMName);
             ValidateVMInstanceView(inputVM, getVMWithInstanceViewResponse);
             ValidateBootDiagnosticsInstanceView(getVMWithInstanceViewResponse.InstanceView.BootDiagnostics, hasError: false);
 
             // Make boot diagnostics encounter an error due to a missing boot diagnostics storage account
-            await WaitForCompletionAsync(await VirtualMachinesOperations.StartDeallocateAsync(resourceGroupName, inputVM.Name));
+            await WaitForCompletionAsync(await VirtualMachinesOperations.StartDeallocateAsync(resourceGroupName, inputVMName));
             await StorageAccountsOperations.DeleteAsync(resourceGroupName, storageAccountForBootDiagnosticsName);
             //await StorageAccountsClient.DeleteWithHttpMessagesAsync(resourceGroupName, storageAccountForBootDiagnosticsName).GetAwaiter().GetResult();
-            await WaitForCompletionAsync(await VirtualMachinesOperations.StartStartAsync(resourceGroupName, inputVM.Name));
+            await WaitForCompletionAsync(await VirtualMachinesOperations.StartStartAsync(resourceGroupName, inputVMName));
 
-            getVMWithInstanceViewResponse = await VirtualMachinesOperations.GetAsync(resourceGroupName, inputVM.Name);
+            getVMWithInstanceViewResponse = await VirtualMachinesOperations.GetAsync(resourceGroupName, inputVMName);
             ValidateBootDiagnosticsInstanceView(getVMWithInstanceViewResponse.InstanceView.BootDiagnostics, hasError: true);
         }
     }

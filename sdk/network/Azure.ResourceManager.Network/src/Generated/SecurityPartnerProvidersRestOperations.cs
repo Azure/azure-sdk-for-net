@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public SecurityPartnerProvidersRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -65,6 +65,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="securityPartnerProviderName"> The name of the Security Partner Provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="securityPartnerProviderName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string securityPartnerProviderName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -93,6 +94,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="securityPartnerProviderName"> The name of the Security Partner Provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="securityPartnerProviderName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string securityPartnerProviderName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -139,6 +141,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="securityPartnerProviderName"> The name of the Security Partner Provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="securityPartnerProviderName"/> is null. </exception>
         public async Task<Response<SecurityPartnerProvider>> GetAsync(string resourceGroupName, string securityPartnerProviderName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -158,14 +161,7 @@ namespace Azure.ResourceManager.Network
                     {
                         SecurityPartnerProvider value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SecurityPartnerProvider.DeserializeSecurityPartnerProvider(document.RootElement);
-                        }
+                        value = SecurityPartnerProvider.DeserializeSecurityPartnerProvider(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -177,6 +173,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="securityPartnerProviderName"> The name of the Security Partner Provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="securityPartnerProviderName"/> is null. </exception>
         public Response<SecurityPartnerProvider> Get(string resourceGroupName, string securityPartnerProviderName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -196,14 +193,7 @@ namespace Azure.ResourceManager.Network
                     {
                         SecurityPartnerProvider value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SecurityPartnerProvider.DeserializeSecurityPartnerProvider(document.RootElement);
-                        }
+                        value = SecurityPartnerProvider.DeserializeSecurityPartnerProvider(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -238,6 +228,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="securityPartnerProviderName"> The name of the Security Partner Provider. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Security Partner Provider operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="securityPartnerProviderName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string securityPartnerProviderName, SecurityPartnerProvider parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -270,6 +261,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="securityPartnerProviderName"> The name of the Security Partner Provider. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Security Partner Provider operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="securityPartnerProviderName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response CreateOrUpdate(string resourceGroupName, string securityPartnerProviderName, SecurityPartnerProvider parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -324,6 +316,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="securityPartnerProviderName"> The name of the Security Partner Provider. </param>
         /// <param name="parameters"> Parameters supplied to update Security Partner Provider tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="securityPartnerProviderName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<SecurityPartnerProvider>> UpdateTagsAsync(string resourceGroupName, string securityPartnerProviderName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -347,14 +340,7 @@ namespace Azure.ResourceManager.Network
                     {
                         SecurityPartnerProvider value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SecurityPartnerProvider.DeserializeSecurityPartnerProvider(document.RootElement);
-                        }
+                        value = SecurityPartnerProvider.DeserializeSecurityPartnerProvider(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -367,6 +353,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="securityPartnerProviderName"> The name of the Security Partner Provider. </param>
         /// <param name="parameters"> Parameters supplied to update Security Partner Provider tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="securityPartnerProviderName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response<SecurityPartnerProvider> UpdateTags(string resourceGroupName, string securityPartnerProviderName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -390,14 +377,7 @@ namespace Azure.ResourceManager.Network
                     {
                         SecurityPartnerProvider value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SecurityPartnerProvider.DeserializeSecurityPartnerProvider(document.RootElement);
-                        }
+                        value = SecurityPartnerProvider.DeserializeSecurityPartnerProvider(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -425,6 +405,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all Security Partner Providers in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<SecurityPartnerProviderListResult>> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -440,14 +421,7 @@ namespace Azure.ResourceManager.Network
                     {
                         SecurityPartnerProviderListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SecurityPartnerProviderListResult.DeserializeSecurityPartnerProviderListResult(document.RootElement);
-                        }
+                        value = SecurityPartnerProviderListResult.DeserializeSecurityPartnerProviderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -458,6 +432,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all Security Partner Providers in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public Response<SecurityPartnerProviderListResult> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -473,14 +448,7 @@ namespace Azure.ResourceManager.Network
                     {
                         SecurityPartnerProviderListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SecurityPartnerProviderListResult.DeserializeSecurityPartnerProviderListResult(document.RootElement);
-                        }
+                        value = SecurityPartnerProviderListResult.DeserializeSecurityPartnerProviderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -515,14 +483,7 @@ namespace Azure.ResourceManager.Network
                     {
                         SecurityPartnerProviderListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SecurityPartnerProviderListResult.DeserializeSecurityPartnerProviderListResult(document.RootElement);
-                        }
+                        value = SecurityPartnerProviderListResult.DeserializeSecurityPartnerProviderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -542,14 +503,7 @@ namespace Azure.ResourceManager.Network
                     {
                         SecurityPartnerProviderListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SecurityPartnerProviderListResult.DeserializeSecurityPartnerProviderListResult(document.RootElement);
-                        }
+                        value = SecurityPartnerProviderListResult.DeserializeSecurityPartnerProviderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -573,6 +527,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<SecurityPartnerProviderListResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -592,14 +547,7 @@ namespace Azure.ResourceManager.Network
                     {
                         SecurityPartnerProviderListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SecurityPartnerProviderListResult.DeserializeSecurityPartnerProviderListResult(document.RootElement);
-                        }
+                        value = SecurityPartnerProviderListResult.DeserializeSecurityPartnerProviderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -611,6 +559,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<SecurityPartnerProviderListResult> ListByResourceGroupNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -630,14 +579,7 @@ namespace Azure.ResourceManager.Network
                     {
                         SecurityPartnerProviderListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SecurityPartnerProviderListResult.DeserializeSecurityPartnerProviderListResult(document.RootElement);
-                        }
+                        value = SecurityPartnerProviderListResult.DeserializeSecurityPartnerProviderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -660,6 +602,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all the Security Partner Providers in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<SecurityPartnerProviderListResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -675,14 +618,7 @@ namespace Azure.ResourceManager.Network
                     {
                         SecurityPartnerProviderListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SecurityPartnerProviderListResult.DeserializeSecurityPartnerProviderListResult(document.RootElement);
-                        }
+                        value = SecurityPartnerProviderListResult.DeserializeSecurityPartnerProviderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -693,6 +629,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all the Security Partner Providers in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<SecurityPartnerProviderListResult> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -708,14 +645,7 @@ namespace Azure.ResourceManager.Network
                     {
                         SecurityPartnerProviderListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SecurityPartnerProviderListResult.DeserializeSecurityPartnerProviderListResult(document.RootElement);
-                        }
+                        value = SecurityPartnerProviderListResult.DeserializeSecurityPartnerProviderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

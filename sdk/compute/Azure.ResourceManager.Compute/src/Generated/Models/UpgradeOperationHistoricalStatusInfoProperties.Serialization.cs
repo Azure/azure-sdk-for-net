@@ -14,70 +14,46 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static UpgradeOperationHistoricalStatusInfoProperties DeserializeUpgradeOperationHistoricalStatusInfoProperties(JsonElement element)
         {
-            UpgradeOperationHistoryStatus runningStatus = default;
-            RollingUpgradeProgressInfo progress = default;
-            ApiError error = default;
-            UpgradeOperationInvoker? startedBy = default;
-            ImageReference targetImageReference = default;
-            RollbackStatusInfo rollbackInfo = default;
+            Optional<UpgradeOperationHistoryStatus> runningStatus = default;
+            Optional<RollingUpgradeProgressInfo> progress = default;
+            Optional<ApiError> error = default;
+            Optional<UpgradeOperationInvoker> startedBy = default;
+            Optional<ImageReference> targetImageReference = default;
+            Optional<RollbackStatusInfo> rollbackInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("runningStatus"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     runningStatus = UpgradeOperationHistoryStatus.DeserializeUpgradeOperationHistoryStatus(property.Value);
                     continue;
                 }
                 if (property.NameEquals("progress"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     progress = RollingUpgradeProgressInfo.DeserializeRollingUpgradeProgressInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("error"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     error = ApiError.DeserializeApiError(property.Value);
                     continue;
                 }
                 if (property.NameEquals("startedBy"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     startedBy = property.Value.GetString().ToUpgradeOperationInvoker();
                     continue;
                 }
                 if (property.NameEquals("targetImageReference"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     targetImageReference = ImageReference.DeserializeImageReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("rollbackInfo"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     rollbackInfo = RollbackStatusInfo.DeserializeRollbackStatusInfo(property.Value);
                     continue;
                 }
             }
-            return new UpgradeOperationHistoricalStatusInfoProperties(runningStatus, progress, error, startedBy, targetImageReference, rollbackInfo);
+            return new UpgradeOperationHistoricalStatusInfoProperties(runningStatus.Value, progress.Value, error.Value, Optional.ToNullable(startedBy), targetImageReference.Value, rollbackInfo.Value);
         }
     }
 }

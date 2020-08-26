@@ -35,7 +35,7 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <summary>
         /// The status of the messaging entity is active.
         /// </summary>
-        public static EntityStatus Disable { get; } = new EntityStatus(DisabledValue);
+        public static EntityStatus Disabled { get; } = new EntityStatus(DisabledValue);
 
         /// <summary>
         /// The sending status of the messaging entity is disabled.

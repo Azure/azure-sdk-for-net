@@ -16,7 +16,7 @@ jobs:
           BuildSHA: $(Build.SourceVersion)
           RepoId: 'Azure/azure-sdk-for-net'
       - pwsh: |
-          Invoke-WebRequest -MaximumRetryCount 10 -Uri "https://github.com/dotnet/docfx/releases/download/v2.43.2/docfx.zip" `
+          Invoke-WebRequest -MaximumRetryCount 10 -Uri "https://github.com/dotnet/docfx/releases/download/$(DocFxVersion)/docfx.zip" `
           -OutFile "docfx.zip" | Wait-Process; Expand-Archive -Path "docfx.zip" -DestinationPath "./docfx/"
         workingDirectory: $(Build.SourcesDirectory)
         displayName: Download and Extract DocFX

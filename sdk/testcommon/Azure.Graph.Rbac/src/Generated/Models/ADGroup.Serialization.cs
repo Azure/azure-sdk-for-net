@@ -16,102 +16,62 @@ namespace Azure.Graph.Rbac.Models
     {
         internal static ADGroup DeserializeADGroup(JsonElement element)
         {
-            string displayName = default;
-            bool? mailEnabled = default;
-            string mailNickname = default;
-            bool? securityEnabled = default;
-            string mail = default;
-            string objectId = default;
-            string objectType = default;
-            DateTimeOffset? deletionTimestamp = default;
+            Optional<string> displayName = default;
+            Optional<bool> mailEnabled = default;
+            Optional<string> mailNickname = default;
+            Optional<bool> securityEnabled = default;
+            Optional<string> mail = default;
+            Optional<string> objectId = default;
+            Optional<string> objectType = default;
+            Optional<DateTimeOffset> deletionTimestamp = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     displayName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("mailEnabled"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     mailEnabled = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("mailNickname"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     mailNickname = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("securityEnabled"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     securityEnabled = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("mail"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     mail = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("objectId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     objectId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("objectType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     objectType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("deletionTimestamp"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     deletionTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    additionalPropertiesDictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ADGroup(objectId, objectType, deletionTimestamp, additionalProperties, displayName, mailEnabled, mailNickname, securityEnabled, mail);
+            return new ADGroup(objectId.Value, objectType.Value, Optional.ToNullable(deletionTimestamp), additionalProperties, displayName.Value, Optional.ToNullable(mailEnabled), mailNickname.Value, Optional.ToNullable(securityEnabled), mail.Value);
         }
     }
 }

@@ -18,35 +18,19 @@ namespace Azure.Iot.Hub.Service.Models
         }
 
         /// <summary> Initializes a new instance of JobResponse. </summary>
-        /// <param name="jobId"> System generated.  Ignored at creation. </param>
-        /// <param name="queryCondition"> Device query condition. </param>
-        /// <param name="createdTime"> System generated.  Ignored at creation. </param>
-        /// <param name="startTime"> Scheduled job start time in UTC. </param>
-        /// <param name="endTime">
-        /// System generated.  Ignored at creation.
-        /// 
-        /// Represents the time the job stopped processing.
-        /// </param>
-        /// <param name="maxExecutionTimeInSeconds"> Max execution time in secounds (ttl duration). </param>
-        /// <param name="type">
-        /// Required.
-        /// 
-        /// The type of job to execute.
-        /// </param>
-        /// <param name="cloudToDeviceMethod">
-        /// Required if jobType is cloudToDeviceMethod.
-        /// 
-        /// The method type and parameters.
-        /// </param>
-        /// <param name="updateTwin"> Twin Representation. </param>
-        /// <param name="status"> System generated.  Ignored at creation. </param>
-        /// <param name="failureReason">
-        /// System generated.  Ignored at creation.
-        /// 
-        /// If status == failure, this represents a string containing the reason.
-        /// </param>
-        /// <param name="statusMessage"> Status message for the job. </param>
-        /// <param name="deviceJobStatistics"> Job details. </param>
+        /// <param name="jobId"> System generated.  Ignored at creation. The unique identifier of the job. </param>
+        /// <param name="queryCondition"> The device query condition. </param>
+        /// <param name="createdTime"> System generated.  Ignored at creation. The creation date and time of the job. </param>
+        /// <param name="startTime"> The start date and time of the scheduled job in UTC. </param>
+        /// <param name="endTime"> System generated.  Ignored at creation. The end date and time of the job in UTC. </param>
+        /// <param name="maxExecutionTimeInSeconds"> The maximum execution time in secounds. </param>
+        /// <param name="type"> The job type. </param>
+        /// <param name="cloudToDeviceMethod"> The method type and parameters. This is required if job type is cloudToDeviceMethod. </param>
+        /// <param name="updateTwin"> The state information for a device or module. This is implicitly created and deleted when the corresponding device/ module identity is created or deleted in the IoT Hub. </param>
+        /// <param name="status"> System generated.  Ignored at creation. The status of the job. </param>
+        /// <param name="failureReason"> The reason for the failure, if a failure occurred. </param>
+        /// <param name="statusMessage"> The status message of the job. </param>
+        /// <param name="deviceJobStatistics"> The details regarding job execution status. </param>
         internal JobResponse(string jobId, string queryCondition, DateTimeOffset? createdTime, DateTimeOffset? startTime, DateTimeOffset? endTime, long? maxExecutionTimeInSeconds, JobResponseType? type, CloudToDeviceMethodRequest cloudToDeviceMethod, TwinData updateTwin, JobResponseStatus? status, string failureReason, string statusMessage, DeviceJobStatistics deviceJobStatistics)
         {
             JobId = jobId;
@@ -64,47 +48,31 @@ namespace Azure.Iot.Hub.Service.Models
             DeviceJobStatistics = deviceJobStatistics;
         }
 
-        /// <summary> System generated.  Ignored at creation. </summary>
+        /// <summary> System generated.  Ignored at creation. The unique identifier of the job. </summary>
         public string JobId { get; }
-        /// <summary> Device query condition. </summary>
+        /// <summary> The device query condition. </summary>
         public string QueryCondition { get; }
-        /// <summary> System generated.  Ignored at creation. </summary>
+        /// <summary> System generated.  Ignored at creation. The creation date and time of the job. </summary>
         public DateTimeOffset? CreatedTime { get; }
-        /// <summary> Scheduled job start time in UTC. </summary>
+        /// <summary> The start date and time of the scheduled job in UTC. </summary>
         public DateTimeOffset? StartTime { get; }
-        /// <summary>
-        /// System generated.  Ignored at creation.
-        /// 
-        /// Represents the time the job stopped processing.
-        /// </summary>
+        /// <summary> System generated.  Ignored at creation. The end date and time of the job in UTC. </summary>
         public DateTimeOffset? EndTime { get; }
-        /// <summary> Max execution time in secounds (ttl duration). </summary>
+        /// <summary> The maximum execution time in secounds. </summary>
         public long? MaxExecutionTimeInSeconds { get; }
-        /// <summary>
-        /// Required.
-        /// 
-        /// The type of job to execute.
-        /// </summary>
+        /// <summary> The job type. </summary>
         public JobResponseType? Type { get; }
-        /// <summary>
-        /// Required if jobType is cloudToDeviceMethod.
-        /// 
-        /// The method type and parameters.
-        /// </summary>
+        /// <summary> The method type and parameters. This is required if job type is cloudToDeviceMethod. </summary>
         public CloudToDeviceMethodRequest CloudToDeviceMethod { get; }
-        /// <summary> Twin Representation. </summary>
+        /// <summary> The state information for a device or module. This is implicitly created and deleted when the corresponding device/ module identity is created or deleted in the IoT Hub. </summary>
         public TwinData UpdateTwin { get; }
-        /// <summary> System generated.  Ignored at creation. </summary>
+        /// <summary> System generated.  Ignored at creation. The status of the job. </summary>
         public JobResponseStatus? Status { get; }
-        /// <summary>
-        /// System generated.  Ignored at creation.
-        /// 
-        /// If status == failure, this represents a string containing the reason.
-        /// </summary>
+        /// <summary> The reason for the failure, if a failure occurred. </summary>
         public string FailureReason { get; }
-        /// <summary> Status message for the job. </summary>
+        /// <summary> The status message of the job. </summary>
         public string StatusMessage { get; }
-        /// <summary> Job details. </summary>
+        /// <summary> The details regarding job execution status. </summary>
         public DeviceJobStatistics DeviceJobStatistics { get; }
     }
 }

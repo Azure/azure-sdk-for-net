@@ -15,9 +15,9 @@ namespace Azure.Analytics.Synapse.Spark.Models
         internal static SparkStatement DeserializeSparkStatement(JsonElement element)
         {
             int id = default;
-            string code = default;
-            string state = default;
-            SparkStatementOutput output = default;
+            Optional<string> code = default;
+            Optional<string> state = default;
+            Optional<SparkStatementOutput> output = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -27,33 +27,21 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 }
                 if (property.NameEquals("code"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     code = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("state"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     state = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("output"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     output = SparkStatementOutput.DeserializeSparkStatementOutput(property.Value);
                     continue;
                 }
             }
-            return new SparkStatement(id, code, state, output);
+            return new SparkStatement(id, code.Value, state.Value, output.Value);
         }
     }
 }

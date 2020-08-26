@@ -73,9 +73,9 @@ namespace Azure.ResourceManager.Compute.Tests
 
             VaultCertificate vmCert = GetDefaultVaultCert();
 
-            var secretGroup = new VaultSecretGroup() { SourceVault = vault, VaultCertificates = new List<VaultCertificate>() { vmCert } };
+            var secretGroup = new VaultSecretGroup() { SourceVault = vault, VaultCertificates = { vmCert } };
 
-            vm.OsProfile.Secrets = new List<VaultSecretGroup>() { secretGroup };
+            vm.OsProfile.Secrets.Add(secretGroup);
         }
 
         //TODO: Create Source Vault Dynamically

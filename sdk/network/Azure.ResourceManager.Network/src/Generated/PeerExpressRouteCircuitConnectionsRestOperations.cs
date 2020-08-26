@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public PeerExpressRouteCircuitConnectionsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="connectionName"> The name of the peer express route circuit connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, <paramref name="peeringName"/>, or <paramref name="connectionName"/> is null. </exception>
         public async Task<Response<PeerExpressRouteCircuitConnection>> GetAsync(string resourceGroupName, string circuitName, string peeringName, string connectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -98,14 +99,7 @@ namespace Azure.ResourceManager.Network
                     {
                         PeerExpressRouteCircuitConnection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PeerExpressRouteCircuitConnection.DeserializePeerExpressRouteCircuitConnection(document.RootElement);
-                        }
+                        value = PeerExpressRouteCircuitConnection.DeserializePeerExpressRouteCircuitConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -119,6 +113,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="connectionName"> The name of the peer express route circuit connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, <paramref name="peeringName"/>, or <paramref name="connectionName"/> is null. </exception>
         public Response<PeerExpressRouteCircuitConnection> Get(string resourceGroupName, string circuitName, string peeringName, string connectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -146,14 +141,7 @@ namespace Azure.ResourceManager.Network
                     {
                         PeerExpressRouteCircuitConnection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PeerExpressRouteCircuitConnection.DeserializePeerExpressRouteCircuitConnection(document.RootElement);
-                        }
+                        value = PeerExpressRouteCircuitConnection.DeserializePeerExpressRouteCircuitConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -187,6 +175,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="circuitName"> The name of the circuit. </param>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, or <paramref name="peeringName"/> is null. </exception>
         public async Task<Response<PeerExpressRouteCircuitConnectionListResult>> ListAsync(string resourceGroupName, string circuitName, string peeringName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -210,14 +199,7 @@ namespace Azure.ResourceManager.Network
                     {
                         PeerExpressRouteCircuitConnectionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PeerExpressRouteCircuitConnectionListResult.DeserializePeerExpressRouteCircuitConnectionListResult(document.RootElement);
-                        }
+                        value = PeerExpressRouteCircuitConnectionListResult.DeserializePeerExpressRouteCircuitConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -230,6 +212,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="circuitName"> The name of the circuit. </param>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, or <paramref name="peeringName"/> is null. </exception>
         public Response<PeerExpressRouteCircuitConnectionListResult> List(string resourceGroupName, string circuitName, string peeringName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -253,14 +236,7 @@ namespace Azure.ResourceManager.Network
                     {
                         PeerExpressRouteCircuitConnectionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PeerExpressRouteCircuitConnectionListResult.DeserializePeerExpressRouteCircuitConnectionListResult(document.RootElement);
-                        }
+                        value = PeerExpressRouteCircuitConnectionListResult.DeserializePeerExpressRouteCircuitConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -286,6 +262,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="circuitName"> The name of the circuit. </param>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, or <paramref name="peeringName"/> is null. </exception>
         public async Task<Response<PeerExpressRouteCircuitConnectionListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string circuitName, string peeringName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -313,14 +290,7 @@ namespace Azure.ResourceManager.Network
                     {
                         PeerExpressRouteCircuitConnectionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PeerExpressRouteCircuitConnectionListResult.DeserializePeerExpressRouteCircuitConnectionListResult(document.RootElement);
-                        }
+                        value = PeerExpressRouteCircuitConnectionListResult.DeserializePeerExpressRouteCircuitConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -334,6 +304,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="circuitName"> The name of the circuit. </param>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, or <paramref name="peeringName"/> is null. </exception>
         public Response<PeerExpressRouteCircuitConnectionListResult> ListNextPage(string nextLink, string resourceGroupName, string circuitName, string peeringName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -361,14 +332,7 @@ namespace Azure.ResourceManager.Network
                     {
                         PeerExpressRouteCircuitConnectionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PeerExpressRouteCircuitConnectionListResult.DeserializePeerExpressRouteCircuitConnectionListResult(document.RootElement);
-                        }
+                        value = PeerExpressRouteCircuitConnectionListResult.DeserializePeerExpressRouteCircuitConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

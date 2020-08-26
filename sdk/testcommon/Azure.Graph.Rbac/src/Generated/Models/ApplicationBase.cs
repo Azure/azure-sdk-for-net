@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
@@ -15,69 +16,16 @@ namespace Azure.Graph.Rbac.Models
         /// <summary> Initializes a new instance of ApplicationBase. </summary>
         public ApplicationBase()
         {
-        }
-
-        /// <summary> Initializes a new instance of ApplicationBase. </summary>
-        /// <param name="allowGuestsSignIn"> A property on the application to indicate if the application accepts other IDPs or not or partially accepts. </param>
-        /// <param name="allowPassthroughUsers"> Indicates that the application supports pass through users who have no presence in the resource tenant. </param>
-        /// <param name="appLogoUrl"> The url for the application logo image stored in a CDN. </param>
-        /// <param name="appRoles"> The collection of application roles that an application may declare. These roles can be assigned to users, groups or service principals. </param>
-        /// <param name="appPermissions"> The application permissions. </param>
-        /// <param name="availableToOtherTenants"> Whether the application is available to other tenants. </param>
-        /// <param name="errorUrl"> A URL provided by the author of the application to report errors when using the application. </param>
-        /// <param name="groupMembershipClaims"> Configures the groups claim issued in a user or OAuth 2.0 access token that the app expects. </param>
-        /// <param name="homepage"> The home page of the application. </param>
-        /// <param name="informationalUrls"> URLs with more information about the application. </param>
-        /// <param name="isDeviceOnlyAuthSupported"> Specifies whether this application supports device authentication without a user. The default is false. </param>
-        /// <param name="keyCredentials"> A collection of KeyCredential objects. </param>
-        /// <param name="knownClientApplications"> Client applications that are tied to this resource application. Consent to any of the known client applications will result in implicit consent to the resource application through a combined consent dialog (showing the OAuth permission scopes required by the client and the resource). </param>
-        /// <param name="logoutUrl"> the url of the logout page. </param>
-        /// <param name="oauth2AllowImplicitFlow"> Whether to allow implicit grant flow for OAuth2. </param>
-        /// <param name="oauth2AllowUrlPathMatching"> Specifies whether during a token Request Azure AD will allow path matching of the redirect URI against the applications collection of replyURLs. The default is false. </param>
-        /// <param name="oauth2Permissions"> The collection of OAuth 2.0 permission scopes that the web API (resource) application exposes to client applications. These permission scopes may be granted to client applications during consent. </param>
-        /// <param name="oauth2RequirePostResponse"> Specifies whether, as part of OAuth 2.0 token requests, Azure AD will allow POST requests, as opposed to GET requests. The default is false, which specifies that only GET requests will be allowed. </param>
-        /// <param name="orgRestrictions"> A list of tenants allowed to access application. </param>
-        /// <param name="optionalClaims"> Specifying the claims to be included in the token. </param>
-        /// <param name="passwordCredentials"> A collection of PasswordCredential objects. </param>
-        /// <param name="preAuthorizedApplications"> list of pre-authorized applications. </param>
-        /// <param name="publicClient"> Specifies whether this application is a public client (such as an installed application running on a mobile device). Default is false. </param>
-        /// <param name="publisherDomain"> Reliable domain which can be used to identify an application. </param>
-        /// <param name="replyUrls"> A collection of reply URLs for the application. </param>
-        /// <param name="requiredResourceAccess"> Specifies resources that this application requires access to and the set of OAuth permission scopes and application roles that it needs under each of those resources. This pre-configuration of required resource access drives the consent experience. </param>
-        /// <param name="samlMetadataUrl"> The URL to the SAML metadata for the application. </param>
-        /// <param name="signInAudience"> Audience for signing in to the application (AzureADMyOrganization, AzureADAllOrganizations, AzureADAndMicrosoftAccounts). </param>
-        /// <param name="wwwHomepage"> The primary Web page. </param>
-        internal ApplicationBase(bool? allowGuestsSignIn, bool? allowPassthroughUsers, string appLogoUrl, IList<AppRole> appRoles, IList<string> appPermissions, bool? availableToOtherTenants, string errorUrl, GroupMembershipClaimTypes? groupMembershipClaims, string homepage, InformationalUrl informationalUrls, bool? isDeviceOnlyAuthSupported, IList<KeyCredential> keyCredentials, IList<string> knownClientApplications, string logoutUrl, bool? oauth2AllowImplicitFlow, bool? oauth2AllowUrlPathMatching, IList<OAuth2Permission> oauth2Permissions, bool? oauth2RequirePostResponse, IList<string> orgRestrictions, OptionalClaims optionalClaims, IList<PasswordCredential> passwordCredentials, IList<PreAuthorizedApplication> preAuthorizedApplications, bool? publicClient, string publisherDomain, IList<string> replyUrls, IList<RequiredResourceAccess> requiredResourceAccess, string samlMetadataUrl, string signInAudience, string wwwHomepage)
-        {
-            AllowGuestsSignIn = allowGuestsSignIn;
-            AllowPassthroughUsers = allowPassthroughUsers;
-            AppLogoUrl = appLogoUrl;
-            AppRoles = appRoles;
-            AppPermissions = appPermissions;
-            AvailableToOtherTenants = availableToOtherTenants;
-            ErrorUrl = errorUrl;
-            GroupMembershipClaims = groupMembershipClaims;
-            Homepage = homepage;
-            InformationalUrls = informationalUrls;
-            IsDeviceOnlyAuthSupported = isDeviceOnlyAuthSupported;
-            KeyCredentials = keyCredentials;
-            KnownClientApplications = knownClientApplications;
-            LogoutUrl = logoutUrl;
-            Oauth2AllowImplicitFlow = oauth2AllowImplicitFlow;
-            Oauth2AllowUrlPathMatching = oauth2AllowUrlPathMatching;
-            Oauth2Permissions = oauth2Permissions;
-            Oauth2RequirePostResponse = oauth2RequirePostResponse;
-            OrgRestrictions = orgRestrictions;
-            OptionalClaims = optionalClaims;
-            PasswordCredentials = passwordCredentials;
-            PreAuthorizedApplications = preAuthorizedApplications;
-            PublicClient = publicClient;
-            PublisherDomain = publisherDomain;
-            ReplyUrls = replyUrls;
-            RequiredResourceAccess = requiredResourceAccess;
-            SamlMetadataUrl = samlMetadataUrl;
-            SignInAudience = signInAudience;
-            WwwHomepage = wwwHomepage;
+            AppRoles = new ChangeTrackingList<AppRole>();
+            AppPermissions = new ChangeTrackingList<string>();
+            KeyCredentials = new ChangeTrackingList<KeyCredential>();
+            KnownClientApplications = new ChangeTrackingList<string>();
+            Oauth2Permissions = new ChangeTrackingList<OAuth2Permission>();
+            OrgRestrictions = new ChangeTrackingList<string>();
+            PasswordCredentials = new ChangeTrackingList<PasswordCredential>();
+            PreAuthorizedApplications = new ChangeTrackingList<PreAuthorizedApplication>();
+            ReplyUrls = new ChangeTrackingList<string>();
+            RequiredResourceAccess = new ChangeTrackingList<RequiredResourceAccess>();
         }
 
         /// <summary> A property on the application to indicate if the application accepts other IDPs or not or partially accepts. </summary>
@@ -87,9 +35,9 @@ namespace Azure.Graph.Rbac.Models
         /// <summary> The url for the application logo image stored in a CDN. </summary>
         public string AppLogoUrl { get; set; }
         /// <summary> The collection of application roles that an application may declare. These roles can be assigned to users, groups or service principals. </summary>
-        public IList<AppRole> AppRoles { get; set; }
+        public IList<AppRole> AppRoles { get; }
         /// <summary> The application permissions. </summary>
-        public IList<string> AppPermissions { get; set; }
+        public IList<string> AppPermissions { get; }
         /// <summary> Whether the application is available to other tenants. </summary>
         public bool? AvailableToOtherTenants { get; set; }
         /// <summary> A URL provided by the author of the application to report errors when using the application. </summary>
@@ -103,9 +51,9 @@ namespace Azure.Graph.Rbac.Models
         /// <summary> Specifies whether this application supports device authentication without a user. The default is false. </summary>
         public bool? IsDeviceOnlyAuthSupported { get; set; }
         /// <summary> A collection of KeyCredential objects. </summary>
-        public IList<KeyCredential> KeyCredentials { get; set; }
+        public IList<KeyCredential> KeyCredentials { get; }
         /// <summary> Client applications that are tied to this resource application. Consent to any of the known client applications will result in implicit consent to the resource application through a combined consent dialog (showing the OAuth permission scopes required by the client and the resource). </summary>
-        public IList<string> KnownClientApplications { get; set; }
+        public IList<string> KnownClientApplications { get; }
         /// <summary> the url of the logout page. </summary>
         public string LogoutUrl { get; set; }
         /// <summary> Whether to allow implicit grant flow for OAuth2. </summary>
@@ -113,25 +61,25 @@ namespace Azure.Graph.Rbac.Models
         /// <summary> Specifies whether during a token Request Azure AD will allow path matching of the redirect URI against the applications collection of replyURLs. The default is false. </summary>
         public bool? Oauth2AllowUrlPathMatching { get; set; }
         /// <summary> The collection of OAuth 2.0 permission scopes that the web API (resource) application exposes to client applications. These permission scopes may be granted to client applications during consent. </summary>
-        public IList<OAuth2Permission> Oauth2Permissions { get; set; }
+        public IList<OAuth2Permission> Oauth2Permissions { get; }
         /// <summary> Specifies whether, as part of OAuth 2.0 token requests, Azure AD will allow POST requests, as opposed to GET requests. The default is false, which specifies that only GET requests will be allowed. </summary>
         public bool? Oauth2RequirePostResponse { get; set; }
         /// <summary> A list of tenants allowed to access application. </summary>
-        public IList<string> OrgRestrictions { get; set; }
+        public IList<string> OrgRestrictions { get; }
         /// <summary> Specifying the claims to be included in the token. </summary>
         public OptionalClaims OptionalClaims { get; set; }
         /// <summary> A collection of PasswordCredential objects. </summary>
-        public IList<PasswordCredential> PasswordCredentials { get; set; }
+        public IList<PasswordCredential> PasswordCredentials { get; }
         /// <summary> list of pre-authorized applications. </summary>
-        public IList<PreAuthorizedApplication> PreAuthorizedApplications { get; set; }
+        public IList<PreAuthorizedApplication> PreAuthorizedApplications { get; }
         /// <summary> Specifies whether this application is a public client (such as an installed application running on a mobile device). Default is false. </summary>
         public bool? PublicClient { get; set; }
         /// <summary> Reliable domain which can be used to identify an application. </summary>
         public string PublisherDomain { get; set; }
         /// <summary> A collection of reply URLs for the application. </summary>
-        public IList<string> ReplyUrls { get; set; }
+        public IList<string> ReplyUrls { get; }
         /// <summary> Specifies resources that this application requires access to and the set of OAuth permission scopes and application roles that it needs under each of those resources. This pre-configuration of required resource access drives the consent experience. </summary>
-        public IList<RequiredResourceAccess> RequiredResourceAccess { get; set; }
+        public IList<RequiredResourceAccess> RequiredResourceAccess { get; }
         /// <summary> The URL to the SAML metadata for the application. </summary>
         public string SamlMetadataUrl { get; set; }
         /// <summary> Audience for signing in to the application (AzureADMyOrganization, AzureADAllOrganizations, AzureADAndMicrosoftAccounts). </summary>

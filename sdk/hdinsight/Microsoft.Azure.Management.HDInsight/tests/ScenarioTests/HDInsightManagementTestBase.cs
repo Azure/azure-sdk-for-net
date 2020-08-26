@@ -5,6 +5,7 @@ using Microsoft.Azure.KeyVault;
 using Microsoft.Azure.Management.HDInsight;
 using Microsoft.Azure.Management.KeyVault.Models;
 using Microsoft.Azure.Management.ManagedServiceIdentity.Models;
+using Microsoft.Azure.Management.Network.Models;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
@@ -39,6 +40,7 @@ namespace Management.HDInsight.Tests
                 HDInsightManagementHelper.RegisterSubscriptionForResource("Microsoft.DataLakeStore");
                 HDInsightManagementHelper.RegisterSubscriptionForResource("Microsoft.ManagedIdentity");
                 HDInsightManagementHelper.RegisterSubscriptionForResource("Microsoft.KeyVault");
+                HDInsightManagementHelper.RegisterSubscriptionForResource("Microsoft.Network");
 
                 this.CreateResources();
 
@@ -109,6 +111,11 @@ namespace Management.HDInsight.Tests
         internal Identity CreateMsi(string msiName)
         {
             return HDInsightManagementHelper.CreateManagedIdentity(CommonData.ResourceGroupName, msiName, CommonData.Location);
+        }
+
+        internal VirtualNetwork CreateVnetForPrivateLink(string location, string virtualNetworkName, string subnetName = "default")
+        {
+            return HDInsightManagementHelper.CreateVirtualNetworkWithSubnet(CommonData.ResourceGroupName, location, virtualNetworkName, subnetName, false, false);
         }
 
         #region Dispose

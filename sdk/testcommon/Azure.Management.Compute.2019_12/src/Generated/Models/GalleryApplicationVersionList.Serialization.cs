@@ -16,7 +16,7 @@ namespace Azure.Management.Compute.Models
         internal static GalleryApplicationVersionList DeserializeGalleryApplicationVersionList(JsonElement element)
         {
             IReadOnlyList<GalleryApplicationVersion> value = default;
-            string nextLink = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -24,29 +24,18 @@ namespace Azure.Management.Compute.Models
                     List<GalleryApplicationVersion> array = new List<GalleryApplicationVersion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(GalleryApplicationVersion.DeserializeGalleryApplicationVersion(item));
-                        }
+                        array.Add(GalleryApplicationVersion.DeserializeGalleryApplicationVersion(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new GalleryApplicationVersionList(value, nextLink);
+            return new GalleryApplicationVersionList(value, nextLink.Value);
         }
     }
 }

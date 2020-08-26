@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         /// <summary> Initializes a new instance of VirtualNetworkConnectionGatewayReference. </summary>
         /// <param name="id"> The ID of VirtualNetworkGateway or LocalNetworkGateway resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public VirtualNetworkConnectionGatewayReference(string id)
         {
             if (id == null)

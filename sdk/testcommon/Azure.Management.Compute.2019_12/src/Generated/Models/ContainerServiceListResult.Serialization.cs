@@ -15,42 +15,27 @@ namespace Azure.Management.Compute.Models
     {
         internal static ContainerServiceListResult DeserializeContainerServiceListResult(JsonElement element)
         {
-            IReadOnlyList<ContainerService> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<ContainerService>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ContainerService> array = new List<ContainerService>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ContainerService.DeserializeContainerService(item));
-                        }
+                        array.Add(ContainerService.DeserializeContainerService(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new ContainerServiceListResult(value, nextLink);
+            return new ContainerServiceListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

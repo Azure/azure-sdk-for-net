@@ -16,27 +16,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Timeout != null)
+            if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout");
                 writer.WriteObjectValue(Timeout);
             }
-            if (Retry != null)
+            if (Optional.IsDefined(Retry))
             {
                 writer.WritePropertyName("retry");
                 writer.WriteObjectValue(Retry);
             }
-            if (RetryIntervalInSeconds != null)
+            if (Optional.IsDefined(RetryIntervalInSeconds))
             {
                 writer.WritePropertyName("retryIntervalInSeconds");
                 writer.WriteNumberValue(RetryIntervalInSeconds.Value);
             }
-            if (SecureInput != null)
+            if (Optional.IsDefined(SecureInput))
             {
                 writer.WritePropertyName("secureInput");
                 writer.WriteBooleanValue(SecureInput.Value);
             }
-            if (SecureOutput != null)
+            if (Optional.IsDefined(SecureOutput))
             {
                 writer.WritePropertyName("secureOutput");
                 writer.WriteBooleanValue(SecureOutput.Value);
@@ -51,72 +51,44 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static ActivityPolicy DeserializeActivityPolicy(JsonElement element)
         {
-            object timeout = default;
-            object retry = default;
-            int? retryIntervalInSeconds = default;
-            bool? secureInput = default;
-            bool? secureOutput = default;
+            Optional<object> timeout = default;
+            Optional<object> retry = default;
+            Optional<int> retryIntervalInSeconds = default;
+            Optional<bool> secureInput = default;
+            Optional<bool> secureOutput = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeout"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     timeout = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("retry"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     retry = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("retryIntervalInSeconds"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     retryIntervalInSeconds = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("secureInput"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     secureInput = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("secureOutput"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     secureOutput = property.Value.GetBoolean();
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    additionalPropertiesDictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ActivityPolicy(timeout, retry, retryIntervalInSeconds, secureInput, secureOutput, additionalProperties);
+            return new ActivityPolicy(timeout.Value, retry.Value, Optional.ToNullable(retryIntervalInSeconds), Optional.ToNullable(secureInput), Optional.ToNullable(secureOutput), additionalProperties);
         }
     }
 }

@@ -50,7 +50,6 @@ namespace Azure.Storage
 #if BlobSDK || FileSDK || DataLakeSDK
                 ServiceVersion.V2019_02_02 => "2019-02-02",
                 ServiceVersion.V2019_07_07 => "2019-07-07",
-                // TODO this is temporary until 73 goes to stage.
                 ServiceVersion.V2019_12_12 => "2019-12-12",
 #elif QueueSDK
                 // Queues just bumped the version number without changing the swagger

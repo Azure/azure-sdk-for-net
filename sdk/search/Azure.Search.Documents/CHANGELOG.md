@@ -1,6 +1,24 @@
 # Release History
 
-## 11.0.0-preview.5 (Unreleased)
+## 11.2.0-preview.1 (Unreleased)
+
+## 11.1.1 (2020-08-18)
+
+### Fixed
+- Bug in TaskExtensions.EnsureCompleted method that causes it to unconditionally throw an exception in the environments with synchronization context
+
+## 11.1.0 (2020-08-11)
+
+### Added
+
+- Added `SearchClientOptions.Serializer` to set which `ObjectSerializer` to use for serialization.
+- Added `FieldBuilder` to easily create `SearchIndex` fields from a model type.
+
+### Removed
+
+- Removed `$select` from the query parameters logged by default.  You can add it back via `SearchClientOptions.Diagnostics.LoggedQueryParameters("$select");` if desired.
+
+## 11.0.0 (2020-07-07)
 
 ### Changed
 
@@ -10,7 +28,10 @@
 
 ### Removed
 
+- Removed `Azure.Core.Experimental` reference and features until they're moved
+  into `Azure.Core`.
 - Removed `SearchServiceCounters.SkillsetCounter`.
+- Removed `new SearchOptions(string continuationToken)` overload.
 
 ## 1.0.0-preview.4 (2020-06-09)
 

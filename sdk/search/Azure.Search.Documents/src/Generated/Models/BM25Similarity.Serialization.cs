@@ -15,15 +15,29 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (K1 != null)
+            if (Optional.IsDefined(K1))
             {
-                writer.WritePropertyName("k1");
-                writer.WriteNumberValue(K1.Value);
+                if (K1 != null)
+                {
+                    writer.WritePropertyName("k1");
+                    writer.WriteNumberValue(K1.Value);
+                }
+                else
+                {
+                    writer.WriteNull("k1");
+                }
             }
-            if (B != null)
+            if (Optional.IsDefined(B))
             {
-                writer.WritePropertyName("b");
-                writer.WriteNumberValue(B.Value);
+                if (B != null)
+                {
+                    writer.WritePropertyName("b");
+                    writer.WriteNumberValue(B.Value);
+                }
+                else
+                {
+                    writer.WriteNull("b");
+                }
             }
             writer.WritePropertyName("@odata.type");
             writer.WriteStringValue(ODataType);
@@ -32,8 +46,8 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static BM25Similarity DeserializeBM25Similarity(JsonElement element)
         {
-            double? k1 = default;
-            double? b = default;
+            Optional<double?> k1 = default;
+            Optional<double?> b = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -41,6 +55,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        k1 = null;
                         continue;
                     }
                     k1 = property.Value.GetDouble();
@@ -50,6 +65,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        b = null;
                         continue;
                     }
                     b = property.Value.GetDouble();
@@ -61,7 +77,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new BM25Similarity(odataType, k1, b);
+            return new BM25Similarity(odataType, Optional.ToNullable(k1), Optional.ToNullable(b));
         }
     }
 }

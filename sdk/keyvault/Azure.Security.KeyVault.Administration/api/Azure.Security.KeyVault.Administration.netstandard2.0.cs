@@ -49,8 +49,10 @@ namespace Azure.Security.KeyVault.Administration
         public virtual System.Uri VaultUri { get { throw null; } }
         public virtual Azure.Security.KeyVault.Administration.BackupOperation StartBackup(System.Uri blobStorageUri, string sasToken, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Administration.BackupOperation> StartBackupAsync(System.Uri blobStorageUri, string sasToken, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Security.KeyVault.Administration.RestoreOperation StartRestore(System.Uri blobStorageUri, string sasToken, string folderName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Administration.RestoreOperation> StartRestoreAsync(System.Uri blobStorageUri, string sasToken, string folderName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Security.KeyVault.Administration.RestoreOperation StartRestore(System.Uri blobStorageUri, string sasToken, string folderName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Administration.RestoreOperation> StartRestoreAsync(System.Uri blobStorageUri, string sasToken, string folderName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Security.KeyVault.Administration.RestoreOperation StartSelectiveRestore(string keyName, System.Uri blobStorageUri, string sasToken, string folderName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Administration.RestoreOperation> StartSelectiveRestoreAsync(string keyName, System.Uri blobStorageUri, string sasToken, string folderName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class KeyVaultBackupClientOptions : Azure.Core.ClientOptions
     {
@@ -82,7 +84,7 @@ namespace Azure.Security.KeyVault.Administration
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public RoleAssignmentScope(string value) { throw null; }
-        public RoleAssignmentScope(System.Uri ResourceId) { throw null; }
+        public RoleAssignmentScope(System.Uri resourceId) { throw null; }
         public static Azure.Security.KeyVault.Administration.RoleAssignmentScope Global { get { throw null; } }
         public static Azure.Security.KeyVault.Administration.RoleAssignmentScope Keys { get { throw null; } }
         public bool Equals(Azure.Security.KeyVault.Administration.RoleAssignmentScope other) { throw null; }
@@ -103,15 +105,15 @@ namespace Azure.Security.KeyVault.Administration.Models
         public static Azure.Security.KeyVault.Administration.BackupOperation BackupOperation(Azure.Response response, Azure.Security.KeyVault.Administration.KeyVaultBackupClient client, string id, System.Uri blobContainerUri, System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), string errorMessage = null) { throw null; }
         public static Azure.Security.KeyVault.Administration.RestoreOperation RestoreOperation(Azure.Response response, Azure.Security.KeyVault.Administration.KeyVaultBackupClient client, string id, System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), string errorMessage = null) { throw null; }
         public static Azure.Security.KeyVault.Administration.Models.RoleAssignment RoleAssignment(string id, string name, string type, Azure.Security.KeyVault.Administration.Models.RoleAssignmentPropertiesWithScope properties) { throw null; }
-        public static Azure.Security.KeyVault.Administration.Models.RoleDefinition RoleDefinition(string id, string name, string type, string roleName, string description, string roleType, System.Collections.Generic.IReadOnlyList<Azure.Security.KeyVault.Administration.Models.KeyVaultPermission> permissions, System.Collections.Generic.IReadOnlyList<string> assignableScopes) { throw null; }
+        public static Azure.Security.KeyVault.Administration.Models.RoleDefinition RoleDefinition(string id, string name, string type, string roleName, string description, string roleType, System.Collections.Generic.IList<Azure.Security.KeyVault.Administration.Models.KeyVaultPermission> permissions, System.Collections.Generic.IList<string> assignableScopes) { throw null; }
     }
     public partial class KeyVaultPermission
     {
         internal KeyVaultPermission() { }
-        public System.Collections.Generic.IReadOnlyList<string> Actions { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> DataActions { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> NotActions { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> NotDataActions { get { throw null; } }
+        public System.Collections.Generic.IList<string> Actions { get { throw null; } }
+        public System.Collections.Generic.IList<string> DataActions { get { throw null; } }
+        public System.Collections.Generic.IList<string> NotActions { get { throw null; } }
+        public System.Collections.Generic.IList<string> NotDataActions { get { throw null; } }
     }
     public partial class KeyVaultServiceError
     {
@@ -144,11 +146,11 @@ namespace Azure.Security.KeyVault.Administration.Models
     public partial class RoleDefinition
     {
         internal RoleDefinition() { }
-        public System.Collections.Generic.IReadOnlyList<string> AssignableScopes { get { throw null; } }
+        public System.Collections.Generic.IList<string> AssignableScopes { get { throw null; } }
         public string Description { get { throw null; } }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Security.KeyVault.Administration.Models.KeyVaultPermission> Permissions { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Security.KeyVault.Administration.Models.KeyVaultPermission> Permissions { get { throw null; } }
         public string RoleName { get { throw null; } }
         public string RoleType { get { throw null; } }
         public string Type { get { throw null; } }

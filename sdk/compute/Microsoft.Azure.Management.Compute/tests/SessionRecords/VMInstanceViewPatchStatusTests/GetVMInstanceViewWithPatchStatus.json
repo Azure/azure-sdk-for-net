@@ -1,0 +1,75 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/7602e371-c6bc-4bb3-bc2d-491dfc17fc32/resourceGroups/PatchStatusRg/providers/Microsoft.Compute/virtualMachines/testVm/instanceView?api-version=2020-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzYwMmUzNzEtYzZiYy00YmIzLWJjMmQtNDkxZGZjMTdmYzMyL3Jlc291cmNlR3JvdXBzL1BhdGNoU3RhdHVzUmcvcHJvdmlkZXJzL01pY3Jvc29mdC5Db21wdXRlL3ZpcnR1YWxNYWNoaW5lcy90ZXN0Vm0vaW5zdGFuY2VWaWV3P2FwaS12ZXJzaW9uPTIwMjAtMDYtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "c8285d6b-5faf-4db9-b6f1-e06d88f2061a"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29017.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/38.2.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-resource": [
+          "Microsoft.Compute/LowCostGet3Min;3998,Microsoft.Compute/LowCostGet30Min;31979"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "064560d4-80b5-4316-9258-ff663a450ed3"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-correlation-request-id": [
+          "d44d10e0-3b6f-40b9-9681-c7ecc80acfb8"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20200805T043627Z:d44d10e0-3b6f-40b9-9681-c7ecc80acfb8"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 05 Aug 2020 04:36:26 GMT"
+        ],
+        "Content-Length": [
+          "4230"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"computerName\": \"testVm\",\r\n  \"osName\": \"Windows Server 2016 Datacenter\",\r\n  \"osVersion\": \"Microsoft Windows NT 10.0.14393.0\",\r\n  \"vmAgent\": {\r\n    \"vmAgentVersion\": \"2.7.41491.982\",\r\n    \"statuses\": [\r\n      {\r\n        \"code\": \"ProvisioningState/succeeded\",\r\n        \"level\": \"Info\",\r\n        \"displayStatus\": \"Ready\",\r\n        \"message\": \"GuestAgent is running and processing the extensions.\",\r\n        \"time\": \"2020-08-04T21:36:25-07:00\"\r\n      }\r\n    ],\r\n    \"extensionHandlers\": [\r\n      {\r\n        \"type\": \"Microsoft.Azure.Geneva.GenevaMonitoring\",\r\n        \"typeHandlerVersion\": \"2.18.0.2\",\r\n        \"status\": {\r\n          \"code\": \"ProvisioningState/succeeded\",\r\n          \"level\": \"Info\",\r\n          \"displayStatus\": \"Ready\",\r\n          \"message\": \"ExtensionOperation:enable. Status:Success\"\r\n        }\r\n      },\r\n      {\r\n        \"type\": \"Microsoft.CPlat.Core.WindowsPatchExtension\",\r\n        \"typeHandlerVersion\": \"1.5.14\",\r\n        \"status\": {\r\n          \"code\": \"ProvisioningState/succeeded\",\r\n          \"level\": \"Info\",\r\n          \"displayStatus\": \"Ready\"\r\n        }\r\n      }\r\n    ]\r\n  },\r\n  \"patchStatus\": {\r\n    \"hotPatchStatus\": {\r\n      \"hotPatchCompatibility\": \"Incompatible\",\r\n      \"hotPatchOptInCompletionStatus\": \"Unknown\",\r\n      \"lastInstalledCumulativeUpdateHotPatchStatus\": \"Unknown\",\r\n      \"lastRefreshedTime\": \"2020-08-04T21:36:27.238032-07:00\",\r\n      \"error\": {\r\n        \"details\": [\r\n          {\r\n            \"code\": \"UNSUPPORTED_PLATFORM_IMAGE\",\r\n            \"message\": \"VM image MicrosoftWindowsServer:2016-Datacenter is not hot patch compatible. For more details, visit: aka.ms/HotPatchCompatibility\"\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    \"availablePatchSummary\": {\r\n      \"assessmentActivityId\": \"54d8ee50-c652-4793-8773-3258c52a01c6\",\r\n      \"status\": \"Succeeded\",\r\n      \"startTime\": \"2020-08-04T21:05:23.3192392-07:00\",\r\n      \"lastModifiedTime\": \"2020-08-04T21:15:54.8385565-07:00\",\r\n      \"criticalAndSecurityPatchCount\": 0,\r\n      \"otherPatchCount\": 1,\r\n      \"rebootPending\": true\r\n    },\r\n    \"lastPatchInstallationSummary\": {\r\n      \"installationActivityId\": \"54d8ee50-c652-4793-8773-3258c52a01c6\",\r\n      \"status\": \"Succeeded\",\r\n      \"startTime\": \"2020-08-04T21:05:23.3192392-07:00\",\r\n      \"lastModifiedTime\": \"2020-08-04T21:15:54.8385565-07:00\",\r\n      \"notSelectedPatchCount\": 0,\r\n      \"excludedPatchCount\": 0,\r\n      \"pendingPatchCount\": 0,\r\n      \"installedPatchCount\": 2,\r\n      \"failedPatchCount\": 0\r\n    }\r\n  },\r\n  \"disks\": [\r\n    {\r\n      \"name\": \"testVm_disk1_cf57a954f3324b958a891ec95a40f926\",\r\n      \"statuses\": [\r\n        {\r\n          \"code\": \"ProvisioningState/succeeded\",\r\n          \"level\": \"Info\",\r\n          \"displayStatus\": \"Provisioning succeeded\",\r\n          \"time\": \"2020-08-04T21:02:08.1306902-07:00\"\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"bootDiagnostics\": {\r\n    \"consoleScreenshotBlobUri\": \"https://patchstatusrgdiag.blob.core.windows.net/bootdiagnostics-testvm-d08f4d9f-50e3-44fd-a699-899e24947e09/testVm.d08f4d9f-50e3-44fd-a699-899e24947e09.screenshot.bmp\",\r\n    \"serialConsoleLogBlobUri\": \"https://patchstatusrgdiag.blob.core.windows.net/bootdiagnostics-testvm-d08f4d9f-50e3-44fd-a699-899e24947e09/testVm.d08f4d9f-50e3-44fd-a699-899e24947e09.serialconsole.log\"\r\n  },\r\n  \"extensions\": [\r\n    {\r\n      \"name\": \"Microsoft.Azure.Geneva.GenevaMonitoring\",\r\n      \"type\": \"Microsoft.Azure.Geneva.GenevaMonitoring\",\r\n      \"typeHandlerVersion\": \"2.18.0.2\",\r\n      \"statuses\": [\r\n        {\r\n          \"code\": \"ProvisioningState/succeeded\",\r\n          \"level\": \"Info\",\r\n          \"displayStatus\": \"Provisioning succeeded\",\r\n          \"message\": \"ExtensionOperation:enable. Status:Success\",\r\n          \"time\": \"2020-08-04T21:36:17-07:00\"\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"internalData\": {\r\n    \"fabricCluster\": \"useast2-prod-a\",\r\n    \"fabricTenantName\": \"3ec7e27f-2a9c-4656-9320-a8418dc3f5b6\"\r\n  },\r\n  \"hyperVGeneration\": \"V1\",\r\n  \"statuses\": [\r\n    {\r\n      \"code\": \"ProvisioningState/succeeded\",\r\n      \"level\": \"Info\",\r\n      \"displayStatus\": \"Provisioning succeeded\",\r\n      \"time\": \"2020-08-04T21:12:52.6346669-07:00\"\r\n    },\r\n    {\r\n      \"code\": \"PowerState/running\",\r\n      \"level\": \"Info\",\r\n      \"displayStatus\": \"VM running\"\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "7602e371-c6bc-4bb3-bc2d-491dfc17fc32"
+  }
+}

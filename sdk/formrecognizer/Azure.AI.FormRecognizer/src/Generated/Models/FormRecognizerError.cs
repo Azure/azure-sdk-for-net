@@ -15,6 +15,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary> Initializes a new instance of FormRecognizerError. </summary>
         /// <param name="errorCode"> . </param>
         /// <param name="message"> . </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="errorCode"/> or <paramref name="message"/> is null. </exception>
         internal FormRecognizerError(string errorCode, string message)
         {
             if (errorCode == null)

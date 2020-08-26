@@ -16,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of PhoenixLinkedService. </summary>
         /// <param name="host"> The IP address or host name of the Phoenix server. (i.e. 192.168.222.160). </param>
         /// <param name="authenticationType"> The authentication mechanism used to connect to the Phoenix server. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         public PhoenixLinkedService(object host, PhoenixAuthenticationType authenticationType)
         {
             if (host == null)

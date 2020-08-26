@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,17 +18,17 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
-            if (Source != null)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source");
                 writer.WriteStringValue(Source);
             }
-            if (SourceContext != null)
+            if (Optional.IsDefined(SourceContext))
             {
                 writer.WritePropertyName("sourceContext");
                 writer.WriteStringValue(SourceContext);
             }
-            if (Inputs != null && Inputs.Any())
+            if (Optional.IsCollectionDefined(Inputs))
             {
                 writer.WritePropertyName("inputs");
                 writer.WriteStartArray();
@@ -45,9 +44,9 @@ namespace Azure.Search.Documents.Indexes.Models
         internal static InputFieldMappingEntry DeserializeInputFieldMappingEntry(JsonElement element)
         {
             string name = default;
-            string source = default;
-            string sourceContext = default;
-            IList<InputFieldMappingEntry> inputs = default;
+            Optional<string> source = default;
+            Optional<string> sourceContext = default;
+            Optional<IList<InputFieldMappingEntry>> inputs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -57,45 +56,26 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("source"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     source = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("sourceContext"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sourceContext = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("inputs"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<InputFieldMappingEntry> array = new List<InputFieldMappingEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(DeserializeInputFieldMappingEntry(item));
-                        }
+                        array.Add(DeserializeInputFieldMappingEntry(item));
                     }
                     inputs = array;
                     continue;
                 }
             }
-            return new InputFieldMappingEntry(name, source, sourceContext, inputs);
+            return new InputFieldMappingEntry(name, source.Value, sourceContext.Value, Optional.ToList(inputs));
         }
     }
 }

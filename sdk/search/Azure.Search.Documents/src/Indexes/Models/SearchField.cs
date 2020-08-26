@@ -34,20 +34,18 @@ namespace Azure.Search.Documents.Indexes.Models
             Name = name;
             Type = type;
 
-            Fields = new List<SearchField>();
-            SynonymMapNames = new List<string>();
+            Fields = new ChangeTrackingList<SearchField>();
+            SynonymMapNames = new ChangeTrackingList<string>();
         }
 
         /// <summary>
         /// Gets the name of the field.
         /// </summary>
-        [CodeGenMember("name")]
         public string Name { get; }
 
         /// <summary>
         /// Ge the data type of the field.
         /// </summary>
-        [CodeGenMember("type")]
         public SearchFieldDataType Type { get; }
 
         // TODO: Remove "overrides" for boolean properties when https://github.com/Azure/autorest.csharp/issues/558 is fixed.
@@ -183,13 +181,13 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary>
         /// Gets a list of names of synonym maps associated with this field. Only fields where <see cref="IsSearchable"/> is true can have associated synonym maps.
         /// </summary>
-        [CodeGenMember("synonymMaps", EmptyAsUndefined = true, Initialize = true)]
+        [CodeGenMember("synonymMaps")]
         public IList<string> SynonymMapNames { get; }
 
         /// <summary>
         /// Gets a list of nested fields if this field is of type <see cref="SearchFieldDataType.Complex"/> or "Collection(DataType.Complex)".
         /// </summary>
-        [CodeGenMember("fields", EmptyAsUndefined = true, Initialize = true)]
+        [CodeGenMember("fields")]
         public IList<SearchField> Fields { get; }
 
 

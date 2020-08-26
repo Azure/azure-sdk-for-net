@@ -9,7 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.Management.Marketplace" Version="1.0.1" />
     <ProjectReference Include="..\src\Microsoft.Azure.Management.Marketplace.csproj" />
   </ItemGroup>
 

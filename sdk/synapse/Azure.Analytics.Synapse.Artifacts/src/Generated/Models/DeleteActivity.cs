@@ -16,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of DeleteActivity. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="dataset"> Delete activity dataset reference. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="dataset"/> is null. </exception>
         public DeleteActivity(string name, DatasetReference dataset) : base(name)
         {
             if (name == null)

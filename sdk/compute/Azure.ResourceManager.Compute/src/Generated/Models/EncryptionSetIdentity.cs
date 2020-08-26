@@ -13,14 +13,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of EncryptionSetIdentity. </summary>
         public EncryptionSetIdentity()
         {
-            Type = "SystemAssigned";
         }
 
         /// <summary> Initializes a new instance of EncryptionSetIdentity. </summary>
         /// <param name="type"> The type of Managed Identity used by the DiskEncryptionSet. Only SystemAssigned is supported. </param>
         /// <param name="principalId"> The object id of the Managed Identity Resource. This will be sent to the RP from ARM via the x-ms-identity-principal-id header in the PUT request if the resource has a systemAssigned(implicit) identity. </param>
         /// <param name="tenantId"> The tenant id of the Managed Identity Resource. This will be sent to the RP from ARM via the x-ms-client-tenant-id header in the PUT request if the resource has a systemAssigned(implicit) identity. </param>
-        internal EncryptionSetIdentity(string type, string principalId, string tenantId)
+        internal EncryptionSetIdentity(DiskEncryptionSetIdentityType? type, string principalId, string tenantId)
         {
             Type = type;
             PrincipalId = principalId;
@@ -28,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The type of Managed Identity used by the DiskEncryptionSet. Only SystemAssigned is supported. </summary>
-        public string Type { get; set; }
+        public DiskEncryptionSetIdentityType? Type { get; set; }
         /// <summary> The object id of the Managed Identity Resource. This will be sent to the RP from ARM via the x-ms-identity-principal-id header in the PUT request if the resource has a systemAssigned(implicit) identity. </summary>
         public string PrincipalId { get; }
         /// <summary> The tenant id of the Managed Identity Resource. This will be sent to the RP from ARM via the x-ms-client-tenant-id header in the PUT request if the resource has a systemAssigned(implicit) identity. </summary>

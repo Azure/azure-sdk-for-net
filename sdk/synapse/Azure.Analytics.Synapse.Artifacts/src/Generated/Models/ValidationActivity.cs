@@ -16,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of ValidationActivity. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="dataset"> Validation activity dataset reference. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="dataset"/> is null. </exception>
         public ValidationActivity(string name, DatasetReference dataset) : base(name)
         {
             if (name == null)

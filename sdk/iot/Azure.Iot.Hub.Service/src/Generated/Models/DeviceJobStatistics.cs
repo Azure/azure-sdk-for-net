@@ -7,7 +7,7 @@
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    /// <summary> The job counts, e.g., number of failed/succeeded devices. </summary>
+    /// <summary> The job statistics regarding execution status. </summary>
     public partial class DeviceJobStatistics
     {
         /// <summary> Initializes a new instance of DeviceJobStatistics. </summary>
@@ -16,9 +16,9 @@ namespace Azure.Iot.Hub.Service.Models
         }
 
         /// <summary> Initializes a new instance of DeviceJobStatistics. </summary>
-        /// <param name="deviceCount"> Number of devices in the job. </param>
+        /// <param name="deviceCount"> The number of devices targeted by the job. </param>
         /// <param name="failedCount"> The number of failed jobs. </param>
-        /// <param name="succeededCount"> The number of Successed jobs. </param>
+        /// <param name="succeededCount"> The number of succeeded jobs. </param>
         /// <param name="runningCount"> The number of running jobs. </param>
         /// <param name="pendingCount"> The number of pending (scheduled) jobs. </param>
         internal DeviceJobStatistics(int? deviceCount, int? failedCount, int? succeededCount, int? runningCount, int? pendingCount)
@@ -30,11 +30,11 @@ namespace Azure.Iot.Hub.Service.Models
             PendingCount = pendingCount;
         }
 
-        /// <summary> Number of devices in the job. </summary>
+        /// <summary> The number of devices targeted by the job. </summary>
         public int? DeviceCount { get; }
         /// <summary> The number of failed jobs. </summary>
         public int? FailedCount { get; }
-        /// <summary> The number of Successed jobs. </summary>
+        /// <summary> The number of succeeded jobs. </summary>
         public int? SucceededCount { get; }
         /// <summary> The number of running jobs. </summary>
         public int? RunningCount { get; }

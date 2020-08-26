@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal static AvailabilitySetListResult DeserializeAvailabilitySetListResult(JsonElement element)
         {
             IReadOnlyList<AvailabilitySet> value = default;
-            string nextLink = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -24,29 +24,18 @@ namespace Azure.ResourceManager.Compute.Models
                     List<AvailabilitySet> array = new List<AvailabilitySet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(AvailabilitySet.DeserializeAvailabilitySet(item));
-                        }
+                        array.Add(AvailabilitySet.DeserializeAvailabilitySet(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new AvailabilitySetListResult(value, nextLink);
+            return new AvailabilitySetListResult(value, nextLink.Value);
         }
     }
 }

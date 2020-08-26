@@ -81,6 +81,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="loadBalancerName"/> is null. </exception>
         public virtual AsyncPageable<BackendAddressPool> ListAsync(string resourceGroupName, string loadBalancerName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -129,6 +130,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="loadBalancerName"/> is null. </exception>
         public virtual Pageable<BackendAddressPool> List(string resourceGroupName, string loadBalancerName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -179,6 +181,7 @@ namespace Azure.Management.Network
         /// <param name="backendAddressPoolName"> The name of the backend address pool. </param>
         /// <param name="parameters"> Parameters supplied to the create or update load balancer backend address pool operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="loadBalancerName"/>, <paramref name="backendAddressPoolName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual async Task<LoadBalancerBackendAddressPoolsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string loadBalancerName, string backendAddressPoolName, BackendAddressPool parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -218,6 +221,7 @@ namespace Azure.Management.Network
         /// <param name="backendAddressPoolName"> The name of the backend address pool. </param>
         /// <param name="parameters"> Parameters supplied to the create or update load balancer backend address pool operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="loadBalancerName"/>, <paramref name="backendAddressPoolName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual LoadBalancerBackendAddressPoolsCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string loadBalancerName, string backendAddressPoolName, BackendAddressPool parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -256,6 +260,7 @@ namespace Azure.Management.Network
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
         /// <param name="backendAddressPoolName"> The name of the backend address pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="loadBalancerName"/>, or <paramref name="backendAddressPoolName"/> is null. </exception>
         public virtual async Task<LoadBalancerBackendAddressPoolsDeleteOperation> StartDeleteAsync(string resourceGroupName, string loadBalancerName, string backendAddressPoolName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -290,6 +295,7 @@ namespace Azure.Management.Network
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
         /// <param name="backendAddressPoolName"> The name of the backend address pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="loadBalancerName"/>, or <paramref name="backendAddressPoolName"/> is null. </exception>
         public virtual LoadBalancerBackendAddressPoolsDeleteOperation StartDelete(string resourceGroupName, string loadBalancerName, string backendAddressPoolName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

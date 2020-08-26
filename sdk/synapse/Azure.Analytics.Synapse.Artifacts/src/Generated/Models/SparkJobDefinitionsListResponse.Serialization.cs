@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static SparkJobDefinitionsListResponse DeserializeSparkJobDefinitionsListResponse(JsonElement element)
         {
             IReadOnlyList<SparkJobDefinitionResource> value = default;
-            string nextLink = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -24,29 +24,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<SparkJobDefinitionResource> array = new List<SparkJobDefinitionResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(SparkJobDefinitionResource.DeserializeSparkJobDefinitionResource(item));
-                        }
+                        array.Add(SparkJobDefinitionResource.DeserializeSparkJobDefinitionResource(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new SparkJobDefinitionsListResponse(value, nextLink);
+            return new SparkJobDefinitionsListResponse(value, nextLink.Value);
         }
     }
 }

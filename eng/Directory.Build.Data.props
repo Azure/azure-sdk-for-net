@@ -47,6 +47,13 @@
     <EnableFxCopAnalyzers Condition="'$(IsShippingClientLibrary)' == 'true'">true</EnableFxCopAnalyzers>
     <EnableStyleCopAnalyzers Condition="'$(EnableStyleCopAnalyzers)' == '' and '$(IsClientLibrary)' == 'true'">true</EnableStyleCopAnalyzers>
     <GenerateAPIListing Condition="'$(IsShippingClientLibrary)' == 'true'">true</GenerateAPIListing>
+    <UpdateSourceOnBuild Condition="'$(UpdateSourceOnBuild)' == ''">$(AZURE_DEV_UPDATESOURCESONBUILD)</UpdateSourceOnBuild>
+    <PowerShellExe Condition="'$(PowerShellExe)' == ''">pwsh</PowerShellExe>
+    <CoverletOutputFormat Condition="'$(CoverletOutputFormat)' == '' and '$(CollectCoverage)' == 'true'">cobertura</CoverletOutputFormat>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(IsShippingClientLibrary)' == 'true' and '$(TF_BUILD)' == 'true'">
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
   </PropertyGroup>
 
   <!-- TODO. REVIEW -->
@@ -55,6 +62,7 @@
       $(NoWarn);
       CA1812;  <!-- Avoid uninstantiated internal classes. (Result from below including the Azure.Core source) -->
       AZC0012; <!-- Single word class names -->
+      AZC0008;
     </NoWarn>
   </PropertyGroup>
 
@@ -79,6 +87,7 @@
     <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">netcoreapp2.1;net461</RequiredTargetFrameworks>
   </PropertyGroup>
 
+  <Import Project="$(RepoRoot)/sdk/core/Azure.Core/src/Azure.Core.props" Condition="'$(IsMgmtClientLibrary)' == 'true'"/>
   <Import Project="TestFramework.props" Condition="'$(IsTestProject)' == 'true'"/>
 
   <PropertyGroup>

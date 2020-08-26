@@ -284,6 +284,7 @@ namespace Azure.Management.Network
         /// <summary> Gets all network interfaces in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual AsyncPageable<NetworkInterface> ListAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -327,6 +328,7 @@ namespace Azure.Management.Network
         /// <summary> Gets all network interfaces in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual Pageable<NetworkInterface> List(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -372,6 +374,7 @@ namespace Azure.Management.Network
         /// <param name="virtualMachineScaleSetName"> The name of the virtual machine scale set. </param>
         /// <param name="virtualmachineIndex"> The virtual machine index. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualMachineScaleSetName"/>, or <paramref name="virtualmachineIndex"/> is null. </exception>
         public virtual AsyncPageable<NetworkInterface> ListVirtualMachineScaleSetVMNetworkInterfacesAsync(string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -425,6 +428,7 @@ namespace Azure.Management.Network
         /// <param name="virtualMachineScaleSetName"> The name of the virtual machine scale set. </param>
         /// <param name="virtualmachineIndex"> The virtual machine index. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualMachineScaleSetName"/>, or <paramref name="virtualmachineIndex"/> is null. </exception>
         public virtual Pageable<NetworkInterface> ListVirtualMachineScaleSetVMNetworkInterfaces(string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -477,6 +481,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualMachineScaleSetName"> The name of the virtual machine scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualMachineScaleSetName"/> is null. </exception>
         public virtual AsyncPageable<NetworkInterface> ListVirtualMachineScaleSetNetworkInterfacesAsync(string resourceGroupName, string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -525,6 +530,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualMachineScaleSetName"> The name of the virtual machine scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualMachineScaleSetName"/> is null. </exception>
         public virtual Pageable<NetworkInterface> ListVirtualMachineScaleSetNetworkInterfaces(string resourceGroupName, string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -576,6 +582,7 @@ namespace Azure.Management.Network
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualMachineScaleSetName"/>, <paramref name="virtualmachineIndex"/>, or <paramref name="networkInterfaceName"/> is null. </exception>
         public virtual AsyncPageable<NetworkInterfaceIPConfiguration> ListVirtualMachineScaleSetIpConfigurationsAsync(string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -635,6 +642,7 @@ namespace Azure.Management.Network
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualMachineScaleSetName"/>, <paramref name="virtualmachineIndex"/>, or <paramref name="networkInterfaceName"/> is null. </exception>
         public virtual Pageable<NetworkInterfaceIPConfiguration> ListVirtualMachineScaleSetIpConfigurations(string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -691,6 +699,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkInterfaceName"/> is null. </exception>
         public virtual async Task<NetworkInterfacesDeleteOperation> StartDeleteAsync(string resourceGroupName, string networkInterfaceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -720,6 +729,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkInterfaceName"/> is null. </exception>
         public virtual NetworkInterfacesDeleteOperation StartDelete(string resourceGroupName, string networkInterfaceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -750,6 +760,7 @@ namespace Azure.Management.Network
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="parameters"> Parameters supplied to the create or update network interface operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkInterfaceName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual async Task<NetworkInterfacesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string networkInterfaceName, NetworkInterface parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -784,6 +795,7 @@ namespace Azure.Management.Network
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="parameters"> Parameters supplied to the create or update network interface operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkInterfaceName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual NetworkInterfacesCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string networkInterfaceName, NetworkInterface parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -817,6 +829,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkInterfaceName"/> is null. </exception>
         public virtual async Task<NetworkInterfacesGetEffectiveRouteTableOperation> StartGetEffectiveRouteTableAsync(string resourceGroupName, string networkInterfaceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -846,6 +859,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkInterfaceName"/> is null. </exception>
         public virtual NetworkInterfacesGetEffectiveRouteTableOperation StartGetEffectiveRouteTable(string resourceGroupName, string networkInterfaceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -875,6 +889,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkInterfaceName"/> is null. </exception>
         public virtual async Task<NetworkInterfacesListEffectiveNetworkSecurityGroupsOperation> StartListEffectiveNetworkSecurityGroupsAsync(string resourceGroupName, string networkInterfaceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -904,6 +919,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkInterfaceName"/> is null. </exception>
         public virtual NetworkInterfacesListEffectiveNetworkSecurityGroupsOperation StartListEffectiveNetworkSecurityGroups(string resourceGroupName, string networkInterfaceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

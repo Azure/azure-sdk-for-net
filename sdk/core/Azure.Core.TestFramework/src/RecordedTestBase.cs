@@ -18,7 +18,7 @@ namespace Azure.Core.TestFramework
 
         public TestRecording Recording { get; private set; }
 
-        public RecordedTestMode Mode { get; }
+        public RecordedTestMode Mode { get; set; }
 
         // copied the Windows version https://github.com/dotnet/runtime/blob/master/src/libraries/System.Private.CoreLib/src/System/IO/Path.Windows.cs
         // as it is the most restrictive of all platforms
@@ -58,10 +58,17 @@ namespace Azure.Core.TestFramework
             TestContext.TestAdapter testAdapter = TestContext.CurrentContext.Test;
 
             string name = new string(testAdapter.Name.Select(c => s_invalidChars.Contains(c) ? '%' : c).ToArray());
+            string additionalParameterName = testAdapter.Properties.ContainsKey(ClientTestFixtureAttribute.RecordingDirectorySuffixKey) ?
+                testAdapter.Properties.Get(ClientTestFixtureAttribute.RecordingDirectorySuffixKey).ToString() :
+                null;
 
             string className = testAdapter.ClassName.Substring(testAdapter.ClassName.LastIndexOf('.') + 1);
+
             string fileName = name + (IsAsync ? "Async" : string.Empty) + ".json";
-            return Path.Combine(TestContext.CurrentContext.TestDirectory, "SessionRecords", className, fileName);
+            return Path.Combine(TestContext.CurrentContext.TestDirectory,
+                "SessionRecords",
+                additionalParameterName == null ? className : $"{className}({additionalParameterName})",
+                fileName);
         }
 
         /// <summary>

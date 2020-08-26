@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexes?api-version=2020-06-30",
+      "RequestUri": "https://azs-net-heathsrch.search.windows.net/indexes?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "Content-Length": "1505",
+        "Content-Length": "408",
         "Content-Type": "application/json",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.0.0-dev.20200625.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Search.Documents/11.1.0-dev.20200728.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "ec8f1b224af8d9bff1f430bc1b15db2c",
         "x-ms-return-client-request-id": "true"
@@ -37,83 +37,6 @@
             "filterable": true,
             "sortable": true,
             "facetable": false
-          },
-          {
-            "name": "description",
-            "type": "Edm.String",
-            "key": false,
-            "retrievable": true,
-            "searchable": true,
-            "filterable": false,
-            "sortable": false,
-            "facetable": false,
-            "analyzer": "en.lucene"
-          },
-          {
-            "name": "tags",
-            "type": "Collection(Edm.String)",
-            "key": false,
-            "retrievable": true,
-            "searchable": true,
-            "filterable": true,
-            "sortable": false,
-            "facetable": true
-          },
-          {
-            "name": "address",
-            "type": "Edm.ComplexType",
-            "fields": [
-              {
-                "name": "streetAddress",
-                "type": "Edm.String",
-                "key": false,
-                "retrievable": true,
-                "searchable": true,
-                "filterable": false,
-                "sortable": false,
-                "facetable": false
-              },
-              {
-                "name": "city",
-                "type": "Edm.String",
-                "key": false,
-                "retrievable": true,
-                "searchable": true,
-                "filterable": true,
-                "sortable": true,
-                "facetable": true
-              },
-              {
-                "name": "stateProvince",
-                "type": "Edm.String",
-                "key": false,
-                "retrievable": true,
-                "searchable": true,
-                "filterable": true,
-                "sortable": true,
-                "facetable": true
-              },
-              {
-                "name": "country",
-                "type": "Edm.String",
-                "key": false,
-                "retrievable": true,
-                "searchable": true,
-                "filterable": true,
-                "sortable": true,
-                "facetable": true
-              },
-              {
-                "name": "postalCode",
-                "type": "Edm.String",
-                "key": false,
-                "retrievable": true,
-                "searchable": true,
-                "filterable": true,
-                "sortable": true,
-                "facetable": true
-              }
-            ]
           }
         ],
         "suggesters": [
@@ -121,8 +44,7 @@
             "name": "sg",
             "searchMode": "analyzingInfixMatching",
             "sourceFields": [
-              "hotelName",
-              "description"
+              "hotelName"
             ]
           }
         ]
@@ -131,13 +53,13 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "ec8f1b22-4af8-d9bf-f1f4-30bc1b15db2c",
-        "Content-Length": "2549",
+        "Content-Length": "933",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Fri, 26 Jun 2020 06:25:31 GMT",
-        "elapsed-time": "768",
-        "ETag": "W/\u00220x8D81999BA166E18\u0022",
+        "Date": "Tue, 28 Jul 2020 23:58:11 GMT",
+        "elapsed-time": "1256",
+        "ETag": "W/\u00220x8D8335215ABF632\u0022",
         "Expires": "-1",
-        "Location": "https://azs-net-heathsrchtst.search.windows.net/indexes(\u0027wldfvoaj\u0027)?api-version=2020-06-30",
+        "Location": "https://azs-net-heathsrch.search.windows.net/indexes(\u0027wldfvoaj\u0027)?api-version=2020-06-30",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
@@ -146,8 +68,8 @@
         "x-ms-client-request-id": "ec8f1b22-4af8-d9bf-f1f4-30bc1b15db2c"
       },
       "ResponseBody": {
-        "@odata.context": "https://azs-net-heathsrchtst.search.windows.net/$metadata#indexes/$entity",
-        "@odata.etag": "\u00220x8D81999BA166E18\u0022",
+        "@odata.context": "https://azs-net-heathsrch.search.windows.net/$metadata#indexes/$entity",
+        "@odata.etag": "\u00220x8D8335215ABF632\u0022",
         "name": "wldfvoaj",
         "defaultScoringProfile": null,
         "fields": [
@@ -178,110 +100,6 @@
             "searchAnalyzer": null,
             "analyzer": null,
             "synonymMaps": []
-          },
-          {
-            "name": "description",
-            "type": "Edm.String",
-            "searchable": true,
-            "filterable": false,
-            "retrievable": true,
-            "sortable": false,
-            "facetable": false,
-            "key": false,
-            "indexAnalyzer": null,
-            "searchAnalyzer": null,
-            "analyzer": "en.lucene",
-            "synonymMaps": []
-          },
-          {
-            "name": "tags",
-            "type": "Collection(Edm.String)",
-            "searchable": true,
-            "filterable": true,
-            "retrievable": true,
-            "sortable": false,
-            "facetable": true,
-            "key": false,
-            "indexAnalyzer": null,
-            "searchAnalyzer": null,
-            "analyzer": null,
-            "synonymMaps": []
-          },
-          {
-            "name": "address",
-            "type": "Edm.ComplexType",
-            "fields": [
-              {
-                "name": "streetAddress",
-                "type": "Edm.String",
-                "searchable": true,
-                "filterable": false,
-                "retrievable": true,
-                "sortable": false,
-                "facetable": false,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "city",
-                "type": "Edm.String",
-                "searchable": true,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": true,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "stateProvince",
-                "type": "Edm.String",
-                "searchable": true,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": true,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "country",
-                "type": "Edm.String",
-                "searchable": true,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": true,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "postalCode",
-                "type": "Edm.String",
-                "searchable": true,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": true,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "synonymMaps": []
-              }
-            ]
           }
         ],
         "scoringProfiles": [],
@@ -291,8 +109,7 @@
             "name": "sg",
             "searchMode": "analyzingInfixMatching",
             "sourceFields": [
-              "hotelName",
-              "description"
+              "hotelName"
             ]
           }
         ],
@@ -307,12 +124,41 @@
           "b": null
         }
       }
+    },
+    {
+      "RequestUri": "https://azs-net-heathsrch.search.windows.net/indexes(\u0027wldfvoaj\u0027)?api-version=2020-06-30",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=minimal",
+        "api-key": "Sanitized",
+        "traceparent": "00-b7d6a0a2d5608043b53f91980f5dda8d-55c2fba0b5474941-00",
+        "User-Agent": [
+          "azsdk-net-Search.Documents/11.1.0-dev.20200728.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "04ea96019403abe77144bfc0b4162512",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "client-request-id": "04ea9601-9403-abe7-7144-bfc0b4162512",
+        "Date": "Tue, 28 Jul 2020 23:58:11 GMT",
+        "elapsed-time": "385",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "request-id": "04ea9601-9403-abe7-7144-bfc0b4162512",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "04ea9601-9403-abe7-7144-bfc0b4162512"
+      },
+      "ResponseBody": []
     }
   ],
   "Variables": {
     "RandomSeed": "2102937546",
-    "SearchIndexName": null,
+    "SearchIndexName": "wldfvoaj",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
-    "SEARCH_SERVICE_NAME": "azs-net-heathsrchtst"
+    "SEARCH_SERVICE_NAME": "azs-net-heathsrch"
   }
 }

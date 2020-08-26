@@ -10,11 +10,13 @@
 
 namespace Microsoft.Azure.Management.Synapse.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// The base definition of the custom setup.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("CustomSetupBase")]
     public partial class CustomSetupBase
     {
         /// <summary>

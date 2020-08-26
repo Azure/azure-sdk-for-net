@@ -15,27 +15,6 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayOnDemandProbe. </summary>
-        /// <param name="protocol"> The protocol used for the probe. </param>
-        /// <param name="host"> Host name to send the probe to. </param>
-        /// <param name="path"> Relative path of probe. Valid path starts from &apos;/&apos;. Probe is sent to &lt;Protocol&gt;://&lt;host&gt;:&lt;port&gt;&lt;path&gt;. </param>
-        /// <param name="timeout"> The probe timeout in seconds. Probe marked as failed if valid response is not received with this timeout period. Acceptable values are from 1 second to 86400 seconds. </param>
-        /// <param name="pickHostNameFromBackendHttpSettings"> Whether the host header should be picked from the backend http settings. Default value is false. </param>
-        /// <param name="match"> Criterion for classifying a healthy probe response. </param>
-        /// <param name="backendAddressPool"> Reference to backend pool of application gateway to which probe request will be sent. </param>
-        /// <param name="backendHttpSettings"> Reference to backend http setting of application gateway to be used for test probe. </param>
-        internal ApplicationGatewayOnDemandProbe(ApplicationGatewayProtocol? protocol, string host, string path, int? timeout, bool? pickHostNameFromBackendHttpSettings, ApplicationGatewayProbeHealthResponseMatch match, SubResource backendAddressPool, SubResource backendHttpSettings)
-        {
-            Protocol = protocol;
-            Host = host;
-            Path = path;
-            Timeout = timeout;
-            PickHostNameFromBackendHttpSettings = pickHostNameFromBackendHttpSettings;
-            Match = match;
-            BackendAddressPool = backendAddressPool;
-            BackendHttpSettings = backendHttpSettings;
-        }
-
         /// <summary> The protocol used for the probe. </summary>
         public ApplicationGatewayProtocol? Protocol { get; set; }
         /// <summary> Host name to send the probe to. </summary>

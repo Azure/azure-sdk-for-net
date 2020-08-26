@@ -91,7 +91,9 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <param name="apiProperties">API specific properties.</param>
         /// <param name="enableAnalyticalStorage">Flag to indicate whether to
         /// enable storage analytics.</param>
-        public DatabaseAccountGetResults(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string kind = default(string), string provisioningState = default(string), string documentEndpoint = default(string), DatabaseAccountOfferType? databaseAccountOfferType = default(DatabaseAccountOfferType?), IList<IpAddressOrRange> ipRules = default(IList<IpAddressOrRange>), bool? isVirtualNetworkFilterEnabled = default(bool?), bool? enableAutomaticFailover = default(bool?), ConsistencyPolicy consistencyPolicy = default(ConsistencyPolicy), IList<Capability> capabilities = default(IList<Capability>), IList<Location> writeLocations = default(IList<Location>), IList<Location> readLocations = default(IList<Location>), IList<Location> locations = default(IList<Location>), IList<FailoverPolicy> failoverPolicies = default(IList<FailoverPolicy>), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), bool? enableMultipleWriteLocations = default(bool?), bool? enableCassandraConnector = default(bool?), string connectorOffer = default(string), bool? disableKeyBasedMetadataWriteAccess = default(bool?), string keyVaultKeyUri = default(string), string publicNetworkAccess = default(string), bool? enableFreeTier = default(bool?), ApiProperties apiProperties = default(ApiProperties), bool? enableAnalyticalStorage = default(bool?))
+        /// <param name="cors">The CORS policy for the Cosmos DB database
+        /// account.</param>
+        public DatabaseAccountGetResults(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string kind = default(string), string provisioningState = default(string), string documentEndpoint = default(string), DatabaseAccountOfferType? databaseAccountOfferType = default(DatabaseAccountOfferType?), IList<IpAddressOrRange> ipRules = default(IList<IpAddressOrRange>), bool? isVirtualNetworkFilterEnabled = default(bool?), bool? enableAutomaticFailover = default(bool?), ConsistencyPolicy consistencyPolicy = default(ConsistencyPolicy), IList<Capability> capabilities = default(IList<Capability>), IList<Location> writeLocations = default(IList<Location>), IList<Location> readLocations = default(IList<Location>), IList<Location> locations = default(IList<Location>), IList<FailoverPolicy> failoverPolicies = default(IList<FailoverPolicy>), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), bool? enableMultipleWriteLocations = default(bool?), bool? enableCassandraConnector = default(bool?), string connectorOffer = default(string), bool? disableKeyBasedMetadataWriteAccess = default(bool?), string keyVaultKeyUri = default(string), string publicNetworkAccess = default(string), bool? enableFreeTier = default(bool?), ApiProperties apiProperties = default(ApiProperties), bool? enableAnalyticalStorage = default(bool?), IList<CorsPolicy> cors = default(IList<CorsPolicy>))
             : base(id, name, type, location, tags)
         {
             Kind = kind;
@@ -118,6 +120,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
             EnableFreeTier = enableFreeTier;
             ApiProperties = apiProperties;
             EnableAnalyticalStorage = enableAnalyticalStorage;
+            Cors = cors;
             CustomInit();
         }
 
@@ -289,6 +292,12 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         public bool? EnableAnalyticalStorage { get; set; }
 
         /// <summary>
+        /// Gets or sets the CORS policy for the Cosmos DB database account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.cors")]
+        public IList<CorsPolicy> Cors { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -337,6 +346,16 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
                     if (element3 != null)
                     {
                         element3.Validate();
+                    }
+                }
+            }
+            if (Cors != null)
+            {
+                foreach (var element4 in Cors)
+                {
+                    if (element4 != null)
+                    {
+                        element4.Validate();
                     }
                 }
             }

@@ -129,6 +129,14 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs
                         destination: memoryStream,
                         conditions: requestCondition).ConfigureAwait(false);
 
+                    if (response.Status == 304)
+                    {
+                        // 304 Not Modified
+                        // Thrown when we already have the latest cached data.
+                        // This isn't an error; we'll return our cached copy of the data.
+                        return latestCachedData;
+                    }
+
                     // At this point, our original cache either didn't exist or was outdated.
                     // We'll update it now and return the updated value
                     latestCachedData = new BlobData()
@@ -139,12 +147,6 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs
 
                 }
                 Volatile.Write(ref _cachedBlobData, latestCachedData);
-            }
-            catch (RequestFailedException ex) when (ex.Status == 304)
-            {
-                // 304 Not Modified
-                // Thrown when we already have the latest cached data.
-                // This isn't an error; we'll return our cached copy of the data.
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
             {

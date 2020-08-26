@@ -30,7 +30,7 @@ namespace Azure.Search.Documents
         /// <param name="endpoint"> The endpoint URL of the search service. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
         public SynonymMapsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, Guid? xMsClientRequestId = null, string apiVersion = "2020-06-30")
         {
             if (endpoint == null)
@@ -88,6 +88,7 @@ namespace Azure.Search.Documents
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="synonymMapName"/> or <paramref name="synonymMap"/> is null. </exception>
         public async Task<Response<SynonymMap>> CreateOrUpdateAsync(string synonymMapName, SynonymMap synonymMap, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (synonymMapName == null)
@@ -108,14 +109,7 @@ namespace Azure.Search.Documents
                     {
                         SynonymMap value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SynonymMap.DeserializeSynonymMap(document.RootElement);
-                        }
+                        value = SynonymMap.DeserializeSynonymMap(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -129,6 +123,7 @@ namespace Azure.Search.Documents
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="synonymMapName"/> or <paramref name="synonymMap"/> is null. </exception>
         public Response<SynonymMap> CreateOrUpdate(string synonymMapName, SynonymMap synonymMap, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (synonymMapName == null)
@@ -149,14 +144,7 @@ namespace Azure.Search.Documents
                     {
                         SynonymMap value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SynonymMap.DeserializeSynonymMap(document.RootElement);
-                        }
+                        value = SynonymMap.DeserializeSynonymMap(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -197,6 +185,7 @@ namespace Azure.Search.Documents
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="synonymMapName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string synonymMapName, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (synonymMapName == null)
@@ -221,6 +210,7 @@ namespace Azure.Search.Documents
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="synonymMapName"/> is null. </exception>
         public Response Delete(string synonymMapName, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (synonymMapName == null)
@@ -263,6 +253,7 @@ namespace Azure.Search.Documents
         /// <summary> Retrieves a synonym map definition. </summary>
         /// <param name="synonymMapName"> The name of the synonym map to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="synonymMapName"/> is null. </exception>
         public async Task<Response<SynonymMap>> GetAsync(string synonymMapName, CancellationToken cancellationToken = default)
         {
             if (synonymMapName == null)
@@ -278,14 +269,7 @@ namespace Azure.Search.Documents
                     {
                         SynonymMap value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SynonymMap.DeserializeSynonymMap(document.RootElement);
-                        }
+                        value = SynonymMap.DeserializeSynonymMap(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -296,6 +280,7 @@ namespace Azure.Search.Documents
         /// <summary> Retrieves a synonym map definition. </summary>
         /// <param name="synonymMapName"> The name of the synonym map to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="synonymMapName"/> is null. </exception>
         public Response<SynonymMap> Get(string synonymMapName, CancellationToken cancellationToken = default)
         {
             if (synonymMapName == null)
@@ -311,14 +296,7 @@ namespace Azure.Search.Documents
                     {
                         SynonymMap value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SynonymMap.DeserializeSynonymMap(document.RootElement);
-                        }
+                        value = SynonymMap.DeserializeSynonymMap(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -361,14 +339,7 @@ namespace Azure.Search.Documents
                     {
                         ListSynonymMapsResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListSynonymMapsResult.DeserializeListSynonymMapsResult(document.RootElement);
-                        }
+                        value = ListSynonymMapsResult.DeserializeListSynonymMapsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -389,14 +360,7 @@ namespace Azure.Search.Documents
                     {
                         ListSynonymMapsResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListSynonymMapsResult.DeserializeListSynonymMapsResult(document.RootElement);
-                        }
+                        value = ListSynonymMapsResult.DeserializeListSynonymMapsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -429,6 +393,7 @@ namespace Azure.Search.Documents
         /// <summary> Creates a new synonym map. </summary>
         /// <param name="synonymMap"> The definition of the synonym map to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="synonymMap"/> is null. </exception>
         public async Task<Response<SynonymMap>> CreateAsync(SynonymMap synonymMap, CancellationToken cancellationToken = default)
         {
             if (synonymMap == null)
@@ -444,14 +409,7 @@ namespace Azure.Search.Documents
                     {
                         SynonymMap value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SynonymMap.DeserializeSynonymMap(document.RootElement);
-                        }
+                        value = SynonymMap.DeserializeSynonymMap(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -462,6 +420,7 @@ namespace Azure.Search.Documents
         /// <summary> Creates a new synonym map. </summary>
         /// <param name="synonymMap"> The definition of the synonym map to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="synonymMap"/> is null. </exception>
         public Response<SynonymMap> Create(SynonymMap synonymMap, CancellationToken cancellationToken = default)
         {
             if (synonymMap == null)
@@ -477,14 +436,7 @@ namespace Azure.Search.Documents
                     {
                         SynonymMap value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SynonymMap.DeserializeSynonymMap(document.RootElement);
-                        }
+                        value = SynonymMap.DeserializeSynonymMap(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -15,64 +15,38 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static AvailableProvidersListState DeserializeAvailableProvidersListState(JsonElement element)
         {
-            string stateName = default;
-            IReadOnlyList<string> providers = default;
-            IReadOnlyList<AvailableProvidersListCity> cities = default;
+            Optional<string> stateName = default;
+            Optional<IReadOnlyList<string>> providers = default;
+            Optional<IReadOnlyList<AvailableProvidersListCity>> cities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("stateName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     stateName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("providers"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     providers = array;
                     continue;
                 }
                 if (property.NameEquals("cities"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<AvailableProvidersListCity> array = new List<AvailableProvidersListCity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(AvailableProvidersListCity.DeserializeAvailableProvidersListCity(item));
-                        }
+                        array.Add(AvailableProvidersListCity.DeserializeAvailableProvidersListCity(item));
                     }
                     cities = array;
                     continue;
                 }
             }
-            return new AvailableProvidersListState(stateName, providers, cities);
+            return new AvailableProvidersListState(stateName.Value, Optional.ToList(providers), Optional.ToList(cities));
         }
     }
 }

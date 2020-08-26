@@ -1034,5 +1034,26 @@ namespace Azure.Storage.Queues.Test
                 test.Queue.UpdateMessageAsync(GetNewMessageId(), GetNewString(), string.Empty),
                 actualException => Assert.AreEqual("MessageNotFound", actualException.ErrorCode));
         }
+
+        [Test]
+        public async Task UpdateMessageAsync_UpdateVisibilityTimeoutOnlyPreservesContent()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            var message = "foo";
+            Models.SendReceipt enqueuedMessage = (await test.Queue.SendMessageAsync(message)).Value;
+
+            // Act
+            Response<Models.UpdateReceipt> result = await test.Queue.UpdateMessageAsync(
+                enqueuedMessage.MessageId,
+                enqueuedMessage.PopReceipt,
+                visibilityTimeout: new TimeSpan(100));
+            var receivedMessage = (await test.Queue.ReceiveMessagesAsync(1)).Value.First();
+
+            // Assert
+            Assert.AreEqual(enqueuedMessage.MessageId, receivedMessage.MessageId);
+            Assert.AreEqual(message, receivedMessage.MessageText);
+        }
     }
 }

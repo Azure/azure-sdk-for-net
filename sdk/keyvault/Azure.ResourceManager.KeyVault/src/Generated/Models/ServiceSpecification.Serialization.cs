@@ -15,32 +15,21 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         internal static ServiceSpecification DeserializeServiceSpecification(JsonElement element)
         {
-            IReadOnlyList<LogSpecification> logSpecifications = default;
+            Optional<IReadOnlyList<LogSpecification>> logSpecifications = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logSpecifications"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<LogSpecification> array = new List<LogSpecification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(LogSpecification.DeserializeLogSpecification(item));
-                        }
+                        array.Add(LogSpecification.DeserializeLogSpecification(item));
                     }
                     logSpecifications = array;
                     continue;
                 }
             }
-            return new ServiceSpecification(logSpecifications);
+            return new ServiceSpecification(Optional.ToList(logSpecifications));
         }
     }
 }

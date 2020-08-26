@@ -15,7 +15,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 {
     [ClientTestFixture(
         KeyClientOptions.ServiceVersion.V7_0,
-        KeyClientOptions.ServiceVersion.V7_1_Preview)]
+        KeyClientOptions.ServiceVersion.V7_1)]
     [NonParallelizable]
     public abstract class KeysTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {

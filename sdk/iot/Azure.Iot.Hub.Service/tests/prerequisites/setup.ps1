@@ -103,8 +103,9 @@ az deployment group create --resource-group $ResourceGroup --name $IotHubName --
 
 # Even though the output variable names are all capital letters in the script, ARM turns them into a strange casing
 # and we have to use that casing in order to get them from the deployment outputs.
-$iotHubConnectionString = az deployment group show -g $ResourceGroup -n $IotHubName --query 'properties.outputs.ioT_HUB_CONNECTIONSTRING.value' --output tsv
-$iotHubHostName = az deployment group show -g $ResourceGroup -n $IotHubName --query 'properties.outputs.ioT_HUB_ENDPOINT_URL.value' --output tsv
+$iotHubConnectionString = az deployment group show -g $ResourceGroup -n $IotHubName --query 'properties.outputs.iot_hub_connection_string.value' --output tsv
+$iotHubHostName = az deployment group show -g $ResourceGroup -n $IotHubName --query 'properties.outputs.iot_hub_endpoint_url.value' --output tsv
+$storageSasToken = az deployment group show -g $ResourceGroup -n $IotHubName --query 'properties.outputs.storage_sas_token.value' --output tsv
 
 Write-Host("Set a new client secret for $appId`n")
 $appSecret = az ad app credential reset --id $appId --years 2 --query 'password' --output tsv
@@ -112,17 +113,30 @@ $appSecret = az ad app credential reset --id $appId --years 2 --query 'password'
 $user = $env:UserName
 $fileName = "$user.config.json"
 Write-Host("Writing user config file - $fileName`n")
-$appSecretJsonEscaped = ConvertTo-Json $appSecret
+
 $config = @"
 {
-    "IotHubConnectionString": "$iotHubConnectionString",
-    "IotHubHostName": "$iotHubHostName",
-    "ApplicationId": "$appId",
-    "ClientSecret": $appSecretJsonEscaped,
-    "TestMode":  "Live"
+    "TestMode":  "Live"	
 }
 "@
 
 $config | Out-File "$PSScriptRoot\..\config\$fileName"
+
+$outputfileDir = (Get-Item -Path $PSScriptRoot).Parent.Parent.Parent.Fullname
+$outputFile = Join-Path -Path $outputfileDir -ChildPath "test-resources.json.env"
+
+Add-Type -AssemblyName System.Security
+$appSecretJsonEscaped = ConvertTo-Json $appSecret
+$environmentText = @"
+{
+    "IOT_HUB_CONNECTION_STRING": "$iotHubConnectionString",
+    "STORAGE_SAS_TOKEN": "$storageSasToken"
+}
+"@
+
+$bytes = ([System.Text.Encoding]::UTF8).GetBytes($environmentText)
+$protectedBytes = [Security.Cryptography.ProtectedData]::Protect($bytes, $null, [Security.Cryptography.DataProtectionScope]::CurrentUser)
+Set-Content $outputFile -Value $protectedBytes -AsByteStream -Force
+Write-Host "Test environment settings stored into encrypted $outputFile"
 
 Write-Host "Done!"

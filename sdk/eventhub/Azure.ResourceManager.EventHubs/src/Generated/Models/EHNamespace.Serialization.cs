@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.EventHubs.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku");
                 writer.WriteObjectValue(Sku);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
                 writer.WriteObjectValue(Identity);
             }
-            if (Location != null)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
                 writer.WriteStringValue(Location);
             }
-            if (Tags != null)
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -43,74 +43,34 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Id != null)
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (ProvisioningState != null)
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState);
-            }
-            if (CreatedAt != null)
-            {
-                writer.WritePropertyName("createdAt");
-                writer.WriteStringValue(CreatedAt.Value, "O");
-            }
-            if (UpdatedAt != null)
-            {
-                writer.WritePropertyName("updatedAt");
-                writer.WriteStringValue(UpdatedAt.Value, "O");
-            }
-            if (ServiceBusEndpoint != null)
-            {
-                writer.WritePropertyName("serviceBusEndpoint");
-                writer.WriteStringValue(ServiceBusEndpoint);
-            }
-            if (ClusterArmId != null)
+            if (Optional.IsDefined(ClusterArmId))
             {
                 writer.WritePropertyName("clusterArmId");
                 writer.WriteStringValue(ClusterArmId);
             }
-            if (MetricId != null)
-            {
-                writer.WritePropertyName("metricId");
-                writer.WriteStringValue(MetricId);
-            }
-            if (IsAutoInflateEnabled != null)
+            if (Optional.IsDefined(IsAutoInflateEnabled))
             {
                 writer.WritePropertyName("isAutoInflateEnabled");
                 writer.WriteBooleanValue(IsAutoInflateEnabled.Value);
             }
-            if (MaximumThroughputUnits != null)
+            if (Optional.IsDefined(MaximumThroughputUnits))
             {
                 writer.WritePropertyName("maximumThroughputUnits");
                 writer.WriteNumberValue(MaximumThroughputUnits.Value);
             }
-            if (KafkaEnabled != null)
+            if (Optional.IsDefined(KafkaEnabled))
             {
                 writer.WritePropertyName("kafkaEnabled");
                 writer.WriteBooleanValue(KafkaEnabled.Value);
             }
-            if (ZoneRedundant != null)
+            if (Optional.IsDefined(ZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant");
                 writer.WriteBooleanValue(ZoneRedundant.Value);
             }
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption");
                 writer.WriteObjectValue(Encryption);
@@ -121,98 +81,63 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static EHNamespace DeserializeEHNamespace(JsonElement element)
         {
-            Sku sku = default;
-            Identity identity = default;
-            string location = default;
-            IDictionary<string, string> tags = default;
-            string id = default;
-            string name = default;
-            string type = default;
-            string provisioningState = default;
-            DateTimeOffset? createdAt = default;
-            DateTimeOffset? updatedAt = default;
-            string serviceBusEndpoint = default;
-            string clusterArmId = default;
-            string metricId = default;
-            bool? isAutoInflateEnabled = default;
-            int? maximumThroughputUnits = default;
-            bool? kafkaEnabled = default;
-            bool? zoneRedundant = default;
-            Encryption encryption = default;
+            Optional<Sku> sku = default;
+            Optional<Identity> identity = default;
+            Optional<string> location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<string> provisioningState = default;
+            Optional<DateTimeOffset> createdAt = default;
+            Optional<DateTimeOffset> updatedAt = default;
+            Optional<string> serviceBusEndpoint = default;
+            Optional<string> clusterArmId = default;
+            Optional<string> metricId = default;
+            Optional<bool> isAutoInflateEnabled = default;
+            Optional<int> maximumThroughputUnits = default;
+            Optional<bool> kafkaEnabled = default;
+            Optional<bool> zoneRedundant = default;
+            Optional<Encryption> encryption = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sku = Sku.DeserializeSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     identity = Identity.DeserializeIdentity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
@@ -222,100 +147,56 @@ namespace Azure.ResourceManager.EventHubs.Models
                     {
                         if (property0.NameEquals("provisioningState"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("createdAt"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             createdAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("updatedAt"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             updatedAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("serviceBusEndpoint"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             serviceBusEndpoint = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("clusterArmId"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             clusterArmId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("metricId"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             metricId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("isAutoInflateEnabled"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             isAutoInflateEnabled = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("maximumThroughputUnits"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             maximumThroughputUnits = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("kafkaEnabled"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             kafkaEnabled = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("zoneRedundant"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             zoneRedundant = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("encryption"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             encryption = Encryption.DeserializeEncryption(property0.Value);
                             continue;
                         }
@@ -323,7 +204,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new EHNamespace(id, name, type, location, tags, sku, identity, provisioningState, createdAt, updatedAt, serviceBusEndpoint, clusterArmId, metricId, isAutoInflateEnabled, maximumThroughputUnits, kafkaEnabled, zoneRedundant, encryption);
+            return new EHNamespace(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), sku.Value, identity.Value, provisioningState.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, clusterArmId.Value, metricId.Value, Optional.ToNullable(isAutoInflateEnabled), Optional.ToNullable(maximumThroughputUnits), Optional.ToNullable(kafkaEnabled), Optional.ToNullable(zoneRedundant), encryption.Value);
         }
     }
 }

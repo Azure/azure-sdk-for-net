@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// business models: link local cache to cloud behavior to pre-populate
         /// before local access. Possible values include:
         /// 'DownloadNewAndModifiedFiles', 'UpdateLocallyCachedFiles'</param>
-        public ServerEndpointUpdateParameters(string cloudTiering = default(string), int? volumeFreeSpacePercent = default(int?), int? tierFilesOlderThanDays = default(int?), string offlineDataTransfer = default(string), string offlineDataTransferShareName = default(string), LocalCacheMode? localCacheMode = default(LocalCacheMode?))
+        public ServerEndpointUpdateParameters(string cloudTiering = default(string), int? volumeFreeSpacePercent = default(int?), int? tierFilesOlderThanDays = default(int?), string offlineDataTransfer = default(string), string offlineDataTransferShareName = default(string), string localCacheMode = default(string))
         {
             CloudTiering = cloudTiering;
             VolumeFreeSpacePercent = volumeFreeSpacePercent;
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// 'UpdateLocallyCachedFiles'
         /// </summary>
         [JsonProperty(PropertyName = "properties.localCacheMode")]
-        public LocalCacheMode? LocalCacheMode { get; set; }
+        public string LocalCacheMode { get; set; }
 
         /// <summary>
         /// Validate the object.

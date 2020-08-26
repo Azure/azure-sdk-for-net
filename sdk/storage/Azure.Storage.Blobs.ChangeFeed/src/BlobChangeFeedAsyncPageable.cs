@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Storage.Blobs.ChangeFeed.Models;
 
 namespace Azure.Storage.Blobs.ChangeFeed
 {
@@ -57,21 +56,22 @@ namespace Azure.Storage.Blobs.ChangeFeed
         {
             if (continuationToken != null)
             {
-                throw new ArgumentException($"Continuation not supported.  Use BlobChangeFeedClient.GetChangesAsync(string) instead");
+                throw new ArgumentException($"{nameof(continuationToken)} not supported.  Use BlobChangeFeedClient.GetChangesAsync(string) instead");
             }
 
             ChangeFeed changeFeed = await _changeFeedFactory.BuildChangeFeed(
-                async: true,
                 _startTime,
                 _endTime,
-                _continuation)
+                _continuation,
+                async: true,
+                cancellationToken: default)
                 .ConfigureAwait(false);
 
             while (changeFeed.HasNext())
             {
                 yield return await changeFeed.GetPage(
                     async: true,
-                    pageSize: pageSizeHint ?? 512).ConfigureAwait(false);
+                    pageSize: pageSizeHint ?? Constants.ChangeFeed.DefaultPageSize).ConfigureAwait(false);
             }
         }
     }

@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal static SearchResourceCounter DeserializeSearchResourceCounter(JsonElement element)
         {
             long usage = default;
-            long? quota = default;
+            Optional<long?> quota = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("usage"))
@@ -27,13 +27,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        quota = null;
                         continue;
                     }
                     quota = property.Value.GetInt64();
                     continue;
                 }
             }
-            return new SearchResourceCounter(usage, quota);
+            return new SearchResourceCounter(usage, Optional.ToNullable(quota));
         }
     }
 }

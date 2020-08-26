@@ -20,7 +20,10 @@ namespace Microsoft.Azure.Management.ContainerRegistry
               return new Tuple<string, string, string>[]
               {
                 new Tuple<string, string, string>("ContainerRegistry", "AgentPools", "2019-06-01-preview"),
+                new Tuple<string, string, string>("ContainerRegistry", "ExportPipelines", "2019-12-01-preview"),
+                new Tuple<string, string, string>("ContainerRegistry", "ImportPipelines", "2019-12-01-preview"),
                 new Tuple<string, string, string>("ContainerRegistry", "Operations", "2019-12-01-preview"),
+                new Tuple<string, string, string>("ContainerRegistry", "PipelineRuns", "2019-12-01-preview"),
                 new Tuple<string, string, string>("ContainerRegistry", "PrivateEndpointConnections", "2019-12-01-preview"),
                 new Tuple<string, string, string>("ContainerRegistry", "Registries", "2019-05-01-preview"),
                 new Tuple<string, string, string>("ContainerRegistry", "Registries", "2019-06-01-preview"),
@@ -38,10 +41,10 @@ namespace Microsoft.Azure.Management.ContainerRegistry
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "v2";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/containerregistry/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\src\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/containerregistry/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\dev\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "b31774e70476dd2c2ce075204832eccffda36109";
+      public static readonly String GithubCommidId = "3903ebec90f50617c36911b25d499a7ae867b740";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

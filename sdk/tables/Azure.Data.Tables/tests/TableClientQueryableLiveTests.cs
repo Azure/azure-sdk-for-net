@@ -21,10 +21,10 @@ namespace Azure.Data.Tables.Tests
     public class TableClientQueryableLiveTests : TableServiceLiveTestsBase
     {
 
-        public TableClientQueryableLiveTests(bool isAsync) : base(isAsync /* To record tests, add this argument, RecordedTestMode.Record */)
+        public TableClientQueryableLiveTests(bool isAsync, TableEndpointType endpointType) : base(isAsync, endpointType /* To record tests, add this argument, RecordedTestMode.Record */)
         { }
 
-        [Test]
+        [RecordedTest]
         public async Task TableQueryableExecuteQueryDictionary()
         {
             var entitiesToCreate = CreateTableEntities(PartitionKeyValue, 1);
@@ -34,7 +34,7 @@ namespace Azure.Data.Tables.Tests
 
             await CreateTestEntities(entitiesToCreate).ConfigureAwait(false);
 
-            var results = await client.QueryAsync(x => (string)x[TableConstants.PropertyNames.PartitionKey] == PartitionKeyValue, select: default).ToEnumerableAsync().ConfigureAwait(false);
+            var results = await client.QueryAsync<TableEntity>(x => x.PartitionKey == PartitionKeyValue, select: default).ToEnumerableAsync().ConfigureAwait(false);
 
             foreach (var entity in results)
             {
@@ -42,7 +42,7 @@ namespace Azure.Data.Tables.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableQueryableExecuteQueryGeneric()
         {
             var entitiesToCreate = CreateComplexTableEntities(PartitionKeyValue, 1);
@@ -60,7 +60,7 @@ namespace Azure.Data.Tables.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableQueryableFilterPredicate()
         {
             var entitiesToCreate = CreateComplexTableEntities(PartitionKeyValue, 4);
@@ -91,7 +91,7 @@ namespace Azure.Data.Tables.Tests
             Assert.That(results.Count, Is.EqualTo(entitiesToCreate.Count - 1));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableQueryableComplexFilter()
         {
             var entitiesToCreate = CreateComplexTableEntities(PartitionKeyValue, 4);
@@ -110,7 +110,7 @@ namespace Azure.Data.Tables.Tests
             Assert.That(results.Count, Is.EqualTo(2));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableQueryableComplexFilterWithCreateFilter()
         {
             var entitiesToCreate = CreateComplexTableEntities(PartitionKeyValue, 4);
@@ -119,7 +119,7 @@ namespace Azure.Data.Tables.Tests
 
             await CreateTestEntities(entitiesToCreate).ConfigureAwait(false);
 
-            var filter = client.CreateFilter<ComplexEntity>(ent => (ent.RowKey == "0004" && ent.Int32 == 4) || ((ent.Int32 == 2) && (ent.String == "wrong string" || ent.Bool == true)) || (ent.LongPrimitiveN == (long)int.MaxValue + 50));
+            var filter = TableClient.CreateQueryFilter<ComplexEntity>(ent => (ent.RowKey == "0004" && ent.Int32 == 4) || ((ent.Int32 == 2) && (ent.String == "wrong string" || ent.Bool == true)) || (ent.LongPrimitiveN == (long)int.MaxValue + 50));
             var results = await client.QueryAsync<ComplexEntity>(filter).ToEnumerableAsync().ConfigureAwait(false);
 
             foreach (ComplexEntity ent in results)
@@ -130,7 +130,7 @@ namespace Azure.Data.Tables.Tests
             Assert.That(results.Count, Is.EqualTo(2));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableQueryableNestedParanthesis()
         {
             var entitiesToCreate = CreateComplexTableEntities(PartitionKeyValue, 4);
@@ -152,7 +152,7 @@ namespace Azure.Data.Tables.Tests
             Assert.That(results.Count, Is.EqualTo(2));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableQueryableUnary()
         {
             var entitiesToCreate = CreateComplexTableEntities(PartitionKeyValue, 4);
@@ -189,7 +189,7 @@ namespace Azure.Data.Tables.Tests
             Assert.That(results.Count, Is.EqualTo(entitiesToCreate.Count));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableTakeWithContinuationTask()
         {
             var entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 20);
@@ -200,7 +200,7 @@ namespace Azure.Data.Tables.Tests
 
             // Query the entities with a Take count to limit the number of responses
 
-            var pagedResult = client.QueryAsync<TestEntity>(e => e.PartitionKey == PartitionKeyValue, top: 10);
+            var pagedResult = client.QueryAsync<TestEntity>(e => e.PartitionKey == PartitionKeyValue, maxPerPage: 10);
 
             await foreach (Page<TestEntity> page in pagedResult.AsPages())
             {
@@ -208,7 +208,7 @@ namespace Azure.Data.Tables.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableQueryableMultipleTake()
         {
             var entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 10);
@@ -219,7 +219,7 @@ namespace Azure.Data.Tables.Tests
 
             // Query the entities with a Take count to limit the number of responses. The lower of the Take values is what takes effect.
 
-            var pagedResult = client.QueryAsync<TestEntity>(e => e.PartitionKey == PartitionKeyValue, top: 5);
+            var pagedResult = client.QueryAsync<TestEntity>(e => e.PartitionKey == PartitionKeyValue, maxPerPage: 5);
 
             await foreach (Page<TestEntity> page in pagedResult.AsPages())
             {
@@ -227,8 +227,8 @@ namespace Azure.Data.Tables.Tests
             }
         }
 
-        [Test]
-        public async Task TableQueryableDynamicTableEntityQuery()
+        [RecordedTest]
+        public async Task TableQueryableDictionaryTableEntityQuery()
         {
             var entitiesToCreate = CreateComplexTableEntities(PartitionKeyValue, 2);
 
@@ -246,7 +246,7 @@ namespace Azure.Data.Tables.Tests
             Assert.That(entity.RowKey, Is.EqualTo(entitiesToCreate[1].RowKey));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableQueryableMultipleWhere()
         {
             var entitiesToCreate = CreateComplexTableEntities(PartitionKeyValue, 2);
@@ -264,7 +264,7 @@ namespace Azure.Data.Tables.Tests
 
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableQueryableEnumerateTwice()
         {
             var entitiesToCreate = CreateComplexTableEntities(PartitionKeyValue, 2);
@@ -298,7 +298,7 @@ namespace Azure.Data.Tables.Tests
         }
 
 
-        [Test]
+        [RecordedTest]
         public async Task TableQueryableOnSupportedTypes()
         {
             var entitiesToCreate = CreateComplexTableEntities(PartitionKeyValue, 4);
@@ -308,7 +308,7 @@ namespace Azure.Data.Tables.Tests
 
             foreach (var entity in entitiesToCreate)
             {
-                await client.CreateEntityAsync(entity).ConfigureAwait(false);
+                await client.AddEntityAsync(entity).ConfigureAwait(false);
             }
 
             // 1. Filter on String
@@ -400,7 +400,7 @@ namespace Azure.Data.Tables.Tests
             Assert.That(results.Count, Is.EqualTo(2));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableQueryableWithDictionaryTypeOnSupportedTypes()
         {
             var entitiesToCreate = CreateComplexTableEntities(PartitionKeyValue, 4);
@@ -410,99 +410,104 @@ namespace Azure.Data.Tables.Tests
 
             foreach (var entity in entitiesToCreate)
             {
-                await client.CreateEntityAsync(entity).ConfigureAwait(false);
+                await client.AddEntityAsync(entity).ConfigureAwait(false);
             }
 
             // 1. Filter on String
-            var results = await client.QueryAsync(ent => (ent["String"] as string).CompareTo(thirdEntity.String) >= 0).ToEnumerableAsync().ConfigureAwait(false);
+            var results = await client.QueryAsync<TableEntity>(ent => ent.GetString("String").CompareTo(thirdEntity.String) >= 0).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(results.Count, Is.EqualTo(2));
 
             // 2. Filter on Guid
-            results = await client.QueryAsync(ent => (Guid)ent["Guid"] == thirdEntity.Guid).ToEnumerableAsync().ConfigureAwait(false);
+            results = await client.QueryAsync<TableEntity>(ent => ent.GetGuid("Guid") == thirdEntity.Guid).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(results.Count, Is.EqualTo(1));
 
 
             // 3. Filter on Long
-            results = await client.QueryAsync(ent => (Int64)ent["Int64"] >= thirdEntity.Int64).ToEnumerableAsync().ConfigureAwait(false);
+            results = await client.QueryAsync<TableEntity>(ent => ent.GetInt64("Int64") >= thirdEntity.Int64).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(results.Count, Is.EqualTo(2));
 
-            results = await client.QueryAsync(ent => (long)ent["LongPrimitive"] >= thirdEntity.LongPrimitive).ToEnumerableAsync().ConfigureAwait(false);
+            results = await client.QueryAsync<TableEntity>(ent => ent.GetInt64("LongPrimitive") >= thirdEntity.LongPrimitive).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(results.Count, Is.EqualTo(2));
 
-            results = await client.QueryAsync(ent => (long?)ent["LongPrimitiveN"] >= thirdEntity.LongPrimitiveN).ToEnumerableAsync().ConfigureAwait(false);
+            results = await client.QueryAsync<TableEntity>(ent => ent.GetInt64("LongPrimitiveN") >= thirdEntity.LongPrimitiveN).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(results.Count, Is.EqualTo(2));
 
 
             // 4. Filter on Double
-            results = await client.QueryAsync(ent => (double)ent["Double"] >= thirdEntity.Double).ToEnumerableAsync().ConfigureAwait(false);
+            results = await client.QueryAsync<TableEntity>(ent => ent.GetDouble("Double") >= thirdEntity.Double).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(results.Count, Is.EqualTo(2));
 
-            results = await client.QueryAsync(ent => (double)ent["DoublePrimitive"] >= thirdEntity.DoublePrimitive).ToEnumerableAsync().ConfigureAwait(false);
+            results = await client.QueryAsync<TableEntity>(ent => ent.GetDouble("DoublePrimitive") >= thirdEntity.DoublePrimitive).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(results.Count, Is.EqualTo(2));
 
 
             // 5. Filter on Integer
-            results = await client.QueryAsync(ent => (Int32)ent["Int32"] >= thirdEntity.Int32).ToEnumerableAsync().ConfigureAwait(false);
+            results = await client.QueryAsync<TableEntity>(ent => ent.GetInt32("Int32") >= thirdEntity.Int32).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(results.Count, Is.EqualTo(2));
 
-            results = await client.QueryAsync(ent => (Int32?)ent["Int32N"] >= thirdEntity.Int32N).ToEnumerableAsync().ConfigureAwait(false);
+            results = await client.QueryAsync<TableEntity>(ent => ent.GetInt32("Int32N") >= thirdEntity.Int32N).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(results.Count, Is.EqualTo(2));
 
 
             // 6. Filter on Date
-            results = await client.QueryAsync(ent => (DateTimeOffset)ent["DateTimeOffset"] >= thirdEntity.DateTimeOffset).ToEnumerableAsync().ConfigureAwait(false);
+            results = await client.QueryAsync<TableEntity>(ent => (DateTimeOffset)ent["DateTimeOffset"] >= thirdEntity.DateTimeOffset).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(results.Count, Is.EqualTo(2));
 
-            results = await client.QueryAsync(ent => (DateTimeOffset)ent["DateTimeOffset"] < thirdEntity.DateTimeOffset).ToEnumerableAsync().ConfigureAwait(false);
+            results = await client.QueryAsync<TableEntity>(ent => (DateTimeOffset)ent["DateTimeOffset"] < thirdEntity.DateTimeOffset).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(results.Count, Is.EqualTo(2));
 
 
             // 7. Filter on Boolean
-            results = await client.QueryAsync(ent => (Boolean)ent["Bool"] == thirdEntity.Bool).ToEnumerableAsync().ConfigureAwait(false);
+            results = await client.QueryAsync<TableEntity>(ent => ent.GetBoolean("Bool") == thirdEntity.Bool).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(results.Count, Is.EqualTo(2));
 
-            results = await client.QueryAsync(ent => (bool)ent["BoolPrimitive"] == thirdEntity.BoolPrimitive).ToEnumerableAsync().ConfigureAwait(false);
+            results = await client.QueryAsync<TableEntity>(ent => ent.GetBoolean("BoolPrimitive") == thirdEntity.BoolPrimitive).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(results.Count, Is.EqualTo(2));
 
 
             // 8. Filter on Binary
-            results = await client.QueryAsync(ent => (Byte[])ent["Binary"] == thirdEntity.Binary).ToEnumerableAsync().ConfigureAwait(false);
+            results = await client.QueryAsync<TableEntity>(ent => ent.GetBinary("Binary") == thirdEntity.Binary).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(results.Count, Is.EqualTo(1));
 
-            results = await client.QueryAsync(ent => (byte[])ent["BinaryPrimitive"] == thirdEntity.BinaryPrimitive).ToEnumerableAsync().ConfigureAwait(false);
+            results = await client.QueryAsync<TableEntity>(ent => ent.GetBinary("BinaryPrimitive") == thirdEntity.BinaryPrimitive).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(results.Count, Is.EqualTo(1));
+
+            // 9. Filter using indexer.
+            results = await client.QueryAsync<TableEntity>(ent => (ent["String"] as string).CompareTo(thirdEntity.String) >= 0).ToEnumerableAsync().ConfigureAwait(false);
+
+            Assert.That(results.Count, Is.EqualTo(2));
 
 
             // 10. Complex Filter on Binary GTE
 
-            results = await client.QueryAsync(ent => (string)ent["PartitionKey"] == thirdEntity.PartitionKey &&
-                     (ent["String"] as string).CompareTo(thirdEntity.String) >= 0 &&
-                     (Int64)ent["Int64"] >= thirdEntity.Int64 &&
-                     (long)ent["LongPrimitive"] >= thirdEntity.LongPrimitive &&
-                     (long?)ent["LongPrimitiveN"] >= thirdEntity.LongPrimitiveN &&
-                     (Int32)ent["Int32"] >= thirdEntity.Int32 &&
-                     (Int32?)ent["Int32N"] >= thirdEntity.Int32N &&
+            results = await client.QueryAsync<TableEntity>(ent => ent.PartitionKey == thirdEntity.PartitionKey &&
+                     ent.GetString("String").CompareTo(thirdEntity.String) >= 0 &&
+                     ent.GetInt64("Int64") >= thirdEntity.Int64 &&
+                     ent.GetInt64("LongPrimitive") >= thirdEntity.LongPrimitive &&
+                     ent.GetInt64("LongPrimitiveN") >= thirdEntity.LongPrimitiveN &&
+                     ent.GetInt32("Int32") >= thirdEntity.Int32 &&
+                     ent.GetInt32("Int32N") >= thirdEntity.Int32N &&
                      (DateTimeOffset)ent["DateTimeOffset"] >= thirdEntity.DateTimeOffset).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(results.Count, Is.EqualTo(2));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableQueryableWithInvalidQuery()
         {
             var entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 1);

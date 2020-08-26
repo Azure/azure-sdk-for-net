@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayRewriteRuleSet. </summary>
         public ApplicationGatewayRewriteRuleSet()
         {
+            RewriteRules = new ChangeTrackingList<ApplicationGatewayRewriteRule>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayRewriteRuleSet. </summary>
@@ -36,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> Rewrite rules in the rewrite rule set. </summary>
-        public IList<ApplicationGatewayRewriteRule> RewriteRules { get; set; }
+        public IList<ApplicationGatewayRewriteRule> RewriteRules { get; }
         /// <summary> The provisioning state of the rewrite rule set resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

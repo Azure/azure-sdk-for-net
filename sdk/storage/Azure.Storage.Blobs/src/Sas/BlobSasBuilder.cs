@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Security.Cryptography;
 using System.Text;
@@ -13,7 +14,9 @@ namespace Azure.Storage.Sas
     /// <summary>
     /// <see cref="BlobSasBuilder"/> is used to generate a Shared Access
     /// Signature (SAS) for an Azure Storage container or blob.
-    /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas" />.
+    /// For more information, see
+    /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+    /// Create a service SAS</see>.
     /// </summary>
     public class BlobSasBuilder
     {
@@ -205,11 +208,49 @@ namespace Azure.Storage.Sas
         /// <summary>
         /// Sets the permissions for the SAS using a raw permissions string.
         /// </summary>
+        /// <param name="rawPermissions">
+        /// Raw permissions string for the SAS.
+        /// </param>
+        /// <param name="normalize">
+        /// If the permissions should be validated and correctly ordered.
+        /// </param>
+        public void SetPermissions(
+            string rawPermissions,
+            bool normalize = default)
+        {
+            if (normalize)
+            {
+                rawPermissions = SasExtensions.ValidateAndSanitizeRawPermissions(
+                    permissions: rawPermissions,
+                    validPermissionsInOrder: s_validPermissionsInOrder);
+            }
+
+            SetPermissions(rawPermissions);
+        }
+
+        /// <summary>
+        /// Sets the permissions for the SAS using a raw permissions string.
+        /// </summary>
         /// <param name="rawPermissions">Raw permissions string for the SAS.</param>
         public void SetPermissions(string rawPermissions)
         {
             Permissions = rawPermissions;
         }
+
+        private static readonly List<char> s_validPermissionsInOrder = new List<char>
+        {
+            Constants.Sas.Permissions.Read,
+            Constants.Sas.Permissions.Add,
+            Constants.Sas.Permissions.Create,
+            Constants.Sas.Permissions.Write,
+            Constants.Sas.Permissions.Delete,
+            Constants.Sas.Permissions.DeleteBlobVersion,
+            Constants.Sas.Permissions.List,
+            Constants.Sas.Permissions.Tag,
+            Constants.Sas.Permissions.Update,
+            Constants.Sas.Permissions.Process,
+            Constants.Sas.Permissions.FilterByTags,
+        };
 
         /// <summary>
         /// Use an account's <see cref="StorageSharedKeyCredential"/> to sign this

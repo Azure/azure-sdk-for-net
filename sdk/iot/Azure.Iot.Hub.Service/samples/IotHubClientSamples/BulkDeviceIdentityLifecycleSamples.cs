@@ -12,18 +12,18 @@ namespace Azure.Iot.Hub.Service.Samples
     /// <summary>
     /// This sample goes through the lifecycle of multiple Device Identities for multiple devices. It utilizes
     /// bulk APIs that allow for creating, updating, and deleting of up to 100 device identities at a time.
-    /// There are also bulk APIs for updating twins on up to 100 devices at time
+    /// There are also bulk APIs for updating twins on up to 100 devices at time.
     /// </summary>
     internal class BulkDeviceIdentityLifecycleSamples
     {
-        public readonly IoTHubServiceClient IoTHubServiceClient;
+        public readonly IotHubServiceClient IoTHubServiceClient;
         public const int MaxRandomValue = 200;
         public static readonly Random Random = new Random();
 
-        // Can be 1 to 100, configures how many devices to create/update/delete per service API call
+        // Can be 1 to 100, configures how many devices to create/update/delete per service API call.
         public const int BulkCount = 20;
 
-        public BulkDeviceIdentityLifecycleSamples(IoTHubServiceClient client)
+        public BulkDeviceIdentityLifecycleSamples(IotHubServiceClient client)
         {
             IoTHubServiceClient = client;
         }
@@ -40,32 +40,32 @@ namespace Azure.Iot.Hub.Service.Samples
                     });
             }
 
-            // Create multiple DeviceIdentities.
+            // Create multiple device identities.
             await CreateDeviceIdentitiesAsync(deviceIdentities);
 
-            // Get the created devices from the service
+            // Get the created devices from the service.
             IEnumerable<DeviceIdentity> createdIdentities = await GetDeviceIdentities(deviceIdentities.Select(identity => identity.DeviceId).ToArray());
 
-            // Update multiple DeviceIdentities.
+            // Update multiple device identities.
             await UpdateDeviceIdentitiesAsync(createdIdentities);
 
-            // Get the updated devices from the service
-            IEnumerable<TwinData> deviceTwins = await GetDeviceTwins(deviceIdentities.Select(identity => identity.DeviceId).ToArray());
+            // Get the device twins from the service.
+            IEnumerable<TwinData> deviceTwins = await GetDeviceTwins();
 
-            // Update Device Twin.
+            // Update multiple device twins.
             await UpdateDeviceTwinsAsync(deviceTwins);
 
-            // Get the updated devices from the service
+            // Get the updated devices from the service.
             IEnumerable<DeviceIdentity> identitiesBeforeDelete = await GetDeviceIdentities(deviceIdentities.Select(identity => identity.DeviceId).ToArray());
 
-            // Delete the device.
+            // Delete multiple device identities.
             await DeleteDeviceIdentitiesAsync(identitiesBeforeDelete);
         }
 
         /// <summary>
-        /// Creates a new device identity.
+        /// Create multiple device identities.
         /// </summary>
-        /// <param name="deviceId">Unique identifier of the device.</param>
+        /// <param name="deviceIdentities">Collection of device identities to be created.</param>
         public async Task CreateDeviceIdentitiesAsync(IEnumerable<DeviceIdentity> deviceIdentities)
         {
             SampleLogger.PrintHeader("CREATE DEVICE IDENTITIES");
@@ -73,6 +73,8 @@ namespace Azure.Iot.Hub.Service.Samples
             try
             {
                 Console.WriteLine($"Creating {BulkCount} new devices");
+
+                #region Snippet:IotHubCreateDeviceIdentities
 
                 Response<BulkRegistryOperationResponse> response = await IoTHubServiceClient.Devices.CreateIdentitiesAsync(deviceIdentities);
 
@@ -91,18 +93,22 @@ namespace Azure.Iot.Hub.Service.Samples
                         SampleLogger.PrintWarning($"Device id that failed: {bulkOperationError.DeviceId}, error code: {bulkOperationError.ErrorCode}");
                     }
                 }
+
+                #endregion Snippet:IotHubCreateDeviceIdentities
             }
             catch (Exception ex)
             {
+                // Try to cleanup before exiting with fatal error.
+                await CleanupHelper.DeleteAllDevicesInHubAsync(IoTHubServiceClient);
                 SampleLogger.FatalError($"Failed to create device identity due to:\n{ex}");
                 throw;
             }
         }
 
         /// <summary>
-        /// Update a device identity.
+        /// Update multiple device identity.
         /// </summary>
-        /// <param name="deviceId">Unique identifier of the device to be updated.</param>
+        /// <param name="deviceIdentities">Collection of device identities to be updated.</param>
         public async Task UpdateDeviceIdentitiesAsync(IEnumerable<DeviceIdentity> deviceIdentities)
         {
             SampleLogger.PrintHeader("UPDATE DEVICE IDENTITIES");
@@ -110,6 +116,9 @@ namespace Azure.Iot.Hub.Service.Samples
             try
             {
                 Console.WriteLine($"Disabling multiple devices so they cannot connect to IoT Hub.");
+
+                #region Snippet:IotHubUpdateDeviceIdentities
+
                 foreach (var identity in deviceIdentities)
                 {
                     identity.Status = DeviceStatus.Disabled;
@@ -131,18 +140,22 @@ namespace Azure.Iot.Hub.Service.Samples
                         SampleLogger.PrintWarning($"Device id that failed: {bulkOperationError.DeviceId}, error code: {bulkOperationError.ErrorCode}");
                     }
                 }
+
+                #endregion Snippet:IotHubUpdateDeviceIdentities
             }
             catch (Exception ex)
             {
+                // Try to cleanup before exiting with fatal error.
+                await CleanupHelper.DeleteAllDevicesInHubAsync(IoTHubServiceClient);
                 SampleLogger.FatalError($"Failed to update a device identity due to:\n{ex}");
                 throw;
             }
         }
 
         /// <summary>
-        /// Update a device twin desired properties.
+        /// Update multiple device twin desired properties.
         /// </summary>
-        /// <param name="deviceId">Unique identifier of the device to be updated.</param>
+        /// <param name="deviceTwins">Collection of device twins to be updated.</param>
         public async Task UpdateDeviceTwinsAsync(IEnumerable<TwinData> deviceTwins)
         {
             SampleLogger.PrintHeader("UPDATE DEVICE TWINS");
@@ -151,7 +164,8 @@ namespace Azure.Iot.Hub.Service.Samples
 
             try
             {
-                // Get the device device
+                #region Snippet:IotHubUpdateDeviceTwins
+
                 Console.WriteLine($"Setting a new desired property {userPropName} to: '{Environment.UserName}' for each twin");
                 foreach (TwinData twin in deviceTwins)
                 {
@@ -174,24 +188,30 @@ namespace Azure.Iot.Hub.Service.Samples
                         SampleLogger.PrintWarning($"Device id that failed: {bulkOperationError.DeviceId}, error code: {bulkOperationError.ErrorCode}");
                     }
                 }
+
+                #endregion Snippet:IotHubUpdateDeviceTwins
             }
             catch (Exception ex)
             {
+                // Try to cleanup before exiting with fatal error.
+                await CleanupHelper.DeleteAllDevicesInHubAsync(IoTHubServiceClient);
                 SampleLogger.FatalError($"Failed to update a device identity due to:\n{ex}");
                 throw;
             }
         }
 
         /// <summary>
-        /// Deletes a device identity.
+        /// Delete multiple device identities.
         /// </summary>
-        /// <param name="deviceId">Unique identifier of the device.</param>
+        /// <param name="deviceIdentities">Collection of device identities to be deleted.</param>
         public async Task DeleteDeviceIdentitiesAsync(IEnumerable<DeviceIdentity> deviceIdentities)
         {
             SampleLogger.PrintHeader("DELETE DEVICE IDENTITIES");
 
             try
             {
+                #region Snippet:IotHubDeleteDeviceIdentities
+
                 Console.WriteLine($"Deleting bulk device identities");
 
                 Response<BulkRegistryOperationResponse> response = await IoTHubServiceClient.Devices.DeleteIdentitiesAsync(deviceIdentities);
@@ -210,37 +230,56 @@ namespace Azure.Iot.Hub.Service.Samples
                         SampleLogger.PrintWarning($"Device id that failed: {bulkOperationError.DeviceId}, error code: {bulkOperationError.ErrorCode}");
                     }
                 }
+
+                #endregion Snippet:IotHubDeleteDeviceIdentities
             }
             catch (Exception ex)
             {
+                // Try to cleanup before exiting with fatal error.
+                await CleanupHelper.DeleteAllDevicesInHubAsync(IoTHubServiceClient);
                 SampleLogger.FatalError($"Failed to device identity due to:\n{ex}");
             }
         }
 
         /// <summary>
-        /// Gets the list of device identities that was created for this sample
+        /// Get the list of device identities that was created for this sample.
         /// </summary>
+        /// <param name="deviceIds">Collection of device identifiers.</param>
         public async Task<IEnumerable<DeviceIdentity>> GetDeviceIdentities(string[] deviceIds)
         {
+            #region Snippet:IotHubGetDeviceIdentities
+
             List<DeviceIdentity> retrievedIdentities = new List<DeviceIdentity>();
             for (int deviceIndex = 0; deviceIndex < BulkCount; deviceIndex++)
             {
                 retrievedIdentities.Add(await IoTHubServiceClient.Devices.GetIdentityAsync(deviceIds[deviceIndex]));
             }
 
+            #endregion Snippet:IotHubGetDeviceIdentities
+
             return retrievedIdentities;
         }
 
         /// <summary>
-        /// Gets the list of device twins that are tied to the device identities that were created for this sample
+        /// Get the list of device twins that are tied to the device identities that were created for this sample.
         /// </summary>
-        public async Task<IEnumerable<TwinData>> GetDeviceTwins(string[] deviceIds)
+        /// <param name="deviceIds">Collection of device identifiers.</param>
+        public async Task<IEnumerable<TwinData>> GetDeviceTwins()
         {
+            #region Snippet:IotHubGetDeviceTwins
+
+            AsyncPageable<TwinData> asyncPageableResponse = IoTHubServiceClient.Devices.GetTwinsAsync();
+
+            // Iterate over the twin instances in the pageable response.
+            // The "await" keyword here is required because new pages will be fetched when necessary,
+            // which involves a request to the service.
             List<TwinData> retrievedTwins = new List<TwinData>();
-            for (int deviceIndex = 0; deviceIndex < BulkCount; deviceIndex++)
+            await foreach (TwinData twin in asyncPageableResponse)
             {
-                retrievedTwins.Add(await IoTHubServiceClient.Devices.GetTwinAsync(deviceIds[deviceIndex]));
+                retrievedTwins.Add(twin);
             }
+
+            #endregion Snippet:IotHubGetDeviceTwins
 
             return retrievedTwins;
         }

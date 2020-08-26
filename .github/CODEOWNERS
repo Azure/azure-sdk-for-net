@@ -9,52 +9,72 @@
 /sdk/                                           @AlexGhiondea
 
 # Core
+# PRLabel: %Azure.Core
 /sdk/core/                                      @pakrym @KrzysztofCwalina
 
 # Extensions
-/sdk/extensions/                                @parkym
+/sdk/extensions/                                @pakrym
+
+# Compute
+# PRLabel: %Compute
+/sdk/compute/                                   @bilaakpan-ms @sandido @dkulkarni-ms @haagha @madewithsmiles @MS-syh2qs @grizzlytheodore
 
 # Service teams
+# PRLabel: %AzConfig
 /sdk/appconfiguration/                          @annelo-msft @AlexanderSher
 
+# PRLabel: %Batch
 /sdk/batch/                                     @bgklein @xingwu1 
 
 /sdk/cognitiveservices/language.textanalytics/  @assafi 
 /sdk/cognitiveservices/vision.computervision/   @toothache
 /sdk/cognitiveservices/vision.face/             @TFR258 
 
+# PRLabel: %DigitalTwins
 /sdk/digitaltwins/                              @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @prmathur-microsoft @bikamani @barustum
 
+# PRLabel: %Event Grid
 /sdk/eventgrid/                                 @Kishp01 @ahamad-MS
 
-/sdk/eventhub/                                  @serkantkaraca @jsquire @kinelski
-/sdk/eventhub/azure.messaging.eventhubs/        @jsquire @kinelski
+# PRLabel: %Event Hubs
+/sdk/eventhub/                                  @serkantkaraca @jsquire
 
-/sdk/identity/                                  @schaabs
+# PRLabel: %Azure.Identity
+/sdk/identity/                                  @schaabs @alexanderSher
 
+# PRLabel: %Iot
 /sdk/iot/                                       @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @prmathur-microsoft @bikamani @barustum
 
+# PRLabel: %KeyVault
 /sdk/keyvault/                                  @schaabs @heaths
 
+# PRLabel: %Search
 /sdk/search/                                    @brjohnstmsft @arv100kri @bleroy @tg-msft @heaths
 /sdk/search/Microsoft.*/                        @brjohnstmsft @arv100kri @bleroy
 
+# PRLabel: %Service Bus
 /sdk/servicebus/                                @JoshLove-msft @ShivangiReja @jsquire @MiYanni
 /sdk/servicebus/Microsoft.*/                    @nemakam
 
-/sdk/storage/                                   @amishra-dev @seanmcc-msft @amnguye @kasobol-msft @tg-msft
+# PRLabel: %Storage
+/sdk/storage/                                   @tg-msft
+/sdk/storage/Azure.Storage.*/                   @amishra-dev @seanmcc-msft @amnguye @kasobol-msft
 
+# PRLabel: %Tables
 /sdk/tables/                                    @christothes
 
+# PRLabel: %Cognitive - Text Analytics
 /sdk/textanalytics/                             @annelo-msft @maririos
 
+# PRLabel: %Cognitive - Form Recognizer
 /sdk/formrecognizer/                            @annelo-msft @kinelski @maririos
 
 # Smoke tests
 /common/SmokeTests/                             @AlexGhiondea @schaabs @heaths @tg-msft @jsquire
 
 # Management Plane
-/**/*Management*/                               @isra-fel @erich-wang
+/**/*Management*/                               @allenjzhang  @m-nash @markcowl
+/**/Azure.ResourceManager*/                     @allenjzhang  @m-nash @markcowl
 
 # Reviewers to double check any API changes
 /sdk/**/api/                                    @KrzysztofCwalina @pakrym @tg-msft
@@ -66,6 +86,6 @@
 # Eng Sys
 ###########
 /eng/           @weshaggard @chidozieononiwu @mitchdenny @danieljurek
-/eng/mgmt/      @isra-fel @erich-wang
+/eng/mgmt/      @allenjzhang @m-nash @markcowl
 /**/tests.yml   @danieljurek
 /**/ci.yml      @mitchdenny

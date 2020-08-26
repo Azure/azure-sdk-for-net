@@ -15,7 +15,7 @@ namespace Azure.Iot.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Desired != null)
+            if (Optional.IsCollectionDefined(Desired))
             {
                 writer.WritePropertyName("desired");
                 writer.WriteStartObject();
@@ -26,7 +26,7 @@ namespace Azure.Iot.Hub.Service.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Reported != null)
+            if (Optional.IsCollectionDefined(Reported))
             {
                 writer.WritePropertyName("reported");
                 writer.WriteStartObject();

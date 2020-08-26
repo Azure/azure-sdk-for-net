@@ -15,45 +15,32 @@ namespace Azure.Management.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (AddressPrefix != null)
+            if (Optional.IsDefined(AddressPrefix))
             {
                 writer.WritePropertyName("addressPrefix");
                 writer.WriteStringValue(AddressPrefix);
-            }
-            if (CircuitConnectionStatus != null)
-            {
-                writer.WritePropertyName("circuitConnectionStatus");
-                writer.WriteStringValue(CircuitConnectionStatus.Value.ToString());
             }
             writer.WriteEndObject();
         }
 
         internal static Ipv6CircuitConnectionConfig DeserializeIpv6CircuitConnectionConfig(JsonElement element)
         {
-            string addressPrefix = default;
-            CircuitConnectionStatus? circuitConnectionStatus = default;
+            Optional<string> addressPrefix = default;
+            Optional<CircuitConnectionStatus> circuitConnectionStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("addressPrefix"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     addressPrefix = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("circuitConnectionStatus"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     circuitConnectionStatus = new CircuitConnectionStatus(property.Value.GetString());
                     continue;
                 }
             }
-            return new Ipv6CircuitConnectionConfig(addressPrefix, circuitConnectionStatus);
+            return new Ipv6CircuitConnectionConfig(addressPrefix.Value, Optional.ToNullable(circuitConnectionStatus));
         }
     }
 }

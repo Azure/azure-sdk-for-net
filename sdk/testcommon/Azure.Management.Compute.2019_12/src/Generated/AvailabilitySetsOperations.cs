@@ -272,6 +272,7 @@ namespace Azure.Management.Compute
         /// <summary> Lists all availability sets in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual AsyncPageable<AvailabilitySet> ListAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -315,6 +316,7 @@ namespace Azure.Management.Compute
         /// <summary> Lists all availability sets in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual Pageable<AvailabilitySet> List(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -359,6 +361,7 @@ namespace Azure.Management.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="availabilitySetName"> The name of the availability set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="availabilitySetName"/> is null. </exception>
         public virtual AsyncPageable<VirtualMachineSize> ListAvailableSizesAsync(string resourceGroupName, string availabilitySetName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -392,6 +395,7 @@ namespace Azure.Management.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="availabilitySetName"> The name of the availability set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="availabilitySetName"/> is null. </exception>
         public virtual Pageable<VirtualMachineSize> ListAvailableSizes(string resourceGroupName, string availabilitySetName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

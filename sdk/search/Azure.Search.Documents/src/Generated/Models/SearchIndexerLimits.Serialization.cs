@@ -15,40 +15,28 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         internal static SearchIndexerLimits DeserializeSearchIndexerLimits(JsonElement element)
         {
-            TimeSpan? maxRunTime = default;
-            long? maxDocumentExtractionSize = default;
-            long? maxDocumentContentCharactersToExtract = default;
+            Optional<TimeSpan> maxRunTime = default;
+            Optional<long> maxDocumentExtractionSize = default;
+            Optional<long> maxDocumentContentCharactersToExtract = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxRunTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     maxRunTime = property.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (property.NameEquals("maxDocumentExtractionSize"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     maxDocumentExtractionSize = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("maxDocumentContentCharactersToExtract"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     maxDocumentContentCharactersToExtract = property.Value.GetInt64();
                     continue;
                 }
             }
-            return new SearchIndexerLimits(maxRunTime, maxDocumentExtractionSize, maxDocumentContentCharactersToExtract);
+            return new SearchIndexerLimits(Optional.ToNullable(maxRunTime), Optional.ToNullable(maxDocumentExtractionSize), Optional.ToNullable(maxDocumentContentCharactersToExtract));
         }
     }
 }

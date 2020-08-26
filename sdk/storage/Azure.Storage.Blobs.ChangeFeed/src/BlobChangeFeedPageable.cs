@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Pipeline;
-using Azure.Storage.Blobs.ChangeFeed.Models;
 
 namespace Azure.Storage.Blobs.ChangeFeed
 {
@@ -57,17 +56,18 @@ namespace Azure.Storage.Blobs.ChangeFeed
             }
 
             ChangeFeed changeFeed = _changeFeedFactory.BuildChangeFeed(
-                async: false,
                 _startTime,
                 _endTime,
-                _continuation)
+                _continuation,
+                async: false,
+                cancellationToken: default)
                 .EnsureCompleted();
 
             while (changeFeed.HasNext())
             {
                 yield return changeFeed.GetPage(
                     async: false,
-                    pageSize: pageSizeHint ?? 512).EnsureCompleted();
+                    pageSize: pageSizeHint ?? Constants.ChangeFeed.DefaultPageSize).EnsureCompleted();
             }
         }
     }

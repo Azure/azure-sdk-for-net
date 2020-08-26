@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -13,15 +14,16 @@ namespace Azure.ResourceManager.Network.Models
     public partial class NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties
     {
         /// <summary> Initializes a new instance of NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties. </summary>
-        public NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties()
+        internal NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties()
         {
+            Fqdns = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties. </summary>
         /// <param name="groupId"> The group ID for current private link connection. </param>
         /// <param name="requiredMemberName"> The required member name for current private link connection. </param>
         /// <param name="fqdns"> List of FQDNs for current private link connection. </param>
-        internal NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties(string groupId, string requiredMemberName, IList<string> fqdns)
+        internal NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties(string groupId, string requiredMemberName, IReadOnlyList<string> fqdns)
         {
             GroupId = groupId;
             RequiredMemberName = requiredMemberName;
@@ -33,6 +35,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The required member name for current private link connection. </summary>
         public string RequiredMemberName { get; }
         /// <summary> List of FQDNs for current private link connection. </summary>
-        public IList<string> Fqdns { get; }
+        public IReadOnlyList<string> Fqdns { get; }
     }
 }

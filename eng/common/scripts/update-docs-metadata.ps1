@@ -14,8 +14,6 @@ param (
   $DocRepoContentLocation = "docs-ref-services/" # within the doc repo, where does our readme go?
 )
 
-
-# import artifact parsing and semver handling
 . (Join-Path $PSScriptRoot artifact-metadata-parsing.ps1)
 . (Join-Path $PSScriptRoot SemVer.ps1)
 
@@ -43,7 +41,7 @@ function GetMetaData($lang){
     }
   }
 
-  $metadataResponse = Invoke-WebRequest-WithHandling -url $metadataUri -method "GET" | ConvertFrom-Csv
+  $metadataResponse = Invoke-RestMethod -Uri $metadataUri -method "GET" -MaximumRetryCount 3 -RetryIntervalSec 10 | ConvertFrom-Csv
 
   return $metadataResponse
 }

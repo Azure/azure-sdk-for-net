@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexes?api-version=2020-06-30",
+      "RequestUri": "https://azs-net-pakrymsearch2.search.windows.net/indexes?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
         "Content-Length": "4032",
         "Content-Type": "application/json",
-        "traceparent": "00-9e77f404e552b34ca155730cc725d7c9-868b838e0fddc64e-00",
+        "traceparent": "00-b2479108e9952e4b8b0207240727ea70-6fd3f839318abf46-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.0.0-dev.20200625.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Search.Documents/11.1.0-dev.20200717.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "26f7066d315f5ab3f827c83cbd605a50",
         "x-ms-return-client-request-id": "true"
@@ -308,13 +308,13 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "26f7066d-315f-5ab3-f827-c83cbd605a50",
-        "Content-Length": "6233",
+        "Content-Length": "6234",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Fri, 26 Jun 2020 06:26:29 GMT",
-        "elapsed-time": "767",
-        "ETag": "W/\u00220x8D81999DC6EB2B9\u0022",
+        "Date": "Fri, 17 Jul 2020 21:45:55 GMT",
+        "elapsed-time": "1067",
+        "ETag": "W/\u00220x8D82A9AC952C584\u0022",
         "Expires": "-1",
-        "Location": "https://azs-net-heathsrchtst.search.windows.net/indexes(\u0027ptbgbued\u0027)?api-version=2020-06-30",
+        "Location": "https://azs-net-pakrymsearch2.search.windows.net/indexes(\u0027ptbgbued\u0027)?api-version=2020-06-30",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
@@ -323,8 +323,8 @@
         "x-ms-client-request-id": "26f7066d-315f-5ab3-f827-c83cbd605a50"
       },
       "ResponseBody": {
-        "@odata.context": "https://azs-net-heathsrchtst.search.windows.net/$metadata#indexes/$entity",
-        "@odata.etag": "\u00220x8D81999DC6EB2B9\u0022",
+        "@odata.context": "https://azs-net-pakrymsearch2.search.windows.net/$metadata#indexes/$entity",
+        "@odata.etag": "\u00220x8D82A9AC952C584\u0022",
         "name": "ptbgbued",
         "defaultScoringProfile": null,
         "fields": [
@@ -723,19 +723,19 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexes(\u0027ptbgbued\u0027)?allowIndexDowntime=true\u0026api-version=2020-06-30",
+      "RequestUri": "https://azs-net-pakrymsearch2.search.windows.net/indexes(\u0027ptbgbued\u0027)?allowIndexDowntime=true\u0026api-version=2020-06-30",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "Content-Length": "4535",
+        "Content-Length": "4994",
         "Content-Type": "application/json",
-        "If-Match": "\u00220x8D81999DC6EB2B9\u0022",
+        "If-Match": "\u00220x8D82A9AC952C584\u0022",
         "Prefer": "return=representation",
-        "traceparent": "00-211b7b41e9f7f74d98b81f75a505a509-ee29399a5149a145-00",
+        "traceparent": "00-cac761f7f0974b448a168ec5af7e3a80-c4cbfe86ccfb3c45-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.0.0-dev.20200625.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Search.Documents/11.1.0-dev.20200717.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "5c92b4cdda72b9dbb6ec10cb1f481d99",
         "x-ms-return-client-request-id": "true"
@@ -751,7 +751,8 @@
             "searchable": false,
             "filterable": true,
             "sortable": true,
-            "facetable": true
+            "facetable": true,
+            "synonymMaps": []
           },
           {
             "name": "hotelName",
@@ -761,7 +762,8 @@
             "searchable": true,
             "filterable": true,
             "sortable": true,
-            "facetable": false
+            "facetable": false,
+            "synonymMaps": []
           },
           {
             "name": "description",
@@ -772,7 +774,8 @@
             "filterable": false,
             "sortable": false,
             "facetable": false,
-            "analyzer": "en.lucene"
+            "analyzer": "en.lucene",
+            "synonymMaps": []
           },
           {
             "name": "descriptionFr",
@@ -783,7 +786,8 @@
             "filterable": false,
             "sortable": false,
             "facetable": false,
-            "analyzer": "fr.lucene"
+            "analyzer": "fr.lucene",
+            "synonymMaps": []
           },
           {
             "name": "category",
@@ -793,7 +797,8 @@
             "searchable": true,
             "filterable": true,
             "sortable": true,
-            "facetable": true
+            "facetable": true,
+            "synonymMaps": []
           },
           {
             "name": "tags",
@@ -803,7 +808,8 @@
             "searchable": true,
             "filterable": true,
             "sortable": false,
-            "facetable": true
+            "facetable": true,
+            "synonymMaps": []
           },
           {
             "name": "parkingIncluded",
@@ -813,7 +819,8 @@
             "searchable": false,
             "filterable": true,
             "sortable": true,
-            "facetable": true
+            "facetable": true,
+            "synonymMaps": []
           },
           {
             "name": "smokingAllowed",
@@ -823,7 +830,8 @@
             "searchable": false,
             "filterable": true,
             "sortable": true,
-            "facetable": true
+            "facetable": true,
+            "synonymMaps": []
           },
           {
             "name": "lastRenovationDate",
@@ -833,7 +841,8 @@
             "searchable": false,
             "filterable": true,
             "sortable": true,
-            "facetable": true
+            "facetable": true,
+            "synonymMaps": []
           },
           {
             "name": "rating",
@@ -843,7 +852,8 @@
             "searchable": false,
             "filterable": true,
             "sortable": true,
-            "facetable": true
+            "facetable": true,
+            "synonymMaps": []
           },
           {
             "name": "location",
@@ -853,7 +863,8 @@
             "searchable": false,
             "filterable": true,
             "sortable": true,
-            "facetable": false
+            "facetable": false,
+            "synonymMaps": []
           },
           {
             "name": "address",
@@ -867,7 +878,8 @@
                 "searchable": true,
                 "filterable": false,
                 "sortable": false,
-                "facetable": false
+                "facetable": false,
+                "synonymMaps": []
               },
               {
                 "name": "city",
@@ -877,7 +889,8 @@
                 "searchable": true,
                 "filterable": true,
                 "sortable": true,
-                "facetable": true
+                "facetable": true,
+                "synonymMaps": []
               },
               {
                 "name": "stateProvince",
@@ -887,7 +900,8 @@
                 "searchable": true,
                 "filterable": true,
                 "sortable": true,
-                "facetable": true
+                "facetable": true,
+                "synonymMaps": []
               },
               {
                 "name": "country",
@@ -897,7 +911,8 @@
                 "searchable": true,
                 "filterable": true,
                 "sortable": true,
-                "facetable": true
+                "facetable": true,
+                "synonymMaps": []
               },
               {
                 "name": "postalCode",
@@ -907,7 +922,8 @@
                 "searchable": true,
                 "filterable": true,
                 "sortable": true,
-                "facetable": true
+                "facetable": true,
+                "synonymMaps": []
               }
             ]
           },
@@ -924,7 +940,8 @@
                 "filterable": false,
                 "sortable": false,
                 "facetable": false,
-                "analyzer": "en.lucene"
+                "analyzer": "en.lucene",
+                "synonymMaps": []
               },
               {
                 "name": "descriptionFr",
@@ -935,7 +952,8 @@
                 "filterable": false,
                 "sortable": false,
                 "facetable": false,
-                "analyzer": "fr.lucene"
+                "analyzer": "fr.lucene",
+                "synonymMaps": []
               },
               {
                 "name": "type",
@@ -945,7 +963,8 @@
                 "searchable": true,
                 "filterable": true,
                 "sortable": false,
-                "facetable": true
+                "facetable": true,
+                "synonymMaps": []
               },
               {
                 "name": "baseRate",
@@ -955,7 +974,8 @@
                 "searchable": false,
                 "filterable": true,
                 "sortable": false,
-                "facetable": true
+                "facetable": true,
+                "synonymMaps": []
               },
               {
                 "name": "bedOptions",
@@ -965,7 +985,8 @@
                 "searchable": true,
                 "filterable": true,
                 "sortable": false,
-                "facetable": true
+                "facetable": true,
+                "synonymMaps": []
               },
               {
                 "name": "sleepsCount",
@@ -975,7 +996,8 @@
                 "searchable": false,
                 "filterable": true,
                 "sortable": false,
-                "facetable": true
+                "facetable": true,
+                "synonymMaps": []
               },
               {
                 "name": "smokingAllowed",
@@ -985,7 +1007,8 @@
                 "searchable": false,
                 "filterable": true,
                 "sortable": false,
-                "facetable": true
+                "facetable": true,
+                "synonymMaps": []
               },
               {
                 "name": "tags",
@@ -995,7 +1018,8 @@
                 "searchable": true,
                 "filterable": true,
                 "sortable": false,
-                "facetable": true
+                "facetable": true,
+                "synonymMaps": []
               }
             ]
           },
@@ -1052,20 +1076,23 @@
             "name": "asciiTags"
           }
         ],
+        "tokenizers": [],
+        "tokenFilters": [],
+        "charFilters": [],
         "similarity": {
           "@odata.type": "#Microsoft.Azure.Search.BM25Similarity"
         },
-        "@odata.etag": "\u00220x8D81999DC6EB2B9\u0022"
+        "@odata.etag": "\u00220x8D82A9AC952C584\u0022"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "5c92b4cd-da72-b9db-b6ec-10cb1f481d99",
-        "Content-Length": "6652",
+        "Content-Length": "6653",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Fri, 26 Jun 2020 06:26:30 GMT",
-        "elapsed-time": "1114",
-        "ETag": "W/\u00220x8D81999DD24682C\u0022",
+        "Date": "Fri, 17 Jul 2020 21:45:58 GMT",
+        "elapsed-time": "1831",
+        "ETag": "W/\u00220x8D82A9ACA6CF3F7\u0022",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -1075,8 +1102,8 @@
         "x-ms-client-request-id": "5c92b4cd-da72-b9db-b6ec-10cb1f481d99"
       },
       "ResponseBody": {
-        "@odata.context": "https://azs-net-heathsrchtst.search.windows.net/$metadata#indexes/$entity",
-        "@odata.etag": "\u00220x8D81999DD24682C\u0022",
+        "@odata.context": "https://azs-net-pakrymsearch2.search.windows.net/$metadata#indexes/$entity",
+        "@odata.etag": "\u00220x8D82A9ACA6CF3F7\u0022",
         "name": "ptbgbued",
         "defaultScoringProfile": null,
         "fields": [
@@ -1502,15 +1529,15 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexes(\u0027ptbgbued\u0027)?api-version=2020-06-30",
+      "RequestUri": "https://azs-net-pakrymsearch2.search.windows.net/indexes(\u0027ptbgbued\u0027)?api-version=2020-06-30",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-98a3398f3f51f7428208f77d03325188-8b2961996e57d143-00",
+        "traceparent": "00-de309c7515b2844088b439fa08d05f19-e5a101709041234b-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.0.0-dev.20200625.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Search.Documents/11.1.0-dev.20200717.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "bcb37215e67e50e3b4d10c4369758711",
         "x-ms-return-client-request-id": "true"
@@ -1520,8 +1547,8 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "bcb37215-e67e-50e3-b4d1-0c4369758711",
-        "Date": "Fri, 26 Jun 2020 06:26:30 GMT",
-        "elapsed-time": "234",
+        "Date": "Fri, 17 Jul 2020 21:45:58 GMT",
+        "elapsed-time": "865",
         "Expires": "-1",
         "Pragma": "no-cache",
         "request-id": "bcb37215-e67e-50e3-b4d1-0c4369758711",
@@ -1535,6 +1562,6 @@
     "RandomSeed": "1669853055",
     "SearchIndexName": "ptbgbued",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
-    "SEARCH_SERVICE_NAME": "azs-net-heathsrchtst"
+    "SEARCH_SERVICE_NAME": "azs-net-pakrymsearch2"
   }
 }

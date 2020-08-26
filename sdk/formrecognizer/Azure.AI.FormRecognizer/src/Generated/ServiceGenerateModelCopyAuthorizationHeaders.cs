@@ -17,6 +17,7 @@ namespace Azure.AI.FormRecognizer
         {
             _response = response;
         }
+        /// <summary> Location and ID of the model being copied. The status of model copy is specified in the status property at the model location. </summary>
         public string Location => _response.Headers.TryGetValue("Location", out string value) ? value : null;
     }
 }

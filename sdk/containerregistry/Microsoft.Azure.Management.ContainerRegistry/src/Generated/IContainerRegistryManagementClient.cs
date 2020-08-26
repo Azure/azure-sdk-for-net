@@ -64,14 +64,29 @@ namespace Microsoft.Azure.Management.ContainerRegistry
 
 
         /// <summary>
+        /// Gets the IExportPipelinesOperations.
+        /// </summary>
+        IExportPipelinesOperations ExportPipelines { get; }
+
+        /// <summary>
         /// Gets the IRegistriesOperations.
         /// </summary>
         IRegistriesOperations Registries { get; }
 
         /// <summary>
+        /// Gets the IImportPipelinesOperations.
+        /// </summary>
+        IImportPipelinesOperations ImportPipelines { get; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
+
+        /// <summary>
+        /// Gets the IPipelineRunsOperations.
+        /// </summary>
+        IPipelineRunsOperations PipelineRuns { get; }
 
         /// <summary>
         /// Gets the IPrivateEndpointConnectionsOperations.

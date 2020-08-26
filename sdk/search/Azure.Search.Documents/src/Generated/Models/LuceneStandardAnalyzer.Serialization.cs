@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
@@ -17,12 +16,12 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (MaxTokenLength != null)
+            if (Optional.IsDefined(MaxTokenLength))
             {
                 writer.WritePropertyName("maxTokenLength");
                 writer.WriteNumberValue(MaxTokenLength.Value);
             }
-            if (Stopwords != null && Stopwords.Any())
+            if (Optional.IsCollectionDefined(Stopwords))
             {
                 writer.WritePropertyName("stopwords");
                 writer.WriteStartArray();
@@ -41,38 +40,23 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static LuceneStandardAnalyzer DeserializeLuceneStandardAnalyzer(JsonElement element)
         {
-            int? maxTokenLength = default;
-            IList<string> stopwords = default;
+            Optional<int> maxTokenLength = default;
+            Optional<IList<string>> stopwords = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxTokenLength"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     maxTokenLength = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("stopwords"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     stopwords = array;
                     continue;
@@ -88,7 +72,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new LuceneStandardAnalyzer(odataType, name, maxTokenLength, stopwords);
+            return new LuceneStandardAnalyzer(odataType, name, Optional.ToNullable(maxTokenLength), Optional.ToList(stopwords));
         }
     }
 }

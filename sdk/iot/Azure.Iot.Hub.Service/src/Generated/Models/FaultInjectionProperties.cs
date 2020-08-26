@@ -10,7 +10,7 @@ using System;
 namespace Azure.Iot.Hub.Service.Models
 {
     /// <summary> The FaultInjectionProperties. </summary>
-    public partial class FaultInjectionProperties
+    internal partial class FaultInjectionProperties
     {
         /// <summary> Initializes a new instance of FaultInjectionProperties. </summary>
         public FaultInjectionProperties()
@@ -18,9 +18,9 @@ namespace Azure.Iot.Hub.Service.Models
         }
 
         /// <summary> Initializes a new instance of FaultInjectionProperties. </summary>
-        /// <param name="iotHubName"> . </param>
-        /// <param name="connection"> . </param>
-        /// <param name="lastUpdatedTimeUtc"> Service generated. </param>
+        /// <param name="iotHubName"> The name of the Iot Hub. </param>
+        /// <param name="connection"> The properties for the connection. </param>
+        /// <param name="lastUpdatedTimeUtc"> The date and time the object was last updated. </param>
         internal FaultInjectionProperties(string iotHubName, FaultInjectionConnectionProperties connection, DateTimeOffset? lastUpdatedTimeUtc)
         {
             IotHubName = iotHubName;
@@ -28,9 +28,11 @@ namespace Azure.Iot.Hub.Service.Models
             LastUpdatedTimeUtc = lastUpdatedTimeUtc;
         }
 
+        /// <summary> The name of the Iot Hub. </summary>
         public string IotHubName { get; set; }
+        /// <summary> The properties for the connection. </summary>
         public FaultInjectionConnectionProperties Connection { get; set; }
-        /// <summary> Service generated. </summary>
+        /// <summary> The date and time the object was last updated. </summary>
         public DateTimeOffset? LastUpdatedTimeUtc { get; set; }
     }
 }

@@ -17,10 +17,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type");
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("referenceName");
             writer.WriteStringValue(ReferenceName);
-            if (Parameters != null)
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters");
                 writer.WriteStartObject();
@@ -36,14 +36,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static DatasetReference DeserializeDatasetReference(JsonElement element)
         {
-            string type = default;
+            DatasetReferenceType type = default;
             string referenceName = default;
-            IDictionary<string, object> parameters = default;
+            Optional<IDictionary<string, object>> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new DatasetReferenceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("referenceName"))
@@ -53,27 +53,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("parameters"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetObject());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetObject());
                     }
                     parameters = dictionary;
                     continue;
                 }
             }
-            return new DatasetReference(type, referenceName, parameters);
+            return new DatasetReference(type, referenceName, Optional.ToDictionary(parameters));
         }
     }
 }

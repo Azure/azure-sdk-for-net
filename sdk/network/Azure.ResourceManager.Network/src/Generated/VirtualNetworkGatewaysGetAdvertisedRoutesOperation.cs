@@ -54,27 +54,13 @@ namespace Azure.ResourceManager.Network
         GatewayRouteListResult IOperationSource<GatewayRouteListResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return GatewayRouteListResult.DeserializeGatewayRouteListResult(document.RootElement);
-            }
+            return GatewayRouteListResult.DeserializeGatewayRouteListResult(document.RootElement);
         }
 
         async ValueTask<GatewayRouteListResult> IOperationSource<GatewayRouteListResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return GatewayRouteListResult.DeserializeGatewayRouteListResult(document.RootElement);
-            }
+            return GatewayRouteListResult.DeserializeGatewayRouteListResult(document.RootElement);
         }
     }
 }

@@ -17,6 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             _response = response;
         }
+        /// <summary> URI to poll for asynchronous operation status. </summary>
         public string Location => _response.Headers.TryGetValue("location", out string value) ? value : null;
     }
 }

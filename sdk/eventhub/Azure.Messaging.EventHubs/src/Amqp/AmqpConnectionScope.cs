@@ -160,7 +160,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// </summary>
         ///
         /// <param name="serviceEndpoint">Endpoint for the Event Hubs service to which the scope is associated.</param>
-        /// <param name="eventHubName"> The name of the Event Hub to which the scope is associated</param>
+        /// <param name="eventHubName"> The name of the Event Hub to which the scope is associated.</param>
         /// <param name="credential">The credential to use for authorization with the Event Hubs service.</param>
         /// <param name="transport">The transport to use for communication.</param>
         /// <param name="proxy">The proxy, if any, to use for communication.</param>
@@ -800,15 +800,39 @@ namespace Azure.Messaging.EventHubs.Amqp
         }
 
         /// <summary>
-        ///   Performs the actions needed to open a generic AMQP object, such
+        ///   Performs the actions needed to open an AMQP object, such
         ///   as a session or link for use.
         /// </summary>
         ///
         /// <param name="target">The target AMQP object to open.</param>
         /// <param name="timeout">The timeout to apply when opening the link.</param>
         ///
-        protected virtual Task OpenAmqpObjectAsync(AmqpObject target,
-                                                   TimeSpan timeout) => target.OpenAsync(timeout);
+        protected virtual async Task OpenAmqpObjectAsync(AmqpObject target,
+                                                         TimeSpan timeout)
+        {
+            try
+            {
+                await target.OpenAsync(timeout).ConfigureAwait(false);
+            }
+            catch
+            {
+                switch (target)
+                {
+                    case AmqpLink linkTarget:
+                        linkTarget.Session?.SafeClose();
+                        break;
+                    case RequestResponseAmqpLink linkTarget:
+                        linkTarget.Session?.SafeClose();
+                        break;
+
+                    default:
+                        break;
+                }
+
+                target.SafeClose();
+                throw;
+            }
+        }
 
         /// <summary>
         ///   Requests authorization for a connection or link using a connection via the CBS mechanism.
@@ -830,18 +854,26 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///   credentials.
         /// </remarks>
         ///
-        protected virtual Task<DateTime> RequestAuthorizationUsingCbsAsync(AmqpConnection connection,
-                                                                           CbsTokenProvider tokenProvider,
-                                                                           Uri endpoint,
-                                                                           string audience,
-                                                                           string resource,
-                                                                           string[] requiredClaims,
-                                                                           TimeSpan timeout)
+        protected virtual async Task<DateTime> RequestAuthorizationUsingCbsAsync(AmqpConnection connection,
+                                                                                 CbsTokenProvider tokenProvider,
+                                                                                 Uri endpoint,
+                                                                                 string audience,
+                                                                                 string resource,
+                                                                                 string[] requiredClaims,
+                                                                                 TimeSpan timeout)
         {
             try
             {
+                // If the connection is in the process of closing, then do not attempt to authorize but consider it an
+                // unexpected scenario that should be treated as transient.
+
+                if (connection.IsClosing())
+                {
+                     throw new EventHubsException(true, EventHubName, Resources.UnknownCommunicationException, EventHubsException.FailureReason.ServiceCommunicationProblem);
+                }
+
                 var authLink = connection.Extensions.Find<AmqpCbsLink>();
-                return authLink.SendTokenAsync(TokenProvider, endpoint, audience, resource, requiredClaims, timeout);
+                return await authLink.SendTokenAsync(TokenProvider, endpoint, audience, resource, requiredClaims, timeout).ConfigureAwait(false);
             }
             catch (Exception ex) when ((ex is ObjectDisposedException) || (ex is OperationCanceledException))
             {

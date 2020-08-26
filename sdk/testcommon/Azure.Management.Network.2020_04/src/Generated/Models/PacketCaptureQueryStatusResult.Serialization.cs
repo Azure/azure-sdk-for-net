@@ -16,65 +16,41 @@ namespace Azure.Management.Network.Models
     {
         internal static PacketCaptureQueryStatusResult DeserializePacketCaptureQueryStatusResult(JsonElement element)
         {
-            string name = default;
-            string id = default;
-            DateTimeOffset? captureStartTime = default;
-            PcStatus? packetCaptureStatus = default;
-            string stopReason = default;
-            IReadOnlyList<PcError> packetCaptureError = default;
+            Optional<string> name = default;
+            Optional<string> id = default;
+            Optional<DateTimeOffset> captureStartTime = default;
+            Optional<PcStatus> packetCaptureStatus = default;
+            Optional<string> stopReason = default;
+            Optional<IReadOnlyList<PcError>> packetCaptureError = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("captureStartTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     captureStartTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("packetCaptureStatus"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     packetCaptureStatus = new PcStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("stopReason"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     stopReason = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("packetCaptureError"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<PcError> array = new List<PcError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -84,7 +60,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new PacketCaptureQueryStatusResult(name, id, captureStartTime, packetCaptureStatus, stopReason, packetCaptureError);
+            return new PacketCaptureQueryStatusResult(name.Value, id.Value, Optional.ToNullable(captureStartTime), Optional.ToNullable(packetCaptureStatus), stopReason.Value, Optional.ToList(packetCaptureError));
         }
     }
 }

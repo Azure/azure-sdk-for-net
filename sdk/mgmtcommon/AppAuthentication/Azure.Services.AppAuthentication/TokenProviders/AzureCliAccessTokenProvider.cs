@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 startInfo = new ProcessStartInfo
                 {
                     FileName = Bash,
-                    Arguments = $"{GetTokenCommand} {ResourceArgumentName} {resource}"
+                    Arguments = $"-c \"{GetTokenCommand} {ResourceArgumentName} {resource}\""
                 };
 
                 azureCliPath = $"{EnvironmentHelper.GetEnvironmentVariable(AzureCliPath)}:{AzureCliDefaultPath}";

@@ -18,17 +18,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
-            if (ConnectVia != null)
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia");
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (Parameters != null)
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters");
                 writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Annotations != null)
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations");
                 writer.WriteStartArray();
@@ -55,32 +55,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteObjectValue(Domain);
             writer.WritePropertyName("accessToken");
             writer.WriteObjectValue(AccessToken);
-            if (ExistingClusterId != null)
+            if (Optional.IsDefined(ExistingClusterId))
             {
                 writer.WritePropertyName("existingClusterId");
                 writer.WriteObjectValue(ExistingClusterId);
             }
-            if (InstancePoolId != null)
+            if (Optional.IsDefined(InstancePoolId))
             {
                 writer.WritePropertyName("instancePoolId");
                 writer.WriteObjectValue(InstancePoolId);
             }
-            if (NewClusterVersion != null)
+            if (Optional.IsDefined(NewClusterVersion))
             {
                 writer.WritePropertyName("newClusterVersion");
                 writer.WriteObjectValue(NewClusterVersion);
             }
-            if (NewClusterNumOfWorker != null)
+            if (Optional.IsDefined(NewClusterNumOfWorker))
             {
                 writer.WritePropertyName("newClusterNumOfWorker");
                 writer.WriteObjectValue(NewClusterNumOfWorker);
             }
-            if (NewClusterNodeType != null)
+            if (Optional.IsDefined(NewClusterNodeType))
             {
                 writer.WritePropertyName("newClusterNodeType");
                 writer.WriteObjectValue(NewClusterNodeType);
             }
-            if (NewClusterSparkConf != null)
+            if (Optional.IsCollectionDefined(NewClusterSparkConf))
             {
                 writer.WritePropertyName("newClusterSparkConf");
                 writer.WriteStartObject();
@@ -91,7 +91,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (NewClusterSparkEnvVars != null)
+            if (Optional.IsCollectionDefined(NewClusterSparkEnvVars))
             {
                 writer.WritePropertyName("newClusterSparkEnvVars");
                 writer.WriteStartObject();
@@ -102,7 +102,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (NewClusterCustomTags != null)
+            if (Optional.IsCollectionDefined(NewClusterCustomTags))
             {
                 writer.WritePropertyName("newClusterCustomTags");
                 writer.WriteStartObject();
@@ -113,22 +113,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (NewClusterDriverNodeType != null)
+            if (Optional.IsDefined(NewClusterDriverNodeType))
             {
                 writer.WritePropertyName("newClusterDriverNodeType");
                 writer.WriteObjectValue(NewClusterDriverNodeType);
             }
-            if (NewClusterInitScripts != null)
+            if (Optional.IsDefined(NewClusterInitScripts))
             {
                 writer.WritePropertyName("newClusterInitScripts");
                 writer.WriteObjectValue(NewClusterInitScripts);
             }
-            if (NewClusterEnableElasticDisk != null)
+            if (Optional.IsDefined(NewClusterEnableElasticDisk))
             {
                 writer.WritePropertyName("newClusterEnableElasticDisk");
                 writer.WriteObjectValue(NewClusterEnableElasticDisk);
             }
-            if (EncryptedCredential != null)
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential");
                 writer.WriteObjectValue(EncryptedCredential);
@@ -145,26 +145,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static AzureDatabricksLinkedService DeserializeAzureDatabricksLinkedService(JsonElement element)
         {
             string type = default;
-            IntegrationRuntimeReference connectVia = default;
-            string description = default;
-            IDictionary<string, ParameterSpecification> parameters = default;
-            IList<object> annotations = default;
+            Optional<IntegrationRuntimeReference> connectVia = default;
+            Optional<string> description = default;
+            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
+            Optional<IList<object>> annotations = default;
             object domain = default;
             SecretBase accessToken = default;
-            object existingClusterId = default;
-            object instancePoolId = default;
-            object newClusterVersion = default;
-            object newClusterNumOfWorker = default;
-            object newClusterNodeType = default;
-            IDictionary<string, object> newClusterSparkConf = default;
-            IDictionary<string, object> newClusterSparkEnvVars = default;
-            IDictionary<string, object> newClusterCustomTags = default;
-            object newClusterDriverNodeType = default;
-            object newClusterInitScripts = default;
-            object newClusterEnableElasticDisk = default;
-            object encryptedCredential = default;
+            Optional<object> existingClusterId = default;
+            Optional<object> instancePoolId = default;
+            Optional<object> newClusterVersion = default;
+            Optional<object> newClusterNumOfWorker = default;
+            Optional<object> newClusterNodeType = default;
+            Optional<IDictionary<string, object>> newClusterSparkConf = default;
+            Optional<IDictionary<string, object>> newClusterSparkEnvVars = default;
+            Optional<IDictionary<string, object>> newClusterCustomTags = default;
+            Optional<object> newClusterDriverNodeType = default;
+            Optional<object> newClusterInitScripts = default;
+            Optional<object> newClusterEnableElasticDisk = default;
+            Optional<object> encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -174,60 +174,30 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("connectVia"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("parameters"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, ParameterSpecification> dictionary = new Dictionary<string, ParameterSpecification>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, ParameterSpecification.DeserializeParameterSpecification(property0.Value));
-                        }
+                        dictionary.Add(property0.Name, ParameterSpecification.DeserializeParameterSpecification(property0.Value));
                     }
                     parameters = dictionary;
                     continue;
                 }
                 if (property.NameEquals("annotations"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<object> array = new List<object>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetObject());
-                        }
+                        array.Add(item.GetObject());
                     }
                     annotations = array;
                     continue;
@@ -248,163 +218,86 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("existingClusterId"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             existingClusterId = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("instancePoolId"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             instancePoolId = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("newClusterVersion"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             newClusterVersion = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("newClusterNumOfWorker"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             newClusterNumOfWorker = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("newClusterNodeType"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             newClusterNodeType = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("newClusterSparkConf"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             Dictionary<string, object> dictionary = new Dictionary<string, object>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                if (property1.Value.ValueKind == JsonValueKind.Null)
-                                {
-                                    dictionary.Add(property1.Name, null);
-                                }
-                                else
-                                {
-                                    dictionary.Add(property1.Name, property1.Value.GetObject());
-                                }
+                                dictionary.Add(property1.Name, property1.Value.GetObject());
                             }
                             newClusterSparkConf = dictionary;
                             continue;
                         }
                         if (property0.NameEquals("newClusterSparkEnvVars"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             Dictionary<string, object> dictionary = new Dictionary<string, object>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                if (property1.Value.ValueKind == JsonValueKind.Null)
-                                {
-                                    dictionary.Add(property1.Name, null);
-                                }
-                                else
-                                {
-                                    dictionary.Add(property1.Name, property1.Value.GetObject());
-                                }
+                                dictionary.Add(property1.Name, property1.Value.GetObject());
                             }
                             newClusterSparkEnvVars = dictionary;
                             continue;
                         }
                         if (property0.NameEquals("newClusterCustomTags"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             Dictionary<string, object> dictionary = new Dictionary<string, object>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                if (property1.Value.ValueKind == JsonValueKind.Null)
-                                {
-                                    dictionary.Add(property1.Name, null);
-                                }
-                                else
-                                {
-                                    dictionary.Add(property1.Name, property1.Value.GetObject());
-                                }
+                                dictionary.Add(property1.Name, property1.Value.GetObject());
                             }
                             newClusterCustomTags = dictionary;
                             continue;
                         }
                         if (property0.NameEquals("newClusterDriverNodeType"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             newClusterDriverNodeType = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("newClusterInitScripts"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             newClusterInitScripts = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("newClusterEnableElasticDisk"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             newClusterEnableElasticDisk = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             encryptedCredential = property0.Value.GetObject();
                             continue;
                         }
                     }
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    additionalPropertiesDictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureDatabricksLinkedService(type, connectVia, description, parameters, annotations, additionalProperties, domain, accessToken, existingClusterId, instancePoolId, newClusterVersion, newClusterNumOfWorker, newClusterNodeType, newClusterSparkConf, newClusterSparkEnvVars, newClusterCustomTags, newClusterDriverNodeType, newClusterInitScripts, newClusterEnableElasticDisk, encryptedCredential);
+            return new AzureDatabricksLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, domain, accessToken, existingClusterId.Value, instancePoolId.Value, newClusterVersion.Value, newClusterNumOfWorker.Value, newClusterNodeType.Value, Optional.ToDictionary(newClusterSparkConf), Optional.ToDictionary(newClusterSparkEnvVars), Optional.ToDictionary(newClusterCustomTags), newClusterDriverNodeType.Value, newClusterInitScripts.Value, newClusterEnableElasticDisk.Value, encryptedCredential.Value);
         }
     }
 }

@@ -14,20 +14,16 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static LogAnalyticsOutput DeserializeLogAnalyticsOutput(JsonElement element)
         {
-            string output = default;
+            Optional<string> output = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("output"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     output = property.Value.GetString();
                     continue;
                 }
             }
-            return new LogAnalyticsOutput(output);
+            return new LogAnalyticsOutput(output.Value);
         }
     }
 }

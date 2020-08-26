@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    public partial class FaultInjectionConnectionProperties : IUtf8JsonSerializable
+    internal partial class FaultInjectionConnectionProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Action != null)
+            if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action");
                 writer.WriteStringValue(Action.Value.ToString());
             }
-            if (BlockDurationInMinutes != null)
+            if (Optional.IsDefined(BlockDurationInMinutes))
             {
                 writer.WritePropertyName("blockDurationInMinutes");
                 writer.WriteNumberValue(BlockDurationInMinutes.Value);
@@ -30,30 +30,22 @@ namespace Azure.Iot.Hub.Service.Models
 
         internal static FaultInjectionConnectionProperties DeserializeFaultInjectionConnectionProperties(JsonElement element)
         {
-            FaultInjectionConnectionPropertiesAction? action = default;
-            int? blockDurationInMinutes = default;
+            Optional<FaultInjectionConnectionPropertiesAction> action = default;
+            Optional<int> blockDurationInMinutes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("action"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     action = new FaultInjectionConnectionPropertiesAction(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("blockDurationInMinutes"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     blockDurationInMinutes = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new FaultInjectionConnectionProperties(action, blockDurationInMinutes);
+            return new FaultInjectionConnectionProperties(Optional.ToNullable(action), Optional.ToNullable(blockDurationInMinutes));
         }
     }
 }

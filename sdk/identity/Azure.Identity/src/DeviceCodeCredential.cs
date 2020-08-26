@@ -40,7 +40,7 @@ namespace Azure.Identity
         /// <param name="clientId">The client id of the application to which the users will authenticate</param>
         /// <param name="options">The client options for the newly created DeviceCodeCredential</param>
         public DeviceCodeCredential(Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, string clientId, TokenCredentialOptions options = default)
-            : this(deviceCodeCallback, null, clientId, options)
+            : this(deviceCodeCallback, null, clientId, options, null)
         {
 
         }
@@ -53,7 +53,7 @@ namespace Azure.Identity
         /// <param name="clientId">The client id of the application to which the users will authenticate</param>
         /// <param name="options">The client options for the newly created DeviceCodeCredential</param>
         public DeviceCodeCredential(Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, string tenantId, string clientId,  TokenCredentialOptions options = default)
-            : this(deviceCodeCallback, tenantId, clientId, CredentialPipeline.GetInstance(options), false)
+            : this(deviceCodeCallback, tenantId, clientId, options, null)
         {
         }
 
@@ -63,26 +63,26 @@ namespace Azure.Identity
         /// <param name="deviceCodeCallback">The callback to be executed to display the device code to the user.</param>
         /// <param name="options">The client options for the newly created <see cref="DeviceCodeCredential"/>.</param>
         public DeviceCodeCredential(Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, DeviceCodeCredentialOptions options = default)
-            : this(deviceCodeCallback, options?.TenantId, options?.ClientId, CredentialPipeline.GetInstance(options), options?.EnablePersistentCache ?? false)
+            : this(deviceCodeCallback, options?.TenantId, options?.ClientId, options, null)
         {
             _disableAutomaticAuthentication = options?.DisableAutomaticAuthentication ?? false;
             _record = options?.AuthenticationRecord;
         }
 
-        internal DeviceCodeCredential(Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, string tenantId, string clientId, CredentialPipeline pipeline, bool attachSharedCache)
-            : this(deviceCodeCallback, clientId, pipeline, pipeline.CreateMsalPublicClient(clientId, tenantId, redirectUrl: KnownAuthorityHosts.GetDeviceCodeRedirectUri(pipeline.AuthorityHost).ToString(), attachSharedCache))
+        internal DeviceCodeCredential(Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, string tenantId, string clientId, TokenCredentialOptions options, CredentialPipeline pipeline)
+            : this(deviceCodeCallback, tenantId, clientId, options, pipeline, null)
         {
         }
 
-        internal DeviceCodeCredential(Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, string clientId, CredentialPipeline pipeline, MsalPublicClient client)
+        internal DeviceCodeCredential(Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, string tenantId, string clientId, TokenCredentialOptions options, CredentialPipeline pipeline, MsalPublicClient client)
         {
             _clientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
 
             _deviceCodeCallback = deviceCodeCallback ?? throw new ArgumentNullException(nameof(deviceCodeCallback));
 
-            _pipeline = pipeline;
+            _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
 
-            _client = client;
+            _client = client ?? new MsalPublicClient(_pipeline, tenantId, clientId, AzureAuthorityHosts.GetDeviceCodeRedirectUri(_pipeline.AuthorityHost).ToString(), options as ITokenCacheOptions);
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Azure.Identity
         public virtual AuthenticationRecord Authenticate(CancellationToken cancellationToken = default)
         {
             // get the default scope for the authority, throw if no default scope exists
-            string defaultScope = KnownAuthorityHosts.GetDefaultScope(_pipeline.AuthorityHost) ?? throw new CredentialUnavailableException(NoDefaultScopeMessage);
+            string defaultScope = AzureAuthorityHosts.GetDefaultScope(_pipeline.AuthorityHost) ?? throw new CredentialUnavailableException(NoDefaultScopeMessage);
 
             return Authenticate(new TokenRequestContext(new string[] { defaultScope }), cancellationToken);
         }
@@ -106,7 +106,7 @@ namespace Azure.Identity
         public virtual async Task<AuthenticationRecord> AuthenticateAsync(CancellationToken cancellationToken = default)
         {
             // get the default scope for the authority, throw if no default scope exists
-            string defaultScope = KnownAuthorityHosts.GetDefaultScope(_pipeline.AuthorityHost) ?? throw new CredentialUnavailableException(NoDefaultScopeMessage);
+            string defaultScope = AzureAuthorityHosts.GetDefaultScope(_pipeline.AuthorityHost) ?? throw new CredentialUnavailableException(NoDefaultScopeMessage);
 
             return await AuthenticateAsync(new TokenRequestContext(new string[] { defaultScope }), cancellationToken).ConfigureAwait(false);
         }
@@ -212,7 +212,7 @@ namespace Azure.Identity
         {
             AuthenticationResult result = await _client.AcquireTokenWithDeviceCodeAsync(scopes, code => DeviceCodeCallback(code, cancellationToken), async, cancellationToken).ConfigureAwait(false);
 
-            _record = new AuthenticationRecord(result);
+            _record = new AuthenticationRecord(result, _clientId);
 
             return new AccessToken(result.AccessToken, result.ExpiresOn);
         }

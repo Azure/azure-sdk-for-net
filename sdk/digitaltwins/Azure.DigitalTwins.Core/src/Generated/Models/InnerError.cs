@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.DigitalTwins.Core.Models
+namespace Azure.DigitalTwins.Core
 {
     /// <summary> A more specific error description than was provided by the containing error. </summary>
     internal partial class InnerError

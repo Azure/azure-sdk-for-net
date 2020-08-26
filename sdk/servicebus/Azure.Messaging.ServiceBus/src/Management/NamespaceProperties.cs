@@ -6,7 +6,7 @@ using System;
 namespace Azure.Messaging.ServiceBus.Management
 {
     /// <summary>
-    /// Represents the metadata related to a service bus namespace.
+    /// Represents the properties related to a Service Bus namespace.
     /// </summary>
     public class NamespaceProperties
     {
@@ -14,7 +14,6 @@ namespace Azure.Messaging.ServiceBus.Management
         /// Name of the namespace.
         /// </summary>
         public string Name { get; internal set; }
-
 
         /// <summary>
         /// Type of entities present in the namespace.
@@ -37,13 +36,13 @@ namespace Azure.Messaging.ServiceBus.Management
         public MessagingSku MessagingSku { get; internal set; }
 
         /// <summary>
-        /// Number of messaging units allocated for namespace.
+        /// The number of messaging units allocated for namespace.
         /// Valid only for <see cref="NamespaceType.Messaging"/> and <see cref="MessagingSku.Premium"/>
         /// </summary>
         public int MessagingUnits { get; internal set; }
 
         /// <summary>
-        /// Alias for the namespace.
+        /// The alias for the namespace.
         /// </summary>
         public string Alias { get; internal set; }
     }

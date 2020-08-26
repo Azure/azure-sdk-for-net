@@ -6,21 +6,24 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    /// <summary> Encapsulates the result of a bulk registry operation. </summary>
+    /// <summary> The result of the bulk registry operation. </summary>
     public partial class BulkRegistryOperationResponse
     {
         /// <summary> Initializes a new instance of BulkRegistryOperationResponse. </summary>
         internal BulkRegistryOperationResponse()
         {
+            Errors = new ChangeTrackingList<DeviceRegistryOperationError>();
+            Warnings = new ChangeTrackingList<DeviceRegistryOperationWarning>();
         }
 
         /// <summary> Initializes a new instance of BulkRegistryOperationResponse. </summary>
-        /// <param name="isSuccessful"> Whether or not the operation was successful. </param>
-        /// <param name="errors"> If the operation was not successful, this contains an array of DeviceRegistryOperationError objects. </param>
-        /// <param name="warnings"> If the operation was partially successful, this contains an array of DeviceRegistryOperationWarning objects. </param>
+        /// <param name="isSuccessful"> The operation result. </param>
+        /// <param name="errors"> The device registry operation errors. </param>
+        /// <param name="warnings"> The device registry operation warnings. </param>
         internal BulkRegistryOperationResponse(bool? isSuccessful, IReadOnlyList<DeviceRegistryOperationError> errors, IReadOnlyList<DeviceRegistryOperationWarning> warnings)
         {
             IsSuccessful = isSuccessful;
@@ -28,11 +31,11 @@ namespace Azure.Iot.Hub.Service.Models
             Warnings = warnings;
         }
 
-        /// <summary> Whether or not the operation was successful. </summary>
+        /// <summary> The operation result. </summary>
         public bool? IsSuccessful { get; }
-        /// <summary> If the operation was not successful, this contains an array of DeviceRegistryOperationError objects. </summary>
+        /// <summary> The device registry operation errors. </summary>
         public IReadOnlyList<DeviceRegistryOperationError> Errors { get; }
-        /// <summary> If the operation was partially successful, this contains an array of DeviceRegistryOperationWarning objects. </summary>
+        /// <summary> The device registry operation warnings. </summary>
         public IReadOnlyList<DeviceRegistryOperationWarning> Warnings { get; }
     }
 }

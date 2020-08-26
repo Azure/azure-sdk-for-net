@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class InnerError
     {
         /// <summary> Initializes a new instance of InnerError. </summary>
-        public InnerError()
+        internal InnerError()
         {
         }
 
@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The exception type. </summary>
-        public string Exceptiontype { get; set; }
+        public string Exceptiontype { get; }
         /// <summary> The internal error message or exception dump. </summary>
-        public string Errordetail { get; set; }
+        public string Errordetail { get; }
     }
 }

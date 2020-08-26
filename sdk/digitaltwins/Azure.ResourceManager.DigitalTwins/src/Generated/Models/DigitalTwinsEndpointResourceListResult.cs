@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <summary> Initializes a new instance of DigitalTwinsEndpointResourceListResult. </summary>
         internal DigitalTwinsEndpointResourceListResult()
         {
+            Value = new ChangeTrackingList<DigitalTwinsEndpointResource>();
         }
 
         /// <summary> Initializes a new instance of DigitalTwinsEndpointResourceListResult. </summary>
