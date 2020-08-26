@@ -947,7 +947,6 @@ namespace Azure.Data.Tables.Tests
         /// Validates the functionality of the TableClient.
         /// </summary>
         [RecordedTest]
-        [LiveOnly]
         public async Task BatchInsert()
         {
             if (_endpointType == TableEndpointType.CosmosTable)
@@ -956,15 +955,77 @@ namespace Azure.Data.Tables.Tests
             }
             var entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 20);
 
-            // Create the new entities.
+            // Create the batch.
+            var batch = client.CreateBatch(entitiesToCreate[0].PartitionKey);
 
-            var responses = await client.BatchTestAsync(entitiesToCreate).ConfigureAwait(false);
+            batch.SetBatchGuids(Recording.Random.NewGuid(), Recording.Random.NewGuid());
+
+            // Add the entities to the batch.
+            batch.AddEntities(entitiesToCreate);
+            var responses = await batch.SubmitBatchAsync().ConfigureAwait(false);
 
             foreach (var response in responses.Value)
             {
-                Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.Created));
+                Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.NoContent));
             }
             Assert.That(responses.Value.Count, Is.EqualTo(entitiesToCreate.Count));
+
+            // Query the entities.
+
+            var entityResults = await client.QueryAsync<TestEntity>().ToEnumerableAsync().ConfigureAwait(false);
+
+            Assert.That(entityResults.Count, Is.EqualTo(entitiesToCreate.Count), "The entity result count should match the created count");
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [RecordedTest]
+        public async Task BatchInsertAndMergeAndDelete()
+        {
+            const string updatedString = "the was updated!";
+            if (_endpointType == TableEndpointType.CosmosTable)
+            {
+                Assert.Ignore("https://github.com/Azure/azure-sdk-for-net/issues/14272");
+            }
+            var entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 4);
+
+            // Add just the first two entities
+            await client.AddEntityAsync(entitiesToCreate[0]).ConfigureAwait(false);
+            await client.AddEntityAsync(entitiesToCreate[1]).ConfigureAwait(false);
+
+            // Create the batch.
+            var batch = client.CreateBatch(entitiesToCreate[0].PartitionKey);
+
+            batch.SetBatchGuids(Recording.Random.NewGuid(), Recording.Random.NewGuid());
+
+            // Add all but the first two entities
+            batch.AddEntities(entitiesToCreate.Skip(2));
+
+            // Add a Merge operation to the entity we are adding.
+            var updatedEntity = entitiesToCreate[0];
+            updatedEntity.StringTypeProperty = updatedString;
+
+            batch.UpdateEntity(updatedEntity, ETag.All, TableUpdateMode.Merge);
+
+            // Add a Delete operation.
+            var entityToDelete = entitiesToCreate[1];
+            batch.DeleteEntity(entityToDelete.PartitionKey, entityToDelete.RowKey, ETag.All);
+
+            var responses = await batch.SubmitBatchAsync().ConfigureAwait(false);
+
+            foreach (var response in responses.Value)
+            {
+                Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.NoContent));
+            }
+            Assert.That(responses.Value.Count, Is.EqualTo(entitiesToCreate.Count));
+
+            // Query the entities.
+
+            var entityResults = await client.QueryAsync<TestEntity>().ToEnumerableAsync().ConfigureAwait(false);
+
+            Assert.That(entityResults.Count, Is.EqualTo(entitiesToCreate.Count - 1), "The entity result count should match the created count minus the deleted count.");
+            Assert.That(entityResults[0].StringTypeProperty, Is.EqualTo(updatedString), "The entity result property should have been updated.");
         }
     }
 
