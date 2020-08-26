@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
-    <ProjectReference Include="..\..\..\servicebus\Azure.Messaging.ServiceBus\src\Azure.Messaging.ServiceBus.csproj" />
     <ProjectReference Include="..\src\Azure.Messaging.EventGrid.csproj" />
   </ItemGroup>
 </Project>

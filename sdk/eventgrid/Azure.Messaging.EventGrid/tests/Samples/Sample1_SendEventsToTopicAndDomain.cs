@@ -8,18 +8,14 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Serialization;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
 
 namespace Azure.Messaging.EventGrid.Tests.Samples
 {
-    public partial class EventGridSamples : EventGridLiveTestBase
+    public partial class EventGridSamples : SamplesBase<EventGridTestEnvironment>
     {
-        public EventGridSamples(bool async)
-            : base(async)
-        {
-        }
-
         // This sample demonstrates how to publish Event Grid schema events to an Event Grid topic.
         [Test]
         public async Task SendEventGridEventsToTopic()
