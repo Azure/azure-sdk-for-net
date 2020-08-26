@@ -37,7 +37,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Gets the sentiment confidence score (Softmax score) between 0 and 1,
-        /// for the opinion for 'positive' and 'negative' labels. It's score
+        /// for the opinion for 'positive' and 'negative' labels. Its score
         /// for 'neutral' will always be 0.
         /// Higher values signify higher confidence.
         /// </summary>

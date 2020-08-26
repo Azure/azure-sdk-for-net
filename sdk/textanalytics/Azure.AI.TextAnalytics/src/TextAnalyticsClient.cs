@@ -692,50 +692,6 @@ namespace Azure.AI.TextAnalytics
         /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
         /// service.  If set to an empty string, the service will apply a model
         /// where the language is explicitly set to "None".</param>
-        /// <exception cref="RequestFailedException">Service returned a non-success
-        /// status code.</exception>
-        public virtual async Task<Response<DocumentSentiment>> AnalyzeSentimentAsync(string document, string language)
-        {
-            return await AnalyzeSentimentAsync(document, language, new AnalyzeSentimentOptions(), new CancellationToken()).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Runs a predictive model to identify the positive, negative or neutral
-        /// sentiment contained in the document, as well as a score indicating the model's
-        /// confidence in the predicted sentiment.
-        /// For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
-        /// For document length limits, maximum batch size, and supported text encoding, see
-        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
-        /// </summary>
-        /// <param name="document">The text to analyze.</param>
-        /// <param name="language">The language that the document is written in.
-        /// If unspecified, this value will be set to the default language in
-        /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
-        /// service.  If set to an empty string, the service will apply a model
-        /// where the language is explicitly set to "None".</param>
-        /// <exception cref="RequestFailedException">Service returned a non-success
-        /// status code.</exception>
-        public virtual Response<DocumentSentiment> AnalyzeSentiment(string document, string language)
-        {
-            return AnalyzeSentiment(document, language, new AnalyzeSentimentOptions(), new CancellationToken());
-        }
-
-        /// <summary>
-        /// Runs a predictive model to identify the positive, negative, neutral
-        /// or mixed sentiment contained in the document, as well as a score
-        /// indicating the model's confidence in the predicted sentiment.
-        /// For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
-        /// For document length limits, maximum batch size, and supported text encoding, see
-        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
-        /// </summary>
-        /// <param name="document">The document to analyze.</param>
-        /// <param name="language">The language that the document is written in.
-        /// If unspecified, this value will be set to the default language in
-        /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
-        /// service.  If set to an empty string, the service will apply a model
-        /// where the language is explicitly set to "None".</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing sentiment predictions for the document
@@ -743,7 +699,8 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<DocumentSentiment>> AnalyzeSentimentAsync(string document, string language, CancellationToken cancellationToken = default)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0002:DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.", Justification = "Hidden method we don't encourage people to use.")]
+        public virtual async Task<Response<DocumentSentiment>> AnalyzeSentimentAsync(string document, string language, CancellationToken cancellationToken)
         {
             return await AnalyzeSentimentAsync(document, language, new AnalyzeSentimentOptions(), cancellationToken).ConfigureAwait(false);
         }
@@ -770,7 +727,8 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<DocumentSentiment> AnalyzeSentiment(string document, string language, CancellationToken cancellationToken = default)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0002:DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.", Justification = "Hidden method we don't encourage people to use.")]
+        public virtual Response<DocumentSentiment> AnalyzeSentiment(string document, string language, CancellationToken cancellationToken)
         {
             return AnalyzeSentiment(document, language, new AnalyzeSentimentOptions(), cancellationToken);
         }

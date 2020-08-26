@@ -343,7 +343,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string document = "El mejor test del mundo!";
 
-            DocumentSentiment docSentiment = await client.AnalyzeSentimentAsync(document, cancellationToken: new System.Threading.CancellationToken());
+            DocumentSentiment docSentiment = await client.AnalyzeSentimentAsync(document, cancellationToken: default);
 
             CheckAnalyzeSentimentProperties(docSentiment);
             Assert.AreEqual("Positive", docSentiment.Sentiment.ToString());
@@ -355,7 +355,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string document = "El mejor test del mundo!";
 
-            DocumentSentiment docSentiment = await client.AnalyzeSentimentAsync(document, "es", new System.Threading.CancellationToken());
+            DocumentSentiment docSentiment = await client.AnalyzeSentimentAsync(document, "es", default);
 
             CheckAnalyzeSentimentProperties(docSentiment);
             Assert.AreEqual("Positive", docSentiment.Sentiment.ToString());
@@ -434,7 +434,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 "I'm not sure how I feel about this product. It is complicated."
             };
 
-            AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(documents, cancellationToken: new System.Threading.CancellationToken());
+            AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(documents, cancellationToken: default);
 
             foreach (AnalyzeSentimentResult docs in results)
             {
@@ -455,7 +455,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 "I'm not sure how I feel about this product. It is complicated."
             };
 
-            AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(documents, "en", cancellationToken: new System.Threading.CancellationToken());
+            AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(documents, "en", cancellationToken: default);
 
             foreach (AnalyzeSentimentResult docs in results)
             {
@@ -528,7 +528,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 "I'm not sure how I feel about this product. It is complicated."
             };
 
-            AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(documents, options: new AnalyzeSentimentOptions() { IncludeStatistics = true }, cancellationToken: new System.Threading.CancellationToken());
+            AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(documents, options: new AnalyzeSentimentOptions() { IncludeStatistics = true }, cancellationToken: default);
 
             foreach (AnalyzeSentimentResult docs in results)
             {
@@ -554,7 +554,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 "I'm not sure how I feel about this product. It is complicated."
             };
 
-            AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(documents, "en", new TextAnalyticsRequestOptions { IncludeStatistics = true }, new System.Threading.CancellationToken());
+            AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(documents, "en", new TextAnalyticsRequestOptions { IncludeStatistics = true }, default);
 
             foreach (AnalyzeSentimentResult docs in results)
             {

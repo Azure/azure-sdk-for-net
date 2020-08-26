@@ -131,7 +131,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="text">Sets the <see cref="AspectSentiment.Text"/> property.</param>
         /// <param name="positiveScore">Sets the <see cref="SentimentConfidenceScores.Positive"/> property.</param>
         /// <param name="negativeScore">Sets the <see cref="SentimentConfidenceScores.Negative"/> property.</param>
-        /// <returns></returns>
+        /// <returns>>A new instance of <see cref="TextAnalytics.AspectSentiment"/> for mocking purposes.</returns>
         public static AspectSentiment AspectSentiment(TextSentiment sentiment, string text, double positiveScore, double negativeScore)
         {
             return new AspectSentiment(sentiment, text, positiveScore, negativeScore);
@@ -145,7 +145,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="negativeScore">Sets the <see cref="SentimentConfidenceScores.Negative"/> property.</param>
         /// <param name="text">Sets the <see cref="OpinionSentiment.Text"/> property.</param>
         /// <param name="isNegated">Sets the <see cref="OpinionSentiment.IsNegated"/> property.</param>
-        /// <returns></returns>
+        /// <returns>A new instance of <see cref="TextAnalytics.OpinionSentiment"/> for mocking purposes.</returns>
         public static OpinionSentiment OpinionSentiment(TextSentiment sentiment, double positiveScore, double negativeScore, string text, bool isNegated)
         {
             return new OpinionSentiment(sentiment, positiveScore, negativeScore, text, isNegated);
@@ -156,7 +156,7 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="aspect">Sets the <see cref="MinedOpinion.Aspect"/> property.</param>
         /// <param name="opinions">Sets the <see cref="MinedOpinion.Opinions"/> property.</param>
-        /// <returns></returns>
+        /// <returns>A new instance of <see cref="TextAnalytics.MinedOpinion"/> for mocking purposes.</returns>
         public static MinedOpinion MinedOpinion(AspectSentiment aspect, IReadOnlyList<OpinionSentiment> opinions)
         {
             return new MinedOpinion(aspect, opinions);
