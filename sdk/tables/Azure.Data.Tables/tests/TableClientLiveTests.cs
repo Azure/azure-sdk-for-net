@@ -29,16 +29,25 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task CreateIfNotExists()
         {
             // Call CreateIfNotExists when the table already exists.
             Assert.That(async () => await CosmosThrottleWrapper(async () => await client.CreateIfNotExistsAsync().ConfigureAwait(false)), Throws.Nothing);
 
-            // Call CreateIfNotExists when the table does not already exists.
+            // Call CreateIfNotExists when the table does not already exist.
             var newTableName = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
-            var tableClient = service.GetTableClient(newTableName);
-            TableItem table = await CosmosThrottleWrapper(async () => await tableClient.CreateIfNotExistsAsync().ConfigureAwait(false));
+            TableItem table;
+            TableClient tableClient = null;
+            try
+            {
+                tableClient = service.GetTableClient(newTableName);
+                table = await CosmosThrottleWrapper(async () => await tableClient.CreateIfNotExistsAsync().ConfigureAwait(false));
+            }
+            finally
+            {
+                await tableClient.DeleteAsync().ConfigureAwait(false);
+            }
 
             Assert.That(table.TableName, Is.EqualTo(newTableName));
         }
@@ -46,7 +55,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task ValidateCreateDeleteTable()
         {
             // Get the TableClient of a table that hasn't been created yet.
@@ -71,7 +80,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public void ValidateSasCredentials()
         {
             // Create a SharedKeyCredential that we can use to sign the SAS token
@@ -111,7 +120,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [RecordedTest]
         [TestCase(null)]
         [TestCase(5)]
         public async Task CreatedEntitiesCanBeQueriedWithAndWithoutPagination(int? pageCount)
@@ -134,7 +143,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task CreatedDynamicEntitiesCanBeQueriedWithFilters()
         {
             List<TableEntity> entityResults;
@@ -157,7 +166,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task CreatedEntitiesCanBeQueriedWithFilters()
         {
             List<TableEntity> entityResults;
@@ -177,7 +186,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task EntityCanBeUpserted()
         {
             string tableName = $"testtable{Recording.GenerateId()}";
@@ -215,7 +224,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task EntityUpdateRespectsEtag()
         {
             string tableName = $"testtable{Recording.GenerateId()}";
@@ -243,7 +252,7 @@ namespace Azure.Data.Tables.Tests
 
             // Use a wildcard ETag to update unconditionally.
 
-            await client.UpdateEntityAsync(originalEntity, "*", TableUpdateMode.Replace).ConfigureAwait(false);
+            await client.UpdateEntityAsync(originalEntity, ETag.All, TableUpdateMode.Replace).ConfigureAwait(false);
 
             // Fetch the updated entity from the service.
 
@@ -271,7 +280,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task EntityMergeRespectsEtag()
         {
             if (_endpointType == TableEndpointType.CosmosTable)
@@ -304,7 +313,7 @@ namespace Azure.Data.Tables.Tests
 
             // Use a wildcard ETag to update unconditionally.
 
-            await client.UpdateEntityAsync(originalEntity, "*", TableUpdateMode.Merge).ConfigureAwait(false);
+            await client.UpdateEntityAsync(originalEntity, ETag.All, TableUpdateMode.Merge).ConfigureAwait(false);
 
             // Fetch the updated entity from the service.
 
@@ -316,11 +325,11 @@ namespace Azure.Data.Tables.Tests
 
             // Use a non-matching ETag.
 
-            Assert.That(async () => await client.UpdateEntityAsync(updatedEntity, originalEntity.ETag, TableUpdateMode.Merge).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
+            Assert.That(async () => await client.UpdateEntityAsync(updatedEntity, new ETag(originalEntity[TableConstants.PropertyNames.EtagOdata] as string), TableUpdateMode.Merge).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
 
             // Use a matching ETag.
 
-            await client.UpdateEntityAsync(updatedEntity, updatedEntity.ETag, TableUpdateMode.Merge).ConfigureAwait(false);
+            await client.UpdateEntityAsync(updatedEntity, new ETag(updatedEntity[TableConstants.PropertyNames.EtagOdata] as string), TableUpdateMode.Merge).ConfigureAwait(false);
 
             // Fetch the newly updated entity from the service.
 
@@ -332,7 +341,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task EntityMergeDoesPartialPropertyUpdates()
         {
             if (_endpointType == TableEndpointType.CosmosTable)
@@ -404,7 +413,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task EntityDeleteRespectsEtag()
         {
             string tableName = $"testtable{Recording.GenerateId()}";
@@ -426,7 +435,7 @@ namespace Azure.Data.Tables.Tests
             // Fetch the created entity from the service.
 
             var originalEntity = (await client.QueryAsync<TableEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
-            var staleEtag = originalEntity.ETag;
+            var staleEtag = new ETag(originalEntity[TableConstants.PropertyNames.EtagOdata] as string);
 
             // Use a wildcard ETag to delete unconditionally.
 
@@ -452,7 +461,7 @@ namespace Azure.Data.Tables.Tests
 
             // Use a matching ETag.
 
-            await client.DeleteEntityAsync(PartitionKeyValue, rowKeyValue, originalEntity.ETag).ConfigureAwait(false);
+            await client.DeleteEntityAsync(PartitionKeyValue, rowKeyValue, new ETag(originalEntity[TableConstants.PropertyNames.EtagOdata] as string)).ConfigureAwait(false);
 
             // Validate that the entity is deleted.
 
@@ -464,7 +473,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task CreatedEntitiesAreRoundtrippedWithProperOdataAnnoations()
         {
             List<TableEntity> entityResults;
@@ -495,7 +504,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task UpsertedEntitiesAreRoundtrippedWithProperOdataAnnoations()
         {
             List<TableEntity> entityResults;
@@ -526,14 +535,15 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task CreateEntityReturnsEntitiesWithoutOdataAnnoations()
         {
-            List<TableEntity> entitiesToCreate = CreateTableEntities(PartitionKeyValue, 1);
+            TableEntity entityToCreate = CreateTableEntities(PartitionKeyValue, 1).First();
 
             // Create an entity.
 
-            var createdEntity = (await client.AddEntityAsync(entitiesToCreate.First()).ConfigureAwait(false)).Value;
+            await client.AddEntityAsync(entityToCreate).ConfigureAwait(false);
+            TableEntity createdEntity = await client.GetEntityAsync<TableEntity>(entityToCreate.PartitionKey, entityToCreate.RowKey).ConfigureAwait(false);
 
             Assert.That(createdEntity.Keys.Count(k => k.EndsWith(TableConstants.Odata.OdataTypeString)), Is.Zero, "The entity should not containt any odata data annotation properties");
         }
@@ -541,7 +551,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task QueryReturnsEntitiesWithoutOdataAnnoations()
         {
             List<TableEntity> entityResults;
@@ -561,7 +571,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [RecordedTest]
         [TestCase(null)]
         [TestCase(5)]
         public async Task CreatedCustomEntitiesCanBeQueriedWithAndWithoutPagination(int? pageCount)
@@ -584,7 +594,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task CreatedCustomEntitiesCanBeQueriedWithFilters()
         {
             List<TestEntity> entityResults;
@@ -604,7 +614,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task CustomEntityCanBeUpserted()
         {
             string tableName = $"testtable{Recording.GenerateId()}";
@@ -642,7 +652,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task CustomEntityUpdateRespectsEtag()
         {
             string tableName = $"testtable{Recording.GenerateId()}";
@@ -670,7 +680,7 @@ namespace Azure.Data.Tables.Tests
 
             // Use a wildcard ETag to update unconditionally.
 
-            await client.UpdateEntityAsync(originalEntity, "*", TableUpdateMode.Replace).ConfigureAwait(false);
+            await client.UpdateEntityAsync(originalEntity, ETag.All, TableUpdateMode.Replace).ConfigureAwait(false);
 
             // Fetch the updated entity from the service.
 
@@ -682,11 +692,11 @@ namespace Azure.Data.Tables.Tests
 
             // Use a non-matching ETag.
 
-            Assert.That(async () => await client.UpdateEntityAsync(updatedEntity, originalEntity.ETag, TableUpdateMode.Replace).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
+            Assert.That(async () => await client.UpdateEntityAsync(updatedEntity, new ETag(originalEntity[TableConstants.PropertyNames.EtagOdata] as string), TableUpdateMode.Replace).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
 
             // Use a matching ETag.
 
-            await client.UpdateEntityAsync(updatedEntity, updatedEntity.ETag, TableUpdateMode.Replace).ConfigureAwait(false);
+            await client.UpdateEntityAsync(updatedEntity, new ETag(updatedEntity[TableConstants.PropertyNames.EtagOdata] as string), TableUpdateMode.Replace).ConfigureAwait(false);
 
             // Fetch the newly updated entity from the service.
 
@@ -698,7 +708,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task CustomEntityMergeRespectsEtag()
         {
             if (_endpointType == TableEndpointType.CosmosTable)
@@ -731,7 +741,7 @@ namespace Azure.Data.Tables.Tests
 
             // Use a wildcard ETag to update unconditionally.
 
-            await client.UpdateEntityAsync(originalEntity, "*", TableUpdateMode.Merge).ConfigureAwait(false);
+            await client.UpdateEntityAsync(originalEntity, ETag.All, TableUpdateMode.Merge).ConfigureAwait(false);
 
             // Fetch the updated entity from the service.
 
@@ -742,11 +752,12 @@ namespace Azure.Data.Tables.Tests
             updatedEntity[propertyName] = updatedValue2;
 
             // Use a non-matching ETag.
-            Assert.That(async () => await client.UpdateEntityAsync(updatedEntity, originalEntity.ETag, TableUpdateMode.Merge).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
+
+            Assert.That(async () => await client.UpdateEntityAsync(updatedEntity, new ETag(originalEntity[TableConstants.PropertyNames.EtagOdata] as string), TableUpdateMode.Merge).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
 
             // Use a matching ETag.
 
-            await client.UpdateEntityAsync(updatedEntity, updatedEntity.ETag, TableUpdateMode.Merge).ConfigureAwait(false);
+            await client.UpdateEntityAsync(updatedEntity, new ETag(updatedEntity[TableConstants.PropertyNames.EtagOdata] as string), TableUpdateMode.Merge).ConfigureAwait(false);
 
             // Fetch the newly updated entity from the service.
 
@@ -758,7 +769,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task CustomEntityDeleteRespectsEtag()
         {
             string tableName = $"testtable{Recording.GenerateId()}";
@@ -779,7 +790,7 @@ namespace Azure.Data.Tables.Tests
             // Fetch the created entity from the service.
 
             var originalEntity = (await client.QueryAsync<TableEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
-            var staleEtag = originalEntity.ETag;
+            var staleEtag = new ETag(originalEntity[TableConstants.PropertyNames.EtagOdata] as string);
 
             // Use a wildcard ETag to delete unconditionally.
 
@@ -805,7 +816,7 @@ namespace Azure.Data.Tables.Tests
 
             // Use a matching ETag.
 
-            await client.DeleteEntityAsync(PartitionKeyValue, rowKeyValue, originalEntity.ETag).ConfigureAwait(false);
+            await client.DeleteEntityAsync(PartitionKeyValue, rowKeyValue, new ETag(originalEntity[TableConstants.PropertyNames.EtagOdata] as string)).ConfigureAwait(false);
 
             // Validate that the entity is deleted.
 
@@ -817,7 +828,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task CreatedCustomEntitiesAreRoundtrippedProprly()
         {
             List<TestEntity> entityResults;
@@ -853,7 +864,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableServiceClient.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task GetAccessPoliciesReturnsPolicies()
         {
             if (_endpointType == TableEndpointType.CosmosTable)
@@ -870,7 +881,6 @@ namespace Azure.Data.Tables.Tests
 
             await client.SetAccessPolicyAsync(tableAcl: policyToCreate);
 
-
             // Get the created policy.
 
             var policies = await client.GetAccessPolicyAsync();
@@ -885,7 +895,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task GetEntityReturnsSingleEntity()
         {
             TableEntity entityResults;
@@ -901,5 +911,91 @@ namespace Azure.Data.Tables.Tests
 
             Assert.That(entityResults, Is.Not.Null, "The entity should not be null.");
         }
+
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [RecordedTest]
+        public async Task BatchInsert()
+        {
+            if (_endpointType == TableEndpointType.CosmosTable)
+            {
+                Assert.Ignore("https://github.com/Azure/azure-sdk-for-net/issues/14272");
+            }
+            var entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 20);
+
+            // Create the batch.
+            var batch = client.CreateBatch(entitiesToCreate[0].PartitionKey);
+
+            batch.SetBatchGuids(Recording.Random.NewGuid(), Recording.Random.NewGuid());
+
+            // Add the entities to the batch.
+            batch.AddEntities(entitiesToCreate);
+            var responses = await batch.SubmitBatchAsync().ConfigureAwait(false);
+
+            foreach (var response in responses.Value)
+            {
+                Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.NoContent));
+            }
+            Assert.That(responses.Value.Count, Is.EqualTo(entitiesToCreate.Count));
+
+            // Query the entities.
+
+            var entityResults = await client.QueryAsync<TestEntity>().ToEnumerableAsync().ConfigureAwait(false);
+
+            Assert.That(entityResults.Count, Is.EqualTo(entitiesToCreate.Count), "The entity result count should match the created count");
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [RecordedTest]
+        public async Task BatchInsertAndMergeAndDelete()
+        {
+            const string updatedString = "the was updated!";
+            if (_endpointType == TableEndpointType.CosmosTable)
+            {
+                Assert.Ignore("https://github.com/Azure/azure-sdk-for-net/issues/14272");
+            }
+            var entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 4);
+
+            // Add just the first two entities
+            await client.AddEntityAsync(entitiesToCreate[0]).ConfigureAwait(false);
+            await client.AddEntityAsync(entitiesToCreate[1]).ConfigureAwait(false);
+
+            // Create the batch.
+            var batch = client.CreateBatch(entitiesToCreate[0].PartitionKey);
+
+            batch.SetBatchGuids(Recording.Random.NewGuid(), Recording.Random.NewGuid());
+
+            // Add all but the first two entities
+            batch.AddEntities(entitiesToCreate.Skip(2));
+
+            // Add a Merge operation to the entity we are adding.
+            var updatedEntity = entitiesToCreate[0];
+            updatedEntity.StringTypeProperty = updatedString;
+
+            batch.UpdateEntity(updatedEntity, ETag.All, TableUpdateMode.Merge);
+
+            // Add a Delete operation.
+            var entityToDelete = entitiesToCreate[1];
+            batch.DeleteEntity(entityToDelete.PartitionKey, entityToDelete.RowKey, ETag.All);
+
+            var responses = await batch.SubmitBatchAsync().ConfigureAwait(false);
+
+            foreach (var response in responses.Value)
+            {
+                Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.NoContent));
+            }
+            Assert.That(responses.Value.Count, Is.EqualTo(entitiesToCreate.Count));
+
+            // Query the entities.
+
+            var entityResults = await client.QueryAsync<TestEntity>().ToEnumerableAsync().ConfigureAwait(false);
+
+            Assert.That(entityResults.Count, Is.EqualTo(entitiesToCreate.Count - 1), "The entity result count should match the created count minus the deleted count.");
+            Assert.That(entityResults[0].StringTypeProperty, Is.EqualTo(updatedString), "The entity result property should have been updated.");
+        }
     }
+
 }

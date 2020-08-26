@@ -19,7 +19,7 @@ namespace Azure.Data.Tables
         private readonly TableRestClient _tableOperations;
         private readonly ServiceRestClient _serviceOperations;
         private readonly ServiceRestClient _secondaryServiceOperations;
-        private readonly OdataMetadataFormat _format = OdataMetadataFormat.ApplicationJsonOdataFullmetadata;
+        private readonly OdataMetadataFormat _format = OdataMetadataFormat.ApplicationJsonOdataMinimalmetadata;
         private readonly string _version;
         internal readonly bool _isPremiumEndpoint;
 

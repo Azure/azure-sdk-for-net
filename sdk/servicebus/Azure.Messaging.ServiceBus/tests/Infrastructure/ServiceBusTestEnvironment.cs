@@ -105,7 +105,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         ///   The environment variable value for the override connection string to indicate an existing namespace should be used.
         /// </summary>
         ///
-        public string OverrideServiceBusConnectionString => GetRecordedOptionalVariable(ServiceBusConnectionStringEnvironmentVariable);
+        public string OverrideServiceBusConnectionString => GetRecordedOptionalVariable(ServiceBusConnectionStringEnvironmentVariable, options => options.HasSecretConnectionStringParameter("SharedAccessKey", SanitizedValue.Base64));
 
         /// <summary>
         ///   The name of an existing Service Bus queue to consider an override and use when

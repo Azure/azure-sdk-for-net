@@ -85,7 +85,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var receivedMaxSizeMessage = await receiver.ReceiveMessageAsync();
                 await receiver.CompleteMessageAsync(receivedMaxSizeMessage.LockToken);
-                Assert.AreEqual(maxPayload, receivedMaxSizeMessage.Body.Bytes.ToArray());
+                Assert.AreEqual(maxPayload, receivedMaxSizeMessage.Body.ToBytes().ToArray());
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
 
                 void AssertMessagesEqual(ServiceBusMessage sentMessage, ServiceBusReceivedMessage received)
                 {
-                    Assert.IsTrue(received.Body.Bytes.ToArray().SequenceEqual(sentMessage.Body.Bytes.ToArray()));
+                    Assert.IsTrue(received.Body.ToBytes().ToArray().SequenceEqual(sentMessage.Body.ToBytes().ToArray()));
                     Assert.AreEqual(received.ContentType, sentMessage.ContentType);
                     Assert.AreEqual(received.CorrelationId, sentMessage.CorrelationId);
                     Assert.AreEqual(received.Label, sentMessage.Label);
@@ -159,14 +159,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                     B = 5,
                     C = false
                 };
-                var body = BinaryData.Serialize(testBody, serializer);
+                var body = BinaryData.FromObject(testBody, serializer);
                 var msg = new ServiceBusMessage(body);
 
                 await sender.SendMessageAsync(msg);
 
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var received = await receiver.ReceiveMessageAsync();
-                var receivedBody = received.Body.Deserialize<TestBody>(serializer);
+                var receivedBody = received.Body.ToObject<TestBody>(serializer);
                 Assert.AreEqual(testBody.A, receivedBody.A);
                 Assert.AreEqual(testBody.B, receivedBody.B);
                 Assert.AreEqual(testBody.C, receivedBody.C);

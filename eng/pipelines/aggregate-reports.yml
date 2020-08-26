@@ -1,5 +1,12 @@
 trigger: none
-pr: none
+
+pr:
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - eng/pipelines/aggregate-reports.yml
 
 jobs:
   - job: GenerateReports
@@ -30,6 +37,7 @@ jobs:
           project: $(TargetPipelineProjectId)
           definition: $(TargetPipelineDefinition)
           buildVersionToDownload: latestFromBranch
+          branchName: $(TargetPipelineBranch)
           tags: scheduled
           artifactName: packages
           targetPath: '$(System.ArtifactsDirectory)/BuildArtifacts'
@@ -107,3 +115,10 @@ jobs:
           storage: azuresdkartifacts
           containerName: 'azure-sdk-for-net'
           blobPrefix: dependencies
+
+      - task: PowerShell@2
+        displayName: "Verify Repository Resource Refs"
+        inputs:
+          pwsh: true
+          workingDirectory: $(Build.SourcesDirectory)
+          filePath: eng/common/scripts/Verify-Resource-Ref.ps1

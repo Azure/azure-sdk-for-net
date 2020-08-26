@@ -13,14 +13,14 @@ namespace Azure.Messaging.ServiceBus
     public class ProcessSessionEventArgs : EventArgs
     {
         /// <summary>
-        /// The processor's <see cref="System.Threading.CancellationToken"/> instance which will be
-        /// cancelled in the event that <see cref="ServiceBusProcessor.StopProcessingAsync"/> is called.
+        /// A <see cref="System.Threading.CancellationToken"/> instance which will be
+        /// cancelled when <see cref="ServiceBusSessionProcessor.StopProcessingAsync"/>
+        /// is called, or when the session lock has been lost.
         /// </summary>
         public CancellationToken CancellationToken { get; }
 
         /// <summary>
-        /// The <see cref="ServiceBusSessionReceiver"/> that will be used for setting and getting session
-        /// state.
+        /// The <see cref="ServiceBusSessionReceiver"/> that will be used for setting and getting session state.
         /// </summary>
         private readonly ServiceBusSessionReceiver _sessionReceiver;
 
@@ -40,8 +40,9 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="receiver">The <see cref="ServiceBusSessionReceiver"/> that will be used for all settlement methods
         /// for the args.</param>
-        /// <param name="cancellationToken">The processor's <see cref="System.Threading.CancellationToken"/> instance which will be cancelled in the event that <see cref="ServiceBusProcessor.StopProcessingAsync"/> is called.</param>
-        internal ProcessSessionEventArgs(
+        /// <param name="cancellationToken">The processor's <see cref="System.Threading.CancellationToken"/> instance which will be cancelled in the event that <see cref="ServiceBusProcessor.StopProcessingAsync"/> is called.
+        /// </param>
+        public ProcessSessionEventArgs(
             ServiceBusSessionReceiver receiver,
             CancellationToken cancellationToken)
         {

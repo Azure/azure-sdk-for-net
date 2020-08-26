@@ -25,6 +25,9 @@ namespace Azure.Data.Tables
         /// </summary>
         internal static Dictionary<string, object> ToOdataAnnotatedDictionary(this IDictionary<string, object> tableEntityProperties)
         {
+            // Remove the ETag property, as it does not need to be serialized
+            tableEntityProperties.Remove(TableConstants.PropertyNames.ETag);
+
             var annotatedDictionary = new Dictionary<string, object>(tableEntityProperties.Keys.Count * 2);
 
             foreach (var item in tableEntityProperties)
@@ -173,9 +176,9 @@ namespace Azure.Data.Tables
             }
 
             // Populate the ETag if present.
-            if (entity.TryGetValue(TableConstants.PropertyNames.Etag, out var etag))
+            if (entity.TryGetValue(TableConstants.PropertyNames.EtagOdata, out var etag))
             {
-                result.ETag = etag as string;
+                result.ETag = new ETag((etag as string)!);
             }
             return result;
         }

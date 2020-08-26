@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Identity.Client;
 using Microsoft.Identity.Client.Extensions.Msal;
@@ -11,7 +12,7 @@ namespace Azure.Identity
     internal abstract class MsalClientBase<TClient>
         where TClient : IClientApplicationBase
     {
-        private readonly Lazy<Task> _ensureInitAsync;
+        private readonly AsyncLockWithValue<TClient> _clientAsyncLock;
 
         /// <summary>
         /// For mocking purposes only.
@@ -32,40 +33,30 @@ namespace Azure.Identity
 
             AllowUnencryptedCache = cacheOptions?.AllowUnencryptedCache ?? false;
 
-            _ensureInitAsync = new Lazy<Task>(InitializeAsync);
+            _clientAsyncLock = new AsyncLockWithValue<TClient>();
         }
 
-        protected string TenantId { get; }
+        internal string TenantId { get; }
 
-        protected string ClientId { get; }
+        internal string ClientId { get; }
 
-        protected bool EnablePersistentCache { get; }
+        internal bool EnablePersistentCache { get; }
 
-        protected bool AllowUnencryptedCache { get; }
+        internal bool AllowUnencryptedCache { get; }
 
         protected CredentialPipeline Pipeline { get; }
 
-        protected TClient Client { get; private set; }
+        protected abstract ValueTask<TClient> CreateClientAsync(bool async, CancellationToken cancellationToken);
 
-        protected abstract Task<TClient> CreateClientAsync();
-
-        protected async Task EnsureInitializedAsync(bool async)
+        protected async ValueTask<TClient> GetClientAsync(bool async, CancellationToken cancellationToken)
         {
-            if (async)
+            using var asyncLock = await _clientAsyncLock.GetLockOrValueAsync(async, cancellationToken).ConfigureAwait(false);
+            if (asyncLock.HasValue)
             {
-                await _ensureInitAsync.Value.ConfigureAwait(false);
+                return asyncLock.Value;
             }
-            else
-            {
-#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
-                _ensureInitAsync.Value.GetAwaiter().GetResult();
-#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
-            }
-        }
 
-        private async Task InitializeAsync()
-        {
-            Client = await CreateClientAsync().ConfigureAwait(false);
+            var client = await CreateClientAsync(async, cancellationToken).ConfigureAwait(false);
 
             if (EnablePersistentCache)
             {
@@ -78,7 +69,7 @@ namespace Azure.Identity
 
                 try
                 {
-                    cacheHelper = await MsalCacheHelper.CreateAsync(storageProperties).ConfigureAwait(false);
+                    cacheHelper = await CreateCacheHelper(storageProperties, async).ConfigureAwait(false);
 
                     cacheHelper.VerifyPersistence();
                 }
@@ -91,7 +82,7 @@ namespace Azure.Identity
                             .WithLinuxUnprotectedFile()
                             .Build();
 
-                        cacheHelper = await MsalCacheHelper.CreateAsync(storageProperties).ConfigureAwait(false);
+                        cacheHelper = await CreateCacheHelper(storageProperties, async).ConfigureAwait(false);
 
                         cacheHelper.VerifyPersistence();
                     }
@@ -101,8 +92,20 @@ namespace Azure.Identity
                     }
                 }
 
-                cacheHelper.RegisterCache(Client.UserTokenCache);
+                cacheHelper.RegisterCache(client.UserTokenCache);
             }
+
+            asyncLock.SetValue(client);
+            return client;
+        }
+
+        private static async ValueTask<MsalCacheHelper> CreateCacheHelper(StorageCreationProperties storageProperties, bool async)
+        {
+            return async
+                ? await MsalCacheHelper.CreateAsync(storageProperties).ConfigureAwait(false)
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
+                : MsalCacheHelper.CreateAsync(storageProperties).GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
         }
     }
 }

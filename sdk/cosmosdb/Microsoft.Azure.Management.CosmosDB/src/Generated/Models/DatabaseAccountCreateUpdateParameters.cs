@@ -11,6 +11,7 @@
 namespace Microsoft.Azure.Management.CosmosDB.Models
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
     /// <summary>
     /// Parameters to create and update Cosmos DB database accounts.
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class DatabaseAccountCreateUpdateParameters : ARMResourceProperties
     {
         /// <summary>
@@ -27,7 +29,6 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </summary>
         public DatabaseAccountCreateUpdateParameters()
         {
-            Properties = new DatabaseAccountCreateUpdateProperties();
             CustomInit();
         }
 
@@ -35,6 +36,8 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// Initializes a new instance of the
         /// DatabaseAccountCreateUpdateParameters class.
         /// </summary>
+        /// <param name="locations">An array that contains the georeplication
+        /// locations enabled for the Cosmos DB account.</param>
         /// <param name="id">The unique resource identifier of the ARM
         /// resource.</param>
         /// <param name="name">The name of the ARM resource.</param>
@@ -44,12 +47,71 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <param name="kind">Indicates the type of database account. This can
         /// only be set at database account creation. Possible values include:
         /// 'GlobalDocumentDB', 'MongoDB', 'Parse'</param>
-        public DatabaseAccountCreateUpdateParameters(DatabaseAccountCreateUpdateProperties properties, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ManagedServiceIdentity identity = default(ManagedServiceIdentity), string kind = default(string))
-            : base(id, name, type, location, tags, identity)
+        /// <param name="consistencyPolicy">The consistency policy for the
+        /// Cosmos DB account.</param>
+        /// <param name="ipRules">List of IpRules.</param>
+        /// <param name="isVirtualNetworkFilterEnabled">Flag to indicate
+        /// whether to enable/disable Virtual Network ACL rules.</param>
+        /// <param name="enableAutomaticFailover">Enables automatic failover of
+        /// the write region in the rare event that the region is unavailable
+        /// due to an outage. Automatic failover will result in a new write
+        /// region for the account and is chosen based on the failover
+        /// priorities configured for the account.</param>
+        /// <param name="capabilities">List of Cosmos DB capabilities for the
+        /// account</param>
+        /// <param name="virtualNetworkRules">List of Virtual Network ACL rules
+        /// configured for the Cosmos DB account.</param>
+        /// <param name="enableMultipleWriteLocations">Enables the account to
+        /// write in multiple locations</param>
+        /// <param name="enableCassandraConnector">Enables the cassandra
+        /// connector on the Cosmos DB C* account</param>
+        /// <param name="connectorOffer">The cassandra connector offer type for
+        /// the Cosmos DB database C* account. Possible values include:
+        /// 'Small'</param>
+        /// <param name="disableKeyBasedMetadataWriteAccess">Disable write
+        /// operations on metadata resources (databases, containers,
+        /// throughput) via account keys</param>
+        /// <param name="keyVaultKeyUri">The URI of the key vault</param>
+        /// <param name="publicNetworkAccess">Whether requests from Public
+        /// Network are allowed. Possible values include: 'Enabled',
+        /// 'Disabled'</param>
+        /// <param name="enableFreeTier">Flag to indicate whether Free Tier is
+        /// enabled.</param>
+        /// <param name="apiProperties">API specific properties. Currently,
+        /// supported only for MongoDB API.</param>
+        /// <param name="enableAnalyticalStorage">Flag to indicate whether to
+        /// enable storage analytics.</param>
+        /// <param name="cors">The CORS policy for the Cosmos DB database
+        /// account.</param>
+        public DatabaseAccountCreateUpdateParameters(IList<Location> locations, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string kind = default(string), ConsistencyPolicy consistencyPolicy = default(ConsistencyPolicy), IList<IpAddressOrRange> ipRules = default(IList<IpAddressOrRange>), bool? isVirtualNetworkFilterEnabled = default(bool?), bool? enableAutomaticFailover = default(bool?), IList<Capability> capabilities = default(IList<Capability>), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), bool? enableMultipleWriteLocations = default(bool?), bool? enableCassandraConnector = default(bool?), string connectorOffer = default(string), bool? disableKeyBasedMetadataWriteAccess = default(bool?), string keyVaultKeyUri = default(string), string publicNetworkAccess = default(string), bool? enableFreeTier = default(bool?), ApiProperties apiProperties = default(ApiProperties), bool? enableAnalyticalStorage = default(bool?), IList<CorsPolicy> cors = default(IList<CorsPolicy>))
+            : base(id, name, type, location, tags)
         {
             Kind = kind;
-            Properties = properties;
+            ConsistencyPolicy = consistencyPolicy;
+            Locations = locations;
+            IpRules = ipRules;
+            IsVirtualNetworkFilterEnabled = isVirtualNetworkFilterEnabled;
+            EnableAutomaticFailover = enableAutomaticFailover;
+            Capabilities = capabilities;
+            VirtualNetworkRules = virtualNetworkRules;
+            EnableMultipleWriteLocations = enableMultipleWriteLocations;
+            EnableCassandraConnector = enableCassandraConnector;
+            ConnectorOffer = connectorOffer;
+            DisableKeyBasedMetadataWriteAccess = disableKeyBasedMetadataWriteAccess;
+            KeyVaultKeyUri = keyVaultKeyUri;
+            PublicNetworkAccess = publicNetworkAccess;
+            EnableFreeTier = enableFreeTier;
+            ApiProperties = apiProperties;
+            EnableAnalyticalStorage = enableAnalyticalStorage;
+            Cors = cors;
             CustomInit();
+        }
+        /// <summary>
+        /// Static constructor for DatabaseAccountCreateUpdateParameters class.
+        /// </summary>
+        static DatabaseAccountCreateUpdateParameters()
+        {
+            DatabaseAccountOfferType = "Standard";
         }
 
         /// <summary>
@@ -66,9 +128,124 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         public string Kind { get; set; }
 
         /// <summary>
+        /// Gets or sets the consistency policy for the Cosmos DB account.
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public DatabaseAccountCreateUpdateProperties Properties { get; set; }
+        [JsonProperty(PropertyName = "properties.consistencyPolicy")]
+        public ConsistencyPolicy ConsistencyPolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets an array that contains the georeplication locations
+        /// enabled for the Cosmos DB account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.locations")]
+        public IList<Location> Locations { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of IpRules.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.ipRules")]
+        public IList<IpAddressOrRange> IpRules { get; set; }
+
+        /// <summary>
+        /// Gets or sets flag to indicate whether to enable/disable Virtual
+        /// Network ACL rules.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isVirtualNetworkFilterEnabled")]
+        public bool? IsVirtualNetworkFilterEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets enables automatic failover of the write region in the
+        /// rare event that the region is unavailable due to an outage.
+        /// Automatic failover will result in a new write region for the
+        /// account and is chosen based on the failover priorities configured
+        /// for the account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableAutomaticFailover")]
+        public bool? EnableAutomaticFailover { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of Cosmos DB capabilities for the account
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.capabilities")]
+        public IList<Capability> Capabilities { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of Virtual Network ACL rules configured for the
+        /// Cosmos DB account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.virtualNetworkRules")]
+        public IList<VirtualNetworkRule> VirtualNetworkRules { get; set; }
+
+        /// <summary>
+        /// Gets or sets enables the account to write in multiple locations
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableMultipleWriteLocations")]
+        public bool? EnableMultipleWriteLocations { get; set; }
+
+        /// <summary>
+        /// Gets or sets enables the cassandra connector on the Cosmos DB C*
+        /// account
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableCassandraConnector")]
+        public bool? EnableCassandraConnector { get; set; }
+
+        /// <summary>
+        /// Gets or sets the cassandra connector offer type for the Cosmos DB
+        /// database C* account. Possible values include: 'Small'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.connectorOffer")]
+        public string ConnectorOffer { get; set; }
+
+        /// <summary>
+        /// Gets or sets disable write operations on metadata resources
+        /// (databases, containers, throughput) via account keys
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.disableKeyBasedMetadataWriteAccess")]
+        public bool? DisableKeyBasedMetadataWriteAccess { get; set; }
+
+        /// <summary>
+        /// Gets or sets the URI of the key vault
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.keyVaultKeyUri")]
+        public string KeyVaultKeyUri { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether requests from Public Network are allowed.
+        /// Possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
+
+        /// <summary>
+        /// Gets or sets flag to indicate whether Free Tier is enabled.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableFreeTier")]
+        public bool? EnableFreeTier { get; set; }
+
+        /// <summary>
+        /// Gets or sets API specific properties. Currently, supported only for
+        /// MongoDB API.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.apiProperties")]
+        public ApiProperties ApiProperties { get; set; }
+
+        /// <summary>
+        /// Gets or sets flag to indicate whether to enable storage analytics.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableAnalyticalStorage")]
+        public bool? EnableAnalyticalStorage { get; set; }
+
+        /// <summary>
+        /// Gets or sets the CORS policy for the Cosmos DB database account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.cors")]
+        public IList<CorsPolicy> Cors { get; set; }
+
+        /// <summary>
+        /// The offer type for the database
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.databaseAccountOfferType")]
+        public static string DatabaseAccountOfferType { get; private set; }
 
         /// <summary>
         /// Validate the object.
@@ -78,13 +255,33 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Properties == null)
+            if (Locations == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Properties");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Locations");
             }
-            if (Properties != null)
+            if (ConsistencyPolicy != null)
             {
-                Properties.Validate();
+                ConsistencyPolicy.Validate();
+            }
+            if (Locations != null)
+            {
+                foreach (var element in Locations)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+            if (Cors != null)
+            {
+                foreach (var element1 in Cors)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
+                    }
+                }
             }
         }
     }

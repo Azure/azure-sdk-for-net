@@ -76,6 +76,8 @@ namespace Azure.Iot.Hub.Service.Samples
             }
             catch (Exception ex)
             {
+                // Try to cleanup before exiting with fatal error.
+                await CleanupHelper.DeleteAllDevicesInHubAsync(IoTHubServiceClient);
                 SampleLogger.FatalError($"Failed to create device identity due to:\n{ex}");
                 throw;
             }
@@ -108,6 +110,8 @@ namespace Azure.Iot.Hub.Service.Samples
             }
             catch (Exception ex)
             {
+                // Try to cleanup before exiting with fatal error.
+                await CleanupHelper.DeleteAllDevicesInHubAsync(IoTHubServiceClient);
                 SampleLogger.FatalError($"Failed to get a device identity due to:\n{ex}");
                 throw;
             }
@@ -145,6 +149,8 @@ namespace Azure.Iot.Hub.Service.Samples
             }
             catch (Exception ex)
             {
+                // Try to cleanup before exiting with fatal error.
+                await CleanupHelper.DeleteAllDevicesInHubAsync(IoTHubServiceClient);
                 SampleLogger.FatalError($"Failed to update a device identity due to:\n{ex}");
                 throw;
             }
@@ -174,6 +180,8 @@ namespace Azure.Iot.Hub.Service.Samples
             }
             catch (Exception ex)
             {
+                // Try to cleanup before exiting with fatal error.
+                await CleanupHelper.DeleteAllDevicesInHubAsync(IoTHubServiceClient);
                 SampleLogger.FatalError($"Failed to get a device twin due to:\n{ex}");
                 throw;
             }
@@ -220,6 +228,8 @@ namespace Azure.Iot.Hub.Service.Samples
             }
             catch (Exception ex)
             {
+                // Try to cleanup before exiting with fatal error.
+                await CleanupHelper.DeleteAllDevicesInHubAsync(IoTHubServiceClient);
                 SampleLogger.FatalError($"Failed to update a device identity due to:\n{ex}");
                 throw;
             }
@@ -251,6 +261,8 @@ namespace Azure.Iot.Hub.Service.Samples
             }
             catch (Exception ex)
             {
+                // Try to cleanup before exiting with fatal error.
+                await CleanupHelper.DeleteAllDevicesInHubAsync(IoTHubServiceClient);
                 SampleLogger.FatalError($"Failed to device identity due to:\n{ex}");
             }
         }

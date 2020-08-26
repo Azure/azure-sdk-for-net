@@ -53,6 +53,9 @@ namespace Azure.Data.Tables
                 }
             }
 
+            // Remove the ETag property, as it does not need to be serialized
+            annotatedDictionary.Remove(TableConstants.PropertyNames.ETag);
+
             return annotatedDictionary;
         }
     }

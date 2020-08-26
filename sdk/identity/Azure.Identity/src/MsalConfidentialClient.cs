@@ -35,7 +35,7 @@ namespace Azure.Identity
             _certificateProvider = certificateProvider;
         }
 
-        protected override async Task<IConfidentialClientApplication> CreateClientAsync()
+        protected override async ValueTask<IConfidentialClientApplication> CreateClientAsync(bool async, CancellationToken cancellationToken)
         {
             ConfidentialClientApplicationBuilder confClientBuilder = ConfidentialClientApplicationBuilder.Create(ClientId).WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, TenantId).WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline));
 
@@ -46,20 +46,17 @@ namespace Azure.Identity
 
             if (_certificateProvider != null)
             {
-                X509Certificate2 clientCertificate = await _certificateProvider.GetCertificateAsync(true, default).ConfigureAwait(false);
-
+                X509Certificate2 clientCertificate = await _certificateProvider.GetCertificateAsync(async, cancellationToken).ConfigureAwait(false);
                 confClientBuilder.WithCertificate(clientCertificate);
             }
 
             return confClientBuilder.Build();
-
         }
 
-        public virtual async Task<AuthenticationResult> AcquireTokenForClientAsync(string[] scopes, bool async, CancellationToken cancellationToken)
+        public virtual async ValueTask<AuthenticationResult> AcquireTokenForClientAsync(string[] scopes, bool async, CancellationToken cancellationToken)
         {
-            await EnsureInitializedAsync(async).ConfigureAwait(false);
-
-            return await Client.AcquireTokenForClient(scopes).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
+            IConfidentialClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
+            return await client.AcquireTokenForClient(scopes).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
         }
     }
 }

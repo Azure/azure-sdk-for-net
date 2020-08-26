@@ -21,10 +21,7 @@ namespace Azure.Iot.Hub.Service
         private readonly QueryRestClient _queryRestClient;
         private readonly StatisticsRestClient _statisticsRestClient;
         private readonly ConfigurationRestClient _configurationRestClient;
-
-        // IoT Hub service currently does not support OAuth tokens, so they do not have their authorization scopes defined.
-        // This value will need to be correctly populated once OAuth token support is available.
-        private static readonly string[] s_authorizationScopes = new[] { "" };
+        private readonly JobsRestClient _jobsRestClient;
 
         /// <summary>
         /// place holder for Devices.
@@ -139,7 +136,7 @@ namespace Azure.Iot.Hub.Service
             options ??= new IotHubServiceClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
 
-            options.AddPolicy(new BearerTokenAuthenticationPolicy(credential, s_authorizationScopes), HttpPipelinePosition.PerCall);
+            options.AddPolicy(new SasTokenAuthenticationPolicy(credential), HttpPipelinePosition.PerCall);
             _httpPipeline = HttpPipelineBuilder.Build(options);
 
             _devicesRestClient = new DevicesRestClient(_clientDiagnostics, _httpPipeline, credential.Endpoint, options.GetVersionString());
@@ -147,6 +144,7 @@ namespace Azure.Iot.Hub.Service
             _queryRestClient = new QueryRestClient(_clientDiagnostics, _httpPipeline, credential.Endpoint, options.GetVersionString());
             _statisticsRestClient = new StatisticsRestClient(_clientDiagnostics, _httpPipeline, credential.Endpoint, options.GetVersionString());
             _configurationRestClient = new ConfigurationRestClient(_clientDiagnostics, _httpPipeline, credential.Endpoint, options.GetVersionString());
+            _jobsRestClient = new JobsRestClient(_clientDiagnostics, _httpPipeline, credential.Endpoint, options.GetVersionString());
 
             // Note that the devices and modules subclient take a reference to the Query convenience layer client. This
             // is because they each expose a helper function that uses the query client for listing twins. By passing in
@@ -160,7 +158,7 @@ namespace Azure.Iot.Hub.Service
 
             Messages = new CloudToDeviceMessagesClient();
             Files = new FilesClient();
-            Jobs = new JobsClient();
+            Jobs = new JobsClient(_jobsRestClient);
         }
 
         private static IotHubSasCredential SetEndpointToIotHubSasCredential(Uri endpoint, IotHubSasCredential credential)
