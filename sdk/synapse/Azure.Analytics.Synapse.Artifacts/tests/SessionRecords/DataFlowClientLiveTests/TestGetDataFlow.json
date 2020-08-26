@@ -4,6 +4,7 @@
       "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/dataflows?api-version=2019-06-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200826.1",
@@ -17,11 +18,11 @@
       "ResponseHeaders": {
         "Content-Length": "321",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Aug 2020 02:00:29 GMT",
+        "Date": "Wed, 26 Aug 2020 03:36:45 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "x-ms-client-request-id": "5df0540fcaf2780acef4bf30a508f780",
-        "x-ms-request-id": "6123ea86-d2af-4909-91c1-5ea4fbb85945"
+        "x-ms-request-id": "c503a024-0cd4-470e-8b98-fb2d7de1d48b"
       },
       "ResponseBody": {
         "value": [
@@ -29,7 +30,7 @@
             "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/dataflows/MyDataFlow",
             "name": "MyDataFlow",
             "type": "Microsoft.Synapse/workspaces/dataflows",
-            "etag": "05006b90-0000-0100-0000-5f45c2340000",
+            "etag": "05009ec8-0000-0100-0000-5f45d8c50000",
             "properties": {
               "type": null
             }
@@ -41,8 +42,9 @@
       "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/dataflows/MyDataFlow?api-version=2019-06-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-4c71ee7f83a0ca479910060b48afc256-312d510da27b3447-00",
+        "traceparent": "00-5f56fa8528538144ac4d8e7f7cabb4a8-6c3116fe081e6748-00",
         "User-Agent": [
           "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200826.1",
           "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
@@ -56,7 +58,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "309",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Aug 2020 02:00:30 GMT",
+        "Date": "Wed, 26 Aug 2020 03:36:45 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -66,8 +68,8 @@
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "8848bd95be6593a42fee8e42ee8d6c88",
-        "x-ms-correlation-request-id": "ed0c2719-1f2c-4deb-b6a5-7b0ce6dd6b06",
-        "x-ms-request-id": "c6a82e6d-4d66-44fa-8d5f-4a7bfd5006d2",
+        "x-ms-correlation-request-id": "8ac53d78-11d6-4493-b035-6800aa9ef782",
+        "x-ms-request-id": "91c1b6d3-0197-41f8-8617-c61acce12de6",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -77,7 +79,7 @@
         "properties": {
           "type": null
         },
-        "etag": "05006b90-0000-0100-0000-5f45c2340000"
+        "etag": "05009ec8-0000-0100-0000-5f45d8c50000"
       }
     }
   ],

@@ -4,6 +4,7 @@
       "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/linkedservices?api-version=2019-06-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200826.1",
@@ -17,11 +18,11 @@
       "ResponseHeaders": {
         "Content-Length": "1487",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Aug 2020 02:04:03 GMT",
+        "Date": "Wed, 26 Aug 2020 03:39:30 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "x-ms-client-request-id": "4f2ace59b3b83ebc6d97535970e1f994",
-        "x-ms-request-id": "cf527a33-8557-4d1a-8458-043d1da0e8d7"
+        "x-ms-request-id": "10a8e5ad-c216-4e20-abba-bc4b55dd27e5"
       },
       "ResponseBody": {
         "value": [
@@ -58,7 +59,7 @@
             "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/linkedservices/MyLinkedService",
             "name": "MyLinkedService",
             "type": "Microsoft.Synapse/workspaces/linkedservices",
-            "etag": "0500d690-0000-0100-0000-5f45c2f20000",
+            "etag": "0500e4c8-0000-0100-0000-5f45d96a0000",
             "properties": {
               "type": "AzureDataLakeStore",
               "typeProperties": {
@@ -73,8 +74,9 @@
       "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/linkedservices/testsynapseworkspace-WorkspaceDefaultStorage?api-version=2019-06-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-6fd301149876cf45bb59bd63bde83937-8b37016cc938054f-00",
+        "traceparent": "00-61ccb791de4d924f869fbea19aafe670-c493fcade2141846-00",
         "User-Agent": [
           "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200826.1",
           "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
@@ -88,7 +90,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "467",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Aug 2020 02:04:03 GMT",
+        "Date": "Wed, 26 Aug 2020 03:39:30 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -98,8 +100,8 @@
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "684e9f5e21cfb0cbe7d96251e503007e",
-        "x-ms-correlation-request-id": "7a42c125-8a29-4f87-8ba1-7455a6f4be8d",
-        "x-ms-request-id": "14c72fcf-2db4-4045-a0b2-e0724790cbc8",
+        "x-ms-correlation-request-id": "72f7a2ba-7586-4248-9a16-5680395387de",
+        "x-ms-request-id": "ef117e1d-280b-4124-a8d6-e7f90ad91796",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -119,8 +121,9 @@
       "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/linkedservices/testsynapseworkspace-WorkspaceDefaultSqlServer?api-version=2019-06-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-64f473bbb38bf544aabca2d4cec7683e-202f83638cef704a-00",
+        "traceparent": "00-1c51c929c4dcd84ca6a070ebc473e442-80b7512c4c5a0b4c-00",
         "User-Agent": [
           "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200826.1",
           "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
@@ -134,7 +137,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "586",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Aug 2020 02:04:03 GMT",
+        "Date": "Wed, 26 Aug 2020 03:39:30 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -144,8 +147,8 @@
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "453617658095eadc0682c623600058a9",
-        "x-ms-correlation-request-id": "7d631118-b971-44f4-94f3-8aca9ae258f0",
-        "x-ms-request-id": "782841ca-9bc7-47ae-ba83-6ce0cf361196",
+        "x-ms-correlation-request-id": "261ea269-c3f7-4e20-b229-1fc093b96fc0",
+        "x-ms-request-id": "3783b568-3cca-418b-aa34-1f86e74eb163",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -170,8 +173,9 @@
       "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/linkedservices/MyLinkedService?api-version=2019-06-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-08b3cf2ec1c2de41aaf8ee34109d5720-111c88905c37e646-00",
+        "traceparent": "00-24408ebb3702a94fad91c827b84dc52f-de532b26828f4047-00",
         "User-Agent": [
           "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200826.1",
           "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
@@ -185,7 +189,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "420",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Aug 2020 02:04:03 GMT",
+        "Date": "Wed, 26 Aug 2020 03:39:30 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -195,8 +199,8 @@
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "5c6a10f6767238bc027968df506b5869",
-        "x-ms-correlation-request-id": "0898ad53-9b48-452f-8b9b-91da1569f5d3",
-        "x-ms-request-id": "c84e2357-bf6c-42f9-a25d-98b4715bdca2",
+        "x-ms-correlation-request-id": "795c5058-9907-4652-b569-7c587a6a608e",
+        "x-ms-request-id": "b1d57975-7ea7-4474-94ff-cc61108ea728",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -209,7 +213,7 @@
             "dataLakeStoreUri": "adl://test.azuredatalakestore.net/"
           }
         },
-        "etag": "0500d690-0000-0100-0000-5f45c2f20000"
+        "etag": "0500e4c8-0000-0100-0000-5f45d96a0000"
       }
     }
   ],
