@@ -118,7 +118,7 @@ List<CloudEvent> eventsList = new List<CloudEvent>
         "/cloudevents/example/binarydata",
         "Example.EventType",
         new BinaryData("This is binary data"),
-        "example/binary")};
+          "example/binary")};
 
 // Send the events
 await client.SendEventsAsync(eventsList);
