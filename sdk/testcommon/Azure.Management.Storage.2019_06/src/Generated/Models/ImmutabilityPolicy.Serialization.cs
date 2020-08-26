@@ -15,39 +15,14 @@ namespace Azure.Management.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Etag != null)
-            {
-                writer.WritePropertyName("etag");
-                writer.WriteStringValue(Etag);
-            }
-            if (Id != null)
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (ImmutabilityPeriodSinceCreationInDays != null)
+            if (Optional.IsDefined(ImmutabilityPeriodSinceCreationInDays))
             {
                 writer.WritePropertyName("immutabilityPeriodSinceCreationInDays");
                 writer.WriteNumberValue(ImmutabilityPeriodSinceCreationInDays.Value);
             }
-            if (State != null)
-            {
-                writer.WritePropertyName("state");
-                writer.WriteStringValue(State.Value.ToString());
-            }
-            if (AllowProtectedAppendWrites != null)
+            if (Optional.IsDefined(AllowProtectedAppendWrites))
             {
                 writer.WritePropertyName("allowProtectedAppendWrites");
                 writer.WriteBooleanValue(AllowProtectedAppendWrites.Value);
@@ -58,48 +33,32 @@ namespace Azure.Management.Storage.Models
 
         internal static ImmutabilityPolicy DeserializeImmutabilityPolicy(JsonElement element)
         {
-            string etag = default;
-            string id = default;
-            string name = default;
-            string type = default;
-            int? immutabilityPeriodSinceCreationInDays = default;
-            ImmutabilityPolicyState? state = default;
-            bool? allowProtectedAppendWrites = default;
+            Optional<string> etag = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<int> immutabilityPeriodSinceCreationInDays = default;
+            Optional<ImmutabilityPolicyState> state = default;
+            Optional<bool> allowProtectedAppendWrites = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
@@ -109,28 +68,16 @@ namespace Azure.Management.Storage.Models
                     {
                         if (property0.NameEquals("immutabilityPeriodSinceCreationInDays"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             immutabilityPeriodSinceCreationInDays = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("state"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             state = new ImmutabilityPolicyState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("allowProtectedAppendWrites"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             allowProtectedAppendWrites = property0.Value.GetBoolean();
                             continue;
                         }
@@ -138,7 +85,7 @@ namespace Azure.Management.Storage.Models
                     continue;
                 }
             }
-            return new ImmutabilityPolicy(id, name, type, etag, immutabilityPeriodSinceCreationInDays, state, allowProtectedAppendWrites);
+            return new ImmutabilityPolicy(id.Value, name.Value, type.Value, etag.Value, Optional.ToNullable(immutabilityPeriodSinceCreationInDays), Optional.ToNullable(state), Optional.ToNullable(allowProtectedAppendWrites));
         }
     }
 }

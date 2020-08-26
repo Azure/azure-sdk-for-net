@@ -16,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of AzureMLBatchExecutionActivity. </summary>
         /// <param name="name"> Activity name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AzureMLBatchExecutionActivity(string name) : base(name)
         {
             if (name == null)

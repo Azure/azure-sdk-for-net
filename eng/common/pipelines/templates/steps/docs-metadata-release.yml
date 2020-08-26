@@ -9,11 +9,14 @@ parameters:
   TargetDocRepoName: ''
   TargetDocRepoOwner: ''
   PRBranchName: 'smoke-test-rdme'
+  SourceBranchName: 'smoke-test'
   ArtifactName: ''
   Language: ''
   DocRepoDestinationPath: '' #usually docs-ref-services/
+  CIConfigs: '[]'
   GHReviewersVariable: '' 
   GHTeamReviewersVariable: '' # externally set, as eng-common does not have the identity-resolver. Run as pre-step
+  OnboardingBranch: ''
 
 steps:
 - pwsh: |
@@ -22,8 +25,8 @@ steps:
     try {
       Push-Location ${{ parameters.WorkingDirectory }}/repo
 
-      Write-Host "git checkout smoke-test"
-      git checkout smoke-test
+      Write-Host "git checkout ${{ parameters.SourceBranchName }}"
+      git checkout ${{ parameters.SourceBranchName }}
     } finally {
       Pop-Location
     }
@@ -48,15 +51,73 @@ steps:
   env:
     GH_TOKEN: $(azuresdk-github-pat)
 
+- task: PowerShell@2
+  displayName: 'Update Docs.MS CI Targeted Packages'
+  condition: and(succeededOrFailed(), eq('${{ parameters.OnboardingBranch }}',''))
+  inputs:
+    targetType: filePath
+    filePath: ${{ parameters.ScriptDirectory }}/update-docs-ci.ps1
+    arguments: >
+      -ArtifactLocation ${{ parameters.ArtifactLocation }}
+      -WorkDirectory "${{ parameters.WorkingDirectory }}"
+      -RepoId ${{ parameters.RepoId }}
+      -Repository ${{ parameters.PackageRepository }}
+      -ReleaseSHA ${{ parameters.ReleaseSha }}
+      -CIRepository "${{ parameters.WorkingDirectory }}/repo"
+      -Configs "${{ parameters.CIConfigs }}"
+    pwsh: true
+  env:
+    GH_TOKEN: $(azuresdk-github-pat)
+
 - template: /eng/common/pipelines/templates/steps/create-pull-request.yml
   parameters:
     RepoName: ${{ parameters.TargetDocRepoName }}
     RepoOwner: ${{ parameters.TargetDocRepoOwner }}
     PRBranchName: ${{ parameters.PRBranchName }}
-    CommitMsg: "Update readme content for ${{ parameters.ArtifactName }}"
-    PRTitle: "Docs.MS Readme Update."
-    BaseBranchName: smoke-test
+    CommitMsg: "Update docs metadata and targeting for release of ${{ parameters.ArtifactName }}"
+    PRTitle: "Docs.MS Release Updates for ${{ parameters.ArtifactName }}"
+    BaseBranchName: ${{ parameters.SourceBranchName }}
     WorkingDirectory: ${{ parameters.WorkingDirectory }}/repo
     ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}
     GHReviewersVariable: ${{ parameters.GHReviewersVariable }}
     GHTeamReviewersVariable: ${{ parameters.GHTeamReviewersVariable }} 
+
+- ${{if ne( parameters['OnboardingBranch'], '')}}:
+  - pwsh: |
+      Push-Location ${{ parameters.WorkingDirectory }}/repo
+
+      git reset --hard HEAD
+      git remote rm azure-sdk-fork
+      git checkout ${{ parameters.OnboardingBranch}}
+    displayName: Reset Docs Repo, Checkout Onboarding Branch
+    ignoreLASTEXITCODE: false
+
+  - task: PowerShell@2
+    displayName: 'Update Docs.MS CI Targeted Packages'
+    inputs:
+      targetType: filePath
+      filePath: ${{ parameters.ScriptDirectory }}/update-docs-ci.ps1
+      arguments: >
+        -ArtifactLocation ${{ parameters.ArtifactLocation }}
+        -WorkDirectory "${{ parameters.WorkingDirectory }}"
+        -RepoId ${{ parameters.RepoId }}
+        -Repository ${{ parameters.PackageRepository }}
+        -ReleaseSHA ${{ parameters.ReleaseSha }}
+        -CIRepository "${{ parameters.WorkingDirectory }}/repo"
+        -Configs "${{ parameters.CIConfigs }}"
+      pwsh: true
+    env:
+      GH_TOKEN: $(azuresdk-github-pat)
+
+  - template: /eng/common/pipelines/templates/steps/create-pull-request.yml
+    parameters:
+      RepoName: ${{ parameters.TargetDocRepoName }}
+      RepoOwner: ${{ parameters.TargetDocRepoOwner }}
+      PRBranchName: ${{ parameters.PRBranchName }}-ci
+      CommitMsg: "CI Update for release of ${{ parameters.ArtifactName }}"
+      PRTitle: "Docs.MS CI Updates for ${{ parameters.ArtifactName }}"
+      BaseBranchName: ${{ parameters.OnboardingBranch }}
+      WorkingDirectory: ${{ parameters.WorkingDirectory }}/repo
+      ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}
+      GHReviewersVariable: ${{ parameters.GHReviewersVariable }}
+      GHTeamReviewersVariable: ${{ parameters.GHTeamReviewersVariable }} 

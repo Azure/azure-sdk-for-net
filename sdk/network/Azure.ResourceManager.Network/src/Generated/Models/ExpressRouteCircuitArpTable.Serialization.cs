@@ -14,50 +14,34 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ExpressRouteCircuitArpTable DeserializeExpressRouteCircuitArpTable(JsonElement element)
         {
-            int? age = default;
-            string @interface = default;
-            string ipAddress = default;
-            string macAddress = default;
+            Optional<int> age = default;
+            Optional<string> @interface = default;
+            Optional<string> ipAddress = default;
+            Optional<string> macAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("age"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     age = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("interface"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     @interface = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("ipAddress"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     ipAddress = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("macAddress"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     macAddress = property.Value.GetString();
                     continue;
                 }
             }
-            return new ExpressRouteCircuitArpTable(age, @interface, ipAddress, macAddress);
+            return new ExpressRouteCircuitArpTable(Optional.ToNullable(age), @interface.Value, ipAddress.Value, macAddress.Value);
         }
     }
 }

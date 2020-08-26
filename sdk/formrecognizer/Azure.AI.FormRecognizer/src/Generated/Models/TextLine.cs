@@ -18,6 +18,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="text"> The text content of the line. </param>
         /// <param name="boundingBox"> Bounding box of an extracted line. </param>
         /// <param name="words"> List of words in the text line. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="text"/>, <paramref name="boundingBox"/>, or <paramref name="words"/> is null. </exception>
         internal TextLine(string text, IEnumerable<float> boundingBox, IEnumerable<TextWord> words)
         {
             if (text == null)

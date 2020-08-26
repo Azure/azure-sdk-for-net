@@ -15,17 +15,7 @@ namespace Azure.Management.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (PrincipalId != null)
-            {
-                writer.WritePropertyName("principalId");
-                writer.WriteStringValue(PrincipalId);
-            }
-            if (TenantId != null)
-            {
-                writer.WritePropertyName("tenantId");
-                writer.WriteStringValue(TenantId);
-            }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type);
@@ -35,40 +25,28 @@ namespace Azure.Management.Resources.Models
 
         internal static Identity DeserializeIdentity(JsonElement element)
         {
-            string principalId = default;
-            string tenantId = default;
-            string type = default;
+            Optional<string> principalId = default;
+            Optional<string> tenantId = default;
+            Optional<string> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     principalId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tenantId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     tenantId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
             }
-            return new Identity(principalId, tenantId, type);
+            return new Identity(principalId.Value, tenantId.Value, type.Value);
         }
     }
 }

@@ -15,10 +15,10 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
     static class TestUtility
     {
-        private static readonly Lazy<string> NamespaceConnectionStringInstance = 
+        private static readonly Lazy<string> NamespaceConnectionStringInstance =
             new Lazy<string>( () => new ServiceBusConnectionStringBuilder(ReadEnvironmentConnectionString()).ToString(), LazyThreadSafetyMode.PublicationOnly);
-        
-        private static readonly Lazy<string> SocketNamespaceConnectionStringInstance = 
+
+        private static readonly Lazy<string> SocketNamespaceConnectionStringInstance =
             new Lazy<string>( () => new ServiceBusConnectionStringBuilder(ReadEnvironmentConnectionString()){TransportType = TransportType.AmqpWebSockets}.ToString(), LazyThreadSafetyMode.PublicationOnly);
 
         internal static string NamespaceConnectionString => NamespaceConnectionStringInstance.Value;
@@ -226,7 +226,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         // String extension methods
-        
+
         internal static string GetString(this byte[] bytes)
         {
             return Encoding.ASCII.GetString(bytes);

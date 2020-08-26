@@ -1083,12 +1083,24 @@ namespace Azure.Storage.Files.Shares
                     $"{nameof(Uri)}: {Uri}");
                 try
                 {
+                    DeleteSnapshotsOptionType? deleteSnapshotsOption;
+
+                    // DeleteSnapshotsOptionType.Include is not valid when deleting a Snapshot Share.
+                    if (Uri.GetQueryParameters().ContainsKey(Constants.ShareSnapshotParameterName))
+                    {
+                        deleteSnapshotsOption = null;
+                    }
+                    else
+                    {
+                        deleteSnapshotsOption = includeSnapshots ? DeleteSnapshotsOptionType.Include : (DeleteSnapshotsOptionType?)null;
+                    }
+
                     return await FileRestClient.Share.DeleteAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
                         version: Version.ToVersionString(),
-                        deleteSnapshots: includeSnapshots ? DeleteSnapshotsOptionType.Include : (DeleteSnapshotsOptionType?)null,
+                        deleteSnapshots: deleteSnapshotsOption,
                         async: async,
                         operationName: operationName ?? $"{nameof(ShareClient)}.{nameof(Delete)}",
                         cancellationToken: cancellationToken)

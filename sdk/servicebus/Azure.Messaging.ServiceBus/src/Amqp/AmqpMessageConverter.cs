@@ -70,25 +70,23 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     {
                         return SBMessageToAmqpMessage(sbMessage);
                     }
-                }), firstMessage);
+                }).ToList(), firstMessage);
         }
 
         /// <summary>
         ///   Builds a batch <see cref="AmqpMessage" /> from a set of <see cref="AmqpMessage" />.
         /// </summary>
         ///
-        /// <param name="source">The set of messages to use as the body of the batch message.</param>
+        /// <param name="batchMessages">The set of messages to use as the body of the batch message.</param>
         /// <param name="firstMessage"></param>
         ///
         /// <returns>The batch <see cref="AmqpMessage" /> containing the source messages.</returns>
         ///
         private static AmqpMessage BuildAmqpBatchFromMessages(
-            IEnumerable<AmqpMessage> source,
+            IList<AmqpMessage> batchMessages,
             SBMessage firstMessage = null)
         {
             AmqpMessage batchEnvelope;
-
-            var batchMessages = source.ToList();
 
             if (batchMessages.Count == 1)
             {

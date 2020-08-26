@@ -28,7 +28,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public MessagesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2020-03-13")
         {
             endpoint ??= new Uri("https://fully-qualified-iothubname.azure-devices.net");
@@ -55,12 +55,14 @@ namespace Azure.Iot.Hub.Service
             uri.AppendPath("/commands", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Deletes all the pending commands for a device in the IoT Hub. </summary>
         /// <param name="id"> The unique identifier of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public async Task<Response<PurgeMessageQueueResult>> PurgeCloudToDeviceMessageQueueAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -87,6 +89,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary> Deletes all the pending commands for a device in the IoT Hub. </summary>
         /// <param name="id"> The unique identifier of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public Response<PurgeMessageQueueResult> PurgeCloudToDeviceMessageQueue(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)

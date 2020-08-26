@@ -62,11 +62,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="fileShare">The azure file share name. It is required
         /// when auth with accountKey/sasToken. Type: string (or Expression
         /// with resultType string).</param>
+        /// <param name="snapshot">The azure file share snapshot version. Type:
+        /// string (or Expression with resultType string).</param>
         /// <param name="encryptedCredential">The encrypted credential used for
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public AzureFileStorageLinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object host = default(object), object userId = default(object), SecretBase password = default(SecretBase), object connectionString = default(object), AzureKeyVaultSecretReference accountKey = default(AzureKeyVaultSecretReference), object sasUri = default(object), AzureKeyVaultSecretReference sasToken = default(AzureKeyVaultSecretReference), object fileShare = default(object), object encryptedCredential = default(object))
+        public AzureFileStorageLinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object host = default(object), object userId = default(object), SecretBase password = default(SecretBase), object connectionString = default(object), AzureKeyVaultSecretReference accountKey = default(AzureKeyVaultSecretReference), object sasUri = default(object), AzureKeyVaultSecretReference sasToken = default(AzureKeyVaultSecretReference), object fileShare = default(object), object snapshot = default(object), object encryptedCredential = default(object))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             Host = host;
@@ -77,6 +79,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             SasUri = sasUri;
             SasToken = sasToken;
             FileShare = fileShare;
+            Snapshot = snapshot;
             EncryptedCredential = encryptedCredential;
             CustomInit();
         }
@@ -143,6 +146,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.fileShare")]
         public object FileShare { get; set; }
+
+        /// <summary>
+        /// Gets or sets the azure file share snapshot version. Type: string
+        /// (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.snapshot")]
+        public object Snapshot { get; set; }
 
         /// <summary>
         /// Gets or sets the encrypted credential used for authentication.

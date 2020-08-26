@@ -76,7 +76,6 @@ namespace Azure.ResourceManager.Compute.Tests
                 var vhduri = vhdContainer + string.Format("/{0}.vhd", Recording.GenerateAssetName("testimageoperations", TestPrefix));
 
                 vm.HardwareProfile.VmSize = VirtualMachineSizeTypes.StandardA4;
-                vm.StorageProfile.DataDisks = new List<DataDisk>();
                 foreach (int index in new int[] { 1, 2 })
                 {
                     var diskName = "dataDisk" + index;
@@ -108,7 +107,7 @@ namespace Azure.ResourceManager.Compute.Tests
             // Create the Image
             var imageInput = new Image(m_location)
             {
-                Tags = new Dictionary<string, string>()
+                Tags =
                         {
                             {"RG", "rg"},
                             {"testTag", "1"},
@@ -123,8 +122,7 @@ namespace Azure.ResourceManager.Compute.Tests
                             Id = diskEncryptionSetId
                         },
                     },
-                    DataDisks = new List<ImageDataDisk>()
-                            {
+                    DataDisks = {
                                 new ImageDataDisk(expectedDiskLunWithDiskEncryptionSet)
                                 {
                                     BlobUri = createdVM.StorageProfile.DataDisks[0].Vhd.Uri,
@@ -150,10 +148,10 @@ namespace Azure.ResourceManager.Compute.Tests
                 Assert.True(string.Equals(diskEncryptionSetId, getImage.StorageProfile.DataDisks[0].DiskEncryptionSet.Id, StringComparison.OrdinalIgnoreCase),
                     "DataDisks.DiskEncryptionSet.Id is not matching with expected DiskEncryptionSet resource");
             }
-            ImageUpdate updateParams = new ImageUpdate()
-            {
-                Tags = getImage.Tags
-            };
+
+            ImageUpdate updateParams = new ImageUpdate();
+            updateParams.Tags.InitializeFrom(getImage.Tags);
+
             string tagKey = "UpdateTag";
             updateParams.Tags.Add(tagKey, "TagValue");
             await WaitForCompletionAsync(await ImagesOperations.StartUpdateAsync(rgName, imageName, updateParams));

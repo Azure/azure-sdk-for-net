@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of VaultProperties. </summary>
         /// <param name="tenantId"> The Azure Active Directory tenant ID that should be used for authenticating requests to the key vault. </param>
         /// <param name="sku"> SKU details. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public VaultProperties(Guid tenantId, Sku sku)
         {
             if (sku == null)
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="enablePurgeProtection"> Property specifying whether protection against purge is enabled for this vault. Setting this property to true activates protection against purge for this vault and its content - only the Key Vault service may initiate a hard, irrecoverable deletion. The setting is effective only if soft delete is also enabled. Enabling this functionality is irreversible - that is, the property does not accept false as its value. </param>
         /// <param name="networkAcls"> Rules governing the accessibility of the key vault from specific network locations. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the key vault. </param>
-        internal VaultProperties(Guid tenantId, Sku sku, IList<AccessPolicyEntry> accessPolicies, string vaultUri, bool? enabledForDeployment, bool? enabledForDiskEncryption, bool? enabledForTemplateDeployment, bool? enableSoftDelete, CreateMode? createMode, bool? enablePurgeProtection, NetworkRuleSet networkAcls, IList<PrivateEndpointConnectionItem> privateEndpointConnections)
+        internal VaultProperties(Guid tenantId, Sku sku, IList<AccessPolicyEntry> accessPolicies, string vaultUri, bool? enabledForDeployment, bool? enabledForDiskEncryption, bool? enabledForTemplateDeployment, bool? enableSoftDelete, CreateMode? createMode, bool? enablePurgeProtection, NetworkRuleSet networkAcls, IReadOnlyList<PrivateEndpointConnectionItem> privateEndpointConnections)
         {
             TenantId = tenantId;
             Sku = sku;
@@ -82,6 +83,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Rules governing the accessibility of the key vault from specific network locations. </summary>
         public NetworkRuleSet NetworkAcls { get; set; }
         /// <summary> List of private endpoint connections associated with the key vault. </summary>
-        public IList<PrivateEndpointConnectionItem> PrivateEndpointConnections { get; }
+        public IReadOnlyList<PrivateEndpointConnectionItem> PrivateEndpointConnections { get; }
     }
 }

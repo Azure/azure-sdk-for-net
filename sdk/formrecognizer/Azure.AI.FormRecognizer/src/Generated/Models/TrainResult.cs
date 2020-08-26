@@ -18,6 +18,7 @@ namespace Azure.AI.FormRecognizer.Models
     {
         /// <summary> Initializes a new instance of TrainResult. </summary>
         /// <param name="trainingDocuments"> List of the documents used to train the model and any errors reported in each document. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="trainingDocuments"/> is null. </exception>
         internal TrainResult(IEnumerable<TrainingDocumentInfo> trainingDocuments)
         {
             if (trainingDocuments == null)

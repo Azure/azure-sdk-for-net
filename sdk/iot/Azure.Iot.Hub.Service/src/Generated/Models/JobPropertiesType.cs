@@ -16,6 +16,7 @@ namespace Azure.Iot.Hub.Service.Models
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="JobPropertiesType"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public JobPropertiesType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

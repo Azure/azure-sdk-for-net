@@ -16,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of DynamicsAXResourceDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="path"> The path of the Dynamics AX OData entity. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="path"/> is null. </exception>
         public DynamicsAXResourceDataset(LinkedServiceReference linkedServiceName, object path) : base(linkedServiceName)
         {
             if (linkedServiceName == null)

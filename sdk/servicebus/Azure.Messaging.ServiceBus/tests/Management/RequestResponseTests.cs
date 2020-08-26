@@ -33,7 +33,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             }
             catch (ServiceBusException ex)
             {
-                Assert.AreEqual(ServiceBusException.FailureReason.Unauthorized, ex.Reason);
+                Assert.AreEqual(ServiceBusFailureReason.Unauthorized, ex.Reason);
                 var inner = (RequestFailedException)ex.InnerException;
                 Assert.AreEqual((int)HttpStatusCode.Unauthorized, inner.Status);
             }
@@ -49,7 +49,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             }
             catch (ServiceBusException ex)
             {
-                Assert.AreEqual(ServiceBusException.FailureReason.MessagingEntityNotFound, ex.Reason);
+                Assert.AreEqual(ServiceBusFailureReason.MessagingEntityNotFound, ex.Reason);
                 var inner = (RequestFailedException)ex.InnerException;
                 Assert.AreEqual((int)HttpStatusCode.NotFound, inner.Status);
                 return;
@@ -67,7 +67,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             }
             catch (ServiceBusException ex)
             {
-                Assert.AreEqual(ServiceBusException.FailureReason.MessagingEntityAlreadyExists, ex.Reason);
+                Assert.AreEqual(ServiceBusFailureReason.MessagingEntityAlreadyExists, ex.Reason);
                 Assert.IsFalse(ex.IsTransient);
                 var inner = (RequestFailedException)ex.InnerException;
                 Assert.AreEqual((int)HttpStatusCode.Conflict, inner.Status);
@@ -88,7 +88,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             }
             catch (ServiceBusException ex)
             {
-                Assert.AreEqual(ServiceBusException.FailureReason.GeneralError, ex.Reason);
+                Assert.AreEqual(ServiceBusFailureReason.GeneralError, ex.Reason);
                 Assert.IsTrue(ex.IsTransient);
                 var inner = (RequestFailedException)ex.InnerException;
                 Assert.AreEqual((int)HttpStatusCode.Conflict, inner.Status);
@@ -108,7 +108,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             }
             catch (ServiceBusException ex)
             {
-                Assert.AreEqual(ServiceBusException.FailureReason.GeneralError, ex.Reason);
+                Assert.AreEqual(ServiceBusFailureReason.GeneralError, ex.Reason);
                 Assert.IsTrue(ex.IsTransient);
                 var inner = (RequestFailedException)ex.InnerException;
                 Assert.AreEqual((int)HttpStatusCode.Conflict, inner.Status);
@@ -128,7 +128,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             }
             catch (ServiceBusException ex)
             {
-                Assert.AreEqual(ServiceBusException.FailureReason.ServiceBusy, ex.Reason);
+                Assert.AreEqual(ServiceBusFailureReason.ServiceBusy, ex.Reason);
                 Assert.IsTrue(ex.IsTransient);
                 var inner = (RequestFailedException)ex.InnerException;
                 Assert.AreEqual((int)HttpStatusCode.ServiceUnavailable, inner.Status);
@@ -187,7 +187,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             }
             catch (ServiceBusException ex)
             {
-                Assert.AreEqual(ServiceBusException.FailureReason.QuotaExceeded, ex.Reason);
+                Assert.AreEqual(ServiceBusFailureReason.QuotaExceeded, ex.Reason);
                 Assert.IsFalse(ex.IsTransient);
                 var inner = (RequestFailedException)ex.InnerException;
                 Assert.AreEqual((int)HttpStatusCode.Forbidden, inner.Status);
@@ -208,7 +208,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             }
             catch (ServiceBusException ex)
             {
-                Assert.AreEqual(ServiceBusException.FailureReason.GeneralError, ex.Reason);
+                Assert.AreEqual(ServiceBusFailureReason.GeneralError, ex.Reason);
                 Assert.IsTrue(ex.IsTransient);
                 var inner = (RequestFailedException)ex.InnerException;
                 Assert.AreEqual(429, inner.Status);

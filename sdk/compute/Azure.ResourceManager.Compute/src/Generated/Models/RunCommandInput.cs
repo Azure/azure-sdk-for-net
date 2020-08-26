@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of RunCommandInput. </summary>
         /// <param name="commandId"> The run command id. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="commandId"/> is null. </exception>
         public RunCommandInput(string commandId)
         {
             if (commandId == null)
@@ -23,24 +25,15 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             CommandId = commandId;
-        }
-
-        /// <summary> Initializes a new instance of RunCommandInput. </summary>
-        /// <param name="commandId"> The run command id. </param>
-        /// <param name="script"> Optional. The script to be executed.  When this value is given, the given script will override the default script of the command. </param>
-        /// <param name="parameters"> The run command parameters. </param>
-        internal RunCommandInput(string commandId, IList<string> script, IList<RunCommandInputParameter> parameters)
-        {
-            CommandId = commandId;
-            Script = script;
-            Parameters = parameters;
+            Script = new ChangeTrackingList<string>();
+            Parameters = new ChangeTrackingList<RunCommandInputParameter>();
         }
 
         /// <summary> The run command id. </summary>
         public string CommandId { get; }
         /// <summary> Optional. The script to be executed.  When this value is given, the given script will override the default script of the command. </summary>
-        public IList<string> Script { get; set; }
+        public IList<string> Script { get; }
         /// <summary> The run command parameters. </summary>
-        public IList<RunCommandInputParameter> Parameters { get; set; }
+        public IList<RunCommandInputParameter> Parameters { get; }
     }
 }

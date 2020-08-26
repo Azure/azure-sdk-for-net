@@ -31,20 +31,35 @@ Tests in the Service Bus client library are split into two categories:
 
 The Live tests read information from the following environment variables:
 
-`SERVICE_BUS_RESOURCEGROUP`  
- The name of the Azure resource group that contains the Service Bus namespace
+- `SERVICEBUS_RESOURCEGROUP`\
+  The name of the Azure resource group that contains the Service Bus namespace
 
-`SERVICE_BUS_SUBSCRIPTION`  
- The identifier (GUID) of the Azure subscription to which the service principal belongs
+- `SERVICEBUS_SUBSCRIPTION`\
+  The identifier (GUID) of the Azure subscription to which the service principal belongs
 
-`SERVICE_BUS_TENANT`  
- The identifier (GUID) of the Azure Active Directory tenant that contains the service principal
+- `SERVICEBUS_TENANT`\
+  The identifier (GUID) of the Azure Active Directory tenant that contains the service principal
 
-`SERVICE_BUS_CLIENT`  
- The identifier (GUID) of the Azure Active Directory application that is associated with the service principal
+- `SERVICEBUS_CLIENT`\
+  The identifier (GUID) of the Azure Active Directory application that is associated with the service principal
 
-`SERVICE_BUS_SECRET`  
- The client secret (password) of the Azure Active Directory application that is associated with the service principal
+- `SERVICEBUS_SECRET`\
+  The client secret (password) of the Azure Active Directory application that is associated with the service principal
+  
+- `SERVICEBUS_CONNECTION_STRING` _**(optional)**_\
+  The connection string to an existing Service Bus namespace to use for testing.  If specified, this namespace will be used as the basis for the test run, with queues, topics, and subscriptions dynamically managed by the tests.  When the run is complete, the namespace will be left in the state that it was in before the test run took place.  If not specified, a new namespace will be dynamically created for the test run and removed at the end of the run.
+  
+- `AZURE_TEST_MODE` _**(optional)**_\
+  This is used for the Service Bus management client tests, which use the HTTP recording framework.  By default tests are run in playback mode. To change the mode this value may be set to one of the following values: `Live`, `Playback`, `Record`.
+
+- `AZURE_AUTHORITY_HOST` _**(optional)**_\
+  The name of the Azure Authority to use for authenticating resource management operations.  The default for this is appropriate for use with the Azure public cloud; when testing in other cloud instances, this may be needed.
+  
+- `SERVICE_MANAGEMENT_URL` _**(optional)**_\
+  The URL of the endpoint responsible for service management operations in Azure.  The default for this is appropriate for use with the Azure public cloud; when testing in other cloud instances, this may be needed.
+  
+- `RESOURCE_MANAGER_URL` _**(optional)**_\
+  The URL of the endpoint responsible for resource management operations in Azure.  The default for this is appropriate for use with the Azure public cloud; when testing in other cloud instances, this may be needed.
 
 ### Samples
 

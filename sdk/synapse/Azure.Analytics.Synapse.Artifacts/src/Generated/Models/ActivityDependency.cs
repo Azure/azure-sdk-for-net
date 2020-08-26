@@ -19,6 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of ActivityDependency. </summary>
         /// <param name="activity"> Activity name. </param>
         /// <param name="dependencyConditions"> Match-Condition for the dependency. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="activity"/> or <paramref name="dependencyConditions"/> is null. </exception>
         public ActivityDependency(string activity, IEnumerable<DependencyCondition> dependencyConditions)
         {
             if (activity == null)

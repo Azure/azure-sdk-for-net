@@ -17,6 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of SearchIndexerSkillset. </summary>
         /// <param name="name"> The name of the skillset. </param>
         /// <param name="skills"> A list of skills in the skillset. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="skills"/> is null. </exception>
         public SearchIndexerSkillset(string name, IEnumerable<SearchIndexerSkill> skills)
         {
             if (name == null)

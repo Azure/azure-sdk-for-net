@@ -27,7 +27,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public EventRoutesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2020-05-31-preview")
         {
             endpoint ??= new Uri("https://digitaltwins-name.digitaltwins.azure.net");
@@ -56,6 +56,7 @@ namespace Azure.DigitalTwins.Core
             {
                 request.Headers.Add("x-ms-max-item-count", eventRoutesListOptions.MaxItemCount.Value);
             }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -122,6 +123,7 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -133,6 +135,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="id"> The id for an event route. The id is unique within event routes and case sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public async Task<Response<EventRoute>> GetByIdAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -164,6 +167,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="id"> The id for an event route. The id is unique within event routes and case sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public Response<EventRoute> GetById(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -199,6 +203,7 @@ namespace Azure.DigitalTwins.Core
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (eventRoute != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -217,6 +222,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="id"> The id for an event route. The id is unique within event routes and case sensitive. </param>
         /// <param name="eventRoute"> The event route data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public async Task<Response> AddAsync(string id, EventRoute eventRoute = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -244,6 +250,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="id"> The id for an event route. The id is unique within event routes and case sensitive. </param>
         /// <param name="eventRoute"> The event route data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public Response Add(string id, EventRoute eventRoute = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -273,6 +280,7 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -284,6 +292,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="id"> The id for an event route. The id is unique within event routes and case sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public async Task<Response> DeleteAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -310,6 +319,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="id"> The id for an event route. The id is unique within event routes and case sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public Response Delete(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -341,6 +351,7 @@ namespace Azure.DigitalTwins.Core
             {
                 request.Headers.Add("x-ms-max-item-count", eventRoutesListOptions.MaxItemCount.Value);
             }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -353,6 +364,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="eventRoutesListOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<EventRouteCollection>> ListNextPageAsync(string nextLink, EventRoutesListOptions eventRoutesListOptions = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -385,6 +397,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="eventRoutesListOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<EventRouteCollection> ListNextPage(string nextLink, EventRoutesListOptions eventRoutesListOptions = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

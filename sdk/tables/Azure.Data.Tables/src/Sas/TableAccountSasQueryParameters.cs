@@ -26,7 +26,7 @@ namespace Azure.Data.Tables.Sas
         private TableAccountSasResourceTypes? _resourceTypes;
 
         // spr
-        private readonly SasProtocol _protocol;
+        private readonly TableSasProtocol _protocol;
 
         // st
         private DateTimeOffset _startTime;
@@ -35,7 +35,7 @@ namespace Azure.Data.Tables.Sas
         private DateTimeOffset _expiryTime;
 
         // sip
-        private readonly SasIPRange _ipRange;
+        private readonly TableSasIPRange _ipRange;
 
         // si
         private readonly string _identifier;
@@ -70,7 +70,7 @@ namespace Azure.Data.Tables.Sas
         /// Optional. Specifies the protocol permitted for a request made with
         /// the shared access signature.
         /// </summary>
-        public SasProtocol Protocol => _protocol;
+        public TableSasProtocol Protocol => _protocol;
 
         /// <summary>
         /// Gets the optional time at which the shared access signature becomes
@@ -90,7 +90,7 @@ namespace Azure.Data.Tables.Sas
         /// to accept requests.  When specifying a range, note that the range
         /// is inclusive.
         /// </summary>
-        public SasIPRange IPRange => _ipRange;
+        public TableSasIPRange IPRange => _ipRange;
 
         /// <summary>
         /// Gets the optional unique value up to 64 characters in length that
@@ -129,10 +129,10 @@ namespace Azure.Data.Tables.Sas
         internal TableAccountSasQueryParameters(
             string version,
             TableAccountSasResourceTypes? resourceTypes,
-            SasProtocol protocol,
+            TableSasProtocol protocol,
             DateTimeOffset startsOn,
             DateTimeOffset expiresOn,
-            SasIPRange ipRange,
+            TableSasIPRange ipRange,
             string identifier,
             string resource,
             string permissions,
@@ -173,10 +173,10 @@ namespace Azure.Data.Tables.Sas
                         _version = kv.Value;
                         break;
                     case TableConstants.Sas.Parameters.ResourceTypesUpper:
-                        _resourceTypes = SasExtensions.ParseResourceTypes(kv.Value);
+                        _resourceTypes = TableSasExtensions.ParseResourceTypes(kv.Value);
                         break;
                     case TableConstants.Sas.Parameters.ProtocolUpper:
-                        _protocol = SasExtensions.ParseProtocol(kv.Value);
+                        _protocol = TableSasExtensions.ParseProtocol(kv.Value);
                         break;
                     case TableConstants.Sas.Parameters.StartTimeUpper:
                         _startTime = DateTimeOffset.ParseExact(kv.Value, TableConstants.Sas.SasTimeFormat, CultureInfo.InvariantCulture);
@@ -185,7 +185,7 @@ namespace Azure.Data.Tables.Sas
                         _expiryTime = DateTimeOffset.ParseExact(kv.Value, TableConstants.Sas.SasTimeFormat, CultureInfo.InvariantCulture);
                         break;
                     case TableConstants.Sas.Parameters.IPRangeUpper:
-                        _ipRange = SasIPRange.Parse(kv.Value);
+                        _ipRange = TableSasIPRange.Parse(kv.Value);
                         break;
                     case TableConstants.Sas.Parameters.IdentifierUpper:
                         _identifier = kv.Value;

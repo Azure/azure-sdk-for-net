@@ -16,6 +16,7 @@ namespace Azure.Iot.Hub.Service.Models
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="DeviceRegistryOperationErrorCode"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DeviceRegistryOperationErrorCode(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

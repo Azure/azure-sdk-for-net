@@ -16,7 +16,7 @@ namespace Azure.Management.Compute.Models
         internal static DiskEncryptionSetList DeserializeDiskEncryptionSetList(JsonElement element)
         {
             IReadOnlyList<DiskEncryptionSet> value = default;
-            string nextLink = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -24,29 +24,18 @@ namespace Azure.Management.Compute.Models
                     List<DiskEncryptionSet> array = new List<DiskEncryptionSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(DiskEncryptionSet.DeserializeDiskEncryptionSet(item));
-                        }
+                        array.Add(DiskEncryptionSet.DeserializeDiskEncryptionSet(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new DiskEncryptionSetList(value, nextLink);
+            return new DiskEncryptionSetList(value, nextLink.Value);
         }
     }
 }

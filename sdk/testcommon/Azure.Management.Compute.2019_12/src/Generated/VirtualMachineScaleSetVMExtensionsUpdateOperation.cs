@@ -54,27 +54,13 @@ namespace Azure.Management.Compute
         VirtualMachineExtension IOperationSource<VirtualMachineExtension>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return VirtualMachineExtension.DeserializeVirtualMachineExtension(document.RootElement);
-            }
+            return VirtualMachineExtension.DeserializeVirtualMachineExtension(document.RootElement);
         }
 
         async ValueTask<VirtualMachineExtension> IOperationSource<VirtualMachineExtension>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return VirtualMachineExtension.DeserializeVirtualMachineExtension(document.RootElement);
-            }
+            return VirtualMachineExtension.DeserializeVirtualMachineExtension(document.RootElement);
         }
     }
 }

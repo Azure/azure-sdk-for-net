@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             Optional<CreateMode> createMode = default;
             Optional<bool> enablePurgeProtection = default;
             Optional<NetworkRuleSet> networkAcls = default;
-            Optional<IList<PrivateEndpointConnectionItem>> privateEndpointConnections = default;
+            Optional<IReadOnlyList<PrivateEndpointConnectionItem>> privateEndpointConnections = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tenantId"))

@@ -16,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of TriggerRunsQueryResponse. </summary>
         /// <param name="value"> List of trigger runs. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal TriggerRunsQueryResponse(IEnumerable<TriggerRun> value)
         {
             if (value == null)

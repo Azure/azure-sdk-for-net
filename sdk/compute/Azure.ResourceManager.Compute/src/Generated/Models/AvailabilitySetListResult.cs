@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of AvailabilitySetListResult. </summary>
         /// <param name="value"> The list of availability sets. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AvailabilitySetListResult(IEnumerable<AvailabilitySet> value)
         {
             if (value == null)
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Compute.Models
                 throw new ArgumentNullException(nameof(value));
             }
 
-            Value = value.ToArray();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of AvailabilitySetListResult. </summary>
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="nextLink"> The URI to fetch the next page of AvailabilitySets. Call ListNext() with this URI to fetch the next page of AvailabilitySets. </param>
         internal AvailabilitySetListResult(IReadOnlyList<AvailabilitySet> value, string nextLink)
         {
-            Value = value ?? new List<AvailabilitySet>();
+            Value = value;
             NextLink = nextLink;
         }
 

@@ -14,6 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of DataFlowDebugResource. </summary>
         /// <param name="properties"> Data flow properties. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DataFlowDebugResource(DataFlow properties)
         {
             if (properties == null)

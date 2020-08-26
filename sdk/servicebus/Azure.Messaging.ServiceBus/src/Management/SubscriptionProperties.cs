@@ -8,7 +8,7 @@ using Azure.Core;
 namespace Azure.Messaging.ServiceBus.Management
 {
     /// <summary>
-    /// Represents the metadata description of the subscription.
+    /// Represents the static properties of the subscription.
     /// </summary>
     public class SubscriptionProperties : IEquatable<SubscriptionProperties>
     {

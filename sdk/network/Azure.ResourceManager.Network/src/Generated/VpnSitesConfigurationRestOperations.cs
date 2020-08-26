@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public VpnSitesConfigurationRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualWANName"> The name of the VirtualWAN for which configuration of all vpn-sites is needed. </param>
         /// <param name="request"> Parameters supplied to download vpn-sites configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualWANName"/>, or <paramref name="request"/> is null. </exception>
         public async Task<Response> DownloadAsync(string resourceGroupName, string virtualWANName, GetVpnSitesConfigurationRequest request, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -102,6 +103,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualWANName"> The name of the VirtualWAN for which configuration of all vpn-sites is needed. </param>
         /// <param name="request"> Parameters supplied to download vpn-sites configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualWANName"/>, or <paramref name="request"/> is null. </exception>
         public Response Download(string resourceGroupName, string virtualWANName, GetVpnSitesConfigurationRequest request, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

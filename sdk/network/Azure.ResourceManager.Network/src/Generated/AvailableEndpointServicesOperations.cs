@@ -40,6 +40,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> List what values of endpoint services are available for use. </summary>
         /// <param name="location"> The location to check available endpoint services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public virtual AsyncPageable<EndpointServiceResult> ListAsync(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -83,6 +84,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> List what values of endpoint services are available for use. </summary>
         /// <param name="location"> The location to check available endpoint services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public virtual Pageable<EndpointServiceResult> List(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)

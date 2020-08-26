@@ -8,6 +8,9 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+#if EXPERIMENTAL_SERIALIZER
+using Azure.Core.Serialization;
+#endif
 
 #pragma warning disable SA1402 // File may only contain a single type
 
@@ -100,11 +103,11 @@ namespace Azure.Search.Documents.Models
                 using MemoryStream stream = new MemoryStream();
                 if (async)
                 {
-                    await serializer.SerializeAsync(stream, Document, typeof(T)).ConfigureAwait(false);
+                    await serializer.SerializeAsync(stream, Document, typeof(T), cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    serializer.Serialize(stream, Document, typeof(T));
+                    serializer.Serialize(stream, Document, typeof(T), cancellationToken);
                 }
                 json = stream.ToArray();
             }

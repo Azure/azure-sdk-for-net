@@ -23,6 +23,7 @@ namespace Microsoft.Azure.Management.Maintenance
                 new Tuple<string, string, string>("Maintenance", "ConfigurationAssignments", "2020-07-01-preview"),
                 new Tuple<string, string, string>("Maintenance", "MaintenanceConfigurations", "2020-07-01-preview"),
                 new Tuple<string, string, string>("Maintenance", "Operations", "2020-07-01-preview"),
+                new Tuple<string, string, string>("Maintenance", "PublicMaintenanceConfigurations", "2020-07-01-preview"),
                 new Tuple<string, string, string>("Maintenance", "Updates", "2020-07-01-preview"),
               }.AsEnumerable();
           }

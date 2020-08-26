@@ -16,6 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Initializes a new instance of InputFieldMappingEntry. </summary>
         /// <param name="name"> The name of the input. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public InputFieldMappingEntry(string name)
         {
             if (name == null)

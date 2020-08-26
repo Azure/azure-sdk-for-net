@@ -17,6 +17,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="status"> Status of the model. </param>
         /// <param name="trainingStartedOn"> Date and time (UTC) when the model was created. </param>
         /// <param name="trainingCompletedOn"> Date and time (UTC) when the status was last updated. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         internal CustomFormModelInfo(string modelId, CustomFormModelStatus status, DateTimeOffset trainingStartedOn, DateTimeOffset trainingCompletedOn)
         {
             if (modelId == null)

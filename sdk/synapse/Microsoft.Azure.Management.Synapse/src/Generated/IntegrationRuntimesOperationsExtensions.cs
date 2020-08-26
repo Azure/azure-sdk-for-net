@@ -455,6 +455,123 @@ namespace Microsoft.Azure.Management.Synapse
             }
 
             /// <summary>
+            /// Create integration runtime
+            /// </summary>
+            /// <remarks>
+            /// Create an integration runtime
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// Integration runtime name
+            /// </param>
+            /// <param name='integrationRuntime'>
+            /// Integration runtime resource definition.
+            /// </param>
+            /// <param name='ifMatch'>
+            /// ETag of the integration runtime entity. Should only be specified for
+            /// update, for which it should match existing entity or can be * for
+            /// unconditional update.
+            /// </param>
+            public static IntegrationRuntimeResource BeginCreate(this IIntegrationRuntimesOperations operations, string resourceGroupName, string workspaceName, string integrationRuntimeName, IntegrationRuntimeResource integrationRuntime, string ifMatch = default(string))
+            {
+                return operations.BeginCreateAsync(resourceGroupName, workspaceName, integrationRuntimeName, integrationRuntime, ifMatch).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create integration runtime
+            /// </summary>
+            /// <remarks>
+            /// Create an integration runtime
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// Integration runtime name
+            /// </param>
+            /// <param name='integrationRuntime'>
+            /// Integration runtime resource definition.
+            /// </param>
+            /// <param name='ifMatch'>
+            /// ETag of the integration runtime entity. Should only be specified for
+            /// update, for which it should match existing entity or can be * for
+            /// unconditional update.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IntegrationRuntimeResource> BeginCreateAsync(this IIntegrationRuntimesOperations operations, string resourceGroupName, string workspaceName, string integrationRuntimeName, IntegrationRuntimeResource integrationRuntime, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, workspaceName, integrationRuntimeName, integrationRuntime, ifMatch, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Delete integration runtime
+            /// </summary>
+            /// <remarks>
+            /// Delete an integration runtime
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// Integration runtime name
+            /// </param>
+            public static void BeginDelete(this IIntegrationRuntimesOperations operations, string resourceGroupName, string workspaceName, string integrationRuntimeName)
+            {
+                operations.BeginDeleteAsync(resourceGroupName, workspaceName, integrationRuntimeName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Delete integration runtime
+            /// </summary>
+            /// <remarks>
+            /// Delete an integration runtime
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// Integration runtime name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDeleteAsync(this IIntegrationRuntimesOperations operations, string resourceGroupName, string workspaceName, string integrationRuntimeName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, workspaceName, integrationRuntimeName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// List integration runtimes
             /// </summary>
             /// <remarks>

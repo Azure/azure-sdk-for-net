@@ -17,6 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of Dataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public Dataset(LinkedServiceReference linkedServiceName)
         {
             if (linkedServiceName == null)

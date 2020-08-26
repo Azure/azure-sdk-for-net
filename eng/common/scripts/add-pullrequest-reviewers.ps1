@@ -45,11 +45,11 @@ catch {
 $userReviewers = @($resp.users | % { return $_.login })
 $teamReviewers = @($resp.teams | % { return $_.slug })
 
-if (!$usersReviewers) { $modifiedUserReviewers = @() } else { $modifiedUserReviewers = $usersReviewers.Clone() }
-$modifiedUserReviewers += ($modifiedUserReviewers | ? { !$usersReviews.Contains($_) })
+if (!$userReviewers) { $modifiedUserReviewers = @() } else { $modifiedUserReviewers = $userReviewers.Clone() }
+$modifiedUserReviewers += ($userAdditions | ? { !$modifiedUserReviewers.Contains($_) })
 
 if ($teamReviewers) { $modifiedTeamReviewers = @() } else { $modifiedTeamReviewers = $teamReviewers.Clone() }
-$modifiedTeamReviewers += ($modifiedUserReviewers | ? { !$teamReviewers.Contains($_) })
+$modifiedTeamReviewers += ($teamAdditions | ? { !$modifiedTeamReviewers.Contains($_) })
 
 $detectedUserDiffs = Compare-Object -ReferenceObject $userReviewers -DifferenceObject $modifiedUserReviewers
 $detectedTeamDiffs = Compare-Object -ReferenceObject $teamReviewers -DifferenceObject $modifiedTeamReviewers
@@ -65,6 +65,7 @@ if ($detectedUserDiffs -or $detectedTeamDiffs) {
   $postResp = $postResp | ConvertTo-Json
 
   try {
+    Write-Host $postResp
     $resp = Invoke-RestMethod -Method Post -Headers $headers -Body $postResp -Uri $uri -MaximumRetryCount 3
     $resp | Write-Verbose
   }

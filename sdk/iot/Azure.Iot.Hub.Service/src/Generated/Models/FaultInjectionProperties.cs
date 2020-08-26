@@ -10,7 +10,7 @@ using System;
 namespace Azure.Iot.Hub.Service.Models
 {
     /// <summary> The FaultInjectionProperties. </summary>
-    public partial class FaultInjectionProperties
+    internal partial class FaultInjectionProperties
     {
         /// <summary> Initializes a new instance of FaultInjectionProperties. </summary>
         public FaultInjectionProperties()

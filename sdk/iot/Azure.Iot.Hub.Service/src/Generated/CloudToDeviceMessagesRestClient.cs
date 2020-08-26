@@ -26,7 +26,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public CloudToDeviceMessagesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2020-03-13")
         {
             endpoint ??= new Uri("https://fully-qualified-iothubname.azure-devices.net");
@@ -103,6 +103,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary> Completes the cloud-to-device feedback message. A completed message is deleted from the feedback queue of the service. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging for more information. </summary>
         /// <param name="lockToken"> The lock token obtained when the cloud-to-device message is received. This is used to resolve race conditions when completing a feedback message. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="lockToken"/> is null. </exception>
         public async Task<Response> CompleteFeedbackNotificationAsync(string lockToken, CancellationToken cancellationToken = default)
         {
             if (lockToken == null)
@@ -124,6 +125,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary> Completes the cloud-to-device feedback message. A completed message is deleted from the feedback queue of the service. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging for more information. </summary>
         /// <param name="lockToken"> The lock token obtained when the cloud-to-device message is received. This is used to resolve race conditions when completing a feedback message. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="lockToken"/> is null. </exception>
         public Response CompleteFeedbackNotification(string lockToken, CancellationToken cancellationToken = default)
         {
             if (lockToken == null)
@@ -160,6 +162,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary> Abandons a cloud-to-device feedback message. An abandoned message is deleted from the feedback queue of the service. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging for more information. </summary>
         /// <param name="lockToken"> The lock token obtained when the cloud-to-device message is received. This is used to resolve race conditions when abandoning a feedback message. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="lockToken"/> is null. </exception>
         public async Task<Response> AbandonFeedbackNotificationAsync(string lockToken, CancellationToken cancellationToken = default)
         {
             if (lockToken == null)
@@ -181,6 +184,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary> Abandons a cloud-to-device feedback message. An abandoned message is deleted from the feedback queue of the service. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging for more information. </summary>
         /// <param name="lockToken"> The lock token obtained when the cloud-to-device message is received. This is used to resolve race conditions when abandoning a feedback message. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="lockToken"/> is null. </exception>
         public Response AbandonFeedbackNotification(string lockToken, CancellationToken cancellationToken = default)
         {
             if (lockToken == null)

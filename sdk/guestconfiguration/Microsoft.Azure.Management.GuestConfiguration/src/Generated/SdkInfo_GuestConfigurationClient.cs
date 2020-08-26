@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.GuestConfiguration
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/guestconfiguration/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\data\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "ab6b4d787190ceb777412ebf79bd57a8dccbec2c";
+      public static readonly String GithubCommidId = "cfd53fbb24ddb3551abddf6f1096983378e9e1e2";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

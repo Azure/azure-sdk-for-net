@@ -19,15 +19,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of WorkspaceUpdateParameters. </summary>
-        /// <param name="tags"> The resource tags. </param>
-        /// <param name="identity"> Managed service identity of the workspace. </param>
-        internal WorkspaceUpdateParameters(IReadOnlyDictionary<string, string> tags, WorkspaceIdentity identity)
-        {
-            Tags = tags;
-            Identity = identity;
-        }
-
         /// <summary> The resource tags. </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }
         /// <summary> Managed service identity of the workspace. </summary>

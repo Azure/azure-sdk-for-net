@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("serviceName");
-            writer.WriteStringValue(ServiceName);
+            writer.WriteStringValue(ServiceName.ToString());
             writer.WritePropertyName("action");
             writer.WriteStringValue(Action.ToString());
             writer.WriteEndObject();

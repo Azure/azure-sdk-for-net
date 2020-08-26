@@ -28,7 +28,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public QueryRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2020-03-13")
         {
             endpoint ??= new Uri("https://fully-qualified-iothubname.azure-devices.net");
@@ -62,6 +62,7 @@ namespace Azure.Iot.Hub.Service
                 request.Headers.Add("x-ms-max-item-count", xMsMaxItemCount);
             }
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(querySpecification);
             request.Content = content;
@@ -73,6 +74,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="xMsContinuation"> The continuation token used to get the next page of results. </param>
         /// <param name="xMsMaxItemCount"> The maximum number of items returned per page. The service may use a different value if the value specified is not acceptable. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="querySpecification"/> is null. </exception>
         public async Task<ResponseWithHeaders<IReadOnlyList<TwinData>, QueryGetTwinsHeaders>> GetTwinsAsync(QuerySpecification querySpecification, string xMsContinuation = null, string xMsMaxItemCount = null, CancellationToken cancellationToken = default)
         {
             if (querySpecification == null)
@@ -107,6 +109,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="xMsContinuation"> The continuation token used to get the next page of results. </param>
         /// <param name="xMsMaxItemCount"> The maximum number of items returned per page. The service may use a different value if the value specified is not acceptable. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="querySpecification"/> is null. </exception>
         public ResponseWithHeaders<IReadOnlyList<TwinData>, QueryGetTwinsHeaders> GetTwins(QuerySpecification querySpecification, string xMsContinuation = null, string xMsMaxItemCount = null, CancellationToken cancellationToken = default)
         {
             if (querySpecification == null)

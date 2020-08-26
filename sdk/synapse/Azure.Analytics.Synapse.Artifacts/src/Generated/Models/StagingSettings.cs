@@ -17,6 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of StagingSettings. </summary>
         /// <param name="linkedServiceName"> Staging linked service reference. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public StagingSettings(LinkedServiceReference linkedServiceName)
         {
             if (linkedServiceName == null)

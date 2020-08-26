@@ -48,6 +48,18 @@ namespace Maintenance.Tests
             return maintenanceConfiguration;
         }
 
+        public static MaintenanceConfiguration CreateTestPublicMaintenanceConfiguration(string maintenanceConfigurationName)
+        {
+            var maintenanceConfiguration = new MaintenanceConfiguration(
+                name: maintenanceConfigurationName,
+                location: "westus",
+                startDateTime: "2020-04-01 01:00:00",
+                visibility: Visibility.Public,
+                maintenanceScope: MaintenanceScope.SQLDB);
+
+            return maintenanceConfiguration;
+        }
+
         public static void VerifyMaintenanceConfigurationProperties(MaintenanceConfiguration expected, MaintenanceConfiguration actual)
         {
             Assert.NotNull(actual);

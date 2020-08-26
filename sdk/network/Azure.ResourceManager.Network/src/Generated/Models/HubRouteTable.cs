@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of HubRouteTable. </summary>
         public HubRouteTable()
         {
+            Routes = new ChangeTrackingList<HubRoute>();
+            Labels = new ChangeTrackingList<string>();
+            AssociatedConnections = new ChangeTrackingList<SubResource>();
+            PropagatingConnections = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of HubRouteTable. </summary>
@@ -27,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="associatedConnections"> List of all connections associated with this route table. </param>
         /// <param name="propagatingConnections"> List of all connections that advertise to this route table. </param>
         /// <param name="provisioningState"> The provisioning state of the RouteTable resource. </param>
-        internal HubRouteTable(string id, string name, string etag, string type, IList<HubRoute> routes, IList<string> labels, IList<SubResource> associatedConnections, IList<SubResource> propagatingConnections, ProvisioningState? provisioningState) : base(id)
+        internal HubRouteTable(string id, string name, string etag, string type, IList<HubRoute> routes, IList<string> labels, IReadOnlyList<SubResource> associatedConnections, IReadOnlyList<SubResource> propagatingConnections, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -46,13 +51,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Resource type. </summary>
         public string Type { get; }
         /// <summary> List of all routes. </summary>
-        public IList<HubRoute> Routes { get; set; }
+        public IList<HubRoute> Routes { get; }
         /// <summary> List of labels associated with this route table. </summary>
-        public IList<string> Labels { get; set; }
+        public IList<string> Labels { get; }
         /// <summary> List of all connections associated with this route table. </summary>
-        public IList<SubResource> AssociatedConnections { get; }
+        public IReadOnlyList<SubResource> AssociatedConnections { get; }
         /// <summary> List of all connections that advertise to this route table. </summary>
-        public IList<SubResource> PropagatingConnections { get; }
+        public IReadOnlyList<SubResource> PropagatingConnections { get; }
         /// <summary> The provisioning state of the RouteTable resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

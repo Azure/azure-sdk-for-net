@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
     /// <summary> The description of the DigitalTwins service. </summary>
-    public partial class DigitalTwinsPatchDescription
+    internal partial class DigitalTwinsPatchDescription
     {
         /// <summary> Initializes a new instance of DigitalTwinsPatchDescription. </summary>
         public DigitalTwinsPatchDescription()

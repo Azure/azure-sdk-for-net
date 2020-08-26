@@ -1670,7 +1670,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Pageable<BlobTagItem> FindBlobsByTags(
+        public virtual Pageable<TaggedBlobItem> FindBlobsByTags(
             string tagFilterSqlExpression,
             CancellationToken cancellationToken = default) =>
             new FilterBlobsAsyncCollection(this, tagFilterSqlExpression).ToSyncCollection(cancellationToken);
@@ -1701,7 +1701,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual AsyncPageable<BlobTagItem> FindBlobsByTagsAsync(
+        public virtual AsyncPageable<TaggedBlobItem> FindBlobsByTagsAsync(
             string tagFilterSqlExpression,
             CancellationToken cancellationToken = default) =>
             new FilterBlobsAsyncCollection(this, tagFilterSqlExpression).ToAsyncCollection(cancellationToken);

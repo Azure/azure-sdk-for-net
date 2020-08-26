@@ -28,7 +28,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public StatisticsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2020-03-13")
         {
             endpoint ??= new Uri("https://fully-qualified-iothubname.azure-devices.net");
@@ -53,12 +53,13 @@ namespace Azure.Iot.Hub.Service
             uri.AppendPath("/statistics/devices", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Gets device statistics of the IoT Hub identity registry, such as total device count. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<RegistryStatistics>> GetDeviceStatisticsAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<DevicesStatistics>> GetDeviceStatisticsAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetDeviceStatisticsRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -66,9 +67,9 @@ namespace Azure.Iot.Hub.Service
             {
                 case 200:
                     {
-                        RegistryStatistics value = default;
+                        DevicesStatistics value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RegistryStatistics.DeserializeRegistryStatistics(document.RootElement);
+                        value = DevicesStatistics.DeserializeDevicesStatistics(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -78,7 +79,7 @@ namespace Azure.Iot.Hub.Service
 
         /// <summary> Gets device statistics of the IoT Hub identity registry, such as total device count. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<RegistryStatistics> GetDeviceStatistics(CancellationToken cancellationToken = default)
+        public Response<DevicesStatistics> GetDeviceStatistics(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetDeviceStatisticsRequest();
             _pipeline.Send(message, cancellationToken);
@@ -86,9 +87,9 @@ namespace Azure.Iot.Hub.Service
             {
                 case 200:
                     {
-                        RegistryStatistics value = default;
+                        DevicesStatistics value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RegistryStatistics.DeserializeRegistryStatistics(document.RootElement);
+                        value = DevicesStatistics.DeserializeDevicesStatistics(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -106,6 +107,7 @@ namespace Azure.Iot.Hub.Service
             uri.AppendPath("/statistics/service", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

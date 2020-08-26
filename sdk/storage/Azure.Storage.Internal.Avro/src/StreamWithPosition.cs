@@ -44,6 +44,16 @@ namespace Azure.Storage.Internal.Avro
             set => throw new NotImplementedException();
         }
 
+        public override int ReadByte()
+        {
+            int val = _stream.ReadByte();
+            if (val != -1)
+            {
+                _position++;
+            }
+            return val;
+        }
+
         /// <inheritdoc/>
         public override int Read(byte[] buffer,
             int offset,
@@ -55,18 +65,7 @@ namespace Azure.Storage.Internal.Avro
                 async: false,
                 cancellationToken: default).EnsureCompleted();
 
-        public new async Task<int> ReadAsync(
-            byte[] buffer,
-            int offset,
-            int count)
-            => await ReadInternal(
-                buffer,
-                offset,
-                count,
-                async: true,
-                cancellationToken: default).ConfigureAwait(false);
-
-        public new async Task<int> ReadAsync(
+        public override async Task<int> ReadAsync(
             byte[] buffer,
             int offset,
             int count,
@@ -91,6 +90,18 @@ namespace Azure.Storage.Internal.Avro
 
             _position += read;
 
+            return read;
+        }
+
+        public override IAsyncResult BeginRead(byte[] buffer, int offset, int count, AsyncCallback callback, object state)
+        {
+            return _stream.BeginRead(buffer, offset, count, callback, state);
+        }
+
+        public override int EndRead(IAsyncResult asyncResult)
+        {
+            var read = _stream.EndRead(asyncResult);
+            _position += read;
             return read;
         }
 

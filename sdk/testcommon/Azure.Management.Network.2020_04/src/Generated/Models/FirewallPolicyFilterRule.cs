@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.Management.Network.Models
         /// <summary> Initializes a new instance of FirewallPolicyFilterRule. </summary>
         public FirewallPolicyFilterRule()
         {
+            RuleConditions = new ChangeTrackingList<FirewallPolicyRuleCondition>();
             RuleType = FirewallPolicyRuleType.FirewallPolicyFilterRule;
         }
 
@@ -34,6 +36,6 @@ namespace Azure.Management.Network.Models
         /// <summary> The action type of a Filter rule. </summary>
         public FirewallPolicyFilterRuleAction Action { get; set; }
         /// <summary> Collection of rule conditions used by a rule. </summary>
-        public IList<FirewallPolicyRuleCondition> RuleConditions { get; set; }
+        public IList<FirewallPolicyRuleCondition> RuleConditions { get; }
     }
 }

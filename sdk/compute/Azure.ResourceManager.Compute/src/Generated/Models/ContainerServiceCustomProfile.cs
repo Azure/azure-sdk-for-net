@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of ContainerServiceCustomProfile. </summary>
         /// <param name="orchestrator"> The name of the custom orchestrator to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="orchestrator"/> is null. </exception>
         public ContainerServiceCustomProfile(string orchestrator)
         {
             if (orchestrator == null)

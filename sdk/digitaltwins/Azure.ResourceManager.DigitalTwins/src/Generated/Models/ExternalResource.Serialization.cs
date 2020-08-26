@@ -10,14 +10,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
-    public partial class ExternalResource : IUtf8JsonSerializable
+    public partial class ExternalResource
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WriteEndObject();
-        }
-
         internal static ExternalResource DeserializeExternalResource(JsonElement element)
         {
             Optional<string> id = default;

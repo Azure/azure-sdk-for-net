@@ -43,11 +43,11 @@ namespace Azure.Data.Tables.Sas
         /// <summary>
         /// The optional signed protocol field specifies the protocol
         /// permitted for a request made with the SAS.  Possible values are
-        /// <see cref="SasProtocol.HttpsAndHttp"/>,
-        /// <see cref="SasProtocol.Https"/>, and
-        /// <see cref="SasProtocol.None"/>.
+        /// <see cref="TableSasProtocol.HttpsAndHttp"/>,
+        /// <see cref="TableSasProtocol.Https"/>, and
+        /// <see cref="TableSasProtocol.None"/>.
         /// </summary>
-        public SasProtocol Protocol { get; set; }
+        public TableSasProtocol Protocol { get; set; }
 
         /// <summary>
         /// Optionally specify the time at which the shared access signature
@@ -81,7 +81,7 @@ namespace Azure.Data.Tables.Sas
         /// When specifying a range of IP addresses, note that the range is
         /// inclusive.
         /// </summary>
-        public SasIPRange IPRange { get; set; }
+        public TableSasIPRange IPRange { get; set; }
 
         /// <summary>
         /// An optional unique value up to 64 characters in length that
@@ -139,8 +139,8 @@ namespace Azure.Data.Tables.Sas
 
             EnsureState();
 
-            var startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
-            var expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
+            var startTime = TableSasExtensions.FormatTimesForSasSigning(StartsOn);
+            var expiryTime = TableSasExtensions.FormatTimesForSasSigning(ExpiresOn);
 
             // String to sign: https://docs.microsoft.com/en-us/rest/api/storageservices/create-account-sas#constructing-the-signature-string
             var stringToSign = string.Join("\n",

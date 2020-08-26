@@ -1,15 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://csharp-linux-westus-2.azure-devices.net/devices?api-version=2020-03-13",
+      "RequestUri": "https://FakeHost.net/devices?api-version=2020-03-13",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "1205",
         "Content-Type": "application/json",
         "User-Agent": [
-          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200716.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.17134 )"
+          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200821.3",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "d568f5c8e57529c1e029374b1c53010a",
         "x-ms-return-client-request-id": "true"
@@ -19,10 +20,10 @@
       "ResponseHeaders": {
         "Content-Length": "47",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 16 Jul 2020 22:08:40 GMT",
+        "Date": "Fri, 21 Aug 2020 14:24:03 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "bdcbb31c-9ebd-4f66-aee4-139baf44d781"
+        "x-ms-request-id": "a66ba19a-0461-4a3c-86a6-b4f302083ada"
       },
       "ResponseBody": {
         "isSuccessful": true,
@@ -31,13 +32,14 @@
       }
     },
     {
-      "RequestUri": "https://csharp-linux-westus-2.azure-devices.net/twins/bulkDeviceWithTwin304767959?api-version=2020-03-13",
+      "RequestUri": "https://FakeHost.net/twins/bulkDeviceWithTwin304767959?api-version=2020-03-13",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200716.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.17134 )"
+          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200821.3",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "f08737db3f531255a2c51ba6431d0eda",
         "x-ms-return-client-request-id": "true"
@@ -45,17 +47,17 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "693",
+        "Content-Length": "689",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 16 Jul 2020 22:08:40 GMT",
+        "Date": "Fri, 21 Aug 2020 14:24:03 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "66ab0b00-4319-4660-a68f-a1cc5a085cf0"
+        "x-ms-request-id": "7c073ef5-f68e-4297-b3d9-0f7e8e4d3595"
       },
       "ResponseBody": {
         "deviceId": "bulkDeviceWithTwin304767959",
         "etag": "AAAAAAAAAAE=",
-        "deviceEtag": "MTA2MTcyMTAzMw==",
+        "deviceEtag": "Nzc5MDU3MjY3",
         "status": "enabled",
         "statusUpdateTime": "0001-01-01T00:00:00Z",
         "connectionState": "Disconnected",
@@ -82,7 +84,7 @@
           },
           "reported": {
             "$metadata": {
-              "$lastUpdated": "2020-07-16T22:08:40.3545794Z"
+              "$lastUpdated": "2020-08-21T14:24:04.3385472Z"
             },
             "$version": 1
           }
@@ -93,15 +95,16 @@
       }
     },
     {
-      "RequestUri": "https://csharp-linux-westus-2.azure-devices.net/devices?api-version=2020-03-13",
+      "RequestUri": "https://FakeHost.net/devices?api-version=2020-03-13",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "595",
         "Content-Type": "application/json",
         "User-Agent": [
-          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200716.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.17134 )"
+          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200821.3",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "e4bdc527c97c715eedadb728278b8cde",
         "x-ms-return-client-request-id": "true"
@@ -111,10 +114,10 @@
       "ResponseHeaders": {
         "Content-Length": "47",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 16 Jul 2020 22:08:40 GMT",
+        "Date": "Fri, 21 Aug 2020 14:24:03 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "c73d7de5-b888-4aaf-951e-44c51c8cb063"
+        "x-ms-request-id": "ab4249df-c373-4463-851a-700ea6a31e47"
       },
       "ResponseBody": {
         "isSuccessful": true,
@@ -124,7 +127,7 @@
     }
   ],
   "Variables": {
-    "IOT_HUB_CONNECTION_STRING": "HostName=csharp-linux-westus-2.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=Kg==;",
+    "IOT_HUB_CONNECTION_STRING": "HostName=FakeHost.net;SharedAccessKeyName=iothubowner;SharedAccessKey=Kg==",
     "RandomSeed": "999894705"
   }
 }

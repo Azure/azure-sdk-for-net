@@ -55,6 +55,41 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="EventData.PublishedSequenceNumber "/>
+        ///   property.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(-1)]
+        [TestCase(-10)]
+        [TestCase(-100)]
+        public void PublishedSequenceNumberValidatesOnSet(int value)
+        {
+            var eventData = new EventData(Array.Empty<byte>());
+            Assert.That(() => eventData.PublishedSequenceNumber = value, Throws.InstanceOf<ArgumentException>(), "Negative values should not be allowed.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventData.PublishedSequenceNumber "/>
+        ///   property.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(null)]
+        [TestCase(0)]
+        [TestCase(1)]
+        [TestCase(10)]
+        [TestCase(100)]
+        [TestCase(32768)]
+        public void PublishedSequenceNumberAllowsValidValues(int? value)
+        {
+            var eventData = new EventData(Array.Empty<byte>());
+            eventData.PublishedSequenceNumber = value;
+
+            Assert.That(eventData.PublishedSequenceNumber, Is.EqualTo(value), "The value should have been accepted.");
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="EventData.Clone" />
         ///   method.
         /// </summary>

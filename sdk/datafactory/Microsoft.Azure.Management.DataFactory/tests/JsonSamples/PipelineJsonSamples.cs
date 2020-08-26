@@ -3815,7 +3815,9 @@ namespace DataFactory.Tests.JsonSamples
                     {
                         type: ""SapOpenHubSource"",
                         excludeLastRequest: false,
-                        baseRequestId: ""123""
+                        baseRequestId: ""123"",
+                        customRfcReadTableFunctionModule: ""fakecustomRfcReadTableFunctionModule"",
+                        sapDataColumnDelimiter: ""|""
                     },
                     sink:
                     {
@@ -4683,7 +4685,8 @@ namespace DataFactory.Tests.JsonSamples
               ""enablePartitionDiscovery"": true,
               ""wildcardFolderPath"": ""A*"",
               ""modifiedDatetimeStart"":  ""2019-07-02T00:00:00.000Z"",
-              ""modifiedDatetimeEnd"":  ""2019-07-03T00:00:00.000Z""
+              ""modifiedDatetimeEnd"":  ""2019-07-03T00:00:00.000Z"",
+              ""deleteFilesAfterCompletion"": true
             },
             ""formatSettings"": {
               ""type"": ""DelimitedTextReadSettings"",
@@ -5587,6 +5590,7 @@ namespace DataFactory.Tests.JsonSamples
                     {
                         type: ""SapTableSource"",
                         rowCount: 3,
+                        sapDataColumnDelimiter: ""|"",
                         partitionOption: ""PartitionOnCalendarDate"",
                         partitionSettings: 
                         {

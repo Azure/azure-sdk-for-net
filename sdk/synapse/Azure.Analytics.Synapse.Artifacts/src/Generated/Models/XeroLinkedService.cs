@@ -15,6 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of XeroLinkedService. </summary>
         /// <param name="host"> The endpoint of the Xero server. (i.e. api.xero.com). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         public XeroLinkedService(object host)
         {
             if (host == null)

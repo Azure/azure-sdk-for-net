@@ -16,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of SapTableResourceDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="tableName"> The name of the SAP Table. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="tableName"/> is null. </exception>
         public SapTableResourceDataset(LinkedServiceReference linkedServiceName, object tableName) : base(linkedServiceName)
         {
             if (linkedServiceName == null)

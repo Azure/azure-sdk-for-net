@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class BootDiagnosticsInstanceView
     {
         /// <summary> Initializes a new instance of BootDiagnosticsInstanceView. </summary>
-        public BootDiagnosticsInstanceView()
+        internal BootDiagnosticsInstanceView()
         {
         }
 

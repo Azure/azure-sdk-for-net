@@ -29,7 +29,7 @@ namespace Azure.Data.Tables
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account or table that is the targe of the desired operation. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
         public TableRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2019-02-02")
         {
             if (url == null)
@@ -171,6 +171,7 @@ namespace Azure.Data.Tables
         /// <param name="responsePreference"> Specifies whether the response should include the inserted entity in the payload. Possible values are return-no-content and return-content. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tableProperties"/> is null. </exception>
         public async Task<ResponseWithHeaders<TableResponse, TableCreateHeaders>> CreateAsync(TableProperties tableProperties, string requestId = null, ResponseFormat? responsePreference = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (tableProperties == null)
@@ -203,6 +204,7 @@ namespace Azure.Data.Tables
         /// <param name="responsePreference"> Specifies whether the response should include the inserted entity in the payload. Possible values are return-no-content and return-content. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tableProperties"/> is null. </exception>
         public ResponseWithHeaders<TableResponse, TableCreateHeaders> Create(TableProperties tableProperties, string requestId = null, ResponseFormat? responsePreference = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (tableProperties == null)
@@ -253,6 +255,7 @@ namespace Azure.Data.Tables
         /// <param name="table"> The name of the table. </param>
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/> is null. </exception>
         public async Task<ResponseWithHeaders<TableDeleteHeaders>> DeleteAsync(string table, string requestId = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
@@ -276,6 +279,7 @@ namespace Azure.Data.Tables
         /// <param name="table"> The name of the table. </param>
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/> is null. </exception>
         public ResponseWithHeaders<TableDeleteHeaders> Delete(string table, string requestId = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
@@ -352,6 +356,7 @@ namespace Azure.Data.Tables
         /// <param name="nextRowKey"> An entity query continuation token from a previous call. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/> is null. </exception>
         public async Task<ResponseWithHeaders<TableEntityQueryResponse, TableQueryEntitiesHeaders>> QueryEntitiesAsync(string table, int? timeout = null, string requestId = null, string nextPartitionKey = null, string nextRowKey = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
@@ -384,6 +389,7 @@ namespace Azure.Data.Tables
         /// <param name="nextRowKey"> An entity query continuation token from a previous call. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/> is null. </exception>
         public ResponseWithHeaders<TableEntityQueryResponse, TableQueryEntitiesHeaders> QueryEntities(string table, int? timeout = null, string requestId = null, string nextPartitionKey = null, string nextRowKey = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
@@ -457,6 +463,7 @@ namespace Azure.Data.Tables
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/>, or <paramref name="rowKey"/> is null. </exception>
         public async Task<ResponseWithHeaders<IReadOnlyDictionary<string, object>, TableQueryEntitiesWithPartitionAndRowKeyHeaders>> QueryEntitiesWithPartitionAndRowKeyAsync(string table, string partitionKey, string rowKey, int? timeout = null, string requestId = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
@@ -502,6 +509,7 @@ namespace Azure.Data.Tables
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/>, or <paramref name="rowKey"/> is null. </exception>
         public ResponseWithHeaders<IReadOnlyDictionary<string, object>, TableQueryEntitiesWithPartitionAndRowKeyHeaders> QueryEntitiesWithPartitionAndRowKey(string table, string partitionKey, string rowKey, int? timeout = null, string requestId = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
@@ -599,6 +607,7 @@ namespace Azure.Data.Tables
         /// <param name="tableEntityProperties"> The properties for the table entity. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/>, or <paramref name="rowKey"/> is null. </exception>
         public async Task<ResponseWithHeaders<TableUpdateEntityHeaders>> UpdateEntityAsync(string table, string partitionKey, string rowKey, int? timeout = null, string requestId = null, string ifMatch = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
@@ -636,6 +645,7 @@ namespace Azure.Data.Tables
         /// <param name="tableEntityProperties"> The properties for the table entity. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/>, or <paramref name="rowKey"/> is null. </exception>
         public ResponseWithHeaders<TableUpdateEntityHeaders> UpdateEntity(string table, string partitionKey, string rowKey, int? timeout = null, string requestId = null, string ifMatch = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
@@ -697,6 +707,7 @@ namespace Azure.Data.Tables
                 request.Headers.Add("If-Match", ifMatch);
             }
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (tableEntityProperties != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -722,6 +733,7 @@ namespace Azure.Data.Tables
         /// <param name="tableEntityProperties"> The properties for the table entity. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/>, or <paramref name="rowKey"/> is null. </exception>
         public async Task<ResponseWithHeaders<TableMergeEntityHeaders>> MergeEntityAsync(string table, string partitionKey, string rowKey, int? timeout = null, string requestId = null, string ifMatch = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
@@ -759,6 +771,7 @@ namespace Azure.Data.Tables
         /// <param name="tableEntityProperties"> The properties for the table entity. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/>, or <paramref name="rowKey"/> is null. </exception>
         public ResponseWithHeaders<TableMergeEntityHeaders> MergeEntity(string table, string partitionKey, string rowKey, int? timeout = null, string requestId = null, string ifMatch = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
@@ -816,6 +829,7 @@ namespace Azure.Data.Tables
             }
             request.Headers.Add("DataServiceVersion", "3.0");
             request.Headers.Add("If-Match", ifMatch);
+            request.Headers.Add("Accept", "application/json;odata=minimalmetadata");
             return message;
         }
 
@@ -828,6 +842,7 @@ namespace Azure.Data.Tables
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/>, <paramref name="rowKey"/>, or <paramref name="ifMatch"/> is null. </exception>
         public async Task<ResponseWithHeaders<TableDeleteEntityHeaders>> DeleteEntityAsync(string table, string partitionKey, string rowKey, string ifMatch, int? timeout = null, string requestId = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
@@ -868,6 +883,7 @@ namespace Azure.Data.Tables
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/>, <paramref name="rowKey"/>, or <paramref name="ifMatch"/> is null. </exception>
         public ResponseWithHeaders<TableDeleteEntityHeaders> DeleteEntity(string table, string partitionKey, string rowKey, string ifMatch, int? timeout = null, string requestId = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
@@ -952,6 +968,7 @@ namespace Azure.Data.Tables
         /// <param name="tableEntityProperties"> The properties for the table entity. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/> is null. </exception>
         public async Task<ResponseWithHeaders<IReadOnlyDictionary<string, object>, TableInsertEntityHeaders>> InsertEntityAsync(string table, int? timeout = null, string requestId = null, ResponseFormat? responsePreference = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
@@ -991,6 +1008,7 @@ namespace Azure.Data.Tables
         /// <param name="tableEntityProperties"> The properties for the table entity. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/> is null. </exception>
         public ResponseWithHeaders<IReadOnlyDictionary<string, object>, TableInsertEntityHeaders> InsertEntity(string table, int? timeout = null, string requestId = null, ResponseFormat? responsePreference = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
@@ -1042,6 +1060,7 @@ namespace Azure.Data.Tables
             {
                 request.Headers.Add("x-ms-client-request-id", requestId);
             }
+            request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
@@ -1050,6 +1069,7 @@ namespace Azure.Data.Tables
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/> is null. </exception>
         public async Task<ResponseWithHeaders<IReadOnlyList<SignedIdentifier>, TableGetAccessPolicyHeaders>> GetAccessPolicyAsync(string table, int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
@@ -1087,6 +1107,7 @@ namespace Azure.Data.Tables
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/> is null. </exception>
         public ResponseWithHeaders<IReadOnlyList<SignedIdentifier>, TableGetAccessPolicyHeaders> GetAccessPolicy(string table, int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
@@ -1161,6 +1182,7 @@ namespace Azure.Data.Tables
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled. </param>
         /// <param name="tableAcl"> The acls for the table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/> is null. </exception>
         public async Task<ResponseWithHeaders<TableSetAccessPolicyHeaders>> SetAccessPolicyAsync(string table, int? timeout = null, string requestId = null, IEnumerable<SignedIdentifier> tableAcl = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
@@ -1186,6 +1208,7 @@ namespace Azure.Data.Tables
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled. </param>
         /// <param name="tableAcl"> The acls for the table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/> is null. </exception>
         public ResponseWithHeaders<TableSetAccessPolicyHeaders> SetAccessPolicy(string table, int? timeout = null, string requestId = null, IEnumerable<SignedIdentifier> tableAcl = null, CancellationToken cancellationToken = default)
         {
             if (table == null)

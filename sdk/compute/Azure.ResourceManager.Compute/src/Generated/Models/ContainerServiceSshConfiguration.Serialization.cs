@@ -36,14 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<ContainerServiceSshPublicKey> array = new List<ContainerServiceSshPublicKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ContainerServiceSshPublicKey.DeserializeContainerServiceSshPublicKey(item));
-                        }
+                        array.Add(ContainerServiceSshPublicKey.DeserializeContainerServiceSshPublicKey(item));
                     }
                     publicKeys = array;
                     continue;

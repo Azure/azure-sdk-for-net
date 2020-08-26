@@ -28,7 +28,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 throw new ServiceBusException(false, ex.Message);
             }
 
-            throw new ServiceBusException("Queue was not found", ServiceBusException.FailureReason.MessagingEntityNotFound);
+            throw new ServiceBusException("Queue was not found", ServiceBusFailureReason.MessagingEntityNotFound);
         }
 
         private static QueueRuntimeProperties ParseFromEntryElement(XElement xEntry)
@@ -41,7 +41,7 @@ namespace Azure.Messaging.ServiceBus.Management
 
             if (qdXml == null)
             {
-                throw new ServiceBusException("Queue was not found", ServiceBusException.FailureReason.MessagingEntityNotFound);
+                throw new ServiceBusException("Queue was not found", ServiceBusFailureReason.MessagingEntityNotFound);
             }
 
             foreach (var element in qdXml.Elements())
@@ -118,7 +118,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 throw new ServiceBusException(false, ex.Message);
             }
 
-            throw new ServiceBusException("No queues were found", ServiceBusException.FailureReason.MessagingEntityNotFound);
+            throw new ServiceBusException("No queues were found", ServiceBusFailureReason.MessagingEntityNotFound);
         }
     }
 }

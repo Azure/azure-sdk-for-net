@@ -28,7 +28,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public FaultInjectionRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2020-03-13")
         {
             endpoint ??= new Uri("https://fully-qualified-iothubname.azure-devices.net");
@@ -53,6 +53,7 @@ namespace Azure.Iot.Hub.Service
             uri.AppendPath("/faultInjection", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -116,6 +117,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary> Creates or updates the FaultInjection entity. </summary>
         /// <param name="value"> The FaultInjectionProperties to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public async Task<Response> SetAsync(FaultInjectionProperties value, CancellationToken cancellationToken = default)
         {
             if (value == null)
@@ -137,6 +139,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary> Creates or updates the FaultInjection entity. </summary>
         /// <param name="value"> The FaultInjectionProperties to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public Response Set(FaultInjectionProperties value, CancellationToken cancellationToken = default)
         {
             if (value == null)

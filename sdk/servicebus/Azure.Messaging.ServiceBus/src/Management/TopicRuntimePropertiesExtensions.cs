@@ -28,7 +28,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 throw new ServiceBusException(false, ex.Message);
             }
 
-            throw new ServiceBusException("Topic was not found", ServiceBusException.FailureReason.MessagingEntityNotFound);
+            throw new ServiceBusException("Topic was not found", ServiceBusFailureReason.MessagingEntityNotFound);
         }
 
         public static TopicRuntimeProperties ParseFromEntryElement(XElement xEntry)
@@ -41,7 +41,7 @@ namespace Azure.Messaging.ServiceBus.Management
 
             if (qdXml == null)
             {
-                throw new ServiceBusException("Topic was not found", ServiceBusException.FailureReason.MessagingEntityNotFound);
+                throw new ServiceBusException("Topic was not found", ServiceBusFailureReason.MessagingEntityNotFound);
             }
 
             foreach (var element in qdXml.Elements())
@@ -64,6 +64,16 @@ namespace Azure.Messaging.ServiceBus.Management
                         topicRuntimeInfo.UpdatedAt = DateTimeOffset.Parse(element.Value, CultureInfo.InvariantCulture);
                         break;
                     case "CountDetails":
+                        foreach (var countElement in element.Elements())
+                        {
+                            switch (countElement.Name.LocalName)
+                            {
+                                case "ScheduledMessageCount":
+                                    topicRuntimeInfo.ScheduledMessageCount = long.Parse(countElement.Value, CultureInfo.InvariantCulture);
+                                    break;
+                            }
+                        }
+
                         break;
                 }
             }
@@ -97,7 +107,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 throw new ServiceBusException(false, ex.Message);
             }
 
-            throw new ServiceBusException("No topics were found", ServiceBusException.FailureReason.MessagingEntityNotFound);
+            throw new ServiceBusException("No topics were found", ServiceBusFailureReason.MessagingEntityNotFound);
         }
     }
 }

@@ -81,7 +81,9 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// supported only for MongoDB API.</param>
         /// <param name="enableAnalyticalStorage">Flag to indicate whether to
         /// enable storage analytics.</param>
-        public DatabaseAccountCreateUpdateParameters(IList<Location> locations, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string kind = default(string), ConsistencyPolicy consistencyPolicy = default(ConsistencyPolicy), IList<IpAddressOrRange> ipRules = default(IList<IpAddressOrRange>), bool? isVirtualNetworkFilterEnabled = default(bool?), bool? enableAutomaticFailover = default(bool?), IList<Capability> capabilities = default(IList<Capability>), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), bool? enableMultipleWriteLocations = default(bool?), bool? enableCassandraConnector = default(bool?), string connectorOffer = default(string), bool? disableKeyBasedMetadataWriteAccess = default(bool?), string keyVaultKeyUri = default(string), string publicNetworkAccess = default(string), bool? enableFreeTier = default(bool?), ApiProperties apiProperties = default(ApiProperties), bool? enableAnalyticalStorage = default(bool?))
+        /// <param name="cors">The CORS policy for the Cosmos DB database
+        /// account.</param>
+        public DatabaseAccountCreateUpdateParameters(IList<Location> locations, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string kind = default(string), ConsistencyPolicy consistencyPolicy = default(ConsistencyPolicy), IList<IpAddressOrRange> ipRules = default(IList<IpAddressOrRange>), bool? isVirtualNetworkFilterEnabled = default(bool?), bool? enableAutomaticFailover = default(bool?), IList<Capability> capabilities = default(IList<Capability>), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), bool? enableMultipleWriteLocations = default(bool?), bool? enableCassandraConnector = default(bool?), string connectorOffer = default(string), bool? disableKeyBasedMetadataWriteAccess = default(bool?), string keyVaultKeyUri = default(string), string publicNetworkAccess = default(string), bool? enableFreeTier = default(bool?), ApiProperties apiProperties = default(ApiProperties), bool? enableAnalyticalStorage = default(bool?), IList<CorsPolicy> cors = default(IList<CorsPolicy>))
             : base(id, name, type, location, tags)
         {
             Kind = kind;
@@ -101,6 +103,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
             EnableFreeTier = enableFreeTier;
             ApiProperties = apiProperties;
             EnableAnalyticalStorage = enableAnalyticalStorage;
+            Cors = cors;
             CustomInit();
         }
         /// <summary>
@@ -233,6 +236,12 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         public bool? EnableAnalyticalStorage { get; set; }
 
         /// <summary>
+        /// Gets or sets the CORS policy for the Cosmos DB database account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.cors")]
+        public IList<CorsPolicy> Cors { get; set; }
+
+        /// <summary>
         /// The offer type for the database
         /// </summary>
         [JsonProperty(PropertyName = "properties.databaseAccountOfferType")]
@@ -261,6 +270,16 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
                     if (element != null)
                     {
                         element.Validate();
+                    }
+                }
+            }
+            if (Cors != null)
+            {
+                foreach (var element1 in Cors)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
                     }
                 }
             }

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public PrivateLinkServicesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -65,6 +65,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the private link service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -93,6 +94,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the private link service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -144,6 +146,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="serviceName"> The name of the private link service. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         public async Task<Response<PrivateLinkService>> GetAsync(string resourceGroupName, string serviceName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -163,14 +166,7 @@ namespace Azure.ResourceManager.Network
                     {
                         PrivateLinkService value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateLinkService.DeserializePrivateLinkService(document.RootElement);
-                        }
+                        value = PrivateLinkService.DeserializePrivateLinkService(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -183,6 +179,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="serviceName"> The name of the private link service. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         public Response<PrivateLinkService> Get(string resourceGroupName, string serviceName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -202,14 +199,7 @@ namespace Azure.ResourceManager.Network
                     {
                         PrivateLinkService value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateLinkService.DeserializePrivateLinkService(document.RootElement);
-                        }
+                        value = PrivateLinkService.DeserializePrivateLinkService(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -244,6 +234,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="serviceName"> The name of the private link service. </param>
         /// <param name="parameters"> Parameters supplied to the create or update private link service operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string serviceName, PrivateLinkService parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -276,6 +267,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="serviceName"> The name of the private link service. </param>
         /// <param name="parameters"> Parameters supplied to the create or update private link service operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response CreateOrUpdate(string resourceGroupName, string serviceName, PrivateLinkService parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -323,6 +315,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all private link services in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<PrivateLinkServiceListResult>> ListAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -338,14 +331,7 @@ namespace Azure.ResourceManager.Network
                     {
                         PrivateLinkServiceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateLinkServiceListResult.DeserializePrivateLinkServiceListResult(document.RootElement);
-                        }
+                        value = PrivateLinkServiceListResult.DeserializePrivateLinkServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -356,6 +342,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all private link services in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public Response<PrivateLinkServiceListResult> List(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -371,14 +358,7 @@ namespace Azure.ResourceManager.Network
                     {
                         PrivateLinkServiceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateLinkServiceListResult.DeserializePrivateLinkServiceListResult(document.RootElement);
-                        }
+                        value = PrivateLinkServiceListResult.DeserializePrivateLinkServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -413,14 +393,7 @@ namespace Azure.ResourceManager.Network
                     {
                         PrivateLinkServiceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateLinkServiceListResult.DeserializePrivateLinkServiceListResult(document.RootElement);
-                        }
+                        value = PrivateLinkServiceListResult.DeserializePrivateLinkServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -440,14 +413,7 @@ namespace Azure.ResourceManager.Network
                     {
                         PrivateLinkServiceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateLinkServiceListResult.DeserializePrivateLinkServiceListResult(document.RootElement);
-                        }
+                        value = PrivateLinkServiceListResult.DeserializePrivateLinkServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -485,6 +451,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="peConnectionName"> The name of the private end point connection. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, or <paramref name="peConnectionName"/> is null. </exception>
         public async Task<Response<PrivateEndpointConnection>> GetPrivateEndpointConnectionAsync(string resourceGroupName, string serviceName, string peConnectionName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -508,14 +475,7 @@ namespace Azure.ResourceManager.Network
                     {
                         PrivateEndpointConnection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateEndpointConnection.DeserializePrivateEndpointConnection(document.RootElement);
-                        }
+                        value = PrivateEndpointConnection.DeserializePrivateEndpointConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -529,6 +489,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="peConnectionName"> The name of the private end point connection. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, or <paramref name="peConnectionName"/> is null. </exception>
         public Response<PrivateEndpointConnection> GetPrivateEndpointConnection(string resourceGroupName, string serviceName, string peConnectionName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -552,14 +513,7 @@ namespace Azure.ResourceManager.Network
                     {
                         PrivateEndpointConnection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateEndpointConnection.DeserializePrivateEndpointConnection(document.RootElement);
-                        }
+                        value = PrivateEndpointConnection.DeserializePrivateEndpointConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -597,6 +551,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="peConnectionName"> The name of the private end point connection. </param>
         /// <param name="parameters"> Parameters supplied to approve or reject the private end point connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="peConnectionName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<PrivateEndpointConnection>> UpdatePrivateEndpointConnectionAsync(string resourceGroupName, string serviceName, string peConnectionName, PrivateEndpointConnection parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -624,14 +579,7 @@ namespace Azure.ResourceManager.Network
                     {
                         PrivateEndpointConnection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateEndpointConnection.DeserializePrivateEndpointConnection(document.RootElement);
-                        }
+                        value = PrivateEndpointConnection.DeserializePrivateEndpointConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -645,6 +593,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="peConnectionName"> The name of the private end point connection. </param>
         /// <param name="parameters"> Parameters supplied to approve or reject the private end point connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="peConnectionName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response<PrivateEndpointConnection> UpdatePrivateEndpointConnection(string resourceGroupName, string serviceName, string peConnectionName, PrivateEndpointConnection parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -672,14 +621,7 @@ namespace Azure.ResourceManager.Network
                     {
                         PrivateEndpointConnection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateEndpointConnection.DeserializePrivateEndpointConnection(document.RootElement);
-                        }
+                        value = PrivateEndpointConnection.DeserializePrivateEndpointConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -712,6 +654,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="serviceName"> The name of the private link service. </param>
         /// <param name="peConnectionName"> The name of the private end point connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, or <paramref name="peConnectionName"/> is null. </exception>
         public async Task<Response> DeletePrivateEndpointConnectionAsync(string resourceGroupName, string serviceName, string peConnectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -745,6 +688,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="serviceName"> The name of the private link service. </param>
         /// <param name="peConnectionName"> The name of the private end point connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, or <paramref name="peConnectionName"/> is null. </exception>
         public Response DeletePrivateEndpointConnection(string resourceGroupName, string serviceName, string peConnectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -796,6 +740,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the private link service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         public async Task<Response<PrivateEndpointConnectionListResult>> ListPrivateEndpointConnectionsAsync(string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -815,14 +760,7 @@ namespace Azure.ResourceManager.Network
                     {
                         PrivateEndpointConnectionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateEndpointConnectionListResult.DeserializePrivateEndpointConnectionListResult(document.RootElement);
-                        }
+                        value = PrivateEndpointConnectionListResult.DeserializePrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -834,6 +772,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the private link service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         public Response<PrivateEndpointConnectionListResult> ListPrivateEndpointConnections(string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -853,14 +792,7 @@ namespace Azure.ResourceManager.Network
                     {
                         PrivateEndpointConnectionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateEndpointConnectionListResult.DeserializePrivateEndpointConnectionListResult(document.RootElement);
-                        }
+                        value = PrivateEndpointConnectionListResult.DeserializePrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -893,6 +825,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CheckPrivateLinkServiceVisibilityAsync(string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -920,6 +853,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
         public Response CheckPrivateLinkServiceVisibility(string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -971,6 +905,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="resourceGroupName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CheckPrivateLinkServiceVisibilityByResourceGroupAsync(string location, string resourceGroupName, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -1003,6 +938,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="resourceGroupName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response CheckPrivateLinkServiceVisibilityByResourceGroup(string location, string resourceGroupName, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -1050,6 +986,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region. </summary>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public async Task<Response<AutoApprovedPrivateLinkServicesResult>> ListAutoApprovedPrivateLinkServicesAsync(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -1065,14 +1002,7 @@ namespace Azure.ResourceManager.Network
                     {
                         AutoApprovedPrivateLinkServicesResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AutoApprovedPrivateLinkServicesResult.DeserializeAutoApprovedPrivateLinkServicesResult(document.RootElement);
-                        }
+                        value = AutoApprovedPrivateLinkServicesResult.DeserializeAutoApprovedPrivateLinkServicesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1083,6 +1013,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region. </summary>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public Response<AutoApprovedPrivateLinkServicesResult> ListAutoApprovedPrivateLinkServices(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -1098,14 +1029,7 @@ namespace Azure.ResourceManager.Network
                     {
                         AutoApprovedPrivateLinkServicesResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AutoApprovedPrivateLinkServicesResult.DeserializeAutoApprovedPrivateLinkServicesResult(document.RootElement);
-                        }
+                        value = AutoApprovedPrivateLinkServicesResult.DeserializeAutoApprovedPrivateLinkServicesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1136,6 +1060,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<AutoApprovedPrivateLinkServicesResult>> ListAutoApprovedPrivateLinkServicesByResourceGroupAsync(string location, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -1155,14 +1080,7 @@ namespace Azure.ResourceManager.Network
                     {
                         AutoApprovedPrivateLinkServicesResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AutoApprovedPrivateLinkServicesResult.DeserializeAutoApprovedPrivateLinkServicesResult(document.RootElement);
-                        }
+                        value = AutoApprovedPrivateLinkServicesResult.DeserializeAutoApprovedPrivateLinkServicesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1174,6 +1092,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<AutoApprovedPrivateLinkServicesResult> ListAutoApprovedPrivateLinkServicesByResourceGroup(string location, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -1193,14 +1112,7 @@ namespace Azure.ResourceManager.Network
                     {
                         AutoApprovedPrivateLinkServicesResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AutoApprovedPrivateLinkServicesResult.DeserializeAutoApprovedPrivateLinkServicesResult(document.RootElement);
-                        }
+                        value = AutoApprovedPrivateLinkServicesResult.DeserializeAutoApprovedPrivateLinkServicesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1224,6 +1136,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<PrivateLinkServiceListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1243,14 +1156,7 @@ namespace Azure.ResourceManager.Network
                     {
                         PrivateLinkServiceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateLinkServiceListResult.DeserializePrivateLinkServiceListResult(document.RootElement);
-                        }
+                        value = PrivateLinkServiceListResult.DeserializePrivateLinkServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1262,6 +1168,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<PrivateLinkServiceListResult> ListNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1281,14 +1188,7 @@ namespace Azure.ResourceManager.Network
                     {
                         PrivateLinkServiceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateLinkServiceListResult.DeserializePrivateLinkServiceListResult(document.RootElement);
-                        }
+                        value = PrivateLinkServiceListResult.DeserializePrivateLinkServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1311,6 +1211,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all private link service in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<PrivateLinkServiceListResult>> ListBySubscriptionNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1326,14 +1227,7 @@ namespace Azure.ResourceManager.Network
                     {
                         PrivateLinkServiceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateLinkServiceListResult.DeserializePrivateLinkServiceListResult(document.RootElement);
-                        }
+                        value = PrivateLinkServiceListResult.DeserializePrivateLinkServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1344,6 +1238,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all private link service in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<PrivateLinkServiceListResult> ListBySubscriptionNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1359,14 +1254,7 @@ namespace Azure.ResourceManager.Network
                     {
                         PrivateLinkServiceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateLinkServiceListResult.DeserializePrivateLinkServiceListResult(document.RootElement);
-                        }
+                        value = PrivateLinkServiceListResult.DeserializePrivateLinkServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1391,6 +1279,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the private link service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="serviceName"/> is null. </exception>
         public async Task<Response<PrivateEndpointConnectionListResult>> ListPrivateEndpointConnectionsNextPageAsync(string nextLink, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1414,14 +1303,7 @@ namespace Azure.ResourceManager.Network
                     {
                         PrivateEndpointConnectionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateEndpointConnectionListResult.DeserializePrivateEndpointConnectionListResult(document.RootElement);
-                        }
+                        value = PrivateEndpointConnectionListResult.DeserializePrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1434,6 +1316,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the private link service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="serviceName"/> is null. </exception>
         public Response<PrivateEndpointConnectionListResult> ListPrivateEndpointConnectionsNextPage(string nextLink, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1457,14 +1340,7 @@ namespace Azure.ResourceManager.Network
                     {
                         PrivateEndpointConnectionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateEndpointConnectionListResult.DeserializePrivateEndpointConnectionListResult(document.RootElement);
-                        }
+                        value = PrivateEndpointConnectionListResult.DeserializePrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1488,6 +1364,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="location"/> is null. </exception>
         public async Task<Response<AutoApprovedPrivateLinkServicesResult>> ListAutoApprovedPrivateLinkServicesNextPageAsync(string nextLink, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1507,14 +1384,7 @@ namespace Azure.ResourceManager.Network
                     {
                         AutoApprovedPrivateLinkServicesResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AutoApprovedPrivateLinkServicesResult.DeserializeAutoApprovedPrivateLinkServicesResult(document.RootElement);
-                        }
+                        value = AutoApprovedPrivateLinkServicesResult.DeserializeAutoApprovedPrivateLinkServicesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1526,6 +1396,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="location"/> is null. </exception>
         public Response<AutoApprovedPrivateLinkServicesResult> ListAutoApprovedPrivateLinkServicesNextPage(string nextLink, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1545,14 +1416,7 @@ namespace Azure.ResourceManager.Network
                     {
                         AutoApprovedPrivateLinkServicesResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AutoApprovedPrivateLinkServicesResult.DeserializeAutoApprovedPrivateLinkServicesResult(document.RootElement);
-                        }
+                        value = AutoApprovedPrivateLinkServicesResult.DeserializeAutoApprovedPrivateLinkServicesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1577,6 +1441,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="location"/>, or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<AutoApprovedPrivateLinkServicesResult>> ListAutoApprovedPrivateLinkServicesByResourceGroupNextPageAsync(string nextLink, string location, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1600,14 +1465,7 @@ namespace Azure.ResourceManager.Network
                     {
                         AutoApprovedPrivateLinkServicesResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AutoApprovedPrivateLinkServicesResult.DeserializeAutoApprovedPrivateLinkServicesResult(document.RootElement);
-                        }
+                        value = AutoApprovedPrivateLinkServicesResult.DeserializeAutoApprovedPrivateLinkServicesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1620,6 +1478,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="location"/>, or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<AutoApprovedPrivateLinkServicesResult> ListAutoApprovedPrivateLinkServicesByResourceGroupNextPage(string nextLink, string location, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1643,14 +1502,7 @@ namespace Azure.ResourceManager.Network
                     {
                         AutoApprovedPrivateLinkServicesResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AutoApprovedPrivateLinkServicesResult.DeserializeAutoApprovedPrivateLinkServicesResult(document.RootElement);
-                        }
+                        value = AutoApprovedPrivateLinkServicesResult.DeserializeAutoApprovedPrivateLinkServicesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

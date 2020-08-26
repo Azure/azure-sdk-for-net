@@ -3,6 +3,7 @@
 
 using System;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using NUnit.Framework;
@@ -67,6 +68,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // this sample from terminating immediately, we can use a task completion source that
                 // we complete from within the message handler.
                 TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+                int processedMessageCount = 0;
                 processor.ProcessMessageAsync += MessageHandler;
                 processor.ProcessErrorAsync += ErrorHandler;
 
@@ -80,7 +82,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     // we can also set arbitrary session state using this receiver
                     // the state is specific to the session, and not any particular message
                     await args.SetSessionStateAsync(Encoding.Default.GetBytes("some state"));
-                    tcs.SetResult(true);
+
+                    // Once we've received the last message, complete the
+                    // task completion source.
+                    if (Interlocked.Increment(ref processedMessageCount) == 2)
+                    {
+                        tcs.SetResult(true);
+                    }
                 }
 
                 Task ErrorHandler(ProcessErrorEventArgs args)

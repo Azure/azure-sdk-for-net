@@ -69,6 +69,9 @@
     <None Condition="Exists('$(MSBuildProjectDirectory)/../README.md')" Include="$(MSBuildProjectDirectory)/../README.md" Pack="true" PackagePath=""/>
   </ItemGroup>
 
+  <!-- Collect Code Coverage -->
+  <Import Condition="'$(CollectCoverage)' == 'true'"  Project="$(MSBuildThisFileDirectory)\CodeCoverage.targets" />
+
   <!-- Add StyleCop Analyzers -->
   <ItemGroup Condition="'$(EnableStyleCopAnalyzers)' == 'true'"  >
     <PackageReference Include="StyleCop.Analyzers">

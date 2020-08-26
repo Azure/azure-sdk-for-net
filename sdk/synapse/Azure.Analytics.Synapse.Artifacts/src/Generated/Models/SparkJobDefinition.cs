@@ -18,6 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of SparkJobDefinition. </summary>
         /// <param name="targetBigDataPool"> Big data pool reference. </param>
         /// <param name="jobProperties"> The properties of the Spark job. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetBigDataPool"/> or <paramref name="jobProperties"/> is null. </exception>
         public SparkJobDefinition(BigDataPoolReference targetBigDataPool, SparkJobProperties jobProperties)
         {
             if (targetBigDataPool == null)

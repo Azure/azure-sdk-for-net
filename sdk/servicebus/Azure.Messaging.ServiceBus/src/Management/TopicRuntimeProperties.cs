@@ -6,7 +6,7 @@ using System;
 namespace Azure.Messaging.ServiceBus.Management
 {
     /// <summary>
-    /// This provides runtime information of the topic.
+    /// Represents the runtime properties of the topic.
     /// </summary>
     public class TopicRuntimeProperties
     {
@@ -36,13 +36,18 @@ namespace Azure.Messaging.ServiceBus.Management
         public DateTimeOffset UpdatedAt { get; internal set; }
 
         /// <summary>
-        /// Current size of the entity in bytes.
+        /// The current size of the entity in bytes.
         /// </summary>
         public long SizeInBytes { get; internal set; }
 
         /// <summary>
-        /// Number of subscriptions to the topic.
+        /// The number of subscriptions to the topic.
         /// </summary>
         public int SubscriptionCount { get; internal set; }
+
+        /// <summary>
+        /// The number of messages that are scheduled to be enqueued.
+        /// </summary>
+        public long ScheduledMessageCount { get; internal set; }
     }
 }

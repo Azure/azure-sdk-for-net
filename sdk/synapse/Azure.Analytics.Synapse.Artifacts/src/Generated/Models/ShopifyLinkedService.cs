@@ -15,6 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of ShopifyLinkedService. </summary>
         /// <param name="host"> The endpoint of the Shopify server. (i.e. mystore.myshopify.com). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         public ShopifyLinkedService(object host)
         {
             if (host == null)

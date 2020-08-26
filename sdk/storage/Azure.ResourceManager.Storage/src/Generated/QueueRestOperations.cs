@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
         public QueueRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2019-06-01")
         {
             if (subscriptionId == null)
@@ -80,6 +80,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="queue"> Queue properties and metadata to be created with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="queueName"/>, or <paramref name="queue"/> is null. </exception>
         public async Task<Response<StorageQueue>> CreateAsync(string resourceGroupName, string accountName, string queueName, StorageQueue queue, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -107,14 +108,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         StorageQueue value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = StorageQueue.DeserializeStorageQueue(document.RootElement);
-                        }
+                        value = StorageQueue.DeserializeStorageQueue(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -128,6 +122,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="queue"> Queue properties and metadata to be created with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="queueName"/>, or <paramref name="queue"/> is null. </exception>
         public Response<StorageQueue> Create(string resourceGroupName, string accountName, string queueName, StorageQueue queue, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -155,14 +150,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         StorageQueue value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = StorageQueue.DeserializeStorageQueue(document.RootElement);
-                        }
+                        value = StorageQueue.DeserializeStorageQueue(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -200,6 +188,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="queue"> Queue properties and metadata to be created with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="queueName"/>, or <paramref name="queue"/> is null. </exception>
         public async Task<Response<StorageQueue>> UpdateAsync(string resourceGroupName, string accountName, string queueName, StorageQueue queue, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -227,14 +216,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         StorageQueue value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = StorageQueue.DeserializeStorageQueue(document.RootElement);
-                        }
+                        value = StorageQueue.DeserializeStorageQueue(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -248,6 +230,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="queue"> Queue properties and metadata to be created with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="queueName"/>, or <paramref name="queue"/> is null. </exception>
         public Response<StorageQueue> Update(string resourceGroupName, string accountName, string queueName, StorageQueue queue, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -275,14 +258,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         StorageQueue value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = StorageQueue.DeserializeStorageQueue(document.RootElement);
-                        }
+                        value = StorageQueue.DeserializeStorageQueue(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -315,6 +291,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="queueName"/> is null. </exception>
         public async Task<Response<StorageQueue>> GetAsync(string resourceGroupName, string accountName, string queueName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -338,14 +315,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         StorageQueue value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = StorageQueue.DeserializeStorageQueue(document.RootElement);
-                        }
+                        value = StorageQueue.DeserializeStorageQueue(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -358,6 +328,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="queueName"/> is null. </exception>
         public Response<StorageQueue> Get(string resourceGroupName, string accountName, string queueName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -381,14 +352,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         StorageQueue value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = StorageQueue.DeserializeStorageQueue(document.RootElement);
-                        }
+                        value = StorageQueue.DeserializeStorageQueue(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -421,6 +385,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="queueName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string accountName, string queueName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -452,6 +417,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="queueName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string accountName, string queueName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -511,6 +477,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="maxpagesize"> Optional, a maximum number of queues that should be included in a list queue response. </param>
         /// <param name="filter"> Optional, When specified, only the queues with a name starting with the given filter will be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         public async Task<Response<ListQueueResource>> ListAsync(string resourceGroupName, string accountName, string maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -530,14 +497,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         ListQueueResource value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListQueueResource.DeserializeListQueueResource(document.RootElement);
-                        }
+                        value = ListQueueResource.DeserializeListQueueResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -551,6 +511,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="maxpagesize"> Optional, a maximum number of queues that should be included in a list queue response. </param>
         /// <param name="filter"> Optional, When specified, only the queues with a name starting with the given filter will be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         public Response<ListQueueResource> List(string resourceGroupName, string accountName, string maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -570,14 +531,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         ListQueueResource value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListQueueResource.DeserializeListQueueResource(document.RootElement);
-                        }
+                        value = ListQueueResource.DeserializeListQueueResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -604,6 +558,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="maxpagesize"> Optional, a maximum number of queues that should be included in a list queue response. </param>
         /// <param name="filter"> Optional, When specified, only the queues with a name starting with the given filter will be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="accountName"/> is null. </exception>
         public async Task<Response<ListQueueResource>> ListNextPageAsync(string nextLink, string resourceGroupName, string accountName, string maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -627,14 +582,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         ListQueueResource value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListQueueResource.DeserializeListQueueResource(document.RootElement);
-                        }
+                        value = ListQueueResource.DeserializeListQueueResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -649,6 +597,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="maxpagesize"> Optional, a maximum number of queues that should be included in a list queue response. </param>
         /// <param name="filter"> Optional, When specified, only the queues with a name starting with the given filter will be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="accountName"/> is null. </exception>
         public Response<ListQueueResource> ListNextPage(string nextLink, string resourceGroupName, string accountName, string maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -672,14 +621,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         ListQueueResource value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListQueueResource.DeserializeListQueueResource(document.RootElement);
-                        }
+                        value = ListQueueResource.DeserializeListQueueResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

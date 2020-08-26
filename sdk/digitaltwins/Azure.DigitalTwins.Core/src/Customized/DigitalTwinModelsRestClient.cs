@@ -163,6 +163,7 @@ namespace Azure.DigitalTwins.Core
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json; charset=utf-8");
+            request.Headers.Add("Accept", "application/json");
             if (models != null)
             {
                 string modelsJsonArray = PayloadHelper.BuildArrayPayload(models);
@@ -185,6 +186,7 @@ namespace Azure.DigitalTwins.Core
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json; charset=utf-8");
+            request.Headers.Add("Accept", "application/json");
             if (modelUpdates != null)
             {
                 string modelUpdatesArray = PayloadHelper.BuildArrayPayload(modelUpdates);

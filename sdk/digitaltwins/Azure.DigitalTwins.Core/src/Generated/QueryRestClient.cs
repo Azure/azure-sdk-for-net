@@ -26,7 +26,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public QueryRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2020-05-31-preview")
         {
             endpoint ??= new Uri("https://digitaltwins-name.digitaltwins.azure.net");
@@ -52,6 +52,7 @@ namespace Azure.DigitalTwins.Core
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(querySpecification);
             request.Content = content;
@@ -66,6 +67,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="querySpecification"> The query specification to execute. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="querySpecification"/> is null. </exception>
         public async Task<ResponseWithHeaders<QueryResult, QueryQueryTwinsHeaders>> QueryTwinsAsync(QuerySpecification querySpecification, CancellationToken cancellationToken = default)
         {
             if (querySpecification == null)
@@ -98,6 +100,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="querySpecification"> The query specification to execute. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="querySpecification"/> is null. </exception>
         public ResponseWithHeaders<QueryResult, QueryQueryTwinsHeaders> QueryTwins(QuerySpecification querySpecification, CancellationToken cancellationToken = default)
         {
             if (querySpecification == null)

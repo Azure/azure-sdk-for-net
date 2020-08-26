@@ -8,7 +8,7 @@ using Azure.Core;
 namespace Azure.Messaging.ServiceBus.Management
 {
     /// <summary>
-    /// Represents the metadata description of the topic.
+    /// Represents the static properties of the topic.
     /// </summary>
     public class TopicProperties : IEquatable<TopicProperties>
     {

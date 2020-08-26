@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="groupId"> Group identifier of private link resource. </param>
         /// <param name="requiredMembers"> Required member names of private link resource. </param>
         /// <param name="requiredZoneNames"> Required DNS zone names of the the private link resource. </param>
-        internal PrivateLinkResource(string id, string name, string type, string location, IDictionary<string, string> tags, string groupId, IList<string> requiredMembers, IList<string> requiredZoneNames) : base(id, name, type, location, tags)
+        internal PrivateLinkResource(string id, string name, string type, string location, IReadOnlyDictionary<string, string> tags, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames) : base(id, name, type, location, tags)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Group identifier of private link resource. </summary>
         public string GroupId { get; }
         /// <summary> Required member names of private link resource. </summary>
-        public IList<string> RequiredMembers { get; }
+        public IReadOnlyList<string> RequiredMembers { get; }
         /// <summary> Required DNS zone names of the the private link resource. </summary>
         public IList<string> RequiredZoneNames { get; }
     }

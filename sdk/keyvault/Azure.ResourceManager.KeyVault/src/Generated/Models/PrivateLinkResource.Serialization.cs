@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.KeyVault.Models
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<string> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Optional<IReadOnlyDictionary<string, string>> tags = default;
             Optional<string> groupId = default;
-            Optional<IList<string>> requiredMembers = default;
+            Optional<IReadOnlyList<string>> requiredMembers = default;
             Optional<IList<string>> requiredZoneNames = default;
             foreach (var property in element.EnumerateObject())
             {

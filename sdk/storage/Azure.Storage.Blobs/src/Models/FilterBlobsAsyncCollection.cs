@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal class FilterBlobsAsyncCollection : StorageCollectionEnumerator<BlobTagItem>
+    internal class FilterBlobsAsyncCollection : StorageCollectionEnumerator<TaggedBlobItem>
     {
         private readonly BlobServiceClient _client;
         private readonly string _expression;
@@ -21,7 +21,7 @@ namespace Azure.Storage.Blobs.Models
             _expression = expression;
         }
 
-        public override async ValueTask<Page<BlobTagItem>> GetNextPageAsync(
+        public override async ValueTask<Page<TaggedBlobItem>> GetNextPageAsync(
             string continuationToken,
             int? pageSizeHint,
             bool async,
@@ -35,7 +35,7 @@ namespace Azure.Storage.Blobs.Models
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
 
-            return Page<BlobTagItem>.FromValues(
+            return Page<TaggedBlobItem>.FromValues(
                 response.Value.Blobs.ToBlobTagItems(),
                 response.Value.NextMarker,
                 response.GetRawResponse());

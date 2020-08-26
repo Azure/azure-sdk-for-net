@@ -59,7 +59,7 @@ namespace Azure.Core.Pipeline
                         request.ContentLength = length;
                     }
 
-                    var requestStream = async ? await request.GetRequestStreamAsync().ConfigureAwait(false) : request.GetRequestStream();
+                    using var requestStream = async ? await request.GetRequestStreamAsync().ConfigureAwait(false) : request.GetRequestStream();
 
                     if (async)
                     {
@@ -69,6 +69,10 @@ namespace Azure.Core.Pipeline
                     {
                         message.Request.Content.WriteTo(requestStream, message.CancellationToken);
                     }
+                }
+                else
+                {
+                    request.ContentLength = 0;
                 }
 
                 WebResponse webResponse;
@@ -86,7 +90,7 @@ namespace Azure.Core.Pipeline
             // WebException is thrown in the case of .Abort() call
             catch (WebException) when (message.CancellationToken.IsCancellationRequested)
             {
-                message.CancellationToken.ThrowIfCancellationRequested();
+                throw new TaskCanceledException();
             }
             catch (WebException webException)
             {
@@ -185,12 +189,14 @@ namespace Azure.Core.Pipeline
         private sealed class HttpWebResponseImplementation: Response
         {
             private readonly HttpWebResponse _webResponse;
+            private Stream? _contentStream;
+            private Stream? _originalContentStream;
 
             public HttpWebResponseImplementation(string clientRequestId, HttpWebResponse webResponse)
             {
                 _webResponse = webResponse;
-
-                ContentStream = _webResponse.GetResponseStream();
+                _originalContentStream = _webResponse.GetResponseStream();
+                _contentStream = _originalContentStream;
                 ClientRequestId = clientRequestId;
             }
 
@@ -198,13 +204,23 @@ namespace Azure.Core.Pipeline
 
             public override string ReasonPhrase => _webResponse.StatusDescription;
 
-            public override Stream? ContentStream { get; set; }
+            public override Stream? ContentStream
+            {
+                get => _contentStream;
+                set
+                {
+                    // Make sure we don't dispose the content if the stream was replaced
+                    _originalContentStream = null;
+
+                    _contentStream = value;
+                }
+            }
 
             public override string ClientRequestId { get; set; }
 
             public override void Dispose()
             {
-                ContentStream?.Dispose();
+                _originalContentStream?.Dispose();
             }
 
             protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)

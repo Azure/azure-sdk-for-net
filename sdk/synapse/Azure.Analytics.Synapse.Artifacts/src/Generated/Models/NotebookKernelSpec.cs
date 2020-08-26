@@ -18,6 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of NotebookKernelSpec. </summary>
         /// <param name="name"> Name of the kernel specification. </param>
         /// <param name="displayName"> Name to display in UI. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="displayName"/> is null. </exception>
         public NotebookKernelSpec(string name, string displayName)
         {
             if (name == null)

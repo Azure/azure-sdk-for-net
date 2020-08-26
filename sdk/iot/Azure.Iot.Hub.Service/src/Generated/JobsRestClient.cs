@@ -29,7 +29,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public JobsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2020-03-13")
         {
             endpoint ??= new Uri("https://fully-qualified-iothubname.azure-devices.net");
@@ -55,6 +55,7 @@ namespace Azure.Iot.Hub.Service
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(jobProperties);
             request.Content = content;
@@ -64,6 +65,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary> Creates a new import or export job on the IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities for more information. </summary>
         /// <param name="jobProperties"> The job specifications. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobProperties"/> is null. </exception>
         public async Task<Response<JobProperties>> CreateImportExportJobAsync(JobProperties jobProperties, CancellationToken cancellationToken = default)
         {
             if (jobProperties == null)
@@ -90,6 +92,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary> Creates a new import or export job on the IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities for more information. </summary>
         /// <param name="jobProperties"> The job specifications. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobProperties"/> is null. </exception>
         public Response<JobProperties> CreateImportExportJob(JobProperties jobProperties, CancellationToken cancellationToken = default)
         {
             if (jobProperties == null)
@@ -123,6 +126,7 @@ namespace Azure.Iot.Hub.Service
             uri.AppendPath("/jobs", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -187,12 +191,14 @@ namespace Azure.Iot.Hub.Service
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Gets the status of an import or export job in the IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities for more information. </summary>
         /// <param name="id"> The unique identifier of the job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public async Task<Response<JobProperties>> GetImportExportJobAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -219,6 +225,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary> Gets the status of an import or export job in the IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities for more information. </summary>
         /// <param name="id"> The unique identifier of the job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public Response<JobProperties> GetImportExportJob(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -242,76 +249,6 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        internal HttpMessage CreateCancelImportExportJobRequest(string id)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/jobs/", false);
-            uri.AppendPath(id, true);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            return message;
-        }
-
-        /// <summary> Cancels an import or export job in the IoT Hub. </summary>
-        /// <param name="id"> The unique identifier of the job. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<object>> CancelImportExportJobAsync(string id, CancellationToken cancellationToken = default)
-        {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-
-            using var message = CreateCancelImportExportJobRequest(id);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        object value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = document.RootElement.GetObject();
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 204:
-                    return Response.FromValue<object>(null, message.Response);
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Cancels an import or export job in the IoT Hub. </summary>
-        /// <param name="id"> The unique identifier of the job. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<object> CancelImportExportJob(string id, CancellationToken cancellationToken = default)
-        {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-
-            using var message = CreateCancelImportExportJobRequest(id);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        object value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = document.RootElement.GetObject();
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 204:
-                    return Response.FromValue<object>(null, message.Response);
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
         internal HttpMessage CreateGetScheduledJobRequest(string id)
         {
             var message = _pipeline.CreateMessage();
@@ -323,12 +260,14 @@ namespace Azure.Iot.Hub.Service
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Gets details of a scheduled job from the IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information. </summary>
         /// <param name="id"> The unique identifier of the job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public async Task<Response<JobResponse>> GetScheduledJobAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -355,6 +294,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary> Gets details of a scheduled job from the IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information. </summary>
         /// <param name="id"> The unique identifier of the job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public Response<JobResponse> GetScheduledJob(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -390,6 +330,7 @@ namespace Azure.Iot.Hub.Service
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(jobRequest);
             request.Content = content;
@@ -400,6 +341,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="id"> The unique identifier of the job. </param>
         /// <param name="jobRequest"> The job request info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="jobRequest"/> is null. </exception>
         public async Task<Response<JobResponse>> CreateScheduledJobAsync(string id, JobRequest jobRequest, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -431,6 +373,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="id"> The unique identifier of the job. </param>
         /// <param name="jobRequest"> The job request info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="jobRequest"/> is null. </exception>
         public Response<JobResponse> CreateScheduledJob(string id, JobRequest jobRequest, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -470,12 +413,14 @@ namespace Azure.Iot.Hub.Service
             uri.AppendPath("/cancel", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Cancels a scheduled job on the IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information. </summary>
         /// <param name="id"> The unique identifier of the job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public async Task<Response<JobResponse>> CancelScheduledJobAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -502,6 +447,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary> Cancels a scheduled job on the IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information. </summary>
         /// <param name="id"> The unique identifier of the job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public Response<JobResponse> CancelScheduledJob(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -543,6 +489,7 @@ namespace Azure.Iot.Hub.Service
             }
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

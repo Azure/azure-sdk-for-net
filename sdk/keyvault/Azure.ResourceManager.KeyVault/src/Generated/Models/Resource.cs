@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="type"> Resource type of the key vault resource. </param>
         /// <param name="location"> Azure location of the key vault resource. </param>
         /// <param name="tags"> Tags assigned to the key vault resource. </param>
-        internal Resource(string id, string name, string type, string location, IDictionary<string, string> tags)
+        internal Resource(string id, string name, string type, string location, IReadOnlyDictionary<string, string> tags)
         {
             Id = id;
             Name = name;
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Azure location of the key vault resource. </summary>
         public string Location { get; }
         /// <summary> Tags assigned to the key vault resource. </summary>
-        public IDictionary<string, string> Tags { get; }
+        public IReadOnlyDictionary<string, string> Tags { get; }
     }
 }

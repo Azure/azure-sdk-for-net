@@ -16,6 +16,7 @@ namespace Azure.AI.FormRecognizer.Models
     {
         /// <summary> Initializes a new instance of AnalyzeResult. </summary>
         /// <param name="version"> Version of schema used for this result. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         internal AnalyzeResult(string version)
         {
             if (version == null)

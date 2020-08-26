@@ -17,6 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of DatasetReference. </summary>
         /// <param name="type"> Dataset reference type. </param>
         /// <param name="referenceName"> Reference dataset name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
         public DatasetReference(DatasetReferenceType type, string referenceName)
         {
             if (referenceName == null)

@@ -6,7 +6,7 @@ using System;
 namespace Azure.Messaging.ServiceBus.Management
 {
     /// <summary>
-    /// This provides runtime information of the queue.
+    /// Represents the runtime properties of the queue.
     /// </summary>
     public class QueueRuntimeProperties
     {
@@ -36,7 +36,7 @@ namespace Azure.Messaging.ServiceBus.Management
         public long DeadLetterMessageCount { get; internal set; }
 
         /// <summary>
-        /// The number of messages which are yet to be scheduled.
+        /// The number of messages that are scheduled to be enqueued.
         /// </summary>
         public long ScheduledMessageCount { get; internal set; }
 
@@ -51,7 +51,7 @@ namespace Azure.Messaging.ServiceBus.Management
         public long TransferDeadLetterMessageCount { get; internal set; }
 
         /// <summary>
-        /// Current size of the entity in bytes.
+        /// The current size of the entity in bytes.
         /// </summary>
         public long SizeInBytes { get; internal set; }
 

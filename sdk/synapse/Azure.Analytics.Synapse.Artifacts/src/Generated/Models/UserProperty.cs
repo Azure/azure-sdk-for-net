@@ -15,6 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of UserProperty. </summary>
         /// <param name="name"> User property name. </param>
         /// <param name="value"> User property value. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>
         public UserProperty(string name, object value)
         {
             if (name == null)

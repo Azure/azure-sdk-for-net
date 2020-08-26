@@ -19,23 +19,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of Resource. </summary>
-        /// <param name="id"> The resource identifier. </param>
-        /// <param name="name"> The resource name. </param>
-        /// <param name="type"> The resource type. </param>
-        /// <param name="location"> The resource location. </param>
-        /// <param name="tags"> The resource tags. </param>
-        /// <param name="eTag"> Etag identifies change in the resource. </param>
-        internal Resource(string id, string name, string type, string location, IReadOnlyDictionary<string, string> tags, string eTag)
-        {
-            Id = id;
-            Name = name;
-            Type = type;
-            Location = location;
-            Tags = tags;
-            ETag = eTag;
-        }
-
         /// <summary> The resource identifier. </summary>
         public string Id { get; }
         /// <summary> The resource name. </summary>

@@ -52,7 +52,7 @@ namespace Azure.Messaging.ServiceBus.Management
             {
                 throw new ServiceBusException(
                     ex.Message,
-                    ServiceBusException.FailureReason.Unauthorized,
+                    ServiceBusFailureReason.Unauthorized,
                     innerException: ex);
             }
 
@@ -60,7 +60,7 @@ namespace Azure.Messaging.ServiceBus.Management
             {
                 throw new ServiceBusException(
                     ex.Message,
-                    ServiceBusException.FailureReason.MessagingEntityNotFound,
+                    ServiceBusFailureReason.MessagingEntityNotFound,
                     innerException: ex);
             }
 
@@ -82,7 +82,7 @@ namespace Azure.Messaging.ServiceBus.Management
 
                 throw new ServiceBusException(
                     ex.Message,
-                    ServiceBusException.FailureReason.MessagingEntityAlreadyExists,
+                    ServiceBusFailureReason.MessagingEntityAlreadyExists,
                     innerException: ex);
             }
 
@@ -95,7 +95,7 @@ namespace Azure.Messaging.ServiceBus.Management
 
                 throw new ServiceBusException(
                     ex.Message,
-                    ServiceBusException.FailureReason.QuotaExceeded,
+                    ServiceBusFailureReason.QuotaExceeded,
                     innerException: ex);
             }
 
@@ -108,7 +108,7 @@ namespace Azure.Messaging.ServiceBus.Management
             {
                 throw new ServiceBusException(
                     ex.Message,
-                    ServiceBusException.FailureReason.ServiceBusy,
+                    ServiceBusFailureReason.ServiceBusy,
                     innerException: ex);
             }
 
@@ -273,7 +273,6 @@ namespace Azure.Messaging.ServiceBus.Management
                 var token = await GetToken(request.Uri.ToUri()).ConfigureAwait(false);
                 request.Headers.Add("Authorization", token);
             }
-            request.Headers.Add("UserAgent", $"SERVICEBUS/{ManagementClientConstants.ApiVersion}(api-origin={ClientInfo.Framework};os={ClientInfo.Platform};version={ClientInfo.Version};product={ClientInfo.Product})");
 
             Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 

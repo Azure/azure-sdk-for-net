@@ -54,27 +54,13 @@ namespace Azure.Management.Network
         PublicIPAddress IOperationSource<PublicIPAddress>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return PublicIPAddress.DeserializePublicIPAddress(document.RootElement);
-            }
+            return PublicIPAddress.DeserializePublicIPAddress(document.RootElement);
         }
 
         async ValueTask<PublicIPAddress> IOperationSource<PublicIPAddress>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return PublicIPAddress.DeserializePublicIPAddress(document.RootElement);
-            }
+            return PublicIPAddress.DeserializePublicIPAddress(document.RootElement);
         }
     }
 }

@@ -14,6 +14,7 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Initializes a new instance of HighWaterMarkChangeDetectionPolicy. </summary>
         /// <param name="highWaterMarkColumnName"> The name of the high water mark column. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="highWaterMarkColumnName"/> is null. </exception>
         public HighWaterMarkChangeDetectionPolicy(string highWaterMarkColumnName)
         {
             if (highWaterMarkColumnName == null)

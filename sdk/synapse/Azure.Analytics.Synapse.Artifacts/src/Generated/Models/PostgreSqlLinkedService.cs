@@ -15,6 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of PostgreSqlLinkedService. </summary>
         /// <param name="connectionString"> The connection string. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         public PostgreSqlLinkedService(object connectionString)
         {
             if (connectionString == null)

@@ -17,6 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of IfConditionActivity. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="expression"> An expression that would evaluate to Boolean. This is used to determine the block of activities (ifTrueActivities or ifFalseActivities) that will be executed. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="expression"/> is null. </exception>
         public IfConditionActivity(string name, Expression expression) : base(name)
         {
             if (name == null)

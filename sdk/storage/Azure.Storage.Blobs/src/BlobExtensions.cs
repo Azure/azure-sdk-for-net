@@ -267,28 +267,28 @@ namespace Azure.Storage.Blobs
             return OrProperties;
         }
 
-        internal static BlobTagItem ToBlobTagItem(this FilterBlobItem filterBlobItem)
+        internal static TaggedBlobItem ToBlobTagItem(this FilterBlobItem filterBlobItem)
         {
             if (filterBlobItem == null)
             {
                 return null;
             }
 
-            return new BlobTagItem
+            return new TaggedBlobItem
             {
                 BlobName = filterBlobItem.BlobName,
                 BlobContainerName = filterBlobItem.BlobContainerName
             };
         }
 
-        internal static List<BlobTagItem> ToBlobTagItems(this IEnumerable<FilterBlobItem> filterBlobItems)
+        internal static List<TaggedBlobItem> ToBlobTagItems(this IEnumerable<FilterBlobItem> filterBlobItems)
         {
             if (filterBlobItems == null)
             {
                 return null;
             }
 
-            List<BlobTagItem> list = new List<BlobTagItem>();
+            List<TaggedBlobItem> list = new List<TaggedBlobItem>();
 
             foreach (FilterBlobItem filterBlobItem in filterBlobItems)
             {

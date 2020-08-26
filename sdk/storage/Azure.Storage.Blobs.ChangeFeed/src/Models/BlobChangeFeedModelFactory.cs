@@ -4,7 +4,7 @@
 using System;
 using Azure.Storage.Blobs.Models;
 
-namespace Azure.Storage.Blobs.ChangeFeed.Models
+namespace Azure.Storage.Blobs.ChangeFeed
 {
     /// <summary>
     /// BlobChangeFeedModelFactory for building mock objects.

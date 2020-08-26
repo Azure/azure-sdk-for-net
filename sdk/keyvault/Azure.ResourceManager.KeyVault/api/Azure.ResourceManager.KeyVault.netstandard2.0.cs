@@ -319,9 +319,9 @@ namespace Azure.ResourceManager.KeyVault.Models
     }
     public partial class PrivateEndpointConnectionItem
     {
-        public PrivateEndpointConnectionItem() { }
-        public Azure.ResourceManager.KeyVault.Models.PrivateEndpoint PrivateEndpoint { get { throw null; } set { } }
-        public Azure.ResourceManager.KeyVault.Models.PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
+        internal PrivateEndpointConnectionItem() { }
+        public Azure.ResourceManager.KeyVault.Models.PrivateEndpoint PrivateEndpoint { get { throw null; } }
+        public Azure.ResourceManager.KeyVault.Models.PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.PrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         public PrivateLinkResource() { }
         public string GroupId { get { throw null; } }
-        public System.Collections.Generic.IList<string> RequiredMembers { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
     }
     public partial class PrivateLinkResourceListResult
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public string Id { get { throw null; } }
         public string Location { get { throw null; } }
         public string Name { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
         public string Type { get { throw null; } }
     }
     public partial class ResourceListResult
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public bool? EnablePurgeProtection { get { throw null; } set { } }
         public bool? EnableSoftDelete { get { throw null; } set { } }
         public Azure.ResourceManager.KeyVault.Models.NetworkRuleSet NetworkAcls { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.PrivateEndpointConnectionItem> PrivateEndpointConnections { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.KeyVault.Models.PrivateEndpointConnectionItem> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.Sku Sku { get { throw null; } set { } }
         public System.Guid TenantId { get { throw null; } set { } }
         public string VaultUri { get { throw null; } set { } }

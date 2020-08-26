@@ -13,7 +13,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
     using Microsoft.Azure.EventHubs.Primitives;
     using Microsoft.Azure.EventHubs.Processor;
     using Microsoft.IdentityModel.Clients.ActiveDirectory;
-    using Microsoft.WindowsAzure.Storage;
+    using Microsoft.Azure.Storage;
     using Xunit;
 
     public class ProcessorTests : ProcessorTestBase

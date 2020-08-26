@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VirtualRouter. </summary>
         public VirtualRouter()
         {
+            VirtualRouterIps = new ChangeTrackingList<string>();
+            Peerings = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of VirtualRouter. </summary>
@@ -30,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="hostedGateway"> The Gateway on which VirtualRouter is hosted. </param>
         /// <param name="peerings"> List of references to VirtualRouterPeerings. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal VirtualRouter(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, long? virtualRouterAsn, IList<string> virtualRouterIps, SubResource hostedSubnet, SubResource hostedGateway, IList<SubResource> peerings, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
+        internal VirtualRouter(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, long? virtualRouterAsn, IList<string> virtualRouterIps, SubResource hostedSubnet, SubResource hostedGateway, IReadOnlyList<SubResource> peerings, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
         {
             Etag = etag;
             VirtualRouterAsn = virtualRouterAsn;
@@ -46,13 +49,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> VirtualRouter ASN. </summary>
         public long? VirtualRouterAsn { get; set; }
         /// <summary> VirtualRouter IPs. </summary>
-        public IList<string> VirtualRouterIps { get; set; }
+        public IList<string> VirtualRouterIps { get; }
         /// <summary> The Subnet on which VirtualRouter is hosted. </summary>
         public SubResource HostedSubnet { get; set; }
         /// <summary> The Gateway on which VirtualRouter is hosted. </summary>
         public SubResource HostedGateway { get; set; }
         /// <summary> List of references to VirtualRouterPeerings. </summary>
-        public IList<SubResource> Peerings { get; }
+        public IReadOnlyList<SubResource> Peerings { get; }
         /// <summary> The provisioning state of the resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

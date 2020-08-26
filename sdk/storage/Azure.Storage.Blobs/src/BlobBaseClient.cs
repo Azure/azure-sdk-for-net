@@ -1621,7 +1621,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.SourceConditions,
                 options?.DestinationConditions,
                 options?.RehydratePriority,
-                options?.IsSealed,
+                options?.ShouldSealDestination,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -1772,7 +1772,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.SourceConditions,
                 options?.DestinationConditions,
                 options?.RehydratePriority,
-                options?.IsSealed,
+                options?.ShouldSealDestination,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -2563,7 +2563,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<bool>> DeleteIfExistsInternal(
+        internal async Task<Response<bool>> DeleteIfExistsInternal(
             DeleteSnapshotsOption snapshotsOption,
             BlobRequestConditions conditions,
             bool async,
@@ -3010,7 +3010,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<BlobProperties>> GetPropertiesInternal(
+        internal async Task<Response<BlobProperties>> GetPropertiesInternal(
             BlobRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
@@ -3762,7 +3762,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<Tags> GetTags(
+        public virtual Response<GetBlobTagResult> GetTags(
             BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             GetTagsInternal(
@@ -3794,7 +3794,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<Tags>> GetTagsAsync(
+        public virtual async Task<Response<GetBlobTagResult>> GetTagsAsync(
             BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await GetTagsInternal(
@@ -3829,7 +3829,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<Tags>> GetTagsInternal(
+        private async Task<Response<GetBlobTagResult>> GetTagsInternal(
             bool async,
             BlobRequestConditions conditions,
             CancellationToken cancellationToken)
@@ -3854,8 +3854,13 @@ namespace Azure.Storage.Blobs.Specialized
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
+                    GetBlobTagResult result = new GetBlobTagResult
+                    {
+                        Tags = response.Value.ToTagDictionary()
+                    };
+
                     return Response.FromValue(
-                        response.Value.ToTagDictionary(),
+                        result,
                         response.GetRawResponse());
                 }
                 catch (Exception ex)

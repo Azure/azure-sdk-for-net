@@ -13,7 +13,11 @@
 /sdk/core/                                      @pakrym @KrzysztofCwalina
 
 # Extensions
-/sdk/extensions/                                @parkym
+/sdk/extensions/                                @pakrym
+
+# Compute
+# PRLabel: %Compute
+/sdk/compute/                                   @bilaakpan-ms @sandido @dkulkarni-ms @haagha @madewithsmiles @MS-syh2qs @grizzlytheodore
 
 # Service teams
 # PRLabel: %AzConfig
@@ -33,7 +37,7 @@
 /sdk/eventgrid/                                 @Kishp01 @ahamad-MS
 
 # PRLabel: %Event Hubs
-/sdk/eventhub/                                  @serkantkaraca @jsquire @kinelski
+/sdk/eventhub/                                  @serkantkaraca @jsquire
 
 # PRLabel: %Azure.Identity
 /sdk/identity/                                  @schaabs @alexanderSher
@@ -53,7 +57,8 @@
 /sdk/servicebus/Microsoft.*/                    @nemakam
 
 # PRLabel: %Storage
-/sdk/storage/                                   @amishra-dev @seanmcc-msft @amnguye @kasobol-msft @tg-msft
+/sdk/storage/                                   @tg-msft
+/sdk/storage/Azure.Storage.*/                   @amishra-dev @seanmcc-msft @amnguye @kasobol-msft
 
 # PRLabel: %Tables
 /sdk/tables/                                    @christothes
@@ -68,7 +73,8 @@
 /common/SmokeTests/                             @AlexGhiondea @schaabs @heaths @tg-msft @jsquire
 
 # Management Plane
-/**/*Management*/                               @isra-fel @erich-wang
+/**/*Management*/                               @allenjzhang  @m-nash @markcowl
+/**/Azure.ResourceManager*/                     @allenjzhang  @m-nash @markcowl
 
 # Reviewers to double check any API changes
 /sdk/**/api/                                    @KrzysztofCwalina @pakrym @tg-msft
@@ -80,6 +86,6 @@
 # Eng Sys
 ###########
 /eng/           @weshaggard @chidozieononiwu @mitchdenny @danieljurek
-/eng/mgmt/      @isra-fel @erich-wang
+/eng/mgmt/      @allenjzhang @m-nash @markcowl
 /**/tests.yml   @danieljurek
 /**/ci.yml      @mitchdenny

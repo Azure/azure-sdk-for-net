@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Days != null)
+            if (Optional.IsDefined(Days))
             {
                 writer.WritePropertyName("days");
                 writer.WriteNumberValue(Days.Value);
             }
-            if (Enabled != null)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled");
                 writer.WriteBooleanValue(Enabled.Value);
@@ -30,30 +30,22 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static RetentionPolicyParameters DeserializeRetentionPolicyParameters(JsonElement element)
         {
-            int? days = default;
-            bool? enabled = default;
+            Optional<int> days = default;
+            Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("days"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     days = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("enabled"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new RetentionPolicyParameters(days, enabled);
+            return new RetentionPolicyParameters(Optional.ToNullable(days), Optional.ToNullable(enabled));
         }
     }
 }

@@ -26,7 +26,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public BackupRestoreRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string apiVersion = "7.2-preview")
         {
             if (apiVersion == null)
@@ -63,6 +63,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
         /// <param name="azureStorageBlobContainerUri"> Azure blob shared access signature token pointing to a valid Azure blob container where full backup needs to be stored. This token needs to be valid for at least next 24 hours from the time of making this call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> is null. </exception>
         public async Task<ResponseWithHeaders<ServiceFullBackupHeaders>> FullBackupAsync(string vaultBaseUrl, SASTokenParameter azureStorageBlobContainerUri = null, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
@@ -86,6 +87,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
         /// <param name="azureStorageBlobContainerUri"> Azure blob shared access signature token pointing to a valid Azure blob container where full backup needs to be stored. This token needs to be valid for at least next 24 hours from the time of making this call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> is null. </exception>
         public ResponseWithHeaders<ServiceFullBackupHeaders> FullBackup(string vaultBaseUrl, SASTokenParameter azureStorageBlobContainerUri = null, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
@@ -124,6 +126,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
         /// <param name="jobId"> The id returned as part of the backup request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> or <paramref name="jobId"/> is null. </exception>
         public async Task<Response<FullBackupDetailsInternal>> FullBackupStatusAsync(string vaultBaseUrl, string jobId, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
@@ -155,6 +158,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
         /// <param name="jobId"> The id returned as part of the backup request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> or <paramref name="jobId"/> is null. </exception>
         public Response<FullBackupDetailsInternal> FullBackupStatus(string vaultBaseUrl, string jobId, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
@@ -206,6 +210,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
         /// <param name="restoreBlobDetails"> The Azure blob SAS token pointing to a folder where the previous successful full backup was stored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> is null. </exception>
         public async Task<ResponseWithHeaders<ServiceFullRestoreOperationHeaders>> FullRestoreOperationAsync(string vaultBaseUrl, RestoreOperationParameters restoreBlobDetails = null, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
@@ -229,6 +234,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
         /// <param name="restoreBlobDetails"> The Azure blob SAS token pointing to a folder where the previous successful full backup was stored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> is null. </exception>
         public ResponseWithHeaders<ServiceFullRestoreOperationHeaders> FullRestoreOperation(string vaultBaseUrl, RestoreOperationParameters restoreBlobDetails = null, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
@@ -267,6 +273,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
         /// <param name="jobId"> The Job Id returned part of the restore operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> or <paramref name="jobId"/> is null. </exception>
         public async Task<Response<RestoreDetailsInternal>> RestoreStatusAsync(string vaultBaseUrl, string jobId, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
@@ -298,6 +305,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
         /// <param name="jobId"> The Job Id returned part of the restore operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> or <paramref name="jobId"/> is null. </exception>
         public Response<RestoreDetailsInternal> RestoreStatus(string vaultBaseUrl, string jobId, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
@@ -352,6 +360,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="keyName"> The name of the key to be restored from the user supplied backup. </param>
         /// <param name="restoreBlobDetails"> The Azure blob SAS token pointing to a folder where the previous successful full backup was stored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> or <paramref name="keyName"/> is null. </exception>
         public async Task<ResponseWithHeaders<ServiceSelectiveKeyRestoreOperationHeaders>> SelectiveKeyRestoreOperationAsync(string vaultBaseUrl, string keyName, SelectiveKeyRestoreOperationParameters restoreBlobDetails = null, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
@@ -380,6 +389,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="keyName"> The name of the key to be restored from the user supplied backup. </param>
         /// <param name="restoreBlobDetails"> The Azure blob SAS token pointing to a folder where the previous successful full backup was stored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> or <paramref name="keyName"/> is null. </exception>
         public ResponseWithHeaders<ServiceSelectiveKeyRestoreOperationHeaders> SelectiveKeyRestoreOperation(string vaultBaseUrl, string keyName, SelectiveKeyRestoreOperationParameters restoreBlobDetails = null, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)

@@ -17,6 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of NotebookLanguageInfo. </summary>
         /// <param name="name"> The programming language which this kernel runs. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public NotebookLanguageInfo(string name)
         {
             if (name == null)

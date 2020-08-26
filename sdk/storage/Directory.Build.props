@@ -30,7 +30,7 @@
     <DefineConstants>DEBUG;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
 
-  <Import Condition="'$(IsClientLibrary)' == 'true'" Project="$(MSBuildThisFileDirectory)..\core\Azure.Core\src\Azure.Core.props" />
+  <Import Condition="'$(IsClientLibrary)' == 'true' AND '$(IsMgmtClientLibrary)' != 'true'" Project="$(MSBuildThisFileDirectory)..\core\Azure.Core\src\Azure.Core.props" />
 
   <!-- Add references for CLIENT LIBRARY projects -->
   <ItemGroup Condition="'$(IsTestProject)' != 'true' and '$(IsClientLibrary)' == 'true'">

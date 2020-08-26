@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     public partial class PrivateEndpointConnectionItem
     {
         /// <summary> Initializes a new instance of PrivateEndpointConnectionItem. </summary>
-        public PrivateEndpointConnectionItem()
+        internal PrivateEndpointConnectionItem()
         {
         }
 
@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Properties of the private endpoint object. </summary>
-        public PrivateEndpoint PrivateEndpoint { get; set; }
+        public PrivateEndpoint PrivateEndpoint { get; }
         /// <summary> Approval state of the private link connection. </summary>
-        public PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
+        public PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; }
         /// <summary> Provisioning state of the private endpoint connection. </summary>
         public PrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
     }

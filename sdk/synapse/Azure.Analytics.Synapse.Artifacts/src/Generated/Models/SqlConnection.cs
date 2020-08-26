@@ -18,6 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of SqlConnection. </summary>
         /// <param name="type"> The type of the connection. </param>
         /// <param name="name"> The identifier of the connection. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public SqlConnection(SqlConnectionType type, string name)
         {
             if (name == null)

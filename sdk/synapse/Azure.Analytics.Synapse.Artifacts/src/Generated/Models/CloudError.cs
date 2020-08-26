@@ -17,6 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of CloudError. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
         internal CloudError(string code, string message)
         {
             if (code == null)

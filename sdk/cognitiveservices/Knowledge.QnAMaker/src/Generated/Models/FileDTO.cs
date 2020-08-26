@@ -74,17 +74,6 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "FileUri");
             }
-            if (FileName != null)
-            {
-                if (FileName.Length > 200)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "FileName", 200);
-                }
-                if (FileName.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "FileName", 1);
-                }
-            }
         }
     }
 }

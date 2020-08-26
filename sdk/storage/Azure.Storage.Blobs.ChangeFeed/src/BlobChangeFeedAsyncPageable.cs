@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Storage.Blobs.ChangeFeed.Models;
 
 namespace Azure.Storage.Blobs.ChangeFeed
 {

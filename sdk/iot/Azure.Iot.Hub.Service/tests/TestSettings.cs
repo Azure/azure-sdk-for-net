@@ -10,13 +10,15 @@ using Microsoft.Extensions.Configuration;
 namespace Azure.Iot.Hub.Service.Tests
 {
     /// <summary>
-    /// These are the settings that will be used by the end-to-end tests tests.
-    /// The json files configured in the config will load the settings specific to a user.
+    /// These are the settings that will be used by the end-to-end tests.
+    /// The json files configured in the configuration will load the settings specific to a user.
     /// </summary>
     public class TestSettings
     {
         public const string IotHubEnvironmentVariablesPrefix = "IOT";
         public const string IotHubConnectionString = "IOT_HUB_CONNECTION_STRING";
+        public const string StorageSasToken = "STORAGE_SAS_TOKEN";
+        public const string TestModeEnvVariable = "AZURE_TEST_MODE";
 
         public static TestSettings Instance { get; private set; }
 
@@ -41,7 +43,7 @@ namespace Azure.Iot.Hub.Service.Tests
 
             string userName = Environment.UserName;
 
-            // Initialize the settings related to IoT Hub instance and auth
+            // Initialize the settings related to IoT Hub instance and authentication
             var testSettingsConfigBuilder = new ConfigurationBuilder();
 
             string testSettingsCommonPath = Path.Combine(workingDirectory, "config", "common.config.json");
@@ -57,6 +59,16 @@ namespace Azure.Iot.Hub.Service.Tests
 
             // This will set the values from the above config files into the TestSettings Instance.
             Instance = config.Get<TestSettings>();
+
+            // Override the test mode if the test mode environment variable was specified.
+            string testModeEnvVariable = Environment.GetEnvironmentVariable(TestModeEnvVariable);
+            if (!string.IsNullOrEmpty(testModeEnvVariable))
+            {
+                Instance.TestMode = (RecordedTestMode)Enum.Parse(
+                    typeof(RecordedTestMode),
+                    testModeEnvVariable);
+            }
+
             Instance.WorkingDirectory = workingDirectory;
         }
     }

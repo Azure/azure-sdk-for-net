@@ -16,6 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Initializes a new instance of EdgeNGramTokenizer. </summary>
         /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public EdgeNGramTokenizer(string name) : base(name)
         {
             if (name == null)
