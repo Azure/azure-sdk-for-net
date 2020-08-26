@@ -1,10 +1,12 @@
 # Publishing Events to an Event Grid Topic
 
-This sample demonstrates how to publish both Event Grid and CloudEvent 1.0 schema events to the Event Grid service. You can publish events from your own application using the `EventGridPublisherClient`. To begin, separate custom Event Grid topics accepting events of the Event Grid and CloudEvent 1.0 schema must be created.
+This sample demonstrates how to publish both Event Grid and CloudEvent 1.0 schema events to the Event Grid service. You can publish events from your own application using the `EventGridPublisherClient`.
+
+To begin, create separate custom Event Grid topics accepting events of the Event Grid and CloudEvent 1.0 schema. See the [Prerequisites](../#prerequisites) section of the README for more instructions on creating custom topics.
 
 ## Creating and Authenticating `EventGridPublisherClient`
 Once you have your access key and topic endpoint, you can create the publisher client using the `AzureKeyCredential` class as follows:
-```csharp CreateClient
+```csharp Snippet:CreateClient
 EventGridPublisherClient client = new EventGridPublisherClient(
     new Uri(topicEndpoint),
     new AzureKeyCredential(topicAccessKey));
@@ -73,3 +75,8 @@ List<CloudEvent> eventsList = new List<CloudEvent>
 // Send the events
 await client.SendEventsAsync(eventsList);
 ```
+
+## Source
+
+To view the full example source, see:
+- [Sample1_SendEventsToTopic.cs](../tests/Samples/Sample1_SendEventsToTopicAndDomain.cs)

@@ -16,15 +16,8 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
 {
     public partial class EventGridSamples : EventGridLiveTestBase
     {
-        private readonly JsonObjectSerializer _myCustomSerializer = new JsonObjectSerializer(
-            new JsonSerializerOptions()
-            {
-                AllowTrailingCommas = true,
-                PropertyNameCaseInsensitive = true
-            });
-
         [Test]
-        public async Task ReceiveAndDeserializeEventGridEvents()
+        public async Task NonGenericReceiveAndDeserializeEventGridEvents()
         {
             // Create the ServiceBus client and receiver
             ServiceBusClient serviceBusClient = new ServiceBusClient("SERVICE BUS CONNECTION STRING");
@@ -47,9 +40,6 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
             // If the event is a system event, GetData() should return the correct system event type
             switch (egEvent.GetData())
             {
-                // Note that Event Grid requires you to prove ownership of your Webhook endpoint before it starts delivering events to that endpoint.
-                // At the time of event subscription creation, Event Grid sends a subscription validation event to your endpoint, as seen below.
-                // Learn more about completing the handshake here: Webhook event delivery
                 case SubscriptionValidationEventData subscriptionValidated:
                     Console.WriteLine(subscriptionValidated.ValidationCode);
                     break;
@@ -58,12 +48,36 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
                     break;
                 case BinaryData unknownType:
                     // An unrecognized event type - GetData() returns BinaryData with the serialized JSON payload
-                    // You can use BinaryData methods to deserialize the payload
-                    TestPayload deserializedEventData = await unknownType.DeserializeAsync<TestPayload>();
-                    Console.WriteLine(deserializedEventData.Name);
+                    if (egEvent.EventType == "MyApp.Models.CustomEventType")
+                    {
+                        // You can use BinaryData methods to deserialize the payload
+                        TestPayload deserializedEventData = await unknownType.DeserializeAsync<TestPayload>();
+                        Console.WriteLine(deserializedEventData.Name);
+                    }
                     break;
             }
             #endregion
+        }
+
+        public async Task GenericReceiveAndDeserializeEventGridEvents()
+        {
+            JsonObjectSerializer myCustomSerializer = new JsonObjectSerializer(
+            new JsonSerializerOptions()
+            {
+                AllowTrailingCommas = true,
+                PropertyNameCaseInsensitive = true
+            });
+
+            // Create the ServiceBus client and receiver
+            ServiceBusClient serviceBusClient = new ServiceBusClient("SERVICE BUS CONNECTION STRING");
+            ServiceBusReceiver serviceBusReceiver = serviceBusClient.CreateReceiver("SERVICE BUS QUEUE NAME");
+
+            ServiceBusReceivedMessage receivedMessage = await serviceBusReceiver.ReceiveMessageAsync();
+            await serviceBusReceiver.CompleteMessageAsync(receivedMessage);
+
+            // Event Grid delivers a single event per message when routing events to a Service Bus Queue or Topic
+            // So egEvents should only have one event
+            EventGridEvent egEvent = EventGridEvent.Parse(receivedMessage.Body)[0];
 
             #region Snippet:DeserializePayloadUsingGenericGetData
             switch (egEvent.EventType)
@@ -75,7 +89,7 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
                     break;
                 case "MyApp.Models.CustomEventType":
                     // One can also specify a custom ObjectSerializer as needed to deserialize the payload correctly
-                    TestPayload testPayload = await egEvent.GetDataAsync<TestPayload>(_myCustomSerializer);
+                    TestPayload testPayload = await egEvent.GetDataAsync<TestPayload>(myCustomSerializer);
                     Console.WriteLine(testPayload.Name);
                     break;
                 case "Microsoft.EventGrid.SubscriptionValidationEvent":

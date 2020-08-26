@@ -16,6 +16,7 @@ Use the client library for Azure Event Grid to:
 Install the client library from NuGet:
 
 ```
+// Hasn't been released yet!
 ```
 
 ### Prerequisites
@@ -174,8 +175,11 @@ switch (egEvent.GetData())
     case BinaryData unknownType:
         // An unrecognized event type - GetData() returns BinaryData with the serialized JSON payload
         // You can use BinaryData methods to deserialize the payload
-        TestPayload deserializedEventData = await unknownType.DeserializeAsync<TestPayload>();
-        Console.WriteLine(deserializedEventData.Name);
+        if (egEvent.EventType == "MyApp.Models.CustomEventType")
+        {
+            TestPayload deserializedEventData = await unknownType.DeserializeAsync<TestPayload>();
+            Console.WriteLine(deserializedEventData.Name);
+        }
         break;
 }
 ```
@@ -184,12 +188,13 @@ Here is an example calling `GetData<T>()`. In order to deserialize to the correc
 switch (egEvent.EventType)
 {
     case "Contoso.Items.ItemReceived":
+        // By default, GetData uses JsonObjectSerializer to deserialize the payload
         ContosoItemReceivedEventData itemReceived = egEvent.GetData<ContosoItemReceivedEventData>();
         Console.WriteLine(itemReceived.ItemSku);
         break;
     case "MyApp.Models.CustomEventType":
         // One can also specify a custom ObjectSerializer as needed to deserialize the payload correctly
-        TestPayload testPayload = egEvent.GetData<TestPayload>(_myCustomSerializer);
+        TestPayload testPayload = egEvent.GetData<TestPayload>(myCustomSerializer);
         Console.WriteLine(testPayload.Name);
         break;
     case "Microsoft.EventGrid.SubscriptionValidationEvent":
