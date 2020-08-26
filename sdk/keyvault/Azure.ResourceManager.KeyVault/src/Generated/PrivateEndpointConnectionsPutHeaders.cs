@@ -17,7 +17,9 @@ namespace Azure.ResourceManager.KeyVault
         {
             _response = response;
         }
+        /// <summary> (specified only if operation does not finish synchronously) The recommended number of seconds to wait before calling the URI specified in Azure-AsyncOperation. </summary>
         public int? RetryAfter => _response.Headers.TryGetValue("Retry-After", out int? value) ? value : null;
+        /// <summary> (specified only if operation does not finish synchronously) The URI to poll for completion status. The response of this URI may be synchronous or asynchronous. </summary>
         public string AzureAsyncOperation => _response.Headers.TryGetValue("Azure-AsyncOperation", out string value) ? value : null;
     }
 }

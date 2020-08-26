@@ -10,37 +10,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class PrivateEndpointConnectionItem : IUtf8JsonSerializable
+    public partial class PrivateEndpointConnectionItem
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("properties");
-            writer.WriteStartObject();
-            if (PrivateEndpoint != null)
-            {
-                writer.WritePropertyName("privateEndpoint");
-                writer.WriteObjectValue(PrivateEndpoint);
-            }
-            if (PrivateLinkServiceConnectionState != null)
-            {
-                writer.WritePropertyName("privateLinkServiceConnectionState");
-                writer.WriteObjectValue(PrivateLinkServiceConnectionState);
-            }
-            if (ProvisioningState != null)
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            writer.WriteEndObject();
-            writer.WriteEndObject();
-        }
-
         internal static PrivateEndpointConnectionItem DeserializePrivateEndpointConnectionItem(JsonElement element)
         {
-            PrivateEndpoint privateEndpoint = default;
-            PrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
-            PrivateEndpointConnectionProvisioningState? provisioningState = default;
+            Optional<PrivateEndpoint> privateEndpoint = default;
+            Optional<PrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            Optional<PrivateEndpointConnectionProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"))
@@ -49,28 +25,16 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         if (property0.NameEquals("privateEndpoint"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             privateEndpoint = PrivateEndpoint.DeserializePrivateEndpoint(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             privateLinkServiceConnectionState = PrivateLinkServiceConnectionState.DeserializePrivateLinkServiceConnectionState(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             provisioningState = new PrivateEndpointConnectionProvisioningState(property0.Value.GetString());
                             continue;
                         }
@@ -78,7 +42,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new PrivateEndpointConnectionItem(privateEndpoint, privateLinkServiceConnectionState, provisioningState);
+            return new PrivateEndpointConnectionItem(privateEndpoint.Value, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

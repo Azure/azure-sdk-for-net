@@ -30,7 +30,7 @@ namespace Azure.Graph.Rbac
         /// <param name="tenantID"> The tenant ID. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantID"/> or <paramref name="apiVersion"/> is null. </exception>
         public DeletedApplicationsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string tenantID, Uri endpoint = null, string apiVersion = "1.6")
         {
             if (tenantID == null)
@@ -70,6 +70,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Restores the deleted application in the directory. </summary>
         /// <param name="objectId"> Application object ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
         public async Task<Response<Application>> RestoreAsync(string objectId, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
@@ -85,14 +86,7 @@ namespace Azure.Graph.Rbac
                     {
                         Application value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Application.DeserializeApplication(document.RootElement);
-                        }
+                        value = Application.DeserializeApplication(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -103,6 +97,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Restores the deleted application in the directory. </summary>
         /// <param name="objectId"> Application object ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
         public Response<Application> Restore(string objectId, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
@@ -118,14 +113,7 @@ namespace Azure.Graph.Rbac
                     {
                         Application value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Application.DeserializeApplication(document.RootElement);
-                        }
+                        value = Application.DeserializeApplication(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -165,14 +153,7 @@ namespace Azure.Graph.Rbac
                     {
                         ApplicationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
-                        }
+                        value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -193,14 +174,7 @@ namespace Azure.Graph.Rbac
                     {
                         ApplicationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
-                        }
+                        value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -227,6 +201,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Hard-delete an application. </summary>
         /// <param name="applicationObjectId"> Application object ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationObjectId"/> is null. </exception>
         public async Task<Response> HardDeleteAsync(string applicationObjectId, CancellationToken cancellationToken = default)
         {
             if (applicationObjectId == null)
@@ -248,6 +223,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Hard-delete an application. </summary>
         /// <param name="applicationObjectId"> Application object ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationObjectId"/> is null. </exception>
         public Response HardDelete(string applicationObjectId, CancellationToken cancellationToken = default)
         {
             if (applicationObjectId == null)
@@ -285,6 +261,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets a list of deleted applications in the directory. </summary>
         /// <param name="nextLink"> Next link for the list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<ApplicationListResult>> ListNextAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -300,14 +277,7 @@ namespace Azure.Graph.Rbac
                     {
                         ApplicationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
-                        }
+                        value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -318,6 +288,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets a list of deleted applications in the directory. </summary>
         /// <param name="nextLink"> Next link for the list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<ApplicationListResult> ListNext(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -333,14 +304,7 @@ namespace Azure.Graph.Rbac
                     {
                         ApplicationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
-                        }
+                        value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -363,6 +327,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets a list of deleted applications in the directory. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<ApplicationListResult>> ListNextNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -378,14 +343,7 @@ namespace Azure.Graph.Rbac
                     {
                         ApplicationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
-                        }
+                        value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -396,6 +354,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets a list of deleted applications in the directory. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<ApplicationListResult> ListNextNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -411,14 +370,7 @@ namespace Azure.Graph.Rbac
                     {
                         ApplicationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
-                        }
+                        value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

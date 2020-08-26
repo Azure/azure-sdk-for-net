@@ -64,7 +64,9 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// application capacity settings.</param>
         /// <param name="metrics">List of application capacity metric
         /// description.</param>
-        public ApplicationResourceUpdate(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), string typeVersion = default(string), IDictionary<string, string> parameters = default(IDictionary<string, string>), ApplicationUpgradePolicy upgradePolicy = default(ApplicationUpgradePolicy), long? minimumNodes = default(long?), long? maximumNodes = default(long?), bool? removeApplicationCapacity = default(bool?), IList<ApplicationMetricDescription> metrics = default(IList<ApplicationMetricDescription>))
+        /// <param name="managedIdentities">List of user assigned identities
+        /// for the application, each mapped to a friendly name.</param>
+        public ApplicationResourceUpdate(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), string typeVersion = default(string), IDictionary<string, string> parameters = default(IDictionary<string, string>), ApplicationUpgradePolicy upgradePolicy = default(ApplicationUpgradePolicy), long? minimumNodes = default(long?), long? maximumNodes = default(long?), bool? removeApplicationCapacity = default(bool?), IList<ApplicationMetricDescription> metrics = default(IList<ApplicationMetricDescription>), IList<ApplicationUserAssignedIdentity> managedIdentities = default(IList<ApplicationUserAssignedIdentity>))
             : base(id, name, type, location, tags, etag)
         {
             TypeVersion = typeVersion;
@@ -74,6 +76,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
             MaximumNodes = maximumNodes;
             RemoveApplicationCapacity = removeApplicationCapacity;
             Metrics = metrics;
+            ManagedIdentities = managedIdentities;
             CustomInit();
         }
 
@@ -137,6 +140,13 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         public IList<ApplicationMetricDescription> Metrics { get; set; }
 
         /// <summary>
+        /// Gets or sets list of user assigned identities for the application,
+        /// each mapped to a friendly name.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.managedIdentities")]
+        public IList<ApplicationUserAssignedIdentity> ManagedIdentities { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -155,6 +165,16 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
             if (MaximumNodes < 0)
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "MaximumNodes", 0);
+            }
+            if (ManagedIdentities != null)
+            {
+                foreach (var element in ManagedIdentities)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }

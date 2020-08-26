@@ -16,7 +16,7 @@ namespace Azure.Iot.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (DeviceContent != null)
+            if (Optional.IsCollectionDefined(DeviceContent))
             {
                 writer.WritePropertyName("deviceContent");
                 writer.WriteStartObject();
@@ -27,7 +27,7 @@ namespace Azure.Iot.Hub.Service.Models
                 }
                 writer.WriteEndObject();
             }
-            if (ModulesContent != null)
+            if (Optional.IsCollectionDefined(ModulesContent))
             {
                 writer.WritePropertyName("modulesContent");
                 writer.WriteStartObject();
@@ -38,7 +38,7 @@ namespace Azure.Iot.Hub.Service.Models
                 }
                 writer.WriteEndObject();
             }
-            if (ModuleContent != null)
+            if (Optional.IsCollectionDefined(ModuleContent))
             {
                 writer.WritePropertyName("moduleContent");
                 writer.WriteStartObject();
@@ -54,76 +54,43 @@ namespace Azure.Iot.Hub.Service.Models
 
         internal static ConfigurationContent DeserializeConfigurationContent(JsonElement element)
         {
-            IDictionary<string, object> deviceContent = default;
-            IDictionary<string, object> modulesContent = default;
-            IDictionary<string, object> moduleContent = default;
+            Optional<IDictionary<string, object>> deviceContent = default;
+            Optional<IDictionary<string, object>> modulesContent = default;
+            Optional<IDictionary<string, object>> moduleContent = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceContent"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetObject());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetObject());
                     }
                     deviceContent = dictionary;
                     continue;
                 }
                 if (property.NameEquals("modulesContent"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetObject());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetObject());
                     }
                     modulesContent = dictionary;
                     continue;
                 }
                 if (property.NameEquals("moduleContent"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetObject());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetObject());
                     }
                     moduleContent = dictionary;
                     continue;
                 }
             }
-            return new ConfigurationContent(deviceContent, modulesContent, moduleContent);
+            return new ConfigurationContent(Optional.ToDictionary(deviceContent), Optional.ToDictionary(modulesContent), Optional.ToDictionary(moduleContent));
         }
     }
 }

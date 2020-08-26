@@ -929,17 +929,40 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         /// <summary>
-        ///   Performs the actions needed to open a generic AMQP object, such
+        ///   Performs the actions needed to open an AMQP object, such
         ///   as a session or link for use.
         /// </summary>
         ///
         /// <param name="target">The target AMQP object to open.</param>
         /// <param name="timeout">The timeout to apply when opening the link.</param>
         ///
-        protected virtual Task OpenAmqpObjectAsync(
+        protected virtual async Task OpenAmqpObjectAsync(
             AmqpObject target,
-            TimeSpan timeout) =>
-            target.OpenAsync(timeout);
+            TimeSpan timeout)
+        {
+            try
+            {
+                await target.OpenAsync(timeout).ConfigureAwait(false);
+            }
+            catch
+            {
+                switch (target)
+                {
+                    case AmqpLink linkTarget:
+                        linkTarget.Session?.SafeClose();
+                        break;
+                    case RequestResponseAmqpLink linkTarget:
+                        linkTarget.Session?.SafeClose();
+                        break;
+
+                    default:
+                        break;
+                }
+
+                target.SafeClose();
+                throw;
+            }
+        }
 
         /// <summary>
         ///   Requests authorization for a connection or link using a connection via the CBS mechanism.

@@ -54,27 +54,13 @@ namespace Azure.ResourceManager.Resources
         Application IOperationSource<Application>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return Application.DeserializeApplication(document.RootElement);
-            }
+            return Application.DeserializeApplication(document.RootElement);
         }
 
         async ValueTask<Application> IOperationSource<Application>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return Application.DeserializeApplication(document.RootElement);
-            }
+            return Application.DeserializeApplication(document.RootElement);
         }
     }
 }

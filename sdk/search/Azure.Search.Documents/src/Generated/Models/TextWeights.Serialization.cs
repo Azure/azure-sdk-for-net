@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
@@ -17,21 +16,14 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Weights.Any())
+            writer.WritePropertyName("weights");
+            writer.WriteStartObject();
+            foreach (var item in Weights)
             {
-                writer.WritePropertyName("weights");
-                writer.WriteStartObject();
-                foreach (var item in Weights)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteNumberValue(item.Value);
-                }
-                writer.WriteEndObject();
+                writer.WritePropertyName(item.Key);
+                writer.WriteNumberValue(item.Value);
             }
-            else
-            {
-                writer.WriteNull("weights");
-            }
+            writer.WriteEndObject();
             writer.WriteEndObject();
         }
 

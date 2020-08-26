@@ -15,7 +15,7 @@ namespace Azure.Management.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Delete != null)
+            if (Optional.IsDefined(Delete))
             {
                 writer.WritePropertyName("delete");
                 writer.WriteObjectValue(Delete);
@@ -25,20 +25,16 @@ namespace Azure.Management.Storage.Models
 
         internal static ManagementPolicySnapShot DeserializeManagementPolicySnapShot(JsonElement element)
         {
-            DateAfterCreation delete = default;
+            Optional<DateAfterCreation> delete = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("delete"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     delete = DateAfterCreation.DeserializeDateAfterCreation(property.Value);
                     continue;
                 }
             }
-            return new ManagementPolicySnapShot(delete);
+            return new ManagementPolicySnapShot(delete.Value);
         }
     }
 }

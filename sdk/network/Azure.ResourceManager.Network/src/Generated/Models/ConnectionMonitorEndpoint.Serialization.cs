@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId");
                 writer.WriteStringValue(ResourceId);
             }
-            if (Address != null)
+            if (Optional.IsDefined(Address))
             {
                 writer.WritePropertyName("address");
                 writer.WriteStringValue(Address);
             }
-            if (Filter != null)
+            if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter");
                 writer.WriteObjectValue(Filter);
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.Network.Models
         internal static ConnectionMonitorEndpoint DeserializeConnectionMonitorEndpoint(JsonElement element)
         {
             string name = default;
-            string resourceId = default;
-            string address = default;
-            ConnectionMonitorEndpointFilter filter = default;
+            Optional<string> resourceId = default;
+            Optional<string> address = default;
+            Optional<ConnectionMonitorEndpointFilter> filter = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -50,33 +50,21 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("resourceId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     resourceId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("address"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     address = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("filter"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     filter = ConnectionMonitorEndpointFilter.DeserializeConnectionMonitorEndpointFilter(property.Value);
                     continue;
                 }
             }
-            return new ConnectionMonitorEndpoint(name, resourceId, address, filter);
+            return new ConnectionMonitorEndpoint(name, resourceId.Value, address.Value, filter.Value);
         }
     }
 }

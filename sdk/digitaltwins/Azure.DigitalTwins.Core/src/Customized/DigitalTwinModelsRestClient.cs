@@ -8,7 +8,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.DigitalTwins.Core.Models;
 using Azure.DigitalTwins.Core.Serialization;
 
 namespace Azure.DigitalTwins.Core
@@ -164,6 +163,7 @@ namespace Azure.DigitalTwins.Core
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json; charset=utf-8");
+            request.Headers.Add("Accept", "application/json");
             if (models != null)
             {
                 string modelsJsonArray = PayloadHelper.BuildArrayPayload(models);
@@ -186,6 +186,7 @@ namespace Azure.DigitalTwins.Core
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json; charset=utf-8");
+            request.Headers.Add("Accept", "application/json");
             if (modelUpdates != null)
             {
                 string modelUpdatesArray = PayloadHelper.BuildArrayPayload(modelUpdates);
@@ -195,6 +196,7 @@ namespace Azure.DigitalTwins.Core
         }
 
         #region null overrides
+
         // The following methods are only declared so that autorest does not create these functions in the generated code.
         // For methods that we need to override, when the parameter list is the same, autorest knows not to generate them again.
         // When the parameter list changes, autorest generates the methods again.
@@ -216,6 +218,7 @@ namespace Azure.DigitalTwins.Core
         private HttpMessage CreateAddRequest(IEnumerable<object> models) => null;
 
 #pragma warning restore CA1801, IDE0051, IDE0060 // Remove unused parameter
-        #endregion
+
+        #endregion null overrides
     }
 }

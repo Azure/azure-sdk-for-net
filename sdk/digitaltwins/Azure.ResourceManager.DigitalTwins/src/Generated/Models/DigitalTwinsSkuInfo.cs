@@ -11,19 +11,13 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     public partial class DigitalTwinsSkuInfo
     {
         /// <summary> Initializes a new instance of DigitalTwinsSkuInfo. </summary>
-        public DigitalTwinsSkuInfo()
-        {
-            Name = "F1";
-        }
-
-        /// <summary> Initializes a new instance of DigitalTwinsSkuInfo. </summary>
         /// <param name="name"> The name of the SKU. </param>
-        internal DigitalTwinsSkuInfo(string name)
+        public DigitalTwinsSkuInfo(DigitalTwinsSku name)
         {
             Name = name;
         }
 
         /// <summary> The name of the SKU. </summary>
-        public string Name { get; set; }
+        public DigitalTwinsSku Name { get; set; }
     }
 }

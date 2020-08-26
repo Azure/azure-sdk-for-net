@@ -15,12 +15,12 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (MinLength != null)
+            if (Optional.IsDefined(MinLength))
             {
                 writer.WritePropertyName("min");
                 writer.WriteNumberValue(MinLength.Value);
             }
-            if (MaxLength != null)
+            if (Optional.IsDefined(MaxLength))
             {
                 writer.WritePropertyName("max");
                 writer.WriteNumberValue(MaxLength.Value);
@@ -34,27 +34,19 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static LengthTokenFilter DeserializeLengthTokenFilter(JsonElement element)
         {
-            int? min = default;
-            int? max = default;
+            Optional<int> min = default;
+            Optional<int> max = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("min"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     min = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("max"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     max = property.Value.GetInt32();
                     continue;
                 }
@@ -69,7 +61,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new LengthTokenFilter(odataType, name, min, max);
+            return new LengthTokenFilter(odataType, name, Optional.ToNullable(min), Optional.ToNullable(max));
         }
     }
 }

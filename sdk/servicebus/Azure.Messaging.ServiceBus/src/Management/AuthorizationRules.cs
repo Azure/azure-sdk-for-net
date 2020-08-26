@@ -22,6 +22,18 @@ namespace Azure.Messaging.ServiceBus.Management
             return rules;
         }
 
+        internal AuthorizationRules Clone()
+        {
+            var rules = new AuthorizationRules();
+            foreach (AuthorizationRule rule in this)
+            {
+                rules.Add(rule.Clone());
+            }
+            return rules;
+        }
+
+        internal AuthorizationRules() { }
+
         internal static AuthorizationRules ParseFromXElement(XElement xElement)
         {
             var rules = new AuthorizationRules();

@@ -27,7 +27,21 @@ namespace Azure.Core.Pipeline
 
         public override int Read(byte[] buffer, int offset, int count)
         {
-            return _stream.Read(buffer, offset, count);
+            var source = StartTimeout(default, out bool dispose);
+            try
+            {
+                return _stream.Read(buffer, offset, count);
+            }
+            // We dispose stream on timeout so catch and check if cancellation token was cancelled
+            catch (ObjectDisposedException)
+            {
+                source.Token.ThrowIfCancellationRequested();
+                throw;
+            }
+            finally
+            {
+                StopTimeout(source, dispose);
+            }
         }
 
         public override async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)

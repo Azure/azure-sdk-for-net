@@ -17,17 +17,17 @@ namespace Azure.Iot.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (SchemaVersion != null)
+            if (Optional.IsDefined(SchemaVersion))
             {
                 writer.WritePropertyName("schemaVersion");
                 writer.WriteStringValue(SchemaVersion);
             }
-            if (Labels != null)
+            if (Optional.IsCollectionDefined(Labels))
             {
                 writer.WritePropertyName("labels");
                 writer.WriteStartObject();
@@ -38,42 +38,42 @@ namespace Azure.Iot.Hub.Service.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Content != null)
+            if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content");
                 writer.WriteObjectValue(Content);
             }
-            if (TargetCondition != null)
+            if (Optional.IsDefined(TargetCondition))
             {
                 writer.WritePropertyName("targetCondition");
                 writer.WriteStringValue(TargetCondition);
             }
-            if (CreatedTimeUtc != null)
+            if (Optional.IsDefined(CreatedTimeUtc))
             {
                 writer.WritePropertyName("createdTimeUtc");
                 writer.WriteStringValue(CreatedTimeUtc.Value, "O");
             }
-            if (LastUpdatedTimeUtc != null)
+            if (Optional.IsDefined(LastUpdatedTimeUtc))
             {
                 writer.WritePropertyName("lastUpdatedTimeUtc");
                 writer.WriteStringValue(LastUpdatedTimeUtc.Value, "O");
             }
-            if (Priority != null)
+            if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority");
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (SystemMetrics != null)
+            if (Optional.IsDefined(SystemMetrics))
             {
                 writer.WritePropertyName("systemMetrics");
                 writer.WriteObjectValue(SystemMetrics);
             }
-            if (Metrics != null)
+            if (Optional.IsDefined(Metrics))
             {
                 writer.WritePropertyName("metrics");
                 writer.WriteObjectValue(Metrics);
             }
-            if (Etag != null)
+            if (Optional.IsDefined(Etag))
             {
                 writer.WritePropertyName("etag");
                 writer.WriteStringValue(Etag);
@@ -83,132 +83,81 @@ namespace Azure.Iot.Hub.Service.Models
 
         internal static TwinConfiguration DeserializeTwinConfiguration(JsonElement element)
         {
-            string id = default;
-            string schemaVersion = default;
-            IDictionary<string, string> labels = default;
-            ConfigurationContent content = default;
-            string targetCondition = default;
-            DateTimeOffset? createdTimeUtc = default;
-            DateTimeOffset? lastUpdatedTimeUtc = default;
-            int? priority = default;
-            ConfigurationMetrics systemMetrics = default;
-            ConfigurationMetrics metrics = default;
-            string etag = default;
+            Optional<string> id = default;
+            Optional<string> schemaVersion = default;
+            Optional<IDictionary<string, string>> labels = default;
+            Optional<ConfigurationContent> content = default;
+            Optional<string> targetCondition = default;
+            Optional<DateTimeOffset> createdTimeUtc = default;
+            Optional<DateTimeOffset> lastUpdatedTimeUtc = default;
+            Optional<int> priority = default;
+            Optional<ConfigurationMetrics> systemMetrics = default;
+            Optional<ConfigurationMetrics> metrics = default;
+            Optional<string> etag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("schemaVersion"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     schemaVersion = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("labels"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     labels = dictionary;
                     continue;
                 }
                 if (property.NameEquals("content"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     content = ConfigurationContent.DeserializeConfigurationContent(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targetCondition"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     targetCondition = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("createdTimeUtc"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     createdTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("lastUpdatedTimeUtc"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     lastUpdatedTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("priority"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     priority = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("systemMetrics"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     systemMetrics = ConfigurationMetrics.DeserializeConfigurationMetrics(property.Value);
                     continue;
                 }
                 if (property.NameEquals("metrics"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     metrics = ConfigurationMetrics.DeserializeConfigurationMetrics(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
             }
-            return new TwinConfiguration(id, schemaVersion, labels, content, targetCondition, createdTimeUtc, lastUpdatedTimeUtc, priority, systemMetrics, metrics, etag);
+            return new TwinConfiguration(id.Value, schemaVersion.Value, Optional.ToDictionary(labels), content.Value, targetCondition.Value, Optional.ToNullable(createdTimeUtc), Optional.ToNullable(lastUpdatedTimeUtc), Optional.ToNullable(priority), systemMetrics.Value, metrics.Value, etag.Value);
         }
     }
 }

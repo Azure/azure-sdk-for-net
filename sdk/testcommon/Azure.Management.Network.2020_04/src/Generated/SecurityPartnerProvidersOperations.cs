@@ -118,6 +118,7 @@ namespace Azure.Management.Network
         /// <summary> Lists all Security Partner Providers in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual AsyncPageable<SecurityPartnerProvider> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -161,6 +162,7 @@ namespace Azure.Management.Network
         /// <summary> Lists all Security Partner Providers in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual Pageable<SecurityPartnerProvider> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -279,6 +281,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="securityPartnerProviderName"> The name of the Security Partner Provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="securityPartnerProviderName"/> is null. </exception>
         public virtual async Task<SecurityPartnerProvidersDeleteOperation> StartDeleteAsync(string resourceGroupName, string securityPartnerProviderName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -308,6 +311,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="securityPartnerProviderName"> The name of the Security Partner Provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="securityPartnerProviderName"/> is null. </exception>
         public virtual SecurityPartnerProvidersDeleteOperation StartDelete(string resourceGroupName, string securityPartnerProviderName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -338,6 +342,7 @@ namespace Azure.Management.Network
         /// <param name="securityPartnerProviderName"> The name of the Security Partner Provider. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Security Partner Provider operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="securityPartnerProviderName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual async Task<SecurityPartnerProvidersCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string securityPartnerProviderName, SecurityPartnerProvider parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -372,6 +377,7 @@ namespace Azure.Management.Network
         /// <param name="securityPartnerProviderName"> The name of the Security Partner Provider. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Security Partner Provider operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="securityPartnerProviderName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual SecurityPartnerProvidersCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string securityPartnerProviderName, SecurityPartnerProvider parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

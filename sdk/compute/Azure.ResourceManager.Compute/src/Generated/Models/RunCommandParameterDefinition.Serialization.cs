@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Compute.Models
         {
             string name = default;
             string type = default;
-            string defaultValue = default;
-            bool? required = default;
+            Optional<string> defaultValue = default;
+            Optional<bool> required = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -32,24 +32,16 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("defaultValue"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     defaultValue = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("required"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     required = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new RunCommandParameterDefinition(name, type, defaultValue, required);
+            return new RunCommandParameterDefinition(name, type, defaultValue.Value, Optional.ToNullable(required));
         }
     }
 }

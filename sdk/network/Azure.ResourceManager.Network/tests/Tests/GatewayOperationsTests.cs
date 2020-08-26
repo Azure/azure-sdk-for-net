@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Xml;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Management.Resources;
 using Azure.Management.Resources.Models;
@@ -78,12 +79,12 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             VirtualNetworkGateway virtualNetworkGateway = new VirtualNetworkGateway()
             {
                 Location = location,
-                Tags = new Dictionary<string, string>() { { "key", "value" } },
+                Tags = { { "key", "value" } },
                 EnableBgp = false,
                 GatewayDefaultSite = null,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations = new List<VirtualNetworkGatewayIPConfiguration>()
+                IpConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
                     {
@@ -181,11 +182,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             LocalNetworkGateway localNetworkGateway = new LocalNetworkGateway()
             {
                 Location = location,
-                Tags = new Dictionary<string, string>() { { "test", "value" } },
+                Tags = { { "test", "value" } },
                 GatewayIpAddress = gatewayIp,
                 LocalNetworkAddressSpace = new AddressSpace()
                 {
-                    AddressPrefixes = new List<string>() { addressPrefixes, }
+                    AddressPrefixes = { addressPrefixes, }
                 }
             };
 
@@ -203,7 +204,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Assert.AreEqual(addressPrefixes, getLocalNetworkGatewayResponse.Value.LocalNetworkAddressSpace.AddressPrefixes[0].ToString());
 
             // 3A. UpdateLocalNetworkgateway API :- LocalNetworkGateway LocalNetworkAddressSpace from "192.168.0.0/16" => "200.168.0.0/16"
-            getLocalNetworkGatewayResponse.Value.LocalNetworkAddressSpace = new AddressSpace() { AddressPrefixes = new List<string>() { newAddressPrefixes, } };
+            getLocalNetworkGatewayResponse.Value.LocalNetworkAddressSpace = new AddressSpace() { AddressPrefixes = { newAddressPrefixes, } };
 
             putLocalNetworkGatewayResponseOperation = await NetworkManagementClient.LocalNetworkGateways.StartCreateOrUpdateAsync(resourceGroupName, localNetworkGatewayName, getLocalNetworkGatewayResponse);
             putLocalNetworkGatewayResponse = await WaitForCompletionAsync(putLocalNetworkGatewayResponseOperation);
@@ -249,11 +250,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             LocalNetworkGateway localNetworkGateway = new LocalNetworkGateway()
             {
                 Location = location,
-                Tags = new Dictionary<string, string>() { { "test", "value" } },
+                Tags = { { "test", "value" } },
                 GatewayIpAddress = gatewayIp,
                 LocalNetworkAddressSpace = new AddressSpace()
                 {
-                    AddressPrefixes = new List<string>() { "192.168.0.0/16", }
+                    AddressPrefixes = { "192.168.0.0/16", }
                 },
                 BgpSettings = new BgpSettings()
                 {
@@ -291,11 +292,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             VirtualNetworkGateway virtualNetworkGateway = new VirtualNetworkGateway()
             {
                 Location = location,
-                Tags = new Dictionary<string, string>() { { "key", "value" } },
+                Tags = { { "key", "value" } },
                 EnableBgp = false,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations = new List<VirtualNetworkGatewayIPConfiguration>()
+                IpConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
                     {
@@ -398,11 +399,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             LocalNetworkGateway localNetworkGateway = new LocalNetworkGateway()
             {
                 Location = location,
-                Tags = new Dictionary<string, string>() { { "test", "value" } },
+                Tags = { { "test", "value" } },
                 GatewayIpAddress = gatewayIp,
                 LocalNetworkAddressSpace = new AddressSpace()
                 {
-                    AddressPrefixes = new List<string>() { "192.168.0.0/16", }
+                    AddressPrefixes = { "192.168.0.0/16", }
                 }
             };
 
@@ -434,11 +435,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             VirtualNetworkGateway virtualNetworkGateway = new VirtualNetworkGateway()
             {
                 Location = location,
-                Tags = new Dictionary<string, string>() { { "key", "value" } },
+                Tags = { { "key", "value" } },
                 EnableBgp = false,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations = new List<VirtualNetworkGatewayIPConfiguration>()
+                IpConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
                     {
@@ -474,10 +475,13 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 Location = location,
                 LocalNetworkGateway2 = getLocalNetworkGatewayResponse,
                 RoutingWeight = 3,
-                SharedKey = "abc"
+                SharedKey = "abc",
+                IpsecPolicies =
+                {
+                    new IpsecPolicy(300, 1024, IpsecEncryption.AES128, IpsecIntegrity.SHA256, IkeEncryption.AES192, IkeIntegrity.SHA1, DhGroup.DHGroup2, PfsGroup.PFS1)
+                }
             };
 
-            virtualNetworkGatewayConnection.IpsecPolicies = new List<IpsecPolicy>() { new IpsecPolicy(300, 1024, IpsecEncryption.AES128, IpsecIntegrity.SHA256, IkeEncryption.AES192, IkeIntegrity.SHA1, DhGroup.DHGroup2, PfsGroup.PFS1) };
             virtualNetworkGatewayConnection.UsePolicyBasedTrafficSelectors = true;
 
             VirtualNetworkGatewayConnectionsCreateOrUpdateOperation putVirtualNetworkGatewayConnectionResponseOperation = await NetworkManagementClient.VirtualNetworkGatewayConnections.StartCreateOrUpdateAsync(resourceGroupName, VirtualNetworkGatewayConnectionName, virtualNetworkGatewayConnection);
@@ -508,7 +512,8 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             // 3A. UpdateVirtualNetworkGatewayConnection API : update ipsec policies and disable TS
             virtualNetworkGatewayConnection.UsePolicyBasedTrafficSelectors = false;
-            virtualNetworkGatewayConnection.IpsecPolicies = new List<IpsecPolicy>() { new IpsecPolicy(600, 2048, IpsecEncryption.Gcmaes256, IpsecIntegrity.Gcmaes256, IkeEncryption.AES256, IkeIntegrity.SHA384, DhGroup.DHGroup2048, PfsGroup.ECP384) };
+            virtualNetworkGatewayConnection.IpsecPolicies.Clear();
+            virtualNetworkGatewayConnection.IpsecPolicies.Add(new IpsecPolicy(600, 2048, IpsecEncryption.Gcmaes256, IpsecIntegrity.Gcmaes256, IkeEncryption.AES256, IkeIntegrity.SHA384, DhGroup.DHGroup2048, PfsGroup.ECP384));
 
             putVirtualNetworkGatewayConnectionResponseOperation = await NetworkManagementClient.VirtualNetworkGatewayConnections.StartCreateOrUpdateAsync(resourceGroupName, VirtualNetworkGatewayConnectionName, virtualNetworkGatewayConnection);
             putVirtualNetworkGatewayConnectionResponse = await WaitForCompletionAsync(putVirtualNetworkGatewayConnectionResponseOperation);
@@ -536,7 +541,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Assert.AreEqual(virtualNetworkGatewayConnection.IpsecPolicies[0].SaLifeTimeSeconds, getVirtualNetworkGatewayConnectionResponse.Value.IpsecPolicies[0].SaLifeTimeSeconds);
 
             // 4A. UpdateVirtualNetworkGatewayConnection API : remove ipsec policies
-            virtualNetworkGatewayConnection.IpsecPolicies = null;
+            (virtualNetworkGatewayConnection.IpsecPolicies as ChangeTrackingList<IpsecPolicy>).Reset();
 
             putVirtualNetworkGatewayConnectionResponseOperation = await NetworkManagementClient.VirtualNetworkGatewayConnections.StartCreateOrUpdateAsync(resourceGroupName, VirtualNetworkGatewayConnectionName, virtualNetworkGatewayConnection);
             putVirtualNetworkGatewayConnectionResponse = await WaitForCompletionAsync(putVirtualNetworkGatewayConnectionResponseOperation);
@@ -589,11 +594,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             LocalNetworkGateway localNetworkGateway = new LocalNetworkGateway()
             {
                 Location = location,
-                Tags = new Dictionary<string, string>() { { "test", "value" } },
+                Tags = { { "test", "value" } },
                 GatewayIpAddress = gatewayIp,
                 LocalNetworkAddressSpace = new AddressSpace()
                 {
-                    AddressPrefixes = new List<string>() { "192.168.0.0/16", }
+                    AddressPrefixes = { "192.168.0.0/16", }
                 }
             };
 
@@ -626,7 +631,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             VirtualNetworkGateway virtualNetworkGateway = new VirtualNetworkGateway()
             {
                 Location = location,
-                Tags = new Dictionary<string, string>() { { "key", "value" } },
+                Tags = { { "key", "value" } },
                 EnableBgp = false,
                 GatewayDefaultSite = new SubResource()
                 {
@@ -634,7 +639,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 },
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations = new List<VirtualNetworkGatewayIPConfiguration>()
+                IpConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
                     {
@@ -700,8 +705,8 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Console.WriteLine("Default site removal from Virtual network gateway is successful.", getVirtualNetworkGatewayResponse.Value.GatewayDefaultSite);
 
             // 3A. UpdateVirtualNetworkGatewayConnection API :- RoutingWeight = 3 => 4, SharedKey = "abc"=> "xyz"
+            await WaitForCompletionAsync(await NetworkManagementClient.VirtualNetworkGatewayConnections.StartSetSharedKeyAsync(resourceGroupName, VirtualNetworkGatewayConnectionName, new ConnectionSharedKey("xyz")));
             virtualNetworkGatewayConneciton.RoutingWeight = 4;
-            virtualNetworkGatewayConneciton.SharedKey = "xyz";
 
             putVirtualNetworkGatewayConnectionResponseOperation = await NetworkManagementClient.VirtualNetworkGatewayConnections.StartCreateOrUpdateAsync(resourceGroupName, VirtualNetworkGatewayConnectionName, virtualNetworkGatewayConneciton);
             putVirtualNetworkGatewayConnectionResponse = await WaitForCompletionAsync(putVirtualNetworkGatewayConnectionResponseOperation);
@@ -779,12 +784,12 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             VirtualNetworkGateway virtualNetworkGateway = new VirtualNetworkGateway()
             {
                 Location = location,
-                Tags = new Dictionary<string, string>() { { "key", "value" } },
+                Tags = { { "key", "value" } },
                 EnableBgp = false,
                 GatewayDefaultSite = null,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations = new List<VirtualNetworkGatewayIPConfiguration>()
+                IpConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
                     {
@@ -813,11 +818,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             LocalNetworkGateway localNetworkGateway = new LocalNetworkGateway()
             {
                 Location = location,
-                Tags = new Dictionary<string, string>() { { "test", "value" } },
+                Tags = { { "test", "value" } },
                 GatewayIpAddress = gatewayIp,
                 LocalNetworkAddressSpace = new AddressSpace()
                 {
-                    AddressPrefixes = new List<string>() { "192.168.0.0/16", }
+                    AddressPrefixes = { "192.168.0.0/16", }
                 }
             };
 
@@ -883,9 +888,9 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             LocalNetworkGateway localNetworkGateway = new LocalNetworkGateway()
             {
                 Location = location,
-                Tags = new Dictionary<string, string>() { { "test", "value" } },
+                Tags = { { "test", "value" } },
                 GatewayIpAddress = gatewayIp,
-                LocalNetworkAddressSpace = new AddressSpace() { AddressPrefixes = new List<string>() { "192.168.0.0/16", } }
+                LocalNetworkAddressSpace = new AddressSpace() { AddressPrefixes = { "192.168.0.0/16", } }
             };
             LocalNetworkGatewaysCreateOrUpdateOperation putLocalNetworkGatewayResponseOperation = await NetworkManagementClient.LocalNetworkGateways.StartCreateOrUpdateAsync(resourceGroupName, localNetworkGatewayName, localNetworkGateway);
             Response<LocalNetworkGateway> putLocalNetworkGatewayResponse = await WaitForCompletionAsync(putLocalNetworkGatewayResponseOperation);
@@ -918,7 +923,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             var virtualNetworkGateway = new VirtualNetworkGateway()
             {
                 Location = location,
-                Tags = new Dictionary<string, string>() { { "key", "value" } },
+                Tags = { { "key", "value" } },
                 EnableBgp = false,
                 Sku = new VirtualNetworkGatewaySku
                 {
@@ -928,7 +933,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 GatewayDefaultSite = new SubResource() { Id = getLocalNetworkGatewayResponse.Value.Id },
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations = new List<VirtualNetworkGatewayIPConfiguration>()
+                IpConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
                     {
@@ -940,7 +945,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 },
                 VpnClientConfiguration = new VpnClientConfiguration()
                 {
-                    VpnClientAddressPool = new AddressSpace() { AddressPrefixes = new List<string>() { addressPrefixes } }
+                    VpnClientAddressPool = new AddressSpace() { AddressPrefixes = { addressPrefixes } }
                 }
             };
 
@@ -966,9 +971,9 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             // 3.Update P2S VPNClient Address Pool
             getVirtualNetworkGatewayResponse.Value.VpnClientConfiguration = new VpnClientConfiguration()
             {
-                VpnClientAddressPool = new AddressSpace() { AddressPrefixes = new List<string>() { newAddressPrefixes } }
+                VpnClientAddressPool = new AddressSpace() { AddressPrefixes = { newAddressPrefixes } }
             };
-            getVirtualNetworkGatewayResponse.Value.VpnClientConfiguration.VpnClientAddressPool.AddressPrefixes = new List<string>() { newAddressPrefixes };
+            getVirtualNetworkGatewayResponse.Value.VpnClientConfiguration.VpnClientAddressPool.AddressPrefixes.Add(newAddressPrefixes);
             putVirtualNetworkGatewayResponseOperation = await NetworkManagementClient.VirtualNetworkGateways.StartCreateOrUpdateAsync(resourceGroupName, virtualNetworkGatewayName, getVirtualNetworkGatewayResponse);
             putVirtualNetworkGatewayResponse = await WaitForCompletionAsync(putVirtualNetworkGatewayResponseOperation);
             Assert.AreEqual("Succeeded", putVirtualNetworkGatewayResponse.Value.ProvisioningState.ToString());
@@ -987,7 +992,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             {
                 Name = clientRootCertName,
             };
-            getVirtualNetworkGatewayResponse.Value.VpnClientConfiguration.VpnClientRootCertificates = new List<VpnClientRootCertificate> { clientRootCert };
+            getVirtualNetworkGatewayResponse.Value.VpnClientConfiguration.VpnClientRootCertificates.Add(clientRootCert);
 
             putVirtualNetworkGatewayResponseOperation = await NetworkManagementClient.VirtualNetworkGateways.StartCreateOrUpdateAsync(resourceGroupName, virtualNetworkGatewayName, getVirtualNetworkGatewayResponse);
             putVirtualNetworkGatewayResponse = await WaitForCompletionAsync(putVirtualNetworkGatewayResponseOperation);
@@ -1030,7 +1035,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 Name = "sampleClientCert.cer",
                 Thumbprint = sampleCertThumpprint
             };
-            getVirtualNetworkGatewayResponse.Value.VpnClientConfiguration.VpnClientRevokedCertificates = new List<VpnClientRevokedCertificate> { sampleClientCert };
+            getVirtualNetworkGatewayResponse.Value.VpnClientConfiguration.VpnClientRevokedCertificates.Add(sampleClientCert);
 
             putVirtualNetworkGatewayResponseOperation = await NetworkManagementClient.VirtualNetworkGateways.StartCreateOrUpdateAsync(resourceGroupName, virtualNetworkGatewayName, getVirtualNetworkGatewayResponse);
             putVirtualNetworkGatewayResponse = await WaitForCompletionAsync(putVirtualNetworkGatewayResponseOperation);
@@ -1106,13 +1111,13 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             VirtualNetworkGateway virtualNetworkGateway = new VirtualNetworkGateway()
             {
                 Location = location,
-                Tags = new Dictionary<string, string>() { { "key", "value" } },
+                Tags = { { "key", "value" } },
                 EnableBgp = false,
                 Active = true,
                 GatewayDefaultSite = null,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations = new List<VirtualNetworkGatewayIPConfiguration>() { ipconfig1, ipconfig2 },
+                IpConfigurations = { ipconfig1, ipconfig2 },
                 Sku = new VirtualNetworkGatewaySku() { Name = VirtualNetworkGatewaySkuName.HighPerformance, Tier = VirtualNetworkGatewaySkuTier.HighPerformance }
             };
 
@@ -1183,8 +1188,8 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             VirtualNetwork vnet1 = new VirtualNetwork()
             {
                 Location = location,
-                AddressSpace = new AddressSpace() { AddressPrefixes = new List<string>() { "10.1.0.0/16" } },
-                Subnets = new List<Subnet>() { new Subnet() { Name = gatewaySubnetName, AddressPrefix = "10.1.1.0/24" } }
+                AddressSpace = new AddressSpace() { AddressPrefixes = { "10.1.0.0/16" } },
+                Subnets = { new Subnet() { Name = gatewaySubnetName, AddressPrefix = "10.1.1.0/24" } }
             };
             PublicIPAddress publicIPAddress = await CreateDefaultPublicIpAddress(gw1IpName, resourceGroupName, gw1IpDomainNameLabel, location, NetworkManagementClient);
             VirtualNetworksCreateOrUpdateOperation virtualNetworksCreateOrUpdateOperation = await NetworkManagementClient.VirtualNetworks.StartCreateOrUpdateAsync(resourceGroupName, vnet1Name, vnet1);
@@ -1202,7 +1207,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 Location = location,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations = new List<VirtualNetworkGatewayIPConfiguration>() { ipconfig1 },
+                IpConfigurations = { ipconfig1 },
                 Sku = new VirtualNetworkGatewaySku() { Name = VirtualNetworkGatewaySkuName.Standard, Tier = VirtualNetworkGatewaySkuTier.Standard },
                 BgpSettings = new BgpSettings() { Asn = 1337, BgpPeeringAddress = null, PeerWeight = 5 }
             };
@@ -1211,8 +1216,8 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             VirtualNetwork vnet2 = new VirtualNetwork()
             {
                 Location = location,
-                AddressSpace = new AddressSpace() { AddressPrefixes = new List<string>() { "10.2.0.0/16" } },
-                Subnets = new List<Subnet>() { new Subnet() { Name = gatewaySubnetName, AddressPrefix = "10.2.1.0/24", } }
+                AddressSpace = new AddressSpace() { AddressPrefixes = { "10.2.0.0/16" } },
+                Subnets = { new Subnet() { Name = gatewaySubnetName, AddressPrefix = "10.2.1.0/24", } }
             };
             VirtualNetworksCreateOrUpdateOperation vnet2Operation = await NetworkManagementClient.VirtualNetworks.StartCreateOrUpdateAsync(resourceGroupName, vnet2Name, vnet2);
             VirtualNetwork vnet2Response = await WaitForCompletionAsync(vnet2Operation);
@@ -1229,7 +1234,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 Location = location,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations = new List<VirtualNetworkGatewayIPConfiguration>() { ipconfig2 },
+                IpConfigurations = { ipconfig2 },
                 Sku = new VirtualNetworkGatewaySku() { Name = VirtualNetworkGatewaySkuName.Standard, Tier = VirtualNetworkGatewaySkuTier.Standard },
                 BgpSettings = new BgpSettings() { Asn = 9001, BgpPeeringAddress = null, PeerWeight = 5 }
             };
@@ -1343,11 +1348,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             var virtualNetworkGateway = new VirtualNetworkGateway()
             {
                 Location = location,
-                Tags = new Dictionary<string, string>() { { "key", "value" } },
+                Tags = { { "key", "value" } },
                 EnableBgp = false,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations = new List<VirtualNetworkGatewayIPConfiguration>()
+                IpConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
                     {
@@ -1361,7 +1366,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 {
                     VpnClientAddressPool = new AddressSpace()
                     {
-                        AddressPrefixes = new List<string>() { addressPrefixes },
+                        AddressPrefixes = { addressPrefixes },
                     }
                 },
                 Sku = new VirtualNetworkGatewaySku()
@@ -1402,12 +1407,12 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             {
                 VpnClientAddressPool = new AddressSpace()
                 {
-                    AddressPrefixes = new List<string>() { newAddressPrefixes }
+                    AddressPrefixes = { newAddressPrefixes }
                 },
                 RadiusServerAddress = @"8.8.8.8",
                 RadiusServerSecret = @"TestRadiusSecret",
             };
-            getVirtualNetworkGatewayResponse.Value.VpnClientConfiguration.VpnClientAddressPool.AddressPrefixes = new List<string>() { newAddressPrefixes };
+            getVirtualNetworkGatewayResponse.Value.VpnClientConfiguration.VpnClientAddressPool.AddressPrefixes.Add(newAddressPrefixes);
             putVirtualNetworkGatewayResponseOperation =
                 await NetworkManagementClient.VirtualNetworkGateways.StartCreateOrUpdateAsync(resourceGroupName, virtualNetworkGatewayName, getVirtualNetworkGatewayResponse);
             putVirtualNetworkGatewayResponse = await WaitForCompletionAsync(putVirtualNetworkGatewayResponseOperation);
@@ -1452,11 +1457,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             var localNetworkGateway = new LocalNetworkGateway()
             {
                 Location = location,
-                Tags = new Dictionary<string, string>() { { "test", "value" } },
+                Tags = { { "test", "value" } },
                 GatewayIpAddress = gatewayIp,
                 LocalNetworkAddressSpace = new AddressSpace()
                 {
-                    AddressPrefixes = new List<string>() { "192.168.0.0/16", }
+                    AddressPrefixes = { "192.168.0.0/16", }
                 }
             };
 
@@ -1488,11 +1493,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             VirtualNetworkGateway virtualNetworkGateway = new VirtualNetworkGateway()
             {
                 Location = location,
-                Tags = new Dictionary<string, string>() { { "key", "value" } },
+                Tags = { { "key", "value" } },
                 EnableBgp = false,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations = new List<VirtualNetworkGatewayIPConfiguration>()
+                IpConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
                     {
@@ -1526,10 +1531,9 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 SharedKey = "abc"
             };
 
-            virtualNetworkGatewayConnection.IpsecPolicies = new List<IpsecPolicy>()
-                {
+            virtualNetworkGatewayConnection.IpsecPolicies.Add(
                     new IpsecPolicy(300,1024,IpsecEncryption.AES128,IpsecIntegrity.SHA256,IkeEncryption.AES192,IkeIntegrity.SHA1,DhGroup.DHGroup2, PfsGroup.PFS1)
-                };
+                );
 
             virtualNetworkGatewayConnection.UsePolicyBasedTrafficSelectors = true;
 

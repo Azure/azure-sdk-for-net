@@ -15,7 +15,7 @@ namespace Azure.Storage.Blobs
     internal static class QuickQueryExtensions
     {
         internal static QuerySerialization ToQuickQuerySerialization(
-            this BlobQueryTextConfiguration textConfiguration)
+            this BlobQueryTextOptions textConfiguration)
         {
             if (textConfiguration == default)
             {
@@ -30,9 +30,9 @@ namespace Azure.Storage.Blobs
             serialization.Format.DelimitedTextConfiguration = default;
             serialization.Format.JsonTextConfiguration = default;
 
-            if (textConfiguration.GetType() == typeof(BlobQueryCsvTextConfiguration))
+            if (textConfiguration.GetType() == typeof(BlobQueryCsvTextOptions))
             {
-                BlobQueryCsvTextConfiguration cvsTextConfiguration = textConfiguration as BlobQueryCsvTextConfiguration;
+                BlobQueryCsvTextOptions cvsTextConfiguration = textConfiguration as BlobQueryCsvTextOptions;
                 serialization.Format.Type = QueryFormatType.Delimited;
                 serialization.Format.DelimitedTextConfiguration = new DelimitedTextConfigurationInternal
                 {
@@ -43,9 +43,9 @@ namespace Azure.Storage.Blobs
                     HeadersPresent = cvsTextConfiguration.HasHeaders
                 };
             }
-            else if (textConfiguration.GetType() == typeof(BlobQueryJsonTextConfiguration))
+            else if (textConfiguration.GetType() == typeof(BlobQueryJsonTextOptions))
             {
-                BlobQueryJsonTextConfiguration jsonTextConfiguration = textConfiguration as BlobQueryJsonTextConfiguration;
+                BlobQueryJsonTextOptions jsonTextConfiguration = textConfiguration as BlobQueryJsonTextOptions;
                 serialization.Format.Type = QueryFormatType.Json;
                 serialization.Format.JsonTextConfiguration = new JsonTextConfigurationInternal
                 {
@@ -64,21 +64,20 @@ namespace Azure.Storage.Blobs
             => BlobsModelFactory.BlobDownloadInfo(
                 lastModified: quickQueryResult.LastModified,
                 blobSequenceNumber: quickQueryResult.BlobSequenceNumber,
-                blobType: (Blobs.Models.BlobType)quickQueryResult.BlobType,
+                blobType: quickQueryResult.BlobType,
                 contentCrc64: quickQueryResult.ContentCrc64,
                 contentLanguage: quickQueryResult.ContentLanguage,
                 copyStatusDescription: quickQueryResult.CopyStatusDescription,
                 copyId: quickQueryResult.CopyId,
                 copyProgress: quickQueryResult.CopyProgress,
                 copySource: quickQueryResult.CopySource != default ? new Uri(quickQueryResult.CopySource) : default,
-                copyStatus: (Blobs.Models.CopyStatus)quickQueryResult.CopyStatus,
+                copyStatus: quickQueryResult.CopyStatus,
                 contentDisposition: quickQueryResult.ContentDisposition,
-                leaseDuration: (Blobs.Models.LeaseDurationType)quickQueryResult.LeaseDuration,
+                leaseDuration: quickQueryResult.LeaseDuration,
                 cacheControl: quickQueryResult.CacheControl,
-                leaseState: (Blobs.Models.LeaseState)quickQueryResult.LeaseState,
+                leaseState: quickQueryResult.LeaseState,
                 contentEncoding: quickQueryResult.ContentEncoding,
-                leaseStatus: (Blobs.Models.LeaseStatus)quickQueryResult.LeaseStatus,
-                //TODO this might be wrong
+                leaseStatus: quickQueryResult.LeaseStatus,
                 contentHash: quickQueryResult.ContentHash,
                 acceptRanges: quickQueryResult.AcceptRanges,
                 eTag: quickQueryResult.ETag,
@@ -89,7 +88,6 @@ namespace Azure.Storage.Blobs
                 encryptionKeySha256: quickQueryResult.EncryptionKeySha256,
                 encryptionScope: quickQueryResult.EncryptionScope,
                 contentLength: quickQueryResult.ContentLength,
-                //TODO this one might be wrong
                 blobContentHash: quickQueryResult.BlobContentMD5,
                 metadata: quickQueryResult.Metadata,
                 content: quickQueryResult.Body,

@@ -10,12 +10,13 @@ using Microsoft.Extensions.Configuration;
 namespace Azure.DigitalTwins.Core.Tests
 {
     /// <summary>
-    /// These are the settings that will be used by the end-to-end tests tests.
+    /// These are the settings that will be used by the end-to-end tests.
     /// The json files configured in the config will load the settings specific to a user.
     /// </summary>
     public class TestSettings
     {
         public const string AdtEnvironmentVariablesPrefix = "DIGITALTWINS";
+        public const string TestModeEnvVariable = "AZURE_TEST_MODE";
 
         // If these environment variables exist in the environment, their values will replace (supersede) config.json values.
 
@@ -42,7 +43,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
             string userName = Environment.UserName;
 
-            // Initialize the settings related to DT instance and auth
+            // Initialize the settings related to DT instance and authentication
             var testSettingsConfigBuilder = new ConfigurationBuilder();
 
             string testSettingsCommonPath = Path.Combine(workingDirectory, "config", "common.config.json");
@@ -58,6 +59,15 @@ namespace Azure.DigitalTwins.Core.Tests
 
             Instance = config.Get<TestSettings>();
             Instance.WorkingDirectory = workingDirectory;
+
+            // Override the test mode if the test mode environment variable was specified.
+            string testModeEnvVariable = Environment.GetEnvironmentVariable(TestModeEnvVariable);
+            if (!string.IsNullOrEmpty(testModeEnvVariable))
+            {
+                Instance.TestMode = (RecordedTestMode)Enum.Parse(
+                    typeof(RecordedTestMode),
+                    testModeEnvVariable);
+            }
         }
     }
 }

@@ -1,24 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027pybitseg\u0027)/docs/search.post.search?api-version=2020-06-30",
+      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexes(\u0027wnpngsjg\u0027)/docs/search.post.search?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "Content-Length": "49",
+        "Content-Length": "14",
         "Content-Type": "application/json",
-        "traceparent": "00-a136ace68a5519409a3b3c74fe5f6472-9e26abb0f640c145-00",
+        "traceparent": "00-7caadf92b7cdec4bb965cbb084f63f57-52c04f8e52817343-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200608.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Search.Documents/11.1.0-dev.20200801.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "af18bd458a8748f174608b8f7fd86649",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "facets": [],
-        "scoringParameters": [],
         "search": "*"
       },
       "StatusCode": 200,
@@ -27,8 +25,8 @@
         "client-request-id": "af18bd45-8a87-48f1-7460-8b8f7fd86649",
         "Content-Length": "7076",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Mon, 08 Jun 2020 14:32:32 GMT",
-        "elapsed-time": "120",
+        "Date": "Sat, 01 Aug 2020 13:22:23 GMT",
+        "elapsed-time": "39",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -42,9 +40,9 @@
   ],
   "Variables": {
     "RandomSeed": "251878370",
-    "SearchIndexName": "pybitseg",
+    "SearchIndexName": "wnpngsjg",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
     "SEARCH_QUERY_API_KEY": "Sanitized",
-    "SEARCH_SERVICE_NAME": "azs-net-teglaza"
+    "SEARCH_SERVICE_NAME": "azs-net-heathsrchtst"
   }
 }

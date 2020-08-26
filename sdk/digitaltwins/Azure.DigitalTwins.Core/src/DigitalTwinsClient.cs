@@ -3,11 +3,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.DigitalTwins.Core.Models;
 
 namespace Azure.DigitalTwins.Core
 {
@@ -1190,9 +1190,10 @@ namespace Azure.DigitalTwins.Core
         /// Console.WriteLine($&quot;Created models &apos;{componentModelId}&apos; and &apos;{sampleModelId}&apos;.&quot;);
         /// </code>
         /// </example>
-        public virtual Task<Response<IReadOnlyList<ModelData>>> CreateModelsAsync(IEnumerable<string> models, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ModelData[]>> CreateModelsAsync(IEnumerable<string> models, CancellationToken cancellationToken = default)
         {
-            return _dtModelsRestClient.AddAsync(models, cancellationToken);
+            Response<IReadOnlyList<ModelData>> response = await _dtModelsRestClient.AddAsync(models, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(response.Value.ToArray(), response.GetRawResponse());
         }
 
         /// <summary>
@@ -1218,9 +1219,10 @@ namespace Azure.DigitalTwins.Core
         /// <seealso cref="CreateModelsAsync(IEnumerable{string}, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response<IReadOnlyList<ModelData>> CreateModels(IEnumerable<string> models, CancellationToken cancellationToken = default)
+        public virtual Response<ModelData[]> CreateModels(IEnumerable<string> models, CancellationToken cancellationToken = default)
         {
-            return _dtModelsRestClient.Add(models, cancellationToken);
+            Response<IReadOnlyList<ModelData>> response = _dtModelsRestClient.Add(models, cancellationToken);
+            return Response.FromValue(response.Value.ToArray(), response.GetRawResponse());
         }
 
         /// <summary>

@@ -15,12 +15,12 @@ namespace Azure.Iot.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (TargetCondition != null)
+            if (Optional.IsDefined(TargetCondition))
             {
                 writer.WritePropertyName("targetCondition");
                 writer.WriteStringValue(TargetCondition);
             }
-            if (CustomMetricQueries != null)
+            if (Optional.IsCollectionDefined(CustomMetricQueries))
             {
                 writer.WritePropertyName("customMetricQueries");
                 writer.WriteStartObject();

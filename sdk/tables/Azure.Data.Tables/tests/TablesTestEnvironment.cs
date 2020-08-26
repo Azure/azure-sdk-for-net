@@ -11,11 +11,18 @@ namespace Azure.Data.Tables.Tests
         {
         }
 
-        public const string PrimaryKeyEnvironmentVariableName = "TABLES_PRIMARY_STORAGE_ACCOUNT_KEY";
+        // Storage Tables
+        public const string PrimaryStorageKeyEnvironmentVariableName = "TABLES_PRIMARY_STORAGE_ACCOUNT_KEY";
         private const string StorageUriFormat = "https://{0}.table.core.windows.net";
+        public string PrimaryStorageAccountKey => GetRecordedVariable(PrimaryStorageKeyEnvironmentVariableName, options => options.IsSecret());
+        public string StorageAccountName => GetRecordedVariable("TABLES_STORAGE_ACCOUNT_NAME");
+        public string StorageUri => string.Format(StorageUriFormat, StorageAccountName);
 
-        public string PrimaryStorageAccountKey => GetRecordedVariable(PrimaryKeyEnvironmentVariableName);
-        public string AccountName => GetRecordedVariable("TABLES_STORAGE_ACCOUNT_NAME");
-        public string StorageUri => string.Format(StorageUriFormat, AccountName);
+        // Cosmos Tables
+        public const string PrimaryCosmosKeyEnvironmentVariableName = "TABLES_PRIMARY_COSMOS_ACCOUNT_KEY";
+        private const string CosmosUriFormat = "https://{0}.table.cosmos.azure.com";
+        public string PrimaryCosmosAccountKey => GetRecordedVariable(PrimaryCosmosKeyEnvironmentVariableName, options => options.IsSecret());
+        public string CosmosAccountName => GetRecordedVariable("TABLES_COSMOS_ACCOUNT_NAME");
+        public string CosmosUri => string.Format(CosmosUriFormat, CosmosAccountName);
     }
 }

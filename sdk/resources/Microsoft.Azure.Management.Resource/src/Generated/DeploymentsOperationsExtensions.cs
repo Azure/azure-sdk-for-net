@@ -647,6 +647,48 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
+            /// Returns changes that will be made by the deployment if executed at the
+            /// scope of the tenant group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to validate.
+            /// </param>
+            public static WhatIfOperationResult WhatIfAtTenantScope(this IDeploymentsOperations operations, string deploymentName, ScopedDeploymentWhatIf parameters)
+            {
+                return operations.WhatIfAtTenantScopeAsync(deploymentName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns changes that will be made by the deployment if executed at the
+            /// scope of the tenant group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to validate.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<WhatIfOperationResult> WhatIfAtTenantScopeAsync(this IDeploymentsOperations operations, string deploymentName, ScopedDeploymentWhatIf parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.WhatIfAtTenantScopeWithHttpMessagesAsync(deploymentName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Exports the template used for specified deployment.
             /// </summary>
             /// <param name='operations'>
@@ -999,6 +1041,54 @@ namespace Microsoft.Azure.Management.ResourceManager
             public static async Task<DeploymentValidateResult> ValidateAtManagementGroupScopeAsync(this IDeploymentsOperations operations, string groupId, string deploymentName, ScopedDeployment parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ValidateAtManagementGroupScopeWithHttpMessagesAsync(groupId, deploymentName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Returns changes that will be made by the deployment if executed at the
+            /// scope of the management group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='groupId'>
+            /// The management group ID.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to validate.
+            /// </param>
+            public static WhatIfOperationResult WhatIfAtManagementGroupScope(this IDeploymentsOperations operations, string groupId, string deploymentName, ScopedDeploymentWhatIf parameters)
+            {
+                return operations.WhatIfAtManagementGroupScopeAsync(groupId, deploymentName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns changes that will be made by the deployment if executed at the
+            /// scope of the management group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='groupId'>
+            /// The management group ID.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to validate.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<WhatIfOperationResult> WhatIfAtManagementGroupScopeAsync(this IDeploymentsOperations operations, string groupId, string deploymentName, ScopedDeploymentWhatIf parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.WhatIfAtManagementGroupScopeWithHttpMessagesAsync(groupId, deploymentName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -2219,6 +2309,48 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
+            /// Returns changes that will be made by the deployment if executed at the
+            /// scope of the tenant group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to validate.
+            /// </param>
+            public static WhatIfOperationResult BeginWhatIfAtTenantScope(this IDeploymentsOperations operations, string deploymentName, ScopedDeploymentWhatIf parameters)
+            {
+                return operations.BeginWhatIfAtTenantScopeAsync(deploymentName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns changes that will be made by the deployment if executed at the
+            /// scope of the tenant group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to validate.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<WhatIfOperationResult> BeginWhatIfAtTenantScopeAsync(this IDeploymentsOperations operations, string deploymentName, ScopedDeploymentWhatIf parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginWhatIfAtTenantScopeWithHttpMessagesAsync(deploymentName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Deletes a deployment from the deployment history.
             /// </summary>
             /// <remarks>
@@ -2374,6 +2506,54 @@ namespace Microsoft.Azure.Management.ResourceManager
             public static async Task<DeploymentValidateResult> BeginValidateAtManagementGroupScopeAsync(this IDeploymentsOperations operations, string groupId, string deploymentName, ScopedDeployment parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginValidateAtManagementGroupScopeWithHttpMessagesAsync(groupId, deploymentName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Returns changes that will be made by the deployment if executed at the
+            /// scope of the management group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='groupId'>
+            /// The management group ID.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to validate.
+            /// </param>
+            public static WhatIfOperationResult BeginWhatIfAtManagementGroupScope(this IDeploymentsOperations operations, string groupId, string deploymentName, ScopedDeploymentWhatIf parameters)
+            {
+                return operations.BeginWhatIfAtManagementGroupScopeAsync(groupId, deploymentName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns changes that will be made by the deployment if executed at the
+            /// scope of the management group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='groupId'>
+            /// The management group ID.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to validate.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<WhatIfOperationResult> BeginWhatIfAtManagementGroupScopeAsync(this IDeploymentsOperations operations, string groupId, string deploymentName, ScopedDeploymentWhatIf parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginWhatIfAtManagementGroupScopeWithHttpMessagesAsync(groupId, deploymentName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

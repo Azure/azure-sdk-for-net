@@ -1,0 +1,8 @@
+{
+  "Entries": [],
+  "Variables": {
+    "AZURE_KEYVAULT_URL": "https://eastus.clitest.managedhsm-preview.azure.net",
+    "CLIENT_OBJECTID": "693a17da-7022-4cdd-9d4e-4e72e4ad449d",
+    "RandomSeed": "1129588271"
+  }
+}

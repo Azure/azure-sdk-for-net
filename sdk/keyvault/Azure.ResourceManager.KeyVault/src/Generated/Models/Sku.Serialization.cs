@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("family");
-            writer.WriteStringValue(Family);
+            writer.WriteStringValue(Family.ToString());
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name.ToSerialString());
             writer.WriteEndObject();
@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static Sku DeserializeSku(JsonElement element)
         {
-            string family = default;
+            SkuFamily family = default;
             SkuName name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("family"))
                 {
-                    family = property.Value.GetString();
+                    family = new SkuFamily(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))

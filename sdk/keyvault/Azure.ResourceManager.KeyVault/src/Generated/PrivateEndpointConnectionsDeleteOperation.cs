@@ -54,27 +54,13 @@ namespace Azure.ResourceManager.KeyVault
         PrivateEndpointConnection IOperationSource<PrivateEndpointConnection>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return PrivateEndpointConnection.DeserializePrivateEndpointConnection(document.RootElement);
-            }
+            return PrivateEndpointConnection.DeserializePrivateEndpointConnection(document.RootElement);
         }
 
         async ValueTask<PrivateEndpointConnection> IOperationSource<PrivateEndpointConnection>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return PrivateEndpointConnection.DeserializePrivateEndpointConnection(document.RootElement);
-            }
+            return PrivateEndpointConnection.DeserializePrivateEndpointConnection(document.RootElement);
         }
     }
 }

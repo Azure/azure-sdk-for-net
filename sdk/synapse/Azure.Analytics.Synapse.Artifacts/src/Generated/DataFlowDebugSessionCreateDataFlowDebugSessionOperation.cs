@@ -54,27 +54,13 @@ namespace Azure.Analytics.Synapse.Artifacts
         CreateDataFlowDebugSessionResponse IOperationSource<CreateDataFlowDebugSessionResponse>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return CreateDataFlowDebugSessionResponse.DeserializeCreateDataFlowDebugSessionResponse(document.RootElement);
-            }
+            return CreateDataFlowDebugSessionResponse.DeserializeCreateDataFlowDebugSessionResponse(document.RootElement);
         }
 
         async ValueTask<CreateDataFlowDebugSessionResponse> IOperationSource<CreateDataFlowDebugSessionResponse>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return CreateDataFlowDebugSessionResponse.DeserializeCreateDataFlowDebugSessionResponse(document.RootElement);
-            }
+            return CreateDataFlowDebugSessionResponse.DeserializeCreateDataFlowDebugSessionResponse(document.RootElement);
         }
     }
 }

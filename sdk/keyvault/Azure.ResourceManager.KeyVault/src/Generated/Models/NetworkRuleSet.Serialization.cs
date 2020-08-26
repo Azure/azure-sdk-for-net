@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.KeyVault.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Bypass != null)
+            if (Optional.IsDefined(Bypass))
             {
                 writer.WritePropertyName("bypass");
                 writer.WriteStringValue(Bypass.Value.ToString());
             }
-            if (DefaultAction != null)
+            if (Optional.IsDefined(DefaultAction))
             {
                 writer.WritePropertyName("defaultAction");
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (IpRules != null)
+            if (Optional.IsCollectionDefined(IpRules))
             {
                 writer.WritePropertyName("ipRules");
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 writer.WriteEndArray();
             }
-            if (VirtualNetworkRules != null)
+            if (Optional.IsCollectionDefined(VirtualNetworkRules))
             {
                 writer.WritePropertyName("virtualNetworkRules");
                 writer.WriteStartArray();
@@ -51,74 +51,44 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static NetworkRuleSet DeserializeNetworkRuleSet(JsonElement element)
         {
-            NetworkRuleBypassOptions? bypass = default;
-            NetworkRuleAction? defaultAction = default;
-            IList<IPRule> ipRules = default;
-            IList<VirtualNetworkRule> virtualNetworkRules = default;
+            Optional<NetworkRuleBypassOptions> bypass = default;
+            Optional<NetworkRuleAction> defaultAction = default;
+            Optional<IList<IPRule>> ipRules = default;
+            Optional<IList<VirtualNetworkRule>> virtualNetworkRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bypass"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     bypass = new NetworkRuleBypassOptions(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("defaultAction"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     defaultAction = new NetworkRuleAction(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ipRules"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<IPRule> array = new List<IPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(IPRule.DeserializeIPRule(item));
-                        }
+                        array.Add(IPRule.DeserializeIPRule(item));
                     }
                     ipRules = array;
                     continue;
                 }
                 if (property.NameEquals("virtualNetworkRules"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<VirtualNetworkRule> array = new List<VirtualNetworkRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(VirtualNetworkRule.DeserializeVirtualNetworkRule(item));
-                        }
+                        array.Add(VirtualNetworkRule.DeserializeVirtualNetworkRule(item));
                     }
                     virtualNetworkRules = array;
                     continue;
                 }
             }
-            return new NetworkRuleSet(bypass, defaultAction, ipRules, virtualNetworkRules);
+            return new NetworkRuleSet(Optional.ToNullable(bypass), Optional.ToNullable(defaultAction), Optional.ToList(ipRules), Optional.ToList(virtualNetworkRules));
         }
     }
 }

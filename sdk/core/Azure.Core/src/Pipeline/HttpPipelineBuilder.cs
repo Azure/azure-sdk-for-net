@@ -17,7 +17,7 @@ namespace Azure.Core.Pipeline
         /// Creates an instance of <see cref="HttpPipeline"/> populated with default policies, customer provided policies from <paramref name="options"/> and client provided per call policies.
         /// </summary>
         /// <param name="options">The customer provided client options object.</param>
-        /// <param name="perRetryPolicies">Client provided per-call policies.</param>
+        /// <param name="perRetryPolicies">Client provided per-retry policies.</param>
         /// <returns>A new instance of <see cref="HttpPipeline"/></returns>
         public static HttpPipeline Build(ClientOptions options, params HttpPipelinePolicy[] perRetryPolicies)
         {

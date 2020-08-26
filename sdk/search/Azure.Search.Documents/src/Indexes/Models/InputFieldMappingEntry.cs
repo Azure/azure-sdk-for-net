@@ -9,7 +9,6 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class InputFieldMappingEntry
     {
         /// <summary> The recursive inputs used when creating a complex type. </summary>
-        [CodeGenMember(EmptyAsUndefined = true, Initialize = true)]
         public IList<InputFieldMappingEntry> Inputs { get; }
     }
 }

@@ -10,12 +10,13 @@ using System.ComponentModel;
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    /// <summary> The ExportImportDeviceImportMode. </summary>
+    /// <summary> The type of registry operation and ETag preferences. </summary>
     public readonly partial struct ExportImportDeviceImportMode : IEquatable<ExportImportDeviceImportMode>
     {
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="ExportImportDeviceImportMode"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ExportImportDeviceImportMode(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

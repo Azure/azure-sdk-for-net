@@ -16,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of AzureDataExplorerCommandActivity. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="command"> A control command, according to the Azure Data Explorer command syntax. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="command"/> is null. </exception>
         public AzureDataExplorerCommandActivity(string name, object command) : base(name)
         {
             if (name == null)

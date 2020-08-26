@@ -59,5 +59,40 @@ namespace Azure.Messaging.EventHubs.Core
             SharedAccessKeyName = sharedAccessKeyName;
             SharedAccessKey = sharedAccessKey;
         }
+
+        /// <summary>
+        ///   Performs the actions needed to validate the set of connection string properties for connecting to the
+        ///   Event Hubs service.
+        /// </summary>
+        ///
+        /// <param name="explicitEventHubName">The name of the Event Hub that was explicitly passed independent of the connection string, allowing easier use of a namespace-level connection string.</param>
+        /// <param name="connectionStringArgumentName">The name of the argument associated with the connection string; to be used when raising <see cref="ArgumentException" /> variants.</param>
+        ///
+        /// <exception cref="ArgumentException">In the case that the properties violate an invariant or otherwise represent a combination that is not permissible, an appropriate exception will be thrown.</exception>
+        ///
+        public void Validate(string explicitEventHubName,
+                             string connectionStringArgumentName)
+        {
+            // The Event Hub name may only be specified in one of the possible forms, either as part of the
+            // connection string or as a stand-alone parameter, but not both.  If specified in both to the same
+            // value, then do not consider this a failure.
+
+            if ((!string.IsNullOrEmpty(explicitEventHubName))
+                && (!string.IsNullOrEmpty(EventHubName))
+                && (!string.Equals(explicitEventHubName, EventHubName, StringComparison.InvariantCultureIgnoreCase)))
+            {
+                throw new ArgumentException(Resources.OnlyOneEventHubNameMayBeSpecified, connectionStringArgumentName);
+            }
+
+            // Ensure that each of the needed components are present for connecting.
+
+            if ((string.IsNullOrEmpty(explicitEventHubName)) && (string.IsNullOrEmpty(EventHubName))
+                || (string.IsNullOrEmpty(Endpoint?.Host))
+                || (string.IsNullOrEmpty(SharedAccessKeyName))
+                || (string.IsNullOrEmpty(SharedAccessKey)))
+            {
+                throw new ArgumentException(Resources.MissingConnectionInformation, connectionStringArgumentName);
+            }
+        }
     }
 }

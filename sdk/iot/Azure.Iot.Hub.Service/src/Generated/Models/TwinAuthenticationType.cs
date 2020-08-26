@@ -10,12 +10,13 @@ using System.ComponentModel;
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    /// <summary> Corresponding Device&apos;s authentication type. </summary>
+    /// <summary> The authentication type used by the device. </summary>
     public readonly partial struct TwinAuthenticationType : IEquatable<TwinAuthenticationType>
     {
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="TwinAuthenticationType"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TwinAuthenticationType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

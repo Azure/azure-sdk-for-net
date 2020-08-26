@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public VirtualMachineScaleSetsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmScaleSetName"> The name of the VM scale set to create or update. </param>
         /// <param name="parameters"> The scale set object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmScaleSetName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSet parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -102,6 +103,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmScaleSetName"> The name of the VM scale set to create or update. </param>
         /// <param name="parameters"> The scale set object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmScaleSetName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response CreateOrUpdate(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSet parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -156,6 +158,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmScaleSetName"> The name of the VM scale set to create or update. </param>
         /// <param name="parameters"> The scale set object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmScaleSetName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> UpdateAsync(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetUpdate parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -187,6 +190,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmScaleSetName"> The name of the VM scale set to create or update. </param>
         /// <param name="parameters"> The scale set object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmScaleSetName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response Update(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetUpdate parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -235,6 +239,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmScaleSetName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string vmScaleSetName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -263,6 +268,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmScaleSetName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string vmScaleSetName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -309,6 +315,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmScaleSetName"/> is null. </exception>
         public async Task<Response<VirtualMachineScaleSet>> GetAsync(string resourceGroupName, string vmScaleSetName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -328,14 +335,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         VirtualMachineScaleSet value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineScaleSet.DeserializeVirtualMachineScaleSet(document.RootElement);
-                        }
+                        value = VirtualMachineScaleSet.DeserializeVirtualMachineScaleSet(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -347,6 +347,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmScaleSetName"/> is null. </exception>
         public Response<VirtualMachineScaleSet> Get(string resourceGroupName, string vmScaleSetName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -366,14 +367,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         VirtualMachineScaleSet value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineScaleSet.DeserializeVirtualMachineScaleSet(document.RootElement);
-                        }
+                        value = VirtualMachineScaleSet.DeserializeVirtualMachineScaleSet(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -412,6 +406,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmScaleSetName"/> is null. </exception>
         public async Task<Response> DeallocateAsync(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -440,6 +435,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmScaleSetName"/> is null. </exception>
         public Response Deallocate(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -491,6 +487,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmScaleSetName"/>, or <paramref name="vmInstanceIDs"/> is null. </exception>
         public async Task<Response> DeleteInstancesAsync(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceRequiredIDs vmInstanceIDs, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -523,6 +520,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmScaleSetName"/>, or <paramref name="vmInstanceIDs"/> is null. </exception>
         public Response DeleteInstances(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceRequiredIDs vmInstanceIDs, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -573,6 +571,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmScaleSetName"/> is null. </exception>
         public async Task<Response<VirtualMachineScaleSetInstanceView>> GetInstanceViewAsync(string resourceGroupName, string vmScaleSetName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -592,14 +591,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         VirtualMachineScaleSetInstanceView value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineScaleSetInstanceView.DeserializeVirtualMachineScaleSetInstanceView(document.RootElement);
-                        }
+                        value = VirtualMachineScaleSetInstanceView.DeserializeVirtualMachineScaleSetInstanceView(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -611,6 +603,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmScaleSetName"/> is null. </exception>
         public Response<VirtualMachineScaleSetInstanceView> GetInstanceView(string resourceGroupName, string vmScaleSetName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -630,14 +623,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         VirtualMachineScaleSetInstanceView value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineScaleSetInstanceView.DeserializeVirtualMachineScaleSetInstanceView(document.RootElement);
-                        }
+                        value = VirtualMachineScaleSetInstanceView.DeserializeVirtualMachineScaleSetInstanceView(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -665,6 +651,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets a list of all VM scale sets under a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<VirtualMachineScaleSetListResult>> ListAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -680,14 +667,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         VirtualMachineScaleSetListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineScaleSetListResult.DeserializeVirtualMachineScaleSetListResult(document.RootElement);
-                        }
+                        value = VirtualMachineScaleSetListResult.DeserializeVirtualMachineScaleSetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -698,6 +678,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets a list of all VM scale sets under a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public Response<VirtualMachineScaleSetListResult> List(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -713,14 +694,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         VirtualMachineScaleSetListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineScaleSetListResult.DeserializeVirtualMachineScaleSetListResult(document.RootElement);
-                        }
+                        value = VirtualMachineScaleSetListResult.DeserializeVirtualMachineScaleSetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -755,14 +729,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         VirtualMachineScaleSetListWithLinkResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineScaleSetListWithLinkResult.DeserializeVirtualMachineScaleSetListWithLinkResult(document.RootElement);
-                        }
+                        value = VirtualMachineScaleSetListWithLinkResult.DeserializeVirtualMachineScaleSetListWithLinkResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -782,14 +749,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         VirtualMachineScaleSetListWithLinkResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineScaleSetListWithLinkResult.DeserializeVirtualMachineScaleSetListWithLinkResult(document.RootElement);
-                        }
+                        value = VirtualMachineScaleSetListWithLinkResult.DeserializeVirtualMachineScaleSetListWithLinkResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -820,6 +780,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmScaleSetName"/> is null. </exception>
         public async Task<Response<VirtualMachineScaleSetListSkusResult>> ListSkusAsync(string resourceGroupName, string vmScaleSetName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -839,14 +800,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         VirtualMachineScaleSetListSkusResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineScaleSetListSkusResult.DeserializeVirtualMachineScaleSetListSkusResult(document.RootElement);
-                        }
+                        value = VirtualMachineScaleSetListSkusResult.DeserializeVirtualMachineScaleSetListSkusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -858,6 +812,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmScaleSetName"/> is null. </exception>
         public Response<VirtualMachineScaleSetListSkusResult> ListSkus(string resourceGroupName, string vmScaleSetName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -877,14 +832,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         VirtualMachineScaleSetListSkusResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineScaleSetListSkusResult.DeserializeVirtualMachineScaleSetListSkusResult(document.RootElement);
-                        }
+                        value = VirtualMachineScaleSetListSkusResult.DeserializeVirtualMachineScaleSetListSkusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -915,6 +863,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmScaleSetName"/> is null. </exception>
         public async Task<Response<VirtualMachineScaleSetListOSUpgradeHistory>> GetOSUpgradeHistoryAsync(string resourceGroupName, string vmScaleSetName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -934,14 +883,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         VirtualMachineScaleSetListOSUpgradeHistory value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineScaleSetListOSUpgradeHistory.DeserializeVirtualMachineScaleSetListOSUpgradeHistory(document.RootElement);
-                        }
+                        value = VirtualMachineScaleSetListOSUpgradeHistory.DeserializeVirtualMachineScaleSetListOSUpgradeHistory(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -953,6 +895,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmScaleSetName"/> is null. </exception>
         public Response<VirtualMachineScaleSetListOSUpgradeHistory> GetOSUpgradeHistory(string resourceGroupName, string vmScaleSetName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -972,14 +915,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         VirtualMachineScaleSetListOSUpgradeHistory value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineScaleSetListOSUpgradeHistory.DeserializeVirtualMachineScaleSetListOSUpgradeHistory(document.RootElement);
-                        }
+                        value = VirtualMachineScaleSetListOSUpgradeHistory.DeserializeVirtualMachineScaleSetListOSUpgradeHistory(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1023,6 +959,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="skipShutdown"> The parameter to request non-graceful VM shutdown. True value for this flag indicates non-graceful shutdown whereas false indicates otherwise. Default value for this flag is false if not specified. </param>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmScaleSetName"/> is null. </exception>
         public async Task<Response> PowerOffAsync(string resourceGroupName, string vmScaleSetName, bool? skipShutdown = null, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1052,6 +989,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="skipShutdown"> The parameter to request non-graceful VM shutdown. True value for this flag indicates non-graceful shutdown whereas false indicates otherwise. Default value for this flag is false if not specified. </param>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmScaleSetName"/> is null. </exception>
         public Response PowerOff(string resourceGroupName, string vmScaleSetName, bool? skipShutdown = null, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1106,6 +1044,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmScaleSetName"/> is null. </exception>
         public async Task<Response> RestartAsync(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1134,6 +1073,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmScaleSetName"/> is null. </exception>
         public Response Restart(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1188,6 +1128,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmScaleSetName"/> is null. </exception>
         public async Task<Response> StartAsync(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1216,6 +1157,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmScaleSetName"/> is null. </exception>
         public Response Start(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1270,6 +1212,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmScaleSetName"/> is null. </exception>
         public async Task<Response> RedeployAsync(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1298,6 +1241,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmScaleSetName"/> is null. </exception>
         public Response Redeploy(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1352,6 +1296,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmScaleSetName"/> is null. </exception>
         public async Task<Response> PerformMaintenanceAsync(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1380,6 +1325,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmScaleSetName"/> is null. </exception>
         public Response PerformMaintenance(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1431,6 +1377,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmScaleSetName"/>, or <paramref name="vmInstanceIDs"/> is null. </exception>
         public async Task<Response> UpdateInstancesAsync(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceRequiredIDs vmInstanceIDs, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1463,6 +1410,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmScaleSetName"/>, or <paramref name="vmInstanceIDs"/> is null. </exception>
         public Response UpdateInstances(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceRequiredIDs vmInstanceIDs, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1521,6 +1469,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="vmScaleSetReimageInput"> Parameters for Reimaging VM ScaleSet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmScaleSetName"/> is null. </exception>
         public async Task<Response> ReimageAsync(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetReimageParameters vmScaleSetReimageInput = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1549,6 +1498,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="vmScaleSetReimageInput"> Parameters for Reimaging VM ScaleSet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmScaleSetName"/> is null. </exception>
         public Response Reimage(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetReimageParameters vmScaleSetReimageInput = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1603,6 +1553,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmScaleSetName"/> is null. </exception>
         public async Task<Response> ReimageAllAsync(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1631,6 +1582,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmScaleSetName"/> is null. </exception>
         public Response ReimageAll(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1679,6 +1631,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="platformUpdateDomain"> The platform update domain for which a manual recovery walk is requested. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmScaleSetName"/> is null. </exception>
         public async Task<Response<RecoveryWalkResponse>> ForceRecoveryServiceFabricPlatformUpdateDomainWalkAsync(string resourceGroupName, string vmScaleSetName, int platformUpdateDomain, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1698,14 +1651,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         RecoveryWalkResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = RecoveryWalkResponse.DeserializeRecoveryWalkResponse(document.RootElement);
-                        }
+                        value = RecoveryWalkResponse.DeserializeRecoveryWalkResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1718,6 +1664,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="platformUpdateDomain"> The platform update domain for which a manual recovery walk is requested. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmScaleSetName"/> is null. </exception>
         public Response<RecoveryWalkResponse> ForceRecoveryServiceFabricPlatformUpdateDomainWalk(string resourceGroupName, string vmScaleSetName, int platformUpdateDomain, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1737,14 +1684,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         RecoveryWalkResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = RecoveryWalkResponse.DeserializeRecoveryWalkResponse(document.RootElement);
-                        }
+                        value = RecoveryWalkResponse.DeserializeRecoveryWalkResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1779,6 +1719,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmScaleSetName"> The name of the virtual machine scale set to create or update. </param>
         /// <param name="parameters"> The input object for ConvertToSinglePlacementGroup API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmScaleSetName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> ConvertToSinglePlacementGroupAsync(string resourceGroupName, string vmScaleSetName, VMScaleSetConvertToSinglePlacementGroupInput parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1810,6 +1751,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmScaleSetName"> The name of the virtual machine scale set to create or update. </param>
         /// <param name="parameters"> The input object for ConvertToSinglePlacementGroup API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmScaleSetName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response ConvertToSinglePlacementGroup(string resourceGroupName, string vmScaleSetName, VMScaleSetConvertToSinglePlacementGroupInput parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1864,6 +1806,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmScaleSetName"> The name of the virtual machine scale set to create or update. </param>
         /// <param name="parameters"> The input object for SetOrchestrationServiceState API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmScaleSetName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> SetOrchestrationServiceStateAsync(string resourceGroupName, string vmScaleSetName, OrchestrationServiceStateInput parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1896,6 +1839,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmScaleSetName"> The name of the virtual machine scale set to create or update. </param>
         /// <param name="parameters"> The input object for SetOrchestrationServiceState API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmScaleSetName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response SetOrchestrationServiceState(string resourceGroupName, string vmScaleSetName, OrchestrationServiceStateInput parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1939,6 +1883,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<VirtualMachineScaleSetListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1958,14 +1903,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         VirtualMachineScaleSetListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineScaleSetListResult.DeserializeVirtualMachineScaleSetListResult(document.RootElement);
-                        }
+                        value = VirtualMachineScaleSetListResult.DeserializeVirtualMachineScaleSetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1977,6 +1915,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<VirtualMachineScaleSetListResult> ListNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1996,14 +1935,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         VirtualMachineScaleSetListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineScaleSetListResult.DeserializeVirtualMachineScaleSetListResult(document.RootElement);
-                        }
+                        value = VirtualMachineScaleSetListResult.DeserializeVirtualMachineScaleSetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2026,6 +1958,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets a list of all VM Scale Sets in the subscription, regardless of the associated resource group. Use nextLink property in the response to get the next page of VM Scale Sets. Do this till nextLink is null to fetch all the VM Scale Sets. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<VirtualMachineScaleSetListWithLinkResult>> ListAllNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -2041,14 +1974,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         VirtualMachineScaleSetListWithLinkResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineScaleSetListWithLinkResult.DeserializeVirtualMachineScaleSetListWithLinkResult(document.RootElement);
-                        }
+                        value = VirtualMachineScaleSetListWithLinkResult.DeserializeVirtualMachineScaleSetListWithLinkResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2059,6 +1985,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets a list of all VM Scale Sets in the subscription, regardless of the associated resource group. Use nextLink property in the response to get the next page of VM Scale Sets. Do this till nextLink is null to fetch all the VM Scale Sets. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<VirtualMachineScaleSetListWithLinkResult> ListAllNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -2074,14 +2001,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         VirtualMachineScaleSetListWithLinkResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineScaleSetListWithLinkResult.DeserializeVirtualMachineScaleSetListWithLinkResult(document.RootElement);
-                        }
+                        value = VirtualMachineScaleSetListWithLinkResult.DeserializeVirtualMachineScaleSetListWithLinkResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2106,6 +2026,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="vmScaleSetName"/> is null. </exception>
         public async Task<Response<VirtualMachineScaleSetListSkusResult>> ListSkusNextPageAsync(string nextLink, string resourceGroupName, string vmScaleSetName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -2129,14 +2050,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         VirtualMachineScaleSetListSkusResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineScaleSetListSkusResult.DeserializeVirtualMachineScaleSetListSkusResult(document.RootElement);
-                        }
+                        value = VirtualMachineScaleSetListSkusResult.DeserializeVirtualMachineScaleSetListSkusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2149,6 +2063,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="vmScaleSetName"/> is null. </exception>
         public Response<VirtualMachineScaleSetListSkusResult> ListSkusNextPage(string nextLink, string resourceGroupName, string vmScaleSetName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -2172,14 +2087,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         VirtualMachineScaleSetListSkusResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineScaleSetListSkusResult.DeserializeVirtualMachineScaleSetListSkusResult(document.RootElement);
-                        }
+                        value = VirtualMachineScaleSetListSkusResult.DeserializeVirtualMachineScaleSetListSkusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2204,6 +2112,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="vmScaleSetName"/> is null. </exception>
         public async Task<Response<VirtualMachineScaleSetListOSUpgradeHistory>> GetOSUpgradeHistoryNextPageAsync(string nextLink, string resourceGroupName, string vmScaleSetName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -2227,14 +2136,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         VirtualMachineScaleSetListOSUpgradeHistory value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineScaleSetListOSUpgradeHistory.DeserializeVirtualMachineScaleSetListOSUpgradeHistory(document.RootElement);
-                        }
+                        value = VirtualMachineScaleSetListOSUpgradeHistory.DeserializeVirtualMachineScaleSetListOSUpgradeHistory(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2247,6 +2149,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="vmScaleSetName"/> is null. </exception>
         public Response<VirtualMachineScaleSetListOSUpgradeHistory> GetOSUpgradeHistoryNextPage(string nextLink, string resourceGroupName, string vmScaleSetName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -2270,14 +2173,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         VirtualMachineScaleSetListOSUpgradeHistory value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = VirtualMachineScaleSetListOSUpgradeHistory.DeserializeVirtualMachineScaleSetListOSUpgradeHistory(document.RootElement);
-                        }
+                        value = VirtualMachineScaleSetListOSUpgradeHistory.DeserializeVirtualMachineScaleSetListOSUpgradeHistory(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

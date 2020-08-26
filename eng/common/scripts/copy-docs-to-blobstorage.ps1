@@ -351,3 +351,9 @@ if ($Language -eq "c")
     $pkgInfo = Get-Content $DocLocation/package-info.json | ConvertFrom-Json
     Upload-Blobs -DocDir $DocLocation -PkgName 'docs' -DocVersion $pkgInfo.version
 }
+
+if ($Language -eq "cpp")
+{
+    $packageInfo = (Get-Content (Join-Path $DocLocation 'package-info.json') | ConvertFrom-Json)
+    Upload-Blobs -DocDir $DocLocation -PkgName $packageInfo.name -DocVersion $packageInfo.version
+}

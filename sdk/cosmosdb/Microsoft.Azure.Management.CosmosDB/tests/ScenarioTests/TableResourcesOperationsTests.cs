@@ -14,11 +14,11 @@ namespace CosmosDB.Tests.ScenarioTests
 {
     public class TableResourcesOperationsTests
     {
-        const string location = "EAST US";
+        const string location = "EAST US 2";
 
         // using an existing DB account, since Account provisioning takes 10-15 minutes
-        const string resourceGroupName = "CosmosDBResourceGroup2510";
-        const string databaseAccountName = "db2527";
+        const string resourceGroupName = "CosmosDBResourceGroup3668";
+        const string databaseAccountName = "db2048";
 
         const string tableName = "tableName2527";
         const string tableName2 = "tableName22527";

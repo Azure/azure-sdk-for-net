@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <summary> Initializes a new instance of RoleAssignmentListResult. </summary>
         internal RoleAssignmentListResult()
         {
+            Value = new ChangeTrackingList<RoleAssignment>();
         }
 
         /// <summary> Initializes a new instance of RoleAssignmentListResult. </summary>

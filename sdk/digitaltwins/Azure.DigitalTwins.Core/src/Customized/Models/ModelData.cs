@@ -3,13 +3,17 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
-namespace Azure.DigitalTwins.Core.Models
+namespace Azure.DigitalTwins.Core
 {
+    [CodeGenModel("ModelData")]
     public partial class ModelData
     {
         // This class declaration makes the generated class of the same name declare Model as a **string** rather than an **object**.
         // It also changes displayName and description from objects (per swagger) to dictionaries (per swagger comment).
+        // It also changes the namespace.
+        // Do not remove.
 
         /// <summary> Initializes a new instance of ModelData. </summary>
         /// <param name="displayName"> A language map that contains the localized display names as specified in the model definition. </param>
@@ -44,11 +48,15 @@ namespace Azure.DigitalTwins.Core.Models
         public IDictionary<string, string> Description { get; }
 
         #region null overrides
+
 #pragma warning disable CA1801 // Remove unused parameter
 
-        private ModelData(string id) { }
+        private ModelData(string id)
+        {
+        }
 
 #pragma warning restore CA1801 // Remove unused parameter
-        #endregion
+
+        #endregion null overrides
     }
 }

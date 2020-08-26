@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -17,6 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of SparkJobDefinition. </summary>
         /// <param name="targetBigDataPool"> Big data pool reference. </param>
         /// <param name="jobProperties"> The properties of the Spark job. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetBigDataPool"/> or <paramref name="jobProperties"/> is null. </exception>
         public SparkJobDefinition(BigDataPoolReference targetBigDataPool, SparkJobProperties jobProperties)
         {
             if (targetBigDataPool == null)
@@ -30,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             TargetBigDataPool = targetBigDataPool;
             JobProperties = jobProperties;
-            AdditionalProperties = new Dictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of SparkJobDefinition. </summary>
@@ -47,7 +49,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             RequiredSparkVersion = requiredSparkVersion;
             Language = language;
             JobProperties = jobProperties;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> The description of the Spark job definition. </summary>

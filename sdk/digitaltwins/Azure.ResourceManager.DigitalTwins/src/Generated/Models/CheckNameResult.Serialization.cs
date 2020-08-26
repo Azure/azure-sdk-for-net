@@ -14,50 +14,34 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     {
         internal static CheckNameResult DeserializeCheckNameResult(JsonElement element)
         {
-            bool? nameAvailable = default;
-            string name = default;
-            string message = default;
-            Reason? reason = default;
+            Optional<bool> nameAvailable = default;
+            Optional<string> name = default;
+            Optional<string> message = default;
+            Optional<Reason> reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nameAvailable"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nameAvailable = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("message"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     message = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("reason"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     reason = new Reason(property.Value.GetString());
                     continue;
                 }
             }
-            return new CheckNameResult(nameAvailable, name, message, reason);
+            return new CheckNameResult(Optional.ToNullable(nameAvailable), name.Value, message.Value, Optional.ToNullable(reason));
         }
     }
 }

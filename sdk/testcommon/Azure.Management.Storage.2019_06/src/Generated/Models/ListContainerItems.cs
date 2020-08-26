@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Storage.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.Management.Storage.Models
         /// <summary> Initializes a new instance of ListContainerItems. </summary>
         internal ListContainerItems()
         {
+            Value = new ChangeTrackingList<ListContainerItem>();
         }
 
         /// <summary> Initializes a new instance of ListContainerItems. </summary>

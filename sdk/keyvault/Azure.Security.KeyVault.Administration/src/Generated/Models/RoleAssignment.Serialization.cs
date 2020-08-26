@@ -14,50 +14,34 @@ namespace Azure.Security.KeyVault.Administration.Models
     {
         internal static RoleAssignment DeserializeRoleAssignment(JsonElement element)
         {
-            string id = default;
-            string name = default;
-            string type = default;
-            RoleAssignmentPropertiesWithScope properties = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<RoleAssignmentPropertiesWithScope> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     properties = RoleAssignmentPropertiesWithScope.DeserializeRoleAssignmentPropertiesWithScope(property.Value);
                     continue;
                 }
             }
-            return new RoleAssignment(id, name, type, properties);
+            return new RoleAssignment(id.Value, name.Value, type.Value, properties.Value);
         }
     }
 }

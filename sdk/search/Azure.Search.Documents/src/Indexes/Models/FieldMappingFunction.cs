@@ -9,7 +9,6 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class FieldMappingFunction
     {
         /// <summary> A dictionary of parameter name/value pairs to pass to the function. Each value must be of a primitive type. </summary>
-        [CodeGenMember(EmptyAsUndefined = true, Initialize = true)]
         public IDictionary<string, object> Parameters { get; }
     }
 }

@@ -14,60 +14,40 @@ namespace Azure.Iot.Hub.Service.Models
     {
         internal static DeviceRegistryOperationError DeserializeDeviceRegistryOperationError(JsonElement element)
         {
-            string deviceId = default;
-            DeviceRegistryOperationErrorCode? errorCode = default;
-            string errorStatus = default;
-            string moduleId = default;
-            string operation = default;
+            Optional<string> deviceId = default;
+            Optional<DeviceRegistryOperationErrorCode> errorCode = default;
+            Optional<string> errorStatus = default;
+            Optional<string> moduleId = default;
+            Optional<string> operation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     deviceId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("errorCode"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     errorCode = new DeviceRegistryOperationErrorCode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("errorStatus"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     errorStatus = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("moduleId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     moduleId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("operation"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     operation = property.Value.GetString();
                     continue;
                 }
             }
-            return new DeviceRegistryOperationError(deviceId, errorCode, errorStatus, moduleId, operation);
+            return new DeviceRegistryOperationError(deviceId.Value, Optional.ToNullable(errorCode), errorStatus.Value, moduleId.Value, operation.Value);
         }
     }
 }

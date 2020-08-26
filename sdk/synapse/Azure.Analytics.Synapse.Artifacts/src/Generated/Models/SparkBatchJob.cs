@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -16,7 +17,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="id"> The session Id. </param>
         internal SparkBatchJob(int id)
         {
+            Errors = new ChangeTrackingList<SparkServiceError>();
+            Tags = new ChangeTrackingDictionary<string, string>();
             Id = id;
+            AppInfo = new ChangeTrackingDictionary<string, string>();
+            LogLines = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SparkBatchJob. </summary>

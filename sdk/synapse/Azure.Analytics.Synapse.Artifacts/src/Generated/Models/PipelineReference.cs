@@ -13,15 +13,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     public partial class PipelineReference
     {
         /// <summary> Initializes a new instance of PipelineReference. </summary>
+        /// <param name="type"> Pipeline reference type. </param>
         /// <param name="referenceName"> Reference pipeline name. </param>
-        public PipelineReference(string referenceName)
+        /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
+        public PipelineReference(PipelineReferenceType type, string referenceName)
         {
             if (referenceName == null)
             {
                 throw new ArgumentNullException(nameof(referenceName));
             }
 
-            Type = "PipelineReference";
+            Type = type;
             ReferenceName = referenceName;
         }
 
@@ -29,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="type"> Pipeline reference type. </param>
         /// <param name="referenceName"> Reference pipeline name. </param>
         /// <param name="name"> Reference name. </param>
-        internal PipelineReference(string type, string referenceName, string name)
+        internal PipelineReference(PipelineReferenceType type, string referenceName, string name)
         {
             Type = type;
             ReferenceName = referenceName;
@@ -37,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Pipeline reference type. </summary>
-        public string Type { get; set; }
+        public PipelineReferenceType Type { get; set; }
         /// <summary> Reference pipeline name. </summary>
         public string ReferenceName { get; set; }
         /// <summary> Reference name. </summary>

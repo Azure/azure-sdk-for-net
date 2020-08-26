@@ -1303,11 +1303,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             }
 
             await processor.StartProcessingAsync();
-            var cts = new CancellationTokenSource();
-            cts.Cancel();
+            await processor.StopProcessingAsync();
+
             Assert.That(
-                async () => await processor.StopProcessingAsync(cts.Token),
-                Throws.InstanceOf<TaskCanceledException>());
+                async () => await processor.StopProcessingAsync(),
+                Throws.InstanceOf<InvalidOperationException>());
 
             mockLogger
                 .Verify(
@@ -1320,9 +1320,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                         processor.Identifier,
                         It.IsAny<string>()),
                 Times.Once);
-
-            // actually stop processing
-            await processor.StopProcessingAsync();
         }
 
         private Mock<ServiceBusConnection> GetMockConnection(Mock<TransportReceiver> mockTransportReceiver)

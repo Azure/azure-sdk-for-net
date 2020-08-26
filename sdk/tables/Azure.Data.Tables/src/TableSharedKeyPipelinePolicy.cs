@@ -18,10 +18,10 @@ namespace Azure.Data.Tables
     /// </summary>
     internal sealed class TableSharedKeyPipelinePolicy : HttpPipelineSynchronousPolicy
     {
-        private class InternalStorageCredential: TableSharedKeyCredential
+        private class InternalStorageCredential : TableSharedKeyCredential
         {
             public static InternalStorageCredential Instance = new InternalStorageCredential();
-            public InternalStorageCredential(): base(string.Empty, string.Empty)
+            public InternalStorageCredential() : base(string.Empty, string.Empty)
             {
             }
 
@@ -94,6 +94,10 @@ namespace Azure.Data.Tables
             {
                 foreach (var name in parameters.Keys.OrderBy(key => key, StringComparer.Ordinal))
                 {
+                    // If the request URI addresses a component of the resource, append the appropriate query string.
+                    // The query string should include the question mark and the comp parameter (for example, ?comp=metadata).
+                    // No other parameters should be included on the query string.
+                    // https://docs.microsoft.com/en-us/rest/api/storageservices/authorize-with-shared-key#shared-key-lite-and-table-service-format-for-2009-09-19-and-later
                     if (name == "comp")
                     {
 #pragma warning disable CA1308 // Normalize strings to uppercase

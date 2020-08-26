@@ -127,8 +127,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/clusters/ofertestforclient?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL29mZXJ0ZXN0Z3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy9vZmVydGVzdGZvcmNsaWVudD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/clusters/ofertestforclient?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL29mZXJ0ZXN0Z3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy9vZmVydGVzdGZvcmNsaWVudD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "PATCH",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"keyVaultProperties\": {\r\n      \"keyName\": \"TestClientKey\",\r\n      \"keyVersion\": \"4d294ee7ce964d8bb6d04c1245276e93\",\r\n      \"keyVaultUri\": \"https://testforclient.vault.azure.net/\"\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
@@ -162,13 +162,13 @@
           "\"\""
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/19ab9394-3d84-4cdd-8ef6-a16091d1503a?api-version=2020-02-15&operationResultResponseType=Location"
+          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/19ab9394-3d84-4cdd-8ef6-a16091d1503a?api-version=2020-06-14&operationResultResponseType=Location"
         ],
         "x-ms-request-id": [
           "c2d3b0a8-36a3-46a1-acbc-082b460dd7fe"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central US/operationResults/19ab9394-3d84-4cdd-8ef6-a16091d1503a?api-version=2020-02-15"
+          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central US/operationResults/19ab9394-3d84-4cdd-8ef6-a16091d1503a?api-version=2020-06-14"
         ],
         "Set-Cookie": [
           "ARRAffinity=f8efa2d44f4f61144c8c03d4c5b5a5e933cd99e4fb3c36abf43f050b1eae54d5;Path=/;HttpOnly;Domain=rp-kustorpcus-website.azurewebsites.net"
@@ -208,8 +208,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/19ab9394-3d84-4cdd-8ef6-a16091d1503a?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzE5YWI5Mzk0LTNkODQtNGNkZC04ZWY2LWExNjA5MWQxNTAzYT9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Central%20US/operationResults/19ab9394-3d84-4cdd-8ef6-a16091d1503a?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0NlbnRyYWwlMjBVUy9vcGVyYXRpb25SZXN1bHRzLzE5YWI5Mzk0LTNkODQtNGNkZC04ZWY2LWExNjA5MWQxNTAzYT9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -271,8 +271,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/clusters/ofertestforclient?api-version=2020-02-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL29mZXJ0ZXN0Z3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy9vZmVydGVzdGZvcmNsaWVudD9hcGktdmVyc2lvbj0yMDIwLTAyLTE1",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Kusto/clusters/ofertestforclient?api-version=2020-06-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL29mZXJ0ZXN0Z3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy9vZmVydGVzdGZvcmNsaWVudD9hcGktdmVyc2lvbj0yMDIwLTA2LTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {

@@ -15,64 +15,38 @@ namespace Azure.Iot.Hub.Service.Models
     {
         internal static BulkRegistryOperationResponse DeserializeBulkRegistryOperationResponse(JsonElement element)
         {
-            bool? isSuccessful = default;
-            IReadOnlyList<DeviceRegistryOperationError> errors = default;
-            IReadOnlyList<DeviceRegistryOperationWarning> warnings = default;
+            Optional<bool> isSuccessful = default;
+            Optional<IReadOnlyList<DeviceRegistryOperationError>> errors = default;
+            Optional<IReadOnlyList<DeviceRegistryOperationWarning>> warnings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isSuccessful"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     isSuccessful = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("errors"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<DeviceRegistryOperationError> array = new List<DeviceRegistryOperationError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(DeviceRegistryOperationError.DeserializeDeviceRegistryOperationError(item));
-                        }
+                        array.Add(DeviceRegistryOperationError.DeserializeDeviceRegistryOperationError(item));
                     }
                     errors = array;
                     continue;
                 }
                 if (property.NameEquals("warnings"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<DeviceRegistryOperationWarning> array = new List<DeviceRegistryOperationWarning>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(DeviceRegistryOperationWarning.DeserializeDeviceRegistryOperationWarning(item));
-                        }
+                        array.Add(DeviceRegistryOperationWarning.DeserializeDeviceRegistryOperationWarning(item));
                     }
                     warnings = array;
                     continue;
                 }
             }
-            return new BulkRegistryOperationResponse(isSuccessful, errors, warnings);
+            return new BulkRegistryOperationResponse(Optional.ToNullable(isSuccessful), Optional.ToList(errors), Optional.ToList(warnings));
         }
     }
 }

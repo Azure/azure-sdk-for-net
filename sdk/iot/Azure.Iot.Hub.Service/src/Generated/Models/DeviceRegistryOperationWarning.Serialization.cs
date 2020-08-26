@@ -14,40 +14,28 @@ namespace Azure.Iot.Hub.Service.Models
     {
         internal static DeviceRegistryOperationWarning DeserializeDeviceRegistryOperationWarning(JsonElement element)
         {
-            string deviceId = default;
-            string warningCode = default;
-            string warningStatus = default;
+            Optional<string> deviceId = default;
+            Optional<string> warningCode = default;
+            Optional<string> warningStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     deviceId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("warningCode"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     warningCode = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("warningStatus"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     warningStatus = property.Value.GetString();
                     continue;
                 }
             }
-            return new DeviceRegistryOperationWarning(deviceId, warningCode, warningStatus);
+            return new DeviceRegistryOperationWarning(deviceId.Value, warningCode.Value, warningStatus.Value);
         }
     }
 }

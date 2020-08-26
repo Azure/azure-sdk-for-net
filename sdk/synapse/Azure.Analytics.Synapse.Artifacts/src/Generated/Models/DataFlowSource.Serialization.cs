@@ -15,14 +15,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Dataset != null)
+            if (Optional.IsDefined(Dataset))
             {
                 writer.WritePropertyName("dataset");
                 writer.WriteObjectValue(Dataset);
             }
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
@@ -32,17 +32,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static DataFlowSource DeserializeDataFlowSource(JsonElement element)
         {
-            DatasetReference dataset = default;
+            Optional<DatasetReference> dataset = default;
             string name = default;
-            string description = default;
+            Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataset"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     dataset = DatasetReference.DeserializeDatasetReference(property.Value);
                     continue;
                 }
@@ -53,15 +49,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
             }
-            return new DataFlowSource(name, description, dataset);
+            return new DataFlowSource(name, description.Value, dataset.Value);
         }
     }
 }

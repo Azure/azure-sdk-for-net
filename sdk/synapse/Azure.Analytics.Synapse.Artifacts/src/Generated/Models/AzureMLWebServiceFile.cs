@@ -15,6 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of AzureMLWebServiceFile. </summary>
         /// <param name="filePath"> The relative file path, including container name, in the Azure Blob Storage specified by the LinkedService. Type: string (or Expression with resultType string). </param>
         /// <param name="linkedServiceName"> Reference to an Azure Storage LinkedService, where Azure ML WebService Input/Output file located. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="filePath"/> or <paramref name="linkedServiceName"/> is null. </exception>
         public AzureMLWebServiceFile(object filePath, LinkedServiceReference linkedServiceName)
         {
             if (filePath == null)

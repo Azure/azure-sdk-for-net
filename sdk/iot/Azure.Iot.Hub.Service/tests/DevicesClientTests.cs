@@ -7,12 +7,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Iot.Hub.Service.Models;
 using FluentAssertions;
+using Microsoft.Azure.Devices.Client;
 using NUnit.Framework;
 
 namespace Azure.Iot.Hub.Service.Tests
 {
     /// <summary>
-    /// Test all APIs of a DeviceClient.
+    /// Test all APIs of the DevicesClient.
     /// </summary>
     /// <remarks>
     /// All API calls are wrapped in a try catch block so we can clean up resources regardless of the test outcome.
@@ -38,13 +39,13 @@ namespace Azure.Iot.Hub.Service.Tests
             string testDeviceId = $"IdentityLifecycleDevice{GetRandom()}";
 
             DeviceIdentity device = null;
-            IoTHubServiceClient client = GetClient();
+            IotHubServiceClient client = GetClient();
 
             try
             {
                 // Create a device
                 Response<DeviceIdentity> createResponse = await client.Devices.CreateOrUpdateIdentityAsync(
-                    new Models.DeviceIdentity
+                    new DeviceIdentity
                     {
                         DeviceId = testDeviceId
                     }).ConfigureAwait(false);
@@ -72,7 +73,7 @@ namespace Azure.Iot.Hub.Service.Tests
             }
             finally
             {
-                await Cleanup(client, device);
+                await CleanupAsync(client, device).ConfigureAwait(false);
             }
         }
 
@@ -85,13 +86,13 @@ namespace Azure.Iot.Hub.Service.Tests
             string testDeviceId = $"UpdateWithETag{GetRandom()}";
 
             DeviceIdentity device = null;
-            IoTHubServiceClient client = GetClient();
+            IotHubServiceClient client = GetClient();
 
             try
             {
                 // Create a device
                 Response<DeviceIdentity> createResponse = await client.Devices.CreateOrUpdateIdentityAsync(
-                    new Models.DeviceIdentity
+                    new DeviceIdentity
                     {
                         DeviceId = testDeviceId
                     }).ConfigureAwait(false);
@@ -124,7 +125,7 @@ namespace Azure.Iot.Hub.Service.Tests
             }
             finally
             {
-                await Cleanup(client, device);
+                await CleanupAsync(client, device).ConfigureAwait(false);
             }
         }
 
@@ -138,14 +139,14 @@ namespace Azure.Iot.Hub.Service.Tests
 
             DeviceIdentity device = null;
 
-            IoTHubServiceClient client = GetClient();
+            IotHubServiceClient client = GetClient();
 
             try
             {
                 // Create a device
                 // Creating a device also creates a twin for the device.
                 Response<DeviceIdentity> createResponse = await client.Devices.CreateOrUpdateIdentityAsync(
-                    new Models.DeviceIdentity
+                    new DeviceIdentity
                     {
                         DeviceId = testDeviceId
                     }).ConfigureAwait(false);
@@ -173,7 +174,7 @@ namespace Azure.Iot.Hub.Service.Tests
             }
             finally
             {
-                await Cleanup(client, device);
+                await CleanupAsync(client, device).ConfigureAwait(false);
             }
         }
 
@@ -184,11 +185,11 @@ namespace Azure.Iot.Hub.Service.Tests
         [Test]
         public async Task DevicesClient_BulkCreation()
         {
-            string testDeviceprefix = $"bulkDevice";
+            string testDevicePrefix = $"bulkDevice";
 
-            IEnumerable<DeviceIdentity> devices = BuildMultipleDevices(testDeviceprefix, BULK_DEVICE_COUNT);
+            IEnumerable<DeviceIdentity> devices = BuildMultipleDevices(testDevicePrefix, BULK_DEVICE_COUNT);
 
-            IoTHubServiceClient client = GetClient();
+            IotHubServiceClient client = GetClient();
 
             try
             {
@@ -199,7 +200,7 @@ namespace Azure.Iot.Hub.Service.Tests
             }
             finally
             {
-                await Cleanup(client, devices);
+                await CleanupAsync(client, devices).ConfigureAwait(false);
             }
         }
 
@@ -210,30 +211,30 @@ namespace Azure.Iot.Hub.Service.Tests
         [Test]
         public async Task DevicesClient_BulkUpdate()
         {
-            string testDeviceprefix = $"bulkDeviceUpdate";
+            string testDevicePrefix = $"bulkDeviceUpdate";
 
-            IoTHubServiceClient client = GetClient();
+            IotHubServiceClient client = GetClient();
             IList<DeviceIdentity> listOfDevicesToUpdate = null;
 
             try
             {
                 // Create two devices
-                Response<DeviceIdentity> deviceOneCeateResponse = await client.Devices.CreateOrUpdateIdentityAsync(
+                Response<DeviceIdentity> deviceOneCreateResponse = await client.Devices.CreateOrUpdateIdentityAsync(
                     new DeviceIdentity
                     {
-                        DeviceId = $"{testDeviceprefix}{GetRandom()}",
+                        DeviceId = $"{testDevicePrefix}{GetRandom()}",
                         Status = DeviceStatus.Enabled,
                     }).ConfigureAwait(false);
 
-                Response<DeviceIdentity> deviceTwoCeateResponse = await client.Devices.CreateOrUpdateIdentityAsync(
+                Response<DeviceIdentity> deviceTwoCreateResponse = await client.Devices.CreateOrUpdateIdentityAsync(
                     new DeviceIdentity
                     {
-                        DeviceId = $"{testDeviceprefix}{GetRandom()}",
+                        DeviceId = $"{testDevicePrefix}{GetRandom()}",
                         Status = DeviceStatus.Enabled,
                     }).ConfigureAwait(false);
 
-                DeviceIdentity deviceOne = deviceOneCeateResponse.Value;
-                DeviceIdentity deviceTwo = deviceTwoCeateResponse.Value;
+                DeviceIdentity deviceOne = deviceOneCreateResponse.Value;
+                DeviceIdentity deviceTwo = deviceTwoCreateResponse.Value;
 
                 listOfDevicesToUpdate = new List<DeviceIdentity> { deviceOne, deviceTwo };
 
@@ -250,15 +251,15 @@ namespace Azure.Iot.Hub.Service.Tests
                 Assert.IsTrue(updateResponse.Value.IsSuccessful, "Bulk device update ended with errors");
 
                 // Verify the devices status is updated.
-                deviceOne = (await client.Devices.GetIdentityAsync(deviceOne.DeviceId)).Value;
-                deviceTwo = (await client.Devices.GetIdentityAsync(deviceTwo.DeviceId)).Value;
+                deviceOne = (await client.Devices.GetIdentityAsync(deviceOne.DeviceId).ConfigureAwait(false)).Value;
+                deviceTwo = (await client.Devices.GetIdentityAsync(deviceTwo.DeviceId).ConfigureAwait(false)).Value;
 
                 deviceOne.Status.Should().Be(DeviceStatus.Disabled, "Device should have been disabled");
                 deviceTwo.Status.Should().Be(DeviceStatus.Disabled, "Device should have been disabled");
             }
             finally
             {
-                await Cleanup(client, listOfDevicesToUpdate);
+                await CleanupAsync(client, listOfDevicesToUpdate).ConfigureAwait(false);
             }
         }
 
@@ -270,16 +271,16 @@ namespace Azure.Iot.Hub.Service.Tests
         [Ignore("DeviceRegistryOperationError cannot be parsed since service sends integer instead of a string")]
         public async Task DevicesClient_BulkCreation_OneAlreadyExists()
         {
-            string testDeviceprefix = $"bulkDevice";
-            string existingDeviceName = $"{testDeviceprefix}{GetRandom()}";
+            string testDevicePrefix = $"bulkDevice";
+            string existingDeviceName = $"{testDevicePrefix}{GetRandom()}";
 
-            IoTHubServiceClient client = GetClient();
-            IList<DeviceIdentity> devices = BuildMultipleDevices(testDeviceprefix, BULK_DEVICE_COUNT-1);
+            IotHubServiceClient client = GetClient();
+            IList<DeviceIdentity> devices = BuildMultipleDevices(testDevicePrefix, BULK_DEVICE_COUNT - 1);
 
             try
             {
                 // We first create a single device.
-                Response<DeviceIdentity> response = await client.Devices.CreateOrUpdateIdentityAsync(new DeviceIdentity { DeviceId = existingDeviceName });
+                Response<DeviceIdentity> response = await client.Devices.CreateOrUpdateIdentityAsync(new DeviceIdentity { DeviceId = existingDeviceName }).ConfigureAwait(false);
 
                 // Add the existing device to the list of devices to be bulk created.
                 devices.Add(response.Value);
@@ -292,7 +293,7 @@ namespace Azure.Iot.Hub.Service.Tests
             }
             finally
             {
-                await Cleanup(client, devices);
+                await CleanupAsync(client, devices).ConfigureAwait(false);
             }
         }
 
@@ -302,11 +303,11 @@ namespace Azure.Iot.Hub.Service.Tests
         [Test]
         public async Task DevicesClient_BulkCreation_DeviceWithTwin()
         {
-            string testDeviceprefix = $"bulkDeviceWithTwin";
+            string testDevicePrefix = $"bulkDeviceWithTwin";
             string userPropertyName = "user";
             string userPropertyValue = "userA";
 
-            IoTHubServiceClient client = GetClient();
+            IotHubServiceClient client = GetClient();
 
             IDictionary<string, object> desiredProperties = new Dictionary<string, object>
             {
@@ -314,7 +315,7 @@ namespace Azure.Iot.Hub.Service.Tests
             };
 
             // We will build multiple devices and all of them with the same desired properties for convenience.
-            IDictionary<DeviceIdentity, TwinData> devicesAndTwins = BuildDevicesAndTwins(testDeviceprefix, BULK_DEVICE_COUNT, desiredProperties);
+            IDictionary<DeviceIdentity, TwinData> devicesAndTwins = BuildDevicesAndTwins(testDevicePrefix, BULK_DEVICE_COUNT, desiredProperties);
 
             try
             {
@@ -331,7 +332,8 @@ namespace Azure.Iot.Hub.Service.Tests
             }
             finally
             {
-                await Cleanup(client, devicesAndTwins.Keys);
+                await CleanupAsync(client, devicesAndTwins.Keys).ConfigureAwait(false);
+                ;
             }
         }
 
@@ -343,11 +345,11 @@ namespace Azure.Iot.Hub.Service.Tests
         [Test]
         public async Task DevicesClient_Query_GetTwins()
         {
-            string testDeviceprefix = $"bulkDevice";
+            string testDevicePrefix = $"bulkDevice";
 
-            IEnumerable<DeviceIdentity> devices = BuildMultipleDevices(testDeviceprefix, BULK_DEVICE_COUNT);
+            IEnumerable<DeviceIdentity> devices = BuildMultipleDevices(testDevicePrefix, BULK_DEVICE_COUNT);
 
-            IoTHubServiceClient client = GetClient();
+            IotHubServiceClient client = GetClient();
 
             try
             {
@@ -379,7 +381,7 @@ namespace Azure.Iot.Hub.Service.Tests
                         break;
                     }
 
-                    await Task.Delay(_queryRetryInterval);
+                    await Task.Delay(_queryRetryInterval).ConfigureAwait(false);
                 }
 
                 matchesFound.Should().Be(BULK_DEVICE_COUNT, "Timed out waiting for all the bulk created devices to be query-able." +
@@ -387,42 +389,123 @@ namespace Azure.Iot.Hub.Service.Tests
             }
             finally
             {
-                await Cleanup(client, devices);
+                await CleanupAsync(client, devices).ConfigureAwait(false);
             }
         }
 
-        private IDictionary<DeviceIdentity, TwinData> BuildDevicesAndTwins(string testDeviceprefix, int deviceCount, IDictionary<string, object> desiredProperties)
+        [Test]
+        [Ignore("device client has no way to record/playback since it doesn't use http. As such, this test can only be run in Live mode")]
+        public async Task DevicesClient_InvokeMethodOnDevice()
         {
-            IList<DeviceIdentity> devices = BuildMultipleDevices(testDeviceprefix, deviceCount);
+            if (!this.IsAsync)
+            {
+                // TODO: Tim: The device client doesn't appear to open a connection to iothub or start
+                // listening for method invocations when this test is run in Sync mode. Not sure why though.
+                // calls to track 1 library don't throw, but seem to silently fail
+                return;
+            }
+
+            string testDeviceId = $"InvokeMethodDevice{GetRandom()}";
+
+            DeviceIdentity device = null;
+            DeviceClient deviceClient = null;
+            IotHubServiceClient serviceClient = GetClient();
+
+            try
+            {
+                // Create a device to invoke the method on
+                device = (await serviceClient.Devices
+                    .CreateOrUpdateIdentityAsync(
+                        new DeviceIdentity
+                        {
+                            DeviceId = testDeviceId
+                        })
+                    .ConfigureAwait(false))
+                    .Value;
+
+                // Method expectations
+                string expectedMethodName = "someMethodToInvoke";
+                int expectedStatus = 222;
+                object expectedRequestPayload = null;
+
+                // Create module client instance to receive the method invocation
+                string moduleClientConnectionString = $"HostName={GetHostName()};DeviceId={testDeviceId};SharedAccessKey={device.Authentication.SymmetricKey.PrimaryKey}";
+                deviceClient = DeviceClient.CreateFromConnectionString(moduleClientConnectionString, TransportType.Mqtt_Tcp_Only);
+
+                // These two methods are part of our track 1 device client. When the test fixture runs when isAsync = true,
+                // these methods work. When isAsync = false, these methods silently don't work.
+                await deviceClient.OpenAsync().ConfigureAwait(false);
+                await deviceClient.SetMethodHandlerAsync(
+                    expectedMethodName,
+                    (methodRequest, userContext) =>
+                    {
+                        return Task.FromResult(new MethodResponse(expectedStatus));
+                    },
+                    null).ConfigureAwait(false);
+
+                // Invoke the method on the module
+                CloudToDeviceMethodRequest methodRequest = new CloudToDeviceMethodRequest()
+                {
+                    MethodName = expectedMethodName,
+                    Payload = expectedRequestPayload,
+                    ConnectTimeoutInSeconds = 5,
+                    ResponseTimeoutInSeconds = 5
+                };
+
+                var methodResponse = (await serviceClient.Devices.InvokeMethodAsync(testDeviceId, methodRequest).ConfigureAwait(false)).Value;
+
+                Assert.AreEqual(expectedStatus, methodResponse.Status);
+            }
+            finally
+            {
+                if (deviceClient != null)
+                {
+                    await deviceClient.CloseAsync().ConfigureAwait(false);
+                }
+
+                await CleanupAsync(serviceClient, device).ConfigureAwait(false);
+            }
+        }
+
+        private IDictionary<DeviceIdentity, TwinData> BuildDevicesAndTwins(string testDevicePrefix, int deviceCount, IDictionary<string, object> desiredProperties)
+        {
+            IList<DeviceIdentity> devices = BuildMultipleDevices(testDevicePrefix, deviceCount);
             IDictionary<DeviceIdentity, TwinData> devicesAndTwins = new Dictionary<DeviceIdentity, TwinData>();
 
             foreach (DeviceIdentity device in devices)
             {
-                devicesAndTwins.Add(device, new TwinData { Properties = new TwinProperties { Desired = desiredProperties } });
+                var twinProperties = new TwinProperties();
+
+                foreach (var desiredProperty in desiredProperties)
+                {
+                    twinProperties.Desired.Add(desiredProperty);
+                }
+
+                devicesAndTwins.Add(device, new TwinData { Properties = twinProperties });
             }
 
             return devicesAndTwins;
         }
 
-        private IList<DeviceIdentity> BuildMultipleDevices(string testDeviceprefix, int deviceCount)
+        private IList<DeviceIdentity> BuildMultipleDevices(string testDevicePrefix, int deviceCount)
         {
             List<DeviceIdentity> deviceList = new List<DeviceIdentity>();
 
             for (int i = 0; i < deviceCount; i++)
             {
-                deviceList.Add(new DeviceIdentity { DeviceId = $"{testDeviceprefix}{GetRandom()}" });
+                deviceList.Add(new DeviceIdentity { DeviceId = $"{testDevicePrefix}{GetRandom()}" });
             }
 
             return deviceList;
         }
 
-        private async Task Cleanup(IoTHubServiceClient client, IEnumerable<DeviceIdentity> devices)
+        private async Task CleanupAsync(IotHubServiceClient client, IEnumerable<DeviceIdentity> devices)
         {
             try
             {
                 if (devices != null && devices.Any())
                 {
-                    await client.Devices.DeleteIdentitiesAsync(devices, BulkIfMatchPrecondition.Unconditional);
+                    await client.Devices.DeleteIdentitiesAsync(devices, BulkIfMatchPrecondition.Unconditional).ConfigureAwait(false);
                 }
             }
             catch (Exception ex)
@@ -431,7 +514,7 @@ namespace Azure.Iot.Hub.Service.Tests
             }
         }
 
-        private async Task Cleanup(IoTHubServiceClient client, DeviceIdentity device)
+        private async Task CleanupAsync(IotHubServiceClient client, DeviceIdentity device)
         {
             // cleanup
             try

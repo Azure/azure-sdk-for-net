@@ -15,6 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of AzureDataLakeStoreLinkedService. </summary>
         /// <param name="dataLakeStoreUri"> Data Lake Store service URI. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataLakeStoreUri"/> is null. </exception>
         public AzureDataLakeStoreLinkedService(object dataLakeStoreUri)
         {
             if (dataLakeStoreUri == null)

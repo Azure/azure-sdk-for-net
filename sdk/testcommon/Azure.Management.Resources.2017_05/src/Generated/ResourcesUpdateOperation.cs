@@ -54,27 +54,13 @@ namespace Azure.Management.Resources
         GenericResource IOperationSource<GenericResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return GenericResource.DeserializeGenericResource(document.RootElement);
-            }
+            return GenericResource.DeserializeGenericResource(document.RootElement);
         }
 
         async ValueTask<GenericResource> IOperationSource<GenericResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return GenericResource.DeserializeGenericResource(document.RootElement);
-            }
+            return GenericResource.DeserializeGenericResource(document.RootElement);
         }
     }
 }

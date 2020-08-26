@@ -15,15 +15,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
         }
 
-        /// <summary> Initializes a new instance of ExposureControlRequest. </summary>
-        /// <param name="featureName"> The feature name. </param>
-        /// <param name="featureType"> The feature type. </param>
-        internal ExposureControlRequest(string featureName, string featureType)
-        {
-            FeatureName = featureName;
-            FeatureType = featureType;
-        }
-
         /// <summary> The feature name. </summary>
         public string FeatureName { get; }
         /// <summary> The feature type. </summary>

@@ -8,37 +8,43 @@ schema: 2.0.0
 # Remove-TestResources.ps1
 
 ## SYNOPSIS
+
 Deletes the resource group deployed for a service directory from Azure.
 
 ## SYNTAX
 
 ### Default (Default)
-```
+
+```text
 Remove-TestResources.ps1 [-BaseName] <String> [-Environment <String>] [-Force] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
 
 ### Default+Provisioner
-```
+
+```text
 Remove-TestResources.ps1 [-BaseName] <String> -TenantId <String> [-SubscriptionId <String>]
  -ProvisionerApplicationId <String> -ProvisionerApplicationSecret <String> [-Environment <String>] [-Force]
  [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### ResourceGroup+Provisioner
-```
+
+```text
 Remove-TestResources.ps1 -ResourceGroupName <String> -TenantId <String> [-SubscriptionId <String>]
  -ProvisionerApplicationId <String> -ProvisionerApplicationSecret <String> [-Environment <String>] [-Force]
  [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### ResourceGroup
-```
+
+```text
 Remove-TestResources.ps1 -ResourceGroupName <String> [-Environment <String>] [-Force] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
 Removes a resource group and all its resources previously deployed using
 New-TestResources.ps1.
 
@@ -52,7 +58,8 @@ create resources.
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+```text
 Remove-TestResources.ps1 -BaseName 'uuid123' -Force
 ```
 
@@ -60,7 +67,8 @@ Use the currently logged-in account to delete the resource group by the name of
 'rg-uuid123'
 
 ### EXAMPLE 2
-```
+
+```text
 Remove-TestResources.ps1 `
     -ResourceGroupName "${env:AZURE_RESOURCEGROUP_NAME}" `
     -TenantId '$(TenantId)' `
@@ -77,6 +85,7 @@ AZURE_RESOURCEGROUP_NAME.
 ## PARAMETERS
 
 ### -BaseName
+
 A name to use in the resource group and passed to the ARM template as 'baseName'.
 This will delete the resource group named 'rg-\<baseName\>'
 
@@ -93,6 +102,7 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
+
 The name of the resource group to delete.
 
 ```yaml
@@ -108,6 +118,7 @@ Accept wildcard characters: False
 ```
 
 ### -TenantId
+
 The tenant ID of a service principal when a provisioner is specified.
 
 ```yaml
@@ -123,6 +134,7 @@ Accept wildcard characters: False
 ```
 
 ### -SubscriptionId
+
 Optional subscription ID to use for new resources when logging in as a
 provisioner.
 You can also use Set-AzContext if not provisioning.
@@ -140,6 +152,7 @@ Accept wildcard characters: False
 ```
 
 ### -ProvisionerApplicationId
+
 A service principal ID to provision test resources when a provisioner is specified.
 
 ```yaml
@@ -155,6 +168,7 @@ Accept wildcard characters: False
 ```
 
 ### -ProvisionerApplicationSecret
+
 A service principal secret (password) to provision test resources when a provisioner is specified.
 
 ```yaml
@@ -170,6 +184,7 @@ Accept wildcard characters: False
 ```
 
 ### -ServiceDirectory
+
 A directory under 'sdk' in the repository root - optionally with subdirectories
 specified - specified - in which to discover pre removal script named 'remove-test-resources-pre.json'.
 
@@ -186,6 +201,7 @@ Accept wildcard characters: False
 ```
 
 ### -Environment
+
 Name of the cloud environment.
 The default is the Azure Public Cloud
 ('PublicCloud')
@@ -203,6 +219,7 @@ Accept wildcard characters: False
 ```
 
 ### -Force
+
 Force removal of resource group without asking for user confirmation
 
 ```yaml
@@ -218,6 +235,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
+
 Shows what would happen if the cmdlet runs.
 The cmdlet is not run.
 
@@ -234,6 +252,7 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
+
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -249,6 +268,7 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
+
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS

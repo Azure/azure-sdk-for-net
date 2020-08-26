@@ -82,6 +82,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="configStoreName"/> is null. </exception>
         public virtual AsyncPageable<PrivateEndpointConnection> ListByConfigurationStoreAsync(string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -130,6 +131,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="configStoreName"/> is null. </exception>
         public virtual Pageable<PrivateEndpointConnection> ListByConfigurationStore(string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -180,6 +182,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="privateEndpointConnectionName"> Private endpoint connection name. </param>
         /// <param name="privateEndpointConnection"> The private endpoint connection properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, <paramref name="privateEndpointConnectionName"/>, or <paramref name="privateEndpointConnection"/> is null. </exception>
         public virtual async Task<PrivateEndpointConnectionsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string configStoreName, string privateEndpointConnectionName, PrivateEndpointConnection privateEndpointConnection, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -219,6 +222,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="privateEndpointConnectionName"> Private endpoint connection name. </param>
         /// <param name="privateEndpointConnection"> The private endpoint connection properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, <paramref name="privateEndpointConnectionName"/>, or <paramref name="privateEndpointConnection"/> is null. </exception>
         public virtual PrivateEndpointConnectionsCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string configStoreName, string privateEndpointConnectionName, PrivateEndpointConnection privateEndpointConnection, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -257,6 +261,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="privateEndpointConnectionName"> Private endpoint connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual async Task<PrivateEndpointConnectionsDeleteOperation> StartDeleteAsync(string resourceGroupName, string configStoreName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -291,6 +296,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="privateEndpointConnectionName"> Private endpoint connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual PrivateEndpointConnectionsDeleteOperation StartDelete(string resourceGroupName, string configStoreName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

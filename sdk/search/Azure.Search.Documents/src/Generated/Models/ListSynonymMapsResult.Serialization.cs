@@ -23,14 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<SynonymMap> array = new List<SynonymMap>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(SynonymMap.DeserializeSynonymMap(item));
-                        }
+                        array.Add(SynonymMap.DeserializeSynonymMap(item));
                     }
                     value = array;
                     continue;

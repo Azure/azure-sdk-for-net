@@ -16,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of PipelineListResponse. </summary>
         /// <param name="value"> List of pipelines. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal PipelineListResponse(IEnumerable<PipelineResource> value)
         {
             if (value == null)
@@ -23,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 throw new ArgumentNullException(nameof(value));
             }
 
-            Value = value.ToArray();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of PipelineListResponse. </summary>
@@ -31,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
         internal PipelineListResponse(IReadOnlyList<PipelineResource> value, string nextLink)
         {
-            Value = value ?? new List<PipelineResource>();
+            Value = value;
             NextLink = nextLink;
         }
 

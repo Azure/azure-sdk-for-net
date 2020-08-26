@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://westus2.ppe.cognitiveservices.azure.com/text/analytics/v3.0/entities/linking",
+      "RequestUri": "https://azsdknet-test-ta.cognitiveservices.azure.com/text/analytics/v3.1-preview.1/entities/linking",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Content-Length": "229",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-c8f2010846adc14ca6f1299d6a21d2c8-8e9d04dad9f03c4b-00",
+        "traceparent": "00-c2c8b16016bcf545b4fe1b6dcb9e36e7-653d4f9584251242-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/1.0.0-dev.20200424.1",
+          "azsdk-net-AI.TextAnalytics/1.1.0-dev.20200706.1",
           "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "a31c6139014927c10b81c58c3423ed27",
@@ -36,14 +36,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "15336494-72e3-4d30-a6d4-e0f743fa8339",
+        "apim-request-id": "97711aaf-c8af-448b-a9ad-fc41a627e773",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
-        "Date": "Sat, 25 Apr 2020 20:38:43 GMT",
+        "Date": "Mon, 06 Jul 2020 22:03:57 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "21"
+        "x-envoy-upstream-service-time": "22"
       },
       "ResponseBody": {
         "documents": [
@@ -57,7 +57,7 @@
                     "text": "Bill Gates",
                     "offset": 25,
                     "length": 10,
-                    "confidenceScore": 0.0
+                    "confidenceScore": 0.52
                   }
                 ],
                 "language": "en",
@@ -72,7 +72,7 @@
                     "text": "Paul Allen",
                     "offset": 40,
                     "length": 10,
-                    "confidenceScore": 0.0
+                    "confidenceScore": 0.54
                   }
                 ],
                 "language": "en",
@@ -87,7 +87,7 @@
                     "text": "Microsoft",
                     "offset": 0,
                     "length": 9,
-                    "confidenceScore": 0.0
+                    "confidenceScore": 0.49
                   }
                 ],
                 "language": "en",
@@ -108,7 +108,7 @@
                     "text": "Pike place market",
                     "offset": 0,
                     "length": 17,
-                    "confidenceScore": 0.0
+                    "confidenceScore": 0.86
                   }
                 ],
                 "language": "en",
@@ -123,7 +123,7 @@
                     "text": "Seattle",
                     "offset": 33,
                     "length": 7,
-                    "confidenceScore": 0.0
+                    "confidenceScore": 0.27
                   }
                 ],
                 "language": "en",
@@ -155,6 +155,6 @@
   "Variables": {
     "RandomSeed": "35415180",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://westus2.ppe.cognitiveservices.azure.com/"
+    "TEXT_ANALYTICS_ENDPOINT": "https://azsdknet-test-ta.cognitiveservices.azure.com/"
   }
 }

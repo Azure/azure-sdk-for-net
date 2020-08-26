@@ -81,6 +81,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group containing Network Watcher. </param>
         /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is null. </exception>
         public virtual AsyncPageable<FlowLog> ListAsync(string resourceGroupName, string networkWatcherName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -129,6 +130,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group containing Network Watcher. </param>
         /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is null. </exception>
         public virtual Pageable<FlowLog> List(string resourceGroupName, string networkWatcherName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -179,6 +181,7 @@ namespace Azure.Management.Network
         /// <param name="flowLogName"> The name of the flow log. </param>
         /// <param name="parameters"> Parameters that define the create or update flow log resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, <paramref name="flowLogName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual async Task<FlowLogsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string networkWatcherName, string flowLogName, FlowLog parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -218,6 +221,7 @@ namespace Azure.Management.Network
         /// <param name="flowLogName"> The name of the flow log. </param>
         /// <param name="parameters"> Parameters that define the create or update flow log resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, <paramref name="flowLogName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual FlowLogsCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string networkWatcherName, string flowLogName, FlowLog parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -256,6 +260,7 @@ namespace Azure.Management.Network
         /// <param name="networkWatcherName"> The name of the network watcher. </param>
         /// <param name="flowLogName"> The name of the flow log resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="flowLogName"/> is null. </exception>
         public virtual async Task<FlowLogsDeleteOperation> StartDeleteAsync(string resourceGroupName, string networkWatcherName, string flowLogName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -290,6 +295,7 @@ namespace Azure.Management.Network
         /// <param name="networkWatcherName"> The name of the network watcher. </param>
         /// <param name="flowLogName"> The name of the flow log resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="flowLogName"/> is null. </exception>
         public virtual FlowLogsDeleteOperation StartDelete(string resourceGroupName, string networkWatcherName, string flowLogName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

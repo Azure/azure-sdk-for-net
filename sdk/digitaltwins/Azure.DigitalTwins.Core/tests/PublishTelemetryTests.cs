@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.DigitalTwins.Core.Models;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -106,7 +105,6 @@ namespace Azure.DigitalTwins.Core.Tests
                     Assert.Fail($"Test clean up failed: {ex.Message}");
                 }
             }
-
         }
 
         private async Task CreateModelsAndTwins(DigitalTwinsClient client, string wifiModelId, string roomWithWifiModelId, string wifiComponentName, string roomWithWifiTwinId)

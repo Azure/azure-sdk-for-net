@@ -65,7 +65,7 @@ namespace Azure.Identity.Tests
 
             var mockMsalClient = new MockMsalConfidentialClient(new MockClientException(expectedInnerExMessage));
 
-            var credential = InstrumentClient(new ClientSecretCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), CredentialPipeline.GetInstance(null), mockMsalClient));
+            var credential = InstrumentClient(new ClientSecretCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), default, default, mockMsalClient));
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 

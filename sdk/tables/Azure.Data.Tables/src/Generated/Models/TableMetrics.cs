@@ -20,13 +20,13 @@ namespace Azure.Data.Tables.Models
         /// <summary> Initializes a new instance of TableMetrics. </summary>
         /// <param name="version"> The version of Analytics to configure. </param>
         /// <param name="enabled"> Indicates whether metrics are enabled for the Table service. </param>
-        /// <param name="includeAPIs"> Indicates whether metrics should generate summary statistics for called API operations. </param>
+        /// <param name="includeApis"> Indicates whether metrics should generate summary statistics for called API operations. </param>
         /// <param name="retentionPolicy"> The retention policy. </param>
-        internal TableMetrics(string version, bool enabled, bool? includeAPIs, RetentionPolicy retentionPolicy)
+        internal TableMetrics(string version, bool enabled, bool? includeApis, RetentionPolicy retentionPolicy)
         {
             Version = version;
             Enabled = enabled;
-            IncludeAPIs = includeAPIs;
+            IncludeApis = includeApis;
             RetentionPolicy = retentionPolicy;
         }
 
@@ -34,8 +34,6 @@ namespace Azure.Data.Tables.Models
         public string Version { get; set; }
         /// <summary> Indicates whether metrics are enabled for the Table service. </summary>
         public bool Enabled { get; set; }
-        /// <summary> Indicates whether metrics should generate summary statistics for called API operations. </summary>
-        public bool? IncludeAPIs { get; set; }
         /// <summary> The retention policy. </summary>
         public RetentionPolicy RetentionPolicy { get; set; }
     }

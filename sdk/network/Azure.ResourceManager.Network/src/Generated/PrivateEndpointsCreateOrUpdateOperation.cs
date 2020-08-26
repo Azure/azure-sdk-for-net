@@ -54,27 +54,13 @@ namespace Azure.ResourceManager.Network
         PrivateEndpoint IOperationSource<PrivateEndpoint>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return PrivateEndpoint.DeserializePrivateEndpoint(document.RootElement);
-            }
+            return PrivateEndpoint.DeserializePrivateEndpoint(document.RootElement);
         }
 
         async ValueTask<PrivateEndpoint> IOperationSource<PrivateEndpoint>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return PrivateEndpoint.DeserializePrivateEndpoint(document.RootElement);
-            }
+            return PrivateEndpoint.DeserializePrivateEndpoint(document.RootElement);
         }
     }
 }

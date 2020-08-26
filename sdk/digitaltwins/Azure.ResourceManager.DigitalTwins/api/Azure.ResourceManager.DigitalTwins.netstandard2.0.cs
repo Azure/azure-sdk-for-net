@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.DigitalTwins
     public partial class DigitalTwinsOperations
     {
         protected DigitalTwinsOperations() { }
-        public virtual Azure.Response<Azure.ResourceManager.DigitalTwins.Models.CheckNameResult> CheckNameAvailability(string location, string name, string type = "Microsoft.DigitalTwins/digitalTwinsInstances", System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DigitalTwins.Models.CheckNameResult>> CheckNameAvailabilityAsync(string location, string name, string type = "Microsoft.DigitalTwins/digitalTwinsInstances", System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DigitalTwins.Models.CheckNameResult> CheckNameAvailability(string location, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DigitalTwins.Models.CheckNameResult>> CheckNameAvailabilityAsync(string location, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsDescription> Get(string resourceGroupName, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsDescription>> GetAsync(string resourceGroupName, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsDescription> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -117,12 +117,6 @@ namespace Azure.ResourceManager.DigitalTwins
 }
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
-    public partial class CheckNameRequest
-    {
-        public CheckNameRequest(string name) { }
-        public string Name { get { throw null; } }
-        public string Type { get { throw null; } }
-    }
     public partial class CheckNameResult
     {
         internal CheckNameResult() { }
@@ -161,12 +155,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public DigitalTwinsEndpointResourceProperties() { }
         public System.DateTimeOffset? CreatedTime { get { throw null; } }
         public Azure.ResourceManager.DigitalTwins.Models.EndpointProvisioningState? ProvisioningState { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
-    }
-    public partial class DigitalTwinsPatchDescription
-    {
-        public DigitalTwinsPatchDescription() { }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class DigitalTwinsResource
     {
@@ -178,10 +167,27 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
         public string Type { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DigitalTwinsSku : System.IEquatable<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsSku>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DigitalTwinsSku(string value) { throw null; }
+        public static Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsSku F1 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsSku other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsSku left, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsSku right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsSku (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsSku left, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsSku right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class DigitalTwinsSkuInfo
     {
-        public DigitalTwinsSkuInfo() { }
-        public string Name { get { throw null; } set { } }
+        public DigitalTwinsSkuInfo(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsSku name) { }
+        public Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsSku Name { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EndpointProvisioningState : System.IEquatable<Azure.ResourceManager.DigitalTwins.Models.EndpointProvisioningState>
@@ -238,7 +244,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     }
     public partial class ExternalResource
     {
-        public ExternalResource() { }
+        internal ExternalResource() { }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
         public string Type { get { throw null; } }

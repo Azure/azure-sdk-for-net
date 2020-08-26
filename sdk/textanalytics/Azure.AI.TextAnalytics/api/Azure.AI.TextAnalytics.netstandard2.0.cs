@@ -216,12 +216,13 @@ namespace Azure.AI.TextAnalytics
     }
     public partial class TextAnalyticsClientOptions : Azure.Core.ClientOptions
     {
-        public TextAnalyticsClientOptions(Azure.AI.TextAnalytics.TextAnalyticsClientOptions.ServiceVersion version = Azure.AI.TextAnalytics.TextAnalyticsClientOptions.ServiceVersion.V3_0) { }
+        public TextAnalyticsClientOptions(Azure.AI.TextAnalytics.TextAnalyticsClientOptions.ServiceVersion version = Azure.AI.TextAnalytics.TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_1) { }
         public string DefaultCountryHint { get { throw null; } set { } }
         public string DefaultLanguage { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V3_0 = 1,
+            V3_1_Preview_1 = 2,
         }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

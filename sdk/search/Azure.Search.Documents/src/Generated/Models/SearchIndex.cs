@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -32,15 +33,15 @@ namespace Azure.Search.Documents.Indexes.Models
         internal SearchIndex(string name, IList<SearchField> fields, IList<ScoringProfile> scoringProfiles, string defaultScoringProfile, CorsOptions corsOptions, IList<SearchSuggester> suggesters, IList<LexicalAnalyzer> analyzers, IList<LexicalTokenizer> tokenizers, IList<TokenFilter> tokenFilters, IList<CharFilter> charFilters, SearchResourceEncryptionKey encryptionKey, SimilarityAlgorithm similarity, string Etag)
         {
             Name = name;
-            Fields = fields ?? new List<SearchField>();
-            ScoringProfiles = scoringProfiles ?? new List<ScoringProfile>();
+            Fields = fields;
+            ScoringProfiles = scoringProfiles;
             DefaultScoringProfile = defaultScoringProfile;
             CorsOptions = corsOptions;
-            Suggesters = suggesters ?? new List<SearchSuggester>();
-            Analyzers = analyzers ?? new List<LexicalAnalyzer>();
-            Tokenizers = tokenizers ?? new List<LexicalTokenizer>();
-            TokenFilters = tokenFilters ?? new List<TokenFilter>();
-            CharFilters = charFilters ?? new List<CharFilter>();
+            Suggesters = suggesters;
+            Analyzers = analyzers;
+            Tokenizers = tokenizers;
+            TokenFilters = tokenFilters;
+            CharFilters = charFilters;
             EncryptionKey = encryptionKey;
             Similarity = similarity;
             _etag = Etag;

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -160,29 +159,40 @@ namespace Azure.AI.FormRecognizer.Training
         {
             if (!_hasCompleted)
             {
-                // Include keys is always set to true -- the service does not have a use case for includeKeys: false.
-                Response<Model_internal> update = async
-                    ? await _serviceClient.GetCustomModelAsync(new Guid(Id), includeKeys: true, cancellationToken).ConfigureAwait(false)
-                    : _serviceClient.GetCustomModel(new Guid(Id), includeKeys: true, cancellationToken);
+                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TrainingOperation)}.{nameof(UpdateStatus)}");
+                scope.Start();
 
-                _response = update.GetRawResponse();
-
-                if (update.Value.ModelInfo.Status == CustomFormModelStatus.Ready)
+                try
                 {
-                    // We need to first assign a value and then mark the operation as completed to avoid a race condition with the getter in Value
-                    _value = new CustomFormModel(update.Value);
-                    _hasCompleted = true;
+                    // Include keys is always set to true -- the service does not have a use case for includeKeys: false.
+                    Response<Model> update = async
+                        ? await _serviceClient.GetCustomModelAsync(new Guid(Id), includeKeys: true, cancellationToken).ConfigureAwait(false)
+                        : _serviceClient.GetCustomModel(new Guid(Id), includeKeys: true, cancellationToken);
+
+                    _response = update.GetRawResponse();
+
+                    if (update.Value.ModelInfo.Status == CustomFormModelStatus.Ready)
+                    {
+                        // We need to first assign a value and then mark the operation as completed to avoid a race condition with the getter in Value
+                        _value = new CustomFormModel(update.Value);
+                        _hasCompleted = true;
+                    }
+                    else if (update.Value.ModelInfo.Status == CustomFormModelStatus.Invalid)
+                    {
+                        _requestFailedException = await ClientCommon.CreateExceptionForFailedOperationAsync(
+                                                        async,
+                                                        _diagnostics,
+                                                        _response,
+                                                        update.Value.TrainResult.Errors,
+                                                        $"Invalid model created with ID {update.Value.ModelInfo.ModelId}").ConfigureAwait(false);
+                        _hasCompleted = true;
+                        throw _requestFailedException;
+                    }
                 }
-                else if (update.Value.ModelInfo.Status == CustomFormModelStatus.Invalid)
+                catch (Exception e)
                 {
-                    _requestFailedException = await ClientCommon.CreateExceptionForFailedOperationAsync(
-                                                    async,
-                                                    _diagnostics,
-                                                    _response,
-                                                    update.Value.TrainResult.Errors,
-                                                    $"Invalid model created with ID {update.Value.ModelInfo.ModelId}").ConfigureAwait(false);
-                    _hasCompleted = true;
-                    throw _requestFailedException;
+                    scope.Failed(e);
+                    throw;
                 }
             }
 

@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         internal static SparkStatementCollection DeserializeSparkStatementCollection(JsonElement element)
         {
             int totalStatements = default;
-            IReadOnlyList<SparkStatement> statements = default;
+            Optional<IReadOnlyList<SparkStatement>> statements = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("total_statements"))
@@ -26,27 +26,16 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 }
                 if (property.NameEquals("statements"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<SparkStatement> array = new List<SparkStatement>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(SparkStatement.DeserializeSparkStatement(item));
-                        }
+                        array.Add(SparkStatement.DeserializeSparkStatement(item));
                     }
                     statements = array;
                     continue;
                 }
             }
-            return new SparkStatementCollection(totalStatements, statements);
+            return new SparkStatementCollection(totalStatements, Optional.ToList(statements));
         }
     }
 }

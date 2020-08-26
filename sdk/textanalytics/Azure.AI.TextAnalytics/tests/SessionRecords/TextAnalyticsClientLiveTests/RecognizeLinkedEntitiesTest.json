@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://westus2.ppe.cognitiveservices.azure.com/text/analytics/v3.0/entities/linking",
+      "RequestUri": "https://azsdknet-test-ta.cognitiveservices.azure.com/text/analytics/v3.1-preview.1/entities/linking",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Content-Length": "103",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-3d7ef2583bc68345a489b568b9d9c376-d8de3b057ee49145-00",
+        "traceparent": "00-0c529fc876481748926bbd836d89492e-b5f179cf21fbce43-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/1.0.0-dev.20200424.1",
+          "azsdk-net-AI.TextAnalytics/1.1.0-dev.20200706.1",
           "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "e3778139259e1903444975ba4546d6d8",
@@ -26,14 +26,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "a3895edd-c2cd-4dfe-8b38-7c45b2876d38",
+        "apim-request-id": "3ed86cd7-f545-488f-bd3f-827418c25fa2",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1",
-        "Date": "Sat, 25 Apr 2020 20:38:38 GMT",
+        "Date": "Mon, 06 Jul 2020 22:03:48 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "17"
+        "x-envoy-upstream-service-time": "21"
       },
       "ResponseBody": {
         "documents": [
@@ -47,7 +47,7 @@
                     "text": "Bill Gates",
                     "offset": 25,
                     "length": 10,
-                    "confidenceScore": 0.0
+                    "confidenceScore": 0.52
                   }
                 ],
                 "language": "en",
@@ -62,7 +62,7 @@
                     "text": "Paul Allen",
                     "offset": 40,
                     "length": 10,
-                    "confidenceScore": 0.0
+                    "confidenceScore": 0.54
                   }
                 ],
                 "language": "en",
@@ -77,7 +77,7 @@
                     "text": "Microsoft",
                     "offset": 0,
                     "length": 9,
-                    "confidenceScore": 0.0
+                    "confidenceScore": 0.49
                   }
                 ],
                 "language": "en",
@@ -97,6 +97,6 @@
   "Variables": {
     "RandomSeed": "2126928205",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://westus2.ppe.cognitiveservices.azure.com/"
+    "TEXT_ANALYTICS_ENDPOINT": "https://azsdknet-test-ta.cognitiveservices.azure.com/"
   }
 }

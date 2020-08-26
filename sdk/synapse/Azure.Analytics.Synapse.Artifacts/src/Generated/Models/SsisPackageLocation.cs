@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of SsisPackageLocation. </summary>
         public SsisPackageLocation()
         {
+            ChildPackages = new ChangeTrackingList<SsisChildPackage>();
         }
 
         /// <summary> Initializes a new instance of SsisPackageLocation. </summary>
@@ -57,6 +59,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The embedded package last modified date. </summary>
         public string PackageLastModifiedDate { get; set; }
         /// <summary> The embedded child package list. </summary>
-        public IList<SsisChildPackage> ChildPackages { get; set; }
+        public IList<SsisChildPackage> ChildPackages { get; }
     }
 }

@@ -29,6 +29,7 @@ pr:
     - sdk/azurestack/Microsoft.AzureStack.Management.Subscription
     - sdk/azurestack/Microsoft.AzureStack.Management.Subscriptions.Admin
     - sdk/azurestack/Microsoft.AzureStack.Management.Update.Admin
+    - sdk/azurestackhci/Microsoft.Azure.Management.AzureStackHCI
     - sdk/batch/Microsoft.Azure.Management.Batch
     - sdk/batchai/Microsoft.Azure.Management.BatchAI
     - sdk/billing/Microsoft.Azure.Management.Billing
@@ -88,7 +89,6 @@ pr:
     - sdk/maps/Microsoft.Azure.Management.Maps
     - sdk/marketplace/Microsoft.Azure.Management.Marketplace
     - sdk/marketplaceordering/Microsoft.Azure.Management.MarketplaceOrdering
-    - sdk/marketplace/Microsoft.Azure.Management.Marketplace
     - sdk/mediaservices/Microsoft.Azure.Management.Media
     - sdk/mgmtcommon/AppAuthentication
     - sdk/mgmtcommon/Auth

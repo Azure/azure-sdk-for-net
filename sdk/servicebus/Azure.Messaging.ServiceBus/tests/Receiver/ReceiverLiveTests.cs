@@ -320,7 +320,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 sequenceNumbers.Add(45);
                 Assert.That(
                     async () => await receiver.ReceiveDeferredMessagesAsync(sequenceNumbers),
-                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessageNotFound));
+                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessageNotFound));
             }
         }
 

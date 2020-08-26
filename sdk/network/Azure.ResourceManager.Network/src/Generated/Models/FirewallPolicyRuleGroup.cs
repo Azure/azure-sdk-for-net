@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of FirewallPolicyRuleGroup. </summary>
         public FirewallPolicyRuleGroup()
         {
+            Rules = new ChangeTrackingList<FirewallPolicyRule>();
         }
 
         /// <summary> Initializes a new instance of FirewallPolicyRuleGroup. </summary>
@@ -44,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Priority of the Firewall Policy Rule Group resource. </summary>
         public int? Priority { get; set; }
         /// <summary> Group of Firewall Policy rules. </summary>
-        public IList<FirewallPolicyRule> Rules { get; set; }
+        public IList<FirewallPolicyRule> Rules { get; }
         /// <summary> The provisioning state of the firewall policy rule group resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

@@ -1,7 +1,24 @@
 # Release History
 
-## 12.5.0-preview.6 (Unreleased)
+## 12.6.0-preview.1 (Unreleased)
 
+## 12.5.1 (2020-08-18)
+- Bug in TaskExtensions.EnsureCompleted method that causes it to unconditionally throw an exception in the environments with synchronization context
+
+## 12.5.0 (2020-08-13)
+- Includes all features from 12.5.0-preview.1 through 12.5.0-preview.6.
+- Added support for custom local emulator hostname for blob storage endpoints.
+- Fixed bug where BlobContainerClient.SetAccessPolicy() sends DateTimeOffset.MinValue when StartsOn and ExpiresOn when not set in BlobAccessPolicy
+- Added nullable properties, PolicyStartsOn and PolicyExpiresOn to BlobAccessPolicy
+- Added BlockBlobClient.OpenWrite(), AppendBlobClient.OpenWrite(), and PageBlobClient.OpenWrite()
+
+## 12.5.0-preview.6 (2020-07-27)
+- Fixed bug where BlockBlobClient and PageBlobClient would throw NullReferenceExceptions when using Uri constructor.
+- Fixed bug where .WithSnapshot() and .WithVersion() would URL-encode the name of the new clients.
+- Updated BlobSasBuilder to correctly order raw string permissions and make the permissions lowercase.
+- Fixed bug where BlockBlobClient.Query() failed when query response was > ~200 MB.
+- Added BlobBaseClient.OpenRead().
+- Fixed bug where BlockBlobClient.Query() would buffer the query response before parsing the Avro contents.
 
 ## 12.5.0-preview.5 (2020-07-03)
 - Added support for service version 2019-12-12.

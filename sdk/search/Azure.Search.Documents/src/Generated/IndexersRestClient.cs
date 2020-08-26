@@ -30,7 +30,7 @@ namespace Azure.Search.Documents
         /// <param name="endpoint"> The endpoint URL of the search service. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
         public IndexersRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, Guid? xMsClientRequestId = null, string apiVersion = "2020-06-30")
         {
             if (endpoint == null)
@@ -72,6 +72,7 @@ namespace Azure.Search.Documents
         /// <summary> Resets the change tracking state associated with an indexer. </summary>
         /// <param name="indexerName"> The name of the indexer to reset. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
         public async Task<Response> ResetAsync(string indexerName, CancellationToken cancellationToken = default)
         {
             if (indexerName == null)
@@ -93,6 +94,7 @@ namespace Azure.Search.Documents
         /// <summary> Resets the change tracking state associated with an indexer. </summary>
         /// <param name="indexerName"> The name of the indexer to reset. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
         public Response Reset(string indexerName, CancellationToken cancellationToken = default)
         {
             if (indexerName == null)
@@ -134,6 +136,7 @@ namespace Azure.Search.Documents
         /// <summary> Runs an indexer on-demand. </summary>
         /// <param name="indexerName"> The name of the indexer to run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
         public async Task<Response> RunAsync(string indexerName, CancellationToken cancellationToken = default)
         {
             if (indexerName == null)
@@ -155,6 +158,7 @@ namespace Azure.Search.Documents
         /// <summary> Runs an indexer on-demand. </summary>
         /// <param name="indexerName"> The name of the indexer to run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
         public Response Run(string indexerName, CancellationToken cancellationToken = default)
         {
             if (indexerName == null)
@@ -212,6 +216,7 @@ namespace Azure.Search.Documents
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> or <paramref name="indexer"/> is null. </exception>
         public async Task<Response<SearchIndexer>> CreateOrUpdateAsync(string indexerName, SearchIndexer indexer, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (indexerName == null)
@@ -232,14 +237,7 @@ namespace Azure.Search.Documents
                     {
                         SearchIndexer value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndexer.DeserializeSearchIndexer(document.RootElement);
-                        }
+                        value = SearchIndexer.DeserializeSearchIndexer(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -253,6 +251,7 @@ namespace Azure.Search.Documents
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> or <paramref name="indexer"/> is null. </exception>
         public Response<SearchIndexer> CreateOrUpdate(string indexerName, SearchIndexer indexer, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (indexerName == null)
@@ -273,14 +272,7 @@ namespace Azure.Search.Documents
                     {
                         SearchIndexer value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndexer.DeserializeSearchIndexer(document.RootElement);
-                        }
+                        value = SearchIndexer.DeserializeSearchIndexer(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -321,6 +313,7 @@ namespace Azure.Search.Documents
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string indexerName, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (indexerName == null)
@@ -345,6 +338,7 @@ namespace Azure.Search.Documents
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
         public Response Delete(string indexerName, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (indexerName == null)
@@ -387,6 +381,7 @@ namespace Azure.Search.Documents
         /// <summary> Retrieves an indexer definition. </summary>
         /// <param name="indexerName"> The name of the indexer to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
         public async Task<Response<SearchIndexer>> GetAsync(string indexerName, CancellationToken cancellationToken = default)
         {
             if (indexerName == null)
@@ -402,14 +397,7 @@ namespace Azure.Search.Documents
                     {
                         SearchIndexer value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndexer.DeserializeSearchIndexer(document.RootElement);
-                        }
+                        value = SearchIndexer.DeserializeSearchIndexer(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -420,6 +408,7 @@ namespace Azure.Search.Documents
         /// <summary> Retrieves an indexer definition. </summary>
         /// <param name="indexerName"> The name of the indexer to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
         public Response<SearchIndexer> Get(string indexerName, CancellationToken cancellationToken = default)
         {
             if (indexerName == null)
@@ -435,14 +424,7 @@ namespace Azure.Search.Documents
                     {
                         SearchIndexer value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndexer.DeserializeSearchIndexer(document.RootElement);
-                        }
+                        value = SearchIndexer.DeserializeSearchIndexer(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -485,14 +467,7 @@ namespace Azure.Search.Documents
                     {
                         ListIndexersResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListIndexersResult.DeserializeListIndexersResult(document.RootElement);
-                        }
+                        value = ListIndexersResult.DeserializeListIndexersResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -513,14 +488,7 @@ namespace Azure.Search.Documents
                     {
                         ListIndexersResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ListIndexersResult.DeserializeListIndexersResult(document.RootElement);
-                        }
+                        value = ListIndexersResult.DeserializeListIndexersResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -553,6 +521,7 @@ namespace Azure.Search.Documents
         /// <summary> Creates a new indexer. </summary>
         /// <param name="indexer"> The definition of the indexer to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="indexer"/> is null. </exception>
         public async Task<Response<SearchIndexer>> CreateAsync(SearchIndexer indexer, CancellationToken cancellationToken = default)
         {
             if (indexer == null)
@@ -568,14 +537,7 @@ namespace Azure.Search.Documents
                     {
                         SearchIndexer value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndexer.DeserializeSearchIndexer(document.RootElement);
-                        }
+                        value = SearchIndexer.DeserializeSearchIndexer(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -586,6 +548,7 @@ namespace Azure.Search.Documents
         /// <summary> Creates a new indexer. </summary>
         /// <param name="indexer"> The definition of the indexer to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="indexer"/> is null. </exception>
         public Response<SearchIndexer> Create(SearchIndexer indexer, CancellationToken cancellationToken = default)
         {
             if (indexer == null)
@@ -601,14 +564,7 @@ namespace Azure.Search.Documents
                     {
                         SearchIndexer value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndexer.DeserializeSearchIndexer(document.RootElement);
-                        }
+                        value = SearchIndexer.DeserializeSearchIndexer(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -639,6 +595,7 @@ namespace Azure.Search.Documents
         /// <summary> Returns the current status and execution history of an indexer. </summary>
         /// <param name="indexerName"> The name of the indexer for which to retrieve status. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
         public async Task<Response<SearchIndexerStatus>> GetStatusAsync(string indexerName, CancellationToken cancellationToken = default)
         {
             if (indexerName == null)
@@ -654,14 +611,7 @@ namespace Azure.Search.Documents
                     {
                         SearchIndexerStatus value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndexerStatus.DeserializeSearchIndexerStatus(document.RootElement);
-                        }
+                        value = SearchIndexerStatus.DeserializeSearchIndexerStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -672,6 +622,7 @@ namespace Azure.Search.Documents
         /// <summary> Returns the current status and execution history of an indexer. </summary>
         /// <param name="indexerName"> The name of the indexer for which to retrieve status. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
         public Response<SearchIndexerStatus> GetStatus(string indexerName, CancellationToken cancellationToken = default)
         {
             if (indexerName == null)
@@ -687,14 +638,7 @@ namespace Azure.Search.Documents
                     {
                         SearchIndexerStatus value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SearchIndexerStatus.DeserializeSearchIndexerStatus(document.RootElement);
-                        }
+                        value = SearchIndexerStatus.DeserializeSearchIndexerStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

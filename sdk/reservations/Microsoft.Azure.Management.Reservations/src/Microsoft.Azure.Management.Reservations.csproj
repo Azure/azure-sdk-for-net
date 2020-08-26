@@ -7,10 +7,10 @@
 		<PackageId>Microsoft.Azure.Management.Reservations</PackageId>
 		<Description>Microsoft.Azure.Management.Reservations Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Reservations</AssemblyName>
-		<Version>1.13.0-preview</Version>
+		<Version>1.14.0-preview</Version>
     <PackageTags>Reservations;</PackageTags>
 		<PackageReleaseNotes>
-			Update billing plan sdk
+			Adding quota api to sdk
 		</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

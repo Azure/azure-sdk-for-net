@@ -85,10 +85,6 @@ namespace Microsoft.Azure.Management.Billing
         /// </return>
         public async Task<AzureOperationResponse<BillingRoleDefinition>> GetByBillingAccountWithHttpMessagesAsync(string billingAccountName, string billingRoleDefinitionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (billingAccountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountName");
@@ -97,6 +93,7 @@ namespace Microsoft.Azure.Management.Billing
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "billingRoleDefinitionName");
             }
+            string apiVersion = "2020-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -104,6 +101,7 @@ namespace Microsoft.Azure.Management.Billing
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("billingAccountName", billingAccountName);
                 tracingParameters.Add("billingRoleDefinitionName", billingRoleDefinitionName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -115,9 +113,9 @@ namespace Microsoft.Azure.Management.Billing
             _url = _url.Replace("{billingAccountName}", System.Uri.EscapeDataString(billingAccountName));
             _url = _url.Replace("{billingRoleDefinitionName}", System.Uri.EscapeDataString(billingRoleDefinitionName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -280,10 +278,6 @@ namespace Microsoft.Azure.Management.Billing
         /// </return>
         public async Task<AzureOperationResponse<BillingRoleDefinition>> GetByInvoiceSectionWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string invoiceSectionName, string billingRoleDefinitionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (billingAccountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountName");
@@ -300,6 +294,7 @@ namespace Microsoft.Azure.Management.Billing
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "billingRoleDefinitionName");
             }
+            string apiVersion = "2020-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -307,6 +302,7 @@ namespace Microsoft.Azure.Management.Billing
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("billingAccountName", billingAccountName);
                 tracingParameters.Add("billingProfileName", billingProfileName);
                 tracingParameters.Add("invoiceSectionName", invoiceSectionName);
@@ -322,9 +318,9 @@ namespace Microsoft.Azure.Management.Billing
             _url = _url.Replace("{invoiceSectionName}", System.Uri.EscapeDataString(invoiceSectionName));
             _url = _url.Replace("{billingRoleDefinitionName}", System.Uri.EscapeDataString(billingRoleDefinitionName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -484,10 +480,6 @@ namespace Microsoft.Azure.Management.Billing
         /// </return>
         public async Task<AzureOperationResponse<BillingRoleDefinition>> GetByBillingProfileWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string billingRoleDefinitionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (billingAccountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountName");
@@ -500,6 +492,7 @@ namespace Microsoft.Azure.Management.Billing
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "billingRoleDefinitionName");
             }
+            string apiVersion = "2020-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -507,6 +500,7 @@ namespace Microsoft.Azure.Management.Billing
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("billingAccountName", billingAccountName);
                 tracingParameters.Add("billingProfileName", billingProfileName);
                 tracingParameters.Add("billingRoleDefinitionName", billingRoleDefinitionName);
@@ -520,9 +514,9 @@ namespace Microsoft.Azure.Management.Billing
             _url = _url.Replace("{billingProfileName}", System.Uri.EscapeDataString(billingProfileName));
             _url = _url.Replace("{billingRoleDefinitionName}", System.Uri.EscapeDataString(billingRoleDefinitionName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -676,14 +670,11 @@ namespace Microsoft.Azure.Management.Billing
         /// </return>
         public async Task<AzureOperationResponse<IPage<BillingRoleDefinition>>> ListByBillingAccountWithHttpMessagesAsync(string billingAccountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (billingAccountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountName");
             }
+            string apiVersion = "2020-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -691,6 +682,7 @@ namespace Microsoft.Azure.Management.Billing
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("billingAccountName", billingAccountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListByBillingAccount", tracingParameters);
@@ -700,9 +692,9 @@ namespace Microsoft.Azure.Management.Billing
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingRoleDefinitions").ToString();
             _url = _url.Replace("{billingAccountName}", System.Uri.EscapeDataString(billingAccountName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -862,10 +854,6 @@ namespace Microsoft.Azure.Management.Billing
         /// </return>
         public async Task<AzureOperationResponse<IPage<BillingRoleDefinition>>> ListByInvoiceSectionWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string invoiceSectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (billingAccountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountName");
@@ -878,6 +866,7 @@ namespace Microsoft.Azure.Management.Billing
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "invoiceSectionName");
             }
+            string apiVersion = "2020-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -885,6 +874,7 @@ namespace Microsoft.Azure.Management.Billing
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("billingAccountName", billingAccountName);
                 tracingParameters.Add("billingProfileName", billingProfileName);
                 tracingParameters.Add("invoiceSectionName", invoiceSectionName);
@@ -898,9 +888,9 @@ namespace Microsoft.Azure.Management.Billing
             _url = _url.Replace("{billingProfileName}", System.Uri.EscapeDataString(billingProfileName));
             _url = _url.Replace("{invoiceSectionName}", System.Uri.EscapeDataString(invoiceSectionName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1057,10 +1047,6 @@ namespace Microsoft.Azure.Management.Billing
         /// </return>
         public async Task<AzureOperationResponse<IPage<BillingRoleDefinition>>> ListByBillingProfileWithHttpMessagesAsync(string billingAccountName, string billingProfileName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (billingAccountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountName");
@@ -1069,6 +1055,7 @@ namespace Microsoft.Azure.Management.Billing
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "billingProfileName");
             }
+            string apiVersion = "2020-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1076,6 +1063,7 @@ namespace Microsoft.Azure.Management.Billing
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("billingAccountName", billingAccountName);
                 tracingParameters.Add("billingProfileName", billingProfileName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -1087,9 +1075,9 @@ namespace Microsoft.Azure.Management.Billing
             _url = _url.Replace("{billingAccountName}", System.Uri.EscapeDataString(billingAccountName));
             _url = _url.Replace("{billingProfileName}", System.Uri.EscapeDataString(billingProfileName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {

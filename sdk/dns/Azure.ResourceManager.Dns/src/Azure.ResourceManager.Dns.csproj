@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Version>1.0.0-preview.1</Version>
+    <PackageId>Azure.ResourceManager.Dns</PackageId>
+    <Description>
+      Azure management client SDK for Azure resource provider Microsoft.EventHub.
+      This is a beta preview vesion. This version uses a next-generation code generator that introduces important breaking changes, but also new features (such as intuitive authentication, custom HTTP pipeline, distributed tracing and much more).
+    </Description>
+    <Description>Azure Resource Manager client SDK for Azure resource provider Microsoft.Dns</Description>
+    <PackageTags>azure;management;arm;resource manager;dns</PackageTags>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- TODO: As part of release process, this PropertyGroup can be removed once RP is approved for namespace -->
+    <NoWarn>$(NoWarn);AZC0001</NoWarn>
+  </PropertyGroup>
+</Project>

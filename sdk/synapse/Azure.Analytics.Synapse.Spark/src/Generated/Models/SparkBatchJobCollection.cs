@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Spark.Models
 {
@@ -19,6 +20,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         {
             From = @from;
             Total = total;
+            Sessions = new ChangeTrackingList<SparkBatchJob>();
         }
 
         /// <summary> Initializes a new instance of SparkBatchJobCollection. </summary>

@@ -26,14 +26,14 @@ namespace Azure.Data.Tables.Models
         internal static SignedIdentifier DeserializeSignedIdentifier(XElement element)
         {
             string id = default;
-            AccessPolicy accessPolicy = default;
+            TableAccessPolicy accessPolicy = default;
             if (element.Element("Id") is XElement idElement)
             {
                 id = (string)idElement;
             }
             if (element.Element("AccessPolicy") is XElement accessPolicyElement)
             {
-                accessPolicy = AccessPolicy.DeserializeAccessPolicy(accessPolicyElement);
+                accessPolicy = TableAccessPolicy.DeserializeTableAccessPolicy(accessPolicyElement);
             }
             return new SignedIdentifier(id, accessPolicy);
         }

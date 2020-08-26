@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ConnectivityParameters. </summary>
         /// <param name="source"> The source of the connection. </param>
         /// <param name="destination"> The destination of connection. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="source"/> or <paramref name="destination"/> is null. </exception>
         public ConnectivityParameters(ConnectivitySource source, ConnectivityDestination destination)
         {
             if (source == null)
@@ -28,21 +29,6 @@ namespace Azure.ResourceManager.Network.Models
 
             Source = source;
             Destination = destination;
-        }
-
-        /// <summary> Initializes a new instance of ConnectivityParameters. </summary>
-        /// <param name="source"> The source of the connection. </param>
-        /// <param name="destination"> The destination of connection. </param>
-        /// <param name="protocol"> Network protocol. </param>
-        /// <param name="protocolConfiguration"> Configuration of the protocol. </param>
-        /// <param name="preferredIPVersion"> Preferred IP version of the connection. </param>
-        internal ConnectivityParameters(ConnectivitySource source, ConnectivityDestination destination, Protocol? protocol, ProtocolConfiguration protocolConfiguration, IPVersion? preferredIPVersion)
-        {
-            Source = source;
-            Destination = destination;
-            Protocol = protocol;
-            ProtocolConfiguration = protocolConfiguration;
-            PreferredIPVersion = preferredIPVersion;
         }
 
         /// <summary> The source of the connection. </summary>

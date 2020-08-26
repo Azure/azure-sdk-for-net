@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Azure.Storage.Blobs.ChangeFeed.Models;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.ChangeFeed.Tests
@@ -18,7 +17,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         }
 
         [Test]
-        [Ignore("")]
+        [Ignore("For debugging larger Change Feeds locally")]
         public void Test()
         {
             BlobServiceClient service = GetServiceClient_SharedKey();

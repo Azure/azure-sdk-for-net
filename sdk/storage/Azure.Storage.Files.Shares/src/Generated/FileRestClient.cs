@@ -8655,12 +8655,12 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// The date-time the policy is active.
         /// </summary>
-        public System.DateTimeOffset StartsOn { get; set; }
+        public System.DateTimeOffset? PolicyStartsOn { get; set; }
 
         /// <summary>
         /// The date-time the policy expires.
         /// </summary>
-        public System.DateTimeOffset ExpiresOn { get; set; }
+        public System.DateTimeOffset? PolicyExpiresOn { get; set; }
 
         /// <summary>
         /// The permissions for the ACL policy.
@@ -8683,15 +8683,24 @@ namespace Azure.Storage.Files.Shares.Models
         {
             System.Diagnostics.Debug.Assert(value != null);
             System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("Start", ""),
-                value.StartsOn.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffZ", System.Globalization.CultureInfo.InvariantCulture)));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("Expiry", ""),
-                value.ExpiresOn.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffZ", System.Globalization.CultureInfo.InvariantCulture)));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("Permission", ""),
-                value.Permissions));
+            if (value.PolicyStartsOn != null)
+            {
+                _element.Add(new System.Xml.Linq.XElement(
+                    System.Xml.Linq.XName.Get("Start", ""),
+                    value.PolicyStartsOn.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffZ", System.Globalization.CultureInfo.InvariantCulture)));
+            }
+            if (value.PolicyExpiresOn != null)
+            {
+                _element.Add(new System.Xml.Linq.XElement(
+                    System.Xml.Linq.XName.Get("Expiry", ""),
+                    value.PolicyExpiresOn.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffZ", System.Globalization.CultureInfo.InvariantCulture)));
+            }
+            if (value.Permissions != null)
+            {
+                _element.Add(new System.Xml.Linq.XElement(
+                    System.Xml.Linq.XName.Get("Permission", ""),
+                    value.Permissions));
+            }
             return _element;
         }
 
@@ -8708,12 +8717,12 @@ namespace Azure.Storage.Files.Shares.Models
             _child = element.Element(System.Xml.Linq.XName.Get("Start", ""));
             if (_child != null)
             {
-                _value.StartsOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _value.PolicyStartsOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("Expiry", ""));
             if (_child != null)
             {
-                _value.ExpiresOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _value.PolicyExpiresOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("Permission", ""));
             if (_child != null)

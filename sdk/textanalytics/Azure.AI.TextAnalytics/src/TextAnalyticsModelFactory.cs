@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Azure.AI.TextAnalytics.Models;
 
 namespace Azure.AI.TextAnalytics
 {
@@ -155,7 +155,7 @@ namespace Azure.AI.TextAnalytics
         public static DetectedLanguage DetectedLanguage(string name, string iso6391Name, double confidenceScore, IList<TextAnalyticsWarning> warnings = default)
         {
             warnings ??= new List<TextAnalyticsWarning>();
-            return new DetectedLanguage(name, iso6391Name, confidenceScore, warnings);
+            return new DetectedLanguage(new DetectedLanguageInternal(name, iso6391Name, confidenceScore), warnings);
         }
 
         /// <summary>

@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Messaging.EventGrid;
 using Azure.Messaging.EventGrid.Models;
-using Microsoft.Azure.Management.EventGrid.Models;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventGrid.Tests
@@ -21,11 +20,11 @@ namespace Azure.Messaging.EventGrid.Tests
         {
         }
 
-        public string dataVersion { get; set; }
-        public DateTimeOffset eventTime { get; set; }
-        public string eventType { get; set; }
-        public string id { get; set; }
-        public string subject { get; set; }
-        public string topic { get; set; }
+        public string DataVersion { get; set; }
+        public DateTimeOffset EventTime { get; set; }
+        public string EventType { get; set; }
+        public string Id { get; set; }
+        public string Subject { get; set; }
+        public string Topic { get; set; }
     }
 }

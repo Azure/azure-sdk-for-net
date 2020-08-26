@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of ContainerServiceLinuxProfile. </summary>
         /// <param name="adminUsername"> The administrator username to use for Linux VMs. </param>
         /// <param name="ssh"> The ssh key configuration for Linux VMs. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="adminUsername"/> or <paramref name="ssh"/> is null. </exception>
         public ContainerServiceLinuxProfile(string adminUsername, ContainerServiceSshConfiguration ssh)
         {
             if (adminUsername == null)

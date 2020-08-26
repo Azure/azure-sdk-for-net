@@ -18,10 +18,10 @@ namespace Microsoft.Azure.EventHubs.Tests
     using Microsoft.Azure.Management.EventHub.Models;
     using Microsoft.Azure.Management.ResourceManager;
     using Microsoft.Azure.Management.Storage;
+    using Microsoft.Azure.Storage;
     using Microsoft.IdentityModel.Clients.ActiveDirectory;
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
-    using Microsoft.WindowsAzure.Storage;
     using Polly;
 
     using StorageManagement = Microsoft.Azure.Management.Storage.Models;
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.EventHubs.Tests
             var resourceGroup = TestUtility.EventHubsResourceGroup;
             var eventHubNamespace = TestUtility.EventHubsNamespace;
             var token = await AquireManagementTokenAsync();
-            var client = new EventHubManagementClient(new TokenCredentials(token)) { SubscriptionId = TestUtility.EventHubsSubscription };
+            var client = new EventHubManagementClient(TestUtility.ResourceManager, new TokenCredentials(token)) { SubscriptionId = TestUtility.EventHubsSubscription };
 
             try
             {
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.EventHubs.Tests
 
             string CreateName() => $"{ Guid.NewGuid().ToString("D").Substring(0, 13) }-{ caller }";
 
-            using (var client = new EventHubManagementClient(new TokenCredentials(token)) { SubscriptionId = TestUtility.EventHubsSubscription })
+            using (var client = new EventHubManagementClient(TestUtility.ResourceManager, new TokenCredentials(token)) { SubscriptionId = TestUtility.EventHubsSubscription })
             {
                 var eventHub = new Eventhub(partitionCount: partitionCount);
                 eventHub = await CreateRetryPolicy<Eventhub>().ExecuteAsync(() => client.EventHubs.CreateOrUpdateAsync(resourceGroup, eventHubNamespace, CreateName(), eventHub));
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.EventHubs.Tests
 
             string CreateName() => $"net-eventhubs-track-one-{ Guid.NewGuid().ToString("D").Substring(0, 8) }";
 
-            using (var client = new EventHubManagementClient(new TokenCredentials(token)) { SubscriptionId = subscription })
+            using (var client = new EventHubManagementClient(TestUtility.ResourceManager, new TokenCredentials(token)) { SubscriptionId = subscription })
             {
                 var location = await QueryResourceGroupLocationAsync(token, resourceGroup, subscription);
 
@@ -139,7 +139,7 @@ namespace Microsoft.Azure.EventHubs.Tests
                 eventHubsNamespace = await CreateRetryPolicy<EHNamespace>().ExecuteAsync(() => client.Namespaces.CreateOrUpdateAsync(resourceGroup, CreateName(), eventHubsNamespace));
 
                 var accessKey = await CreateRetryPolicy<AccessKeys>().ExecuteAsync(() => client.Namespaces.ListKeysAsync(resourceGroup, eventHubsNamespace.Name, "RootManageSharedAccessKey"));
-                return new AzureResourceProperties(eventHubsNamespace.Name, accessKey.PrimaryConnectionString);
+                return new AzureResourceProperties(eventHubsNamespace.Name, accessKey.PrimaryConnectionString, true);
             }
         }
 
@@ -149,7 +149,7 @@ namespace Microsoft.Azure.EventHubs.Tests
             var resourceGroup = TestUtility.EventHubsResourceGroup;
             var token = await AquireManagementTokenAsync();
 
-            using (var client = new EventHubManagementClient(new TokenCredentials(token)) { SubscriptionId = subscription })
+            using (var client = new EventHubManagementClient(TestUtility.ResourceManager, new TokenCredentials(token)) { SubscriptionId = subscription })
             {
                 await CreateRetryPolicy().ExecuteAsync(() => client.Namespaces.DeleteAsync(resourceGroup, namespaceName));
                 ;
@@ -164,7 +164,7 @@ namespace Microsoft.Azure.EventHubs.Tests
 
             string CreateName() => $"neteventhubstrackone{ Guid.NewGuid().ToString("D").Substring(0, 4) }";
 
-            using (var client = new StorageManagementClient(new TokenCredentials(token)) { SubscriptionId = subscription })
+            using (var client = new StorageManagementClient(TestUtility.ResourceManager, new TokenCredentials(token)) { SubscriptionId = subscription })
             {
                 var location = await QueryResourceGroupLocationAsync(token, resourceGroup, subscription);
 
@@ -173,7 +173,7 @@ namespace Microsoft.Azure.EventHubs.Tests
                 var storageAccount = await CreateRetryPolicy<StorageManagement.StorageAccount>().ExecuteAsync(() => client.StorageAccounts.CreateAsync(resourceGroup, CreateName(), parameters));
 
                 var storageKeys = await CreateRetryPolicy<StorageManagement.StorageAccountListKeysResult>().ExecuteAsync(() => client.StorageAccounts.ListKeysAsync(resourceGroup, storageAccount.Name));
-                return new AzureResourceProperties(storageAccount.Name, $"DefaultEndpointsProtocol=https;AccountName={ storageAccount.Name };AccountKey={ storageKeys.Keys[0].Value };EndpointSuffix=core.windows.net");
+                return new AzureResourceProperties(storageAccount.Name, $"DefaultEndpointsProtocol=https;AccountName={ storageAccount.Name };AccountKey={ storageKeys.Keys[0].Value };EndpointSuffix={ TestUtility.StorageEndpointSuffix }", true);
             }
         }
 
@@ -183,7 +183,7 @@ namespace Microsoft.Azure.EventHubs.Tests
             var resourceGroup = TestUtility.EventHubsResourceGroup;
             var token = await AquireManagementTokenAsync();
 
-            using (var client = new StorageManagementClient(new TokenCredentials(token)) { SubscriptionId = subscription })
+            using (var client = new StorageManagementClient(TestUtility.ResourceManager, new TokenCredentials(token)) { SubscriptionId = subscription })
             {
                 await CreateRetryPolicy().ExecuteAsync(() => client.StorageAccounts.DeleteAsync(resourceGroup, accountName));
             }
@@ -193,7 +193,7 @@ namespace Microsoft.Azure.EventHubs.Tests
                                                                           string resourceGroupName,
                                                                           string subscriptionId)
         {
-            using (var client = new ResourceManagementClient(new TokenCredentials(accessToken)) { SubscriptionId = subscriptionId })
+            using (var client = new ResourceManagementClient(TestUtility.ResourceManager, new TokenCredentials(accessToken)) { SubscriptionId = subscriptionId })
             {
                 var resourceGroup = await CreateRetryPolicy<Microsoft.Azure.Management.ResourceManager.Models.ResourceGroup>().ExecuteAsync(() => client.ResourceGroups.GetAsync(resourceGroupName));
                 return resourceGroup.Location;
@@ -274,8 +274,8 @@ namespace Microsoft.Azure.EventHubs.Tests
             if ((token == null) || (token.ExpiresOn <= DateTimeOffset.UtcNow.Add(CredentialRefreshBuffer)))
             {
                 var credential = new ClientCredential(TestUtility.EventHubsClient, TestUtility.EventHubsSecret);
-                var context = new AuthenticationContext($"https://login.windows.net/{ TestUtility.EventHubsTenant }");
-                var result = await context.AcquireTokenAsync("https://management.core.windows.net/", credential);
+                var context = new AuthenticationContext($"{ TestUtility.AuthorityHost }{ TestUtility.EventHubsTenant }");
+                var result = await context.AcquireTokenAsync(TestUtility.ServiceManagementUrl, credential).ConfigureAwait(false);
 
                 if ((String.IsNullOrEmpty(result?.AccessToken)))
                 {
@@ -293,12 +293,15 @@ namespace Microsoft.Azure.EventHubs.Tests
         {
             public readonly string Name;
             public readonly string ConnectionString;
+            public readonly bool ShouldRemoveAtCompletion;
 
             internal AzureResourceProperties(string name,
-                                             string connectionString)
+                                             string connectionString,
+                                             bool shouldRemoveAtCompletion)
             {
                 Name = name;
                 ConnectionString = connectionString;
+                ShouldRemoveAtCompletion = shouldRemoveAtCompletion;
             }
         }
 

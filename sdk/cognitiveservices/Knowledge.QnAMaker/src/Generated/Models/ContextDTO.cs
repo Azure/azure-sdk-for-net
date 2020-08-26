@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -68,28 +67,5 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
         [JsonProperty(PropertyName = "prompts")]
         public IList<PromptDTO> Prompts { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Prompts != null)
-            {
-                if (Prompts.Count > 20)
-                {
-                    throw new ValidationException(ValidationRules.MaxItems, "Prompts", 20);
-                }
-                foreach (var element in Prompts)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
-            }
-        }
     }
 }

@@ -14,6 +14,14 @@ namespace Azure.Data.Tables
             public const string SharedKey = "SharedKeyLite";
             public const string Authorization = "Authorization";
             public const string IfMatch = "If-Match";
+            public const string Accept = "Accept";
+            public const string Content = "Content-Type";
+        }
+
+        internal static class MimeType
+        {
+            internal const string ApplicationJson = "application/json";
+            internal const string ApplicationXml = "application/xml";
         }
 
         internal static class QueryParameterNames
@@ -28,7 +36,8 @@ namespace Azure.Data.Tables
             public const string TimeStamp = "Timestamp";
             public const string PartitionKey = "PartitionKey";
             public const string RowKey = "RowKey";
-            public const string Etag = "odata.etag";
+            public const string EtagOdata = "odata.etag";
+            public const string ETag = nameof(ITableEntity.ETag);
         }
 
         internal static class Odata
@@ -86,6 +95,10 @@ namespace Azure.Data.Tables
                 public const string EndRowKey = "endrk";
                 public const string TableNameUpper = "TN";
                 public const string VersionUpper = "SV";
+                public const string Services = "ss";
+                public const string ServicesUpper = "SS";
+                public const string ResourceTypes = "srt";
+                public const string ResourceTypesUpper = "SRT";
                 public const string Protocol = "spr";
                 public const string ProtocolUpper = "SPR";
                 public const string StartTime = "st";
@@ -102,6 +115,18 @@ namespace Azure.Data.Tables
                 public const string PermissionsUpper = "SP";
                 public const string Signature = "sig";
                 public const string SignatureUpper = "SIG";
+            }
+
+            internal static class TableAccountResources
+            {
+                public const char Service = 's';
+                public const char Container = 'c';
+                public const char Object = 'o';
+            }
+
+            internal static class TableAccountServices
+            {
+                public const string Table = "t";
             }
         }
     }

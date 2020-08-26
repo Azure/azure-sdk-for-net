@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class SystemData
     {
         /// <summary> Initializes a new instance of SystemData. </summary>
-        public SystemData()
+        internal SystemData()
         {
         }
 
@@ -35,16 +35,16 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The identity that created the resource. </summary>
-        public string CreatedBy { get; set; }
+        public string CreatedBy { get; }
         /// <summary> The type of identity that created the resource. </summary>
-        public CreatedByType? CreatedByType { get; set; }
+        public CreatedByType? CreatedByType { get; }
         /// <summary> The timestamp of resource creation (UTC). </summary>
-        public DateTimeOffset? CreatedAt { get; set; }
+        public DateTimeOffset? CreatedAt { get; }
         /// <summary> The identity that last modified the resource. </summary>
-        public string LastModifiedBy { get; set; }
+        public string LastModifiedBy { get; }
         /// <summary> The type of identity that last modified the resource. </summary>
-        public CreatedByType? LastModifiedByType { get; set; }
+        public CreatedByType? LastModifiedByType { get; }
         /// <summary> The type of identity that last modified the resource. </summary>
-        public DateTimeOffset? LastModifiedAt { get; set; }
+        public DateTimeOffset? LastModifiedAt { get; }
     }
 }

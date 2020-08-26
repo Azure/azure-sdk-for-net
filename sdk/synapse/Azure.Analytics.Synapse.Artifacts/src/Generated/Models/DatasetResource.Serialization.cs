@@ -17,36 +17,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteObjectValue(Properties);
-            if (Id != null)
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
-            if (Etag != null)
-            {
-                writer.WritePropertyName("etag");
-                writer.WriteStringValue(Etag);
-            }
             writer.WriteEndObject();
         }
 
         internal static DatasetResource DeserializeDatasetResource(JsonElement element)
         {
             Dataset properties = default;
-            string id = default;
-            string name = default;
-            string type = default;
-            string etag = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<string> etag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"))
@@ -56,42 +36,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
             }
-            return new DatasetResource(id, name, type, etag, properties);
+            return new DatasetResource(id.Value, name.Value, type.Value, etag.Value, properties);
         }
     }
 }

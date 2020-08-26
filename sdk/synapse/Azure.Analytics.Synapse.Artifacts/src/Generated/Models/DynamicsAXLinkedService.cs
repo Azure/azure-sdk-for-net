@@ -19,6 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="servicePrincipalKey"> Specify the application&apos;s key. Mark this field as a SecureString to store it securely in Data Factory, or reference a secret stored in Azure Key Vault. Type: string (or Expression with resultType string). </param>
         /// <param name="tenant"> Specify the tenant information (domain name or tenant ID) under which your application resides. Retrieve it by hovering the mouse in the top-right corner of the Azure portal. Type: string (or Expression with resultType string). </param>
         /// <param name="aadResourceId"> Specify the resource you are requesting authorization. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="servicePrincipalId"/>, <paramref name="servicePrincipalKey"/>, <paramref name="tenant"/>, or <paramref name="aadResourceId"/> is null. </exception>
         public DynamicsAXLinkedService(object url, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, object aadResourceId)
         {
             if (url == null)

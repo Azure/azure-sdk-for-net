@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of MultiplePipelineTrigger. </summary>
         public MultiplePipelineTrigger()
         {
+            Pipelines = new ChangeTrackingList<TriggerPipelineReference>();
             Type = "MultiplePipelineTrigger";
         }
 
@@ -32,6 +34,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Pipelines that need to be started. </summary>
-        public IList<TriggerPipelineReference> Pipelines { get; set; }
+        public IList<TriggerPipelineReference> Pipelines { get; }
     }
 }

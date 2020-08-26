@@ -18,7 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
-            if (CodemirrorMode != null)
+            if (Optional.IsDefined(CodemirrorMode))
             {
                 writer.WritePropertyName("codemirror_mode");
                 writer.WriteStringValue(CodemirrorMode);
@@ -34,9 +34,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static NotebookLanguageInfo DeserializeNotebookLanguageInfo(JsonElement element)
         {
             string name = default;
-            string codemirrorMode = default;
+            Optional<string> codemirrorMode = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -46,25 +46,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("codemirror_mode"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     codemirrorMode = property.Value.GetString();
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    additionalPropertiesDictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new NotebookLanguageInfo(name, codemirrorMode, additionalProperties);
+            return new NotebookLanguageInfo(name, codemirrorMode.Value, additionalProperties);
         }
     }
 }

@@ -30,7 +30,7 @@ namespace Azure.Graph.Rbac
         /// <param name="tenantID"> The tenant ID. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantID"/> or <paramref name="apiVersion"/> is null. </exception>
         public ObjectsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string tenantID, Uri endpoint = null, string apiVersion = "1.6")
         {
             if (tenantID == null)
@@ -72,6 +72,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets the directory objects specified in a list of object IDs. You can also specify which resource collections (users, groups, etc.) should be searched by specifying the optional types parameter. </summary>
         /// <param name="parameters"> Objects filtering parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public async Task<Response<DirectoryObjectListResult>> GetObjectsByObjectIdsAsync(GetObjectsParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
@@ -87,14 +88,7 @@ namespace Azure.Graph.Rbac
                     {
                         DirectoryObjectListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
-                        }
+                        value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -105,6 +99,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets the directory objects specified in a list of object IDs. You can also specify which resource collections (users, groups, etc.) should be searched by specifying the optional types parameter. </summary>
         /// <param name="parameters"> Objects filtering parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public Response<DirectoryObjectListResult> GetObjectsByObjectIds(GetObjectsParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
@@ -120,14 +115,7 @@ namespace Azure.Graph.Rbac
                     {
                         DirectoryObjectListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
-                        }
+                        value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -154,6 +142,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets AD group membership for the specified AD object IDs. </summary>
         /// <param name="nextLink"> Next link for the list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<DirectoryObjectListResult>> GetObjectsByObjectIdsNextAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -169,14 +158,7 @@ namespace Azure.Graph.Rbac
                     {
                         DirectoryObjectListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
-                        }
+                        value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -187,6 +169,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets AD group membership for the specified AD object IDs. </summary>
         /// <param name="nextLink"> Next link for the list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<DirectoryObjectListResult> GetObjectsByObjectIdsNext(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -202,14 +185,7 @@ namespace Azure.Graph.Rbac
                     {
                         DirectoryObjectListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
-                        }
+                        value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -232,6 +208,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets AD group membership for the specified AD object IDs. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<DirectoryObjectListResult>> GetObjectsByObjectIdsNextNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -247,14 +224,7 @@ namespace Azure.Graph.Rbac
                     {
                         DirectoryObjectListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
-                        }
+                        value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -265,6 +235,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets AD group membership for the specified AD object IDs. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<DirectoryObjectListResult> GetObjectsByObjectIdsNextNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -280,14 +251,7 @@ namespace Azure.Graph.Rbac
                     {
                         DirectoryObjectListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
-                        }
+                        value = DirectoryObjectListResult.DeserializeDirectoryObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

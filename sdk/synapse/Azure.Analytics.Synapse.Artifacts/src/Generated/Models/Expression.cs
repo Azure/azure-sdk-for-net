@@ -13,29 +13,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     public partial class Expression
     {
         /// <summary> Initializes a new instance of Expression. </summary>
+        /// <param name="type"> Expression type. </param>
         /// <param name="value"> Expression value. </param>
-        public Expression(string value)
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public Expression(ExpressionType type, string value)
         {
             if (value == null)
             {
                 throw new ArgumentNullException(nameof(value));
             }
 
-            Type = "Expression";
-            Value = value;
-        }
-
-        /// <summary> Initializes a new instance of Expression. </summary>
-        /// <param name="type"> Expression type. </param>
-        /// <param name="value"> Expression value. </param>
-        internal Expression(string type, string value)
-        {
             Type = type;
             Value = value;
         }
 
         /// <summary> Expression type. </summary>
-        public string Type { get; set; }
+        public ExpressionType Type { get; set; }
         /// <summary> Expression value. </summary>
         public string Value { get; set; }
     }

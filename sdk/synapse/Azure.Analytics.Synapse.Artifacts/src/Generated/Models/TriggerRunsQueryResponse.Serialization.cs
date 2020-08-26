@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static TriggerRunsQueryResponse DeserializeTriggerRunsQueryResponse(JsonElement element)
         {
             IReadOnlyList<TriggerRun> value = default;
-            string continuationToken = default;
+            Optional<string> continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -24,29 +24,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<TriggerRun> array = new List<TriggerRun>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(TriggerRun.DeserializeTriggerRun(item));
-                        }
+                        array.Add(TriggerRun.DeserializeTriggerRun(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("continuationToken"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     continuationToken = property.Value.GetString();
                     continue;
                 }
             }
-            return new TriggerRunsQueryResponse(value, continuationToken);
+            return new TriggerRunsQueryResponse(value, continuationToken.Value);
         }
     }
 }

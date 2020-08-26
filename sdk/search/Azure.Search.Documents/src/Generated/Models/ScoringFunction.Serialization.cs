@@ -21,7 +21,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(FieldName);
             writer.WritePropertyName("boost");
             writer.WriteNumberValue(Boost);
-            if (Interpolation != null)
+            if (Optional.IsDefined(Interpolation))
             {
                 writer.WritePropertyName("interpolation");
                 writer.WriteStringValue(Interpolation.Value.ToSerialString());
@@ -44,7 +44,7 @@ namespace Azure.Search.Documents.Indexes.Models
             string type = default;
             string fieldName = default;
             double boost = default;
-            ScoringFunctionInterpolation? interpolation = default;
+            Optional<ScoringFunctionInterpolation> interpolation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -64,15 +64,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("interpolation"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     interpolation = property.Value.GetString().ToScoringFunctionInterpolation();
                     continue;
                 }
             }
-            return new ScoringFunction(type, fieldName, boost, interpolation);
+            return new ScoringFunction(type, fieldName, boost, Optional.ToNullable(interpolation));
         }
     }
 }

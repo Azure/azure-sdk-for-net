@@ -19,17 +19,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (RuntimeState != null)
-            {
-                writer.WritePropertyName("runtimeState");
-                writer.WriteStringValue(RuntimeState.Value.ToString());
-            }
-            if (Annotations != null)
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations");
                 writer.WriteStartArray();
@@ -41,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
-            if (ParentTrigger != null)
+            if (Optional.IsDefined(ParentTrigger))
             {
                 writer.WritePropertyName("parentTrigger");
                 writer.WriteObjectValue(ParentTrigger);
@@ -64,15 +59,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static RerunTumblingWindowTrigger DeserializeRerunTumblingWindowTrigger(JsonElement element)
         {
             string type = default;
-            string description = default;
-            TriggerRuntimeState? runtimeState = default;
-            IList<object> annotations = default;
-            object parentTrigger = default;
+            Optional<string> description = default;
+            Optional<TriggerRuntimeState> runtimeState = default;
+            Optional<IList<object>> annotations = default;
+            Optional<object> parentTrigger = default;
             DateTimeOffset requestedStartTime = default;
             DateTimeOffset requestedEndTime = default;
             int maxConcurrency = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -82,39 +77,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("runtimeState"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     runtimeState = new TriggerRuntimeState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("annotations"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<object> array = new List<object>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetObject());
-                        }
+                        array.Add(item.GetObject());
                     }
                     annotations = array;
                     continue;
@@ -125,10 +101,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         if (property0.NameEquals("parentTrigger"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             parentTrigger = property0.Value.GetObject();
                             continue;
                         }
@@ -150,18 +122,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    additionalPropertiesDictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new RerunTumblingWindowTrigger(type, description, runtimeState, annotations, additionalProperties, parentTrigger, requestedStartTime, requestedEndTime, maxConcurrency);
+            return new RerunTumblingWindowTrigger(type, description.Value, Optional.ToNullable(runtimeState), Optional.ToList(annotations), additionalProperties, parentTrigger.Value, requestedStartTime, requestedEndTime, maxConcurrency);
         }
     }
 }

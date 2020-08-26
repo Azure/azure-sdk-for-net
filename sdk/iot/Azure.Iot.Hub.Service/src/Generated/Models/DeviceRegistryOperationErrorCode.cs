@@ -10,12 +10,13 @@ using System.ComponentModel;
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    /// <summary> ErrorCode associated with the error. </summary>
+    /// <summary> The error code. </summary>
     public readonly partial struct DeviceRegistryOperationErrorCode : IEquatable<DeviceRegistryOperationErrorCode>
     {
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="DeviceRegistryOperationErrorCode"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DeviceRegistryOperationErrorCode(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
@@ -218,8 +219,9 @@ namespace Azure.Iot.Hub.Service.Models
         private const string UnableToShareIdentityValue = "UnableToShareIdentity";
         private const string UnableToExpandDiscoveryInfoValue = "UnableToExpandDiscoveryInfo";
         private const string UnableToExpandComponentInfoValue = "UnableToExpandComponentInfo";
-        private const string UnableToCompressDiscoveryInfoValue = "UnableToCompressDiscoveryInfo";
         private const string UnableToCompressComponentInfoValue = "UnableToCompressComponentInfo";
+        private const string UnableToCompressDiscoveryInfoValue = "UnableToCompressDiscoveryInfo";
+        private const string OrphanDiscoveryDocumentValue = "OrphanDiscoveryDocument";
         private const string GenericBadGatewayValue = "GenericBadGateway";
         private const string InvalidResponseWhileProxyingValue = "InvalidResponseWhileProxying";
         private const string GenericServiceUnavailableValue = "GenericServiceUnavailable";
@@ -631,10 +633,12 @@ namespace Azure.Iot.Hub.Service.Models
         public static DeviceRegistryOperationErrorCode UnableToExpandDiscoveryInfo { get; } = new DeviceRegistryOperationErrorCode(UnableToExpandDiscoveryInfoValue);
         /// <summary> UnableToExpandComponentInfo. </summary>
         public static DeviceRegistryOperationErrorCode UnableToExpandComponentInfo { get; } = new DeviceRegistryOperationErrorCode(UnableToExpandComponentInfoValue);
-        /// <summary> UnableToCompressDiscoveryInfo. </summary>
-        public static DeviceRegistryOperationErrorCode UnableToCompressDiscoveryInfo { get; } = new DeviceRegistryOperationErrorCode(UnableToCompressDiscoveryInfoValue);
         /// <summary> UnableToCompressComponentInfo. </summary>
         public static DeviceRegistryOperationErrorCode UnableToCompressComponentInfo { get; } = new DeviceRegistryOperationErrorCode(UnableToCompressComponentInfoValue);
+        /// <summary> UnableToCompressDiscoveryInfo. </summary>
+        public static DeviceRegistryOperationErrorCode UnableToCompressDiscoveryInfo { get; } = new DeviceRegistryOperationErrorCode(UnableToCompressDiscoveryInfoValue);
+        /// <summary> OrphanDiscoveryDocument. </summary>
+        public static DeviceRegistryOperationErrorCode OrphanDiscoveryDocument { get; } = new DeviceRegistryOperationErrorCode(OrphanDiscoveryDocumentValue);
         /// <summary> GenericBadGateway. </summary>
         public static DeviceRegistryOperationErrorCode GenericBadGateway { get; } = new DeviceRegistryOperationErrorCode(GenericBadGatewayValue);
         /// <summary> InvalidResponseWhileProxying. </summary>

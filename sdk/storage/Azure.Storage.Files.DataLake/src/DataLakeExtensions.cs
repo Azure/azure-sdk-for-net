@@ -290,8 +290,8 @@ namespace Azure.Storage.Files.DataLake
 
             return new DataLakeAccessPolicy()
             {
-                StartsOn = blobAccessPolicy.StartsOn,
-                ExpiresOn = blobAccessPolicy.ExpiresOn,
+                PolicyStartsOn = blobAccessPolicy.PolicyStartsOn,
+                PolicyExpiresOn = blobAccessPolicy.PolicyExpiresOn,
                 Permissions = blobAccessPolicy.Permissions
             };
         }
@@ -329,8 +329,8 @@ namespace Azure.Storage.Files.DataLake
 
             return new BlobAccessPolicy()
             {
-                StartsOn = dataLakeAccessPolicy.StartsOn,
-                ExpiresOn = dataLakeAccessPolicy.ExpiresOn,
+                PolicyStartsOn = dataLakeAccessPolicy.PolicyStartsOn,
+                PolicyExpiresOn = dataLakeAccessPolicy.PolicyExpiresOn,
                 Permissions = dataLakeAccessPolicy.Permissions
             };
         }
@@ -358,34 +358,34 @@ namespace Azure.Storage.Files.DataLake
             return blobQueryOptions;
         }
 
-        internal static BlobQueryTextConfiguration ToBlobQueryTextConfiguration(this DataLakeQueryTextConfiguration textConfiguration)
+        internal static BlobQueryTextOptions ToBlobQueryTextConfiguration(this DataLakeQueryTextOptions textConfiguration)
         {
             if (textConfiguration == null)
             {
                 return null;
             }
 
-            if (textConfiguration.GetType() == typeof(DataLakeQueryJsonTextConfiguration))
+            if (textConfiguration.GetType() == typeof(DataLakeQueryJsonTextOptions))
             {
-                return ((DataLakeQueryJsonTextConfiguration)textConfiguration).ToBlobQueryJsonTextConfiguration();
+                return ((DataLakeQueryJsonTextOptions)textConfiguration).ToBlobQueryJsonTextConfiguration();
             }
 
-            if (textConfiguration.GetType() == typeof(DataLakeQueryCsvTextConfiguration))
+            if (textConfiguration.GetType() == typeof(DataLakeQueryCsvTextOptions))
             {
-                return ((DataLakeQueryCsvTextConfiguration)textConfiguration).ToBlobQueryCsvTextConfiguration();
+                return ((DataLakeQueryCsvTextOptions)textConfiguration).ToBlobQueryCsvTextConfiguration();
             }
 
             throw new ArgumentException("Invalid text configuration type");
         }
 
-        internal static BlobQueryJsonTextConfiguration ToBlobQueryJsonTextConfiguration(this DataLakeQueryJsonTextConfiguration textConfiguration)
-            => new BlobQueryJsonTextConfiguration
+        internal static BlobQueryJsonTextOptions ToBlobQueryJsonTextConfiguration(this DataLakeQueryJsonTextOptions textConfiguration)
+            => new BlobQueryJsonTextOptions
             {
                 RecordSeparator = textConfiguration.RecordSeparator
             };
 
-        internal static BlobQueryCsvTextConfiguration ToBlobQueryCsvTextConfiguration(this DataLakeQueryCsvTextConfiguration textConfiguration)
-            => new BlobQueryCsvTextConfiguration
+        internal static BlobQueryCsvTextOptions ToBlobQueryCsvTextConfiguration(this DataLakeQueryCsvTextOptions textConfiguration)
+            => new BlobQueryCsvTextOptions
             {
                 ColumnSeparator = textConfiguration.ColumnSeparator,
                 QuotationCharacter = textConfiguration.QuotationCharacter,

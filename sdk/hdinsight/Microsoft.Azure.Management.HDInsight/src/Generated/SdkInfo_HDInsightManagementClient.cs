@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.HDInsight
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/hdinsight/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=D:\\source\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "c94d2623e95db48fcdff105c5c03fab75ebe9b56";
+      public static readonly String GithubCommidId = "afbd723252e704e2763de2ec324a8263d67e8867";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

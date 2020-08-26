@@ -7,10 +7,10 @@ namespace Azure.DigitalTwins.Core
         public DigitalTwinsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.DigitalTwins.Core.DigitalTwinsClientOptions options) { }
         public virtual Azure.Response<string> CreateDigitalTwin(string digitalTwinId, string digitalTwin, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<string>> CreateDigitalTwinAsync(string digitalTwinId, string digitalTwin, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response CreateEventRoute(string eventRouteId, Azure.DigitalTwins.Core.Models.EventRoute eventRoute, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateEventRouteAsync(string eventRouteId, Azure.DigitalTwins.Core.Models.EventRoute eventRoute, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.DigitalTwins.Core.Models.ModelData>> CreateModels(System.Collections.Generic.IEnumerable<string> models, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.DigitalTwins.Core.Models.ModelData>>> CreateModelsAsync(System.Collections.Generic.IEnumerable<string> models, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response CreateEventRoute(string eventRouteId, Azure.DigitalTwins.Core.EventRoute eventRoute, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateEventRouteAsync(string eventRouteId, Azure.DigitalTwins.Core.EventRoute eventRoute, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.DigitalTwins.Core.ModelData[]> CreateModels(System.Collections.Generic.IEnumerable<string> models, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.DigitalTwins.Core.ModelData[]>> CreateModelsAsync(System.Collections.Generic.IEnumerable<string> models, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<string> CreateRelationship(string digitalTwinId, string relationshipId, string relationship, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<string>> CreateRelationshipAsync(string digitalTwinId, string relationshipId, string relationship, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DecommissionModel(string modelId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -27,24 +27,24 @@ namespace Azure.DigitalTwins.Core
         public virtual System.Threading.Tasks.Task<Azure.Response<string>> GetComponentAsync(string digitalTwinId, string componentPath, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<string> GetDigitalTwin(string digitalTwinId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<string>> GetDigitalTwinAsync(string digitalTwinId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.DigitalTwins.Core.Models.EventRoute> GetEventRoute(string eventRouteId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.DigitalTwins.Core.Models.EventRoute>> GetEventRouteAsync(string eventRouteId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.DigitalTwins.Core.Models.EventRoute> GetEventRoutes(Azure.DigitalTwins.Core.Models.EventRoutesListOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.DigitalTwins.Core.Models.EventRoute> GetEventRoutesAsync(Azure.DigitalTwins.Core.Models.EventRoutesListOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.DigitalTwins.Core.Models.IncomingRelationship> GetIncomingRelationships(string digitalTwinId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.DigitalTwins.Core.Models.IncomingRelationship> GetIncomingRelationshipsAsync(string digitalTwinId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.DigitalTwins.Core.Models.ModelData> GetModel(string modelId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.DigitalTwins.Core.Models.ModelData>> GetModelAsync(string modelId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.DigitalTwins.Core.Models.ModelData> GetModels(System.Collections.Generic.IEnumerable<string> dependenciesFor = null, bool includeModelDefinition = false, Azure.DigitalTwins.Core.Models.GetModelsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.DigitalTwins.Core.Models.ModelData> GetModelsAsync(System.Collections.Generic.IEnumerable<string> dependenciesFor = null, bool includeModelDefinition = false, Azure.DigitalTwins.Core.Models.GetModelsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.DigitalTwins.Core.EventRoute> GetEventRoute(string eventRouteId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.DigitalTwins.Core.EventRoute>> GetEventRouteAsync(string eventRouteId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.DigitalTwins.Core.EventRoute> GetEventRoutes(Azure.DigitalTwins.Core.EventRoutesListOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.DigitalTwins.Core.EventRoute> GetEventRoutesAsync(Azure.DigitalTwins.Core.EventRoutesListOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.DigitalTwins.Core.IncomingRelationship> GetIncomingRelationships(string digitalTwinId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.DigitalTwins.Core.IncomingRelationship> GetIncomingRelationshipsAsync(string digitalTwinId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.DigitalTwins.Core.ModelData> GetModel(string modelId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.DigitalTwins.Core.ModelData>> GetModelAsync(string modelId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.DigitalTwins.Core.ModelData> GetModels(System.Collections.Generic.IEnumerable<string> dependenciesFor = null, bool includeModelDefinition = false, Azure.DigitalTwins.Core.GetModelsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.DigitalTwins.Core.ModelData> GetModelsAsync(System.Collections.Generic.IEnumerable<string> dependenciesFor = null, bool includeModelDefinition = false, Azure.DigitalTwins.Core.GetModelsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<string> GetRelationship(string digitalTwinId, string relationshipId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<string>> GetRelationshipAsync(string digitalTwinId, string relationshipId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<string> GetRelationships(string digitalTwinId, string relationshipName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<string> GetRelationshipsAsync(string digitalTwinId, string relationshipName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response PublishComponentTelemetry(string digitalTwinId, string componentName, string payload, Azure.DigitalTwins.Core.Models.TelemetryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> PublishComponentTelemetryAsync(string digitalTwinId, string componentName, string payload, Azure.DigitalTwins.Core.Models.TelemetryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response PublishTelemetry(string digitalTwinId, string payload, Azure.DigitalTwins.Core.Models.TelemetryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> PublishTelemetryAsync(string digitalTwinId, string payload, Azure.DigitalTwins.Core.Models.TelemetryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response PublishComponentTelemetry(string digitalTwinId, string componentName, string payload, Azure.DigitalTwins.Core.TelemetryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> PublishComponentTelemetryAsync(string digitalTwinId, string componentName, string payload, Azure.DigitalTwins.Core.TelemetryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response PublishTelemetry(string digitalTwinId, string payload, Azure.DigitalTwins.Core.TelemetryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> PublishTelemetryAsync(string digitalTwinId, string payload, Azure.DigitalTwins.Core.TelemetryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<string> Query(string query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<string> QueryAsync(string query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<string> UpdateComponent(string digitalTwinId, string componentPath, string componentUpdateOperations, Azure.DigitalTwins.Core.RequestOptions requestOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -63,18 +63,6 @@ namespace Azure.DigitalTwins.Core
             V2020_05_31_preview = 1,
         }
     }
-    public static partial class QueryChargeHelper
-    {
-        public static bool TryGetQueryCharge(Azure.Page<string> page, out float queryCharge) { throw null; }
-    }
-    public partial class RequestOptions
-    {
-        public RequestOptions() { }
-        public string IfMatch { get { throw null; } set { } }
-    }
-}
-namespace Azure.DigitalTwins.Core.Models
-{
     public partial class EventRoute
     {
         public EventRoute(string endpointName) { }
@@ -109,6 +97,15 @@ namespace Azure.DigitalTwins.Core.Models
         public string Id { get { throw null; } }
         public string Model { get { throw null; } }
         public System.DateTimeOffset? UploadTime { get { throw null; } }
+    }
+    public static partial class QueryChargeHelper
+    {
+        public static bool TryGetQueryCharge(Azure.Page<string> page, out float queryCharge) { throw null; }
+    }
+    public partial class RequestOptions
+    {
+        public RequestOptions() { }
+        public string IfMatch { get { throw null; } set { } }
     }
     public partial class TelemetryOptions
     {

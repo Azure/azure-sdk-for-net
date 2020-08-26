@@ -1,0 +1,142 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://FakeHost.net/devices/QueryDevice1136733538?api-version=2020-03-13",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "36",
+        "Content-Type": "application/json",
+        "If-Match": "\u0022\u0022",
+        "User-Agent": [
+          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200820.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "70e974997046ab6a27ced2ebad48aad8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "deviceId": "QueryDevice1136733538"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "553",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 20 Aug 2020 21:44:50 GMT",
+        "ETag": "\u0022MzA2MDI2ODk4\u0022",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Vary": "Origin",
+        "x-ms-request-id": "22b78275-878d-4504-adcc-68e1cbcc8339"
+      },
+      "ResponseBody": {
+        "deviceId": "QueryDevice1136733538",
+        "generationId": "637335566907246349",
+        "etag": "MzA2MDI2ODk4",
+        "connectionState": "Disconnected",
+        "status": "enabled",
+        "statusReason": null,
+        "connectionStateUpdatedTime": "0001-01-01T00:00:00",
+        "statusUpdatedTime": "0001-01-01T00:00:00",
+        "lastActivityTime": "0001-01-01T00:00:00",
+        "cloudToDeviceMessageCount": 0,
+        "authentication": {
+          "symmetricKey": {
+            "primaryKey": "Sanitized",
+            "secondaryKey": "Sanitized"
+          },
+          "x509Thumbprint": {
+            "primaryThumbprint": null,
+            "secondaryThumbprint": null
+          },
+          "type": "sas"
+        },
+        "capabilities": {
+          "iotEdge": false
+        },
+        "parentScopes": []
+      }
+    },
+    {
+      "RequestUri": "https://FakeHost.net/devices/query?api-version=2020-03-13",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "74",
+        "Content-Type": "application/json",
+        "User-Agent": [
+          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200820.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "cd4b10b506a3d2049671cfc14b5acd16",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "{\u0022query\u0022:\u0022SELECT * FROM devices WHERE deviceId = \u0027QueryDevice1136733538\u0027\u0022}",
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "2",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 20 Aug 2020 21:44:50 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Vary": "Origin",
+        "x-ms-item-type": "Twin",
+        "x-ms-request-id": "a964b88c-4abd-46ca-af71-4765764c34ba"
+      },
+      "ResponseBody": "[]"
+    },
+    {
+      "RequestUri": "https://FakeHost.net/devices/query?api-version=2020-03-13",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "74",
+        "Content-Type": "application/json",
+        "User-Agent": [
+          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200820.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "64387c94a8b758055925caae091cfbf1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "{\u0022query\u0022:\u0022SELECT * FROM devices WHERE deviceId = \u0027QueryDevice1136733538\u0027\u0022}",
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "583",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 20 Aug 2020 21:44:56 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Vary": "Origin",
+        "x-ms-item-type": "Twin",
+        "x-ms-request-id": "2461850d-6e25-4f60-bda8-73e7d9d2f9b0"
+      },
+      "ResponseBody": "[{\u0022deviceId\u0022:\u0022QueryDevice1136733538\u0022,\u0022etag\u0022:\u0022AAAAAAAAAAE=\u0022,\u0022deviceEtag\u0022:\u0022MzA2MDI2ODk4\u0022,\u0022status\u0022:\u0022enabled\u0022,\u0022statusUpdateTime\u0022:\u00220001-01-01T00:00:00Z\u0022,\u0022connectionState\u0022:\u0022Disconnected\u0022,\u0022lastActivityTime\u0022:\u00220001-01-01T00:00:00Z\u0022,\u0022cloudToDeviceMessageCount\u0022:0,\u0022authenticationType\u0022:\u0022sas\u0022,\u0022x509Thumbprint\u0022:{\u0022primaryThumbprint\u0022:null,\u0022secondaryThumbprint\u0022:null},\u0022version\u0022:2,\u0022properties\u0022:{\u0022desired\u0022:{\u0022$metadata\u0022:{\u0022$lastUpdated\u0022:\u00222020-08-20T21:44:50.7246349Z\u0022},\u0022$version\u0022:1},\u0022reported\u0022:{\u0022$metadata\u0022:{\u0022$lastUpdated\u0022:\u00222020-08-20T21:44:50.7246349Z\u0022},\u0022$version\u0022:1}},\u0022capabilities\u0022:{\u0022iotEdge\u0022:false}}]"
+    },
+    {
+      "RequestUri": "https://FakeHost.net/devices/QueryDevice1136733538?api-version=2020-03-13",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "If-Match": "*",
+        "User-Agent": [
+          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200820.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "673b19ca184592bf7017dad5a0a960cd",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Thu, 20 Aug 2020 21:45:01 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Vary": "Origin",
+        "x-ms-request-id": "c8b44513-ecb3-49bd-a755-a33262f29897"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "IOT_HUB_CONNECTION_STRING": "HostName=FakeHost.net;SharedAccessKeyName=iothubowner;SharedAccessKey=Kg==",
+    "RandomSeed": "1424267082"
+  }
+}

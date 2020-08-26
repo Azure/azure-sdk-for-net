@@ -6,29 +6,23 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    /// <summary> Represents Twin properties. </summary>
+    /// <summary> The desired and reported properties of the twin. The maximum depth of the object is 10. </summary>
     public partial class PropertyContainer
     {
         /// <summary> Initializes a new instance of PropertyContainer. </summary>
         public PropertyContainer()
         {
+            Desired = new ChangeTrackingDictionary<string, object>();
+            Reported = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of PropertyContainer. </summary>
-        /// <param name="desired"> Used in conjunction with reported properties to synchronize device configuration or condition. Desired properties can only be set by the solution back end and can be read by the device app. The device app can also be notified in real time of changes on the desired properties. </param>
-        /// <param name="reported"> Used in conjunction with desired properties to synchronize device configuration or condition. Reported properties can only be set by the device app and can be read and queried by the solution back end. </param>
-        internal PropertyContainer(IDictionary<string, object> desired, IDictionary<string, object> reported)
-        {
-            Desired = desired;
-            Reported = reported;
-        }
-
-        /// <summary> Used in conjunction with reported properties to synchronize device configuration or condition. Desired properties can only be set by the solution back end and can be read by the device app. The device app can also be notified in real time of changes on the desired properties. </summary>
-        public IDictionary<string, object> Desired { get; set; }
-        /// <summary> Used in conjunction with desired properties to synchronize device configuration or condition. Reported properties can only be set by the device app and can be read and queried by the solution back end. </summary>
-        public IDictionary<string, object> Reported { get; set; }
+        /// <summary> The collection of desired property key-value pairs. The keys are UTF-8 encoded, case-sensitive and up-to 1KB in length. Allowed characters exclude UNICODE control characters (segments C0 and C1), &apos;.&apos;, &apos;$&apos; and space. The desired porperty values are JSON objects, up-to 4KB in length. </summary>
+        public IDictionary<string, object> Desired { get; }
+        /// <summary> The collection of reported property key-value pairs. The keys are UTF-8 encoded, case-sensitive and up-to 1KB in length. Allowed characters exclude UNICODE control characters (segments C0 and C1), &apos;.&apos;, &apos;$&apos; and space. The reported property values are JSON objects, up-to 4KB in length. </summary>
+        public IDictionary<string, object> Reported { get; }
     }
 }

@@ -7,13 +7,12 @@
 		<PackageId>Microsoft.Azure.Management.HDInsight</PackageId>
 		<Description>Azure HDInsight Management SDK Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.HDInsight</AssemblyName>
-		<Version>5.4.0</Version>
+		<Version>5.6.0</Version>
 		<PackageTags>Microsoft Azure HDInsight Management;HDInsight;HDInsight Management</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-This release adds two features:
-- Support to list the hosts of the cluster.
-- Support to restart specific hosts.
+This release supports one feature:
+- Support to create cluster with encryption at host.
       ]]>
 		</PackageReleaseNotes>
     

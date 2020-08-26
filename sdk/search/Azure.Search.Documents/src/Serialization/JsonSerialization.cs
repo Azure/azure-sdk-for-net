@@ -9,8 +9,10 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.Pipeline;
+#if EXPERIMENTAL_SERIALIZER
+using Azure.Core.Serialization;
+#endif
 #if EXPERIMENTAL_SPATIAL
 using Azure.Core.Spatial;
 #endif
@@ -362,8 +364,8 @@ namespace Azure.Search.Documents
             else if (serializer != null)
             {
                 return async ?
-                    (T)await serializer.DeserializeAsync(json, typeof(T)).ConfigureAwait(false) :
-                    (T)serializer.Deserialize(json, typeof(T));
+                    (T)await serializer.DeserializeAsync(json, typeof(T), cancellationToken).ConfigureAwait(false) :
+                    (T)serializer.Deserialize(json, typeof(T), cancellationToken);
             }
 #endif
             else if (async)

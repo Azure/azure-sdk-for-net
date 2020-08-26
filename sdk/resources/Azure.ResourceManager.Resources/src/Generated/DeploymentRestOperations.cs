@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public DeploymentRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="operationId"> The ID of the operation to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="deploymentName"/>, or <paramref name="operationId"/> is null. </exception>
         public async Task<Response<DeploymentOperation>> GetAtScopeAsync(string scope, string deploymentName, string operationId, CancellationToken cancellationToken = default)
         {
             if (scope == null)
@@ -89,14 +90,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentOperation value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentOperation.DeserializeDeploymentOperation(document.RootElement);
-                        }
+                        value = DeploymentOperation.DeserializeDeploymentOperation(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -109,6 +103,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="operationId"> The ID of the operation to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="deploymentName"/>, or <paramref name="operationId"/> is null. </exception>
         public Response<DeploymentOperation> GetAtScope(string scope, string deploymentName, string operationId, CancellationToken cancellationToken = default)
         {
             if (scope == null)
@@ -132,14 +127,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentOperation value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentOperation.DeserializeDeploymentOperation(document.RootElement);
-                        }
+                        value = DeploymentOperation.DeserializeDeploymentOperation(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -173,6 +161,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="deploymentName"/> is null. </exception>
         public async Task<Response<DeploymentOperationsListResult>> ListAtScopeAsync(string scope, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (scope == null)
@@ -192,14 +181,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentOperationsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
-                        }
+                        value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -212,6 +194,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="deploymentName"/> is null. </exception>
         public Response<DeploymentOperationsListResult> ListAtScope(string scope, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (scope == null)
@@ -231,14 +214,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentOperationsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
-                        }
+                        value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -266,6 +242,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="operationId"> The ID of the operation to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="operationId"/> is null. </exception>
         public async Task<Response<DeploymentOperation>> GetAtTenantScopeAsync(string deploymentName, string operationId, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
@@ -285,14 +262,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentOperation value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentOperation.DeserializeDeploymentOperation(document.RootElement);
-                        }
+                        value = DeploymentOperation.DeserializeDeploymentOperation(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -304,6 +274,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="operationId"> The ID of the operation to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="operationId"/> is null. </exception>
         public Response<DeploymentOperation> GetAtTenantScope(string deploymentName, string operationId, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
@@ -323,14 +294,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentOperation value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentOperation.DeserializeDeploymentOperation(document.RootElement);
-                        }
+                        value = DeploymentOperation.DeserializeDeploymentOperation(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -361,6 +325,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public async Task<Response<DeploymentOperationsListResult>> ListAtTenantScopeAsync(string deploymentName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
@@ -376,14 +341,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentOperationsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
-                        }
+                        value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -395,6 +353,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public Response<DeploymentOperationsListResult> ListAtTenantScope(string deploymentName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
@@ -410,14 +369,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentOperationsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
-                        }
+                        value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -448,6 +400,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="operationId"> The ID of the operation to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deploymentName"/>, or <paramref name="operationId"/> is null. </exception>
         public async Task<Response<DeploymentOperation>> GetAtManagementGroupScopeAsync(string groupId, string deploymentName, string operationId, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
@@ -471,14 +424,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentOperation value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentOperation.DeserializeDeploymentOperation(document.RootElement);
-                        }
+                        value = DeploymentOperation.DeserializeDeploymentOperation(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -491,6 +437,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="operationId"> The ID of the operation to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deploymentName"/>, or <paramref name="operationId"/> is null. </exception>
         public Response<DeploymentOperation> GetAtManagementGroupScope(string groupId, string deploymentName, string operationId, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
@@ -514,14 +461,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentOperation value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentOperation.DeserializeDeploymentOperation(document.RootElement);
-                        }
+                        value = DeploymentOperation.DeserializeDeploymentOperation(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -555,6 +495,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentName"/> is null. </exception>
         public async Task<Response<DeploymentOperationsListResult>> ListAtManagementGroupScopeAsync(string groupId, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
@@ -574,14 +515,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentOperationsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
-                        }
+                        value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -594,6 +528,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentName"/> is null. </exception>
         public Response<DeploymentOperationsListResult> ListAtManagementGroupScope(string groupId, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
@@ -613,14 +548,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentOperationsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
-                        }
+                        value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -650,6 +578,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="operationId"> The ID of the operation to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="operationId"/> is null. </exception>
         public async Task<Response<DeploymentOperation>> GetAtSubscriptionScopeAsync(string deploymentName, string operationId, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
@@ -669,14 +598,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentOperation value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentOperation.DeserializeDeploymentOperation(document.RootElement);
-                        }
+                        value = DeploymentOperation.DeserializeDeploymentOperation(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -688,6 +610,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="operationId"> The ID of the operation to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="operationId"/> is null. </exception>
         public Response<DeploymentOperation> GetAtSubscriptionScope(string deploymentName, string operationId, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
@@ -707,14 +630,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentOperation value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentOperation.DeserializeDeploymentOperation(document.RootElement);
-                        }
+                        value = DeploymentOperation.DeserializeDeploymentOperation(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -747,6 +663,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public async Task<Response<DeploymentOperationsListResult>> ListAtSubscriptionScopeAsync(string deploymentName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
@@ -762,14 +679,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentOperationsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
-                        }
+                        value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -781,6 +691,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public Response<DeploymentOperationsListResult> ListAtSubscriptionScope(string deploymentName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
@@ -796,14 +707,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentOperationsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
-                        }
+                        value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -836,6 +740,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="operationId"> The ID of the operation to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="deploymentName"/>, or <paramref name="operationId"/> is null. </exception>
         public async Task<Response<DeploymentOperation>> GetAsync(string resourceGroupName, string deploymentName, string operationId, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -859,14 +764,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentOperation value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentOperation.DeserializeDeploymentOperation(document.RootElement);
-                        }
+                        value = DeploymentOperation.DeserializeDeploymentOperation(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -879,6 +777,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="operationId"> The ID of the operation to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="deploymentName"/>, or <paramref name="operationId"/> is null. </exception>
         public Response<DeploymentOperation> Get(string resourceGroupName, string deploymentName, string operationId, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -902,14 +801,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentOperation value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentOperation.DeserializeDeploymentOperation(document.RootElement);
-                        }
+                        value = DeploymentOperation.DeserializeDeploymentOperation(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -945,6 +837,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="deploymentName"/> is null. </exception>
         public async Task<Response<DeploymentOperationsListResult>> ListAsync(string resourceGroupName, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -964,14 +857,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentOperationsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
-                        }
+                        value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -984,6 +870,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="deploymentName"/> is null. </exception>
         public Response<DeploymentOperationsListResult> List(string resourceGroupName, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1003,14 +890,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentOperationsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
-                        }
+                        value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1036,6 +916,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="scope"/>, or <paramref name="deploymentName"/> is null. </exception>
         public async Task<Response<DeploymentOperationsListResult>> ListAtScopeNextPageAsync(string nextLink, string scope, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1059,14 +940,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentOperationsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
-                        }
+                        value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1080,6 +954,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="scope"/>, or <paramref name="deploymentName"/> is null. </exception>
         public Response<DeploymentOperationsListResult> ListAtScopeNextPage(string nextLink, string scope, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1103,14 +978,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentOperationsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
-                        }
+                        value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1135,6 +1003,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="deploymentName"/> is null. </exception>
         public async Task<Response<DeploymentOperationsListResult>> ListAtTenantScopeNextPageAsync(string nextLink, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1154,14 +1023,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentOperationsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
-                        }
+                        value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1174,6 +1036,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="deploymentName"/> is null. </exception>
         public Response<DeploymentOperationsListResult> ListAtTenantScopeNextPage(string nextLink, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1193,14 +1056,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentOperationsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
-                        }
+                        value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1226,6 +1082,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="groupId"/>, or <paramref name="deploymentName"/> is null. </exception>
         public async Task<Response<DeploymentOperationsListResult>> ListAtManagementGroupScopeNextPageAsync(string nextLink, string groupId, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1249,14 +1106,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentOperationsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
-                        }
+                        value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1270,6 +1120,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="groupId"/>, or <paramref name="deploymentName"/> is null. </exception>
         public Response<DeploymentOperationsListResult> ListAtManagementGroupScopeNextPage(string nextLink, string groupId, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1293,14 +1144,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentOperationsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
-                        }
+                        value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1325,6 +1169,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="deploymentName"/> is null. </exception>
         public async Task<Response<DeploymentOperationsListResult>> ListAtSubscriptionScopeNextPageAsync(string nextLink, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1344,14 +1189,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentOperationsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
-                        }
+                        value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1364,6 +1202,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="deploymentName"/> is null. </exception>
         public Response<DeploymentOperationsListResult> ListAtSubscriptionScopeNextPage(string nextLink, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1383,14 +1222,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentOperationsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
-                        }
+                        value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1416,6 +1248,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="deploymentName"/> is null. </exception>
         public async Task<Response<DeploymentOperationsListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1439,14 +1272,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentOperationsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
-                        }
+                        value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1460,6 +1286,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="deploymentName"/> is null. </exception>
         public Response<DeploymentOperationsListResult> ListNextPage(string nextLink, string resourceGroupName, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1483,14 +1310,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         DeploymentOperationsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
-                        }
+                        value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

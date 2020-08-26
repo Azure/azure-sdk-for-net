@@ -169,7 +169,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             Assert.That(async () => await receiver.ReceiveMessagesAsync(
                 100,
                 default,
-                cancellationSource.Token), Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.GeneralError));
+                cancellationSource.Token), Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.GeneralError));
 
             mockScope
                 .Verify(scope => scope.OpenReceiverLinkAsync(
@@ -223,7 +223,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             Assert.That(async () => await receiver.ReceiveMessagesAsync(
                 100,
                 default,
-                cancellationSource.Token), Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.ServiceTimeout));
+                cancellationSource.Token), Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.ServiceTimeout));
 
             mockScope
                 .Verify(scope => scope.OpenReceiverLinkAsync(
@@ -286,7 +286,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             Assert.That(async () => await receiver.ReceiveMessagesAsync(
                 100,
                 default,
-                cancellationSource.Token), Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.ServiceBusy));
+                cancellationSource.Token), Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.ServiceBusy));
             mockScope
                 .Verify(scope => scope.OpenReceiverLinkAsync(
                    It.IsAny<string>(),

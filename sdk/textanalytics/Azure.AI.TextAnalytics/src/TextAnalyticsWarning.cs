@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.AI.TextAnalytics.Models;
+
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
@@ -12,6 +14,12 @@ namespace Azure.AI.TextAnalytics
         {
             WarningCode = code;
             Message = message;
+        }
+
+        internal TextAnalyticsWarning(TextAnalyticsWarningInternal warning)
+        {
+            WarningCode = warning.Code;
+            Message = warning.Message;
         }
 
         /// <summary>

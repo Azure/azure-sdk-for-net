@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of ResourceListResult. </summary>
         internal ResourceListResult()
         {
+            Value = new ChangeTrackingList<Resource>();
         }
 
         /// <summary> Initializes a new instance of ResourceListResult. </summary>

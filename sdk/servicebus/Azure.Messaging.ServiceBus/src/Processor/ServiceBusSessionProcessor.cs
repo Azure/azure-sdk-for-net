@@ -41,7 +41,7 @@ namespace Azure.Messaging.ServiceBus
         public ReceiveMode ReceiveMode => _innerProcessor.ReceiveMode;
 
         /// <summary>
-        /// The number of messages that will be eagerly requested from Queues or Subscriptions and queued locally without regard to
+        /// Gets the number of messages that will be eagerly requested from Queues or Subscriptions and queued locally without regard to
         /// whether a processing is currently active, intended to help maximize throughput by allowing the receiver to receive
         /// from a local cache rather than waiting on a service request.
         /// </summary>
@@ -56,15 +56,15 @@ namespace Azure.Messaging.ServiceBus
         /// </value>
         public bool IsProcessing => _innerProcessor.IsProcessing;
 
-        /// <summary>Gets or sets a value that indicates whether the <see cref="ServiceBusSessionProcessor"/> should automatically
+        /// <summary>Gets a value that indicates whether the <see cref="ServiceBusSessionProcessor"/> should automatically
         /// complete messages after the event handler has completed processing. If the event handler
         /// triggers an exception, the message will not be automatically completed.</summary>
         ///
-        /// <value>true to complete the message processing automatically on successful execution of the operation; otherwise, false.</value>
+        /// <value>true if the message will be completed automatically on successful execution of the operation; otherwise, false.</value>
         public bool AutoComplete => _innerProcessor.AutoComplete;
 
         /// <summary>
-        /// Gets or sets the maximum duration within which the lock will be renewed automatically. This
+        /// Gets the maximum duration within which the lock will be renewed automatically. This
         /// value should be greater than the longest message lock duration; for example, the LockDuration Property.
         /// </summary>
         ///
@@ -74,12 +74,14 @@ namespace Azure.Messaging.ServiceBus
         /// after completion of message and result in a few false MessageLockLostExceptions temporarily.</remarks>
         public TimeSpan MaxAutoLockRenewalDuration => _innerProcessor.MaxAutoLockRenewalDuration;
 
-        /// <summary>Gets or sets the maximum number of concurrent calls to the
-        /// <see cref="ProcessMessageAsync"/> event handler the processor should initiate.
-        /// </summary>
-        ///
-        /// <value>The maximum number of concurrent calls to the event handler.</value>
-        public int MaxConcurrentCalls => _innerProcessor.MaxConcurrentCalls;
+        /// <summary>Gets the maximum number of sessions that will be processed concurrently by the processor.
+        /// The default value is 8.</summary>
+        public int MaxConcurrentSessions => _innerProcessor.MaxConcurrentSessions;
+
+        /// <summary>Gets the maximum number of calls to the callback the processor will initiate per session.
+        /// Thus the total number of callbacks will be equal to MaxConcurrentSessions * MaxConcurrentCallsPerSession.
+        /// The default value is 1.</summary>
+        public int MaxConcurrentCallsPerSession => _innerProcessor.MaxConcurrentCallsPerSession;
 
         /// <summary>
         /// The fully qualified Service Bus namespace that the receiver is associated with.  This is likely
@@ -104,7 +106,9 @@ namespace Azure.Messaging.ServiceBus
                 true,
                 plugins,
                 options.ToProcessorOptions(),
-                options.SessionIds);
+                options.SessionIds,
+                options.MaxConcurrentSessions,
+                options.MaxConcurrentCallsPerSession);
         }
 
         /// <summary>

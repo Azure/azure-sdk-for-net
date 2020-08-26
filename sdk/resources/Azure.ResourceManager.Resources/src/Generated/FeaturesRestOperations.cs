@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public FeaturesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -70,14 +70,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         FeatureOperationsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FeatureOperationsListResult.DeserializeFeatureOperationsListResult(document.RootElement);
-                        }
+                        value = FeatureOperationsListResult.DeserializeFeatureOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -97,14 +90,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         FeatureOperationsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FeatureOperationsListResult.DeserializeFeatureOperationsListResult(document.RootElement);
-                        }
+                        value = FeatureOperationsListResult.DeserializeFeatureOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -132,6 +118,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets all the preview features in a provider namespace that are available through AFEC for the subscription. </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider for getting features. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         public async Task<Response<FeatureOperationsListResult>> ListAsync(string resourceProviderNamespace, CancellationToken cancellationToken = default)
         {
             if (resourceProviderNamespace == null)
@@ -147,14 +134,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         FeatureOperationsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FeatureOperationsListResult.DeserializeFeatureOperationsListResult(document.RootElement);
-                        }
+                        value = FeatureOperationsListResult.DeserializeFeatureOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -165,6 +145,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets all the preview features in a provider namespace that are available through AFEC for the subscription. </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider for getting features. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         public Response<FeatureOperationsListResult> List(string resourceProviderNamespace, CancellationToken cancellationToken = default)
         {
             if (resourceProviderNamespace == null)
@@ -180,14 +161,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         FeatureOperationsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FeatureOperationsListResult.DeserializeFeatureOperationsListResult(document.RootElement);
-                        }
+                        value = FeatureOperationsListResult.DeserializeFeatureOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -217,6 +191,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceProviderNamespace"> The resource provider namespace for the feature. </param>
         /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> or <paramref name="featureName"/> is null. </exception>
         public async Task<Response<FeatureResult>> GetAsync(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
         {
             if (resourceProviderNamespace == null)
@@ -236,14 +211,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         FeatureResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FeatureResult.DeserializeFeatureResult(document.RootElement);
-                        }
+                        value = FeatureResult.DeserializeFeatureResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -255,6 +223,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceProviderNamespace"> The resource provider namespace for the feature. </param>
         /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> or <paramref name="featureName"/> is null. </exception>
         public Response<FeatureResult> Get(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
         {
             if (resourceProviderNamespace == null)
@@ -274,14 +243,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         FeatureResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FeatureResult.DeserializeFeatureResult(document.RootElement);
-                        }
+                        value = FeatureResult.DeserializeFeatureResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -312,6 +274,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="featureName"> The name of the feature to register. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> or <paramref name="featureName"/> is null. </exception>
         public async Task<Response<FeatureResult>> RegisterAsync(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
         {
             if (resourceProviderNamespace == null)
@@ -331,14 +294,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         FeatureResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FeatureResult.DeserializeFeatureResult(document.RootElement);
-                        }
+                        value = FeatureResult.DeserializeFeatureResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -350,6 +306,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="featureName"> The name of the feature to register. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> or <paramref name="featureName"/> is null. </exception>
         public Response<FeatureResult> Register(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
         {
             if (resourceProviderNamespace == null)
@@ -369,14 +326,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         FeatureResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FeatureResult.DeserializeFeatureResult(document.RootElement);
-                        }
+                        value = FeatureResult.DeserializeFeatureResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -407,6 +357,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="featureName"> The name of the feature to unregister. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> or <paramref name="featureName"/> is null. </exception>
         public async Task<Response<FeatureResult>> UnregisterAsync(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
         {
             if (resourceProviderNamespace == null)
@@ -426,14 +377,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         FeatureResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FeatureResult.DeserializeFeatureResult(document.RootElement);
-                        }
+                        value = FeatureResult.DeserializeFeatureResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -445,6 +389,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="featureName"> The name of the feature to unregister. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> or <paramref name="featureName"/> is null. </exception>
         public Response<FeatureResult> Unregister(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
         {
             if (resourceProviderNamespace == null)
@@ -464,14 +409,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         FeatureResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FeatureResult.DeserializeFeatureResult(document.RootElement);
-                        }
+                        value = FeatureResult.DeserializeFeatureResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -494,6 +432,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets all the preview features that are available through AFEC for the subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<FeatureOperationsListResult>> ListAllNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -509,14 +448,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         FeatureOperationsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FeatureOperationsListResult.DeserializeFeatureOperationsListResult(document.RootElement);
-                        }
+                        value = FeatureOperationsListResult.DeserializeFeatureOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -527,6 +459,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets all the preview features that are available through AFEC for the subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<FeatureOperationsListResult> ListAllNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -542,14 +475,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         FeatureOperationsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FeatureOperationsListResult.DeserializeFeatureOperationsListResult(document.RootElement);
-                        }
+                        value = FeatureOperationsListResult.DeserializeFeatureOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -573,6 +499,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider for getting features. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceProviderNamespace"/> is null. </exception>
         public async Task<Response<FeatureOperationsListResult>> ListNextPageAsync(string nextLink, string resourceProviderNamespace, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -592,14 +519,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         FeatureOperationsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FeatureOperationsListResult.DeserializeFeatureOperationsListResult(document.RootElement);
-                        }
+                        value = FeatureOperationsListResult.DeserializeFeatureOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -611,6 +531,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider for getting features. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceProviderNamespace"/> is null. </exception>
         public Response<FeatureOperationsListResult> ListNextPage(string nextLink, string resourceProviderNamespace, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -630,14 +551,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         FeatureOperationsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FeatureOperationsListResult.DeserializeFeatureOperationsListResult(document.RootElement);
-                        }
+                        value = FeatureOperationsListResult.DeserializeFeatureOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(Uri);
             writer.WritePropertyName("roles");
             writer.WriteStringValue(Roles.ToString());
-            if (Parameters != null)
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters");
                 writer.WriteStringValue(Parameters);
@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             string name = default;
             string uri = default;
             HdiNodeTypes roles = default;
-            string parameters = default;
+            Optional<string> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -54,15 +54,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("parameters"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     parameters = property.Value.GetString();
                     continue;
                 }
             }
-            return new ScriptAction(name, uri, roles, parameters);
+            return new ScriptAction(name, uri, roles, parameters.Value);
         }
     }
 }

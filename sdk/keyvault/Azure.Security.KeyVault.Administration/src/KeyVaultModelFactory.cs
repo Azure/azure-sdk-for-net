@@ -22,7 +22,7 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <param name="roleType"> The role type. </param>
         /// <param name="permissions"> Role definition permissions. </param>
         /// <param name="assignableScopes"> Role definition assignable scopes. </param>
-        public static RoleDefinition RoleDefinition(string id, string name, string type, string roleName, string description, string roleType, IReadOnlyList<KeyVaultPermission> permissions, IReadOnlyList<string> assignableScopes) =>
+        public static RoleDefinition RoleDefinition(string id, string name, string type, string roleName, string description, string roleType, IList<KeyVaultPermission> permissions, IList<string> assignableScopes) =>
             new RoleDefinition(id, name, type, roleName, description, roleType, permissions, assignableScopes);
 
         /// <summary>
@@ -45,12 +45,13 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <param name="endTime"> The end time of the restore operation.</param>
         /// <param name="errorMessage">The error message generated from the operation, if any.</param>
         public static RestoreOperation RestoreOperation(Response response, KeyVaultBackupClient client, string id, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string errorMessage = null) =>
-            new RestoreOperation(new FullRestoreDetailsInternal(null,
-                                                                null,
-                                                                errorMessage == null ? null : new KeyVaultServiceError(string.Empty, errorMessage, null),
-                                                                id,
-                                                                startTime,
-                                                                endTime), response, client);
+            new RestoreOperation(new RestoreDetailsInternal(
+                null,
+                null,
+                errorMessage == null ? null : new KeyVaultServiceError(string.Empty, errorMessage, null),
+                id,
+                startTime,
+                endTime), response, client);
 
         /// <summary>
         /// Initializes a new instance of a FullBackupOperation for mocking purposes.
@@ -63,12 +64,13 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <param name="endTime"> The end time of the restore operation.</param>
         /// <param name="errorMessage">The error message generated from the operation, if any.</param>
         public static BackupOperation BackupOperation(Response response, KeyVaultBackupClient client, string id, Uri blobContainerUri, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string errorMessage = null) =>
-            new BackupOperation(new FullBackupDetailsInternal(null,
-                                                              null,
-                                                              errorMessage == null ? null : new KeyVaultServiceError(string.Empty, errorMessage, null),
-                                                              startTime,
-                                                              endTime,
-                                                              id,
-                                                              blobContainerUri.AbsoluteUri), response, client);
+            new BackupOperation(new FullBackupDetailsInternal(
+                null,
+                null,
+                errorMessage == null ? null : new KeyVaultServiceError(string.Empty, errorMessage, null),
+                startTime,
+                endTime,
+                id,
+                blobContainerUri.AbsoluteUri), response, client);
     }
 }

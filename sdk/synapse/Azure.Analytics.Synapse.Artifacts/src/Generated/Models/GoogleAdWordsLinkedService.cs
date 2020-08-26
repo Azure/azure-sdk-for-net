@@ -17,6 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="clientCustomerID"> The Client customer ID of the AdWords account that you want to fetch report data for. </param>
         /// <param name="developerToken"> The developer token associated with the manager account that you use to grant access to the AdWords API. </param>
         /// <param name="authenticationType"> The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication can only be used on self-hosted IR. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientCustomerID"/> or <paramref name="developerToken"/> is null. </exception>
         public GoogleAdWordsLinkedService(object clientCustomerID, SecretBase developerToken, GoogleAdWordsAuthenticationType authenticationType)
         {
             if (clientCustomerID == null)

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Resources != null)
+            if (Optional.IsCollectionDefined(Resources))
             {
                 writer.WritePropertyName("resources");
                 writer.WriteStartArray();
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Options != null)
+            if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options");
                 writer.WriteStringValue(Options);

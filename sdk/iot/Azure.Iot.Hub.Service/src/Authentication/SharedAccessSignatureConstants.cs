@@ -10,17 +10,21 @@ namespace Azure.Iot.Hub.Service.Authentication
     /// </summary>
     internal static class SharedAccessSignatureConstants
     {
-        internal const int MaxKeyNameLength = 256;
-        internal const int MaxKeyLength = 256;
-        internal const string SharedAccessSignature = "SharedAccessSignature";
+        // The following keys are used to parse the relevant fields from an IoT hub connection string.
+        internal const string HostNameIdentifier = "HostName";
+        internal const string SharedAccessKeyIdentifier = "SharedAccessKey";
+        internal const string SharedAccessPolicyIdentifier = "SharedAccessKeyName";
+
+        // The following keys are used for constructing the shared access signature token.
+        // Example returned string:
+        // SharedAccessSignature sr=<Audience>&sig=<Signature>&se=<ExpiresOnValue>[&skn=<KeyName>]
+        internal const string SharedAccessSignatureIdentifier = "SharedAccessSignature";
         internal const string AudienceFieldName = "sr";
         internal const string SignatureFieldName = "sig";
         internal const string KeyNameFieldName = "skn";
         internal const string ExpiryFieldName = "se";
-        internal const string SignedResourceFullFieldName = SharedAccessSignature + " " + AudienceFieldName;
-        internal const string KeyValueSeparator = "=";
-        internal const string PairSeparator = "&";
-        internal static readonly DateTime EpochTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-        internal static readonly TimeSpan MaxClockSkew = TimeSpan.FromMinutes(5);
+
+        // The Unix time representation of January 1, 1970 midnight UTC.
+        internal static readonly DateTime s_epochTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
     }
 }

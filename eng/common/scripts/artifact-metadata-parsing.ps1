@@ -36,47 +36,7 @@ function CreateReleases($pkgList, $releaseApiUrl, $releaseSha) {
       "Authorization" = "token $($env:GH_TOKEN)"
     }
 
-    Invoke-WebRequest-WithHandling -url $url -body $body -headers $headers -method "Post"
-  }
-}
-
-function Invoke-WebRequest-WithHandling($url, $method, $body = $null, $headers = $null) {
-  $attempts = 1
-
-  while ($attempts -le 3) {
-    try {
-      return Invoke-RestMethod -Method $method -Uri $url -Body $body -Headers $headers
-    }
-    catch {
-      $response = $_.Exception.Response
-
-      $statusCode = $response.StatusCode.value__
-      $statusDescription = $response.StatusDescription
-
-      if ($statusCode) {
-        Write-Host "API request attempt number $attempts to $url failed with statuscode $statusCode"
-        Write-Host $statusDescription
-
-        Write-Host "Rate Limit Details:"
-        Write-Host "Total: $($response.Headers.GetValues("X-RateLimit-Limit"))"
-        Write-Host "Remaining: $($response.Headers.GetValues("X-RateLimit-Remaining"))"
-        Write-Host "Reset Epoch: $($response.Headers.GetValues("X-RateLimit-Reset"))"
-      }
-      else {
-        Write-Host "API request attempt number $attempts to $url failed with no statuscode present, exception follows:"
-        Write-Host $_.Exception.Response
-        Write-Host $_.Exception
-      }
-
-      if ($attempts -ge 3) {
-        Write-Host "Abandoning Request $url after 3 attempts."
-        exit(1)
-      }
-
-      Start-Sleep -s 10
-    }
-
-    $attempts += 1
+    Invoke-RestMethod -Uri $url -Body $body -Headers $headers -Method "Post" -MaximumRetryCount 3 -RetryIntervalSec 10
   }
 }
 
@@ -107,6 +67,7 @@ function ParseMavenPackage($pkg, $workingDirectory) {
 
   return New-Object PSObject -Property @{
     PackageId      = $pkgId
+    GroupId        = $groupId
     PackageVersion = $pkgVersion
     Deployable     = $forceCreate -or !(IsMavenPackageVersionPublished -pkgId $pkgId -pkgVersion $pkgVersion -groupId $groupId.Replace(".", "/"))
     ReleaseNotes   = $releaseNotes
@@ -119,7 +80,7 @@ function IsMavenPackageVersionPublished($pkgId, $pkgVersion, $groupId) {
   try {
 
     $uri = "https://oss.sonatype.org/content/repositories/releases/$groupId/$pkgId/$pkgVersion/$pkgId-$pkgVersion.pom"
-    $pomContent = Invoke-RestMethod -MaximumRetryCount 3 -Method "GET" -uri $uri
+    $pomContent = Invoke-RestMethod -MaximumRetryCount 3 -RetryIntervalSec 10 -Method "GET" -uri $uri
 
     if ($pomContent -ne $null -or $pomContent.Length -eq 0) {
       return $true
@@ -259,7 +220,7 @@ function IsNugetPackageVersionPublished($pkgId, $pkgVersion) {
   $nugetUri = "https://api.nuget.org/v3-flatcontainer/$($pkgId.ToLowerInvariant())/index.json"
 
   try {
-    $nugetVersions = Invoke-RestMethod -MaximumRetryCount 3 -uri $nugetUri -Method "GET"
+    $nugetVersions = Invoke-RestMethod -MaximumRetryCount 3 -RetryIntervalSec 10 -uri $nugetUri -Method "GET"
 
     return $nugetVersions.versions.Contains($pkgVersion)
   }
@@ -347,10 +308,42 @@ function ParseCArtifact($pkg, $workingDirectory) {
   }
 }
 
+function ParseCppArtifact($pkg, $workingDirectory) {
+  $packageInfo = Get-Content -Raw -Path $pkg | ConvertFrom-JSON
+  $packageArtifactLocation = (Get-ItemProperty $pkg).Directory.FullName
+  $releaseNotes = ""
+  $readmeContent = ""
+
+  $pkgVersion = $packageInfo.version
+  $pkgName = $packageInfo.name
+
+  $changeLogLoc = @(Get-ChildItem -Path $packageArtifactLocation -Recurse -Include "CHANGELOG.md")[0]
+  if ($changeLogLoc)
+  {
+    $releaseNotes = Get-ChangeLogEntryAsString -ChangeLogLocation $changeLogLoc -VersionString $pkgVersion
+  }
+
+  $readmeContentLoc = @(Get-ChildItem -Path $packageArtifactLocation -Recurse -Include "README.md")[0]
+  if ($readmeContentLoc) {
+    $readmeContent = Get-Content -Raw $readmeContentLoc
+  }
+
+  return New-Object PSObject -Property @{
+    PackageId      = $pkgName
+    PackageVersion = $pkgVersion
+    # Artifact info is always considered deployable for now becasue it is not
+    # deployed anywhere. Dealing with duplicate tags happens downstream in
+    # CheckArtifactShaAgainstTagsList
+    Deployable     = $true
+    ReleaseNotes   = $releaseNotes
+  }
+}
+
+
 # Returns the pypi publish status of a package id and version.
 function IsPythonPackageVersionPublished($pkgId, $pkgVersion) {
   try {
-    $existingVersion = (Invoke-RestMethod -MaximumRetryCount 3 -Method "Get" -uri "https://pypi.org/pypi/$pkgId/$pkgVersion/json").info.version
+    $existingVersion = (Invoke-RestMethod -MaximumRetryCount 3 -RetryIntervalSec 10 -Method "Get" -uri "https://pypi.org/pypi/$pkgId/$pkgVersion/json").info.version
 
     # if existingVersion exists, then it's already been published
     return $True
@@ -374,9 +367,10 @@ function IsPythonPackageVersionPublished($pkgId, $pkgVersion) {
 # Retrieves the list of all tags that exist on the target repository
 function GetExistingTags($apiUrl) {
   try {
-    return (Invoke-WebRequest-WithHandling -Method "GET" -url "$apiUrl/git/refs/tags"  ) | % { $_.ref.Replace("refs/tags/", "") }
+    return (Invoke-RestMethod -Method "GET" -Uri "$apiUrl/git/refs/tags" -MaximumRetryCount 3 -RetryIntervalSec 10) | % { $_.ref.Replace("refs/tags/", "") }
   }
   catch {
+    Write-Host $_
     $statusCode = $_.Exception.Response.StatusCode.value__
     $statusDescription = $_.Exception.Response.StatusDescription
 
@@ -386,7 +380,7 @@ function GetExistingTags($apiUrl) {
 
     # Return an empty list if there are no tags in the repo
     if ($statusCode -eq 404) {
-      return @()
+      return ,@()
     }
 
     exit(1)
@@ -424,6 +418,10 @@ function VerifyPackages($pkgRepository, $artifactLocation, $workingDirectory, $a
       $ParsePkgInfoFn = "ParseCArtifact"
       $packagePattern = "*.json"
     }
+    "CPP" {
+      $ParsePkgInfoFn = "ParseCppArtifact"
+      $packagePattern = "*.json"
+    }
     default {
       Write-Host "Unrecognized Language: $language"
       exit(1)
@@ -455,9 +453,11 @@ function VerifyPackages($pkgRepository, $artifactLocation, $workingDirectory, $a
       $pkgList += New-Object PSObject -Property @{
         PackageId      = $parsedPackage.PackageId
         PackageVersion = $parsedPackage.PackageVersion
+        GroupId        = $parsedPackage.GroupId
         Tag            = $tag
         ReleaseNotes   = $parsedPackage.ReleaseNotes
         ReadmeContent  = $parsedPackage.ReadmeContent
+        IsPrerelease   = [AzureEngSemanticVersion]::ParseVersionString($parsedPackage.PackageVersion).IsPrerelease
       }
     }
     catch {
@@ -494,7 +494,7 @@ function CheckArtifactShaAgainstTagsList($priorExistingTagList, $releaseSha, $ap
   $unmatchedTags = @()
 
   foreach ($tag in $priorExistingTagList) {
-    $tagSha = (Invoke-WebRequest-WithHandling -Method "Get" -Url "$apiUrl/git/refs/tags/$tag" -Headers $headers)."object".sha
+    $tagSha = (Invoke-RestMethod -Method "Get" -Uri "$apiUrl/git/refs/tags/$tag" -Headers $headers -MaximumRetryCount 3 -RetryIntervalSec 10)."object".sha
 
     if ($tagSha -eq $releaseSha) {
       Write-Host "This package has already been released. The existing tag commit SHA $releaseSha matches the artifact SHA being processed. Skipping release step for this tag."

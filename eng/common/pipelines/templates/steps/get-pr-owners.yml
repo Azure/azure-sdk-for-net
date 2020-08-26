@@ -1,0 +1,46 @@
+parameters: 
+  TargetVariable: ''
+  ServiceDirectory: ''
+
+steps:
+  - pwsh: |
+      git clone https://github.com/Azure/azure-sdk-tools.git $(Build.SourcesDirectory)/tools_repo
+      cd $(Build.SourcesDirectory)/tools_repo
+      git checkout 564ad63ae72d18422533fa1da9d396e7703c1cb5
+    displayName: Setup Identity Resolver
+
+  - pwsh: |
+      $result = dotnet run -v q -- `
+        --aad-app-id-var APP_ID `
+        --aad-app-secret-var APP_SECRET `
+        --aad-tenant-var AAD_TENANT `
+        --kusto-url-var KUSTO_URL `
+        --kusto-database-var KUSTO_DB `
+        --kusto-table-var KUSTO_TABLE `
+        --identity "$(Build.QueuedBy)"
+      $resolvedIdentity = $result[-1] | ConvertFrom-Json
+
+      Write-Host $resolvedIdentity
+
+      Write-Output "##vso[task.setvariable variable=${{ parameters.TargetVariable }}]$($resolvedIdentity.GithubUserName)"
+    displayName: 'Resolving Queuing User'
+    workingDirectory: $(Build.SourcesDirectory)/tools_repo/tools/notification-configuration/identity-resolver
+    env:
+      APP_ID: $(notification-aad-app-id)
+      APP_SECRET: $(notification-aad-secret)
+      AAD_TENANT: $(notification-aad-tenant)
+      KUSTO_URL: $(notification-kusto-url)
+      KUSTO_DB: $(notification-kusto-db)
+      KUSTO_TABLE: $(notification-kusto-table)
+
+  - pwsh: |
+      Remove-Item -Force -Recurse $(Build.SourcesDirectory)/tools_repo
+    displayName: Clean Up Cloned Tools Repo
+
+  - pwsh: |
+      $originalValue = "$(${{ parameters.TargetVariable }})"
+      $result = $(Build.SourcesDirectory)/eng/common/scripts/get-codeowners.ps1 -TargetDirectory /sdk/${{ parameters.ServiceDirectory }}/ -RootDirectory $(Build.SourcesDirectory)
+      if ($result) {
+        Write-Output "##vso[task.setvariable variable=${{ parameters.TargetVariable }}]$originalValue,$result"
+      }
+    displayName: Add CodeOwners if Present

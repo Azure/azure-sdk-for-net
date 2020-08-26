@@ -16,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of SapOpenHubTableDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="openHubDestinationName"> The name of the Open Hub Destination with destination type as Database Table. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="openHubDestinationName"/> is null. </exception>
         public SapOpenHubTableDataset(LinkedServiceReference linkedServiceName, object openHubDestinationName) : base(linkedServiceName)
         {
             if (linkedServiceName == null)

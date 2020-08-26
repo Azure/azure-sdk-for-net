@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -15,6 +16,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of MappingDataFlow. </summary>
         public MappingDataFlow()
         {
+            Sources = new ChangeTrackingList<DataFlowSource>();
+            Sinks = new ChangeTrackingList<DataFlowSink>();
+            Transformations = new ChangeTrackingList<Transformation>();
             Type = "MappingDataFlow";
         }
 
@@ -37,11 +41,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> List of sources in data flow. </summary>
-        public IList<DataFlowSource> Sources { get; set; }
+        public IList<DataFlowSource> Sources { get; }
         /// <summary> List of sinks in data flow. </summary>
-        public IList<DataFlowSink> Sinks { get; set; }
+        public IList<DataFlowSink> Sinks { get; }
         /// <summary> List of transformations in data flow. </summary>
-        public IList<Transformation> Transformations { get; set; }
+        public IList<Transformation> Transformations { get; }
         /// <summary> DataFlow script. </summary>
         public string Script { get; set; }
     }

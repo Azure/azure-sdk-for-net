@@ -16,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of MongoDbV2LinkedService. </summary>
         /// <param name="connectionString"> The MongoDB connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
         /// <param name="database"> The name of the MongoDB database that you want to access. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> or <paramref name="database"/> is null. </exception>
         public MongoDbV2LinkedService(object connectionString, object database)
         {
             if (connectionString == null)

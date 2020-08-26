@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -16,6 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of DatabricksSparkPythonActivity. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="pythonFile"> The URI of the Python file to be executed. DBFS paths are supported. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="pythonFile"/> is null. </exception>
         public DatabricksSparkPythonActivity(string name, object pythonFile) : base(name)
         {
             if (name == null)
@@ -28,6 +30,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
 
             PythonFile = pythonFile;
+            Parameters = new ChangeTrackingList<object>();
+            Libraries = new ChangeTrackingList<IDictionary<string, object>>();
             Type = "DatabricksSparkPython";
         }
 
@@ -54,8 +58,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The URI of the Python file to be executed. DBFS paths are supported. Type: string (or Expression with resultType string). </summary>
         public object PythonFile { get; set; }
         /// <summary> Command line parameters that will be passed to the Python file. </summary>
-        public IList<object> Parameters { get; set; }
+        public IList<object> Parameters { get; }
         /// <summary> A list of libraries to be installed on the cluster that will execute the job. </summary>
-        public IList<IDictionary<string, object>> Libraries { get; set; }
+        public IList<IDictionary<string, object>> Libraries { get; }
     }
 }

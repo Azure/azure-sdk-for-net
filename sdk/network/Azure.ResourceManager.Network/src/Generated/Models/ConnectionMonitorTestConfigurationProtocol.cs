@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="ConnectionMonitorTestConfigurationProtocol"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConnectionMonitorTestConfigurationProtocol(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

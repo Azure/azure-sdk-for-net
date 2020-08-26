@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Azure.Storage.Blobs.ChangeFeed.Models
+namespace Azure.Storage.Blobs.ChangeFeed
 {
     /// <summary>
     /// Segment Cursor.
@@ -18,23 +18,23 @@ namespace Azure.Storage.Blobs.ChangeFeed.Models
         public List<ShardCursor> ShardCursors { get; set; }
 
         /// <summary>
-        /// Index of the current Shard.
+        /// The path to the current Shard.
         /// </summary>
-        public int ShardIndex { get; set; }
+        public string CurrentShardPath { get; set; }
 
         /// <summary>
-        /// The DateTimeOffset of the Segment.
+        /// The path of the Segment.
         /// </summary>
-        public DateTimeOffset SegmentTime { get; set; }
+        public string SegmentPath { get; set; }
 
         internal SegmentCursor(
-            DateTimeOffset segmentDateTime,
+            string segmentPath,
             List<ShardCursor> shardCursors,
-            int shardIndex)
+            string currentShardPath)
         {
-            SegmentTime = segmentDateTime;
+            SegmentPath = segmentPath;
             ShardCursors = shardCursors;
-            ShardIndex = shardIndex;
+            CurrentShardPath = currentShardPath;
         }
 
         public SegmentCursor() { }

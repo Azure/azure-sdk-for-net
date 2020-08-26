@@ -325,6 +325,7 @@ namespace Azure.Management.Network
         /// <summary> Lists all application gateways in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual AsyncPageable<ApplicationGateway> ListAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -368,6 +369,7 @@ namespace Azure.Management.Network
         /// <summary> Lists all application gateways in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual Pageable<ApplicationGateway> List(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -560,6 +562,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="applicationGatewayName"/> is null. </exception>
         public virtual async Task<ApplicationGatewaysDeleteOperation> StartDeleteAsync(string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -589,6 +592,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="applicationGatewayName"/> is null. </exception>
         public virtual ApplicationGatewaysDeleteOperation StartDelete(string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -619,6 +623,7 @@ namespace Azure.Management.Network
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
         /// <param name="parameters"> Parameters supplied to the create or update application gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="applicationGatewayName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual async Task<ApplicationGatewaysCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string applicationGatewayName, ApplicationGateway parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -653,6 +658,7 @@ namespace Azure.Management.Network
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
         /// <param name="parameters"> Parameters supplied to the create or update application gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="applicationGatewayName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual ApplicationGatewaysCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string applicationGatewayName, ApplicationGateway parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -686,6 +692,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="applicationGatewayName"/> is null. </exception>
         public virtual async Task<ApplicationGatewaysStartOperation> StartStartAsync(string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -715,6 +722,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="applicationGatewayName"/> is null. </exception>
         public virtual ApplicationGatewaysStartOperation StartStart(string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -744,6 +752,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="applicationGatewayName"/> is null. </exception>
         public virtual async Task<ApplicationGatewaysStopOperation> StartStopAsync(string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -773,6 +782,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="applicationGatewayName"/> is null. </exception>
         public virtual ApplicationGatewaysStopOperation StartStop(string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -803,6 +813,7 @@ namespace Azure.Management.Network
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
         /// <param name="expand"> Expands BackendAddressPool and BackendHttpSettings referenced in backend health. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="applicationGatewayName"/> is null. </exception>
         public virtual async Task<ApplicationGatewaysBackendHealthOperation> StartBackendHealthAsync(string resourceGroupName, string applicationGatewayName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -833,6 +844,7 @@ namespace Azure.Management.Network
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
         /// <param name="expand"> Expands BackendAddressPool and BackendHttpSettings referenced in backend health. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="applicationGatewayName"/> is null. </exception>
         public virtual ApplicationGatewaysBackendHealthOperation StartBackendHealth(string resourceGroupName, string applicationGatewayName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -864,6 +876,7 @@ namespace Azure.Management.Network
         /// <param name="probeRequest"> Request body for on-demand test probe operation. </param>
         /// <param name="expand"> Expands BackendAddressPool and BackendHttpSettings referenced in backend health. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="applicationGatewayName"/>, or <paramref name="probeRequest"/> is null. </exception>
         public virtual async Task<ApplicationGatewaysBackendHealthOnDemandOperation> StartBackendHealthOnDemandAsync(string resourceGroupName, string applicationGatewayName, ApplicationGatewayOnDemandProbe probeRequest, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -899,6 +912,7 @@ namespace Azure.Management.Network
         /// <param name="probeRequest"> Request body for on-demand test probe operation. </param>
         /// <param name="expand"> Expands BackendAddressPool and BackendHttpSettings referenced in backend health. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="applicationGatewayName"/>, or <paramref name="probeRequest"/> is null. </exception>
         public virtual ApplicationGatewaysBackendHealthOnDemandOperation StartBackendHealthOnDemand(string resourceGroupName, string applicationGatewayName, ApplicationGatewayOnDemandProbe probeRequest, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

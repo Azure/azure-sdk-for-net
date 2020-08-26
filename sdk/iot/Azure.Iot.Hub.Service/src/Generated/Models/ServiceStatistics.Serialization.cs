@@ -14,20 +14,16 @@ namespace Azure.Iot.Hub.Service.Models
     {
         internal static ServiceStatistics DeserializeServiceStatistics(JsonElement element)
         {
-            long? connectedDeviceCount = default;
+            Optional<long> connectedDeviceCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectedDeviceCount"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     connectedDeviceCount = property.Value.GetInt64();
                     continue;
                 }
             }
-            return new ServiceStatistics(connectedDeviceCount);
+            return new ServiceStatistics(Optional.ToNullable(connectedDeviceCount));
         }
     }
 }

@@ -15,13 +15,16 @@ namespace Azure.AI.FormRecognizer.Training
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Prefix != null)
+            if (Optional.IsDefined(Prefix))
             {
                 writer.WritePropertyName("prefix");
                 writer.WriteStringValue(Prefix);
             }
-            writer.WritePropertyName("includeSubFolders");
-            writer.WriteBooleanValue(IncludeSubFolders);
+            if (Optional.IsDefined(IncludeSubfolders))
+            {
+                writer.WritePropertyName("includeSubFolders");
+                writer.WriteBooleanValue(IncludeSubfolders);
+            }
             writer.WriteEndObject();
         }
     }

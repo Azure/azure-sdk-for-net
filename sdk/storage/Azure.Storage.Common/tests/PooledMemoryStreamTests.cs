@@ -4,12 +4,11 @@
 using System;
 using System.Buffers;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
-using System.Text;
+using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Storage.Shared;
+using Azure.Storage.Tests.Shared;
 using NUnit.Framework;
 
 namespace Azure.Storage.Tests
@@ -18,65 +17,6 @@ namespace Azure.Storage.Tests
     public class PooledMemoryStreamTests
     {
         private readonly ArrayPool<byte> _pool = ArrayPool<byte>.Shared;
-
-        /// <summary>
-        /// Stream who's byte at position n is n % <see cref="byte.MaxValue"/>.
-        /// Note this means we have 255 possibilities, not 256, giving variation at likely buffer boundaries.
-        /// </summary>
-        private class PredictableStream : Stream
-        {
-            public override bool CanRead => true;
-
-            public override bool CanSeek => true;
-
-            public override bool CanWrite => false;
-
-            public override long Length => throw new NotSupportedException();
-
-            public override long Position { get; set; } = 0;
-
-            public override void Flush()
-            { }
-
-            public override int Read(byte[] buffer, int offset, int count)
-            {
-                for (int i = 0; i < count; i++)
-                {
-                    buffer[offset + i] = (byte)((Position + i) % byte.MaxValue);
-                }
-
-                Position += count;
-                return count;
-            }
-
-            public override long Seek(long offset, SeekOrigin origin)
-            {
-                switch (origin)
-                {
-                    case SeekOrigin.Begin:
-                        Position = offset;
-                        break;
-                    case SeekOrigin.Current:
-                        Position += offset;
-                        break;
-                    case SeekOrigin.End:
-                        Position = Length + offset;
-                        break;
-                }
-
-                return Position;
-            }
-
-            public override void SetLength(long value)
-            {
-                throw new NotSupportedException();
-            }
-
-            public override void Write(byte[] buffer, int offset, int count)
-            {
-                throw new NotSupportedException();
-            }
-        }
 
         /// <summary>
         /// Sanity check for our test helper stream implementation.
@@ -101,14 +41,14 @@ namespace Azure.Storage.Tests
         [TestCase(Constants.KB, 256)] // buffer split size smaller than data
         [TestCase(Constants.KB, 2 * Constants.KB)] // buffer split size larger than data.
         [TestCase(Constants.KB + 11, 256)] // content doesn't line up with buffers (extremely unlikely any array pool implementation will add exactly 11 bytes more than requested across 4 buffers)
-        public void ReadStream(int dataSize, int bufferPartitionSize)
+        public async Task ReadStream(int dataSize, int bufferPartitionSize)
         {
-            var originalStream = new PredictableStream();
-            var arrayPoolStream = PooledMemoryStream.BufferStreamPartitionInternal(originalStream, dataSize, dataSize, 0, _pool, bufferPartitionSize, false, default).EnsureCompleted();
+            PredictableStream originalStream = new PredictableStream();
+            PooledMemoryStream arrayPoolStream = await PooledMemoryStream.BufferStreamPartitionInternal(originalStream, dataSize, dataSize, 0, _pool, bufferPartitionSize, true, default);
             originalStream.Position = 0;
 
-            var originalStreamData = new byte[dataSize];
-            var poolStreamData = new byte[dataSize];
+            byte[] originalStreamData = new byte[dataSize];
+            byte[] poolStreamData = new byte[dataSize];
             originalStream.Read(originalStreamData, 0, dataSize);
             arrayPoolStream.Read(poolStreamData, 0, dataSize);
 
@@ -116,14 +56,13 @@ namespace Azure.Storage.Tests
         }
 
         [Test]
-        [Explicit]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/12312")]
         public void StreamCanHoldLongData()
         {
             const long dataSize = 4000L * Constants.MB;
             const int bufferPartitionSize = 512 * Constants.MB;
-            var originalStream = new PredictableStream();
-            var arrayPoolStream = PooledMemoryStream.BufferStreamPartitionInternal(originalStream, dataSize, dataSize, 0, _pool, bufferPartitionSize, false, default).EnsureCompleted();
+            PredictableStream originalStream = new PredictableStream();
+            PooledMemoryStream arrayPoolStream = PooledMemoryStream.BufferStreamPartitionInternal(originalStream, dataSize, dataSize, 0, _pool, bufferPartitionSize, false, default).EnsureCompleted();
             originalStream.Position = 0;
 
 
@@ -141,6 +80,44 @@ namespace Azure.Storage.Tests
             } while (read != 0);
 
             Assert.AreEqual(dataSize, totalRead);
+        }
+
+        [TestCase(Constants.KB, 256)] // buffer split size smaller than data
+        [TestCase(Constants.KB, 2 * Constants.KB)] // buffer split size larger than data.
+        [TestCase(Constants.KB + 11, 256)] // content doesn't line up with buffers (extremely unlikely any array pool implementation will add exactly 11 bytes more than requested across 4 buffers)
+        public async Task WriteStream(int dataSize, int bufferPartitionSize)
+        {
+            // Arrange
+            byte[] originalData = GetRandomBuffer(dataSize);
+            byte[] readData = new byte[dataSize];
+            PooledMemoryStream pooledMemoryStream = new PooledMemoryStream(ArrayPool<byte>.Shared, 0, bufferPartitionSize);
+
+            // Act
+            await pooledMemoryStream.WriteAsync(originalData, 0, dataSize);
+            pooledMemoryStream.Position = 0;
+            await pooledMemoryStream.ReadAsync(readData, 0, dataSize);
+
+            // Also testing that clear works.
+            pooledMemoryStream.Clear();
+
+            // Assert
+            AssertSequenceEqual(originalData, readData);
+            Assert.AreEqual(0, pooledMemoryStream.Position);
+        }
+
+        private static byte[] GetRandomBuffer(long size)
+        {
+            Random random = new Random(Environment.TickCount);
+            var buffer = new byte[size];
+            random.NextBytes(buffer);
+            return buffer;
+        }
+
+        private static void AssertSequenceEqual<T>(IEnumerable<T> expected, IEnumerable<T> actual)
+        {
+            Assert.AreEqual(expected.Count(), actual.Count(), "Actual sequence length does not match expected sequence length");
+            (int index, T expected, T actual)[] firstErrors = expected.Zip(actual, (e, a) => (expected: e, actual: a)).Select((x, i) => (index: i, x.expected, x.actual)).Where(x => !x.expected.Equals(x.actual)).Take(5).ToArray();
+            Assert.IsFalse(firstErrors.Any(), $"Actual sequence does not match expected sequence at locations\n{string.Join("\n", firstErrors.Select(e => $"{e.index} => expected = {e.expected}, actual = {e.actual}"))}");
         }
     }
 }

@@ -15,12 +15,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (SourceName != null)
+            if (Optional.IsDefined(SourceName))
             {
                 writer.WritePropertyName("sourceName");
                 writer.WriteStringValue(SourceName);
             }
-            if (RowLimit != null)
+            if (Optional.IsDefined(RowLimit))
             {
                 writer.WritePropertyName("rowLimit");
                 writer.WriteNumberValue(RowLimit.Value);

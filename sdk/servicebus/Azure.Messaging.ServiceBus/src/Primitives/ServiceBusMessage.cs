@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using Azure.Core;
 
 namespace Azure.Messaging.ServiceBus
@@ -27,8 +26,8 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Creates a new message.
         /// </summary>
-        public ServiceBusMessage()
-            : this(default(ReadOnlyMemory<byte>))
+        public ServiceBusMessage() :
+            this(default(ReadOnlyMemory<byte>))
         {
         }
 
@@ -36,20 +35,9 @@ namespace Azure.Messaging.ServiceBus
         /// Creates a new message from the specified string, using UTF-8 encoding.
         /// </summary>
         /// <param name="body">The payload of the message as a string.</param>
-        public ServiceBusMessage(string body) :
-            this(body, Encoding.UTF8)
+        public ServiceBusMessage(string body)
         {
-        }
-
-        /// <summary>
-        /// Creates a new message from the specified string, using the specified encoding.
-        /// </summary>
-        /// <param name="body">The payload of the message as a string.</param>
-        /// <param name="encoding">The encoding to use for the body.</param>
-        public ServiceBusMessage(string body, Encoding encoding)
-        {
-            Argument.AssertNotNull(encoding, nameof(encoding));
-            Body = new BinaryData(body, encoding);
+            Body = new BinaryData(body);
             Properties = new Dictionary<string, object>();
         }
 
@@ -57,10 +45,9 @@ namespace Azure.Messaging.ServiceBus
         /// Creates a new message from the specified payload.
         /// </summary>
         /// <param name="body">The payload of the message in bytes.</param>
-        public ServiceBusMessage(ReadOnlyMemory<byte> body)
+        public ServiceBusMessage(ReadOnlyMemory<byte> body) :
+            this(BinaryData.FromMemory(body))
         {
-            Body = new BinaryData(body);
-            Properties = new Dictionary<string, object>();
         }
 
         /// <summary>
@@ -81,7 +68,7 @@ namespace Azure.Messaging.ServiceBus
         {
             Argument.AssertNotNull(receivedMessage, nameof(receivedMessage));
 
-            Body = receivedMessage.Body;
+            Body = receivedMessage.SentMessage.Body;
             ContentType = receivedMessage.ContentType;
             CorrelationId = receivedMessage.CorrelationId;
             Label = receivedMessage.Label;

@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(Query);
             writer.WritePropertyName("currentConnection");
             writer.WriteObjectValue(CurrentConnection);
-            if (Metadata != null)
+            if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata");
                 writer.WriteObjectValue(Metadata);
@@ -37,9 +37,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             string query = default;
             SqlConnection currentConnection = default;
-            SqlScriptMetadata metadata = default;
+            Optional<SqlScriptMetadata> metadata = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("query"))
@@ -54,25 +54,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("metadata"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     metadata = SqlScriptMetadata.DeserializeSqlScriptMetadata(property.Value);
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    additionalPropertiesDictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SqlScriptContent(query, currentConnection, metadata, additionalProperties);
+            return new SqlScriptContent(query, currentConnection, metadata.Value, additionalProperties);
         }
     }
 }

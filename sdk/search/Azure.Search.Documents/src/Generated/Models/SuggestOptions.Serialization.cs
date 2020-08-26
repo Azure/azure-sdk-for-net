@@ -15,51 +15,51 @@ namespace Azure.Search.Documents
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Filter != null)
+            if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter");
                 writer.WriteStringValue(Filter);
             }
-            if (UseFuzzyMatching != null)
+            if (Optional.IsDefined(UseFuzzyMatching))
             {
                 writer.WritePropertyName("fuzzy");
                 writer.WriteBooleanValue(UseFuzzyMatching.Value);
             }
-            if (HighlightPostTag != null)
+            if (Optional.IsDefined(HighlightPostTag))
             {
                 writer.WritePropertyName("highlightPostTag");
                 writer.WriteStringValue(HighlightPostTag);
             }
-            if (HighlightPreTag != null)
+            if (Optional.IsDefined(HighlightPreTag))
             {
                 writer.WritePropertyName("highlightPreTag");
                 writer.WriteStringValue(HighlightPreTag);
             }
-            if (MinimumCoverage != null)
+            if (Optional.IsDefined(MinimumCoverage))
             {
                 writer.WritePropertyName("minimumCoverage");
                 writer.WriteNumberValue(MinimumCoverage.Value);
             }
-            if (OrderByRaw != null)
+            if (Optional.IsDefined(OrderByRaw))
             {
                 writer.WritePropertyName("orderby");
                 writer.WriteStringValue(OrderByRaw);
             }
             writer.WritePropertyName("search");
             writer.WriteStringValue(SearchText);
-            if (SearchFieldsRaw != null)
+            if (Optional.IsDefined(SearchFieldsRaw))
             {
                 writer.WritePropertyName("searchFields");
                 writer.WriteStringValue(SearchFieldsRaw);
             }
-            if (SelectRaw != null)
+            if (Optional.IsDefined(SelectRaw))
             {
                 writer.WritePropertyName("select");
                 writer.WriteStringValue(SelectRaw);
             }
             writer.WritePropertyName("suggesterName");
             writer.WriteStringValue(SuggesterName);
-            if (Size != null)
+            if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("top");
                 writer.WriteNumberValue(Size.Value);

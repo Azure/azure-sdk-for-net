@@ -49,7 +49,7 @@ namespace Azure.Storage.Blobs
                 cancellationToken).ConfigureAwait(false);
 
             metadata ??= new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-            metadata.Add(Constants.ClientSideEncryption.EncryptionDataKey, EncryptionDataSerializer.Serialize(encryptionData));
+            metadata[Constants.ClientSideEncryption.EncryptionDataKey] = EncryptionDataSerializer.Serialize(encryptionData);
 
             return (nonSeekableCiphertext, metadata);
         }

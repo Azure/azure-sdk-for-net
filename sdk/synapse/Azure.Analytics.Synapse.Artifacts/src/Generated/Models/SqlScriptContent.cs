@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -17,6 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of SqlScriptContent. </summary>
         /// <param name="query"> SQL query to execute. </param>
         /// <param name="currentConnection"> The connection used to execute the SQL script. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="query"/> or <paramref name="currentConnection"/> is null. </exception>
         public SqlScriptContent(string query, SqlConnection currentConnection)
         {
             if (query == null)
@@ -30,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             Query = query;
             CurrentConnection = currentConnection;
-            AdditionalProperties = new Dictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of SqlScriptContent. </summary>
@@ -43,7 +45,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Query = query;
             CurrentConnection = currentConnection;
             Metadata = metadata;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> SQL query to execute. </summary>

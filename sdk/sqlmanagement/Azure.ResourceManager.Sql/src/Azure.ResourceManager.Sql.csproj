@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Version>1.0.0-preview.1</Version>
+    <PackageId>Azure.ResourceManager.Sql</PackageId>
+    <Description>Azure Resource Manager client SDK for Azure resource provider Microsoft.Sql</Description>
+    <PackageTags>azure;management;arm;resource manager;sql</PackageTags>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- TODO: As part of release process, this PropertyGroup can be removed once RP is approved for namespace -->
+    <NoWarn>$(NoWarn);AZC0001;CS1591</NoWarn>
+  </PropertyGroup>
+</Project>

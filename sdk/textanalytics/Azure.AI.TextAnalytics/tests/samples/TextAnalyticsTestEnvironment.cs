@@ -12,6 +12,6 @@ namespace Azure.AI.TextAnalytics.Samples
         }
 
         public string Endpoint => GetRecordedVariable("TEXT_ANALYTICS_ENDPOINT");
-        public string ApiKey => GetRecordedVariable("TEXT_ANALYTICS_API_KEY");
+        public string ApiKey => GetRecordedVariable("TEXT_ANALYTICS_API_KEY", options => options.IsSecret());
     }
 }

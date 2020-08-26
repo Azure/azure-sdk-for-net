@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Storage.Models
     public partial class StorageAccountInternetEndpoints
     {
         /// <summary> Initializes a new instance of StorageAccountInternetEndpoints. </summary>
-        public StorageAccountInternetEndpoints()
+        internal StorageAccountInternetEndpoints()
         {
         }
 

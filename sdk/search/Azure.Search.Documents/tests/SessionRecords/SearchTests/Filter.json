@@ -1,25 +1,23 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexes(\u0027josgoidr\u0027)/docs/search.post.search?api-version=2020-06-30",
+      "RequestUri": "https://azs-net-pakrysearch.search.windows.net/indexes(\u0027aypqybvw\u0027)/docs/search.post.search?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "Content-Length": "106",
+        "Content-Length": "71",
         "Content-Type": "application/json",
-        "traceparent": "00-9a41b7d7d33e2546adf4e75c219d6c37-deac6a1eba94d246-00",
+        "traceparent": "00-c949ff0f3febe94d9ae1a0c8b08f982d-761a8f770f2d8c4b-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.0.0-dev.20200625.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Search.Documents/11.1.0-dev.20200717.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "07a3c50b3edb39a6194807ff352b8e6c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "facets": [],
-        "filter": "rating gt 3 and lastRenovationDate gt 2000-01-01T00:00:00Z",
-        "scoringParameters": []
+        "filter": "rating gt 3 and lastRenovationDate gt 2000-01-01T00:00:00Z"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
@@ -27,8 +25,8 @@
         "client-request-id": "07a3c50b-3edb-39a6-1948-07ff352b8e6c",
         "Content-Length": "1405",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Fri, 26 Jun 2020 06:31:50 GMT",
-        "elapsed-time": "14",
+        "Date": "Fri, 17 Jul 2020 20:23:43 GMT",
+        "elapsed-time": "6",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -42,8 +40,8 @@
   ],
   "Variables": {
     "RandomSeed": "1956187125",
-    "SearchIndexName": "josgoidr",
+    "SearchIndexName": "aypqybvw",
     "SEARCH_QUERY_API_KEY": "Sanitized",
-    "SEARCH_SERVICE_NAME": "azs-net-heathsrchtst"
+    "SEARCH_SERVICE_NAME": "azs-net-pakrysearch"
   }
 }

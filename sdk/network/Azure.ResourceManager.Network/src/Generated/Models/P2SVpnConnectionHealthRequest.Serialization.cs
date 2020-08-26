@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (VpnUserNamesFilter != null)
+            if (Optional.IsCollectionDefined(VpnUserNamesFilter))
             {
                 writer.WritePropertyName("vpnUserNamesFilter");
                 writer.WriteStartArray();
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (OutputBlobSasUrl != null)
+            if (Optional.IsDefined(OutputBlobSasUrl))
             {
                 writer.WritePropertyName("outputBlobSasUrl");
                 writer.WriteStringValue(OutputBlobSasUrl);

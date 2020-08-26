@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -17,6 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="name"> The name of the indexer. </param>
         /// <param name="dataSourceName"> The name of the datasource from which this indexer reads data. </param>
         /// <param name="targetIndexName"> The name of the index to which this indexer writes data. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="dataSourceName"/>, or <paramref name="targetIndexName"/> is null. </exception>
         public SearchIndexer(string name, string dataSourceName, string targetIndexName)
         {
             if (name == null)
@@ -35,8 +37,8 @@ namespace Azure.Search.Documents.Indexes.Models
             Name = name;
             DataSourceName = dataSourceName;
             TargetIndexName = targetIndexName;
-            FieldMappings = new List<FieldMapping>();
-            OutputFieldMappings = new List<FieldMapping>();
+            FieldMappings = new ChangeTrackingList<FieldMapping>();
+            OutputFieldMappings = new ChangeTrackingList<FieldMapping>();
         }
 
         /// <summary> Initializes a new instance of SearchIndexer. </summary>
@@ -60,8 +62,8 @@ namespace Azure.Search.Documents.Indexes.Models
             TargetIndexName = targetIndexName;
             Schedule = schedule;
             Parameters = parameters;
-            FieldMappings = fieldMappings ?? new List<FieldMapping>();
-            OutputFieldMappings = outputFieldMappings ?? new List<FieldMapping>();
+            FieldMappings = fieldMappings;
+            OutputFieldMappings = outputFieldMappings;
             IsDisabled = isDisabled;
             _etag = Etag;
         }

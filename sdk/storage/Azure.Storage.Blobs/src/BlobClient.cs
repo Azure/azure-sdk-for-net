@@ -43,7 +43,9 @@ namespace Azure.Storage.Blobs
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
         ///
-        /// For more information, <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">Configure Azure Storage connection strings</see>
+        /// For more information,
+        /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
+        /// Configure Azure Storage connection strings</see>.
         /// </param>
         /// <param name="blobContainerName">
         /// The name of the container containing this blob.
@@ -65,7 +67,9 @@ namespace Azure.Storage.Blobs
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
         ///
-        /// For more information, <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">Configure Azure Storage connection strings</see>
+        /// For more information,
+        /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
+        /// Configure Azure Storage connection strings</see>.
         /// </param>
         /// <param name="blobContainerName">
         /// The name of the container containing this blob.
@@ -182,6 +186,65 @@ namespace Azure.Storage.Blobs
         }
         #endregion ctors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobClient"/>
+        /// class with an identical <see cref="Uri"/> source but the specified
+        /// <paramref name="snapshot"/> timestamp.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/creating-a-snapshot-of-a-blob" />.
+        /// </summary>
+        /// <param name="snapshot">The snapshot identifier.</param>
+        /// <returns>A new <see cref="BlobClient"/> instance.</returns>
+        /// <remarks>
+        /// Pass null or empty string to remove the snapshot returning a URL
+        /// to the base blob.
+        /// </remarks>
+        public new BlobClient WithSnapshot(string snapshot)
+        {
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
+            {
+                Snapshot = snapshot
+            };
+
+            return new BlobClient(
+                blobUriBuilder.ToUri(),
+                Pipeline,
+                Version,
+                ClientDiagnostics,
+                CustomerProvidedKey,
+                ClientSideEncryption,
+                EncryptionScope);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobClient"/>
+        /// class with an identical <see cref="Uri"/> source but the specified
+        /// <paramref name="versionId"/> timestamp.
+        ///
+        /// </summary>
+        /// <param name="versionId">The version identifier.</param>
+        /// <returns>A new <see cref="BlobClient"/> instance.</returns>
+        /// <remarks>
+        /// Pass null or empty string to remove the version returning a URL
+        /// to the base blob.
+        /// </remarks>
+        public new BlobClient WithVersion(string versionId)
+        {
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
+            {
+                VersionId = versionId
+            };
+
+            return new BlobClient(
+                blobUriBuilder.ToUri(),
+                Pipeline,
+                Version,
+                ClientDiagnostics,
+                CustomerProvidedKey,
+                ClientSideEncryption,
+                EncryptionScope);
+        }
+
         #region Upload
         /// <summary>
         /// The <see cref="Upload(Stream)"/> operation creates a new block blob
@@ -193,7 +256,9 @@ namespace Azure.Storage.Blobs
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
         /// </summary>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
@@ -219,7 +284,9 @@ namespace Azure.Storage.Blobs
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
         /// </summary>
         /// <param name="path">
         /// A file path containing the content to upload.
@@ -245,7 +312,9 @@ namespace Azure.Storage.Blobs
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
         /// </summary>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
@@ -271,7 +340,9 @@ namespace Azure.Storage.Blobs
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
         /// </summary>
         /// <param name="path">
         /// A file path containing the content to upload.
@@ -298,7 +369,9 @@ namespace Azure.Storage.Blobs
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
         /// </summary>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
@@ -334,7 +407,9 @@ namespace Azure.Storage.Blobs
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
         /// </summary>
         /// <param name="path">
         /// A file path containing the content to upload.
@@ -370,7 +445,9 @@ namespace Azure.Storage.Blobs
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
         /// </summary>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
@@ -406,7 +483,9 @@ namespace Azure.Storage.Blobs
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
         /// </summary>
         /// <param name="path">
         /// A file path containing the content to upload.
@@ -443,7 +522,9 @@ namespace Azure.Storage.Blobs
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
         /// </summary>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
@@ -484,7 +565,9 @@ namespace Azure.Storage.Blobs
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
         /// </summary>
         /// <param name="path">
         /// A file path containing the content to upload.
@@ -525,7 +608,9 @@ namespace Azure.Storage.Blobs
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
         /// </summary>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
@@ -566,7 +651,9 @@ namespace Azure.Storage.Blobs
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
         /// </summary>
         /// <param name="path">
         /// A file path containing the content to upload.
@@ -608,7 +695,9 @@ namespace Azure.Storage.Blobs
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
         /// </summary>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
@@ -650,7 +739,9 @@ namespace Azure.Storage.Blobs
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
+        /// For more information,
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
         /// </summary>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
@@ -726,7 +817,9 @@ namespace Azure.Storage.Blobs
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
         /// </summary>
         /// <param name="path">
         /// A file path containing the content to upload.
@@ -773,7 +866,9 @@ namespace Azure.Storage.Blobs
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
         /// </summary>
         /// <param name="path">
         /// A file path containing the content to upload.
@@ -854,7 +949,9 @@ namespace Azure.Storage.Blobs
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
         /// </summary>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
@@ -896,7 +993,9 @@ namespace Azure.Storage.Blobs
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
         /// </summary>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
@@ -972,7 +1071,9 @@ namespace Azure.Storage.Blobs
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>..
         /// </summary>
         /// <param name="path">
         /// A file path containing the content to upload.
@@ -1019,7 +1120,9 @@ namespace Azure.Storage.Blobs
         /// append blobs, please see <see cref="PageBlobClient"/> or
         /// <see cref="AppendBlobClient"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
         /// </summary>
         /// <param name="path">
         /// A file path containing the content to upload.

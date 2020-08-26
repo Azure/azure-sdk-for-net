@@ -149,8 +149,8 @@ namespace Azure.Messaging.EventHubs
             connectionOptions = connectionOptions?.Clone() ?? new EventHubConnectionOptions();
             ValidateConnectionOptions(connectionOptions);
 
-            ConnectionStringProperties connectionStringProperties = ConnectionStringParser.Parse(connectionString);
-            ValidateConnectionProperties(connectionStringProperties, eventHubName, nameof(connectionString));
+            var connectionStringProperties = ConnectionStringParser.Parse(connectionString);
+            connectionStringProperties.Validate(eventHubName, nameof(connectionString));
 
             var fullyQualifiedNamespace = connectionStringProperties.Endpoint.Host;
 
@@ -468,46 +468,6 @@ namespace Azure.Messaging.EventHubs
             }
 
             return builder.Uri.AbsoluteUri.ToLowerInvariant();
-        }
-
-        /// <summary>
-        ///   Performs the actions needed to validate the set of properties for connecting to the
-        ///   Event Hubs service, as passed to this client during creation.
-        /// </summary>
-        ///
-        /// <param name="properties">The set of properties parsed from the connection string associated this client.</param>
-        /// <param name="eventHubName">The name of the Event Hub passed independent of the connection string, allowing easier use of a namespace-level connection string.</param>
-        /// <param name="connectionStringArgumentName">The name of the argument associated with the connection string; to be used when raising <see cref="ArgumentException" /> variants.</param>
-        ///
-        /// <remarks>
-        ///   In the case that the properties violate an invariant or otherwise represent a combination that
-        ///   is not permissible, an appropriate exception will be thrown.
-        /// </remarks>
-        ///
-        private static void ValidateConnectionProperties(ConnectionStringProperties properties,
-                                                         string eventHubName,
-                                                         string connectionStringArgumentName)
-        {
-            // The Event Hub name may only be specified in one of the possible forms, either as part of the
-            // connection string or as a stand-alone parameter, but not both.  If specified in both to the same
-            // value, then do not consider this a failure.
-
-            if ((!string.IsNullOrEmpty(eventHubName))
-                && (!string.IsNullOrEmpty(properties.EventHubName))
-                && (!string.Equals(eventHubName, properties.EventHubName, StringComparison.InvariantCultureIgnoreCase)))
-            {
-                throw new ArgumentException(Resources.OnlyOneEventHubNameMayBeSpecified, connectionStringArgumentName);
-            }
-
-            // Ensure that each of the needed components are present for connecting.
-
-            if ((string.IsNullOrEmpty(eventHubName)) && (string.IsNullOrEmpty(properties.EventHubName))
-                || (string.IsNullOrEmpty(properties.Endpoint?.Host))
-                || (string.IsNullOrEmpty(properties.SharedAccessKeyName))
-                || (string.IsNullOrEmpty(properties.SharedAccessKey)))
-            {
-                throw new ArgumentException(Resources.MissingConnectionInformation, connectionStringArgumentName);
-            }
         }
 
         /// <summary>

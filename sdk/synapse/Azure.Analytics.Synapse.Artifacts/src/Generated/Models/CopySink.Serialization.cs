@@ -18,27 +18,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
-            if (WriteBatchSize != null)
+            if (Optional.IsDefined(WriteBatchSize))
             {
                 writer.WritePropertyName("writeBatchSize");
                 writer.WriteObjectValue(WriteBatchSize);
             }
-            if (WriteBatchTimeout != null)
+            if (Optional.IsDefined(WriteBatchTimeout))
             {
                 writer.WritePropertyName("writeBatchTimeout");
                 writer.WriteObjectValue(WriteBatchTimeout);
             }
-            if (SinkRetryCount != null)
+            if (Optional.IsDefined(SinkRetryCount))
             {
                 writer.WritePropertyName("sinkRetryCount");
                 writer.WriteObjectValue(SinkRetryCount);
             }
-            if (SinkRetryWait != null)
+            if (Optional.IsDefined(SinkRetryWait))
             {
                 writer.WritePropertyName("sinkRetryWait");
                 writer.WriteObjectValue(SinkRetryWait);
             }
-            if (MaxConcurrentConnections != null)
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections");
                 writer.WriteObjectValue(MaxConcurrentConnections);
@@ -53,14 +53,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static CopySink DeserializeCopySink(JsonElement element)
         {
+            if (element.TryGetProperty("type", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "AvroSink": return AvroSink.DeserializeAvroSink(element);
+                    case "AzureBlobFSSink": return AzureBlobFSSink.DeserializeAzureBlobFSSink(element);
+                    case "AzureDataExplorerSink": return AzureDataExplorerSink.DeserializeAzureDataExplorerSink(element);
+                    case "AzureDataLakeStoreSink": return AzureDataLakeStoreSink.DeserializeAzureDataLakeStoreSink(element);
+                    case "AzureMySqlSink": return AzureMySqlSink.DeserializeAzureMySqlSink(element);
+                    case "AzurePostgreSqlSink": return AzurePostgreSqlSink.DeserializeAzurePostgreSqlSink(element);
+                    case "AzureQueueSink": return AzureQueueSink.DeserializeAzureQueueSink(element);
+                    case "AzureSearchIndexSink": return AzureSearchIndexSink.DeserializeAzureSearchIndexSink(element);
+                    case "AzureSqlSink": return AzureSqlSink.DeserializeAzureSqlSink(element);
+                    case "AzureTableSink": return AzureTableSink.DeserializeAzureTableSink(element);
+                    case "BinarySink": return BinarySink.DeserializeBinarySink(element);
+                    case "BlobSink": return BlobSink.DeserializeBlobSink(element);
+                    case "CommonDataServiceForAppsSink": return CommonDataServiceForAppsSink.DeserializeCommonDataServiceForAppsSink(element);
+                    case "CosmosDbMongoDbApiSink": return CosmosDbMongoDbApiSink.DeserializeCosmosDbMongoDbApiSink(element);
+                    case "CosmosDbSqlApiSink": return CosmosDbSqlApiSink.DeserializeCosmosDbSqlApiSink(element);
+                    case "DelimitedTextSink": return DelimitedTextSink.DeserializeDelimitedTextSink(element);
+                    case "DocumentDbCollectionSink": return DocumentDbCollectionSink.DeserializeDocumentDbCollectionSink(element);
+                    case "DynamicsCrmSink": return DynamicsCrmSink.DeserializeDynamicsCrmSink(element);
+                    case "DynamicsSink": return DynamicsSink.DeserializeDynamicsSink(element);
+                    case "FileSystemSink": return FileSystemSink.DeserializeFileSystemSink(element);
+                    case "InformixSink": return InformixSink.DeserializeInformixSink(element);
+                    case "JsonSink": return JsonSink.DeserializeJsonSink(element);
+                    case "MicrosoftAccessSink": return MicrosoftAccessSink.DeserializeMicrosoftAccessSink(element);
+                    case "OdbcSink": return OdbcSink.DeserializeOdbcSink(element);
+                    case "OracleSink": return OracleSink.DeserializeOracleSink(element);
+                    case "OrcSink": return OrcSink.DeserializeOrcSink(element);
+                    case "ParquetSink": return ParquetSink.DeserializeParquetSink(element);
+                    case "SalesforceServiceCloudSink": return SalesforceServiceCloudSink.DeserializeSalesforceServiceCloudSink(element);
+                    case "SalesforceSink": return SalesforceSink.DeserializeSalesforceSink(element);
+                    case "SapCloudForCustomerSink": return SapCloudForCustomerSink.DeserializeSapCloudForCustomerSink(element);
+                    case "SqlDWSink": return SqlDWSink.DeserializeSqlDWSink(element);
+                    case "SqlMISink": return SqlMISink.DeserializeSqlMISink(element);
+                    case "SqlServerSink": return SqlServerSink.DeserializeSqlServerSink(element);
+                    case "SqlSink": return SqlSink.DeserializeSqlSink(element);
+                }
+            }
             string type = default;
-            object writeBatchSize = default;
-            object writeBatchTimeout = default;
-            object sinkRetryCount = default;
-            object sinkRetryWait = default;
-            object maxConcurrentConnections = default;
+            Optional<object> writeBatchSize = default;
+            Optional<object> writeBatchTimeout = default;
+            Optional<object> sinkRetryCount = default;
+            Optional<object> sinkRetryWait = default;
+            Optional<object> maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -70,61 +110,33 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("writeBatchSize"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     writeBatchSize = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("writeBatchTimeout"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     writeBatchTimeout = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("sinkRetryCount"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sinkRetryCount = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("sinkRetryWait"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sinkRetryWait = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("maxConcurrentConnections"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     maxConcurrentConnections = property.Value.GetObject();
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    additionalPropertiesDictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CopySink(type, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, additionalProperties);
+            return new CopySink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties);
         }
     }
 }

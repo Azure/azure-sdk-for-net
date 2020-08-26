@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
         public PipelineRunRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2019-06-01-preview")
         {
             if (endpoint == null)
@@ -66,6 +66,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Query pipeline runs in the workspace based on input filter conditions. </summary>
         /// <param name="filterParameters"> Parameters to filter the pipeline run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="filterParameters"/> is null. </exception>
         public async Task<Response<PipelineRunsQueryResponse>> QueryPipelineRunsByWorkspaceAsync(RunFilterParameters filterParameters, CancellationToken cancellationToken = default)
         {
             if (filterParameters == null)
@@ -81,14 +82,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         PipelineRunsQueryResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PipelineRunsQueryResponse.DeserializePipelineRunsQueryResponse(document.RootElement);
-                        }
+                        value = PipelineRunsQueryResponse.DeserializePipelineRunsQueryResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -99,6 +93,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Query pipeline runs in the workspace based on input filter conditions. </summary>
         /// <param name="filterParameters"> Parameters to filter the pipeline run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="filterParameters"/> is null. </exception>
         public Response<PipelineRunsQueryResponse> QueryPipelineRunsByWorkspace(RunFilterParameters filterParameters, CancellationToken cancellationToken = default)
         {
             if (filterParameters == null)
@@ -114,14 +109,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         PipelineRunsQueryResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PipelineRunsQueryResponse.DeserializePipelineRunsQueryResponse(document.RootElement);
-                        }
+                        value = PipelineRunsQueryResponse.DeserializePipelineRunsQueryResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -146,6 +134,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Get a pipeline run by its run ID. </summary>
         /// <param name="runId"> The pipeline run identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         public async Task<Response<PipelineRun>> GetPipelineRunAsync(string runId, CancellationToken cancellationToken = default)
         {
             if (runId == null)
@@ -161,14 +150,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         PipelineRun value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PipelineRun.DeserializePipelineRun(document.RootElement);
-                        }
+                        value = PipelineRun.DeserializePipelineRun(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -179,6 +161,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Get a pipeline run by its run ID. </summary>
         /// <param name="runId"> The pipeline run identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         public Response<PipelineRun> GetPipelineRun(string runId, CancellationToken cancellationToken = default)
         {
             if (runId == null)
@@ -194,14 +177,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         PipelineRun value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PipelineRun.DeserializePipelineRun(document.RootElement);
-                        }
+                        value = PipelineRun.DeserializePipelineRun(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -235,6 +211,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="runId"> The pipeline run identifier. </param>
         /// <param name="filterParameters"> Parameters to filter the activity runs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/>, <paramref name="runId"/>, or <paramref name="filterParameters"/> is null. </exception>
         public async Task<Response<ActivityRunsQueryResponse>> QueryActivityRunsAsync(string pipelineName, string runId, RunFilterParameters filterParameters, CancellationToken cancellationToken = default)
         {
             if (pipelineName == null)
@@ -258,14 +235,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         ActivityRunsQueryResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ActivityRunsQueryResponse.DeserializeActivityRunsQueryResponse(document.RootElement);
-                        }
+                        value = ActivityRunsQueryResponse.DeserializeActivityRunsQueryResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -278,6 +248,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="runId"> The pipeline run identifier. </param>
         /// <param name="filterParameters"> Parameters to filter the activity runs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/>, <paramref name="runId"/>, or <paramref name="filterParameters"/> is null. </exception>
         public Response<ActivityRunsQueryResponse> QueryActivityRuns(string pipelineName, string runId, RunFilterParameters filterParameters, CancellationToken cancellationToken = default)
         {
             if (pipelineName == null)
@@ -301,14 +272,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         ActivityRunsQueryResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ActivityRunsQueryResponse.DeserializeActivityRunsQueryResponse(document.RootElement);
-                        }
+                        value = ActivityRunsQueryResponse.DeserializeActivityRunsQueryResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -339,6 +303,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="runId"> The pipeline run identifier. </param>
         /// <param name="isRecursive"> If true, cancel all the Child pipelines that are triggered by the current pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         public async Task<Response> CancelPipelineRunAsync(string runId, bool? isRecursive = null, CancellationToken cancellationToken = default)
         {
             if (runId == null)
@@ -361,6 +326,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="runId"> The pipeline run identifier. </param>
         /// <param name="isRecursive"> If true, cancel all the Child pipelines that are triggered by the current pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         public Response CancelPipelineRun(string runId, bool? isRecursive = null, CancellationToken cancellationToken = default)
         {
             if (runId == null)

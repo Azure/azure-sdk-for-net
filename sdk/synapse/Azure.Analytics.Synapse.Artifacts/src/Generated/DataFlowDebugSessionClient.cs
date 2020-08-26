@@ -186,6 +186,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Creates a data flow debug session. </summary>
         /// <param name="request"> Data flow debug session definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
         public virtual async Task<DataFlowDebugSessionCreateDataFlowDebugSessionOperation> StartCreateDataFlowDebugSessionAsync(CreateDataFlowDebugSessionRequest request, CancellationToken cancellationToken = default)
         {
             if (request == null)
@@ -210,6 +211,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Creates a data flow debug session. </summary>
         /// <param name="request"> Data flow debug session definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
         public virtual DataFlowDebugSessionCreateDataFlowDebugSessionOperation StartCreateDataFlowDebugSession(CreateDataFlowDebugSessionRequest request, CancellationToken cancellationToken = default)
         {
             if (request == null)
@@ -234,6 +236,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Execute a data flow debug command. </summary>
         /// <param name="request"> Data flow debug command definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
         public virtual async Task<DataFlowDebugSessionExecuteCommandOperation> StartExecuteCommandAsync(DataFlowDebugCommandRequest request, CancellationToken cancellationToken = default)
         {
             if (request == null)
@@ -258,6 +261,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Execute a data flow debug command. </summary>
         /// <param name="request"> Data flow debug command definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
         public virtual DataFlowDebugSessionExecuteCommandOperation StartExecuteCommand(DataFlowDebugCommandRequest request, CancellationToken cancellationToken = default)
         {
             if (request == null)

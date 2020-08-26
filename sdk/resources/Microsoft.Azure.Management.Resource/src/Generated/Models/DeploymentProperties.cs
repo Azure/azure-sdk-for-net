@@ -145,10 +145,6 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (TemplateLink != null)
-            {
-                TemplateLink.Validate();
-            }
             if (ParametersLink != null)
             {
                 ParametersLink.Validate();

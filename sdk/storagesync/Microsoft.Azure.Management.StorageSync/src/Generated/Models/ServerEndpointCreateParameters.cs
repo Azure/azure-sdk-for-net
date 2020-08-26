@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// business models: link local cache to cloud behavior to pre-populate
         /// before local access. Possible values include:
         /// 'DownloadNewAndModifiedFiles', 'UpdateLocallyCachedFiles'</param>
-        public ServerEndpointCreateParameters(string id = default(string), string name = default(string), string type = default(string), string serverLocalPath = default(string), string cloudTiering = default(string), int? volumeFreeSpacePercent = default(int?), int? tierFilesOlderThanDays = default(int?), string friendlyName = default(string), string serverResourceId = default(string), string offlineDataTransfer = default(string), string offlineDataTransferShareName = default(string), InitialDownloadPolicy? initialDownloadPolicy = default(InitialDownloadPolicy?), LocalCacheMode? localCacheMode = default(LocalCacheMode?))
+        public ServerEndpointCreateParameters(string id = default(string), string name = default(string), string type = default(string), string serverLocalPath = default(string), string cloudTiering = default(string), int? volumeFreeSpacePercent = default(int?), int? tierFilesOlderThanDays = default(int?), string friendlyName = default(string), string serverResourceId = default(string), string offlineDataTransfer = default(string), string offlineDataTransferShareName = default(string), string initialDownloadPolicy = default(string), string localCacheMode = default(string))
             : base(id, name, type)
         {
             ServerLocalPath = serverLocalPath;
@@ -138,7 +138,7 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// 'NamespaceThenModifiedFiles', 'AvoidTieredFiles'
         /// </summary>
         [JsonProperty(PropertyName = "properties.initialDownloadPolicy")]
-        public InitialDownloadPolicy? InitialDownloadPolicy { get; set; }
+        public string InitialDownloadPolicy { get; set; }
 
         /// <summary>
         /// Gets or sets policy for enabling follow-the-sun business models:
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// 'UpdateLocallyCachedFiles'
         /// </summary>
         [JsonProperty(PropertyName = "properties.localCacheMode")]
-        public LocalCacheMode? LocalCacheMode { get; set; }
+        public string LocalCacheMode { get; set; }
 
         /// <summary>
         /// Validate the object.

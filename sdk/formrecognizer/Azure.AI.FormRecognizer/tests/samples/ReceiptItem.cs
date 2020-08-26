@@ -20,7 +20,7 @@ namespace Azure.AI.FormRecognizer.Samples
         public ReceiptItem(FormField<string> name, FormField<float> quantity, FormField<float> price, FormField<float> totalPrice)
         {
             // To see the list of the supported fields returned by service and its corresponding types, consult:
-            // https://westus2.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2-preview/operations/GetAnalyzeReceiptResult
+            // https://aka.ms/formrecognizer/receiptfields
 
             Name = name;
             Quantity = quantity;

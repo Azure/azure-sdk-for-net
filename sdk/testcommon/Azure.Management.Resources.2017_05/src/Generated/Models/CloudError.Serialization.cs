@@ -14,20 +14,16 @@ namespace Azure.Management.Resources.Models
     {
         internal static CloudError DeserializeCloudError(JsonElement element)
         {
-            ErrorResponse error = default;
+            Optional<ErrorResponse> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     error = ErrorResponse.DeserializeErrorResponse(property.Value);
                     continue;
                 }
             }
-            return new CloudError(error);
+            return new CloudError(error.Value);
         }
     }
 }

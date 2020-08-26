@@ -182,7 +182,7 @@ namespace Azure.Storage.Test.Shared
             BlobSasQueryParameters sasCredentials = default)
             => InstrumentClient(
                 new BlobServiceClient(
-                    new Uri($"{TestConfigDefault.BlobServiceEndpoint}?{sasCredentials ?? GetNewAccountSasCredentials(sharedKeyCredentials: sharedKeyCredentials)}"),
+                    new Uri($"{TestConfigDefault.BlobServiceEndpoint}?{sasCredentials ?? GetNewAccountSas(sharedKeyCredentials: sharedKeyCredentials)}"),
                     GetOptions()));
 
         public BlobServiceClient GetServiceClient_BlobServiceSas_Container(
@@ -278,22 +278,22 @@ namespace Azure.Storage.Test.Shared
                     TestConfigDefault.AccountName,
                     TestConfigDefault.AccountKey);
 
-        public SasQueryParameters GetNewAccountSasCredentials(
-            AccountSasResourceTypes accountSasResourceTypes = AccountSasResourceTypes.All,
-            AccountSasPermissions accountSasPermissions = AccountSasPermissions.All,
+        public SasQueryParameters GetNewAccountSas(
+            AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.All,
+            AccountSasPermissions permissions = AccountSasPermissions.All,
             StorageSharedKeyCredential sharedKeyCredentials = default)
         {
             var builder = new AccountSasBuilder
             {
                 Protocol = SasProtocol.None,
                 Services = AccountSasServices.Blobs,
-                ResourceTypes = accountSasResourceTypes,
+                ResourceTypes = resourceTypes,
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
                 IPRange = new SasIPRange(IPAddress.None, IPAddress.None),
                 Version = ToSasVersion(_serviceVersion)
             };
-            builder.SetPermissions(accountSasPermissions);
+            builder.SetPermissions(permissions);
             return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
         }
 
@@ -367,6 +367,33 @@ namespace Azure.Storage.Test.Shared
             string sasVersion = default)
         {
             BlobSasBuilder sasBuilder = GetBlobSasBuilder(containerName, sasVersion: sasVersion);
+            sasBuilder.SetPermissions(permissions);
+            return sasBuilder.ToSasQueryParameters(userDelegationKey, accountName);
+        }
+
+        public BlobSasQueryParameters GetSnapshotSas(
+            string containerName,
+            string blobName,
+            string snapshot,
+            SnapshotSasPermissions permissions,
+            StorageSharedKeyCredential sharedKeyCredential = default,
+            string sasVersion = default)
+        {
+            BlobSasBuilder sasBuilder = GetBlobSasBuilder(containerName, blobName, snapshot: snapshot, sasVersion: sasVersion);
+            sasBuilder.SetPermissions(permissions);
+            return sasBuilder.ToSasQueryParameters(sharedKeyCredential ?? GetNewSharedKeyCredentials());
+        }
+
+        public BlobSasQueryParameters GetSnapshotIdentitySas(
+            string containerName,
+            string blobName,
+            string snapshot,
+            SnapshotSasPermissions permissions,
+            UserDelegationKey userDelegationKey,
+            string accountName,
+            string sasVersion = default)
+        {
+            BlobSasBuilder sasBuilder = GetBlobSasBuilder(containerName, blobName, snapshot: snapshot, sasVersion: sasVersion);
             sasBuilder.SetPermissions(permissions);
             return sasBuilder.ToSasQueryParameters(userDelegationKey, accountName);
         }
@@ -446,19 +473,15 @@ namespace Azure.Storage.Test.Shared
             return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
         }
 
-        private static string ToSasVersion(BlobClientOptions.ServiceVersion serviceVersion)
+        public static string ToSasVersion(BlobClientOptions.ServiceVersion serviceVersion)
         {
-            switch (serviceVersion)
+            return serviceVersion switch
             {
-                case BlobClientOptions.ServiceVersion.V2019_02_02:
-                    return "2019-02-02";
-                case BlobClientOptions.ServiceVersion.V2019_07_07:
-                    return "2019-07-07";
-                case BlobClientOptions.ServiceVersion.V2019_12_12:
-                    return "2019-12-12";
-                default:
-                    throw new ArgumentException("Invalid service version");
-            }
+                BlobClientOptions.ServiceVersion.V2019_02_02 => "2019-02-02",
+                BlobClientOptions.ServiceVersion.V2019_07_07 => "2019-07-07",
+                BlobClientOptions.ServiceVersion.V2019_12_12 => "2019-12-12",
+                _ => throw new ArgumentException("Invalid service version"),
+            };
         }
 
         public async Task<PageBlobClient> CreatePageBlobClientAsync(BlobContainerClient container, long size)
@@ -535,8 +558,8 @@ namespace Azure.Storage.Test.Shared
                     Id = GetNewString(),
                     AccessPolicy = new BlobAccessPolicy()
                     {
-                        StartsOn = Recording.UtcNow.AddHours(-1),
-                        ExpiresOn = Recording.UtcNow.AddHours(1),
+                        PolicyStartsOn = Recording.UtcNow.AddHours(-1),
+                        PolicyExpiresOn = Recording.UtcNow.AddHours(1),
                         Permissions = "rw"
                     }
                 }
