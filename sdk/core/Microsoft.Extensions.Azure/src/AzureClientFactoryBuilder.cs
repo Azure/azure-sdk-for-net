@@ -132,11 +132,11 @@ namespace Microsoft.Extensions.Azure
         }
 
         /// <summary>
-        ///
+        /// Sets the configuration instance that is used to resolve clients that were not explicitly registered.
         /// </summary>
-        /// <param name="configurationProvider"></param>
-        /// <returns></returns>
-        public AzureClientFactoryBuilder SetConfigurationRoot(Func<IServiceProvider, IConfiguration> configurationProvider)
+        /// <param name="configurationProvider">The delegate that returns a configuration instance that's used to resolve client configuration from.</param>
+        /// <returns>This instance.</returns>
+        public AzureClientFactoryBuilder UseConfiguration(Func<IServiceProvider, IConfiguration> configurationProvider)
         {
             _serviceCollection.Configure<AzureClientsGlobalOptions>(options => options.ConfigurationRootResolver = configurationProvider);
 

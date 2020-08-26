@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Extensions.WebJobs;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
@@ -10,12 +11,12 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Microsoft.Extensions.Hosting
 {
     /// <summary>
-    ///
+    /// The <see cref="IWebJobsBuilder"/> extensions for Azure SDK client support.
     /// </summary>
     public static class AzureClientsWebJobsBuilderExtensions
     {
         /// <summary>
-        ///
+        /// Adds support for <see cref="AzureClientAttribute"/> and <see cref="IAzureClientFactory{TClient}"/> in WebJobs.
         /// </summary>
         /// <param name="builder"></param>
         /// <returns></returns>
@@ -28,7 +29,7 @@ namespace Microsoft.Extensions.Hosting
             }
 
             builder.Services.AddAzureClients(builder =>
-                builder.SetConfigurationRoot(provider => provider.GetRequiredService<IConfiguration>().GetWebJobsRootConfiguration()));
+                builder.UseConfiguration(provider => provider.GetRequiredService<IConfiguration>().GetWebJobsRootConfiguration()));
             builder.AddExtension<AzureClientsExtensionConfigProvider>();
 
             return builder;
