@@ -47,7 +47,7 @@ namespace Microsoft.Extensions.Hosting
             {
                 return Task.FromResult(
                     (object)_serviceProvider
-                        .GetService<IAzureClientFactory<TClient>>()
+                        .GetRequiredService<IAzureClientFactory<TClient>>()
                         .CreateClient(_connection));
             }
 

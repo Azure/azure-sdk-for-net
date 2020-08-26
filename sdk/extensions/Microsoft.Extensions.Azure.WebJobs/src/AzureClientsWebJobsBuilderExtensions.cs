@@ -3,6 +3,9 @@
 
 using System;
 using Microsoft.Azure.WebJobs;
+using Microsoft.Extensions.Azure;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.Extensions.Hosting
 {
@@ -24,6 +27,8 @@ namespace Microsoft.Extensions.Hosting
                 throw new ArgumentNullException(nameof(builder));
             }
 
+            builder.Services.AddAzureClients(builder =>
+                builder.SetConfigurationRoot(provider => provider.GetRequiredService<IConfiguration>().GetWebJobsRootConfiguration()));
             builder.AddExtension<AzureClientsExtensionConfigProvider>();
 
             return builder;

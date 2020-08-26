@@ -3,9 +3,6 @@
 
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Hosting;
-using Microsoft.Extensions.Azure;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 [assembly: WebJobsStartup(typeof(Azure.Extensions.WebJobs.AzureClientsWebJobsStartup))]
@@ -15,9 +12,6 @@ namespace Azure.Extensions.WebJobs
     {
         public void Configure(IWebJobsBuilder builder)
         {
-            builder.Services.AddAzureClients(builder =>
-                builder.SetConfigurationRoot(provider => provider.GetRequiredService<IConfiguration>()
-                    .GetWebJobsRootConfiguration()));
             builder.AddAzureClients();
         }
      }
