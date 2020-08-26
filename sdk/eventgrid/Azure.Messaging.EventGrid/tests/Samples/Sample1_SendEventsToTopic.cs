@@ -4,9 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Serialization;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 
 namespace Azure.Messaging.EventGrid.Tests.Samples
 {
@@ -17,19 +20,22 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
         {
         }
 
+        // This sample demonstrates how to publish Event Grid schema events to an Event Grid topic.
         [Test]
         public async Task SendEventGridEventsToTopic()
         {
             string topicEndpoint = TestEnvironment.TopicHost;
             string topicAccessKey = TestEnvironment.TopicKey;
 
-            #region Snippet:SendEGEventsToTopic
             // Create the publisher client using an AzureKeyCredential
             // Custom topic should be configured to accept events of the Event Grid schema
+            #region Snippet:CreateClient
             EventGridPublisherClient client = new EventGridPublisherClient(
                 new Uri(topicEndpoint),
                 new AzureKeyCredential(topicAccessKey));
+            #endregion
 
+            #region Snippet:SendEGEventsToTopic
             // Add EventGridEvents to a list to publish to the topic
             List<EventGridEvent> eventsList = new List<EventGridEvent>
             {
@@ -45,22 +51,38 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
             #endregion
         }
 
+        // This sample demonstrates how to publish CloudEvents 1.0 schema events to an Event Grid topic.
         [Test]
         public async Task SendCloudEventsToTopic()
         {
             string topicEndpoint = TestEnvironment.CloudEventTopicHost;
             string topicAccessKey = TestEnvironment.CloudEventTopicKey;
 
-            #region Snippet:SendCloudEventsToTopic
+            var myCustomDataSerializer = new JsonObjectSerializer(
+                new JsonSerializerOptions()
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                });
+
             // Create the publisher client using an AzureKeyCredential
             // Custom topic should be configured to accept events of the CloudEvents 1.0 schema
+            #region Snippet:CreateClientWithOptions
+            EventGridPublisherClientOptions clientOptions = new EventGridPublisherClientOptions()
+            {
+                DataSerializer = myCustomDataSerializer
+            };
+
             EventGridPublisherClient client = new EventGridPublisherClient(
                 new Uri(topicEndpoint),
-                new AzureKeyCredential(topicAccessKey));
+                new AzureKeyCredential(topicAccessKey),
+                clientOptions);
+            #endregion
 
+            #region Snippet:SendCloudEventsToTopic
             // Add CloudEvents to a list to publish to the topic
             List<CloudEvent> eventsList = new List<CloudEvent>
             {
+                // CloudEvent with populated data
                 new CloudEvent(
                     "/cloudevents/example/source",
                     "Example.EventType",
@@ -78,19 +100,20 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
             #endregion
         }
 
+        // This sample demonstrates how to publish Event Grid schema events to a topic within an Event Grid domain.
         [Test]
         public async Task SendEventsToDomain()
         {
             string domainEndpoint = TestEnvironment.DomainHost;
             string domainAccessKey = TestEnvironment.DomainKey;
 
-            #region Snippet:SendEventsToDomain
             // Create the publisher client using an AzureKeyCredential
             // Domain should be configured to accept events of the Event Grid schema
             EventGridPublisherClient client = new EventGridPublisherClient(
                 new Uri(domainEndpoint),
                 new AzureKeyCredential(domainAccessKey));
 
+            #region Snippet:SendEventsToDomain
             // Add EventGridEvents to a list to publish to the domain
             // Don't forget to specify the topic you want the event to be delivered to!
             List<EventGridEvent> eventsList = new List<EventGridEvent>
