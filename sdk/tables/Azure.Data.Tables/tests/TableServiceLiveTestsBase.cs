@@ -500,5 +500,20 @@ namespace Azure.Data.Tables.Tests
                 Assert.AreEqual(a.DateTimeNull, b.DateTimeNull);
             }
         }
+
+        public class EnumEntity : ITableEntity
+        {
+            public string PartitionKey { get; set; }
+            public string RowKey { get; set; }
+            public DateTimeOffset? Timestamp { get; set; }
+            public ETag ETag { get; set; }
+            public Foo MyFoo { get; set; }
+        }
+
+        public enum Foo
+        {
+            One,
+            Two
+        }
     }
 }
