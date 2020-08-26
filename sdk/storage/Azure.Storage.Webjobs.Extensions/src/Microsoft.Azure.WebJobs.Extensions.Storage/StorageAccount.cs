@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Storage.Queues;
 using Microsoft.Azure.Storage.Blob;
-using Microsoft.Azure.Storage.Queue;
 using Microsoft.Azure.WebJobs.Extensions.Storage;
 using CloudStorageAccount = Microsoft.Azure.Storage.CloudStorageAccount;
 
@@ -17,6 +17,7 @@ namespace Microsoft.Azure.WebJobs
     public class StorageAccount
     {
         private readonly IDelegatingHandlerProvider _delegatingHandlerProvider;
+        private readonly string _connectionString;
 
         /// <summary>
         /// Get the real azure storage account. Only use this if you explicitly need to bind to the <see cref="CloudStorageAccount"/>,
@@ -35,9 +36,11 @@ namespace Microsoft.Azure.WebJobs
         /// TODO.
         /// </summary>
         /// <param name="delegatingHandlerProvider"></param>
-        public StorageAccount(IDelegatingHandlerProvider delegatingHandlerProvider)
+        /// <param name="connectionString"></param>
+        public StorageAccount(IDelegatingHandlerProvider delegatingHandlerProvider, string connectionString)
         {
             _delegatingHandlerProvider = delegatingHandlerProvider;
+            _connectionString = connectionString;
         }
 
         /// <summary>
@@ -48,18 +51,19 @@ namespace Microsoft.Azure.WebJobs
         public static StorageAccount NewFromConnectionString(string accountConnectionString)
         {
             var account = CloudStorageAccount.Parse(accountConnectionString);
-            return New(account);
+            return New(account, accountConnectionString);
         }
 
         /// <summary>
         /// TODO.
         /// </summary>
         /// <param name="account"></param>
+        /// <param name="connectionString"></param>
         /// <param name="delegatingHandlerProvider"></param>
         /// <returns></returns>
-        public static StorageAccount New(CloudStorageAccount account, IDelegatingHandlerProvider delegatingHandlerProvider = null)
+        public static StorageAccount New(CloudStorageAccount account, string connectionString, IDelegatingHandlerProvider delegatingHandlerProvider = null)
         {
-            return new StorageAccount(delegatingHandlerProvider) { SdkObject = account };
+            return new StorageAccount(delegatingHandlerProvider, connectionString) { SdkObject = account };
         }
 
         /// <summary>
@@ -101,9 +105,9 @@ namespace Microsoft.Azure.WebJobs
         /// TODO.
         /// </summary>
         /// <returns></returns>
-        public virtual CloudQueueClient CreateCloudQueueClient()
+        public virtual QueueServiceClient CreateQueueServiceClient()
         {
-            return new CloudQueueClient(SdkObject.QueueStorageUri, SdkObject.Credentials, _delegatingHandlerProvider?.Create());
+            return new QueueServiceClient(_connectionString);
         }
     }
 }

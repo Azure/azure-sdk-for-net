@@ -3,18 +3,17 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs.Host.Properties;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Azure.Storage.Queue;
 using Newtonsoft.Json;
 using Xunit;
 using Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests;
+using Azure.Storage.Queues;
+using Azure.Storage.Queues.Models;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
@@ -53,11 +52,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             await host.GetJobHost().CallAsync<GenericProgram<ICollector<string>>>("Func");
 
             // Now peek at messages.
-            var queue = account.CreateCloudQueueClient().GetQueueReference(QueueName);
-            var msgs = (await queue.GetMessagesAsync(10)).ToArray();
+            var queue = account.CreateQueueServiceClient().GetQueueClient(QueueName);
+            var msgs = (await queue.ReceiveMessagesAsync(10)).Value;
 
             Assert.Single(msgs);
-            Assert.Equal("123", msgs[0].AsString);
+            Assert.Equal("123", msgs[0].MessageText);
         }
 
         // Program with a static bad queue name (no { } ).
@@ -200,16 +199,16 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             var trigger = new ProgramWithTriggerAndBindingData.Poco { xyz = "abc" };
             await host.GetJobHost().CallAsync<ProgramWithTriggerAndBindingData>("Func", new
             {
-                triggers = new CloudQueueMessage(JsonConvert.SerializeObject(trigger))
+                triggers = QueuesModelFactory.QueueMessage("id", "receipt", JsonConvert.SerializeObject(trigger), 0)
             });
 
             // Now peek at messages.
             // queue name is normalized to lowercase.
-            var queue = account.CreateCloudQueueClient().GetQueueReference("qname-abc");
-            var msgs = (await queue.GetMessagesAsync(10)).ToArray();
+            var queue = account.CreateQueueServiceClient().GetQueueClient("qname-abc");
+            var msgs = (await queue.ReceiveMessagesAsync(10)).Value;
 
             Assert.Single(msgs);
-            Assert.Equal("123", msgs[0].AsString);
+            Assert.Equal("123", msgs[0].MessageText);
         }
 
         public class ProgramWithTriggerAndCompoundBindingData
@@ -269,16 +268,16 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
             await host.GetJobHost().CallAsync<ProgramWithTriggerAndCompoundBindingData>("Func", new
             {
-                triggers = new CloudQueueMessage(JsonConvert.SerializeObject(trigger))
+                triggers = QueuesModelFactory.QueueMessage("id", "receipt", JsonConvert.SerializeObject(trigger), 0)
             });
 
             // Now peek at messages.
             // queue name is normalized to lowercase.
-            var queue = account.CreateCloudQueueClient().GetQueueReference("qname-abc");
-            var msgs = (await queue.GetMessagesAsync(10)).ToArray();
+            var queue = account.CreateQueueServiceClient().GetQueueClient("qname-abc");
+            var msgs = (await queue.ReceiveMessagesAsync(10)).Value;
 
             Assert.Single(msgs);
-            Assert.Equal("123", msgs[0].AsString);
+            Assert.Equal("123", msgs[0].MessageText);
         }
 
         public class ProgramSimple
@@ -436,18 +435,18 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             // Arrange
             var account = CreateFakeStorageAccount();
-            CloudQueueClient client = account.CreateCloudQueueClient();
-            CloudQueue triggerQueue = await CreateQueue(client, TriggerQueueName);
-            await triggerQueue.AddMessageAsync(new CloudQueueMessage("ignore"));
+            var client = account.CreateQueueServiceClient();
+            var triggerQueue = await CreateQueue(client, TriggerQueueName);
+            await triggerQueue.SendMessageAsync("ignore");
 
             // Act
-            CloudQueue result = await RunTriggerAsync<CloudQueue>(account, typeof(BindToCloudQueueProgram),
+            QueueClient result = await RunTriggerAsync<QueueClient>(account, typeof(BindToCloudQueueProgram),
                 (s) => BindToCloudQueueProgram.TaskSource = s);
 
             // Assert
             Assert.NotNull(result);
             Assert.Equal(QueueName, result.Name);
-            var queue = client.GetQueueReference(QueueName);
+            var queue = client.GetQueueClient(QueueName);
             Assert.True(await queue.ExistsAsync());
         }
 
@@ -457,21 +456,21 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             // Arrange
             string expectedContent = Guid.NewGuid().ToString();
             var account = CreateFakeStorageAccount();
-            var client = account.CreateCloudQueueClient();
+            var client = account.CreateQueueServiceClient();
             var triggerQueue = await CreateQueue(client, TriggerQueueName);
-            await triggerQueue.AddMessageAsync(new CloudQueueMessage(expectedContent));
+            await triggerQueue.SendMessageAsync(expectedContent);
 
             // Act
             await RunTriggerAsync<object>(account, typeof(BindToICollectorCloudQueueMessageProgram),
                 (s) => BindToICollectorCloudQueueMessageProgram.TaskSource = s);
 
             // Assert
-            var queue = client.GetQueueReference(QueueName);
-            IEnumerable<CloudQueueMessage> messages = await queue.GetMessagesAsync(messageCount: 10);
+            var queue = client.GetQueueClient(QueueName);
+            IEnumerable<QueueMessage> messages = (await queue.ReceiveMessagesAsync(10)).Value;
             Assert.NotNull(messages);
             Assert.Single(messages);
-            CloudQueueMessage message = messages.Single();
-            Assert.Equal(expectedContent, message.AsString);
+            QueueMessage message = messages.Single();
+            Assert.Equal(expectedContent, message.MessageText);
         }
 
         private StorageAccount CreateFakeStorageAccount()
@@ -480,9 +479,9 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             return StorageAccount.NewFromConnectionString(account.ConnectionString);
         }
 
-        private static async Task<CloudQueue> CreateQueue(CloudQueueClient client, string queueName)
+        private static async Task<QueueClient> CreateQueue(QueueServiceClient client, string queueName)
         {
-            var queue = client.GetQueueReference(queueName);
+            var queue = client.GetQueueClient(queueName);
             await queue.CreateIfNotExistsAsync();
             return queue;
         }
@@ -495,10 +494,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
         private class BindToCloudQueueProgram
         {
-            public static TaskCompletionSource<CloudQueue> TaskSource { get; set; }
+            public static TaskCompletionSource<QueueClient> TaskSource { get; set; }
 
-            public static void Run([QueueTrigger(TriggerQueueName)] CloudQueueMessage ignore,
-                [Queue(QueueName)] CloudQueue queue)
+            public static void Run([QueueTrigger(TriggerQueueName)] QueueMessage ignore,
+                [Queue(QueueName)] QueueClient queue)
             {
                 TaskSource.TrySetResult(queue);
             }
@@ -508,8 +507,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             public static TaskCompletionSource<object> TaskSource { get; set; }
 
-            public static void Run([QueueTrigger(TriggerQueueName)] CloudQueueMessage message,
-                [Queue(QueueName)] ICollector<CloudQueueMessage> queue)
+            public static void Run([QueueTrigger(TriggerQueueName)] QueueMessage message,
+                [Queue(QueueName)] ICollector<QueueMessage> queue)
             {
                 queue.Add(message);
                 TaskSource.TrySetResult(null);

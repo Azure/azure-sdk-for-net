@@ -6,17 +6,17 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Protocols;
 using Microsoft.Azure.WebJobs.Host.Queues;
-using Microsoft.Azure.Storage.Queue;
 using Newtonsoft.Json;
+using QueueClient = Azure.Storage.Queues.QueueClient;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 {
     internal class BlobTriggerQueueWriter : IBlobTriggerQueueWriter
     {
-        private readonly CloudQueue _queue;
+        private readonly QueueClient _queue;
         private readonly IMessageEnqueuedWatcher _watcher;
 
-        public BlobTriggerQueueWriter(CloudQueue queue, IMessageEnqueuedWatcher watcher)
+        public BlobTriggerQueueWriter(QueueClient queue, IMessageEnqueuedWatcher watcher)
         {
             _queue = queue;
             Debug.Assert(watcher != null);
@@ -26,10 +26,9 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
         public async Task<(string QueueName, string MessageId)> EnqueueAsync(BlobTriggerMessage message, CancellationToken cancellationToken)
         {
             string contents = JsonConvert.SerializeObject(message, JsonSerialization.Settings);
-            var queueMessage = new CloudQueueMessage(contents);
-            await _queue.AddMessageAndCreateIfNotExistsAsync(queueMessage, cancellationToken).ConfigureAwait(false);
+            var receipt = await _queue.AddMessageAndCreateIfNotExistsAsync(contents, cancellationToken).ConfigureAwait(false);
             _watcher.Notify(_queue.Name);
-            return (QueueName: _queue.Name, MessageId: queueMessage.Id);
+            return (QueueName: _queue.Name, MessageId: receipt.MessageId);
         }
     }
 }

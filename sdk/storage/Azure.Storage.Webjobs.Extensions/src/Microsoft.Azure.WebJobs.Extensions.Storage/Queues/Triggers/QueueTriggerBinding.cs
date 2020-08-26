@@ -12,32 +12,36 @@ using Microsoft.Azure.WebJobs.Host.Queues.Listeners;
 using Microsoft.Azure.WebJobs.Host.Timers;
 using Microsoft.Azure.WebJobs.Host.Triggers;
 using Microsoft.Extensions.Logging;
-using Microsoft.Azure.Storage.Queue;
+using Azure.Storage.Queues;
+using Azure.Storage.Queues.Models;
 
 namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
 {
     internal class QueueTriggerBinding : ITriggerBinding
     {
         private readonly string _parameterName;
-        private readonly CloudQueue _queue;
-        private readonly ITriggerDataArgumentBinding<CloudQueueMessage> _argumentBinding;
+        private readonly QueueServiceClient _queueServiceClient;
+        private readonly QueueClient _queue;
+        private readonly ITriggerDataArgumentBinding<QueueMessage> _argumentBinding;
         private readonly IReadOnlyDictionary<string, Type> _bindingDataContract;
         private readonly QueuesOptions _queueOptions;
         private readonly IWebJobsExceptionHandler _exceptionHandler;
         private readonly SharedQueueWatcher _messageEnqueuedWatcherSetter;
         private readonly ILoggerFactory _loggerFactory;
-        private readonly IObjectToTypeConverter<CloudQueueMessage> _converter;
+        private readonly IObjectToTypeConverter<QueueMessage> _converter;
         private readonly IQueueProcessorFactory _queueProcessorFactory;
 
         public QueueTriggerBinding(string parameterName,
-            CloudQueue queue,
-            ITriggerDataArgumentBinding<CloudQueueMessage> argumentBinding,
+            QueueServiceClient queueServiceClient,
+            QueueClient queue,
+            ITriggerDataArgumentBinding<QueueMessage> argumentBinding,
             QueuesOptions queueOptions,
             IWebJobsExceptionHandler exceptionHandler,
             SharedQueueWatcher messageEnqueuedWatcherSetter,
             ILoggerFactory loggerFactory,
             IQueueProcessorFactory queueProcessorFactory)
         {
+            _queueServiceClient = queueServiceClient ?? throw new ArgumentNullException(nameof(queueServiceClient));
             _queue = queue ?? throw new ArgumentNullException(nameof(queue));
             _argumentBinding = argumentBinding ?? throw new ArgumentNullException(nameof(argumentBinding));
             _bindingDataContract = CreateBindingDataContract(argumentBinding.BindingDataContract);
@@ -48,14 +52,14 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
             _parameterName = parameterName;
             _loggerFactory = loggerFactory;
             _queueProcessorFactory = queueProcessorFactory;
-            _converter = CreateConverter(queue);
+            _converter = CreateConverter(_queue);
         }
 
         public Type TriggerValueType
         {
             get
             {
-                return typeof(CloudQueueMessage);
+                return typeof(QueueMessage);
             }
         }
 
@@ -73,7 +77,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
         {
             Dictionary<string, Type> contract = new Dictionary<string, Type>(StringComparer.OrdinalIgnoreCase);
             contract.Add("QueueTrigger", typeof(string));
-            contract.Add("DequeueCount", typeof(int));
+            contract.Add("DequeueCount", typeof(long));
             contract.Add("ExpirationTime", typeof(DateTimeOffset));
             contract.Add("Id", typeof(string));
             contract.Add("InsertionTime", typeof(DateTimeOffset));
@@ -92,16 +96,16 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
             return contract;
         }
 
-        private static IObjectToTypeConverter<CloudQueueMessage> CreateConverter(CloudQueue queue)
+        private static IObjectToTypeConverter<QueueMessage> CreateConverter(QueueClient queue)
         {
-            return new CompositeObjectToTypeConverter<CloudQueueMessage>(
-                new OutputConverter<CloudQueueMessage>(new IdentityConverter<CloudQueueMessage>()),
+            return new CompositeObjectToTypeConverter<QueueMessage>(
+                new OutputConverter<QueueMessage>(new IdentityConverter<QueueMessage>()),
                 new OutputConverter<string>(new StringToStorageQueueMessageConverter(queue)));
         }
 
         public async Task<ITriggerData> BindAsync(object value, ValueBindingContext context)
         {
-            CloudQueueMessage message = null;
+            QueueMessage message = null;
 
             if (!_converter.TryConvert(value, out message))
             {
@@ -121,7 +125,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
                 throw new ArgumentNullException(nameof(context));
             }
 
-            var factory = new QueueListenerFactory(_queue, _queueOptions, _exceptionHandler,
+            var factory = new QueueListenerFactory(_queueServiceClient, _queue, _queueOptions, _exceptionHandler,
                     _messageEnqueuedWatcherSetter, _loggerFactory, context.Executor, _queueProcessorFactory, context.Descriptor);
 
             return factory.CreateAsync(context.CancellationToken);
@@ -132,17 +136,17 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
             return new QueueTriggerParameterDescriptor
             {
                 Name = _parameterName,
-                AccountName = _queue.ServiceClient.GetAccountName(),
+                AccountName = _queueServiceClient.AccountName,
                 QueueName = _queue.Name
             };
         }
 
-        private static IReadOnlyDictionary<string, object> CreateBindingData(CloudQueueMessage value,
+        private static IReadOnlyDictionary<string, object> CreateBindingData(QueueMessage value,
             IReadOnlyDictionary<string, object> bindingDataFromValueType)
         {
             Dictionary<string, object> bindingData = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
 
-            string queueMessageString = value.TryGetAsString();
+            string queueMessageString = value.MessageText;
 
             // Don't provide the QueueTrigger binding data when the queue message is not a valid string.
             if (queueMessageString != null)
@@ -151,10 +155,10 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
             }
 
             bindingData.Add("DequeueCount", value.DequeueCount);
-            bindingData.Add("ExpirationTime", value.ExpirationTime.GetValueOrDefault(DateTimeOffset.MaxValue));
-            bindingData.Add("Id", value.Id);
-            bindingData.Add("InsertionTime", value.InsertionTime.GetValueOrDefault(DateTimeOffset.UtcNow));
-            bindingData.Add("NextVisibleTime", value.NextVisibleTime.GetValueOrDefault(DateTimeOffset.MaxValue));
+            bindingData.Add("ExpirationTime", value.ExpiresOn.GetValueOrDefault(DateTimeOffset.MaxValue));
+            bindingData.Add("Id", value.MessageId);
+            bindingData.Add("InsertionTime", value.InsertedOn.GetValueOrDefault(DateTimeOffset.UtcNow));
+            bindingData.Add("NextVisibleTime", value.NextVisibleOn.GetValueOrDefault(DateTimeOffset.MaxValue));
             bindingData.Add("PopReceipt", value.PopReceipt);
 
             if (bindingDataFromValueType != null)

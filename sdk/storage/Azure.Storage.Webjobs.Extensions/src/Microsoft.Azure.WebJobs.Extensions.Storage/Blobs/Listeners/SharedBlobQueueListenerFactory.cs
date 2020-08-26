@@ -10,8 +10,9 @@ using Microsoft.Azure.WebJobs.Host.Queues;
 using Microsoft.Azure.WebJobs.Host.Queues.Listeners;
 using Microsoft.Azure.WebJobs.Host.Timers;
 using Microsoft.Extensions.Logging;
-using Microsoft.Azure.Storage.Queue;
 using Newtonsoft.Json;
+using Azure.Storage.Queues.Models;
+using Azure.Storage.Queues;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 {
@@ -22,7 +23,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
         private const string SharedBlobQueueListenerFunctionId = "SharedBlobQueueListener";
 
         private readonly SharedQueueWatcher _sharedQueueWatcher;
-        private readonly CloudQueue _hostBlobTriggerQueue;
+        private readonly QueueClient _hostBlobTriggerQueue;
         private readonly QueuesOptions _queueOptions;
         private readonly IWebJobsExceptionHandler _exceptionHandler;
         private readonly IBlobWrittenWatcher _blobWrittenWatcher;
@@ -33,7 +34,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
         public SharedBlobQueueListenerFactory(
             StorageAccount hostAccount,
             SharedQueueWatcher sharedQueueWatcher,
-            CloudQueue hostBlobTriggerQueue,
+            QueueClient hostBlobTriggerQueue,
             QueuesOptions queueOptions,
             IWebJobsExceptionHandler exceptionHandler,
             ILoggerFactory loggerFactory,
@@ -61,7 +62,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             // the triggering blob.
             // However we use a poison queue in the host storage account as a fallback default
             // in case a particular blob lives in a restricted "blob only" storage account (i.e. no queues).
-            var defaultPoisonQueue = _hostAccount.CreateCloudQueueClient().GetQueueReference(HostQueueNames.BlobTriggerPoisonQueue);
+            var defaultPoisonQueue = _hostAccount.CreateQueueServiceClient().GetQueueClient(HostQueueNames.BlobTriggerPoisonQueue);
 
             // This special queue bypasses the QueueProcessorFactory - we don't want people to override this.
             // So we define our own custom queue processor factory for this listener
@@ -84,7 +85,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                 _executor = executor;
             }
 
-            protected override Task CopyMessageToPoisonQueueAsync(CloudQueueMessage message, CloudQueue poisonQueue, CancellationToken cancellationToken)
+            protected override Task CopyMessageToPoisonQueueAsync(QueueMessage message, QueueClient poisonQueue, CancellationToken cancellationToken)
             {
                 // determine the poison queue based on the storage account
                 // of the triggering blob, or default
@@ -93,19 +94,19 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                 return base.CopyMessageToPoisonQueueAsync(message, poisonQueue, cancellationToken);
             }
 
-            private CloudQueue GetPoisonQueue(CloudQueueMessage message)
+            private QueueClient GetPoisonQueue(QueueMessage message)
             {
                 if (message == null)
                 {
                     throw new ArgumentNullException(nameof(message));
                 }
 
-                var blobTriggerMessage = JsonConvert.DeserializeObject<BlobTriggerMessage>(message.AsString);
+                var blobTriggerMessage = JsonConvert.DeserializeObject<BlobTriggerMessage>(message.MessageText);
 
                 BlobQueueRegistration registration = null;
                 if (_executor.TryGetRegistration(blobTriggerMessage.FunctionId, out registration))
                 {
-                    var poisonQueue = registration.QueueClient.GetQueueReference(HostQueueNames.BlobTriggerPoisonQueue);
+                    var poisonQueue = registration.QueueClient.GetQueueClient(HostQueueNames.BlobTriggerPoisonQueue);
                     return poisonQueue;
                 }
 
@@ -116,12 +117,12 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
         private class SharedBlobQueueProcessorFactory : IQueueProcessorFactory
         {
             private readonly BlobQueueTriggerExecutor _triggerExecutor;
-            private readonly CloudQueue _queue;
+            private readonly QueueClient _queue;
             private readonly ILoggerFactory _loggerFactory;
             private readonly QueuesOptions _options;
-            private readonly CloudQueue _poisonQueue;
+            private readonly QueueClient _poisonQueue;
 
-            public SharedBlobQueueProcessorFactory(BlobQueueTriggerExecutor triggerExecutor, CloudQueue queue, ILoggerFactory loggerFactory, QueuesOptions queuesOptions, CloudQueue poisonQueue)
+            public SharedBlobQueueProcessorFactory(BlobQueueTriggerExecutor triggerExecutor, QueueClient queue, ILoggerFactory loggerFactory, QueuesOptions queuesOptions, QueueClient poisonQueue)
             {
                 _triggerExecutor = triggerExecutor;
                 _queue = queue;

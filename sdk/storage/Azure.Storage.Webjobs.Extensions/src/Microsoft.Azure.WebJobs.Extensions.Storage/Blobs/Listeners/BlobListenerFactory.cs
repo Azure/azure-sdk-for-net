@@ -12,7 +12,7 @@ using Microsoft.Azure.WebJobs.Host.Queues.Listeners;
 using Microsoft.Azure.WebJobs.Host.Timers;
 using Microsoft.Extensions.Logging;
 using Microsoft.Azure.Storage.Blob;
-using Microsoft.Azure.Storage.Queue;
+using Azure.Storage.Queues;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 {
@@ -72,18 +72,18 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
         {
             // Note that these clients are intentionally for the storage account rather than for the dashboard account.
             // We use the storage, not dashboard, account for the blob receipt container and blob trigger queues.
-            var primaryQueueClient = _hostAccount.CreateCloudQueueClient();
+            var primaryQueueClient = _hostAccount.CreateQueueServiceClient();
             var primaryBlobClient = _hostAccount.CreateCloudBlobClient();
 
             // Important: We're using the storage account of the function target here, which is the account that the
             // function the listener is for is targeting. This is the account that will be used
             // to read the trigger blob.
             var targetBlobClient = _dataAccount.CreateCloudBlobClient();
-            var targetQueueClient = _dataAccount.CreateCloudQueueClient();
+            var targetQueueClient = _dataAccount.CreateQueueServiceClient();
 
             string hostId = await _hostIdProvider.GetHostIdAsync(cancellationToken).ConfigureAwait(false);
             string hostBlobTriggerQueueName = HostQueueNames.GetHostBlobTriggerQueueName(hostId);
-            var hostBlobTriggerQueue = primaryQueueClient.GetQueueReference(hostBlobTriggerQueueName);
+            var hostBlobTriggerQueue = primaryQueueClient.GetQueueClient(hostBlobTriggerQueueName);
 
             SharedQueueWatcher sharedQueueWatcher = _messageEnqueuedWatcherSetter;
 
@@ -145,7 +145,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             string hostId,
             SharedBlobListener sharedBlobListener,
             CloudBlobClient blobClient,
-            CloudQueue hostBlobTriggerQueue,
+            QueueClient hostBlobTriggerQueue,
             IMessageEnqueuedWatcher messageEnqueuedWatcher,
             CancellationToken cancellationToken)
         {
@@ -159,7 +159,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
         private void RegisterWithSharedBlobQueueListenerAsync(
             SharedBlobQueueListener sharedBlobQueueListener,
             CloudBlobClient blobClient,
-            CloudQueueClient queueClient)
+            QueueServiceClient queueClient)
         {
             BlobQueueRegistration registration = new BlobQueueRegistration
             {

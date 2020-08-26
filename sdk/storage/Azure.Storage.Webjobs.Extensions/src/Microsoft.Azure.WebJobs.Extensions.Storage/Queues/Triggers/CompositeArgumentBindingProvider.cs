@@ -3,8 +3,8 @@
 
 using System.Collections.Generic;
 using System.Reflection;
+using Azure.Storage.Queues.Models;
 using Microsoft.Azure.WebJobs.Host.Triggers;
-using Microsoft.Azure.Storage.Queue;
 
 namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
 {
@@ -17,11 +17,11 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
             _providers = providers;
         }
 
-        public ITriggerDataArgumentBinding<CloudQueueMessage> TryCreate(ParameterInfo parameter)
+        public ITriggerDataArgumentBinding<QueueMessage> TryCreate(ParameterInfo parameter)
         {
             foreach (IQueueTriggerArgumentBindingProvider provider in _providers)
             {
-                ITriggerDataArgumentBinding<CloudQueueMessage> binding = provider.TryCreate(parameter);
+                ITriggerDataArgumentBinding<QueueMessage> binding = provider.TryCreate(parameter);
 
                 if (binding != null)
                 {

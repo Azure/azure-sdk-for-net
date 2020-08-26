@@ -18,19 +18,21 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Azure.Storage;
-using Microsoft.Azure.Storage.Queue;
 using Moq;
 using Xunit;
+using Azure.Storage.Queues;
+using Azure.Storage.Queues.Models;
+using Azure;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
 {
     public class QueueListenerTests : IClassFixture<QueueListenerTests.TestFixture>
     {
-        private Mock<CloudQueue> _mockQueue;
+        private Mock<QueueClient> _mockQueue;
         private QueueListener _listener;
         private Mock<QueueProcessor> _mockQueueProcessor;
-        private Mock<ITriggerExecutor<CloudQueueMessage>> _mockTriggerExecutor;
-        private CloudQueueMessage _queueMessage;
+        private Mock<ITriggerExecutor<QueueMessage>> _mockTriggerExecutor;
+        private QueueMessage _queueMessage;
         private ILoggerFactory _loggerFactory;
         private TestLoggerProvider _loggerProvider;
 
@@ -38,9 +40,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
         {
             Fixture = fixture;
 
-            _mockQueue = new Mock<CloudQueue>(new Uri("https://test.queue.core.windows.net/testqueue"));
+            _mockQueue = new Mock<QueueClient>(new Uri("https://test.queue.core.windows.net/testqueue"), null);
+            _mockQueue.Setup(x => x.Name).Returns("testqueue");
 
-            _mockTriggerExecutor = new Mock<ITriggerExecutor<CloudQueueMessage>>(MockBehavior.Strict);
+            _mockTriggerExecutor = new Mock<ITriggerExecutor<QueueMessage>>(MockBehavior.Strict);
             Mock<IWebJobsExceptionHandler> mockExceptionDispatcher = new Mock<IWebJobsExceptionHandler>(MockBehavior.Strict);
             _loggerFactory = new LoggerFactory();
             _loggerProvider = new TestLoggerProvider();
@@ -58,7 +61,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             mockQueueProcessorFactory.Setup(p => p.Create(It.IsAny<QueueProcessorFactoryContext>())).Returns(_mockQueueProcessor.Object);
 
             _listener = new QueueListener(_mockQueue.Object, null, _mockTriggerExecutor.Object, mockExceptionDispatcher.Object, _loggerFactory, null, queueConfig, mockQueueProcessorFactory.Object, new FunctionDescriptor { Id = "TestFunction" });
-            _queueMessage = new CloudQueueMessage("TestMessage");
+            _queueMessage = QueuesModelFactory.QueueMessage("TestId", "TestPopReceipt", "TestMessage", 0);
         }
 
         public TestFixture Fixture { get; set; }
@@ -73,7 +76,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
         public async Task GetMetrics_ReturnsExpectedResult()
         {
             var queuesOptions = new QueuesOptions();
-            Mock<ITriggerExecutor<CloudQueueMessage>> mockTriggerExecutor = new Mock<ITriggerExecutor<CloudQueueMessage>>(MockBehavior.Strict);
+            Mock<ITriggerExecutor<QueueMessage>> mockTriggerExecutor = new Mock<ITriggerExecutor<QueueMessage>>(MockBehavior.Strict);
             var queueProcessorFactory = new DefaultQueueProcessorFactory();
             QueueListener listener = new QueueListener(Fixture.Queue, null, mockTriggerExecutor.Object, new WebJobsExceptionHandler(null),
                 _loggerFactory, null, queuesOptions, queueProcessorFactory, new FunctionDescriptor { Id = "TestFunction" });
@@ -87,10 +90,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             // add some test messages
             for (int i = 0; i < 5; i++)
             {
-                await Fixture.Queue.AddMessageAsync(new CloudQueueMessage($"Message {i}"), null, null, null, null, CancellationToken.None);
+                await Fixture.Queue.SendMessageAsync($"Message {i}");
             }
 
-            await Task.Delay(25);
+            await Task.Delay(TimeSpan.FromSeconds(5));
 
             metrics = await listener.GetMetricsAsync();
 
@@ -106,15 +109,13 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
         [Fact]
         public async Task GetMetrics_HandlesStorageExceptions()
         {
-            var exception = new StorageException(
-                new RequestResult
-                {
-                    HttpStatusCode = 500
-                },
+            var exception = new RequestFailedException(
+                500,
                 "Things are very wrong.",
+                default,
                 new Exception());
 
-            _mockQueue.Setup(p => p.FetchAttributesAsync()).Throws(exception);
+            _mockQueue.Setup(p => p.GetPropertiesAsync(It.IsAny<CancellationToken>())).Throws(exception);
 
             var metrics = await _listener.GetMetricsAsync();
 
@@ -372,56 +373,54 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
         [Fact]
         public async Task UpdatedQueueMessage_RetainsOriginalProperties()
         {
-            CloudQueue queue = Fixture.CreateNewQueue();
-            CloudQueue poisonQueue = Fixture.CreateNewQueue();
+            QueueClient queue = Fixture.CreateNewQueue();
+            QueueClient poisonQueue = Fixture.CreateNewQueue();
 
             var queuesOptions = new QueuesOptions { MaxDequeueCount = 2 };
 
-            Mock<ITriggerExecutor<CloudQueueMessage>> mockTriggerExecutor = new Mock<ITriggerExecutor<CloudQueueMessage>>(MockBehavior.Strict);
+            Mock<ITriggerExecutor<QueueMessage>> mockTriggerExecutor = new Mock<ITriggerExecutor<QueueMessage>>(MockBehavior.Strict);
 
             string messageContent = Guid.NewGuid().ToString();
-            CloudQueueMessage message = new CloudQueueMessage(messageContent);
-            await queue.AddMessageAsync(message, null, null, null, null, CancellationToken.None);
-            CloudQueueMessage messageFromCloud = await queue.GetMessageAsync();
+            await queue.SendMessageAsync(messageContent);
+            QueueMessage messageFromCloud = (await queue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
             var queueProcessorFactory = new DefaultQueueProcessorFactory();
 
             QueueListener listener = new QueueListener(queue, poisonQueue, mockTriggerExecutor.Object, new WebJobsExceptionHandler(null),
                 NullLoggerFactory.Instance, null, queuesOptions, queueProcessorFactory, new FunctionDescriptor { Id = "TestFunction" });
 
             mockTriggerExecutor
-                .Setup(m => m.ExecuteAsync(It.IsAny<CloudQueueMessage>(), CancellationToken.None))
+                .Setup(m => m.ExecuteAsync(It.IsAny<QueueMessage>(), CancellationToken.None))
                 .ReturnsAsync(new FunctionResult(false));
 
             await listener.ProcessMessageAsync(messageFromCloud, TimeSpan.FromMinutes(10), CancellationToken.None);
 
             // pull the message and process it again (to have it go through the poison queue flow)
-            messageFromCloud = await queue.GetMessageAsync();
+            messageFromCloud = (await queue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
             Assert.Equal(2, messageFromCloud.DequeueCount);
 
             await listener.ProcessMessageAsync(messageFromCloud, TimeSpan.FromMinutes(10), CancellationToken.None);
 
             // Make sure the message was processed and deleted.
-            await queue.FetchAttributesAsync();
-            Assert.Equal(0, queue.ApproximateMessageCount);
+            QueueProperties queueProperties = await queue.GetPropertiesAsync();
+            Assert.Equal(0, queueProperties.ApproximateMessagesCount);
 
             // The Listener has inserted a message to the poison queue.
-            await poisonQueue.FetchAttributesAsync();
-            Assert.Equal(1, poisonQueue.ApproximateMessageCount);
+            QueueProperties poisonQueueProperties = await poisonQueue.GetPropertiesAsync();
+            Assert.Equal(1, poisonQueueProperties.ApproximateMessagesCount);
 
-            mockTriggerExecutor.Verify(m => m.ExecuteAsync(It.IsAny<CloudQueueMessage>(), CancellationToken.None), Times.Exactly(2));
+            mockTriggerExecutor.Verify(m => m.ExecuteAsync(It.IsAny<QueueMessage>(), CancellationToken.None), Times.Exactly(2));
         }
 
-        [Fact]
+        [Fact(Skip = "TODO (kasobol-msft) revisit this test if we put recordings in place, we don't use stateful message in V12")]
         public async Task RenewedQueueMessage_DeletesCorrectly()
         {
-            CloudQueue queue = Fixture.CreateNewQueue();
+            QueueClient queue = Fixture.CreateNewQueue();
 
-            Mock<ITriggerExecutor<CloudQueueMessage>> mockTriggerExecutor = new Mock<ITriggerExecutor<CloudQueueMessage>>(MockBehavior.Strict);
+            Mock<ITriggerExecutor<QueueMessage>> mockTriggerExecutor = new Mock<ITriggerExecutor<QueueMessage>>(MockBehavior.Strict);
 
             string messageContent = Guid.NewGuid().ToString();
-            CloudQueueMessage message = new CloudQueueMessage(messageContent);
-            await queue.AddMessageAsync(message, null, null, null, null, CancellationToken.None);
-            CloudQueueMessage messageFromCloud = await queue.GetMessageAsync();
+            await queue.SendMessageAsync(messageContent);
+            QueueMessage messageFromCloud = (await queue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
 
             QueueListener listener = new QueueListener(queue, null, mockTriggerExecutor.Object, new WebJobsExceptionHandler(null),
                 _loggerFactory, null, new QueuesOptions(), new DefaultQueueProcessorFactory(), new FunctionDescriptor { Id = "TestFunction" });
@@ -430,32 +429,32 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
 
             // Set up a function that sleeps to allow renewal
             mockTriggerExecutor
-                .Setup(m => m.ExecuteAsync(It.Is<CloudQueueMessage>(msg => msg.DequeueCount == 1), CancellationToken.None))
+                .Setup(m => m.ExecuteAsync(It.Is<QueueMessage>(msg => msg.DequeueCount == 1), CancellationToken.None))
                 .ReturnsAsync(() =>
                 {
                     Thread.Sleep(4000);
                     return new FunctionResult(true);
                 });
 
-            var previousNextVisibleTime = messageFromCloud.NextVisibleTime;
+            var previousNextVisibleTime = messageFromCloud.NextVisibleOn;
             var previousPopReceipt = messageFromCloud.PopReceipt;
 
             // Renewal should happen at 2 seconds
             await listener.ProcessMessageAsync(messageFromCloud, TimeSpan.FromSeconds(4), CancellationToken.None);
 
             // Check to make sure the renewal occurred.
-            Assert.NotEqual(messageFromCloud.NextVisibleTime, previousNextVisibleTime);
+            Assert.NotEqual(messageFromCloud.NextVisibleOn, previousNextVisibleTime);
             Assert.NotEqual(messageFromCloud.PopReceipt, previousPopReceipt);
 
             // Make sure the message was processed and deleted.
-            await queue.FetchAttributesAsync();
-            Assert.Equal(0, queue.ApproximateMessageCount);
+            QueueProperties queueProperties = await queue.GetPropertiesAsync();
+            Assert.Equal(0, queueProperties.ApproximateMessagesCount);
         }
 
         [Fact]
         public void CreateQueueProcessor_CreatesProcessorCorrectly()
         {
-            CloudQueue poisonQueue = null;
+            QueueClient poisonQueue = null;
             bool poisonMessageHandlerInvoked = false;
             EventHandler<PoisonMessageEventArgs> poisonMessageEventHandler = (sender, e) => { poisonMessageHandlerInvoked = true; };
             Mock<IQueueProcessorFactory> mockQueueProcessorFactory = new Mock<IQueueProcessorFactory>(MockBehavior.Strict);
@@ -467,7 +466,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             bool processorFactoryInvoked = false;
 
             // create for a host queue - don't expect custom factory to be invoked
-            CloudQueue queue = new CloudQueue(new Uri(string.Format("https://test.queue.core.windows.net/{0}", HostQueueNames.GetHostQueueName("12345"))));
+            QueueClient queue = new QueueClient(new Uri(string.Format("https://test.queue.core.windows.net/{0}", HostQueueNames.GetHostQueueName("12345"))));
             QueueProcessor queueProcessor = QueueListener.CreateQueueProcessor(queue, poisonQueue, _loggerFactory, mockQueueProcessorFactory.Object, queueConfig, poisonMessageEventHandler);
             Assert.False(processorFactoryInvoked);
             Assert.NotSame(expectedQueueProcessor, queueProcessor);
@@ -496,7 +495,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             // when storage host is "localhost" we invoke the processor factory even for
             // host queues (this enables local test mocking)
             processorFactoryInvoked = false;
-            queue = new CloudQueue(new Uri(string.Format("https://localhost/{0}", HostQueueNames.GetHostQueueName("12345"))));
+            queue = new QueueClient(new Uri(string.Format("https://localhost/{0}", HostQueueNames.GetHostQueueName("12345"))));
             queueProcessor = QueueListener.CreateQueueProcessor(queue, poisonQueue, _loggerFactory, mockQueueProcessorFactory.Object, queueConfig, poisonMessageEventHandler);
             Assert.True(processorFactoryInvoked);
             Assert.Same(expectedQueueProcessor, queueProcessor);
@@ -504,7 +503,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             // create for application queue - expect processor factory to be invoked
             poisonMessageHandlerInvoked = false;
             processorFactoryInvoked = false;
-            queue = new CloudQueue(new Uri("https://test.queue.core.windows.net/testqueue"));
+            queue = new QueueClient(new Uri("https://test.queue.core.windows.net/testqueue"));
             queueProcessor = QueueListener.CreateQueueProcessor(queue, poisonQueue, _loggerFactory, mockQueueProcessorFactory.Object, queueConfig, poisonMessageEventHandler);
             Assert.True(processorFactoryInvoked);
             Assert.Same(expectedQueueProcessor, queueProcessor);
@@ -537,15 +536,14 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
         public async Task GetMessages_QueueCheckThrowsTransientError_ReturnsBackoffResult()
         {
             CancellationToken cancellationToken = new CancellationToken();
-            var exception = new StorageException(
-                new RequestResult
-                {
-                    HttpStatusCode = 503
-                },
+            _mockQueue.Setup(x => x.ExistsAsync(It.IsAny<CancellationToken>())).ReturnsAsync(Response.FromValue(true, null));
+            var exception = new RequestFailedException(
+                503,
+                string.Empty,
                 string.Empty,
                 new Exception());
 
-            _mockQueue.Setup(p => p.GetMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), null, null, cancellationToken)).Throws(exception);
+            _mockQueue.Setup(p => p.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), cancellationToken)).Throws(exception);
 
             var result = await _listener.ExecuteAsync(cancellationToken);
 #pragma warning disable xUnit2002 // Do not use null check on value type
@@ -559,8 +557,8 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
         {
             var cancellationToken = new CancellationToken();
             bool queueExists = false;
-            _mockQueue.Setup(p => p.ExistsAsync()).ReturnsAsync(() => queueExists);
-            _mockQueue.Setup(p => p.GetMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), QueueListener.DefaultQueueRequestOptions, It.IsAny<OperationContext>(), cancellationToken)).ReturnsAsync(Enumerable.Empty<CloudQueueMessage>());
+            _mockQueue.Setup(p => p.ExistsAsync(It.IsAny<CancellationToken>())).ReturnsAsync(() => Response.FromValue(queueExists, null));
+            _mockQueue.Setup(p => p.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), cancellationToken)).ReturnsAsync(Response.FromValue(new QueueMessage[0], null));
 
             int numIterations = 5;
             int numFailedExistenceChecks = 2;
@@ -577,22 +575,21 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
                 await result.Wait;
             }
 
-            _mockQueue.Verify(p => p.ExistsAsync(), Times.Exactly(numIterations - numFailedExistenceChecks));
-            _mockQueue.Verify(p => p.GetMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), QueueListener.DefaultQueueRequestOptions, It.IsAny<OperationContext>(), cancellationToken), Times.Exactly(numIterations - numFailedExistenceChecks));
+            _mockQueue.Verify(p => p.ExistsAsync(It.IsAny<CancellationToken>()), Times.Exactly(numIterations - numFailedExistenceChecks));
+            _mockQueue.Verify(p => p.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), cancellationToken), Times.Exactly(numIterations - numFailedExistenceChecks));
         }
 
         [Fact]
         public async Task GetMessages_ResetsQueueExistenceCheck_OnException()
         {
             var cancellationToken = new CancellationToken();
-            _mockQueue.Setup(p => p.ExistsAsync()).ReturnsAsync(true);
-            var exception = new StorageException(
-                new RequestResult
-                {
-                    HttpStatusCode = 503
-                },
-                string.Empty, new Exception());
-            _mockQueue.Setup(p => p.GetMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), QueueListener.DefaultQueueRequestOptions, It.IsAny<OperationContext>(), cancellationToken)).Throws(exception);
+            _mockQueue.Setup(p => p.ExistsAsync(It.IsAny<CancellationToken>())).ReturnsAsync(() => Response.FromValue(true, null));
+            var exception = new RequestFailedException(
+                503,
+                string.Empty,
+                string.Empty,
+                new Exception());
+            _mockQueue.Setup(p => p.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), cancellationToken)).Throws(exception);
 
             for (int i = 0; i < 5; i++)
             {
@@ -600,8 +597,8 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
                 await result.Wait;
             }
 
-            _mockQueue.Verify(p => p.ExistsAsync(), Times.Exactly(5));
-            _mockQueue.Verify(p => p.GetMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), QueueListener.DefaultQueueRequestOptions, It.IsAny<OperationContext>(), cancellationToken), Times.Exactly(5));
+            _mockQueue.Verify(p => p.ExistsAsync(It.IsAny<CancellationToken>()), Times.Exactly(5));
+            _mockQueue.Verify(p => p.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), cancellationToken), Times.Exactly(5));
         }
 
         [Fact]
@@ -639,51 +636,51 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
                     .Build();
 
                 var storageAccount = host.GetStorageAccount();
-                QueueClient = storageAccount.CreateCloudQueueClient();
+                QueueClient = storageAccount.CreateQueueServiceClient();
 
                 string queueName = string.Format("{0}-{1}", TestQueuePrefix, Guid.NewGuid());
-                Queue = QueueClient.GetQueueReference(queueName);
-                Queue.CreateIfNotExistsAsync(null, null, CancellationToken.None).Wait();
+                Queue = QueueClient.GetQueueClient(queueName);
+                Queue.CreateIfNotExistsAsync().Wait();
 
                 string poisonQueueName = string.Format("{0}-poison", queueName);
-                PoisonQueue = QueueClient.GetQueueReference(poisonQueueName);
-                PoisonQueue.CreateIfNotExistsAsync(null, null, CancellationToken.None).Wait();
+                PoisonQueue = QueueClient.GetQueueClient(poisonQueueName);
+                PoisonQueue.CreateIfNotExistsAsync().Wait();
             }
 
-            public CloudQueue Queue
+            public QueueClient Queue
             {
                 get;
                 private set;
             }
 
-            public CloudQueue PoisonQueue
+            public QueueClient PoisonQueue
             {
                 get;
                 private set;
             }
 
-            public CloudQueueClient QueueClient
+            public QueueServiceClient QueueClient
             {
                 get;
                 private set;
             }
 
-            public CloudQueue CreateNewQueue()
+            public QueueClient CreateNewQueue()
             {
                 string queueName = string.Format("{0}-{1}", TestQueuePrefix, Guid.NewGuid());
-                var queue = QueueClient.GetQueueReference(queueName);
-                queue.CreateIfNotExistsAsync(null, null, CancellationToken.None).Wait();
+                var queue = QueueClient.GetQueueClient(queueName);
+                queue.CreateIfNotExistsAsync().Wait();
                 return queue;
             }
 
             public void Dispose()
             {
-                var result = QueueClient.ListQueuesSegmentedAsync(TestQueuePrefix, null).Result;
+                var result = QueueClient.GetQueues(prefix: TestQueuePrefix);
                 var tasks = new List<Task>();
 
-                foreach (var queue in result.Results)
+                foreach (var queue in result)
                 {
-                    tasks.Add(queue.DeleteAsync());
+                    tasks.Add(QueueClient.GetQueueClient(queue.Name).DeleteAsync());
                 }
 
                 Task.WaitAll(tasks.ToArray());

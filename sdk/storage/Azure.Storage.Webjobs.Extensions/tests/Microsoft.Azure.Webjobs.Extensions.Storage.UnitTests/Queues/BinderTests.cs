@@ -3,7 +3,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Microsoft.Azure.Storage.Queue;
+using Azure.Storage.Queues;
+using Azure.Storage.Queues.Models;
 using Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests;
 using Xunit;
 
@@ -25,9 +26,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             // Arrange
             const string expectedContents = "abc";
             var account = CreateFakeStorageAccount();
-            CloudQueue queue = CreateQueue(account, QueueName);
-            CloudQueueMessage message = new CloudQueueMessage(expectedContents);
-            await queue.AddMessageAsync(message);
+            QueueClient queue = CreateQueue(account, QueueName);
+            await queue.SendMessageAsync(expectedContents);
 
             // Act
             Exception exception = await RunTriggerFailureAsync<string>(account, typeof(BindToQueueTriggerViaIBinderProgram),
@@ -42,11 +42,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             return StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
         }
 
-        private static CloudQueue CreateQueue(StorageAccount account, string queueName)
+        private static QueueClient CreateQueue(StorageAccount account, string queueName)
         {
-            CloudQueueClient client = account.CreateCloudQueueClient();
-            CloudQueue queue = client.GetQueueReference(queueName);
-            queue.CreateIfNotExistsAsync().GetAwaiter().GetResult();
+            var client = account.CreateQueueServiceClient();
+            var queue = client.GetQueueClient(queueName);
+            queue.CreateIfNotExists();
             return queue;
         }
 
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             public static TaskCompletionSource<string> TaskSource { get; set; }
 
-            public static void Run([QueueTrigger(QueueName)] CloudQueueMessage message, IBinder binder)
+            public static void Run([QueueTrigger(QueueName)] QueueMessage message, IBinder binder)
             {
                 TaskSource.TrySetResult(binder.Bind<string>(new QueueTriggerAttribute(QueueName)));
             }

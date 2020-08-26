@@ -10,7 +10,7 @@ using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Protocols;
 using Microsoft.Azure.WebJobs.Host.Timers;
 using Microsoft.Extensions.Logging;
-using Microsoft.Azure.Storage.Queue;
+using Azure.Storage.Queues;
 
 namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
 {
@@ -18,8 +18,8 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
     {
         private static string poisonQueueSuffix = "-poison";
 
-        private readonly CloudQueue _queue;
-        private readonly CloudQueue _poisonQueue;
+        private readonly QueueClient _queue;
+        private readonly QueueClient _poisonQueue;
         private readonly QueuesOptions _queueOptions;
         private readonly IWebJobsExceptionHandler _exceptionHandler;
         private readonly SharedQueueWatcher _messageEnqueuedWatcherSetter;
@@ -28,7 +28,9 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
         private readonly FunctionDescriptor _descriptor;
         private readonly IQueueProcessorFactory _queueProcessorFactory;
 
-        public QueueListenerFactory(CloudQueue queue,
+        public QueueListenerFactory(
+            QueueServiceClient queueServiceClient,
+            QueueClient queue,
             QueuesOptions queueOptions,
             IWebJobsExceptionHandler exceptionHandler,
             SharedQueueWatcher messageEnqueuedWatcherSetter,
@@ -44,7 +46,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
             _executor = executor ?? throw new ArgumentNullException(nameof(executor));
             _descriptor = descriptor ?? throw new ArgumentNullException(nameof(descriptor));
 
-            _poisonQueue = CreatePoisonQueueReference(queue.ServiceClient, queue.Name);
+            _poisonQueue = CreatePoisonQueueReference(queueServiceClient, queue.Name);
             _loggerFactory = loggerFactory;
             _queueProcessorFactory = queueProcessorFactory;
         }
@@ -60,7 +62,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
             return Task.FromResult(listener);
         }
 
-        private static CloudQueue CreatePoisonQueueReference(CloudQueueClient client, string name)
+        private static QueueClient CreatePoisonQueueReference(QueueServiceClient client, string name)
         {
             Debug.Assert(client != null);
 
@@ -75,12 +77,12 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
 
             string possiblePoisonQueueName = name + poisonQueueSuffix;
 
-            if (!QueueClient.IsValidQueueName(possiblePoisonQueueName))
+            if (!QueueClientExtensions.IsValidQueueName(possiblePoisonQueueName))
             {
                 return null;
             }
 
-            return client.GetQueueReference(possiblePoisonQueueName);
+            return client.GetQueueClient(possiblePoisonQueueName);
         }
     }
 }

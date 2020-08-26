@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -12,15 +11,12 @@ using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Blobs;
 using Microsoft.Azure.WebJobs.Host.Config;
 using Microsoft.Azure.WebJobs.Host.Indexers;
-using Microsoft.Azure.WebJobs.Host.TestCommon;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Azure.Storage.Blob;
-using Microsoft.Azure.Storage.Queue;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Xunit;
 using Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests;
+using Azure.Storage.Queues;
+using Azure.Storage.Queues.Models;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
@@ -453,7 +449,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             await CallAsync(account, typeof(QueueProgram), "BindToOutPoco");
 
             // Assert
-            var queue = account.CreateCloudQueueClient().GetQueueReference(OutputQueueName);
+            var queue = account.CreateQueueServiceClient().GetQueueClient(OutputQueueName);
             AssertMessageSent(new PocoMessage { Value = "15" }, queue);
         }
 
@@ -475,22 +471,23 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             var account = CreateFakeStorageAccount();
 
             // Act
-            await CallAsync(account, typeof(QueueProgram), "BindToIAsyncCollectorByteArray");
+            await CallAsync(account, typeof(QueueProgram), "BindToIAsyncCollectorByteArray"); // TODO (kasobol-msft) revisit when BinaryData is in SDK
 
             // Assert
-            var queue = account.CreateCloudQueueClient().GetQueueReference(OutputQueueName);
-            IEnumerable<CloudQueueMessage> messages = await queue.GetMessagesAsync(messageCount: 32);
+            var queue = account.CreateQueueServiceClient().GetQueueClient(OutputQueueName);
+            QueueMessage[] messages = await queue.ReceiveMessagesAsync(32);
             Assert.NotNull(messages);
             Assert.Equal(3, messages.Count());
-            CloudQueueMessage[] sortedMessages = messages.OrderBy((m) => m.AsString).ToArray();
+            QueueMessage[] sortedMessages = messages.OrderBy((m) => m.MessageText).ToArray();
 
-            Assert.Equal(Encoding.UTF8.GetBytes("test1"), sortedMessages[0].AsBytes);
-            Assert.Equal(Encoding.UTF8.GetBytes("test2"), sortedMessages[1].AsBytes);
-            Assert.Equal(Encoding.UTF8.GetBytes("test3"), sortedMessages[2].AsBytes);
+            // TODO (kasobol-msft) revisit this when base64/BinaryData is in the SDK
+            Assert.Equal("test1", sortedMessages[0].MessageText);
+            Assert.Equal("test2", sortedMessages[1].MessageText);
+            Assert.Equal("test3", sortedMessages[2].MessageText);
         }
 
         [Fact]
-        public async Task Queue_IfBoundToICollectorByteArray_CanCall()
+        public async Task Queue_IfBoundToICollectorByteArray_CanCall() // TODO (kasobol-msft) revisit when BinaryData is in SDK
         {
             var account = CreateFakeStorageAccount();
 
@@ -498,15 +495,15 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             await CallAsync(account, typeof(QueueProgram), "BindToICollectorByteArray");
 
             // Assert
-            CloudQueue queue = account.CreateCloudQueueClient().GetQueueReference(OutputQueueName);
-            IEnumerable<CloudQueueMessage> messages = await queue.GetMessagesAsync(messageCount: 32);
+            var queue = account.CreateQueueServiceClient().GetQueueClient(OutputQueueName);
+            QueueMessage[] messages = await queue.ReceiveMessagesAsync(32);
             Assert.NotNull(messages);
             Assert.Equal(3, messages.Count());
-            CloudQueueMessage[] sortedMessages = messages.OrderBy((m) => m.AsString).ToArray();
+            QueueMessage[] sortedMessages = messages.OrderBy((m) => m.MessageText).ToArray();
 
-            Assert.Equal(Encoding.UTF8.GetBytes("test1"), sortedMessages[0].AsBytes);
-            Assert.Equal(Encoding.UTF8.GetBytes("test2"), sortedMessages[1].AsBytes);
-            Assert.Equal(Encoding.UTF8.GetBytes("test3"), sortedMessages[2].AsBytes);
+            Assert.Equal("test1", sortedMessages[0].MessageText);
+            Assert.Equal("test2", sortedMessages[1].MessageText);
+            Assert.Equal("test3", sortedMessages[2].MessageText);
         }
 
         [Fact]
@@ -532,14 +529,14 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             await CallAsync(account, typeof(QueueProgram), methodName);
 
             // Assert
-            CloudQueue queue = account.CreateCloudQueueClient().GetQueueReference(OutputQueueName);
-            IEnumerable<CloudQueueMessage> messages = await queue.GetMessagesAsync(messageCount: 32);
+            var queue = account.CreateQueueServiceClient().GetQueueClient(OutputQueueName);
+            QueueMessage[] messages = await queue.ReceiveMessagesAsync(32);
             Assert.NotNull(messages);
             Assert.Equal(3, messages.Count());
-            IEnumerable<CloudQueueMessage> sortedMessages = messages.OrderBy((m) => m.AsString);
-            CloudQueueMessage firstMessage = sortedMessages.ElementAt(0);
-            CloudQueueMessage secondMessage = sortedMessages.ElementAt(1);
-            CloudQueueMessage thirdMessage = sortedMessages.ElementAt(2);
+            IEnumerable<QueueMessage> sortedMessages = messages.OrderBy((m) => m.MessageText);
+            QueueMessage firstMessage = sortedMessages.ElementAt(0);
+            QueueMessage secondMessage = sortedMessages.ElementAt(1);
+            QueueMessage thirdMessage = sortedMessages.ElementAt(2);
             AssertEqual(new PocoMessage { Value = "10" }, firstMessage);
             AssertEqual(new PocoMessage { Value = "20" }, secondMessage);
             AssertEqual(new PocoMessage { Value = "30" }, thirdMessage);
@@ -562,7 +559,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             StorageAccount account = CreateFakeStorageAccount();
 
             // Act
-            CloudQueue result = await CallAsync<CloudQueue>(account, typeof(BindToCloudQueueProgram), "BindToCloudQueue",
+            QueueClient result = await CallAsync<QueueClient>(account, typeof(BindToCloudQueueProgram), "BindToCloudQueue",
                 (s) => BindToCloudQueueProgram.TaskSource = s);
 
             // Assert
@@ -577,20 +574,20 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             StorageAccount account = CreateFakeStorageAccount();
 
             // Act
-            CloudQueue result = await CallAsync<CloudQueue>(account, typeof(BindToCloudQueueProgram), "BindToCloudQueue",
+            QueueClient result = await CallAsync<QueueClient>(account, typeof(BindToCloudQueueProgram), "BindToCloudQueue",
                 (s) => BindToCloudQueueProgram.TaskSource = s);
 
             // Assert
             Assert.NotNull(result);
-            CloudQueue queue = account.CreateCloudQueueClient().GetQueueReference(QueueName);
+            QueueClient queue = account.CreateQueueServiceClient().GetQueueClient(QueueName);
             Assert.True(await queue.ExistsAsync());
         }
 
         private class BindToCloudQueueProgram
         {
-            public static TaskCompletionSource<CloudQueue> TaskSource { get; set; }
+            public static TaskCompletionSource<QueueClient> TaskSource { get; set; }
 
-            public static void BindToCloudQueue([Queue(QueueName)] CloudQueue queue)
+            public static void BindToCloudQueue([Queue(QueueName)] QueueClient queue)
             {
                 TaskSource.TrySetResult(queue);
             }
@@ -610,7 +607,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             await CallAsync(account, typeof(MissingQueueProgram), methodName);
 
             // Assert
-            CloudQueue queue = account.CreateCloudQueueClient().GetQueueReference(OutputQueueName);
+            QueueClient queue = account.CreateQueueServiceClient().GetQueueClient(OutputQueueName);
             Assert.True(await queue.ExistsAsync());
             AssertMessageSent(expectedMessage, queue);
         }
@@ -625,7 +622,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             await CallAsync(account, typeof(MissingQueueProgram), "FuncWithOutT");
 
             // Assert
-            CloudQueue queue = account.CreateCloudQueueClient().GetQueueReference(OutputQueueName);
+            QueueClient queue = account.CreateQueueServiceClient().GetQueueClient(OutputQueueName);
             Assert.True(await queue.ExistsAsync());
             AssertMessageSent(new PocoMessage { Value = TestQueueMessage }, queue);
         }
@@ -640,7 +637,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             await CallAsync(account, typeof(MissingQueueProgram), "FuncWithOutT");
 
             // Assert
-            CloudQueue queue = account.CreateCloudQueueClient().GetQueueReference(OutputQueueName);
+            QueueClient queue = account.CreateQueueServiceClient().GetQueueClient(OutputQueueName);
             Assert.True(await queue.ExistsAsync());
             AssertMessageSent(new StructMessage { Value = TestQueueMessage }, queue);
         }
@@ -659,7 +656,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             await CallAsync(account, typeof(MissingQueueProgram), methodName);
 
             // Assert
-            CloudQueue queue = account.CreateCloudQueueClient().GetQueueReference(OutputQueueName);
+            QueueClient queue = account.CreateQueueServiceClient().GetQueueClient(OutputQueueName);
             Assert.False(await queue.ExistsAsync());
         }
 
@@ -691,42 +688,42 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
 
-        private static void AssertMessageSent(string expectedMessage, CloudQueue queue)
+        private static void AssertMessageSent(string expectedMessage, QueueClient queue)
         {
             Assert.NotNull(queue);
-            CloudQueueMessage message = queue.GetMessageAsync().GetAwaiter().GetResult();
+            QueueMessage message = queue.ReceiveMessages(1).Value.FirstOrDefault();
             Assert.NotNull(message);
-            Assert.Equal(expectedMessage, message.AsString);
+            Assert.Equal(expectedMessage, message.MessageText);
         }
 
-        private static void AssertMessageSent(PocoMessage expected, CloudQueue queue)
+        private static void AssertMessageSent(PocoMessage expected, QueueClient queue)
         {
             Assert.NotNull(queue);
-            CloudQueueMessage message = queue.GetMessageAsync().GetAwaiter().GetResult();
-            Assert.NotNull(message);
-            AssertEqual(expected, message);
-        }
-
-        private static void AssertMessageSent(StructMessage expected, CloudQueue queue)
-        {
-            Assert.NotNull(queue);
-            CloudQueueMessage message = queue.GetMessageAsync().GetAwaiter().GetResult();
+            QueueMessage message = queue.ReceiveMessages(1).Value.FirstOrDefault();
             Assert.NotNull(message);
             AssertEqual(expected, message);
         }
 
-        private static void AssertEqual(PocoMessage expected, CloudQueueMessage actualMessage)
+        private static void AssertMessageSent(StructMessage expected, QueueClient queue)
+        {
+            Assert.NotNull(queue);
+            QueueMessage message = queue.ReceiveMessages(1).Value.FirstOrDefault();
+            Assert.NotNull(message);
+            AssertEqual(expected, message);
+        }
+
+        private static void AssertEqual(PocoMessage expected, QueueMessage actualMessage)
         {
             Assert.NotNull(actualMessage);
-            string content = actualMessage.AsString;
+            string content = actualMessage.MessageText;
             PocoMessage actual = JsonConvert.DeserializeObject<PocoMessage>(content);
             AssertEqual(expected, actual);
         }
 
-        private static void AssertEqual(StructMessage expected, CloudQueueMessage actualMessage)
+        private static void AssertEqual(StructMessage expected, QueueMessage actualMessage)
         {
             Assert.NotNull(actualMessage);
-            string content = actualMessage.AsString;
+            string content = actualMessage.MessageText;
             StructMessage actual = JsonConvert.DeserializeObject<StructMessage>(content);
             AssertEqual(expected, actual);
         }
@@ -1035,13 +1032,13 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
             public static async Task BindToIAsyncCollectorEnqueuesImmediately(
                 [Queue(OutputQueueName)] IAsyncCollector<string> collector,
-                [Queue(OutputQueueName)] CloudQueue queue)
+                [Queue(OutputQueueName)] QueueClient queue)
             {
                 string expectedContents = "Enqueued immediately";
                 await collector.AddAsync(expectedContents);
-                CloudQueueMessage message = await queue.GetMessageAsync();
+                QueueMessage message = (await queue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
                 Assert.NotNull(message);
-                Assert.Equal(expectedContents, message.AsString);
+                Assert.Equal(expectedContents, message.MessageText);
             }
         }
 
@@ -1057,12 +1054,12 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
         private class MissingQueueProgram
         {
-            public static void FuncWithOutCloudQueueMessage([Queue(OutputQueueName)] out CloudQueueMessage message)
+            public static void FuncWithOutCloudQueueMessage([Queue(OutputQueueName)] out QueueMessage message) // TODO (kasobol-msft) Do we support this binding?
             {
-                message = new CloudQueueMessage(TestQueueMessage);
+                message = QueuesModelFactory.QueueMessage(null, null, TestQueueMessage, 0);
             }
 
-            public static void FuncWithOutCloudQueueMessageNull([Queue(OutputQueueName)] out CloudQueueMessage message)
+            public static void FuncWithOutCloudQueueMessageNull([Queue(OutputQueueName)] out QueueMessage message) // TODO (kasobol-msft) Do we support this binding?
             {
                 message = null;
             }

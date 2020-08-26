@@ -4,13 +4,11 @@
 using System;
 using System.Globalization;
 using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs.Host.FunctionalTests.TestDoubles;
-using Microsoft.Azure.WebJobs.Host.Indexers;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Azure.Storage.Queue;
 using Xunit;
 using Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests;
+using Azure.Storage.Queues;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
@@ -46,7 +44,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
         private class InvalidQueueNameProgram
         {
-            public static void Invalid([Queue("-IllegalName-")] CloudQueue queue)
+            public static void Invalid([Queue("-IllegalName-")] QueueClient queue)
             {
             }
         }

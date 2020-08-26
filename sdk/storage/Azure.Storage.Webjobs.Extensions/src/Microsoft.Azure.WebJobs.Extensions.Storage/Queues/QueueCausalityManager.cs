@@ -4,10 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.Contracts;
 using Microsoft.Azure.WebJobs.Host.Protocols;
-using Microsoft.Azure.Storage.Queue;
 using Newtonsoft.Json.Linq;
+using Azure.Storage.Queues.Models;
 
 namespace Microsoft.Azure.WebJobs.Host.Queues
 {
@@ -40,9 +39,9 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         }
 
         [DebuggerNonUserCode]
-        public static Guid? GetOwner(CloudQueueMessage msg)
+        public static Guid? GetOwner(QueueMessage msg)
         {
-            string text = msg.TryGetAsString();
+            string text = msg.MessageText;
 
             if (text == null)
             {

@@ -10,7 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="appinsights.testlogger" VersionOverride="1.0.0" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" VersionOverride="2.14.0" />
     <PackageReference Include="Microsoft.AspNetCore" VersionOverride="2.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" VersionOverride="2.1.0" />

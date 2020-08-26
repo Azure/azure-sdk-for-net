@@ -6,24 +6,24 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
 using System.Threading.Tasks;
+using Azure.Storage.Queues.Models;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Protocols;
 using Microsoft.Azure.WebJobs.Host.Triggers;
-using Microsoft.Azure.Storage.Queue;
 using Newtonsoft.Json;
 
 namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
 {
     internal class UserTypeArgumentBindingProvider : IQueueTriggerArgumentBindingProvider
     {
-        public ITriggerDataArgumentBinding<CloudQueueMessage> TryCreate(ParameterInfo parameter)
+        public ITriggerDataArgumentBinding<QueueMessage> TryCreate(ParameterInfo parameter)
         {
             // At indexing time, attempt to bind all types.
             // (Whether or not actual binding is possible depends on the message shape at runtime.)
             return new UserTypeArgumentBinding(parameter.ParameterType);
         }
 
-        private class UserTypeArgumentBinding : ITriggerDataArgumentBinding<CloudQueueMessage>
+        private class UserTypeArgumentBinding : ITriggerDataArgumentBinding<QueueMessage>
         {
             private readonly Type _valueType;
             private readonly IBindingDataProvider _bindingDataProvider;
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
                 get { return _bindingDataProvider != null ? _bindingDataProvider.Contract : null; }
             }
 
-            public Task<ITriggerData> BindAsync(CloudQueueMessage value, ValueBindingContext context)
+            public Task<ITriggerData> BindAsync(QueueMessage value, ValueBindingContext context)
             {
                 if (value == null)
                 {
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
                 object convertedValue;
                 try
                 {
-                    convertedValue = JsonConvert.DeserializeObject(value.AsString, ValueType, JsonSerialization.Settings);
+                    convertedValue = JsonConvert.DeserializeObject(value.MessageText, ValueType, JsonSerialization.Settings);
                 }
                 catch (JsonException e)
                 {

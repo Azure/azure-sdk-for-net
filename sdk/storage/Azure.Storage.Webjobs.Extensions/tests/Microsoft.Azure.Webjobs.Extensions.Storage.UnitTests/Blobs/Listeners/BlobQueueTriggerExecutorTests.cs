@@ -3,12 +3,10 @@
 
 using System;
 using System.Linq;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Storage;
+using Azure.Storage.Queues.Models;
 using Microsoft.Azure.Storage.Blob;
-using Microsoft.Azure.Storage.Queue;
 using Microsoft.Azure.WebJobs.Host.Blobs;
 using Microsoft.Azure.WebJobs.Host.Blobs.Listeners;
 using Microsoft.Azure.WebJobs.Host.Executors;
@@ -315,7 +313,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             return new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict).Object;
         }
 
-        private static CloudQueueMessage CreateMessage(string functionId, string eTag)
+        private static QueueMessage CreateMessage(string functionId, string eTag)
         {
             BlobTriggerMessage triggerMessage = new BlobTriggerMessage
             {
@@ -328,18 +326,14 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             return CreateMessage(triggerMessage);
         }
 
-        private static CloudQueueMessage CreateMessage(BlobTriggerMessage triggerMessage)
+        private static QueueMessage CreateMessage(BlobTriggerMessage triggerMessage)
         {
             return CreateMessage(JsonConvert.SerializeObject(triggerMessage));
         }
 
-        private static CloudQueueMessage CreateMessage(string content)
+        private static QueueMessage CreateMessage(string content)
         {
-            var message = new CloudQueueMessage(content);
-            message.SetId(TestQueueMessageId);
-            message.SetInsertionTime(DateTimeOffset.UtcNow);
-            message.SetDequeueCount(0);
-            return message;
+            return QueuesModelFactory.QueueMessage(TestQueueMessageId, "testReceipt", content, 0, insertedOn: DateTime.UtcNow);
         }
 
         private BlobQueueTriggerExecutor CreateProductUnderTest()

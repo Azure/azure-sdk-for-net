@@ -4,13 +4,14 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs.Host.Queues;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Azure.Storage;
-using Microsoft.Azure.Storage.Queue;
 using Xunit;
+using Azure.Storage.Queues;
+using System.Linq;
+using Azure.Storage.Queues.Models;
 
 namespace Microsoft.Azure.WebJobs.Storage.IntegrationTests
 {
@@ -26,20 +27,20 @@ namespace Microsoft.Azure.WebJobs.Storage.IntegrationTests
             string queueName = GetQueueName("create-queue");
 
             // Initialize using the SdkAccount directly.
-            CloudQueue sdkQueue = GetQueueReference(sdkAccount, queueName);
+            var sdkQueue = GetQueueReference(storageAccount, queueName);
             await sdkQueue.DeleteIfExistsAsync();
             Assert.False(await sdkQueue.ExistsAsync());
 
             try
             {
                 // Make sure that using our StorageAccount uses the underlying SdkAccount
-                CloudQueueClient client = storageAccount.CreateCloudQueueClient();
+                var client = storageAccount.CreateQueueServiceClient();
                 Assert.NotNull(client); // Guard
-                CloudQueue queue = client.GetQueueReference(queueName);
+                var queue = client.GetQueueClient(queueName);
                 Assert.NotNull(queue); // Guard
 
                 // Act
-                await queue.CreateIfNotExistsAsync(CancellationToken.None);
+                await queue.CreateIfNotExistsAsync();
 
                 // Assert
                 Assert.True(await sdkQueue.ExistsAsync());
@@ -62,28 +63,25 @@ namespace Microsoft.Azure.WebJobs.Storage.IntegrationTests
             string queueName = GetQueueName("add-message");
 
             // Initialize using the SdkAccount directly.
-            CloudQueue sdkQueue = GetQueueReference(sdkAccount, queueName);
+            var sdkQueue = GetQueueReference(storageAccount, queueName);
             await sdkQueue.CreateIfNotExistsAsync();
 
             try
             {
                 string expectedContent = "hello";
 
-                CloudQueueClient client = storageAccount.CreateCloudQueueClient();
+                var client = storageAccount.CreateQueueServiceClient();
                 Assert.NotNull(client); // Guard
-                CloudQueue queue = client.GetQueueReference(queueName);
+                var queue = client.GetQueueClient(queueName);
                 Assert.NotNull(queue); // Guard
 
-                CloudQueueMessage message = new CloudQueueMessage(expectedContent);
-                Assert.NotNull(message); // Guard
-
                 // Act
-                await queue.AddMessageAsync(message, CancellationToken.None);
+                await queue.SendMessageAsync(expectedContent);
 
                 // Assert
-                CloudQueueMessage sdkMessage = await sdkQueue.GetMessageAsync();
+                QueueMessage sdkMessage = (await sdkQueue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
                 Assert.NotNull(sdkMessage);
-                Assert.Equal(expectedContent, sdkMessage.AsString);
+                Assert.Equal(expectedContent, sdkMessage.MessageText);
             }
             finally
             {
@@ -106,10 +104,10 @@ namespace Microsoft.Azure.WebJobs.Storage.IntegrationTests
             return account;
         }
 
-        private static CloudQueue GetQueueReference(CloudStorageAccount sdkAccount, string queueName)
+        private static QueueClient GetQueueReference(StorageAccount sdkAccount, string queueName)
         {
-            CloudQueueClient sdkClient = sdkAccount.CreateCloudQueueClient();
-            return sdkClient.GetQueueReference(queueName);
+            var queueServiceClient = sdkAccount.CreateQueueServiceClient();
+            return queueServiceClient.GetQueueClient(queueName);
         }
 
         private static string GetQueueName(string infix)

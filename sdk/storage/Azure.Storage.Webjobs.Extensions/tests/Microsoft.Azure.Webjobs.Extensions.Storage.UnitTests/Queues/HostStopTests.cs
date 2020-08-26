@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Azure.Storage.Queue;
 using Xunit;
 using Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests;
+using Azure.Storage.Queues;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
@@ -29,9 +29,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         public async Task Stop_TriggersCancellationToken()
         {
             StorageAccount account = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
-            CloudQueue queue = await CreateQueueAsync(account, QueueName);
-            CloudQueueMessage message = new CloudQueueMessage("ignore");
-            await queue.AddMessageAsync(message);
+            QueueClient queue = await CreateQueueAsync(account, QueueName);
+            await queue.SendMessageAsync("ignore");
 
             var host = new HostBuilder()
                 .ConfigureDefaultTestHost<CallbackCancellationTokenProgram>(c =>
@@ -70,10 +69,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
 
-        private static async Task<CloudQueue> CreateQueueAsync(StorageAccount account, string queueName)
+        private static async Task<QueueClient> CreateQueueAsync(StorageAccount account, string queueName)
         {
-            CloudQueueClient client = account.CreateCloudQueueClient();
-            CloudQueue queue = client.GetQueueReference(queueName);
+            var client = account.CreateQueueServiceClient();
+            var queue = client.GetQueueClient(queueName);
             await queue.CreateIfNotExistsAsync();
             return queue;
         }

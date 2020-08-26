@@ -1,21 +1,23 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Azure.Storage.Queue;
 using System;
+using System.Text;
+using Azure.Storage.Queues.Models;
 
 namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
 {
-    internal class StorageQueueMessageToByteArrayConverter : IConverter<CloudQueueMessage, byte[]>
+    internal class StorageQueueMessageToByteArrayConverter : IConverter<QueueMessage, byte[]>
     {
-        public byte[] Convert(CloudQueueMessage input)
+        public byte[] Convert(QueueMessage input)
         {
             if (input == null)
             {
                 throw new ArgumentNullException(nameof(input));
             }
 
-            return input.AsBytes;
+            // TODO (kasobol-msft) revisit this when base64/BinaryData is in the SDK
+            return Encoding.UTF8.GetBytes(input.MessageText);
         }
     }
 }

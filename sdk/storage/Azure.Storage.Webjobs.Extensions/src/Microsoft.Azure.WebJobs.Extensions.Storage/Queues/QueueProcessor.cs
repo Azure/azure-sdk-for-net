@@ -5,10 +5,11 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Storage.Queue;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Extensions.Logging;
-using Microsoft.Azure.Storage;
+using Azure.Storage.Queues.Models;
+using Azure.Storage.Queues;
+using Azure;
 
 namespace Microsoft.Azure.WebJobs.Host.Queues
 {
@@ -21,8 +22,8 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
     /// </remarks>
     public class QueueProcessor
     {
-        private readonly CloudQueue _queue;
-        private readonly CloudQueue _poisonQueue;
+        private readonly QueueClient _queue;
+        private readonly QueueClient _poisonQueue;
         private readonly ILogger _logger;
 
         /// <summary>
@@ -86,7 +87,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// <param name="message">The message to process.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use</param>
         /// <returns>True if the message processing should continue, false otherwise.</returns>
-        public virtual async Task<bool> BeginProcessingMessageAsync(CloudQueueMessage message, CancellationToken cancellationToken)
+        public virtual async Task<bool> BeginProcessingMessageAsync(QueueMessage message, CancellationToken cancellationToken)
         {
             if (message.DequeueCount > MaxDequeueCount)
             {
@@ -108,7 +109,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// <param name="result">The <see cref="FunctionResult"/> from the job invocation.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use</param>
         /// <returns></returns>
-        public virtual async Task CompleteProcessingMessageAsync(CloudQueueMessage message, FunctionResult result, CancellationToken cancellationToken)
+        public virtual async Task CompleteProcessingMessageAsync(QueueMessage message, FunctionResult result, CancellationToken cancellationToken)
         {
             if (result.Succeeded)
             {
@@ -133,19 +134,19 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
             }
         }
 
-        private async Task HandlePoisonMessageAsync(CloudQueueMessage message, CancellationToken cancellationToken)
+        private async Task HandlePoisonMessageAsync(QueueMessage message, CancellationToken cancellationToken)
         {
             if (_poisonQueue != null)
             {
                 // These values may change if the message is inserted into another queue. We'll store them here and make sure
                 // the message always has the original values before we pass it to a customer-facing method.
-                string id = message.Id;
+                string id = message.MessageId;
                 string popReceipt = message.PopReceipt;
 
                 await CopyMessageToPoisonQueueAsync(message, _poisonQueue, cancellationToken).ConfigureAwait(false);
 
                 // TEMP: Re-evaluate these property updates when we update Storage SDK: https://github.com/Azure/azure-webjobs-sdk/issues/1144
-                message.UpdateChangedProperties(id, popReceipt);
+                // message.UpdateChangedProperties(id, popReceipt); TODO (kasobol-msft) this shouldn't be needed.
 
                 await DeleteMessageAsync(message, cancellationToken).ConfigureAwait(false);
             }
@@ -158,12 +159,12 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// <param name="poisonQueue">The poison queue to copy the message to</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use</param>
         /// <returns></returns>
-        protected virtual async Task CopyMessageToPoisonQueueAsync(CloudQueueMessage message, CloudQueue poisonQueue, CancellationToken cancellationToken)
+        protected virtual async Task CopyMessageToPoisonQueueAsync(QueueMessage message, QueueClient poisonQueue, CancellationToken cancellationToken)
         {
             string msg = string.Format(CultureInfo.InvariantCulture, "Message has reached MaxDequeueCount of {0}. Moving message to queue '{1}'.", MaxDequeueCount, poisonQueue.Name);
             _logger?.LogWarning(msg);
 
-            await poisonQueue.AddMessageAndCreateIfNotExistsAsync(message, cancellationToken).ConfigureAwait(false);
+            await poisonQueue.AddMessageAndCreateIfNotExistsAsync(message.MessageText, cancellationToken).ConfigureAwait(false);
 
             var eventArgs = new PoisonMessageEventArgs(message, poisonQueue);
             OnMessageAddedToPoisonQueue(eventArgs);
@@ -177,14 +178,15 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// <param name="visibilityTimeout">The visibility timeout to set for the message</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use</param>
         /// <returns></returns>
-        protected virtual async Task ReleaseMessageAsync(CloudQueueMessage message, FunctionResult result, TimeSpan visibilityTimeout, CancellationToken cancellationToken)
+        protected virtual async Task ReleaseMessageAsync(QueueMessage message, FunctionResult result, TimeSpan visibilityTimeout, CancellationToken cancellationToken)
         {
             try
             {
                 // We couldn't process the message. Let someone else try.
-                await _queue.UpdateMessageAsync(message, visibilityTimeout, MessageUpdateFields.Visibility, null, null, cancellationToken).ConfigureAwait(false);
+                // TODO (kasobol-msft) fix after https://github.com/Azure/azure-sdk-for-net/issues/14243 is resolved.
+                await _queue.UpdateMessageAsync(message.MessageId, message.PopReceipt, message.MessageText, visibilityTimeout: visibilityTimeout, cancellationToken: cancellationToken).ConfigureAwait(false);
             }
-            catch (StorageException exception)
+            catch (RequestFailedException exception)
             {
                 if (exception.IsBadRequestPopReceiptMismatch())
                 {
@@ -210,31 +212,31 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// <param name="message">The message to delete.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use</param>
         /// <returns></returns>
-        protected virtual async Task DeleteMessageAsync(CloudQueueMessage message, CancellationToken cancellationToken)
+        protected virtual async Task DeleteMessageAsync(QueueMessage message, CancellationToken cancellationToken)
         {
             try
             {
-                await _queue.DeleteMessageAsync(message, cancellationToken).ConfigureAwait(false);
+                await _queue.DeleteMessageAsync(message.MessageId, message.PopReceipt, cancellationToken).ConfigureAwait(false);
             }
-            catch (StorageException exception)
+            catch (RequestFailedException exception)
             {
                 // For consistency, the exceptions handled here should match UpdateQueueMessageVisibilityCommand.
                 if (exception.IsBadRequestPopReceiptMismatch())
                 {
                     // If someone else took over the message; let them delete it.
-                    string msg = $"Unable to delete queue message '{message.Id}' because the {nameof(CloudQueueMessage.PopReceipt)} did not match. This could indicate that the function has modified the message and may be expected.";
+                    string msg = $"Unable to delete queue message '{message.MessageId}' because the {nameof(QueueMessage.PopReceipt)} did not match. This could indicate that the function has modified the message and may be expected.";
                     _logger.LogDebug(msg);
                     return;
                 }
                 else if (exception.IsNotFoundMessageOrQueueNotFound())
                 {
-                    string msg = $"Unable to delete queue message '{message.Id}' because either the message or the queue '{_queue.Name}' was not found.";
+                    string msg = $"Unable to delete queue message '{message.MessageId}' because either the message or the queue '{_queue.Name}' was not found.";
                     _logger.LogDebug(msg);
                 }
                 else if (exception.IsConflictQueueBeingDeletedOrDisabled())
                 {
                     // The message or queue is gone, or the queue is down; no need to delete the message.
-                    string msg = $"Unable to delete queue message '{message.Id}' because the queue `{_queue.Name}` is either disabled or being deleted.";
+                    string msg = $"Unable to delete queue message '{message.MessageId}' because the queue `{_queue.Name}` is either disabled or being deleted.";
                     _logger.LogDebug(msg);
                     return;
                 }

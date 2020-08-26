@@ -8,10 +8,11 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.FunctionalTests.TestDoubles;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
-using Microsoft.Azure.Storage.Queue;
 using Newtonsoft.Json;
 using Xunit;
 using Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests;
+using Azure.Storage.Queues;
+using Azure.Storage.Queues.Models;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
@@ -27,14 +28,14 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
         private async Task SetupAsync(StorageAccount account, object contents)
         {
-            CloudQueueMessage message;
+            string message;
             if (contents is string str)
             {
-                message = new CloudQueueMessage(str);
+                message = str;
             }
-            else if (contents is byte[] bytearray)
+            else if (contents is byte[] bytearray) // TODO (kasobol-msft) revisit this when we have Base64/BinaryData
             {
-                message = new CloudQueueMessage(bytearray);
+                message = Encoding.UTF8.GetString(bytearray);
             }
             else
             {
@@ -44,7 +45,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             var queue = await CreateQueue(account, QueueName);
 
             // message.InsertionTime is provided by FakeStorageAccount when the message is inserted.
-            await queue.AddMessageAsync(message);
+            await queue.SendMessageAsync(message);
         }
 
         [Fact]
@@ -52,17 +53,16 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             // Arrange
             string expectedGuid = Guid.NewGuid().ToString();
-            CloudQueueMessage expectedMessage = new CloudQueueMessage(expectedGuid);
             var account = CreateFakeStorageAccount();
             var queue = await CreateQueue(account, QueueName);
-            await queue.AddMessageAsync(expectedMessage);
+            await queue.SendMessageAsync(expectedGuid);
 
             // Act
-            CloudQueueMessage result = await RunTriggerAsync<CloudQueueMessage>(account, typeof(BindToCloudQueueMessageProgram),
+            QueueMessage result = await RunTriggerAsync<QueueMessage>(account, typeof(BindToCloudQueueMessageProgram),
                 (s) => BindToCloudQueueMessageProgram.TaskSource = s);
 
             // Assert
-            Assert.Equal(expectedMessage.AsString, result.AsString);
+            Assert.Equal(expectedGuid, result.MessageText);
         }
 
         [Fact]
@@ -82,9 +82,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             // Arrange
             var account = CreateFakeStorageAccount();
-            CloudQueue queue = await CreateQueue(account, QueueName);
-            CloudQueueMessage message = new CloudQueueMessage(expectedContent);
-            await queue.AddMessageAsync(message);
+            var queue = await CreateQueue(account, QueueName);
+            await queue.SendMessageAsync(expectedContent);
 
             // Act
             string result = await RunTriggerAsync<string>(account, typeof(BindToStringProgram),
@@ -94,15 +93,14 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(expectedContent, result);
         }
 
-        [Fact]
+        [Fact(Skip = "TODO (kasobol-msft) reenable when we get base64/BinaryData in SDK")]
         public async Task QueueTrigger_IfBoundToStringAndMessageIsNotUtf8ByteArray_DoesNotBind()
         {
             // Arrange
             byte[] content = new byte[] { 0xFF, 0x00 }; // Not a valid UTF-8 byte sequence.
             var account = CreateFakeStorageAccount();
-            CloudQueue queue = await CreateQueue(account, QueueName);
-            var message = new CloudQueueMessage(content);
-            await queue.AddMessageAsync(message);
+            var queue = await CreateQueue(account, QueueName);
+            await queue.SendMessageAsync(Convert.ToBase64String(content));
 
             // Act
             Exception exception = await RunTriggerFailureAsync<string>(account, typeof(BindToStringProgram),
@@ -117,7 +115,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 innerException.Message);
         }
 
-        [Fact]
+        [Fact(Skip = "TODO (kasobol-msft) revisit this when base64/BinaryData is in the SDK")]
         public async Task QueueTrigger_IfBoundToByteArray_Binds()
         {
             byte[] expectedContent = new byte[] { 0x31, 0x32, 0x33 };
@@ -131,20 +129,19 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             await TestBindToByteArray(expectedContent);
         }
 
-        [Fact]
+        [Fact(Skip = "TODO (kasobol-msft) revisit this when base64/BinaryData is in the SDK")]
         public async Task QueueTrigger_IfBoundToByteArrayAndMessageIsNonUtf8_Binds()
         {
             byte[] expectedContent = new byte[] { 0xFF, 0x00 }; // Not a valid UTF-8 byte sequence.
             await TestBindToByteArray(expectedContent);
         }
 
-        private async Task TestBindToByteArray(byte[] expectedContent)
+        private async Task TestBindToByteArray(byte[] expectedContent) // TODO (kasobol-msft) do we support this??
         {
             // Arrange
             var account = CreateFakeStorageAccount();
-            CloudQueue queue = await CreateQueue(account, QueueName);
-            var message = new CloudQueueMessage(expectedContent);
-            await queue.AddMessageAsync(message);
+            var queue = await CreateQueue(account, QueueName);
+            await queue.SendMessageAsync(Convert.ToBase64String(expectedContent));
 
             // Act
             byte[] result = await RunTriggerAsync<byte[]>(account, typeof(BindToByteArrayProgram),
@@ -172,10 +169,9 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             // Arrange
             var account = CreateFakeStorageAccount();
-            CloudQueue queue = await CreateQueue(account, QueueName);
+            var queue = await CreateQueue(account, QueueName);
             string content = JsonConvert.SerializeObject(expectedContent, typeof(Poco), settings: null);
-            CloudQueueMessage message = new CloudQueueMessage(content);
-            await queue.AddMessageAsync(message);
+            await queue.SendMessageAsync(content);
 
             // Act
             Poco result = await RunTriggerAsync<Poco>(account, typeof(BindToPocoProgram), (s) => BindToPocoProgram.TaskSource = s);
@@ -204,9 +200,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             // Arrange
             const string content = "not json"; // Not a valid JSON byte sequence.
             var account = CreateFakeStorageAccount();
-            CloudQueue queue = await CreateQueue(account, QueueName);
-            CloudQueueMessage message = new CloudQueueMessage(content);
-            await queue.AddMessageAsync(message);
+            var queue = await CreateQueue(account, QueueName);
+            await queue.SendMessageAsync(content);
 
             // Act
             Exception exception = await RunTriggerFailureAsync<Poco>(account, typeof(BindToPocoProgram),
@@ -232,9 +227,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             // Arrange
             const string content = "123"; // A JSON int rather than a JSON object.
             var account = CreateFakeStorageAccount();
-            CloudQueue queue = await CreateQueue(account, QueueName);
-            CloudQueueMessage message = new CloudQueueMessage(content);
-            await queue.AddMessageAsync(message);
+            var queue = await CreateQueue(account, QueueName);
+            await queue.SendMessageAsync(content);
 
             // Act
             Exception exception = await RunTriggerFailureAsync<Poco>(account, typeof(BindToPocoProgram),
@@ -260,10 +254,9 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             // Arrange
             const int expectedContent = 123;
             var account = CreateFakeStorageAccount();
-            CloudQueue queue = await CreateQueue(account, QueueName);
+            var queue = await CreateQueue(account, QueueName);
             string content = JsonConvert.SerializeObject(expectedContent, typeof(int), settings: null);
-            CloudQueueMessage message = new CloudQueueMessage(content);
-            await queue.AddMessageAsync(message);
+            await queue.SendMessageAsync(content);
 
             // Act
             int result = await RunTriggerAsync<int>(account, typeof(BindToPocoStructProgram),
@@ -280,8 +273,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             string expectedQueueTrigger = Guid.NewGuid().ToString();
             var account = CreateFakeStorageAccount();
             var queue = await CreateQueue(account, QueueName);
-            CloudQueueMessage message = new CloudQueueMessage(expectedQueueTrigger);
-            await queue.AddMessageAsync(message);
+            await queue.SendMessageAsync(expectedQueueTrigger);
 
             // Act
             string result = await RunTriggerAsync<string>(account, typeof(BindToQueueTriggerBindingDataProgram),
@@ -296,11 +288,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             // Arrange
             const string expectedQueueTrigger = "abc";
-            byte[] content = Encoding.UTF8.GetBytes(expectedQueueTrigger);
+            byte[] content = Encoding.UTF8.GetBytes(expectedQueueTrigger); // TODO (kasobol-msft) do we need this?
             var account = CreateFakeStorageAccount();
             var queue = await CreateQueue(account, QueueName);
-            var message = new CloudQueueMessage(content);
-            await queue.AddMessageAsync(message);
+            await queue.SendMessageAsync(expectedQueueTrigger);
 
             // Act
             string result = await RunTriggerAsync<string>(account, typeof(BindToQueueTriggerBindingDataProgram),
@@ -310,15 +301,14 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(expectedQueueTrigger, result);
         }
 
-        [Fact]
+        [Fact(Skip = "TODO (kasobol-msft) revisit that when we get base64/BinaryData in the SDK")]
         public async Task QueueTrigger_IfMessageIsNonUtf8ByteArray_DoesNotProvideQueueTriggerBindingData()
         {
             // Arrange
             byte[] content = new byte[] { 0xFF, 0x00 }; // Not a valid UTF-8 byte sequence.
             var account = CreateFakeStorageAccount();
             var queue = await CreateQueue(account, QueueName);
-            var message = new CloudQueueMessage(content);
-            await queue.AddMessageAsync(message);
+            await queue.SendMessageAsync(Convert.ToBase64String(content));
 
             // Act
             Exception exception = await RunTriggerFailureAsync<string>(account, typeof(BindToQueueTriggerBindingDataProgram),
@@ -338,12 +328,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             // Arrange
             var account = CreateFakeStorageAccount();
             var queue = await CreateQueue(account, QueueName);
-            var message = new CloudQueueMessage("ignore");
             // message.DequeueCount is provided by FakeStorageAccount when the message is retrieved.
-            await queue.AddMessageAsync(message);
+            await queue.SendMessageAsync("ignore");
 
             // Act
-            int result = await RunTriggerAsync<int>(account, typeof(BindToDequeueCountBindingDataProgram),
+            long result = await RunTriggerAsync<long>(account, typeof(BindToDequeueCountBindingDataProgram),
                 (s) => BindToDequeueCountBindingDataProgram.TaskSource = s);
 
             // Assert
@@ -356,9 +345,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             // Arrange
             var account = CreateFakeStorageAccount();
             var queue = await CreateQueue(account, QueueName);
-            var message = new CloudQueueMessage("ignore");
             // message.ExpirationTime is provided by FakeStorageAccount when the message is inserted.
-            await queue.AddMessageAsync(message);
+            await queue.SendMessageAsync("ignore");
 
             // Act
             DateTimeOffset result = await RunTriggerAsync<DateTimeOffset>(account, typeof(BindToExpirationTimeBindingDataProgram),
@@ -374,9 +362,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             // Arrange
             var account = CreateFakeStorageAccount();
             var queue = await CreateQueue(account, QueueName);
-            var message = new CloudQueueMessage("ignore");
             // message.Id is provided by FakeStorageAccount when the message is inserted.
-            await queue.AddMessageAsync(message);
+            await queue.SendMessageAsync("ignore");
 
             // Act
             string result = await RunTriggerAsync<string>(account, typeof(BindToIdBindingDataProgram),
@@ -526,10 +513,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         public async Task CallQueueTrigger_IfArgumentIsCloudQueueMessage_Binds()
         {
             // Arrange
-            CloudQueueMessage expectedMessage = new CloudQueueMessage("ignore");
+            QueueMessage expectedMessage = QueuesModelFactory.QueueMessage("id", "receipt", "ignore", 0);
 
             // Act
-            CloudQueueMessage result = await CallQueueTriggerAsync<CloudQueueMessage>(expectedMessage,
+            QueueMessage result = await CallQueueTriggerAsync<QueueMessage>(expectedMessage,
                 typeof(BindToCloudQueueMessageProgram), (s) => BindToCloudQueueMessageProgram.TaskSource = s);
 
             // Assert
@@ -543,22 +530,22 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             const string expectedContents = "abc";
 
             // Act
-            CloudQueueMessage result = await CallQueueTriggerAsync<CloudQueueMessage>(expectedContents,
+            QueueMessage result = await CallQueueTriggerAsync<QueueMessage>(expectedContents,
                 typeof(BindToCloudQueueMessageProgram), (s) => BindToCloudQueueMessageProgram.TaskSource = s);
 
             // Assert
             Assert.NotNull(result);
-            Assert.Same(expectedContents, result.AsString);
+            Assert.Same(expectedContents, result.MessageText);
         }
 
         [Fact]
         public async Task CallQueueTrigger_IfArgumentIsIStorageQueueMessage_Binds()
         {
             // Arrange
-            CloudQueueMessage expectedMessage = new CloudQueueMessage("ignore");
+            QueueMessage expectedMessage = QueuesModelFactory.QueueMessage("id", "receipt", "ignore", 0);
 
             // Act
-            CloudQueueMessage result = await CallQueueTriggerAsync<CloudQueueMessage>(expectedMessage,
+            QueueMessage result = await CallQueueTriggerAsync<QueueMessage>(expectedMessage,
                 typeof(BindToCloudQueueMessageProgram), (s) => BindToCloudQueueMessageProgram.TaskSource = s);
 
             // Assert
@@ -569,11 +556,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         public async Task CallQueueTrigger_ProvidesDequeueCountBindingData()
         {
             // Arrange
-            const int expectedDequeueCount = 123;
-            var message = new CloudQueueMessage("ignore").SetDequeueCount(expectedDequeueCount);
+            const long expectedDequeueCount = 123;
+            QueueMessage message = QueuesModelFactory.QueueMessage("id", "receipt", "ignore", expectedDequeueCount);
 
             // Act
-            int result = await CallQueueTriggerAsync<int>(message, typeof(BindToDequeueCountBindingDataProgram),
+            long result = await CallQueueTriggerAsync<long>(message, typeof(BindToDequeueCountBindingDataProgram),
                 (s) => BindToDequeueCountBindingDataProgram.TaskSource = s);
 
             // Assert
@@ -585,7 +572,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             // Arrange
             DateTimeOffset expectedExpirationTime = DateTimeOffset.Now;
-            var message = new CloudQueueMessage("ignore").SetExpirationTime(expectedExpirationTime);
+            QueueMessage message = QueuesModelFactory.QueueMessage("id", "receipt", "ignore", 0, expiresOn: expectedExpirationTime);
 
             // Act
             DateTimeOffset result = await CallQueueTriggerAsync<DateTimeOffset>(message,
@@ -601,7 +588,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             // Arrange
             DateTimeOffset expectedExpirationTime = DateTimeOffset.Now;
-            var message = new CloudQueueMessage("ignore").SetExpirationTime(null);
+            QueueMessage message = QueuesModelFactory.QueueMessage("id", "receipt", "ignore", 0, expiresOn: null);
 
             // Act
             DateTimeOffset result = await CallQueueTriggerAsync<DateTimeOffset>(message,
@@ -617,7 +604,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             // Arrange
             const string expectedId = "abc";
-            var message = new CloudQueueMessage("ignore").SetId(expectedId);
+            QueueMessage message = QueuesModelFactory.QueueMessage(expectedId, "receipt", "ignore", 0);
 
             // Act
             string result = await CallQueueTriggerAsync<string>(message, typeof(BindToIdBindingDataProgram),
@@ -632,7 +619,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             // Arrange
             DateTimeOffset expectedInsertionTime = DateTimeOffset.Now;
-            var message = new CloudQueueMessage("ignore").SetInsertionTime(expectedInsertionTime);
+            QueueMessage message = QueuesModelFactory.QueueMessage("id", "receipt", "ignore", 0, insertedOn: expectedInsertionTime);
 
             // Act
             DateTimeOffset result = await CallQueueTriggerAsync<DateTimeOffset>(message,
@@ -648,7 +635,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             // Arrange
             DateTimeOffset expectedInsertionTime = DateTimeOffset.Now;
-            var message = new CloudQueueMessage("ignore").SetInsertionTime(null);
+            QueueMessage message = QueuesModelFactory.QueueMessage("id", "receipt", "ignore", 0, insertedOn: null);
 
             // Act
             DateTimeOffset result = await CallQueueTriggerAsync<DateTimeOffset>(message,
@@ -665,7 +652,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             // Arrange
             DateTimeOffset expectedNextVisibleTime = DateTimeOffset.Now;
-            var message = new CloudQueueMessage("ignore").SetNextVisibleTime(expectedNextVisibleTime);
+            QueueMessage message = QueuesModelFactory.QueueMessage("id", "receipt", "ignore", 0, nextVisibleOn: expectedNextVisibleTime);
 
             // Act
             DateTimeOffset result = await CallQueueTriggerAsync<DateTimeOffset>(message,
@@ -681,7 +668,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             // Arrange
             DateTimeOffset expectedNextVisibleTime = DateTimeOffset.Now;
-            var message = new CloudQueueMessage("ignore").SetNextVisibleTime(null);
+            QueueMessage message = QueuesModelFactory.QueueMessage("id", "receipt", "ignore", 0, nextVisibleOn: null);
 
             // Act
             DateTimeOffset result = await CallQueueTriggerAsync<DateTimeOffset>(message,
@@ -697,7 +684,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             // Arrange
             const string expectedPopReceipt = "abc";
-            var message = new CloudQueueMessage("ignore").SetPopReceipt(expectedPopReceipt);
+            QueueMessage message = QueuesModelFactory.QueueMessage("id", expectedPopReceipt, "ignore", 0);
 
             // Act
             string result = await CallQueueTriggerAsync<string>(message, typeof(BindToPopReceiptBindingDataProgram),
@@ -745,19 +732,19 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             return StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
         }
 
-        private static async Task<CloudQueue> CreateQueue(StorageAccount account, string queueName)
+        private static async Task<QueueClient> CreateQueue(StorageAccount account, string queueName)
         {
-            var client = account.CreateCloudQueueClient();
-            CloudQueue queue = client.GetQueueReference(queueName);
+            var client = account.CreateQueueServiceClient();
+            var queue = client.GetQueueClient(queueName);
             await queue.CreateIfNotExistsAsync();
             return queue;
         }
 
         private class BindToCloudQueueMessageProgram
         {
-            public static TaskCompletionSource<CloudQueueMessage> TaskSource { get; set; }
+            public static TaskCompletionSource<QueueMessage> TaskSource { get; set; }
 
-            public static void Run([QueueTrigger(QueueName)] CloudQueueMessage message)
+            public static void Run([QueueTrigger(QueueName)] QueueMessage message)
             {
                 TaskSource.TrySetResult(message);
             }
@@ -807,7 +794,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             public static TaskCompletionSource<string> TaskSource { get; set; }
 
-            public static void Run([QueueTrigger(QueueName)] CloudQueueMessage message, string queueTrigger)
+            public static void Run([QueueTrigger(QueueName)] QueueMessage message, string queueTrigger)
             {
                 TaskSource.TrySetResult(queueTrigger);
             }
@@ -815,9 +802,9 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
         private class BindToDequeueCountBindingDataProgram
         {
-            public static TaskCompletionSource<int> TaskSource { get; set; }
+            public static TaskCompletionSource<long> TaskSource { get; set; }
 
-            public static void Run([QueueTrigger(QueueName)] CloudQueueMessage message, int dequeueCount)
+            public static void Run([QueueTrigger(QueueName)] QueueMessage message, long dequeueCount)
             {
                 TaskSource.TrySetResult(dequeueCount);
             }
@@ -827,7 +814,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             public static TaskCompletionSource<DateTimeOffset> TaskSource { get; set; }
 
-            public static void Run([QueueTrigger(QueueName)] CloudQueueMessage message, DateTimeOffset expirationTime)
+            public static void Run([QueueTrigger(QueueName)] QueueMessage message, DateTimeOffset expirationTime)
             {
                 TaskSource.TrySetResult(expirationTime);
             }
@@ -837,7 +824,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             public static TaskCompletionSource<string> TaskSource { get; set; }
 
-            public static void Run([QueueTrigger(QueueName)] CloudQueueMessage message, string id)
+            public static void Run([QueueTrigger(QueueName)] QueueMessage message, string id)
             {
                 TaskSource.TrySetResult(id);
             }
@@ -847,7 +834,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             public static TaskCompletionSource<DateTimeOffset> TaskSource { get; set; }
 
-            public static void Run([QueueTrigger(QueueName)] CloudQueueMessage message, DateTimeOffset insertionTime)
+            public static void Run([QueueTrigger(QueueName)] QueueMessage message, DateTimeOffset insertionTime)
             {
                 TaskSource.TrySetResult(insertionTime);
             }
@@ -857,7 +844,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             public static TaskCompletionSource<DateTimeOffset> TaskSource { get; set; }
 
-            public static void Run([QueueTrigger(QueueName)] CloudQueueMessage message, DateTimeOffset nextVisibleTime)
+            public static void Run([QueueTrigger(QueueName)] QueueMessage message, DateTimeOffset nextVisibleTime)
             {
                 TaskSource.TrySetResult(nextVisibleTime);
             }
@@ -867,7 +854,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             public static TaskCompletionSource<string> TaskSource { get; set; }
 
-            public static void Run([QueueTrigger(QueueName)] CloudQueueMessage message, string popReceipt)
+            public static void Run([QueueTrigger(QueueName)] QueueMessage message, string popReceipt)
             {
                 TaskSource.TrySetResult(popReceipt);
             }

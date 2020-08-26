@@ -9,10 +9,10 @@ using System.Linq;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
+using Azure;
+using Azure.Storage.Queues;
+using Azure.Storage.Queues.Models;
 using Microsoft.Azure.Storage;
-using Microsoft.Azure.Storage.Queue;
-using Microsoft.Azure.WebJobs.Extensions.Storage;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Protocols;
@@ -26,13 +26,11 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
     {
         private const int NumberOfSamplesToConsider = 5;
 
-        internal static readonly QueueRequestOptions DefaultQueueRequestOptions = new QueueRequestOptions { NetworkTimeout = TimeSpan.FromSeconds(100) };
-
         private readonly ITaskSeriesTimer _timer;
         private readonly IDelayStrategy _delayStrategy;
-        private readonly CloudQueue _queue;
-        private readonly CloudQueue _poisonQueue;
-        private readonly ITriggerExecutor<CloudQueueMessage> _triggerExecutor;
+        private readonly QueueClient _queue;
+        private readonly QueueClient _poisonQueue;
+        private readonly ITriggerExecutor<QueueMessage> _triggerExecutor;
         private readonly IWebJobsExceptionHandler _exceptionHandler;
         private readonly IMessageEnqueuedWatcher _sharedWatcher;
         private readonly List<Task> _processing = new List<Task>();
@@ -56,9 +54,9 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
         {
         }
 
-        public QueueListener(CloudQueue queue,
-            CloudQueue poisonQueue,
-            ITriggerExecutor<CloudQueueMessage> triggerExecutor,
+        public QueueListener(QueueClient queue,
+            QueueClient poisonQueue,
+            ITriggerExecutor<QueueMessage> triggerExecutor,
             IWebJobsExceptionHandler exceptionHandler,
             ILoggerFactory loggerFactory,
             SharedQueueWatcher sharedWatcher,
@@ -179,7 +177,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
                 _stopWaitingTaskSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
             }
 
-            IEnumerable<CloudQueueMessage> batch = null;
+            QueueMessage[] batch = null;
             string clientRequestId = Guid.NewGuid().ToString();
             Stopwatch sw = null;
             try
@@ -200,21 +198,13 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
                     sw = Stopwatch.StartNew();
                     OperationContext context = new OperationContext { ClientRequestID = clientRequestId };
 
-                    batch = await TimeoutHandler.ExecuteWithTimeout(nameof(CloudQueue.GetMessageAsync), context.ClientRequestID,
-                        _exceptionHandler, _logger, () =>
-                        {
-                            return _queue.GetMessagesAsync(_queueProcessor.BatchSize,
-                                _visibilityTimeout,
-                                options: DefaultQueueRequestOptions,
-                                operationContext: context,
-                                cancellationToken: cancellationToken);
-                        }, cancellationToken).ConfigureAwait(false);
+                    batch = await _queue.ReceiveMessagesAsync(_queueProcessor.BatchSize, _visibilityTimeout, cancellationToken).ConfigureAwait(false);
 
                     int count = batch?.Count() ?? -1;
                     Logger.GetMessages(_logger, _functionDescriptor.LogName, _queue.Name, context.ClientRequestID, count, sw.ElapsedMilliseconds);
                 }
             }
-            catch (StorageException exception)
+            catch (RequestFailedException exception)
             {
                 // if we get ANY errors querying the queue reset our existence check
                 // doing this on all errors rather than trying to special case not
@@ -317,7 +307,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
             }
         }
 
-        internal async Task ProcessMessageAsync(CloudQueueMessage message, TimeSpan visibilityTimeout, CancellationToken cancellationToken)
+        internal async Task ProcessMessageAsync(QueueMessage message, TimeSpan visibilityTimeout, CancellationToken cancellationToken)
         {
             try
             {
@@ -341,7 +331,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
                 // Only cancel completion or update of the message if a non-graceful shutdown is requested via _shutdownCancellationTokenSource.
                 await _queueProcessor.CompleteProcessingMessageAsync(message, result, _shutdownCancellationTokenSource.Token).ConfigureAwait(false);
             }
-            catch (StorageException ex) when (ex.IsTaskCanceled())
+            catch (StorageException ex) when (ex.IsTaskCanceled()) // TODO (kasobol-msft) check this exception
             {
                 // TaskCanceledExceptions may be wrapped in StorageException.
             }
@@ -367,8 +357,8 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
             _sharedWatcher.Notify(e.PoisonQueue.Name);
         }
 
-        private ITaskSeriesTimer CreateUpdateMessageVisibilityTimer(CloudQueue queue,
-            CloudQueueMessage message, TimeSpan visibilityTimeout,
+        private ITaskSeriesTimer CreateUpdateMessageVisibilityTimer(QueueClient queue,
+            QueueMessage message, TimeSpan visibilityTimeout,
             IWebJobsExceptionHandler exceptionHandler)
         {
             // Update a message's visibility when it is halfway to expiring.
@@ -387,7 +377,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
             }
         }
 
-        internal static QueueProcessor CreateQueueProcessor(CloudQueue queue, CloudQueue poisonQueue, ILoggerFactory loggerFactory, IQueueProcessorFactory queueProcessorFactory,
+        internal static QueueProcessor CreateQueueProcessor(QueueClient queue, QueueClient poisonQueue, ILoggerFactory loggerFactory, IQueueProcessorFactory queueProcessorFactory,
             QueuesOptions queuesOptions, EventHandler<PoisonMessageEventArgs> poisonQueueMessageAddedHandler)
         {
             QueueProcessorFactoryContext context = new QueueProcessorFactoryContext(queue, loggerFactory, queuesOptions, poisonQueue);
@@ -434,17 +424,17 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
 
             try
             {
-                await _queue.FetchAttributesAsync().ConfigureAwait(false);
-                queueLength = _queue.ApproximateMessageCount.GetValueOrDefault();
+                QueueProperties queueProperties = await _queue.GetPropertiesAsync().ConfigureAwait(false);
+                queueLength = queueProperties.ApproximateMessagesCount;
 
                 if (queueLength > 0)
                 {
-                    CloudQueueMessage message = await _queue.PeekMessageAsync().ConfigureAwait(false);
+                    PeekedMessage message = (await _queue.PeekMessagesAsync(1).ConfigureAwait(false)).Value.FirstOrDefault();
                     if (message != null)
                     {
-                        if (message.InsertionTime.HasValue)
+                        if (message.InsertedOn.HasValue)
                         {
-                            queueTime = DateTime.UtcNow.Subtract(message.InsertionTime.Value.DateTime);
+                            queueTime = DateTime.UtcNow.Subtract(message.InsertedOn.Value.DateTime);
                         }
                     }
                     else
@@ -455,7 +445,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
                     }
                 }
             }
-            catch (StorageException ex)
+            catch (RequestFailedException ex)
             {
                 if (ex.IsNotFoundQueueNotFound() ||
                     ex.IsConflictQueueBeingDeletedOrDisabled() ||

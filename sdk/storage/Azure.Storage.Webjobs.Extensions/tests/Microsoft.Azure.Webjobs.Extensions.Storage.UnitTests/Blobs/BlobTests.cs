@@ -6,10 +6,10 @@ using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Azure.Storage.Blob;
-using Microsoft.Azure.Storage.Queue;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Xunit;
 using Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests;
+using Azure.Storage.Queues;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
@@ -66,8 +66,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             const string expectedContent = "message";
             var azuriteAccount = azuriteFixture.GetAccount();
             var account = StorageAccount.NewFromConnectionString(azuriteAccount.ConnectionString);
-            CloudQueue triggerQueue = CreateQueue(account, TriggerQueueName);
-            await triggerQueue.AddMessageAsync(new CloudQueueMessage(expectedContent));
+            QueueClient triggerQueue = CreateQueue(account, TriggerQueueName);
+            await triggerQueue.SendMessageAsync(expectedContent);
 
             // Act
             await RunTrigger(account, typeof(BindToTextWriterProgram));
@@ -81,11 +81,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(expectedContent, content);
         }
 
-        private static CloudQueue CreateQueue(StorageAccount account, string queueName)
+        private static QueueClient CreateQueue(StorageAccount account, string queueName)
         {
-            var client = account.CreateCloudQueueClient();
-            var queue = client.GetQueueReference(queueName);
-            queue.CreateIfNotExistsAsync().GetAwaiter().GetResult();
+            var client = account.CreateQueueServiceClient();
+            var queue = client.GetQueueClient(queueName);
+            queue.CreateIfNotExists();
             return queue;
         }
 

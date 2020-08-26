@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Azure.Storage.Blob;
-using Microsoft.Azure.Storage.Queue;
+using Azure.Storage.Queues;
 
 namespace Microsoft.Azure.WebJobs
 {
@@ -21,10 +21,10 @@ namespace Microsoft.Azure.WebJobs
             return provider.GetHost();
         }
 
-        public static async Task<CloudQueue> CreateQueueAsync(this StorageAccount account, string queueName)
+        public static async Task<QueueClient> CreateQueueAsync(this StorageAccount account, string queueName)
         {
-            CloudQueueClient client = account.CreateCloudQueueClient();
-            CloudQueue queue = client.GetQueueReference(queueName);
+            var client = account.CreateQueueServiceClient();
+            var queue = client.GetQueueClient(queueName);
             await queue.CreateIfNotExistsAsync();
             return queue;
         }

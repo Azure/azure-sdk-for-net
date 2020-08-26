@@ -3,6 +3,8 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure;
+using Azure.Storage.Queues.Models;
 using Microsoft.Azure.Storage;
 
 namespace Microsoft.Azure.WebJobs
@@ -10,21 +12,14 @@ namespace Microsoft.Azure.WebJobs
     /// <summary>Provides extension methods for the <see cref="StorageException"/> class.</summary>
     internal static class StorageExceptionExtensions
     {
-        public static bool IsServerSideError(this StorageException exception)
+        public static bool IsServerSideError(this RequestFailedException exception)
         {
             if (exception == null)
             {
                 throw new ArgumentNullException(nameof(exception));
             }
 
-            RequestResult result = exception.RequestInformation;
-
-            if (result == null)
-            {
-                return false;
-            }
-
-            int statusCode = result.HttpStatusCode;
+            int statusCode = exception.Status;
             return statusCode >= 500 && statusCode < 600;
         }
 
@@ -36,55 +31,19 @@ namespace Microsoft.Azure.WebJobs
         /// <see langword="true"/> if the exception is due to a 400 Bad Request error with the error code
         /// PopReceiptMismatch; otherwise <see langword="false"/>.
         /// </returns>
-        public static bool IsBadRequestPopReceiptMismatch(this StorageException exception)
+        public static bool IsBadRequestPopReceiptMismatch(this RequestFailedException exception)
         {
             if (exception == null)
             {
                 throw new ArgumentNullException(nameof(exception));
             }
 
-            RequestResult result = exception.RequestInformation;
-
-            if (result == null)
+            if (exception.Status != 400)
             {
                 return false;
             }
 
-            if (result.HttpStatusCode != 400)
-            {
-                return false;
-            }
-
-            StorageExtendedErrorInformation extendedInformation = result.ExtendedErrorInformation;
-
-            if (extendedInformation == null)
-            {
-                return false;
-            }
-
-            return extendedInformation.ErrorCode == "PopReceiptMismatch";
-        }
-
-        /// <summary>Determines whether the exception is due to a 409 Conflict error.</summary>
-        /// <param name="exception">The storage exception.</param>
-        /// <returns>
-        /// <see langword="true"/> if the exception is due to a 409 Conflict error; otherwise <see langword="false"/>.
-        /// </returns>
-        public static bool IsConflict(this StorageException exception)
-        {
-            if (exception == null)
-            {
-                throw new ArgumentNullException(nameof(exception));
-            }
-
-            RequestResult result = exception.RequestInformation;
-
-            if (result == null)
-            {
-                return false;
-            }
-
-            return result.HttpStatusCode == 409;
+            return exception.ErrorCode == "PopReceiptMismatch";
         }
 
         /// <summary>
@@ -200,43 +159,6 @@ namespace Microsoft.Azure.WebJobs
         }
 
         /// <summary>
-        /// Determines whether the exception is due to a 409 Conflict error with the error code QueueBeingDeleted.
-        /// </summary>
-        /// <param name="exception">The storage exception.</param>
-        /// <returns>
-        /// <see langword="true"/> if the exception is due to a 409 Conflict error with the error code
-        /// QueueBeingDeleted; otherwise <see langword="false"/>.
-        /// </returns>
-        public static bool IsConflictQueueBeingDeleted(this StorageException exception)
-        {
-            if (exception == null)
-            {
-                throw new ArgumentNullException(nameof(exception));
-            }
-
-            RequestResult result = exception.RequestInformation;
-
-            if (result == null)
-            {
-                return false;
-            }
-
-            if (result.HttpStatusCode != 409)
-            {
-                return false;
-            }
-
-            StorageExtendedErrorInformation extendedInformation = result.ExtendedErrorInformation;
-
-            if (extendedInformation == null)
-            {
-                return false;
-            }
-
-            return extendedInformation.ErrorCode == "QueueBeingDeleted";
-        }
-
-        /// <summary>
         /// Determines whether the exception is due to a 409 Conflict error with the error code QueueBeingDeleted or
         /// QueueDisabled.
         /// </summary>
@@ -245,70 +167,19 @@ namespace Microsoft.Azure.WebJobs
         /// <see langword="true"/> if the exception is due to a 409 Conflict error with the error code QueueBeingDeleted
         /// or QueueDisabled; otherwise <see langword="false"/>.
         /// </returns>
-        public static bool IsConflictQueueBeingDeletedOrDisabled(this StorageException exception)
+        public static bool IsConflictQueueBeingDeletedOrDisabled(this RequestFailedException exception)
         {
             if (exception == null)
             {
                 throw new ArgumentNullException(nameof(exception));
             }
 
-            RequestResult result = exception.RequestInformation;
-
-            if (result == null)
+            if (exception.Status != 409)
             {
                 return false;
             }
 
-            if (result.HttpStatusCode != 409)
-            {
-                return false;
-            }
-
-            StorageExtendedErrorInformation extendedInformation = result.ExtendedErrorInformation;
-
-            if (extendedInformation == null)
-            {
-                return false;
-            }
-
-            return extendedInformation.ErrorCode == "QueueBeingDeleted";
-        }
-
-        /// <summary>
-        /// Determines whether the exception is due to a 409 Conflict error with the error code QueueDisabled.
-        /// </summary>
-        /// <param name="exception">The storage exception.</param>
-        /// <returns>
-        /// <see langword="true"/> if the exception is due to a 409 Conflict error with the error code QueueDisabled;
-        /// otherwise <see langword="false"/>.
-        /// </returns>
-        public static bool IsConflictQueueDisabled(this StorageException exception)
-        {
-            if (exception == null)
-            {
-                throw new ArgumentNullException(nameof(exception));
-            }
-
-            RequestResult result = exception.RequestInformation;
-
-            if (result == null)
-            {
-                return false;
-            }
-
-            if (result.HttpStatusCode != 409)
-            {
-                return false;
-            }
-
-            StorageExtendedErrorInformation extendedInformation = result.ExtendedErrorInformation;
-
-            if (extendedInformation == null)
-            {
-                return false;
-            }
-
-            return extendedInformation.ErrorCode == "QueueDisabled";
+            return exception.ErrorCode == "QueueBeingDeleted";
         }
 
         /// <summary>Determines whether the exception is due to a 404 Not Found error.</summary>
@@ -331,43 +202,6 @@ namespace Microsoft.Azure.WebJobs
             }
 
             return result.HttpStatusCode == 404;
-        }
-
-        /// <summary>
-        /// Determines whether the exception is due to a 404 Not Found error with the error code BlobNotFound.
-        /// </summary>
-        /// <param name="exception">The storage exception.</param>
-        /// <returns>
-        /// <see langword="true"/> if the exception is due to a 404 Not Found error with the error code BlobNotFound;
-        /// otherwise <see langword="false"/>.
-        /// </returns>
-        public static bool IsNotFoundBlobNotFound(this StorageException exception)
-        {
-            if (exception == null)
-            {
-                throw new ArgumentNullException(nameof(exception));
-            }
-
-            RequestResult result = exception.RequestInformation;
-
-            if (result == null)
-            {
-                return false;
-            }
-
-            if (result.HttpStatusCode != 404)
-            {
-                return false;
-            }
-
-            StorageExtendedErrorInformation extendedInformation = result.ExtendedErrorInformation;
-
-            if (extendedInformation == null)
-            {
-                return false;
-            }
-
-            return extendedInformation.ErrorCode == "BlobNotFound";
         }
 
         /// <summary>
@@ -457,71 +291,20 @@ namespace Microsoft.Azure.WebJobs
         /// <see langword="true"/> if the exception is due to a 404 Not Found error with the error code MessageNotFound
         /// or QueueNotFound; otherwise <see langword="false"/>.
         /// </returns>
-        public static bool IsNotFoundMessageOrQueueNotFound(this StorageException exception)
+        public static bool IsNotFoundMessageOrQueueNotFound(this RequestFailedException exception)
         {
             if (exception == null)
             {
                 throw new ArgumentNullException(nameof(exception));
             }
 
-            RequestResult result = exception.RequestInformation;
-
-            if (result == null)
+            if (exception.Status != 404)
             {
                 return false;
             }
 
-            if (result.HttpStatusCode != 404)
-            {
-                return false;
-            }
-
-            StorageExtendedErrorInformation extendedInformation = result.ExtendedErrorInformation;
-
-            if (extendedInformation == null)
-            {
-                return false;
-            }
-
-            string errorCode = extendedInformation.ErrorCode;
+            string errorCode = exception.ErrorCode;
             return errorCode == "MessageNotFound" || errorCode == "QueueNotFound";
-        }
-
-        /// <summary>
-        /// Determines whether the exception is due to a 404 Not Found error with the error code MessageNotFound.
-        /// </summary>
-        /// <param name="exception">The storage exception.</param>
-        /// <returns>
-        /// <see langword="true"/> if the exception is due to a 404 Not Found error with the error code MessageNotFound;
-        /// otherwise <see langword="false"/>.
-        /// </returns>
-        public static bool IsNotFoundMessageNotFound(this StorageException exception)
-        {
-            if (exception == null)
-            {
-                throw new ArgumentNullException(nameof(exception));
-            }
-
-            RequestResult result = exception.RequestInformation;
-
-            if (result == null)
-            {
-                return false;
-            }
-
-            if (result.HttpStatusCode != 404)
-            {
-                return false;
-            }
-
-            StorageExtendedErrorInformation extendedInformation = result.ExtendedErrorInformation;
-
-            if (extendedInformation == null)
-            {
-                return false;
-            }
-
-            return extendedInformation.ErrorCode == "MessageNotFound";
         }
 
         /// <summary>
@@ -532,33 +315,19 @@ namespace Microsoft.Azure.WebJobs
         /// <see langword="true"/> if the exception is due to a 404 Not Found error with the error code QueueNotFound;
         /// otherwise <see langword="false"/>.
         /// </returns>
-        public static bool IsNotFoundQueueNotFound(this StorageException exception)
+        public static bool IsNotFoundQueueNotFound(this RequestFailedException exception)
         {
             if (exception == null)
             {
                 throw new ArgumentNullException(nameof(exception));
             }
 
-            RequestResult result = exception.RequestInformation;
-
-            if (result == null)
+            if (exception.Status != 404)
             {
                 return false;
             }
 
-            if (result.HttpStatusCode != 404)
-            {
-                return false;
-            }
-
-            StorageExtendedErrorInformation extendedInformation = result.ExtendedErrorInformation;
-
-            if (extendedInformation == null)
-            {
-                return false;
-            }
-
-            return extendedInformation.ErrorCode == "QueueNotFound";
+            return exception.ErrorCode == QueueErrorCode.QueueNotFound;
         }
 
         /// <summary>Determines whether the exception occurred despite a 200 OK response.</summary>
@@ -582,67 +351,6 @@ namespace Microsoft.Azure.WebJobs
             }
 
             return result.HttpStatusCode == 200;
-        }
-
-        /// <summary>Determines whether the exception is due to a 412 Precondition Failed error.</summary>
-        /// <param name="exception">The storage exception.</param>
-        /// <returns>
-        /// <see langword="true"/> if the exception is due to a 412 Precondition Failed error; otherwise
-        /// <see langword="false"/>.
-        /// </returns>
-        public static bool IsPreconditionFailed(this StorageException exception)
-        {
-            if (exception == null)
-            {
-                throw new ArgumentNullException(nameof(exception));
-            }
-
-            RequestResult result = exception.RequestInformation;
-
-            if (result == null)
-            {
-                return false;
-            }
-
-            return result.HttpStatusCode == 412;
-        }
-
-        /// <summary>
-        /// Determines whether the exception is due to a 412 Precondition Failed error with the error code
-        /// ConditionNotMet.
-        /// </summary>
-        /// <param name="exception">The storage exception.</param>
-        /// <returns>
-        /// <see langword="true"/> if the exception is due to a 412 Precondition Failed error with the error code
-        /// ConditionNotMet; otherwise <see langword="false"/>.
-        /// </returns>
-        public static bool IsPreconditionFailedConditionNotMet(this StorageException exception)
-        {
-            if (exception == null)
-            {
-                throw new ArgumentNullException(nameof(exception));
-            }
-
-            RequestResult result = exception.RequestInformation;
-
-            if (result == null)
-            {
-                return false;
-            }
-
-            if (result.HttpStatusCode != 412)
-            {
-                return false;
-            }
-
-            StorageExtendedErrorInformation extendedInformation = result.ExtendedErrorInformation;
-
-            if (extendedInformation == null)
-            {
-                return false;
-            }
-
-            return extendedInformation.ErrorCode == "ConditionNotMet";
         }
 
         /// <summary>
@@ -733,86 +441,6 @@ namespace Microsoft.Azure.WebJobs
             }
 
             return exception.InnerException is TaskCanceledException;
-        }
-
-        /// <summary>
-        /// Returns the status code from the storage exception, or null.
-        /// </summary>
-        /// <param name="exception">The storage exception.</param>
-        /// <param name="statusCode">When this method returns, contains the status code.</param>
-        /// <returns>Returns true if there was a status code; otherwise, false.</returns>
-        public static bool TryGetStatusCode(this StorageException exception, out int statusCode)
-        {
-            statusCode = 0;
-
-            if (exception == null)
-            {
-                throw new ArgumentNullException(nameof(exception));
-            }
-
-            RequestResult result = exception.RequestInformation;
-
-            if (result == null)
-            {
-                return false;
-            }
-
-            statusCode = result.HttpStatusCode;
-            return true;
-        }
-
-        /// <summary>
-        /// Returns the error code from storage exception, or null.
-        /// </summary>
-        /// <param name="exception">The storage exception.</param>
-        /// <returns>The error code, or null.</returns>
-        public static string GetErrorCode(this StorageException exception)
-        {
-            if (exception == null)
-            {
-                throw new ArgumentNullException(nameof(exception));
-            }
-
-            RequestResult result = exception.RequestInformation;
-
-            if (result == null)
-            {
-                return null;
-            }
-
-            StorageExtendedErrorInformation extendedInformation = result.ExtendedErrorInformation;
-
-            if (extendedInformation == null)
-            {
-                return null;
-            }
-
-            return extendedInformation.ErrorCode;
-        }
-
-        /// <summary>
-        /// Returns a custom detailed error message for a StorageException. This is a workaround for bad error messages
-        /// returned by Azure Storage.
-        /// </summary>
-        /// <param name="exception">The storage exception.</param>
-        /// <returns>The error message.</returns>
-        public static string GetDetailedErrorMessage(this StorageException exception)
-        {
-            if (exception == null)
-            {
-                throw new ArgumentNullException(nameof(exception));
-            }
-
-            string message = exception.Message;
-
-            if (exception.RequestInformation != null)
-            {
-                message += $" (HTTP status code {exception.RequestInformation.HttpStatusCode}: "
-                    + $"{exception.RequestInformation.ExtendedErrorInformation?.ErrorCode}. "
-                    + $"{exception.RequestInformation.ExtendedErrorInformation?.ErrorMessage})";
-            }
-
-            return message;
         }
     }
 }

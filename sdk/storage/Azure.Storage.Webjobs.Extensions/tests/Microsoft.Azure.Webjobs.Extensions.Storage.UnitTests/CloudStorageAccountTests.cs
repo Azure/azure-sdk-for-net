@@ -1,24 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs.Host.Blobs;
-using Microsoft.Azure.WebJobs.Host.Indexers;
-using Microsoft.Azure.WebJobs.Host.TestCommon;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Azure.Storage;
-using Microsoft.Azure.Storage.Blob;
-using Microsoft.Azure.Storage.Queue;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Xunit;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
@@ -31,7 +15,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             // Arrange
             CloudStorageAccount realAccount = CloudStorageAccount.DevelopmentStorageAccount;
 
-            StorageAccount account = StorageAccount.New(realAccount);
+            StorageAccount account = StorageAccount.New(realAccount, "");
 
             // Act
             var t = typeof(CloudStorageAccountProgram);

@@ -2,13 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text;
 using Microsoft.Azure.WebJobs.Host.Queues;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
-using Microsoft.Azure.Storage.Queue;
-using Moq;
 using Newtonsoft.Json.Linq;
 using Xunit;
+using Azure.Storage.Queues.Models;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
 {
@@ -56,7 +54,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
         [Fact]
         public void GetOwner_IfMessageIsNotValidString_ReturnsNull()
         {
-            CloudQueueMessage message = new CloudQueueMessage("invalid");
+            QueueMessage message = CreateMessage("invalid");
             //Mock<IStorageQueueMessage> mock = new Mock<IStorageQueueMessage>(MockBehavior.Strict);
             //mock.Setup(m => m.AsString).Throws<DecoderFallbackException>();
             //IStorageQueueMessage message = mock.Object;
@@ -118,7 +116,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             TestOwnerIsNull(CreateMessage(message));
         }
 
-        private static void TestOwnerIsNull(CloudQueueMessage message)
+        private static void TestOwnerIsNull(QueueMessage message)
         {
             // Act
             Guid? owner = QueueCausalityManager.GetOwner(message);
@@ -143,9 +141,9 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             return JToken.FromObject(value) as JObject;
         }
 
-        private static CloudQueueMessage CreateMessage(string content)
+        private static QueueMessage CreateMessage(string content)
         {
-            return new CloudQueueMessage(content);
+            return QueuesModelFactory.QueueMessage("testId", "testReceipt", content, 0);
         }
 
         public class Payload
