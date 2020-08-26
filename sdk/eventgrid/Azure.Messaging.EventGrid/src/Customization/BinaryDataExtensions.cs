@@ -22,7 +22,7 @@ namespace Azure.Messaging.EventGrid
         public static EventGridEvent ToEventGridEvent(this BinaryData binaryData)
         {
             // Deserialize JsonElement to single event, parse event envelope properties
-            JsonDocument requestDocument = JsonDocument.Parse(binaryData.Bytes);
+            JsonDocument requestDocument = JsonDocument.Parse(binaryData.ToBytes());
             EventGridEventInternal egEventInternal = EventGridEventInternal.DeserializeEventGridEventInternal(requestDocument.RootElement);
 
             EventGridEvent egEvent = new EventGridEvent()
@@ -46,7 +46,7 @@ namespace Azure.Messaging.EventGrid
         public static CloudEvent ToCloudEvent(this BinaryData binaryData)
         {
             // Deserialize JsonElement to single event, parse event envelope properties
-            JsonDocument requestDocument = JsonDocument.Parse(binaryData.Bytes);
+            JsonDocument requestDocument = JsonDocument.Parse(binaryData.ToBytes());
             CloudEventInternal cloudEventInternal = CloudEventInternal.DeserializeCloudEventInternal(requestDocument.RootElement);
 
             // Case where Data and Type are null - cannot pass null Type into CloudEvent constructor

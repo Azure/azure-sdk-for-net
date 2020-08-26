@@ -1,33 +1,42 @@
-namespace Azure.Core
+namespace Azure
 {
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BinaryData
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public BinaryData(object data, System.Type type, Azure.Core.Serialization.ObjectSerializer? serializer = null) { throw null; }
+        public BinaryData(byte[] data) { throw null; }
+        public BinaryData(object serializable, Azure.Core.Serialization.ObjectSerializer serializer, System.Type? type = null) { throw null; }
+        public BinaryData(object jsonSerializable, System.Type? type = null) { throw null; }
+        public BinaryData(System.ReadOnlyMemory<byte> data) { throw null; }
         public BinaryData(System.ReadOnlySpan<byte> data) { throw null; }
         public BinaryData(string data) { throw null; }
-        public System.ReadOnlyMemory<byte> Bytes { get { throw null; } }
-        public System.Threading.Tasks.ValueTask<T> DeserializeAsync<T>(Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public System.Threading.Tasks.ValueTask<T> DeserializeAsync<T>(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public T Deserialize<T>(Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public T Deserialize<T>(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
-        public static Azure.Core.BinaryData FromMemory(System.ReadOnlyMemory<byte> data) { throw null; }
-        public static Azure.Core.BinaryData FromStream(System.IO.Stream stream) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Core.BinaryData> FromStreamAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.BinaryData FromBytes(byte[] data) { throw null; }
+        public static Azure.BinaryData FromBytes(System.ReadOnlyMemory<byte> data) { throw null; }
+        public static Azure.BinaryData FromBytes(System.ReadOnlySpan<byte> data) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.BinaryData> FromObjectAsync<T>(T serializable, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.BinaryData> FromObjectAsync<T>(T jsonSerializable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.BinaryData FromObject<T>(T serializable, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.BinaryData FromObject<T>(T jsonSerializable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.BinaryData FromStream(System.IO.Stream stream) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.BinaryData> FromStreamAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.BinaryData FromString(string data) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static implicit operator System.ReadOnlyMemory<byte> (Azure.Core.BinaryData data) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Core.BinaryData> SerializeAsync<T>(T data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Core.BinaryData> SerializeAsync<T>(T data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.BinaryData Serialize<T>(T data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.BinaryData Serialize<T>(T data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static implicit operator System.ReadOnlyMemory<byte> (Azure.BinaryData data) { throw null; }
+        public System.ReadOnlyMemory<byte> ToBytes() { throw null; }
+        public System.Threading.Tasks.ValueTask<T> ToObjectAsync<T>(Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.ValueTask<T> ToObjectAsync<T>(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public T ToObject<T>(Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public T ToObject<T>(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public System.IO.Stream ToStream() { throw null; }
         public override string ToString() { throw null; }
     }
+}
+namespace Azure.Core
+{
     public partial class DynamicJson : System.Dynamic.IDynamicMetaObjectProvider
     {
         public DynamicJson(string json) { }
