@@ -107,11 +107,13 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
             string domainEndpoint = TestEnvironment.DomainHost;
             string domainAccessKey = TestEnvironment.DomainKey;
 
+            #region Snippet:CreateDomainClient
             // Create the publisher client using an AzureKeyCredential
             // Domain should be configured to accept events of the Event Grid schema
             EventGridPublisherClient client = new EventGridPublisherClient(
                 new Uri(domainEndpoint),
                 new AzureKeyCredential(domainAccessKey));
+            #endregion
 
             #region Snippet:SendEventsToDomain
             // Add EventGridEvents to a list to publish to the domain
