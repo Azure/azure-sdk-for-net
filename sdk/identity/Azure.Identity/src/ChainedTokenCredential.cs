@@ -22,6 +22,11 @@ namespace Azure.Identity
 
         private readonly TokenCredential[] _sources;
 
+        internal ChainedTokenCredential()
+        {
+            _sources = Array.Empty<TokenCredential>();
+        }
+
         /// <summary>
         /// Creates an instance with the specified <see cref="TokenCredential"/> sources.
         /// </summary>
@@ -106,6 +111,35 @@ namespace Azure.Identity
             }
 
             throw AuthenticationFailedException.CreateAggregateException(AggregateAllUnavailableErrorMessage, exceptions);
+        }
+
+        private async ValueTask<AccessToken> GetTokenImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
+        {
+            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScopeGroup("DefaultAzureCredential.GetToken", requestContext);
+
+            try
+            {
+                using var asyncLock = await _credentialLock.GetLockOrValueAsync(async, cancellationToken).ConfigureAwait(false);
+
+                AccessToken token;
+                if (asyncLock.HasValue)
+                {
+                    token = await GetTokenFromCredentialAsync(asyncLock.Value, requestContext, async, cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    TokenCredential credential;
+                    (token, credential) = await GetTokenFromSourcesAsync(_sources, requestContext, async, cancellationToken).ConfigureAwait(false);
+                    _sources = default;
+                    asyncLock.SetValue(credential);
+                }
+
+                return scope.Succeeded(token);
+            }
+            catch (Exception e)
+            {
+                throw scope.FailWrapAndThrow(e);
+            }
         }
     }
 }
