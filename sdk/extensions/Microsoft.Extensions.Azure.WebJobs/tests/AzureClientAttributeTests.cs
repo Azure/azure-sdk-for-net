@@ -17,6 +17,14 @@ namespace Microsoft.Extensions.Azure.WebJobs.Tests
     {
         public AzureClientAttributeTests(bool isAsync) : base(isAsync)
         {
+            Matcher = new RecordMatcher()
+            {
+                VolatileQueryParameters =
+                {
+                    // Ignore KeyVault client API Version when matching
+                    "api-version"
+                }
+            };
         }
 
         [RecordedTest]

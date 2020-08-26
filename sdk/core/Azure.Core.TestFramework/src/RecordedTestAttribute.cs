@@ -51,14 +51,17 @@ namespace Azure.Core.TestFramework
                     SetRecordMode(context.TestObject as RecordedTestBase, RecordedTestMode.Record);
                     context.CurrentResult = innerCommand.Execute(context);
 
-                    // If the recording succeeded, set a warning result.
+                    // If the recording succeeded, set an error result.
                     if (context.CurrentResult.ResultState.Status == TestStatus.Passed)
                     {
-                        context.CurrentResult.SetResult(ResultState.Error, "Test failed playback, but was successfully re-recorded (it should pass if re-run). Please copy updated recording to SessionFiles.");
+                        context.CurrentResult.SetResult(ResultState.Error, "Test failed playback, but was successfully re-recorded (it should pass if re-run). Please copy updated recordings to SessionFiles using `dotnet msbuild /t:UpdateSessionRecords`.");
                     }
                     else
                     {
-                        context.CurrentResult.SetResult(context.CurrentResult.ResultState, context.CurrentResult.Message + Environment.NewLine + "Original error: " + originalResult.Message, context.CurrentResult.Message);
+                        context.CurrentResult.SetResult(context.CurrentResult.ResultState,
+                            "Error while trying to re-record: " + Environment.NewLine +
+                            context.CurrentResult.Message + Environment.NewLine +
+                            "Original error: " + originalResult.Message, context.CurrentResult.Message);
                     }
 
                     // revert RecordTestMode to Playback

@@ -319,7 +319,7 @@ namespace Azure.Core.Extensions.Tests
                 new KeyValuePair<string, string>("TestClient:tenantId", "ConfigurationTenantId"));
 
             var serviceCollection = new ServiceCollection();
-            serviceCollection.AddAzureClients(builder => builder.SetConfigurationRoot(_ => configuration));
+            serviceCollection.AddAzureClients(builder => builder.UseConfiguration(_ => configuration));
 
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             IAzureClientFactory<TestClientWithCredentials> factory = provider.GetService<IAzureClientFactory<TestClientWithCredentials>>();
@@ -341,7 +341,7 @@ namespace Azure.Core.Extensions.Tests
                 new KeyValuePair<string, string>("TestClient", "http://localhost/"));
 
             var serviceCollection = new ServiceCollection();
-            serviceCollection.AddAzureClients(builder => builder.SetConfigurationRoot(_ => configuration));
+            serviceCollection.AddAzureClients(builder => builder.UseConfiguration(_ => configuration));
 
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             IAzureClientFactory<TestClient> factory = provider.GetService<IAzureClientFactory<TestClient>>();
