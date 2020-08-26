@@ -41,7 +41,7 @@ switch (egEvent.GetData())
         // You can use BinaryData methods to deserialize the payload
         if (egEvent.EventType == "MyApp.Models.CustomEventType")
         {
-            TestPayload deserializedEventData = await unknownType.DeserializeAsync<TestPayload>();
+            TestPayload deserializedEventData = await unknownType.ToObject<TestPayload>();
             Console.WriteLine(deserializedEventData.Name);
         }
         break;
