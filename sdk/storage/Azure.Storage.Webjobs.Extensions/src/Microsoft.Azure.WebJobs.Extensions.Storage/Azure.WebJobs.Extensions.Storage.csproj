@@ -85,7 +85,7 @@
   </ItemGroup>  
 
   <ItemGroup>
-    <PackageReference Include="Azure.Storage.Queues" VersionOverride="12.3.2"/>
+    <PackageReference Include="Azure.Storage.Queues" VersionOverride="12.4.1"/>
     <PackageReference Include="Microsoft.Azure.Storage.Blob" />
     <PackageReference Include="Microsoft.Azure.WebJobs" />
   </ItemGroup>
