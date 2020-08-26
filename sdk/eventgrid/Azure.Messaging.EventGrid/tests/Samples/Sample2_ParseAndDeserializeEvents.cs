@@ -51,7 +51,7 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
                     if (egEvent.EventType == "MyApp.Models.CustomEventType")
                     {
                         // You can use BinaryData methods to deserialize the payload
-                        TestPayload deserializedEventData = await unknownType.ToObject<TestPayload>();
+                        TestPayload deserializedEventData = await unknownType.ToObjectAsync<TestPayload>();
                         Console.WriteLine(deserializedEventData.Name);
                     }
                     break;
