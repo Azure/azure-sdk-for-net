@@ -6,8 +6,8 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200821.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200826.1",
+          "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "33fb91d27c5a3010474b58bf2270acbd",
         "x-ms-return-client-request-id": "true"
@@ -17,11 +17,11 @@
       "ResponseHeaders": {
         "Content-Length": "4188",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 21 Aug 2020 01:53:42 GMT",
+        "Date": "Wed, 26 Aug 2020 02:07:02 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "x-ms-client-request-id": "33fb91d27c5a3010474b58bf2270acbd",
-        "x-ms-request-id": "02a7b30d-c2d8-4811-a8e8-78a23af98eef"
+        "x-ms-request-id": "9f4d3466-051a-4604-be7f-6d658c349ae8"
       },
       "ResponseBody": {
         "value": [
@@ -172,9 +172,9 @@
             "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/pipelines/MyPipeline",
             "name": "MyPipeline",
             "type": "Microsoft.Synapse/workspaces/pipelines",
-            "etag": "0900ff05-0000-0100-0000-5f3f291d0000",
+            "etag": "05002091-0000-0100-0000-5f45c3b40000",
             "properties": {
-              "lastPublishTime": "2020-08-21T01:53:33Z"
+              "lastPublishTime": "2020-08-26T02:06:44Z"
             }
           }
         ]
@@ -185,10 +185,10 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-bda4e6c46472e34781c9b26d8a8a258b-f058a1bc5ecf0b43-00",
+        "traceparent": "00-56df02f3f26b89489f58670ae5870984-68636dccc5481040-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200821.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200826.1",
+          "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "eb51ee2b1608ec5afe9637bbb301e7f3",
         "x-ms-return-client-request-id": "true"
@@ -199,7 +199,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "652",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 21 Aug 2020 01:53:43 GMT",
+        "Date": "Wed, 26 Aug 2020 02:07:02 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -209,8 +209,8 @@
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "eb51ee2b1608ec5afe9637bbb301e7f3",
-        "x-ms-correlation-request-id": "44f5cec8-0028-437a-9caa-5c8d4dadc5b1",
-        "x-ms-request-id": "ecca6108-53a7-401e-acf3-60412742d6fb",
+        "x-ms-correlation-request-id": "f635d60c-56aa-4550-aa1a-dce5a7b4c9d1",
+        "x-ms-request-id": "0af058df-f145-4c2a-8816-8ac7640f18a4",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -250,10 +250,10 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-7c61273750791342aa1b692d91e384f9-5075062408cf5248-00",
+        "traceparent": "00-688cf3abc8ad11418b499cabc3350daa-f8021a7a6dd93040-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200821.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200826.1",
+          "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "5ed53bdd4eb4a73dad230e2ab58d4037",
         "x-ms-return-client-request-id": "true"
@@ -264,7 +264,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "454",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 21 Aug 2020 01:53:43 GMT",
+        "Date": "Wed, 26 Aug 2020 02:07:02 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -274,8 +274,8 @@
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "5ed53bdd4eb4a73dad230e2ab58d4037",
-        "x-ms-correlation-request-id": "225b1474-00dc-4ce6-94ab-dcec8e1dca04",
-        "x-ms-request-id": "d8d81b31-93e8-4577-9345-12e10b5ed564",
+        "x-ms-correlation-request-id": "58f749ba-6a85-4374-b797-59361b1c906e",
+        "x-ms-request-id": "af397b0c-69a9-4c16-a4a3-df5296d1a2b3",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -300,10 +300,10 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-0367d6a683da2644bad2bd411eb883c9-14088a605f87ed4a-00",
+        "traceparent": "00-9fa868370234fa46a2580ccabfa7e7a9-6df27a59614acb46-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200821.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200826.1",
+          "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "a50beeede95ebc2a370e35c344557c46",
         "x-ms-return-client-request-id": "true"
@@ -314,7 +314,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "454",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 21 Aug 2020 01:53:43 GMT",
+        "Date": "Wed, 26 Aug 2020 02:07:02 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -324,8 +324,8 @@
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "a50beeede95ebc2a370e35c344557c46",
-        "x-ms-correlation-request-id": "49996300-ac95-443e-9355-50f4be238f25",
-        "x-ms-request-id": "e96b4981-50d8-4e29-97a2-fda9d6555fa5",
+        "x-ms-correlation-request-id": "c611ba58-92e3-4631-a715-f436a3859144",
+        "x-ms-request-id": "fbe7d76a-6bac-4a61-bdf2-e4561ea8172f",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -350,10 +350,10 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-1539967e7a2d1a4d8fde39a80403d6e9-fb39845a05756743-00",
+        "traceparent": "00-c4205ea0d3b2e445b4eddcd422e56bba-57ae31bcf3294b4a-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200821.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200826.1",
+          "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "e6e265644d9bdc09b0aa3de408303770",
         "x-ms-return-client-request-id": "true"
@@ -364,7 +364,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "454",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 21 Aug 2020 01:53:43 GMT",
+        "Date": "Wed, 26 Aug 2020 02:07:03 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -374,8 +374,8 @@
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "e6e265644d9bdc09b0aa3de408303770",
-        "x-ms-correlation-request-id": "44f12cbb-6301-4165-8d17-51a0c5ef3805",
-        "x-ms-request-id": "62d384fc-bf61-4c9e-a37b-3b09a0e50555",
+        "x-ms-correlation-request-id": "3e4cdeb8-9e60-48e4-a0d9-8332b3c560f0",
+        "x-ms-request-id": "36aa14f8-9abe-466e-a884-43c64c67658a",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -400,10 +400,10 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-2cb89f95e04d6944a157dd3d876ea119-8d7e4aec24a9cd46-00",
+        "traceparent": "00-7fb106e50eb71946bc568dfd6b18fe12-ce884e9de7411043-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200821.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200826.1",
+          "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "c4ceff5541f5f394111927a5187a6258",
         "x-ms-return-client-request-id": "true"
@@ -414,7 +414,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "454",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 21 Aug 2020 01:53:44 GMT",
+        "Date": "Wed, 26 Aug 2020 02:07:03 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -424,8 +424,8 @@
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "c4ceff5541f5f394111927a5187a6258",
-        "x-ms-correlation-request-id": "e636ee54-6e65-4013-8179-13a0e7355ccf",
-        "x-ms-request-id": "d5099f3e-0d25-4dca-8065-c88d59b12511",
+        "x-ms-correlation-request-id": "6c6b7949-2457-45fa-9cf5-4ea4d1290fb1",
+        "x-ms-request-id": "b1d7b01c-f4a6-4697-a63f-13b16ee94cff",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -450,10 +450,10 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-108971b3632a964cb72fb8612da355e4-10c24607a8ddfe4f-00",
+        "traceparent": "00-b9f058b6b9e9434b9707d6167efb26e4-39b5d5e5bec72e48-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200821.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200826.1",
+          "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "4fc5c7a75aaa9f9ce52ef4b4ab45b306",
         "x-ms-return-client-request-id": "true"
@@ -464,7 +464,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "454",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 21 Aug 2020 01:53:44 GMT",
+        "Date": "Wed, 26 Aug 2020 02:07:03 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -474,8 +474,8 @@
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "4fc5c7a75aaa9f9ce52ef4b4ab45b306",
-        "x-ms-correlation-request-id": "b5657d5d-aa6c-40e6-b391-36937740c1a3",
-        "x-ms-request-id": "16a7ebf7-821a-492f-b0e0-4adf02c3bf8d",
+        "x-ms-correlation-request-id": "793c5516-c2de-4598-8159-2aeeb5f1d926",
+        "x-ms-request-id": "2f43e42c-7171-4f51-a327-2c1d774b128e",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -500,10 +500,10 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-02818bae54b0dc42898a4e769a768927-0712c69356111e47-00",
+        "traceparent": "00-86cf79c598f0d749b5f09570af0b045d-400f93712d29a84a-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200821.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200826.1",
+          "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "446dc4d7b8872251d0eed5812663c436",
         "x-ms-return-client-request-id": "true"
@@ -514,7 +514,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "454",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 21 Aug 2020 01:53:44 GMT",
+        "Date": "Wed, 26 Aug 2020 02:07:03 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -524,8 +524,8 @@
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "446dc4d7b8872251d0eed5812663c436",
-        "x-ms-correlation-request-id": "6ef67748-5820-4c6f-a650-21de1d1b3a75",
-        "x-ms-request-id": "837a069e-1669-4201-b9bf-4edef06a8705",
+        "x-ms-correlation-request-id": "aafd4f5d-d0bf-43a6-ad8f-a64ad53eda10",
+        "x-ms-request-id": "00d07e02-1f71-4523-9bfb-eb3841ce7158",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -550,10 +550,10 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-571aa6260ebf054fbbba9414b7c36631-2912f11222833d4c-00",
+        "traceparent": "00-89c4d89fca21c040b8cad6c13c3c66e7-444e743e29db734d-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200821.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200826.1",
+          "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "403de547e76bfbc6632edec64cdf48cb",
         "x-ms-return-client-request-id": "true"
@@ -564,7 +564,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "454",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 21 Aug 2020 01:53:44 GMT",
+        "Date": "Wed, 26 Aug 2020 02:07:04 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -574,8 +574,8 @@
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "403de547e76bfbc6632edec64cdf48cb",
-        "x-ms-correlation-request-id": "c1f3aaa4-2389-4871-88c7-c91308c255ff",
-        "x-ms-request-id": "c93624f8-6c6a-477b-a110-5bb612866b93",
+        "x-ms-correlation-request-id": "ea214bbf-cb79-418a-b46f-ae20b0a174fe",
+        "x-ms-request-id": "e88ab633-c3e3-4cb6-8030-14b6c225419d",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -600,10 +600,10 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-4fa9ceacc1cd354bb2a24f791796b858-84a3873683d0384d-00",
+        "traceparent": "00-5837cdebbf4dba41918f6442c981a402-48f8c25e26f56548-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200821.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200826.1",
+          "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "53ce21651d0cefd076a27ebb841a7982",
         "x-ms-return-client-request-id": "true"
@@ -614,7 +614,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "338",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 21 Aug 2020 01:53:45 GMT",
+        "Date": "Wed, 26 Aug 2020 02:07:04 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -624,8 +624,8 @@
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "53ce21651d0cefd076a27ebb841a7982",
-        "x-ms-correlation-request-id": "952b315f-e5ae-4e04-a181-83a87fa0c6c8",
-        "x-ms-request-id": "57fba4e9-0bc8-4dcd-bdab-499bd9310cba",
+        "x-ms-correlation-request-id": "3a4ed417-d135-4661-a651-16c8214969ae",
+        "x-ms-request-id": "5b7be439-cdac-44c1-ac87-7bbadf4888fe",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -633,9 +633,9 @@
         "name": "MyPipeline",
         "type": "Microsoft.Synapse/workspaces/pipelines",
         "properties": {
-          "lastPublishTime": "2020-08-21T01:53:33Z"
+          "lastPublishTime": "2020-08-26T02:06:44Z"
         },
-        "etag": "0900ff05-0000-0100-0000-5f3f291d0000"
+        "etag": "05002091-0000-0100-0000-5f45c3b40000"
       }
     }
   ],

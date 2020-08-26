@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/linkedservices/MyLinkedService?api-version=2019-06-01-preview",
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/dataflows/MyDataFlow?api-version=2019-06-01-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-6f0ff2c960fe3d41870cd0fadb79daff-5ef0de070869c948-00",
+        "traceparent": "00-fdfa10a2e4f03e4a9798cf9786d9a75f-566e6d81ee2ffc4d-00",
         "User-Agent": [
           "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200826.1",
           "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
-        "x-ms-client-request-id": "b29a26d5114ab6a7c035149b4a1dad89",
+        "x-ms-client-request-id": "0ba137a0276ce7d951a56a850162704c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -18,28 +18,28 @@
       "ResponseHeaders": {
         "Access-Control-Allow-Headers": "Location",
         "Access-Control-Expose-Headers": "Location",
-        "Content-Length": "375",
+        "Content-Length": "355",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Aug 2020 02:02:52 GMT",
-        "Location": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/40961cdf-5a25-4089-a489-16f7095aa520?api-version=2019-06-01-preview",
+        "Date": "Wed, 26 Aug 2020 02:00:40 GMT",
+        "Location": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/07aca10e-e62b-4ae2-a8dd-54963535a029?api-version=2019-06-01-preview",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-client-request-id": "b29a26d5114ab6a7c035149b4a1dad89",
-        "x-ms-request-id": "0e97350d-b99f-4e13-9591-45b1d638a3df"
+        "x-ms-client-request-id": "0ba137a0276ce7d951a56a850162704c",
+        "x-ms-request-id": "e6005289-21e7-4b8f-9b74-bc70f12df2dd"
       },
       "ResponseBody": {
-        "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/linkedServices/MyLinkedService",
+        "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/dataflows/MyDataFlow",
         "recordId": 0,
         "state": "Deleting",
         "created": "0001-01-01T00:00:00",
         "changed": "0001-01-01T00:00:00",
-        "type": "LinkedService",
-        "name": "MyLinkedService",
-        "operationId": "40961cdf-5a25-4089-a489-16f7095aa520"
+        "type": "DataFlow",
+        "name": "MyDataFlow",
+        "operationId": "07aca10e-e62b-4ae2-a8dd-54963535a029"
       }
     },
     {
-      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/40961cdf-5a25-4089-a489-16f7095aa520?api-version=2019-06-01-preview",
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/07aca10e-e62b-4ae2-a8dd-54963535a029?api-version=2019-06-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -47,7 +47,7 @@
           "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200826.1",
           "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
-        "x-ms-client-request-id": "ecd5272aae8fc00eca190888f47c3df1",
+        "x-ms-client-request-id": "fd2c9ecb8cfc982b6412d39d45f15090",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -63,20 +63,20 @@
         ],
         "Content-Length": "23",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Aug 2020 02:02:53 GMT",
-        "Location": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/40961cdf-5a25-4089-a489-16f7095aa520?api-version=2019-06-01-preview",
+        "Date": "Wed, 26 Aug 2020 02:00:40 GMT",
+        "Location": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/07aca10e-e62b-4ae2-a8dd-54963535a029?api-version=2019-06-01-preview",
         "Retry-After": "10",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-client-request-id": "ecd5272aae8fc00eca190888f47c3df1",
-        "x-ms-request-id": "c7e74d60-35c4-4a0c-9fd0-d7f5782f63ac"
+        "x-ms-client-request-id": "fd2c9ecb8cfc982b6412d39d45f15090",
+        "x-ms-request-id": "639ea40e-5325-4a6d-8f34-52768583cf91"
       },
       "ResponseBody": {
         "status": "InProgress"
       }
     },
     {
-      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/40961cdf-5a25-4089-a489-16f7095aa520?api-version=2019-06-01-preview",
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/07aca10e-e62b-4ae2-a8dd-54963535a029?api-version=2019-06-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -84,7 +84,7 @@
           "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200826.1",
           "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
-        "x-ms-client-request-id": "6554ea43b687de6ec28fd5010e4a1a50",
+        "x-ms-client-request-id": "5f1d7b2c92149e309ba65c0525301494",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -100,20 +100,20 @@
         ],
         "Content-Length": "23",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Aug 2020 02:02:53 GMT",
-        "Location": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/40961cdf-5a25-4089-a489-16f7095aa520?api-version=2019-06-01-preview",
+        "Date": "Wed, 26 Aug 2020 02:00:40 GMT",
+        "Location": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/07aca10e-e62b-4ae2-a8dd-54963535a029?api-version=2019-06-01-preview",
         "Retry-After": "10",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-client-request-id": "6554ea43b687de6ec28fd5010e4a1a50",
-        "x-ms-request-id": "465f6c14-be3c-4814-94cf-d452bfb6f092"
+        "x-ms-client-request-id": "5f1d7b2c92149e309ba65c0525301494",
+        "x-ms-request-id": "af4b3977-c8e2-4283-b0c7-2ced74d49815"
       },
       "ResponseBody": {
         "status": "InProgress"
       }
     },
     {
-      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/40961cdf-5a25-4089-a489-16f7095aa520?api-version=2019-06-01-preview",
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/07aca10e-e62b-4ae2-a8dd-54963535a029?api-version=2019-06-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -121,7 +121,7 @@
           "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200826.1",
           "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
-        "x-ms-client-request-id": "2271470ac04808f9e7d82390eedb1660",
+        "x-ms-client-request-id": "63b9a0a672359d5098652da52efeb5be",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -137,20 +137,20 @@
         ],
         "Content-Length": "23",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Aug 2020 02:02:53 GMT",
-        "Location": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/40961cdf-5a25-4089-a489-16f7095aa520?api-version=2019-06-01-preview",
+        "Date": "Wed, 26 Aug 2020 02:00:40 GMT",
+        "Location": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/07aca10e-e62b-4ae2-a8dd-54963535a029?api-version=2019-06-01-preview",
         "Retry-After": "10",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-client-request-id": "2271470ac04808f9e7d82390eedb1660",
-        "x-ms-request-id": "11727d8e-ed5a-4648-ab58-e5f61db96f2b"
+        "x-ms-client-request-id": "63b9a0a672359d5098652da52efeb5be",
+        "x-ms-request-id": "ce85f22e-e5f8-46ee-8631-9e64545b5eda"
       },
       "ResponseBody": {
         "status": "InProgress"
       }
     },
     {
-      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/40961cdf-5a25-4089-a489-16f7095aa520?api-version=2019-06-01-preview",
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/07aca10e-e62b-4ae2-a8dd-54963535a029?api-version=2019-06-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -158,7 +158,7 @@
           "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200826.1",
           "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
-        "x-ms-client-request-id": "b119110bc51b7345b9f62900d90db180",
+        "x-ms-client-request-id": "577c70179f9f38b66d8d615630267334",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -174,20 +174,20 @@
         ],
         "Content-Length": "23",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Aug 2020 02:02:53 GMT",
-        "Location": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/40961cdf-5a25-4089-a489-16f7095aa520?api-version=2019-06-01-preview",
+        "Date": "Wed, 26 Aug 2020 02:00:41 GMT",
+        "Location": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/07aca10e-e62b-4ae2-a8dd-54963535a029?api-version=2019-06-01-preview",
         "Retry-After": "10",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-client-request-id": "b119110bc51b7345b9f62900d90db180",
-        "x-ms-request-id": "5a8c27cd-0f63-4e76-9c86-6ae4d7b78d0c"
+        "x-ms-client-request-id": "577c70179f9f38b66d8d615630267334",
+        "x-ms-request-id": "23b95799-b9e5-45d8-8547-99cb8a342654"
       },
       "ResponseBody": {
         "status": "InProgress"
       }
     },
     {
-      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/40961cdf-5a25-4089-a489-16f7095aa520?api-version=2019-06-01-preview",
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/07aca10e-e62b-4ae2-a8dd-54963535a029?api-version=2019-06-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -195,7 +195,7 @@
           "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200826.1",
           "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
-        "x-ms-client-request-id": "ac7db7ff1a0a82a9f04c7daf93deefe7",
+        "x-ms-client-request-id": "a5f73efdec37b95b2b80c6ae658b709c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -211,20 +211,20 @@
         ],
         "Content-Length": "23",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Aug 2020 02:02:54 GMT",
-        "Location": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/40961cdf-5a25-4089-a489-16f7095aa520?api-version=2019-06-01-preview",
+        "Date": "Wed, 26 Aug 2020 02:00:41 GMT",
+        "Location": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/07aca10e-e62b-4ae2-a8dd-54963535a029?api-version=2019-06-01-preview",
         "Retry-After": "10",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-client-request-id": "ac7db7ff1a0a82a9f04c7daf93deefe7",
-        "x-ms-request-id": "1ad6a1d9-d729-4a67-a707-feda14a64bf5"
+        "x-ms-client-request-id": "a5f73efdec37b95b2b80c6ae658b709c",
+        "x-ms-request-id": "81c74caa-2db9-498c-9ce7-9db4f26cc0e5"
       },
       "ResponseBody": {
         "status": "InProgress"
       }
     },
     {
-      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/40961cdf-5a25-4089-a489-16f7095aa520?api-version=2019-06-01-preview",
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/07aca10e-e62b-4ae2-a8dd-54963535a029?api-version=2019-06-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -232,7 +232,7 @@
           "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200826.1",
           "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
-        "x-ms-client-request-id": "fdf674796930453502fe695197f92fda",
+        "x-ms-client-request-id": "b4ee9ef0bdb306f5ea80f6a711f96c72",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -248,20 +248,20 @@
         ],
         "Content-Length": "23",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Aug 2020 02:02:54 GMT",
-        "Location": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/40961cdf-5a25-4089-a489-16f7095aa520?api-version=2019-06-01-preview",
+        "Date": "Wed, 26 Aug 2020 02:00:41 GMT",
+        "Location": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/07aca10e-e62b-4ae2-a8dd-54963535a029?api-version=2019-06-01-preview",
         "Retry-After": "10",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-client-request-id": "fdf674796930453502fe695197f92fda",
-        "x-ms-request-id": "182aca8c-77e5-4ca4-9130-1b065e045637"
+        "x-ms-client-request-id": "b4ee9ef0bdb306f5ea80f6a711f96c72",
+        "x-ms-request-id": "59db211d-e591-4ef8-b721-3fd870636607"
       },
       "ResponseBody": {
         "status": "InProgress"
       }
     },
     {
-      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/40961cdf-5a25-4089-a489-16f7095aa520?api-version=2019-06-01-preview",
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/07aca10e-e62b-4ae2-a8dd-54963535a029?api-version=2019-06-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -269,7 +269,7 @@
           "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200826.1",
           "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
-        "x-ms-client-request-id": "3691a226695ef0556797c0cf4896dfdb",
+        "x-ms-client-request-id": "efa7f8f210072a8615c32b1ed907d3e1",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -285,20 +285,20 @@
         ],
         "Content-Length": "23",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Aug 2020 02:02:54 GMT",
-        "Location": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/40961cdf-5a25-4089-a489-16f7095aa520?api-version=2019-06-01-preview",
+        "Date": "Wed, 26 Aug 2020 02:00:41 GMT",
+        "Location": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/07aca10e-e62b-4ae2-a8dd-54963535a029?api-version=2019-06-01-preview",
         "Retry-After": "10",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-client-request-id": "3691a226695ef0556797c0cf4896dfdb",
-        "x-ms-request-id": "5af011bd-c4eb-4205-9457-c223b9c8aa41"
+        "x-ms-client-request-id": "efa7f8f210072a8615c32b1ed907d3e1",
+        "x-ms-request-id": "16bd878f-d600-4c93-81bc-f040ba5e3fe7"
       },
       "ResponseBody": {
         "status": "InProgress"
       }
     },
     {
-      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/40961cdf-5a25-4089-a489-16f7095aa520?api-version=2019-06-01-preview",
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/07aca10e-e62b-4ae2-a8dd-54963535a029?api-version=2019-06-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -306,7 +306,7 @@
           "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200826.1",
           "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
-        "x-ms-client-request-id": "65864206b416964f8237aa0cb158ebf7",
+        "x-ms-client-request-id": "9266c41dbe38408148f0bab7f6b3a831",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -322,20 +322,20 @@
         ],
         "Content-Length": "23",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Aug 2020 02:02:54 GMT",
-        "Location": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/40961cdf-5a25-4089-a489-16f7095aa520?api-version=2019-06-01-preview",
+        "Date": "Wed, 26 Aug 2020 02:00:41 GMT",
+        "Location": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/07aca10e-e62b-4ae2-a8dd-54963535a029?api-version=2019-06-01-preview",
         "Retry-After": "10",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-client-request-id": "65864206b416964f8237aa0cb158ebf7",
-        "x-ms-request-id": "24db8df8-01dc-47bc-a47e-a1b5bd19daa2"
+        "x-ms-client-request-id": "9266c41dbe38408148f0bab7f6b3a831",
+        "x-ms-request-id": "3c20fec2-2df0-4a7d-ad99-cd2f58fcd134"
       },
       "ResponseBody": {
         "status": "InProgress"
       }
     },
     {
-      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/40961cdf-5a25-4089-a489-16f7095aa520?api-version=2019-06-01-preview",
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/07aca10e-e62b-4ae2-a8dd-54963535a029?api-version=2019-06-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -343,7 +343,7 @@
           "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200826.1",
           "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
-        "x-ms-client-request-id": "f089a31cb84c10891e069599a865fc6b",
+        "x-ms-client-request-id": "6cbb541380e4df9417c39ef091d72de2",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -359,20 +359,20 @@
         ],
         "Content-Length": "23",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Aug 2020 02:02:54 GMT",
-        "Location": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/40961cdf-5a25-4089-a489-16f7095aa520?api-version=2019-06-01-preview",
+        "Date": "Wed, 26 Aug 2020 02:00:42 GMT",
+        "Location": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/07aca10e-e62b-4ae2-a8dd-54963535a029?api-version=2019-06-01-preview",
         "Retry-After": "10",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-client-request-id": "f089a31cb84c10891e069599a865fc6b",
-        "x-ms-request-id": "307c437b-fc1a-47a2-a6eb-47212e57e2ca"
+        "x-ms-client-request-id": "6cbb541380e4df9417c39ef091d72de2",
+        "x-ms-request-id": "24463e29-4173-4f79-83a5-f65836d1852d"
       },
       "ResponseBody": {
         "status": "InProgress"
       }
     },
     {
-      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/40961cdf-5a25-4089-a489-16f7095aa520?api-version=2019-06-01-preview",
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/07aca10e-e62b-4ae2-a8dd-54963535a029?api-version=2019-06-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -380,7 +380,7 @@
           "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200826.1",
           "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
-        "x-ms-client-request-id": "554a8e1eca7271c453fbb426be493e0f",
+        "x-ms-client-request-id": "4c8914adda9333397767a61755ce3461",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -396,20 +396,20 @@
         ],
         "Content-Length": "23",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Aug 2020 02:02:55 GMT",
-        "Location": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/40961cdf-5a25-4089-a489-16f7095aa520?api-version=2019-06-01-preview",
+        "Date": "Wed, 26 Aug 2020 02:00:42 GMT",
+        "Location": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/07aca10e-e62b-4ae2-a8dd-54963535a029?api-version=2019-06-01-preview",
         "Retry-After": "10",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-client-request-id": "554a8e1eca7271c453fbb426be493e0f",
-        "x-ms-request-id": "16ab142c-6f39-49c1-8f7c-7dff4211eb6c"
+        "x-ms-client-request-id": "4c8914adda9333397767a61755ce3461",
+        "x-ms-request-id": "a4079635-6de1-4cad-bc61-d3f226016de8"
       },
       "ResponseBody": {
         "status": "InProgress"
       }
     },
     {
-      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/40961cdf-5a25-4089-a489-16f7095aa520?api-version=2019-06-01-preview",
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/07aca10e-e62b-4ae2-a8dd-54963535a029?api-version=2019-06-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -417,7 +417,7 @@
           "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200826.1",
           "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
-        "x-ms-client-request-id": "a5b2c9abee0c4d8eb876460f1fb6ed1c",
+        "x-ms-client-request-id": "850afa1a664c9cfd2f867a752090ae71",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -433,20 +433,20 @@
         ],
         "Content-Length": "23",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Aug 2020 02:02:55 GMT",
-        "Location": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/40961cdf-5a25-4089-a489-16f7095aa520?api-version=2019-06-01-preview",
+        "Date": "Wed, 26 Aug 2020 02:00:42 GMT",
+        "Location": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/07aca10e-e62b-4ae2-a8dd-54963535a029?api-version=2019-06-01-preview",
         "Retry-After": "10",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-client-request-id": "a5b2c9abee0c4d8eb876460f1fb6ed1c",
-        "x-ms-request-id": "90bf914a-33b2-4177-9715-12d477b42068"
+        "x-ms-client-request-id": "850afa1a664c9cfd2f867a752090ae71",
+        "x-ms-request-id": "f515a7f8-c485-4e97-828a-15174d18f8e8"
       },
       "ResponseBody": {
         "status": "InProgress"
       }
     },
     {
-      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/40961cdf-5a25-4089-a489-16f7095aa520?api-version=2019-06-01-preview",
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/07aca10e-e62b-4ae2-a8dd-54963535a029?api-version=2019-06-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -454,7 +454,7 @@
           "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200826.1",
           "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
-        "x-ms-client-request-id": "23ed3f3b960d5284de189d51046351d5",
+        "x-ms-client-request-id": "e109d8c35b29399d1b88f57cd97d8949",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -470,20 +470,20 @@
         ],
         "Content-Length": "23",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Aug 2020 02:02:55 GMT",
-        "Location": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/40961cdf-5a25-4089-a489-16f7095aa520?api-version=2019-06-01-preview",
+        "Date": "Wed, 26 Aug 2020 02:00:42 GMT",
+        "Location": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/07aca10e-e62b-4ae2-a8dd-54963535a029?api-version=2019-06-01-preview",
         "Retry-After": "10",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-client-request-id": "23ed3f3b960d5284de189d51046351d5",
-        "x-ms-request-id": "a923de37-4163-434f-b4d3-076371de731e"
+        "x-ms-client-request-id": "e109d8c35b29399d1b88f57cd97d8949",
+        "x-ms-request-id": "7c25de53-2121-4ee1-b274-b1070074ba32"
       },
       "ResponseBody": {
         "status": "InProgress"
       }
     },
     {
-      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/40961cdf-5a25-4089-a489-16f7095aa520?api-version=2019-06-01-preview",
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/07aca10e-e62b-4ae2-a8dd-54963535a029?api-version=2019-06-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -491,7 +491,7 @@
           "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200826.1",
           "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
-        "x-ms-client-request-id": "dfed86c857b32f5efffd9cfc83b4529c",
+        "x-ms-client-request-id": "97d53c8fa7cd469617ec1c0d5fc413e6",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -507,20 +507,20 @@
         ],
         "Content-Length": "23",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Aug 2020 02:02:55 GMT",
-        "Location": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/40961cdf-5a25-4089-a489-16f7095aa520?api-version=2019-06-01-preview",
+        "Date": "Wed, 26 Aug 2020 02:00:42 GMT",
+        "Location": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/07aca10e-e62b-4ae2-a8dd-54963535a029?api-version=2019-06-01-preview",
         "Retry-After": "10",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-client-request-id": "dfed86c857b32f5efffd9cfc83b4529c",
-        "x-ms-request-id": "38d51ea3-be10-4cd0-b8a3-148bac12131f"
+        "x-ms-client-request-id": "97d53c8fa7cd469617ec1c0d5fc413e6",
+        "x-ms-request-id": "41faebfb-7196-45b1-b0b1-43fbca8a8e69"
       },
       "ResponseBody": {
         "status": "InProgress"
       }
     },
     {
-      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/40961cdf-5a25-4089-a489-16f7095aa520?api-version=2019-06-01-preview",
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/07aca10e-e62b-4ae2-a8dd-54963535a029?api-version=2019-06-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -528,7 +528,7 @@
           "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200826.1",
           "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
-        "x-ms-client-request-id": "7feb980d1b5b1501445fc6f4513c4955",
+        "x-ms-client-request-id": "7d5335b853c4be375cd06ac37180c3b2",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -544,20 +544,20 @@
         ],
         "Content-Length": "23",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Aug 2020 02:02:55 GMT",
-        "Location": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/40961cdf-5a25-4089-a489-16f7095aa520?api-version=2019-06-01-preview",
+        "Date": "Wed, 26 Aug 2020 02:00:43 GMT",
+        "Location": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/07aca10e-e62b-4ae2-a8dd-54963535a029?api-version=2019-06-01-preview",
         "Retry-After": "10",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-client-request-id": "7feb980d1b5b1501445fc6f4513c4955",
-        "x-ms-request-id": "011b9ae8-d2ed-42d3-b4da-5ce0a7d585e9"
+        "x-ms-client-request-id": "7d5335b853c4be375cd06ac37180c3b2",
+        "x-ms-request-id": "50f75d77-8662-45cf-bdb1-1d9615306e39"
       },
       "ResponseBody": {
         "status": "InProgress"
       }
     },
     {
-      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/40961cdf-5a25-4089-a489-16f7095aa520?api-version=2019-06-01-preview",
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/operationResults/07aca10e-e62b-4ae2-a8dd-54963535a029?api-version=2019-06-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -565,24 +565,24 @@
           "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200826.1",
           "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
-        "x-ms-client-request-id": "984770240dc8e368e0be2310f988cf2a",
+        "x-ms-client-request-id": "e3e531fc17bb1ba441c3c93c3f90d957",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 26 Aug 2020 02:02:57 GMT",
+        "Date": "Wed, 26 Aug 2020 02:00:43 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-client-request-id": "984770240dc8e368e0be2310f988cf2a",
-        "x-ms-request-id": "a107830f-c36d-4ee0-bea4-84d6077ca97b"
+        "x-ms-client-request-id": "e3e531fc17bb1ba441c3c93c3f90d957",
+        "x-ms-request-id": "bca45df5-15dc-4b6e-b995-5560a52c00bc"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
     "AZURE_SYNAPSE_WORKSPACE_URL": "https://testsynapseworkspace.dev.azuresynapse.net",
-    "RandomSeed": "1988979361"
+    "RandomSeed": "1400607649"
   }
 }

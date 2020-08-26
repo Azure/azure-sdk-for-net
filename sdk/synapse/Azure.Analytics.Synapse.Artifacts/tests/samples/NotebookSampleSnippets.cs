@@ -42,7 +42,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
                 nbformatMinor: 2,
                 new List<NotebookCell>()
             );
-            var createdNotebook = notebookClient.StartCreateOrUpdateNotebook("MyNotebook", new NotebookResource(notebook));
+            var operation = notebookClient.StartCreateOrUpdateNotebook("MyNotebook", new NotebookResource(notebook));
+            while (!operation.HasValue)
+            {
+                operation.UpdateStatus();
+            }
+            NotebookResource notebookResource = operation.Value;
             #endregion
         }
 
