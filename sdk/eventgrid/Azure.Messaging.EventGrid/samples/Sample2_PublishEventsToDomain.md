@@ -10,7 +10,7 @@ See the this [step-by-step tutorial](https://docs.microsoft.com/en-us/azure/even
 
 ## Create and Authenticate `EventGridPublisherClient`
 
-If you have not created an `EventGridPublisherClient`, refer to the sample [Publish Events To Topic](../Sample1_PublishEventsToTopic.md) for more information on creating and authenticating the client. An example is shown below:
+If you have not created an `EventGridPublisherClient`, refer to the sample [Publish Events To Topic](Sample1_PublishEventsToTopic.md) for more information on creating and authenticating the client. An example is shown below:
 ```csharp Snippet:CreateDomainClient
 // Create the publisher client using an AzureKeyCredential
 // Domain should be configured to accept events of the Event Grid schema
@@ -44,4 +44,4 @@ await client.SendEventsAsync(eventsList);
 ## Source
 
 To view the full example source, see:
-- [Sample1_SendEventsToTopic.cs](../tests/Samples/Sample1_SendEventsToTopicAndDomain.cs)
+- [Sample1_SendEventsToTopicAndDomain.cs](../tests/Samples/Sample1_SendEventsToTopicAndDomain.cs)

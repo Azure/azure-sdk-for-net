@@ -79,4 +79,4 @@ await client.SendEventsAsync(eventsList);
 ## Source
 
 To view the full example source, see:
-- [Sample1_SendEventsToTopic.cs](../tests/Samples/Sample1_SendEventsToTopicAndDomain.cs)
+- [Sample1_SendEventsToTopicAndDomain.cs](../tests/Samples/Sample1_SendEventsToTopicAndDomain.cs)

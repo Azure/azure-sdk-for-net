@@ -76,4 +76,4 @@ switch (cloudEvent.Type)
 
 ## Source
 To view the full example source, see:
-- [Sample2_ParseAndDeserializeEvents.cs](../tests/Samples/Sample1_ParseAndDeserializeEvents.cs)
+- [Sample2_ParseAndDeserializeEvents.cs](../tests/Samples/Sample2_ParseAndDeserializeEvents.cs)
