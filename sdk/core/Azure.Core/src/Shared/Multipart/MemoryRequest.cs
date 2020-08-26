@@ -16,8 +16,6 @@ namespace Azure.Core
 
         private readonly Dictionary<string, List<string>> _headers = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
 
-        public bool IsDisposed { get; private set; }
-
         public override RequestContent Content
         {
             get { return base.Content; }
@@ -96,8 +94,6 @@ namespace Azure.Core
         public override string ToString() => $"{Method} {Uri}";
 
         public override void Dispose()
-        {
-            IsDisposed = true;
-        }
+        { }
     }
 }
