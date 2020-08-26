@@ -10,46 +10,34 @@
 
 namespace Microsoft.Azure.Management.HybridCompute.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Describes a Machine Extension.
+    /// Describes the properties of a Machine Extension.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class MachineExtension : TrackedResource
+    public partial class MachineExtensionPropertiesModel
     {
         /// <summary>
-        /// Initializes a new instance of the MachineExtension class.
+        /// Initializes a new instance of the MachineExtensionPropertiesModel
+        /// class.
         /// </summary>
-        public MachineExtension()
+        public MachineExtensionPropertiesModel()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the MachineExtension class.
+        /// Initializes a new instance of the MachineExtensionPropertiesModel
+        /// class.
         /// </summary>
-        /// <param name="location">The geo-location where the resource
-        /// lives</param>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
-        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
-        /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
-        /// <param name="tags">Resource tags.</param>
         /// <param name="forceUpdateTag">How the extension handler should be
         /// forced to update even if the extension configuration has not
         /// changed.</param>
         /// <param name="publisher">The name of the extension handler
         /// publisher.</param>
-        /// <param name="machineExtensionType">Specifies the type of the
-        /// extension; an example is "CustomScriptExtension".</param>
+        /// <param name="type">Specifies the type of the extension; an example
+        /// is "CustomScriptExtension".</param>
         /// <param name="typeHandlerVersion">Specifies the version of the
         /// script handler.</param>
         /// <param name="autoUpgradeMinorVersion">Indicates whether the
@@ -66,12 +54,11 @@ namespace Microsoft.Azure.Management.HybridCompute.Models
         /// appears in the response.</param>
         /// <param name="instanceView">The machine extension instance
         /// view.</param>
-        public MachineExtension(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string forceUpdateTag = default(string), string publisher = default(string), string machineExtensionType = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), object settings = default(object), object protectedSettings = default(object), string provisioningState = default(string), MachineExtensionPropertiesInstanceView instanceView = default(MachineExtensionPropertiesInstanceView))
-            : base(location, id, name, type, tags)
+        public MachineExtensionPropertiesModel(string forceUpdateTag = default(string), string publisher = default(string), string type = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), object settings = default(object), object protectedSettings = default(object), string provisioningState = default(string), MachineExtensionPropertiesInstanceView instanceView = default(MachineExtensionPropertiesInstanceView))
         {
             ForceUpdateTag = forceUpdateTag;
             Publisher = publisher;
-            MachineExtensionType = machineExtensionType;
+            Type = type;
             TypeHandlerVersion = typeHandlerVersion;
             AutoUpgradeMinorVersion = autoUpgradeMinorVersion;
             Settings = settings;
@@ -90,26 +77,26 @@ namespace Microsoft.Azure.Management.HybridCompute.Models
         /// Gets or sets how the extension handler should be forced to update
         /// even if the extension configuration has not changed.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.forceUpdateTag")]
+        [JsonProperty(PropertyName = "forceUpdateTag")]
         public string ForceUpdateTag { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the extension handler publisher.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.publisher")]
+        [JsonProperty(PropertyName = "publisher")]
         public string Publisher { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the type of the extension; an example is
         /// "CustomScriptExtension".
         /// </summary>
-        [JsonProperty(PropertyName = "properties.type")]
-        public string MachineExtensionType { get; set; }
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the version of the script handler.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.typeHandlerVersion")]
+        [JsonProperty(PropertyName = "typeHandlerVersion")]
         public string TypeHandlerVersion { get; set; }
 
         /// <summary>
@@ -118,43 +105,33 @@ namespace Microsoft.Azure.Management.HybridCompute.Models
         /// deployed, however, the extension will not upgrade minor versions
         /// unless redeployed, even with this property set to true.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.autoUpgradeMinorVersion")]
+        [JsonProperty(PropertyName = "autoUpgradeMinorVersion")]
         public bool? AutoUpgradeMinorVersion { get; set; }
 
         /// <summary>
         /// Gets or sets json formatted public settings for the extension.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.settings")]
+        [JsonProperty(PropertyName = "settings")]
         public object Settings { get; set; }
 
         /// <summary>
         /// Gets or sets the extension can contain either protectedSettings or
         /// protectedSettingsFromKeyVault or no protected settings at all.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.protectedSettings")]
+        [JsonProperty(PropertyName = "protectedSettings")]
         public object ProtectedSettings { get; set; }
 
         /// <summary>
         /// Gets the provisioning state, which only appears in the response.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
+        [JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets the machine extension instance view.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.instanceView")]
+        [JsonProperty(PropertyName = "instanceView")]
         public MachineExtensionPropertiesInstanceView InstanceView { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-        }
     }
 }

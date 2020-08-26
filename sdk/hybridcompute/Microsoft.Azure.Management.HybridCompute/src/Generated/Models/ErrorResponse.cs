@@ -10,16 +10,14 @@
 
 namespace Microsoft.Azure.Management.HybridCompute.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Error response.
+    /// The resource management error response.
     /// </summary>
-    /// <remarks>
-    /// Contains details when the response code indicates an error.
-    /// </remarks>
     public partial class ErrorResponse
     {
         /// <summary>
@@ -33,10 +31,18 @@ namespace Microsoft.Azure.Management.HybridCompute.Models
         /// <summary>
         /// Initializes a new instance of the ErrorResponse class.
         /// </summary>
-        /// <param name="error">The error details.</param>
-        public ErrorResponse(ErrorDetail error)
+        /// <param name="code">The error code.</param>
+        /// <param name="message">The error message.</param>
+        /// <param name="target">The error target.</param>
+        /// <param name="details">The error details.</param>
+        /// <param name="additionalInfo">The error additional info.</param>
+        public ErrorResponse(string code = default(string), string message = default(string), string target = default(string), IList<ErrorResponse> details = default(IList<ErrorResponse>), IList<ErrorAdditionalInfo> additionalInfo = default(IList<ErrorAdditionalInfo>))
         {
-            Error = error;
+            Code = code;
+            Message = message;
+            Target = target;
+            Details = details;
+            AdditionalInfo = additionalInfo;
             CustomInit();
         }
 
@@ -46,27 +52,34 @@ namespace Microsoft.Azure.Management.HybridCompute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the error details.
+        /// Gets the error code.
         /// </summary>
-        [JsonProperty(PropertyName = "error")]
-        public ErrorDetail Error { get; set; }
+        [JsonProperty(PropertyName = "code")]
+        public string Code { get; private set; }
 
         /// <summary>
-        /// Validate the object.
+        /// Gets the error message.
         /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Error == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Error");
-            }
-            if (Error != null)
-            {
-                Error.Validate();
-            }
-        }
+        [JsonProperty(PropertyName = "message")]
+        public string Message { get; private set; }
+
+        /// <summary>
+        /// Gets the error target.
+        /// </summary>
+        [JsonProperty(PropertyName = "target")]
+        public string Target { get; private set; }
+
+        /// <summary>
+        /// Gets the error details.
+        /// </summary>
+        [JsonProperty(PropertyName = "details")]
+        public IList<ErrorResponse> Details { get; private set; }
+
+        /// <summary>
+        /// Gets the error additional info.
+        /// </summary>
+        [JsonProperty(PropertyName = "additionalInfo")]
+        public IList<ErrorAdditionalInfo> AdditionalInfo { get; private set; }
+
     }
 }

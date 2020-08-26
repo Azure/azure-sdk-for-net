@@ -10,43 +10,35 @@
 
 namespace Microsoft.Azure.Management.HybridCompute.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Describes a hybrid machine Update.
+    /// Identity for the resource.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class MachineUpdate : UpdateResource
+    public partial class Identity
     {
         /// <summary>
-        /// Initializes a new instance of the MachineUpdate class.
+        /// Initializes a new instance of the Identity class.
         /// </summary>
-        public MachineUpdate()
+        public Identity()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the MachineUpdate class.
+        /// Initializes a new instance of the Identity class.
         /// </summary>
-        /// <param name="tags">Resource tags</param>
         /// <param name="principalId">The principal ID of resource
         /// identity.</param>
         /// <param name="tenantId">The tenant ID of resource.</param>
         /// <param name="type">The identity type. Possible values include:
         /// 'SystemAssigned'</param>
-        public MachineUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), string principalId = default(string), string tenantId = default(string), ResourceIdentityType? type = default(ResourceIdentityType?), LocationData locationData = default(LocationData))
-            : base(tags)
+        public Identity(string principalId = default(string), string tenantId = default(string), ResourceIdentityType? type = default(ResourceIdentityType?))
         {
             PrincipalId = principalId;
             TenantId = tenantId;
             Type = type;
-            LocationData = locationData;
             CustomInit();
         }
 
@@ -58,39 +50,21 @@ namespace Microsoft.Azure.Management.HybridCompute.Models
         /// <summary>
         /// Gets the principal ID of resource identity.
         /// </summary>
-        [JsonProperty(PropertyName = "identity.principalId")]
+        [JsonProperty(PropertyName = "principalId")]
         public string PrincipalId { get; private set; }
 
         /// <summary>
         /// Gets the tenant ID of resource.
         /// </summary>
-        [JsonProperty(PropertyName = "identity.tenantId")]
+        [JsonProperty(PropertyName = "tenantId")]
         public string TenantId { get; private set; }
 
         /// <summary>
         /// Gets or sets the identity type. Possible values include:
         /// 'SystemAssigned'
         /// </summary>
-        [JsonProperty(PropertyName = "identity.type")]
+        [JsonProperty(PropertyName = "type")]
         public ResourceIdentityType? Type { get; set; }
 
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.locationData")]
-        public LocationData LocationData { get; set; }
-
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (LocationData != null)
-            {
-                LocationData.Validate();
-            }
-        }
     }
 }

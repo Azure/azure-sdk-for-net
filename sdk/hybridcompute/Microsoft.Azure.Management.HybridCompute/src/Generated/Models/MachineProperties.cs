@@ -10,39 +10,27 @@
 
 namespace Microsoft.Azure.Management.HybridCompute.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Describes a hybrid machine.
+    /// Describes the properties of a hybrid machine.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class Machine : TrackedResource
+    public partial class MachineProperties
     {
         /// <summary>
-        /// Initializes a new instance of the Machine class.
+        /// Initializes a new instance of the MachineProperties class.
         /// </summary>
-        public Machine()
+        public MachineProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Machine class.
+        /// Initializes a new instance of the MachineProperties class.
         /// </summary>
-        /// <param name="location">The geo-location where the resource
-        /// lives</param>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
-        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
-        /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
-        /// <param name="tags">Resource tags.</param>
         /// <param name="osProfile">Specifies the operating system settings for
         /// the hybrid machine.</param>
         /// <param name="provisioningState">The provisioning state, which only
@@ -67,8 +55,7 @@ namespace Microsoft.Azure.Management.HybridCompute.Models
         /// <param name="osVersion">The version of Operating System running on
         /// the hybrid machine.</param>
         /// <param name="extensions">Machine Extensions information</param>
-        public Machine(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), LocationData locationData = default(LocationData), MachinePropertiesOsProfile osProfile = default(MachinePropertiesOsProfile), string provisioningState = default(string), string status = default(string), System.DateTime? lastStatusChange = default(System.DateTime?), IList<ErrorDetail> errorDetails = default(IList<ErrorDetail>), string agentVersion = default(string), string vmId = default(string), string displayName = default(string), string machineFqdn = default(string), string clientPublicKey = default(string), string osName = default(string), string osVersion = default(string), IList<MachineExtensionInstanceView> extensions = default(IList<MachineExtensionInstanceView>), MachineIdentity identity = default(MachineIdentity))
-            : base(location, id, name, type, tags)
+        public MachineProperties(LocationData locationData = default(LocationData), MachinePropertiesOsProfile osProfile = default(MachinePropertiesOsProfile), string provisioningState = default(string), string status = default(string), System.DateTime? lastStatusChange = default(System.DateTime?), IList<ErrorDetail> errorDetails = default(IList<ErrorDetail>), string agentVersion = default(string), string vmId = default(string), string displayName = default(string), string machineFqdn = default(string), string clientPublicKey = default(string), string osName = default(string), string osVersion = default(string), IList<MachineExtensionInstanceView> extensions = default(IList<MachineExtensionInstanceView>))
         {
             LocationData = locationData;
             OsProfile = osProfile;
@@ -84,7 +71,6 @@ namespace Microsoft.Azure.Management.HybridCompute.Models
             OsName = osName;
             OsVersion = osVersion;
             Extensions = extensions;
-            Identity = identity;
             CustomInit();
         }
 
@@ -95,104 +81,98 @@ namespace Microsoft.Azure.Management.HybridCompute.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "properties.locationData")]
+        [JsonProperty(PropertyName = "locationData")]
         public LocationData LocationData { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the operating system settings for the hybrid
         /// machine.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.osProfile")]
+        [JsonProperty(PropertyName = "osProfile")]
         public MachinePropertiesOsProfile OsProfile { get; set; }
 
         /// <summary>
         /// Gets the provisioning state, which only appears in the response.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
+        [JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets the status of the hybrid machine agent. Possible values
         /// include: 'Connected', 'Disconnected', 'Error'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.status")]
+        [JsonProperty(PropertyName = "status")]
         public string Status { get; private set; }
 
         /// <summary>
         /// Gets the time of the last status change.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.lastStatusChange")]
+        [JsonProperty(PropertyName = "lastStatusChange")]
         public System.DateTime? LastStatusChange { get; private set; }
 
         /// <summary>
         /// Gets details about the error state.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.errorDetails")]
+        [JsonProperty(PropertyName = "errorDetails")]
         public IList<ErrorDetail> ErrorDetails { get; private set; }
 
         /// <summary>
         /// Gets the hybrid machine agent full version.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.agentVersion")]
+        [JsonProperty(PropertyName = "agentVersion")]
         public string AgentVersion { get; private set; }
 
         /// <summary>
         /// Gets or sets specifies the hybrid machine unique ID.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.vmId")]
+        [JsonProperty(PropertyName = "vmId")]
         public string VmId { get; set; }
 
         /// <summary>
         /// Gets specifies the hybrid machine display name.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.displayName")]
+        [JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; private set; }
 
         /// <summary>
         /// Gets specifies the hybrid machine FQDN.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.machineFqdn")]
+        [JsonProperty(PropertyName = "machineFqdn")]
         public string MachineFqdn { get; private set; }
 
         /// <summary>
         /// Gets or sets public Key that the client provides to be used during
         /// initial resource onboarding
         /// </summary>
-        [JsonProperty(PropertyName = "properties.clientPublicKey")]
+        [JsonProperty(PropertyName = "clientPublicKey")]
         public string ClientPublicKey { get; set; }
 
         /// <summary>
         /// Gets the Operating System running on the hybrid machine.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.osName")]
+        [JsonProperty(PropertyName = "osName")]
         public string OsName { get; private set; }
 
         /// <summary>
         /// Gets the version of Operating System running on the hybrid machine.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.osVersion")]
+        [JsonProperty(PropertyName = "osVersion")]
         public string OsVersion { get; private set; }
 
         /// <summary>
         /// Gets or sets machine Extensions information
         /// </summary>
-        [JsonProperty(PropertyName = "properties.extensions")]
+        [JsonProperty(PropertyName = "extensions")]
         public IList<MachineExtensionInstanceView> Extensions { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "identity")]
-        public MachineIdentity Identity { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
             if (LocationData != null)
             {
                 LocationData.Validate();

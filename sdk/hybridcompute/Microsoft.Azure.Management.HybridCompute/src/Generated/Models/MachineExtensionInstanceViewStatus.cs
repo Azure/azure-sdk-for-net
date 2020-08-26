@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.HybridCompute.Models
         /// <param name="message">The detailed status message, including for
         /// alerts and error messages.</param>
         /// <param name="time">The time of the status.</param>
-        public MachineExtensionInstanceViewStatus(string code = default(string), StatusLevelTypes? level = default(StatusLevelTypes?), string displayStatus = default(string), string message = default(string), System.DateTime? time = default(System.DateTime?))
+        public MachineExtensionInstanceViewStatus(string code = default(string), string level = default(string), string displayStatus = default(string), string message = default(string), System.DateTime? time = default(System.DateTime?))
         {
             Code = code;
             Level = level;
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.HybridCompute.Models
         /// 'Warning', 'Error'
         /// </summary>
         [JsonProperty(PropertyName = "level")]
-        public StatusLevelTypes? Level { get; set; }
+        public string Level { get; set; }
 
         /// <summary>
         /// Gets or sets the short localizable label for the status.
