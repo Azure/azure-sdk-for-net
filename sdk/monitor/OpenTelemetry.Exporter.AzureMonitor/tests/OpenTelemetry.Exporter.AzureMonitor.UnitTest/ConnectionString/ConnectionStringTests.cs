@@ -47,7 +47,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
         /// Verify that we can fetch any value from the dictionary regardless of the casing.
         /// </summary>
         [Test]
-        public void VerifyConnectionStringDictionary_IsCaseInsensitive()
+        public void TestParseConnectionString_IsCaseInsensitive()
         {
             var test = Azure.Core.ConnectionString.Parse("UPPERCASE=value1;lowercase=value2;MixedCase=value3");
 
@@ -60,25 +60,25 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
         }
 
         [Test]
-        public void TestParseConnectionString_DuplaceKeys()
+        public void TestParseConnectionString_WithDuplaceKeys()
         {
             Assert.Throws<InvalidOperationException>(() => Azure.Core.ConnectionString.Parse("key1=value1;key1=value2"));
         }
 
         [Test]
-        public void TestParseConnectionString_DuplaceKeysWithSpaces()
+        public void TestParseConnectionString_WithDuplaceKeysWithSpaces()
         {
             Assert.Throws<InvalidOperationException>(() => Azure.Core.ConnectionString.Parse("key1=value1;key1  =value2"));
         }
 
         [Test]
-        public void TestParseConnectionString_InvalidDelimiters()
+        public void TestParseConnectionString_WithInvalidDelimiters()
         {
             Assert.Throws<InvalidOperationException>(() => Azure.Core.ConnectionString.Parse("key1;key2=value2"));
         }
 
         //[Test]
-        //public void TestParseConnectionString_InvalidCharInValue()
+        //public void TestParseConnectionString_WithInvalidCharInValue()
         //{
         //    //Assert.Throws<Exception>(() => Azure.Core.ConnectionString.Parse("key1=value1=value2"));
         //}
