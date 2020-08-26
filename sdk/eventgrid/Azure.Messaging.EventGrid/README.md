@@ -195,7 +195,7 @@ switch (egEvent.EventType)
         break;
     case "MyApp.Models.CustomEventType":
         // One can also specify a custom ObjectSerializer as needed to deserialize the payload correctly
-        TestPayload testPayload = egEvent.GetData<TestPayload>(_myCustomSerializer);
+        TestPayload testPayload = egEvent.GetData<TestPayload>(myCustomSerializer);
         Console.WriteLine(testPayload.Name);
         break;
     case "Microsoft.EventGrid.SubscriptionValidationEvent":
