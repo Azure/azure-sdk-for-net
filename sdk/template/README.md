@@ -1,0 +1,1 @@
+https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/appconfiguration/Azure.ResourceManager.AppConfiguration
