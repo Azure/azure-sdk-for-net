@@ -237,6 +237,18 @@ namespace Azure.Security.KeyVault.Keys
         public string Name { get { throw null; } }
         public Azure.Security.KeyVault.Keys.KeyProperties Properties { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct KeyVaultKeyIdentifier
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public string Name { get { throw null; } }
+        public System.Uri SourceId { get { throw null; } }
+        public System.Uri VaultUri { get { throw null; } }
+        public string Version { get { throw null; } }
+        public static Azure.Security.KeyVault.Keys.KeyVaultKeyIdentifier Parse(System.Uri id) { throw null; }
+        public static bool TryParse(System.Uri id, out Azure.Security.KeyVault.Keys.KeyVaultKeyIdentifier keyId) { throw null; }
+    }
     public partial class RecoverDeletedKeyOperation : Azure.Operation<Azure.Security.KeyVault.Keys.KeyVaultKey>
     {
         internal RecoverDeletedKeyOperation() { }
