@@ -438,19 +438,21 @@ function VerifyPackages($pkgRepository, $artifactLocation, $workingDirectory, $a
         continue
       }
 
-      if ($parsedPackage.Deployable -ne $True -and !$continueOnError) {
-        Write-Host "Package $($parsedPackage.PackageId) is marked with version $($parsedPackage.PackageVersion), the version $($parsedPackage.PackageVersion) has already been deployed to the target repository."
-        Write-Host "Maybe a pkg version wasn't updated properly?"
-        #return
-        #exit(1)
-      }
-
       $tag = if ($parsedPackage.packageId) {
         "$($parsedPackage.packageId)_$($parsedPackage.PackageVersion)"
       } else {
         $parsedPackage.PackageVersion
       }
       echo "##vso[task.setvariable variable=ReleaseTag;isOutput=true]$tag"
+
+      if ($parsedPackage.Deployable -ne $True -and !$continueOnError) {
+        Write-Host "Package $($parsedPackage.PackageId) is marked with version $($parsedPackage.PackageVersion), the version $($parsedPackage.PackageVersion) has already been deployed to the target repository."
+        Write-Host "Maybe a pkg version wasn't updated properly?"
+        return
+        #exit(1)
+      }
+
+
       $pkgList += New-Object PSObject -Property @{
         PackageId      = $parsedPackage.PackageId
         PackageVersion = $parsedPackage.PackageVersion
