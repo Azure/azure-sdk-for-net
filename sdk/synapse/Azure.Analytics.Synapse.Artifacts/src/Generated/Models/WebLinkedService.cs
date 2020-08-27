@@ -15,6 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of WebLinkedService. </summary>
         /// <param name="typeProperties"> Web linked service properties. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeProperties"/> is null. </exception>
         public WebLinkedService(WebLinkedServiceTypeProperties typeProperties)
         {
             if (typeProperties == null)

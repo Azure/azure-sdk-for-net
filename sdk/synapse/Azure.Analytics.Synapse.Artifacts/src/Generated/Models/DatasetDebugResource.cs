@@ -14,6 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of DatasetDebugResource. </summary>
         /// <param name="properties"> Dataset properties. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DatasetDebugResource(Dataset properties)
         {
             if (properties == null)

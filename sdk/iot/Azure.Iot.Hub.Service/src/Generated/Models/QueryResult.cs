@@ -22,7 +22,7 @@ namespace Azure.Iot.Hub.Service.Models
         /// <summary> Initializes a new instance of QueryResult. </summary>
         /// <param name="type"> The query result type. </param>
         /// <param name="items"> The query result items, as a collection. </param>
-        /// <param name="continuationToken"> Request continuation token. </param>
+        /// <param name="continuationToken"> The continuation token. </param>
         internal QueryResult(QueryResultType? type, IReadOnlyList<object> items, string continuationToken)
         {
             Type = type;
@@ -34,7 +34,7 @@ namespace Azure.Iot.Hub.Service.Models
         public QueryResultType? Type { get; }
         /// <summary> The query result items, as a collection. </summary>
         public IReadOnlyList<object> Items { get; }
-        /// <summary> Request continuation token. </summary>
+        /// <summary> The continuation token. </summary>
         public string ContinuationToken { get; }
     }
 }

@@ -11,7 +11,7 @@ namespace Azure.Management.Compute.Models
     public partial class RollingUpgradeProgressInfo
     {
         /// <summary> Initializes a new instance of RollingUpgradeProgressInfo. </summary>
-        public RollingUpgradeProgressInfo()
+        internal RollingUpgradeProgressInfo()
         {
         }
 

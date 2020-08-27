@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             VirtualNetworkGateway virtualNetworkGateway = new VirtualNetworkGateway()
             {
                 Location = location,
-                Tags = new Dictionary<string, string>() { { "key", "value" } },
+                Tags = { { "key", "value" } },
                 EnableBgp = false,
                 GatewayDefaultSite = null,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
-                IpConfigurations = new List<VirtualNetworkGatewayIPConfiguration>()
+                IpConfigurations =
                 {
                     new VirtualNetworkGatewayIPConfiguration()
                     {

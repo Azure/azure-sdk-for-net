@@ -18,6 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of DataFlowReference. </summary>
         /// <param name="type"> Data flow reference type. </param>
         /// <param name="referenceName"> Reference data flow name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
         public DataFlowReference(DataFlowReferenceType type, string referenceName)
         {
             if (referenceName == null)

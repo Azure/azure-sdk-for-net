@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         /// <summary> Initializes a new instance of Vault. </summary>
         /// <param name="properties"> Properties of the vault. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         internal Vault(VaultProperties properties)
         {
             if (properties == null)

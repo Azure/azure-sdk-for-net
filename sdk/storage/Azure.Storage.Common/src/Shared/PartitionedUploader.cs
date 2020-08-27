@@ -358,6 +358,11 @@ namespace Azure.Storage
                     async: true,
                     cancellationToken).ConfigureAwait(false))
                 {
+                    /* We need to do this first! Length is calculated on the fly based on stream buffer
+                     * contents; We need to record the partition data first before consuming the stream
+                     * asynchronously. */
+                    partitions.Add((block.AbsolutePosition, block.Length));
+
                     // Start staging the next block (but don't await the Task!)
                     Task task = StagePartitionAndDisposeInternal(
                         block,
@@ -369,7 +374,6 @@ namespace Azure.Storage
 
                     // Add the block to our task and commit lists
                     runningTasks.Add(task);
-                    partitions.Add((block.AbsolutePosition, block.Length));
 
                     // If we run out of workers
                     if (runningTasks.Count >= _maxWorkerCount)

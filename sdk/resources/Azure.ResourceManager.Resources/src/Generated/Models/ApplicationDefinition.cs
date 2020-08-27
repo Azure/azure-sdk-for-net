@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -17,6 +18,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ApplicationDefinition. </summary>
         /// <param name="lockLevel"> The managed application lock level. </param>
         /// <param name="authorizations"> The managed application provider authorizations. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizations"/> is null. </exception>
         public ApplicationDefinition(ApplicationLockLevel lockLevel, IEnumerable<ApplicationProviderAuthorization> authorizations)
         {
             if (authorizations == null)
@@ -26,6 +28,7 @@ namespace Azure.ResourceManager.Resources.Models
 
             LockLevel = lockLevel;
             Authorizations = authorizations.ToList();
+            Artifacts = new ChangeTrackingList<ApplicationArtifact>();
         }
 
         /// <summary> Initializes a new instance of ApplicationDefinition. </summary>
@@ -51,7 +54,7 @@ namespace Azure.ResourceManager.Resources.Models
             LockLevel = lockLevel;
             DisplayName = displayName;
             IsEnabled = isEnabled;
-            Authorizations = authorizations ?? new List<ApplicationProviderAuthorization>();
+            Authorizations = authorizations;
             Artifacts = artifacts;
             Description = description;
             PackageFileUri = packageFileUri;
@@ -68,7 +71,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The managed application provider authorizations. </summary>
         public IList<ApplicationProviderAuthorization> Authorizations { get; }
         /// <summary> The collection of managed application artifacts. The portal will use the files specified as artifacts to construct the user experience of creating a managed application from a managed application definition. </summary>
-        public IList<ApplicationArtifact> Artifacts { get; set; }
+        public IList<ApplicationArtifact> Artifacts { get; }
         /// <summary> The managed application definition description. </summary>
         public string Description { get; set; }
         /// <summary> The managed application definition package file Uri. Use this element. </summary>

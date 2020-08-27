@@ -3,8 +3,8 @@
 [CmdletBinding()]
 param (
     [Parameter(Position=0)]
-    [ValidateNotNullOrEmpty()]
-    [string] $ServiceDirectory
+    [string] $ServiceDirectory,
+    [string] $ProjectDirectory
 )
 
 $ErrorActionPreference = 'Stop'
@@ -38,55 +38,67 @@ function Invoke-Block([scriptblock]$cmd) {
 }
 
 try {
-
-    Write-Host "Force .NET Welcome experience"
-    Invoke-Block {
-        & dotnet msbuild -version
-    }
-
-    Write-Host "Checking that solutions are up to date"
-    Join-Path "$PSScriptRoot/../../sdk" $ServiceDirectory  `
-        | Resolve-Path `
-        | % { Get-ChildItem $_ -Filter "Azure.*.sln" -Recurse } `
-        | % {
-            Write-Host "  Checking $(Split-Path -Leaf $_)"
-            $slnDir = Split-Path -Parent $_
-            $sln = $_
-            & dotnet sln $_ list `
-                | ? { $_ -ne 'Project(s)' -and $_ -ne '----------' } `
-                | % {
-                        $proj = Join-Path $slnDir $_
-                        if (-not (Test-Path $proj)) {
-                            LogError "Missing project. Solution references a project which does not exist: $proj. [$sln] "
-                        }
-                    }
+    if ($ProjectDirectory -and -not $ServiceDirectory)
+    {
+        if ($ProjectDirectory -match "sdk[\\/](?<projectdir>.*)[\\/]src")
+        {
+            $ServiceDirectory = $Matches['projectdir']
         }
+    }
+    if (-not $ProjectDirectory)
+    {
+        Write-Host "Force .NET Welcome experience"
+        Invoke-Block {
+            & dotnet msbuild -version
+        }
+
+        Write-Host "`nChecking that solutions are up to date"
+        Join-Path "$PSScriptRoot/../../sdk" $ServiceDirectory  `
+            | Resolve-Path `
+            | % { Get-ChildItem $_ -Filter "Azure.*.sln" -Recurse } `
+            | % {
+                Write-Host "Checking $(Split-Path -Leaf $_)"
+                $slnDir = Split-Path -Parent $_
+                $sln = $_
+                & dotnet sln $_ list `
+                    | ? { $_ -ne 'Project(s)' -and $_ -ne '----------' } `
+                    | % {
+                            $proj = Join-Path $slnDir $_
+                            if (-not (Test-Path $proj)) {
+                                LogError "Missing project. Solution references a project which does not exist: $proj. [$sln] "
+                            }
+                        }
+            }
+
+        Write-Host "Re-generating clients"
+        Invoke-Block {
+            & dotnet msbuild $PSScriptRoot\..\service.proj /t:GenerateCode /p:ServiceDirectory=$ServiceDirectory
+
+            # https://github.com/Azure/azure-sdk-for-net/issues/8584
+            # & $repoRoot\storage\generate.ps1
+        }
+    }
 
     Write-Host "Re-generating readmes"
     Invoke-Block {
-        & $PSScriptRoot\Update-Snippets.ps1 @script:PSBoundParameters
-    }
-
-    Write-Host "Re-generating clients"
-    Invoke-Block {
-        & dotnet msbuild $PSScriptRoot\..\service.proj /t:GenerateCode /p:ServiceDirectory=$ServiceDirectory
-
-        # https://github.com/Azure/azure-sdk-for-net/issues/8584
-        # & $repoRoot\storage\generate.ps1
+        & $PSScriptRoot\Update-Snippets.ps1 -ServiceDirectory $ServiceDirectory
     }
 
     Write-Host "Re-generating listings"
     Invoke-Block {
-        & $PSScriptRoot\Export-API.ps1 @script:PSBoundParameters
+        & $PSScriptRoot\Export-API.ps1 -ServiceDirectory $ServiceDirectory
     }
 
-    Write-Host "git diff"
-    # prevent warning related to EOL differences which triggers an exception for some reason
-    & git -c core.safecrlf=false diff --ignore-space-at-eol --exit-code
-    if ($LastExitCode -ne 0) {
-        $status = git status -s | Out-String
-        $status = $status -replace "`n","`n    "
-        LogError "Generated code is not up to date. You may need to run eng\scripts\Update-Snippets.ps1 or sdk\storage\generate.ps1 or eng\scripts\Export-API.ps1"
+    if (-not $ProjectDirectory)
+    {
+        Write-Host "git diff"
+        # prevent warning related to EOL differences which triggers an exception for some reason
+        & git -c core.safecrlf=false diff --ignore-space-at-eol --exit-code
+        if ($LastExitCode -ne 0) {
+            $status = git status -s | Out-String
+            $status = $status -replace "`n","`n    "
+            LogError "Generated code is not up to date. You may need to run eng\scripts\Update-Snippets.ps1 or sdk\storage\generate.ps1 or eng\scripts\Export-API.ps1"
+        }
     }
 }
 finally {

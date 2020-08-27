@@ -16,6 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="TextSplitMode"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TextSplitMode(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of AzureFirewall. </summary>
         public AzureFirewall()
         {
+            Zones = new ChangeTrackingList<string>();
+            ApplicationRuleCollections = new ChangeTrackingList<AzureFirewallApplicationRuleCollection>();
+            NatRuleCollections = new ChangeTrackingList<AzureFirewallNatRuleCollection>();
+            NetworkRuleCollections = new ChangeTrackingList<AzureFirewallNetworkRuleCollection>();
+            IpConfigurations = new ChangeTrackingList<AzureFirewallIPConfiguration>();
+            IpGroups = new ChangeTrackingList<AzureFirewallIpGroups>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of AzureFirewall. </summary>
@@ -38,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ipGroups"> IpGroups associated with AzureFirewall. </param>
         /// <param name="sku"> The Azure Firewall Resource SKU. </param>
         /// <param name="additionalProperties"> The additional properties used to further config this azure firewall. </param>
-        internal AzureFirewall(string id, string name, string type, string location, IDictionary<string, string> tags, IList<string> zones, string etag, IList<AzureFirewallApplicationRuleCollection> applicationRuleCollections, IList<AzureFirewallNatRuleCollection> natRuleCollections, IList<AzureFirewallNetworkRuleCollection> networkRuleCollections, IList<AzureFirewallIPConfiguration> ipConfigurations, AzureFirewallIPConfiguration managementIpConfiguration, ProvisioningState? provisioningState, AzureFirewallThreatIntelMode? threatIntelMode, SubResource virtualHub, SubResource firewallPolicy, HubIPAddresses hubIpAddresses, IList<AzureFirewallIpGroups> ipGroups, AzureFirewallSku sku, IDictionary<string, string> additionalProperties) : base(id, name, type, location, tags)
+        internal AzureFirewall(string id, string name, string type, string location, IDictionary<string, string> tags, IList<string> zones, string etag, IList<AzureFirewallApplicationRuleCollection> applicationRuleCollections, IList<AzureFirewallNatRuleCollection> natRuleCollections, IList<AzureFirewallNetworkRuleCollection> networkRuleCollections, IList<AzureFirewallIPConfiguration> ipConfigurations, AzureFirewallIPConfiguration managementIpConfiguration, ProvisioningState? provisioningState, AzureFirewallThreatIntelMode? threatIntelMode, SubResource virtualHub, SubResource firewallPolicy, HubIPAddresses hubIpAddresses, IReadOnlyList<AzureFirewallIpGroups> ipGroups, AzureFirewallSku sku, IDictionary<string, string> additionalProperties) : base(id, name, type, location, tags)
         {
             Zones = zones;
             Etag = etag;
@@ -58,17 +66,17 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A list of availability zones denoting where the resource needs to come from. </summary>
-        public IList<string> Zones { get; set; }
+        public IList<string> Zones { get; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> Collection of application rule collections used by Azure Firewall. </summary>
-        public IList<AzureFirewallApplicationRuleCollection> ApplicationRuleCollections { get; set; }
+        public IList<AzureFirewallApplicationRuleCollection> ApplicationRuleCollections { get; }
         /// <summary> Collection of NAT rule collections used by Azure Firewall. </summary>
-        public IList<AzureFirewallNatRuleCollection> NatRuleCollections { get; set; }
+        public IList<AzureFirewallNatRuleCollection> NatRuleCollections { get; }
         /// <summary> Collection of network rule collections used by Azure Firewall. </summary>
-        public IList<AzureFirewallNetworkRuleCollection> NetworkRuleCollections { get; set; }
+        public IList<AzureFirewallNetworkRuleCollection> NetworkRuleCollections { get; }
         /// <summary> IP configuration of the Azure Firewall resource. </summary>
-        public IList<AzureFirewallIPConfiguration> IpConfigurations { get; set; }
+        public IList<AzureFirewallIPConfiguration> IpConfigurations { get; }
         /// <summary> IP configuration of the Azure Firewall used for management traffic. </summary>
         public AzureFirewallIPConfiguration ManagementIpConfiguration { get; set; }
         /// <summary> The provisioning state of the Azure firewall resource. </summary>
@@ -82,10 +90,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> IP addresses associated with AzureFirewall. </summary>
         public HubIPAddresses HubIpAddresses { get; }
         /// <summary> IpGroups associated with AzureFirewall. </summary>
-        public IList<AzureFirewallIpGroups> IpGroups { get; }
+        public IReadOnlyList<AzureFirewallIpGroups> IpGroups { get; }
         /// <summary> The Azure Firewall Resource SKU. </summary>
         public AzureFirewallSku Sku { get; set; }
         /// <summary> The additional properties used to further config this azure firewall. </summary>
-        public IDictionary<string, string> AdditionalProperties { get; set; }
+        public IDictionary<string, string> AdditionalProperties { get; }
     }
 }

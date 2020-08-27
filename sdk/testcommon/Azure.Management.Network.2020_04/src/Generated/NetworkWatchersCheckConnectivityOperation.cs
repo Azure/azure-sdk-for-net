@@ -54,27 +54,13 @@ namespace Azure.Management.Network
         ConnectivityInformation IOperationSource<ConnectivityInformation>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return ConnectivityInformation.DeserializeConnectivityInformation(document.RootElement);
-            }
+            return ConnectivityInformation.DeserializeConnectivityInformation(document.RootElement);
         }
 
         async ValueTask<ConnectivityInformation> IOperationSource<ConnectivityInformation>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return ConnectivityInformation.DeserializeConnectivityInformation(document.RootElement);
-            }
+            return ConnectivityInformation.DeserializeConnectivityInformation(document.RootElement);
         }
     }
 }

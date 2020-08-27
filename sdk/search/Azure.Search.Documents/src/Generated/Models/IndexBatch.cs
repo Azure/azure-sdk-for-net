@@ -16,6 +16,7 @@ namespace Azure.Search.Documents.Models
     {
         /// <summary> Initializes a new instance of IndexBatch. </summary>
         /// <param name="actions"> The actions in the batch. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="actions"/> is null. </exception>
         public IndexBatch(IEnumerable<IndexAction> actions)
         {
             if (actions == null)

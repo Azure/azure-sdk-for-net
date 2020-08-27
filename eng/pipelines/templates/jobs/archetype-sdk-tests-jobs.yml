@@ -1,0 +1,112 @@
+parameters:
+- name: Platforms
+  type: object
+  default: []
+- name: PreSteps
+  type: object
+  default: []
+- name: PostSteps
+  type: object
+  default: []
+- name: EnvVars
+  type: object
+  default: {}
+- name: MaxParallel
+  type: number
+  default: 0
+- name: BuildInParallel
+  type: boolean
+  default: true
+- name: TimeoutInMinutes
+  type: number
+  default: 60
+- name: Location
+  type: string
+  default: ''
+- name: SubscriptionConfiguration
+  type: string
+  default: $(sub-config-azure-cloud-test-resources)
+- name: ServiceDirectory
+  type: string
+  default: not-specified
+
+jobs:
+  - ${{ each platform in parameters.Platforms }}:
+    - job:
+      condition: eq(eq(variables['Record'], 'true'), eq('${{ platform.TestMode }}', 'Record'))
+      displayName: ${{ platform.DisplayName }}
+      variables:
+        - template: ../variables/globals.yml
+        - name: OSVmImage
+          value: ${{ platform.OSVmImage }}
+
+      timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
+
+      pool:
+        vmImage: $(OSVmImage)
+      ${{ if platform.Container }}:
+        container: ${{ platform.Container }}
+
+      steps:
+        - ${{ if platform.PreSteps }}:
+          - ${{ platform.PreSteps }}
+
+        - ${{ parameters.PreSteps }}
+
+        - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
+
+        - task: UseDotNet@2
+          displayName: "Use .NET Core runtime $(DotNetCoreRuntimeVersion)"
+          inputs:
+            packageType: runtime
+            version: "$(DotNetCoreRuntimeVersion)"
+
+        - task: UseDotNet@2
+          displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
+          inputs:
+            packageType: sdk
+            version: "$(DotNetCoreSDKVersion)"
+
+        - template: /eng/common/TestResources/deploy-test-resources.yml
+          parameters:
+            Location: ${{ parameters.Location }}
+            ServiceDirectory: '${{ parameters.ServiceDirectory }}'
+            SubscriptionConfiguration: ${{ parameters.SubscriptionConfiguration }}
+
+        - script: >
+            dotnet test eng/service.proj
+            --framework ${{ platform.TestTargetFramework }}
+            --filter "TestCategory!=Manually"
+            --logger "trx"
+            --logger:"console;verbosity=normal"
+            /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
+            /p:IncludeSrc=false /p:IncludeSamples=false
+            /p:BuildInParallel=${{ parameters.BuildInParallel }}
+            ${{ platform.AdditionalTestArguments }}
+
+          displayName: "Build & Test (all tests for ${{ platform.TestTargetFramework }})"
+          env:
+            DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+            DOTNET_CLI_TELEMETRY_OPTOUT: 1
+            DOTNET_MULTILEVEL_LOOKUP: 0
+            AZURE_TEST_MODE: "${{ coalesce(platform.TestMode, 'None') }}"
+            ${{ insert }}: ${{ parameters.EnvVars }}
+
+        - template: /eng/common/TestResources/remove-test-resources.yml
+          parameters:
+            ServiceDirectory: '${{ parameters.ServiceDirectory }}'
+            SubscriptionConfiguration: ${{ parameters.SubscriptionConfiguration }}
+
+        - task: PublishTestResults@2
+          condition: always()
+          displayName: "Publish Results (${{ platform.TestTargetFramework }})"
+          inputs:
+            testResultsFiles: "**/*.trx"
+            testRunTitle: "$(OSName) ${{ platform.TestTargetFramework }}"
+            testResultsFormat: "VSTest"
+            mergeTestResults: true
+
+        - ${{ parameters.PostSteps }}
+
+        - ${{ if platform.PostSteps }}:
+          - ${{ platform.PostSteps }}

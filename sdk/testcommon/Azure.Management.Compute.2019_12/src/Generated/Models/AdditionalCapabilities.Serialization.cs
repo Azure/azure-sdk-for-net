@@ -15,7 +15,7 @@ namespace Azure.Management.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (UltraSSDEnabled != null)
+            if (Optional.IsDefined(UltraSSDEnabled))
             {
                 writer.WritePropertyName("ultraSSDEnabled");
                 writer.WriteBooleanValue(UltraSSDEnabled.Value);
@@ -25,20 +25,16 @@ namespace Azure.Management.Compute.Models
 
         internal static AdditionalCapabilities DeserializeAdditionalCapabilities(JsonElement element)
         {
-            bool? ultraSSDEnabled = default;
+            Optional<bool> ultraSSDEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ultraSSDEnabled"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     ultraSSDEnabled = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new AdditionalCapabilities(ultraSSDEnabled);
+            return new AdditionalCapabilities(Optional.ToNullable(ultraSSDEnabled));
         }
     }
 }

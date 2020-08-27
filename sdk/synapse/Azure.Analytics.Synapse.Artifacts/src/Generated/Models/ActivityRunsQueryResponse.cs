@@ -16,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of ActivityRunsQueryResponse. </summary>
         /// <param name="value"> List of activity runs. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ActivityRunsQueryResponse(IEnumerable<ActivityRun> value)
         {
             if (value == null)

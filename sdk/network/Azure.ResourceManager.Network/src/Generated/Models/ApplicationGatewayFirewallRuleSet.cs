@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayFirewallRuleSet. </summary>
         public ApplicationGatewayFirewallRuleSet()
         {
+            RuleGroups = new ChangeTrackingList<ApplicationGatewayFirewallRuleGroup>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayFirewallRuleSet. </summary>
@@ -42,6 +44,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The version of the web application firewall rule set type. </summary>
         public string RuleSetVersion { get; set; }
         /// <summary> The rule groups of the web application firewall rule set. </summary>
-        public IList<ApplicationGatewayFirewallRuleGroup> RuleGroups { get; set; }
+        public IList<ApplicationGatewayFirewallRuleGroup> RuleGroups { get; }
     }
 }

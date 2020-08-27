@@ -64,7 +64,10 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <param name="servicePackageActivationMode">The activation Mode of
         /// the service package. Possible values include: 'SharedProcess',
         /// 'ExclusiveProcess'</param>
-        public ServiceResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), string placementConstraints = default(string), IList<ServiceCorrelationDescription> correlationScheme = default(IList<ServiceCorrelationDescription>), IList<ServiceLoadMetricDescription> serviceLoadMetrics = default(IList<ServiceLoadMetricDescription>), IList<ServicePlacementPolicyDescription> servicePlacementPolicies = default(IList<ServicePlacementPolicyDescription>), string defaultMoveCost = default(string), string provisioningState = default(string), string serviceTypeName = default(string), PartitionSchemeDescription partitionDescription = default(PartitionSchemeDescription), string servicePackageActivationMode = default(string))
+        /// <param name="serviceDnsName">Dns name used for the service. If this
+        /// is specified, then the service can be accessed via its DNS name
+        /// instead of service name.</param>
+        public ServiceResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), string placementConstraints = default(string), IList<ServiceCorrelationDescription> correlationScheme = default(IList<ServiceCorrelationDescription>), IList<ServiceLoadMetricDescription> serviceLoadMetrics = default(IList<ServiceLoadMetricDescription>), IList<ServicePlacementPolicyDescription> servicePlacementPolicies = default(IList<ServicePlacementPolicyDescription>), string defaultMoveCost = default(string), string provisioningState = default(string), string serviceTypeName = default(string), PartitionSchemeDescription partitionDescription = default(PartitionSchemeDescription), string servicePackageActivationMode = default(string), string serviceDnsName = default(string))
             : base(id, name, type, location, tags, etag)
         {
             PlacementConstraints = placementConstraints;
@@ -76,6 +79,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
             ServiceTypeName = serviceTypeName;
             PartitionDescription = partitionDescription;
             ServicePackageActivationMode = servicePackageActivationMode;
+            ServiceDnsName = serviceDnsName;
             CustomInit();
         }
 
@@ -147,6 +151,14 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.servicePackageActivationMode")]
         public string ServicePackageActivationMode { get; set; }
+
+        /// <summary>
+        /// Gets or sets dns name used for the service. If this is specified,
+        /// then the service can be accessed via its DNS name instead of
+        /// service name.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.serviceDnsName")]
+        public string ServiceDnsName { get; set; }
 
     }
 }

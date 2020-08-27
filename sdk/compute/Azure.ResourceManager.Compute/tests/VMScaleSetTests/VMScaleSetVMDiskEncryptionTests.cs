@@ -48,8 +48,7 @@ namespace Azure.ResourceManager.Compute.Tests
             // Create ADE extension to enable disk encryption
             VirtualMachineScaleSetExtensionProfile extensionProfile = new VirtualMachineScaleSetExtensionProfile()
             {
-                Extensions = new List<VirtualMachineScaleSetExtension>()
-                {
+                Extensions = {
                     GetAzureDiskEncryptionExtension(),
                 }
             };

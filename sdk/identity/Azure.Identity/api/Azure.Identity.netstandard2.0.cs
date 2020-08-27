@@ -9,6 +9,7 @@ namespace Azure.Identity
     {
         internal AuthenticationRecord() { }
         public string Authority { get { throw null; } }
+        public string ClientId { get { throw null; } }
         public string HomeAccountId { get { throw null; } }
         public string TenantId { get { throw null; } }
         public string Username { get { throw null; } }
@@ -30,6 +31,13 @@ namespace Azure.Identity
         public AuthorizationCodeCredential(string tenantId, string clientId, string clientSecret, string authorizationCode, Azure.Identity.TokenCredentialOptions options) { }
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public static partial class AzureAuthorityHosts
+    {
+        public static System.Uri AzureChina { get { throw null; } }
+        public static System.Uri AzureGermany { get { throw null; } }
+        public static System.Uri AzureGovernment { get { throw null; } }
+        public static System.Uri AzurePublicCloud { get { throw null; } }
     }
     public partial class AzureCliCredential : Azure.Core.TokenCredential
     {
@@ -170,13 +178,6 @@ namespace Azure.Identity
         public bool DisableAutomaticAuthentication { get { throw null; } set { } }
         public bool EnablePersistentCache { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
-    }
-    public static partial class KnownAuthorityHosts
-    {
-        public static System.Uri AzureChinaCloud { get { throw null; } }
-        public static System.Uri AzureCloud { get { throw null; } }
-        public static System.Uri AzureGermanCloud { get { throw null; } }
-        public static System.Uri AzureUSGovernment { get { throw null; } }
     }
     public partial class ManagedIdentityCredential : Azure.Core.TokenCredential
     {

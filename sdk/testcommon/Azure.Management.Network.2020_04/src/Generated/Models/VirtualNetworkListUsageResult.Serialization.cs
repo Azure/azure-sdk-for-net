@@ -15,42 +15,27 @@ namespace Azure.Management.Network.Models
     {
         internal static VirtualNetworkListUsageResult DeserializeVirtualNetworkListUsageResult(JsonElement element)
         {
-            IReadOnlyList<VirtualNetworkUsage> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<VirtualNetworkUsage>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<VirtualNetworkUsage> array = new List<VirtualNetworkUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(VirtualNetworkUsage.DeserializeVirtualNetworkUsage(item));
-                        }
+                        array.Add(VirtualNetworkUsage.DeserializeVirtualNetworkUsage(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new VirtualNetworkListUsageResult(value, nextLink);
+            return new VirtualNetworkListUsageResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

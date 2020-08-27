@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    /// <summary> Configuration Content for Devices or Modules on Edge Devices. </summary>
+    /// <summary> The configuration content for devices or modules on edge devices. </summary>
     public partial class ConfigurationContent
     {
         /// <summary> Initializes a new instance of ConfigurationContent. </summary>
@@ -22,9 +22,9 @@ namespace Azure.Iot.Hub.Service.Models
         }
 
         /// <summary> Initializes a new instance of ConfigurationContent. </summary>
-        /// <param name="deviceContent"> Gets or sets device Configurations. </param>
-        /// <param name="modulesContent"> Gets or sets Modules Configurations. </param>
-        /// <param name="moduleContent"> Gets or sets Module Configurations. </param>
+        /// <param name="deviceContent"> The device configuration content. </param>
+        /// <param name="modulesContent"> The modules configuration content. </param>
+        /// <param name="moduleContent"> The module configuration content. </param>
         internal ConfigurationContent(IDictionary<string, object> deviceContent, IDictionary<string, object> modulesContent, IDictionary<string, object> moduleContent)
         {
             DeviceContent = deviceContent;
@@ -32,11 +32,11 @@ namespace Azure.Iot.Hub.Service.Models
             ModuleContent = moduleContent;
         }
 
-        /// <summary> Gets or sets device Configurations. </summary>
+        /// <summary> The device configuration content. </summary>
         public IDictionary<string, object> DeviceContent { get; }
-        /// <summary> Gets or sets Modules Configurations. </summary>
+        /// <summary> The modules configuration content. </summary>
         public IDictionary<string, object> ModulesContent { get; }
-        /// <summary> Gets or sets Module Configurations. </summary>
+        /// <summary> The module configuration content. </summary>
         public IDictionary<string, object> ModuleContent { get; }
     }
 }

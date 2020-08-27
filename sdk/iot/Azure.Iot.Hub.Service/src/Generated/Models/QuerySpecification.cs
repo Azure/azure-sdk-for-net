@@ -7,7 +7,7 @@
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    /// <summary> A Json query request. </summary>
+    /// <summary> The Json query request. </summary>
     public partial class QuerySpecification
     {
         /// <summary> Initializes a new instance of QuerySpecification. </summary>
@@ -15,7 +15,7 @@ namespace Azure.Iot.Hub.Service.Models
         {
         }
 
-        /// <summary> The query. </summary>
+        /// <summary> The query string. </summary>
         public string Query { get; set; }
     }
 }

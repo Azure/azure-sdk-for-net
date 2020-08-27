@@ -70,20 +70,17 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             return sslCertList;
         }
 
-        private List<ApplicationGatewayAuthenticationCertificate> CreateAuthCertificate(string authCertName)
+        private ApplicationGatewayAuthenticationCertificate CreateAuthCertificate(string authCertName)
         {
             string certPath = System.IO.Path.Combine("Tests", "Data", "ApplicationGatewayAuthCert.cer");
             X509Certificate2 cert = new X509Certificate2(certPath);
 
-            List<ApplicationGatewayAuthenticationCertificate> authCertList = new List<ApplicationGatewayAuthenticationCertificate>()
-            {
+            return
                 new ApplicationGatewayAuthenticationCertificate()
                 {
                     Name = authCertName,
-                    Data  = Convert.ToBase64String(cert.Export(X509ContentType.Cert))
-                }
-            };
-            return authCertList;
+                    Data = Convert.ToBase64String(cert.Export(X509ContentType.Cert))
+                };
         }
 
         private ApplicationGateway CreateApplicationGateway(string location, Subnet subnet, string resourceGroupName, string appGwName, string subscriptionId)
@@ -123,8 +120,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                     Tier = ApplicationGatewayTier.WAF,
                     Capacity = 2
                 },
-                GatewayIPConfigurations = new List<ApplicationGatewayIPConfiguration>()
-                {
+                GatewayIPConfigurations = {
                     new ApplicationGatewayIPConfiguration()
                     {
                         Name = gatewayIPConfigName,
@@ -134,8 +130,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                         }
                     }
                 },
-                FrontendIPConfigurations = new List<ApplicationGatewayFrontendIPConfiguration>()
-                {
+                FrontendIPConfigurations = {
                     new ApplicationGatewayFrontendIPConfiguration()
                     {
                         Name = frontendIPConfigName,
@@ -146,8 +141,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                         }
                     }
                 },
-                FrontendPorts = new List<ApplicationGatewayFrontendPort>
-                {
+                FrontendPorts = {
                     new ApplicationGatewayFrontendPort()
                     {
                         Name = frontendPort1Name,
@@ -169,8 +163,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                         Port = 8081
                     }
                 },
-                Probes = new List<ApplicationGatewayProbe>
-                {
+                Probes = {
                     new ApplicationGatewayProbe()
                     {
                         Name = probeName,
@@ -183,17 +176,15 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                         Match = new ApplicationGatewayProbeHealthResponseMatch
                         {
                             Body = "helloworld",
-                            StatusCodes = new List<string> {"200-300","403"}
+                            StatusCodes = {"200-300","403"}
                         }
                     }
                 },
-                BackendAddressPools = new List<ApplicationGatewayBackendAddressPool>
-                {
+                BackendAddressPools = {
                     new ApplicationGatewayBackendAddressPool()
                     {
                         Name = backendAddressPoolName,
-                        BackendAddresses = new List<ApplicationGatewayBackendAddress>()
-                        {
+                        BackendAddresses = {
                             new ApplicationGatewayBackendAddress()
                             {
                                 IpAddress = "hello1.azurewebsites.net"
@@ -209,8 +200,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                         Name = nicBackendAddressPoolName
                     }
                 },
-                BackendHttpSettingsCollection = new List<ApplicationGatewayBackendHttpSettings>
-                {
+                BackendHttpSettingsCollection = {
                     new ApplicationGatewayBackendHttpSettings()
                     {
                         Name = backendHttpSettings1Name,
@@ -233,7 +223,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                         Port = 443,
                         Protocol = ApplicationGatewayProtocol.Https,
                         CookieBasedAffinity = ApplicationGatewayCookieBasedAffinity.Enabled,
-                        AuthenticationCertificates =  new List<SubResource>()
+                        AuthenticationCertificates =
                         {
                             new SubResource()
                             {
@@ -243,8 +233,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                         }
                     }
                 },
-                HttpListeners = new List<ApplicationGatewayHttpListener>
-                {
+                HttpListeners = {
                     new ApplicationGatewayHttpListener()
                     {
                         Name = httpListener1Name,
@@ -322,8 +311,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                         Protocol = ApplicationGatewayProtocol.Https
                     }
                 },
-                UrlPathMaps = new List<ApplicationGatewayUrlPathMap>()
-                {
+                UrlPathMaps = {
                     new ApplicationGatewayUrlPathMap{
                         Name = urlPathMapName,
                         DefaultRedirectConfiguration = new SubResource
@@ -331,11 +319,10 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                             Id = GetChildAppGwResourceId(subscriptionId,
                             resourceGroupName, appGwName, "redirectConfigurations", redirectConfiguration2Name)
                         },
-                        PathRules = new List<ApplicationGatewayPathRule>
-                        {
+                        PathRules = {
                             new ApplicationGatewayPathRule{
                                 Name = pathRuleName,
-                                Paths = new List<string>{"/paa"},
+                                Paths = {"/paa"},
                                 BackendAddressPool = new SubResource()
                                 {
                                     Id = GetChildAppGwResourceId(subscriptionId,
@@ -351,8 +338,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
                     }
                 },
-                RequestRoutingRules = new List<ApplicationGatewayRequestRoutingRule>()
-                {
+                RequestRoutingRules = {
                     new ApplicationGatewayRequestRoutingRule()
                     {
                         Name = requestRoutingRule1Name,
@@ -424,14 +410,15 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                         }
                     },
                 },
-                AuthenticationCertificates = CreateAuthCertificate(authCertName),
+                AuthenticationCertificates = {
+                    CreateAuthCertificate(authCertName)
+                },
                 WebApplicationFirewallConfiguration = new ApplicationGatewayWebApplicationFirewallConfiguration(true, ApplicationGatewayFirewallMode.Prevention, "OWASP", "2.2.9")
                 {
-                    DisabledRuleGroups = new List<ApplicationGatewayFirewallDisabledRuleGroup>()
-                    {
+                    DisabledRuleGroups = {
                         new ApplicationGatewayFirewallDisabledRuleGroup("crs_41_sql_injection_attacks")
                         {
-                            Rules=new List<int>() { 981318, 981320 }
+                            Rules = { 981318, 981320 }
                         },
                         new ApplicationGatewayFirewallDisabledRuleGroup("crs_35_bad_robots")
                     }
@@ -441,8 +428,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                     PolicyType = "Predefined",
                     PolicyName = "AppGwSslPolicy20170401"
                 },
-                RedirectConfigurations = new List<ApplicationGatewayRedirectConfiguration>
-                {
+                RedirectConfigurations = {
                     new ApplicationGatewayRedirectConfiguration
                     {
                         Name = redirectConfiguration1Name,
@@ -541,10 +527,9 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             VirtualNetwork vnet = new VirtualNetwork()
             {
                 Location = location,
-                AddressSpace = new AddressSpace() { AddressPrefixes = new List<string>() { "10.0.0.0/16", } },
-                DhcpOptions = new DhcpOptions() { DnsServers = new List<string>() { "10.1.1.1", "10.1.2.4" } },
-                Subnets = new List<Subnet>()
-                    {
+                AddressSpace = new AddressSpace() { AddressPrefixes = { "10.0.0.0/16", } },
+                DhcpOptions = new DhcpOptions() { DnsServers = { "10.1.1.1", "10.1.2.4" } },
+                Subnets = {
                         new Subnet() { Name = gwSubnetName, AddressPrefix = "10.0.0.0/24" },
                         new Subnet() { Name = subnet2Name, AddressPrefix = "10.0.1.0/24" }
                     }
@@ -620,8 +605,8 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 NetworkManagementClient);
 
             // Add NIC to application gateway backend address pool.
-            nic1.Result.IpConfigurations[0].ApplicationGatewayBackendAddressPools = new List<ApplicationGatewayBackendAddressPool> { getGateway.Value.BackendAddressPools[1] };
-            nic2.Result.IpConfigurations[0].ApplicationGatewayBackendAddressPools = new List<ApplicationGatewayBackendAddressPool> { getGateway.Value.BackendAddressPools[1] };
+            nic1.Result.IpConfigurations[0].ApplicationGatewayBackendAddressPools.Add(getGateway.Value.BackendAddressPools[1]);
+            nic2.Result.IpConfigurations[0].ApplicationGatewayBackendAddressPools.Add(getGateway.Value.BackendAddressPools[1]);
             // Put Nics
             NetworkInterfacesCreateOrUpdateOperation createOrUpdateOperation1 = await NetworkManagementClient.NetworkInterfaces.StartCreateOrUpdateAsync(resourceGroupName, nic1name, nic1.Result);
             await WaitForCompletionAsync(createOrUpdateOperation1);

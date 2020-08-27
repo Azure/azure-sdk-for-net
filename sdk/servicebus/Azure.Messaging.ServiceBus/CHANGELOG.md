@@ -1,9 +1,31 @@
 # Release History
 
-## 7.0.0-preview.5 (Unreleased)
+## 7.0.0-preview.7 (Unreleased)
 
+## 7.0.0-preview.6 (2020-08-18)
+
+### Fixed
+- Bug in TaskExtensions.EnsureCompleted method that causes it to unconditionally throw an exception in the environments with synchronization context
+
+## 7.0.0-preview.5 (2020-08-11)
+
+### Acknowledgements
+Thank you to our developer community members who helped to make the Service Bus client library better with their contributions and design input for this release:
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
+- Sean Feldman _([GitHub](https://github.com/SeanFeldman))_
+
+### Added
+- Added MaxConcurrentCallsPerSession option to ServiceBusSessionProcessor
+  
+### Breaking Changes
+- Change MaxConcurrentCalls to MaxConcurrentSessions in ServiceBusSessionProcessor.
+- Replace (Queue|Topic|Subscription|Rule)Description with (Queue|Topic|Subscription|Rule)Properties.
+- Add Create(Queue|Topic|Subscription|Rule)Options for creating entities.
+- Replace (Queue|Topic|Subscription)RuntimeInfo with (Queue|Topic|Subscription)RuntimeProperties.
+- Remove MessageCountDetails and move the properties directly into the RuntimeProperties types.
 
 ## 7.0.0-preview.4 (2020-07-07)
+
 ### Acknowledgements
 Thank you to our developer community members who helped to make the Service Bus client library better with their contributions and design input for this release:
 - Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
@@ -22,8 +44,8 @@ Thank you to our developer community members who helped to make the Service Bus 
 - Change output list type from IList<ServiceBusReceivedMessage> to IReadOnlyList<ServiceBusReceivedMessage>
 - Removed ServiceBusException.FailureReason.ClientClosed in favor of throwing ObjectDisposedException
 
-
 ## 7.0.0-preview.3 (2020-06-08)
+
 ### Acknowledgements
 Thank you to our developer community members who helped to make the Service Bus client library better with their contributions and design input for this release:
 - Daniel Marbach _([GitHub](https://github.com/danielmarbach))_

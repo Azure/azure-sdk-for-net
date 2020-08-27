@@ -20,16 +20,17 @@ namespace Azure.Iot.Hub.Service.Models
         }
 
         /// <summary> Initializes a new instance of ConfigurationQueriesTestResponse. </summary>
-        /// <param name="targetConditionError"> . </param>
-        /// <param name="customMetricQueryErrors"> Dictionary of &lt;string&gt;. </param>
+        /// <param name="targetConditionError"> The errors from running the target condition query. </param>
+        /// <param name="customMetricQueryErrors"> The errors from running the custom metric query. </param>
         internal ConfigurationQueriesTestResponse(string targetConditionError, IReadOnlyDictionary<string, string> customMetricQueryErrors)
         {
             TargetConditionError = targetConditionError;
             CustomMetricQueryErrors = customMetricQueryErrors;
         }
 
+        /// <summary> The errors from running the target condition query. </summary>
         public string TargetConditionError { get; }
-        /// <summary> Dictionary of &lt;string&gt;. </summary>
+        /// <summary> The errors from running the custom metric query. </summary>
         public IReadOnlyDictionary<string, string> CustomMetricQueryErrors { get; }
     }
 }

@@ -15,6 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of CustomDataSourceLinkedService. </summary>
         /// <param name="typeProperties"> Custom linked service properties. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeProperties"/> is null. </exception>
         public CustomDataSourceLinkedService(object typeProperties)
         {
             if (typeProperties == null)

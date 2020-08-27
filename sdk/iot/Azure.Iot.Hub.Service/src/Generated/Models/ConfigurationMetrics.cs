@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    /// <summary> Configuration Metrics. </summary>
+    /// <summary> The configuration metrics for Iot Hub devices and modules. </summary>
     public partial class ConfigurationMetrics
     {
         /// <summary> Initializes a new instance of ConfigurationMetrics. </summary>
@@ -21,17 +21,17 @@ namespace Azure.Iot.Hub.Service.Models
         }
 
         /// <summary> Initializes a new instance of ConfigurationMetrics. </summary>
-        /// <param name="results"> Dictionary of &lt;integer&gt;. </param>
-        /// <param name="queries"> Dictionary of &lt;string&gt;. </param>
+        /// <param name="results"> The results of the metrics collection queries. </param>
+        /// <param name="queries"> The key-value pairs with queries and their identifier. </param>
         internal ConfigurationMetrics(IDictionary<string, long> results, IDictionary<string, string> queries)
         {
             Results = results;
             Queries = queries;
         }
 
-        /// <summary> Dictionary of &lt;integer&gt;. </summary>
+        /// <summary> The results of the metrics collection queries. </summary>
         public IDictionary<string, long> Results { get; }
-        /// <summary> Dictionary of &lt;string&gt;. </summary>
+        /// <summary> The key-value pairs with queries and their identifier. </summary>
         public IDictionary<string, string> Queries { get; }
     }
 }

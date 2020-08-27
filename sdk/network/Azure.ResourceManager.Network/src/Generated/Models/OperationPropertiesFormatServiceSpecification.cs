@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of OperationPropertiesFormatServiceSpecification. </summary>
         internal OperationPropertiesFormatServiceSpecification()
         {
+            MetricSpecifications = new ChangeTrackingList<MetricSpecification>();
+            LogSpecifications = new ChangeTrackingList<LogSpecification>();
         }
 
         /// <summary> Initializes a new instance of OperationPropertiesFormatServiceSpecification. </summary>

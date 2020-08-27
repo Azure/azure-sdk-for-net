@@ -38,46 +38,6 @@ namespace Azure.Analytics.Synapse.Artifacts
             _pipeline = pipeline;
         }
 
-        /// <summary> Creates or updates a pipeline. </summary>
-        /// <param name="pipelineName"> The pipeline name. </param>
-        /// <param name="pipeline"> Pipeline resource definition. </param>
-        /// <param name="ifMatch"> ETag of the pipeline entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PipelineResource>> CreateOrUpdatePipelineAsync(string pipelineName, PipelineResource pipeline, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PipelineClient.CreateOrUpdatePipeline");
-            scope.Start();
-            try
-            {
-                return await RestClient.CreateOrUpdatePipelineAsync(pipelineName, pipeline, ifMatch, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a pipeline. </summary>
-        /// <param name="pipelineName"> The pipeline name. </param>
-        /// <param name="pipeline"> Pipeline resource definition. </param>
-        /// <param name="ifMatch"> ETag of the pipeline entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PipelineResource> CreateOrUpdatePipeline(string pipelineName, PipelineResource pipeline, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PipelineClient.CreateOrUpdatePipeline");
-            scope.Start();
-            try
-            {
-                return RestClient.CreateOrUpdatePipeline(pipelineName, pipeline, ifMatch, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Gets a pipeline. </summary>
         /// <param name="pipelineName"> The pipeline name. </param>
         /// <param name="ifNoneMatch"> ETag of the pipeline entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
@@ -108,86 +68,6 @@ namespace Azure.Analytics.Synapse.Artifacts
             try
             {
                 return RestClient.GetPipeline(pipelineName, ifNoneMatch, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a pipeline. </summary>
-        /// <param name="pipelineName"> The pipeline name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeletePipelineAsync(string pipelineName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PipelineClient.DeletePipeline");
-            scope.Start();
-            try
-            {
-                return await RestClient.DeletePipelineAsync(pipelineName, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a pipeline. </summary>
-        /// <param name="pipelineName"> The pipeline name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DeletePipeline(string pipelineName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PipelineClient.DeletePipeline");
-            scope.Start();
-            try
-            {
-                return RestClient.DeletePipeline(pipelineName, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates a run of a pipeline. </summary>
-        /// <param name="pipelineName"> The pipeline name. </param>
-        /// <param name="referencePipelineRunId"> The pipeline run identifier. If run ID is specified the parameters of the specified run will be used to create a new run. </param>
-        /// <param name="isRecovery"> Recovery mode flag. If recovery mode is set to true, the specified referenced pipeline run and the new run will be grouped under the same groupId. </param>
-        /// <param name="startActivityName"> In recovery mode, the rerun will start from this activity. If not specified, all activities will run. </param>
-        /// <param name="parameters"> Parameters of the pipeline run. These parameters will be used only if the runId is not specified. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CreateRunResponse>> CreatePipelineRunAsync(string pipelineName, string referencePipelineRunId = null, bool? isRecovery = null, string startActivityName = null, IDictionary<string, object> parameters = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PipelineClient.CreatePipelineRun");
-            scope.Start();
-            try
-            {
-                return await RestClient.CreatePipelineRunAsync(pipelineName, referencePipelineRunId, isRecovery, startActivityName, parameters, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates a run of a pipeline. </summary>
-        /// <param name="pipelineName"> The pipeline name. </param>
-        /// <param name="referencePipelineRunId"> The pipeline run identifier. If run ID is specified the parameters of the specified run will be used to create a new run. </param>
-        /// <param name="isRecovery"> Recovery mode flag. If recovery mode is set to true, the specified referenced pipeline run and the new run will be grouped under the same groupId. </param>
-        /// <param name="startActivityName"> In recovery mode, the rerun will start from this activity. If not specified, all activities will run. </param>
-        /// <param name="parameters"> Parameters of the pipeline run. These parameters will be used only if the runId is not specified. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CreateRunResponse> CreatePipelineRun(string pipelineName, string referencePipelineRunId = null, bool? isRecovery = null, string startActivityName = null, IDictionary<string, object> parameters = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PipelineClient.CreatePipelineRun");
-            scope.Start();
-            try
-            {
-                return RestClient.CreatePipelineRun(pipelineName, referencePipelineRunId, isRecovery, startActivityName, parameters, cancellationToken);
             }
             catch (Exception e)
             {
@@ -268,6 +148,176 @@ namespace Azure.Analytics.Synapse.Artifacts
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Creates or updates a pipeline. </summary>
+        /// <param name="pipelineName"> The pipeline name. </param>
+        /// <param name="pipeline"> Pipeline resource definition. </param>
+        /// <param name="ifMatch"> ETag of the pipeline entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> or <paramref name="pipeline"/> is null. </exception>
+        public virtual async Task<PipelineCreateOrUpdatePipelineOperation> StartCreateOrUpdatePipelineAsync(string pipelineName, PipelineResource pipeline, string ifMatch = null, CancellationToken cancellationToken = default)
+        {
+            if (pipelineName == null)
+            {
+                throw new ArgumentNullException(nameof(pipelineName));
+            }
+            if (pipeline == null)
+            {
+                throw new ArgumentNullException(nameof(pipeline));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("PipelineClient.StartCreateOrUpdatePipeline");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.CreateOrUpdatePipelineAsync(pipelineName, pipeline, ifMatch, cancellationToken).ConfigureAwait(false);
+                return new PipelineCreateOrUpdatePipelineOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateOrUpdatePipelineRequest(pipelineName, pipeline, ifMatch).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates or updates a pipeline. </summary>
+        /// <param name="pipelineName"> The pipeline name. </param>
+        /// <param name="pipeline"> Pipeline resource definition. </param>
+        /// <param name="ifMatch"> ETag of the pipeline entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> or <paramref name="pipeline"/> is null. </exception>
+        public virtual PipelineCreateOrUpdatePipelineOperation StartCreateOrUpdatePipeline(string pipelineName, PipelineResource pipeline, string ifMatch = null, CancellationToken cancellationToken = default)
+        {
+            if (pipelineName == null)
+            {
+                throw new ArgumentNullException(nameof(pipelineName));
+            }
+            if (pipeline == null)
+            {
+                throw new ArgumentNullException(nameof(pipeline));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("PipelineClient.StartCreateOrUpdatePipeline");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.CreateOrUpdatePipeline(pipelineName, pipeline, ifMatch, cancellationToken);
+                return new PipelineCreateOrUpdatePipelineOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateOrUpdatePipelineRequest(pipelineName, pipeline, ifMatch).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a pipeline. </summary>
+        /// <param name="pipelineName"> The pipeline name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> is null. </exception>
+        public virtual async Task<PipelineDeletePipelineOperation> StartDeletePipelineAsync(string pipelineName, CancellationToken cancellationToken = default)
+        {
+            if (pipelineName == null)
+            {
+                throw new ArgumentNullException(nameof(pipelineName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("PipelineClient.StartDeletePipeline");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.DeletePipelineAsync(pipelineName, cancellationToken).ConfigureAwait(false);
+                return new PipelineDeletePipelineOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeletePipelineRequest(pipelineName).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a pipeline. </summary>
+        /// <param name="pipelineName"> The pipeline name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> is null. </exception>
+        public virtual PipelineDeletePipelineOperation StartDeletePipeline(string pipelineName, CancellationToken cancellationToken = default)
+        {
+            if (pipelineName == null)
+            {
+                throw new ArgumentNullException(nameof(pipelineName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("PipelineClient.StartDeletePipeline");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.DeletePipeline(pipelineName, cancellationToken);
+                return new PipelineDeletePipelineOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeletePipelineRequest(pipelineName).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates a run of a pipeline. </summary>
+        /// <param name="pipelineName"> The pipeline name. </param>
+        /// <param name="referencePipelineRunId"> The pipeline run identifier. If run ID is specified the parameters of the specified run will be used to create a new run. </param>
+        /// <param name="isRecovery"> Recovery mode flag. If recovery mode is set to true, the specified referenced pipeline run and the new run will be grouped under the same groupId. </param>
+        /// <param name="startActivityName"> In recovery mode, the rerun will start from this activity. If not specified, all activities will run. </param>
+        /// <param name="parameters"> Parameters of the pipeline run. These parameters will be used only if the runId is not specified. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> is null. </exception>
+        public virtual async Task<PipelineCreatePipelineRunOperation> StartCreatePipelineRunAsync(string pipelineName, string referencePipelineRunId = null, bool? isRecovery = null, string startActivityName = null, IDictionary<string, object> parameters = null, CancellationToken cancellationToken = default)
+        {
+            if (pipelineName == null)
+            {
+                throw new ArgumentNullException(nameof(pipelineName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("PipelineClient.StartCreatePipelineRun");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.CreatePipelineRunAsync(pipelineName, referencePipelineRunId, isRecovery, startActivityName, parameters, cancellationToken).ConfigureAwait(false);
+                return new PipelineCreatePipelineRunOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreatePipelineRunRequest(pipelineName, referencePipelineRunId, isRecovery, startActivityName, parameters).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates a run of a pipeline. </summary>
+        /// <param name="pipelineName"> The pipeline name. </param>
+        /// <param name="referencePipelineRunId"> The pipeline run identifier. If run ID is specified the parameters of the specified run will be used to create a new run. </param>
+        /// <param name="isRecovery"> Recovery mode flag. If recovery mode is set to true, the specified referenced pipeline run and the new run will be grouped under the same groupId. </param>
+        /// <param name="startActivityName"> In recovery mode, the rerun will start from this activity. If not specified, all activities will run. </param>
+        /// <param name="parameters"> Parameters of the pipeline run. These parameters will be used only if the runId is not specified. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> is null. </exception>
+        public virtual PipelineCreatePipelineRunOperation StartCreatePipelineRun(string pipelineName, string referencePipelineRunId = null, bool? isRecovery = null, string startActivityName = null, IDictionary<string, object> parameters = null, CancellationToken cancellationToken = default)
+        {
+            if (pipelineName == null)
+            {
+                throw new ArgumentNullException(nameof(pipelineName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("PipelineClient.StartCreatePipelineRun");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.CreatePipelineRun(pipelineName, referencePipelineRunId, isRecovery, startActivityName, parameters, cancellationToken);
+                return new PipelineCreatePipelineRunOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreatePipelineRunRequest(pipelineName, referencePipelineRunId, isRecovery, startActivityName, parameters).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

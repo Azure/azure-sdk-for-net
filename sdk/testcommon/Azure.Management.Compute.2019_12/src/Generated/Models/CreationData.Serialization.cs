@@ -17,37 +17,32 @@ namespace Azure.Management.Compute.Models
             writer.WriteStartObject();
             writer.WritePropertyName("createOption");
             writer.WriteStringValue(CreateOption.ToString());
-            if (StorageAccountId != null)
+            if (Optional.IsDefined(StorageAccountId))
             {
                 writer.WritePropertyName("storageAccountId");
                 writer.WriteStringValue(StorageAccountId);
             }
-            if (ImageReference != null)
+            if (Optional.IsDefined(ImageReference))
             {
                 writer.WritePropertyName("imageReference");
                 writer.WriteObjectValue(ImageReference);
             }
-            if (GalleryImageReference != null)
+            if (Optional.IsDefined(GalleryImageReference))
             {
                 writer.WritePropertyName("galleryImageReference");
                 writer.WriteObjectValue(GalleryImageReference);
             }
-            if (SourceUri != null)
+            if (Optional.IsDefined(SourceUri))
             {
                 writer.WritePropertyName("sourceUri");
                 writer.WriteStringValue(SourceUri);
             }
-            if (SourceResourceId != null)
+            if (Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId");
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (SourceUniqueId != null)
-            {
-                writer.WritePropertyName("sourceUniqueId");
-                writer.WriteStringValue(SourceUniqueId);
-            }
-            if (UploadSizeBytes != null)
+            if (Optional.IsDefined(UploadSizeBytes))
             {
                 writer.WritePropertyName("uploadSizeBytes");
                 writer.WriteNumberValue(UploadSizeBytes.Value);
@@ -58,13 +53,13 @@ namespace Azure.Management.Compute.Models
         internal static CreationData DeserializeCreationData(JsonElement element)
         {
             DiskCreateOption createOption = default;
-            string storageAccountId = default;
-            ImageDiskReference imageReference = default;
-            ImageDiskReference galleryImageReference = default;
-            string sourceUri = default;
-            string sourceResourceId = default;
-            string sourceUniqueId = default;
-            long? uploadSizeBytes = default;
+            Optional<string> storageAccountId = default;
+            Optional<ImageDiskReference> imageReference = default;
+            Optional<ImageDiskReference> galleryImageReference = default;
+            Optional<string> sourceUri = default;
+            Optional<string> sourceResourceId = default;
+            Optional<string> sourceUniqueId = default;
+            Optional<long> uploadSizeBytes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createOption"))
@@ -74,69 +69,41 @@ namespace Azure.Management.Compute.Models
                 }
                 if (property.NameEquals("storageAccountId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     storageAccountId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("imageReference"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     imageReference = ImageDiskReference.DeserializeImageDiskReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("galleryImageReference"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     galleryImageReference = ImageDiskReference.DeserializeImageDiskReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sourceUri"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sourceUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("sourceResourceId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sourceResourceId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("sourceUniqueId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sourceUniqueId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("uploadSizeBytes"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     uploadSizeBytes = property.Value.GetInt64();
                     continue;
                 }
             }
-            return new CreationData(createOption, storageAccountId, imageReference, galleryImageReference, sourceUri, sourceResourceId, sourceUniqueId, uploadSizeBytes);
+            return new CreationData(createOption, storageAccountId.Value, imageReference.Value, galleryImageReference.Value, sourceUri.Value, sourceResourceId.Value, sourceUniqueId.Value, Optional.ToNullable(uploadSizeBytes));
         }
     }
 }

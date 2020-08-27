@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <summary> Initializes a new instance of EventGrid. </summary>
         /// <param name="accessKey1"> EventGrid secondary accesskey. Will be obfuscated during read. </param>
         /// <param name="accessKey2"> EventGrid secondary accesskey. Will be obfuscated during read. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="accessKey1"/> or <paramref name="accessKey2"/> is null. </exception>
         public EventGrid(string accessKey1, string accessKey2)
         {
             if (accessKey1 == null)

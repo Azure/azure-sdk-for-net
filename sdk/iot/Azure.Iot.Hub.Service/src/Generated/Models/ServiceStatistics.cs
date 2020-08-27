@@ -16,12 +16,13 @@ namespace Azure.Iot.Hub.Service.Models
         }
 
         /// <summary> Initializes a new instance of ServiceStatistics. </summary>
-        /// <param name="connectedDeviceCount"> . </param>
+        /// <param name="connectedDeviceCount"> The number of currently connected devices. </param>
         internal ServiceStatistics(long? connectedDeviceCount)
         {
             ConnectedDeviceCount = connectedDeviceCount;
         }
 
+        /// <summary> The number of currently connected devices. </summary>
         public long? ConnectedDeviceCount { get; }
     }
 }

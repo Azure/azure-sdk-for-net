@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public ApplicationsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -65,6 +65,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationName"> The name of the managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="applicationName"/> is null. </exception>
         public async Task<Response<Application>> GetAsync(string resourceGroupName, string applicationName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -84,14 +85,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         Application value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Application.DeserializeApplication(document.RootElement);
-                        }
+                        value = Application.DeserializeApplication(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
@@ -105,6 +99,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationName"> The name of the managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="applicationName"/> is null. </exception>
         public Response<Application> Get(string resourceGroupName, string applicationName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -124,14 +119,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         Application value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Application.DeserializeApplication(document.RootElement);
-                        }
+                        value = Application.DeserializeApplication(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
@@ -163,6 +151,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationName"> The name of the managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="applicationName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string applicationName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -190,6 +179,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationName"> The name of the managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="applicationName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string applicationName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -240,6 +230,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="applicationName"> The name of the managed application. </param>
         /// <param name="parameters"> Parameters supplied to the create or update a managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="applicationName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string applicationName, Application parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -272,6 +263,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="applicationName"> The name of the managed application. </param>
         /// <param name="parameters"> Parameters supplied to the create or update a managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="applicationName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response CreateOrUpdate(string resourceGroupName, string applicationName, Application parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -329,6 +321,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="applicationName"> The name of the managed application. </param>
         /// <param name="parameters"> Parameters supplied to update an existing managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="applicationName"/> is null. </exception>
         public async Task<Response<Application>> UpdateAsync(string resourceGroupName, string applicationName, Application parameters = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -348,14 +341,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         Application value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Application.DeserializeApplication(document.RootElement);
-                        }
+                        value = Application.DeserializeApplication(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -368,6 +354,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="applicationName"> The name of the managed application. </param>
         /// <param name="parameters"> Parameters supplied to update an existing managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="applicationName"/> is null. </exception>
         public Response<Application> Update(string resourceGroupName, string applicationName, Application parameters = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -387,14 +374,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         Application value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Application.DeserializeApplication(document.RootElement);
-                        }
+                        value = Application.DeserializeApplication(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -422,6 +402,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets all the applications within a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<ApplicationListResult>> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -437,14 +418,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ApplicationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
-                        }
+                        value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -455,6 +429,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets all the applications within a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public Response<ApplicationListResult> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -470,14 +445,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ApplicationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
-                        }
+                        value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -512,14 +480,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ApplicationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
-                        }
+                        value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -539,14 +500,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ApplicationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
-                        }
+                        value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -571,6 +525,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets the managed application. </summary>
         /// <param name="applicationId"> The fully qualified ID of the managed application, including the managed application name and the managed application resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/Microsoft.Solutions/applications/{application-name}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
         public async Task<Response<Application>> GetByIdAsync(string applicationId, CancellationToken cancellationToken = default)
         {
             if (applicationId == null)
@@ -586,14 +541,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         Application value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Application.DeserializeApplication(document.RootElement);
-                        }
+                        value = Application.DeserializeApplication(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
@@ -606,6 +554,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets the managed application. </summary>
         /// <param name="applicationId"> The fully qualified ID of the managed application, including the managed application name and the managed application resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/Microsoft.Solutions/applications/{application-name}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
         public Response<Application> GetById(string applicationId, CancellationToken cancellationToken = default)
         {
             if (applicationId == null)
@@ -621,14 +570,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         Application value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Application.DeserializeApplication(document.RootElement);
-                        }
+                        value = Application.DeserializeApplication(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
@@ -655,6 +597,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Deletes the managed application. </summary>
         /// <param name="applicationId"> The fully qualified ID of the managed application, including the managed application name and the managed application resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/Microsoft.Solutions/applications/{application-name}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
         public async Task<Response> DeleteByIdAsync(string applicationId, CancellationToken cancellationToken = default)
         {
             if (applicationId == null)
@@ -677,6 +620,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Deletes the managed application. </summary>
         /// <param name="applicationId"> The fully qualified ID of the managed application, including the managed application name and the managed application resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/Microsoft.Solutions/applications/{application-name}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
         public Response DeleteById(string applicationId, CancellationToken cancellationToken = default)
         {
             if (applicationId == null)
@@ -718,6 +662,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="applicationId"> The fully qualified ID of the managed application, including the managed application name and the managed application resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/Microsoft.Solutions/applications/{application-name}. </param>
         /// <param name="parameters"> Parameters supplied to the create or update a managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateByIdAsync(string applicationId, Application parameters, CancellationToken cancellationToken = default)
         {
             if (applicationId == null)
@@ -745,6 +690,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="applicationId"> The fully qualified ID of the managed application, including the managed application name and the managed application resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/Microsoft.Solutions/applications/{application-name}. </param>
         /// <param name="parameters"> Parameters supplied to the create or update a managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> or <paramref name="parameters"/> is null. </exception>
         public Response CreateOrUpdateById(string applicationId, Application parameters, CancellationToken cancellationToken = default)
         {
             if (applicationId == null)
@@ -793,6 +739,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="applicationId"> The fully qualified ID of the managed application, including the managed application name and the managed application resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/Microsoft.Solutions/applications/{application-name}. </param>
         /// <param name="parameters"> Parameters supplied to update an existing managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
         public async Task<Response<Application>> UpdateByIdAsync(string applicationId, Application parameters = null, CancellationToken cancellationToken = default)
         {
             if (applicationId == null)
@@ -808,14 +755,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         Application value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Application.DeserializeApplication(document.RootElement);
-                        }
+                        value = Application.DeserializeApplication(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -827,6 +767,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="applicationId"> The fully qualified ID of the managed application, including the managed application name and the managed application resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/Microsoft.Solutions/applications/{application-name}. </param>
         /// <param name="parameters"> Parameters supplied to update an existing managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
         public Response<Application> UpdateById(string applicationId, Application parameters = null, CancellationToken cancellationToken = default)
         {
             if (applicationId == null)
@@ -842,14 +783,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         Application value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Application.DeserializeApplication(document.RootElement);
-                        }
+                        value = Application.DeserializeApplication(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -873,6 +807,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<ApplicationListResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -892,14 +827,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ApplicationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
-                        }
+                        value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -911,6 +839,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<ApplicationListResult> ListByResourceGroupNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -930,14 +859,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ApplicationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
-                        }
+                        value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -960,6 +882,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets all the applications within a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<ApplicationListResult>> ListBySubscriptionNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -975,14 +898,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ApplicationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
-                        }
+                        value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -993,6 +909,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets all the applications within a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<ApplicationListResult> ListBySubscriptionNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1008,14 +925,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ApplicationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
-                        }
+                        value = ApplicationListResult.DeserializeApplicationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

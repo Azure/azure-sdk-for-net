@@ -15,10 +15,10 @@ namespace Azure.Security.KeyVault.Administration.Models
     {
         internal static KeyVaultPermission DeserializeKeyVaultPermission(JsonElement element)
         {
-            Optional<IReadOnlyList<string>> actions = default;
-            Optional<IReadOnlyList<string>> notActions = default;
-            Optional<IReadOnlyList<string>> dataActions = default;
-            Optional<IReadOnlyList<string>> notDataActions = default;
+            Optional<IList<string>> actions = default;
+            Optional<IList<string>> notActions = default;
+            Optional<IList<string>> dataActions = default;
+            Optional<IList<string>> notDataActions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actions"))

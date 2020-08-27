@@ -15,12 +15,12 @@ namespace Azure.Management.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Enabled != null)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled");
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (StorageUri != null)
+            if (Optional.IsDefined(StorageUri))
             {
                 writer.WritePropertyName("storageUri");
                 writer.WriteStringValue(StorageUri);
@@ -30,30 +30,22 @@ namespace Azure.Management.Compute.Models
 
         internal static BootDiagnostics DeserializeBootDiagnostics(JsonElement element)
         {
-            bool? enabled = default;
-            string storageUri = default;
+            Optional<bool> enabled = default;
+            Optional<string> storageUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("storageUri"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     storageUri = property.Value.GetString();
                     continue;
                 }
             }
-            return new BootDiagnostics(enabled, storageUri);
+            return new BootDiagnostics(Optional.ToNullable(enabled), storageUri.Value);
         }
     }
 }

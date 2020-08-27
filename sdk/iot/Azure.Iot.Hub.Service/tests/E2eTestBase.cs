@@ -17,7 +17,7 @@ namespace Azure.Iot.Hub.Service.Tests
         public E2eTestBase(bool isAsync)
          : base(isAsync, TestSettings.Instance.TestMode)
         {
-            Sanitizer = new TestConnectionStringSanitizer();
+            Sanitizer = new CustomRequestSanitizer();
         }
 
         public E2eTestBase(bool isAsync, RecordedTestMode testMode)
@@ -34,14 +34,15 @@ namespace Azure.Iot.Hub.Service.Tests
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
         }
 
-        protected IoTHubServiceClient GetClient()
+        protected IotHubServiceClient GetClient()
         {
             return InstrumentClient(
-                new IoTHubServiceClient(
+                new IotHubServiceClient(
                     TestEnvironment.IotHubConnectionString,
-                    Recording.InstrumentClientOptions(new IoTHubServiceClientOptions())));
+                    Recording.InstrumentClientOptions(new IotHubServiceClientOptions())));
         }
 
+        /* Need to use this for playback tests to run, do not use a new instance of random */
         protected string GetRandom()
         {
             return Recording.GenerateId();

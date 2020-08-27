@@ -19,8 +19,9 @@ namespace Azure.Iot.Hub.Service.Models
             CustomMetricQueries = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> The query used to define targeted devices or modules. The query is based on twin tags and/or reported properties. </summary>
         public string TargetCondition { get; set; }
-        /// <summary> Dictionary of &lt;string&gt;. </summary>
+        /// <summary> The key-value pairs with queries and their identifier. </summary>
         public IDictionary<string, string> CustomMetricQueries { get; }
     }
 }

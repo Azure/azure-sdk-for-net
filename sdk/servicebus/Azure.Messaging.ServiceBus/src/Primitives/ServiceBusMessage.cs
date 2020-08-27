@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using Azure.Core;
 
 namespace Azure.Messaging.ServiceBus
@@ -27,8 +26,8 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Creates a new message.
         /// </summary>
-        public ServiceBusMessage()
-            : this(default(ReadOnlyMemory<byte>))
+        public ServiceBusMessage() :
+            this(default(ReadOnlyMemory<byte>))
         {
         }
 
@@ -46,10 +45,9 @@ namespace Azure.Messaging.ServiceBus
         /// Creates a new message from the specified payload.
         /// </summary>
         /// <param name="body">The payload of the message in bytes.</param>
-        public ServiceBusMessage(ReadOnlyMemory<byte> body)
+        public ServiceBusMessage(ReadOnlyMemory<byte> body) :
+            this(BinaryData.FromBytes(body))
         {
-            Body = BinaryData.FromMemory(body);
-            Properties = new Dictionary<string, object>();
         }
 
         /// <summary>
@@ -70,7 +68,7 @@ namespace Azure.Messaging.ServiceBus
         {
             Argument.AssertNotNull(receivedMessage, nameof(receivedMessage));
 
-            Body = receivedMessage.Body;
+            Body = receivedMessage.SentMessage.Body;
             ContentType = receivedMessage.ContentType;
             CorrelationId = receivedMessage.CorrelationId;
             Label = receivedMessage.Label;
@@ -89,12 +87,6 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Gets or sets the body of the message.
         /// </summary>
-        /// <remarks>
-        /// The easiest way to create a new message from a string is the following:
-        /// <code>
-        /// message.Body = System.Text.Encoding.UTF8.GetBytes("Message1");
-        /// </code>
-        /// </remarks>
         public BinaryData Body { get; set; }
 
         /// <summary>

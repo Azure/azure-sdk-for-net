@@ -81,6 +81,16 @@ namespace Azure.Iot.Hub.Service.Models
                 writer.WritePropertyName("failureReason");
                 writer.WriteStringValue(FailureReason);
             }
+            if (Optional.IsDefined(IncludeConfigurations))
+            {
+                writer.WritePropertyName("includeConfigurations");
+                writer.WriteBooleanValue(IncludeConfigurations.Value);
+            }
+            if (Optional.IsDefined(ConfigurationsBlobName))
+            {
+                writer.WritePropertyName("configurationsBlobName");
+                writer.WriteStringValue(ConfigurationsBlobName);
+            }
             writer.WriteEndObject();
         }
 
@@ -99,6 +109,8 @@ namespace Azure.Iot.Hub.Service.Models
             Optional<bool> excludeKeysInExport = default;
             Optional<JobPropertiesStorageAuthenticationType> storageAuthenticationType = default;
             Optional<string> failureReason = default;
+            Optional<bool> includeConfigurations = default;
+            Optional<string> configurationsBlobName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobId"))
@@ -166,8 +178,18 @@ namespace Azure.Iot.Hub.Service.Models
                     failureReason = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("includeConfigurations"))
+                {
+                    includeConfigurations = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("configurationsBlobName"))
+                {
+                    configurationsBlobName = property.Value.GetString();
+                    continue;
+                }
             }
-            return new JobProperties(jobId.Value, Optional.ToNullable(startTimeUtc), Optional.ToNullable(endTimeUtc), Optional.ToNullable(type), Optional.ToNullable(status), Optional.ToNullable(progress), inputBlobContainerUri.Value, inputBlobName.Value, outputBlobContainerUri.Value, outputBlobName.Value, Optional.ToNullable(excludeKeysInExport), Optional.ToNullable(storageAuthenticationType), failureReason.Value);
+            return new JobProperties(jobId.Value, Optional.ToNullable(startTimeUtc), Optional.ToNullable(endTimeUtc), Optional.ToNullable(type), Optional.ToNullable(status), Optional.ToNullable(progress), inputBlobContainerUri.Value, inputBlobName.Value, outputBlobContainerUri.Value, outputBlobName.Value, Optional.ToNullable(excludeKeysInExport), Optional.ToNullable(storageAuthenticationType), failureReason.Value, Optional.ToNullable(includeConfigurations), configurationsBlobName.Value);
         }
     }
 }

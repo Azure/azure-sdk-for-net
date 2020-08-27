@@ -4,8 +4,7 @@ This sample demonstrates how to use the session processor. The session processor
 
 ### Processing messages from a session-enabled queue
 
-Processing session messages is performed with a `ServiceBusSessionProcessor`. This type
-derives from `ServiceBusProcessor` and exposes session-related functionality.
+Processing session messages is performed with a `ServiceBusSessionProcessor`. This type derives from `ServiceBusProcessor` and exposes session-related functionality.
 
 ```C# Snippet:ServiceBusProcessSessionMessages
 string connectionString = "<connection_string>";
@@ -42,7 +41,7 @@ var options = new ServiceBusSessionProcessorOptions
     // I can also allow for processing multiple sessions
     MaxConcurrentSessions = 5,
 
-    // By default, there will be a single concurrent call per session. I can 
+    // By default, there will be a single concurrent call per session. I can
     // increase that here to enable parallel processing within each session.
     MaxConcurrentCallsPerSession = 2
 };
@@ -54,6 +53,7 @@ ServiceBusSessionProcessor processor = client.CreateSessionProcessor(queueName, 
 // this sample from terminating immediately, we can use a task completion source that
 // we complete from within the message handler.
 TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+int processedMessageCount = 0;
 processor.ProcessMessageAsync += MessageHandler;
 processor.ProcessErrorAsync += ErrorHandler;
 
@@ -67,7 +67,13 @@ async Task MessageHandler(ProcessSessionMessageEventArgs args)
     // we can also set arbitrary session state using this receiver
     // the state is specific to the session, and not any particular message
     await args.SetSessionStateAsync(Encoding.Default.GetBytes("some state"));
-    tcs.SetResult(true);
+
+    // Once we've received the last message, complete the
+    // task completion source.
+    if (Interlocked.Increment(ref processedMessageCount) == 2)
+    {
+        tcs.SetResult(true);
+    }
 }
 
 Task ErrorHandler(ProcessErrorEventArgs args)

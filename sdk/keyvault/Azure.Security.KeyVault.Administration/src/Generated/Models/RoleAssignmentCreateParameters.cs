@@ -14,6 +14,7 @@ namespace Azure.Security.KeyVault.Administration.Models
     {
         /// <summary> Initializes a new instance of RoleAssignmentCreateParameters. </summary>
         /// <param name="properties"> Role assignment properties. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public RoleAssignmentCreateParameters(RoleAssignmentProperties properties)
         {
             if (properties == null)

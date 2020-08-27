@@ -202,7 +202,7 @@ namespace Azure.AI.FormRecognizer.Models
 
                 try
                 {
-                    Response<AnalyzeOperationResult_internal> update = async
+                    Response<AnalyzeOperationResult> update = async
                         ? await _serviceClient.GetAnalyzeFormResultAsync(new Guid(_modelId), new Guid(_resultId), cancellationToken).ConfigureAwait(false)
                         : _serviceClient.GetAnalyzeFormResult(new Guid(_modelId), new Guid(_resultId), cancellationToken);
 
@@ -235,14 +235,14 @@ namespace Azure.AI.FormRecognizer.Models
             return GetRawResponse();
         }
 
-        private static RecognizedFormCollection ConvertToRecognizedForms(AnalyzeResult_internal analyzeResult)
+        private static RecognizedFormCollection ConvertToRecognizedForms(AnalyzeResult analyzeResult)
         {
             return analyzeResult.DocumentResults?.Count == 0 ?
                 ConvertUnsupervisedResult(analyzeResult) :
                 ConvertSupervisedResult(analyzeResult);
         }
 
-        private static RecognizedFormCollection ConvertUnsupervisedResult(AnalyzeResult_internal analyzeResult)
+        private static RecognizedFormCollection ConvertUnsupervisedResult(AnalyzeResult analyzeResult)
         {
             List<RecognizedForm> forms = new List<RecognizedForm>();
             for (int pageIndex = 0; pageIndex < analyzeResult.PageResults.Count; pageIndex++)
@@ -252,7 +252,7 @@ namespace Azure.AI.FormRecognizer.Models
             return new RecognizedFormCollection(forms);
         }
 
-        private static RecognizedFormCollection ConvertSupervisedResult(AnalyzeResult_internal analyzeResult)
+        private static RecognizedFormCollection ConvertSupervisedResult(AnalyzeResult analyzeResult)
         {
             List<RecognizedForm> forms = new List<RecognizedForm>();
             foreach (var documentResult in analyzeResult.DocumentResults)

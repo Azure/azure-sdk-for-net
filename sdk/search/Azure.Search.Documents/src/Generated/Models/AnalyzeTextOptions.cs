@@ -16,6 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Initializes a new instance of AnalyzeTextOptions. </summary>
         /// <param name="text"> The text to break into tokens. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         public AnalyzeTextOptions(string text)
         {
             if (text == null)

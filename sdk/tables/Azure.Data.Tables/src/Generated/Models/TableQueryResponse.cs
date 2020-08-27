@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Data.Tables.Models
 {
     /// <summary> The properties for the table query response. </summary>
-    public partial class TableQueryResponse
+    internal partial class TableQueryResponse
     {
         /// <summary> Initializes a new instance of TableQueryResponse. </summary>
         internal TableQueryResponse()

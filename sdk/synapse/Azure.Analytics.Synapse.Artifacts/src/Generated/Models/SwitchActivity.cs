@@ -17,6 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of SwitchActivity. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="on"> An expression that would evaluate to a string or integer. This is used to determine the block of activities in cases that will be executed. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="on"/> is null. </exception>
         public SwitchActivity(string name, Expression @on) : base(name)
         {
             if (name == null)

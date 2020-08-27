@@ -118,6 +118,7 @@ namespace Azure.Management.Network
         /// <summary> Gets all the local network gateways in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual AsyncPageable<LocalNetworkGateway> ListAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -161,6 +162,7 @@ namespace Azure.Management.Network
         /// <summary> Gets all the local network gateways in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual Pageable<LocalNetworkGateway> List(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -206,6 +208,7 @@ namespace Azure.Management.Network
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
         /// <param name="parameters"> Parameters supplied to the create or update local network gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="localNetworkGatewayName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual async Task<LocalNetworkGatewaysCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string localNetworkGatewayName, LocalNetworkGateway parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -240,6 +243,7 @@ namespace Azure.Management.Network
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
         /// <param name="parameters"> Parameters supplied to the create or update local network gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="localNetworkGatewayName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual LocalNetworkGatewaysCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string localNetworkGatewayName, LocalNetworkGateway parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -273,6 +277,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="localNetworkGatewayName"/> is null. </exception>
         public virtual async Task<LocalNetworkGatewaysDeleteOperation> StartDeleteAsync(string resourceGroupName, string localNetworkGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -302,6 +307,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="localNetworkGatewayName"/> is null. </exception>
         public virtual LocalNetworkGatewaysDeleteOperation StartDelete(string resourceGroupName, string localNetworkGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

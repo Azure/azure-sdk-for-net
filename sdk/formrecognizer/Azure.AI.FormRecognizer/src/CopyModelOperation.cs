@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -250,9 +249,9 @@ namespace Azure.AI.FormRecognizer.Training
         {
             return new CustomFormModelInfo(
                 modelId,
+                status,
                 result.CreatedDateTime,
-                result.LastUpdatedDateTime,
-                status);
+                result.LastUpdatedDateTime);
         }
     }
 }

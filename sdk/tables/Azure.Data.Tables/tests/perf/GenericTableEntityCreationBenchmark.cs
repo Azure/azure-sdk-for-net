@@ -47,14 +47,16 @@ namespace Azure.Data.Tables.Performance
             _items.ToTableEntityList<BenchmarkEntity>();
         }
 
-        public class BenchmarkEntity : TableEntity
+        public class BenchmarkEntity : ITableEntity
         {
             public BenchmarkEntity()
             {
             }
 
-            public BenchmarkEntity(string partitionKey, string rowKey) : base(partitionKey, rowKey)
+            public BenchmarkEntity(string partitionKey, string rowKey)
             {
+                PartitionKey = partitionKey;
+                RowKey = rowKey;
             }
 
             public Guid SomeGuid { get; set; }
@@ -62,6 +64,10 @@ namespace Azure.Data.Tables.Performance
             public int SomeInt { get; set; }
             public DateTime SomeDateTime { get; set; }
             public byte[] SomeBinary { get; set; }
+            public string PartitionKey { get; set; }
+            public string RowKey { get; set; }
+            public DateTimeOffset? Timestamp { get; set; }
+            public ETag ETag { get; set; }
         }
     }
 }

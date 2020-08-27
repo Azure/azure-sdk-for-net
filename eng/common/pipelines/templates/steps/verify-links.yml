@@ -2,13 +2,18 @@ parameters:
   Directory: 'not-specified'
   IgnoreLinksFile: "$(Build.SourcesDirectory)/eng/ignore-links.txt"
   
-
 steps:
-  - task: PowerShell@2
-    displayName: Link verification check
-    inputs:
-      pwsh: true
-      workingDirectory: $(Build.SourcesDirectory)/${{ parameters.Directory }}
-      filePath: eng/common/scripts/Verify-Links.ps1 
-      arguments: >
-        -urls $(dir -r -i *.md) -rootUrl "file://$(Build.SourcesDirectory)/${{ parameters.Directory }}" -recursive:$false -ignoreLinksFile ${{ parameters.IgnoreLinksFile }}
+- task: PowerShell@2
+  displayName: Link verification check
+  inputs:
+    pwsh: true
+    workingDirectory: $(Build.SourcesDirectory)/${{ parameters.Directory }}
+    filePath: eng/common/scripts/Verify-Links.ps1 
+    arguments: >
+      -urls $(dir -r -i *.md) 
+      -rootUrl "file://$(Build.SourcesDirectory)/${{ parameters.Directory }}" 
+      -recursive: $false 
+      -ignoreLinksFile ${{ parameters.IgnoreLinksFile }}
+      -branchReplaceRegex "^($env:SYSTEM_PULLREQUEST_SOURCEREPOSITORYURI.*/(?:blob|tree)/)master(/.*)$"
+      -branchReplacementName $env:SYSTEM_PULLREQUEST_SOURCECOMMITID
+      -devOpsLogging: $true

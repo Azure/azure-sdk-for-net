@@ -52,24 +52,14 @@ namespace Azure.AI.FormRecognizer
         {
             string errorCode = default;
 
-            if (string.IsNullOrEmpty(errorMessage))
+            if (errors.Count > 0)
             {
-                if (errors.Count > 0)
-                {
-                    var firstError = errors[0];
-
-                    errorMessage = firstError.Message;
-                    errorCode = firstError.ErrorCode;
-                }
-                else
-                {
-                    errorMessage = "Operation failed.";
-                }
+                errorCode = errors[0].ErrorCode;
+                errorMessage ??= errors[0].Message;
             }
 
             var errorInfo = new Dictionary<string, string>();
             int index = 0;
-
             foreach (var error in errors)
             {
                 errorInfo.Add($"error-{index}", $"{error.ErrorCode}: {error.Message}");

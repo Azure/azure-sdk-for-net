@@ -7,12 +7,15 @@ namespace Azure.Identity
 {
     internal class DefaultAzureCredentialFactory
     {
-        public DefaultAzureCredentialFactory(CredentialPipeline pipeline)
+        public DefaultAzureCredentialFactory(TokenCredentialOptions options)
+            : this(CredentialPipeline.GetInstance(options)) { }
+
+        protected DefaultAzureCredentialFactory(CredentialPipeline pipeline)
         {
             Pipeline = pipeline;
         }
 
-        public virtual CredentialPipeline Pipeline { get; }
+        public CredentialPipeline Pipeline { get; }
 
         public virtual TokenCredential CreateEnvironmentCredential()
         {

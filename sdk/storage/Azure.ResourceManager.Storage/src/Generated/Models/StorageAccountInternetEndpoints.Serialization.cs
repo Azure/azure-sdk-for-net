@@ -10,80 +10,38 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class StorageAccountInternetEndpoints : IUtf8JsonSerializable
+    public partial class StorageAccountInternetEndpoints
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Blob != null)
-            {
-                writer.WritePropertyName("blob");
-                writer.WriteStringValue(Blob);
-            }
-            if (File != null)
-            {
-                writer.WritePropertyName("file");
-                writer.WriteStringValue(File);
-            }
-            if (Web != null)
-            {
-                writer.WritePropertyName("web");
-                writer.WriteStringValue(Web);
-            }
-            if (Dfs != null)
-            {
-                writer.WritePropertyName("dfs");
-                writer.WriteStringValue(Dfs);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static StorageAccountInternetEndpoints DeserializeStorageAccountInternetEndpoints(JsonElement element)
         {
-            string blob = default;
-            string file = default;
-            string web = default;
-            string dfs = default;
+            Optional<string> blob = default;
+            Optional<string> file = default;
+            Optional<string> web = default;
+            Optional<string> dfs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("blob"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     blob = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("file"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     file = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("web"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     web = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("dfs"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     dfs = property.Value.GetString();
                     continue;
                 }
             }
-            return new StorageAccountInternetEndpoints(blob, file, web, dfs);
+            return new StorageAccountInternetEndpoints(blob.Value, file.Value, web.Value, dfs.Value);
         }
     }
 }

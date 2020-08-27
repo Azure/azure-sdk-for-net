@@ -14,40 +14,28 @@ namespace Azure.Management.Compute.Models
     {
         internal static ResourceSkuCosts DeserializeResourceSkuCosts(JsonElement element)
         {
-            string meterID = default;
-            long? quantity = default;
-            string extendedUnit = default;
+            Optional<string> meterID = default;
+            Optional<long> quantity = default;
+            Optional<string> extendedUnit = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("meterID"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     meterID = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("quantity"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     quantity = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("extendedUnit"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     extendedUnit = property.Value.GetString();
                     continue;
                 }
             }
-            return new ResourceSkuCosts(meterID, quantity, extendedUnit);
+            return new ResourceSkuCosts(meterID.Value, Optional.ToNullable(quantity), extendedUnit.Value);
         }
     }
 }

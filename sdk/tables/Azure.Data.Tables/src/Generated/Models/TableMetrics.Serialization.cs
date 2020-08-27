@@ -25,10 +25,10 @@ namespace Azure.Data.Tables.Models
             writer.WriteStartElement("Enabled");
             writer.WriteValue(Enabled);
             writer.WriteEndElement();
-            if (Optional.IsDefined(IncludeAPIs))
+            if (Optional.IsDefined(IncludeApis))
             {
                 writer.WriteStartElement("IncludeAPIs");
-                writer.WriteValue(IncludeAPIs.Value);
+                writer.WriteValue(IncludeApis.Value);
                 writer.WriteEndElement();
             }
             if (Optional.IsDefined(RetentionPolicy))
@@ -42,7 +42,7 @@ namespace Azure.Data.Tables.Models
         {
             string version = default;
             bool enabled = default;
-            bool? includeAPIs = default;
+            bool? includeApis = default;
             RetentionPolicy retentionPolicy = default;
             if (element.Element("Version") is XElement versionElement)
             {
@@ -54,13 +54,13 @@ namespace Azure.Data.Tables.Models
             }
             if (element.Element("IncludeAPIs") is XElement includeAPIsElement)
             {
-                includeAPIs = (bool?)includeAPIsElement;
+                includeApis = (bool?)includeAPIsElement;
             }
             if (element.Element("RetentionPolicy") is XElement retentionPolicyElement)
             {
                 retentionPolicy = RetentionPolicy.DeserializeRetentionPolicy(retentionPolicyElement);
             }
-            return new TableMetrics(version, enabled, includeAPIs, retentionPolicy);
+            return new TableMetrics(version, enabled, includeApis, retentionPolicy);
         }
     }
 }

@@ -15,52 +15,33 @@ namespace Azure.Management.Network.Models
     {
         internal static AzureReachabilityReportItem DeserializeAzureReachabilityReportItem(JsonElement element)
         {
-            string provider = default;
-            string azureLocation = default;
-            IReadOnlyList<AzureReachabilityReportLatencyInfo> latencies = default;
+            Optional<string> provider = default;
+            Optional<string> azureLocation = default;
+            Optional<IReadOnlyList<AzureReachabilityReportLatencyInfo>> latencies = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provider"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     provider = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("azureLocation"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     azureLocation = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("latencies"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<AzureReachabilityReportLatencyInfo> array = new List<AzureReachabilityReportLatencyInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(AzureReachabilityReportLatencyInfo.DeserializeAzureReachabilityReportLatencyInfo(item));
-                        }
+                        array.Add(AzureReachabilityReportLatencyInfo.DeserializeAzureReachabilityReportLatencyInfo(item));
                     }
                     latencies = array;
                     continue;
                 }
             }
-            return new AzureReachabilityReportItem(provider, azureLocation, latencies);
+            return new AzureReachabilityReportItem(provider.Value, azureLocation.Value, Optional.ToList(latencies));
         }
     }
 }

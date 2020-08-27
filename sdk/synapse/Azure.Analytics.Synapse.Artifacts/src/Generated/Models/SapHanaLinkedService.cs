@@ -15,6 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of SapHanaLinkedService. </summary>
         /// <param name="server"> Host name of the SAP HANA server. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="server"/> is null. </exception>
         public SapHanaLinkedService(object server)
         {
             if (server == null)

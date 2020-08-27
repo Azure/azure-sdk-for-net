@@ -15,54 +15,54 @@ namespace Azure.Management.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (OsType != null)
+            if (Optional.IsDefined(OsType))
             {
                 writer.WritePropertyName("osType");
                 writer.WriteStringValue(OsType.Value.ToSerialString());
             }
-            if (EncryptionSettings != null)
+            if (Optional.IsDefined(EncryptionSettings))
             {
                 writer.WritePropertyName("encryptionSettings");
                 writer.WriteObjectValue(EncryptionSettings);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Vhd != null)
+            if (Optional.IsDefined(Vhd))
             {
                 writer.WritePropertyName("vhd");
                 writer.WriteObjectValue(Vhd);
             }
-            if (Image != null)
+            if (Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image");
                 writer.WriteObjectValue(Image);
             }
-            if (Caching != null)
+            if (Optional.IsDefined(Caching))
             {
                 writer.WritePropertyName("caching");
                 writer.WriteStringValue(Caching.Value.ToSerialString());
             }
-            if (WriteAcceleratorEnabled != null)
+            if (Optional.IsDefined(WriteAcceleratorEnabled))
             {
                 writer.WritePropertyName("writeAcceleratorEnabled");
                 writer.WriteBooleanValue(WriteAcceleratorEnabled.Value);
             }
-            if (DiffDiskSettings != null)
+            if (Optional.IsDefined(DiffDiskSettings))
             {
                 writer.WritePropertyName("diffDiskSettings");
                 writer.WriteObjectValue(DiffDiskSettings);
             }
             writer.WritePropertyName("createOption");
             writer.WriteStringValue(CreateOption.ToString());
-            if (DiskSizeGB != null)
+            if (Optional.IsDefined(DiskSizeGB))
             {
                 writer.WritePropertyName("diskSizeGB");
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (ManagedDisk != null)
+            if (Optional.IsDefined(ManagedDisk))
             {
                 writer.WritePropertyName("managedDisk");
                 writer.WriteObjectValue(ManagedDisk);
@@ -72,88 +72,56 @@ namespace Azure.Management.Compute.Models
 
         internal static OSDisk DeserializeOSDisk(JsonElement element)
         {
-            OperatingSystemTypes? osType = default;
-            DiskEncryptionSettings encryptionSettings = default;
-            string name = default;
-            VirtualHardDisk vhd = default;
-            VirtualHardDisk image = default;
-            CachingTypes? caching = default;
-            bool? writeAcceleratorEnabled = default;
-            DiffDiskSettings diffDiskSettings = default;
+            Optional<OperatingSystemTypes> osType = default;
+            Optional<DiskEncryptionSettings> encryptionSettings = default;
+            Optional<string> name = default;
+            Optional<VirtualHardDisk> vhd = default;
+            Optional<VirtualHardDisk> image = default;
+            Optional<CachingTypes> caching = default;
+            Optional<bool> writeAcceleratorEnabled = default;
+            Optional<DiffDiskSettings> diffDiskSettings = default;
             DiskCreateOptionTypes createOption = default;
-            int? diskSizeGB = default;
-            ManagedDiskParameters managedDisk = default;
+            Optional<int> diskSizeGB = default;
+            Optional<ManagedDiskParameters> managedDisk = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     osType = property.Value.GetString().ToOperatingSystemTypes();
                     continue;
                 }
                 if (property.NameEquals("encryptionSettings"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     encryptionSettings = DiskEncryptionSettings.DeserializeDiskEncryptionSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("vhd"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     vhd = VirtualHardDisk.DeserializeVirtualHardDisk(property.Value);
                     continue;
                 }
                 if (property.NameEquals("image"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     image = VirtualHardDisk.DeserializeVirtualHardDisk(property.Value);
                     continue;
                 }
                 if (property.NameEquals("caching"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     caching = property.Value.GetString().ToCachingTypes();
                     continue;
                 }
                 if (property.NameEquals("writeAcceleratorEnabled"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     writeAcceleratorEnabled = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("diffDiskSettings"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     diffDiskSettings = DiffDiskSettings.DeserializeDiffDiskSettings(property.Value);
                     continue;
                 }
@@ -164,24 +132,16 @@ namespace Azure.Management.Compute.Models
                 }
                 if (property.NameEquals("diskSizeGB"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     diskSizeGB = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("managedDisk"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     managedDisk = ManagedDiskParameters.DeserializeManagedDiskParameters(property.Value);
                     continue;
                 }
             }
-            return new OSDisk(osType, encryptionSettings, name, vhd, image, caching, writeAcceleratorEnabled, diffDiskSettings, createOption, diskSizeGB, managedDisk);
+            return new OSDisk(Optional.ToNullable(osType), encryptionSettings.Value, name.Value, vhd.Value, image.Value, Optional.ToNullable(caching), Optional.ToNullable(writeAcceleratorEnabled), diffDiskSettings.Value, createOption, Optional.ToNullable(diskSizeGB), managedDisk.Value);
         }
     }
 }

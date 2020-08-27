@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     {
         /// <summary> Initializes a new instance of DigitalTwinsResource. </summary>
         /// <param name="location"> The resource location. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public DigitalTwinsResource(string location)
         {
             if (location == null)

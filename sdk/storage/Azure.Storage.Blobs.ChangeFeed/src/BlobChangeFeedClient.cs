@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.ChangeFeed.Models;
 
 namespace Azure.Storage.Blobs.ChangeFeed
 {
@@ -69,7 +68,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// every request.
         /// </param>
         public BlobChangeFeedClient(string connectionString, BlobClientOptions options)
-
         {
             _blobServiceClient = new BlobServiceClient(connectionString, options);
         }
@@ -169,7 +167,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// <param name="end"></param>
         /// <returns><see cref="BlobChangeFeedPageable"/>.</returns>
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-        public virtual Pageable<BlobChangeFeedEvent> GetChanges(DateTimeOffset start = default, DateTimeOffset end = default)
+        public virtual Pageable<BlobChangeFeedEvent> GetChanges(DateTimeOffset? start = default, DateTimeOffset? end = default)
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         {
             BlobChangeFeedPageable pageable = new BlobChangeFeedPageable(
@@ -213,8 +211,8 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// <returns><see cref="BlobChangeFeedAsyncPageable"/>.</returns>
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual AsyncPageable<BlobChangeFeedEvent> GetChangesAsync(
-            DateTimeOffset start = default,
-            DateTimeOffset end = default)
+            DateTimeOffset? start = default,
+            DateTimeOffset? end = default)
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         {
             BlobChangeFeedAsyncPageable asyncPagable = new BlobChangeFeedAsyncPageable(

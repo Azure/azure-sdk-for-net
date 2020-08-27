@@ -26,7 +26,30 @@ namespace Azure.Data.Tables.Tests
         public TableServiceClientLiveTests(bool isAsync, TableEndpointType endpointType) : base(isAsync, endpointType /* To record tests, add this argument, RecordedTestMode.Record */)
         { }
 
-        [Test]
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [RecordedTest]
+        public async Task CreateTableIfNotExists()
+        {
+            // Call CreateTableIfNotExists when the table already exists.
+            Assert.That(async () => await CosmosThrottleWrapper(async () => await service.CreateTableIfNotExistsAsync(tableName).ConfigureAwait(false)), Throws.Nothing);
+
+            // Call CreateTableIfNotExists when the table does not already exists.
+            var newTableName = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
+            try
+            {
+                TableItem table = await CosmosThrottleWrapper(async () => await service.CreateTableIfNotExistsAsync(newTableName).ConfigureAwait(false));
+                Assert.That(table.TableName, Is.EqualTo(newTableName));
+            }
+            finally
+            {
+                // Delete the table using the TableClient method.
+                await CosmosThrottleWrapper(async () => await service.DeleteTableAsync(newTableName).ConfigureAwait(false));
+            }
+        }
+
+        [RecordedTest]
         public void ValidateAccountSasCredentialsWithPermissions()
         {
             // Create a SharedKeyCredential that we can use to sign the SAS token
@@ -74,7 +97,7 @@ namespace Azure.Data.Tables.Tests
             Assert.That(async () => await sasAuthedServiceDelete.DeleteTableAsync(sasTableName).ConfigureAwait(false), Throws.Nothing);
         }
 
-        [Test]
+        [RecordedTest]
         public void ValidateAccountSasCredentialsWithResourceTypes()
         {
             // Create a SharedKeyCredential that we can use to sign the SAS token
@@ -133,7 +156,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableServiceClient.
         /// </summary>
-        [Test]
+        [RecordedTest]
         [TestCase(null)]
         [TestCase(5)]
         public async Task GetTablesReturnsTablesWithAndWithoutPagination(int? pageCount)
@@ -147,8 +170,8 @@ namespace Azure.Data.Tables.Tests
                 for (int i = 0; i < 10; i++)
                 {
                     var table = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
-                    await CosmosThrottleWrapper(async () => await service.CreateTableAsync(table).ConfigureAwait(false));
                     createdTables.Add(table);
+                    await CosmosThrottleWrapper(async () => await service.CreateTableAsync(table).ConfigureAwait(false));
                 }
 
                 // Get the table list.
@@ -170,7 +193,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Validates the functionality of the TableServiceClient.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task GetTablesReturnsTablesWithFilter()
         {
             var createdTables = new List<string>();
@@ -202,7 +225,7 @@ namespace Azure.Data.Tables.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetPropertiesReturnsProperties()
         {
             if (_endpointType == TableEndpointType.CosmosTable)
@@ -236,10 +259,10 @@ namespace Azure.Data.Tables.Tests
 
             // Test each property
 
-            CompareTableServiceProperties(responseToChange, changedResponse);
+            CompareServiceProperties(responseToChange, changedResponse);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetTableServiceStatsReturnsStats()
         {
             if (_endpointType == TableEndpointType.CosmosTable)
@@ -249,14 +272,14 @@ namespace Azure.Data.Tables.Tests
 
             // Get statistics
 
-            TableServiceStats stats = await service.GetTableServiceStatsAsync().ConfigureAwait(false);
+            TableServiceStatistics stats = await service.GetStatisticsAsync().ConfigureAwait(false);
 
             // Test that the secondary location is live
 
-            Assert.AreEqual(new GeoReplicationStatusType("live"), stats.GeoReplication.Status);
+            Assert.AreEqual(new TableGeoReplicationStatus("live"), stats.GeoReplication.Status);
         }
 
-        private void CompareTableServiceProperties(TableServiceProperties expected, TableServiceProperties actual)
+        private void CompareServiceProperties(TableServiceProperties expected, TableServiceProperties actual)
         {
             Assert.AreEqual(expected.Logging.Read, actual.Logging.Read);
             Assert.AreEqual(expected.Logging.Version, actual.Logging.Version);
@@ -267,21 +290,21 @@ namespace Azure.Data.Tables.Tests
 
             Assert.AreEqual(expected.HourMetrics.Enabled, actual.HourMetrics.Enabled);
             Assert.AreEqual(expected.HourMetrics.Version, actual.HourMetrics.Version);
-            Assert.AreEqual(expected.HourMetrics.IncludeAPIs, actual.HourMetrics.IncludeAPIs);
+            Assert.AreEqual(expected.HourMetrics.IncludeApis, actual.HourMetrics.IncludeApis);
             Assert.AreEqual(expected.HourMetrics.RetentionPolicy.Enabled, actual.HourMetrics.RetentionPolicy.Enabled);
             Assert.AreEqual(expected.HourMetrics.RetentionPolicy.Days, actual.HourMetrics.RetentionPolicy.Days);
 
             Assert.AreEqual(expected.MinuteMetrics.Enabled, actual.MinuteMetrics.Enabled);
             Assert.AreEqual(expected.MinuteMetrics.Version, actual.MinuteMetrics.Version);
-            Assert.AreEqual(expected.MinuteMetrics.IncludeAPIs, actual.MinuteMetrics.IncludeAPIs);
+            Assert.AreEqual(expected.MinuteMetrics.IncludeApis, actual.MinuteMetrics.IncludeApis);
             Assert.AreEqual(expected.MinuteMetrics.RetentionPolicy.Enabled, actual.MinuteMetrics.RetentionPolicy.Enabled);
             Assert.AreEqual(expected.MinuteMetrics.RetentionPolicy.Days, actual.MinuteMetrics.RetentionPolicy.Days);
 
             Assert.AreEqual(expected.Cors.Count, actual.Cors.Count);
             for (int i = 0; i < expected.Cors.Count; i++)
             {
-                CorsRule expectedRule = expected.Cors[i];
-                CorsRule actualRule = actual.Cors[i];
+                TableCorsRule expectedRule = expected.Cors[i];
+                TableCorsRule actualRule = actual.Cors[i];
                 Assert.AreEqual(expectedRule.AllowedHeaders, actualRule.AllowedHeaders);
                 Assert.AreEqual(expectedRule.AllowedMethods, actualRule.AllowedMethods);
                 Assert.AreEqual(expectedRule.AllowedOrigins, actualRule.AllowedOrigins);

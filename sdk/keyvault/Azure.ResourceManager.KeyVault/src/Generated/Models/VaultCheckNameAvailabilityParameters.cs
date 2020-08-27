@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         /// <summary> Initializes a new instance of VaultCheckNameAvailabilityParameters. </summary>
         /// <param name="name"> The vault name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public VaultCheckNameAvailabilityParameters(string name)
         {
             if (name == null)

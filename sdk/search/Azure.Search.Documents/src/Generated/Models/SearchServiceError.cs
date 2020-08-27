@@ -16,6 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Initializes a new instance of SearchServiceError. </summary>
         /// <param name="message"> A human-readable representation of the error. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
         internal SearchServiceError(string message)
         {
             if (message == null)

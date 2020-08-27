@@ -16,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of RestServiceLinkedService. </summary>
         /// <param name="url"> The base URL of the REST service. </param>
         /// <param name="authenticationType"> Type of authentication used to connect to the REST service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
         public RestServiceLinkedService(object url, RestServiceAuthenticationType authenticationType)
         {
             if (url == null)

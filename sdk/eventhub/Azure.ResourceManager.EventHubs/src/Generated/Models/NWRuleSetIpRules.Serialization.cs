@@ -15,45 +15,37 @@ namespace Azure.ResourceManager.EventHubs.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (IpMask != null)
+            if (Optional.IsDefined(IpMask))
             {
                 writer.WritePropertyName("ipMask");
                 writer.WriteStringValue(IpMask);
             }
-            if (Action != null)
+            if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action");
-                writer.WriteStringValue(Action);
+                writer.WriteStringValue(Action.Value.ToString());
             }
             writer.WriteEndObject();
         }
 
         internal static NWRuleSetIpRules DeserializeNWRuleSetIpRules(JsonElement element)
         {
-            string ipMask = default;
-            string action = default;
+            Optional<string> ipMask = default;
+            Optional<NetworkRuleIPAction> action = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipMask"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     ipMask = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("action"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    action = property.Value.GetString();
+                    action = new NetworkRuleIPAction(property.Value.GetString());
                     continue;
                 }
             }
-            return new NWRuleSetIpRules(ipMask, action);
+            return new NWRuleSetIpRules(ipMask.Value, Optional.ToNullable(action));
         }
     }
 }

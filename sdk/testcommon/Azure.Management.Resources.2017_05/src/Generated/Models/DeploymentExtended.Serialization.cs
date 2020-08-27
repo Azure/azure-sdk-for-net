@@ -14,17 +14,13 @@ namespace Azure.Management.Resources.Models
     {
         internal static DeploymentExtended DeserializeDeploymentExtended(JsonElement element)
         {
-            string id = default;
+            Optional<string> id = default;
             string name = default;
-            DeploymentPropertiesExtended properties = default;
+            Optional<DeploymentPropertiesExtended> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
@@ -35,15 +31,11 @@ namespace Azure.Management.Resources.Models
                 }
                 if (property.NameEquals("properties"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     properties = DeploymentPropertiesExtended.DeserializeDeploymentPropertiesExtended(property.Value);
                     continue;
                 }
             }
-            return new DeploymentExtended(id, name, properties);
+            return new DeploymentExtended(id.Value, name, properties.Value);
         }
     }
 }

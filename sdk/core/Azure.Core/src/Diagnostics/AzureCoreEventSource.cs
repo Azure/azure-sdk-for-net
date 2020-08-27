@@ -11,6 +11,7 @@ namespace Azure.Core.Diagnostics
     {
         private const string EventSourceName = "Azure-Core";
 
+        private const int BackgroundRefreshFailedEvent = 19;
         private const int RequestEvent = 1;
         private const int RequestContentEvent = 2;
         private const int RequestContentTextEvent = 17;
@@ -31,6 +32,12 @@ namespace Azure.Core.Diagnostics
         private AzureCoreEventSource() : base(EventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue) { }
 
         public static AzureCoreEventSource Singleton { get; } = new AzureCoreEventSource();
+
+        [Event(BackgroundRefreshFailedEvent, Level = EventLevel.Informational, Message = "Background token refresh [{0}] failed with exception {1}")]
+        public void BackgroundRefreshFailed(string requestId, string exception)
+        {
+            WriteEvent(BackgroundRefreshFailedEvent, requestId, exception);
+        }
 
         [Event(RequestEvent, Level = EventLevel.Informational, Message = "Request [{0}] {1} {2}\r\n{3}client assembly: {4}")]
         public void Request(string requestId, string method, string uri, string headers, string? clientAssembly)

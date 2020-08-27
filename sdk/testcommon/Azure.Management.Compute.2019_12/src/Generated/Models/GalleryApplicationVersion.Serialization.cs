@@ -16,24 +16,9 @@ namespace Azure.Management.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
-            if (Tags != null)
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -46,20 +31,10 @@ namespace Azure.Management.Compute.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (PublishingProfile != null)
+            if (Optional.IsDefined(PublishingProfile))
             {
                 writer.WritePropertyName("publishingProfile");
                 writer.WriteObjectValue(PublishingProfile);
-            }
-            if (ProvisioningState != null)
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (ReplicationStatus != null)
-            {
-                writer.WritePropertyName("replicationStatus");
-                writer.WriteObjectValue(ReplicationStatus);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -67,40 +42,28 @@ namespace Azure.Management.Compute.Models
 
         internal static GalleryApplicationVersion DeserializeGalleryApplicationVersion(JsonElement element)
         {
-            string id = default;
-            string name = default;
-            string type = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
             string location = default;
-            IDictionary<string, string> tags = default;
-            GalleryApplicationVersionPublishingProfile publishingProfile = default;
-            GalleryApplicationVersionPropertiesProvisioningState? provisioningState = default;
-            ReplicationStatus replicationStatus = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<GalleryApplicationVersionPublishingProfile> publishingProfile = default;
+            Optional<GalleryApplicationVersionPropertiesProvisioningState> provisioningState = default;
+            Optional<ReplicationStatus> replicationStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
@@ -111,21 +74,10 @@ namespace Azure.Management.Compute.Models
                 }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
                     continue;
@@ -136,28 +88,16 @@ namespace Azure.Management.Compute.Models
                     {
                         if (property0.NameEquals("publishingProfile"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             publishingProfile = GalleryApplicationVersionPublishingProfile.DeserializeGalleryApplicationVersionPublishingProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             provisioningState = new GalleryApplicationVersionPropertiesProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("replicationStatus"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             replicationStatus = ReplicationStatus.DeserializeReplicationStatus(property0.Value);
                             continue;
                         }
@@ -165,7 +105,7 @@ namespace Azure.Management.Compute.Models
                     continue;
                 }
             }
-            return new GalleryApplicationVersion(id, name, type, location, tags, publishingProfile, provisioningState, replicationStatus);
+            return new GalleryApplicationVersion(id.Value, name.Value, type.Value, location, Optional.ToDictionary(tags), publishingProfile.Value, Optional.ToNullable(provisioningState), replicationStatus.Value);
         }
     }
 }

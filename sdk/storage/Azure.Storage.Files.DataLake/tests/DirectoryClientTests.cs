@@ -1227,8 +1227,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Id = signedIdentifierId,
                 AccessPolicy = new DataLakeAccessPolicy
                 {
-                    StartsOn = Recording.UtcNow.AddHours(-1),
-                    ExpiresOn = Recording.UtcNow.AddHours(1),
+                    PolicyStartsOn = Recording.UtcNow.AddHours(-1),
+                    PolicyExpiresOn = Recording.UtcNow.AddHours(1),
                     Permissions = "rw"
                 }
             };

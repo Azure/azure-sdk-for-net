@@ -10,12 +10,13 @@ using System.ComponentModel;
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    /// <summary> The AuthenticationMechanismType. </summary>
+    /// <summary> The type of authentication used to connect to the service. </summary>
     public readonly partial struct AuthenticationMechanismType : IEquatable<AuthenticationMechanismType>
     {
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="AuthenticationMechanismType"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AuthenticationMechanismType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

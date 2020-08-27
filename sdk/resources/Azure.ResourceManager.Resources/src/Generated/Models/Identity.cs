@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of Identity. </summary>
         public Identity()
         {
+            UserAssignedIdentities = new ChangeTrackingDictionary<string, IdentityUserAssignedIdentitiesValue>();
         }
 
         /// <summary> Initializes a new instance of Identity. </summary>
@@ -37,6 +39,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The identity type. </summary>
         public ResourceIdentityType? Type { get; set; }
         /// <summary> The list of user identities associated with the resource. The user identity dictionary key references will be ARM resource ids in the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}&apos;. </summary>
-        public IDictionary<string, IdentityUserAssignedIdentitiesValue> UserAssignedIdentities { get; set; }
+        public IDictionary<string, IdentityUserAssignedIdentitiesValue> UserAssignedIdentities { get; }
     }
 }

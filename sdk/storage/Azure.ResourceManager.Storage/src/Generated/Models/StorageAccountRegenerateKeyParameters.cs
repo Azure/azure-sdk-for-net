@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         /// <summary> Initializes a new instance of StorageAccountRegenerateKeyParameters. </summary>
         /// <param name="keyName"> The name of storage keys that want to be regenerated, possible values are key1, key2, kerb1, kerb2. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         public StorageAccountRegenerateKeyParameters(string keyName)
         {
             if (keyName == null)

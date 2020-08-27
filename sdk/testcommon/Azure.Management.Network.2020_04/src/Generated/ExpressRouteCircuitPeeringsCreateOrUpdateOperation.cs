@@ -54,27 +54,13 @@ namespace Azure.Management.Network
         ExpressRouteCircuitPeering IOperationSource<ExpressRouteCircuitPeering>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return ExpressRouteCircuitPeering.DeserializeExpressRouteCircuitPeering(document.RootElement);
-            }
+            return ExpressRouteCircuitPeering.DeserializeExpressRouteCircuitPeering(document.RootElement);
         }
 
         async ValueTask<ExpressRouteCircuitPeering> IOperationSource<ExpressRouteCircuitPeering>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return ExpressRouteCircuitPeering.DeserializeExpressRouteCircuitPeering(document.RootElement);
-            }
+            return ExpressRouteCircuitPeering.DeserializeExpressRouteCircuitPeering(document.RootElement);
         }
     }
 }

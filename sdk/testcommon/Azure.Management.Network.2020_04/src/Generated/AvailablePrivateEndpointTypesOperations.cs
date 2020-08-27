@@ -40,6 +40,7 @@ namespace Azure.Management.Network
         /// <summary> Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region. </summary>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public virtual AsyncPageable<AvailablePrivateEndpointType> ListAsync(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -83,6 +84,7 @@ namespace Azure.Management.Network
         /// <summary> Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region. </summary>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public virtual Pageable<AvailablePrivateEndpointType> List(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -127,6 +129,7 @@ namespace Azure.Management.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public virtual AsyncPageable<AvailablePrivateEndpointType> ListByResourceGroupAsync(string location, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -175,6 +178,7 @@ namespace Azure.Management.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public virtual Pageable<AvailablePrivateEndpointType> ListByResourceGroup(string location, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (location == null)

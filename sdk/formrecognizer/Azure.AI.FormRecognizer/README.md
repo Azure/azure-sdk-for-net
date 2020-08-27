@@ -13,10 +13,10 @@ Azure Cognitive Services Form Recognizer is a cloud service that uses machine le
 Install the Azure Form Recognizer client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-dotnet add package Azure.AI.FormRecognizer --version 1.0.0-preview.4
+dotnet add package Azure.AI.FormRecognizer --version 3.0.0
 ``` 
 
-**Note:** This package version targets Azure Form Recognizer service API version v2.0-preview.
+**Note:** This package version targets Azure Form Recognizer service API version v2.0.
 
 ### Prerequisites
 * An [Azure subscription][azure_sub].
@@ -52,7 +52,7 @@ az cognitiveservices account create \
 ```
 For more information about creating the resource or how to get the location and sku information see [here][cognitive_resource_cli].
 
-### Authenticate a Form Recognizer client
+### Authenticate the client
 In order to interact with the Form Recognizer service, you'll need to create an instance of the [`FormRecognizerClient`][form_recognizer_client_class] class.  You will need an **endpoint** and an **API key** to instantiate a client object.  
 
 #### Get API Key
@@ -204,7 +204,7 @@ using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
         FormField merchantNameField;
         if (receipt.Fields.TryGetValue("MerchantName", out merchantNameField))
         {
-            if (merchantNameField.Value.Type == FieldValueType.String)
+            if (merchantNameField.Value.ValueType == FieldValueType.String)
             {
                 string merchantName = merchantNameField.Value.AsString();
 
@@ -215,7 +215,7 @@ using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
         FormField transactionDateField;
         if (receipt.Fields.TryGetValue("TransactionDate", out transactionDateField))
         {
-            if (transactionDateField.Value.Type == FieldValueType.Date)
+            if (transactionDateField.Value.ValueType == FieldValueType.Date)
             {
                 DateTime transactionDate = transactionDateField.Value.AsDate();
 
@@ -226,20 +226,20 @@ using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
         FormField itemsField;
         if (receipt.Fields.TryGetValue("Items", out itemsField))
         {
-            if (itemsField.Value.Type == FieldValueType.List)
+            if (itemsField.Value.ValueType == FieldValueType.List)
             {
                 foreach (FormField itemField in itemsField.Value.AsList())
                 {
                     Console.WriteLine("Item:");
 
-                    if (itemField.Value.Type == FieldValueType.Dictionary)
+                    if (itemField.Value.ValueType == FieldValueType.Dictionary)
                     {
                         IReadOnlyDictionary<string, FormField> itemFields = itemField.Value.AsDictionary();
 
                         FormField itemNameField;
                         if (itemFields.TryGetValue("Name", out itemNameField))
                         {
-                            if (itemNameField.Value.Type == FieldValueType.String)
+                            if (itemNameField.Value.ValueType == FieldValueType.String)
                             {
                                 string itemName = itemNameField.Value.AsString();
 
@@ -250,7 +250,7 @@ using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
                         FormField itemTotalPriceField;
                         if (itemFields.TryGetValue("TotalPrice", out itemTotalPriceField))
                         {
-                            if (itemTotalPriceField.Value.Type == FieldValueType.Float)
+                            if (itemTotalPriceField.Value.ValueType == FieldValueType.Float)
                             {
                                 float itemTotalPrice = itemTotalPriceField.Value.AsFloat();
 
@@ -265,7 +265,7 @@ using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
         FormField totalField;
         if (receipt.Fields.TryGetValue("Total", out totalField))
         {
-            if (totalField.Value.Type == FieldValueType.Float)
+            if (totalField.Value.ValueType == FieldValueType.Float)
             {
                 float total = totalField.Value.AsFloat();
 
@@ -484,7 +484,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [formreco_refdocs]: https://aka.ms/azsdk/net/docs/ref/formrecognizer
 [formreco_nuget_package]: https://www.nuget.org/packages/Azure.AI.FormRecognizer
 [formreco_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/README.md
-[formreco_rest_api]: https://westus2.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2-preview
+[formreco_rest_api]: https://westus2.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2
 [cognitive_resource]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
 
 

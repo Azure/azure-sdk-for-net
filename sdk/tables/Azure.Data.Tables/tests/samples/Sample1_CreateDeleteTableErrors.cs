@@ -12,12 +12,12 @@ namespace Azure.Data.Tables.Samples
     public partial class TablesSamples : TablesTestEnvironment
     {
         [Test]
-        public void TableCreateError()
+        public void CreateDeleteTableError()
         {
             string storageUri = StorageUri;
             string accountName = StorageAccountName;
             string storageAccountKey = PrimaryStorageAccountKey;
-            string tableName = "OfficeSupplies2";
+            string tableName = "OfficeSupplies1p3";
 
             var serviceClient = new TableServiceClient(
                 new Uri(storageUri),
@@ -38,10 +38,22 @@ namespace Azure.Data.Tables.Samples
                 Console.WriteLine(e.Message);
             }
             #endregion
-            finally
+
+            #region Snippet:TablesSample1DeleteNonexistentTable
+            try
             {
+                // Deletes the table.
+                serviceClient.DeleteTable(tableName);
+
+                // Second attempt to delete table with the same name should throw exception.
                 serviceClient.DeleteTable(tableName);
             }
+            catch (RequestFailedException e)
+            {
+                Console.WriteLine("Deleting a nonexistent table throws the following exception:");
+                Console.WriteLine(e.Message);
+            }
+            #endregion
         }
     }
 }

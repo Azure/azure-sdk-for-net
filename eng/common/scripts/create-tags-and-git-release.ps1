@@ -7,7 +7,7 @@ param (
   $artifactLocation, # the root of the artifact folder. DevOps $(System.ArtifactsDirectory)
   $workingDirectory, # directory that package artifacts will be extracted into for examination (if necessary)
   $packageRepository, # used to indicate destination against which we will check the existing version.
-  # valid options: PyPI, Nuget, NPM, Maven, C
+  # valid options: PyPI, Nuget, NPM, Maven, C, CPP
   # used by CreateTags
   $releaseSha, # the SHA for the artifacts. DevOps: $(Release.Artifacts.<artifactAlias>.SourceVersion) or $(Build.SourceVersion)
 

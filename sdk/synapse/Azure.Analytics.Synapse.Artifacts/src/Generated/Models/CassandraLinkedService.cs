@@ -15,6 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of CassandraLinkedService. </summary>
         /// <param name="host"> Host name for connection. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         public CassandraLinkedService(object host)
         {
             if (host == null)

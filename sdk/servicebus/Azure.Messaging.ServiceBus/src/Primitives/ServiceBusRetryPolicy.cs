@@ -126,7 +126,7 @@ namespace Azure.Messaging.ServiceBus
                 await Task.Delay(tryTimeout, cancellationToken).ConfigureAwait(false);
                 throw new ServiceBusException(
                     ServerBusyExceptionMessage,
-                    ServiceBusException.FailureReason.ServiceBusy);
+                    ServiceBusFailureReason.ServiceBusy);
             }
             while (!cancellationToken.IsCancellationRequested)
             {

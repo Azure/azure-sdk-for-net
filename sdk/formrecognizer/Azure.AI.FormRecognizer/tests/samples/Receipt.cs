@@ -109,7 +109,7 @@ namespace Azure.AI.FormRecognizer.Samples
             {
                 foreach (FormField itemField in itemsField.Value.AsList())
                 {
-                    if (itemField.Value.Type == FieldValueType.Dictionary)
+                    if (itemField.Value.ValueType == FieldValueType.Dictionary)
                     {
                         IReadOnlyDictionary<string, FormField> itemPropertyFields = itemField.Value.AsDictionary();
 

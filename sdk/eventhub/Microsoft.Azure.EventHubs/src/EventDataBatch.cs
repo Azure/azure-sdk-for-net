@@ -5,6 +5,7 @@ namespace Microsoft.Azure.EventHubs
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using Microsoft.Azure.Amqp;
     using Microsoft.Azure.EventHubs.Amqp;
     using Microsoft.Azure.EventHubs.Primitives;
@@ -13,6 +14,7 @@ namespace Microsoft.Azure.EventHubs
     public class EventDataBatch : IDisposable
     {
         const int MaxSizeLimit = 4 * 1024 * 1024;
+        const int DiagnosticsIdOverhead = 64;
 
         readonly List<EventData> eventDataList;
         readonly long maxSize;
@@ -50,6 +52,16 @@ namespace Microsoft.Azure.EventHubs
             }
         }
 
+        /// <summary>Gets the current batch size in bytes.</summary>
+        public long Size
+        {
+            get
+            {
+                this.ThrowIfDisposed();
+                return this.currentSize;
+            }
+        }
+
         /// <summary>Tries to add an event data to the batch if permitted by the batch's size limit.</summary>
         /// <param name="eventData">The <see cref="Microsoft.Azure.EventHubs.EventData" /> to add.</param>
         /// <returns>A boolean value indicating if the event data has been added to the batch or not.</returns>
@@ -80,16 +92,27 @@ namespace Microsoft.Azure.EventHubs
 
         long GetEventSizeForBatch(EventData eventData)
         {
-            // Create AMQP message here. We will use the same message while sending to save compute time.
+            // Create AMQP message here.
             var amqpMessage = AmqpMessageConverter.EventDataToAmqpMessage(eventData);
             AmqpMessageConverter.UpdateAmqpMessagePartitionKey(amqpMessage, this.PartitionKey);
-            eventData.AmqpMessage = amqpMessage;
 
             // Calculate overhead depending on the message size. 
             // Overhead is smaller for messages smaller than 256 bytes.
-            long overhead = eventData.AmqpMessage.SerializedMessageSize < 256 ? 5 : 8;
+            long overhead = amqpMessage.SerializedMessageSize < 256 ? 5 : 8;
 
-            return eventData.AmqpMessage.SerializedMessageSize + overhead;
+            // We can use the same AMQP message unless diagnostics is enabled.
+            // Diagnostics extension will stamp message with an id on the Send call.
+            if (!EventHubsDiagnosticSource.IsEnabledForSendActivity)
+            {
+                eventData.AmqpMessage = amqpMessage;
+            }
+            else
+            {
+                // Reserve overhead for diagnostic-id property.
+                overhead += DiagnosticsIdOverhead;
+            }
+
+            return amqpMessage.SerializedMessageSize + overhead;
         }
 
         /// <summary>

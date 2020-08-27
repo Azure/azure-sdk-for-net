@@ -11,7 +11,7 @@ namespace Azure.Management.Compute.Models
     public partial class VirtualMachineHealthStatus
     {
         /// <summary> Initializes a new instance of VirtualMachineHealthStatus. </summary>
-        public VirtualMachineHealthStatus()
+        internal VirtualMachineHealthStatus()
         {
         }
 

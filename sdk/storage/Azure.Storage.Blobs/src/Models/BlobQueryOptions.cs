@@ -16,12 +16,12 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Optional input text configuration.
         /// </summary>
-        public BlobQueryTextConfiguration InputTextConfiguration { get; set; }
+        public BlobQueryTextOptions InputTextConfiguration { get; set; }
 
         /// <summary>
         /// Optional output text configuration.
         /// </summary>
-        public BlobQueryTextConfiguration OutputTextConfiguration { get; set; }
+        public BlobQueryTextOptions OutputTextConfiguration { get; set; }
 
         /// <summary>
         /// Lock for ErrorHandler add and remove.

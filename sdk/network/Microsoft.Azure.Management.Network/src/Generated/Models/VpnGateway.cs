@@ -50,9 +50,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// 'Deleting', 'Failed'</param>
         /// <param name="vpnGatewayScaleUnit">The scale unit for this vpn
         /// gateway.</param>
+        /// <param name="ipConfigurations">List of all IPs configured on the
+        /// gateway.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public VpnGateway(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualHub = default(SubResource), IList<VpnConnection> connections = default(IList<VpnConnection>), BgpSettings bgpSettings = default(BgpSettings), string provisioningState = default(string), int? vpnGatewayScaleUnit = default(int?), string etag = default(string))
+        public VpnGateway(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualHub = default(SubResource), IList<VpnConnection> connections = default(IList<VpnConnection>), BgpSettings bgpSettings = default(BgpSettings), string provisioningState = default(string), int? vpnGatewayScaleUnit = default(int?), IList<VpnGatewayIpConfiguration> ipConfigurations = default(IList<VpnGatewayIpConfiguration>), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             VirtualHub = virtualHub;
@@ -60,6 +62,7 @@ namespace Microsoft.Azure.Management.Network.Models
             BgpSettings = bgpSettings;
             ProvisioningState = provisioningState;
             VpnGatewayScaleUnit = vpnGatewayScaleUnit;
+            IpConfigurations = ipConfigurations;
             Etag = etag;
             CustomInit();
         }
@@ -99,6 +102,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.vpnGatewayScaleUnit")]
         public int? VpnGatewayScaleUnit { get; set; }
+
+        /// <summary>
+        /// Gets list of all IPs configured on the gateway.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.ipConfigurations")]
+        public IList<VpnGatewayIpConfiguration> IpConfigurations { get; private set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource

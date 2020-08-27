@@ -10,7 +10,7 @@ using System.Text.Json;
 using Azure.AI.FormRecognizer;
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer.Training
+namespace Azure.AI.FormRecognizer.Models
 {
     internal partial class CopyOperationResult
     {

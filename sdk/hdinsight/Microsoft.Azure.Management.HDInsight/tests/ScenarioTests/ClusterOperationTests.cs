@@ -741,5 +741,31 @@ namespace Management.HDInsight.Tests
 
             Assert.Null(clusterDisabledAutoScale.Properties.ComputeProfile.Roles.First(role => role.Name.Equals("workernode")).AutoscaleConfiguration);
         }
+
+        [Fact]
+        public void TestCreateClusterWithEncryptionAtHost()
+        {
+            TestInitialize();
+
+            // create HDInsight cluster with encrytpion at host
+            string clusterName = TestUtilities.GenerateName("hdisdk-encryptionathost");
+            var createParams = CommonData.PrepareClusterCreateParamsForWasb();
+            createParams.Location = "South Central US";
+            createParams.Properties.ClusterDefinition.Kind = "Spark";
+
+            createParams.Properties.ComputeProfile.Roles.ToList().ForEach(role => role.HardwareProfile.VmSize = "Standard_DS14_v2");
+
+            createParams.Properties.DiskEncryptionProperties = new DiskEncryptionProperties
+            {
+                EncryptionAtHost = true
+            };
+
+            var cluster = HDInsightClient.Clusters.Create(CommonData.ResourceGroupName, clusterName, createParams);
+            ValidateCluster(clusterName, createParams, cluster);
+
+            // check encryption at host properties
+            var diskEncryptionProperties = cluster.Properties.DiskEncryptionProperties;
+            Assert.True(diskEncryptionProperties.EncryptionAtHost);
+        }
     }
 }

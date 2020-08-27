@@ -13,7 +13,7 @@ namespace Azure.Management.Compute.Models
     public partial class RollingUpgradeRunningStatus
     {
         /// <summary> Initializes a new instance of RollingUpgradeRunningStatus. </summary>
-        public RollingUpgradeRunningStatus()
+        internal RollingUpgradeRunningStatus()
         {
         }
 

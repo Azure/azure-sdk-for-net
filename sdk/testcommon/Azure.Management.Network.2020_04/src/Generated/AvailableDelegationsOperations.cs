@@ -40,6 +40,7 @@ namespace Azure.Management.Network
         /// <summary> Gets all of the available subnet delegations for this subscription in this region. </summary>
         /// <param name="location"> The location of the subnet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public virtual AsyncPageable<AvailableDelegation> ListAsync(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -83,6 +84,7 @@ namespace Azure.Management.Network
         /// <summary> Gets all of the available subnet delegations for this subscription in this region. </summary>
         /// <param name="location"> The location of the subnet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public virtual Pageable<AvailableDelegation> List(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
