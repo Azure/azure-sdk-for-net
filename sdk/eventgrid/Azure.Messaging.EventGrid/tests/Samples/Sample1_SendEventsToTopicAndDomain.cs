@@ -54,6 +54,7 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
             string topicEndpoint = TestEnvironment.CloudEventTopicHost;
             string topicAccessKey = TestEnvironment.CloudEventTopicKey;
 
+            // Example of a custom ObjectSerializer used to serialize the event payload to JSON
             var myCustomDataSerializer = new JsonObjectSerializer(
                 new JsonSerializerOptions()
                 {

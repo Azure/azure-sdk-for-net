@@ -16,10 +16,12 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
 {
     public partial class EventGridSamples : SamplesBase<EventGridTestEnvironment>
     {
+        // Example JSON payloads
         private readonly string jsonPayloadSampleOne = "[{ \"id\": \"2d1781af-3a4c\", \"topic\": \"/examples/test/payload\", \"subject\": \"\",  \"data\": { \"name\": \"example\",\"age\": 20 },\"eventType\": \"MyApp.Models.CustomEventType\",\"eventTime\": \"2018-01-25T22:12:19.4556811Z\",\"dataVersion\": \"1\"}]";
 
         private readonly string jsonPayloadSampleTwo = "[{ \"id\": \"2d1781af-3a4c\", \"source\": \"/examples/test/payload\", \"data\": { \"Name\": \"example\",\"Age\": 20, },\"type\": \"MyApp.Models.CustomEventType\",\"time\": \"2018-01-25T22:12:19.4556811Z\",\"specversion\": \"1\"},]";
 
+        // This sample demonstrates how to parse EventGridEvents from JSON and access event data using GetData()
         [Test]
         public async Task NonGenericReceiveAndDeserializeEventGridEvents()
         {
@@ -28,10 +30,10 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
             EventGridEvent[] egEvents = EventGridEvent.Parse(jsonPayloadSampleOne);
             #endregion
 
-            // Access event data by calling GetData() or GetData<T>()
+            // Iterate over each event to access event properties and data
+            #region Snippet:DeserializePayloadUsingNonGenericGetData
             foreach (EventGridEvent egEvent in egEvents)
             {
-                #region Snippet:DeserializePayloadUsingNonGenericGetData
                 // If the event is a system event, GetData() should return the correct system event type
                 switch (egEvent.GetData())
                 {
@@ -51,13 +53,15 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
                         }
                         break;
                 }
-                #endregion
             }
+            #endregion
         }
 
+        // This sample demonstrates how to parse CloudEvents from JSON and access event data using GetData<T>()
         [Test]
         public async Task GenericReceiveAndDeserializeEventGridEvents()
         {
+            // Example of a custom ObjectSerializer used to deserialize the event payload
             JsonObjectSerializer myCustomSerializer = new JsonObjectSerializer(
             new JsonSerializerOptions()
             {
@@ -70,9 +74,10 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
             CloudEvent[] cloudEvents = CloudEvent.Parse(jsonPayloadSampleTwo);
             #endregion
 
+            // Iterate over each event to access event properties and data
+            #region Snippet:DeserializePayloadUsingGenericGetData
             foreach (CloudEvent cloudEvent in cloudEvents)
             {
-                #region Snippet:DeserializePayloadUsingGenericGetData
                 switch (cloudEvent.Type)
                 {
                     case "Contoso.Items.ItemReceived":
@@ -86,12 +91,13 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
                         Console.WriteLine(testPayload.Name);
                         break;
                     case "Microsoft.EventGrid.SubscriptionValidationEvent":
+                        // Deserialize to a system event by providing the appropriate system event type
                         SubscriptionValidationEventData subscriptionValidated = cloudEvent.GetData<SubscriptionValidationEventData>();
                         Console.WriteLine(subscriptionValidated.ValidationCode);
                         break;
                 }
-                #endregion
             }
+            #endregion
         }
     }
 }

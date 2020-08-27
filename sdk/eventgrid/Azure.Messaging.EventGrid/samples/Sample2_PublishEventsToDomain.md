@@ -20,7 +20,7 @@ EventGridPublisherClient client = new EventGridPublisherClient(
 ```
 
 ## Publish Events to Azure Event Grid
-To publish events to any topic in an Event Domain, push the events to the domain's endpoint the same way you would for a custom topic. The only difference is that you must specify the topic you'd like the event to be delivered to. Use the same `SendEvents` method to publish events to the service.
+To publish events to any topic in an Event Domain, push the events to the domain's endpoint the same way you would for a custom topic. The only difference is that you must specify the topic you'd like the event to be delivered to. Invoke `SendEvents` or `SendEventsAsync` to publish events to the service.
 
 ```csharp Snippet:SendEventsToDomain
 // Add EventGridEvents to a list to publish to the domain

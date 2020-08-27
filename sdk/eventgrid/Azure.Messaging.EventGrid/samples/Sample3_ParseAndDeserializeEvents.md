@@ -30,47 +30,52 @@ From here, one can access the event data by deserializing to a specific type usi
 If expecting mostly system events, it may be cleaner to switch on object `GetData()` and use pattern matching to deserialize events. In the case where there are unrecognized event types, one can use the returned `BinaryData` to deserialize the custom event data.
 
 ```csharp Snippet:DeserializePayloadUsingNonGenericGetData
-// If the event is a system event, GetData() should return the correct system event type
-switch (egEvent.GetData())
+foreach (EventGridEvent egEvent in egEvents)
 {
-    case SubscriptionValidationEventData subscriptionValidated:
-        Console.WriteLine(subscriptionValidated.ValidationCode);
-        break;
-    case StorageBlobCreatedEventData blobCreated:
-        Console.WriteLine(blobCreated.BlobType);
-        break;
-    case BinaryData unknownType:
-        // An unrecognized event type - GetData() returns BinaryData with the serialized JSON payload
-        // You can use BinaryData methods to deserialize the payload
-        if (egEvent.EventType == "MyApp.Models.CustomEventType")
-        {
-            TestPayload deserializedEventData = await unknownType.ToObject<TestPayload>();
-            Console.WriteLine(deserializedEventData.Name);
-        }
-        break;
+    // If the event is a system event, GetData() should return the correct system event type
+    switch (egEvent.GetData())
+    {
+        case SubscriptionValidationEventData subscriptionValidated:
+            Console.WriteLine(subscriptionValidated.ValidationCode);
+            break;
+        case StorageBlobCreatedEventData blobCreated:
+            Console.WriteLine(blobCreated.BlobType);
+            break;
+        case BinaryData unknownType:
+            // An unrecognized event type - GetData() returns BinaryData with the serialized JSON payload
+            if (egEvent.EventType == "MyApp.Models.CustomEventType")
+            {
+                // You can use BinaryData methods to deserialize the payload
+                TestPayload deserializedEventData = await unknownType.ToObjectAsync<TestPayload>();
+                Console.WriteLine(deserializedEventData.Name);
+            }
+            break;
+    }
 }
 ```
 ### Using `GetData<T>()`
 Below is an example calling `GetData<T>()` for CloudEvents. In order to deserialize to the correct type, the `EventType` property (`Type` for CloudEvents) helps distinguish between different events. Custom event data should be deserialized using the generic method `GetData<T>()`. There is also an overload for `GetData<T>()` that accepts a custom `ObjectSerializer` to deserialize the event data.
 
 ```csharp Snippet:DeserializePayloadUsingGenericGetData
-// If the event is a system event, GetData() should return the correct system event type
-switch (cloudEvent.Type)
+foreach (CloudEvent cloudEvent in cloudEvents)
 {
-    case "Contoso.Items.ItemReceived":
-        // By default, GetData uses JsonObjectSerializer to deserialize the payload
-        ContosoItemReceivedEventData itemReceived = cloudEvent.GetData<ContosoItemReceivedEventData>();
-        Console.WriteLine(itemReceived.ItemSku);
-        break;
-    case "MyApp.Models.CustomEventType":
-        // One can also specify a custom ObjectSerializer as needed to deserialize the payload correctly
-        TestPayload testPayload = await cloudEvent.GetDataAsync<TestPayload>(myCustomSerializer);
-        Console.WriteLine(testPayload.Name);
-        break;
-    case "Microsoft.EventGrid.SubscriptionValidationEvent":
-        SubscriptionValidationEventData subscriptionValidated = cloudEvent.GetData<SubscriptionValidationEventData>();
-        Console.WriteLine(subscriptionValidated.ValidationCode);
-        break;
+    switch (cloudEvent.Type)
+    {
+        case "Contoso.Items.ItemReceived":
+            // By default, GetData uses JsonObjectSerializer to deserialize the payload
+            ContosoItemReceivedEventData itemReceived = cloudEvent.GetData<ContosoItemReceivedEventData>();
+            Console.WriteLine(itemReceived.ItemSku);
+            break;
+        case "MyApp.Models.CustomEventType":
+            // One can also specify a custom ObjectSerializer as needed to deserialize the payload correctly
+            TestPayload testPayload = await cloudEvent.GetDataAsync<TestPayload>(myCustomSerializer);
+            Console.WriteLine(testPayload.Name);
+            break;
+        case "Microsoft.EventGrid.SubscriptionValidationEvent":
+            SubscriptionValidationEventData subscriptionValidated = cloudEvent.GetData<SubscriptionValidationEventData>();
+            Console.WriteLine(subscriptionValidated.ValidationCode);
+            break;
+    }
 }
 ```
 
