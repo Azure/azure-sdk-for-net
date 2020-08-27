@@ -109,12 +109,12 @@ stages:
                       #     packagesToPush: '$(Pipeline.Workspace)/staging/**/*.nupkg;!$(Pipeline.Workspace)/staging/**/*.symbols.nupkg'
                       #     nuGetFeedType: external
                       #     publishFeedCredentials: Nuget.org
-                      - task: NuGetCommand@2
-                        displayName: 'Publish to DevOps Feed'
-                        inputs:
-                          command: push
-                          packagesToPush: '$(Pipeline.Workspace)/staging/**/*.nupkg;!$(Pipeline.Workspace)/staging/**/*.symbols.nupkg'
-                          publishVstsFeed: ${{ parameters.DevOpsFeedID }}
+                      # - task: NuGetCommand@2
+                      #   displayName: 'Publish to DevOps Feed'
+                      #   inputs:
+                      #     command: push
+                      #     packagesToPush: '$(Pipeline.Workspace)/staging/**/*.nupkg;!$(Pipeline.Workspace)/staging/**/*.symbols.nupkg'
+                      #     publishVstsFeed: ${{ parameters.DevOpsFeedID }}
 
           - ${{if ne(artifact.options.skipSymbolsUpload, 'true')}}:
             - deployment: UploadSymbols
