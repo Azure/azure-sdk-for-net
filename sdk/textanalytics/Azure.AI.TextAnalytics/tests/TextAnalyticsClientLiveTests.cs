@@ -270,6 +270,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(exceptionMessage, ex.Message);
         }
 
+        #region Analyze Sentiment
         [Test]
         public async Task AnalyzeSentimentTest()
         {
@@ -290,6 +291,71 @@ namespace Azure.AI.TextAnalytics.Tests
             string document = "El mejor test del mundo!";
 
             DocumentSentiment docSentiment = await client.AnalyzeSentimentAsync(document, "es");
+
+            CheckAnalyzeSentimentProperties(docSentiment);
+            Assert.AreEqual("Positive", docSentiment.Sentiment.ToString());
+        }
+
+        [Test]
+        public async Task AnalyzeSentimentWithOpinionMining()
+        {
+            TextAnalyticsClient client = GetClient();
+            string document = "The park was clean and pretty. The bathrooms and restaurant were not clean.";
+
+            DocumentSentiment docSentiment = await client.AnalyzeSentimentAsync(document, options: new AnalyzeSentimentOptions() { IncludeOpinionMining = true });
+
+            CheckAnalyzeSentimentProperties(docSentiment, opinionMining:true);
+            Assert.AreEqual("Mixed", docSentiment.Sentiment.ToString());
+        }
+
+        [Test]
+        public async Task AnalyzeSentimentWithOpinionMiningEmpty()
+        {
+            TextAnalyticsClient client = GetClient();
+            string document = "That was the best day of my life!";
+
+            DocumentSentiment docSentiment = await client.AnalyzeSentimentAsync(document, "en", new AnalyzeSentimentOptions() { IncludeOpinionMining = true });
+
+            CheckAnalyzeSentimentProperties(docSentiment);
+            Assert.AreEqual("Positive", docSentiment.Sentiment.ToString());
+        }
+
+        [Test]
+        public async Task AnalyzeSentimentWithOpinionMiningNegated()
+        {
+            TextAnalyticsClient client = GetClient();
+            string document = "The bathrooms are not clean.";
+
+            DocumentSentiment docSentiment = await client.AnalyzeSentimentAsync(document, options: new AnalyzeSentimentOptions() { IncludeOpinionMining = true });
+
+            CheckAnalyzeSentimentProperties(docSentiment, opinionMining:true);
+            MinedOpinion minedOpinion = docSentiment.Sentences.FirstOrDefault().MinedOpinions.FirstOrDefault();
+            Assert.AreEqual("bathrooms", minedOpinion.Aspect.Text);
+            Assert.AreEqual(TextSentiment.Negative, minedOpinion.Aspect.Sentiment);
+            Assert.AreEqual("clean", minedOpinion.Opinions.FirstOrDefault().Text);
+            Assert.AreEqual(TextSentiment.Negative, minedOpinion.Opinions.FirstOrDefault().Sentiment);
+            Assert.IsTrue(minedOpinion.Opinions.FirstOrDefault().IsNegated);
+        }
+
+        [Test]
+        public async Task AnalyzeSentimentWithCancellationTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            string document = "El mejor test del mundo!";
+
+            DocumentSentiment docSentiment = await client.AnalyzeSentimentAsync(document, cancellationToken: default);
+
+            CheckAnalyzeSentimentProperties(docSentiment);
+            Assert.AreEqual("Positive", docSentiment.Sentiment.ToString());
+        }
+
+        [Test]
+        public async Task AnalyzeSentimentWithLanguageAndCancellationTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            string document = "El mejor test del mundo!";
+
+            DocumentSentiment docSentiment = await client.AnalyzeSentimentAsync(document, "es", default);
 
             CheckAnalyzeSentimentProperties(docSentiment);
             Assert.AreEqual("Positive", docSentiment.Sentiment.ToString());
@@ -317,7 +383,91 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        public async Task AnalyzeSentimentBatchConvenienceWithStatisticsTest()
+        public async Task AnalyzeSentimentBatchConvenienceWithOpinionMiningTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var documents = new List<string>
+            {
+                "The park was clean and pretty. The bathrooms and restaurant were not clean.",
+                "The food and service is not good."
+            };
+
+            AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(documents, options: new AnalyzeSentimentOptions() { IncludeOpinionMining = true });
+
+            foreach (AnalyzeSentimentResult docs in results)
+            {
+                CheckAnalyzeSentimentProperties(docs.DocumentSentiment, opinionMining:true);
+            }
+
+            Assert.AreEqual("Mixed", results[0].DocumentSentiment.Sentiment.ToString());
+            Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
+        }
+
+        [Test]
+        public async Task AnalyzeSentimentBatchConvenienceWithLanguageTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var documents = new List<string>
+            {
+                "That was the best day of my life!. I had a lot of fun at the park.",
+                "I'm not sure how I feel about this product. It is complicated."
+            };
+
+            AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(documents, "en");
+
+            foreach (AnalyzeSentimentResult docs in results)
+            {
+                CheckAnalyzeSentimentProperties(docs.DocumentSentiment);
+            }
+
+            Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
+            Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
+        }
+
+        [Test]
+        public async Task AnalyzeSentimentBatchConvenienceWithCancellationTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var documents = new List<string>
+            {
+                "That was the best day of my life!. I had a lot of fun at the park.",
+                "I'm not sure how I feel about this product. It is complicated."
+            };
+
+            AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(documents, cancellationToken: default);
+
+            foreach (AnalyzeSentimentResult docs in results)
+            {
+                CheckAnalyzeSentimentProperties(docs.DocumentSentiment);
+            }
+
+            Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
+            Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
+        }
+
+        [Test]
+        public async Task AnalyzeSentimentBatchConvenienceWithLanguageAndCancellationTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var documents = new List<string>
+            {
+                "That was the best day of my life!. I had a lot of fun at the park.",
+                "I'm not sure how I feel about this product. It is complicated."
+            };
+
+            AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(documents, "en", cancellationToken: default);
+
+            foreach (AnalyzeSentimentResult docs in results)
+            {
+                CheckAnalyzeSentimentProperties(docs.DocumentSentiment);
+            }
+
+            Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
+            Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
+        }
+
+        [Test]
+        public async Task AnalyzeSentimentBatchConvenienceWithLanguageAndStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
             var documents = new List<string>
@@ -327,6 +477,84 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(documents, "en", new TextAnalyticsRequestOptions { IncludeStatistics = true });
+
+            foreach (AnalyzeSentimentResult docs in results)
+            {
+                CheckAnalyzeSentimentProperties(docs.DocumentSentiment);
+            }
+
+            Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
+            Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
+
+            Assert.IsNotNull(results.Statistics.ValidDocumentCount);
+            Assert.IsNotNull(results.Statistics.DocumentCount);
+            Assert.IsNotNull(results.Statistics.TransactionCount);
+            Assert.IsNotNull(results.Statistics.InvalidDocumentCount);
+        }
+
+        [Test]
+        public async Task AnalyzeSentimentBatchConvenienceWithStatisticsTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var documents = new List<string>
+            {
+                "That was the best day of my life!. I had a lot of fun at the park.",
+                "I'm not sure how I feel about this product. It is complicated."
+            };
+
+            AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(documents, options: new AnalyzeSentimentOptions() { IncludeStatistics = true });
+
+            foreach (AnalyzeSentimentResult docs in results)
+            {
+                CheckAnalyzeSentimentProperties(docs.DocumentSentiment);
+            }
+
+            Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
+            Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
+
+            Assert.IsNotNull(results.Statistics.ValidDocumentCount);
+            Assert.IsNotNull(results.Statistics.DocumentCount);
+            Assert.IsNotNull(results.Statistics.TransactionCount);
+            Assert.IsNotNull(results.Statistics.InvalidDocumentCount);
+        }
+
+        [Test]
+        public async Task AnalyzeSentimentBatchConvenienceWithStatisticsAndCancellationTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var documents = new List<string>
+            {
+                "That was the best day of my life!. I had a lot of fun at the park.",
+                "I'm not sure how I feel about this product. It is complicated."
+            };
+
+            AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(documents, options: new AnalyzeSentimentOptions() { IncludeStatistics = true }, cancellationToken: default);
+
+            foreach (AnalyzeSentimentResult docs in results)
+            {
+                CheckAnalyzeSentimentProperties(docs.DocumentSentiment);
+            }
+
+            Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
+            Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
+
+            Assert.IsNotNull(results.Statistics.ValidDocumentCount);
+            Assert.IsNotNull(results.Statistics.DocumentCount);
+            Assert.IsNotNull(results.Statistics.TransactionCount);
+            Assert.IsNotNull(results.Statistics.InvalidDocumentCount);
+        }
+
+        [Test]
+        public async Task AnalyzeSentimentBatchConvenienceFullTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var documents = new List<string>
+            {
+                "That was the best day of my life!. I had a lot of fun at the park.",
+                "I'm not sure how I feel about this product. It is complicated."
+            };
+
+            AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(documents, "en", new TextAnalyticsRequestOptions { IncludeStatistics = true }, default);
 
             foreach (AnalyzeSentimentResult docs in results)
             {
@@ -366,6 +594,33 @@ namespace Azure.AI.TextAnalytics.Tests
             }
 
             Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
+            Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
+        }
+
+        [Test]
+        public async Task AnalyzeSentimentBatchWithOpinionMiningTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var documents = new List<TextDocumentInput>
+            {
+                new TextDocumentInput("1", "The park was clean and pretty. The bathrooms and restaurant were not clean.")
+                {
+                     Language = "en",
+                },
+                new TextDocumentInput("2", "The food and service is not good.")
+                {
+                     Language = "en",
+                }
+            };
+
+            AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(documents, options: new AnalyzeSentimentOptions() { IncludeOpinionMining = true });
+
+            foreach (AnalyzeSentimentResult docs in results)
+            {
+                CheckAnalyzeSentimentProperties(docs.DocumentSentiment, opinionMining:true);
+            }
+
+            Assert.AreEqual("Mixed", results[0].DocumentSentiment.Sentiment.ToString());
             Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
         }
 
@@ -445,6 +700,8 @@ namespace Azure.AI.TextAnalytics.Tests
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => results[0].DocumentSentiment.GetType());
             Assert.AreEqual(exceptionMessage, ex.Message);
         }
+
+        #endregion
 
         [Test]
         public async Task ExtractKeyPhrasesTest()
@@ -1102,7 +1359,7 @@ namespace Azure.AI.TextAnalytics.Tests
             await client.DetectLanguageAsync(document);
         }
 
-        private void CheckAnalyzeSentimentProperties(DocumentSentiment doc)
+        private void CheckAnalyzeSentimentProperties(DocumentSentiment doc, bool opinionMining = false)
         {
             Assert.IsNotNull(doc.ConfidenceScores.Positive);
             Assert.IsNotNull(doc.ConfidenceScores.Neutral);
@@ -1116,6 +1373,37 @@ namespace Azure.AI.TextAnalytics.Tests
                 Assert.IsNotNull(sentence.ConfidenceScores.Neutral);
                 Assert.IsNotNull(sentence.ConfidenceScores.Negative);
                 Assert.IsTrue(CheckTotalConfidenceScoreValue(sentence.ConfidenceScores));
+
+                Assert.IsNotNull(sentence.MinedOpinions);
+                if (opinionMining)
+                {
+                    Assert.Greater(sentence.MinedOpinions.Count(), 0);
+                    foreach (var minedOpinions in sentence.MinedOpinions)
+                    {
+                        // Aspect
+                        Assert.IsNotNull(minedOpinions.Aspect);
+                        Assert.IsNotNull(minedOpinions.Aspect.Text);
+                        Assert.IsNotNull(minedOpinions.Aspect.ConfidenceScores.Positive);
+                        Assert.IsNotNull(minedOpinions.Aspect.ConfidenceScores.Negative);
+                        // Neutral should always be 0
+                        Assert.AreEqual(0, minedOpinions.Aspect.ConfidenceScores.Neutral);
+                        Assert.IsTrue(CheckTotalConfidenceScoreValue(minedOpinions.Aspect.ConfidenceScores));
+
+                        // Opinions
+                        Assert.IsNotNull(minedOpinions.Opinions);
+                        Assert.Greater(minedOpinions.Opinions.Count(), 0);
+                        foreach (var opinion in minedOpinions.Opinions)
+                        {
+                            Assert.IsNotNull(opinion.Text);
+                            Assert.IsNotNull(opinion.ConfidenceScores.Positive);
+                            Assert.IsNotNull(opinion.ConfidenceScores.Negative);
+                            // Neutral should always be 0
+                            Assert.AreEqual(0, opinion.ConfidenceScores.Neutral);
+                            Assert.IsTrue(CheckTotalConfidenceScoreValue(opinion.ConfidenceScores));
+                            Assert.IsNotNull(opinion.IsNegated);
+                        }
+                    }
+                }
             }
         }
 

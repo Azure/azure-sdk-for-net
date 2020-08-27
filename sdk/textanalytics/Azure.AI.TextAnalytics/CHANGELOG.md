@@ -3,10 +3,10 @@
 ## 5.1.0-beta.1 (Unreleased)
 ### Breaking changes
 - It defaults to the latest supported API version, which currently is `3.1-preview.1`.
-Note that new functionality hasn't been implemented in the client library.
 
 ### New Features
 - `ErrorCode` value returned from the service is now surfaced in `RequestFailedException`.
+- Support added for Opinion Mining. This feature is available in the Text Analytics service v3.1-preview.1 and above.
 
 ## 5.0.0 (2020-07-27)
 - Re-release of version `1.0.1` with updated version `5.0.0`.

@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azsdknet-test-ta.cognitiveservices.azure.com/text/analytics/v3.1-preview.1/sentiment?showStats=false\u0026opinionMining=false",
+      "RequestUri": "https://azsdknet-test-ta.cognitiveservices.azure.com/text/analytics/v3.1-preview.1/sentiment?showStats=false\u0026opinionMining=true",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": [
@@ -11,12 +11,12 @@
         "Content-Length": "85",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-eb28d2190fc109419ad95c9f0d9427cc-594f91dbe57b074b-00",
+        "traceparent": "00-3187fb9c6c45844087134775af69c373-b4642c89095b854c-00",
         "User-Agent": [
           "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200826.1",
           "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
         ],
-        "x-ms-client-request-id": "8c4c704653f0fc6bfe188a3209258473",
+        "x-ms-client-request-id": "1cf849efa12d8c772e8815b2f3c5500a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -30,14 +30,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "6f0f3f3b-62ad-4c49-9874-eb540dd49c75",
+        "apim-request-id": "336c9a47-c502-4a8c-9b58-c5aa8a497f5a",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1",
-        "Date": "Wed, 26 Aug 2020 16:48:07 GMT",
+        "Date": "Wed, 26 Aug 2020 16:48:09 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "99"
+        "x-envoy-upstream-service-time": "135"
       },
       "ResponseBody": {
         "documents": [
@@ -59,7 +59,9 @@
                 },
                 "offset": 0,
                 "length": 33,
-                "text": "That was the best day of my life!"
+                "text": "That was the best day of my life!",
+                "aspects": [],
+                "opinions": []
               }
             ],
             "warnings": []
@@ -71,7 +73,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1863375381",
+    "RandomSeed": "1043094004",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
     "TEXT_ANALYTICS_ENDPOINT": "https://azsdknet-test-ta.cognitiveservices.azure.com/"
   }
