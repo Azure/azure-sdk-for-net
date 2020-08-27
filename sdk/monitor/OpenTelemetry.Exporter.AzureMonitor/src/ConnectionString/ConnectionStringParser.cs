@@ -42,7 +42,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
         internal static string GetInstrumentationKey(this Azure.Core.ConnectionString connectionString) => connectionString.GetRequired(Constants.InstrumentationKeyKey);
 
         /// <summary>
-        /// Will evaluate connection string and return the requested endpoint.
+        /// Evaluate connection string and return the requested endpoint.
         /// </summary>
         /// <remarks>
         /// Parsing the connection string MUST follow these rules:
