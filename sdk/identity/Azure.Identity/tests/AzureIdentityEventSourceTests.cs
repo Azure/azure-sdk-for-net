@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
@@ -102,7 +103,7 @@ namespace Azure.Identity.Tests
         {
             var mockMsalClient = new MockMsalPublicClient
             {
-                Accounts = new IAccount[] { new MockAccount("mockuser@mockdomain.com") },
+                Accounts = new List<IAccount> { new MockAccount("mockuser@mockdomain.com") },
                 SilentAuthFactory = (_) => { return AuthenticationResultFactory.Create(accessToken: Guid.NewGuid().ToString(), expiresOn: DateTimeOffset.UtcNow.AddMinutes(10)); }
             };
 
@@ -176,7 +177,7 @@ namespace Azure.Identity.Tests
 
             var mockMsalClient = new MockMsalPublicClient
             {
-                Accounts = new IAccount[] { new MockAccount("mockuser@mockdomain.com") },
+                Accounts = new List<IAccount> { new MockAccount("mockuser@mockdomain.com") },
                 SilentAuthFactory = (_) => throw new MockClientException(expExMessage)
             };
 

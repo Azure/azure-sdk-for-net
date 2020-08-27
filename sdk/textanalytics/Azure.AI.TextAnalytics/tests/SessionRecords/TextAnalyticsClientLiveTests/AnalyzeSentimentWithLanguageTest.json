@@ -1,18 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azsdknet-test-ta.cognitiveservices.azure.com/text/analytics/v3.1-preview.1/sentiment",
+      "RequestUri": "https://azsdknet-test-ta.cognitiveservices.azure.com/text/analytics/v3.1-preview.1/sentiment?showStats=false\u0026opinionMining=false",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
         "Content-Length": "76",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-d891d76a76a7154db9be70275f0c040b-093e601c59a5bd4b-00",
+        "traceparent": "00-266c0fa3b8833840a0cab7fdea548061-79137f6f7af5234c-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200817.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200826.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
         ],
-        "x-ms-client-request-id": "f4cd73140416ebb6ebdc26116b39a234",
+        "x-ms-client-request-id": "41bf587b8226bfe5d2e3fef8eef6bf9b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -26,14 +30,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "7a892936-2e98-4239-a825-164411518564",
+        "apim-request-id": "91e5152d-77fd-4463-b03f-4dbf0a82819e",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1",
-        "Date": "Mon, 17 Aug 2020 20:11:01 GMT",
+        "Date": "Wed, 26 Aug 2020 16:48:08 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "1372"
+        "x-envoy-upstream-service-time": "93"
       },
       "ResponseBody": {
         "documents": [
@@ -67,7 +71,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "324602469",
+    "RandomSeed": "1564931520",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
     "TEXT_ANALYTICS_ENDPOINT": "https://azsdknet-test-ta.cognitiveservices.azure.com/"
   }

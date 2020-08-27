@@ -13,7 +13,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
     internal static class AmqpMessageExtensions
     {
         public static AmqpMessage ToAmqpMessage(this ServiceBusMessage message) =>
-            AmqpMessage.Create(new Data { Value = new ArraySegment<byte>(message.Body.Bytes.IsEmpty ? Array.Empty<byte>() : message.Body.Bytes.ToArray()) });
+            AmqpMessage.Create(new Data { Value = new ArraySegment<byte>(message.Body.ToBytes().IsEmpty ? Array.Empty<byte>() : message.Body.ToBytes().ToArray()) });
 
         private static byte[] GetByteArray(this Data data)
         {
@@ -84,7 +84,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         private static ServiceBusMessage CreateAmqpDataMessage(IEnumerable<byte[]> data) =>
-            new ServiceBusMessage(BinaryData.FromMemory(ConvertAndFlattenData(data) ?? ReadOnlyMemory<byte>.Empty));
+            new ServiceBusMessage(BinaryData.FromBytes(ConvertAndFlattenData(data) ?? ReadOnlyMemory<byte>.Empty));
 
         public static ServiceBusReceivedMessage ToServiceBusReceivedMessage(this AmqpMessage message)
         {

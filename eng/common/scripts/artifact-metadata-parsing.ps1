@@ -298,7 +298,7 @@ function ParseCArtifact($pkg, $workingDirectory) {
   }
 
   return New-Object PSObject -Property @{
-    PackageId      = 'azure-sdk-for-c'
+    PackageId      = ''
     PackageVersion = $pkgVersion
     # Artifact info is always considered deployable for C becasue it is not
     # deployed anywhere. Dealing with duplicate tags happens downstream in
