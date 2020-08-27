@@ -4387,7 +4387,9 @@ namespace DataFactory.Tests.JsonSamples
               ""referenceName"": ""exampleLinkedService"",
               ""type"": ""LinkedServiceReference""
             },
-            ""path"": ""test""
+            ""path"": ""test"",
+            ""logLevel"": ""exampleLogLevel"",
+            ""enableReliableLogging"": true
           }
         },
         ""inputs"": [
