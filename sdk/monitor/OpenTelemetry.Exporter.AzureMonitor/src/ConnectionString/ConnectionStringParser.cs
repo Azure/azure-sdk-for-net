@@ -15,7 +15,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
         /// <remarks>
         /// Official Doc: <a href="https://docs.microsoft.com/azure/azure-monitor/app/sdk-connection-string" />.
         /// </remarks>
-        public static void GetValues(string connectionString, out string ikey, out string endpoint)
+        public static void GetValues(string connectionString, out string ikey, out string ingestionEndpoint)
         {
             try
             {
@@ -30,7 +30,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
 
                 var connString = Azure.Core.ConnectionString.Parse(connectionString);
                 ikey = connString.GetInstrumentationKey();
-                endpoint = connString.GetIngestionEndpoint();
+                ingestionEndpoint = connString.GetIngestionEndpoint();
             }
             catch (Exception ex)
             {

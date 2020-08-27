@@ -40,10 +40,10 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
         public AzureMonitorTransmitter(AzureMonitorExporterOptions exporterOptions)
         {
-            ConnectionStringParser.GetValues(exporterOptions.ConnectionString, out this.ikey, out string endpoint);
+            ConnectionStringParser.GetValues(exporterOptions.ConnectionString, out this.ikey, out string ingestionEndpoint);
 
             options = exporterOptions;
-            serviceRestClient = new ServiceRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), endpoint: endpoint);
+            serviceRestClient = new ServiceRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), endpoint: ingestionEndpoint);
         }
 
         internal async ValueTask<int> AddBatchActivityAsync(IEnumerable<Activity> batchActivity, CancellationToken cancellationToken)
