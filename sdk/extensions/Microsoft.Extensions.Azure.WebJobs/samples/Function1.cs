@@ -10,6 +10,7 @@ using System.Linq;
 
 namespace Azure.Extensions.WebJobs.Sample
 {
+    #region Snippet:AzureClientInFunction
     public static class Function1
     {
         [FunctionName("Function1")]
@@ -20,4 +21,5 @@ namespace Azure.Extensions.WebJobs.Sample
             return new OkObjectResult(client.GetBlobContainers().ToArray());
         }
     }
+    #endregion
 }
