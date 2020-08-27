@@ -125,38 +125,38 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="Models.AspectSentiment"/> for mocking purposes.
+        /// Initializes a new instance of <see cref="TextAnalytics.AspectSentiment"/> for mocking purposes.
         /// </summary>
         /// <param name="sentiment">Sets the <see cref="AspectSentiment.Sentiment"/> property.</param>
         /// <param name="text">Sets the <see cref="AspectSentiment.Text"/> property.</param>
         /// <param name="positiveScore">Sets the <see cref="SentimentConfidenceScores.Positive"/> property.</param>
         /// <param name="negativeScore">Sets the <see cref="SentimentConfidenceScores.Negative"/> property.</param>
-        /// <returns>>A new instance of <see cref="Models.AspectSentiment"/> for mocking purposes.</returns>
+        /// <returns>>A new instance of <see cref="TextAnalytics.AspectSentiment"/> for mocking purposes.</returns>
         public static AspectSentiment AspectSentiment(TextSentiment sentiment, string text, double positiveScore, double negativeScore)
         {
             return new AspectSentiment(sentiment, text, positiveScore, negativeScore);
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="Models.OpinionSentiment"/> for mocking purposes.
+        /// Initializes a new instance of <see cref="TextAnalytics.OpinionSentiment"/> for mocking purposes.
         /// </summary>
         /// <param name="sentiment">Sets the <see cref="OpinionSentiment.Sentiment"/> property.</param>
         /// <param name="positiveScore">Sets the <see cref="SentimentConfidenceScores.Positive"/> property.</param>
         /// <param name="negativeScore">Sets the <see cref="SentimentConfidenceScores.Negative"/> property.</param>
         /// <param name="text">Sets the <see cref="OpinionSentiment.Text"/> property.</param>
         /// <param name="isNegated">Sets the <see cref="OpinionSentiment.IsNegated"/> property.</param>
-        /// <returns>A new instance of <see cref="Models.OpinionSentiment"/> for mocking purposes.</returns>
+        /// <returns>A new instance of <see cref="TextAnalytics.OpinionSentiment"/> for mocking purposes.</returns>
         public static OpinionSentiment OpinionSentiment(TextSentiment sentiment, double positiveScore, double negativeScore, string text, bool isNegated)
         {
             return new OpinionSentiment(sentiment, positiveScore, negativeScore, text, isNegated);
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="Models.MinedOpinion"/> for mocking purposes.
+        /// Initializes a new instance of <see cref="TextAnalytics.MinedOpinion"/> for mocking purposes.
         /// </summary>
         /// <param name="aspect">Sets the <see cref="MinedOpinion.Aspect"/> property.</param>
         /// <param name="opinions">Sets the <see cref="MinedOpinion.Opinions"/> property.</param>
-        /// <returns>A new instance of <see cref="Models.MinedOpinion"/> for mocking purposes.</returns>
+        /// <returns>A new instance of <see cref="TextAnalytics.MinedOpinion"/> for mocking purposes.</returns>
         public static MinedOpinion MinedOpinion(AspectSentiment aspect, IReadOnlyList<OpinionSentiment> opinions)
         {
             return new MinedOpinion(aspect, opinions);

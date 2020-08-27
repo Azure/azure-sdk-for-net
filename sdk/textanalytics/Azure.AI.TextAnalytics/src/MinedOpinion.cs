@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// A mined opinion object represents an opinion extracted from a sentence.

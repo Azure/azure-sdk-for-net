@@ -2,8 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.AI.TextAnalytics.Models;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// Contains the predicted sentiment, confidence scores, and other information about the opinion of an aspect.
@@ -12,10 +13,12 @@ namespace Azure.AI.TextAnalytics.Models
     /// </summary>
     public readonly struct OpinionSentiment
     {
+        private const double _neutralValue = 0d;
+
         internal OpinionSentiment(TextSentiment sentiment, double positiveScore, double negativeScore, string text, bool isNegated)
         {
             Sentiment = sentiment;
-            ConfidenceScores = new SentimentConfidenceScores(positiveScore, 0d, negativeScore);
+            ConfidenceScores = new SentimentConfidenceScores(positiveScore, _neutralValue, negativeScore);
             Text = text;
             IsNegated = isNegated;
         }
@@ -25,7 +28,7 @@ namespace Azure.AI.TextAnalytics.Models
             _ = opinion ?? throw new ArgumentNullException(nameof(opinion));
 
             Text = opinion.Text;
-            ConfidenceScores = new SentimentConfidenceScores(opinion.ConfidenceScores.Positive, 0d, opinion.ConfidenceScores.Negative);
+            ConfidenceScores = new SentimentConfidenceScores(opinion.ConfidenceScores.Positive, _neutralValue, opinion.ConfidenceScores.Negative);
             Sentiment = (TextSentiment)Enum.Parse(typeof(TextSentiment), opinion.Sentiment, ignoreCase: true);
             IsNegated = opinion.IsNegated;
         }
