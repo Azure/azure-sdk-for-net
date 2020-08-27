@@ -226,13 +226,14 @@ stages:
                         displayName: Output Visible Artifacts
                       - template: /eng/common/pipelines/templates/steps/publish-blobs.yml
                         parameters:
+                          ReleaseTag: $[TagRepository.outputs['releaseTag.ReleaseTag'] ]
                           FolderForUpload: '$(Pipeline.Workspace)/${{artifact.safeName}}'
                           BlobSASKey: '$(azure-sdk-docs-prod-sas)'
                           BlobName: '$(azure-sdk-docs-prod-blob-name)'
+                          RepoId: $(Build.Repository.Name)
                           TargetLanguage: 'dotnet'
                           # we override the regular script path because we have cloned the build tools repo as a separate artifact.
                           ScriptPath: 'eng/common/scripts/copy-docs-to-blobstorage.ps1'
-                          ReleaseTag: $[TagRepository.outputs['releaseTag.ReleaseTag'] ]
 
           - ${{if ne(artifact.options.skipUpdatePackageVersion, 'true')}}:
             - deployment: UpdatePackageVersion
