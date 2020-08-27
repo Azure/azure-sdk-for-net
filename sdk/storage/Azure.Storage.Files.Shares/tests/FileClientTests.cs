@@ -2712,8 +2712,13 @@ namespace Azure.Storage.Files.Shares.Test
             using Stream stream = new MemoryStream(data);
             await file.UploadAsync(stream);
 
+            ShareFileOpenReadOptions options = new ShareFileOpenReadOptions(allowModifications: false)
+            {
+                BufferSize = size / 8
+            };
+
             // Act
-            Stream outputStream = await file.OpenReadAsync(bufferSize: size / 8).ConfigureAwait(false);
+            Stream outputStream = await file.OpenReadAsync(options).ConfigureAwait(false);
             byte[] outputBytes = new byte[size];
 
             int downloadedBytes = 0;
@@ -2743,10 +2748,14 @@ namespace Azure.Storage.Files.Shares.Test
             byte[] expected = new byte[size];
             Array.Copy(data, size / 2, expected, size / 2, size / 2);
 
+            ShareFileOpenReadOptions options = new ShareFileOpenReadOptions(allowModifications: false)
+            {
+                Position = size / 2,
+                BufferSize = size / 8
+            };
+
             // Act
-            Stream outputStream = await file.OpenReadAsync(
-                position: size / 2,
-                bufferSize: size / 8)
+            Stream outputStream = await file.OpenReadAsync(options)
                 .ConfigureAwait(false);
             byte[] outputBytes = new byte[size];
             int downloadedBytes = size / 2;
@@ -2793,8 +2802,13 @@ namespace Azure.Storage.Files.Shares.Test
                 LeaseId = fileLease.LeaseId
             };
 
+            ShareFileOpenReadOptions options = new ShareFileOpenReadOptions(allowModifications: false)
+            {
+                Conditions = conditions
+            };
+
             // Act
-            Stream outputStream = await file.OpenReadAsync(conditions: conditions).ConfigureAwait(false);
+            Stream outputStream = await file.OpenReadAsync(options).ConfigureAwait(false);
             byte[] outputBytes = new byte[size];
             await outputStream.ReadAsync(outputBytes, 0, size);
 
@@ -2817,8 +2831,13 @@ namespace Azure.Storage.Files.Shares.Test
                 LeaseId = Recording.Random.NewGuid().ToString()
             };
 
+            ShareFileOpenReadOptions options = new ShareFileOpenReadOptions(allowModifications: false)
+            {
+                Conditions = conditions
+            };
+
             // Act
-            Stream outputStream = await file.OpenReadAsync(conditions: conditions).ConfigureAwait(false);
+            Stream outputStream = await file.OpenReadAsync(options).ConfigureAwait(false);
             byte[] outputBytes = new byte[size];
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 outputStream.ReadAsync(outputBytes, 0, size),
@@ -2838,7 +2857,13 @@ namespace Azure.Storage.Files.Shares.Test
             using Stream stream = new MemoryStream(exectedData);
             await file.UploadAsync(stream);
 
-            Stream outputStream = await file.OpenReadAsync(position: 0, bufferSize: 157);
+            ShareFileOpenReadOptions options = new ShareFileOpenReadOptions(allowModifications: false)
+            {
+                Position = 0,
+                BufferSize = 157
+            };
+
+            Stream outputStream = await file.OpenReadAsync(options);
             byte[] actualData = new byte[size];
             int offset = 0;
 
@@ -2894,6 +2919,28 @@ namespace Azure.Storage.Files.Shares.Test
                 }
                 offset += readSize;
             }
+        }
+
+        [Test]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/13510
+        public async Task OpenReadAsync_CopyReadStreamToAnotherStream()
+        {
+            // Arrange
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            long size = 4 * Constants.MB;
+            byte[] exectedData = GetRandomBuffer(size);
+            ShareFileClient fileClient = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
+            await fileClient.CreateAsync(size);
+            using Stream stream = new MemoryStream(exectedData);
+            await fileClient.UploadAsync(stream);
+
+            MemoryStream outputStream = new MemoryStream();
+
+            // Act
+            using Stream fileStream = await fileClient.OpenReadAsync();
+            await fileStream.CopyToAsync(outputStream);
+
+            TestHelper.AssertSequenceEqual(exectedData, outputStream.ToArray());
         }
 
         [Test]

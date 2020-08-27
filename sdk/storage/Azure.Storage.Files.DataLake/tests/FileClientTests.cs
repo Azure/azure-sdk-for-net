@@ -3492,8 +3492,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             using Stream stream = new MemoryStream(data);
             await file.UploadAsync(stream);
 
+            DataLakeOpenReadOptions options = new DataLakeOpenReadOptions(allowModifications: false)
+            {
+                BufferSize = size / 8
+            };
+
             // Act
-            Stream outputStream = await file.OpenReadAsync(bufferSize: size / 8).ConfigureAwait(false);
+            Stream outputStream = await file.OpenReadAsync(options).ConfigureAwait(false);
             byte[] outputBytes = new byte[size];
             int downloadedBytes = 0;
 
@@ -3521,11 +3526,14 @@ namespace Azure.Storage.Files.DataLake.Tests
             byte[] expected = new byte[size];
             Array.Copy(data, size / 2, expected, size / 2, size / 2);
 
+            DataLakeOpenReadOptions options = new DataLakeOpenReadOptions(allowModifications: false)
+            {
+                Position = size / 2,
+                BufferSize = size / 8
+            };
+
             // Act
-            Stream outputStream = await file.OpenReadAsync(
-                position: size / 2,
-                bufferSize: size / 8)
-                .ConfigureAwait(false);
+            Stream outputStream = await file.OpenReadAsync(options).ConfigureAwait(false);
             byte[] outputBytes = new byte[size];
 
             int downloadedBytes = size / 2;
@@ -3577,10 +3585,14 @@ namespace Azure.Storage.Files.DataLake.Tests
                     parameters: parameters,
                     lease: true);
 
+                DataLakeOpenReadOptions options = new DataLakeOpenReadOptions(allowModifications: false)
+                {
+                    BufferSize = size / 4,
+                    Conditions = accessConditions
+                };
+
                 // Act
-                Stream outputStream = await file.OpenReadAsync(
-                    bufferSize: size / 4,
-                    conditions: accessConditions).ConfigureAwait(false);
+                Stream outputStream = await file.OpenReadAsync(options).ConfigureAwait(false);
                 byte[] outputBytes = new byte[size];
 
                 int downloadedBytes = 0;
@@ -3615,10 +3627,14 @@ namespace Azure.Storage.Files.DataLake.Tests
                 parameters.NoneMatch = await SetupPathMatchCondition(file, parameters.NoneMatch);
                 DataLakeRequestConditions accessConditions = BuildDataLakeRequestConditions(parameters);
 
+                DataLakeOpenReadOptions options = new DataLakeOpenReadOptions(allowModifications: false)
+                {
+                    BufferSize = size / 4,
+                    Conditions = accessConditions
+                };
+
                 // Act
-                Stream outputStream = await file.OpenReadAsync(
-                    bufferSize: size / 4,
-                    conditions: accessConditions).ConfigureAwait(false);
+                Stream outputStream = await file.OpenReadAsync(options).ConfigureAwait(false);
                 byte[] outputBytes = new byte[size];
 
                 await TestHelper.CatchAsync<Exception>(
@@ -3630,7 +3646,6 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/13510
         public async Task OpenReadAsync_StrangeOffsetsTest()
         {
             // Arrange
@@ -3643,7 +3658,14 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 await file.UploadAsync(stream);
             }
-            Stream outputStream = await file.OpenReadAsync(position: 0, bufferSize: 157);
+
+            DataLakeOpenReadOptions options = new DataLakeOpenReadOptions(allowModifications: false)
+            {
+                Position = 0,
+                BufferSize = 157
+            };
+
+            Stream outputStream = await file.OpenReadAsync(options);
             byte[] actualData = new byte[length];
             int offset = 0;
 
@@ -3678,8 +3700,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             using Stream stream = new MemoryStream(data);
             await file.UploadAsync(stream);
 
+            DataLakeOpenReadOptions options = new DataLakeOpenReadOptions(allowModifications: false)
+            {
+                BufferSize = size / 2
+            };
+
             // Act
-            Stream outputStream = await file.OpenReadAsync();
+            Stream outputStream = await file.OpenReadAsync(options);
             byte[] outputBytes = new byte[size];
             await outputStream.ReadAsync(outputBytes, 0, size / 2);
 
@@ -3711,8 +3738,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             using Stream stream0 = new MemoryStream(data0);
             await file.UploadAsync(stream0);
 
+            DataLakeOpenReadOptions options = new DataLakeOpenReadOptions(allowModifications: true);
+
             // Act
-            Stream outputStream = await file.OpenReadAsync(allowfileModifications: true);
+            Stream outputStream = await file.OpenReadAsync(options);
             byte[] outputBytes = new byte[size * 2];
             await outputStream.ReadAsync(outputBytes, 0, size);
 
@@ -3769,6 +3798,26 @@ namespace Azure.Storage.Files.DataLake.Tests
                 }
                 offset += readSize;
             }
+        }
+
+        [Test]
+        public async Task OpenReadAsync_CopyReadStreamToAnotherStream()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            long size = 4 * Constants.MB;
+            byte[] exectedData = GetRandomBuffer(size);
+            DataLakeFileClient fileClient = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            using Stream stream = new MemoryStream(exectedData);
+            await fileClient.UploadAsync(stream);
+
+            MemoryStream outputStream = new MemoryStream();
+
+            // Act
+            using Stream blobStream = await fileClient.OpenReadAsync();
+            await blobStream.CopyToAsync(outputStream);
+
+            TestHelper.AssertSequenceEqual(exectedData, outputStream.ToArray());
         }
 
         [Test]
