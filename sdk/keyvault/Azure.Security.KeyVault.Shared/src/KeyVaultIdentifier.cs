@@ -22,23 +22,26 @@ namespace Azure.Security.KeyVault
 
         public string Version { get; set; }
 
-        public static KeyVaultIdentifier Parse(string collection, Uri id)
-        {
-            KeyVaultIdentifier identifier = Parse(id);
-
-            if (!string.Equals(identifier.Collection, collection + "/", StringComparison.OrdinalIgnoreCase))
-                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. segment [1] should be '{1}/', found '{2}'", id, collection, identifier.Collection));
-
-            return identifier;
-        }
-
         public static KeyVaultIdentifier Parse(Uri id)
         {
-            // We expect an identifier with either 3 or 4 segments: host + collection + name [+ version]
-            if (id.Segments.Length != 3 && id.Segments.Length != 4)
-                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. Bad number of segments: {1}", id, id.Segments.Length));
+            if (TryParse(id ?? throw new ArgumentNullException(nameof(id)), out KeyVaultIdentifier identifier))
+            {
+                return identifier;
+            }
 
-            KeyVaultIdentifier identifier = new KeyVaultIdentifier
+            throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. Bad number of segments: {1}", id, id.Segments.Length));
+        }
+
+        public static bool TryParse(Uri id, out KeyVaultIdentifier identifier)
+        {
+            // We expect an identifier with either 3 or 4 segments: host + collection + name [+ version]
+            if (id is null || id.Segments.Length != 3 && id.Segments.Length != 4)
+            {
+                identifier = default;
+                return false;
+            }
+
+            identifier = new KeyVaultIdentifier
             {
 
                 Id = id,
@@ -48,7 +51,7 @@ namespace Azure.Security.KeyVault
                 Version = (id.Segments.Length == 4) ? id.Segments[3].TrimEnd('/') : null
             };
 
-            return identifier;
+            return true;
         }
     }
 }
