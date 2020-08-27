@@ -15,7 +15,7 @@ using Azure.ResourceManager.TestFramework;
 namespace Azure.Management.Dns.Tests
 {
     [TestFixture]
-    public class ScenarioTests : DnsManagementClientBase
+    public class ScenarioTestsRecordSets : DnsManagementClientBase
     {
         private string location;
         private string resourceGroup;
@@ -32,7 +32,7 @@ namespace Azure.Management.Dns.Tests
         private bool setupRun = false;
 
 
-        public ScenarioTests()
+        public ScenarioTestsRecordSets()
             : base(true)
         {
             resourceGroup = null;
