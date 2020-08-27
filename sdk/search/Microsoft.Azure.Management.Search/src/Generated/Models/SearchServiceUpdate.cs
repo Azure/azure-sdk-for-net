@@ -18,31 +18,28 @@ namespace Microsoft.Azure.Management.Search.Models
     using System.Linq;
 
     /// <summary>
-    /// Describes an Azure Cognitive Search service and its current state.
+    /// The parameters used to update an Azure Cognitive Search service.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class SearchService : TrackedResource
+    public partial class SearchServiceUpdate : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the SearchService class.
+        /// Initializes a new instance of the SearchServiceUpdate class.
         /// </summary>
-        public SearchService()
+        public SearchServiceUpdate()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SearchService class.
+        /// Initializes a new instance of the SearchServiceUpdate class.
         /// </summary>
-        /// <param name="location">The geo-location where the resource
-        /// lives</param>
         /// <param name="id">Fully qualified resource Id for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
         /// <param name="type">The type of the resource. Ex-
         /// Microsoft.Compute/virtualMachines or
         /// Microsoft.Storage/storageAccounts.</param>
-        /// <param name="tags">Resource tags.</param>
         /// <param name="replicaCount">The number of replicas in the Search
         /// service. If specified, it must be a value between 1 and 12
         /// inclusive for standard SKUs or between 1 and 3 inclusive for basic
@@ -105,9 +102,15 @@ namespace Microsoft.Azure.Management.Search.Models
         /// <param name="sku">The SKU of the Search Service, which determines
         /// price tier and capacity limits. This property is required when
         /// creating a new Search Service.</param>
+        /// <param name="location">The geographic location of the resource.
+        /// This must be one of the supported and registered Azure Geo Regions
+        /// (for example, West US, East US, Southeast Asia, and so forth). This
+        /// property is required when creating a new resource.</param>
+        /// <param name="tags">Tags to help categorize the resource in the
+        /// Azure portal.</param>
         /// <param name="identity">The identity of the resource.</param>
-        public SearchService(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), int? replicaCount = default(int?), int? partitionCount = default(int?), HostingMode? hostingMode = default(HostingMode?), PublicNetworkAccess? publicNetworkAccess = default(PublicNetworkAccess?), SearchServiceStatus? status = default(SearchServiceStatus?), string statusDetails = default(string), ProvisioningState? provisioningState = default(ProvisioningState?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), IList<SharedPrivateLinkResource> sharedPrivateLinkResources = default(IList<SharedPrivateLinkResource>), Sku sku = default(Sku), Identity identity = default(Identity))
-            : base(location, id, name, type, tags)
+        public SearchServiceUpdate(string id = default(string), string name = default(string), string type = default(string), int? replicaCount = default(int?), int? partitionCount = default(int?), HostingMode? hostingMode = default(HostingMode?), PublicNetworkAccess? publicNetworkAccess = default(PublicNetworkAccess?), SearchServiceStatus? status = default(SearchServiceStatus?), string statusDetails = default(string), ProvisioningState? provisioningState = default(ProvisioningState?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), IList<SharedPrivateLinkResource> sharedPrivateLinkResources = default(IList<SharedPrivateLinkResource>), Sku sku = default(Sku), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity))
+            : base(id, name, type)
         {
             ReplicaCount = replicaCount;
             PartitionCount = partitionCount;
@@ -120,6 +123,8 @@ namespace Microsoft.Azure.Management.Search.Models
             PrivateEndpointConnections = privateEndpointConnections;
             SharedPrivateLinkResources = sharedPrivateLinkResources;
             Sku = sku;
+            Location = location;
+            Tags = tags;
             Identity = identity;
             CustomInit();
         }
@@ -242,6 +247,22 @@ namespace Microsoft.Azure.Management.Search.Models
         public Sku Sku { get; set; }
 
         /// <summary>
+        /// Gets or sets the geographic location of the resource. This must be
+        /// one of the supported and registered Azure Geo Regions (for example,
+        /// West US, East US, Southeast Asia, and so forth). This property is
+        /// required when creating a new resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
+
+        /// <summary>
+        /// Gets or sets tags to help categorize the resource in the Azure
+        /// portal.
+        /// </summary>
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
         /// Gets or sets the identity of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "identity")]
@@ -253,9 +274,8 @@ namespace Microsoft.Azure.Management.Search.Models
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
             if (ReplicaCount > 12)
             {
                 throw new ValidationException(ValidationRules.InclusiveMaximum, "ReplicaCount", 12);

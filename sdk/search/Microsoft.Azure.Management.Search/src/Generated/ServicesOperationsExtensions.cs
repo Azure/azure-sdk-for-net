@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Management.Search
             /// <param name='searchManagementRequestOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static SearchService Update(this IServicesOperations operations, string resourceGroupName, string searchServiceName, SearchService service, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions))
+            public static SearchService Update(this IServicesOperations operations, string resourceGroupName, string searchServiceName, SearchServiceUpdate service, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions))
             {
                 return operations.UpdateAsync(resourceGroupName, searchServiceName, service, searchManagementRequestOptions).GetAwaiter().GetResult();
             }
@@ -141,7 +141,7 @@ namespace Microsoft.Azure.Management.Search
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SearchService> UpdateAsync(this IServicesOperations operations, string resourceGroupName, string searchServiceName, SearchService service, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SearchService> UpdateAsync(this IServicesOperations operations, string resourceGroupName, string searchServiceName, SearchServiceUpdate service, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, searchServiceName, service, searchManagementRequestOptions, null, cancellationToken).ConfigureAwait(false))
                 {

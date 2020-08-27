@@ -10,25 +10,24 @@
 
 namespace Microsoft.Azure.Management.Search.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Describes a supported private link resource for the Azure Cognitive
-    /// Search service.
+    /// The resource model definition for a ARM proxy resource. It will have
+    /// everything other than required location and tags
     /// </summary>
-    public partial class PrivateLinkResource : Resource
+    public partial class ProxyResource : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the PrivateLinkResource class.
+        /// Initializes a new instance of the ProxyResource class.
         /// </summary>
-        public PrivateLinkResource()
+        public ProxyResource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PrivateLinkResource class.
+        /// Initializes a new instance of the ProxyResource class.
         /// </summary>
         /// <param name="id">Fully qualified resource Id for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
@@ -36,13 +35,9 @@ namespace Microsoft.Azure.Management.Search.Models
         /// <param name="type">The type of the resource. Ex-
         /// Microsoft.Compute/virtualMachines or
         /// Microsoft.Storage/storageAccounts.</param>
-        /// <param name="properties">Describes the properties of a supported
-        /// private link resource for the Azure Cognitive Search
-        /// service.</param>
-        public PrivateLinkResource(string id = default(string), string name = default(string), string type = default(string), PrivateLinkResourceProperties properties = default(PrivateLinkResourceProperties))
+        public ProxyResource(string id = default(string), string name = default(string), string type = default(string))
             : base(id, name, type)
         {
-            Properties = properties;
             CustomInit();
         }
 
@@ -50,13 +45,6 @@ namespace Microsoft.Azure.Management.Search.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets describes the properties of a supported private link resource
-        /// for the Azure Cognitive Search service.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public PrivateLinkResourceProperties Properties { get; private set; }
 
     }
 }
