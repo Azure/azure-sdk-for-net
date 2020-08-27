@@ -17,6 +17,8 @@ The branch which we want to create a pull request for.
 A personal access token
 .PARAMETER PRTitle
 The title of the pull request.
+.PARAMETER PRBody
+The body message for the pull request. 
 .PARAMETER PRLabels
 The labels added to the PRs. Multple labels seperated by comma, e.g "bug, service"
 #>
@@ -42,7 +44,9 @@ param(
 
   [Parameter(Mandatory = $true)]
   [string]$PRTitle,
-  $PRBody = $PRTitle,
+
+  [Parameter(Mandatory = $false)]
+  [string]$PRBody = $PRTitle,
 
   [Parameter(Mandatory = $false)]
   [string]$PRLabels
