@@ -3,6 +3,10 @@
 
 - Restoring Application Authentication APIs from 1.2.0-preview.6
 
+### Fixes and improvements
+- Fixed issue with non GUID Client Ids (Issue [#14585](https://github.com/Azure/azure-sdk-for-net/issues/14585))
+
+
 ## 1.2.2 (2020-08-20)
 
 ### Fixes and improvements
