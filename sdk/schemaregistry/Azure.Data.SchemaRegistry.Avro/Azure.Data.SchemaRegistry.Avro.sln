@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApacheAvroTestTool", "tool\ApacheAvroTestTool.csproj", "{D995E097-476D-48C6-87D9-0E01FA890AC4}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Data.SchemaRegistry", "..\Azure.Data.SchemaRegistry\src\Azure.Data.SchemaRegistry.csproj", "{D451EE68-ADE4-4780-A002-2D13DEA888A2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{D995E097-476D-48C6-87D9-0E01FA890AC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D995E097-476D-48C6-87D9-0E01FA890AC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D995E097-476D-48C6-87D9-0E01FA890AC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D451EE68-ADE4-4780-A002-2D13DEA888A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D451EE68-ADE4-4780-A002-2D13DEA888A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D451EE68-ADE4-4780-A002-2D13DEA888A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D451EE68-ADE4-4780-A002-2D13DEA888A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

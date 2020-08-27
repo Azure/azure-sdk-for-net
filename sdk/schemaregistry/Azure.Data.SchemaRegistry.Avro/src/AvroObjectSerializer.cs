@@ -7,9 +7,9 @@ using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Avro;
 using Avro.File;
 using Avro.Generic;
+using Avro.Specific;
 using Azure.Core.Serialization;
 
 namespace Azure.Data.SchemaRegistry.Avro
@@ -22,14 +22,20 @@ namespace Azure.Data.SchemaRegistry.Avro
         //private readonly ConcurrentDictionary<MemberInfo, string?> _cache;
         //private readonly JsonSerializerOptions _options;
 
-        private readonly RecordSchema _schema;
+        private readonly SchemaRegistryClient _client;
+        private readonly string _schemaContent;
+        private readonly string _groupName;
+
 
         /// <summary>
         /// Initializes new instance of <see cref="AvroObjectSerializer"/>.
         /// </summary>
-        public AvroObjectSerializer(string schema) //: this(new JsonSerializerOptions())
+        public AvroObjectSerializer(SchemaRegistryClient client, string schemaContent, string groupName) //: this(new JsonSerializerOptions())
         {
-            _schema = (RecordSchema)Schema.Parse(schema);
+            _client = client;
+            _schemaContent = schemaContent;
+            _groupName = groupName;
+
         }
 
         ///// <summary>
@@ -51,19 +57,112 @@ namespace Azure.Data.SchemaRegistry.Avro
         //    if (value is Schema.Type.Array)
         //}
 
+        //private static Dictionary<Type, (>
+
+        //private class SpecificRecordSerializer
+        //{
+        //    private readonly Type _type;
+        //    //private readonly string _schema;
+
+
+
+        //    public SpecificRecordSerializer(Type type)
+        //    {
+        //        if (type == null)
+        //        {
+        //            throw new ArgumentNullException(nameof(type));
+        //        }
+
+        //        _type = type;
+        //        //_schema = schema;
+        //    }
+
+        //    public void Serialize(Stream stream, object value)
+        //    {
+        //        ////throw new NotImplementedException();
+        //        ////https://stackoverflow.com/a/1151470/294804
+        //        //var datumWriterType = typeof(SpecificDatumWriter<>).MakeGenericType(_type);
+        //        ////https://stackoverflow.com/a/2451341/294804
+        //        //dynamic writer = Activator.CreateInstance(datumWriterType, schema);
+
+
+        //        ////https://stackoverflow.com/a/4667999/294804
+        //        //var writerType = typeof(DataFileWriter<>).MakeGenericType(typeof(Employee));
+        //        ////var openWriterMethod = writerType.GetMethod("OpenWriter", BindingFlags.Public | BindingFlags.Static);
+        //        //var datumBaseType = typeof(DatumWriter<>).MakeGenericType(typeof(Employee));
+        //        //var openWriterMethod = writerType.GetMethod("OpenWriter", new[] { datumBaseType, typeof(Stream) });
+        //        //dynamic fileWriter = openWriterMethod?.Invoke(null, new[] { writer, writeFileStream });
+
+        //        ////var writer = new SpecificDatumWriter<Employee>(schema);
+        //        ////var fileWriter = DataFileWriter<Employee>.OpenWriter(writer, employeePath);
+
+
+
+
+
+
+
+        //        //fileWriter?.Append(employee);
+        //        //fileWriter?.Close();
+
+        //    }
+
+        //    //public ValueTask SerializeAsync(Stream stream, object value, Type inputType, CancellationToken cancellationToken)
+        //    //{
+        //    //    throw new NotImplementedException();
+        //    //}
+
+        //    public object Deserialize(Stream stream)
+        //    {
+        //        throw new NotImplementedException();
+        //    }
+
+        //    //public ValueTask<object> DeserializeAsync(Stream stream, Type returnType, CancellationToken cancellationToken)
+        //    //{
+        //    //    throw new NotImplementedException();
+        //    //}
+        //}
+
         /// <inheritdoc />
         public override void Serialize(Stream stream, object value, Type inputType, CancellationToken cancellationToken)
         {
-            if (!(value is IEnumerable<GenericRecord> records))
+            //if (!(value is IEnumerable<GenericRecord> records))
+            //{
+            //    throw new ArgumentException("Wrong value type.");
+            //}
+
+
+
+
+
+            if (!(value is ISpecificRecord specificRecord))
             {
                 throw new ArgumentException("Wrong value type.");
             }
-            var datumWriter = new GenericDatumWriter<GenericRecord>(_schema);
-            using var writer = DataFileWriter<GenericRecord>.OpenWriter(datumWriter, stream);
-            foreach (var record in records)
-            {
-                writer.Append(record);
-            }
+
+            ////https://stackoverflow.com/a/4667999/294804
+            //// Get the generic type definition
+            //MethodInfo method = inputType.GetMethod("Linq", BindingFlags.Public | BindingFlags.Static);
+
+            //// Build a method with the specific type argument you're interested in
+            //method = method.MakeGenericMethod(typeOne);
+            //// The "null" is because it's a static method
+            //method.Invoke(null, arguments);
+
+
+            //var datumWriter = new GenericDatumWriter<inputType>(_schema);
+            //using var writer = DataFileWriter<GenericRecord>.OpenWriter(datumWriter, stream);
+            //foreach (var record in records)
+            //{
+            //    writer.Append(record);
+            //}
+
+
+
+
+
+
+
 
             //var buffer = JsonSerializer.SerializeToUtf8Bytes(value, inputType, _options);
             //stream.Write(buffer, 0, buffer.Length);
