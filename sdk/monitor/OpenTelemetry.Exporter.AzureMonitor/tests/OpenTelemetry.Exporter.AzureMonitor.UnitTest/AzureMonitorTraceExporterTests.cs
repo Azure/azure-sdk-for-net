@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Reflection;
 
 using NUnit.Framework;
@@ -23,6 +24,12 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             FieldInfo field = typeof(ServiceRestClient).GetField("endpoint", BindingFlags.Instance | BindingFlags.NonPublic);
             var serviceRestClientEndpoint = field.GetValue(exporter.AzureMonitorTransmitter.serviceRestClient);
             Assert.AreEqual(testEndpoint, serviceRestClientEndpoint);
+        }
+
+        [Test]
+        public void VerifyInvalidConnectionStringThrowsException()
+        {
+            Assert.Throws<Exception>(() => new AzureMonitorTraceExporter(new AzureMonitorExporterOptions { ConnectionString = null }));
         }
     }
 }
