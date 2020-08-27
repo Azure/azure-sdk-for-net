@@ -181,36 +181,28 @@ namespace Azure.Storage
             // Bytes remaining to copy.  It is save to truncate the long because we asked for a max of int _buffer size bytes.
             int remainingBytes = (int)downloadSize;
 
-            if (async)
+            do
             {
-                do
+                if (async)
                 {
                     copiedBytes = await networkStream.ReadAsync(
                         buffer: _buffer,
                         offset: totalCopiedBytes,
                         count: remainingBytes,
                         cancellationToken: cancellationToken).ConfigureAwait(false);
-
-                    totalCopiedBytes += copiedBytes;
-                    remainingBytes -= copiedBytes;
                 }
-                while (copiedBytes != 0);
-
-            }
-            else
-            {
-                do
+                else
                 {
                     copiedBytes = networkStream.Read(
                         buffer: _buffer,
                         offset: totalCopiedBytes,
                         count: remainingBytes);
-
-                    totalCopiedBytes += copiedBytes;
-                    remainingBytes -= copiedBytes;
                 }
-                while (copiedBytes != 0);
+
+                totalCopiedBytes += copiedBytes;
+                remainingBytes -= copiedBytes;
             }
+            while (copiedBytes != 0);
 
             _bufferPosition = 0;
             _bufferLength = totalCopiedBytes;
