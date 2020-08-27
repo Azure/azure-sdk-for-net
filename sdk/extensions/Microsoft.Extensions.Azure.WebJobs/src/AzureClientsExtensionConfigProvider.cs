@@ -4,7 +4,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Extensions.WebJobs;
+using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Config;
 using Microsoft.Extensions.Azure;
@@ -51,10 +51,7 @@ namespace Microsoft.Extensions.Hosting
                         .CreateClient(_connection));
             }
 
-            public string ToInvokeString()
-            {
-                throw new NotImplementedException();
-            }
+            public string ToInvokeString() => $"{typeof(TClient).Name} Connection: {_connection}";
 
             public Type Type => typeof(TClient);
 

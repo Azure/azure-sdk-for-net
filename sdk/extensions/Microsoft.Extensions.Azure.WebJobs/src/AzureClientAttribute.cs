@@ -5,7 +5,7 @@ using System;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Description;
 
-namespace Azure.Extensions.WebJobs
+namespace Microsoft.Azure.WebJobs
 {
     /// <summary>
     ///

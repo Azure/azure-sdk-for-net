@@ -47,6 +47,8 @@ namespace Microsoft.Extensions.Azure
 
         public TClient CreateClient(string name)
         {
+            _logForwarder.Start();
+
             var globalOptions = _globalOptions.CurrentValue;
 
             FallbackClientRegistration<TClient> registration;

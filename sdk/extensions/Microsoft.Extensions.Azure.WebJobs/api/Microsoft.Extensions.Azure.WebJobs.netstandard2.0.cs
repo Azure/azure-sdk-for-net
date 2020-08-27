@@ -1,4 +1,4 @@
-namespace Azure.Extensions.WebJobs
+namespace Microsoft.Azure.WebJobs
 {
     [Microsoft.Azure.WebJobs.Description.BindingAttribute]
     [System.AttributeUsageAttribute(System.AttributeTargets.Parameter)]

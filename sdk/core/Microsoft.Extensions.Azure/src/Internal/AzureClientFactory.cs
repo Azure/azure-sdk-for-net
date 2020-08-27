@@ -40,6 +40,7 @@ namespace Microsoft.Extensions.Azure
 
         public TClient CreateClient(string name)
         {
+            _logForwarder.Start();
             if (!_clientRegistrations.TryGetValue(name, out ClientRegistration<TClient> registration))
             {
                 throw new InvalidOperationException($"Unable to find client registration with type '{typeof(TClient).Name}' and name '{name}'.");
