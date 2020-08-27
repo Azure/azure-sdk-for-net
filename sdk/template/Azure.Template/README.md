@@ -102,3 +102,4 @@ This is a template, but your SDK readme should include details on how to contrib
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftemplate%2FAzure.Template%2FREADME.png)
+https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/appconfiguration/Azure.ResourceManager.AppConfiguration
