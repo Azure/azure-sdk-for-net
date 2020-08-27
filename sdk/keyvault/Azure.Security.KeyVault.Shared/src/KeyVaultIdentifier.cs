@@ -34,8 +34,15 @@ namespace Azure.Security.KeyVault
 
         public static bool TryParse(Uri id, out KeyVaultIdentifier identifier)
         {
+            if (id is null)
+            {
+                identifier = default;
+                return false;
+            }
+
             // We expect an identifier with either 3 or 4 segments: host + collection + name [+ version]
-            if (id is null || id.Segments.Length != 3 && id.Segments.Length != 4)
+            string[] segments = id.Segments;
+            if (segments.Length != 3 && segments.Length != 4)
             {
                 identifier = default;
                 return false;
@@ -46,9 +53,9 @@ namespace Azure.Security.KeyVault
 
                 Id = id,
                 VaultUri = new Uri($"{id.Scheme}://{id.Authority}"),
-                Collection = id.Segments[1].Trim('/'),
-                Name = id.Segments[2].Trim('/'),
-                Version = (id.Segments.Length == 4) ? id.Segments[3].TrimEnd('/') : null
+                Collection = segments[1].Trim('/'),
+                Name = segments[2].Trim('/'),
+                Version = (segments.Length == 4) ? segments[3].TrimEnd('/') : null
             };
 
             return true;
