@@ -1893,25 +1893,12 @@ namespace Azure.Storage.Files.Shares
 #pragma warning restore AZC0015 // Unexpected client method return type.
             ShareFileOpenReadOptions options,
             CancellationToken cancellationToken = default)
-        {
-            ShareFileRequestConditions conditions;
-
-            if (options.AllowModified == true)
-            {
-                conditions = new ShareFileRequestConditions();
-            }
-            else
-            {
-                conditions = options?.Conditions;
-            }
-
-            return OpenReadInteral(
+            => OpenReadInteral(
                 options?.Position ?? 0,
                 options?.BufferSize,
-                conditions,
+                options?.Conditions,
                 async: false,
                 cancellationToken).EnsureCompleted();
-        }
 
         /// <summary>
         /// Opens a stream for reading from the file.  The stream will only download
@@ -1933,25 +1920,12 @@ namespace Azure.Storage.Files.Shares
 #pragma warning restore AZC0015 // Unexpected client method return type.
             ShareFileOpenReadOptions options,
             CancellationToken cancellationToken = default)
-        {
-            ShareFileRequestConditions conditions;
-
-            if (options.AllowModified == true)
-            {
-                conditions = new ShareFileRequestConditions();
-            }
-            else
-            {
-                conditions = options?.Conditions;
-            }
-
-            return await OpenReadInteral(
+            => await OpenReadInteral(
                 options?.Position ?? 0,
                 options?.BufferSize,
-                conditions,
+                options?.Conditions,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
-        }
 
         /// <summary>
         /// Opens a stream for reading from the file.  The stream will only download

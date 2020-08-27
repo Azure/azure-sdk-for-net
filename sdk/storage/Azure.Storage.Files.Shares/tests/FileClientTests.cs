@@ -2712,7 +2712,7 @@ namespace Azure.Storage.Files.Shares.Test
             using Stream stream = new MemoryStream(data);
             await file.UploadAsync(stream);
 
-            ShareFileOpenReadOptions options = new ShareFileOpenReadOptions
+            ShareFileOpenReadOptions options = new ShareFileOpenReadOptions(allowModifications: false)
             {
                 BufferSize = size / 8
             };
@@ -2748,7 +2748,7 @@ namespace Azure.Storage.Files.Shares.Test
             byte[] expected = new byte[size];
             Array.Copy(data, size / 2, expected, size / 2, size / 2);
 
-            ShareFileOpenReadOptions options = new ShareFileOpenReadOptions
+            ShareFileOpenReadOptions options = new ShareFileOpenReadOptions(allowModifications: false)
             {
                 Position = size / 2,
                 BufferSize = size / 8
@@ -2802,7 +2802,7 @@ namespace Azure.Storage.Files.Shares.Test
                 LeaseId = fileLease.LeaseId
             };
 
-            ShareFileOpenReadOptions options = new ShareFileOpenReadOptions
+            ShareFileOpenReadOptions options = new ShareFileOpenReadOptions(allowModifications: false)
             {
                 Conditions = conditions
             };
@@ -2831,7 +2831,7 @@ namespace Azure.Storage.Files.Shares.Test
                 LeaseId = Recording.Random.NewGuid().ToString()
             };
 
-            ShareFileOpenReadOptions options = new ShareFileOpenReadOptions
+            ShareFileOpenReadOptions options = new ShareFileOpenReadOptions(allowModifications: false)
             {
                 Conditions = conditions
             };
@@ -2857,7 +2857,7 @@ namespace Azure.Storage.Files.Shares.Test
             using Stream stream = new MemoryStream(exectedData);
             await file.UploadAsync(stream);
 
-            ShareFileOpenReadOptions options = new ShareFileOpenReadOptions
+            ShareFileOpenReadOptions options = new ShareFileOpenReadOptions(allowModifications: false)
             {
                 Position = 0,
                 BufferSize = 157

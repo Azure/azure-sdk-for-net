@@ -293,7 +293,7 @@ namespace Azure.Storage
 
             if (rangeString == null)
             {
-                throw new ArgumentException("Content-Range header is mssing on download response.");
+                throw new InvalidOperationException("Content-Range header is missing on download response.");
             }
 
             string[] split = rangeString.Split('/');

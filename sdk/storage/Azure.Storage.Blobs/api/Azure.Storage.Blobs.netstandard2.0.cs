@@ -663,8 +663,7 @@ namespace Azure.Storage.Blobs.Models
     }
     public partial class BlobOpenReadOptions
     {
-        public BlobOpenReadOptions() { }
-        public bool AllowModified { get { throw null; } set { } }
+        public BlobOpenReadOptions(bool allowModifications) { }
         public int? BufferSize { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobRequestConditions Conditions { get { throw null; } set { } }
         public long Position { get { throw null; } set { } }

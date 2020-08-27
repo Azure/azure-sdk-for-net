@@ -373,8 +373,7 @@ namespace Azure.Storage.Files.DataLake.Models
     }
     public partial class DataLakeOpenReadOptions
     {
-        public DataLakeOpenReadOptions() { }
-        public bool AllowModified { get { throw null; } set { } }
+        public DataLakeOpenReadOptions(bool allowModifications) { }
         public int? BufferSize { get { throw null; } set { } }
         public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
         public long Position { get { throw null; } set { } }

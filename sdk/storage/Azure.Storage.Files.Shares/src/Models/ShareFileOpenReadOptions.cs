@@ -9,12 +9,6 @@ namespace Azure.Storage.Files.Shares.Models
     public class ShareFileOpenReadOptions
     {
         /// <summary>
-        /// If true, you can continue streaming a file even if it has been modified.
-        /// If true, <see cref="Conditions"/> with be ignored.
-        /// </summary>
-        public bool AllowModified { get; set; }
-
-        /// <summary>
         /// The position within the file to begin the stream.
         /// Defaults to the beginning of the file.
         /// </summary>
@@ -31,5 +25,20 @@ namespace Azure.Storage.Files.Shares.Models
         /// the download of the file.
         /// </summary>
         public ShareFileRequestConditions Conditions { get; set; }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="allowModifications">
+        /// If false, a <see cref="RequestFailedException"/> will be thrown if the file is modified while
+        /// it is being read from.
+        /// </param>
+        public ShareFileOpenReadOptions(bool allowModifications)
+        {
+            if (allowModifications)
+            {
+                Conditions = new ShareFileRequestConditions();
+            }
+        }
     }
 }

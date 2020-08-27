@@ -957,7 +957,7 @@ namespace Azure.Storage.Blobs.Test
             using Stream stream = new MemoryStream(data);
             await blob.UploadAsync(stream);
 
-            BlobOpenReadOptions options = new BlobOpenReadOptions
+            BlobOpenReadOptions options = new BlobOpenReadOptions(allowModifications: false)
             {
                 BufferSize = size / 8
             };
@@ -992,7 +992,7 @@ namespace Azure.Storage.Blobs.Test
             byte[] expected = new byte[size];
             Array.Copy(data, size / 2, expected, size / 2, size / 2);
 
-            BlobOpenReadOptions options = new BlobOpenReadOptions
+            BlobOpenReadOptions options = new BlobOpenReadOptions(allowModifications: false)
             {
                 Position = size / 2,
                 BufferSize = size / 8
@@ -1049,7 +1049,7 @@ namespace Azure.Storage.Blobs.Test
                     parameters: parameters,
                     lease: true);
 
-                BlobOpenReadOptions options = new BlobOpenReadOptions
+                BlobOpenReadOptions options = new BlobOpenReadOptions(allowModifications: false)
                 {
                     Conditions = accessConditions,
                     BufferSize = size / 4
@@ -1089,7 +1089,7 @@ namespace Azure.Storage.Blobs.Test
                 parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
                 BlobRequestConditions accessConditions = BuildAccessConditions(parameters);
 
-                BlobOpenReadOptions options = new BlobOpenReadOptions
+                BlobOpenReadOptions options = new BlobOpenReadOptions(allowModifications: false)
                 {
                     Conditions = accessConditions,
                     BufferSize = size / 4
@@ -1119,7 +1119,7 @@ namespace Azure.Storage.Blobs.Test
             using Stream stream = new MemoryStream(exectedData);
             await blobClient.UploadAsync(stream);
 
-            BlobOpenReadOptions options = new BlobOpenReadOptions
+            BlobOpenReadOptions options = new BlobOpenReadOptions(allowModifications: false)
             {
                 Position = 0,
                 BufferSize = 157
@@ -1161,7 +1161,7 @@ namespace Azure.Storage.Blobs.Test
             using Stream stream = new MemoryStream(data);
             await blob.UploadAsync(stream);
 
-            BlobOpenReadOptions options = new BlobOpenReadOptions
+            BlobOpenReadOptions options = new BlobOpenReadOptions(allowModifications: false)
             {
                 BufferSize = size / 2
             };
@@ -1211,10 +1211,7 @@ namespace Azure.Storage.Blobs.Test
 
             await blob.CommitBlockListAsync(new List<string> { blockId0 });
 
-            BlobOpenReadOptions options = new BlobOpenReadOptions
-            {
-                AllowModified = true
-            };
+            BlobOpenReadOptions options = new BlobOpenReadOptions(allowModifications: true);
 
             // Act
             Stream outputStream = await blob.OpenReadAsync(options).ConfigureAwait(false);

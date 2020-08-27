@@ -547,8 +547,7 @@ namespace Azure.Storage.Files.Shares.Models
     }
     public partial class ShareFileOpenReadOptions
     {
-        public ShareFileOpenReadOptions() { }
-        public bool AllowModified { get { throw null; } set { } }
+        public ShareFileOpenReadOptions(bool allowModifications) { }
         public int? BufferSize { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions Conditions { get { throw null; } set { } }
         public long Position { get { throw null; } set { } }

@@ -1344,25 +1344,12 @@ namespace Azure.Storage.Blobs.Specialized
 #pragma warning restore AZC0015 // Unexpected client method return type.
             BlobOpenReadOptions options,
             CancellationToken cancellationToken = default)
-        {
-            BlobRequestConditions conditions;
-
-            if (options?.AllowModified == true)
-            {
-                conditions = new BlobRequestConditions();
-            }
-            else
-            {
-                conditions = options?.Conditions;
-            }
-
-            return OpenReadInternal(
+            => OpenReadInternal(
                 options?.Position ?? 0,
                 options?.BufferSize,
-                conditions,
+                options?.Conditions,
                 async: false,
                 cancellationToken).EnsureCompleted();
-        }
 
         /// <summary>
         /// Opens a stream for reading from the blob.  The stream will only download
@@ -1384,25 +1371,12 @@ namespace Azure.Storage.Blobs.Specialized
 #pragma warning restore AZC0015 // Unexpected client method return type.
             BlobOpenReadOptions options,
             CancellationToken cancellationToken = default)
-        {
-            BlobRequestConditions conditions;
-
-            if (options?.AllowModified == true)
-            {
-                conditions = new BlobRequestConditions();
-            }
-            else
-            {
-                conditions = options?.Conditions;
-            }
-
-            return await OpenReadInternal(
+            => await OpenReadInternal(
                 options.Position,
                 options?.BufferSize,
-                conditions,
+                options?.Conditions,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
-        }
 
         /// <summary>
         /// Opens a stream for reading from the blob.  The stream will only download

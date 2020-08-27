@@ -3492,7 +3492,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             using Stream stream = new MemoryStream(data);
             await file.UploadAsync(stream);
 
-            DataLakeOpenReadOptions options = new DataLakeOpenReadOptions
+            DataLakeOpenReadOptions options = new DataLakeOpenReadOptions(allowModifications: false)
             {
                 BufferSize = size / 8
             };
@@ -3526,7 +3526,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             byte[] expected = new byte[size];
             Array.Copy(data, size / 2, expected, size / 2, size / 2);
 
-            DataLakeOpenReadOptions options = new DataLakeOpenReadOptions
+            DataLakeOpenReadOptions options = new DataLakeOpenReadOptions(allowModifications: false)
             {
                 Position = size / 2,
                 BufferSize = size / 8
@@ -3585,7 +3585,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     parameters: parameters,
                     lease: true);
 
-                DataLakeOpenReadOptions options = new DataLakeOpenReadOptions
+                DataLakeOpenReadOptions options = new DataLakeOpenReadOptions(allowModifications: false)
                 {
                     BufferSize = size / 4,
                     Conditions = accessConditions
@@ -3627,7 +3627,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 parameters.NoneMatch = await SetupPathMatchCondition(file, parameters.NoneMatch);
                 DataLakeRequestConditions accessConditions = BuildDataLakeRequestConditions(parameters);
 
-                DataLakeOpenReadOptions options = new DataLakeOpenReadOptions
+                DataLakeOpenReadOptions options = new DataLakeOpenReadOptions(allowModifications: false)
                 {
                     BufferSize = size / 4,
                     Conditions = accessConditions
@@ -3659,7 +3659,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await file.UploadAsync(stream);
             }
 
-            DataLakeOpenReadOptions options = new DataLakeOpenReadOptions
+            DataLakeOpenReadOptions options = new DataLakeOpenReadOptions(allowModifications: false)
             {
                 Position = 0,
                 BufferSize = 157
@@ -3700,7 +3700,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             using Stream stream = new MemoryStream(data);
             await file.UploadAsync(stream);
 
-            DataLakeOpenReadOptions options = new DataLakeOpenReadOptions
+            DataLakeOpenReadOptions options = new DataLakeOpenReadOptions(allowModifications: false)
             {
                 BufferSize = size / 2
             };
@@ -3738,10 +3738,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             using Stream stream0 = new MemoryStream(data0);
             await file.UploadAsync(stream0);
 
-            DataLakeOpenReadOptions options = new DataLakeOpenReadOptions
-            {
-                AllowModified = true
-            };
+            DataLakeOpenReadOptions options = new DataLakeOpenReadOptions(allowModifications: true);
 
             // Act
             Stream outputStream = await file.OpenReadAsync(options);

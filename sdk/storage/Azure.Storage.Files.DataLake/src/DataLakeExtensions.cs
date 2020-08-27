@@ -416,9 +416,8 @@ namespace Azure.Storage.Files.DataLake
                 return null;
             }
 
-            return new BlobOpenReadOptions
+            return new BlobOpenReadOptions(options.Conditions == null)
             {
-                AllowModified = options.AllowModified,
                 BufferSize = options.BufferSize,
                 Conditions = options.Conditions.ToBlobRequestConditions(),
                 Position = options.Position
