@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// A mined opinion object represents an opinion extracted from a sentence.
+    /// A mined opinion object contains opinions extracted from a sentence.
     /// It consists of both an aspect that these opinions are about, and the actual
     /// opinions themselves.
     /// </summary>
