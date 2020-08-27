@@ -257,11 +257,11 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         [Theory]
         [InlineData(false)]
         [InlineData(true)]
-        private async Task MsiRetryTimeoutTest(bool isAppServices)
+        internal async Task MsiRetryTimeoutTest(bool isAppServices)
         {
             if (isAppServices)
             {
-                // To simplify tests, mock as MSI App Services to skip Azure VM IDMS probe request
+                // Mock as MSI App Services to skip Azure VM IDMS probe request
                 Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, Constants.MsiEndpoint);
                 Environment.SetEnvironmentVariable(Constants.MsiAppServiceHeaderEnv, Constants.ClientSecret);
             }
