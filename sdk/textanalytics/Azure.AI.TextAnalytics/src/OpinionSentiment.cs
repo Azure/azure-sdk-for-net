@@ -2,9 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.AI.TextAnalytics.Models;
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary>
     /// Contains the predicted sentiment, confidence scores, and other information about the opinion of an aspect.
@@ -23,6 +22,8 @@ namespace Azure.AI.TextAnalytics
 
         internal OpinionSentiment(SentenceOpinion opinion)
         {
+            _ = opinion ?? throw new ArgumentNullException(nameof(opinion));
+
             Text = opinion.Text;
             ConfidenceScores = new SentimentConfidenceScores(opinion.ConfidenceScores.Positive, 0d, opinion.ConfidenceScores.Negative);
             Sentiment = (TextSentiment)Enum.Parse(typeof(TextSentiment), opinion.Sentiment, ignoreCase: true);

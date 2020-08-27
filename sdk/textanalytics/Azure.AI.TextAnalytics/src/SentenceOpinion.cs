@@ -8,6 +8,7 @@ namespace Azure.AI.TextAnalytics.Models
     [CodeGenModel("SentenceOpinion")]
     internal partial class SentenceOpinion
     {
+        // Transform from enum SentenceOpinionSentiment to string so we can parse it into a TextSentiment
         public string Sentiment { get; }
     }
 }
