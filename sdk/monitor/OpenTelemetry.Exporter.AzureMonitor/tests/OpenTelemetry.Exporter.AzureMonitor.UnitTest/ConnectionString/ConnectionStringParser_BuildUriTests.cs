@@ -7,12 +7,12 @@ using NUnit.Framework;
 
 namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
 {
+    /// <summary>
+    /// The <see cref="ConnectionStringParser.TryBuildUri(string, string, out Uri, string)"/> method takes user input to construct an endpoint.
+    /// These tests verify that user input is correctly sanitized and that valid endpoints are constructed.
+    /// </summary>
     public class ConnectionStringParser_BuildUriTests
     {
-        /// <summary>
-        /// Location and Endpoint are user input fields (via connection string).
-        /// Need to ensure that if the user inputs extra periods, that we don't crash.
-        /// </summary>
         [Test]
         public void VerifyCanHandleExtraPeriods()
         {

@@ -13,7 +13,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
     public class ConnectionStringTests
     {
         [Test]
-        public void TestParseConnectionString()
+        public void TestParse()
         {
             var test = Azure.Core.ConnectionString.Parse("key1=value1;key2=value2;key3=value3");
 
@@ -23,7 +23,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
         }
 
         [Test]
-        public void TestParseConnectionString_WithTrailingSemicolon()
+        public void TestParse_WithTrailingSemicolon()
         {
             var test = Azure.Core.ConnectionString.Parse("key1=value1;key2=value2;key3=value3;");
 
@@ -33,7 +33,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
         }
 
         [Test]
-        public void TestParseConnectionString_WithExtraSpaces()
+        public void TestParse_WithExtraSpaces()
         {
             var test = Azure.Core.ConnectionString.Parse(" key1 =  value1   ; key2 = value2 ; key3    =value3   ");
 
@@ -47,7 +47,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
         /// Verify that we can fetch any value from the dictionary regardless of the casing.
         /// </summary>
         [Test]
-        public void TestParseConnectionString_IsCaseInsensitive()
+        public void TestParse_IsCaseInsensitive()
         {
             var test = Azure.Core.ConnectionString.Parse("UPPERCASE=value1;lowercase=value2;MixedCase=value3");
 
@@ -60,27 +60,33 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
         }
 
         [Test]
-        public void TestParseConnectionString_WithDuplaceKeys()
+        public void TestParse_WithNull()
+        {
+            Assert.Throws<NullReferenceException>(() => Azure.Core.ConnectionString.Parse(null));
+        }
+
+        [Test]
+        public void TestParse_WithEmptyString()
+        {
+            Assert.Throws<InvalidOperationException>(() => Azure.Core.ConnectionString.Parse(string.Empty));
+        }
+
+        [Test]
+        public void TestParse_WithDuplaceKeys()
         {
             Assert.Throws<InvalidOperationException>(() => Azure.Core.ConnectionString.Parse("key1=value1;key1=value2"));
         }
 
         [Test]
-        public void TestParseConnectionString_WithDuplaceKeysWithSpaces()
+        public void TestParse_WithDuplaceKeysWithSpaces()
         {
             Assert.Throws<InvalidOperationException>(() => Azure.Core.ConnectionString.Parse("key1=value1;key1  =value2"));
         }
 
         [Test]
-        public void TestParseConnectionString_WithInvalidDelimiters()
+        public void TestParse_WithInvalidDelimiters()
         {
             Assert.Throws<InvalidOperationException>(() => Azure.Core.ConnectionString.Parse("key1;key2=value2"));
         }
-
-        //[Test]
-        //public void TestParseConnectionString_WithInvalidCharInValue()
-        //{
-        //    //Assert.Throws<Exception>(() => Azure.Core.ConnectionString.Parse("key1=value1=value2"));
-        //}
     }
 }

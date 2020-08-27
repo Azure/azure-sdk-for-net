@@ -26,6 +26,11 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
         internal const string InstrumentationKeyKey = "InstrumentationKey";
 
         /// <summary>
+        /// This is the key that a customer would use to specify an endpoint suffix in the connection string.
+        /// </summary>
+        internal const string EndpointSuffixKey = "EndpointSuffix";
+
+        /// <summary>
         /// This is the key that a customer would use to specify a location in the connection string.
         /// </summary>
         internal const string LocationKey = "Location";

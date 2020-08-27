@@ -10,7 +10,11 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
     {
         /// <summary>
         /// Parse a connection string that matches the format: "key1=value1;key2=value2;key3=value3".
+        /// This method will encapsulate all exception handling.
         /// </summary>
+        /// <remarks>
+        /// Official Doc: <a href="https://docs.microsoft.com/azure/azure-monitor/app/sdk-connection-string" />.
+        /// </remarks>
         public static void GetValues(string connectionString, out string ikey, out string endpoint)
         {
             try
@@ -25,16 +29,17 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
                 }
 
                 var connString = Azure.Core.ConnectionString.Parse(connectionString);
-                ikey = connString.GetRequired(Constants.InstrumentationKeyKey);
-                endpoint = GetIngestionEndpoint(connString).AbsoluteUri;
+                ikey = connString.GetInstrumentationKey();
+                endpoint = connString.GetIngestionEndpoint();
             }
             catch (Exception ex)
             {
-                string message = "Connection String Error: " + ex.Message;
-                //TODO: Log to ETW
-                throw new Exception(message, ex);
+                AzureMonitorTraceExporterEventSource.Log.ConnectionStringError(ex);
+                throw new Exception("Connection String Error: " + ex.Message, ex);
             }
         }
+
+        internal static string GetInstrumentationKey(this Azure.Core.ConnectionString connectionString) => connectionString.GetRequired(Constants.InstrumentationKeyKey);
 
         /// <summary>
         /// Will evaluate connection string and return the requested endpoint.
@@ -43,40 +48,35 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
         /// Parsing the connection string MUST follow these rules:
         ///     1. check for explicit endpoint (location is ignored)
         ///     2. check for endpoint suffix (location is optional)
-        ///     3. use classic endpoint (location is ignored)
-        /// This behavior is required by the Connection String spec.
+        ///     3. use default endpoint (location is ignored)
+        /// This behavior is required by the Connection String Specification.
         /// </remarks>
-        /// <returns>Returns a <see cref="Uri" /> for the requested endpoint. Passing the string value through the Uri constructor will validate that it is a valid endpoint.</returns>
-        internal static Uri GetIngestionEndpoint(Azure.Core.ConnectionString connectionString)
+        internal static string GetIngestionEndpoint(this Azure.Core.ConnectionString connectionString)
         {
+            // Passing the user input values through the Uri constructor will verify that we've built a valid endpoint.
+            Uri uri;
+
             if (connectionString.TryGetNonRequiredValue(Constants.IngestionExplicitEndpointKey, out string explicitEndpoint))
             {
-                if (Uri.TryCreate(explicitEndpoint, UriKind.Absolute, out var uri))
-                {
-                    return uri;
-                }
-                else
+                if (!Uri.TryCreate(explicitEndpoint, UriKind.Absolute, out uri))
                 {
                     throw new ArgumentException($"The value for {Constants.IngestionExplicitEndpointKey} is invalid. '{explicitEndpoint}'");
                 }
             }
-            else if (connectionString.TryGetNonRequiredValue("EndpointSuffix", out string endpointSuffix))
+            else if (connectionString.TryGetNonRequiredValue(Constants.EndpointSuffixKey, out string endpointSuffix))
             {
                 var location = connectionString.GetNonRequired(Constants.LocationKey);
-                if (TryBuildUri(prefix: Constants.IngestionPrefix, suffix: endpointSuffix, location: location, uri: out var uri))
+                if (!TryBuildUri(prefix: Constants.IngestionPrefix, suffix: endpointSuffix, location: location, uri: out uri))
                 {
-                    return uri;
-                }
-                else
-                {
-                    throw new ArgumentException($"The value for EndpointSuffix is invalid. '{endpointSuffix}'");
+                    throw new ArgumentException($"The value for {Constants.EndpointSuffixKey} is invalid. '{endpointSuffix}'");
                 }
             }
             else
             {
-                return new Uri(Constants.DefaultIngestionEndpoint);
+                return Constants.DefaultIngestionEndpoint;
             }
 
+            return uri.AbsoluteUri;
         }
 
         /// <summary>
@@ -85,9 +85,8 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
         /// Example: "https://westus2.dc.applicationinsights.azure.cn/".
         /// </summary>
         /// <remarks>
-        /// Will also attempt to sanitize user input. Won't fail just because the user typo-ed an extra period.
+        /// Will also attempt to sanitize user input. Won't fail if the user typo-ed an extra period.
         /// </remarks>
-        /// <returns>Returns a <see cref="Uri"/> built from the inputs.</returns>
         internal static bool TryBuildUri(string prefix, string suffix, out Uri uri, string location = null)
         {
             // Location and Suffix are user input fields and need to be sanitized (extra spaces or periods).
