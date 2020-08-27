@@ -11,6 +11,7 @@ param (
   $RepoReplaceRegex,
   $Tag
 )
+. (Join-Path $PSScriptRoot link-replacement.ps1)
 
 $Language = $Language.ToLower()
 
