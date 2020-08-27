@@ -7,7 +7,7 @@ $SDIST_PACKAGE_REGEX = "^(?<package>.*)\-(?<versionstring>$([AzureEngSemanticVer
 function CreateReleases($pkgList, $releaseApiUrl, $releaseSha) {
   foreach ($pkgInfo in $pkgList) {
     Write-Host "Creating release $($pkgInfo.Tag)"
-
+    echo "##vso[task.setvariable variable=ReleaseTag;isOutput=true]$($pkgInfo.Tag)"
     $releaseNotes = ""
     if ($pkgInfo.ReleaseNotes -ne $null) {
       $releaseNotes = $pkgInfo.ReleaseNotes
@@ -502,7 +502,7 @@ function CheckArtifactShaAgainstTagsList($priorExistingTagList, $releaseSha, $ap
     else {
       Write-Host "The artifact SHA $releaseSha does not match that of the currently existing tag."
       Write-Host "Tag with issues is $tag with commit SHA $tagSha"
-
+      echo "##vso[task.setvariable variable=ReleaseTag;isOutput=true]$tag"
       $unmatchedTags += $tag
     }
   }

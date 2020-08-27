@@ -17,6 +17,8 @@ param (
 . (Join-Path $PSScriptRoot artifact-metadata-parsing.ps1)
 . (Join-Path $PSScriptRoot SemVer.ps1)
 
+$releaseReplaceRegex = "(https://github.com/$RepoId/(?:blob|tree)/)master(/.*)"
+
 function GetMetaData($lang){
   switch ($lang) {
     "java" {
@@ -75,6 +77,12 @@ function GetAdjustedReadmeContent($pkgInfo, $lang){
     if ($headerContentMatches) {
       $foundTitle = $headerContentMatches.Matches[0]
       $fileContent = $pkgInfo.ReadmeContent -replace $foundTitle, "$foundTitle - Version $($pkgInfo.PackageVersion) `n"
+      # Replace github master link with release tag.
+      $regex = new-object System.Text.RegularExpressions.Regex ($releaseReplaceRegex,
+          [System.Text.RegularExpressions.RegexOptions]"Singleline, IgnoreCase")
+
+      $ReplacementPattern = "`${1}$($pkgInfo.Tag)`$2"
+      $fileContent = $fileContent -replace $regex, $ReplacementPattern
     }
 
     $header = "---`ntitle: $foundTitle`nkeywords: Azure, $lang, SDK, API, $($pkgInfo.PackageId), $service`nauthor: maggiepint`nms.author: magpint`nms.date: $date`nms.topic: article`nms.prod: azure`nms.technology: azure`nms.devlang: $lang`nms.service: $service`n---`n"

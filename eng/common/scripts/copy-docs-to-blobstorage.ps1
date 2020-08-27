@@ -7,7 +7,9 @@ param (
   $Language,
   $BlobName,
   $ExitOnError=1,
-  $UploadLatest=1
+  $UploadLatest=1,
+  $RepoReplaceRegex,
+  $Tag
 )
 
 $Language = $Language.ToLower()
@@ -197,6 +199,10 @@ function Upload-Blobs
     Write-Host "DocDir $($DocDir)"
     Write-Host "Final Dest $($DocDest)/$($PkgName)/$($DocVersion)"
 
+    # Use the step to replace master link to release tag link 
+    Write-Host "Replacing all readme master links with release tag $Tag"
+    ReplaceLink -scanFolder $DocDir -fileSuffix ".html" -replacement $Tag -customRegex $RepoReplaceRegex
+   
     Write-Host "Uploading $($PkgName)/$($DocVersion) to $($DocDest)..."
     & $($AzCopy) cp "$($DocDir)/**" "$($DocDest)/$($PkgName)/$($DocVersion)$($SASKey)" --recursive=true
 
