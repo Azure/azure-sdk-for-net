@@ -1,10 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Text.Json;
-
-#pragma warning disable 1591
-
 namespace Azure.Core.JsonPatch
 {
     internal class JsonPatchOperation
