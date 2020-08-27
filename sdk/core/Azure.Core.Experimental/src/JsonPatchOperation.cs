@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace Azure.Core.JsonPatch
 {
-    public class JsonPatchOperation
+    internal class JsonPatchOperation
     {
         public JsonPatchOperation(JsonPatchOperationKind kind, string path, string? from, string? rawJsonValue)
         {

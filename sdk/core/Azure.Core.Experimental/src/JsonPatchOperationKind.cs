@@ -5,7 +5,7 @@
 
 namespace Azure.Core.JsonPatch
 {
-    public readonly struct JsonPatchOperationKind
+    internal readonly struct JsonPatchOperationKind
     {
         private readonly string _operation;
 
@@ -20,5 +20,10 @@ namespace Azure.Core.JsonPatch
         public static JsonPatchOperationKind Move { get; } = new JsonPatchOperationKind("move");
         public static JsonPatchOperationKind Copy { get; } = new JsonPatchOperationKind("copy");
         public static JsonPatchOperationKind Test { get; } = new JsonPatchOperationKind("test");
+
+        public override string ToString()
+        {
+            return _operation;
+        }
     }
 }
