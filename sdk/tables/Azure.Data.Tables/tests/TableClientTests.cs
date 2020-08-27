@@ -3,6 +3,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
+using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Data.Tables;
 using Azure.Data.Tables.Sas;
@@ -19,7 +23,7 @@ namespace Azure.Tables.Tests
         private const string AccountName = "someaccount";
         private readonly Uri _url = new Uri($"https://someaccount.table.core.windows.net");
         private readonly Uri _urlHttp = new Uri($"http://someaccount.table.core.windows.net");
-        private TableClient client_Instrumented { get; set; }
+        private TableClient client { get; set; }
         private TableEntity entityWithoutPK = new TableEntity { { TableConstants.PropertyNames.RowKey, "row" } };
         private TableEntity entityWithoutRK = new TableEntity { { TableConstants.PropertyNames.PartitionKey, "partition" } };
         private TableEntity validEntity = new TableEntity { { TableConstants.PropertyNames.PartitionKey, "partition" }, { TableConstants.PropertyNames.RowKey, "row" } };
@@ -27,8 +31,8 @@ namespace Azure.Tables.Tests
         [SetUp]
         public void TestSetup()
         {
-            var service_Instrumented = InstrumentClient(new TableServiceClient(new Uri("https://example.com")));
-            client_Instrumented = service_Instrumented.GetTableClient(TableName);
+            var service_Instrumented = InstrumentClient(new TableServiceClient(new Uri("https://example.com"), new TableClientOptions()));
+            client = service_Instrumented.GetTableClient(TableName);
         }
 
         /// <summary>
@@ -60,19 +64,19 @@ namespace Azure.Tables.Tests
         [Test]
         public void ServiceMethodsValidateArguments()
         {
-            Assert.That(async () => await client_Instrumented.AddEntityAsync<TableEntity>(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the entity is not null.");
+            Assert.That(async () => await client.AddEntityAsync<TableEntity>(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the entity is not null.");
 
-            Assert.That(async () => await client_Instrumented.UpsertEntityAsync<TableEntity>(null, TableUpdateMode.Replace), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the entity is not null.");
-            Assert.That(async () => await client_Instrumented.UpsertEntityAsync(new TableEntity { PartitionKey = null, RowKey = "row" }, TableUpdateMode.Replace), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.PartitionKey}.");
+            Assert.That(async () => await client.UpsertEntityAsync<TableEntity>(null, TableUpdateMode.Replace), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the entity is not null.");
+            Assert.That(async () => await client.UpsertEntityAsync(new TableEntity { PartitionKey = null, RowKey = "row" }, TableUpdateMode.Replace), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.PartitionKey}.");
 
-            Assert.That(async () => await client_Instrumented.UpsertEntityAsync(new TableEntity { PartitionKey = "partition", RowKey = null }, TableUpdateMode.Replace), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.RowKey}.");
+            Assert.That(async () => await client.UpsertEntityAsync(new TableEntity { PartitionKey = "partition", RowKey = null }, TableUpdateMode.Replace), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.RowKey}.");
 
-            Assert.That(async () => await client_Instrumented.UpdateEntityAsync<TableEntity>(null, new ETag("etag"), TableUpdateMode.Replace), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the entity is not null.");
-            Assert.That(async () => await client_Instrumented.UpdateEntityAsync(validEntity, default, TableUpdateMode.Replace), Throws.InstanceOf<ArgumentException>(), "The method should validate the eTag is not null.");
+            Assert.That(async () => await client.UpdateEntityAsync<TableEntity>(null, new ETag("etag"), TableUpdateMode.Replace), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the entity is not null.");
+            Assert.That(async () => await client.UpdateEntityAsync(validEntity, default, TableUpdateMode.Replace), Throws.InstanceOf<ArgumentException>(), "The method should validate the eTag is not null.");
 
-            Assert.That(async () => await client_Instrumented.UpdateEntityAsync(entityWithoutPK, new ETag("etag"), TableUpdateMode.Replace), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.PartitionKey}.");
+            Assert.That(async () => await client.UpdateEntityAsync(entityWithoutPK, new ETag("etag"), TableUpdateMode.Replace), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.PartitionKey}.");
 
-            Assert.That(async () => await client_Instrumented.UpdateEntityAsync(entityWithoutRK, new ETag("etag"), TableUpdateMode.Replace), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.RowKey}.");
+            Assert.That(async () => await client.UpdateEntityAsync(entityWithoutRK, new ETag("etag"), TableUpdateMode.Replace), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.RowKey}.");
         }
 
         [Test]
@@ -81,7 +85,7 @@ namespace Azure.Tables.Tests
             var expiry = DateTimeOffset.Now.AddDays(1);
             var permissions = TableSasPermissions.All;
 
-            var sas = client_Instrumented.GetSasBuilder(permissions, expiry);
+            var sas = client.GetSasBuilder(permissions, expiry);
 
             Assert.That(sas.Permissions, Is.EqualTo(permissions.ToPermissionsString()));
             Assert.That(sas.ExpiresOn, Is.EqualTo(expiry));
@@ -93,10 +97,53 @@ namespace Azure.Tables.Tests
             var expiry = DateTimeOffset.Now.AddDays(1);
             var permissions = TableSasPermissions.All;
 
-            var sas = client_Instrumented.GetSasBuilder(permissions.ToPermissionsString(), expiry);
+            var sas = client.GetSasBuilder(permissions.ToPermissionsString(), expiry);
 
             Assert.That(sas.Permissions, Is.EqualTo(permissions.ToPermissionsString()));
             Assert.That(sas.ExpiresOn, Is.EqualTo(expiry));
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [Test]
+        public void CreatedTableEntityEnumEntitiesThrowNotSupported()
+        {
+            var entityToCreate = new TableEntity { PartitionKey = "partitionKey", RowKey = "01" };
+            entityToCreate["MyFoo"] = Foo.Two;
+
+            // Create the new entities.
+            Assert.ThrowsAsync<NotSupportedException>(async () => await client.AddEntityAsync(entityToCreate).ConfigureAwait(false));
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [Test]
+        public void CreatedEnumPropertiesAreSerializedProperly()
+        {
+            var entity = new EnumEntity { PartitionKey = "partitionKey", RowKey = "01", Timestamp = DateTime.Now, MyFoo = Foo.Two, ETag = ETag.All };
+
+            // Create the new entities.
+            var dictEntity = entity.ToOdataAnnotatedDictionary();
+
+            Assert.That(dictEntity["PartitionKey"], Is.EqualTo(entity.PartitionKey), "The entities should be equivalent");
+            Assert.That(dictEntity["RowKey"], Is.EqualTo(entity.RowKey), "The entities should be equivalent");
+            Assert.That(dictEntity["MyFoo"], Is.EqualTo(entity.MyFoo.ToString()), "The entities should be equivalent");
+        }
+
+        public class EnumEntity : ITableEntity
+        {
+            public string PartitionKey { get; set; }
+            public string RowKey { get; set; }
+            public DateTimeOffset? Timestamp { get; set; }
+            public ETag ETag { get; set; }
+            public Foo MyFoo { get; set; }
+        }
+        public enum Foo
+        {
+            One,
+            Two
         }
     }
 }

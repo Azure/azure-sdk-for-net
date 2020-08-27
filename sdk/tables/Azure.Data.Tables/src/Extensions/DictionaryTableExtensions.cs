@@ -56,6 +56,8 @@ namespace Azure.Data.Tables
                     case DateTime _:
                         annotatedDictionary[item.Key.ToOdataTypeString()] = TableConstants.Odata.EdmDateTime;
                         break;
+                    case Enum enumValue:
+                        throw new NotSupportedException("Enum values are only supported for custom model types implementing ITableEntity.");
                 }
             }
 
@@ -170,7 +172,14 @@ namespace Azure.Data.Tables
                     }
                     else
                     {
-                        property.SetValue(result, propertyValue);
+                        if (property.PropertyType.IsEnum)
+                        {
+                            typeActions[typeof(Enum)](property, propertyValue, result);
+                        }
+                        else
+                        {
+                            property.SetValue(result, propertyValue);
+                        }
                     }
                 }
             }
@@ -201,6 +210,7 @@ namespace Azure.Data.Tables
             {typeof(string), (property, propertyValue, result) =>  property.SetValue(result, propertyValue as string)},
             {typeof(int), (property, propertyValue, result) =>  property.SetValue(result, (int)propertyValue)},
             {typeof(int?), (property, propertyValue, result) =>  property.SetValue(result, (int?)propertyValue)},
+            {typeof(Enum), (property, propertyValue, result) =>  property.SetValue(result, Enum.Parse(property.PropertyType, propertyValue as string ))},
         };
     }
 }

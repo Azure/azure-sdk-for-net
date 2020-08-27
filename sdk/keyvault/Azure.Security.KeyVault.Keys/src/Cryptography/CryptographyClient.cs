@@ -33,7 +33,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <summary>
         /// Initializes a new instance of the <see cref="CryptographyClient"/> class.
         /// </summary>
-        /// <param name="keyId">The <see cref="KeyProperties.Id"/> of the <see cref="KeyVaultKey"/> which will be used for cryptographic operations.</param>
+        /// <param name="keyId">
+        /// The <see cref="KeyProperties.Id"/> of the <see cref="KeyVaultKey"/> which will be used for cryptographic operations.
+        /// If you have a key <see cref="Uri"/>, use <see cref="KeyVaultKeyIdentifier"/> to parse the <see cref="KeyVaultKeyIdentifier.VaultUri"/> and other information.
+        /// </param>
         /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, like DefaultAzureCredential.</param>
         /// <exception cref="ArgumentNullException"><paramref name="keyId"/> or <paramref name="credential"/> is null.</exception>
         public CryptographyClient(Uri keyId, TokenCredential credential)
@@ -44,7 +47,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <summary>
         /// Initializes a new instance of the <see cref="CryptographyClient"/> class.
         /// </summary>
-        /// <param name="keyId">The <see cref="KeyProperties.Id"/> of the <see cref="KeyVaultKey"/> which will be used for cryptographic operations.</param>
+        /// <param name="keyId">
+        /// The <see cref="KeyProperties.Id"/> of the <see cref="KeyVaultKey"/> which will be used for cryptographic operations.
+        /// If you have a key <see cref="Uri"/>, use <see cref="KeyVaultKeyIdentifier"/> to parse the <see cref="KeyVaultKeyIdentifier.VaultUri"/> and other information.
+        /// </param>
         /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, like DefaultAzureCredential.</param>
         /// <param name="options"><see cref="CryptographyClientOptions"/> that allow to configure the management of the request sent to Key Vault.</param>
         /// <exception cref="ArgumentNullException"><paramref name="keyId"/> or <paramref name="credential"/> is null.</exception>

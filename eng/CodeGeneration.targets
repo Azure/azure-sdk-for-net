@@ -3,7 +3,7 @@
   <PropertyGroup>
     <_AutoRestVersion>https://github.com/Azure/autorest/releases/download/autorest-3.0.6236/autorest-3.0.6236.tgz</_AutoRestVersion>
     <_AutoRestCoreVersion>3.0.6306</_AutoRestCoreVersion>
-    <_AutoRestCSharpVersion>https://github.com/Azure/autorest.csharp/releases/download/3.0.0-dev.20200811.1/autorest-csharp-v3-3.0.0-dev.20200811.1.tgz</_AutoRestCSharpVersion>
+    <_AutoRestCSharpVersion>https://github.com/Azure/autorest.csharp/releases/download/3.0.0-dev.20200825.2/autorest-csharp-v3-3.0.0-dev.20200825.2.tgz</_AutoRestCSharpVersion>
     <_SupportsCodeGeneration Condition="'$(IsClientLibrary)' == 'true'">true</_SupportsCodeGeneration>
     <_DefaultInputName Condition="Exists('$(MSBuildProjectDirectory)/autorest.md')">$(MSBuildProjectDirectory)/autorest.md</_DefaultInputName>
     <AutoRestInput Condition="'$(AutoRestInput)' == ''">$(_DefaultInputName)</AutoRestInput>
@@ -16,6 +16,12 @@
     <_AutoRestSharedCodeDirectory>$(_SharedCodeDirectory)AutoRest/</_AutoRestSharedCodeDirectory>
 
     <_GenerateCode Condition="'$(_SupportsCodeGeneration)' == 'true' AND '$(AutoRestInput)' != ''">true</_GenerateCode>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <_AutoRestVersion Condition="'$(TemporaryUsePreviousGeneratorVersion)' == 'true'">https://github.com/Azure/autorest/releases/download/autorest-3.0.6236/autorest-3.0.6236.tgz</_AutoRestVersion>
+    <_AutoRestCoreVersion Condition="'$(TemporaryUsePreviousGeneratorVersion)' == 'true'">3.0.6306</_AutoRestCoreVersion>
+    <_AutoRestCSharpVersion Condition="'$(TemporaryUsePreviousGeneratorVersion)' == 'true'">https://github.com/Azure/autorest.csharp/releases/download/3.0.0-dev.20200811.1/autorest-csharp-v3-3.0.0-dev.20200811.1.tgz</_AutoRestCSharpVersion>
   </PropertyGroup>
 
   <Target Name="GenerateCode" Condition="'$(_GenerateCode)' == 'true'" >
@@ -44,6 +50,8 @@
   </ItemGroup>
 
 </Project>
+
+
 
 
 

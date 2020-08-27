@@ -10,12 +10,6 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public struct TextAnalyticsWarning
     {
-        internal TextAnalyticsWarning(string code, string message)
-        {
-            WarningCode = code;
-            Message = message;
-        }
-
         internal TextAnalyticsWarning(TextAnalyticsWarningInternal warning)
         {
             WarningCode = warning.Code;

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
@@ -12,15 +13,23 @@ namespace Azure.AI.TextAnalytics
     /// name of the entity used in the data source.  Note that the formal name
     /// may be different from the exact text match in the input document.
     /// </summary>
-    public readonly struct LinkedEntity
+    [CodeGenModel("LinkedEntity")]
+    public readonly partial struct LinkedEntity
     {
-        internal LinkedEntity(string name, string dataSourceEntityId, string language, string dataSource, Uri url, IEnumerable<LinkedEntityMatch> matches)
+        /// <summary>
+        /// Gets the URL that identifies the linked entity's entry in the data source.
+        /// </summary>
+        [CodeGenMember("Url")]
+        private string _url { get; }
+
+        internal LinkedEntity(string name, IEnumerable<LinkedEntityMatch> matches, string language, string dataSourceEntityId, string url, string dataSource)
         {
             Name = name;
             DataSourceEntityId = dataSourceEntityId;
             Language = language;
             DataSource = dataSource;
-            Url = url;
+            _url = url;
+            Url = new Uri(url);
             Matches = matches;
         }
 
@@ -32,6 +41,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Gets the unique identifier of the entity in the data source.
         /// </summary>
+        [CodeGenMember("Id")]
         public string DataSourceEntityId { get; }
 
         /// <summary>

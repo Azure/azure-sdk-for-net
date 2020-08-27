@@ -9,14 +9,14 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
-    internal partial class LinkedEntity
+    public partial struct LinkedEntity
     {
         internal static LinkedEntity DeserializeLinkedEntity(JsonElement element)
         {
             string name = default;
-            IReadOnlyList<Match> matches = default;
+            IEnumerable<LinkedEntityMatch> matches = default;
             string language = default;
             Optional<string> id = default;
             string url = default;
@@ -30,10 +30,10 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("matches"))
                 {
-                    List<Match> array = new List<Match>();
+                    List<LinkedEntityMatch> array = new List<LinkedEntityMatch>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Match.DeserializeMatch(item));
+                        array.Add(LinkedEntityMatch.DeserializeLinkedEntityMatch(item));
                     }
                     matches = array;
                     continue;
