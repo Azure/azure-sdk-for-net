@@ -12,16 +12,19 @@ using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using OpenTelemetry.Exporter.AzureMonitor.Extensions;
 using OpenTelemetry.Exporter.AzureMonitor.Models;
-using OpenTelemetry.Trace;
 
 namespace OpenTelemetry.Exporter.AzureMonitor
 {
     internal class AzureMonitorTransmitter
     {
-        private const string StatusCode_200 = "200";
-        private const string StatusCode_0 = "0";
-        private const string StatusCode_Ok = "Ok";
-        private const string HttpUrlPrefix = "http://";
+        private const string StatusCode200 = "200";
+        private const string StatusCode0 = "0";
+        private const string StatusCodeOk = "Ok";
+        private const string HttpScheme = "http://";
+        private const string SchemePostfix = "://";
+        private const char Colon = '/';
+        private const string HttpPort80 = "80";
+        private const string HttpPort443 = "443";
 
         private readonly ServiceRestClient serviceRestClient;
         private readonly AzureMonitorExporterOptions options;
@@ -94,16 +97,17 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
         private MonitorBase GenerateTelemetryData(Activity activity)
         {
-            MonitorBase telemetry = new MonitorBase();
-
-            var tags = activity.Tags.ToAzureMonitorTags(out var activityType);
             var telemetryType = activity.GetTelemetryType();
-            telemetry.BaseType = Telemetry_Base_Type_Mapping[telemetryType];
+            var tags = activity.Tags.ToAzureMonitorTags(out var activityType);
+            MonitorBase telemetry = new MonitorBase
+            {
+                BaseType = Telemetry_Base_Type_Mapping[telemetryType]
+            };
 
             if (telemetryType == TelemetryType.Request)
             {
-                var url = activity.Kind == ActivityKind.Server ? GetHttpUrl(tags) : GetMessagingUrl(tags);
-                var statusCode = GetStatus(tags, out bool success) ?? StatusCode_0 ;
+                var url = activity.Kind == ActivityKind.Server ? GetUrl(tags) : GetMessagingUrl(tags);
+                var statusCode = GetStatus(tags, out bool success) ?? StatusCode0 ;
                 var request = new RequestData(2, activity.Context.SpanId.ToHexString(), activity.Duration.ToString("c", CultureInfo.InvariantCulture), success, statusCode)
                 {
                     Name = activity.DisplayName,
@@ -111,14 +115,14 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                     // TODO: Handle request.source.
                 };
 
-                // TODO: Handle activity.TagObjects
-                ExtractPropertiesFromTags(request.Properties, activity.Tags);
+                // TODO: Handle activity.TagObjects, extract well-known tags
+                // ExtractPropertiesFromTags(request.Properties, activity.Tags);
 
                 telemetry.BaseData = request;
             }
             else if (telemetryType == TelemetryType.Dependency)
             {
-                var statusCode = GetStatus(tags, out bool success) ?? StatusCode_0;
+                var statusCode = GetStatus(tags, out bool success) ?? StatusCode0;
                 var dependency = new RemoteDependencyData(2, activity.DisplayName, activity.Duration.ToString("c", CultureInfo.InvariantCulture))
                 {
                     Id = activity.Context.SpanId.ToHexString(),
@@ -130,7 +134,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
                 if (activityType != PartBType.Http)
                 {
-                    dependency.Data = GetHttpUrl(tags);
+                    dependency.Data = GetUrl(tags);
                     dependency.Type = "HTTP"; // TODO: Parse for storage / SB.
                     dependency.ResultCode = statusCode;
                 }
@@ -143,7 +147,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static string GetHttpUrl(Dictionary<string, string> tags)
+        private static string GetUrl(Dictionary<string, string> tags)
         {
             if (tags.TryGetValue(SemanticConventions.AttributeHttpUrl, out var url))
             {
@@ -155,30 +159,39 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                 }
             }
 
-            // TODO: Consider StringBuilder
             if (tags.TryGetValue(SemanticConventions.AttributeHttpScheme, out var httpScheme))
             {
                 tags.TryGetValue(SemanticConventions.AttributeHttpTarget, out var httpTarget);
                 if (tags.TryGetValue(SemanticConventions.AttributeHttpHost, out var httpHost))
                 {
-                    url = httpScheme + httpHost + httpTarget;
+                    tags.TryGetValue(SemanticConventions.AttributeHttpHost, out var httpPort);
+                    if (httpPort != null && httpPort != HttpPort80 && httpPort != HttpPort443)
+                    {
+                        url = $"{httpScheme}{SchemePostfix}{httpHost}{Colon}{httpPort}{httpTarget}";
+                    }
+                    else
+                    {
+                        url = $"{httpScheme}{SchemePostfix}{httpHost}{httpTarget}";
+                    }
+
+                    return url;
                 }
                 else if (tags.TryGetValue(SemanticConventions.AttributeNetPeerName, out var netPeerName)
                          && tags.TryGetValue(SemanticConventions.AttributeNetPeerPort, out var netPeerPort))
                 {
-                    url = httpScheme + netPeerName + netPeerPort + httpTarget;
+                    return $"{httpScheme}{SchemePostfix}{netPeerName}{Colon}{netPeerPort}{httpTarget}";
                 }
                 else if (tags.TryGetValue(SemanticConventions.AttributeNetPeerIp, out var netPeerIP)
                          && tags.TryGetValue(SemanticConventions.AttributeNetPeerPort, out netPeerPort))
                 {
-                    url = httpScheme + netPeerIP + netPeerPort + httpTarget;
+                    return $"{httpScheme}{SchemePostfix}{netPeerIP}{Colon}{netPeerPort}{httpTarget}";
                 }
             }
 
             if (tags.TryGetValue(SemanticConventions.AttributeHttpHost, out var host))
             {
                 tags.TryGetValue(SemanticConventions.AttributeHttpTarget, out var httpTarget);
-                url = HttpUrlPrefix + host + (httpTarget ?? url);
+                url = $"{HttpScheme}{host}{Colon}{(httpTarget ?? url)}";
             }
 
             return url;
@@ -188,7 +201,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         private static string GetStatus(Dictionary<string, string> tags, out bool success)
         {
             tags.TryGetValue(SemanticConventions.AttributeHttpStatusCode, out var status);
-            success = (status == StatusCode_200 || status == StatusCode_Ok) ? true : false;
+            success = status == StatusCode200 || status == StatusCodeOk;
 
             return status;
         }
