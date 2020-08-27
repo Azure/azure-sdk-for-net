@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Extensions.WebJobs;
 using Azure.Security.KeyVault.Secrets;
+using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
