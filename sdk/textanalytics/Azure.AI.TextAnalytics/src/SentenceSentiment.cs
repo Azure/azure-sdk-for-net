@@ -57,7 +57,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Gets the mined opinions of a sentence. This is only returned if
-        /// <see cref="AnalyzeSentimentOptions.IncludeOpinionMining"/> is set to true.
+        /// <see cref="AnalyzeSentimentType.OpinionMining"/> is set in <see cref="AnalyzeSentimentOptions.IncludeAnalysis"/>.
         /// </summary>
         public IReadOnlyCollection<MinedOpinion> MinedOpinions { get; }
 

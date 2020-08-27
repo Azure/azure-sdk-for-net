@@ -23,9 +23,9 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// If set to true, response will contain Opinion Mining sentiment analysis results.
-        /// Only available for Text Analytics Service version v3.1-preview.1 and above.
+        /// Specifies the types of analysis to apply, like for example,
+        /// Opinion mining.
         /// </summary>
-        public bool IncludeOpinionMining { get; set; } = false;
-    }
+        public AnalyzeSentimentType IncludeAnalysis { get; set; }
+}
 }
