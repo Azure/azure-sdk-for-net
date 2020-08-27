@@ -76,21 +76,21 @@ namespace Azure.Data.Tables.Tests
 
             };
 
-            ServiceUri ??= _endpointType switch
+            ServiceUri = _endpointType switch
             {
                 TableEndpointType.Storage => TestEnvironment.StorageUri,
                 TableEndpointType.CosmosTable => TestEnvironment.CosmosUri,
                 _ => throw new NotSupportedException("Unknown endpoint type")
             };
 
-            AccountName ??= _endpointType switch
+            AccountName = _endpointType switch
             {
                 TableEndpointType.Storage => TestEnvironment.StorageAccountName,
                 TableEndpointType.CosmosTable => TestEnvironment.CosmosAccountName,
                 _ => throw new NotSupportedException("Unknown endpoint type")
             };
 
-            AccountKey ??= _endpointType switch
+            AccountKey = _endpointType switch
             {
                 TableEndpointType.Storage => TestEnvironment.PrimaryStorageAccountKey,
                 TableEndpointType.CosmosTable => TestEnvironment.PrimaryCosmosAccountKey,
@@ -499,6 +499,21 @@ namespace Azure.Data.Tables.Tests
                 Assert.AreEqual(a.DateTimeN, b.DateTimeN);
                 Assert.AreEqual(a.DateTimeNull, b.DateTimeNull);
             }
+        }
+
+        public class EnumEntity : ITableEntity
+        {
+            public string PartitionKey { get; set; }
+            public string RowKey { get; set; }
+            public DateTimeOffset? Timestamp { get; set; }
+            public ETag ETag { get; set; }
+            public Foo MyFoo { get; set; }
+        }
+
+        public enum Foo
+        {
+            One,
+            Two
         }
     }
 }

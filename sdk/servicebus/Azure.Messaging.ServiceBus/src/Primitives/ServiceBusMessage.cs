@@ -46,7 +46,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="body">The payload of the message in bytes.</param>
         public ServiceBusMessage(ReadOnlyMemory<byte> body) :
-            this(BinaryData.FromMemory(body))
+            this(BinaryData.FromBytes(body))
         {
         }
 
@@ -87,12 +87,6 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Gets or sets the body of the message.
         /// </summary>
-        /// <remarks>
-        /// The easiest way to create a new message from a string is the following:
-        /// <code>
-        /// message.Body = System.Text.Encoding.UTF8.GetBytes("Message1");
-        /// </code>
-        /// </remarks>
         public BinaryData Body { get; set; }
 
         /// <summary>

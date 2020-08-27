@@ -1,16 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://shivangitest.cognitiveservices.azure.com/anomalydetector/v1.0/timeseries/changepoint/detect",
+      "RequestUri": "https://tf93b734ab9454795-anomalydetector.cognitiveservices.azure.com/anomalydetector/v1.0/timeseries/changepoint/detect",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Content-Length": "13727",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-d50e7165ba8cd148942459ecd95892f9-3a8c7d6155efed45-00",
+        "traceparent": "00-88eca874799b3349a628676a1c944a98-e0466e5f33954846-00",
         "User-Agent": [
-          "azsdk-net-AI.AnomalyDetector/3.0.0-dev.20200821.1",
-          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.AnomalyDetector/3.0.0-dev.20200825.2",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "c2458cdd2f93dccbd00d62aad965a9b3",
         "x-ms-return-client-request-id": "true"
@@ -1054,15 +1055,15 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "0256482c-549e-48a0-aef7-8cb45ebb8e48",
+        "apim-request-id": "e8909859-2554-4516-a774-ebbb95ea4014",
         "Content-Length": "6887",
         "Content-Type": "application/json",
         "csp-billing-usage": "CognitiveServices.AnomalyDetector.DataPoints=1",
-        "Date": "Fri, 21 Aug 2020 19:31:22 GMT",
+        "Date": "Tue, 25 Aug 2020 16:18:11 GMT",
         "model-id": "60",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "32"
+        "x-envoy-upstream-service-time": "25"
       },
       "ResponseBody": {
         "confidenceScores": [
@@ -1589,7 +1590,7 @@
   ],
   "Variables": {
     "ANOMALY_DETECTOR_API_KEY": "Sanitized",
-    "ANOMALY_DETECTOR_ENDPOINT": "https://shivangitest.cognitiveservices.azure.com/",
+    "ANOMALY_DETECTOR_ENDPOINT": "https://tf93b734ab9454795-anomalydetector.cognitiveservices.azure.com",
     "RandomSeed": "883059328"
   }
 }

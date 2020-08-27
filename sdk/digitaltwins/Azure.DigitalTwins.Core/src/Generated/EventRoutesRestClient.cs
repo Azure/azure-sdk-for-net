@@ -56,6 +56,7 @@ namespace Azure.DigitalTwins.Core
             {
                 request.Headers.Add("x-ms-max-item-count", eventRoutesListOptions.MaxItemCount.Value);
             }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -122,6 +123,7 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -201,6 +203,7 @@ namespace Azure.DigitalTwins.Core
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (eventRoute != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -277,6 +280,7 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -347,6 +351,7 @@ namespace Azure.DigitalTwins.Core
             {
                 request.Headers.Add("x-ms-max-item-count", eventRoutesListOptions.MaxItemCount.Value);
             }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

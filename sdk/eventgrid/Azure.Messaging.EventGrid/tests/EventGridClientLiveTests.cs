@@ -82,7 +82,7 @@ namespace Azure.Messaging.EventGrid.Tests
             {
                 eventsList.Add(
                     new EventGridEvent(
-                        BinaryData.Serialize(new TestPayload("name", i)),
+                        BinaryData.FromObject(new TestPayload("name", i)),
                         $"Subject-{i}",
                         "Microsoft.MockPublisher.TestEvent",
                         "1.0")
