@@ -18,7 +18,6 @@ param (
 . (Join-Path $PSScriptRoot SemVer.ps1)
 
 $releaseReplaceRegex = "(https://github.com/$RepoId/(?:blob|tree)/)master(/.*)"
-
 function GetMetaData($lang){
   switch ($lang) {
     "java" {
@@ -80,7 +79,8 @@ function GetAdjustedReadmeContent($pkgInfo, $lang){
       # Replace github master link with release tag.
       $regex = new-object System.Text.RegularExpressions.Regex ($releaseReplaceRegex,
           [System.Text.RegularExpressions.RegexOptions]"Singleline, IgnoreCase")
-
+      Write-Host "Print out the regex $regex."
+      Write-Host "Print out the tag $($pkgInfo.Tag)."
       $ReplacementPattern = "`${1}$($pkgInfo.Tag)`$2"
       $fileContent = $fileContent -replace $regex, $ReplacementPattern
     }

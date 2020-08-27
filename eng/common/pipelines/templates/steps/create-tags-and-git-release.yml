@@ -21,4 +21,4 @@ steps:
   timeoutInMinutes: 5
   env:
     GH_TOKEN: $(azuresdk-github-pat)
-    name: releaseTag
+  name: releaseTag
