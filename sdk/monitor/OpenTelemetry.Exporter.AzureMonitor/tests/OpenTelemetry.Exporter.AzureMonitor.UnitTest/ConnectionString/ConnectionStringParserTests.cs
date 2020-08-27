@@ -10,6 +10,24 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
     public class ConnectionStringParserTests
     {
         [Test]
+        public void TestInstrumentationKey_IsRequired()
+        {
+            Assert.Throws<Exception>(() => RunTest(
+                connectionString: "EndpointSuffix=ai.contoso.com",
+                expectedIngestionEndpoint: null,
+                expectedInstrumentationKey: null));
+        }
+
+        [Test]
+        public void TestInstrumentationKey_CannotBeEmpty()
+        {
+            Assert.Throws<Exception>(() => RunTest(
+                connectionString: "InstrumentationKey=;EndpointSuffix=ai.contoso.com",
+                expectedIngestionEndpoint: null,
+                expectedInstrumentationKey: null));
+        }
+
+        [Test]
         public void TestDefaultEndpoints()
         {
             RunTest(
