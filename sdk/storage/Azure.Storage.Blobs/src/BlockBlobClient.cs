@@ -716,14 +716,14 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    Errors.VerifyStreamPosition(content);
+                    Errors.VerifyStreamPosition(content, nameof(content));
 
                     return await BlobRestClient.BlockBlob.UploadAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
                         body: content,
-                        contentLength: content?.Length - content?.Position ?? 0,
+                        contentLength: (content?.Length - content?.Position) ?? 0,
                         version: Version.ToVersionString(),
                         blobContentType: blobHttpHeaders?.ContentType,
                         blobContentEncoding: blobHttpHeaders?.ContentEncoding,
@@ -969,6 +969,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
+                    Errors.VerifyStreamPosition(content, nameof(content));
                     content = content.WithNoDispose().WithProgress(progressHandler);
                     return await BlobRestClient.BlockBlob.StageBlockAsync(
                         ClientDiagnostics,
@@ -976,7 +977,7 @@ namespace Azure.Storage.Blobs.Specialized
                         Uri,
                         blockId: base64BlockId,
                         body: content,
-                        contentLength: content.Length,
+                        contentLength: (content?.Length - content?.Position) ?? 0,
                         version: Version.ToVersionString(),
                         transactionalContentHash: transactionalContentHash,
                         leaseId: conditions?.LeaseId,

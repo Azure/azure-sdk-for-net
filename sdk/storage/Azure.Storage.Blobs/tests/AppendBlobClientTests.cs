@@ -870,7 +870,7 @@ namespace Azure.Storage.Blobs.Test
 
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                 blob.AppendBlockAsync(stream),
-                e => Assert.AreEqual("stream.Position must be less than stream.Length", e.Message));
+                e => Assert.AreEqual("content.Position must be less than content.Length. Please set content.Position to the start of the data to upload.", e.Message));
         }
 
         [Test]

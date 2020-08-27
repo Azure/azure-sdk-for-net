@@ -962,7 +962,7 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
-                    Errors.VerifyStreamPosition(content);
+                    Errors.VerifyStreamPosition(content, nameof(content));
 
                     content = content?.WithNoDispose().WithProgress(progressHandler);
                     return await BlobRestClient.AppendBlob.AppendBlockAsync(
@@ -970,7 +970,7 @@ namespace Azure.Storage.Blobs.Specialized
                         Pipeline,
                         Uri,
                         body: content,
-                        contentLength: content?.Length - content?.Position ?? 0,
+                        contentLength: (content?.Length - content?.Position) ?? 0,
                         version: Version.ToVersionString(),
                         transactionalContentHash: transactionalContentHash,
                         leaseId: conditions?.LeaseId,

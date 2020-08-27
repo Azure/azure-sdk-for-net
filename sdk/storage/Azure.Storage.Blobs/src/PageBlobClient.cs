@@ -1083,16 +1083,16 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    Errors.VerifyStreamPosition(content);
+                    Errors.VerifyStreamPosition(content, nameof(content));
                     content = content?.WithNoDispose().WithProgress(progressHandler);
-                    var range = new HttpRange(offset, content?.Length - content?.Position ?? null);
+                    var range = new HttpRange(offset, (content?.Length - content?.Position) ?? null);
 
                     return await BlobRestClient.PageBlob.UploadPagesAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
                         body: content,
-                        contentLength: content?.Length - content?.Position ?? 0,
+                        contentLength: (content?.Length - content?.Position) ?? 0,
                         version: Version.ToVersionString(),
                         transactionalContentHash: transactionalContentHash,
                         timeout: default,

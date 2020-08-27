@@ -1820,7 +1820,7 @@ namespace Azure.Storage.Files.DataLake
                     $"{nameof(leaseId)}: {leaseId}\n");
                 try
                 {
-                    Errors.VerifyStreamPosition(content);
+                    Errors.VerifyStreamPosition(content, nameof(content));
 
                     Response<PathAppendDataResult> response = await DataLakeRestClient.Path.AppendDataAsync(
                         clientDiagnostics: ClientDiagnostics,
