@@ -99,7 +99,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
                 // Location names are expected to match Azure region names. No special characters allowed.
                 if (!location.All(x => char.IsLetterOrDigit(x)))
                 {
-                    throw new ArgumentException($"The value for Location must not contain special characters. '{location}'");
+                    throw new ArgumentException($"The value for Location must contain only alphanumeric characters. '{location}'");
                 }
             }
 
