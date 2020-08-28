@@ -62,6 +62,9 @@ namespace Azure.Iot.Hub.Service.Samples
             var statisticsSample = new StatisticsSamples(hubClient);
             await statisticsSample.RunSampleAsync();
 
+            var configurationsSample = new ConfigurationSamples(hubClient);
+            await configurationsSample.RunSampleAsync();
+
             // Get SAS token to 'jobs' container in the  storage account.
             Uri containerSasUri = await GetSasUriAsync(options.StorageAccountConnectionString, "jobs").ConfigureAwait(false);
 
