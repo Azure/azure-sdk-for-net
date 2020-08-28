@@ -107,7 +107,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             if (telemetryType == TelemetryType.Request)
             {
                 var url = activity.Kind == ActivityKind.Server ? GetUrl(tags) : GetMessagingUrl(tags);
-                var statusCode = GetStatus(tags, out bool success) ?? StatusCode0 ;
+                var statusCode = GetStatus(tags, out bool success) ;
                 var request = new RequestData(2, activity.Context.SpanId.ToHexString(), activity.Duration.ToString("c", CultureInfo.InvariantCulture), success, statusCode)
                 {
                     Name = activity.DisplayName,
@@ -122,7 +122,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             }
             else if (telemetryType == TelemetryType.Dependency)
             {
-                var statusCode = GetStatus(tags, out bool success) ?? StatusCode0;
+                var statusCode = GetStatus(tags, out bool success);
                 var dependency = new RemoteDependencyData(2, activity.DisplayName, activity.Duration.ToString("c", CultureInfo.InvariantCulture))
                 {
                     Id = activity.Context.SpanId.ToHexString(),
@@ -132,7 +132,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                 // TODO: Handle activity.TagObjects
                 // ExtractPropertiesFromTags(dependency.Properties, activity.Tags);
 
-                if (activityType != PartBType.Http)
+                if (activityType == PartBType.Http)
                 {
                     dependency.Data = GetUrl(tags);
                     dependency.Type = "HTTP"; // TODO: Parse for storage / SB.
@@ -203,7 +203,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             tags.TryGetValue(SemanticConventions.AttributeHttpStatusCode, out var status);
             success = status == StatusCode200 || status == StatusCodeOk;
 
-            return status;
+            return status ?? StatusCode0;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
