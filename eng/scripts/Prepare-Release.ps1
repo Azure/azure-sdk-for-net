@@ -1,5 +1,8 @@
-param($package)
-
+[CmdletBinding()]
+param(
+    [Parameter(Mandatory=$true)]
+    $package
+)
 
 function Get-LevenshteinDistance {
     <#
@@ -71,13 +74,18 @@ function Get-LevenshteinDistance {
     }
 }
 
+$ErrorPreference = 'Stop'
 $repoRoot = Resolve-Path "$PSScriptRoot/../..";
+
+if (!(Get-Command az)) {
+  throw 'You must have the Azure CLI installed: https://aka.ms/azure-cli'
+}
 
 . ${repoRoot}\eng\common\scripts\SemVer.ps1
 . ${repoRoot}\eng\common\scripts\ChangeLog-Operations.ps1
 
 $packageDirectory = Get-ChildItem "$repoRoot/sdk" -Directory -Recurse -Depth 2 -Filter $package
-$serviceDirectory = ($packageDirectory).Parent.Name
+$serviceDirectory = $packageDirectory.Parent.Name
 
 Write-Host "Source directory $serviceDirectory"
 
@@ -170,11 +178,11 @@ if (!$issueId)
 }
 
 $fields = @{
-    "Permalink usetag"="https://github.com/Azure/azure-sdk-for-net/sdk/$serviceDirectory/$package/README.md";
-    "Package Registry Permalink"="https://nuget.org/packages/$package/$newVersion";
-    "Library Type"=$libraryType;
-    "Release Type"=$releaseType;
-    "Version Number"=$newVersion;
+    "Permalink usetag"="https://github.com/Azure/azure-sdk-for-net/sdk/$serviceDirectory/$package/README.md"
+    "Package Registry Permalink"="https://nuget.org/packages/$package/$newVersion"
+    "Library Type"=$libraryType
+    "Release Type"=$releaseType
+    "Version Number"=$newVersion
 }
 
 Write-Host
