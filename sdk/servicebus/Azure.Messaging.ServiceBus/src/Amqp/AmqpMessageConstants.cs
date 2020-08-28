@@ -5,6 +5,10 @@ using Microsoft.Azure.Amqp;
 
 namespace Azure.Messaging.ServiceBus.Amqp
 {
+    /// <summary>
+    /// Service Bus specific constants that are used to identify keys for various
+    /// MessageAnnotations in an AMQP message.
+    /// </summary>
     internal class AmqpMessageConstants
     {
         internal const string EnqueuedTimeUtcName = "x-opt-enqueued-time";

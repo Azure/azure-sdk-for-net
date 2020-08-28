@@ -7,7 +7,7 @@ namespace Azure.Core.Amqp
 {
     /// <summary>
     /// Represents the AMQP message properties.
-    /// http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-properties
+    /// <seealso href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-properties" />
     /// </summary>
     public class AmqpMessageProperties
     {
@@ -19,7 +19,7 @@ namespace Azure.Core.Amqp
         /// <summary>
         /// Initializes a new <see cref="AmqpMessageProperties"/> instance by copying the passed in properties.
         /// </summary>
-        /// <param name="properties"></param>
+        /// <param name="properties">The properties to copy.</param>
         public AmqpMessageProperties(AmqpMessageProperties properties)
         {
             MessageId = properties.MessageId;

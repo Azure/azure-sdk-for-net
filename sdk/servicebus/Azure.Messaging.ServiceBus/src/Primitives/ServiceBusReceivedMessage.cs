@@ -20,10 +20,10 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Creates a new message from the specified payload.
         /// </summary>
-        /// <param name="body">The payload of the message in bytes</param>
+        /// <param name="body">The payload of the message represented as bytes.</param>
         internal ServiceBusReceivedMessage(ReadOnlyMemory<byte> body)
+            : this(new AmqpAnnotatedMessage(new BinaryData[] { BinaryData.FromBytes(body) }))
         {
-            AmqpMessage = new AmqpAnnotatedMessage(new BinaryData[] { BinaryData.FromBytes(body) });
         }
 
         /// <summary>
@@ -44,7 +44,9 @@ namespace Azure.Messaging.ServiceBus
         internal bool IsSettled { get; set; }
 
         /// <summary>
-        ///
+        /// Gets the raw Amqp message data that will be transmitted over the wire.
+        /// This can be used to enable scenarios that require reading AMQP header, footer, property, or annotation
+        /// data that is not exposed as top level properties in the ServiceBusMessage.
         /// </summary>
         public AmqpAnnotatedMessage AmqpMessage { get; internal set; }
 
@@ -186,7 +188,7 @@ namespace Azure.Messaging.ServiceBus
         public DateTimeOffset ScheduledEnqueueTime => AmqpMessage.GetScheduledEnqueueTime();
 
         /// <summary>
-        /// Gets the "user properties" bag, which can be used for custom message metadata.
+        /// Gets the application properties bag, which can be used for custom message metadata.
         /// </summary>
         /// <remarks>
         /// Only following value types are supported:

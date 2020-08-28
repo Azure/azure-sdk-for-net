@@ -21,7 +21,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
 {
     internal static class AmqpMessageConverter
     {
-        internal const int GuidSize = 16;
+        /// <summary>
+        /// The size, in bytes, to use for extracting the delivery tag bytes into <see cref="Guid"/>.
+        /// </summary>
+        private const int GuidSizeInBytes = 16;
 
         /// <summary>The size, in bytes, to use as a buffer for stream operations.</summary>
         private const int StreamBufferSizeInBytes = 512;
@@ -335,10 +338,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 }
             }
 
-            if (amqpMessage.DeliveryTag.Count == GuidSize)
+            if (amqpMessage.DeliveryTag.Count == GuidSizeInBytes)
             {
-                var guidBuffer = new byte[GuidSize];
-                Buffer.BlockCopy(amqpMessage.DeliveryTag.Array, amqpMessage.DeliveryTag.Offset, guidBuffer, 0, GuidSize);
+                var guidBuffer = new byte[GuidSizeInBytes];
+                Buffer.BlockCopy(amqpMessage.DeliveryTag.Array, amqpMessage.DeliveryTag.Offset, guidBuffer, 0, GuidSizeInBytes);
                 sbMessage.LockTokenGuid = new Guid(guidBuffer);
             }
 
@@ -416,7 +419,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         MessageId = amqpCorrelationFilter.MessageId,
                         To = amqpCorrelationFilter.To,
                         ReplyTo = amqpCorrelationFilter.ReplyTo,
-                        Subject = amqpCorrelationFilter.Label,
+                        Subject = amqpCorrelationFilter.Subject,
                         SessionId = amqpCorrelationFilter.SessionId,
                         ReplyToSessionId = amqpCorrelationFilter.ReplyToSessionId,
                         ContentType = amqpCorrelationFilter.ContentType

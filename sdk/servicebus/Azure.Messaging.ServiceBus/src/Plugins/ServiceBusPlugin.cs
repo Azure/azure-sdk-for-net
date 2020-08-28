@@ -140,7 +140,7 @@ namespace Azure.Messaging.ServiceBus.Plugins
         /// <param name="sessionId">The session ID to set on the message.</param>
         protected void SetSessionId(ServiceBusReceivedMessage message, string sessionId)
         {
-            message.AmqpMessage.Properties.GroupId= sessionId;
+            message.AmqpMessage.Properties.GroupId = sessionId;
         }
 
         /// <summary>

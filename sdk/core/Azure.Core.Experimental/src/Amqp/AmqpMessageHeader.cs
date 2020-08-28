@@ -7,7 +7,7 @@ namespace Azure.Core.Amqp
 {
     /// <summary>
     /// Represents an AMQP message header.
-    /// http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-header
+    /// <seealso href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-header" />
     /// </summary>
     public class AmqpMessageHeader
     {
@@ -16,6 +16,10 @@ namespace Azure.Core.Amqp
         /// </summary>
         public AmqpMessageHeader() { }
 
+        /// <summary>
+        /// Initializes a new <see cref="AmqpMessageHeader"/> instance by copying the passed in header.
+        /// </summary>
+        /// <param name="header">The header to copy.</param>
         internal AmqpMessageHeader(AmqpMessageHeader header)
         {
             Durable = header.Durable;
@@ -26,7 +30,7 @@ namespace Azure.Core.Amqp
         }
 
         /// <summary>
-        /// The durable value from the AMQP message header.
+        /// The durable value from the AMQP transport header.
         /// </summary>
         public bool? Durable { get; set; }
 
@@ -49,6 +53,5 @@ namespace Azure.Core.Amqp
         /// The delivery-count value from the AMQP message header.
         /// </summary>
         public uint? DeliveryCount { get; set; }
-
     }
 }

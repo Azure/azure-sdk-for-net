@@ -62,7 +62,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         // The method is optimized for this situation to return the pre-existing array.
         public static BinaryData ConvertAndFlattenData(this IEnumerable<BinaryData> dataList)
         {
-            ReadOnlyMemory<byte> flattened = null;
+            ReadOnlyMemory<byte> flattened = default;
             List<byte> flattenedList = null;
             var dataCount = 0;
             foreach (BinaryData data in dataList)

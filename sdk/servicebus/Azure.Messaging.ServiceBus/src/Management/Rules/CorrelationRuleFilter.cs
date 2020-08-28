@@ -106,9 +106,9 @@ namespace Azure.Messaging.ServiceBus.Management
         }
 
         /// <summary>
-        /// Application specific label.
+        /// Application specific subject.
         /// </summary>
-        /// <value>The application specific label.</value>
+        /// <value>The application specific subject.</value>
         public string Subject
         {
             get;

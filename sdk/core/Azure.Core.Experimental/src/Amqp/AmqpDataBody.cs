@@ -8,7 +8,7 @@ namespace Azure.Core.Amqp
     /// <summary>
     /// Represents the data body of an AMQP message.
     /// This consists of one or more data sections.
-    /// http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-data
+    /// <seealso href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-data" />
     /// </summary>
     public class AmqpDataBody : AmqpMessageBody
     {

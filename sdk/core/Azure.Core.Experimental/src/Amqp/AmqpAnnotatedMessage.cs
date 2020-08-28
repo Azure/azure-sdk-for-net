@@ -7,7 +7,7 @@ namespace Azure.Core.Amqp
 {
     /// <summary>
     /// Represents an AMQP message.
-    /// http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#section-message-format
+    /// <seealso href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#section-message-format" />
     /// </summary>
     public class AmqpAnnotatedMessage
     {
@@ -29,7 +29,9 @@ namespace Azure.Core.Amqp
         /// <summary>
         /// Creates a new Data body <see cref="AmqpAnnotatedMessage"/>.
         /// </summary>
-        /// <param name="dataBody">The data body sections.</param>
+        /// <param name="dataBody">The data sections comprising the message body.
+        /// <seealso href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-data"/>
+        /// </param>
         public AmqpAnnotatedMessage(IEnumerable<BinaryData> dataBody)
         {
             Body = new AmqpDataBody(dataBody);
@@ -69,7 +71,5 @@ namespace Azure.Core.Amqp
         /// The body of the AMQP message.
         /// </summary>
         public AmqpMessageBody Body { get; set; }
-
-
     }
 }
