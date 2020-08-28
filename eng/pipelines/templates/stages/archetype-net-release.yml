@@ -5,41 +5,41 @@ parameters:
   DevOpsFeedId: '29ec6040-b234-4e31-b139-33dc4287b756/fa8c16a3-dbe0-4de2-a297-03065ec1ba3f'
 
 stages:
-  # - stage: Signing
-  #   dependsOn: ${{parameters.DependsOn}}
-  #   jobs:
-  #     - deployment: SignPackage
-  #       environment: esrp
-  #       pool:
-  #         vmImage: windows-2019
+  - stage: Signing
+    dependsOn: ${{parameters.DependsOn}}
+    jobs:
+      - deployment: SignPackage
+        environment: esrp
+        pool:
+          vmImage: windows-2019
 
-  #       strategy:
-  #         runOnce:
-  #           deploy:
-  #             steps:
-  #               - checkout: none
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: none
 
-  #               - download: current
-  #                 artifact: ${{parameters.ArtifactName}}
-  #                 timeoutInMinutes: 5
+                - download: current
+                  artifact: ${{parameters.ArtifactName}}
+                  timeoutInMinutes: 5
 
-  #               - ${{ each artifact in parameters.Artifacts }}:
-  #                 - pwsh: |
-  #                     New-Item -Type Directory -Name staging -Path $(Pipeline.Workspace) -Force
-  #                     Copy-Item $(Pipeline.Workspace)/${{parameters.ArtifactName}}/${{artifact.name}}.[0-9]*.[0-9]*.[0-9]* $(Pipeline.Workspace)/staging
-  #                     Get-ChildItem $(Pipeline.Workspace)/staging
-  #                   displayName: Copying ${{artifact.name}} to staging directory
+                - ${{ each artifact in parameters.Artifacts }}:
+                  - pwsh: |
+                      New-Item -Type Directory -Name staging -Path $(Pipeline.Workspace) -Force
+                      Copy-Item $(Pipeline.Workspace)/${{parameters.ArtifactName}}/${{artifact.name}}.[0-9]*.[0-9]*.[0-9]* $(Pipeline.Workspace)/staging
+                      Get-ChildItem $(Pipeline.Workspace)/staging
+                    displayName: Copying ${{artifact.name}} to staging directory
 
-  #               - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
+                - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
 
-  #               - template: pipelines/steps/net-signing.yml@azure-sdk-build-tools
-  #                 parameters:
-  #                   PackagesPath: $(Pipeline.Workspace)/staging
-  #                   BuildToolsPath: $(AzureSDKBuildToolsPath)
+                - template: pipelines/steps/net-signing.yml@azure-sdk-build-tools
+                  parameters:
+                    PackagesPath: $(Pipeline.Workspace)/staging
+                    BuildToolsPath: $(AzureSDKBuildToolsPath)
 
-  #               - publish: $(Pipeline.Workspace)/staging
-  #                 artifact: ${{parameters.ArtifactName}}-signed
-  #                 displayName: 'Store signed packages in ${{parameters.ArtifactName}}-signed artifact'
+                - publish: $(Pipeline.Workspace)/staging
+                  artifact: ${{parameters.ArtifactName}}-signed
+                  displayName: 'Store signed packages in ${{parameters.ArtifactName}}-signed artifact'
 
   - ${{if and(eq(variables['Build.Reason'], 'Manual'), eq(variables['System.TeamProject'], 'internal'))}}:
     - ${{ each artifact in parameters.Artifacts }}:
@@ -66,11 +66,11 @@ stages:
                         PackageName: ${{artifact.name}}
                         ServiceName: ${{parameters.ServiceDirectory}}
                         ForRelease: true
-                    # - template: /eng/pipelines/templates/steps/stage-artifacts.yml
-                    #   parameters:
-                    #     SourceFolder: ${{parameters.ArtifactName}}-signed
-                    #     TargetFolder: ${{artifact.safeName}}
-                    #     FileFilter: ${{artifact.name}}.[0-9]*.[0-9]*.[0-9]*
+                    - template: /eng/pipelines/templates/steps/stage-artifacts.yml
+                      parameters:
+                        SourceFolder: ${{parameters.ArtifactName}}-signed
+                        TargetFolder: ${{artifact.safeName}}
+                        FileFilter: ${{artifact.name}}.[0-9]*.[0-9]*.[0-9]*
                     - template: /eng/common/pipelines/templates/steps/create-tags-and-git-release.yml
                       parameters:
                         ArtifactLocation: $(Pipeline.Workspace)/${{artifact.safeName}}
