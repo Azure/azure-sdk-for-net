@@ -1,7 +1,9 @@
 # Release History
 ## 1.3.0-preview.1 (Unreleased)
 
+### New Features
 - Restoring Application Authentication APIs from 1.2.0-preview.6
+- Added `IncludeX5CClaimHeader` to `ClientCertificateCredentialOptions` to enable subject name / issuer authentication with the `ClientCertificateCredential`.
 
 ### Fixes and improvements
 - Fixed issue with non GUID Client Ids (Issue [#14585](https://github.com/Azure/azure-sdk-for-net/issues/14585))
