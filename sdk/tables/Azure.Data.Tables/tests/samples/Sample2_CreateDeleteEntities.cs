@@ -26,8 +26,8 @@ namespace Azure.Data.Tables.Samples
             #region Snippet:TablesSample2CreateTableWithTableClient
             // Construct a new <see cref="TableClient" /> using a <see cref="TableSharedKeyCredential" />.
             var tableClient = new TableClient(
-                tableName,
                 new Uri(storageUri),
+                tableName,
                 new TableSharedKeyCredential(accountName, storageAccountKey));
 
             // Create the table in the service.

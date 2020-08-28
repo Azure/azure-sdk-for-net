@@ -51,6 +51,7 @@ namespace Azure.Data.Tables.Tests
         protected string ServiceUri;
         protected string AccountName;
         protected string AccountKey;
+        protected string ConnectionString;
 
         /// <summary>
         /// Creates a <see cref="TableServiceClient" /> with the endpoint and API key provided via environment
@@ -59,22 +60,6 @@ namespace Azure.Data.Tables.Tests
         [SetUp]
         public async Task TablesTestSetup()
         {
-            service = _endpointType switch
-            {
-
-                TableEndpointType.Storage => InstrumentClient(new TableServiceClient(
-                    new Uri(TestEnvironment.StorageUri),
-                    new TableSharedKeyCredential(TestEnvironment.StorageAccountName, TestEnvironment.PrimaryStorageAccountKey),
-                    Recording.InstrumentClientOptions(new TableClientOptions()))),
-
-                TableEndpointType.CosmosTable => InstrumentClient(new TableServiceClient(
-                    new Uri(TestEnvironment.CosmosUri),
-                    new TableSharedKeyCredential(TestEnvironment.CosmosAccountName, TestEnvironment.PrimaryCosmosAccountKey),
-                    Recording.InstrumentClientOptions(new TableClientOptions()))),
-
-                _ => throw new NotSupportedException("Unknown endpoint type")
-
-            };
 
             ServiceUri = _endpointType switch
             {
@@ -96,6 +81,11 @@ namespace Azure.Data.Tables.Tests
                 TableEndpointType.CosmosTable => TestEnvironment.PrimaryCosmosAccountKey,
                 _ => throw new NotSupportedException("Unknown endpoint type")
             };
+
+            service = InstrumentClient(new TableServiceClient(
+                new Uri(ServiceUri),
+                new TableSharedKeyCredential(AccountName, AccountKey),
+                Recording.InstrumentClientOptions(new TableClientOptions())));
 
             tableName = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
 
