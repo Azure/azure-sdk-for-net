@@ -444,7 +444,7 @@ function VerifyPackages($pkgRepository, $artifactLocation, $workingDirectory, $a
         $parsedPackage.PackageVersion
       }
       echo "##vso[task.setvariable variable=ReleaseTag;isOutput=true]$tag"
-      Write-Host '##vso[task.setvariable variable=ReleaseTag;isOutput=true]$tag
+      Write-Host "##vso[task.setvariable variable=ReleaseTag;isOutput=true]$tag"
       Write-Host "This works: $env:RELEASE_TAG"
   
       if ($parsedPackage.Deployable -ne $True -and !$continueOnError) {
