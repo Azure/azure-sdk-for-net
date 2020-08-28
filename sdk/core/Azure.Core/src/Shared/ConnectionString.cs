@@ -24,7 +24,6 @@ namespace Azure.Core
         public static ConnectionString Empty(string segmentSeparator = ";", string keywordValueSeparator = "=") =>
             new ConnectionString(new Dictionary<string, string>(), segmentSeparator, keywordValueSeparator);
 
-
         private ConnectionString(Dictionary<string, string> pairs, string pairSeparator, string keywordValueSeparator)
         {
             _pairs = pairs;
