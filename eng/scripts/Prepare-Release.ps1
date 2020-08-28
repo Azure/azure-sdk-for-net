@@ -121,6 +121,24 @@ $currentProjectVersion = ([xml](Get-Content "$packageDirectory/src/*.csproj")).P
 
 if ($latestVersion)
 {
+    Write-Host
+    Write-Host "Latest released version $latestVersion, library type $libraryType" -ForegroundColor Green
+}
+else
+{
+    Write-Host
+    Write-Host "No released version, library type $libraryType" -ForegroundColor Green
+}
+
+$newVersion = Read-Host -Prompt "Input the new version or press Enter to use use current project version '$currentProjectVersion'"
+
+if (!$newVersion)
+{
+    $newVersion = $currentProjectVersion;
+}
+
+if ($latestVersion)
+{
     $releaseType = "None";
     $parsedNewVersion = [AzureEngSemanticVersion]::new($newVersion)
     if ($parsedNewVersion.Major -ne $parsedVersion.Major)
@@ -139,23 +157,10 @@ if ($latestVersion)
     {
         $releaseType = "Bugfix"
     }
-
-
-    Write-Host
-    Write-Host "Latest released version $latestVersion, library type $libraryType" -ForegroundColor Green
 }
 else
 {
     $releaseType = "Major";
-    Write-Host
-    Write-Host "No released version, library type $libraryType" -ForegroundColor Green
-}
-
-$newVersion = Read-Host -Prompt "Input the new version or press Enter to use use current project version '$currentProjectVersion'"
-
-if (!$newVersion)
-{
-    $newVersion = $currentProjectVersion;
 }
 
 Write-Host
