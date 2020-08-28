@@ -14,8 +14,8 @@ var tableClient = serviceClient.GetTableClient(tableName);
 
 ```C# Snippet:TablesSample1CreateTableClient
 tableClient = new TableClient(
-    tableName,
     new Uri(storageUri),
+    tableName,
     new TableSharedKeyCredential(accountName, storageAccountKey));
 ```
 
