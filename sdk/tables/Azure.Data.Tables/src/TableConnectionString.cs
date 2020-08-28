@@ -153,7 +153,6 @@ namespace Azure.Data.Tables
             if (settings == null)
             {
                 accountInformation = null;
-
                 return false;
             }
 
@@ -162,7 +161,6 @@ namespace Azure.Data.Tables
             string settingOrDefault(string key)
             {
                 settings.TryGetValue(key, out var result);
-
                 return result;
             }
 
@@ -252,9 +250,7 @@ namespace Azure.Data.Tables
 
             // not valid
             accountInformation = null;
-
             error("No valid combination of account information found.");
-
             return false;
         }
 
