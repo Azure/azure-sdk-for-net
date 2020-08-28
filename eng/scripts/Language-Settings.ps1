@@ -1,10 +1,10 @@
 $Language = "dotnet"
-$Lang = "net"
+$LanguageShort = "net"
 $PackageRepository = "Nuget"
 $packagePattern = "*.nupkg"
 $MetadataUri = "https://raw.githubusercontent.com/Azure/azure-sdk/master/_data/releases/latest/dotnet-packages.csv"
 
-function Get-dotnet-PackageInfoFromRepo ($pkgPath, $serviceName, $pkgName)
+function Get-dotnet-PackageInfoFromRepo ($pkgPath, $serviceDirectory, $pkgName)
 {
   $projectPath = Join-Path $pkgPath "src" "$pkgName.csproj"
   if (Test-Path $projectPath)
@@ -12,7 +12,7 @@ function Get-dotnet-PackageInfoFromRepo ($pkgPath, $serviceName, $pkgName)
     $projectData = New-Object -TypeName XML
     $projectData.load($projectPath)
     $pkgVersion = Select-XML -Xml $projectData -XPath '/Project/PropertyGroup/Version'
-    return [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceName)
+    return [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceDirectory)
   }
   else
   {
@@ -27,7 +27,7 @@ function IsNugetPackageVersionPublished ($pkgId, $pkgVersion)
 
   try
   {
-    $nugetVersions = Invoke-RestMethod -MaximumRetryCount 3 -uri $nugetUri -Method "GET"
+    $nugetVersions = Invoke-RestMethod -MaximumRetryCount 3 -RetryIntervalSec 10 -uri $nugetUri -Method "GET"
     return $nugetVersions.versions.Contains($pkgVersion)
   }
   catch

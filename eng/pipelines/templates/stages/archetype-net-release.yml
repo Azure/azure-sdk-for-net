@@ -64,7 +64,7 @@ stages:
                     - template: /eng/common/pipelines/templates/steps/verify-changelog.yml
                       parameters:
                         PackageName: ${{artifact.name}}
-                        ServiceDirectory: ${{parameters.ServiceDirectory}}
+                        ServiceName: ${{parameters.ServiceDirectory}}
                         ForRelease: true
                     - template: /eng/pipelines/templates/steps/stage-artifacts.yml
                       parameters:
