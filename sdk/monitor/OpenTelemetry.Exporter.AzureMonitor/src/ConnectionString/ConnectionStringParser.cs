@@ -15,7 +15,10 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
         /// <remarks>
         /// Official Doc: <a href="https://docs.microsoft.com/azure/azure-monitor/app/sdk-connection-string" />.
         /// </remarks>
-        public static void GetValues(string connectionString, out string ikey, out string ingestionEndpoint)
+        /// <exception cref="InvalidOperationException">
+        /// Any exceptions that occur while parsing the connection string will be wrapped and re-thrown.
+        /// </exception>
+        public static void GetValues(string connectionString, out string instrumentationKey, out string ingestionEndpoint)
         {
             try
             {
@@ -29,13 +32,13 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
                 }
 
                 var connString = Azure.Core.ConnectionString.Parse(connectionString);
-                ikey = connString.GetInstrumentationKey();
+                instrumentationKey = connString.GetInstrumentationKey();
                 ingestionEndpoint = connString.GetIngestionEndpoint();
             }
             catch (Exception ex)
             {
                 AzureMonitorTraceExporterEventSource.Log.ConnectionStringError(ex);
-                throw new Exception("Connection String Error: " + ex.Message, ex);
+                throw new InvalidOperationException("Connection String Error: " + ex.Message, ex);
             }
         }
 

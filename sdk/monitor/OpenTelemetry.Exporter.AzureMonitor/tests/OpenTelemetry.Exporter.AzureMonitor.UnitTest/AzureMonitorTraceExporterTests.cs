@@ -38,7 +38,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         [Test]
         public void VerifyConnectionString_ThrowsExceptionWhenInvalid()
         {
-            Assert.Throws<Exception>(() => new AzureMonitorTraceExporter(new AzureMonitorExporterOptions { ConnectionString = null }));
+            Assert.Throws<InvalidOperationException>(() => new AzureMonitorTraceExporter(new AzureMonitorExporterOptions { ConnectionString = null }));
         }
 
         [Test]
@@ -46,7 +46,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         {
             var testEndpoint = "https://www.bing.com/";
 
-            Assert.Throws<Exception>(() => new AzureMonitorTraceExporter(new AzureMonitorExporterOptions { ConnectionString = $"IngestionEndpoint={testEndpoint}" }));
+            Assert.Throws<InvalidOperationException>(() => new AzureMonitorTraceExporter(new AzureMonitorExporterOptions { ConnectionString = $"IngestionEndpoint={testEndpoint}" }));
         }
 
         private void GetInternalFields(AzureMonitorTraceExporter exporter, out string ikey, out string endpoint)
