@@ -43,7 +43,6 @@ namespace Azure.Storage
             CancellationToken cancellationToken);
         public delegate Task<Response<TCompleteUploadReturn>> CommitPartitionedUploadInternal(
             List<(long Offset, long Size)> partitions,
-            long initialPosition,
             TServiceSpecificArgs args,
             bool async,
             CancellationToken cancellationToken);
@@ -158,6 +157,13 @@ namespace Azure.Storage
                 throw Errors.ArgumentNull(nameof(content));
             }
 
+            Errors.VerifyStreamPosition(content, nameof(content));
+
+            if (content.Position > 0)
+            {
+                content = WindowStream.GetWindow(content, content.Length - content.Position, content.Position);
+            }
+
             await _initializeDestinationInternal(args, async, cancellationToken).ConfigureAwait(false);
 
             // some strategies are unavailable if we don't know the stream length, and some can still work
@@ -256,10 +262,6 @@ namespace Azure.Storage
                             ? (GetNextStreamPartition)GetStreamedPartitionInternal
                             : /*   redundant cast   */GetBufferedPartitionInternal;
 
-                // If the stream is not starting from position 0, we want to shift the offsets we are sending
-                // to the backend back by the inital position.
-                long initialPosition = content.CanSeek ? content.Position : 0;
-
                 // Partition the stream into individual blocks and stage them
                 if (async)
                 {
@@ -273,7 +275,7 @@ namespace Azure.Storage
                     {
                         await StagePartitionAndDisposeInternal(
                             block,
-                            block.AbsolutePosition - initialPosition,
+                            block.AbsolutePosition,
                             args,
                             progressHandler,
                             async: true,
@@ -294,7 +296,7 @@ namespace Azure.Storage
                     {
                         StagePartitionAndDisposeInternal(
                             block,
-                            block.AbsolutePosition - initialPosition,
+                            block.AbsolutePosition,
                             args,
                             progressHandler,
                             async: false,
@@ -308,7 +310,6 @@ namespace Azure.Storage
                 // complete the upload
                 return await _commitPartitionedUploadInternal(
                     partitions,
-                    initialPosition,
                     args,
                     async,
                     cancellationToken).ConfigureAwait(false);
@@ -348,10 +349,6 @@ namespace Azure.Storage
 
                 // The list tracking blocks IDs we're going to commit
                 List<(long Offset, long Size)> partitions = new List<(long, long)>();
-
-                // If the stream's initial position is not 0, we want to shift the offsets we are
-                // reporting to the service back by the inital offset.
-                long initialPosition = content.CanSeek ? content.Position : 0;
 
                 // A list of tasks that are currently executing which will
                 // always be smaller than _maxWorkerCount
@@ -412,7 +409,6 @@ namespace Azure.Storage
                 // Calling internal method for easier mocking in PartitionedUploaderTests
                 return await _commitPartitionedUploadInternal(
                     partitions,
-                    initialPosition: 0,
                     args,
                     async: true,
                     cancellationToken)
