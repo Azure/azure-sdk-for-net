@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    public partial class RoleDefinition : IUtf8JsonSerializable
+    public partial class KeyVaultRoleDefinition : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -57,7 +57,7 @@ namespace Azure.Security.KeyVault.Administration.Models
             writer.WriteEndObject();
         }
 
-        internal static RoleDefinition DeserializeRoleDefinition(JsonElement element)
+        internal static KeyVaultRoleDefinition DeserializeKeyVaultRoleDefinition(JsonElement element)
         {
             Optional<string> id = default;
             Optional<string> name = default;
@@ -127,7 +127,7 @@ namespace Azure.Security.KeyVault.Administration.Models
                     continue;
                 }
             }
-            return new RoleDefinition(id.Value, name.Value, type.Value, roleName.Value, description.Value, type0.Value, Optional.ToList(permissions), Optional.ToList(assignableScopes));
+            return new KeyVaultRoleDefinition(id.Value, name.Value, type.Value, roleName.Value, description.Value, type0.Value, Optional.ToList(permissions), Optional.ToList(assignableScopes));
         }
     }
 }

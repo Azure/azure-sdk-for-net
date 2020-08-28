@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    public partial class RoleAssignmentPropertiesWithScope
+    public partial class KeyVaultRoleAssignmentPropertiesWithScope
     {
-        internal static RoleAssignmentPropertiesWithScope DeserializeRoleAssignmentPropertiesWithScope(JsonElement element)
+        internal static KeyVaultRoleAssignmentPropertiesWithScope DeserializeKeyVaultRoleAssignmentPropertiesWithScope(JsonElement element)
         {
             Optional<string> scope = default;
             Optional<string> roleDefinitionId = default;
@@ -35,7 +35,7 @@ namespace Azure.Security.KeyVault.Administration.Models
                     continue;
                 }
             }
-            return new RoleAssignmentPropertiesWithScope(scope.Value, roleDefinitionId.Value, principalId.Value);
+            return new KeyVaultRoleAssignmentPropertiesWithScope(scope.Value, roleDefinitionId.Value, principalId.Value);
         }
     }
 }

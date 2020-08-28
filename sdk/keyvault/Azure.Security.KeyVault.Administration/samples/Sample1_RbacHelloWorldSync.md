@@ -19,7 +19,7 @@ KeyVaultAccessControlClient client = new KeyVaultAccessControlClient(new Uri(key
 In order to assign a role to a service principal, we'll have to know which role definitions are available. Let's get all of them.
 
 ```C# Snippet:GetRoleDefinitionsSync
-List<RoleDefinition> roleDefinitions = client.GetRoleDefinitions(RoleAssignmentScope.Global).ToList();
+List<KeyVaultRoleDefinition> roleDefinitions = client.GetRoleDefinitions(KeyVaultRoleScope.Global).ToList();
 ```
 
 ## Listing All Role Assignments
@@ -27,7 +27,7 @@ List<RoleDefinition> roleDefinitions = client.GetRoleDefinitions(RoleAssignmentS
 Before assigning any new roles, let's get all the current role assignments.
 
 ```C# Snippet:GetRoleAssignmentsSync
-List<RoleAssignment> roleAssignments = client.GetRoleAssignments(RoleAssignmentScope.Global).ToList();
+List<KeyVaultRoleAssignment> roleAssignments = client.GetRoleAssignments(KeyVaultRoleScope.Global).ToList();
 ```
 
 # Creating a Role Assignment
@@ -46,7 +46,7 @@ az ad signed-in-user show --query objectId
 string definitionIdToAssign = "<roleDefinitionId>";
 string servicePrincipalObjectId = "<objectId>";
 
-RoleAssignmentProperties properties = new RoleAssignmentProperties(definitionIdToAssign, servicePrincipalObjectId);
+KeyVaultRoleAssignmentProperties properties = new KeyVaultRoleAssignmentProperties(definitionIdToAssign, servicePrincipalObjectId);
 RoleAssignment createdAssignment = client.CreateRoleAssignment(RoleAssignmentScope.Global, properties);
 ```
 
@@ -55,14 +55,14 @@ RoleAssignment createdAssignment = client.CreateRoleAssignment(RoleAssignmentSco
 To get an existing role assignment, we'll need the `Name` property from an existing assignment. Let's use the `createdAssignment` from the previous example.
 
 ```C# Snippet:GetRoleAssignment
-RoleAssignment fetchedAssignment = client.GetRoleAssignment(RoleAssignmentScope.Global, createdAssignment.Name);
+KeyVaultRoleAssignment fetchedAssignment = client.GetRoleAssignment(KeyVaultRoleScope.Global, createdAssignment.Name);
 ```
 
 # Deleting a Role Assignment
 To remove a role assignment from a service principal, the role assignment must be deleted. Let's delete the `createdAssignment` from the previous example.
 
 ```C# Snippet:DeleteRoleAssignment
-RoleAssignment deletedAssignment = client.DeleteRoleAssignment(RoleAssignmentScope.Global, createdAssignment.Name);
+KeyVaultRoleAssignment deletedAssignment = client.DeleteRoleAssignment(KeyVaultRoleScope.Global, createdAssignment.Name);
 ```
 
 <!-- LINKS -->

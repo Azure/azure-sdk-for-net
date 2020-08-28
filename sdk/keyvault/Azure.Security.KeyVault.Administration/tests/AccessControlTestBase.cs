@@ -102,7 +102,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             }
         }
 
-        protected void RegisterForCleanup(RoleAssignment assignment)
+        protected void RegisterForCleanup(KeyVaultRoleAssignment assignment)
         {
             _roleAssignmentsToDelete.Enqueue((assignment.Name, assignment.Properties.Scope));
         }

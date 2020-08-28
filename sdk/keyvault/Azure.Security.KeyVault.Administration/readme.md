@@ -81,10 +81,10 @@ Once you've populated the **AZURE_CLIENT_ID**, **AZURE_CLIENT_SECRET** and **AZU
 KeyVaultAccessControlClient client = new KeyVaultAccessControlClient(vaultUri: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
 
 // Retrieve all the role definitions.
-List<RoleDefinition> roleDefinitions = client.GetRoleDefinitions(RoleAssignmentScope.Global).ToList();
+List<KeyVaultRoleDefinition> roleDefinitions = client.GetRoleDefinitions(KeyVaultRoleScope.Global).ToList();
 
 // Retrieve all the role assignments.
-List<RoleAssignment> roleAssignments = client.GetRoleAssignments(RoleAssignmentScope.Global).ToList();
+List<KeyVaultRoleAssignment> roleAssignments = client.GetRoleAssignments(KeyVaultRoleScope.Global).ToList();
 ```
 
 ## Key concepts
@@ -109,9 +109,9 @@ The following section provides several code snippets using the `client` [created
 List the role definitions available for assignment.
 
 ```C# Snippet:GetRoleDefinitions
-Pageable<RoleDefinition> allDefinitions = client.GetRoleDefinitions(RoleAssignmentScope.Global);
+Pageable<KeyVaultRoleDefinition> allDefinitions = client.GetRoleDefinitions(KeyVaultRoleScope.Global);
 
-foreach (RoleDefinition roleDefinition in allDefinitions)
+foreach (KeyVaultRoleDefinition roleDefinition in allDefinitions)
 {
     Console.WriteLine(roleDefinition.Id);
     Console.WriteLine(roleDefinition.RoleName);
@@ -130,20 +130,20 @@ string definitionIdToAssign = "<roleDefinitionId>";
 // Replace <objectId> with the service principal object id from the Create/Get credentials section above
 string servicePrincipalObjectId = "<objectId>";
 
-RoleAssignmentProperties properties = new RoleAssignmentProperties(definitionIdToAssign, servicePrincipalObjectId);
+KeyVaultRoleAssignmentProperties properties = new KeyVaultRoleAssignmentProperties(definitionIdToAssign, servicePrincipalObjectId);
 RoleAssignment createdAssignment = client.CreateRoleAssignment(RoleAssignmentScope.Global, properties);
 
 Console.WriteLine(createdAssignment.Name);
 Console.WriteLine(createdAssignment.Properties.PrincipalId);
 Console.WriteLine(createdAssignment.Properties.RoleDefinitionId);
 
-RoleAssignment fetchedAssignment = client.GetRoleAssignment(RoleAssignmentScope.Global, createdAssignment.Name);
+KeyVaultRoleAssignment fetchedAssignment = client.GetRoleAssignment(KeyVaultRoleScope.Global, createdAssignment.Name);
 
 Console.WriteLine(fetchedAssignment.Name);
 Console.WriteLine(fetchedAssignment.Properties.PrincipalId);
 Console.WriteLine(fetchedAssignment.Properties.RoleDefinitionId);
 
-RoleAssignment deletedAssignment = client.DeleteRoleAssignment(RoleAssignmentScope.Global, createdAssignment.Name);
+KeyVaultRoleAssignment deletedAssignment = client.DeleteRoleAssignment(KeyVaultRoleScope.Global, createdAssignment.Name);
 
 Console.WriteLine(deletedAssignment.Name);
 Console.WriteLine(deletedAssignment.Properties.PrincipalId);
@@ -159,7 +159,7 @@ For example, if you try to retrieve a role assignment that doesn't exist in your
 ```C# Snippet:RoleAssignmentNotFound
 try
 {
-    RoleAssignment roleAssignment = client.GetRoleAssignment(RoleAssignmentScope.Global, "invalid-name");
+    KeyVaultRoleAssignment roleAssignment = client.GetRoleAssignment(KeyVaultRoleScope.Global, "invalid-name");
 }
 catch (RequestFailedException ex)
 {

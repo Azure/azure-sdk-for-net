@@ -41,10 +41,10 @@ namespace Azure.Security.KeyVault.Administration.Samples
             /*@@*/client = Client;
 
             // Retrieve all the role definitions.
-            List<RoleDefinition> roleDefinitions = client.GetRoleDefinitions(RoleAssignmentScope.Global).ToList();
+            List<KeyVaultRoleDefinition> roleDefinitions = client.GetRoleDefinitions(KeyVaultRoleScope.Global).ToList();
 
             // Retrieve all the role assignments.
-            List<RoleAssignment> roleAssignments = client.GetRoleAssignments(RoleAssignmentScope.Global).ToList();
+            List<KeyVaultRoleAssignment> roleAssignments = client.GetRoleAssignments(KeyVaultRoleScope.Global).ToList();
             #endregion
         }
 
@@ -54,9 +54,9 @@ namespace Azure.Security.KeyVault.Administration.Samples
         {
             client = Client;
             #region Snippet:GetRoleDefinitions
-            Pageable<RoleDefinition> allDefinitions = client.GetRoleDefinitions(RoleAssignmentScope.Global);
+            Pageable<KeyVaultRoleDefinition> allDefinitions = client.GetRoleDefinitions(KeyVaultRoleScope.Global);
 
-            foreach (RoleDefinition roleDefinition in allDefinitions)
+            foreach (KeyVaultRoleDefinition roleDefinition in allDefinitions)
             {
                 Console.WriteLine(roleDefinition.Id);
                 Console.WriteLine(roleDefinition.RoleName);
@@ -71,7 +71,7 @@ namespace Azure.Security.KeyVault.Administration.Samples
         public async Task CreateRoleAssignment()
         {
             client = Client;
-            List<RoleDefinition> definitions = await Client.GetRoleDefinitionsAsync(RoleAssignmentScope.Global).ToEnumerableAsync().ConfigureAwait(false);
+            List<KeyVaultRoleDefinition> definitions = await Client.GetRoleDefinitionsAsync(KeyVaultRoleScope.Global).ToEnumerableAsync().ConfigureAwait(false);
             _roleDefinitionId = definitions.FirstOrDefault(d => d.RoleName == RoleName).Id;
 
             // Replace roleDefinitionId with a role definition Id from the definitions returned from the List the role definitions section above
@@ -87,21 +87,21 @@ namespace Azure.Security.KeyVault.Administration.Samples
             // Replace <objectId> with the service principal object id from the Create/Get credentials section above
             //@@string servicePrincipalObjectId = "<objectId>";
 
-            RoleAssignmentProperties properties = new RoleAssignmentProperties(definitionIdToAssign, servicePrincipalObjectId);
+            KeyVaultRoleAssignmentProperties properties = new KeyVaultRoleAssignmentProperties(definitionIdToAssign, servicePrincipalObjectId);
             //@@RoleAssignment createdAssignment = client.CreateRoleAssignment(RoleAssignmentScope.Global, properties);
-            /*@@*/RoleAssignment createdAssignment = client.CreateRoleAssignment(RoleAssignmentScope.Global, properties, _roleAssignmentId);
+            /*@@*/KeyVaultRoleAssignment createdAssignment = client.CreateRoleAssignment(KeyVaultRoleScope.Global, properties, _roleAssignmentId);
 
             Console.WriteLine(createdAssignment.Name);
             Console.WriteLine(createdAssignment.Properties.PrincipalId);
             Console.WriteLine(createdAssignment.Properties.RoleDefinitionId);
 
-            RoleAssignment fetchedAssignment = client.GetRoleAssignment(RoleAssignmentScope.Global, createdAssignment.Name);
+            KeyVaultRoleAssignment fetchedAssignment = client.GetRoleAssignment(KeyVaultRoleScope.Global, createdAssignment.Name);
 
             Console.WriteLine(fetchedAssignment.Name);
             Console.WriteLine(fetchedAssignment.Properties.PrincipalId);
             Console.WriteLine(fetchedAssignment.Properties.RoleDefinitionId);
 
-            RoleAssignment deletedAssignment = client.DeleteRoleAssignment(RoleAssignmentScope.Global, createdAssignment.Name);
+            KeyVaultRoleAssignment deletedAssignment = client.DeleteRoleAssignment(KeyVaultRoleScope.Global, createdAssignment.Name);
 
             Console.WriteLine(deletedAssignment.Name);
             Console.WriteLine(deletedAssignment.Properties.PrincipalId);
@@ -118,7 +118,7 @@ namespace Azure.Security.KeyVault.Administration.Samples
             #region Snippet:RoleAssignmentNotFound
             try
             {
-                RoleAssignment roleAssignment = client.GetRoleAssignment(RoleAssignmentScope.Global, "invalid-name");
+                KeyVaultRoleAssignment roleAssignment = client.GetRoleAssignment(KeyVaultRoleScope.Global, "invalid-name");
             }
             catch (RequestFailedException ex)
             {

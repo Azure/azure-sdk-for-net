@@ -11,16 +11,16 @@ using Azure.Core;
 namespace Azure.Security.KeyVault.Administration.Models
 {
     /// <summary> Role definition. </summary>
-    public partial class RoleDefinition
+    public partial class KeyVaultRoleDefinition
     {
-        /// <summary> Initializes a new instance of RoleDefinition. </summary>
-        public RoleDefinition()
+        /// <summary> Initializes a new instance of KeyVaultRoleDefinition. </summary>
+        public KeyVaultRoleDefinition()
         {
             Permissions = new ChangeTrackingList<KeyVaultPermission>();
             AssignableScopes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RoleDefinition. </summary>
+        /// <summary> Initializes a new instance of KeyVaultRoleDefinition. </summary>
         /// <param name="id"> The role definition ID. </param>
         /// <param name="name"> The role definition name. </param>
         /// <param name="type"> The role definition type. </param>
@@ -29,7 +29,7 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <param name="roleType"> The role type. </param>
         /// <param name="permissions"> Role definition permissions. </param>
         /// <param name="assignableScopes"> Role definition assignable scopes. </param>
-        internal RoleDefinition(string id, string name, string type, string roleName, string description, string roleType, IList<KeyVaultPermission> permissions, IList<string> assignableScopes)
+        internal KeyVaultRoleDefinition(string id, string name, string type, string roleName, string description, string roleType, IList<KeyVaultPermission> permissions, IList<string> assignableScopes)
         {
             Id = id;
             Name = name;
