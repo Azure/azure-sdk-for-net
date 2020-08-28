@@ -201,8 +201,8 @@ function Upload-Blobs
     Write-Host "Final Dest $($DocDest)/$($PkgName)/$($DocVersion)"
 
     # Use the step to replace master link to release tag link 
-    Write-Host "Replacing all readme master links with release tag $Tag"
-    ReplaceLink -scanFolder $DocDir -fileSuffix ".html" -replacement $Tag -customRegex $RepoReplaceRegex
+    Write-Host "Replacing all readme master links with release tag $(tempVar)"
+    ReplaceLink -scanFolder $DocDir -fileSuffix ".html" -replacement $(tempVar) -customRegex $RepoReplaceRegex
    
     Write-Host "Uploading $($PkgName)/$($DocVersion) to $($DocDest)..."
     & $($AzCopy) cp "$($DocDir)/**" "$($DocDest)/$($PkgName)/$($DocVersion)$($SASKey)" --recursive=true
