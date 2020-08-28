@@ -271,7 +271,7 @@ if ($Language -eq "dotnet")
     $pkgName = Split-Path -Path $DocLocation -Leaf
     $version = $pkgZip.BaseName.Replace("${pkgName}.","")
 
-    New-Item -Path "$BinDirectory" -ItemType Directory -Value "docstoupload"
+    New-Item -ItemType directory -Path "$BinDirectory/docstoupload"
     Expand-Archive -LiteralPath $docZip.FullName -DestinationPath "$BinDirectory/docstoupload"
 
     Write-Host "Start Upload for $($PkgName)/$($version)"
