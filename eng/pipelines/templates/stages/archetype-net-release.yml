@@ -222,11 +222,11 @@ stages:
                           SourceFolder: ${{parameters.ArtifactName}}-signed
                           TargetFolder: ${{artifact.safeName}}/packages
                           FileFilter: ${{artifact.name}}.[0-9]*.[0-9]*.[0-9]*
-                      # - template: /eng/pipelines/templates/steps/stage-artifacts.yml
-                      #   parameters:
-                      #     SourceFolder: Docs.${{artifact.name}}
-                      #     TargetFolder: ${{artifact.safeName}}/Docs.${{artifact.name}}
-                      #     FileFilter: '*'
+                      - template: /eng/pipelines/templates/steps/stage-artifacts.yml
+                        parameters:
+                          SourceFolder: Docs.${{artifact.name}}
+                          TargetFolder: ${{artifact.safeName}}/Docs.${{artifact.name}}
+                          FileFilter: '*'
                       - pwsh: |
                           Get-ChildItem -Recurse $(Pipeline.Workspace)/${{artifact.safeName}}
                         workingDirectory: $(Pipeline.Workspace)
