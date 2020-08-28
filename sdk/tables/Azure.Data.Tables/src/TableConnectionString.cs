@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Azure.Core;
 using AccountSetting = System.Collections.Generic.KeyValuePair<string, System.Func<string, bool>>;
 using ConnectionStringFilter = System.Func<System.Collections.Generic.IDictionary<string, string>, System.Collections.Generic.IDictionary<string, string>>;
 
@@ -37,7 +38,7 @@ namespace Azure.Data.Tables
         /// <summary>
         /// The connection string parsed into settings.
         /// </summary>
-        internal IDictionary<string, string> Settings { get; set; }
+        internal ConnectionString Settings { get; set; }
 
         /// <summary>
         /// Indicates whether this account is a development storage account.
@@ -97,14 +98,14 @@ namespace Azure.Data.Tables
         /// <returns>A <see cref="TableConnectionString"/> object constructed from the values provided in the connection string.</returns>
         public static TableConnectionString Parse(string connectionString)
         {
+            Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
 
-            if (string.IsNullOrEmpty(connectionString))
+            if (ParseInternal(connectionString, out TableConnectionString ret, out string err))
             {
-                throw Errors.ArgumentNull(nameof(connectionString));
-            }
-
-            if (ParseInternal(connectionString, out TableConnectionString ret, err => { throw new FormatException(err); }))
-            {
+                if (err != null)
+                {
+                    throw new FormatException(err);
+                }
                 return ret;
             }
 
@@ -128,7 +129,7 @@ namespace Azure.Data.Tables
 
             try
             {
-                return ParseInternal(connectionString, out account, err => { });
+                return ParseInternal(connectionString, out account, out var error);
             }
             catch (Exception)
             {
@@ -144,15 +145,18 @@ namespace Azure.Data.Tables
         /// <param name="accountInformation">The <see cref="TableConnectionString"/> to return.</param>
         /// <param name="error">A callback for reporting errors.</param>
         /// <returns>If true, the parse was successful. Otherwise, false.</returns>
-        internal static bool ParseInternal(string connectionString, out TableConnectionString accountInformation, Action<string> error)
+        internal static bool ParseInternal(string connectionString, out TableConnectionString accountInformation, out string error)
         {
-            IDictionary<string, string> settings = ParseStringIntoSettings(connectionString, error);
+            error = null;
+
+            ConnectionString settings = ConnectionString.Parse(connectionString);
 
             // malformed settings string
 
             if (settings == null)
             {
                 accountInformation = null;
+                error = "Unable to parse connection string.";
                 return false;
             }
 
@@ -160,16 +164,16 @@ namespace Azure.Data.Tables
 
             string settingOrDefault(string key)
             {
-                settings.TryGetValue(key, out var result);
+                settings.TryGetSegmentValue(key, out var result);
                 return result;
             }
 
             // devstore case
 
-            if (settings.TryGetValue(TableConstants.ConnectionStrings.UseDevelopmentSetting, out var useDevSettings) && useDevSettings == "true")
+            if (settings.TryGetSegmentValue(TableConstants.ConnectionStrings.UseDevelopmentSetting, out var useDevSettings) && useDevSettings == "true")
             {
                 accountInformation =
-                    settings.TryGetValue(TableConstants.ConnectionStrings.DevelopmentProxyUriSetting, out var proxyUri)
+                    settings.TryGetSegmentValue(TableConstants.ConnectionStrings.DevelopmentProxyUriSetting, out var proxyUri)
                     ? GetDevelopmentStorageAccount(new Uri(proxyUri))
                     : DevelopmentStorageAccount;
 
@@ -180,18 +184,18 @@ namespace Azure.Data.Tables
             string sasToken = default;
 
             var matchesExplicitEndpointsSpec =
-                settings.TryGetValue(TableConstants.ConnectionStrings.TableEndpointSetting, out var tableEndpoint) &&
+                settings.TryGetSegmentValue(TableConstants.ConnectionStrings.TableEndpointSetting, out var tableEndpoint) &&
                 Uri.IsWellFormedUriString(tableEndpoint, UriKind.Absolute) &&
-                settings.TryGetValue(TableConstants.ConnectionStrings.SharedAccessSignatureSetting, out sasToken);
+                settings.TryGetSegmentValue(TableConstants.ConnectionStrings.SharedAccessSignatureSetting, out sasToken);
 
-            var matchesAutomaticEndpointsSpec = settings.TryGetValue(TableConstants.ConnectionStrings.AccountNameSetting, out var accountName) &&
-                settings.TryGetValue(TableConstants.ConnectionStrings.AccountKeySetting, out var accountKey) &&
-                    (settings.TryGetValue(TableConstants.ConnectionStrings.TableEndpointSetting, out accountName) ||
-                    settings.TryGetValue(TableConstants.ConnectionStrings.EndpointSuffixSetting, out var endpointSuffix));
+            var matchesAutomaticEndpointsSpec = settings.TryGetSegmentValue(TableConstants.ConnectionStrings.AccountNameSetting, out var accountName) &&
+                settings.TryGetSegmentValue(TableConstants.ConnectionStrings.AccountKeySetting, out var accountKey) &&
+                    (settings.TryGetSegmentValue(TableConstants.ConnectionStrings.TableEndpointSetting, out accountName) ||
+                    settings.TryGetSegmentValue(TableConstants.ConnectionStrings.EndpointSuffixSetting, out var endpointSuffix));
 
             if (matchesAutomaticEndpointsSpec || matchesExplicitEndpointsSpec)
             {
-                if (matchesAutomaticEndpointsSpec && !settings.ContainsKey(TableConstants.ConnectionStrings.DefaultEndpointsProtocolSetting))
+                if (matchesAutomaticEndpointsSpec && !settings.ContainsSegmentKey(TableConstants.ConnectionStrings.DefaultEndpointsProtocolSetting))
                 {
                     settings.Add(TableConstants.ConnectionStrings.DefaultEndpointsProtocolSetting, "https");
                 }
@@ -200,23 +204,31 @@ namespace Azure.Data.Tables
 
                 // if secondary is specified, primary must also be specified
 
-                static bool s_isValidEndpointPair(string primary, string secondary) =>
+                static bool IsValidEndpointPair(string primary, string secondary) =>
                         !string.IsNullOrWhiteSpace(primary)
                         || /* primary is null, and... */ string.IsNullOrWhiteSpace(secondary);
 
-                (Uri, Uri) createStorageUri(string primary, string secondary, string sasToken, Func<IDictionary<string, string>, (Uri, Uri)> factory)
+                (Uri, Uri) createStorageUri(string primary, string secondary, string sasToken, Func<ConnectionString, (Uri, Uri)> factory)
                 {
-                    return
-                        !string.IsNullOrWhiteSpace(secondary) && !string.IsNullOrWhiteSpace(primary)
-                            ? (CreateUri(primary, sasToken), CreateUri(secondary, sasToken))
-                        : !string.IsNullOrWhiteSpace(primary)
-                            ? (CreateUri(primary, sasToken), default)
-                        : matchesAutomaticEndpointsSpec && factory != null
-                            ? factory(settings)
-                        : (default, default);
+                    if (!string.IsNullOrWhiteSpace(primary))
+                    {
+                        return (CreateUri(primary, sasToken), CreateUri(secondary, sasToken));
+                    }
+                    else if (matchesAutomaticEndpointsSpec && factory != null)
+                    {
+                        return factory(settings);
+                    }
+                    else
+                    {
+                        return (default, default);
+                    }
 
                     static Uri CreateUri(string endpoint, string sasToken)
                     {
+                        if (string.IsNullOrWhiteSpace(endpoint))
+                        {
+                            return default;
+                        }
                         var builder = new UriBuilder(endpoint);
                         if (!string.IsNullOrEmpty(builder.Query))
                         {
@@ -230,7 +242,7 @@ namespace Azure.Data.Tables
                     }
                 }
 
-                if (s_isValidEndpointPair(tableEndpoint, tableSecondaryEndpoint))
+                if (IsValidEndpointPair(tableEndpoint, tableSecondaryEndpoint))
                 {
                     accountInformation =
                         new TableConnectionString(
@@ -242,7 +254,7 @@ namespace Azure.Data.Tables
                             Settings = settings
                         };
 
-                    accountInformation._accountName = settingOrDefault(TableConstants.ConnectionStrings.AccountNameSetting);// ?? accountInformation.TableStorageUri.PrimaryUri.Host.Split(new[] { '.' })[0];
+                    accountInformation._accountName = settingOrDefault(TableConstants.ConnectionStrings.AccountNameSetting);
 
                     return true;
                 }
@@ -250,7 +262,7 @@ namespace Azure.Data.Tables
 
             // not valid
             accountInformation = null;
-            error("No valid combination of account information found.");
+            error = "No valid combination of account information found.";
             return false;
         }
 
@@ -280,7 +292,7 @@ namespace Azure.Data.Tables
                 credentials,
                 tableStorageUri: (tableEndpoint, tableSecondaryEndpoint))
             {
-                Settings = new Dictionary<string, string>()
+                Settings = ConnectionString.Empty()
             };
             account.Settings.Add(TableConstants.ConnectionStrings.UseDevelopmentSetting, "true");
             if (proxyUri != null)
@@ -331,12 +343,12 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="settings">The settings to check.</param>
         /// <returns>The StorageCredentials object specified in the settings.</returns>
-        private static object GetCredentials(IDictionary<string, string> settings)
+        private static object GetCredentials(ConnectionString settings)
         {
 
-            settings.TryGetValue(TableConstants.ConnectionStrings.AccountNameSetting, out var accountName);
-            settings.TryGetValue(TableConstants.ConnectionStrings.AccountKeySetting, out var accountKey);
-            settings.TryGetValue(TableConstants.ConnectionStrings.SharedAccessSignatureSetting, out var sharedAccessSignature);
+            settings.TryGetSegmentValue(TableConstants.ConnectionStrings.AccountNameSetting, out var accountName);
+            settings.TryGetSegmentValue(TableConstants.ConnectionStrings.AccountKeySetting, out var accountKey);
+            settings.TryGetSegmentValue(TableConstants.ConnectionStrings.SharedAccessSignatureSetting, out var sharedAccessSignature);
 
             return
                 accountName != null && accountKey != null && sharedAccessSignature == null
@@ -424,11 +436,11 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="settings">The settings.</param>
         /// <returns>The default table endpoint.</returns>
-        private static (Uri, Uri) ConstructTableEndpoint(IDictionary<string, string> settings) => ConstructTableEndpoint(
-                settings[TableConstants.ConnectionStrings.DefaultEndpointsProtocolSetting],
-                settings[TableConstants.ConnectionStrings.AccountNameSetting],
-                settings.ContainsKey(TableConstants.ConnectionStrings.EndpointSuffixSetting) ? settings[TableConstants.ConnectionStrings.EndpointSuffixSetting] : null,
-                settings.ContainsKey(TableConstants.ConnectionStrings.SharedAccessSignatureSetting) ? settings[TableConstants.ConnectionStrings.SharedAccessSignatureSetting] : null);
+        private static (Uri, Uri) ConstructTableEndpoint(ConnectionString settings) => ConstructTableEndpoint(
+                settings.GetRequired(TableConstants.ConnectionStrings.DefaultEndpointsProtocolSetting),
+                settings.GetRequired(TableConstants.ConnectionStrings.AccountNameSetting),
+                settings.GetNonRequired(TableConstants.ConnectionStrings.EndpointSuffixSetting),
+                settings.GetNonRequired(TableConstants.ConnectionStrings.SharedAccessSignatureSetting));
 
     }
 }

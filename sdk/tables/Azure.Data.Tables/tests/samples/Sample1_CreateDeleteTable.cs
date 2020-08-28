@@ -45,8 +45,8 @@ namespace Azure.Data.Tables.Samples
 
             #region Snippet:TablesSample1CreateTableClient
             tableClient = new TableClient(
-                tableName,
                 new Uri(storageUri),
+                tableName,
                 new TableSharedKeyCredential(accountName, storageAccountKey));
             #endregion
 

@@ -82,13 +82,6 @@ namespace Azure.Data.Tables.Tests
                 _ => throw new NotSupportedException("Unknown endpoint type")
             };
 
-            ConnectionString = _endpointType switch
-            {
-                TableEndpointType.Storage => $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={AccountKey};EndpointSuffix={TestEnvironment.StorageEndpointSuffix};",
-                TableEndpointType.CosmosTable => $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={AccountKey};TableEndpoint={ServiceUri};",
-                _ => throw new NotSupportedException("Unknown endpoint type")
-            };
-
             service = InstrumentClient(new TableServiceClient(
                 new Uri(ServiceUri),
                 new TableSharedKeyCredential(AccountName, AccountKey),

@@ -123,7 +123,7 @@ namespace Azure.Data.Tables
 
             options ??= new TableClientOptions();
             var endpointString = connString.TableStorageUri.PrimaryUri.ToString();
-            var secondaryEndpoint = endpointString.Insert(endpointString.IndexOf('.'), "-secondary");
+            var secondaryEndpoint = connString.TableStorageUri.PrimaryUri?.ToString() ?? endpointString.Insert(endpointString.IndexOf('.'), "-secondary");
 
             TableSharedKeyPipelinePolicy policy = connString.Credentials switch
             {
