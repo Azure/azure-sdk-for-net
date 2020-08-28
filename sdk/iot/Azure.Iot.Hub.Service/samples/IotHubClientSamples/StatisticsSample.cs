@@ -9,12 +9,12 @@ namespace Azure.Iot.Hub.Service.Samples
     /// <summary>
     /// This sample goes through the usage of statistics on the IoT Hub.
     /// </summary>
-    internal class StatisticsSamples
+    internal class StatisticsSample
     {
 
         public readonly IotHubServiceClient IoTHubServiceClient;
 
-        public StatisticsSamples(IotHubServiceClient client)
+        public StatisticsSample(IotHubServiceClient client)
         {
             IoTHubServiceClient = client;
         }

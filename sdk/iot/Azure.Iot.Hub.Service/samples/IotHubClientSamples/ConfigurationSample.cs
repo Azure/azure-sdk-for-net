@@ -10,13 +10,13 @@ namespace Azure.Iot.Hub.Service.Samples
     /// <summary>
     /// This sample goes through the usage of Configuration on the IoT Hub.
     /// </summary>
-    internal class ConfigurationSamples
+    internal class ConfigurationSample
     {
         public readonly IotHubServiceClient IoTHubServiceClient;
         public const int MaxRandomValue = 200;
         public static readonly Random Random = new Random();
 
-        public ConfigurationSamples(IotHubServiceClient client)
+        public ConfigurationSample(IotHubServiceClient client)
         {
             IoTHubServiceClient = client;
         }
@@ -27,23 +27,23 @@ namespace Azure.Iot.Hub.Service.Samples
             TwinConfiguration twinConfiguration = CreateSampleConfig(testConfigurationId);
             
             // Create a Twin Configuration.
-            await CreateConfiguratioAsync(twinConfiguration);
+            await CreateConfigurationAsync(twinConfiguration);
 
             // Get the Twin Configuration.
-            await GetConfiguratioAsync(twinConfiguration);
+            await GetConfigurationAsync(twinConfiguration);
 
             // Update the Twin Configuration.
-            await UpdateConfiguratioAsync(twinConfiguration);
+            await UpdateConfigurationAsync(twinConfiguration);
 
             // Delete the Twin Configuration.
-            await DeleteConfiguratioAsync(twinConfiguration);
+            await DeleteConfigurationAsync(twinConfiguration);
         }
 
         /// <summary>
         /// Creates a new twin configuration.
         /// </summary>
         /// <param name="twinConfiguration">Twin Configuration to create.</param>
-        public async Task<TwinConfiguration> CreateConfiguratioAsync(TwinConfiguration twinConfiguration)
+        public async Task<TwinConfiguration> CreateConfigurationAsync(TwinConfiguration twinConfiguration)
         {
             SampleLogger.PrintHeader("CREATE TWIN CONFIGURATION");
             TwinConfiguration createdConfig;
@@ -52,8 +52,9 @@ namespace Azure.Iot.Hub.Service.Samples
             {
                 // Create a twin configuration
                 #region Snippet:IotHubCreateConfiguration
-                Response<TwinConfiguration> createResponse =
-                    await IoTHubServiceClient.Configurations.CreateOrUpdateConfigurationAsync(twinConfiguration).ConfigureAwait(false);
+                Response<TwinConfiguration> createResponse = await IoTHubServiceClient.Configurations
+                    .CreateOrUpdateConfigurationAsync(twinConfiguration)
+                    .ConfigureAwait(false);
                 createdConfig = createResponse.Value;
 
                 Console.WriteLine($"Successfully created a new configuration with Id: '{createdConfig.Id}', ETag: '{createdConfig.Etag}'");
@@ -65,7 +66,7 @@ namespace Azure.Iot.Hub.Service.Samples
             catch (Exception ex)
             {
                 // Try to cleanup before exiting with fatal error.
-                await DeleteConfiguratioAsync(twinConfiguration);
+                await DeleteConfigurationAsync(twinConfiguration);
                 SampleLogger.FatalError($"Failed to create twin configuration due to:\n{ex}");
                 throw;
             }
@@ -75,7 +76,7 @@ namespace Azure.Iot.Hub.Service.Samples
         /// Get a twin configuration.
         /// </summary>
         /// <param name="twinConfiguration">Twin Configuration</param>
-        public async Task<TwinConfiguration> GetConfiguratioAsync(TwinConfiguration twinConfiguration)
+        public async Task<TwinConfiguration> GetConfigurationAsync(TwinConfiguration twinConfiguration)
         {
             SampleLogger.PrintHeader("GET A CONFIGURATION");
 
@@ -85,11 +86,13 @@ namespace Azure.Iot.Hub.Service.Samples
 
                 #region Snippet:IotHubGetConfiguration
 
-                Response<TwinConfiguration> getResponse = await IoTHubServiceClient.Configurations.GetConfigurationAsync(twinConfiguration.Id).ConfigureAwait(false);
+                Response<TwinConfiguration> getResponse = await IoTHubServiceClient.Configurations
+                    .GetConfigurationAsync(twinConfiguration.Id)
+                    .ConfigureAwait(false);
 
                 TwinConfiguration responseConfiguration = getResponse.Value;
 
-                SampleLogger.PrintSuccess($"\t- Configuration Id: '{responseConfiguration.Id}', ETag: '{responseConfiguration.Etag}'");
+                SampleLogger.PrintSuccess($"Configuration Id: '{responseConfiguration.Id}', ETag: '{responseConfiguration.Etag}'");
 
                 #endregion Snippet:IotHubGetConfiguration
 
@@ -98,7 +101,7 @@ namespace Azure.Iot.Hub.Service.Samples
             catch (Exception ex)
             {
                 // Try to cleanup before exiting with fatal error.
-                await DeleteConfiguratioAsync(twinConfiguration);
+                await DeleteConfigurationAsync(twinConfiguration);
                 SampleLogger.FatalError($"Failed to get a twin configuration due to:\n{ex}");
                 throw;
             }
@@ -108,7 +111,7 @@ namespace Azure.Iot.Hub.Service.Samples
         /// Update a twin configuration.
         /// </summary>
         /// <param name="twinConfiguration">Twin Configuration to to be updated.</param>
-        public async Task<TwinConfiguration> UpdateConfiguratioAsync(TwinConfiguration twinConfiguration)
+        public async Task<TwinConfiguration> UpdateConfigurationAsync(TwinConfiguration twinConfiguration)
         {
             SampleLogger.PrintHeader("UPDATE A CONFIGURATION");
 
@@ -118,7 +121,9 @@ namespace Azure.Iot.Hub.Service.Samples
 
                 twinConfiguration.Priority = Random.Next(MaxRandomValue);
                 Console.WriteLine($"Updating twin configuration with Id: '{twinConfiguration.Id}''s priority to: '{twinConfiguration.Priority}'");
-                Response < TwinConfiguration > response = await IoTHubServiceClient.Configurations.CreateOrUpdateConfigurationAsync(twinConfiguration, IfMatchPrecondition.UnconditionalIfMatch).ConfigureAwait(false);
+                Response <TwinConfiguration> response = await IoTHubServiceClient.Configurations
+                    .CreateOrUpdateConfigurationAsync(twinConfiguration, IfMatchPrecondition.UnconditionalIfMatch)
+                    .ConfigureAwait(false);
 
                 TwinConfiguration updatedConfiguration = response.Value;
 
@@ -131,7 +136,7 @@ namespace Azure.Iot.Hub.Service.Samples
             catch (Exception ex)
             {
                 // Try to cleanup before exiting with fatal error.
-                await DeleteConfiguratioAsync(twinConfiguration);
+                await DeleteConfigurationAsync(twinConfiguration);
                 SampleLogger.FatalError($"Failed to update a twin configuration due to:\n{ex}");
                 throw;
             }
@@ -140,19 +145,20 @@ namespace Azure.Iot.Hub.Service.Samples
         /// <summary>
         /// Deletes a twin configuration.
         /// </summary>
-        /// <param name="twinConfiguration">Twin Configuration to deletec.</param>
-        public async Task DeleteConfiguratioAsync(TwinConfiguration twinConfiguration)
+        /// <param name="twinConfiguration">Twin Configuration to delete.</param>
+        public async Task DeleteConfigurationAsync(TwinConfiguration twinConfiguration)
         {
             SampleLogger.PrintHeader("DELETE A CONFIGURATION");
 
             try
             {
-
                 Console.WriteLine($"Deleting twin configuration with Id: '{twinConfiguration.Id}'");
 
                 #region Snippet:IotHubDeleteConfiguration
 
-                Response response = await IoTHubServiceClient.Configurations.DeleteConfigurationAsync(twinConfiguration, IfMatchPrecondition.UnconditionalIfMatch).ConfigureAwait(false);
+                Response response = await IoTHubServiceClient.Configurations
+                    .DeleteConfigurationAsync(twinConfiguration, IfMatchPrecondition.UnconditionalIfMatch)
+                    .ConfigureAwait(false);
 
                 SampleLogger.PrintSuccess($"Successfully deleted twin configuration with Id: '{twinConfiguration.Id}'");
 
@@ -166,23 +172,20 @@ namespace Azure.Iot.Hub.Service.Samples
 
         private TwinConfiguration CreateSampleConfig(string testConfigurationId)
         {
-            var twinConfiguration =
-                new TwinConfiguration
+            var twinConfiguration = new TwinConfiguration
+            {
+                Id = testConfigurationId,
+                Labels =
                 {
-                    Id = testConfigurationId
-                };
+                    { "HostPlatform", "SomeValue" },
+                },
+                TargetCondition = "*",
+                Priority = Random.Next(MaxRandomValue),
+            };
 
-            // Labels are optional but adding here due to null check failure in deserialization
-            // Also note that we are not setting Host Platform value from Environment since that'll fail in our build pipeline
-            twinConfiguration.Labels.Add("HostPlatform", "SomeValue");
             twinConfiguration.Content = new ConfigurationContent();
             twinConfiguration.Content.DeviceContent.Add("properties.desired.deviceContent_key", $"deviceContent_value-{twinConfiguration.Id}");
 
-            // Specifying '*' to target all devices
-            twinConfiguration.TargetCondition = "*";
-
-            // Assign any integer value for priority
-            twinConfiguration.Priority = Random.Next(MaxRandomValue);
             return twinConfiguration;
         }
     }
