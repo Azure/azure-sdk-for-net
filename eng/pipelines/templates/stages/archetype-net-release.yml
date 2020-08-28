@@ -142,8 +142,7 @@ stages:
                           FileFilter: ${{artifact.name}}.[0-9]*.[0-9]*.[0-9]*
                       - pwsh: |
                           Get-ChildItem -Recurse $(Pipeline.Workspace)/staging
-                          Write-Host $(tempVar)
-                          echo "##vso[task.setvariable variable=ReleaseTag;isOutput=true]$(tempVar)"
+                          echo "##vso[task.setvariable variable=ReleaseTag;isOutput=true]abc"
                         workingDirectory: $(Pipeline.Workspace)
                         displayName: Output Visible Artifacts
                         name: passVar
@@ -230,12 +229,11 @@ stages:
                           FileFilter: '*'
                       - pwsh: |
                           Get-ChildItem -Recurse $(Pipeline.Workspace)/${{artifact.safeName}}
-                          Write-Host $(tempVar)
                         workingDirectory: $(Pipeline.Workspace)
                         displayName: Output Visible Artifacts
                       - template: /eng/common/pipelines/templates/steps/publish-blobs.yml
                         parameters:
-                          ReleaseTag: $(variables.tempVar)
+                          ReleaseTag: ${{ variables.tempVar }}
                           FolderForUpload: '$(Pipeline.Workspace)/${{artifact.safeName}}'
                           BlobSASKey: '$(azure-sdk-docs-prod-sas)'
                           BlobName: '$(azure-sdk-docs-prod-blob-name)'

@@ -22,3 +22,7 @@ steps:
   timeoutInMinutes: 5
   env:
     GH_TOKEN: $(azuresdk-github-pat)
+- pwsh: |
+    echo $(releaseTag.ReleaseTag)
+  workingDirectory: $(Pipeline.Workspace)
+  displayName: Output Visible Artifacts

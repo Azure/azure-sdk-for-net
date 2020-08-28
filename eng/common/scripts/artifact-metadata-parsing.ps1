@@ -445,7 +445,7 @@ function VerifyPackages($pkgRepository, $artifactLocation, $workingDirectory, $a
       }
       echo "##vso[task.setvariable variable=ReleaseTag;isOutput=true]$tag"
       Write-Host "##vso[task.setvariable variable=ReleaseTag;isOutput=true]$tag"
-      Write-Host "This works: $env:RELEASE_TAG"
+      Write-Host "This works: $ReleaseTag"
   
       if ($parsedPackage.Deployable -ne $True -and !$continueOnError) {
         Write-Host "Package $($parsedPackage.PackageId) is marked with version $($parsedPackage.PackageVersion), the version $($parsedPackage.PackageVersion) has already been deployed to the target repository."
