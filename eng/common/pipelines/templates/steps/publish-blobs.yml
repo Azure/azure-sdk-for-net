@@ -21,6 +21,7 @@ steps:
       -SASKey "${{ parameters.BlobSASKey }}"
       -Language "${{ parameters.TargetLanguage }}"
       -BlobName "${{ parameters.BlobName }}"
+      -BinDirectory "$(Build.BinariesDirectory)"
     pwsh: true
     workingDirectory: $(Pipeline.Workspace)
   displayName: Copy Docs to Blob
