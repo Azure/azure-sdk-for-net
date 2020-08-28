@@ -7,6 +7,7 @@
 ### New Features
 - `ErrorCode` value returned from the service is now surfaced in `RequestFailedException`.
 - Support added for Opinion Mining. This feature is available in the Text Analytics service v3.1-preview.1 and above.
+- `TextAnalyticsError` and `TextAnalyticsWarning` now are marked as immutable.
 
 ## 5.0.0 (2020-07-27)
 - Re-release of version `1.0.1` with updated version `5.0.0`.
