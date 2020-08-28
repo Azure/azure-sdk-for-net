@@ -6,6 +6,7 @@ param (
   $SASKey,
   $Language,
   $BlobName,
+  $BinDirectory,
   $ExitOnError=1,
   $UploadLatest=1
 )
@@ -237,29 +238,28 @@ if ($Language -eq "javascript")
 
 if ($Language -eq "dotnet")
 {
-    $PublishedPkgs = Get-ChildItem "$($DocLocation)/packages" | Where-Object -FilterScript {$_.Name.EndsWith(".nupkg") -and -not $_.Name.EndsWith(".symbols.nupkg")}
-    $PublishedDocs = Get-ChildItem "$($DocLocation)" | Where-Object -FilterScript {$_.Name.StartsWith("Docs.")}
+    $PublishedPkgs = Get-ChildItem "$($DocLocation)" | Where-Object -FilterScript {$_.Name.EndsWith(".nupkg") -and -not $_.Name.EndsWith(".symbols.nupkg")}
+    $PublishedDocs = Get-ChildItem "$($DocLocation)" | Where-Object -FilterScript {$_.Name.EndsWith("docs.zip")}
 
-    foreach ($Item in $PublishedDocs) {
-        $PkgName = $Item.Name.Remove(0, 5)
-        $PkgFullName = $PublishedPkgs | Where-Object -FilterScript {$_.Name -match "$($PkgName).\d"}
-
-        if (($PkgFullName | Measure-Object).count -eq 1)
-        {
-            $DocVersion = $PkgFullName[0].BaseName.Remove(0, $PkgName.Length + 1)
-
-            Write-Host "Start Upload for $($PkgName)/$($DocVersion)"
-            Write-Host "DocDir $($Item)"
-            Write-Host "PkgName $($PkgName)"
-            Write-Host "DocVersion $($DocVersion)"
-            Upload-Blobs -DocDir "$($Item)" -PkgName $PkgName -DocVersion $DocVersion
-        }
-        else
-        {
-            Write-Host "Package with the same name Exists. Upload Skipped"
-            continue
-        }
+    if (($PublishedPkgs.Count -gt 1) -or ($PublishedDoc.Count -gt 1))
+    {
+        Write-Host "$($DocLocation) contains more published artifacts than expected."
+        exit 1
     }
+    $pkgZip = $PublishedPkgs[0]
+    $docZip = $PublishedDocs[0]
+    $pkgName = Split-Path -Path $DocLocation -Leaf
+    $version = $pkgZip.BaseName.Replace("${pkgName}.","")
+
+    New-Item -Path "$BinDirectory" -ItemType Directory -Value "docstoupload"
+    Expand-Archive -LiteralPath $docZip.FullName -DestinationPath "$BinDirectory/docstoupload"
+    $DocDir = 
+
+    Write-Host "Start Upload for $($PkgName)/$($version)"
+    Write-Host "DocDir $($BinDirectory)/docstoupload"
+    Write-Host "PkgName $($pkgName)"
+    Write-Host "DocVersion $($version)"
+    Upload-Blobs -DocDir "$($BinDirectory)/docstoupload" -PkgName $pkgName -DocVersion $version
 }
 
 if ($Language -eq "python")
