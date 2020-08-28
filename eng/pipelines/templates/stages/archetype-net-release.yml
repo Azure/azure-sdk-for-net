@@ -178,20 +178,6 @@ stages:
                   deploy:
                     steps:
                       - checkout: self
-                      - template: /eng/pipelines/templates/steps/stage-artifacts.yml
-                        parameters:
-                          SourceFolder: ${{parameters.ArtifactName}}-signed
-                          TargetFolder: ${{artifact.safeName}}/packages
-                          FileFilter: ${{artifact.name}}.[0-9]*.[0-9]*.[0-9]*
-                      - template: /eng/pipelines/templates/steps/stage-artifacts.yml
-                        parameters:
-                          SourceFolder: Docs.${{artifact.name}}
-                          TargetFolder: ${{artifact.safeName}}/Docs.${{artifact.name}}
-                          FileFilter: '*'
-                      - pwsh: |
-                          Get-ChildItem -Recurse $(Pipeline.Workspace)/${{artifact.safeName}}
-                        workingDirectory: $(Pipeline.Workspace)
-                        displayName: Output Visible Artifacts
                       - template: /eng/common/pipelines/templates/steps/publish-blobs.yml
                         parameters:
                           FolderForUpload: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}/${{artifact.name}}'
