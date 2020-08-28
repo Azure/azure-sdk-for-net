@@ -13,7 +13,7 @@ namespace Azure.Iot.Hub.Service.Samples
     /// bulk APIs that allow for creating, updating, and deleting of up to 100 module identities at a time.
     /// There are also bulk APIs for updating twins on up to 100 modules at time.
     /// </summary>
-    internal class BulkModuleIdentityLifecycleSamples
+    internal class BulkModuleIdentityLifecycleSample
     {
         public readonly IotHubServiceClient IoTHubServiceClient;
         public const int MaxRandomValue = 200;
@@ -22,7 +22,7 @@ namespace Azure.Iot.Hub.Service.Samples
         // Can be 1 to 100, configures how many modules to create/update/delete per service API call.
         public const int BulkCount = 20;
 
-        public BulkModuleIdentityLifecycleSamples(IotHubServiceClient client)
+        public BulkModuleIdentityLifecycleSample(IotHubServiceClient client)
         {
             IoTHubServiceClient = client;
         }

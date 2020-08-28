@@ -12,13 +12,13 @@ namespace Azure.Iot.Hub.Service.Samples
     /// <summary>
     /// This sample goes through the lifecycle of a Device Identity for a device.
     /// </summary>
-    internal class DeviceIdentityLifecycleSamples
+    internal class DeviceIdentityLifecycleSample
     {
         public readonly IotHubServiceClient IoTHubServiceClient;
         public const int MaxRandomValue = 200;
         public static readonly Random Random = new Random();
 
-        public DeviceIdentityLifecycleSamples(IotHubServiceClient client)
+        public DeviceIdentityLifecycleSample(IotHubServiceClient client)
         {
             IoTHubServiceClient = client;
         }

@@ -10,14 +10,14 @@ namespace Azure.Iot.Hub.Service.Samples
     /// <summary>
     /// This sample shows how to start the import and export jobs and check their status.
     /// </summary>
-    internal class JobsSamples
+    internal class JobsSample
     {
         public readonly IotHubServiceClient IoTHubServiceClient;
         public const int MaxRandomValue = 200;
         public static readonly Random Random = new Random();
         public readonly Uri ContainerSasUri;
 
-        public JobsSamples(IotHubServiceClient client, Uri containerSasUri)
+        public JobsSample(IotHubServiceClient client, Uri containerSasUri)
         {
             IoTHubServiceClient = client;
             ContainerSasUri = containerSasUri;
