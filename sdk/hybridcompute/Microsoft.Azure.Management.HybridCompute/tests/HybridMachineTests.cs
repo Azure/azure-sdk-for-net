@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.HybridCompute.Tests
             Initialize();
             Machine hybridMachine = await _client.Machines.GetAsync(_resourceGroupName, _machineName).ConfigureAwait(false);
             Assert.Equal(_machineName, hybridMachine.Name);
-            Assert.Equal("westus2", hybridMachine.Location);
+            Assert.Equal(_location, hybridMachine.Location);
         }
 
         [Fact]
@@ -90,12 +90,13 @@ namespace Microsoft.Azure.Management.HybridCompute.Tests
                 }
                 nextLink = listNextResponse.NextPageLink;
             }
-            Assert.Equal(429, count);
+            Assert.True(count >= 400);
         }
 
         [Fact]
         public void Machines_ListBySubscription()
         {
+            Initialize();
             IPage<Machine> listResponse = _client.Machines.ListBySubscription();
             Assert.NotNull(listResponse);
             int count = listResponse.Count();
@@ -108,7 +109,7 @@ namespace Microsoft.Azure.Management.HybridCompute.Tests
                 count += listNextResponse.Count();
                 nextLink = listNextResponse.NextPageLink;
             }
-            Assert.Equal(440, count);
+            Assert.True(count >= 400);
         }
     }
 }
