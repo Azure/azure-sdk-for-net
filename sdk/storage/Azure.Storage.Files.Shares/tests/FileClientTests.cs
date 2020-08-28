@@ -1904,6 +1904,67 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        public async Task UploadRangeAsync_InvalidStreamPosition()
+        {
+            // Arrange
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            ShareFileClient file = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
+            long size = Constants.KB;
+            await file.CreateAsync(size);
+
+            byte[] data = GetRandomBuffer(size);
+
+            using Stream stream = new MemoryStream(data)
+            {
+                Position = size
+            };
+
+            HttpRange range = new HttpRange(0, stream.Length);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                file.UploadRangeAsync(
+                range: range,
+                content: stream),
+                e => Assert.AreEqual("content.Position must be less than content.Length. Please set content.Position to the start of the data to upload.", e.Message));
+        }
+
+        [Test]
+        public async Task UploadRangeAsync_NonZeroStreamPosition()
+        {
+            // Arrange
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            ShareFileClient file = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
+            long size = Constants.KB;
+            long position = 512;
+            await file.CreateAsync(size - position);
+
+            byte[] data = GetRandomBuffer(size);
+            byte[] expectedData = new byte[size - position];
+            Array.Copy(data, position, expectedData, 0, size - position);
+
+            using Stream stream = new MemoryStream(data)
+            {
+                Position = position
+            };
+
+            HttpRange range = new HttpRange(0, stream.Length - stream.Position);
+
+            // Act
+            await file.UploadRangeAsync(
+                range: range,
+                stream);
+
+            // Assert
+            Response<ShareFileDownloadInfo> response = await file.DownloadAsync();
+
+            var actualData = new byte[512];
+            using var actualStream = new MemoryStream(actualData);
+            await response.Value.Content.CopyToAsync(actualStream);
+            TestHelper.AssertSequenceEqual(expectedData, actualData);
+        }
+
+        [Test]
         public async Task UploadAsync_Simple()
         {
             const int size = 10 * Constants.KB;
