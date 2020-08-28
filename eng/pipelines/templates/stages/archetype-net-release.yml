@@ -206,6 +206,8 @@ stages:
               pool:
                 vmImage: windows-2019
 
+              variables: 
+                tempVar: $[dependencies.TagRepository.outputs['releaseTag.ReleaseTag'] ]
               strategy:
                 runOnce:
                   deploy:
@@ -226,8 +228,6 @@ stages:
                         workingDirectory: $(Pipeline.Workspace)
                         displayName: Output Visible Artifacts
                       - template: /eng/common/pipelines/templates/steps/publish-blobs.yml
-                        variables: 
-                          tempVar: $[dependencies.TagRepository.outputs['releaseTag.ReleaseTag'] ]
                         parameters:
                           ReleaseTag: $(tempVar)
                           FolderForUpload: '$(Pipeline.Workspace)/${{artifact.safeName}}'
