@@ -18,9 +18,9 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 {
     internal class AzureMonitorTransmitter
     {
-        internal readonly ServiceRestClient serviceRestClient;
+        private readonly ServiceRestClient serviceRestClient;
         private readonly AzureMonitorExporterOptions options;
-        internal readonly string ikey;
+        private readonly string instrumentationKey;
 
         private static readonly IReadOnlyDictionary<TelemetryType, string> Telemetry_Base_Type_Mapping = new Dictionary<TelemetryType, string>
         {
@@ -40,7 +40,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
         public AzureMonitorTransmitter(AzureMonitorExporterOptions exporterOptions)
         {
-            ConnectionStringParser.GetValues(exporterOptions.ConnectionString, out this.ikey, out string ingestionEndpoint);
+            ConnectionStringParser.GetValues(exporterOptions.ConnectionString, out this.instrumentationKey, out string ingestionEndpoint);
 
             options = exporterOptions;
             serviceRestClient = new ServiceRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), endpoint: ingestionEndpoint);
@@ -59,7 +59,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             foreach (var activity in batchActivity)
             {
                 telemetryItem = GeneratePartAEnvelope(activity);
-                telemetryItem.IKey = this.ikey;
+                telemetryItem.IKey = this.instrumentationKey;
                 telemetryItem.Data = GenerateTelemetryData(activity);
                 telemetryItems.Add(telemetryItem);
             }

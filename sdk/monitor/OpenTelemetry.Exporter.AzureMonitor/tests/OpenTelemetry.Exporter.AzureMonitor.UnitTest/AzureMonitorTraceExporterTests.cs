@@ -18,12 +18,9 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
             var exporter = new AzureMonitorTraceExporter(new AzureMonitorExporterOptions { ConnectionString = $"InstrumentationKey={testIkey};IngestionEndpoint={testEndpoint}" });
 
-            Assert.AreEqual(testIkey, exporter.AzureMonitorTransmitter.ikey);
-
-            // TODO: WHO OWNS THE SWAGGER? CAN WE CHANGE "endpoint" TO BE internal PLEASE?
-            FieldInfo field = typeof(ServiceRestClient).GetField("endpoint", BindingFlags.Instance | BindingFlags.NonPublic);
-            var serviceRestClientEndpoint = field.GetValue(exporter.AzureMonitorTransmitter.serviceRestClient);
-            Assert.AreEqual(testEndpoint, serviceRestClientEndpoint);
+            GetInternalFields(exporter, out string ikey, out string endpoint);
+            Assert.AreEqual(testIkey, ikey);
+            Assert.AreEqual(testEndpoint, endpoint);
         }
 
         [Test]
@@ -33,12 +30,9 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
             var exporter = new AzureMonitorTraceExporter(new AzureMonitorExporterOptions { ConnectionString = $"InstrumentationKey={testIkey};" });
 
-            Assert.AreEqual(testIkey, exporter.AzureMonitorTransmitter.ikey);
-
-            // TODO: WHO OWNS THE SWAGGER? CAN WE CHANGE "endpoint" TO BE internal PLEASE?
-            FieldInfo field = typeof(ServiceRestClient).GetField("endpoint", BindingFlags.Instance | BindingFlags.NonPublic);
-            var serviceRestClientEndpoint = field.GetValue(exporter.AzureMonitorTransmitter.serviceRestClient);
-            Assert.AreEqual(ConnectionString.Constants.DefaultIngestionEndpoint, serviceRestClientEndpoint);
+            GetInternalFields(exporter, out string ikey, out string endpoint);
+            Assert.AreEqual(testIkey, ikey);
+            Assert.AreEqual(ConnectionString.Constants.DefaultIngestionEndpoint, endpoint);
         }
 
         [Test]
@@ -53,6 +47,31 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             var testEndpoint = "https://www.bing.com/";
 
             Assert.Throws<Exception>(() => new AzureMonitorTraceExporter(new AzureMonitorExporterOptions { ConnectionString = $"IngestionEndpoint={testEndpoint}" }));
+        }
+
+        private void GetInternalFields(AzureMonitorTraceExporter exporter, out string ikey, out string endpoint)
+        {
+            // TODO: NEED A BETTER APPROACH FOR TESTING. WE DECIDED AGAINST MAKING FIELDS "internal".
+            // instrumentationKey: AzureMonitorTraceExporter.AzureMonitorTransmitter.instrumentationKey
+            // endpoint: AzureMonitorTraceExporter.AzureMonitorTransmitter.ServiceRestClient.endpoint
+
+            var transmitter = typeof(AzureMonitorTraceExporter)
+                .GetField("AzureMonitorTransmitter", BindingFlags.Instance | BindingFlags.NonPublic)
+                .GetValue(exporter);
+
+            ikey = typeof(AzureMonitorTransmitter)
+                .GetField("instrumentationKey", BindingFlags.Instance | BindingFlags.NonPublic)
+                .GetValue(transmitter)
+                .ToString();
+
+            var serviceRestClient = typeof(AzureMonitorTransmitter)
+                .GetField("serviceRestClient", BindingFlags.Instance | BindingFlags.NonPublic)
+                .GetValue(transmitter);
+
+            endpoint = typeof(ServiceRestClient)
+                .GetField("endpoint", BindingFlags.Instance | BindingFlags.NonPublic)
+                .GetValue(serviceRestClient)
+                .ToString();
         }
     }
 }

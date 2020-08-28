@@ -12,7 +12,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 {
     public class AzureMonitorTraceExporter : ActivityExporter
     {
-        internal readonly AzureMonitorTransmitter AzureMonitorTransmitter;
+        private readonly AzureMonitorTransmitter AzureMonitorTransmitter;
 
         public AzureMonitorTraceExporter(AzureMonitorExporterOptions options)
         {
