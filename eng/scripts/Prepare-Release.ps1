@@ -24,6 +24,7 @@ foreach ($existingVersion in $existing.versions)
 
 $latestVersion = $existing.versions[$existing.versions.Count - 1];
 
+Write-Host
 Write-Host "Latest released version $latestVersion, library type $libraryType"
 
 $newVersion = Read-Host -Prompt 'Input the new version' 
@@ -47,7 +48,11 @@ elseif ($parsedNewVersion.IsPrerelease)
     $releaseType = "Bugfix"
 }
 
+Write-Host
 Write-Host "Detected released type $releaseType"
+
+Write-Host
+Write-Host "Updating versions"
 
 & "$repoRoot\eng\scripts\Update-PkgVersion.ps1" -ServiceDirectory $serviceDirectory -PackageName $package -NewVersionString $newVersion
 
@@ -57,7 +62,7 @@ if ($date.Day -gt 15)
 {
     $month = $date.AddMonths(1).ToString("MMMM")
 }
-
+Write-Host
 Write-Host "Assuming release is in $month"
 
 $commonParameter = @("--organization", "https://dev.azure.com/azure-sdk", "-o", "json", "--only-show-errors")
@@ -66,6 +71,7 @@ $workItems = az boards query @commonParameter --project Release --wiql "SELECT [
 
 $matchedWorkItems = @();
 
+Write-Host
 Write-Host "The following issues exist:"
 foreach ($item in $workItems)
 {
@@ -85,17 +91,19 @@ $fields = @{
     "Version Number"=$newVersion;
 }
 
+Write-Host
 Write-Host "Going to set the following fields:"
 
 foreach ($field in $fields.Keys)
 {
-    Write-Host "    $field $($fields[$field])"
+    Write-Host "    $field = $($fields[$field])"
 }
 
 $decision = $Host.UI.PromptForChoice('Updating work item', 'Are you sure you want to proceed?', @('&Yes'; '&No'), 0)
 
 if ($decision -eq 0)
 {
+    az boards work-item update @commonParameter --id $issueId --state Active > $null
     foreach ($field in $fields.Keys)
     {
         az boards work-item update @commonParameter --id $issueId -f "$field=$($fields[$field])" > $null
