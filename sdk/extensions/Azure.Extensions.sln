@@ -27,11 +27,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.Azure"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.Azure.Tests", "..\core\Microsoft.Extensions.Azure\tests\Microsoft.Extensions.Azure.Tests.csproj", "{439AD388-D698-4A82-B509-D79D511624F5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.Azure.WebJobs", "Microsoft.Extensions.Azure.WebJobs\src\Microsoft.Extensions.Azure.WebJobs.csproj", "{8AF0DAC5-3F8A-49A7-AA9E-A05D589DD279}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.WebJobs.Extensions.Clients", "Microsoft.Azure.WebJobs.Extensions.Clients\src\Microsoft.Azure.WebJobs.Extensions.Clients.csproj", "{8AF0DAC5-3F8A-49A7-AA9E-A05D589DD279}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.Azure.WebJobs.Tests", "Microsoft.Extensions.Azure.WebJobs\tests\Microsoft.Extensions.Azure.WebJobs.Tests.csproj", "{BFCD7A9E-27A9-448F-B98A-4C1A8808CFFB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.WebJobs.Extensions.Clients.Tests", "Microsoft.Azure.WebJobs.Extensions.Clients\tests\Microsoft.Azure.WebJobs.Extensions.Clients.Tests.csproj", "{BFCD7A9E-27A9-448F-B98A-4C1A8808CFFB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.Azure.WebJobs.Samples", "Microsoft.Extensions.Azure.WebJobs\samples\Microsoft.Extensions.Azure.WebJobs.Samples.csproj", "{45CF248B-6CBA-4BF2-8E8D-44092A525709}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.WebJobs.Extensions.Clients.Samples", "Microsoft.Azure.WebJobs.Extensions.Clients\samples\Microsoft.Azure.WebJobs.Extensions.Clients.Samples.csproj", "{45CF248B-6CBA-4BF2-8E8D-44092A525709}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

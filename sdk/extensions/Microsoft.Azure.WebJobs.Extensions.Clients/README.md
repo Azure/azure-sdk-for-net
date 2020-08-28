@@ -11,7 +11,7 @@ Microsoft.Extensions.Azure.Core provides shared primitives to integrate Azure cl
 Install the ASP.NET Core integration library using [NuGet][nuget]:
 
 ```powershell
-dotnet add package Microsoft.Extensions.Azure
+dotnet add package Microsoft.Azure.WebJobs.Extensions.Clients --version 1.0.0-beta.1
 ```
 
 ### Reference the client from a function
