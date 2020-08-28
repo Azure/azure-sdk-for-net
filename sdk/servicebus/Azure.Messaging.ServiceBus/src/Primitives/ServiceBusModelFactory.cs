@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
+using Azure.Core.Amqp;
+using Azure.Messaging.ServiceBus.Amqp;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -27,7 +29,7 @@ namespace Azure.Messaging.ServiceBus
             string replyToSessionId = default,
             TimeSpan timeToLive = default,
             string correlationId = default,
-            string label = default,
+            string subject = default,
             string to = default,
             string contentType = default,
             string replyTo = default,
@@ -41,55 +43,52 @@ namespace Azure.Messaging.ServiceBus
             long enqueuedSequenceNumber = default,
             DateTimeOffset enqueuedTime = default)
         {
-            var sentMessage = new ServiceBusMessage
-            {
-                Body = body,
-                CorrelationId = correlationId,
-                Label = label,
-                To = to,
-                ContentType = contentType,
-                ReplyTo = replyTo,
-                ScheduledEnqueueTime = scheduledEnqueueTime
-            };
+            var amqpMessage = new AmqpAnnotatedMessage(new BinaryData[] { body });
+            amqpMessage.Properties.CorrelationId = correlationId;
+            amqpMessage.Properties.Subject = subject;
+            amqpMessage.Properties.To = to;
+            amqpMessage.Properties.ContentType = contentType;
+            amqpMessage.Properties.ReplyTo = replyTo;
+            amqpMessage.MessageAnnotations[AmqpMessageConstants.ScheduledEnqueueTimeUtcName] = scheduledEnqueueTime.UtcDateTime;
+
             if (messageId != default)
             {
-                sentMessage.MessageId = messageId;
+                amqpMessage.Properties.MessageId = messageId;
             }
             if (partitionKey != default)
             {
-                sentMessage.PartitionKey = partitionKey;
+                amqpMessage.MessageAnnotations[AmqpMessageConstants.PartitionKeyName] = partitionKey;
             }
             if (viaPartitionKey != default)
             {
-                sentMessage.ViaPartitionKey = viaPartitionKey;
+                amqpMessage.MessageAnnotations[AmqpMessageConstants.ViaPartitionKeyName] = viaPartitionKey;
             }
             if (sessionId != default)
             {
-                sentMessage.SessionId = sessionId;
+                amqpMessage.Properties.GroupId = sessionId;
             }
             if (replyToSessionId != default)
             {
-                sentMessage.ReplyToSessionId = replyToSessionId;
+                amqpMessage.Properties.ReplyToGroupId = replyToSessionId;
             }
             if (timeToLive != default)
             {
-                sentMessage.TimeToLive = timeToLive;
+                amqpMessage.Header.TimeToLive = timeToLive;
             }
             if (properties != default)
             {
-                sentMessage.Properties = properties;
+                amqpMessage.ApplicationProperties = properties;
             }
+            amqpMessage.Header.DeliveryCount = (uint)deliveryCount;
+            amqpMessage.MessageAnnotations[AmqpMessageConstants.LockedUntilName] = lockedUntil.UtcDateTime;
+            amqpMessage.MessageAnnotations[AmqpMessageConstants.SequenceNumberName] = sequenceNumber;
+            amqpMessage.MessageAnnotations[AmqpMessageConstants.DeadLetterSourceName] = deadLetterSource;
+            amqpMessage.MessageAnnotations[AmqpMessageConstants.EnqueueSequenceNumberName] = enqueuedSequenceNumber;
+            amqpMessage.MessageAnnotations[AmqpMessageConstants.EnqueuedTimeUtcName] = enqueuedTime.UtcDateTime;
 
-            return new ServiceBusReceivedMessage
+            return new ServiceBusReceivedMessage(amqpMessage)
             {
-                SentMessage = sentMessage,
                 LockTokenGuid = lockTokenGuid,
-                DeliveryCount = deliveryCount,
-                LockedUntil = lockedUntil,
-                SequenceNumber = sequenceNumber,
-                DeadLetterSource = deadLetterSource,
-                EnqueuedSequenceNumber = enqueuedSequenceNumber,
-                EnqueuedTime = enqueuedTime
             };
         }
     }
