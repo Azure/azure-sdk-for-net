@@ -2,17 +2,17 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using NUnit.Framework;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Extensions.WebJobs;
 using Azure.Security.KeyVault.Secrets;
-using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
+using Microsoft.Extensions.Azure;
+using Microsoft.Extensions.Azure.WebJobs.Tests;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
-namespace Microsoft.Extensions.Azure.WebJobs.Tests
+namespace Microsoft.Azure.WebJobs.Extensions.Clients.Tests
 {
     public class AzureClientAttributeTests : RecordedTestBase<WebJobsTestEnvironment>
     {
@@ -33,7 +33,7 @@ namespace Microsoft.Extensions.Azure.WebJobs.Tests
         {
             var host = new HostBuilder()
                 .ConfigureServices(services => services.AddAzureClients(builder => builder
-                    .ConfigureDefaults(options => Recording.InstrumentClientOptions(options))
+                    .ConfigureDefaults(options => Recording.InstrumentClientOptions<ClientOptions>(options))
                     .UseCredential(TestEnvironment.Credential)))
                 .ConfigureAppConfiguration(config =>
                 {
