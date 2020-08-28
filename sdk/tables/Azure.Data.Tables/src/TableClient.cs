@@ -89,6 +89,66 @@ namespace Azure.Data.Tables
             Argument.AssertNotNull(credential, nameof(credential));
         }
 
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TableServiceClient"/>.
+        /// </summary>
+        /// <param name="tableName">The name of the table with which this client instance will interact.</param>
+        /// <param name="connectionString">
+        /// A connection string includes the authentication information
+        /// required for your application to access data in an Azure Storage
+        /// account at runtime.
+        ///
+        /// For more information,
+        /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
+        /// Configure Azure Storage connection strings</see>.
+        /// </param>
+        public TableClient(string tableName, string connectionString)
+            : this(tableName, connectionString, default)
+        { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TableServiceClient"/>.
+        /// </summary>
+        /// <param name="tableName">The name of the table with which this client instance will interact.</param>
+        /// <param name="connectionString">
+        /// A connection string includes the authentication information
+        /// required for your application to access data in an Azure Storage
+        /// account at runtime.
+        ///
+        /// For more information,
+        /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
+        /// Configure Azure Storage connection strings</see>.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
+        /// </param>
+        public TableClient(string tableName, string connectionString, TableClientOptions options = null)
+        {
+            Argument.AssertNotNull(connectionString, nameof(connectionString));
+
+            TableConnectionString connString = TableConnectionString.Parse(connectionString);
+
+            options ??= new TableClientOptions();
+            var endpointString = connString.TableStorageUri.PrimaryUri.ToString();
+
+            TableSharedKeyPipelinePolicy policy = connString.Credentials switch
+            {
+                TableSharedKeyCredential credential => new TableSharedKeyPipelinePolicy(credential),
+                _ => default
+            };
+
+            options ??= new TableClientOptions();
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, policy);
+
+            _diagnostics = new ClientDiagnostics(options);
+            _tableOperations = new TableRestClient(_diagnostics, pipeline, endpointString);
+            _version = options.VersionString;
+            _table = tableName;
+            _format = OdataMetadataFormat.ApplicationJsonOdataMinimalmetadata;
+            _isPremiumEndpoint = TableServiceClient.IsPremiumEndpoint(connString.TableStorageUri.PrimaryUri);
+        }
+
         internal TableClient(string tableName, Uri endpoint, TableSharedKeyPipelinePolicy policy, TableClientOptions options)
         {
             Argument.AssertNotNull(tableName, nameof(tableName));
@@ -103,7 +163,6 @@ namespace Azure.Data.Tables
             _table = tableName;
             _format = OdataMetadataFormat.ApplicationJsonOdataMinimalmetadata;
             _isPremiumEndpoint = TableServiceClient.IsPremiumEndpoint(endpoint);
-            ;
         }
 
         internal TableClient(string table, TableRestClient tableOperations, string version, ClientDiagnostics diagnostics, bool isPremiumEndpoint)

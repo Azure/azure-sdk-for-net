@@ -10,6 +10,8 @@ namespace Azure.Data.Tables
     public partial class TableClient
     {
         protected TableClient() { }
+        public TableClient(string tableName, string connectionString) { }
+        public TableClient(string tableName, string connectionString, Azure.Data.Tables.TableClientOptions options = null) { }
         public TableClient(string tableName, System.Uri endpoint, Azure.Data.Tables.TableClientOptions options = null) { }
         public TableClient(string tableName, System.Uri endpoint, Azure.Data.Tables.TableSharedKeyCredential credential) { }
         public TableClient(string tableName, System.Uri endpoint, Azure.Data.Tables.TableSharedKeyCredential credential, Azure.Data.Tables.TableClientOptions options = null) { }
@@ -86,6 +88,8 @@ namespace Azure.Data.Tables
     public partial class TableServiceClient
     {
         protected TableServiceClient() { }
+        public TableServiceClient(string connectionString) { }
+        public TableServiceClient(string connectionString, Azure.Data.Tables.TableClientOptions options = null) { }
         public TableServiceClient(System.Uri endpoint) { }
         public TableServiceClient(System.Uri endpoint, Azure.Data.Tables.TableClientOptions options = null) { }
         public TableServiceClient(System.Uri endpoint, Azure.Data.Tables.TableSharedKeyCredential credential) { }
