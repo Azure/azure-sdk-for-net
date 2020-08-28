@@ -200,8 +200,8 @@ stages:
               displayName: Publish Docs to GitHub pages
               condition: and(succeeded(), ne(variables['Skip.PublishDocs'], 'true'))
               environment: githubio
-              dependsOn: PublishPackage
-              #dependsOn: TagRepository
+              #dependsOn: PublishPackage
+              dependsOn: TagRepository
 
               pool:
                 vmImage: windows-2019
@@ -227,7 +227,7 @@ stages:
                         displayName: Output Visible Artifacts
                       - template: /eng/common/pipelines/templates/steps/publish-blobs.yml
                         parameters:
-                          ReleaseTag: $[dependencies.PublishPackage.TagRepository.outputs['releaseTag.ReleaseTag'] ]
+                          ReleaseTag: $[TagRepository.outputs['releaseTag.ReleaseTag'] ]
                           FolderForUpload: '$(Pipeline.Workspace)/${{artifact.safeName}}'
                           BlobSASKey: '$(azure-sdk-docs-prod-sas)'
                           BlobName: '$(azure-sdk-docs-prod-blob-name)'
