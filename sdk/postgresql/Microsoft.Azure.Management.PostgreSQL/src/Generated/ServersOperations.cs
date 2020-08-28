@@ -54,8 +54,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// Creates a new server, or will overwrite an existing server.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the resource. You can obtain
-        /// this value from the Azure Resource Manager API or the portal.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serverName'>
         /// The name of the server.
@@ -81,8 +80,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// properties present in the normal server definition.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the resource. You can obtain
-        /// this value from the Azure Resource Manager API or the portal.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serverName'>
         /// The name of the server.
@@ -107,8 +105,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// Deletes a server.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the resource. You can obtain
-        /// this value from the Azure Resource Manager API or the portal.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serverName'>
         /// The name of the server.
@@ -130,8 +127,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// Gets information about a server.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the resource. You can obtain
-        /// this value from the Azure Resource Manager API or the portal.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serverName'>
         /// The name of the server.
@@ -159,22 +155,41 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// </return>
         public async Task<AzureOperationResponse<Server>> GetWithHttpMessagesAsync(string resourceGroupName, string serverName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
             }
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
+                }
+            }
             if (serverName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "serverName");
             }
+            string apiVersion = "2017-12-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -182,6 +197,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -194,9 +210,9 @@ namespace Microsoft.Azure.Management.PostgreSQL
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serverName}", System.Uri.EscapeDataString(serverName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -327,8 +343,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// List all the servers in a given resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the resource. You can obtain
-        /// this value from the Azure Resource Manager API or the portal.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -353,18 +368,37 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// </return>
         public async Task<AzureOperationResponse<IEnumerable<Server>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
             }
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
+                }
+            }
+            string apiVersion = "2017-12-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -372,6 +406,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListByResourceGroup", tracingParameters);
@@ -382,9 +417,9 @@ namespace Microsoft.Azure.Management.PostgreSQL
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -537,14 +572,18 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// </return>
         public async Task<AzureOperationResponse<IEnumerable<Server>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
+            }
+            string apiVersion = "2017-12-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -552,6 +591,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -560,9 +600,9 @@ namespace Microsoft.Azure.Management.PostgreSQL
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/servers").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -693,8 +733,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// Restarts a server.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the resource. You can obtain
-        /// this value from the Azure Resource Manager API or the portal.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serverName'>
         /// The name of the server.
@@ -716,8 +755,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// Creates a new server, or will overwrite an existing server.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the resource. You can obtain
-        /// this value from the Azure Resource Manager API or the portal.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serverName'>
         /// The name of the server.
@@ -748,17 +786,35 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// </return>
         public async Task<AzureOperationResponse<Server>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string serverName, ServerForCreate parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
+            }
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
+                }
             }
             if (serverName == null)
             {
@@ -772,6 +828,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
             {
                 parameters.Validate();
             }
+            string apiVersion = "2017-12-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -779,6 +836,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
                 tracingParameters.Add("parameters", parameters);
@@ -792,9 +850,9 @@ namespace Microsoft.Azure.Management.PostgreSQL
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serverName}", System.Uri.EscapeDataString(serverName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -950,8 +1008,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// properties present in the normal server definition.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the resource. You can obtain
-        /// this value from the Azure Resource Manager API or the portal.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serverName'>
         /// The name of the server.
@@ -982,17 +1039,35 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// </return>
         public async Task<AzureOperationResponse<Server>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, ServerUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
+            }
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
+                }
             }
             if (serverName == null)
             {
@@ -1002,6 +1077,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
+            string apiVersion = "2017-12-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1009,6 +1085,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
                 tracingParameters.Add("parameters", parameters);
@@ -1022,9 +1099,9 @@ namespace Microsoft.Azure.Management.PostgreSQL
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serverName}", System.Uri.EscapeDataString(serverName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1161,8 +1238,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// Deletes a server.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the resource. You can obtain
-        /// this value from the Azure Resource Manager API or the portal.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serverName'>
         /// The name of the server.
@@ -1187,22 +1263,41 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// </return>
         public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string serverName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
             }
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
+                }
+            }
             if (serverName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "serverName");
             }
+            string apiVersion = "2017-12-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1210,6 +1305,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -1222,9 +1318,9 @@ namespace Microsoft.Azure.Management.PostgreSQL
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serverName}", System.Uri.EscapeDataString(serverName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1337,8 +1433,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// Restarts a server.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the resource. You can obtain
-        /// this value from the Azure Resource Manager API or the portal.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serverName'>
         /// The name of the server.
@@ -1363,22 +1458,41 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// </return>
         public async Task<AzureOperationResponse> BeginRestartWithHttpMessagesAsync(string resourceGroupName, string serverName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
             }
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
+                }
+            }
             if (serverName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "serverName");
             }
+            string apiVersion = "2017-12-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1386,6 +1500,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -1398,9 +1513,9 @@ namespace Microsoft.Azure.Management.PostgreSQL
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serverName}", System.Uri.EscapeDataString(serverName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {

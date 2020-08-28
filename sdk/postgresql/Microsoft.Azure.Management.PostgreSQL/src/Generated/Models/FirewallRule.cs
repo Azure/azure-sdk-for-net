@@ -36,9 +36,12 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         /// firewall rule. Must be IPv4 format.</param>
         /// <param name="endIpAddress">The end IP address of the server
         /// firewall rule. Must be IPv4 format.</param>
-        /// <param name="id">Resource ID</param>
-        /// <param name="name">Resource name.</param>
-        /// <param name="type">Resource type.</param>
+        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. Ex-
+        /// Microsoft.Compute/virtualMachines or
+        /// Microsoft.Storage/storageAccounts.</param>
         public FirewallRule(string startIpAddress, string endIpAddress, string id = default(string), string name = default(string), string type = default(string))
             : base(id, name, type)
         {
