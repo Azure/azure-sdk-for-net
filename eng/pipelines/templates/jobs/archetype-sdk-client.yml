@@ -116,75 +116,75 @@ jobs:
           arguments: -ServiceDirectory ${{parameters.ServiceToBuild}}
           pwsh: true
           failOnStderr:  false
-  - job: "Test"
-    condition: ne(variables['Skip.Test'], true)
-    variables:
-      - template: ../variables/globals.yml
-    strategy:
-      maxParallel: $[ variables['MaxParallelTestJobs'] ]
-      matrix:
-        Linux:
-          OSVmImage: "ubuntu-18.04"
-          TestTargetFramework: netcoreapp2.1
-        Windows_NetCoreApp:
-          OSVmImage: "windows-2019"
-          TestTargetFramework: netcoreapp2.1
-          ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-            CollectCoverage: true
-        Windows_NetCoreApp_ProjectReferences:
-          OSVmImage: "windows-2019"
-          TestTargetFramework: netcoreapp2.1
-          ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
-        Windows_NetFramework:
-          OSVmImage: "windows-2019"
-          TestTargetFramework: net461
-        Windows_NetFramework_ProjectReferences:
-          OSVmImage: "windows-2019"
-          TestTargetFramework: net461
-          ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
-        MacOs:
-          OSVmImage: "macOS-10.15"
-          TestTargetFramework: netcoreapp2.1
-    pool:
-      vmImage: "$(OSVmImage)"
-    steps:
-      - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
-      - task: DotNetCoreInstaller@2
-        displayName: "Use .NET Core runtime $(DotNetCoreRuntimeVersion)"
-        inputs:
-          packageType: runtime
-          version: "$(DotNetCoreRuntimeVersion)"
-      - task: DotNetCoreInstaller@2
-        displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
-        inputs:
-          packageType: sdk
-          version: "$(DotNetCoreSDKVersion)"
-      - script: >-
-          dotnet test eng/service.proj --filter TestCategory!=Live --framework $(TestTargetFramework) --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
-          /p:ServiceDirectory=${{parameters.ServiceToBuild}} /p:IncludeSrc=false /p:IncludeSamples=false /p:Configuration=$(BuildConfiguration) $(ConvertToProjectReferenceOption) /p:CollectCoverage=$(CollectCoverage)
-        displayName: "Build & Test ($(TestTargetFramework))"
-        env:
-          DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
-          DOTNET_CLI_TELEMETRY_OPTOUT: 1
-          DOTNET_MULTILEVEL_LOOKUP: 0
-      - task: PublishTestResults@2
-        condition: always()
-        displayName: "Publish Results ($(TestTargetFramework))"
-        inputs:
-          testResultsFiles: "**/$(TestTargetFramework)*.trx"
-          testRunTitle: "$(OSName) $(TestTargetFramework)"
-          testResultsFormat: "VSTest"
-          mergeTestResults: true
-      - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
-        condition: and(succeeded(), eq(variables['CollectCoverage'], 'true'))
-        displayName: ReportGenerator
-        inputs:
-          reports: '**/*coverage.netcoreapp2.1.cobertura.xml'
-          targetdir: '$(Build.SourcesDirectory)'
-          reporttypes: Cobertura
-      - task: PublishCodeCoverageResults@1
-        condition: and(succeeded(), eq(variables['CollectCoverage'], 'true'))
-        displayName: 'Publish code coverage report'
-        inputs:
-          codeCoverageTool: 'Cobertura'
-          summaryFileLocation: 'Cobertura.xml'
+  # - job: "Test"
+  #   condition: ne(variables['Skip.Test'], true)
+  #   variables:
+  #     - template: ../variables/globals.yml
+  #   strategy:
+  #     maxParallel: $[ variables['MaxParallelTestJobs'] ]
+  #     matrix:
+  #       Linux:
+  #         OSVmImage: "ubuntu-18.04"
+  #         TestTargetFramework: netcoreapp2.1
+  #       Windows_NetCoreApp:
+  #         OSVmImage: "windows-2019"
+  #         TestTargetFramework: netcoreapp2.1
+  #         ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+  #           CollectCoverage: true
+  #       Windows_NetCoreApp_ProjectReferences:
+  #         OSVmImage: "windows-2019"
+  #         TestTargetFramework: netcoreapp2.1
+  #         ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
+  #       Windows_NetFramework:
+  #         OSVmImage: "windows-2019"
+  #         TestTargetFramework: net461
+  #       Windows_NetFramework_ProjectReferences:
+  #         OSVmImage: "windows-2019"
+  #         TestTargetFramework: net461
+  #         ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
+  #       MacOs:
+  #         OSVmImage: "macOS-10.15"
+  #         TestTargetFramework: netcoreapp2.1
+  #   pool:
+  #     vmImage: "$(OSVmImage)"
+  #   steps:
+  #     - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
+  #     - task: DotNetCoreInstaller@2
+  #       displayName: "Use .NET Core runtime $(DotNetCoreRuntimeVersion)"
+  #       inputs:
+  #         packageType: runtime
+  #         version: "$(DotNetCoreRuntimeVersion)"
+  #     - task: DotNetCoreInstaller@2
+  #       displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
+  #       inputs:
+  #         packageType: sdk
+  #         version: "$(DotNetCoreSDKVersion)"
+  #     - script: >-
+  #         dotnet test eng/service.proj --filter TestCategory!=Live --framework $(TestTargetFramework) --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
+  #         /p:ServiceDirectory=${{parameters.ServiceToBuild}} /p:IncludeSrc=false /p:IncludeSamples=false /p:Configuration=$(BuildConfiguration) $(ConvertToProjectReferenceOption) /p:CollectCoverage=$(CollectCoverage)
+  #       displayName: "Build & Test ($(TestTargetFramework))"
+  #       env:
+  #         DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+  #         DOTNET_CLI_TELEMETRY_OPTOUT: 1
+  #         DOTNET_MULTILEVEL_LOOKUP: 0
+  #     - task: PublishTestResults@2
+  #       condition: always()
+  #       displayName: "Publish Results ($(TestTargetFramework))"
+  #       inputs:
+  #         testResultsFiles: "**/$(TestTargetFramework)*.trx"
+  #         testRunTitle: "$(OSName) $(TestTargetFramework)"
+  #         testResultsFormat: "VSTest"
+  #         mergeTestResults: true
+  #     - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
+  #       condition: and(succeeded(), eq(variables['CollectCoverage'], 'true'))
+  #       displayName: ReportGenerator
+  #       inputs:
+  #         reports: '**/*coverage.netcoreapp2.1.cobertura.xml'
+  #         targetdir: '$(Build.SourcesDirectory)'
+  #         reporttypes: Cobertura
+  #     - task: PublishCodeCoverageResults@1
+  #       condition: and(succeeded(), eq(variables['CollectCoverage'], 'true'))
+  #       displayName: 'Publish code coverage report'
+  #       inputs:
+  #         codeCoverageTool: 'Cobertura'
+  #         summaryFileLocation: 'Cobertura.xml'
