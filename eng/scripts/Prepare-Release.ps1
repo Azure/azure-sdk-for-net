@@ -27,7 +27,7 @@ foreach ($existingVersion in $existing.versions)
 $latestVersion = $existing.versions[$existing.versions.Count - 1];
 
 Write-Host
-Write-Host "Latest released version $latestVersion, library type $libraryType"
+Write-Host "Latest released version $latestVersion, library type $libraryType" -ForegroundColor Green
 
 $newVersion = Read-Host -Prompt 'Input the new version' 
 
@@ -51,10 +51,10 @@ elseif ($parsedNewVersion.IsPrerelease)
 }
 
 Write-Host
-Write-Host "Detected released type $releaseType"
+Write-Host "Detected released type $releaseType" -ForegroundColor Green
 
 Write-Host
-Write-Host "Updating versions"
+Write-Host "Updating versions" -ForegroundColor Green
 
 & "$repoRoot\eng\scripts\Update-PkgVersion.ps1" -ServiceDirectory $serviceDirectory -PackageName $package -NewVersionString $newVersion
 
@@ -65,7 +65,7 @@ if ($date.Day -gt 15)
     $month = $date.AddMonths(1).ToString("MMMM")
 }
 Write-Host
-Write-Host "Assuming release is in $month"
+Write-Host "Assuming release is in $month" -ForegroundColor Green
 
 $commonParameter = @("--organization", "https://dev.azure.com/azure-sdk", "-o", "json", "--only-show-errors")
 
@@ -94,7 +94,7 @@ $fields = @{
 }
 
 Write-Host
-Write-Host "Going to set the following fields:"
+Write-Host "Going to set the following fields:" -ForegroundColor Green
 
 foreach ($field in $fields.Keys)
 {
@@ -118,7 +118,7 @@ $changeLogEntry = Get-ChangeLogEntry -ChangeLogLocation "$packageDirectory/CHANG
 
 $githubAnchor = $changeLogEntry.ReleaseTitle.Replace("## ", "").Replace(".", "").Replace("(", "").Replace(")", "").Replace(" ", "-")
 Write-Host
-Write-Host "Snippet for the centralized CHANGELOG:"
+Write-Host "Snippet for the centralized CHANGELOG:" -ForegroundColor Green
 Write-Host "dotnet add package $package --version $newVersion"
 Write-Host "### $package [Changelog](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/$serviceDirectory/$package/CHANGELOG.md#$githubAnchor)"
 $changeLogEntry.ReleaseContent | Write-Host 
