@@ -2,13 +2,15 @@ param($package)
 
 $repoRoot = Resolve-Path "$PSScriptRoot/../..";
 
-$serviceDirectory = (Get-ChildItem "$repoRoot/sdk" -Directory -Recurse -Depth 2 -Filter $package).Parent.Name
+. ${repoRoot}\eng\common\scripts\SemVer.ps1
+. ${repoRoot}\eng\common\scripts\ChangeLog-Operations.ps1
+
+$packageDirectory = Get-ChildItem "$repoRoot/sdk" -Directory -Recurse -Depth 2 -Filter $package
+$serviceDirectory = ($packageDirectory).Parent.Name
 
 Write-Host "Source directory $serviceDirectory"
 
 $existing = Invoke-WebRequest "https://api.nuget.org/v3-flatcontainer/$($package.ToLower())/index.json" | ConvertFrom-Json;
-
-. ${repoRoot}\eng\common\scripts\SemVer.ps1
 
 $libraryType = "preview";
 $latestVersion = "unknown";
@@ -111,3 +113,13 @@ if ($decision -eq 0)
 
     Write-Host "Updated https://dev.azure.com/azure-sdk/Release/_workitems/edit/$issueId"
 }
+
+$changeLogEntry = Get-ChangeLogEntry -ChangeLogLocation "$packageDirectory/CHANGELOG.md" -VersionString $newVersion
+
+$githubAnchor = $changeLogEntry.ReleaseTitle.Replace("## ", "").Replace(".", "").Replace("(", "").Replace(")", "").Replace(" ", "-")
+Write-Host
+Write-Host "Snippet for the centralized CHANGELOG:"
+Write-Host "dotnet add package $package --version $newVersion"
+Write-Host "### $package [Changelog](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/$serviceDirectory/$package/CHANGELOG.md#$githubAnchor)"
+$changeLogEntry.ReleaseContent | Write-Host 
+
