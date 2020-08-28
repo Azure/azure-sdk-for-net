@@ -1,6 +1,6 @@
 # Release History
 
-## 0.1.0-preview.5 (Unreleased)
+## 0.1.0-preview.5 (2020-08-28)
 
 ### Added
 - `JsonPatchDocument` type to represent JSON Path document.
