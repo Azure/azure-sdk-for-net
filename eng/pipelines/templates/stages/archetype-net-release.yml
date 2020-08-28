@@ -126,6 +126,9 @@ stages:
               pool:
                 vmImage: windows-2019
 
+              variables: 
+                tempVar: $[dependencies.TagRepository.outputs['releaseTag.ReleaseTag'] ]
+
               strategy:
                 runOnce:
                   deploy:
@@ -139,8 +142,10 @@ stages:
                           FileFilter: ${{artifact.name}}.[0-9]*.[0-9]*.[0-9]*
                       - pwsh: |
                           Get-ChildItem -Recurse $(Pipeline.Workspace)/staging
+                          echo "##vso[task.setvariable variable=ReleaseTag;isOutput=true]$(tempVar)"
                         workingDirectory: $(Pipeline.Workspace)
                         displayName: Output Visible Artifacts
+                        name: passVar
                       - task: MSBuild@1
                         displayName: 'Upload Symbols for ${{artifact.name}}'
                         inputs:
@@ -200,14 +205,13 @@ stages:
               displayName: Publish Docs to GitHub pages
               condition: and(succeeded(), ne(variables['Skip.PublishDocs'], 'true'))
               environment: githubio
-              #dependsOn: PublishPackage
-              dependsOn: TagRepository
+              dependsOn: PublishPackage
 
               pool:
                 vmImage: windows-2019
 
               variables: 
-                tempVar: $[dependencies.TagRepository.outputs['releaseTag.ReleaseTag'] ]
+                tempVar: $[dependencies.PublishPackage.outputs['passVar.ReleaseTag'] ]
               strategy:
                 runOnce:
                   deploy:
