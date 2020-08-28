@@ -227,7 +227,7 @@ stages:
                         displayName: Output Visible Artifacts
                       - template: /eng/common/pipelines/templates/steps/publish-blobs.yml
                         parameters:
-                          ReleaseTag: $[TagRepository.outputs['releaseTag.ReleaseTag'] ]
+                          ReleaseTag: $($[TagRepository.outputs['releaseTag.ReleaseTag'] ])
                           FolderForUpload: '$(Pipeline.Workspace)/${{artifact.safeName}}'
                           BlobSASKey: '$(azure-sdk-docs-prod-sas)'
                           BlobName: '$(azure-sdk-docs-prod-blob-name)'
