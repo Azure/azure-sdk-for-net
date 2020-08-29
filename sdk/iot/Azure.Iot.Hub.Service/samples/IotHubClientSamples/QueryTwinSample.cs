@@ -10,13 +10,13 @@ namespace Azure.Iot.Hub.Service.Samples
     /// <summary>
     /// This sample shows how to query the device twins to get data.
     /// </summary>
-    internal class QueryTwinSamples
+    internal class QueryTwinSample
     {
         public readonly IotHubServiceClient IoTHubServiceClient;
         public const int MaxRandomValue = 200;
         public static readonly Random Random = new Random();
 
-        public QueryTwinSamples(IotHubServiceClient client)
+        public QueryTwinSample(IotHubServiceClient client)
         {
             IoTHubServiceClient = client;
         }

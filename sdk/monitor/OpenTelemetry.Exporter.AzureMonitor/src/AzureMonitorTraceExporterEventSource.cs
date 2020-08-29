@@ -30,10 +30,22 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             }
         }
 
+        [NonEvent]
+        public void ConnectionStringError(Exception ex)
+        {
+            if (this.IsEnabled(EventLevel.Error, EventKeywords.All))
+            {
+                this.ConnectionStringError(ex.ToInvariantString());
+            }
+        }
+
         [Event(1, Message = "Failed to export activities: '{0}'", Level = EventLevel.Error)]
         public void FailedExport(string exception) => this.WriteEvent(1, exception);
 
         [Event(2, Message = "Error creating SdkVersion : '{0}'", Level = EventLevel.Warning)]
         public void WarnSdkVersionCreateException(string message) => this.WriteEvent(2, message);
+
+        [Event(3, Message = "Connection String Error: '{0}'", Level = EventLevel.Error)]
+        public void ConnectionStringError(string message) => this.WriteEvent(3, message);
     }
 }
