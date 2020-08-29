@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
-using Microsoft.Azure.Storage;
 
 namespace Microsoft.Azure.WebJobs.Host.Queues
 {

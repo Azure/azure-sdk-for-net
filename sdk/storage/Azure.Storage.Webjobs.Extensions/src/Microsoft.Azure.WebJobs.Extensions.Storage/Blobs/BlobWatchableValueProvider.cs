@@ -3,8 +3,8 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Storage.Blobs.Specialized;
 using Microsoft.Azure.WebJobs.Host.Bindings;
-using Microsoft.Azure.Storage.Blob;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs
 {
@@ -12,7 +12,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs
     internal sealed class BlobWatchableValueProvider : IValueProvider, IWatchable
 #pragma warning restore CS0618 // Type or member is obsolete
     {
-        private readonly ICloudBlob _blob;
+        private readonly BlobBaseClient _blob;
         private readonly object _value;
         private readonly Type _valueType;
 #pragma warning disable CS0618 // Type or member is obsolete
@@ -20,7 +20,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs
 #pragma warning restore CS0618 // Type or member is obsolete
 
 #pragma warning disable CS0618 // Type or member is obsolete
-        public BlobWatchableValueProvider(ICloudBlob blob, object value, Type valueType, IWatcher watcher)
+        public BlobWatchableValueProvider(BlobBaseClient blob, object value, Type valueType, IWatcher watcher)
 #pragma warning restore CS0618 // Type or member is obsolete
         {
             if (value != null && !valueType.IsAssignableFrom(value.GetType()))
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs
         }
 
 #pragma warning disable CS0618 // Type or member is obsolete
-        public static BlobWatchableValueProvider Create<T>(ICloudBlob blob, T value, IWatcher watcher)
+        public static BlobWatchableValueProvider Create<T>(BlobBaseClient blob, T value, IWatcher watcher)
 #pragma warning restore CS0618 // Type or member is obsolete
         {
             return new BlobWatchableValueProvider(blob, value: value, valueType: typeof(T), watcher: watcher);

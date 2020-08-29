@@ -9,12 +9,10 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Blobs.Bindings;
-using Microsoft.Azure.Storage.Blob;
-using Microsoft.Azure.Storage;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
 {
-    internal class FakeCloudBlobStream : CloudBlobStream
+    internal class FakeCloudBlobStream : Stream
     {
         private readonly Stream _inner;
 
@@ -72,7 +70,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             set { _inner.WriteTimeout = value; }
         }
 
-        public override Task CommitAsync()
+        public Task CommitAsync()
         {
             ThrowIfCommitted();
             _committed = true;
@@ -179,11 +177,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             }
         }
 
-        public override void Commit()
+        public void Commit()
         {
             throw new NotImplementedException();
         }
 
+        /*
         public override ICancellableAsyncResult BeginCommit(AsyncCallback callback, object state)
         {
             throw new NotImplementedException();
@@ -202,6 +201,6 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         public override void EndFlush(IAsyncResult asyncResult)
         {
             throw new NotImplementedException();
-        }
+        } */ // TODO (kasobol-msft) check this
     }
 }

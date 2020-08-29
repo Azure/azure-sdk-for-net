@@ -5,7 +5,6 @@ using System;
 using Microsoft.Azure.WebJobs.Extensions.Storage;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Configuration;
-using CloudStorageAccount = Microsoft.Azure.Storage.CloudStorageAccount;
 
 namespace Microsoft.Azure.WebJobs
 {
@@ -72,12 +71,7 @@ namespace Microsoft.Azure.WebJobs
                 throw new InvalidOperationException($"Storage account connection string '{IConfigurationExtensions.GetPrefixedConnectionStringName(name)}' does not exist. Make sure that it is a defined App Setting.");
             }
 
-            if (!CloudStorageAccount.TryParse(connectionString, out CloudStorageAccount cloudStorageAccount))
-            {
-                throw new InvalidOperationException($"Storage account connection string for '{IConfigurationExtensions.GetPrefixedConnectionStringName(name)}' is invalid");
-            }
-
-            return StorageAccount.New(cloudStorageAccount, connectionString, _delegatingHandlerProvider);
+            return StorageAccount.New(connectionString, _delegatingHandlerProvider);
         }
 
         /// <summary>

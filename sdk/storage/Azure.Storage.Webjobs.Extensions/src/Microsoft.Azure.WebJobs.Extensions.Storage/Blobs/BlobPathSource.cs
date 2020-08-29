@@ -48,11 +48,11 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs
                 return new ParameterizedBlobPathSource(containerNamePattern, blobNamePattern, template);
             }
 
-            BlobClient.ValidateContainerName(containerNamePattern);
+            BlobClientExtensions.ValidateContainerName(containerNamePattern);
 
             if (hasBlobName)
             {
-                BlobClient.ValidateBlobName(blobNamePattern);
+                BlobClientExtensions.ValidateBlobName(blobNamePattern);
             }
             return new FixedBlobPathSource(new BlobPath(containerNamePattern, blobNamePattern));
         }

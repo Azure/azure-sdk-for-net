@@ -1,12 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Azure.Storage.Blob;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Specialized;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs
 {
     internal interface IBlobWrittenWatcher
     {
-        void Notify(ICloudBlob blobWritten);
+        void Notify(BlobContainerClient container, BlobBaseClient blobWritten);
     }
 }

@@ -9,13 +9,15 @@ using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Protocols;
-using Microsoft.Azure.Storage;
-using Microsoft.Azure.Storage.Blob;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Microsoft.Azure.WebJobs.Host.Queues.Listeners;
 using System.Globalization;
 using Azure.Storage.Queues.Models;
+using Azure.Storage.Blobs.Specialized;
+using Azure;
+using Microsoft.Azure.WebJobs.Host.Blobs.Bindings;
+using Azure.Storage.Blobs.Models;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 {
@@ -76,16 +78,16 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                 return successResult;
             }
 
-            var container = registration.BlobClient.GetContainerReference(message.ContainerName);
+            var container = registration.BlobClient.GetBlobContainerClient(message.ContainerName);
             string blobName = message.BlobName;
 
-            ICloudBlob blob;
+            BlobBaseClient blob;
 
             try
             {
-                blob = await container.GetBlobReferenceFromServerAsync(blobName).ConfigureAwait(false);
+                blob = await container.GetBlobReferenceFromServerAsync(blobName, cancellationToken).ConfigureAwait(false);
             }
-            catch (StorageException exception) when (exception.IsNotFound() || exception.IsOk())
+            catch (RequestFailedException exception) when (exception.IsNotFound() || exception.IsOk())
             {
                 // If the blob no longer exists, just ignore this message.
                 Logger.BlobNotFound(_logger, blobName, value.MessageId);
@@ -93,12 +95,15 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             }
 
             // Ensure the blob still exists with the same ETag.
-            string possibleETag = blob.Properties.ETag; // set since we fetched from server
+            // TODO (kasobol-msft) check this statefulness, check if we can use ETag without toString conversion
+            //string possibleETag = blob.Properties.ETag; // set since we fetched from server
+            BlobProperties blobProperties = await blob.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+            string possibleETag = blobProperties.ETag.ToString();
 
             // If the blob still exists but the ETag is different, delete the message but do a fast path notification.
             if (!string.Equals(message.ETag, possibleETag, StringComparison.Ordinal))
             {
-                _blobWrittenWatcher.Notify(blob);
+                _blobWrittenWatcher.Notify(container, blob);
                 return successResult;
             }
 
@@ -109,14 +114,14 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             // Include the queue details here.
             IDictionary<string, string> details = QueueTriggerExecutor.PopulateTriggerDetails(value);
 
-            if (blob?.Properties?.Created != null && blob.Properties.Created.HasValue)
+            if (blobProperties.CreatedOn != null)
             {
-                details[BlobCreatedKey] = blob.Properties.Created.Value.ToString(Constants.DateTimeFormatString, CultureInfo.InvariantCulture);
+                details[BlobCreatedKey] = blobProperties.CreatedOn.ToString(Constants.DateTimeFormatString, CultureInfo.InvariantCulture);
             }
 
-            if (blob?.Properties?.LastModified != null && blob.Properties.LastModified.HasValue)
+            if (blobProperties.LastModified != null)
             {
-                details[BlobLastModifiedKey] = blob.Properties.LastModified.Value.ToString(Constants.DateTimeFormatString, CultureInfo.InvariantCulture);
+                details[BlobLastModifiedKey] = blobProperties.LastModified.ToString(Constants.DateTimeFormatString, CultureInfo.InvariantCulture);
             }
 
             TriggeredFunctionData input = new TriggeredFunctionData

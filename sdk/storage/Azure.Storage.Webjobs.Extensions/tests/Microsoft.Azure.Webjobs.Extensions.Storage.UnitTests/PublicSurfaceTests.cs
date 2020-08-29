@@ -25,7 +25,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests
             {
                 "Azure.Core",
                 "Azure.Storage.Queues",
-                "Microsoft.Azure.Storage.Blob",
+                "Azure.Storage.Blobs",
                 "Microsoft.Azure.Storage.Common",
                 "Microsoft.Azure.WebJobs",
                 "Microsoft.Azure.WebJobs.Host",

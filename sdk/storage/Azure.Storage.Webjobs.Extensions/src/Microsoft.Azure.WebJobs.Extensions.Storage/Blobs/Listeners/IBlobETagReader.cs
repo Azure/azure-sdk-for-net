@@ -3,13 +3,13 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Storage.Blob;
+using Azure.Storage.Blobs.Specialized;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 {
     // $$$ Delete this; unused - mock the ICloudBlob instead
     internal interface IBlobETagReader
     {
-        Task<string> GetETagAsync(ICloudBlob blob, CancellationToken cancellationToken);
+        Task<string> GetETagAsync(BlobBaseClient blob, CancellationToken cancellationToken);
     }
 }

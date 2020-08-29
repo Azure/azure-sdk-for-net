@@ -1,16 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Azure.Storage.Blob;
+using Azure.Storage.Blobs;
 using System;
 using System.Collections.Generic;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 {
     // IStorageBlobClients are flyweights; distinct references do not equate to distinct storage accounts.
-    internal class CloudBlobClientComparer : IEqualityComparer<CloudBlobClient>
+    internal class CloudBlobClientComparer : IEqualityComparer<BlobServiceClient>
     {
-        public bool Equals(CloudBlobClient x, CloudBlobClient y)
+        public bool Equals(BlobServiceClient x, BlobServiceClient y)
         {
             if (x == null)
             {
@@ -21,17 +21,17 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                 throw new ArgumentNullException(nameof(y));
             }
 
-            return x.Credentials.AccountName == y.Credentials.AccountName;
+            return x.AccountName == y.AccountName;
         }
 
-        public int GetHashCode(CloudBlobClient obj)
+        public int GetHashCode(BlobServiceClient obj)
         {
             if (obj == null)
             {
                 throw new ArgumentNullException(nameof(obj));
             }
 
-            return obj.Credentials.AccountName.GetHashCode();
+            return obj.AccountName.GetHashCode();
         }
     }
 }

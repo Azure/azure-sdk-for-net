@@ -4,29 +4,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Storage;
-using Microsoft.Azure.Storage.Blob;
+using Azure;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
 {
     internal static class StorageBlobContainerExtensions
     {
-        public static Task<ICloudBlob> GetBlobReferenceForArgumentTypeAsync(this CloudBlobContainer container,
+        public static Task<BlobBaseClient> GetBlobReferenceForArgumentTypeAsync(this BlobContainerClient container,
             string blobName, Type argumentType, CancellationToken cancellationToken)
         {
-            if (argumentType == typeof(CloudBlockBlob))
+            if (argumentType == typeof(BlockBlobClient))
             {
-                ICloudBlob blob = container.GetBlockBlobReference(blobName);
+                BlobBaseClient blob = container.GetBlockBlobClient(blobName);
                 return Task.FromResult(blob);
             }
-            else if (argumentType == typeof(CloudPageBlob))
+            else if (argumentType == typeof(PageBlobClient))
             {
-                ICloudBlob blob = container.GetPageBlobReference(blobName);
+                BlobBaseClient blob = container.GetPageBlobClient(blobName);
                 return Task.FromResult(blob);
             }
-            else if (argumentType == typeof(CloudAppendBlob))
+            else if (argumentType == typeof(AppendBlobClient))
             {
-                ICloudBlob blob = container.GetAppendBlobReference(blobName);
+                BlobBaseClient blob = container.GetAppendBlobClient(blobName);
                 return Task.FromResult(blob);
             }
             else
@@ -35,24 +37,39 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
             }
         }
 
-        private static async Task<ICloudBlob> GetExistingOrNewBlockBlobReferenceAsync(CloudBlobContainer container,
+        public static async Task<BlobBaseClient> GetBlobReferenceFromServerAsync(this BlobContainerClient container, string blobName, CancellationToken cancellationToken = default)
+        {
+            BlobProperties blobProperties = await container.GetBlobClient(blobName).GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+            switch (blobProperties.BlobType)
+            {
+                case BlobType.Append:
+                    return container.GetAppendBlobClient(blobName);
+                case BlobType.Block:
+                    return container.GetBlockBlobClient(blobName);
+                case BlobType.Page:
+                    return container.GetPageBlobClient(blobName);
+                default:
+                    throw new InvalidOperationException();
+            }
+        }
+
+        // TODO (kasobol-msft) would blobclient suffice?
+        private static async Task<BlobBaseClient> GetExistingOrNewBlockBlobReferenceAsync(BlobContainerClient container,
             string blobName, CancellationToken cancellationToken)
         {
             try
             {
                 return await container.GetBlobReferenceFromServerAsync(blobName, cancellationToken).ConfigureAwait(false);
             }
-            catch (StorageException exception)
+            catch (RequestFailedException exception)
             {
-                RequestResult result = exception.RequestInformation;
-
-                if (result == null || result.HttpStatusCode != 404)
+                if (exception.Status != 404)
                 {
                     throw;
                 }
                 else
                 {
-                    return container.GetBlockBlobReference(blobName);
+                    return container.GetBlockBlobClient(blobName);
                 }
             }
         }

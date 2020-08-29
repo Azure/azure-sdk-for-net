@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using Microsoft.Azure.WebJobs.Host.Executors;
-using Microsoft.Azure.Storage.Blob;
 using Azure.Storage.Queues;
+using Azure.Storage.Blobs;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 {
@@ -23,7 +23,8 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
         /// storage account that the blob triggered function is listening
         /// to).
         /// </summary>
-        public CloudBlobClient BlobClient { get; set; }
+        // TODO (kasobol-msft) rename this.
+        public BlobServiceClient BlobClient { get; set; }
 
         /// <summary>
         /// The storage client to use for the poison queue.

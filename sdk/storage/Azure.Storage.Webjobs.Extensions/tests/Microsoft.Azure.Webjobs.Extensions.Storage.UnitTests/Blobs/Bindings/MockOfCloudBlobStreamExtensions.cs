@@ -2,15 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
-using Microsoft.Azure.Storage.Blob;
+using System.IO;
 using Moq;
 using Moq.Language.Flow;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
 {
+    // TODO (kasobol-msft) used ??
     internal static class MockOfCloudBlobStreamExtensions
     {
-        public static ISetup<CloudBlobStream, IAsyncResult> SetupBeginRead(this Mock<CloudBlobStream> mock)
+        public static ISetup<Stream, IAsyncResult> SetupBeginRead(this Mock<Stream> mock)
         {
             if (mock == null)
             {
@@ -21,7 +22,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
                 It.IsAny<AsyncCallback>(), It.IsAny<object>()));
         }
 
-        public static ISetup<CloudBlobStream, IAsyncResult> SetupBeginWrite(this Mock<CloudBlobStream> mock)
+        public static ISetup<Stream, IAsyncResult> SetupBeginWrite(this Mock<Stream> mock)
         {
             if (mock == null)
             {
@@ -32,7 +33,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
                 It.IsAny<AsyncCallback>(), It.IsAny<object>()));
         }
 
-        public static ISetup<CloudBlobStream, int> SetupEndRead(this Mock<CloudBlobStream> mock)
+        public static ISetup<Stream, int> SetupEndRead(this Mock<Stream> mock)
         {
             if (mock == null)
             {
@@ -42,7 +43,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             return mock.Setup(s => s.EndRead(It.IsAny<IAsyncResult>()));
         }
 
-        public static ISetup<CloudBlobStream> SetupEndWrite(this Mock<CloudBlobStream> mock)
+        public static ISetup<Stream> SetupEndWrite(this Mock<Stream> mock)
         {
             if (mock == null)
             {

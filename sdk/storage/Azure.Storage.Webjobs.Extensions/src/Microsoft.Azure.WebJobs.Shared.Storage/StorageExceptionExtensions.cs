@@ -5,11 +5,11 @@ using System;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Storage.Queues.Models;
-using Microsoft.Azure.Storage;
 
 namespace Microsoft.Azure.WebJobs
 {
-    /// <summary>Provides extension methods for the <see cref="StorageException"/> class.</summary>
+    // TODO (kasobol-msft) Rename this ?
+    /// <summary>Provides extension methods for the <see cref="RequestFailedException"/> class.</summary>
     internal static class StorageExceptionExtensions
     {
         public static bool IsServerSideError(this RequestFailedException exception)
@@ -54,33 +54,19 @@ namespace Microsoft.Azure.WebJobs
         /// <see langword="true"/> if the exception is due to a 409 Conflict error with the error code
         /// BlobAlreadyExists; otherwise <see langword="false"/>.
         /// </returns>
-        public static bool IsConflictBlobAlreadyExists(this StorageException exception)
+        public static bool IsConflictBlobAlreadyExists(this RequestFailedException exception)
         {
             if (exception == null)
             {
                 throw new ArgumentNullException(nameof(exception));
             }
 
-            RequestResult result = exception.RequestInformation;
-
-            if (result == null)
+            if (exception.Status != 409)
             {
                 return false;
             }
 
-            if (result.HttpStatusCode != 409)
-            {
-                return false;
-            }
-
-            StorageExtendedErrorInformation extendedInformation = result.ExtendedErrorInformation;
-
-            if (extendedInformation == null)
-            {
-                return false;
-            }
-
-            return extendedInformation.ErrorCode == "BlobAlreadyExists";
+            return exception.ErrorCode == "BlobAlreadyExists";
         }
 
         /// <summary>
@@ -91,33 +77,19 @@ namespace Microsoft.Azure.WebJobs
         /// <see langword="true"/> if the exception is due to a 409 Conflict error with the error code
         /// LeaseAlreadyPresent; otherwise <see langword="false"/>.
         /// </returns>
-        public static bool IsConflictLeaseAlreadyPresent(this StorageException exception)
+        public static bool IsConflictLeaseAlreadyPresent(this RequestFailedException exception)
         {
             if (exception == null)
             {
                 throw new ArgumentNullException(nameof(exception));
             }
 
-            RequestResult result = exception.RequestInformation;
-
-            if (result == null)
+            if (exception.Status != 409)
             {
                 return false;
             }
 
-            if (result.HttpStatusCode != 409)
-            {
-                return false;
-            }
-
-            StorageExtendedErrorInformation extendedInformation = result.ExtendedErrorInformation;
-
-            if (extendedInformation == null)
-            {
-                return false;
-            }
-
-            return extendedInformation.ErrorCode == "LeaseAlreadyPresent";
+            return exception.ErrorCode == "LeaseAlreadyPresent";
         }
 
         /// <summary>
@@ -129,33 +101,19 @@ namespace Microsoft.Azure.WebJobs
         /// <see langword="true"/> if the exception is due to a 409 Conflict error with the error code
         /// LeaseIdMismatchWithLeaseOperation; otherwise <see langword="false"/>.
         /// </returns>
-        public static bool IsConflictLeaseIdMismatchWithLeaseOperation(this StorageException exception)
+        public static bool IsConflictLeaseIdMismatchWithLeaseOperation(this RequestFailedException exception)
         {
             if (exception == null)
             {
                 throw new ArgumentNullException(nameof(exception));
             }
 
-            RequestResult result = exception.RequestInformation;
-
-            if (result == null)
+            if (exception.Status != 409)
             {
                 return false;
             }
 
-            if (result.HttpStatusCode != 409)
-            {
-                return false;
-            }
-
-            StorageExtendedErrorInformation extendedInformation = result.ExtendedErrorInformation;
-
-            if (extendedInformation == null)
-            {
-                return false;
-            }
-
-            return extendedInformation.ErrorCode == "LeaseIdMismatchWithLeaseOperation";
+            return exception.ErrorCode == "LeaseIdMismatchWithLeaseOperation";
         }
 
         /// <summary>
@@ -187,21 +145,14 @@ namespace Microsoft.Azure.WebJobs
         /// <returns>
         /// <see langword="true"/> if the exception is due to a 404 Not Found error; otherwise <see langword="false"/>.
         /// </returns>
-        public static bool IsNotFound(this StorageException exception)
+        public static bool IsNotFound(this RequestFailedException exception)
         {
             if (exception == null)
             {
                 throw new ArgumentNullException(nameof(exception));
             }
 
-            RequestResult result = exception.RequestInformation;
-
-            if (result == null)
-            {
-                return false;
-            }
-
-            return result.HttpStatusCode == 404;
+            return exception.Status == 404;
         }
 
         /// <summary>
@@ -212,33 +163,19 @@ namespace Microsoft.Azure.WebJobs
         /// <see langword="true"/> if the exception is due to a 404 Not Found error with the error code
         /// ContainerNotFound; otherwise <see langword="false"/>.
         /// </returns>
-        public static bool IsNotFoundContainerNotFound(this StorageException exception)
+        public static bool IsNotFoundContainerNotFound(this RequestFailedException exception)
         {
             if (exception == null)
             {
                 throw new ArgumentNullException(nameof(exception));
             }
 
-            RequestResult result = exception.RequestInformation;
-
-            if (result == null)
+            if (exception.Status != 404)
             {
                 return false;
             }
 
-            if (result.HttpStatusCode != 404)
-            {
-                return false;
-            }
-
-            StorageExtendedErrorInformation extendedInformation = result.ExtendedErrorInformation;
-
-            if (extendedInformation == null)
-            {
-                return false;
-            }
-
-            return extendedInformation.ErrorCode == "ContainerNotFound";
+            return exception.ErrorCode == "ContainerNotFound";
         }
 
 
@@ -252,33 +189,19 @@ namespace Microsoft.Azure.WebJobs
         /// <see langword="true"/> if the exception is due to a 404 Not Found error with the error code BlobNotFound or
         /// ContainerNotFound; otherwise <see langword="false"/>.
         /// </returns>
-        public static bool IsNotFoundBlobOrContainerNotFound(this StorageException exception)
+        public static bool IsNotFoundBlobOrContainerNotFound(this RequestFailedException exception)
         {
             if (exception == null)
             {
                 throw new ArgumentNullException(nameof(exception));
             }
 
-            RequestResult result = exception.RequestInformation;
-
-            if (result == null)
+            if (exception.Status != 404)
             {
                 return false;
             }
 
-            if (result.HttpStatusCode != 404)
-            {
-                return false;
-            }
-
-            StorageExtendedErrorInformation extendedInformation = result.ExtendedErrorInformation;
-
-            if (extendedInformation == null)
-            {
-                return false;
-            }
-
-            string errorCode = extendedInformation.ErrorCode;
+            string errorCode = exception.ErrorCode;
             return errorCode == "BlobNotFound" || errorCode == "ContainerNotFound";
         }
 
@@ -336,21 +259,14 @@ namespace Microsoft.Azure.WebJobs
         /// <see langword="true"/> if the exception occurred despite a 200 OK response; otherwise
         /// <see langword="false"/>.
         /// </returns>
-        public static bool IsOk(this StorageException exception)
+        public static bool IsOk(this RequestFailedException exception)
         {
             if (exception == null)
             {
                 throw new ArgumentNullException(nameof(exception));
             }
 
-            RequestResult result = exception.RequestInformation;
-
-            if (result == null)
-            {
-                return false;
-            }
-
-            return result.HttpStatusCode == 200;
+            return exception.Status == 200;
         }
 
         /// <summary>
@@ -362,33 +278,19 @@ namespace Microsoft.Azure.WebJobs
         /// <see langword="true"/> if the exception is due to a 412 Precondition Failed error with the error code
         /// LeaseIdMissing; otherwise <see langword="false"/>.
         /// </returns>
-        public static bool IsPreconditionFailedLeaseIdMissing(this StorageException exception)
+        public static bool IsPreconditionFailedLeaseIdMissing(this RequestFailedException exception)
         {
             if (exception == null)
             {
                 throw new ArgumentNullException(nameof(exception));
             }
 
-            RequestResult result = exception.RequestInformation;
-
-            if (result == null)
+            if (exception.Status != 412)
             {
                 return false;
             }
 
-            if (result.HttpStatusCode != 412)
-            {
-                return false;
-            }
-
-            StorageExtendedErrorInformation extendedInformation = result.ExtendedErrorInformation;
-
-            if (extendedInformation == null)
-            {
-                return false;
-            }
-
-            return extendedInformation.ErrorCode == "LeaseIdMissing";
+            return exception.ErrorCode == "LeaseIdMissing";
         }
 
         /// <summary>
@@ -399,41 +301,28 @@ namespace Microsoft.Azure.WebJobs
         /// <see langword="true"/> if the exception is due to a 412 Precondition Failed error with the error code
         /// LeaseLost; otherwise <see langword="false"/>.
         /// </returns>
-        public static bool IsPreconditionFailedLeaseLost(this StorageException exception)
+        public static bool IsPreconditionFailedLeaseLost(this RequestFailedException exception)
         {
             if (exception == null)
             {
                 throw new ArgumentNullException(nameof(exception));
             }
 
-            RequestResult result = exception.RequestInformation;
-
-            if (result == null)
+            if (exception.Status != 412)
             {
                 return false;
             }
 
-            if (result.HttpStatusCode != 412)
-            {
-                return false;
-            }
-
-            StorageExtendedErrorInformation extendedInformation = result.ExtendedErrorInformation;
-
-            if (extendedInformation == null)
-            {
-                return false;
-            }
-
-            return extendedInformation.ErrorCode == "LeaseLost";
+            return exception.ErrorCode == "LeaseLost";
         }
 
+        // TODO (kasobol-msft) is this needed??
         /// <summary>
         /// Determines whether the exception is due to a task cancellation.
         /// </summary>
         /// <param name="exception">The storage exception.</param>
         /// <returns><see langword="true"/> if the inner exception is a <see cref="TaskCanceledException"/>. Otherwise, <see langword="false"/>.</returns>
-        public static bool IsTaskCanceled(this StorageException exception)
+        public static bool IsTaskCanceled(this RequestFailedException exception)
         {
             if (exception == null)
             {

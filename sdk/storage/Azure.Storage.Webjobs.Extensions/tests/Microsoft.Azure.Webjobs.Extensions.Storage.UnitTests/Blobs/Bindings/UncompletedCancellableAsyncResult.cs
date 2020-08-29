@@ -3,7 +3,6 @@
 
 using System;
 using System.Threading;
-using Microsoft.Azure.Storage;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
 {

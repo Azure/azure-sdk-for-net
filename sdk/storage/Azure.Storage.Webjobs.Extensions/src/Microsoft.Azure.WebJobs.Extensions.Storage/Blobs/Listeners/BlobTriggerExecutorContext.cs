@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Azure.Storage.Blob;
+using Azure.Storage.Blobs.Specialized;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 {
     internal class BlobTriggerExecutorContext
     {
-        public ICloudBlob Blob { get; set; }
+        public BlobBaseClient Blob { get; set; }
 
         /// <summary>
         /// The Id of the parent polling operation. This can be the ClientRequestId used to poll the container or

@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Protocols;
-using Microsoft.Azure.Storage.Blob;
+using System.IO;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
 {
@@ -17,12 +17,12 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
     {
         private readonly IBlobCommitedAction _committedAction;
 
-        private bool _committed;
+        // private bool _committed;
         private bool _completed;
         private long _countWritten;
         private bool _flushed;
 
-        public WatchableCloudBlobStream(CloudBlobStream inner, IBlobCommitedAction committedAction)
+        public WatchableCloudBlobStream(Stream inner, IBlobCommitedAction committedAction)
             : base(inner)
         {
             _committedAction = committedAction;
@@ -33,15 +33,19 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
             get
             {
                 // Be nicer than the SDK. Return false when calling Write would throw.
-                return base.CanWrite && !_committed;
+                return base.CanWrite /*&& !_committed */;
             }
         }
 
+        /*
         public bool HasCommitted
         {
-            get { return _committed; }
+            get { return_committed; }
         }
+        */
 
+        // TODO (kasobol-msft) find replacement
+        /*
         public override Task CommitAsync() => CommitAsync(CancellationToken.None);
 
         public async Task CommitAsync(CancellationToken cancellationToken)
@@ -55,15 +59,19 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
                 await _committedAction.ExecuteAsync(cancellationToken).ConfigureAwait(false);
             }
         }
+        */
 
         public override void Close()
         {
+            // TODO (kasobol-msft) find replacement
+            /*
             if (!_committed)
             {
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
                 Task.Run(async () => await CommitAsync().ConfigureAwait(false)).GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
             }
+            */
 
             base.Close();
         }
@@ -135,19 +143,25 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
         /// </returns>
         public async Task<bool> CompleteAsync(CancellationToken cancellationToken)
         {
+            // TODO (kasobol-msft) find replacement
+            /*
             if (!_committed && (_countWritten > 0 || _flushed))
             {
                 await CommitAsync(cancellationToken).ConfigureAwait(false);
             }
+            */
+
+            //TODO (kasobol-msft) this is added artificailly
+            cancellationToken.ThrowIfCancellationRequested();
 
             _completed = true;
 
-            return _committed;
+            return await Task.FromResult(false /*_committed*/).ConfigureAwait(false);
         }
 
         public ParameterLog GetStatus()
         {
-            if (_committed || _countWritten > 0 || _flushed)
+            if (/* _committed || */ _countWritten > 0 || _flushed)
             {
                 return new WriteBlobParameterLog { WasWritten = true, BytesWritten = _countWritten };
             }

@@ -3,8 +3,9 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Storage;
-using Microsoft.Azure.Storage.Blob;
+using Azure;
+using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 {
@@ -21,13 +22,14 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             get { return Singleton; }
         }
 
-        public async Task<string> GetETagAsync(ICloudBlob blob, CancellationToken cancellationToken)
+        public async Task<string> GetETagAsync(BlobBaseClient blob, CancellationToken cancellationToken)
         {
             try
             {
-                await blob.FetchAttributesAsync(cancellationToken).ConfigureAwait(false);
+                BlobProperties blobProperties = await blob.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                return blobProperties.ETag.ToString(); // TODO (kasobol-msft) should we return ETag ?
             }
-            catch (StorageException exception)
+            catch (RequestFailedException exception)
             {
                 // Note that specific exception codes are not available for FetchAttributes, which makes a HEAD request.
 
@@ -47,8 +49,6 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                     throw;
                 }
             }
-
-            return blob.Properties.ETag;
         }
     }
 }

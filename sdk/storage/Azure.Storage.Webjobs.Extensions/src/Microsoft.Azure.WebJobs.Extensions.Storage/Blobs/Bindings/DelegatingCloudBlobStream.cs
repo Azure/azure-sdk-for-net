@@ -5,16 +5,15 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Storage;
-using Microsoft.Azure.Storage.Blob;
 
+// TODO (kasobol-msft) investigate replacement of this
 namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
 {
-    internal class DelegatingCloudBlobStream : CloudBlobStream
+    internal class DelegatingCloudBlobStream : Stream
     {
-        private readonly CloudBlobStream _inner;
+        private readonly Stream _inner;
 
-        public DelegatingCloudBlobStream(CloudBlobStream inner)
+        public DelegatingCloudBlobStream(Stream inner)
         {
             _inner = inner;
         }
@@ -144,7 +143,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
             _inner.WriteByte(value);
         }
 
-        public override Task CommitAsync()
+        /* public override Task CommitAsync()
         {
             return _inner.CommitAsync();
         }
@@ -172,6 +171,6 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
         public override void EndFlush(IAsyncResult asyncResult)
         {
             _inner.EndFlush(asyncResult);
-        }
+        }*/
     }
 }

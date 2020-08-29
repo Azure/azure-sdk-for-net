@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Blobs.Listeners;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Listeners;
-using Microsoft.Azure.Storage.Blob;
 using Xunit;
 using Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests;
+using Azure.Storage.Blobs.Specialized;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
 {
@@ -27,10 +27,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
         {
             const string containerName = "container";
             var account = CreateFakeStorageAccount();
-            var container = account.CreateCloudBlobClient().GetContainerReference(containerName);
+            var blobServiceClient = account.CreateBlobServiceClient();
+            var container = blobServiceClient.GetBlobContainerClient(containerName);
             IBlobListenerStrategy product = new ScanContainersStrategy();
             LambdaBlobTriggerExecutor executor = new LambdaBlobTriggerExecutor();
-            product.Register(container, executor);
+            product.Register(blobServiceClient, container, executor);
             product.Start();
 
             executor.ExecuteLambda = (_) =>
@@ -40,7 +41,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             product.Execute();
 
             const string expectedBlobName = "foo1.csv";
-            var blob = container.GetBlockBlobReference(expectedBlobName);
+            var blob = container.GetBlockBlobClient(expectedBlobName);
             await container.CreateIfNotExistsAsync();
             await blob.UploadTextAsync("ignore");
 
@@ -69,7 +70,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
 
         private class LambdaBlobTriggerExecutor : ITriggerExecutor<BlobTriggerExecutorContext>
         {
-            public Func<ICloudBlob, bool> ExecuteLambda { get; set; }
+            public Func<BlobBaseClient, bool> ExecuteLambda { get; set; }
 
             public Task<FunctionResult> ExecuteAsync(BlobTriggerExecutorContext value, CancellationToken cancellationToken)
             {

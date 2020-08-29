@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
-using Microsoft.Azure.Storage;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Protocols;
@@ -178,7 +177,6 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
             }
 
             QueueMessage[] batch = null;
-            string clientRequestId = Guid.NewGuid().ToString();
             Stopwatch sw = null;
             try
             {
@@ -196,12 +194,12 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
                 if (_queueExists.Value)
                 {
                     sw = Stopwatch.StartNew();
-                    OperationContext context = new OperationContext { ClientRequestID = clientRequestId };
 
-                    batch = await _queue.ReceiveMessagesAsync(_queueProcessor.BatchSize, _visibilityTimeout, cancellationToken).ConfigureAwait(false);
+                    Response<QueueMessage[]> response = await _queue.ReceiveMessagesAsync(_queueProcessor.BatchSize, _visibilityTimeout, cancellationToken).ConfigureAwait(false);
+                    batch = response.Value;
 
                     int count = batch?.Count() ?? -1;
-                    Logger.GetMessages(_logger, _functionDescriptor.LogName, _queue.Name, context.ClientRequestID, count, sw.ElapsedMilliseconds);
+                    Logger.GetMessages(_logger, _functionDescriptor.LogName, _queue.Name, response.GetRawResponse().ClientRequestId, count, sw.ElapsedMilliseconds);
                 }
             }
             catch (RequestFailedException exception)
@@ -216,7 +214,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
                     exception.IsServerSideError())
                 {
                     long pollLatency = sw?.ElapsedMilliseconds ?? -1;
-                    Logger.HandlingStorageException(_logger, _functionDescriptor.LogName, _queue.Name, clientRequestId, pollLatency, exception);
+                    Logger.HandlingStorageException(_logger, _functionDescriptor.LogName, _queue.Name, "TODO (kasobol-msft) here was clientid", pollLatency, exception);
 
                     // Back off when no message is available, or when
                     // transient errors occur
@@ -331,7 +329,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
                 // Only cancel completion or update of the message if a non-graceful shutdown is requested via _shutdownCancellationTokenSource.
                 await _queueProcessor.CompleteProcessingMessageAsync(message, result, _shutdownCancellationTokenSource.Token).ConfigureAwait(false);
             }
-            catch (StorageException ex) when (ex.IsTaskCanceled()) // TODO (kasobol-msft) check this exception
+            catch (RequestFailedException ex) when (ex.IsTaskCanceled()) // TODO (kasobol-msft) check this exception is this needed ?
             {
                 // TaskCanceledExceptions may be wrapped in StorageException.
             }

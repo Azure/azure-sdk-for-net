@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Azure.Storage.Blob;
 using Xunit;
 using Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Specialized;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
@@ -31,12 +32,12 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             // Arrange
             var account = CreateFakeStorageAccount();
             var container = CreateContainer(account, ContainerName);
-            CloudBlockBlob blob = container.GetBlockBlobReference(BlobName);
+            var blob = container.GetBlockBlobClient(BlobName);
 
             await blob.UploadTextAsync("ignore");
 
             // Act
-            ICloudBlob result = await RunTriggerAsync<ICloudBlob>(account, typeof(BindToCloudBlobProgram),
+            BlobBaseClient result = await RunTriggerAsync<BlobBaseClient>(account, typeof(BindToCloudBlobProgram),
                 (s) => BindToCloudBlobProgram.TaskSource = s);
 
             // Assert
@@ -45,9 +46,9 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
         private class BindToCloudBlobProgram
         {
-            public static TaskCompletionSource<ICloudBlob> TaskSource { get; set; }
+            public static TaskCompletionSource<BlobBaseClient> TaskSource { get; set; }
 
-            public static void Run([BlobTrigger(BlobPath)] ICloudBlob blob)
+            public static void Run([BlobTrigger(BlobPath)] BlobBaseClient blob) // TODO (kasobol-msft how about binding to BlobClient??
             {
                 TaskSource.TrySetResult(blob);
             }
@@ -74,8 +75,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
             // Set the binding data, and verify it's accessible in the function.
             var container = CreateContainer(account, ContainerName);
-            var blob = container.GetBlockBlobReference(BlobName);
-            blob.Metadata["m1"] = "v1";
+            var blob = container.GetBlockBlobClient(BlobName);
+            // blob.Metadata["m1"] = "v1"; TODO (kasobol-msft) fix this
 
             await host.GetJobHost().CallAsync(typeof(BindToCloudBlob2Program).GetMethod(nameof(BindToCloudBlob2Program.Run)), new { blob });
 
@@ -86,8 +87,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             public bool Success;
             public void Run(
-                [BlobTrigger(BlobPath)] ICloudBlob blob,
-                [Blob("container/{metadata.m1}")] ICloudBlob blob1
+                [BlobTrigger(BlobPath)] BlobBaseClient blob,
+                [Blob("container/{metadata.m1}")] BlobBaseClient blob1
                 )
             {
                 Assert.Equal("v1", blob1.Name);
@@ -95,10 +96,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
 
-        private static CloudBlobContainer CreateContainer(StorageAccount account, string containerName)
+        private static BlobContainerClient CreateContainer(StorageAccount account, string containerName)
         {
-            var client = account.CreateCloudBlobClient();
-            CloudBlobContainer container = client.GetContainerReference(containerName);
+            var client = account.CreateBlobServiceClient();
+            var container = client.GetBlobContainerClient(containerName);
             container.CreateIfNotExistsAsync().GetAwaiter().GetResult();
             return container;
         }

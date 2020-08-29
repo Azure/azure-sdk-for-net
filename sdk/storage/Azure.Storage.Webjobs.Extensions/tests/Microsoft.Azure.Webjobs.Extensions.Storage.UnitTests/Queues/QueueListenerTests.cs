@@ -17,7 +17,6 @@ using Microsoft.Azure.WebJobs.Host.Timers;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
-using Microsoft.Azure.Storage;
 using Moq;
 using Xunit;
 using Azure.Storage.Queues;

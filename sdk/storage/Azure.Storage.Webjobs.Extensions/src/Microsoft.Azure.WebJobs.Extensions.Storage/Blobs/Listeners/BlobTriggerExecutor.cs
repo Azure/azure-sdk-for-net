@@ -6,7 +6,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Storage.Blob;
+using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Protocols;
@@ -41,7 +42,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 
         public async Task<FunctionResult> ExecuteAsync(BlobTriggerExecutorContext context, CancellationToken cancellationToken)
         {
-            ICloudBlob value = context.Blob;
+            BlobBaseClient value = context.Blob;
             BlobTriggerSource triggerSource = context.TriggerSource;
             string pollId = context.PollId;
 
@@ -68,7 +69,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                 return new FunctionResult(true);
             }
 
-            var receiptBlob = _receiptManager.CreateReference(_hostId, _functionDescriptor.Id, value.Container.Name,
+            var receiptBlob = _receiptManager.CreateReference(_hostId, _functionDescriptor.Id, value.BlobContainerName,
                 value.Name, possibleETag);
 
             // Check for the completed receipt. If it's already there, noop.
@@ -119,11 +120,13 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                 // complete the receipt and release the lease.
 
                 // Enqueue a message: function ID + blob path + ETag
+                // TODO (kasobol-msft) should we pull properties when we resolve blob reference?
+                BlobProperties blobProperties = await value.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                 BlobTriggerMessage message = new BlobTriggerMessage
                 {
                     FunctionId = _functionDescriptor.Id,
-                    BlobType = value.BlobType,
-                    ContainerName = value.Container.Name,
+                    BlobType = blobProperties.BlobType,
+                    ContainerName = value.BlobContainerName,
                     BlobName = value.Name,
                     ETag = possibleETag
                 };

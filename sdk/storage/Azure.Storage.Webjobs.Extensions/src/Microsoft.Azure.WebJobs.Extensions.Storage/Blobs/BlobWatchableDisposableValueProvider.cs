@@ -4,7 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Bindings;
-using Microsoft.Azure.Storage.Blob;
+using Azure.Storage.Blobs.Specialized;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs
 {
@@ -12,7 +12,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs
     internal sealed class BlobWatchableDisposableValueProvider : IValueProvider, IWatchable, IDisposable
 #pragma warning restore CS0618 // Type or member is obsolete
     {
-        private readonly ICloudBlob _blob;
+        private readonly BlobBaseClient _blob;
         private readonly object _value;
         private readonly Type _valueType;
 #pragma warning disable CS0618 // Type or member is obsolete
@@ -23,7 +23,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs
         private bool _disposed;
 
 #pragma warning disable CS0618 // Type or member is obsolete
-        public BlobWatchableDisposableValueProvider(ICloudBlob blob, object value, Type valueType, IWatcher watcher,
+        public BlobWatchableDisposableValueProvider(BlobBaseClient blob, object value, Type valueType, IWatcher watcher,
 #pragma warning restore CS0618 // Type or member is obsolete
             IDisposable disposable)
         {

@@ -4,7 +4,8 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using Microsoft.Azure.Storage.Blob;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Specialized;
 using Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests;
 using Xunit;
 
@@ -30,8 +31,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             // Arrange
             StorageAccount account = await CreateFakeStorageAccountAsync();
-            CloudBlobContainer container = await CreateContainerAsync(account, ContainerName);
-            CloudBlockBlob inputBlob = container.GetBlockBlobReference(BlobName);
+            var container = await CreateContainerAsync(account, ContainerName);
+            var inputBlob = container.GetBlockBlobClient(BlobName);
             await inputBlob.UploadTextAsync("15");
 
             // Act
@@ -39,15 +40,15 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 (s) => BlobTriggerToQueueTriggerToBlobProgram.TaskSource = s);
 
             // Assert
-            CloudBlockBlob outputBlob = container.GetBlockBlobReference(OutputBlobName);
-            string content = outputBlob.DownloadText();
+            var outputBlob = container.GetBlockBlobClient(OutputBlobName);
+            string content = await outputBlob.DownloadTextAsync();
             Assert.Equal("16", content);
         }
 
-        private static async Task<CloudBlobContainer> CreateContainerAsync(StorageAccount account, string containerName)
+        private static async Task<BlobContainerClient> CreateContainerAsync(StorageAccount account, string containerName)
         {
-            CloudBlobClient client = account.CreateCloudBlobClient();
-            CloudBlobContainer container = client.GetContainerReference(containerName);
+            var client = account.CreateBlobServiceClient();
+            var container = client.GetBlobContainerClient(containerName);
             await container.CreateIfNotExistsAsync();
             return container;
         }

@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Diagnostics.CodeAnalysis;
-using Microsoft.Azure.Storage.Blob;
+using Azure.Storage.Blobs.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -22,6 +22,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
         public string FunctionId { get; set; }
 
         // $$$ Ignored this?
+        // TODO (kasobol-msft) should we use SDK's model here ??
         [JsonConverter(typeof(StringEnumConverter))]
         public BlobType BlobType { get; set; }
 

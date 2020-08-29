@@ -2,14 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
-using Microsoft.Azure.WebJobs.Host.Converters;
-using Microsoft.Azure.Storage.Blob;
+using Azure.Storage.Blobs.Specialized;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs
 {
-    internal class StorageBlobConverter<T> : IConverter<ICloudBlob, T> where T : class, ICloudBlob
+    internal class StorageBlobConverter<T> : IConverter<BlobBaseClient, T> where T : BlobBaseClient
     {
-        public T Convert(ICloudBlob input)
+        public T Convert(BlobBaseClient input)
         {
             if (input == null)
             {

@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Storage.Queues" VersionOverride="12.4.1"/>
-    <PackageReference Include="Microsoft.Azure.Storage.Blob" />
+    <PackageReference Include="Azure.Storage.Blobs" VersionOverride="12.5.1"/>
     <PackageReference Include="Microsoft.Azure.WebJobs" />
     <PackageReference Include="Microsoft.Extensions.Logging" VersionOverride="2.1.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />

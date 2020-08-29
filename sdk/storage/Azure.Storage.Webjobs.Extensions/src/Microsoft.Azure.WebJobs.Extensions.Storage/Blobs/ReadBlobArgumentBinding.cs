@@ -4,27 +4,31 @@
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Bindings;
-using Microsoft.Azure.Storage;
 using System.Threading;
-using Microsoft.Azure.Storage.Blob;
+using Azure.Storage.Blobs.Specialized;
+using Azure;
+using Azure.Storage.Blobs.Models;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs
 {
     internal static class ReadBlobArgumentBinding
     {
-        public static Task<WatchableReadStream> TryBindStreamAsync(ICloudBlob blob, ValueBindingContext context)
+        public static Task<WatchableReadStream> TryBindStreamAsync(BlobBaseClient blob, ValueBindingContext context)
         {
             return TryBindStreamAsync(blob, context.CancellationToken);
         }
 
-        public static async Task<WatchableReadStream> TryBindStreamAsync(ICloudBlob blob, CancellationToken cancellationToken)
+        public static async Task<WatchableReadStream> TryBindStreamAsync(BlobBaseClient blob, CancellationToken cancellationToken)
         {
             Stream rawStream;
             try
             {
-                rawStream = await blob.OpenReadAsync(cancellationToken).ConfigureAwait(false);
+                // TODO (kasobol-msft) find replacement
+                //rawStream = await blob.OpenReadAsync(cancellationToken).ConfigureAwait(false);
+                BlobDownloadInfo blobDownloadInfo = await blob.DownloadAsync(cancellationToken).ConfigureAwait(false);
+                rawStream = blobDownloadInfo.Content;
             }
-            catch (StorageException exception)
+            catch (RequestFailedException exception)
             {
                 // Testing generic error case since specific error codes are not available for FetchAttributes
                 // (HEAD request), including OpenRead.

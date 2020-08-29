@@ -2,10 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Storage.Blobs;
 using Azure.Storage.Queues;
-using Microsoft.Azure.Storage.Blob;
 using Microsoft.Azure.WebJobs.Extensions.Storage;
-using CloudStorageAccount = Microsoft.Azure.Storage.CloudStorageAccount;
 
 namespace Microsoft.Azure.WebJobs
 {
@@ -18,12 +17,6 @@ namespace Microsoft.Azure.WebJobs
     {
         private readonly IDelegatingHandlerProvider _delegatingHandlerProvider;
         private readonly string _connectionString;
-
-        /// <summary>
-        /// Get the real azure storage account. Only use this if you explicitly need to bind to the <see cref="CloudStorageAccount"/>,
-        /// else use the virtuals.
-        /// </summary>
-        public CloudStorageAccount SdkObject { get; protected set; }
 
         /// <summary>
         /// TODO.
@@ -50,20 +43,19 @@ namespace Microsoft.Azure.WebJobs
         /// <returns></returns>
         public static StorageAccount NewFromConnectionString(string accountConnectionString)
         {
-            var account = CloudStorageAccount.Parse(accountConnectionString);
-            return New(account, accountConnectionString);
+            return New(accountConnectionString, null);
         }
 
         /// <summary>
         /// TODO.
         /// </summary>
-        /// <param name="account"></param>
         /// <param name="connectionString"></param>
         /// <param name="delegatingHandlerProvider"></param>
         /// <returns></returns>
-        public static StorageAccount New(CloudStorageAccount account, string connectionString, IDelegatingHandlerProvider delegatingHandlerProvider = null)
+        // TODO (kasobol-msft) delegating handler ?
+        public static StorageAccount New(string connectionString, IDelegatingHandlerProvider delegatingHandlerProvider = null)
         {
-            return new StorageAccount(delegatingHandlerProvider, connectionString) { SdkObject = account };
+            return new StorageAccount(delegatingHandlerProvider, connectionString);
         }
 
         /// <summary>
@@ -73,9 +65,11 @@ namespace Microsoft.Azure.WebJobs
         public virtual bool IsDevelopmentStorageAccount()
         {
             // see the section "Addressing local storage resources" in http://msdn.microsoft.com/en-us/library/windowsazure/hh403989.aspx
+            // TODO (kasobol-msft) is there better way?
+            var blobServiceClient = CreateBlobServiceClient();
             return String.Equals(
-                SdkObject.BlobEndpoint.PathAndQuery.TrimStart('/'),
-                SdkObject.Credentials.AccountName,
+                blobServiceClient.Uri.PathAndQuery.TrimStart('/'),
+                blobServiceClient.AccountName,
                 StringComparison.OrdinalIgnoreCase);
         }
 
@@ -84,21 +78,17 @@ namespace Microsoft.Azure.WebJobs
         /// </summary>
         public virtual string Name
         {
-            get { return SdkObject.Credentials.AccountName; }
+            // TODO (kasobol-msft) is there better way?
+            get { return CreateBlobServiceClient().AccountName; }
         }
-
-        /// <summary>
-        /// TODO.
-        /// </summary>
-        public virtual Uri BlobEndpoint => SdkObject.BlobEndpoint;
 
         /// <summary>
         /// TODO
         /// </summary>
         /// <returns></returns>
-        public virtual CloudBlobClient CreateCloudBlobClient()
+        public virtual BlobServiceClient CreateBlobServiceClient()
         {
-            return new CloudBlobClient(SdkObject.BlobStorageUri, SdkObject.Credentials, _delegatingHandlerProvider?.Create());
+            return new BlobServiceClient(_connectionString);
         }
 
         /// <summary>

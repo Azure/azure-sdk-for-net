@@ -8,8 +8,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Storage;
-using Microsoft.Azure.Storage.Blob;
+using Azure;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
 using Microsoft.Azure.WebJobs.Extensions.Storage;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Listeners;
@@ -21,7 +23,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
     internal sealed partial class ScanBlobScanLogHybridPollingStrategy : IBlobListenerStrategy
     {
         private static readonly TimeSpan PollingInterval = TimeSpan.FromSeconds(10);
-        private readonly IDictionary<CloudBlobContainer, ContainerScanInfo> _scanInfo;
+        private readonly IDictionary<BlobContainerClient, ContainerScanInfo> _scanInfo;
         private readonly ConcurrentQueue<BlobNotification> _blobsFoundFromScanOrNotification;
         private readonly IWebJobsExceptionHandler _exceptionHandler;
         private readonly ILogger<BlobListener> _logger;
@@ -37,7 +39,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
         public ScanBlobScanLogHybridPollingStrategy(IBlobScanInfoManager blobScanInfoManager, IWebJobsExceptionHandler exceptionHandler, ILogger<BlobListener> logger) : base()
         {
             _blobScanInfoManager = blobScanInfoManager;
-            _scanInfo = new Dictionary<CloudBlobContainer, ContainerScanInfo>(new CloudBlobContainerComparer());
+            _scanInfo = new Dictionary<BlobContainerClient, ContainerScanInfo>(new CloudBlobContainerComparer());
             _pollLogStrategy = new PollLogsStrategy(exceptionHandler, logger, performInitialScan: false);
             _cancellationTokenSource = new CancellationTokenSource();
             _blobsFoundFromScanOrNotification = new ConcurrentQueue<BlobNotification>();
@@ -58,19 +60,19 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             _cancellationTokenSource.Cancel();
         }
 
-        public async Task RegisterAsync(CloudBlobContainer container, ITriggerExecutor<BlobTriggerExecutorContext> triggerExecutor, CancellationToken cancellationToken)
+        public async Task RegisterAsync(BlobServiceClient blobServiceClient, BlobContainerClient container, ITriggerExecutor<BlobTriggerExecutorContext> triggerExecutor, CancellationToken cancellationToken)
         {
             // Register and Execute are not concurrency-safe.
             // Avoiding calling Register while Execute is running is the caller's responsibility.
             ThrowIfDisposed();
 
             // Register all in logPolling, there is no problem if we get 2 notifications of the new blob
-            await _pollLogStrategy.RegisterAsync(container, triggerExecutor, cancellationToken).ConfigureAwait(false);
+            await _pollLogStrategy.RegisterAsync(blobServiceClient, container, triggerExecutor, cancellationToken).ConfigureAwait(false);
 
             if (!_scanInfo.TryGetValue(container, out ContainerScanInfo containerScanInfo))
             {
                 // First, try to load serialized scanInfo for this container.
-                DateTime? latestStoredScan = await _blobScanInfoManager.LoadLatestScanAsync(container.ServiceClient.Credentials.AccountName, container.Name).ConfigureAwait(false);
+                DateTime? latestStoredScan = await _blobScanInfoManager.LoadLatestScanAsync(blobServiceClient.AccountName, container.Name).ConfigureAwait(false);
 
                 containerScanInfo = new ContainerScanInfo()
                 {
@@ -106,7 +108,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                     break;
                 }
 
-                notifications.Add(NotifyRegistrationsAsync(failedNotification.Blob, failedNotifications, failedNotification.PollId, cancellationToken));
+                notifications.Add(NotifyRegistrationsAsync(failedNotification.Container, failedNotification.Blob, failedNotifications, failedNotification.PollId, cancellationToken));
             }
 
             await Task.WhenAll(notifications).ConfigureAwait(false);
@@ -114,7 +116,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             List<Task> pollingTasks = new List<Task>();
             pollingTasks.Add(logPollingTask);
 
-            foreach (KeyValuePair<CloudBlobContainer, ContainerScanInfo> containerScanInfoPair in _scanInfo)
+            foreach (KeyValuePair<BlobContainerClient, ContainerScanInfo> containerScanInfoPair in _scanInfo)
             {
                 pollingTasks.Add(PollAndNotify(containerScanInfoPair.Key, containerScanInfoPair.Value, failedNotifications, cancellationToken));
             }
@@ -131,7 +133,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             return new TaskSeriesCommandResult(wait: Task.Delay(PollingInterval));
         }
 
-        private async Task PollAndNotify(CloudBlobContainer container, ContainerScanInfo containerScanInfo,
+        private async Task PollAndNotify(BlobContainerClient container, ContainerScanInfo containerScanInfo,
             List<BlobNotification> failedNotifications, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -140,12 +142,12 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             // For tracking
             string clientRequestId = Guid.NewGuid().ToString();
 
-            IEnumerable<ICloudBlob> newBlobs = await PollNewBlobsAsync(container, containerScanInfo, clientRequestId, cancellationToken).ConfigureAwait(false);
+            IEnumerable<BlobBaseClient> newBlobs = await PollNewBlobsAsync(container, containerScanInfo, clientRequestId, cancellationToken).ConfigureAwait(false);
 
             foreach (var newBlob in newBlobs)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await NotifyRegistrationsAsync(newBlob, failedNotifications, clientRequestId, cancellationToken).ConfigureAwait(false);
+                await NotifyRegistrationsAsync(container, newBlob, failedNotifications, clientRequestId, cancellationToken).ConfigureAwait(false);
             }
 
             // if the 'LatestModified' has changed, update it in the manager
@@ -157,21 +159,22 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                 // we continue to find these if the host needs to restart.
                 if (failedNotifications.Any())
                 {
-                    latestScan = failedNotifications.Select(p => p.Blob).Min(n => n.Properties.LastModified.Value.UtcDateTime);
+                    // TODO (kasobol-msft) this call to getPRoperties is suboptimal figure out how to propagate data from listing here.
+                    latestScan = failedNotifications.Select(p => p.Blob).Min(n => n.GetProperties().Value.LastModified.UtcDateTime);
                 }
 
                 // Store our timestamp slightly earlier than the last timestamp. This is a failsafe for any blobs that created
                 // milliseconds after our last scan (blob timestamps round to the second). This way we make sure to pick those
                 // up on a host restart.
-                await _blobScanInfoManager.UpdateLatestScanAsync(container.ServiceClient.Credentials.AccountName,
+                await _blobScanInfoManager.UpdateLatestScanAsync(container.AccountName,
                     container.Name, latestScan.AddMilliseconds(-1)).ConfigureAwait(false);
             }
         }
 
-        public void Notify(ICloudBlob blobWritten)
+        public void Notify(BlobContainerClient container, BlobBaseClient blobWritten)
         {
             ThrowIfDisposed();
-            _blobsFoundFromScanOrNotification.Enqueue(new BlobNotification(blobWritten, null));
+            _blobsFoundFromScanOrNotification.Enqueue(new BlobNotification(container, blobWritten, null));
         }
 
         public void Dispose()
@@ -205,13 +208,13 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
         /// <param name="clientRequestId"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<ICloudBlob>> PollNewBlobsAsync(
-            CloudBlobContainer container, ContainerScanInfo containerScanInfo, string clientRequestId, CancellationToken cancellationToken)
+        public async Task<IEnumerable<BlobBaseClient>> PollNewBlobsAsync(
+            BlobContainerClient container, ContainerScanInfo containerScanInfo, string clientRequestId, CancellationToken cancellationToken)
         {
-            IEnumerable<IListBlobItem> currentBlobs;
-            BlobResultSegment blobSegment;
+            IEnumerable<BlobItem> currentBlobs;
             int blobPollLimitPerContainer = _scanBlobLimitPerPoll / _scanInfo.Count;
-            BlobContinuationToken continuationToken = containerScanInfo.ContinuationToken;
+            string continuationToken = containerScanInfo.ContinuationToken;
+            Page<BlobItem> page;
 
             // if starting the cycle, reset the sweep time
             if (continuationToken == null)
@@ -222,28 +225,25 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             Stopwatch sw = Stopwatch.StartNew();
             try
             {
-                OperationContext operationContext = new OperationContext { ClientRequestID = clientRequestId };
-                blobSegment = await TimeoutHandler.ExecuteWithTimeout("ScanContainer", operationContext.ClientRequestID, _exceptionHandler,
-                    _logger, () =>
-                    {
-                        return container.ListBlobsSegmentedAsync(prefix: null, useFlatBlobListing: true,
-                            blobListingDetails: BlobListingDetails.None, maxResults: blobPollLimitPerContainer, currentToken: continuationToken,
-                            options: null, operationContext: operationContext, cancellationToken: cancellationToken);
-                    }, cancellationToken).ConfigureAwait(false);
-
-                if (blobSegment == null)
+                AsyncPageable<BlobItem> blobsAsyncPageable = container.GetBlobsAsync(cancellationToken: cancellationToken);
+                IAsyncEnumerable<Page<BlobItem>> pages = blobsAsyncPageable.AsPages(continuationToken: continuationToken, pageSizeHint: blobPollLimitPerContainer);
+                IAsyncEnumerator<Page<BlobItem>> pagesEnumerator = pages.GetAsyncEnumerator(cancellationToken);
+                if (await pagesEnumerator.MoveNextAsync().ConfigureAwait(false))
                 {
-                    return Enumerable.Empty<ICloudBlob>();
+                    page = pagesEnumerator.Current;
+                    currentBlobs = page.Values;
                 }
-
-                currentBlobs = blobSegment.Results;
+                else
+                {
+                    return Enumerable.Empty<BlobBaseClient>();
+                }
             }
-            catch (StorageException exception)
+            catch (RequestFailedException exception)
             {
                 if (exception.IsNotFound())
                 {
                     Logger.ContainerDoesNotExist(_logger, container.Name);
-                    return Enumerable.Empty<ICloudBlob>();
+                    return Enumerable.Empty<BlobBaseClient>();
                 }
                 else
                 {
@@ -251,10 +251,10 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                 }
             }
 
-            List<ICloudBlob> newBlobs = new List<ICloudBlob>();
+            List<BlobBaseClient> newBlobs = new List<BlobBaseClient>();
 
             // Type cast to IStorageBlob is safe due to useFlatBlobListing: true above.
-            foreach (ICloudBlob currentBlob in currentBlobs)
+            foreach (BlobItem currentBlob in currentBlobs)
             {
                 cancellationToken.ThrowIfCancellationRequested();
 
@@ -270,18 +270,19 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                 // the previous timestamp to catch any blobs that came in slightly after our previous poll.
                 if (lastModifiedTimestamp >= containerScanInfo.LastSweepCycleLatestModified)
                 {
-                    newBlobs.Add(currentBlob);
+                    // TODO (kasobol-msft) check if it's right type
+                    newBlobs.Add(container.GetBlobClient(currentBlob.Name));
                 }
             }
 
             Logger.PollBlobContainer(_logger, container.Name, containerScanInfo.LastSweepCycleLatestModified, clientRequestId,
-                newBlobs.Count, sw.ElapsedMilliseconds, blobSegment.ContinuationToken != null);
+                newBlobs.Count, sw.ElapsedMilliseconds, page.ContinuationToken != null);
 
             // record continuation token for next chunk retrieval
-            containerScanInfo.ContinuationToken = blobSegment.ContinuationToken;
+            containerScanInfo.ContinuationToken = page.ContinuationToken;
 
             // if ending a cycle then copy currentSweepCycleStartTime to lastSweepCycleStartTime, if changed
-            if (blobSegment.ContinuationToken == null &&
+            if (page.ContinuationToken == null &&
                 containerScanInfo.CurrentSweepCycleLatestModified > containerScanInfo.LastSweepCycleLatestModified)
             {
                 containerScanInfo.LastSweepCycleLatestModified = containerScanInfo.CurrentSweepCycleLatestModified;
@@ -290,10 +291,10 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             return newBlobs;
         }
 
-        private async Task NotifyRegistrationsAsync(ICloudBlob blob, ICollection<BlobNotification> failedNotifications, string clientRequestId, CancellationToken cancellationToken)
+        private async Task NotifyRegistrationsAsync(BlobContainerClient container, BlobBaseClient blob, ICollection<BlobNotification> failedNotifications, string clientRequestId, CancellationToken cancellationToken)
         {
             // Blob written notifications are host-wide, so filter out things that aren't in the container list.
-            if (!_scanInfo.TryGetValue(blob.Container, out ContainerScanInfo containerScanInfo))
+            if (!_scanInfo.TryGetValue(container, out ContainerScanInfo containerScanInfo))
             {
                 return;
             }
@@ -313,7 +314,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                 if (!result.Succeeded)
                 {
                     // If notification failed, try again on the next iteration.
-                    failedNotifications.Add(new BlobNotification(blob, clientRequestId));
+                    failedNotifications.Add(new BlobNotification(container, blob, clientRequestId));
                 }
             }
         }

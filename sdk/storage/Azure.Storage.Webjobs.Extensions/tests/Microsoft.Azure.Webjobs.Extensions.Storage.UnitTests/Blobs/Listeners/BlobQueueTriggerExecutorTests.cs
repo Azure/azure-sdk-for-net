@@ -5,8 +5,11 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Queues.Models;
-using Microsoft.Azure.Storage.Blob;
 using Microsoft.Azure.WebJobs.Host.Blobs;
 using Microsoft.Azure.WebJobs.Host.Blobs.Listeners;
 using Microsoft.Azure.WebJobs.Host.Executors;
@@ -27,9 +30,9 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 
         private readonly TestLoggerProvider _loggerProvider = new TestLoggerProvider();
         private readonly ILogger<BlobListener> _logger;
-        private readonly Mock<CloudBlobClient> blobClientMock = new Mock<CloudBlobClient>(
+        private readonly Mock<BlobServiceClient> blobClientMock = new Mock<BlobServiceClient>(
             new Uri("https://fakeaccount.blob.core.windows.net"), null);
-        private readonly Mock<CloudBlobContainer> blobContainerMock = new Mock<CloudBlobContainer>(new Uri("https://fakeaccount.blob.core.windows.net/fakecontainer"));
+        private readonly Mock<BlobContainerClient> blobContainerMock = new Mock<BlobContainerClient>(new Uri("https://fakeaccount.blob.core.windows.net/fakecontainer"));
 
         public BlobQueueTriggerExecutorTests()
         {
@@ -37,9 +40,9 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             loggerFactory.AddProvider(_loggerProvider);
             _logger = loggerFactory.CreateLogger<BlobListener>();
 
-            blobClientMock.Setup(x => x.GetContainerReference(TestContainerName)).Returns(blobContainerMock.Object);
-            blobContainerMock.Setup(x => x.GetBlobReferenceFromServerAsync(It.IsAny<string>()))
-                .ThrowsAsync(StorageExceptionFactory.Create(404));
+            blobClientMock.Setup(x => x.GetBlobContainerClient(TestContainerName)).Returns(blobContainerMock.Object);
+            /* blobContainerMock.Setup(x => x.GetBlobReferenceFromServerAsync(It.IsAny<string>()))
+                .ThrowsAsync(new RequestFailedException(404, string.Empty)); */ // TODO (kasobol-msft) find replacement
         }
 
         [Fact]
@@ -150,7 +153,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             string functionId = "FunctionId";
             SetEtag(TestContainerName, TestBlobName, "NewETag");
             Mock<IBlobWrittenWatcher> mock = new Mock<IBlobWrittenWatcher>(MockBehavior.Strict);
-            mock.Setup(w => w.Notify(It.IsAny<ICloudBlob>()))
+            mock.Setup(w => w.Notify(It.IsAny<BlobContainerClient>(), It.IsAny<BlobBaseClient>()))
                 .Verifiable();
             IBlobWrittenWatcher blobWrittenWatcher = mock.Object;
 
@@ -195,7 +198,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
                 {
                     Assert.Equal(expectedParentId, mockInput.ParentId);
 
-                    var resultBlob = (ICloudBlob)mockInput.TriggerValue;
+                    var resultBlob = (BlobBaseClient)mockInput.TriggerValue;
                     Assert.Equal(TestBlobName, resultBlob.Name);
                 })
                 .ReturnsAsync(expectedResult)
@@ -368,7 +371,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
         private static IBlobCausalityReader CreateStubCausalityReader(Guid? parentId)
         {
             Mock<IBlobCausalityReader> mock = new Mock<IBlobCausalityReader>(MockBehavior.Strict);
-            mock.Setup(r => r.GetWriterAsync(It.IsAny<ICloudBlob>(), It.IsAny<CancellationToken>()))
+            mock.Setup(r => r.GetWriterAsync(It.IsAny<BlobBaseClient>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(parentId));
             return mock.Object;
         }
@@ -392,11 +395,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
         // Set the etag on the specified blob
         private void SetEtag(string containerName, string blobName, string etag)
         {
-            Mock<ICloudBlob> mockBlob = new Mock<ICloudBlob>(MockBehavior.Strict);
-            mockBlob.SetupGet(b => b.Properties).Returns(new BlobProperties().SetEtag(etag));
+            Mock<BlobBaseClient> mockBlob = new Mock<BlobBaseClient>(MockBehavior.Strict);
+            BlobProperties blobProperties = BlobsModelFactory.BlobProperties(eTag: new ETag(etag));
+            mockBlob.Setup(b => b.GetPropertiesAsync(null, It.IsAny<CancellationToken>())).ReturnsAsync(Response.FromValue(blobProperties, null));
             mockBlob.SetupGet(b => b.Name).Returns(blobName);
 
-            blobContainerMock.Setup(x => x.GetBlobReferenceFromServerAsync(blobName)).ReturnsAsync(mockBlob.Object);
+            // blobContainerMock.Setup(x => x.GetBlobReferenceFromServerAsync(blobName)).ReturnsAsync(mockBlob.Object); TODO (kasobol-msft) find replacement
         }
     }
 }

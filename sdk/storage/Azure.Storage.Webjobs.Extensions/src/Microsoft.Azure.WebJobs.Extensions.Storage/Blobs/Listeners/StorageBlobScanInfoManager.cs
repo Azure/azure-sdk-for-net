@@ -6,8 +6,9 @@ using System.Globalization;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Storage;
-using Microsoft.Azure.Storage.Blob;
+using Azure;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Specialized;
 using Microsoft.Azure.WebJobs.Extensions.Storage;
 using Newtonsoft.Json;
 
@@ -17,9 +18,11 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
     {
         private readonly JsonSerializer _serializer;
         private readonly string _hostId;
-        private CloudBlobDirectory _blobScanInfoDirectory;
+        //private CloudBlobDirectory _blobScanInfoDirectory; // TODO (kasobol-msft) check this
+        private readonly string _blobScanInfoDirectoryPath;
+        private readonly BlobContainerClient _blobContainerClient;
 
-        public StorageBlobScanInfoManager(string hostId, CloudBlobClient blobClient)
+        public StorageBlobScanInfoManager(string hostId, BlobServiceClient blobClient)
         {
             if (string.IsNullOrEmpty(hostId))
             {
@@ -37,8 +40,8 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             };
             _serializer = JsonSerializer.Create(settings);
 
-            string blobScanInfoDirectoryPath = string.Format(CultureInfo.InvariantCulture, "blobscaninfo/{0}", _hostId);
-            _blobScanInfoDirectory = blobClient.GetContainerReference(HostContainerNames.Hosts).GetDirectoryReference(blobScanInfoDirectoryPath);
+            _blobScanInfoDirectoryPath = string.Format(CultureInfo.InvariantCulture, "blobscaninfo/{0}", _hostId);
+            _blobContainerClient = blobClient.GetBlobContainerClient(HostContainerNames.Hosts);
         }
 
         public async Task<DateTime?> LoadLatestScanAsync(string storageAccountName, string containerName)
@@ -61,7 +64,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 
                 return latestScan;
             }
-            catch (StorageException exception)
+            catch (RequestFailedException exception)
             {
                 if (exception.IsNotFound())
                 {
@@ -88,7 +91,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 
             try
             {
-                CloudBlockBlob scanInfoBlob = GetScanInfoBlobReference(storageAccountName, containerName);
+                BlockBlobClient scanInfoBlob = GetScanInfoBlobReference(storageAccountName, containerName);
                 await scanInfoBlob.UploadTextAsync(scanInfoLine).ConfigureAwait(false);
             }
             catch
@@ -97,12 +100,12 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             }
         }
 
-        private CloudBlockBlob GetScanInfoBlobReference(string storageAccountName, string containerName)
+        private BlockBlobClient GetScanInfoBlobReference(string storageAccountName, string containerName)
         {
             // Path to the status blob is:
             // blobScanInfo/{hostId}/{accountName}/{containerName}/scanInfo
             string blobName = string.Format(CultureInfo.InvariantCulture, "{0}/{1}/scanInfo", storageAccountName, containerName);
-            return _blobScanInfoDirectory.SafeGetBlockBlobReference(blobName);
+            return _blobContainerClient.SafeGetBlockBlobReference(_blobScanInfoDirectoryPath, blobName);
         }
 
         internal class ScanInfo

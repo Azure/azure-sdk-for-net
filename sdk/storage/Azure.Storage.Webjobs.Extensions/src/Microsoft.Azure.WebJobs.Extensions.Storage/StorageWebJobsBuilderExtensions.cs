@@ -2,13 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using Microsoft.Azure.Storage;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Storage;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Triggers;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Bindings;
-using Microsoft.Azure.WebJobs.Host.Bindings.StorageAccount;
 using Microsoft.Azure.WebJobs.Host.Blobs;
 using Microsoft.Azure.WebJobs.Host.Blobs.Bindings;
 using Microsoft.Azure.WebJobs.Host.Listeners;
@@ -37,12 +35,13 @@ namespace Microsoft.Extensions.Hosting
         public static IWebJobsBuilder AddAzureStorage(this IWebJobsBuilder builder, Action<QueuesOptions> configureQueues = null, Action<BlobsOptions> configureBlobs = null)
         {
             // add webjobs to user agent for all storage calls
-            OperationContext.GlobalSendingRequest += (sender, e) =>
-            {
+            // TODO (kasobol-msft) how do we add webjobs user agent - do we want to ?
+            //OperationContext.GlobalSendingRequest += (sender, e) =>
+            //{
                 // TODO: FACAVAL - This is not supported on by the latest version of the
                 // storage SDK. Need to re-add this when the capability is reintroduced.
                 // e.UserAgent += " AzureWebJobs";
-            };
+            //};
 
             // $$$ Move to Host.Storage?
 #pragma warning disable CS0618 // Type or member is obsolete
@@ -66,8 +65,6 @@ namespace Microsoft.Extensions.Hosting
             builder.Services.TryAddSingleton<BlobTriggerAttributeBindingProvider>();
 
             builder.Services.TryAddSingleton<QueueTriggerAttributeBindingProvider>();
-
-            builder.Services.TryAddEnumerable(ServiceDescriptor.Singleton<IBindingProvider, CloudStorageAccountBindingProvider>());
 
             builder.AddExtension<QueuesExtensionConfigProvider>()
                 .BindOptions<QueuesOptions>();

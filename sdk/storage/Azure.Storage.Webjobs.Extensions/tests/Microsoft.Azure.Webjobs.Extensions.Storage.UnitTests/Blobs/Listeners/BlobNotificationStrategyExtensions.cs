@@ -3,10 +3,11 @@
 
 using System;
 using System.Threading;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Specialized;
 using Microsoft.Azure.WebJobs.Host.Blobs.Listeners;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Timers;
-using Microsoft.Azure.Storage.Blob;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
 {
@@ -22,7 +23,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             return strategy.ExecuteAsync(CancellationToken.None).GetAwaiter().GetResult();
         }
 
-        public static void Register(this IBlobListenerStrategy strategy, CloudBlobContainer container,
+        public static void Register(this IBlobListenerStrategy strategy, BlobServiceClient blobServiceClient, BlobContainerClient container,
             ITriggerExecutor<BlobTriggerExecutorContext> triggerExecutor)
         {
             if (strategy == null)
@@ -30,11 +31,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
                 throw new ArgumentNullException("strategy");
             }
 
-            strategy.RegisterAsync(container, triggerExecutor, CancellationToken.None).GetAwaiter().GetResult();
+            strategy.RegisterAsync(blobServiceClient, container, triggerExecutor, CancellationToken.None).GetAwaiter().GetResult();
         }
 
-        public static void Start(this IBlobListenerStrategy strategy, CloudBlobContainer container,
-            ITriggerExecutor<ICloudBlob> triggerExecutor)
+        public static void Start(this IBlobListenerStrategy strategy, BlobContainerClient container,
+            ITriggerExecutor<BlobBaseClient> triggerExecutor)
         {
             if (strategy == null)
             {
