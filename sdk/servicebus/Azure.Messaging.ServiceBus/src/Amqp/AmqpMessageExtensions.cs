@@ -15,12 +15,18 @@ namespace Azure.Messaging.ServiceBus.Amqp
     {
         public static AmqpMessage ToAmqpMessage(this ServiceBusMessage message)
         {
-            BinaryData body = ((AmqpDataBody)message.AmqpMessage.Body).Data.ConvertAndFlattenData();
-            return AmqpMessage.Create(
-                new Data
+            return AmqpMessage.Create(((AmqpDataBody)message.AmqpMessage.Body).Data.AsAmqpData());
+        }
+
+        private static IEnumerable<Data> AsAmqpData(this IEnumerable<BinaryData> binaryData)
+        {
+            foreach (BinaryData data in binaryData)
+            {
+                yield return new Data
                 {
-                    Value = new ArraySegment<byte>(body.ToBytes().IsEmpty ? Array.Empty<byte>() : body.ToBytes().ToArray())
-                });
+                    Value = new ArraySegment<byte>(data.ToBytes().IsEmpty ? Array.Empty<byte>() : data.ToBytes().ToArray())
+                };
+            }
         }
 
         private static byte[] GetByteArray(this Data data)
@@ -62,33 +68,20 @@ namespace Azure.Messaging.ServiceBus.Amqp
         // The method is optimized for this situation to return the pre-existing array.
         public static BinaryData ConvertAndFlattenData(this IEnumerable<BinaryData> dataList)
         {
-            ReadOnlyMemory<byte> flattened = default;
-            List<byte> flattenedList = null;
-            var dataCount = 0;
+            var writer = new ArrayBufferWriter<byte>();
+            Memory<byte> memory;
             foreach (BinaryData data in dataList)
             {
-                // Only the first array is needed if it is the only valid array.
-                // This should be the case 99% of the time.
-                if (dataCount == 0)
-                {
-                    flattened = data;
-                }
-                else
-                {
-                    // We defer creating this list since this case will rarely happen.
-                    flattenedList ??= new List<byte>(flattened.ToArray()!);
-                    flattenedList.AddRange(data.ToBytes().ToArray());
-                }
-
-                dataCount++;
+                ReadOnlyMemory<byte> bytes = data.ToBytes();
+                memory = writer.GetMemory(bytes.Length);
+                bytes.CopyTo(memory);
+                writer.Advance(bytes.Length);
             }
-
-            if (dataCount > 1)
+            if (writer.WrittenCount == 0)
             {
-                flattened = flattenedList!.ToArray();
+                return new BinaryData();
             }
-
-            return BinaryData.FromBytes(flattened);
+            return BinaryData.FromBytes(writer.WrittenMemory);
         }
 
         public static string GetPartitionKey(this AmqpAnnotatedMessage message)

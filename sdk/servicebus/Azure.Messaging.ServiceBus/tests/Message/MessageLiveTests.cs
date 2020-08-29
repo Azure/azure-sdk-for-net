@@ -4,7 +4,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Core;
+using Azure.Core.Amqp;
 using Azure.Core.Serialization;
 using NUnit.Framework;
 
@@ -170,6 +170,37 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 Assert.AreEqual(testBody.A, receivedBody.A);
                 Assert.AreEqual(testBody.B, receivedBody.B);
                 Assert.AreEqual(testBody.C, receivedBody.C);
+            }
+        }
+
+        [Test]
+        public async Task CanSendMultipleDataSections()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                var sender = client.CreateSender(scope.QueueName);
+                var amqp = new AmqpAnnotatedMessage(
+                    new BinaryData[]
+                    {
+                        new BinaryData(GetRandomBuffer(100)),
+                        new BinaryData(GetRandomBuffer(100))
+                    });
+                var msg = new ServiceBusMessage()
+                {
+                    AmqpMessage = amqp
+                };
+
+                await sender.SendMessageAsync(msg);
+
+                var receiver = client.CreateReceiver(scope.QueueName);
+                var received = await receiver.ReceiveMessageAsync();
+                var bodyEnum = ((AmqpDataBody)received.AmqpMessage.Body).Data.GetEnumerator();
+                foreach (BinaryData data in ((AmqpDataBody)msg.AmqpMessage.Body).Data)
+                {
+                    bodyEnum.MoveNext();
+                    Assert.AreEqual(data.ToBytes().ToArray(), bodyEnum.Current.ToBytes().ToArray());
+                }
             }
         }
 
