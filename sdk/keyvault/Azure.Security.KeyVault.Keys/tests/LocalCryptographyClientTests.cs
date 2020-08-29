@@ -364,18 +364,31 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             CollectionAssert.AreEqual(TestKey, unwrapped.Key);
         }
-#endregion
+        #endregion
 
-        private static JsonWebKey CreateKey(KeyType type, bool includePrivateParameters = false, IEnumerable<KeyOperation> keyOps = null) => type.ToString() switch
+        private static JsonWebKey CreateKey(KeyType type, bool includePrivateParameters = false, IEnumerable<KeyOperation> keyOps = null)
         {
+            switch (type.ToString())
+            {
 #if NET461
-            KeyType.EcValue or KeyType.EcHsmValue => throw new IgnoreException("Creating JsonWebKey with ECDsa is not supported on net461."),
+                case KeyType.EcValue:
+                case KeyType.EcHsmValue:
+                    throw new IgnoreException("Creating JsonWebKey with ECDsa is not supported on net461.");
 #else
-            KeyType.EcValue or KeyType.EcHsmValue => new JsonWebKey(ECDsa.Create(), includePrivateParameters, keyOps),
+                case KeyType.EcValue:
+                case KeyType.EcHsmValue:
+                    return new JsonWebKey(ECDsa.Create(), includePrivateParameters, keyOps);
 #endif
-            KeyType.RsaValue or KeyType.RsaHsmValue => new JsonWebKey(RSA.Create(), includePrivateParameters, keyOps),
-            KeyType.OctValue => new JsonWebKey(Aes.Create(), keyOps),
-            _ => throw new NotSupportedException(@$"Key type ""{type}"" is not supported"),
-        };
+                case KeyType.RsaValue:
+                case KeyType.RsaHsmValue:
+                    return new JsonWebKey(RSA.Create(), includePrivateParameters, keyOps);
+
+                case KeyType.OctValue:
+                    return new JsonWebKey(Aes.Create(), keyOps);
+
+                default:
+                    throw new NotSupportedException(@$"Key type ""{type}"" is not supported");
+            }
+        }
     }
 }
