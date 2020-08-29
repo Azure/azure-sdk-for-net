@@ -196,10 +196,20 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var received = await receiver.ReceiveMessageAsync();
                 var bodyEnum = ((AmqpDataBody)received.AmqpMessage.Body).Data.GetEnumerator();
+                int ct = 0;
                 foreach (BinaryData data in ((AmqpDataBody)msg.AmqpMessage.Body).Data)
                 {
                     bodyEnum.MoveNext();
-                    Assert.AreEqual(data.ToBytes().ToArray(), bodyEnum.Current.ToBytes().ToArray());
+                    var bytes = data.ToBytes().ToArray();
+                    Assert.AreEqual(bytes, bodyEnum.Current.ToBytes().ToArray());
+                    if (ct++ == 0)
+                    {
+                        Assert.AreEqual(bytes, received.Body.ToBytes().Slice(0, 100).ToArray());
+                    }
+                    else
+                    {
+                        Assert.AreEqual(bytes, received.Body.ToBytes().Slice(100, 100).ToArray());
+                    }
                 }
             }
         }

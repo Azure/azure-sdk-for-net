@@ -782,6 +782,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
                 Assert.AreEqual(message.MessageId, receivedMessage.MessageId);
                 Assert.AreEqual(message.SessionId, receivedMessage.SessionId);
+                Assert.AreEqual(message.Body.ToBytes().ToArray(), receivedMessage.Body.ToBytes().ToArray());
 
                 var sessionStateString = "Received Message From Session!";
                 var sessionState = Encoding.UTF8.GetBytes(sessionStateString);

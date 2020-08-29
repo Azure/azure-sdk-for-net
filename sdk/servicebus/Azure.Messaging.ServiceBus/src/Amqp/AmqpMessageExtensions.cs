@@ -51,16 +51,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
         }
 
-        public static IEnumerable<BinaryData> GetDataViaDataBody(this AmqpMessage message)
+        public static IList<BinaryData> GetDataViaDataBody(this AmqpMessage message)
         {
+            IList<BinaryData> dataList = new List<BinaryData>();
             foreach (Data data in (message.DataBody ?? Enumerable.Empty<Data>()))
             {
-                byte[] bytes = data.GetByteArray();
-                if (bytes != null)
-                {
-                    yield return BinaryData.FromBytes(bytes);
-                }
+                dataList.Add(BinaryData.FromBytes(data.GetByteArray()));
             }
+            return dataList;
         }
 
         // Returns via the out parameter the flattened collection of bytes.
