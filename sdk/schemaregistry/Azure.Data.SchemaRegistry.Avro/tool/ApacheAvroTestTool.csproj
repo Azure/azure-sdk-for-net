@@ -10,6 +10,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Azure.Data.SchemaRegistry\src\Azure.Data.SchemaRegistry.csproj" />
+    <ProjectReference Include="..\src\Azure.Data.SchemaRegistry.Avro.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Example.avro">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
