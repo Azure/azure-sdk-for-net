@@ -26,11 +26,12 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </summary>
         /// <param name="jsonWebKey">A <see cref="JsonWebKey"/> used for cryptographic operations.</param>
         /// <exception cref="ArgumentNullException"><paramref name="jsonWebKey"/> is null.</exception>
+        /// <exception cref="NotSupportedException">The <paramref name="jsonWebKey"/> has a <see cref="JsonWebKey.KeyType"/> that is not supported.</exception>
 #pragma warning disable AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
         public LocalCryptographyClient(JsonWebKey jsonWebKey)
         {
             _jsonWebKey = jsonWebKey ?? throw new ArgumentNullException(nameof(jsonWebKey));
-            _provider = LocalCryptographyProviderFactory.Create(jsonWebKey, null);
+            _provider = LocalCryptographyProviderFactory.Create(jsonWebKey, null) ?? throw new NotSupportedException(@$"Key type ""{jsonWebKey.KeyType}"" is not supported");
         }
 #pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
 
@@ -359,11 +360,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            byte[] digest = CryptographyClient.CreateDigest(algorithm, data);
-
             SignResult result = null;
             if (_provider.SupportsOperation(KeyOperation.Sign))
             {
+                byte[] digest = CryptographyClient.CreateDigest(algorithm, data);
                 result = await _provider.SignAsync(algorithm, digest,  cancellationToken).ConfigureAwait(false);
             }
 
@@ -388,11 +388,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            byte[] digest = CryptographyClient.CreateDigest(algorithm, data);
-
             SignResult result = null;
             if (_provider.SupportsOperation(KeyOperation.Sign))
             {
+                byte[] digest = CryptographyClient.CreateDigest(algorithm, data);
                 result = _provider.Sign(algorithm, digest, cancellationToken);
             }
 
@@ -418,11 +417,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            byte[] digest = CryptographyClient.CreateDigest(algorithm, data);
-
             SignResult result = null;
             if (_provider.SupportsOperation(KeyOperation.Sign))
             {
+                byte[] digest = CryptographyClient.CreateDigest(algorithm, data);
                 result = await _provider.SignAsync(algorithm, digest, cancellationToken).ConfigureAwait(false);
             }
 
@@ -448,11 +446,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            byte[] digest = CryptographyClient.CreateDigest(algorithm, data);
-
             SignResult result = null;
             if (_provider.SupportsOperation(KeyOperation.Sign))
             {
+                byte[] digest = CryptographyClient.CreateDigest(algorithm, data);
                 result = _provider.Sign(algorithm, digest, cancellationToken);
             }
 
@@ -478,11 +475,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            byte[] digest = CryptographyClient.CreateDigest(algorithm, data);
-
             VerifyResult result = null;
             if (_provider.SupportsOperation(KeyOperation.Verify))
             {
+                byte[] digest = CryptographyClient.CreateDigest(algorithm, data);
                 result = await _provider.VerifyAsync(algorithm, digest, signature, cancellationToken).ConfigureAwait(false);
             }
 
@@ -508,11 +504,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            byte[] digest = CryptographyClient.CreateDigest(algorithm, data);
-
             VerifyResult result = null;
             if (_provider.SupportsOperation(KeyOperation.Verify))
             {
+                byte[] digest = CryptographyClient.CreateDigest(algorithm, data);
                 result = _provider.Verify(algorithm, digest, signature, cancellationToken);
             }
 
@@ -538,11 +533,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            byte[] digest = CryptographyClient.CreateDigest(algorithm, data);
-
             VerifyResult result = null;
             if (_provider.SupportsOperation(KeyOperation.Verify))
             {
+                byte[] digest = CryptographyClient.CreateDigest(algorithm, data);
                 result = await _provider.VerifyAsync(algorithm, digest, signature, cancellationToken).ConfigureAwait(false);
             }
 
@@ -568,11 +562,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            byte[] digest = CryptographyClient.CreateDigest(algorithm, data);
-
             VerifyResult result = null;
             if (_provider.SupportsOperation(KeyOperation.Verify))
             {
+                byte[] digest = CryptographyClient.CreateDigest(algorithm, data);
                 result = _provider.Verify(algorithm, digest, signature, cancellationToken);
             }
 
