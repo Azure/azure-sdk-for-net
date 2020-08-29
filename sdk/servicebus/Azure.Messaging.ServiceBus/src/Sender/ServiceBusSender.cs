@@ -254,7 +254,7 @@ namespace Azure.Messaging.ServiceBus
         {
             foreach (ServiceBusMessage message in messages)
             {
-                if (!message.Properties.ContainsKey(DiagnosticProperty.DiagnosticIdAttribute))
+                if (!message.ApplicationProperties.ContainsKey(DiagnosticProperty.DiagnosticIdAttribute))
                 {
                     using DiagnosticScope messageScope = _scopeFactory.CreateScope(
                         DiagnosticProperty.MessageActivityName,
@@ -264,7 +264,7 @@ namespace Azure.Messaging.ServiceBus
                     Activity activity = Activity.Current;
                     if (activity != null)
                     {
-                        message.Properties[DiagnosticProperty.DiagnosticIdAttribute] = activity.Id;
+                        message.ApplicationProperties[DiagnosticProperty.DiagnosticIdAttribute] = activity.Id;
                     }
                 }
             }

@@ -17,7 +17,7 @@ namespace Azure.Messaging.ServiceBus.Management
     /// <para>
     /// A CorrelationRuleFilter holds a set of conditions that are matched against one of more of an arriving message's user and system properties.
     /// A common use is a match against the <see cref="ServiceBusMessage.CorrelationId"/> property, but the application can also choose to match against
-    /// <see cref="ServiceBusMessage.ContentType"/>, <see cref="ServiceBusMessage.Label"/>, <see cref="ServiceBusMessage.MessageId"/>, <see cref="ServiceBusMessage.ReplyTo"/>,
+    /// <see cref="ServiceBusMessage.ContentType"/>, <see cref="ServiceBusMessage.Subject"/>, <see cref="ServiceBusMessage.MessageId"/>, <see cref="ServiceBusMessage.ReplyTo"/>,
     /// <see cref="ServiceBusMessage.ReplyToSessionId"/>, <see cref="ServiceBusMessage.SessionId"/>, <see cref="ServiceBusMessage.To"/>, and any user-defined properties.
     /// A match exists when an arriving message's value for a property is equal to the value specified in the correlation filter. For string expressions,
     /// the comparison is case-sensitive. When specifying multiple match properties, the filter combines them as a logical AND condition,
@@ -57,7 +57,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 MessageId = MessageId,
                 To = To,
                 ReplyTo = ReplyTo,
-                Label = Label,
+                Subject = Subject,
                 SessionId = SessionId,
                 ReplyToSessionId = ReplyToSessionId,
                 ContentType = ContentType,
@@ -106,10 +106,10 @@ namespace Azure.Messaging.ServiceBus.Management
         }
 
         /// <summary>
-        /// Application specific label.
+        /// Application specific subject.
         /// </summary>
-        /// <value>The application specific label.</value>
-        public string Label
+        /// <value>The application specific subject.</value>
+        public string Subject
         {
             get;
             set;
@@ -175,7 +175,7 @@ namespace Azure.Messaging.ServiceBus.Management
             AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.MessageId", MessageId);
             AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.To", To);
             AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.ReplyTo", ReplyTo);
-            AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.Label", Label);
+            AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.Label", Subject);
             AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.SessionId", SessionId);
             AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.ReplyToSessionId", ReplyToSessionId);
             AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.ContentType", ContentType);
@@ -238,7 +238,7 @@ namespace Azure.Messaging.ServiceBus.Management
                     && string.Equals(MessageId, correlationRuleFilter.MessageId, StringComparison.OrdinalIgnoreCase)
                     && string.Equals(To, correlationRuleFilter.To, StringComparison.OrdinalIgnoreCase)
                     && string.Equals(ReplyTo, correlationRuleFilter.ReplyTo, StringComparison.OrdinalIgnoreCase)
-                    && string.Equals(Label, correlationRuleFilter.Label, StringComparison.OrdinalIgnoreCase)
+                    && string.Equals(Subject, correlationRuleFilter.Subject, StringComparison.OrdinalIgnoreCase)
                     && string.Equals(SessionId, correlationRuleFilter.SessionId, StringComparison.OrdinalIgnoreCase)
                     && string.Equals(ReplyToSessionId, correlationRuleFilter.ReplyToSessionId, StringComparison.OrdinalIgnoreCase)
                     && string.Equals(ContentType, correlationRuleFilter.ContentType, StringComparison.OrdinalIgnoreCase))

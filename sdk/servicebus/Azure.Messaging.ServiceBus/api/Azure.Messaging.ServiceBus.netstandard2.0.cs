@@ -152,17 +152,18 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusMessage(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage receivedMessage) { }
         public ServiceBusMessage(System.ReadOnlyMemory<byte> body) { }
         public ServiceBusMessage(string body) { }
+        public Azure.Core.Amqp.AmqpAnnotatedMessage AmqpMessage { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, object> ApplicationProperties { get { throw null; } }
         public Azure.BinaryData Body { get { throw null; } set { } }
         public string ContentType { get { throw null; } set { } }
         public string CorrelationId { get { throw null; } set { } }
-        public string Label { get { throw null; } set { } }
         public string MessageId { get { throw null; } set { } }
         public string PartitionKey { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, object> Properties { get { throw null; } }
         public string ReplyTo { get { throw null; } set { } }
         public string ReplyToSessionId { get { throw null; } set { } }
         public System.DateTimeOffset ScheduledEnqueueTime { get { throw null; } set { } }
         public string SessionId { get { throw null; } set { } }
+        public string Subject { get { throw null; } set { } }
         public System.TimeSpan TimeToLive { get { throw null; } set { } }
         public string To { get { throw null; } set { } }
         public string ViaPartitionKey { get { throw null; } set { } }
@@ -181,7 +182,7 @@ namespace Azure.Messaging.ServiceBus
     public static partial class ServiceBusModelFactory
     {
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static Azure.Messaging.ServiceBus.ServiceBusReceivedMessage ServiceBusReceivedMessage(Azure.BinaryData body = default(Azure.BinaryData), string messageId = null, string partitionKey = null, string viaPartitionKey = null, string sessionId = null, string replyToSessionId = null, System.TimeSpan timeToLive = default(System.TimeSpan), string correlationId = null, string label = null, string to = null, string contentType = null, string replyTo = null, System.DateTimeOffset scheduledEnqueueTime = default(System.DateTimeOffset), System.Collections.Generic.IDictionary<string, object> properties = null, System.Guid lockTokenGuid = default(System.Guid), int deliveryCount = 0, System.DateTimeOffset lockedUntil = default(System.DateTimeOffset), long sequenceNumber = (long)-1, string deadLetterSource = null, long enqueuedSequenceNumber = (long)0, System.DateTimeOffset enqueuedTime = default(System.DateTimeOffset)) { throw null; }
+        public static Azure.Messaging.ServiceBus.ServiceBusReceivedMessage ServiceBusReceivedMessage(Azure.BinaryData body = default(Azure.BinaryData), string messageId = null, string partitionKey = null, string viaPartitionKey = null, string sessionId = null, string replyToSessionId = null, System.TimeSpan timeToLive = default(System.TimeSpan), string correlationId = null, string subject = null, string to = null, string contentType = null, string replyTo = null, System.DateTimeOffset scheduledEnqueueTime = default(System.DateTimeOffset), System.Collections.Generic.IDictionary<string, object> properties = null, System.Guid lockTokenGuid = default(System.Guid), int deliveryCount = 0, System.DateTimeOffset lockedUntil = default(System.DateTimeOffset), long sequenceNumber = (long)-1, string deadLetterSource = null, long enqueuedSequenceNumber = (long)0, System.DateTimeOffset enqueuedTime = default(System.DateTimeOffset)) { throw null; }
     }
     public partial class ServiceBusProcessor
     {
@@ -225,6 +226,8 @@ namespace Azure.Messaging.ServiceBus
     public partial class ServiceBusReceivedMessage
     {
         internal ServiceBusReceivedMessage() { }
+        public Azure.Core.Amqp.AmqpAnnotatedMessage AmqpMessage { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, object> ApplicationProperties { get { throw null; } }
         public Azure.BinaryData Body { get { throw null; } }
         public string ContentType { get { throw null; } }
         public string CorrelationId { get { throw null; } }
@@ -235,17 +238,16 @@ namespace Azure.Messaging.ServiceBus
         public long EnqueuedSequenceNumber { get { throw null; } }
         public System.DateTimeOffset EnqueuedTime { get { throw null; } }
         public System.DateTimeOffset ExpiresAt { get { throw null; } }
-        public string Label { get { throw null; } }
         public System.DateTimeOffset LockedUntil { get { throw null; } }
         public string LockToken { get { throw null; } }
         public string MessageId { get { throw null; } }
         public string PartitionKey { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, object> Properties { get { throw null; } }
         public string ReplyTo { get { throw null; } }
         public string ReplyToSessionId { get { throw null; } }
         public System.DateTimeOffset ScheduledEnqueueTime { get { throw null; } }
         public long SequenceNumber { get { throw null; } }
         public string SessionId { get { throw null; } }
+        public string Subject { get { throw null; } }
         public System.TimeSpan TimeToLive { get { throw null; } }
         public string To { get { throw null; } }
         public string ViaPartitionKey { get { throw null; } }
@@ -467,12 +469,12 @@ namespace Azure.Messaging.ServiceBus.Management
         public CorrelationRuleFilter(string correlationId) { }
         public string ContentType { get { throw null; } set { } }
         public string CorrelationId { get { throw null; } set { } }
-        public string Label { get { throw null; } set { } }
         public string MessageId { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, object> Properties { get { throw null; } }
         public string ReplyTo { get { throw null; } set { } }
         public string ReplyToSessionId { get { throw null; } set { } }
         public string SessionId { get { throw null; } set { } }
+        public string Subject { get { throw null; } set { } }
         public string To { get { throw null; } set { } }
         public override bool Equals(Azure.Messaging.ServiceBus.Management.RuleFilter other) { throw null; }
         public override bool Equals(object obj) { throw null; }
