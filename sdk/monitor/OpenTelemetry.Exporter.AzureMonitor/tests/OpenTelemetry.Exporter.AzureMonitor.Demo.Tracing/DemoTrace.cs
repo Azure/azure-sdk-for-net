@@ -15,7 +15,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
                 .AddSource("Samples.SampleServer")
                 .AddSource("Samples.SampleClient")
                 .AddAzureMonitorTraceExporter(o => {
-                    o.ConnectionString = "ConnectionString";
+                    o.ConnectionString = $"InstrumentationKey=Ikey;";
                 })
                 .Build();
 
