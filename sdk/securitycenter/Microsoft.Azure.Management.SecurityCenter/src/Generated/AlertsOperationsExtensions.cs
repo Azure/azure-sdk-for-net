@@ -36,9 +36,14 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='expand'>
             /// OData expand. Optional.
             /// </param>
-            public static IPage<Alert> List(this IAlertsOperations operations, string filter = default(string), string select = default(string), string expand = default(string))
+            /// <param name='autoDismissRuleName'>
+            /// The name of an existing auto dismiss rule. Use it to simulate the rule on
+            /// existing alerts and get the alerts that would have been dismissed if the
+            /// rule was enabled when the alert was created
+            /// </param>
+            public static IPage<Alert> List(this IAlertsOperations operations, string filter = default(string), string select = default(string), string expand = default(string), string autoDismissRuleName = default(string))
             {
-                return operations.ListAsync(filter, select, expand).GetAwaiter().GetResult();
+                return operations.ListAsync(filter, select, expand, autoDismissRuleName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -56,12 +61,17 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='expand'>
             /// OData expand. Optional.
             /// </param>
+            /// <param name='autoDismissRuleName'>
+            /// The name of an existing auto dismiss rule. Use it to simulate the rule on
+            /// existing alerts and get the alerts that would have been dismissed if the
+            /// rule was enabled when the alert was created
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Alert>> ListAsync(this IAlertsOperations operations, string filter = default(string), string select = default(string), string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Alert>> ListAsync(this IAlertsOperations operations, string filter = default(string), string select = default(string), string expand = default(string), string autoDismissRuleName = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(filter, select, expand, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(filter, select, expand, autoDismissRuleName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -86,9 +96,14 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='expand'>
             /// OData expand. Optional.
             /// </param>
-            public static IPage<Alert> ListByResourceGroup(this IAlertsOperations operations, string resourceGroupName, string filter = default(string), string select = default(string), string expand = default(string))
+            /// <param name='autoDismissRuleName'>
+            /// The name of an existing auto dismiss rule. Use it to simulate the rule on
+            /// existing alerts and get the alerts that would have been dismissed if the
+            /// rule was enabled when the alert was created
+            /// </param>
+            public static IPage<Alert> ListByResourceGroup(this IAlertsOperations operations, string resourceGroupName, string filter = default(string), string select = default(string), string expand = default(string), string autoDismissRuleName = default(string))
             {
-                return operations.ListByResourceGroupAsync(resourceGroupName, filter, select, expand).GetAwaiter().GetResult();
+                return operations.ListByResourceGroupAsync(resourceGroupName, filter, select, expand, autoDismissRuleName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -110,12 +125,17 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='expand'>
             /// OData expand. Optional.
             /// </param>
+            /// <param name='autoDismissRuleName'>
+            /// The name of an existing auto dismiss rule. Use it to simulate the rule on
+            /// existing alerts and get the alerts that would have been dismissed if the
+            /// rule was enabled when the alert was created
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Alert>> ListByResourceGroupAsync(this IAlertsOperations operations, string resourceGroupName, string filter = default(string), string select = default(string), string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Alert>> ListByResourceGroupAsync(this IAlertsOperations operations, string resourceGroupName, string filter = default(string), string select = default(string), string expand = default(string), string autoDismissRuleName = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, filter, select, expand, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, filter, select, expand, autoDismissRuleName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -137,9 +157,14 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='expand'>
             /// OData expand. Optional.
             /// </param>
-            public static IPage<Alert> ListSubscriptionLevelAlertsByRegion(this IAlertsOperations operations, string filter = default(string), string select = default(string), string expand = default(string))
+            /// <param name='autoDismissRuleName'>
+            /// The name of an existing auto dismiss rule. Use it to simulate the rule on
+            /// existing alerts and get the alerts that would have been dismissed if the
+            /// rule was enabled when the alert was created
+            /// </param>
+            public static IPage<Alert> ListSubscriptionLevelAlertsByRegion(this IAlertsOperations operations, string filter = default(string), string select = default(string), string expand = default(string), string autoDismissRuleName = default(string))
             {
-                return operations.ListSubscriptionLevelAlertsByRegionAsync(filter, select, expand).GetAwaiter().GetResult();
+                return operations.ListSubscriptionLevelAlertsByRegionAsync(filter, select, expand, autoDismissRuleName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -158,12 +183,17 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='expand'>
             /// OData expand. Optional.
             /// </param>
+            /// <param name='autoDismissRuleName'>
+            /// The name of an existing auto dismiss rule. Use it to simulate the rule on
+            /// existing alerts and get the alerts that would have been dismissed if the
+            /// rule was enabled when the alert was created
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Alert>> ListSubscriptionLevelAlertsByRegionAsync(this IAlertsOperations operations, string filter = default(string), string select = default(string), string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Alert>> ListSubscriptionLevelAlertsByRegionAsync(this IAlertsOperations operations, string filter = default(string), string select = default(string), string expand = default(string), string autoDismissRuleName = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListSubscriptionLevelAlertsByRegionWithHttpMessagesAsync(filter, select, expand, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListSubscriptionLevelAlertsByRegionWithHttpMessagesAsync(filter, select, expand, autoDismissRuleName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -189,9 +219,14 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='expand'>
             /// OData expand. Optional.
             /// </param>
-            public static IPage<Alert> ListResourceGroupLevelAlertsByRegion(this IAlertsOperations operations, string resourceGroupName, string filter = default(string), string select = default(string), string expand = default(string))
+            /// <param name='autoDismissRuleName'>
+            /// The name of an existing auto dismiss rule. Use it to simulate the rule on
+            /// existing alerts and get the alerts that would have been dismissed if the
+            /// rule was enabled when the alert was created
+            /// </param>
+            public static IPage<Alert> ListResourceGroupLevelAlertsByRegion(this IAlertsOperations operations, string resourceGroupName, string filter = default(string), string select = default(string), string expand = default(string), string autoDismissRuleName = default(string))
             {
-                return operations.ListResourceGroupLevelAlertsByRegionAsync(resourceGroupName, filter, select, expand).GetAwaiter().GetResult();
+                return operations.ListResourceGroupLevelAlertsByRegionAsync(resourceGroupName, filter, select, expand, autoDismissRuleName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -214,12 +249,17 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='expand'>
             /// OData expand. Optional.
             /// </param>
+            /// <param name='autoDismissRuleName'>
+            /// The name of an existing auto dismiss rule. Use it to simulate the rule on
+            /// existing alerts and get the alerts that would have been dismissed if the
+            /// rule was enabled when the alert was created
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Alert>> ListResourceGroupLevelAlertsByRegionAsync(this IAlertsOperations operations, string resourceGroupName, string filter = default(string), string select = default(string), string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Alert>> ListResourceGroupLevelAlertsByRegionAsync(this IAlertsOperations operations, string resourceGroupName, string filter = default(string), string select = default(string), string expand = default(string), string autoDismissRuleName = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListResourceGroupLevelAlertsByRegionWithHttpMessagesAsync(resourceGroupName, filter, select, expand, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListResourceGroupLevelAlertsByRegionWithHttpMessagesAsync(resourceGroupName, filter, select, expand, autoDismissRuleName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -35,6 +35,11 @@ namespace Microsoft.Azure.Management.Security
         /// <param name='expand'>
         /// OData expand. Optional.
         /// </param>
+        /// <param name='autoDismissRuleName'>
+        /// The name of an existing auto dismiss rule. Use it to simulate the
+        /// rule on existing alerts and get the alerts that would have been
+        /// dismissed if the rule was enabled when the alert was created
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -50,7 +55,7 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Alert>>> ListWithHttpMessagesAsync(string filter = default(string), string select = default(string), string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Alert>>> ListWithHttpMessagesAsync(string filter = default(string), string select = default(string), string expand = default(string), string autoDismissRuleName = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all the alerts that are associated with the resource group
         /// </summary>
@@ -67,6 +72,11 @@ namespace Microsoft.Azure.Management.Security
         /// <param name='expand'>
         /// OData expand. Optional.
         /// </param>
+        /// <param name='autoDismissRuleName'>
+        /// The name of an existing auto dismiss rule. Use it to simulate the
+        /// rule on existing alerts and get the alerts that would have been
+        /// dismissed if the rule was enabled when the alert was created
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -82,7 +92,7 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Alert>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, string filter = default(string), string select = default(string), string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Alert>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, string filter = default(string), string select = default(string), string expand = default(string), string autoDismissRuleName = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all the alerts that are associated with the subscription that
         /// are stored in a specific location
@@ -96,6 +106,11 @@ namespace Microsoft.Azure.Management.Security
         /// <param name='expand'>
         /// OData expand. Optional.
         /// </param>
+        /// <param name='autoDismissRuleName'>
+        /// The name of an existing auto dismiss rule. Use it to simulate the
+        /// rule on existing alerts and get the alerts that would have been
+        /// dismissed if the rule was enabled when the alert was created
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -111,7 +126,7 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Alert>>> ListSubscriptionLevelAlertsByRegionWithHttpMessagesAsync(string filter = default(string), string select = default(string), string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Alert>>> ListSubscriptionLevelAlertsByRegionWithHttpMessagesAsync(string filter = default(string), string select = default(string), string expand = default(string), string autoDismissRuleName = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all the alerts that are associated with the resource group
         /// that are stored in a specific location
@@ -129,6 +144,11 @@ namespace Microsoft.Azure.Management.Security
         /// <param name='expand'>
         /// OData expand. Optional.
         /// </param>
+        /// <param name='autoDismissRuleName'>
+        /// The name of an existing auto dismiss rule. Use it to simulate the
+        /// rule on existing alerts and get the alerts that would have been
+        /// dismissed if the rule was enabled when the alert was created
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -144,7 +164,7 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Alert>>> ListResourceGroupLevelAlertsByRegionWithHttpMessagesAsync(string resourceGroupName, string filter = default(string), string select = default(string), string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Alert>>> ListResourceGroupLevelAlertsByRegionWithHttpMessagesAsync(string resourceGroupName, string filter = default(string), string select = default(string), string expand = default(string), string autoDismissRuleName = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get an alert that is associated with a subscription
         /// </summary>

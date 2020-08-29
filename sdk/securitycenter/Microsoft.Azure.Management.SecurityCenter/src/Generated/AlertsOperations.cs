@@ -62,6 +62,11 @@ namespace Microsoft.Azure.Management.Security
         /// <param name='expand'>
         /// OData expand. Optional.
         /// </param>
+        /// <param name='autoDismissRuleName'>
+        /// The name of an existing auto dismiss rule. Use it to simulate the rule on
+        /// existing alerts and get the alerts that would have been dismissed if the
+        /// rule was enabled when the alert was created
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -83,7 +88,7 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Alert>>> ListWithHttpMessagesAsync(string filter = default(string), string select = default(string), string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<Alert>>> ListWithHttpMessagesAsync(string filter = default(string), string select = default(string), string expand = default(string), string autoDismissRuleName = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -108,6 +113,7 @@ namespace Microsoft.Azure.Management.Security
                 tracingParameters.Add("filter", filter);
                 tracingParameters.Add("select", select);
                 tracingParameters.Add("expand", expand);
+                tracingParameters.Add("autoDismissRuleName", autoDismissRuleName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -131,6 +137,10 @@ namespace Microsoft.Azure.Management.Security
             if (expand != null)
             {
                 _queryParameters.Add(string.Format("$expand={0}", System.Uri.EscapeDataString(expand)));
+            }
+            if (autoDismissRuleName != null)
+            {
+                _queryParameters.Add(string.Format("autoDismissRuleName={0}", System.Uri.EscapeDataString(autoDismissRuleName)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -273,6 +283,11 @@ namespace Microsoft.Azure.Management.Security
         /// <param name='expand'>
         /// OData expand. Optional.
         /// </param>
+        /// <param name='autoDismissRuleName'>
+        /// The name of an existing auto dismiss rule. Use it to simulate the rule on
+        /// existing alerts and get the alerts that would have been dismissed if the
+        /// rule was enabled when the alert was created
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -294,7 +309,7 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Alert>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, string filter = default(string), string select = default(string), string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<Alert>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, string filter = default(string), string select = default(string), string expand = default(string), string autoDismissRuleName = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -339,6 +354,7 @@ namespace Microsoft.Azure.Management.Security
                 tracingParameters.Add("filter", filter);
                 tracingParameters.Add("select", select);
                 tracingParameters.Add("expand", expand);
+                tracingParameters.Add("autoDismissRuleName", autoDismissRuleName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListByResourceGroup", tracingParameters);
             }
@@ -363,6 +379,10 @@ namespace Microsoft.Azure.Management.Security
             if (expand != null)
             {
                 _queryParameters.Add(string.Format("$expand={0}", System.Uri.EscapeDataString(expand)));
+            }
+            if (autoDismissRuleName != null)
+            {
+                _queryParameters.Add(string.Format("autoDismissRuleName={0}", System.Uri.EscapeDataString(autoDismissRuleName)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -502,6 +522,11 @@ namespace Microsoft.Azure.Management.Security
         /// <param name='expand'>
         /// OData expand. Optional.
         /// </param>
+        /// <param name='autoDismissRuleName'>
+        /// The name of an existing auto dismiss rule. Use it to simulate the rule on
+        /// existing alerts and get the alerts that would have been dismissed if the
+        /// rule was enabled when the alert was created
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -523,7 +548,7 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Alert>>> ListSubscriptionLevelAlertsByRegionWithHttpMessagesAsync(string filter = default(string), string select = default(string), string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<Alert>>> ListSubscriptionLevelAlertsByRegionWithHttpMessagesAsync(string filter = default(string), string select = default(string), string expand = default(string), string autoDismissRuleName = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -552,6 +577,7 @@ namespace Microsoft.Azure.Management.Security
                 tracingParameters.Add("filter", filter);
                 tracingParameters.Add("select", select);
                 tracingParameters.Add("expand", expand);
+                tracingParameters.Add("autoDismissRuleName", autoDismissRuleName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListSubscriptionLevelAlertsByRegion", tracingParameters);
             }
@@ -576,6 +602,10 @@ namespace Microsoft.Azure.Management.Security
             if (expand != null)
             {
                 _queryParameters.Add(string.Format("$expand={0}", System.Uri.EscapeDataString(expand)));
+            }
+            if (autoDismissRuleName != null)
+            {
+                _queryParameters.Add(string.Format("autoDismissRuleName={0}", System.Uri.EscapeDataString(autoDismissRuleName)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -719,6 +749,11 @@ namespace Microsoft.Azure.Management.Security
         /// <param name='expand'>
         /// OData expand. Optional.
         /// </param>
+        /// <param name='autoDismissRuleName'>
+        /// The name of an existing auto dismiss rule. Use it to simulate the rule on
+        /// existing alerts and get the alerts that would have been dismissed if the
+        /// rule was enabled when the alert was created
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -740,7 +775,7 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Alert>>> ListResourceGroupLevelAlertsByRegionWithHttpMessagesAsync(string resourceGroupName, string filter = default(string), string select = default(string), string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<Alert>>> ListResourceGroupLevelAlertsByRegionWithHttpMessagesAsync(string resourceGroupName, string filter = default(string), string select = default(string), string expand = default(string), string autoDismissRuleName = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -789,6 +824,7 @@ namespace Microsoft.Azure.Management.Security
                 tracingParameters.Add("filter", filter);
                 tracingParameters.Add("select", select);
                 tracingParameters.Add("expand", expand);
+                tracingParameters.Add("autoDismissRuleName", autoDismissRuleName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListResourceGroupLevelAlertsByRegion", tracingParameters);
             }
@@ -814,6 +850,10 @@ namespace Microsoft.Azure.Management.Security
             if (expand != null)
             {
                 _queryParameters.Add(string.Format("$expand={0}", System.Uri.EscapeDataString(expand)));
+            }
+            if (autoDismissRuleName != null)
+            {
+                _queryParameters.Add(string.Format("autoDismissRuleName={0}", System.Uri.EscapeDataString(autoDismissRuleName)));
             }
             if (_queryParameters.Count > 0)
             {

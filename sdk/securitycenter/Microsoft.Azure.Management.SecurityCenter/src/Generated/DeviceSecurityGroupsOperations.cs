@@ -100,7 +100,7 @@ namespace Microsoft.Azure.Management.Security
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{resourceId}/providers/Microsoft.Security/deviceSecurityGroups").ToString();
-            _url = _url.Replace("{resourceId}", System.Uri.EscapeDataString(resourceId));
+            _url = _url.Replace("{resourceId}", resourceId);
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -290,7 +290,7 @@ namespace Microsoft.Azure.Management.Security
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{resourceId}/providers/Microsoft.Security/deviceSecurityGroups/{deviceSecurityGroupName}").ToString();
-            _url = _url.Replace("{resourceId}", System.Uri.EscapeDataString(resourceId));
+            _url = _url.Replace("{resourceId}", resourceId);
             _url = _url.Replace("{deviceSecurityGroupName}", System.Uri.EscapeDataString(deviceSecurityGroupName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
@@ -489,7 +489,7 @@ namespace Microsoft.Azure.Management.Security
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{resourceId}/providers/Microsoft.Security/deviceSecurityGroups/{deviceSecurityGroupName}").ToString();
-            _url = _url.Replace("{resourceId}", System.Uri.EscapeDataString(resourceId));
+            _url = _url.Replace("{resourceId}", resourceId);
             _url = _url.Replace("{deviceSecurityGroupName}", System.Uri.EscapeDataString(deviceSecurityGroupName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
@@ -700,7 +700,7 @@ namespace Microsoft.Azure.Management.Security
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{resourceId}/providers/Microsoft.Security/deviceSecurityGroups/{deviceSecurityGroupName}").ToString();
-            _url = _url.Replace("{resourceId}", System.Uri.EscapeDataString(resourceId));
+            _url = _url.Replace("{resourceId}", resourceId);
             _url = _url.Replace("{deviceSecurityGroupName}", System.Uri.EscapeDataString(deviceSecurityGroupName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
