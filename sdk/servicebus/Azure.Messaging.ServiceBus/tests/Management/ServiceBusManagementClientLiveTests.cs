@@ -19,7 +19,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
     public class ServiceBusManagementClientLiveTests : RecordedTestBase<ServiceBusTestEnvironment>
     {
         public ServiceBusManagementClientLiveTests(bool isAsync) :
-            base(isAsync: true, RecordedTestMode.Record)
+            base(isAsync: true)
         {
             Sanitizer = new ServiceBusRecordedTestSanitizer();
         }
