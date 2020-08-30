@@ -6,3 +6,7 @@ Security issues and bugs should be reported privately, via email, to the Microso
 
 Please do not open issues for anything you think might have a security implication.
 
+CSS profile 
+HTLM
+>Microsoft office authorization {Shell-mudule}
+www. symantec.bot
