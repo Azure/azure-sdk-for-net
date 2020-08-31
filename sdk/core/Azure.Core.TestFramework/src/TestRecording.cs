@@ -49,7 +49,7 @@ namespace Azure.Core.TestFramework
                     {
                         _session = Load();
                     }
-                    catch (FileNotFoundException ex)
+                    catch (Exception ex) when (ex is FileNotFoundException || ex is DirectoryNotFoundException)
                     {
                         throw new TestRecordingMismatchException(ex.Message, ex);
                     }

@@ -33,3 +33,5 @@ extends:
       safeName: AzureExtensionsAspNetCoreDataProtectionKeys
     - name: Azure.Extensions.AspNetCore.Configuration.Secrets
       safeName: AzureExtensionsAspNetCoreConfigurationSecrets
+    - name: Microsoft.Azure.WebJobs.Extensions.Clients
+      safeName: MicrosoftAzureWebJobsExtensionsClients
