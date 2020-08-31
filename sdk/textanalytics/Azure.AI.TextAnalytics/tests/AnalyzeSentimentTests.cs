@@ -426,8 +426,6 @@ namespace Azure.AI.TextAnalytics.Tests
                 Assert.IsNotNull(sentence.ConfidenceScores.Neutral);
                 Assert.IsNotNull(sentence.ConfidenceScores.Negative);
                 Assert.IsTrue(CheckTotalConfidenceScoreValue(sentence.ConfidenceScores));
-                Assert.IsNotNull(sentence.Offset);
-                Assert.IsNotNull(sentence.Length);
                 Assert.Greater(sentence.Length, 0);
 
                 Assert.IsNotNull(sentence.MinedOpinions);

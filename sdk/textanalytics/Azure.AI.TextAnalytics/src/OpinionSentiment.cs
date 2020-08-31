@@ -63,12 +63,12 @@ namespace Azure.AI.TextAnalytics
         public bool IsNegated { get; }
 
         /// <summary>
-        /// Gets the starting position (in UTF16 code units) for the opinion text.
+        /// Gets the starting position (in UTF-16 code units) for the opinion text.
         /// </summary>
         public int Offset { get; }
 
         /// <summary>
-        /// Gets the length (in UTF16 code units) of the opinion text.
+        /// Gets the length (in UTF-16 code units) of the opinion text.
         /// </summary>
         public int Length { get; }
     }

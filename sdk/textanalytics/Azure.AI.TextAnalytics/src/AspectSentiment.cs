@@ -56,12 +56,12 @@ namespace Azure.AI.TextAnalytics
         public SentimentConfidenceScores ConfidenceScores { get; }
 
         /// <summary>
-        /// Gets the starting position (in UTF16 code units) for the aspect text.
+        /// Gets the starting position (in UTF-16 code units) for the aspect text.
         /// </summary>
         public int Offset { get; }
 
         /// <summary>
-        /// Gets the length (in UTF16 code units) of the aspect text.
+        /// Gets the length (in UTF-16 code units) of the aspect text.
         /// </summary>
         public int Length { get; }
     }

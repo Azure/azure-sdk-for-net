@@ -62,12 +62,12 @@ namespace Azure.AI.TextAnalytics
         public IReadOnlyCollection<MinedOpinion> MinedOpinions { get; }
 
         /// <summary>
-        /// Gets the starting position (in UTF16 code units) for the matching text in the sentence.
+        /// Gets the starting position (in UTF-16 code units) for the matching text in the sentence.
         /// </summary>
         public int Offset { get; }
 
         /// <summary>
-        /// Gets the length (in UTF16 code units) of the matching text in the sentence.
+        /// Gets the length (in UTF-16 code units) of the matching text in the sentence.
         /// </summary>
         public int Length { get; }
 
