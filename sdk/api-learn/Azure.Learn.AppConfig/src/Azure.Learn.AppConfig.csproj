@@ -1,14 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description></Description>
+    <Description>API Design Learning Project</Description>
     <AssemblyTitle></AssemblyTitle>
-    <Version></Version>
+    <Version>0.0.1-preview.1</Version>
     <PackageTags></PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <NoWarn>CS1591;AZC0012;CA1308</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- The System.Text.Json package is on the approved list of dependencies for Azure SDK libraries.
+         See https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-dependencies-list for details. -->
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
@@ -24,10 +25,7 @@
     <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
 
+  <!-- The following line enables switching between project and package references. -->
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
-
-  <ItemGroup>
-    <Compile Remove="C:\src\azure-sdk-for-net\eng\..\sdk\core\Azure.Core\src\Shared\AutoRest\ArmOperationHelpers.cs" />
-  </ItemGroup>
 
 </Project>
