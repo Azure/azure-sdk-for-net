@@ -244,7 +244,7 @@ function Upload-Blobs
 }
 # VERIFY PACKAGES
 $apiUrl = "https://api.github.com/repos/$repoId"
-#$pkgList = VerifyPackages -pkgRepository $packageRepository -artifactLocation $artifactLocation -workingDirectory $workingDirectory -apiUrl $apiUrl -releaseSha $releaseSha -continueOnError $continueOnError
+$pkgList = VerifyPackages -pkgRepository $packageRepository -artifactLocation $artifactLocation -workingDirectory $workingDirectory -apiUrl $apiUrl -releaseSha $releaseSha -continueOnError $continueOnError
 if ($Language -eq "javascript")
 {
     $PublishedDocs = Get-ChildItem "$($DocLocation)/documentation" | Where-Object -FilterScript {$_.Name.EndsWith(".zip")}
@@ -283,7 +283,7 @@ if ($Language -eq "dotnet")
             Write-Host "DocDir $($Item)"
             Write-Host "PkgName $($PkgName)"
             Write-Host "DocVersion $($DocVersion)"
-            Upload-Blobs -DocDir "$($Item)" -PkgName $PkgName -DocVersion $DocVersion #-PkgInfo $pkgList
+            Upload-Blobs -DocDir "$($Item)" -PkgName $PkgName -DocVersion $DocVersion -PkgInfo $pkgList
         }
         else
         {
