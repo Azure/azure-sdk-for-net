@@ -565,6 +565,27 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task DownloadAsync_LastAccess()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var data = GetRandomBuffer(Constants.KB);
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            // Act
+            Response<BlobDownloadInfo> response = await blob.DownloadAsync();
+
+            // Assert
+            Assert.AreNotEqual(DateTimeOffset.MinValue, response.Value.Details.LastAccessed);
+        }
+
+        [Test]
         public async Task DownloadAsync_Overloads()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -3555,6 +3576,22 @@ namespace Azure.Storage.Blobs.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 blob.GetPropertiesAsync(),
                 e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task GetPropertiesAsync_LastAccessed()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            // Act
+            Response<BlobProperties> response = await blob.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreNotEqual(DateTimeOffset.MinValue, response.Value.LastAccessed);
         }
 
         [Test]

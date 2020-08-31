@@ -11,7 +11,7 @@
   <TargetPremiumFileTenant>PremiumFileTenant</TargetPremiumFileTenant>
 
   <TenantConfigurations>
-    <!-- A storage account with an Encryption Scope and Blob Versioning enabled -->
+    <!-- A storage account with an Encryption Scope, Blob Versioning, and Last Access Time enabled -->
     <!-- Replace [ACCOUNT] and [ACCOUNT-KEY] -->
     <TenantConfiguration>
       <TenantName>ProductionTenant</TenantName>
