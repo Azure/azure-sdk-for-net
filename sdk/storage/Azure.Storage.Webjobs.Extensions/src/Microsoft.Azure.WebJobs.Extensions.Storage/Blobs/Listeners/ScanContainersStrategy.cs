@@ -160,6 +160,31 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             try
             {
                 currentBlobs = container.GetBlobsAsync(cancellationToken: cancellationToken);
+
+
+                List<BlobBaseClient> newBlobs = new List<BlobBaseClient>();
+
+                // Type cast to IStorageBlob is safe due to useFlatBlobListing: true above.
+                await foreach (BlobItem currentBlob in currentBlobs.ConfigureAwait(false))
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+
+                    var properties = currentBlob.Properties;
+                    DateTime lastModifiedTimestamp = properties.LastModified.Value.UtcDateTime;
+
+                    if (lastModifiedTimestamp > updatedTimestamp)
+                    {
+                        updatedTimestamp = lastModifiedTimestamp;
+                    }
+
+                    if (lastModifiedTimestamp > previousTimestamp)
+                    {
+                        // TODO (kasobol-msft) check type here
+                        newBlobs.Add(container.GetBlobClient(currentBlob.Name));
+                    }
+                }
+
+                return new Tuple<IEnumerable<BlobBaseClient>, DateTime>(newBlobs, updatedTimestamp);
             }
             catch (RequestFailedException exception)
             {
@@ -173,30 +198,6 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                     throw;
                 }
             }
-
-            List<BlobBaseClient> newBlobs = new List<BlobBaseClient>();
-
-            // Type cast to IStorageBlob is safe due to useFlatBlobListing: true above.
-            await foreach (BlobItem currentBlob in currentBlobs.ConfigureAwait(false))
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-
-                var properties = currentBlob.Properties;
-                DateTime lastModifiedTimestamp = properties.LastModified.Value.UtcDateTime;
-
-                if (lastModifiedTimestamp > updatedTimestamp)
-                {
-                    updatedTimestamp = lastModifiedTimestamp;
-                }
-
-                if (lastModifiedTimestamp > previousTimestamp)
-                {
-                    // TODO (kasobol-msft) check type here
-                    newBlobs.Add(container.GetBlobClient(currentBlob.Name));
-                }
-            }
-
-            return new Tuple<IEnumerable<BlobBaseClient>, DateTime>(newBlobs, updatedTimestamp);
         }
     }
 }
