@@ -1,6 +1,14 @@
 # Note, due to how `Expand-Archive` is leveraged in this script,
 # powershell core is a requirement for successful execution.
 param (
+  # used by VerifyPackages
+  $artifactLocation, # the root of the artifact folder. DevOps $(System.ArtifactsDirectory)
+  $workingDirectory, # directory that package artifacts will be extracted into for examination (if necessary)
+  $packageRepository, # used to indicate destination against which we will check the existing version.
+  # valid options: PyPI, Nuget, NPM, Maven, C, CPP
+  # used by CreateTags
+  $releaseSha, # the SHA for the artifacts. DevOps: $(Release.Artifacts.<artifactAlias>.SourceVersion) or $(Build.SourceVersion)
+
   $AzCopy,
   $DocLocation,
   $SASKey,
@@ -14,7 +22,7 @@ param (
 . (Join-Path $PSScriptRoot artiface-metadata-parsing.ps1)
 
 $Language = $Language.ToLower()
-
+$DocDefaultName = 'docs'
 # Regex inspired but simplified from https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string
 $SEMVER_REGEX = "^(?<major>0|[1-9]\d*)\.(?<minor>0|[1-9]\d*)\.(?<patch>0|[1-9]\d*)(?:-?(?<prelabel>[a-zA-Z-]*)(?:\.?(?<prenumber>0|[1-9]\d*))?)?$"
 
@@ -189,7 +197,8 @@ function Upload-Blobs
     Param (
         [Parameter(Mandatory=$true)] [String]$DocDir,
         [Parameter(Mandatory=$true)] [String]$PkgName,
-        [Parameter(Mandatory=$true)] [String]$DocVersion
+        [Parameter(Mandatory=$true)] [String]$DocVersion,
+        [Parameter(Mandatory=$true)] [Object[]]$PkgInfo
     )
     #eg : $BlobName = "https://azuresdkdocs.blob.core.windows.net"
     $DocDest = "$($BlobName)/`$web/$($Language)"
@@ -201,7 +210,19 @@ function Upload-Blobs
     Write-Host "Final Dest $($DocDest)/$($PkgName)/$($DocVersion)"
 
     # Use the step to replace master link to release tag link 
-    $tag = GenerateReleaseTag($PkgName, $DocVersion)
+    $tag = ''
+    if (!$PkgInfo) {
+        $tag = if ($PkgName -eq $DocDefaultName) {
+            "$($packageInfo.packageId)_$($packageInfo.PackageVersion)"
+        } else {
+            $packageInfo.PackageVersion
+        }
+    } else {
+        Write-Host "The package name retieved from artifacts: $($PkgInfo[0].PackageId)."
+        Write-Host "The package version retieved from artifacts: $($PkgInfo[0].PackageVersion)."
+        $tag = $PkgInfo[0].Tag
+    }
+    
     Write-Host "Replacing all readme master links with release tag $tag"
     ReplaceLink -scanFolder $DocDir -fileSuffix ".html" -replacement $tag -customRegex $RepoReplaceRegex
    
@@ -220,8 +241,9 @@ function Upload-Blobs
         & $($AzCopy) cp "$($DocDir)/**" "$($DocDest)/$($PkgName)/latest$($SASKey)" --recursive=true
     }
 }
-
-
+# VERIFY PACKAGES
+$apiUrl = "https://api.github.com/repos/$repoId"
+$pkgList = VerifyPackages -pkgRepository $packageRepository -artifactLocation $artifactLocation -workingDirectory $workingDirectory -apiUrl $apiUrl -releaseSha $releaseSha -continueOnError $continueOnError
 if ($Language -eq "javascript")
 {
     $PublishedDocs = Get-ChildItem "$($DocLocation)/documentation" | Where-Object -FilterScript {$_.Name.EndsWith(".zip")}
@@ -235,7 +257,7 @@ if ($Language -eq "javascript")
         if($dirList.Length -eq 1){
             $DocVersion = $dirList[0].Name
             Write-Host "Uploading Doc for $($PkgName) Version:- $($DocVersion)..."
-            Upload-Blobs -DocDir "$($DocLocation)/documentation/$($Item.BaseName)/$($Item.BaseName)/$($DocVersion)" -PkgName $PkgName -DocVersion $DocVersion
+            Upload-Blobs -DocDir "$($DocLocation)/documentation/$($Item.BaseName)/$($Item.BaseName)/$($DocVersion)" -PkgName $PkgName -DocVersion $DocVersion -PkgInfo $pkgList
         }
         else{
             Write-Host "found more than 1 folder under the documentation for package - $($Item.Name)"
@@ -260,7 +282,7 @@ if ($Language -eq "dotnet")
             Write-Host "DocDir $($Item)"
             Write-Host "PkgName $($PkgName)"
             Write-Host "DocVersion $($DocVersion)"
-            Upload-Blobs -DocDir "$($Item)" -PkgName $PkgName -DocVersion $DocVersion
+            Upload-Blobs -DocDir "$($Item)" -PkgName $PkgName -DocVersion $DocVersion -PkgInfo $pkgList
         }
         else
         {
@@ -287,8 +309,7 @@ if ($Language -eq "python")
         Write-Host "Discovered Package Name: $PkgName"
         Write-Host "Discovered Package Version: $Version"
         Write-Host "Directory for Upload: $UnzippedDocumentationPath"
-
-        Upload-Blobs -DocDir $UnzippedDocumentationPath -PkgName $PkgName -DocVersion $Version
+        Upload-Blobs -DocDir $UnzippedDocumentationPath -PkgName $PkgName -DocVersion $Version -PkgInfo $pkgList
     }
 }
 
@@ -334,8 +355,7 @@ if ($Language -eq "java")
             Write-Host "DocDir $($UnjarredDocumentationPath)"
             Write-Host "PkgName $($ArtifactId)"
             Write-Host "DocVersion $($Version)"
-
-            Upload-Blobs -DocDir $UnjarredDocumentationPath -PkgName $ArtifactId -DocVersion $Version
+            Upload-Blobs -DocDir $UnjarredDocumentationPath -PkgName $ArtifactId -DocVersion $Version -PkgInfo $pkgList
 
         } Finally {
             if (![string]::IsNullOrEmpty($UnjarredDocumentationPath)) {
@@ -357,11 +377,11 @@ if ($Language -eq "c")
     # Those loops are left over from previous versions of this script which were
     # used to publish multiple docs packages in a single invocation.
     $pkgInfo = Get-Content $DocLocation/package-info.json | ConvertFrom-Json
-    Upload-Blobs -DocDir $DocLocation -PkgName 'docs' -DocVersion $pkgInfo.version
+    Upload-Blobs -DocDir $DocLocation -PkgName 'docs' -DocVersion $pkgInfo.version -PkgInfo $pkgList
 }
 
 if ($Language -eq "cpp")
 {
     $packageInfo = (Get-Content (Join-Path $DocLocation 'package-info.json') | ConvertFrom-Json)
-    Upload-Blobs -DocDir $DocLocation -PkgName $packageInfo.name -DocVersion $packageInfo.version
+    Upload-Blobs -DocDir $DocLocation -PkgName $packageInfo.name -DocVersion $packageInfo.version -PkgInfo $pkgList
 }

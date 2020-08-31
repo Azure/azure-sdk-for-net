@@ -22,8 +22,3 @@ steps:
   timeoutInMinutes: 5
   env:
     GH_TOKEN: $(azuresdk-github-pat)
-- pwsh: |
-    echo $(releaseTag.ReleaseTag)
-    Write-Host "This is the tag:$(releaseTag.ReleaseTag)" $(releaseTag.ReleaseTag)
-  workingDirectory: $(Pipeline.Workspace)
-  displayName: Output Visible Artifacts

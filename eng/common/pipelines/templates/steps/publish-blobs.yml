@@ -5,7 +5,10 @@ parameters:
   BlobName: ''
   ScriptPath: ''
   RepoId: ''
-  ReleaseTag: ''
+  ArtifactLocation: 'not-specified'
+  PackageRepository: 'not-specified'
+  ReleaseSha: 'not-specified'
+  WorkingDirectory: ''
 
 steps:
 - pwsh: |
@@ -18,13 +21,16 @@ steps:
   inputs:
     filePath: ${{ parameters.ScriptPath }}
     arguments: >
+      -artifactLocation ${{ parameters.ArtifactLocation }}
+      -packageRepository ${{ parameters.PackageRepository }}
+      -releaseSha ${{ parameters.ReleaseSha }}
       -AzCopy $(Resolve-Path "$(Build.BinariesDirectory)/azcopy/azcopy_windows_amd64_*/azcopy.exe")[0]
       -DocLocation "${{ parameters.FolderForUpload }}"
       -SASKey "${{ parameters.BlobSASKey }}"
       -Language "${{ parameters.TargetLanguage }}"
       -BlobName "${{ parameters.BlobName }}"
       -RepoReplaceRegex "(https://github.com/${{ parameters.RepoId }}/(?:blob|tree)/)master(/.*)"
-      -Tag: "${{ parameters.ReleaseTag }}"
+      -workingDirectory '${{ parameters.WorkingDirectory }}'
     pwsh: true
     workingDirectory: $(Pipeline.Workspace)
   displayName: Copy Docs to Blob
