@@ -49,6 +49,7 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
 
         public static async Task UploadFromByteArrayAsync(this PageBlobClient pageBlobClient, byte[] bytes, int offset)
         {
+            await pageBlobClient.CreateIfNotExistsAsync(512);
             await pageBlobClient.UploadPagesAsync(new MemoryStream(bytes), offset);
         }
 
