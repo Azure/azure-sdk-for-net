@@ -16,10 +16,10 @@ namespace Microsoft.Azure.Management.DataBox.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for DataDestinationType.
+    /// Defines values for DataAccountType.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum DataDestinationType
+    public enum DataAccountType
     {
         /// <summary>
         /// Storage Accounts .
@@ -32,33 +32,33 @@ namespace Microsoft.Azure.Management.DataBox.Models
         [EnumMember(Value = "ManagedDisk")]
         ManagedDisk
     }
-    internal static class DataDestinationTypeEnumExtension
+    internal static class DataAccountTypeEnumExtension
     {
-        internal static string ToSerializedValue(this DataDestinationType? value)
+        internal static string ToSerializedValue(this DataAccountType? value)
         {
-            return value == null ? null : ((DataDestinationType)value).ToSerializedValue();
+            return value == null ? null : ((DataAccountType)value).ToSerializedValue();
         }
 
-        internal static string ToSerializedValue(this DataDestinationType value)
+        internal static string ToSerializedValue(this DataAccountType value)
         {
             switch( value )
             {
-                case DataDestinationType.StorageAccount:
+                case DataAccountType.StorageAccount:
                     return "StorageAccount";
-                case DataDestinationType.ManagedDisk:
+                case DataAccountType.ManagedDisk:
                     return "ManagedDisk";
             }
             return null;
         }
 
-        internal static DataDestinationType? ParseDataDestinationType(this string value)
+        internal static DataAccountType? ParseDataAccountType(this string value)
         {
             switch( value )
             {
                 case "StorageAccount":
-                    return DataDestinationType.StorageAccount;
+                    return DataAccountType.StorageAccount;
                 case "ManagedDisk":
-                    return DataDestinationType.ManagedDisk;
+                    return DataAccountType.ManagedDisk;
             }
             return null;
         }
