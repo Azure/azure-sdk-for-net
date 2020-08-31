@@ -16,12 +16,13 @@ namespace Azure.Learn.AppConfig.Models
         }
 
         /// <summary> Initializes a new instance of Key. </summary>
-        /// <param name="name"> . </param>
+        /// <param name="name"> The name of the key. </param>
         internal Key(string name)
         {
             Name = name;
         }
 
+        /// <summary> The name of the key. </summary>
         public string Name { get; }
     }
 }
