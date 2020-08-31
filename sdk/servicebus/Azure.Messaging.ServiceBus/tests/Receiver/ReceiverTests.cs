@@ -30,6 +30,33 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         }
 
         [Test]
+        public void EntityPathConstructedCorrectly()
+        {
+            var account = Encoding.Default.GetString(GetRandomBuffer(12));
+            var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
+            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(GetRandomBuffer(64))}";
+            var queueName = "queueName";
+            var client = new ServiceBusClient(connString);
+            var receiver = client.CreateReceiver(queueName, new ServiceBusReceiverOptions
+            {
+                SubQueue = SubQueue.None
+            });
+            Assert.AreEqual("queueName", receiver.EntityPath);
+
+            receiver = client.CreateReceiver(queueName, new ServiceBusReceiverOptions
+            {
+                SubQueue = SubQueue.DeadLetter
+            });
+            Assert.AreEqual("queueName/$DeadLetterQueue", receiver.EntityPath);
+
+            receiver = client.CreateReceiver(queueName, new ServiceBusReceiverOptions
+            {
+                SubQueue = SubQueue.TransferDeadLetter
+            });
+            Assert.AreEqual("queueName/$Transfer/$DeadLetterQueue", receiver.EntityPath);
+        }
+
+        [Test]
         public void ReceiverOptionsValidation()
         {
             var options = new ServiceBusReceiverOptions();

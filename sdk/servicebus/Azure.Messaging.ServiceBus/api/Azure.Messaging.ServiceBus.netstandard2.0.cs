@@ -11,14 +11,6 @@ namespace Azure.Messaging.ServiceBus
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
     }
-    public static partial class EntityNameFormatter
-    {
-        public static string FormatDeadLetterPath(string entityPath) { throw null; }
-        public static string FormatRulePath(string topicPath, string subscriptionName, string ruleName) { throw null; }
-        public static string FormatSubQueuePath(string entityPath, string subQueueName) { throw null; }
-        public static string FormatSubscriptionPath(string topicPath, string subscriptionName) { throw null; }
-        public static string FormatTransferDeadLetterPath(string entityPath) { throw null; }
-    }
     public sealed partial class ProcessErrorEventArgs : System.EventArgs
     {
         public ProcessErrorEventArgs(System.Exception exception, Azure.Messaging.ServiceBus.ServiceBusErrorSource errorSource, string fullyQualifiedNamespace, string entityPath) { }
@@ -77,8 +69,6 @@ namespace Azure.Messaging.ServiceBus
         public string FullyQualifiedNamespace { get { throw null; } }
         public bool IsDisposed { get { throw null; } }
         public Azure.Messaging.ServiceBus.ServiceBusTransportType TransportType { get { throw null; } }
-        public virtual Azure.Messaging.ServiceBus.ServiceBusReceiver CreateDeadLetterReceiver(string queueName, Azure.Messaging.ServiceBus.ServiceBusReceiverOptions options = null) { throw null; }
-        public virtual Azure.Messaging.ServiceBus.ServiceBusReceiver CreateDeadLetterReceiver(string topicName, string subscriptionName, Azure.Messaging.ServiceBus.ServiceBusReceiverOptions options = null) { throw null; }
         public virtual Azure.Messaging.ServiceBus.ServiceBusProcessor CreateProcessor(string queueName) { throw null; }
         public virtual Azure.Messaging.ServiceBus.ServiceBusProcessor CreateProcessor(string queueName, Azure.Messaging.ServiceBus.ServiceBusProcessorOptions options) { throw null; }
         public virtual Azure.Messaging.ServiceBus.ServiceBusProcessor CreateProcessor(string topicName, string subscriptionName) { throw null; }
@@ -262,15 +252,10 @@ namespace Azure.Messaging.ServiceBus
         public int PrefetchCount { get { throw null; } }
         public Azure.Messaging.ServiceBus.ReceiveMode ReceiveMode { get { throw null; } }
         public virtual System.Threading.Tasks.Task AbandonMessageAsync(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Collections.Generic.IDictionary<string, object> propertiesToModify = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task AbandonMessageAsync(string lockToken, System.Collections.Generic.IDictionary<string, object> propertiesToModify = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task CompleteMessageAsync(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task CompleteMessageAsync(string lockToken, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task DeadLetterMessageAsync(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Collections.Generic.IDictionary<string, object> propertiesToModify = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task DeadLetterMessageAsync(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, string deadLetterReason, string deadLetterErrorDescription = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task DeadLetterMessageAsync(string lockToken, System.Collections.Generic.IDictionary<string, object> propertiesToModify = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task DeadLetterMessageAsync(string lockToken, string deadLetterReason, string deadLetterErrorDescription = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task DeferMessageAsync(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Collections.Generic.IDictionary<string, object> propertiesToModify = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task DeferMessageAsync(string lockToken, System.Collections.Generic.IDictionary<string, object> propertiesToModify = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.ValueTask DisposeAsync() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -284,7 +269,6 @@ namespace Azure.Messaging.ServiceBus
         public virtual System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Azure.Messaging.ServiceBus.ServiceBusReceivedMessage>> ReceiveMessagesAsync(int maxMessages, System.TimeSpan? maxWaitTime = default(System.TimeSpan?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Collections.Generic.IAsyncEnumerable<Azure.Messaging.ServiceBus.ServiceBusReceivedMessage> ReceiveMessagesAsync([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task RenewMessageLockAsync(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.DateTimeOffset> RenewMessageLockAsync(string lockToken, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
     }
@@ -293,6 +277,7 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusReceiverOptions() { }
         public int PrefetchCount { get { throw null; } set { } }
         public Azure.Messaging.ServiceBus.ReceiveMode ReceiveMode { get { throw null; } set { } }
+        public Azure.Messaging.ServiceBus.SubQueue SubQueue { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -432,6 +417,12 @@ namespace Azure.Messaging.ServiceBus
     {
         AmqpTcp = 0,
         AmqpWebSockets = 1,
+    }
+    public enum SubQueue
+    {
+        None = 0,
+        DeadLetter = 1,
+        TransferDeadLetter = 2,
     }
 }
 namespace Azure.Messaging.ServiceBus.Management

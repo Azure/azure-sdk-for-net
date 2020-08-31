@@ -438,7 +438,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 messageEnum.Reset();
                 remainingMessages = messageCount;
-                var deadLetterReceiver = client.CreateDeadLetterReceiver(scope.QueueName);
+                var deadLetterReceiver = client.CreateReceiver(scope.QueueName, new ServiceBusReceiverOptions
+                {
+                    SubQueue = SubQueue.DeadLetter
+                });
 
                 while (remainingMessages > 0)
                 {
@@ -511,7 +514,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 messageEnum.Reset();
                 remainingMessages = messageCount;
-                var deadLetterReceiver = client.CreateDeadLetterReceiver(topicName, subscriptionName);
+                var deadLetterReceiver = client.CreateReceiver(topicName, subscriptionName, new ServiceBusReceiverOptions
+                {
+                    SubQueue = SubQueue.DeadLetter
+                });
 
                 while (remainingMessages > 0)
                 {
