@@ -33,7 +33,15 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// </summary>
         /// <param name="authorizationPolicies">The shared access policies you
         /// can use to secure a connection to the IoT hub.</param>
+        /// <param name="publicNetworkAccess">Whether requests from Public
+        /// Network are allowed. Possible values include: 'Enabled',
+        /// 'Disabled'</param>
         /// <param name="ipFilterRules">The IP filter rules.</param>
+        /// <param name="minTlsVersion">Specifies the minimum TLS version to
+        /// support for this hub. Can be set to "1.2" to have clients that use
+        /// a TLS version below 1.2 to be rejected.</param>
+        /// <param name="privateEndpointConnections">Private endpoint
+        /// connections created on this IotHub</param>
         /// <param name="provisioningState">The provisioning state.</param>
         /// <param name="state">The hub state.</param>
         /// <param name="hostName">The name of the host.</param>
@@ -58,12 +66,17 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// <param name="features">The capabilities and features enabled for
         /// the IoT hub. Possible values include: 'None',
         /// 'DeviceManagement'</param>
+        /// <param name="encryption">The encryption properties for the IoT
+        /// hub.</param>
         /// <param name="locations">Primary and secondary location for iot
         /// hub</param>
-        public IotHubProperties(IList<SharedAccessSignatureAuthorizationRule> authorizationPolicies = default(IList<SharedAccessSignatureAuthorizationRule>), IList<IpFilterRule> ipFilterRules = default(IList<IpFilterRule>), string provisioningState = default(string), string state = default(string), string hostName = default(string), IDictionary<string, EventHubProperties> eventHubEndpoints = default(IDictionary<string, EventHubProperties>), RoutingProperties routing = default(RoutingProperties), IDictionary<string, StorageEndpointProperties> storageEndpoints = default(IDictionary<string, StorageEndpointProperties>), IDictionary<string, MessagingEndpointProperties> messagingEndpoints = default(IDictionary<string, MessagingEndpointProperties>), bool? enableFileUploadNotifications = default(bool?), CloudToDeviceProperties cloudToDevice = default(CloudToDeviceProperties), string comments = default(string), IotHubPropertiesDeviceStreams deviceStreams = default(IotHubPropertiesDeviceStreams), string features = default(string), IList<IotHubLocationDescription> locations = default(IList<IotHubLocationDescription>))
+        public IotHubProperties(IList<SharedAccessSignatureAuthorizationRule> authorizationPolicies = default(IList<SharedAccessSignatureAuthorizationRule>), string publicNetworkAccess = default(string), IList<IpFilterRule> ipFilterRules = default(IList<IpFilterRule>), string minTlsVersion = default(string), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string provisioningState = default(string), string state = default(string), string hostName = default(string), IDictionary<string, EventHubProperties> eventHubEndpoints = default(IDictionary<string, EventHubProperties>), RoutingProperties routing = default(RoutingProperties), IDictionary<string, StorageEndpointProperties> storageEndpoints = default(IDictionary<string, StorageEndpointProperties>), IDictionary<string, MessagingEndpointProperties> messagingEndpoints = default(IDictionary<string, MessagingEndpointProperties>), bool? enableFileUploadNotifications = default(bool?), CloudToDeviceProperties cloudToDevice = default(CloudToDeviceProperties), string comments = default(string), IotHubPropertiesDeviceStreams deviceStreams = default(IotHubPropertiesDeviceStreams), string features = default(string), EncryptionPropertiesDescription encryption = default(EncryptionPropertiesDescription), IList<IotHubLocationDescription> locations = default(IList<IotHubLocationDescription>))
         {
             AuthorizationPolicies = authorizationPolicies;
+            PublicNetworkAccess = publicNetworkAccess;
             IpFilterRules = ipFilterRules;
+            MinTlsVersion = minTlsVersion;
+            PrivateEndpointConnections = privateEndpointConnections;
             ProvisioningState = provisioningState;
             State = state;
             HostName = hostName;
@@ -76,6 +89,7 @@ namespace Microsoft.Azure.Management.IotHub.Models
             Comments = comments;
             DeviceStreams = deviceStreams;
             Features = features;
+            Encryption = encryption;
             Locations = locations;
             CustomInit();
         }
@@ -93,10 +107,31 @@ namespace Microsoft.Azure.Management.IotHub.Models
         public IList<SharedAccessSignatureAuthorizationRule> AuthorizationPolicies { get; set; }
 
         /// <summary>
+        /// Gets or sets whether requests from Public Network are allowed.
+        /// Possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
+
+        /// <summary>
         /// Gets or sets the IP filter rules.
         /// </summary>
         [JsonProperty(PropertyName = "ipFilterRules")]
         public IList<IpFilterRule> IpFilterRules { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the minimum TLS version to support for this
+        /// hub. Can be set to "1.2" to have clients that use a TLS version
+        /// below 1.2 to be rejected.
+        /// </summary>
+        [JsonProperty(PropertyName = "minTlsVersion")]
+        public string MinTlsVersion { get; set; }
+
+        /// <summary>
+        /// Gets or sets private endpoint connections created on this IotHub
+        /// </summary>
+        [JsonProperty(PropertyName = "privateEndpointConnections")]
+        public IList<PrivateEndpointConnection> PrivateEndpointConnections { get; set; }
 
         /// <summary>
         /// Gets the provisioning state.
@@ -180,6 +215,12 @@ namespace Microsoft.Azure.Management.IotHub.Models
         public string Features { get; set; }
 
         /// <summary>
+        /// Gets or sets the encryption properties for the IoT hub.
+        /// </summary>
+        [JsonProperty(PropertyName = "encryption")]
+        public EncryptionPropertiesDescription Encryption { get; set; }
+
+        /// <summary>
         /// Gets primary and secondary location for iot hub
         /// </summary>
         [JsonProperty(PropertyName = "locations")]
@@ -210,6 +251,16 @@ namespace Microsoft.Azure.Management.IotHub.Models
                     if (element1 != null)
                     {
                         element1.Validate();
+                    }
+                }
+            }
+            if (PrivateEndpointConnections != null)
+            {
+                foreach (var element2 in PrivateEndpointConnections)
+                {
+                    if (element2 != null)
+                    {
+                        element2.Validate();
                     }
                 }
             }

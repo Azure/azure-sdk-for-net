@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Management.IotHub
             /// ETag of the Certificate. Do not specify for creating a brand new
             /// certificate. Required to update an existing certificate.
             /// </param>
-            public static CertificateDescription CreateOrUpdate(this ICertificatesOperations operations, string resourceGroupName, string resourceName, string certificateName, CertificateBodyDescription certificateDescription, string ifMatch = default(string))
+            public static CertificateDescription CreateOrUpdate(this ICertificatesOperations operations, string resourceGroupName, string resourceName, string certificateName, CertificateDescription certificateDescription, string ifMatch = default(string))
             {
                 return operations.CreateOrUpdateAsync(resourceGroupName, resourceName, certificateName, certificateDescription, ifMatch).GetAwaiter().GetResult();
             }
@@ -177,7 +177,7 @@ namespace Microsoft.Azure.Management.IotHub
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CertificateDescription> CreateOrUpdateAsync(this ICertificatesOperations operations, string resourceGroupName, string resourceName, string certificateName, CertificateBodyDescription certificateDescription, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CertificateDescription> CreateOrUpdateAsync(this ICertificatesOperations operations, string resourceGroupName, string resourceName, string certificateName, CertificateDescription certificateDescription, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, resourceName, certificateName, certificateDescription, ifMatch, null, cancellationToken).ConfigureAwait(false))
                 {
