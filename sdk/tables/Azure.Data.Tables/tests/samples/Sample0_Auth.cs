@@ -73,7 +73,7 @@ namespace Azure.Data.Tables.Samples
 
             // Build a shared access signature with the Write and Delete permissions and access to all service resource types.
 
-            TableAccountSasBuilder sasWriteDelete = serviceClient.GetSasBuilder(TableAccountSasPermissions.Write, TableAccountSasResourceTypes.All, new DateTime(2040, 1, 1, 1, 1, 0, DateTimeKind.Utc));
+            TableAccountSasBuilder sasWriteDelete = serviceClient.GetSasBuilder(TableAccountSasPermissions.Write | TableAccountSasPermissions.Delete, TableAccountSasResourceTypes.All, new DateTime(2040, 1, 1, 1, 1, 0, DateTimeKind.Utc));
             string tokenWriteDelete = sasWriteDelete.Sign(credential);
 
             // Build SAS URIs.
