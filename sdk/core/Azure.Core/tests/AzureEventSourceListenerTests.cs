@@ -71,7 +71,28 @@ namespace Azure.Core.Tests
                             "other = 5", message);
         }
 
+        [Test]
+        public void FormatsUnformattableMessageAsKeyValues()
+        {
+            var eventTuples = ExpectMultipleEvents(() => TestSource.Log.LogUnformattableMessage("a message"),2);
+            (EventWrittenEventArgs e, string message) = eventTuples[0];
+            Assert.AreEqual("EventMessageFailedFormatting" + Environment.NewLine +
+                            "eventSourceName = Test-source" + Environment.NewLine +
+                            "eventName = LogUnformattableMessage" + Environment.NewLine +
+                            "message = Logging {1}", message);
+
+            (e, message) = eventTuples[1];
+            Assert.AreEqual("LogUnformattableMessage" + Environment.NewLine +
+                            nameof(e.Message) + " = Logging {1}" + Environment.NewLine +
+                            "payload = a message", message);
+        }
+
         private static (EventWrittenEventArgs, string) ExpectSingleEvent(Action logDelegate)
+        {
+            return ExpectMultipleEvents(logDelegate,1).Single();
+        }
+
+        private static IList<(EventWrittenEventArgs, string)> ExpectMultipleEvents(Action logDelegate, int eventCount)
         {
             var invocations = new List<(EventWrittenEventArgs, string)>();
             using var _ = new AzureEventSourceListener(
@@ -80,8 +101,8 @@ namespace Azure.Core.Tests
                     invocations.Add((args, s));
                 }, EventLevel.Verbose);
             logDelegate();
-            Assert.AreEqual(1, invocations.Count);
-            return invocations.Single();
+            Assert.AreEqual(eventCount, invocations.Count);
+            return invocations;
         }
 
         private class TestSource : EventSource
@@ -108,6 +129,12 @@ namespace Azure.Core.Tests
             public void LogWithByteArray(byte[] b)
             {
                 WriteEvent(3, b);
+            }
+
+            [Event(4, Message = "Logging {1}", Level = EventLevel.Critical)]
+            public void LogUnformattableMessage(string payload)
+            {
+                WriteEvent(4, payload);
             }
         }
     }
