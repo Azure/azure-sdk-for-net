@@ -437,8 +437,7 @@ function VerifyPackages($pkgRepository, $artifactLocation, $workingDirectory, $a
       if ($parsedPackage -eq $null) {
         continue
       }
-      $tag = GenerateReleaseTag($parsedPackage)
-  
+
       if ($parsedPackage.Deployable -ne $True -and !$continueOnError) {
         Write-Host "Package $($parsedPackage.PackageId) is marked with version $($parsedPackage.PackageVersion), the version $($parsedPackage.PackageVersion) has already been deployed to the target repository."
         Write-Host "Maybe a pkg version wasn't updated properly?"
@@ -446,6 +445,12 @@ function VerifyPackages($pkgRepository, $artifactLocation, $workingDirectory, $a
         #exit(1)
       }
 
+      $tag = if ($parsedPackage.packageId) {	
+        "$($parsedPackage.packageId)_$($parsedPackage.PackageVersion)"	
+      } else {	
+        $parsedPackage.PackageVersion	
+      }
+  
 
       $pkgList += New-Object PSObject -Property @{
         PackageId      = $parsedPackage.PackageId
@@ -508,15 +513,4 @@ function CheckArtifactShaAgainstTagsList($priorExistingTagList, $releaseSha, $ap
     Write-Host "Tags already existing with different SHA versions. Exiting."
     #exit(1)
   }
-}
-
-# given the package id and package version, generate the release tag
-
-function GenerateReleaseTag($packageInfo) {
-  $tag = = if ($parsedPackage.packageId) {
-    "$($parsedPackage.packageId)_$($parsedPackage.PackageVersion)"
-  } else {
-    $parsedPackage.PackageVersion
-  }
-  return $tag
 }
