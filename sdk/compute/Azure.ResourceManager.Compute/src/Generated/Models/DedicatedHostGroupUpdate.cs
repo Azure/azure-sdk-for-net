@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,25 +16,15 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of DedicatedHostGroupUpdate. </summary>
         public DedicatedHostGroupUpdate()
         {
-        }
-
-        /// <summary> Initializes a new instance of DedicatedHostGroupUpdate. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="zones"> Availability Zone to use for this host group. Only single zone is supported. The zone can be assigned only during creation. If not provided, the group supports all zones in the region. If provided, enforces each host in the group to be in the same zone. </param>
-        /// <param name="platformFaultDomainCount"> Number of fault domains that the host group can span. </param>
-        /// <param name="hosts"> A list of references to all dedicated hosts in the dedicated host group. </param>
-        internal DedicatedHostGroupUpdate(IDictionary<string, string> tags, IList<string> zones, int? platformFaultDomainCount, IList<SubResourceReadOnly> hosts) : base(tags)
-        {
-            Zones = zones;
-            PlatformFaultDomainCount = platformFaultDomainCount;
-            Hosts = hosts;
+            Zones = new ChangeTrackingList<string>();
+            Hosts = new ChangeTrackingList<SubResourceReadOnly>();
         }
 
         /// <summary> Availability Zone to use for this host group. Only single zone is supported. The zone can be assigned only during creation. If not provided, the group supports all zones in the region. If provided, enforces each host in the group to be in the same zone. </summary>
-        public IList<string> Zones { get; set; }
+        public IList<string> Zones { get; }
         /// <summary> Number of fault domains that the host group can span. </summary>
         public int? PlatformFaultDomainCount { get; set; }
         /// <summary> A list of references to all dedicated hosts in the dedicated host group. </summary>
-        public IList<SubResourceReadOnly> Hosts { get; }
+        public IReadOnlyList<SubResourceReadOnly> Hosts { get; }
     }
 }

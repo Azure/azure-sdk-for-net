@@ -37,7 +37,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// <param name="userData">User specified data. Length should not
         /// exceed 16KB.</param>
         /// <param name="recognitionModel">Possible values include:
-        /// 'recognition_01', 'recognition_02'</param>
+        /// 'recognition_01', 'recognition_02', 'recognition_03'</param>
         public PersonGroup(string personGroupId, string name = default(string), string userData = default(string), string recognitionModel = default(string))
             : base(name, userData, recognitionModel)
         {
@@ -62,23 +62,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
             if (PersonGroupId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "PersonGroupId");
-            }
-            if (PersonGroupId != null)
-            {
-                if (PersonGroupId.Length > 64)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "PersonGroupId", 64);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(PersonGroupId, "^[a-z0-9-_]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "PersonGroupId", "^[a-z0-9-_]+$");
-                }
             }
         }
     }

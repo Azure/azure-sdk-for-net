@@ -15,232 +15,130 @@ namespace Azure.Management.Network.Models
     {
         internal static EffectiveNetworkSecurityRule DeserializeEffectiveNetworkSecurityRule(JsonElement element)
         {
-            string name = default;
-            EffectiveSecurityRuleProtocol? protocol = default;
-            string sourcePortRange = default;
-            string destinationPortRange = default;
-            IReadOnlyList<string> sourcePortRanges = default;
-            IReadOnlyList<string> destinationPortRanges = default;
-            string sourceAddressPrefix = default;
-            string destinationAddressPrefix = default;
-            IReadOnlyList<string> sourceAddressPrefixes = default;
-            IReadOnlyList<string> destinationAddressPrefixes = default;
-            IReadOnlyList<string> expandedSourceAddressPrefix = default;
-            IReadOnlyList<string> expandedDestinationAddressPrefix = default;
-            SecurityRuleAccess? access = default;
-            int? priority = default;
-            SecurityRuleDirection? direction = default;
+            Optional<string> name = default;
+            Optional<EffectiveSecurityRuleProtocol> protocol = default;
+            Optional<string> sourcePortRange = default;
+            Optional<string> destinationPortRange = default;
+            Optional<IReadOnlyList<string>> sourcePortRanges = default;
+            Optional<IReadOnlyList<string>> destinationPortRanges = default;
+            Optional<string> sourceAddressPrefix = default;
+            Optional<string> destinationAddressPrefix = default;
+            Optional<IReadOnlyList<string>> sourceAddressPrefixes = default;
+            Optional<IReadOnlyList<string>> destinationAddressPrefixes = default;
+            Optional<IReadOnlyList<string>> expandedSourceAddressPrefix = default;
+            Optional<IReadOnlyList<string>> expandedDestinationAddressPrefix = default;
+            Optional<SecurityRuleAccess> access = default;
+            Optional<int> priority = default;
+            Optional<SecurityRuleDirection> direction = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("protocol"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     protocol = new EffectiveSecurityRuleProtocol(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sourcePortRange"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sourcePortRange = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("destinationPortRange"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     destinationPortRange = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("sourcePortRanges"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     sourcePortRanges = array;
                     continue;
                 }
                 if (property.NameEquals("destinationPortRanges"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     destinationPortRanges = array;
                     continue;
                 }
                 if (property.NameEquals("sourceAddressPrefix"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sourceAddressPrefix = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("destinationAddressPrefix"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     destinationAddressPrefix = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("sourceAddressPrefixes"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     sourceAddressPrefixes = array;
                     continue;
                 }
                 if (property.NameEquals("destinationAddressPrefixes"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     destinationAddressPrefixes = array;
                     continue;
                 }
                 if (property.NameEquals("expandedSourceAddressPrefix"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     expandedSourceAddressPrefix = array;
                     continue;
                 }
                 if (property.NameEquals("expandedDestinationAddressPrefix"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     expandedDestinationAddressPrefix = array;
                     continue;
                 }
                 if (property.NameEquals("access"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     access = new SecurityRuleAccess(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("priority"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     priority = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("direction"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     direction = new SecurityRuleDirection(property.Value.GetString());
                     continue;
                 }
             }
-            return new EffectiveNetworkSecurityRule(name, protocol, sourcePortRange, destinationPortRange, sourcePortRanges, destinationPortRanges, sourceAddressPrefix, destinationAddressPrefix, sourceAddressPrefixes, destinationAddressPrefixes, expandedSourceAddressPrefix, expandedDestinationAddressPrefix, access, priority, direction);
+            return new EffectiveNetworkSecurityRule(name.Value, Optional.ToNullable(protocol), sourcePortRange.Value, destinationPortRange.Value, Optional.ToList(sourcePortRanges), Optional.ToList(destinationPortRanges), sourceAddressPrefix.Value, destinationAddressPrefix.Value, Optional.ToList(sourceAddressPrefixes), Optional.ToList(destinationAddressPrefixes), Optional.ToList(expandedSourceAddressPrefix), Optional.ToList(expandedDestinationAddressPrefix), Optional.ToNullable(access), Optional.ToNullable(priority), Optional.ToNullable(direction));
         }
     }
 }

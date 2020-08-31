@@ -20,7 +20,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         {
             var options = new ServiceBusManagementClientOptions();
             var pipeline = HttpPipelineBuilder.Build(options);
-            _requestResponse = new HttpRequestAndResponse(pipeline, new ClientDiagnostics(options), null, "fakeNamespace");
+            _requestResponse = new HttpRequestAndResponse(pipeline, new ClientDiagnostics(options), null, "fakeNamespace", ServiceBusManagementClientOptions.ServiceVersion.V2017_04);
         }
 
         [Test]

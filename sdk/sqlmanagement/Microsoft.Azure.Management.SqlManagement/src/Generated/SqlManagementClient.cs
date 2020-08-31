@@ -55,20 +55,19 @@ namespace Microsoft.Azure.Management.Sql
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// The preferred language for the response.
+        /// Gets or sets the preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
 
         /// <summary>
-        /// The retry timeout in seconds for Long Running Operations. Default value is
-        /// 30.
+        /// Gets or sets the retry timeout in seconds for Long Running Operations.
+        /// Default value is 30.
         /// </summary>
         public int? LongRunningOperationRetryTimeout { get; set; }
 
         /// <summary>
-        /// Whether a unique x-ms-client-request-id should be generated. When set to
-        /// true a unique x-ms-client-request-id value is generated and included in
-        /// each request. Default is true.
+        /// When set to true a unique x-ms-client-request-id value is generated and
+        /// included in each request. Default is true.
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
 
@@ -206,16 +205,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the ISyncAgentsOperations.
         /// </summary>
         public virtual ISyncAgentsOperations SyncAgents { get; private set; }
-
-        /// <summary>
-        /// Gets the ISyncGroupsOperations.
-        /// </summary>
-        public virtual ISyncGroupsOperations SyncGroups { get; private set; }
-
-        /// <summary>
-        /// Gets the ISyncMembersOperations.
-        /// </summary>
-        public virtual ISyncMembersOperations SyncMembers { get; private set; }
 
         /// <summary>
         /// Gets the ISubscriptionUsagesOperations.
@@ -470,7 +459,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <summary>
         /// Gets the IPrivateEndpointConnectionsOperations.
         /// </summary>
-		public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
+        public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
 
         /// <summary>
         /// Gets the IPrivateLinkResourcesOperations.
@@ -501,23 +490,26 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IManagedInstanceOperations.
         /// </summary>
         public virtual IManagedInstanceOperations ManagedInstanceOperations { get; private set; }
-        
+
+        /// <summary>
+        /// Gets the IServerAzureADAdministratorsOperations.
+        /// </summary>
+        public virtual IServerAzureADAdministratorsOperations ServerAzureADAdministrators { get; private set; }
+
+        /// <summary>
+        /// Gets the ISyncGroupsOperations.
+        /// </summary>
+        public virtual ISyncGroupsOperations SyncGroups { get; private set; }
+
+        /// <summary>
+        /// Gets the ISyncMembersOperations.
+        /// </summary>
+        public virtual ISyncMembersOperations SyncMembers { get; private set; }
+
+        /// <summary>
         /// Gets the IManagedDatabaseRestoreDetailsOperations.
         /// </summary>
         public virtual IManagedDatabaseRestoreDetailsOperations ManagedDatabaseRestoreDetails { get; private set; }
-        
-        /// <summary>
-        /// Initializes a new instance of the SqlManagementClient class.
-        /// </summary>
-        /// <param name='httpClient'>
-        /// HttpClient to be used
-        /// </param>
-        /// <param name='disposeHttpClient'>
-        /// True: will dispose the provided httpClient on calling SqlManagementClient.Dispose(). False: will not dispose provided httpClient</param>
-        protected SqlManagementClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
-        {
-            Initialize();
-        }
 
         /// <summary>
         /// Gets the IManagedDatabasesOperations.
@@ -525,9 +517,9 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IManagedDatabasesOperations ManagedDatabases { get; private set; }
 
         /// <summary>
-        /// Gets the IServerAzureADAdministratorsOperations.
+        /// Gets the IServerAzureADOnlyAuthenticationsOperations.
         /// </summary>
-        public virtual IServerAzureADAdministratorsOperations ServerAzureADAdministrators { get; private set; }
+        public virtual IServerAzureADOnlyAuthenticationsOperations ServerAzureADOnlyAuthentications { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
@@ -612,33 +604,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Thrown when a required parameter is null
         /// </exception>
         public SqlManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
-        {
-            if (credentials == null)
-            {
-                throw new System.ArgumentNullException("credentials");
-            }
-            Credentials = credentials;
-            if (Credentials != null)
-            {
-                Credentials.InitializeServiceClient(this);
-            }
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the SqlManagementClient class.
-        /// </summary>
-        /// <param name='credentials'>
-        /// Required. Credentials needed for the client to connect to Azure.
-        /// </param>
-        /// <param name='httpClient'>
-        /// HttpClient to be used
-        /// </param>
-        /// <param name='disposeHttpClient'>
-        /// True: will dispose the provided httpClient on calling SqlManagementClient.Dispose(). False: will not dispose provided httpClient</param>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        public SqlManagementClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
         {
             if (credentials == null)
             {
@@ -746,7 +711,7 @@ namespace Microsoft.Azure.Management.Sql
             {
                 Credentials.InitializeServiceClient(this);
             }
-        }        
+        }
 
         /// <summary>
         /// An optional partial-method to perform custom initialization.
@@ -784,8 +749,6 @@ namespace Microsoft.Azure.Management.Sql
             Operations = new Operations(this);
             ServerKeys = new ServerKeysOperations(this);
             SyncAgents = new SyncAgentsOperations(this);
-            SyncGroups = new SyncGroupsOperations(this);
-            SyncMembers = new SyncMembersOperations(this);
             SubscriptionUsages = new SubscriptionUsagesOperations(this);
             VirtualClusters = new VirtualClustersOperations(this);
             VirtualNetworkRules = new VirtualNetworkRulesOperations(this);
@@ -838,14 +801,17 @@ namespace Microsoft.Azure.Management.Sql
             ManagedInstances = new ManagedInstancesOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
-            ManagedInstanceOperations = new ManagedInstanceOperations(this);
             Servers = new ServersOperations(this);
             Capabilities = new CapabilitiesOperations(this);
             LongTermRetentionManagedInstanceBackups = new LongTermRetentionManagedInstanceBackupsOperations(this);
             ManagedInstanceLongTermRetentionPolicies = new ManagedInstanceLongTermRetentionPoliciesOperations(this);
+            ManagedInstanceOperations = new ManagedInstanceOperations(this);
+            ServerAzureADAdministrators = new ServerAzureADAdministratorsOperations(this);
+            SyncGroups = new SyncGroupsOperations(this);
+            SyncMembers = new SyncMembersOperations(this);
             ManagedDatabaseRestoreDetails = new ManagedDatabaseRestoreDetailsOperations(this);
             ManagedDatabases = new ManagedDatabasesOperations(this);
-            ServerAzureADAdministrators = new ServerAzureADAdministratorsOperations(this);
+            ServerAzureADOnlyAuthentications = new ServerAzureADOnlyAuthenticationsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

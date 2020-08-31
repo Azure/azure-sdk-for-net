@@ -1,13 +1,33 @@
 # Release History
 
-## 3.0.0-preview.1 (Unreleased)
+## 3.1.0-preview.1 (Unreleased)
+
+
+## 3.0.0 (2020-08-20)
+
+- First stable release of the Azure.AI.FormRecognizer package.
+
+### Breaking changes
+
+- Renamed the model `BoundingBox` to `FieldBoundingBox`.
+
+### New Features
+
+- Added `FormRecognizerModelFactory` static class to support mocking model types.
+
+## 3.0.0-preview.2 (2020-08-18)
+
+### Fixed
+- Bug in TaskExtensions.EnsureCompleted method that causes it to unconditionally throw an exception in the environments with synchronization context
+
+## 3.0.0-preview.1 (2020-08-11)
 
 ### Breaking changes
 
 - The library now targets the service's v2.0 API, instead of the v2.0-preview.1 API.
-- Updated version number from `1.0.0-preview.5` to `3.0.0-preview.5`.
-- Added models `RecognizeCustomFormsOptions`, `RecognizeReceiptsOptions`, and `RecognizeContentOptions` instead of a generic `RecognizeOptions` to support passing configurable options to recognize API's.
-- Added model`TrainingOptions` to support passing configurable options to training API's. This type now includes `TrainingFileFilter`.
+- Updated version number from `1.0.0-preview.5` to `3.0.0-preview.1`.
+- Added models `RecognizeCustomFormsOptions`, `RecognizeReceiptsOptions`, and `RecognizeContentOptions` instead of a generic `RecognizeOptions` to support passing configurable options to recognize APIs.
+- Added model `TrainingOptions` to support passing configurable options to training APIs. This type now includes `TrainingFileFilter`.
 - Renamed the `FieldValue` property `Type` to `ValueType`.
 - Renamed the `TrainingDocumentInfo` property `DocumentName` to `Name`.
 - Renamed the `TrainingFileFilter` property `IncludeSubFolders` to `IncludeSubfolders`.

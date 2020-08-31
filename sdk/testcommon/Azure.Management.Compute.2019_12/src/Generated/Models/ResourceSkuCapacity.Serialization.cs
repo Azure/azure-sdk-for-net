@@ -14,50 +14,34 @@ namespace Azure.Management.Compute.Models
     {
         internal static ResourceSkuCapacity DeserializeResourceSkuCapacity(JsonElement element)
         {
-            long? minimum = default;
-            long? maximum = default;
-            long? @default = default;
-            ResourceSkuCapacityScaleType? scaleType = default;
+            Optional<long> minimum = default;
+            Optional<long> maximum = default;
+            Optional<long> @default = default;
+            Optional<ResourceSkuCapacityScaleType> scaleType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minimum"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     minimum = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("maximum"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     maximum = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("default"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     @default = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("scaleType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     scaleType = property.Value.GetString().ToResourceSkuCapacityScaleType();
                     continue;
                 }
             }
-            return new ResourceSkuCapacity(minimum, maximum, @default, scaleType);
+            return new ResourceSkuCapacity(Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(@default), Optional.ToNullable(scaleType));
         }
     }
 }

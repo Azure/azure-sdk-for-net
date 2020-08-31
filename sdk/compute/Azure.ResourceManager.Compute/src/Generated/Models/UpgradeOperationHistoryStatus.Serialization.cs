@@ -15,40 +15,28 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static UpgradeOperationHistoryStatus DeserializeUpgradeOperationHistoryStatus(JsonElement element)
         {
-            UpgradeState? code = default;
-            DateTimeOffset? startTime = default;
-            DateTimeOffset? endTime = default;
+            Optional<UpgradeState> code = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     code = property.Value.GetString().ToUpgradeState();
                     continue;
                 }
                 if (property.NameEquals("startTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("endTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new UpgradeOperationHistoryStatus(code, startTime, endTime);
+            return new UpgradeOperationHistoryStatus(Optional.ToNullable(code), Optional.ToNullable(startTime), Optional.ToNullable(endTime));
         }
     }
 }

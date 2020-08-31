@@ -25,7 +25,8 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Initializes a new instance of the <see cref="FormRecognizerClientLiveTests"/> class.
         /// </summary>
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
-        public FormRecognizerClientLiveTests(bool isAsync) : base(isAsync)
+        public FormRecognizerClientLiveTests(bool isAsync)
+            : base(isAsync)
         {
         }
 
@@ -1067,9 +1068,9 @@ namespace Azure.AI.FormRecognizer.Tests
 
                 // Basic sanity test to make sure pages are ordered correctly.
 
-                var sampleField = recognizedForm.Fields["field-2"];
-                var expectedLabelData = formIndex == 0 ? "__Tokens__1" : "Contact:";
-                var expectedValueData = formIndex == 0 ? "Vendor Registration" : "Jamie@southridgevideo.com";
+                var sampleField = recognizedForm.Fields["field-1"];
+                var expectedLabelData = formIndex == 0 ? "__Address__1" : "Company Name:";
+                var expectedValueData = formIndex == 0 ? "Contoso Ltd. 2345 Dogwood Lane Birch, Kansas 98123" : "Southridge Video";
 
                 Assert.IsNotNull(sampleField.LabelData);
                 Assert.AreEqual(expectedLabelData, sampleField.LabelData.Text);
@@ -1185,8 +1186,8 @@ namespace Azure.AI.FormRecognizer.Tests
             var operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream);
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync(PollingInterval));
-            string expectedErrorCode = useTrainingLabels ? "3014" : "2005";
-            Assert.AreEqual(expectedErrorCode, ex.ErrorCode);
+
+            Assert.AreEqual("2005", ex.ErrorCode);
 
             Assert.True(operation.HasCompleted);
             Assert.False(operation.HasValue);
@@ -1197,7 +1198,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Recognizer cognitive service and handle returned errors.
         /// </summary>
         [Test]
-        [TestCase(true, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/12319")]
+        [TestCase(true)]
         [TestCase(false)]
         public async Task StartRecognizeCustomFormsFromUriThrowsForNonExistingContent(bool useTrainingLabels)
         {
@@ -1209,9 +1210,8 @@ namespace Azure.AI.FormRecognizer.Tests
             var operation = await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.ModelId, invalidUri);
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync(PollingInterval));
-            string expectedErrorCode = useTrainingLabels ? "3003" : "2003";
-            Assert.AreEqual(expectedErrorCode, ex.ErrorCode);
 
+            Assert.AreEqual("2003", ex.ErrorCode);
             Assert.True(operation.HasCompleted);
             Assert.False(operation.HasValue);
         }

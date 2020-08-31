@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class AzureFirewallPublicIPAddress
     {
         /// <summary> Initializes a new instance of AzureFirewallPublicIPAddress. </summary>
-        public AzureFirewallPublicIPAddress()
+        internal AzureFirewallPublicIPAddress()
         {
         }
 
@@ -23,6 +23,6 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Public IP Address value. </summary>
-        public string Address { get; set; }
+        public string Address { get; }
     }
 }

@@ -169,9 +169,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
             BlobContainerClient containerClient,
             ChangeFeedCursor cursor)
         {
-            if (BlobChangeFeedExtensions.ComputeMD5(containerClient.Uri.AbsoluteUri) != cursor.UrlHash)
+            if (containerClient.Uri.Host != cursor.UrlHost)
             {
-                throw new ArgumentException("Cursor URL does not match container URL.");
+                throw new ArgumentException("Cursor URL Host does not match container URL host.");
             }
             if (cursor.CursorVersion != 1)
             {

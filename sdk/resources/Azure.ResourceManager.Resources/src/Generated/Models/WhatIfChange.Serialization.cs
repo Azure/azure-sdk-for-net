@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Resources.Models
         {
             string resourceId = default;
             ChangeType changeType = default;
-            object before = default;
-            object after = default;
-            IReadOnlyList<WhatIfPropertyChange> delta = default;
+            Optional<object> before = default;
+            Optional<object> after = default;
+            Optional<IReadOnlyList<WhatIfPropertyChange>> delta = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"))
@@ -34,45 +34,26 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("before"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     before = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("after"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     after = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("delta"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<WhatIfPropertyChange> array = new List<WhatIfPropertyChange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(WhatIfPropertyChange.DeserializeWhatIfPropertyChange(item));
-                        }
+                        array.Add(WhatIfPropertyChange.DeserializeWhatIfPropertyChange(item));
                     }
                     delta = array;
                     continue;
                 }
             }
-            return new WhatIfChange(resourceId, changeType, before, after, delta);
+            return new WhatIfChange(resourceId, changeType, before.Value, after.Value, Optional.ToList(delta));
         }
     }
 }

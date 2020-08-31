@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -26,21 +27,22 @@ namespace Azure.Data.Tables
         private readonly TableRestClient _tableOperations;
         private readonly string _version;
         private readonly bool _isPremiumEndpoint;
+        private readonly ResponseFormat _returnNoContent = ResponseFormat.ReturnNoContent;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TableClient"/>.
         /// </summary>
-        /// <param name="tableName">The name of the table with which this client instance will interact.</param>
         /// <param name="endpoint">
         /// A <see cref="Uri"/> referencing the table service account.
         /// This is likely to be similar to "https://{account_name}.table.core.windows.net/" or "https://{account_name}.table.cosmos.azure.com/".
         /// </param>
+        /// <param name="tableName">The name of the table with which this client instance will interact.</param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
         /// </param>
         /// <exception cref="ArgumentException"><paramref name="endpoint"/> is not https.</exception>
-        public TableClient(string tableName, Uri endpoint, TableClientOptions options = null)
-            : this(tableName, endpoint, default(TableSharedKeyPipelinePolicy), options)
+        public TableClient(Uri endpoint, string tableName, TableClientOptions options = null)
+            : this(endpoint, tableName, default(TableSharedKeyPipelinePolicy), options)
         {
             Argument.AssertNotNull(tableName, nameof(tableName));
 
@@ -53,15 +55,15 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Initializes a new instance of the <see cref="TableClient"/>.
         /// </summary>
-        /// <param name="tableName">The name of the table with which this client instance will interact.</param>
         /// <param name="endpoint">
         /// A <see cref="Uri"/> referencing the table service account.
         /// This is likely to be similar to "https://{account_name}.table.core.windows.net/" or "https://{account_name}.table.cosmos.azure.com/".
         /// </param>
+        /// <param name="tableName">The name of the table with which this client instance will interact.</param>
         /// <param name="credential">The shared key credential used to sign requests.</param>
         /// <exception cref="ArgumentNullException"><paramref name="tableName"/> or <paramref name="credential"/> is null.</exception>
-        public TableClient(string tableName, Uri endpoint, TableSharedKeyCredential credential)
-            : this(tableName, endpoint, new TableSharedKeyPipelinePolicy(credential), null)
+        public TableClient(Uri endpoint, string tableName, TableSharedKeyCredential credential)
+            : this(endpoint, tableName, new TableSharedKeyPipelinePolicy(credential), null)
         {
             Argument.AssertNotNull(tableName, nameof(tableName));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -70,24 +72,83 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Initializes a new instance of the <see cref="TableClient"/>.
         /// </summary>
-        /// <param name="tableName">The name of the table with which this client instance will interact.</param>
         /// <param name="endpoint">
         /// A <see cref="Uri"/> referencing the table service account.
         /// This is likely to be similar to "https://{account_name}.table.core.windows.net/" or "https://{account_name}.table.cosmos.azure.com/".
         /// </param>
+        /// <param name="tableName">The name of the table with which this client instance will interact.</param>
         /// <param name="credential">The shared key credential used to sign requests.</param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
         /// </param>
         /// <exception cref="ArgumentNullException"><paramref name="tableName"/> or <paramref name="credential"/> is null.</exception>
-        public TableClient(string tableName, Uri endpoint, TableSharedKeyCredential credential, TableClientOptions options = null)
-            : this(tableName, endpoint, new TableSharedKeyPipelinePolicy(credential), options)
+        public TableClient(Uri endpoint, string tableName, TableSharedKeyCredential credential, TableClientOptions options = null)
+            : this(endpoint, tableName, new TableSharedKeyPipelinePolicy(credential), options)
         {
             Argument.AssertNotNull(tableName, nameof(tableName));
             Argument.AssertNotNull(credential, nameof(credential));
         }
 
-        internal TableClient(string tableName, Uri endpoint, TableSharedKeyPipelinePolicy policy, TableClientOptions options)
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TableServiceClient"/>.
+        /// </summary>
+        /// <param name="connectionString">
+        /// A connection string includes the authentication information
+        /// required for your application to access data in an Azure Storage
+        /// account at runtime.
+        ///
+        /// For more information,
+        /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
+        /// Configure Azure Storage connection strings</see>.
+        /// </param>
+        /// <param name="tableName">The name of the table with which this client instance will interact.</param>
+        public TableClient(string connectionString, string tableName)
+            : this(connectionString, tableName, default)
+        { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TableServiceClient"/>.
+        /// </summary>
+        /// <param name="connectionString">
+        /// A connection string includes the authentication information
+        /// required for your application to access data in an Azure Storage
+        /// account at runtime.
+        ///
+        /// For more information,
+        /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
+        /// Configure Azure Storage connection strings</see>.
+        /// </param>
+        /// <param name="tableName">The name of the table with which this client instance will interact.</param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
+        /// </param>
+        public TableClient(string connectionString, string tableName, TableClientOptions options = null)
+        {
+            Argument.AssertNotNull(connectionString, nameof(connectionString));
+
+            TableConnectionString connString = TableConnectionString.Parse(connectionString);
+
+            options ??= new TableClientOptions();
+            var endpointString = connString.TableStorageUri.PrimaryUri.ToString();
+
+            TableSharedKeyPipelinePolicy policy = connString.Credentials switch
+            {
+                TableSharedKeyCredential credential => new TableSharedKeyPipelinePolicy(credential),
+                _ => default
+            };
+
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, policy);
+
+            _diagnostics = new ClientDiagnostics(options);
+            _tableOperations = new TableRestClient(_diagnostics, pipeline, endpointString);
+            _version = options.VersionString;
+            _table = tableName;
+            _format = OdataMetadataFormat.ApplicationJsonOdataMinimalmetadata;
+            _isPremiumEndpoint = TableServiceClient.IsPremiumEndpoint(connString.TableStorageUri.PrimaryUri);
+        }
+
+        internal TableClient(Uri endpoint, string tableName, TableSharedKeyPipelinePolicy policy, TableClientOptions options)
         {
             Argument.AssertNotNull(tableName, nameof(tableName));
             Argument.AssertNotNull(endpoint, nameof(endpoint));
@@ -99,9 +160,8 @@ namespace Azure.Data.Tables
             _tableOperations = new TableRestClient(_diagnostics, pipeline, endpoint.ToString());
             _version = options.VersionString;
             _table = tableName;
-            _format = OdataMetadataFormat.ApplicationJsonOdataFullmetadata;
+            _format = OdataMetadataFormat.ApplicationJsonOdataMinimalmetadata;
             _isPremiumEndpoint = TableServiceClient.IsPremiumEndpoint(endpoint);
-            ;
         }
 
         internal TableClient(string table, TableRestClient tableOperations, string version, ClientDiagnostics diagnostics, bool isPremiumEndpoint)
@@ -109,7 +169,7 @@ namespace Azure.Data.Tables
             _tableOperations = tableOperations;
             _version = version;
             _table = table;
-            _format = OdataMetadataFormat.ApplicationJsonOdataFullmetadata;
+            _format = OdataMetadataFormat.ApplicationJsonOdataMinimalmetadata;
             _diagnostics = diagnostics;
             _isPremiumEndpoint = isPremiumEndpoint;
         }
@@ -149,7 +209,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns>A <see cref="TableItem"/> containing properties of the table</returns>
+        /// <returns>A <see cref="Response{TableItem}"/> containing properties of the table.</returns>
         public virtual Response<TableItem> Create(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Create)}");
@@ -171,7 +231,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns>A <see cref="TableItem"/> containing properties of the table</returns>
+        /// <returns>A <see cref="Response{TableItem}"/> containing properties of the table.</returns>
         public virtual async Task<Response<TableItem>> CreateAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Create)}");
@@ -180,6 +240,58 @@ namespace Azure.Data.Tables
             {
                 var response = await _tableOperations.CreateAsync(new TableProperties() { TableName = _table }, null, queryOptions: new QueryOptions() { Format = _format }, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates the current table.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <returns>If the table does not already exist, a <see cref="Response{TableItem}"/>. If the table already exists, <c>null</c>.</returns>
+        public virtual Response<TableItem> CreateIfNotExists(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(CreateIfNotExists)}");
+            scope.Start();
+            try
+            {
+                var response = _tableOperations.Create(new TableProperties() { TableName = _table }, null, queryOptions: new QueryOptions() { Format = _format }, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
+            }
+            catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict)
+            {
+                return default;
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates the current table.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <returns>If the table does not already exist, a <see cref="Response{TableItem}"/>. If the table already exists, <c>null</c>.</returns>
+        public virtual async Task<Response<TableItem>> CreateIfNotExistsAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(CreateIfNotExists)}");
+            scope.Start();
+            try
+            {
+                var response = await _tableOperations.CreateAsync(new TableProperties() { TableName = _table }, null, queryOptions: new QueryOptions() { Format = _format }, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
+            }
+            catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict)
+            {
+                return default;
             }
             catch (Exception ex)
             {
@@ -229,29 +341,29 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Creates a Table Entity into the Table.
+        /// Adds a Table Entity into the Table.
         /// </summary>
-        /// <param name="entity">The entity to create.</param>
+        /// <param name="entity">The entity to add.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns>The created Table entity.</returns>
+        /// <returns>A <see cref="Response"/> containing headers such as ETag.</returns>
         /// <exception cref="RequestFailedException">Exception thrown if entity already exists.</exception>
-        public virtual async Task<Response<T>> CreateEntityAsync<T>(T entity, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+        public virtual async Task<Response> AddEntityAsync<T>(T entity, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
         {
             Argument.AssertNotNull(entity, nameof(entity));
             Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
             Argument.AssertNotNull(entity?.RowKey, nameof(entity.RowKey));
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(CreateEntity)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(AddEntity)}");
             scope.Start();
             try
             {
                 var response = await _tableOperations.InsertEntityAsync(_table,
                     tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                    responsePreference: _returnNoContent,
                     queryOptions: new QueryOptions() { Format = _format },
                     cancellationToken: cancellationToken).ConfigureAwait(false);
 
-                var result = ((Dictionary<string, object>)response.Value).ToTableEntity<T>();
-                return Response.FromValue(result, response.GetRawResponse());
+                return response.GetRawResponse();
             }
             catch (Exception ex)
             {
@@ -261,28 +373,28 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Creates a Table Entity into the Table.
+        /// Adds a Table Entity into the Table.
         /// </summary>
-        /// <param name="entity">The entity to create.</param>
+        /// <param name="entity">The entity to add.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The created Table entity.</returns>
+        /// <returns>A <see cref="Response"/> containing headers such as ETag</returns>
         /// <exception cref="RequestFailedException">Exception thrown if entity already exists.</exception>
-        public virtual Response<T> CreateEntity<T>(T entity, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+        public virtual Response AddEntity<T>(T entity, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
         {
             Argument.AssertNotNull(entity, nameof(entity));
             Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
             Argument.AssertNotNull(entity?.RowKey, nameof(entity.RowKey));
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(CreateEntity)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(AddEntity)}");
             scope.Start();
             try
             {
                 var response = _tableOperations.InsertEntity(_table,
                     tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                    responsePreference: _returnNoContent,
                     queryOptions: new QueryOptions() { Format = _format },
                     cancellationToken: cancellationToken);
 
-                var result = ((Dictionary<string, object>)response.Value).ToTableEntity<T>();
-                return Response.FromValue(result, response.GetRawResponse());
+                return response.GetRawResponse();
             }
             catch (Exception ex)
             {
@@ -464,12 +576,13 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual async Task<Response> UpdateEntityAsync<T>(T entity, string ifMatch, TableUpdateMode mode = TableUpdateMode.Merge, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+        public virtual async Task<Response> UpdateEntityAsync<T>(T entity, ETag ifMatch, TableUpdateMode mode = TableUpdateMode.Merge, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
         {
             Argument.AssertNotNull(entity, nameof(entity));
             Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
             Argument.AssertNotNull(entity?.RowKey, nameof(entity.RowKey));
-            Argument.AssertNotNullOrWhiteSpace(ifMatch, nameof(ifMatch));
+            Argument.AssertNotDefault(ref ifMatch, nameof(ifMatch));
+
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(UpdateEntity)}");
             scope.Start();
             try
@@ -480,7 +593,7 @@ namespace Azure.Data.Tables
                         entity.PartitionKey,
                         entity.RowKey,
                         tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                        ifMatch: ifMatch,
+                        ifMatch: ifMatch.ToString(),
                         queryOptions: new QueryOptions() { Format = _format },
                         cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
@@ -490,7 +603,7 @@ namespace Azure.Data.Tables
                         entity.PartitionKey,
                         entity.RowKey,
                         tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                        ifMatch: ifMatch,
+                        ifMatch: ifMatch.ToString(),
                         queryOptions: new QueryOptions() { Format = _format },
                         cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
@@ -515,12 +628,13 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual Response UpdateEntity<T>(T entity, string ifMatch, TableUpdateMode mode = TableUpdateMode.Merge, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+        public virtual Response UpdateEntity<T>(T entity, ETag ifMatch, TableUpdateMode mode = TableUpdateMode.Merge, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
         {
             Argument.AssertNotNull(entity, nameof(entity));
             Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
             Argument.AssertNotNull(entity?.RowKey, nameof(entity.RowKey));
-            Argument.AssertNotNullOrWhiteSpace(ifMatch, nameof(ifMatch));
+            Argument.AssertNotDefault(ref ifMatch, nameof(ifMatch));
+
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(UpdateEntity)}");
             scope.Start();
             try
@@ -531,7 +645,7 @@ namespace Azure.Data.Tables
                         entity.PartitionKey,
                         entity.RowKey,
                         tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                        ifMatch: ifMatch,
+                        ifMatch: ifMatch.ToString(),
                         queryOptions: new QueryOptions() { Format = _format },
                         cancellationToken: cancellationToken);
                 }
@@ -541,7 +655,7 @@ namespace Azure.Data.Tables
                         entity.PartitionKey,
                         entity.RowKey,
                         tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                        ifMatch: ifMatch,
+                        ifMatch: ifMatch.ToString(),
                         queryOptions: new QueryOptions() { Format = _format },
                         cancellationToken: cancellationToken);
                 }
@@ -721,7 +835,7 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual async Task<Response> DeleteEntityAsync(string partitionKey, string rowKey, string ifMatch = "*", CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteEntityAsync(string partitionKey, string rowKey, ETag ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(partitionKey, nameof(partitionKey));
             Argument.AssertNotNull(rowKey, nameof(rowKey));
@@ -732,7 +846,7 @@ namespace Azure.Data.Tables
                 return await _tableOperations.DeleteEntityAsync(_table,
                     partitionKey,
                     rowKey,
-                    ifMatch: ifMatch,
+                    ifMatch: ifMatch == default ? ETag.All.ToString() : ifMatch.ToString(),
                     queryOptions: new QueryOptions() { Format = _format },
                     cancellationToken: cancellationToken).ConfigureAwait(false);
             }
@@ -752,7 +866,7 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual Response DeleteEntity(string partitionKey, string rowKey, string ifMatch = "*", CancellationToken cancellationToken = default)
+        public virtual Response DeleteEntity(string partitionKey, string rowKey, ETag ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(partitionKey, nameof(partitionKey));
             Argument.AssertNotNull(rowKey, nameof(rowKey));
@@ -763,7 +877,7 @@ namespace Azure.Data.Tables
                 return _tableOperations.DeleteEntity(_table,
                     partitionKey,
                     rowKey,
-                    ifMatch: ifMatch,
+                    ifMatch: ifMatch == default ? ETag.All.ToString() : ifMatch.ToString(),
                     queryOptions: new QueryOptions() { Format = _format },
                     cancellationToken: cancellationToken);
             }
@@ -816,7 +930,7 @@ namespace Azure.Data.Tables
         /// <param name="tableAcl"> the access policies for the table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response> SetAccessPolicyAsync(IEnumerable<SignedIdentifier> tableAcl = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> SetAccessPolicyAsync(IEnumerable<SignedIdentifier> tableAcl, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(SetAccessPolicy)}");
             scope.Start();
@@ -858,19 +972,29 @@ namespace Azure.Data.Tables
         /// <returns>The string representation of the filter expression.</returns>
         public static string CreateQueryFilter<T>(Expression<Func<T, bool>> filter) => Bind(filter);
 
+        /// <summary>
+        /// Create a <see cref="TablesBatch" /> for the given partitionkey value.
+        /// </summary>
+        /// <param name="partitionKey">The partitionKey context for the batch.</param>
+        /// <returns></returns>
+        internal virtual TablesBatch CreateBatch(string partitionKey)
+        {
+            return new TablesBatch(_table, _tableOperations, _format);
+        }
+
         internal static string Bind(Expression expression)
         {
             Argument.AssertNotNull(expression, nameof(expression));
 
             Dictionary<Expression, Expression> normalizerRewrites = new Dictionary<Expression, Expression>(ReferenceEqualityComparer<Expression>.Instance);
 
-            // Evaluate any local evaluatable expressions ( lambdas etc)
+            // Evaluate any local valid expressions ( lambdas etc)
             Expression partialEvaluatedExpression = Evaluator.PartialEval(expression);
 
             // Normalize expression, replace String Comparisons etc.
             Expression normalizedExpression = ExpressionNormalizer.Normalize(partialEvaluatedExpression, normalizerRewrites);
 
-            // Parse the Bound expression into sub components, i.e. take count, filter, select columns, request options, opcontext, etc.
+            // Parse the Bound expression into an OData filter.
             ExpressionParser parser = new ExpressionParser();
             parser.Translate(normalizedExpression);
 

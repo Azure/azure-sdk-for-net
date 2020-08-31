@@ -129,7 +129,7 @@ foreach (SearchResult<SearchDocument> result in response.GetResults())
 ```
 
 You can paste that into a new console app,
-[install the Azure.Search.Documents package](#Install-the-package), add a
+[install the Azure.Search.Documents package](#install-the-package), add a
 `using Azure.Search.Documents;` statement, and then hit F5 to run.
 
 ## Key concepts
@@ -214,20 +214,16 @@ Let's explore them with a search for a "luxury" hotel.
 We can decorate our own C# types with [attributes from `System.Text.Json`](https://docs.microsoft.com/dotnet/standard/serialization/system-text-json-how-to):
 
 ```C# Snippet:Azure_Search_Tests_Samples_Readme_StaticType
-        public class Hotel
-        {
-            [JsonPropertyName("hotelId")]
-#if EXPERIMENTAL_FIELDBUILDER
-            [SimpleField(IsKey = true, IsFilterable = true, IsSortable = true)]
-#endif
-            public string Id { get; set; }
+public class Hotel
+{
+    [JsonPropertyName("HotelId")]
+    [SimpleField(IsKey = true, IsFilterable = true, IsSortable = true)]
+    public string Id { get; set; }
 
-            [JsonPropertyName("hotelName")]
-#if EXPERIMENTAL_FIELDBUILDER
-            [SearchableField(IsFilterable = true, IsSortable = true)]
-#endif
-            public string Name { get; set; }
-        }
+    [JsonPropertyName("HotelName")]
+    [SearchableField(IsFilterable = true, IsSortable = true)]
+    public string Name { get; set; }
+}
 ```
 
 Then we use them as the type parameter when querying to return strongly-typed search results:
@@ -255,8 +251,8 @@ SearchResults<SearchDocument> response = client.Search<SearchDocument>("luxury")
 foreach (SearchResult<SearchDocument> result in response.GetResults())
 {
     SearchDocument doc = result.Document;
-    string id = (string)doc["hotelId"];
-    string name = (string)doc["hotelName"];
+    string id = (string)doc["HotelId"];
+    string name = (string)doc["HotelName"];
     Console.WriteLine("{id}: {name}");
 }
 ```
@@ -270,10 +266,10 @@ Let's search for the top 5 luxury hotels with a good rating.
 int stars = 4;
 SearchOptions options = new SearchOptions
 {
-    // Filter to only ratings greater than or equal our preference
-    Filter = SearchFilter.Create($"rating ge {stars}"),
+    // Filter to only Rating greater than or equal our preference
+    Filter = SearchFilter.Create($"Rating ge {stars}"),
     Size = 5, // Take only 5 results
-    OrderBy = { "rating desc" } // Sort by rating from high to low
+    OrderBy = { "Rating desc" } // Sort by Rating from high to low
 };
 SearchResults<Hotel> response = client.Search<Hotel>("luxury", options);
 // ...
@@ -414,9 +410,9 @@ deeper into the requests you're making against the service.
 
 ## Next steps
 
-* [Go further with Azure.Search.Documents and our samples][samples]
-* [Watch a demo or deep dive video](https://azure.microsoft.com/resources/videos/index/?services=search)
-* [Read more about the Azure Cognitive Search service](https://docs.microsoft.com/azure/search/search-what-is-azure-search)
+* Go further with Azure.Search.Documents and our [samples][samples]
+* Watch a [demo or deep dive video](https://azure.microsoft.com/resources/videos/index/?services=search)
+* Read more about the [Azure Cognitive Search service](https://docs.microsoft.com/azure/search/search-what-is-azure-search)
 
 ## Contributing
 
@@ -450,7 +446,7 @@ additional questions or comments.
 [RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/src/RequestFailedException.cs
 [status_codes]: https://docs.microsoft.com/rest/api/searchservice/http-status-codes
 [samples]: samples/
-[search_contrib]: ../CONTRIBUTING.md
+[search_contrib]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/search/CONTRIBUTING.md
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/

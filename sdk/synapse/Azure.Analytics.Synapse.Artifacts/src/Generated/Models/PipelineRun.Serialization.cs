@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> status = default;
             Optional<string> message = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("runId"))
@@ -97,7 +97,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     message = property.Value.GetString();
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;

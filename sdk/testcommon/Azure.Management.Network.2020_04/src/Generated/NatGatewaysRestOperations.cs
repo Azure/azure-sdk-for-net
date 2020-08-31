@@ -28,7 +28,7 @@ namespace Azure.Management.Network
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public NatGatewaysRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -65,6 +65,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="natGatewayName"> The name of the nat gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="natGatewayName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string natGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -93,6 +94,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="natGatewayName"> The name of the nat gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="natGatewayName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string natGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -144,6 +146,7 @@ namespace Azure.Management.Network
         /// <param name="natGatewayName"> The name of the nat gateway. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="natGatewayName"/> is null. </exception>
         public async Task<Response<NatGateway>> GetAsync(string resourceGroupName, string natGatewayName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -163,14 +166,7 @@ namespace Azure.Management.Network
                     {
                         NatGateway value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NatGateway.DeserializeNatGateway(document.RootElement);
-                        }
+                        value = NatGateway.DeserializeNatGateway(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -183,6 +179,7 @@ namespace Azure.Management.Network
         /// <param name="natGatewayName"> The name of the nat gateway. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="natGatewayName"/> is null. </exception>
         public Response<NatGateway> Get(string resourceGroupName, string natGatewayName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -202,14 +199,7 @@ namespace Azure.Management.Network
                     {
                         NatGateway value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NatGateway.DeserializeNatGateway(document.RootElement);
-                        }
+                        value = NatGateway.DeserializeNatGateway(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -244,6 +234,7 @@ namespace Azure.Management.Network
         /// <param name="natGatewayName"> The name of the nat gateway. </param>
         /// <param name="parameters"> Parameters supplied to the create or update nat gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="natGatewayName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string natGatewayName, NatGateway parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -277,6 +268,7 @@ namespace Azure.Management.Network
         /// <param name="natGatewayName"> The name of the nat gateway. </param>
         /// <param name="parameters"> Parameters supplied to the create or update nat gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="natGatewayName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response CreateOrUpdate(string resourceGroupName, string natGatewayName, NatGateway parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -332,6 +324,7 @@ namespace Azure.Management.Network
         /// <param name="natGatewayName"> The name of the nat gateway. </param>
         /// <param name="parameters"> Parameters supplied to update nat gateway tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="natGatewayName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<NatGateway>> UpdateTagsAsync(string resourceGroupName, string natGatewayName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -355,14 +348,7 @@ namespace Azure.Management.Network
                     {
                         NatGateway value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NatGateway.DeserializeNatGateway(document.RootElement);
-                        }
+                        value = NatGateway.DeserializeNatGateway(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -375,6 +361,7 @@ namespace Azure.Management.Network
         /// <param name="natGatewayName"> The name of the nat gateway. </param>
         /// <param name="parameters"> Parameters supplied to update nat gateway tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="natGatewayName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response<NatGateway> UpdateTags(string resourceGroupName, string natGatewayName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -398,14 +385,7 @@ namespace Azure.Management.Network
                     {
                         NatGateway value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NatGateway.DeserializeNatGateway(document.RootElement);
-                        }
+                        value = NatGateway.DeserializeNatGateway(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -440,14 +420,7 @@ namespace Azure.Management.Network
                     {
                         NatGatewayListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NatGatewayListResult.DeserializeNatGatewayListResult(document.RootElement);
-                        }
+                        value = NatGatewayListResult.DeserializeNatGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -467,14 +440,7 @@ namespace Azure.Management.Network
                     {
                         NatGatewayListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NatGatewayListResult.DeserializeNatGatewayListResult(document.RootElement);
-                        }
+                        value = NatGatewayListResult.DeserializeNatGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -502,6 +468,7 @@ namespace Azure.Management.Network
         /// <summary> Gets all nat gateways in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<NatGatewayListResult>> ListAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -517,14 +484,7 @@ namespace Azure.Management.Network
                     {
                         NatGatewayListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NatGatewayListResult.DeserializeNatGatewayListResult(document.RootElement);
-                        }
+                        value = NatGatewayListResult.DeserializeNatGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -535,6 +495,7 @@ namespace Azure.Management.Network
         /// <summary> Gets all nat gateways in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public Response<NatGatewayListResult> List(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -550,14 +511,7 @@ namespace Azure.Management.Network
                     {
                         NatGatewayListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NatGatewayListResult.DeserializeNatGatewayListResult(document.RootElement);
-                        }
+                        value = NatGatewayListResult.DeserializeNatGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -580,6 +534,7 @@ namespace Azure.Management.Network
         /// <summary> Gets all the Nat Gateways in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<NatGatewayListResult>> ListAllNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -595,14 +550,7 @@ namespace Azure.Management.Network
                     {
                         NatGatewayListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NatGatewayListResult.DeserializeNatGatewayListResult(document.RootElement);
-                        }
+                        value = NatGatewayListResult.DeserializeNatGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -613,6 +561,7 @@ namespace Azure.Management.Network
         /// <summary> Gets all the Nat Gateways in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<NatGatewayListResult> ListAllNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -628,14 +577,7 @@ namespace Azure.Management.Network
                     {
                         NatGatewayListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NatGatewayListResult.DeserializeNatGatewayListResult(document.RootElement);
-                        }
+                        value = NatGatewayListResult.DeserializeNatGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -659,6 +601,7 @@ namespace Azure.Management.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<NatGatewayListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -678,14 +621,7 @@ namespace Azure.Management.Network
                     {
                         NatGatewayListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NatGatewayListResult.DeserializeNatGatewayListResult(document.RootElement);
-                        }
+                        value = NatGatewayListResult.DeserializeNatGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -697,6 +633,7 @@ namespace Azure.Management.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<NatGatewayListResult> ListNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -716,14 +653,7 @@ namespace Azure.Management.Network
                     {
                         NatGatewayListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = NatGatewayListResult.DeserializeNatGatewayListResult(document.RootElement);
-                        }
+                        value = NatGatewayListResult.DeserializeNatGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

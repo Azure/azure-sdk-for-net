@@ -358,7 +358,7 @@ namespace Azure.Storage.Files.DataLake
             return blobQueryOptions;
         }
 
-        internal static IBlobQueryTextOptions ToBlobQueryTextConfiguration(this IDataLakeQueryTextOptions textConfiguration)
+        internal static BlobQueryTextOptions ToBlobQueryTextConfiguration(this DataLakeQueryTextOptions textConfiguration)
         {
             if (textConfiguration == null)
             {
@@ -406,6 +406,21 @@ namespace Azure.Storage.Files.DataLake
                 Description = error.Description,
                 IsFatal = error.IsFatal,
                 Position = error.Position
+            };
+        }
+
+        internal static BlobOpenReadOptions ToBlobOpenReadOptions(this DataLakeOpenReadOptions options)
+        {
+            if (options == null)
+            {
+                return null;
+            }
+
+            return new BlobOpenReadOptions(options.Conditions == null)
+            {
+                BufferSize = options.BufferSize,
+                Conditions = options.Conditions.ToBlobRequestConditions(),
+                Position = options.Position
             };
         }
     }

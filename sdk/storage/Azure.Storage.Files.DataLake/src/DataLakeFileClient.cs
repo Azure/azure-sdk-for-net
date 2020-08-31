@@ -27,8 +27,21 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// Gets the maximum number of bytes that can be sent in a call
         /// to <see cref="UploadAsync(Stream, PathHttpHeaders, DataLakeRequestConditions, IProgress{long}, StorageTransferOptions, CancellationToken)"/>.
+        /// Supported value is now larger than <see cref="int.MaxValue"/>; please use
+        /// <see cref="MaxUploadLongBytes"/>.
         /// </summary>
-        public virtual int MaxUploadBytes => Constants.DataLake.MaxAppendBytes;
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual int MaxUploadBytes => Version < DataLakeClientOptions.ServiceVersion.V2019_12_12
+            ? Constants.DataLake.Pre_2019_12_12_MaxAppendBytes
+            : int.MaxValue;  // value is larger than can be represented by an int
+
+        /// <summary>
+        /// Gets the maximum number of bytes that can be sent in a call
+        /// to <see cref="UploadAsync(Stream, PathHttpHeaders, DataLakeRequestConditions, IProgress{long}, StorageTransferOptions, CancellationToken)"/>.
+        /// </summary>
+        public virtual long MaxUploadLongBytes => Version < DataLakeClientOptions.ServiceVersion.V2019_12_12
+            ? Constants.DataLake.Pre_2019_12_12_MaxAppendBytes
+            : Constants.DataLake.MaxAppendBytes;
 
         #region ctors
         /// <summary>
@@ -1807,6 +1820,8 @@ namespace Azure.Storage.Files.DataLake
                     $"{nameof(leaseId)}: {leaseId}\n");
                 try
                 {
+                    Errors.VerifyStreamPosition(content, nameof(content));
+
                     Response<PathAppendDataResult> response = await DataLakeRestClient.Path.AppendDataAsync(
                         clientDiagnostics: ClientDiagnostics,
                         pipeline: Pipeline,
@@ -1814,7 +1829,7 @@ namespace Azure.Storage.Files.DataLake
                         body: content,
                         version: Version.ToVersionString(),
                         position: offset,
-                        contentLength: content?.Length ?? 0,
+                        contentLength: content?.Length - content?.Position ?? 0,
                         transactionalContentHash: contentHash,
                         leaseId: leaseId,
                         async: async,
@@ -3695,6 +3710,86 @@ namespace Azure.Storage.Files.DataLake
         /// Opens a stream for reading from the file.  The stream will only download
         /// the file as the stream is read from.
         /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns a stream that will download the file as the stream
+        /// is read from.
+        /// </returns>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual Stream OpenRead(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            DataLakeOpenReadOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(OpenRead)}");
+            try
+            {
+                scope.Start();
+                return _blockBlobClient.OpenRead(
+                    options.ToBlobOpenReadOptions(),
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Opens a stream for reading from the file.  The stream will only download
+        /// the file as the stream is read from.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns a stream that will download the file as the stream
+        /// is read from.
+        /// </returns>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual async Task<Stream> OpenReadAsync(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            DataLakeOpenReadOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(OpenRead)}");
+            try
+            {
+                scope.Start();
+                return await _blockBlobClient.OpenReadAsync(
+                options.ToBlobOpenReadOptions(),
+                cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Opens a stream for reading from the file.  The stream will only download
+        /// the file as the stream is read from.
+        /// </summary>
         /// <param name="position">
         /// The position within the file to begin the stream.
         /// Defaults to the beginning of the file.
@@ -3715,6 +3810,7 @@ namespace Azure.Storage.Files.DataLake
         /// Returns a stream that will download the file as the stream
         /// is read from.
         /// </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenRead(
 #pragma warning restore AZC0015 // Unexpected client method return type.
@@ -3767,6 +3863,7 @@ namespace Azure.Storage.Files.DataLake
         /// Returns a stream that will download the file as the stream
         /// is read from.
         /// </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenRead(
 #pragma warning restore AZC0015 // Unexpected client method return type.
@@ -3801,6 +3898,7 @@ namespace Azure.Storage.Files.DataLake
         /// Returns a stream that will download the file as the stream
         /// is read from.
         /// </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Stream> OpenReadAsync(
 #pragma warning restore AZC0015 // Unexpected client method return type.
@@ -3853,6 +3951,7 @@ namespace Azure.Storage.Files.DataLake
         /// Returns a stream that will download the file as the stream
         /// is read from.
         /// </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Stream> OpenReadAsync(
 #pragma warning restore AZC0015 // Unexpected client method return type.
@@ -3863,6 +3962,193 @@ namespace Azure.Storage.Files.DataLake
                 => await (allowfileModifications ? OpenReadAsync(position, bufferSize, new DataLakeRequestConditions(), cancellationToken)
                 : OpenReadAsync(position, bufferSize, null, cancellationToken)).ConfigureAwait(false);
         #endregion OpenRead
+
+        #region OpenWrite
+        /// <summary>
+        /// Opens a stream for writing to the file.
+        /// </summary>
+        /// <param name="overwrite">
+        /// Whether an existing blob should be deleted and recreated.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A stream to write to the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual Stream OpenWrite(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            bool overwrite,
+            DataLakeFileOpenWriteOptions options = default,
+            CancellationToken cancellationToken = default)
+            => OpenWriteInternal(
+                overwrite: overwrite,
+                options: options,
+                async: false,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Opens a stream for writing to the file..
+        /// </summary>
+        /// <param name="overwrite">
+        /// Whether an existing blob should be deleted and recreated.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A stream to write to the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual async Task<Stream> OpenWriteAsync(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            bool overwrite,
+            DataLakeFileOpenWriteOptions options = default,
+            CancellationToken cancellationToken = default)
+            => await OpenWriteInternal(
+                overwrite: overwrite,
+                options: options,
+                async: true,
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Opens a stream for writing to the file.
+        /// </summary>
+        /// <param name="overwrite">
+        /// Whether an existing blob should be deleted and recreated.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A stream to write to the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Stream> OpenWriteInternal(
+            bool overwrite,
+            DataLakeFileOpenWriteOptions options,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(OpenWrite)}");
+
+            try
+            {
+                scope.Start();
+
+                long position;
+                ETag? eTag;
+
+                if (overwrite)
+                {
+                    Response<PathInfo> createResponse = await CreateInternal(
+                        resourceType: PathResourceType.File,
+                        httpHeaders: default,
+                        metadata: default,
+                        permissions: default,
+                        umask: default,
+                        conditions: options?.OpenConditions,
+                        async: async,
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+
+                    position = 0;
+                    eTag = createResponse.Value.ETag;
+                }
+                else
+                {
+                    try
+                    {
+                        Response<PathProperties> propertiesResponse;
+
+                        if (async)
+                        {
+                            propertiesResponse = await GetPropertiesAsync(
+                                conditions: options?.OpenConditions,
+                                cancellationToken: cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            propertiesResponse = GetProperties(
+                                conditions: options?.OpenConditions,
+                                cancellationToken: cancellationToken);
+                        }
+
+                        position = propertiesResponse.Value.ContentLength;
+                        eTag = propertiesResponse.Value.ETag;
+                    }
+                    catch (RequestFailedException ex)
+                    when (ex.ErrorCode == BlobErrorCode.BlobNotFound)
+                    {
+                        Response<PathInfo> createResponse = await CreateInternal(
+                            resourceType: PathResourceType.File,
+                            httpHeaders: default,
+                            metadata: default,
+                            permissions: default,
+                            umask: default,
+                            conditions: options?.OpenConditions,
+                            async: async,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+
+                        position = 0;
+                        eTag = createResponse.Value.ETag;
+                    }
+                }
+
+                DataLakeRequestConditions conditions = new DataLakeRequestConditions
+                {
+                    IfMatch = eTag,
+                    LeaseId = options?.OpenConditions?.LeaseId
+                };
+
+                return new DataLakeFileWriteStream(
+                    fileClient: this,
+                    bufferSize: options?.BufferSize ?? Constants.DefaultBufferSize,
+                    position: position,
+                    conditions: conditions,
+                    progressHandler: options?.ProgressHandler);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+        #endregion OpenWrite
 
         #region PartitionedUplaoder
         internal PartitionedUploader<DataLakeFileUploadOptions, PathInfo> GetPartitionedUploader(
@@ -3895,6 +4181,8 @@ namespace Azure.Storage.Files.DataLake
                     if (args?.Conditions != null)
                         args.Conditions = new DataLakeRequestConditions { LeaseId = args.Conditions.LeaseId };
 
+                    long newPosition = stream.Length - stream.Position;
+
                     // Append data
                     await client.AppendInternal(
                         stream,
@@ -3907,7 +4195,7 @@ namespace Azure.Storage.Files.DataLake
 
                     // Flush data
                     return await client.FlushInternal(
-                        position: stream.Length,
+                        position: newPosition,
                         retainUncommittedData: default,
                         close: default,
                         args.HttpHeaders,
@@ -3921,7 +4209,7 @@ namespace Azure.Storage.Files.DataLake
                         stream,
                         offset,
                         contentHash: default,
-                        args.Conditions.LeaseId,
+                        args?.Conditions?.LeaseId,
                         progressHandler,
                         async,
                         cancellationToken).ConfigureAwait(false),

@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetListOSUpgradeHistory. </summary>
         /// <param name="value"> The list of OS upgrades performed on the virtual machine scale set. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal VirtualMachineScaleSetListOSUpgradeHistory(IEnumerable<UpgradeOperationHistoricalStatusInfo> value)
         {
             if (value == null)
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Compute.Models
                 throw new ArgumentNullException(nameof(value));
             }
 
-            Value = value.ToArray();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetListOSUpgradeHistory. </summary>
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="nextLink"> The uri to fetch the next page of OS Upgrade History. Call ListNext() with this to fetch the next page of history of upgrades. </param>
         internal VirtualMachineScaleSetListOSUpgradeHistory(IReadOnlyList<UpgradeOperationHistoricalStatusInfo> value, string nextLink)
         {
-            Value = value ?? new List<UpgradeOperationHistoricalStatusInfo>();
+            Value = value;
             NextLink = nextLink;
         }
 

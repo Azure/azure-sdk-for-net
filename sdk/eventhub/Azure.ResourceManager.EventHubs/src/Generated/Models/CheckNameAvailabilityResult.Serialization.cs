@@ -14,40 +14,28 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         internal static CheckNameAvailabilityResult DeserializeCheckNameAvailabilityResult(JsonElement element)
         {
-            string message = default;
-            bool? nameAvailable = default;
-            UnavailableReason? reason = default;
+            Optional<string> message = default;
+            Optional<bool> nameAvailable = default;
+            Optional<UnavailableReason> reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     message = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("nameAvailable"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nameAvailable = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("reason"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     reason = property.Value.GetString().ToUnavailableReason();
                     continue;
                 }
             }
-            return new CheckNameAvailabilityResult(message, nameAvailable, reason);
+            return new CheckNameAvailabilityResult(message.Value, Optional.ToNullable(nameAvailable), Optional.ToNullable(reason));
         }
     }
 }

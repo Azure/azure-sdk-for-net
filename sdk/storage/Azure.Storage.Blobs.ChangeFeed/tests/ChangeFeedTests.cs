@@ -145,7 +145,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             DateTimeOffset endDateTime = new DateTimeOffset(2020, 5, 6, 18, 0, 0, TimeSpan.Zero);
             ChangeFeedCursor expectedCursor = new ChangeFeedCursor(
-                urlHash: BlobChangeFeedExtensions.ComputeMD5(containerUri.ToString()),
+                urlHost: containerUri.Host,
                 endDateTime: endDateTime,
                 currentSegmentCursor: segmentCursor);
 
@@ -166,7 +166,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             // Assert
             Assert.AreEqual(expectedCursor.CursorVersion, actualCursor.CursorVersion);
             Assert.AreEqual(expectedCursor.EndTime, actualCursor.EndTime);
-            Assert.AreEqual(expectedCursor.UrlHash, actualCursor.UrlHash);
+            Assert.AreEqual(expectedCursor.UrlHost, actualCursor.UrlHost);
 
             Assert.AreEqual(expectedCursor.CurrentSegmentCursor.SegmentPath, actualCursor.CurrentSegmentCursor.SegmentPath);
             Assert.AreEqual(expectedCursor.CurrentSegmentCursor.CurrentShardPath, actualCursor.CurrentSegmentCursor.CurrentShardPath);
@@ -452,7 +452,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 },
                 currentShardPath);
             ChangeFeedCursor changeFeedCursor = new ChangeFeedCursor(
-                BlobChangeFeedExtensions.ComputeMD5(containerUri.ToString()),
+                containerUri.Host,
                 null,
                 segmentCursor);
 

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("value");
             writer.WriteStringValue(Value);
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
         internal static ConnectionSharedKey DeserializeConnectionSharedKey(JsonElement element)
         {
             string value = default;
-            string id = default;
+            Optional<string> id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -38,15 +38,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
             }
-            return new ConnectionSharedKey(id, value);
+            return new ConnectionSharedKey(id.Value, value);
         }
     }
 }

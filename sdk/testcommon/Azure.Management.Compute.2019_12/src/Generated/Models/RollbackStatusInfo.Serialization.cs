@@ -14,40 +14,28 @@ namespace Azure.Management.Compute.Models
     {
         internal static RollbackStatusInfo DeserializeRollbackStatusInfo(JsonElement element)
         {
-            int? successfullyRolledbackInstanceCount = default;
-            int? failedRolledbackInstanceCount = default;
-            ApiError rollbackError = default;
+            Optional<int> successfullyRolledbackInstanceCount = default;
+            Optional<int> failedRolledbackInstanceCount = default;
+            Optional<ApiError> rollbackError = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("successfullyRolledbackInstanceCount"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     successfullyRolledbackInstanceCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("failedRolledbackInstanceCount"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     failedRolledbackInstanceCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("rollbackError"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     rollbackError = ApiError.DeserializeApiError(property.Value);
                     continue;
                 }
             }
-            return new RollbackStatusInfo(successfullyRolledbackInstanceCount, failedRolledbackInstanceCount, rollbackError);
+            return new RollbackStatusInfo(Optional.ToNullable(successfullyRolledbackInstanceCount), Optional.ToNullable(failedRolledbackInstanceCount), rollbackError.Value);
         }
     }
 }

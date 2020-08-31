@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
             Action<VirtualMachine> useVMMImage = vm =>
             {
-                vm.StorageProfile.DataDisks = null;
+                vm.StorageProfile.DataDisks.Clear();
                 vm.StorageProfile.ImageReference = new ImageReference
                 {
                     Publisher = vmmPublisherName,
@@ -113,6 +113,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var rgName = Recording.GenerateAssetName(TestPrefix);
             string asName = Recording.GenerateAssetName("as");
             VirtualMachine inputVM;
+            string inputVMName;
 
             string storageAccountName = Recording.GenerateAssetName(TestPrefix);
             ImageReference dummyImageRef = null;
@@ -131,6 +132,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 var returnTwoVM = await CreateVM(rgName, asName, storageAccountOutput, dummyImageRef, useVMMImage);
                 vm1 = returnTwoVM.Item1;
                 inputVM = returnTwoVM.Item2;
+                inputVMName = returnTwoVM.Item3;
             }
             catch (Exception ex)
             {
@@ -148,8 +150,8 @@ namespace Azure.ResourceManager.Compute.Tests
             //var getResponse = await VirtualMachinesClient.GetAsync(rgName, vm1.Name).GetAwaiter().GetResult();
             //Assert.True(getResponse.Status == HttpStatusCode.OK);
             ValidateVM(inputVM, getResponse,
-                Helpers.GetVMReferenceId(m_subId, rgName, inputVM.Name));
-            var lroResponse = await WaitForCompletionAsync(await VirtualMachinesOperations.StartDeleteAsync(rgName, inputVM.Name));
+                Helpers.GetVMReferenceId(m_subId, rgName, inputVMName));
+            var lroResponse = await WaitForCompletionAsync(await VirtualMachinesOperations.StartDeleteAsync(rgName, inputVMName));
             //var lroResponse = await VirtualMachinesClient.DeleteWithHttpMessagesAsync(rgName, inputVM.Name).GetAwaiter().GetResult();
             /////TODO
             //Assert.True(lroResponse .StatusCode == HttpStatusCode.OK);

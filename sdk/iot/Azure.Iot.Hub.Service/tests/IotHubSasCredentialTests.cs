@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Iot.Hub.Service.Authentication;
 using FluentAssertions;
 using NUnit.Framework;
@@ -69,6 +71,8 @@ namespace Azure.Iot.Hub.Service.Tests
         {
             // Arrange
             var ttl = TimeSpan.FromMinutes(1);
+            var ctx = new TokenRequestContext();
+            var cts = new CancellationTokenSource();
 
             // Act
             var credential = new IotHubSasCredential("policy", s_testSharedAccessKey, ttl)
@@ -76,9 +80,9 @@ namespace Azure.Iot.Hub.Service.Tests
                 Endpoint = s_endpoint,
             };
 
-            string initialToken = credential.GetSasToken();
-            await Task.Delay(2000);
-            string newToken = credential.GetSasToken();
+            string initialToken = credential.GetToken(ctx, cts.Token).Token;
+            await Task.Delay(2000).ConfigureAwait(false);
+            string newToken = credential.GetToken(ctx, cts.Token).Token;
 
             // Assert
             newToken.Should().BeEquivalentTo(initialToken, "Token should be cached and returned");
@@ -89,6 +93,8 @@ namespace Azure.Iot.Hub.Service.Tests
         {
             // Arrange
             var ttl = TimeSpan.FromSeconds(1);
+            var ctx = new TokenRequestContext();
+            var cts = new CancellationTokenSource();
 
             // Act
             var credential = new IotHubSasCredential("policy", s_testSharedAccessKey, ttl)
@@ -96,9 +102,9 @@ namespace Azure.Iot.Hub.Service.Tests
                 Endpoint = s_endpoint,
             };
 
-            string initialToken = credential.GetSasToken();
-            await Task.Delay(2000);
-            string newToken = credential.GetSasToken();
+            string initialToken = credential.GetToken(ctx, cts.Token).Token;
+            await Task.Delay(2000).ConfigureAwait(false);
+            string newToken = credential.GetToken(ctx, cts.Token).Token;
 
             // Assert
             newToken.Should().NotBeEquivalentTo(initialToken, "Token has expired, and should be regenerated");

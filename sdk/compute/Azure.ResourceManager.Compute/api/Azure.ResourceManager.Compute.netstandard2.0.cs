@@ -444,8 +444,8 @@ namespace Azure.ResourceManager.Compute
     public partial class GalleryApplicationVersionsOperations
     {
         protected GalleryApplicationVersionsOperations() { }
-        public virtual Azure.Response<Azure.ResourceManager.Compute.Models.GalleryApplicationVersion> Get(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Models.GalleryApplicationVersion>> GetAsync(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Compute.Models.GalleryApplicationVersion> Get(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, Azure.ResourceManager.Compute.Models.ReplicationStatusTypes? expand = default(Azure.ResourceManager.Compute.Models.ReplicationStatusTypes?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Models.GalleryApplicationVersion>> GetAsync(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, Azure.ResourceManager.Compute.Models.ReplicationStatusTypes? expand = default(Azure.ResourceManager.Compute.Models.ReplicationStatusTypes?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Compute.Models.GalleryApplicationVersion> ListByGalleryApplication(string resourceGroupName, string galleryName, string galleryApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Compute.Models.GalleryApplicationVersion> ListByGalleryApplicationAsync(string resourceGroupName, string galleryName, string galleryApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Compute.GalleryApplicationVersionsCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, Azure.ResourceManager.Compute.Models.GalleryApplicationVersion galleryApplicationVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -550,8 +550,8 @@ namespace Azure.ResourceManager.Compute
     public partial class GalleryImageVersionsOperations
     {
         protected GalleryImageVersionsOperations() { }
-        public virtual Azure.Response<Azure.ResourceManager.Compute.Models.GalleryImageVersion> Get(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Models.GalleryImageVersion>> GetAsync(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Compute.Models.GalleryImageVersion> Get(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, Azure.ResourceManager.Compute.Models.ReplicationStatusTypes? expand = default(Azure.ResourceManager.Compute.Models.ReplicationStatusTypes?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Models.GalleryImageVersion>> GetAsync(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, Azure.ResourceManager.Compute.Models.ReplicationStatusTypes? expand = default(Azure.ResourceManager.Compute.Models.ReplicationStatusTypes?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Compute.Models.GalleryImageVersion> ListByGalleryImage(string resourceGroupName, string galleryName, string galleryImageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Compute.Models.GalleryImageVersion> ListByGalleryImageAsync(string resourceGroupName, string galleryName, string galleryImageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Compute.GalleryImageVersionsCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, Azure.ResourceManager.Compute.Models.GalleryImageVersion galleryImageVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1752,19 +1752,19 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public partial class ApiError
     {
-        public ApiError() { }
-        public string Code { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.ApiErrorBase> Details { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.InnerError Innererror { get { throw null; } set { } }
-        public string Message { get { throw null; } set { } }
-        public string Target { get { throw null; } set { } }
+        internal ApiError() { }
+        public string Code { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ApiErrorBase> Details { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.InnerError Innererror { get { throw null; } }
+        public string Message { get { throw null; } }
+        public string Target { get { throw null; } }
     }
     public partial class ApiErrorBase
     {
-        public ApiErrorBase() { }
-        public string Code { get { throw null; } set { } }
-        public string Message { get { throw null; } set { } }
-        public string Target { get { throw null; } set { } }
+        internal ApiErrorBase() { }
+        public string Code { get { throw null; } }
+        public string Message { get { throw null; } }
+        public string Target { get { throw null; } }
     }
     public partial class AutomaticOSUpgradePolicy
     {
@@ -1790,8 +1790,8 @@ namespace Azure.ResourceManager.Compute.Models
         public int? PlatformUpdateDomainCount { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.SubResource ProximityPlacementGroup { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.Sku Sku { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.InstanceViewStatus> Statuses { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.SubResource> VirtualMachines { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.InstanceViewStatus> Statuses { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.SubResource> VirtualMachines { get { throw null; } }
     }
     public partial class AvailabilitySetListResult
     {
@@ -1824,8 +1824,8 @@ namespace Azure.ResourceManager.Compute.Models
         public int? PlatformUpdateDomainCount { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.SubResource ProximityPlacementGroup { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.Sku Sku { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.InstanceViewStatus> Statuses { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.SubResource> VirtualMachines { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.InstanceViewStatus> Statuses { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.SubResource> VirtualMachines { get { throw null; } }
     }
     public partial class BillingProfile
     {
@@ -1840,7 +1840,7 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public partial class BootDiagnosticsInstanceView
     {
-        public BootDiagnosticsInstanceView() { }
+        internal BootDiagnosticsInstanceView() { }
         public string ConsoleScreenshotBlobUri { get { throw null; } }
         public string SerialConsoleLogBlobUri { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.InstanceViewStatus Status { get { throw null; } }
@@ -1881,7 +1881,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class ContainerService : Azure.ResourceManager.Compute.Models.Resource
     {
         public ContainerService(string location) : base (default(string)) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.ContainerServiceAgentPoolProfile> AgentPoolProfiles { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.ContainerServiceAgentPoolProfile> AgentPoolProfiles { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.ContainerServiceCustomProfile CustomProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ContainerServiceDiagnosticsProfile DiagnosticsProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ContainerServiceLinuxProfile LinuxProfile { get { throw null; } set { } }
@@ -1925,7 +1925,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class ContainerServiceMasterProfile
     {
         public ContainerServiceMasterProfile(string dnsPrefix) { }
-        public Azure.ResourceManager.Compute.Models.Enum27? Count { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.Enum31? Count { get { throw null; } set { } }
         public string DnsPrefix { get { throw null; } set { } }
         public string Fqdn { get { throw null; } }
     }
@@ -2081,25 +2081,25 @@ namespace Azure.ResourceManager.Compute.Models
         public string ProvisioningState { get { throw null; } }
         public System.DateTimeOffset? ProvisioningTime { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.Sku Sku { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.SubResourceReadOnly> VirtualMachines { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.SubResourceReadOnly> VirtualMachines { get { throw null; } }
     }
     public partial class DedicatedHostAllocatableVM
     {
-        public DedicatedHostAllocatableVM() { }
-        public double? Count { get { throw null; } set { } }
-        public string VmSize { get { throw null; } set { } }
+        internal DedicatedHostAllocatableVM() { }
+        public double? Count { get { throw null; } }
+        public string VmSize { get { throw null; } }
     }
     public partial class DedicatedHostAvailableCapacity
     {
-        public DedicatedHostAvailableCapacity() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.DedicatedHostAllocatableVM> AllocatableVMs { get { throw null; } set { } }
+        internal DedicatedHostAvailableCapacity() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.DedicatedHostAllocatableVM> AllocatableVMs { get { throw null; } }
     }
     public partial class DedicatedHostGroup : Azure.ResourceManager.Compute.Models.Resource
     {
         public DedicatedHostGroup(string location) : base (default(string)) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.SubResourceReadOnly> Hosts { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.SubResourceReadOnly> Hosts { get { throw null; } }
         public int? PlatformFaultDomainCount { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Zones { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Zones { get { throw null; } }
     }
     public partial class DedicatedHostGroupListResult
     {
@@ -2110,16 +2110,16 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class DedicatedHostGroupUpdate : Azure.ResourceManager.Compute.Models.UpdateResource
     {
         public DedicatedHostGroupUpdate() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.SubResourceReadOnly> Hosts { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.SubResourceReadOnly> Hosts { get { throw null; } }
         public int? PlatformFaultDomainCount { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Zones { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Zones { get { throw null; } }
     }
     public partial class DedicatedHostInstanceView
     {
-        public DedicatedHostInstanceView() { }
+        internal DedicatedHostInstanceView() { }
         public string AssetId { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.DedicatedHostAvailableCapacity AvailableCapacity { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.InstanceViewStatus> Statuses { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.DedicatedHostAvailableCapacity AvailableCapacity { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.InstanceViewStatus> Statuses { get { throw null; } }
     }
     public enum DedicatedHostLicenseTypes
     {
@@ -2143,12 +2143,29 @@ namespace Azure.ResourceManager.Compute.Models
         public int? PlatformFaultDomain { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public System.DateTimeOffset? ProvisioningTime { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.SubResourceReadOnly> VirtualMachines { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.SubResourceReadOnly> VirtualMachines { get { throw null; } }
     }
     public partial class DiagnosticsProfile
     {
         public DiagnosticsProfile() { }
         public Azure.ResourceManager.Compute.Models.BootDiagnostics BootDiagnostics { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DiffDiskOptions : System.IEquatable<Azure.ResourceManager.Compute.Models.DiffDiskOptions>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DiffDiskOptions(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.DiffDiskOptions Local { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.DiffDiskOptions other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.DiffDiskOptions left, Azure.ResourceManager.Compute.Models.DiffDiskOptions right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.DiffDiskOptions (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.DiffDiskOptions left, Azure.ResourceManager.Compute.Models.DiffDiskOptions right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DiffDiskPlacement : System.IEquatable<Azure.ResourceManager.Compute.Models.DiffDiskPlacement>
@@ -2171,13 +2188,13 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class DiffDiskSettings
     {
         public DiffDiskSettings() { }
-        public string Option { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.DiffDiskOptions? Option { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.DiffDiskPlacement? Placement { get { throw null; } set { } }
     }
     public partial class Disallowed
     {
         public Disallowed() { }
-        public System.Collections.Generic.IList<string> DiskTypes { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> DiskTypes { get { throw null; } }
     }
     public partial class Disk : Azure.ResourceManager.Compute.Models.Resource
     {
@@ -2194,15 +2211,15 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.EncryptionSettingsCollection EncryptionSettingsCollection { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.HyperVGeneration? HyperVGeneration { get { throw null; } set { } }
         public string ManagedBy { get { throw null; } }
-        public System.Collections.Generic.IList<string> ManagedByExtended { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> ManagedByExtended { get { throw null; } }
         public int? MaxShares { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.OperatingSystemTypes? OsType { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.ShareInfoElement> ShareInfo { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ShareInfoElement> ShareInfo { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.DiskSku Sku { get { throw null; } set { } }
         public System.DateTimeOffset? TimeCreated { get { throw null; } }
         public string UniqueId { get { throw null; } }
-        public System.Collections.Generic.IList<string> Zones { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Zones { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DiskCreateOption : System.IEquatable<Azure.ResourceManager.Compute.Models.DiskCreateOption>
@@ -2251,8 +2268,25 @@ namespace Azure.ResourceManager.Compute.Models
         public DiskEncryptionSet(string location) : base (default(string)) { }
         public Azure.ResourceManager.Compute.Models.KeyVaultAndKeyReference ActiveKey { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.EncryptionSetIdentity Identity { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.KeyVaultAndKeyReference> PreviousKeys { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.KeyVaultAndKeyReference> PreviousKeys { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DiskEncryptionSetIdentityType : System.IEquatable<Azure.ResourceManager.Compute.Models.DiskEncryptionSetIdentityType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DiskEncryptionSetIdentityType(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.DiskEncryptionSetIdentityType SystemAssigned { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.DiskEncryptionSetIdentityType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.DiskEncryptionSetIdentityType left, Azure.ResourceManager.Compute.Models.DiskEncryptionSetIdentityType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.DiskEncryptionSetIdentityType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.DiskEncryptionSetIdentityType left, Azure.ResourceManager.Compute.Models.DiskEncryptionSetIdentityType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class DiskEncryptionSetList
     {
@@ -2275,7 +2309,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public DiskEncryptionSetUpdate() { }
         public Azure.ResourceManager.Compute.Models.KeyVaultAndKeyReference ActiveKey { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class DiskImageEncryption
     {
@@ -2284,10 +2318,10 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public partial class DiskInstanceView
     {
-        public DiskInstanceView() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.DiskEncryptionSettings> EncryptionSettings { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.InstanceViewStatus> Statuses { get { throw null; } set { } }
+        internal DiskInstanceView() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.DiskEncryptionSettings> EncryptionSettings { get { throw null; } }
+        public string Name { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.InstanceViewStatus> Statuses { get { throw null; } }
     }
     public partial class DiskList
     {
@@ -2356,7 +2390,7 @@ namespace Azure.ResourceManager.Compute.Models
         public int? MaxShares { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.OperatingSystemTypes? OsType { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.DiskSku Sku { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class Encryption
     {
@@ -2367,7 +2401,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class EncryptionImages
     {
         public EncryptionImages() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.DataDiskImageEncryption> DataDiskImages { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.DataDiskImageEncryption> DataDiskImages { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.DiskImageEncryption OsDiskImage { get { throw null; } set { } }
     }
     public partial class EncryptionSetIdentity
@@ -2375,13 +2409,13 @@ namespace Azure.ResourceManager.Compute.Models
         public EncryptionSetIdentity() { }
         public string PrincipalId { get { throw null; } }
         public string TenantId { get { throw null; } }
-        public string Type { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.DiskEncryptionSetIdentityType? Type { get { throw null; } set { } }
     }
     public partial class EncryptionSettingsCollection
     {
         public EncryptionSettingsCollection(bool enabled) { }
         public bool Enabled { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.EncryptionSettingsElement> EncryptionSettings { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.EncryptionSettingsElement> EncryptionSettings { get { throw null; } }
         public string EncryptionSettingsVersion { get { throw null; } set { } }
     }
     public partial class EncryptionSettingsElement
@@ -2409,21 +2443,21 @@ namespace Azure.ResourceManager.Compute.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Enum27 : System.IEquatable<Azure.ResourceManager.Compute.Models.Enum27>
+    public readonly partial struct Enum31 : System.IEquatable<Azure.ResourceManager.Compute.Models.Enum31>
     {
         private readonly int _dummyPrimitive;
-        public Enum27(int value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.Enum27 Five { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.Enum27 One { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.Enum27 Three { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Models.Enum27 other) { throw null; }
+        public Enum31(int value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.Enum31 Five { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.Enum31 One { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.Enum31 Three { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.Enum31 other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Models.Enum27 left, Azure.ResourceManager.Compute.Models.Enum27 right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.Enum27 (int value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Models.Enum27 left, Azure.ResourceManager.Compute.Models.Enum27 right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.Enum31 left, Azure.ResourceManager.Compute.Models.Enum31 right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.Enum31 (int value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.Enum31 left, Azure.ResourceManager.Compute.Models.Enum31 right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class Gallery : Azure.ResourceManager.Compute.Models.Resource
@@ -2516,7 +2550,7 @@ namespace Azure.ResourceManager.Compute.Models
         public System.DateTimeOffset? PublishedDate { get { throw null; } }
         public int? ReplicaCount { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.StorageAccountType? StorageAccountType { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.TargetRegion> TargetRegions { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.TargetRegion> TargetRegions { get { throw null; } }
     }
     public partial class GalleryArtifactVersionSource
     {
@@ -2652,7 +2686,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class GalleryImageVersionStorageProfile
     {
         public GalleryImageVersionStorageProfile() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.GalleryDataDiskImage> DataDiskImages { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.GalleryDataDiskImage> DataDiskImages { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.GalleryDiskImage OsDiskImage { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.GalleryArtifactVersionSource Source { get { throw null; } set { } }
     }
@@ -2835,7 +2869,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class ImageStorageProfile
     {
         public ImageStorageProfile() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.ImageDataDisk> DataDisks { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.ImageDataDisk> DataDisks { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.ImageOSDisk OsDisk { get { throw null; } set { } }
         public bool? ZoneResilient { get { throw null; } set { } }
     }
@@ -2849,9 +2883,9 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public partial class InnerError
     {
-        public InnerError() { }
-        public string Errordetail { get { throw null; } set { } }
-        public string Exceptiontype { get { throw null; } set { } }
+        internal InnerError() { }
+        public string Errordetail { get { throw null; } }
+        public string Exceptiontype { get { throw null; } }
     }
     public partial class InstanceViewStatus
     {
@@ -2953,14 +2987,14 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public partial class MaintenanceRedeployStatus
     {
-        public MaintenanceRedeployStatus() { }
-        public bool? IsCustomerInitiatedMaintenanceAllowed { get { throw null; } set { } }
-        public string LastOperationMessage { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.MaintenanceOperationResultCodeTypes? LastOperationResultCode { get { throw null; } set { } }
-        public System.DateTimeOffset? MaintenanceWindowEndTime { get { throw null; } set { } }
-        public System.DateTimeOffset? MaintenanceWindowStartTime { get { throw null; } set { } }
-        public System.DateTimeOffset? PreMaintenanceWindowEndTime { get { throw null; } set { } }
-        public System.DateTimeOffset? PreMaintenanceWindowStartTime { get { throw null; } set { } }
+        internal MaintenanceRedeployStatus() { }
+        public bool? IsCustomerInitiatedMaintenanceAllowed { get { throw null; } }
+        public string LastOperationMessage { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.MaintenanceOperationResultCodeTypes? LastOperationResultCode { get { throw null; } }
+        public System.DateTimeOffset? MaintenanceWindowEndTime { get { throw null; } }
+        public System.DateTimeOffset? MaintenanceWindowStartTime { get { throw null; } }
+        public System.DateTimeOffset? PreMaintenanceWindowEndTime { get { throw null; } }
+        public System.DateTimeOffset? PreMaintenanceWindowStartTime { get { throw null; } }
     }
     public partial class ManagedDiskParameters : Azure.ResourceManager.Compute.Models.SubResource
     {
@@ -2976,7 +3010,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class NetworkProfile
     {
         public NetworkProfile() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.NetworkInterfaceReference> NetworkInterfaces { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.NetworkInterfaceReference> NetworkInterfaces { get { throw null; } }
     }
     public enum OperatingSystemStateTypes
     {
@@ -2987,6 +3021,23 @@ namespace Azure.ResourceManager.Compute.Models
     {
         Windows = 0,
         Linux = 1,
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct OrchestrationServiceNames : System.IEquatable<Azure.ResourceManager.Compute.Models.OrchestrationServiceNames>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public OrchestrationServiceNames(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.OrchestrationServiceNames AutomaticRepairs { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.OrchestrationServiceNames other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.OrchestrationServiceNames left, Azure.ResourceManager.Compute.Models.OrchestrationServiceNames right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.OrchestrationServiceNames (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.OrchestrationServiceNames left, Azure.ResourceManager.Compute.Models.OrchestrationServiceNames right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct OrchestrationServiceState : System.IEquatable<Azure.ResourceManager.Compute.Models.OrchestrationServiceState>
@@ -3027,14 +3078,14 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public partial class OrchestrationServiceStateInput
     {
-        public OrchestrationServiceStateInput(Azure.ResourceManager.Compute.Models.OrchestrationServiceStateAction action) { }
+        public OrchestrationServiceStateInput(Azure.ResourceManager.Compute.Models.OrchestrationServiceNames serviceName, Azure.ResourceManager.Compute.Models.OrchestrationServiceStateAction action) { }
         public Azure.ResourceManager.Compute.Models.OrchestrationServiceStateAction Action { get { throw null; } }
-        public string ServiceName { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.OrchestrationServiceNames ServiceName { get { throw null; } }
     }
     public partial class OrchestrationServiceSummary
     {
         internal OrchestrationServiceSummary() { }
-        public string ServiceName { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.OrchestrationServiceNames? ServiceName { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.OrchestrationServiceState? ServiceState { get { throw null; } }
     }
     public partial class OSDisk
@@ -3071,7 +3122,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string CustomData { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.LinuxConfiguration LinuxConfiguration { get { throw null; } set { } }
         public bool? RequireGuestProvisionSignal { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VaultSecretGroup> Secrets { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VaultSecretGroup> Secrets { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.WindowsConfiguration WindowsConfiguration { get { throw null; } set { } }
     }
     public partial class Plan
@@ -3090,11 +3141,11 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class ProximityPlacementGroup : Azure.ResourceManager.Compute.Models.Resource
     {
         public ProximityPlacementGroup(string location) : base (default(string)) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.SubResourceWithColocationStatus> AvailabilitySets { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.SubResourceWithColocationStatus> AvailabilitySets { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.InstanceViewStatus ColocationStatus { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ProximityPlacementGroupType? ProximityPlacementGroupType { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.SubResourceWithColocationStatus> VirtualMachines { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.SubResourceWithColocationStatus> VirtualMachineScaleSets { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.SubResourceWithColocationStatus> VirtualMachines { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.SubResourceWithColocationStatus> VirtualMachineScaleSets { get { throw null; } }
     }
     public partial class ProximityPlacementGroupListResult
     {
@@ -3145,7 +3196,7 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public partial class RegionalReplicationStatus
     {
-        public RegionalReplicationStatus() { }
+        internal RegionalReplicationStatus() { }
         public string Details { get { throw null; } }
         public int? Progress { get { throw null; } }
         public string Region { get { throw null; } }
@@ -3173,9 +3224,26 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public partial class ReplicationStatus
     {
-        public ReplicationStatus() { }
+        internal ReplicationStatus() { }
         public Azure.ResourceManager.Compute.Models.AggregatedReplicationState? AggregatedState { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.RegionalReplicationStatus> Summary { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.RegionalReplicationStatus> Summary { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ReplicationStatusTypes : System.IEquatable<Azure.ResourceManager.Compute.Models.ReplicationStatusTypes>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ReplicationStatusTypes(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.ReplicationStatusTypes ReplicationStatus { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.ReplicationStatusTypes other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.ReplicationStatusTypes left, Azure.ResourceManager.Compute.Models.ReplicationStatusTypes right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.ReplicationStatusTypes (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.ReplicationStatusTypes left, Azure.ResourceManager.Compute.Models.ReplicationStatusTypes right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class RequestRateByIntervalInput : Azure.ResourceManager.Compute.Models.LogAnalyticsInputBase
     {
@@ -3188,7 +3256,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string Id { get { throw null; } }
         public string Location { get { throw null; } set { } }
         public string Name { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public string Type { get { throw null; } }
     }
     public enum ResourceIdentityType
@@ -3313,7 +3381,7 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public partial class RollingUpgradeProgressInfo
     {
-        public RollingUpgradeProgressInfo() { }
+        internal RollingUpgradeProgressInfo() { }
         public int? FailedInstanceCount { get { throw null; } }
         public int? InProgressInstanceCount { get { throw null; } }
         public int? PendingInstanceCount { get { throw null; } }
@@ -3321,7 +3389,7 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public partial class RollingUpgradeRunningStatus
     {
-        public RollingUpgradeRunningStatus() { }
+        internal RollingUpgradeRunningStatus() { }
         public Azure.ResourceManager.Compute.Models.RollingUpgradeStatusCode? Code { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.RollingUpgradeActionType? LastAction { get { throw null; } }
         public System.DateTimeOffset? LastActionTime { get { throw null; } }
@@ -3361,8 +3429,8 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public RunCommandInput(string commandId) { }
         public string CommandId { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.RunCommandInputParameter> Parameters { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Script { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.RunCommandInputParameter> Parameters { get { throw null; } }
+        public System.Collections.Generic.IList<string> Script { get { throw null; } }
     }
     public partial class RunCommandInputParameter
     {
@@ -3392,7 +3460,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class ScaleInPolicy
     {
         public ScaleInPolicy() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetScaleInRules> Rules { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetScaleInRules> Rules { get { throw null; } }
     }
     public partial class ScheduledEventsProfile
     {
@@ -3406,7 +3474,7 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public partial class ShareInfoElement
     {
-        public ShareInfoElement() { }
+        internal ShareInfoElement() { }
         public string VmUri { get { throw null; } }
     }
     public partial class Sku
@@ -3472,7 +3540,7 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.EncryptionSettingsCollection EncryptionSettingsCollection { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.OperatingSystemTypes? OsType { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.SnapshotSku Sku { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class SourceVault
     {
@@ -3482,7 +3550,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class SshConfiguration
     {
         public SshConfiguration() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.SshPublicKey> PublicKeys { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.SshPublicKey> PublicKeys { get { throw null; } }
     }
     public partial class SshPublicKey
     {
@@ -3561,7 +3629,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class StorageProfile
     {
         public StorageProfile() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.DataDisk> DataDisks { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.DataDisk> DataDisks { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.ImageReference ImageReference { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.OSDisk OsDisk { get { throw null; } set { } }
     }
@@ -3601,14 +3669,14 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class UpdateResource
     {
         public UpdateResource() { }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class UpdateResourceDefinition
     {
         public UpdateResourceDefinition() { }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public string Type { get { throw null; } }
     }
     public enum UpgradeMode
@@ -3691,7 +3759,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public VaultSecretGroup() { }
         public Azure.ResourceManager.Compute.Models.SubResource SourceVault { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VaultCertificate> VaultCertificates { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VaultCertificate> VaultCertificates { get { throw null; } }
     }
     public partial class VirtualHardDisk
     {
@@ -3717,18 +3785,18 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.VirtualMachinePriorityTypes? Priority { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.SubResource ProximityPlacementGroup { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineExtension> Resources { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.VirtualMachineExtension> Resources { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.StorageProfile StorageProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.SubResource VirtualMachineScaleSet { get { throw null; } set { } }
         public string VmId { get { throw null; } }
-        public System.Collections.Generic.IList<string> Zones { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Zones { get { throw null; } }
     }
     public partial class VirtualMachineAgentInstanceView
     {
-        public VirtualMachineAgentInstanceView() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineExtensionHandlerInstanceView> ExtensionHandlers { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.InstanceViewStatus> Statuses { get { throw null; } set { } }
-        public string VmAgentVersion { get { throw null; } set { } }
+        internal VirtualMachineAgentInstanceView() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.VirtualMachineExtensionHandlerInstanceView> ExtensionHandlers { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.InstanceViewStatus> Statuses { get { throw null; } }
+        public string VmAgentVersion { get { throw null; } }
     }
     public partial class VirtualMachineCaptureParameters
     {
@@ -3742,7 +3810,7 @@ namespace Azure.ResourceManager.Compute.Models
         public VirtualMachineCaptureResult() { }
         public string ContentVersion { get { throw null; } }
         public object Parameters { get { throw null; } }
-        public System.Collections.Generic.IList<object> Resources { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<object> Resources { get { throw null; } }
         public string Schema { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -3778,10 +3846,10 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public partial class VirtualMachineExtensionHandlerInstanceView
     {
-        public VirtualMachineExtensionHandlerInstanceView() { }
-        public Azure.ResourceManager.Compute.Models.InstanceViewStatus Status { get { throw null; } set { } }
-        public string Type { get { throw null; } set { } }
-        public string TypeHandlerVersion { get { throw null; } set { } }
+        internal VirtualMachineExtensionHandlerInstanceView() { }
+        public Azure.ResourceManager.Compute.Models.InstanceViewStatus Status { get { throw null; } }
+        public string Type { get { throw null; } }
+        public string TypeHandlerVersion { get { throw null; } }
     }
     public partial class VirtualMachineExtensionImage : Azure.ResourceManager.Compute.Models.Resource
     {
@@ -3796,8 +3864,8 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public VirtualMachineExtensionInstanceView() { }
         public string Name { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.InstanceViewStatus> Statuses { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.InstanceViewStatus> Substatuses { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.InstanceViewStatus> Statuses { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.InstanceViewStatus> Substatuses { get { throw null; } }
         public string Type { get { throw null; } set { } }
         public string TypeHandlerVersion { get { throw null; } set { } }
     }
@@ -3819,7 +3887,7 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public partial class VirtualMachineHealthStatus
     {
-        public VirtualMachineHealthStatus() { }
+        internal VirtualMachineHealthStatus() { }
         public Azure.ResourceManager.Compute.Models.InstanceViewStatus Status { get { throw null; } }
     }
     public partial class VirtualMachineIdentity
@@ -3828,13 +3896,13 @@ namespace Azure.ResourceManager.Compute.Models
         public string PrincipalId { get { throw null; } }
         public string TenantId { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.ResourceIdentityType? Type { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Compute.Models.Components1H8M3EpSchemasVirtualmachineidentityPropertiesUserassignedidentitiesAdditionalproperties> UserAssignedIdentities { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Compute.Models.Components1H8M3EpSchemasVirtualmachineidentityPropertiesUserassignedidentitiesAdditionalproperties> UserAssignedIdentities { get { throw null; } }
     }
     public partial class VirtualMachineImage : Azure.ResourceManager.Compute.Models.VirtualMachineImageResource
     {
         public VirtualMachineImage(string name, string location) : base (default(string), default(string)) { }
         public Azure.ResourceManager.Compute.Models.AutomaticOSUpgradeProperties AutomaticOSUpgradeProperties { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.DataDiskImage> DataDiskImages { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.DataDiskImage> DataDiskImages { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.HyperVGenerationTypes? HyperVGeneration { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.OSDiskImage OsDiskImage { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.PurchasePlan Plan { get { throw null; } set { } }
@@ -3844,24 +3912,24 @@ namespace Azure.ResourceManager.Compute.Models
         public VirtualMachineImageResource(string name, string location) { }
         public string Location { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class VirtualMachineInstanceView
     {
-        public VirtualMachineInstanceView() { }
-        public Azure.ResourceManager.Compute.Models.BootDiagnosticsInstanceView BootDiagnostics { get { throw null; } set { } }
-        public string ComputerName { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.DiskInstanceView> Disks { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineExtensionInstanceView> Extensions { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.HyperVGenerationType? HyperVGeneration { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.MaintenanceRedeployStatus MaintenanceRedeployStatus { get { throw null; } set { } }
-        public string OsName { get { throw null; } set { } }
-        public string OsVersion { get { throw null; } set { } }
-        public int? PlatformFaultDomain { get { throw null; } set { } }
-        public int? PlatformUpdateDomain { get { throw null; } set { } }
-        public string RdpThumbPrint { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.InstanceViewStatus> Statuses { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.VirtualMachineAgentInstanceView VmAgent { get { throw null; } set { } }
+        internal VirtualMachineInstanceView() { }
+        public Azure.ResourceManager.Compute.Models.BootDiagnosticsInstanceView BootDiagnostics { get { throw null; } }
+        public string ComputerName { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.DiskInstanceView> Disks { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.VirtualMachineExtensionInstanceView> Extensions { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.HyperVGenerationType? HyperVGeneration { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.MaintenanceRedeployStatus MaintenanceRedeployStatus { get { throw null; } }
+        public string OsName { get { throw null; } }
+        public string OsVersion { get { throw null; } }
+        public int? PlatformFaultDomain { get { throw null; } }
+        public int? PlatformUpdateDomain { get { throw null; } }
+        public string RdpThumbPrint { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.InstanceViewStatus> Statuses { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.VirtualMachineAgentInstanceView VmAgent { get { throw null; } }
     }
     public partial class VirtualMachineListResult
     {
@@ -3912,7 +3980,7 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.UpgradePolicy UpgradePolicy { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVMProfile VirtualMachineProfile { get { throw null; } set { } }
         public bool? ZoneBalance { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Zones { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Zones { get { throw null; } }
     }
     public partial class VirtualMachineScaleSetDataDisk
     {
@@ -3934,7 +4002,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string ForceUpdateTag { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public object ProtectedSettings { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> ProvisionAfterExtensions { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> ProvisionAfterExtensions { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public string Publisher { get { throw null; } set { } }
         public object Settings { get { throw null; } set { } }
@@ -3951,7 +4019,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class VirtualMachineScaleSetExtensionProfile
     {
         public VirtualMachineScaleSetExtensionProfile() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetExtension> Extensions { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetExtension> Extensions { get { throw null; } }
     }
     public partial class VirtualMachineScaleSetExtensionUpdate : Azure.ResourceManager.Compute.Models.SubResourceReadOnly
     {
@@ -3960,7 +4028,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string ForceUpdateTag { get { throw null; } set { } }
         public string Name { get { throw null; } }
         public object ProtectedSettings { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> ProvisionAfterExtensions { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> ProvisionAfterExtensions { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public string Publisher { get { throw null; } set { } }
         public object Settings { get { throw null; } set { } }
@@ -3974,7 +4042,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string PrincipalId { get { throw null; } }
         public string TenantId { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.ResourceIdentityType? Type { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Compute.Models.ComponentsNj115SSchemasVirtualmachinescalesetidentityPropertiesUserassignedidentitiesAdditionalproperties> UserAssignedIdentities { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Compute.Models.ComponentsNj115SSchemasVirtualmachinescalesetidentityPropertiesUserassignedidentitiesAdditionalproperties> UserAssignedIdentities { get { throw null; } }
     }
     public partial class VirtualMachineScaleSetInstanceView
     {
@@ -3992,10 +4060,10 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class VirtualMachineScaleSetIPConfiguration : Azure.ResourceManager.Compute.Models.SubResource
     {
         public VirtualMachineScaleSetIPConfiguration(string name) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.SubResource> ApplicationGatewayBackendAddressPools { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.SubResource> ApplicationSecurityGroups { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.SubResource> LoadBalancerBackendAddressPools { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.SubResource> LoadBalancerInboundNatPools { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.SubResource> ApplicationGatewayBackendAddressPools { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.SubResource> ApplicationSecurityGroups { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.SubResource> LoadBalancerBackendAddressPools { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.SubResource> LoadBalancerInboundNatPools { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public bool? Primary { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.IPVersion? PrivateIPAddressVersion { get { throw null; } set { } }
@@ -4044,7 +4112,7 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetNetworkConfigurationDnsSettings DnsSettings { get { throw null; } set { } }
         public bool? EnableAcceleratedNetworking { get { throw null; } set { } }
         public bool? EnableIPForwarding { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetIPConfiguration> IpConfigurations { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetIPConfiguration> IpConfigurations { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.SubResource NetworkSecurityGroup { get { throw null; } set { } }
         public bool? Primary { get { throw null; } set { } }
@@ -4052,13 +4120,13 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class VirtualMachineScaleSetNetworkConfigurationDnsSettings
     {
         public VirtualMachineScaleSetNetworkConfigurationDnsSettings() { }
-        public System.Collections.Generic.IList<string> DnsServers { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> DnsServers { get { throw null; } }
     }
     public partial class VirtualMachineScaleSetNetworkProfile
     {
         public VirtualMachineScaleSetNetworkProfile() { }
         public Azure.ResourceManager.Compute.Models.ApiEntityReference HealthProbe { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetNetworkConfiguration> NetworkInterfaceConfigurations { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetNetworkConfiguration> NetworkInterfaceConfigurations { get { throw null; } }
     }
     public partial class VirtualMachineScaleSetOSDisk
     {
@@ -4071,7 +4139,7 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetManagedDiskParameters ManagedDisk { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.OperatingSystemTypes? OsType { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> VhdContainers { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> VhdContainers { get { throw null; } }
         public bool? WriteAcceleratorEnabled { get { throw null; } set { } }
     }
     public partial class VirtualMachineScaleSetOSProfile
@@ -4082,7 +4150,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string ComputerNamePrefix { get { throw null; } set { } }
         public string CustomData { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.LinuxConfiguration LinuxConfiguration { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VaultSecretGroup> Secrets { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VaultSecretGroup> Secrets { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.WindowsConfiguration WindowsConfiguration { get { throw null; } set { } }
     }
     public partial class VirtualMachineScaleSetPublicIPAddressConfiguration
@@ -4090,7 +4158,7 @@ namespace Azure.ResourceManager.Compute.Models
         public VirtualMachineScaleSetPublicIPAddressConfiguration(string name) { }
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings DnsSettings { get { throw null; } set { } }
         public int? IdleTimeoutInMinutes { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetIpTag> IpTags { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetIpTag> IpTags { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.IPVersion? PublicIPAddressVersion { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.SubResource PublicIPPrefix { get { throw null; } set { } }
@@ -4103,7 +4171,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class VirtualMachineScaleSetReimageParameters : Azure.ResourceManager.Compute.Models.VirtualMachineReimageParameters
     {
         public VirtualMachineScaleSetReimageParameters() { }
-        public System.Collections.Generic.IList<string> InstanceIds { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> InstanceIds { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VirtualMachineScaleSetScaleInRules : System.IEquatable<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetScaleInRules>
@@ -4147,7 +4215,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class VirtualMachineScaleSetStorageProfile
     {
         public VirtualMachineScaleSetStorageProfile() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetDataDisk> DataDisks { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetDataDisk> DataDisks { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.ImageReference ImageReference { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetOSDisk OsDisk { get { throw null; } set { } }
     }
@@ -4170,10 +4238,10 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class VirtualMachineScaleSetUpdateIPConfiguration : Azure.ResourceManager.Compute.Models.SubResource
     {
         public VirtualMachineScaleSetUpdateIPConfiguration() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.SubResource> ApplicationGatewayBackendAddressPools { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.SubResource> ApplicationSecurityGroups { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.SubResource> LoadBalancerBackendAddressPools { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.SubResource> LoadBalancerInboundNatPools { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.SubResource> ApplicationGatewayBackendAddressPools { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.SubResource> ApplicationSecurityGroups { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.SubResource> LoadBalancerBackendAddressPools { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.SubResource> LoadBalancerInboundNatPools { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public bool? Primary { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.IPVersion? PrivateIPAddressVersion { get { throw null; } set { } }
@@ -4186,7 +4254,7 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetNetworkConfigurationDnsSettings DnsSettings { get { throw null; } set { } }
         public bool? EnableAcceleratedNetworking { get { throw null; } set { } }
         public bool? EnableIPForwarding { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpdateIPConfiguration> IpConfigurations { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpdateIPConfiguration> IpConfigurations { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.SubResource NetworkSecurityGroup { get { throw null; } set { } }
         public bool? Primary { get { throw null; } set { } }
@@ -4195,7 +4263,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public VirtualMachineScaleSetUpdateNetworkProfile() { }
         public Azure.ResourceManager.Compute.Models.ApiEntityReference HealthProbe { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpdateNetworkConfiguration> NetworkInterfaceConfigurations { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpdateNetworkConfiguration> NetworkInterfaceConfigurations { get { throw null; } }
     }
     public partial class VirtualMachineScaleSetUpdateOSDisk
     {
@@ -4204,7 +4272,7 @@ namespace Azure.ResourceManager.Compute.Models
         public int? DiskSizeGB { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualHardDisk Image { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetManagedDiskParameters ManagedDisk { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> VhdContainers { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> VhdContainers { get { throw null; } }
         public bool? WriteAcceleratorEnabled { get { throw null; } set { } }
     }
     public partial class VirtualMachineScaleSetUpdateOSProfile
@@ -4212,7 +4280,7 @@ namespace Azure.ResourceManager.Compute.Models
         public VirtualMachineScaleSetUpdateOSProfile() { }
         public string CustomData { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.LinuxConfiguration LinuxConfiguration { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VaultSecretGroup> Secrets { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VaultSecretGroup> Secrets { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.WindowsConfiguration WindowsConfiguration { get { throw null; } set { } }
     }
     public partial class VirtualMachineScaleSetUpdatePublicIPAddressConfiguration
@@ -4225,7 +4293,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class VirtualMachineScaleSetUpdateStorageProfile
     {
         public VirtualMachineScaleSetUpdateStorageProfile() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetDataDisk> DataDisks { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetDataDisk> DataDisks { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.ImageReference ImageReference { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpdateOSDisk OsDisk { get { throw null; } set { } }
     }
@@ -4259,11 +4327,11 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.Plan Plan { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVMProtectionPolicy ProtectionPolicy { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineExtension> Resources { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.VirtualMachineExtension> Resources { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.Sku Sku { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.StorageProfile StorageProfile { get { throw null; } set { } }
         public string VmId { get { throw null; } }
-        public System.Collections.Generic.IList<string> Zones { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
     }
     public partial class VirtualMachineScaleSetVMExtensionsSummary
     {
@@ -4274,7 +4342,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class VirtualMachineScaleSetVMInstanceIDs
     {
         public VirtualMachineScaleSetVMInstanceIDs() { }
-        public System.Collections.Generic.IList<string> InstanceIds { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> InstanceIds { get { throw null; } }
     }
     public partial class VirtualMachineScaleSetVMInstanceRequiredIDs
     {
@@ -4283,17 +4351,17 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public partial class VirtualMachineScaleSetVMInstanceView
     {
-        public VirtualMachineScaleSetVMInstanceView() { }
-        public Azure.ResourceManager.Compute.Models.BootDiagnosticsInstanceView BootDiagnostics { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.DiskInstanceView> Disks { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineExtensionInstanceView> Extensions { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.MaintenanceRedeployStatus MaintenanceRedeployStatus { get { throw null; } set { } }
-        public string PlacementGroupId { get { throw null; } set { } }
-        public int? PlatformFaultDomain { get { throw null; } set { } }
-        public int? PlatformUpdateDomain { get { throw null; } set { } }
-        public string RdpThumbPrint { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.InstanceViewStatus> Statuses { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.VirtualMachineAgentInstanceView VmAgent { get { throw null; } set { } }
+        internal VirtualMachineScaleSetVMInstanceView() { }
+        public Azure.ResourceManager.Compute.Models.BootDiagnosticsInstanceView BootDiagnostics { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.DiskInstanceView> Disks { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.VirtualMachineExtensionInstanceView> Extensions { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.MaintenanceRedeployStatus MaintenanceRedeployStatus { get { throw null; } }
+        public string PlacementGroupId { get { throw null; } }
+        public int? PlatformFaultDomain { get { throw null; } }
+        public int? PlatformUpdateDomain { get { throw null; } }
+        public string RdpThumbPrint { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.InstanceViewStatus> Statuses { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.VirtualMachineAgentInstanceView VmAgent { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineHealthStatus VmHealth { get { throw null; } }
     }
     public partial class VirtualMachineScaleSetVMListResult
@@ -4305,7 +4373,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class VirtualMachineScaleSetVMNetworkProfileConfiguration
     {
         public VirtualMachineScaleSetVMNetworkProfileConfiguration() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetNetworkConfiguration> NetworkInterfaceConfigurations { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetNetworkConfiguration> NetworkInterfaceConfigurations { get { throw null; } }
     }
     public partial class VirtualMachineScaleSetVMProfile
     {
@@ -4556,7 +4624,7 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.StorageProfile StorageProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.SubResource VirtualMachineScaleSet { get { throw null; } set { } }
         public string VmId { get { throw null; } }
-        public System.Collections.Generic.IList<string> Zones { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Zones { get { throw null; } }
     }
     public partial class VMScaleSetConvertToSinglePlacementGroupInput
     {
@@ -4566,7 +4634,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class WindowsConfiguration
     {
         public WindowsConfiguration() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.AdditionalUnattendContent> AdditionalUnattendContent { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.AdditionalUnattendContent> AdditionalUnattendContent { get { throw null; } }
         public bool? EnableAutomaticUpdates { get { throw null; } set { } }
         public bool? ProvisionVMAgent { get { throw null; } set { } }
         public string TimeZone { get { throw null; } set { } }
@@ -4575,7 +4643,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class WinRMConfiguration
     {
         public WinRMConfiguration() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.WinRMListener> Listeners { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.WinRMListener> Listeners { get { throw null; } }
     }
     public partial class WinRMListener
     {

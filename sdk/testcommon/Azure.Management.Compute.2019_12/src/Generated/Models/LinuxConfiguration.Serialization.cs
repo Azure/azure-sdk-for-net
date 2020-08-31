@@ -15,17 +15,17 @@ namespace Azure.Management.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (DisablePasswordAuthentication != null)
+            if (Optional.IsDefined(DisablePasswordAuthentication))
             {
                 writer.WritePropertyName("disablePasswordAuthentication");
                 writer.WriteBooleanValue(DisablePasswordAuthentication.Value);
             }
-            if (Ssh != null)
+            if (Optional.IsDefined(Ssh))
             {
                 writer.WritePropertyName("ssh");
                 writer.WriteObjectValue(Ssh);
             }
-            if (ProvisionVMAgent != null)
+            if (Optional.IsDefined(ProvisionVMAgent))
             {
                 writer.WritePropertyName("provisionVMAgent");
                 writer.WriteBooleanValue(ProvisionVMAgent.Value);
@@ -35,40 +35,28 @@ namespace Azure.Management.Compute.Models
 
         internal static LinuxConfiguration DeserializeLinuxConfiguration(JsonElement element)
         {
-            bool? disablePasswordAuthentication = default;
-            SshConfiguration ssh = default;
-            bool? provisionVMAgent = default;
+            Optional<bool> disablePasswordAuthentication = default;
+            Optional<SshConfiguration> ssh = default;
+            Optional<bool> provisionVMAgent = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("disablePasswordAuthentication"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     disablePasswordAuthentication = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("ssh"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     ssh = SshConfiguration.DeserializeSshConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisionVMAgent"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     provisionVMAgent = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new LinuxConfiguration(disablePasswordAuthentication, ssh, provisionVMAgent);
+            return new LinuxConfiguration(Optional.ToNullable(disablePasswordAuthentication), ssh.Value, Optional.ToNullable(provisionVMAgent));
         }
     }
 }

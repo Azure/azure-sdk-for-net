@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Search.Serialization
         private static readonly IEnumerable<string> TypeAndProperties = new[] { Type, Properties };
 
         /// <summary>
-        /// Determines whether the given <c cref="JObject">JObject</c> is a valid Geo-JSON point.
+        /// Determines whether the given <see cref="JObject" /> is a valid Geo-JSON point.
         /// </summary>
         /// <param name="obj">The JSON object to test.</param>
         /// <returns><c>true</c> if the JSON object is not null and is a valid Geo-JSON point, <c>false</c> otherwise.</returns>
@@ -54,12 +54,12 @@ namespace Microsoft.Azure.Search.Serialization
                 }) ?? false;
 
         /// <summary>
-        /// Reads a Geo-JSON point into a <c cref="GeographyPoint">GeographyPoint</c> instance, or throws
-        /// <c cref="JsonSerializationException">JsonSerializationException</c> if the reader is not positioned on the
+        /// Reads a Geo-JSON point into a <see cref="GeographyPoint" /> instance, or throws
+        /// <see cref="JsonSerializationException" /> if the reader is not positioned on the
         /// beginning of a valid Geo-JSON point.
         /// </summary>
         /// <param name="reader">The JSON reader from which to read a Geo-JSON point.</param>
-        /// <returns>A <c cref="GeographyPoint">GeographyPoint</c> instance.</returns>
+        /// <returns>A <see cref="GeographyPoint" /> instance.</returns>
         public static GeographyPoint ReadGeoJsonPoint(this JsonReader reader)
         {
             // Check for null first.
@@ -95,10 +95,10 @@ namespace Microsoft.Azure.Search.Serialization
         }
 
         /// <summary>
-        /// Writes a <c cref="GeographyPoint">GeographyPoint</c> instance as Geo-JSON format.
+        /// Writes a <see cref="GeographyPoint" /> instance as Geo-JSON format.
         /// </summary>
         /// <param name="writer">The JSON writer to which to write the Geo-JSON point.</param>
-        /// <param name="point">The <c cref="GeographyPoint">GeographyPoint</c> instance to write.</param>
+        /// <param name="point">The <see cref="GeographyPoint" /> instance to write.</param>
         public static void WriteGeoJsonPoint(this JsonWriter writer, GeographyPoint point)
         {
             writer.WriteStartObject();

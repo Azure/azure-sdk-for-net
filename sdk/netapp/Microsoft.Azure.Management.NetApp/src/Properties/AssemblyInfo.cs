@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Provides management functionality for Azure NetApp Storage.")]
 
 [assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.5.1.0")]
+[assembly: AssemblyFileVersion("1.5.2.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]

@@ -15,22 +15,22 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ProcessorArchitecture != null)
+            if (Optional.IsDefined(ProcessorArchitecture))
             {
                 writer.WritePropertyName("processorArchitecture");
                 writer.WriteStringValue(ProcessorArchitecture.Value.ToString());
             }
-            if (AuthenticationMethod != null)
+            if (Optional.IsDefined(AuthenticationMethod))
             {
                 writer.WritePropertyName("authenticationMethod");
                 writer.WriteStringValue(AuthenticationMethod.Value.ToString());
             }
-            if (RadiusServerAuthCertificate != null)
+            if (Optional.IsDefined(RadiusServerAuthCertificate))
             {
                 writer.WritePropertyName("radiusServerAuthCertificate");
                 writer.WriteStringValue(RadiusServerAuthCertificate);
             }
-            if (ClientRootCertificates != null)
+            if (Optional.IsCollectionDefined(ClientRootCertificates))
             {
                 writer.WritePropertyName("clientRootCertificates");
                 writer.WriteStartArray();

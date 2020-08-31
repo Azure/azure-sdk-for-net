@@ -681,6 +681,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
         public virtual AsyncPageable<IpFilterRule> ListIPFilterRulesAsync(string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -729,6 +730,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
         public virtual Pageable<IpFilterRule> ListIPFilterRules(string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -850,6 +852,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Lists the available Namespaces within a resource group. </summary>
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual AsyncPageable<EHNamespace> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -893,6 +896,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Lists the available Namespaces within a resource group. </summary>
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual Pageable<EHNamespace> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -937,6 +941,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
         public virtual AsyncPageable<VirtualNetworkRule> ListVirtualNetworkRulesAsync(string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -985,6 +990,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
         public virtual Pageable<VirtualNetworkRule> ListVirtualNetworkRules(string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1033,6 +1039,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
         public virtual AsyncPageable<AuthorizationRule> ListAuthorizationRulesAsync(string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1081,6 +1088,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
         public virtual Pageable<AuthorizationRule> ListAuthorizationRules(string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1130,6 +1138,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="parameters"> Parameters for creating a namespace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual async Task<NamespacesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string namespaceName, EHNamespace parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1164,6 +1173,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="parameters"> Parameters for creating a namespace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual NamespacesCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string namespaceName, EHNamespace parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1197,6 +1207,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
         public virtual async Task<NamespacesDeleteOperation> StartDeleteAsync(string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -1226,6 +1237,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
         public virtual NamespacesDeleteOperation StartDelete(string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

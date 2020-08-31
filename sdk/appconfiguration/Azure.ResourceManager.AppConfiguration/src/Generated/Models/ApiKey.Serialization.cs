@@ -15,70 +15,46 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     {
         internal static ApiKey DeserializeApiKey(JsonElement element)
         {
-            string id = default;
-            string name = default;
-            string value = default;
-            string connectionString = default;
-            DateTimeOffset? lastModified = default;
-            bool? readOnly = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> value = default;
+            Optional<string> connectionString = default;
+            Optional<DateTimeOffset> lastModified = default;
+            Optional<bool> readOnly = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     value = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("connectionString"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     connectionString = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("lastModified"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     lastModified = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("readOnly"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     readOnly = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new ApiKey(id, name, value, connectionString, lastModified, readOnly);
+            return new ApiKey(id.Value, name.Value, value.Value, connectionString.Value, Optional.ToNullable(lastModified), Optional.ToNullable(readOnly));
         }
     }
 }

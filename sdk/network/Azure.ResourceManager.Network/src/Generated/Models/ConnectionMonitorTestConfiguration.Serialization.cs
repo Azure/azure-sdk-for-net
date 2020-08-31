@@ -17,34 +17,34 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
-            if (TestFrequencySec != null)
+            if (Optional.IsDefined(TestFrequencySec))
             {
                 writer.WritePropertyName("testFrequencySec");
                 writer.WriteNumberValue(TestFrequencySec.Value);
             }
             writer.WritePropertyName("protocol");
             writer.WriteStringValue(Protocol.ToString());
-            if (PreferredIPVersion != null)
+            if (Optional.IsDefined(PreferredIPVersion))
             {
                 writer.WritePropertyName("preferredIPVersion");
                 writer.WriteStringValue(PreferredIPVersion.Value.ToString());
             }
-            if (HttpConfiguration != null)
+            if (Optional.IsDefined(HttpConfiguration))
             {
                 writer.WritePropertyName("httpConfiguration");
                 writer.WriteObjectValue(HttpConfiguration);
             }
-            if (TcpConfiguration != null)
+            if (Optional.IsDefined(TcpConfiguration))
             {
                 writer.WritePropertyName("tcpConfiguration");
                 writer.WriteObjectValue(TcpConfiguration);
             }
-            if (IcmpConfiguration != null)
+            if (Optional.IsDefined(IcmpConfiguration))
             {
                 writer.WritePropertyName("icmpConfiguration");
                 writer.WriteObjectValue(IcmpConfiguration);
             }
-            if (SuccessThreshold != null)
+            if (Optional.IsDefined(SuccessThreshold))
             {
                 writer.WritePropertyName("successThreshold");
                 writer.WriteObjectValue(SuccessThreshold);
@@ -55,13 +55,13 @@ namespace Azure.ResourceManager.Network.Models
         internal static ConnectionMonitorTestConfiguration DeserializeConnectionMonitorTestConfiguration(JsonElement element)
         {
             string name = default;
-            int? testFrequencySec = default;
+            Optional<int> testFrequencySec = default;
             ConnectionMonitorTestConfigurationProtocol protocol = default;
-            PreferredIPVersion? preferredIPVersion = default;
-            ConnectionMonitorHttpConfiguration httpConfiguration = default;
-            ConnectionMonitorTcpConfiguration tcpConfiguration = default;
-            ConnectionMonitorIcmpConfiguration icmpConfiguration = default;
-            ConnectionMonitorSuccessThreshold successThreshold = default;
+            Optional<PreferredIPVersion> preferredIPVersion = default;
+            Optional<ConnectionMonitorHttpConfiguration> httpConfiguration = default;
+            Optional<ConnectionMonitorTcpConfiguration> tcpConfiguration = default;
+            Optional<ConnectionMonitorIcmpConfiguration> icmpConfiguration = default;
+            Optional<ConnectionMonitorSuccessThreshold> successThreshold = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -71,10 +71,6 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("testFrequencySec"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     testFrequencySec = property.Value.GetInt32();
                     continue;
                 }
@@ -85,51 +81,31 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("preferredIPVersion"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     preferredIPVersion = new PreferredIPVersion(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("httpConfiguration"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     httpConfiguration = ConnectionMonitorHttpConfiguration.DeserializeConnectionMonitorHttpConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tcpConfiguration"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     tcpConfiguration = ConnectionMonitorTcpConfiguration.DeserializeConnectionMonitorTcpConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("icmpConfiguration"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     icmpConfiguration = ConnectionMonitorIcmpConfiguration.DeserializeConnectionMonitorIcmpConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("successThreshold"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     successThreshold = ConnectionMonitorSuccessThreshold.DeserializeConnectionMonitorSuccessThreshold(property.Value);
                     continue;
                 }
             }
-            return new ConnectionMonitorTestConfiguration(name, testFrequencySec, protocol, preferredIPVersion, httpConfiguration, tcpConfiguration, icmpConfiguration, successThreshold);
+            return new ConnectionMonitorTestConfiguration(name, Optional.ToNullable(testFrequencySec), protocol, Optional.ToNullable(preferredIPVersion), httpConfiguration.Value, tcpConfiguration.Value, icmpConfiguration.Value, successThreshold.Value);
         }
     }
 }

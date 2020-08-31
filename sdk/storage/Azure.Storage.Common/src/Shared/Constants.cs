@@ -73,6 +73,7 @@ namespace Azure.Storage
 
         public const string SnapshotParameterName = "snapshot";
         public const string VersionIdParameterName = "versionid";
+        public const string ShareSnapshotParameterName = "sharesnapshot";
 
         public const string Https = "https";
         public const string Http = "http";
@@ -180,6 +181,11 @@ namespace Azure.Storage
                 public const int MaxBlocks = 50000;
             }
 
+            internal static class Page
+            {
+                public const int PageSizeBytes = 512;
+            }
+
             internal static class Container
             {
                 /// <summary>
@@ -283,9 +289,14 @@ namespace Azure.Storage
             public const int DefaultConcurrentTransfersCount = 5;
 
             /// <summary>
+            /// Max upload bytes for less than Service Version 2019-12-12.
+            /// </summary>
+            public const int Pre_2019_12_12_MaxAppendBytes = 100 * Constants.MB; // 100 MB
+
+            /// <summary>
             /// Max upload bytes.
             /// </summary>
-            public const int MaxAppendBytes = 100 * Constants.MB; // 100 MB
+            public const long MaxAppendBytes = 4000L * Constants.MB; // 4000MB;
 
             /// <summary>
             /// Metadata key for isFolder property.

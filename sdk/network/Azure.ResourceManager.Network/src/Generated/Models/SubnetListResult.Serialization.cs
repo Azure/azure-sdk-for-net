@@ -15,42 +15,27 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static SubnetListResult DeserializeSubnetListResult(JsonElement element)
         {
-            IReadOnlyList<Subnet> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<Subnet>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<Subnet> array = new List<Subnet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(Subnet.DeserializeSubnet(item));
-                        }
+                        array.Add(Subnet.DeserializeSubnet(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new SubnetListResult(value, nextLink);
+            return new SubnetListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

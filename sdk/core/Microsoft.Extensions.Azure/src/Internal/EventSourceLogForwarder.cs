@@ -20,12 +20,16 @@ namespace Microsoft.Extensions.Azure
 
         private readonly Func<EventSourceEvent, Exception, string> _formatMessage = FormatMessage;
 
-        private readonly AzureEventSourceListener _listener;
+        private AzureEventSourceListener _listener;
 
         public EventSourceLogForwarder(ILoggerFactory loggerFactory = null)
         {
             _loggerFactory = loggerFactory;
-            _listener = new AzureEventSourceListener((e, s) => LogEvent(e), EventLevel.Verbose);
+        }
+
+        public void Start()
+        {
+            _listener ??= new AzureEventSourceListener((e, s) => LogEvent(e), EventLevel.Verbose);
         }
 
         private void LogEvent(EventWrittenEventArgs eventData)

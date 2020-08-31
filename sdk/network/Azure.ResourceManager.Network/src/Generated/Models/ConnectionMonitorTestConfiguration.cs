@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ConnectionMonitorTestConfiguration. </summary>
         /// <param name="name"> The name of the connection monitor test configuration. </param>
         /// <param name="protocol"> The protocol to use in test evaluation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ConnectionMonitorTestConfiguration(string name, ConnectionMonitorTestConfigurationProtocol protocol)
         {
             if (name == null)

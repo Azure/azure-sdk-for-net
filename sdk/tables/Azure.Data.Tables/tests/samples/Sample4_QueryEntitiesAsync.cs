@@ -38,14 +38,14 @@ namespace Azure.Data.Tables.Samples
                 {"Product", "Markers" },
                 {"Price", 5.00 },
             };
-            await tableClient.CreateEntityAsync(entity);
+            await tableClient.AddEntityAsync(entity);
 
             var entity2 = new TableEntity(partitionKey, rowKey2)
             {
                 {"Product", "Chair" },
                 {"Price", 7.00 },
             };
-            await tableClient.CreateEntityAsync(entity2);
+            await tableClient.AddEntityAsync(entity2);
 
             #region Snippet:TablesSample4QueryEntitiesAsync
             // Use the <see cref="TableClient"> to query the table. Passing in OData filter strings is optional.
