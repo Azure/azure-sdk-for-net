@@ -38,7 +38,7 @@ az storage account create -n mystorageaccount -g MyResourceGroup -l westus --sub
 
 #### Creating a Cosmos DB
 
-Create a storage account `MyCosmosDBDatabaseAccount` in resource group `MyResourceGroup` 
+Create a Cosmos DB account `MyCosmosDBDatabaseAccount` in resource group `MyResourceGroup` 
 in the subscription `MySubscription` and a table named `MyTableName` in the account.
 
 ```
@@ -98,7 +98,7 @@ foreach (TableItem table in queryTableResults)
 }
 ```
 
-Individual tables can bel deleted from the service.
+Individual tables can be deleted from the service.
 
 ```C# Snippet:TablesSample1DeleteTable
 // Deletes the table made previously.
@@ -171,9 +171,9 @@ tableClient.DeleteEntity(partitionKey, rowKey);
 ## Troubleshooting
 
 When you interact with the Azure table library using the .NET SDK, errors returned by the service correspond to the same HTTP 
-status codes returned for [REST API][keyvault_rest] requests.
+status codes returned for [REST API][tables_rest] requests.
 
-For example, if you try to retrieve a create a table that already exists, a `409` error is returned, indicating "Conflict".
+For example, if you try to create a table that already exists, a `409` error is returned, indicating "Conflict".
 
 ```C# Snippet:CreateDuplicateTable
 // Construct a new TableClient using a connection string.
@@ -215,6 +215,7 @@ For more information see the [Code of Conduct FAQ][coc_faq] or contact
 [opencode@microsoft.com][coc_contact] with any additional questions or comments.
 
 <!-- LINKS -->
+[tables_rest]: https://docs.microsoft.com/en-us/rest/api/storageservices/table-service-rest-api
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/
 [contrib]: ./CONTRIBUTING.md
