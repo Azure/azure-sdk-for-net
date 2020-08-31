@@ -2,6 +2,10 @@
 
 ## 4.2.0-preview.1 (Unreleased)
 
+### Added
+
+- Added `KeyVaultKeyIdentifier` to parse key URIs.
+
 ## 4.1.0 (2020-08-11)
 
 ### Added

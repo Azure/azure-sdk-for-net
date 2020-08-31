@@ -1,9 +1,11 @@
 # Release History
 
 ## 12.6.0-preview.1 (Unreleased)
+- Fixed bug where BlobClient.Upload(), BlockBlobClient.Upload(), AppendBlobClient.AppendBlock(), and PageBlobClient.UploadPages() would deadlock if the content stream's position was not 0.
+- Fixed bug in BlobBaseClient.OpenRead() causing us to do more download called than necessary.
 
 ## 12.5.1 (2020-08-18)
-- Bug in TaskExtensions.EnsureCompleted method that causes it to unconditionally throw an exception in the environments with synchronization context
+- Fixed bug in TaskExtensions.EnsureCompleted method that causes it to unconditionally throw an exception in the environments with synchronization context
 
 ## 12.5.0 (2020-08-13)
 - Includes all features from 12.5.0-preview.1 through 12.5.0-preview.6.

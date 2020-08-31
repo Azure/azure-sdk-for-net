@@ -55,6 +55,7 @@
     <PackageReference Update="Microsoft.Azure.Storage.Blob" Version="11.1.7" />
     <PackageReference Update="Microsoft.Azure.Storage.Queue" Version="11.1.7" />
     <PackageReference Update="Microsoft.Azure.Test.HttpRecorder" Version="[1.13.3, 2.0.0)" />
+    <PackageReference Update="Microsoft.Azure.WebJobs" Version="3.0.16" />
     <PackageReference Update="Microsoft.Bcl.Json.Sources" Version="4.6.0-preview3.19128.7" />
     <PackageReference Update="Microsoft.Build.Tasks.Core" Version="15.5.180" />
     <PackageReference Update="Microsoft.Build" Version="15.5.180" />
@@ -142,6 +143,7 @@
   <!-- Packages intended for Extensions libraries only -->
   <ItemGroup Condition="'$(IsExtensionClientLibrary)' == 'true'">
     <PackageReference Update="Microsoft.AspNetCore.DataProtection" Version="2.1.0" />
+    <PackageReference Update="Microsoft.Extensions.Azure" Version="1.0.0" />
     <PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="2.1.0" />

@@ -29,7 +29,7 @@ namespace Azure.Messaging.ServiceBus.Management
                         correlationRuleFilter.ReplyTo = element.Value;
                         break;
                     case "Label":
-                        correlationRuleFilter.Label = element.Value;
+                        correlationRuleFilter.Subject = element.Value;
                         break;
                     case "SessionId":
                         correlationRuleFilter.SessionId = element.Value;
@@ -85,8 +85,8 @@ namespace Azure.Messaging.ServiceBus.Management
                     new XElement(XName.Get("To", ManagementClientConstants.ServiceBusNamespace), filter.To),
                 string.IsNullOrWhiteSpace(filter.ReplyTo) ? null :
                     new XElement(XName.Get("ReplyTo", ManagementClientConstants.ServiceBusNamespace), filter.ReplyTo),
-                string.IsNullOrWhiteSpace(filter.Label) ? null :
-                    new XElement(XName.Get("Label", ManagementClientConstants.ServiceBusNamespace), filter.Label),
+                string.IsNullOrWhiteSpace(filter.Subject) ? null :
+                    new XElement(XName.Get("Label", ManagementClientConstants.ServiceBusNamespace), filter.Subject),
                 string.IsNullOrWhiteSpace(filter.SessionId) ? null :
                     new XElement(XName.Get("SessionId", ManagementClientConstants.ServiceBusNamespace), filter.SessionId),
                 string.IsNullOrWhiteSpace(filter.ReplyToSessionId) ? null :

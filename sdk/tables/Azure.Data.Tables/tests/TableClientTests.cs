@@ -41,21 +41,21 @@ namespace Azure.Tables.Tests
         [Test]
         public void ConstructorValidatesArguments()
         {
-            Assert.That(() => new TableClient(null, _url, new TableSharedKeyCredential(AccountName, string.Empty)), Throws.InstanceOf<ArgumentNullException>(), "The constructor should validate the tableName.");
+            Assert.That(() => new TableClient(_url, null, new TableSharedKeyCredential(AccountName, string.Empty)), Throws.InstanceOf<ArgumentNullException>(), "The constructor should validate the tableName.");
 
-            Assert.That(() => new TableClient(TableName, null, new TableSharedKeyCredential(AccountName, string.Empty)), Throws.InstanceOf<ArgumentNullException>(), "The constructor should validate the url.");
+            Assert.That(() => new TableClient(null, TableName, new TableSharedKeyCredential(AccountName, string.Empty)), Throws.InstanceOf<ArgumentNullException>(), "The constructor should validate the url.");
 
-            Assert.That(() => new TableClient(TableName, _url, new TableSharedKeyCredential(AccountName, string.Empty), new TableClientOptions()), Throws.Nothing, "The constructor should accept valid arguments.");
+            Assert.That(() => new TableClient(_url, TableName, new TableSharedKeyCredential(AccountName, string.Empty), new TableClientOptions()), Throws.Nothing, "The constructor should accept valid arguments.");
 
-            Assert.That(() => new TableClient(TableName, _url, credential: null), Throws.InstanceOf<ArgumentNullException>(), "The constructor should validate the TablesSharedKeyCredential.");
+            Assert.That(() => new TableClient(_url, TableName, credential: null), Throws.InstanceOf<ArgumentNullException>(), "The constructor should validate the TablesSharedKeyCredential.");
 
-            Assert.That(() => new TableClient(TableName, _urlHttp), Throws.InstanceOf<ArgumentException>(), "The constructor should validate the Uri is https when using a SAS token.");
+            Assert.That(() => new TableClient(_urlHttp, TableName), Throws.InstanceOf<ArgumentException>(), "The constructor should validate the Uri is https when using a SAS token.");
 
-            Assert.That(() => new TableClient(TableName, _url), Throws.Nothing, "The constructor should accept a null credential");
+            Assert.That(() => new TableClient(_url, TableName), Throws.Nothing, "The constructor should accept a null credential");
 
-            Assert.That(() => new TableClient(TableName, _url, new TableSharedKeyCredential(AccountName, string.Empty)), Throws.Nothing, "The constructor should accept valid arguments.");
+            Assert.That(() => new TableClient(_url, TableName, new TableSharedKeyCredential(AccountName, string.Empty)), Throws.Nothing, "The constructor should accept valid arguments.");
 
-            Assert.That(() => new TableClient(TableName, _urlHttp, new TableSharedKeyCredential(AccountName, string.Empty)), Throws.Nothing, "The constructor should accept an http url.");
+            Assert.That(() => new TableClient(_urlHttp, TableName, new TableSharedKeyCredential(AccountName, string.Empty)), Throws.Nothing, "The constructor should accept an http url.");
         }
 
         /// <summary>
