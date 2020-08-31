@@ -2737,6 +2737,94 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public async Task UploadAsync_Stream_InvalidStreamPosition()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = test.FileSystem.GetFileClient(GetNewFileName());
+            long size = Constants.KB;
+            byte[] data = GetRandomBuffer(size);
+
+            using Stream stream = new MemoryStream(data)
+            {
+                Position = size
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                file.UploadAsync(
+                content: stream),
+                e => Assert.AreEqual("content.Position must be less than content.Length. Please set content.Position to the start of the data to upload.", e.Message));
+        }
+
+        [Test]
+        public async Task UploadAsync_NonZeroStreamPosition()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = test.FileSystem.GetFileClient(GetNewFileName());
+
+            long size = Constants.KB;
+            long position = 512;
+            byte[] data = GetRandomBuffer(size);
+            byte[] expectedData = new byte[size - position];
+            Array.Copy(data, position, expectedData, 0, size - position);
+
+            using Stream stream = new MemoryStream(data)
+            {
+                Position = position
+            };
+
+            // Act
+            await file.UploadAsync(stream);
+
+            // Assert
+            Response<FileDownloadInfo> downloadResponse = await file.ReadAsync();
+            var actual = new MemoryStream();
+            await downloadResponse.Value.Content.CopyToAsync(actual);
+            TestHelper.AssertSequenceEqual(expectedData, actual.ToArray());
+        }
+
+        [Test]
+        public async Task UploadAsync_NonZeroStreamPositionMultipleBlocks()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = test.FileSystem.GetFileClient(GetNewFileName());
+
+            long size = 2 * Constants.KB;
+            long position = 300;
+            byte[] data = GetRandomBuffer(size);
+            byte[] expectedData = new byte[size - position];
+            Array.Copy(data, position, expectedData, 0, size - position);
+
+            using Stream stream = new MemoryStream(data)
+            {
+                Position = position
+            };
+
+            DataLakeFileUploadOptions options = new DataLakeFileUploadOptions
+            {
+                TransferOptions = new StorageTransferOptions
+                {
+                    MaximumTransferSize = 512,
+                    InitialTransferSize = 512
+                }
+            };
+
+            // Act
+            await file.UploadAsync(
+                stream,
+                options);
+
+            // Assert
+            Response<FileDownloadInfo> downloadResponse = await file.ReadAsync();
+            var actual = new MemoryStream();
+            await downloadResponse.Value.Content.CopyToAsync(actual);
+            TestHelper.AssertSequenceEqual(expectedData, actual.ToArray());
+        }
+
+        [Test]
         [Ignore("Live tests will run out of memory")]
         public async Task UploadAsync_FileLarge()
         {
