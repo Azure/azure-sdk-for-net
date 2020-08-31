@@ -1,6 +1,6 @@
 # Release History
 
-## 12.6.0 (20202-08-31)
+## 12.6.0 (2020-08-31)
 - Fixed bug where BlobClient.Upload(), BlockBlobClient.Upload(), AppendBlobClient.AppendBlock(), and PageBlobClient.UploadPages() would deadlock if the content stream's position was not 0.
 - Fixed bug in BlobBaseClient.OpenRead() causing us to do more download called than necessary.
 - Fixed bug where PageBlobWriteStream would advance Position 2x the number of written bytes.
