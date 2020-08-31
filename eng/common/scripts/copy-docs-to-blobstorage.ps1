@@ -8,6 +8,7 @@ param (
   # valid options: PyPI, Nuget, NPM, Maven, C, CPP
   # used by CreateTags
   $releaseSha, # the SHA for the artifacts. DevOps: $(Release.Artifacts.<artifactAlias>.SourceVersion) or $(Build.SourceVersion)
+  [switch]$continueOnError = $true,
 
   $AzCopy,
   $DocLocation,
@@ -19,7 +20,7 @@ param (
   $RepoReplaceRegex
 )
 . (Join-Path $PSScriptRoot link-replacement.ps1)
-. (Join-Path $PSScriptRoot artiface-metadata-parsing.ps1)
+. (Join-Path $PSScriptRoot artifact-metadata-parsing.ps1)
 
 $Language = $Language.ToLower()
 $DocDefaultName = 'docs'
@@ -212,7 +213,7 @@ function Upload-Blobs
     # Use the step to replace master link to release tag link 
     $tag = ''
     if (!$PkgInfo) {
-        $tag = if ($PkgName -eq $DocDefaultName) {
+        $tag = if ($PkgName -ne $DocDefaultName) {
             "$($packageInfo.packageId)_$($packageInfo.PackageVersion)"
         } else {
             $packageInfo.PackageVersion

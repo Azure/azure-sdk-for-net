@@ -77,12 +77,9 @@ function GetAdjustedReadmeContent($pkgInfo, $lang){
       $foundTitle = $headerContentMatches.Matches[0]
       $fileContent = $pkgInfo.ReadmeContent -replace $foundTitle, "$foundTitle - Version $($pkgInfo.PackageVersion) `n"
       # Replace github master link with release tag.
-      $regex = new-object System.Text.RegularExpressions.Regex ($releaseReplaceRegex,
-          [System.Text.RegularExpressions.RegexOptions]"Singleline, IgnoreCase")
-      Write-Host "Print out the regex $regex."
       Write-Host "Print out the tag $($pkgInfo.Tag)."
       $ReplacementPattern = "`${1}$($pkgInfo.Tag)`$2"
-      $fileContent = $fileContent -replace $regex, $ReplacementPattern
+      $fileContent = $fileContent -replace $releaseReplaceRegex, $ReplacementPattern
     }
 
     $header = "---`ntitle: $foundTitle`nkeywords: Azure, $lang, SDK, API, $($pkgInfo.PackageId), $service`nauthor: maggiepint`nms.author: magpint`nms.date: $date`nms.topic: article`nms.prod: azure`nms.technology: azure`nms.devlang: $lang`nms.service: $service`n---`n"
