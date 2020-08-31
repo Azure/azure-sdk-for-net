@@ -8,6 +8,7 @@ In the sample below, we will use a Storage account and authenticate with an endp
 
 ```C# Snippet:TablesSample1CreateClient
 // Construct a new <see cref="TableServiceClient" /> using a <see cref="TableSharedKeyCredential" />.
+
 var serviceClient = new TableServiceClient(
     new Uri(storageUri),
     new TableSharedKeyCredential(accountName, storageAccountKey));
@@ -38,6 +39,7 @@ To create a table, invoke `CreateTable` with the table name.
 
 ```C# Snippet:TablesSample1CreateTable
 // Create a new table. The <see cref="TableItem" /> class stores properties of the created table.
+
 TableItem table = serviceClient.CreateTable(tableName);
 Console.WriteLine($"The created table's name is {table.TableName}.");
 ```
@@ -54,6 +56,7 @@ To delete the table, invoke `DeleteTable` with the table name.
 
 ```C# Snippet:TablesSample1DeleteTable
 // Deletes the table made previously.
+
 serviceClient.DeleteTable(tableName);
 ```
 
