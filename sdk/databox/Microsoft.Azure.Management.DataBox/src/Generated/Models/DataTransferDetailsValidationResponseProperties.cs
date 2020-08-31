@@ -14,29 +14,29 @@ namespace Microsoft.Azure.Management.DataBox.Models
     using System.Linq;
 
     /// <summary>
-    /// Properties of data destination details validation response.
+    /// Properties of data transfer details validation response.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("ValidateDataDestinationDetails")]
-    public partial class DataDestinationDetailsValidationResponseProperties : ValidationInputResponse
+    [Newtonsoft.Json.JsonObject("ValidateDataTransferDetails")]
+    public partial class DataTransferDetailsValidationResponseProperties : ValidationInputResponse
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// DataDestinationDetailsValidationResponseProperties class.
+        /// DataTransferDetailsValidationResponseProperties class.
         /// </summary>
-        public DataDestinationDetailsValidationResponseProperties()
+        public DataTransferDetailsValidationResponseProperties()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// DataDestinationDetailsValidationResponseProperties class.
+        /// DataTransferDetailsValidationResponseProperties class.
         /// </summary>
         /// <param name="error">Error code and message of validation
         /// response.</param>
-        /// <param name="status">Data destination details validation status.
+        /// <param name="status">Data transfer details validation status.
         /// Possible values include: 'Valid', 'Invalid', 'Skipped'</param>
-        public DataDestinationDetailsValidationResponseProperties(Error error = default(Error), ValidationStatus? status = default(ValidationStatus?))
+        public DataTransferDetailsValidationResponseProperties(CloudError error = default(CloudError), ValidationStatus? status = default(ValidationStatus?))
             : base(error)
         {
             Status = status;
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets data destination details validation status. Possible values
+        /// Gets data transfer details validation status. Possible values
         /// include: 'Valid', 'Invalid', 'Skipped'
         /// </summary>
         [JsonProperty(PropertyName = "status")]

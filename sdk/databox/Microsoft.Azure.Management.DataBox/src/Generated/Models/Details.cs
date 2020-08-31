@@ -10,30 +10,24 @@
 
 namespace Microsoft.Azure.Management.DataBox.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
-    /// <summary>
-    /// Top level error for the job.
-    /// </summary>
-    public partial class Error
+    public partial class Details
     {
         /// <summary>
-        /// Initializes a new instance of the Error class.
+        /// Initializes a new instance of the Details class.
         /// </summary>
-        public Error()
+        public Details()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Error class.
+        /// Initializes a new instance of the Details class.
         /// </summary>
-        /// <param name="code">Error code that can be used to programmatically
-        /// identify the error.</param>
-        /// <param name="message">Describes the error in detail and provides
-        /// debugging information.</param>
-        public Error(string code = default(string), string message = default(string))
+        public Details(string code, string message)
         {
             Code = code;
             Message = message;
@@ -46,18 +40,31 @@ namespace Microsoft.Azure.Management.DataBox.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets error code that can be used to programmatically identify the
-        /// error.
         /// </summary>
         [JsonProperty(PropertyName = "code")]
-        public string Code { get; private set; }
+        public string Code { get; set; }
 
         /// <summary>
-        /// Gets describes the error in detail and provides debugging
-        /// information.
         /// </summary>
         [JsonProperty(PropertyName = "message")]
-        public string Message { get; private set; }
+        public string Message { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Code == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Code");
+            }
+            if (Message == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Message");
+            }
+        }
     }
 }

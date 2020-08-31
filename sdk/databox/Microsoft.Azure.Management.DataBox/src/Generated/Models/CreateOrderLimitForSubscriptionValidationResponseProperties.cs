@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// response.</param>
         /// <param name="status">Create order limit validation status. Possible
         /// values include: 'Valid', 'Invalid', 'Skipped'</param>
-        public CreateOrderLimitForSubscriptionValidationResponseProperties(Error error = default(Error), ValidationStatus? status = default(ValidationStatus?))
+        public CreateOrderLimitForSubscriptionValidationResponseProperties(CloudError error = default(CloudError), ValidationStatus? status = default(ValidationStatus?))
             : base(error)
         {
             Status = status;

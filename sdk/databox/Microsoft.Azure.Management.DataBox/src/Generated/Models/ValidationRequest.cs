@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
     using System.Linq;
 
     /// <summary>
-    /// Input request for all pre job creation validation.
+    /// Minimum request requirement of any validation category.
     /// </summary>
     public partial class ValidationRequest
     {

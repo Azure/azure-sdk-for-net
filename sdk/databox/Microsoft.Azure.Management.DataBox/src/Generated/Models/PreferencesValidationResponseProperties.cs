@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// <param name="status">Validation status of requested data center and
         /// transport. Possible values include: 'Valid', 'Invalid',
         /// 'Skipped'</param>
-        public PreferencesValidationResponseProperties(Error error = default(Error), ValidationStatus? status = default(ValidationStatus?))
+        public PreferencesValidationResponseProperties(CloudError error = default(CloudError), ValidationStatus? status = default(ValidationStatus?))
             : base(error)
         {
             Status = status;
