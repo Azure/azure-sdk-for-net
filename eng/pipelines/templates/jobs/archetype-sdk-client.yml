@@ -47,6 +47,9 @@ jobs:
         inputs:
           artifactName: packages
           path: $(Build.ArtifactStagingDirectory)
+      - template: /eng/common/pipelines/templates/steps/verify-links.yml
+        parameters:
+          Directory: sdk/${{ parameters.ServiceDirectory }}
       - template: ../steps/archetype-sdk-docs.yml
         parameters:
           ServiceDirectory: ${{parameters.ServiceDirectory}}
