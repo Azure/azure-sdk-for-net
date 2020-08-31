@@ -4,9 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Azure.Core;
 using Azure.Core.Amqp;
 using Azure.Messaging.ServiceBus.Amqp;
+using Azure.Messaging.ServiceBus.Management;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -91,5 +91,115 @@ namespace Azure.Messaging.ServiceBus
                 LockTokenGuid = lockTokenGuid,
             };
         }
+
+        /// <summary>
+        /// Creates a new <see cref="QueueProperties"/> instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static QueueProperties QueueProperties(
+            string name,
+            TimeSpan lockDuration = default,
+            long maxSizeInMegabytes = default,
+            bool requiresDuplicateDetection = default,
+            bool requiresSession = default,
+            TimeSpan defaultMessageTimeToLive = default,
+            TimeSpan autoDeleteOnIdle = default,
+            bool deadLetteringOnMessageExpiration = default,
+            TimeSpan duplicateDetectionHistoryTimeWindow = default,
+            int maxDeliveryCount = default,
+            bool enableBatchedOperations = default,
+            EntityStatus status = default,
+            string forwardTo = default,
+            string forwardDeadLetteredMessagesTo = default,
+            string userMetadata = default) =>
+            new QueueProperties(name)
+            {
+                LockDuration = lockDuration,
+                MaxSizeInMegabytes = maxSizeInMegabytes,
+                RequiresDuplicateDetection = requiresDuplicateDetection,
+                RequiresSession = requiresSession,
+                DefaultMessageTimeToLive = defaultMessageTimeToLive,
+                AutoDeleteOnIdle = autoDeleteOnIdle,
+                DeadLetteringOnMessageExpiration = deadLetteringOnMessageExpiration,
+                DuplicateDetectionHistoryTimeWindow = duplicateDetectionHistoryTimeWindow,
+                MaxDeliveryCount = maxDeliveryCount,
+                EnableBatchedOperations = enableBatchedOperations,
+                AuthorizationRules = new AuthorizationRules(), // this cannot be created by the user
+                Status = status,
+                ForwardTo = forwardTo,
+                ForwardDeadLetteredMessagesTo = forwardDeadLetteredMessagesTo,
+                UserMetadata = userMetadata
+            };
+
+        /// <summary>
+        /// Creates a new <see cref="TopicProperties"/> instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static TopicProperties TopicProperties(
+            string name,
+            long maxSizeInMegabytes = default,
+            bool requiresDuplicateDetection = default,
+            TimeSpan defaultMessageTimeToLive = default,
+            TimeSpan autoDeleteOnIdle = default,
+            TimeSpan duplicateDetectionHistoryTimeWindow = default,
+            bool enableBatchedOperations = default,
+            EntityStatus status = default) =>
+            new TopicProperties(name)
+            {
+                MaxSizeInMegabytes = maxSizeInMegabytes,
+                RequiresDuplicateDetection = requiresDuplicateDetection,
+                DefaultMessageTimeToLive = defaultMessageTimeToLive,
+                AutoDeleteOnIdle = autoDeleteOnIdle,
+                DuplicateDetectionHistoryTimeWindow = duplicateDetectionHistoryTimeWindow,
+                EnableBatchedOperations = enableBatchedOperations,
+                AuthorizationRules = new AuthorizationRules(), // this cannot be created by the user
+                Status = status,
+            };
+
+        /// <summary>
+        /// Creates a new <see cref="SubscriptionProperties"/> instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SubscriptionProperties SubscriptionProperties(
+            string topicName,
+            string subscriptionName,
+            TimeSpan lockDuration = default,
+            bool requiresSession = default,
+            TimeSpan defaultMessageTimeToLive = default,
+            TimeSpan autoDeleteOnIdle = default,
+            bool deadLetteringOnMessageExpiration = default,
+            int maxDeliveryCount = default,
+            bool enableBatchedOperations = default,
+            EntityStatus status = default,
+            string forwardTo = default,
+            string forwardDeadLetteredMessagesTo = default,
+            string userMetadata = default) =>
+            new SubscriptionProperties(topicName, subscriptionName)
+            {
+                LockDuration = lockDuration,
+                RequiresSession = requiresSession,
+                DefaultMessageTimeToLive = defaultMessageTimeToLive,
+                AutoDeleteOnIdle = autoDeleteOnIdle,
+                DeadLetteringOnMessageExpiration = deadLetteringOnMessageExpiration,
+                MaxDeliveryCount = maxDeliveryCount,
+                EnableBatchedOperations = enableBatchedOperations,
+                Status = status,
+                ForwardTo = forwardTo,
+                ForwardDeadLetteredMessagesTo = forwardDeadLetteredMessagesTo,
+                UserMetadata = userMetadata
+            };
+
+        /// <summary>
+        /// Creates a new <see cref="RuleProperties"/> instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RuleProperties RuleProperties(
+            string name,
+            RuleFilter filter = default,
+            RuleAction action = default) =>
+            new RuleProperties(name, filter)
+            {
+                Action = action
+            };
     }
 }
