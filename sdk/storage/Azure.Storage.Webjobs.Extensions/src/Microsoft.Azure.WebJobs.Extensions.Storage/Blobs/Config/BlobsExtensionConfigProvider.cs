@@ -112,7 +112,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
 
             // Trigger already has the IStorageBlob. Whereas BindToInput defines: Attr-->Stream.
             //  Converter manager already has Stream-->Byte[],String,TextReader
-            context.AddConverter<BlobClient, Stream>(ConvertToStreamAsync);
+            context.AddConverter<BlobBaseClient, Stream>(ConvertToStreamAsync);
 
             // Blob type is a property of an existing blob.
             // $$$ did we lose CloudBlob. That's a base class for Cloud*Blob, but does not implement ICloudBlob?

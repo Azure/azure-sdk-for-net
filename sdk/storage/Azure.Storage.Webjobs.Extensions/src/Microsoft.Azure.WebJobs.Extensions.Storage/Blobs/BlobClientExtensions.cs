@@ -14,12 +14,6 @@ namespace Microsoft.Azure.WebJobs
 {
     internal static class BlobClientExtensions
     {
-        // TODO (kasobol-msft) dead code?
-        public static string GetAccountName(this BlobBaseClient client)
-        {
-            return client?.AccountName;
-        }
-
         public static async Task<string> DownloadTextAsync(this BlobBaseClient blobClient, CancellationToken cancellationToken = default)
         {
             using BlobDownloadInfo blobDownloadInfo = await blobClient.DownloadAsync(cancellationToken).ConfigureAwait(false);
