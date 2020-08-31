@@ -152,53 +152,53 @@ stages:
                           solution: '$(AzureSDKBuildToolsPath)/tools/symboltool/SymbolUploader.proj'
                           msbuildArguments: '/p:PackagesPath=$(Pipeline.Workspace)/staging /p:MSPublicSymbolsPAT=$(azuresdk-microsoftpublicsymbols-devops-pat) /p:MSSymbolsPAT=$(azuresdk-microsoft-devops-pat) /p:AzureSDKSymbolsPAT=$(azuresdk-azure-sdk-devops-pat)'
 
-          # - ${{if ne(artifact.options.skipPublishDocs, 'true')}}:
-          #   - deployment: PublicDocsMS
-          #     displayName: Publish to Docs.MS
-          #     condition: and(succeeded(), ne(variables['Skip.PublishDocs'], 'true'))
-          #     environment: githubio
-          #     dependsOn: PublishPackage
+          - ${{if ne(artifact.options.skipPublishDocs, 'true')}}:
+            - deployment: PublicDocsMS
+              displayName: Publish to Docs.MS
+              condition: and(succeeded(), ne(variables['Skip.PublishDocs'], 'true'))
+              environment: githubio
+              dependsOn: PublishPackage
 
-          #     variables:
-          #       CIConfigs: "{'targets':[{'path_to_config':'bundlepackages/azure-dotnet-preview.csv','Mode':'Preview'},{'path_to_config':'bundlepackages/azure-dotnet.csv','mode':'Latest'}]}"
+              variables:
+                CIConfigs: "{'targets':[{'path_to_config':'bundlepackages/azure-dotnet-preview.csv','Mode':'Preview'},{'path_to_config':'bundlepackages/azure-dotnet.csv','mode':'Latest'}]}"
 
-          #     pool:
-          #       vmImage: windows-2019
+              pool:
+                vmImage: windows-2019
 
-          #     strategy:
-          #       runOnce:
-          #         deploy:
-          #           steps:
-          #             - checkout: self
-          #             - template: /eng/pipelines/templates/steps/stage-artifacts.yml
-          #               parameters:
-          #                 SourceFolder: ${{parameters.ArtifactName}}-signed
-          #                 TargetFolder: ${{artifact.safeName}}
-          #                 FileFilter: ${{artifact.name}}.[0-9]*.[0-9]*.[0-9]*
-          #             - pwsh: |
-          #                 Get-ChildItem -Recurse $(Pipeline.Workspace)/${{artifact.safeName}}
-          #               workingDirectory: $(Pipeline.Workspace)
-          #               displayName: Output Visible Artifacts
-          #             - template: /eng/common/pipelines/templates/steps/get-pr-owners.yml
-          #               parameters:
-          #                 TargetVariable: "OwningGHUser"
-          #                 ServiceDirectory: ${{parameters.ServiceDirectory}}
-          #             - template: /eng/common/pipelines/templates/steps/docs-metadata-release.yml
-          #               parameters:
-          #                 ArtifactLocation: $(Pipeline.Workspace)/${{artifact.safeName}}
-          #                 PackageRepository: Nuget
-          #                 ReleaseSha: $(Build.SourceVersion)
-          #                 RepoId: Azure/azure-sdk-for-net
-          #                 WorkingDirectory: $(System.DefaultWorkingDirectory)
-          #                 TargetDocRepoOwner: ${{parameters.TargetDocRepoOwner}}
-          #                 TargetDocRepoName: ${{parameters.TargetDocRepoName}}
-          #                 PRBranchName: onboarding-${{artifact.name}}-$(Build.BuildId)
-          #                 ArtifactName: ${{artifact.name}}
-          #                 Language: '.net'
-          #                 DocRepoDestinationPath: 'api/overview/azure/' 
-          #                 GHReviewersVariable: 'OwningGHUser'
-          #                 CIConfigs: $(CIConfigs)
-          #                 OnboardingBranch: 'onboarding'
+              strategy:
+                runOnce:
+                  deploy:
+                    steps:
+                      - checkout: self
+                      - template: /eng/pipelines/templates/steps/stage-artifacts.yml
+                        parameters:
+                          SourceFolder: ${{parameters.ArtifactName}}-signed
+                          TargetFolder: ${{artifact.safeName}}
+                          FileFilter: ${{artifact.name}}.[0-9]*.[0-9]*.[0-9]*
+                      - pwsh: |
+                          Get-ChildItem -Recurse $(Pipeline.Workspace)/${{artifact.safeName}}
+                        workingDirectory: $(Pipeline.Workspace)
+                        displayName: Output Visible Artifacts
+                      - template: /eng/common/pipelines/templates/steps/get-pr-owners.yml
+                        parameters:
+                          TargetVariable: "OwningGHUser"
+                          ServiceDirectory: ${{parameters.ServiceDirectory}}
+                      - template: /eng/common/pipelines/templates/steps/docs-metadata-release.yml
+                        parameters:
+                          ArtifactLocation: $(Pipeline.Workspace)/${{artifact.safeName}}
+                          PackageRepository: Nuget
+                          ReleaseSha: $(Build.SourceVersion)
+                          RepoId: Azure/azure-sdk-for-net
+                          WorkingDirectory: $(System.DefaultWorkingDirectory)
+                          TargetDocRepoOwner: ${{parameters.TargetDocRepoOwner}}
+                          TargetDocRepoName: ${{parameters.TargetDocRepoName}}
+                          PRBranchName: onboarding-${{artifact.name}}-$(Build.BuildId)
+                          ArtifactName: ${{artifact.name}}
+                          Language: '.net'
+                          DocRepoDestinationPath: 'api/overview/azure/' 
+                          GHReviewersVariable: 'OwningGHUser'
+                          CIConfigs: $(CIConfigs)
+                          OnboardingBranch: 'onboarding'
 
           - ${{if ne(artifact.options.skipPublishDocs, 'true')}}:
             - deployment: PublishDocs

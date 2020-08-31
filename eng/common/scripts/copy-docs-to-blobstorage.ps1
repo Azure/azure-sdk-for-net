@@ -11,6 +11,7 @@ param (
   $RepoReplaceRegex
 )
 . (Join-Path $PSScriptRoot link-replacement.ps1)
+. (Join-Path $PSScriptRoot artiface-metadata-parsing.ps1)
 
 $Language = $Language.ToLower()
 
@@ -188,8 +189,7 @@ function Upload-Blobs
     Param (
         [Parameter(Mandatory=$true)] [String]$DocDir,
         [Parameter(Mandatory=$true)] [String]$PkgName,
-        [Parameter(Mandatory=$true)] [String]$DocVersion,
-        [Parameter(Mandatory=$true)] [bool]$UseVersionOnly
+        [Parameter(Mandatory=$true)] [String]$DocVersion
     )
     #eg : $BlobName = "https://azuresdkdocs.blob.core.windows.net"
     $DocDest = "$($BlobName)/`$web/$($Language)"
@@ -201,11 +201,7 @@ function Upload-Blobs
     Write-Host "Final Dest $($DocDest)/$($PkgName)/$($DocVersion)"
 
     # Use the step to replace master link to release tag link 
-    $tag = if ($UseVersionOnly) {
-        $DocVersion
-    } else {
-        "$($PkgName)" + "_" + "$($DocVersion)"
-    }
+    $tag = GenerateReleaseTag($PkgName, $DocVersion)
     Write-Host "Replacing all readme master links with release tag $tag"
     ReplaceLink -scanFolder $DocDir -fileSuffix ".html" -replacement $tag -customRegex $RepoReplaceRegex
    
@@ -367,5 +363,5 @@ if ($Language -eq "c")
 if ($Language -eq "cpp")
 {
     $packageInfo = (Get-Content (Join-Path $DocLocation 'package-info.json') | ConvertFrom-Json)
-    Upload-Blobs -DocDir $DocLocation -PkgName $packageInfo.name -DocVersion $packageInfo.version -UseVersionOnly $true
+    Upload-Blobs -DocDir $DocLocation -PkgName $packageInfo.name -DocVersion $packageInfo.version
 }

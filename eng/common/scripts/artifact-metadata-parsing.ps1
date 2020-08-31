@@ -8,6 +8,7 @@ function CreateReleases($pkgList, $releaseApiUrl, $releaseSha) {
   foreach ($pkgInfo in $pkgList) {
     Write-Host "Creating release $($pkgInfo.Tag)"
     echo "##vso[task.setvariable variable=ReleaseTag;isOutput=true]$($pkgInfo.Tag)"
+
     $releaseNotes = ""
     if ($pkgInfo.ReleaseNotes -ne $null) {
       $releaseNotes = $pkgInfo.ReleaseNotes
@@ -437,13 +438,8 @@ function VerifyPackages($pkgRepository, $artifactLocation, $workingDirectory, $a
       if ($parsedPackage -eq $null) {
         continue
       }
+      $tag = GenerateReleaseTag($parsedPackage.packageId, $parsedPackage.PackageVersion)
 
-      $tag = if ($parsedPackage.packageId) {
-        "$($parsedPackage.packageId)_$($parsedPackage.PackageVersion)"
-      } else {
-        $parsedPackage.PackageVersion
-      }
-      echo "##vso[task.setvariable variable=ReleaseTag;isOutput=true]$tag"
       Write-Host "##vso[task.setvariable variable=ReleaseTag;isOutput=true]$tag"
       Write-Host "This works: $ReleaseTag"
   
@@ -500,13 +496,14 @@ function CheckArtifactShaAgainstTagsList($priorExistingTagList, $releaseSha, $ap
 
   foreach ($tag in $priorExistingTagList) {
     $tagSha = (Invoke-RestMethod -Method "Get" -Uri "$apiUrl/git/refs/tags/$tag" -Headers $headers -MaximumRetryCount 3 -RetryIntervalSec 10)."object".sha
-    echo "##vso[task.setvariable variable=ReleaseTag;isOutput=true]$tag"
+
     if ($tagSha -eq $releaseSha) {
       Write-Host "This package has already been released. The existing tag commit SHA $releaseSha matches the artifact SHA being processed. Skipping release step for this tag."
     }
     else {
       Write-Host "The artifact SHA $releaseSha does not match that of the currently existing tag."
       Write-Host "Tag with issues is $tag with commit SHA $tagSha"
+
       $unmatchedTags += $tag
     }
   }
@@ -515,4 +512,15 @@ function CheckArtifactShaAgainstTagsList($priorExistingTagList, $releaseSha, $ap
     Write-Host "Tags already existing with different SHA versions. Exiting."
     #exit(1)
   }
+}
+
+# given the package id and package version, generate the release tag
+
+function GenerateReleaseTag($packageId, $packageVersion) {
+  $tag = if ($packageId) {
+    "$packageId_$packageVersion"
+  } else {
+    $packageVersion
+  }
+  return $tag
 }
