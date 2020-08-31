@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.2/sentiment?showStats=false\u0026opinionMining=true",
+      "RequestUri": "https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.2/sentiment?showStats=false\u0026opinionMining=true\u0026stringIndexType=Utf16CodeUnit",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": [
@@ -11,9 +11,9 @@
         "Content-Length": "197",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-ff5b460cc3c0dd42b45a8ea59b4a4bed-5361ea7b807c4343-00",
+        "traceparent": "00-f4483d7a466f7a468433352aa55bb3f3-3515465e267dc64a-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200828.1",
+          "azsdk-net-AI.TextAnalytics/5.1.0-dev.20200831.1",
           "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "4bb052b32c66958101e8bfb2d70a96bf",
@@ -35,14 +35,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "d97584a1-cd57-4704-9602-f2d4a582c29b",
+        "apim-request-id": "fc1dd4fe-9fa9-4081-9672-ad7bbb169178",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
-        "Date": "Fri, 28 Aug 2020 21:32:54 GMT",
+        "Date": "Mon, 31 Aug 2020 18:39:03 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "95"
+        "x-envoy-upstream-service-time": "82"
       },
       "ResponseBody": {
         "documents": [

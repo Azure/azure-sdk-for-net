@@ -53,8 +53,13 @@ namespace Azure.AI.TextAnalytics.Tests
                 Assert.IsNotNull(entity.Language);
                 Assert.IsNotNull(entity.Url);
                 Assert.IsNotNull(entity.Matches);
-                Assert.IsNotNull(entity.Matches.First().ConfidenceScore);
-                Assert.IsNotNull(entity.Matches.First().Text);
+
+                LinkedEntityMatch match = entity.Matches.First();
+                Assert.IsNotNull(match.ConfidenceScore);
+                Assert.IsNotNull(match.Text);
+                Assert.IsNotNull(match.Offset);
+                Assert.IsNotNull(match.Length);
+                Assert.Greater(match.Length, 0);
             }
         }
 

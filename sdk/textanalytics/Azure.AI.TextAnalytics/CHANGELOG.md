@@ -6,6 +6,7 @@
 - It defaults to the latest supported API version, which currently is `3.1-preview.2`.
 - `ErrorCode` value returned from the service is now surfaced in `RequestFailedException`.
 - Support added for Opinion Mining. This feature is available in the Text Analytics service v3.1-preview.1 and above.
+- Added `Offset` and `Length` properties for `CategorizedEntity`, `SentenceSentiment`, and `LinkedEntityMatch`. The default encoding is UTF16 code units. For additional information see https://aka.ms/text-analytics-offsets
 - `TextAnalyticsError` and `TextAnalyticsWarning` now are marked as immutable.
 
 ## 5.0.0 (2020-07-27)
