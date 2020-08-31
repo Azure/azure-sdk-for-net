@@ -53,7 +53,10 @@ function GetAdjustedReadmeContent($pkgInfo, $lang){
 
     # the namespace is not expected to be present for js.
     $pkgId = $pkgInfo.PackageId.Replace("@azure/", "")
-
+    Write-Host "$pkgId"
+    Write-Host $pkgInfo.PackageId
+    Write-Host $pkgInfo.PackageVersion
+    Write-Host $pkgInfo.Tag
     try {
       $metadata = GetMetaData -lang $lang
 

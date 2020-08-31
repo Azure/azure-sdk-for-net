@@ -7,7 +7,6 @@ $SDIST_PACKAGE_REGEX = "^(?<package>.*)\-(?<versionstring>$([AzureEngSemanticVer
 function CreateReleases($pkgList, $releaseApiUrl, $releaseSha) {
   foreach ($pkgInfo in $pkgList) {
     Write-Host "Creating release $($pkgInfo.Tag)"
-    echo "##vso[task.setvariable variable=ReleaseTag;isOutput=true]$($pkgInfo.Tag)"
 
     $releaseNotes = ""
     if ($pkgInfo.ReleaseNotes -ne $null) {
@@ -438,10 +437,7 @@ function VerifyPackages($pkgRepository, $artifactLocation, $workingDirectory, $a
       if ($parsedPackage -eq $null) {
         continue
       }
-      $tag = GenerateReleaseTag($parsedPackage.packageId, $parsedPackage.PackageVersion)
-
-      Write-Host "##vso[task.setvariable variable=ReleaseTag;isOutput=true]$tag"
-      Write-Host "This works: $ReleaseTag"
+      $tag = GenerateReleaseTag($parsedPackage)
   
       if ($parsedPackage.Deployable -ne $True -and !$continueOnError) {
         Write-Host "Package $($parsedPackage.PackageId) is marked with version $($parsedPackage.PackageVersion), the version $($parsedPackage.PackageVersion) has already been deployed to the target repository."
@@ -516,11 +512,11 @@ function CheckArtifactShaAgainstTagsList($priorExistingTagList, $releaseSha, $ap
 
 # given the package id and package version, generate the release tag
 
-function GenerateReleaseTag($packageId, $packageVersion) {
-  $tag = if ($packageId) {
-    "$packageId_$packageVersion"
+function GenerateReleaseTag($packageInfo) {
+  $tag = = if ($parsedPackage.packageId) {
+    "$($parsedPackage.packageId)_$($parsedPackage.PackageVersion)"
   } else {
-    $packageVersion
+    $parsedPackage.PackageVersion
   }
   return $tag
 }

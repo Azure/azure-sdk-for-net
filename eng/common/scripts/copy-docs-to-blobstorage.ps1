@@ -199,7 +199,7 @@ function Upload-Blobs
         [Parameter(Mandatory=$true)] [String]$DocDir,
         [Parameter(Mandatory=$true)] [String]$PkgName,
         [Parameter(Mandatory=$true)] [String]$DocVersion,
-        [Parameter(Mandatory=$true)] [Object[]]$PkgInfo
+        [Parameter(Mandatory=$false)] [Object[]]$PkgInfo
     )
     #eg : $BlobName = "https://azuresdkdocs.blob.core.windows.net"
     $DocDest = "$($BlobName)/`$web/$($Language)"
@@ -214,9 +214,9 @@ function Upload-Blobs
     $tag = ''
     if (!$PkgInfo) {
         $tag = if ($PkgName -ne $DocDefaultName) {
-            "$($packageInfo.packageId)_$($packageInfo.PackageVersion)"
+            "$($PkgName)_$($DocVersion)"
         } else {
-            $packageInfo.PackageVersion
+            $DocVersion
         }
     } else {
         Write-Host "The package name retieved from artifacts: $($PkgInfo[0].PackageId)."
@@ -244,7 +244,7 @@ function Upload-Blobs
 }
 # VERIFY PACKAGES
 $apiUrl = "https://api.github.com/repos/$repoId"
-$pkgList = VerifyPackages -pkgRepository $packageRepository -artifactLocation $artifactLocation -workingDirectory $workingDirectory -apiUrl $apiUrl -releaseSha $releaseSha -continueOnError $continueOnError
+#$pkgList = VerifyPackages -pkgRepository $packageRepository -artifactLocation $artifactLocation -workingDirectory $workingDirectory -apiUrl $apiUrl -releaseSha $releaseSha -continueOnError $continueOnError
 if ($Language -eq "javascript")
 {
     $PublishedDocs = Get-ChildItem "$($DocLocation)/documentation" | Where-Object -FilterScript {$_.Name.EndsWith(".zip")}
@@ -268,7 +268,7 @@ if ($Language -eq "javascript")
 
 if ($Language -eq "dotnet")
 {
-    $PublishedPkgs = Get-ChildItem "$($DocLocation)/packages" | Where-Object -FilterScript {$_.Name.EndsWith(".nupkg") -and -not $_.Name.EndsWith(".symbols.nupkg")}
+    $PublishedPkgs = Get-ChildItem "$($DocLocation)" | Where-Object -FilterScript {$_.Name.EndsWith(".nupkg") -and -not $_.Name.EndsWith(".symbols.nupkg")}
     $PublishedDocs = Get-ChildItem "$($DocLocation)" | Where-Object -FilterScript {$_.Name.StartsWith("Docs.")}
 
     foreach ($Item in $PublishedDocs) {
@@ -283,7 +283,7 @@ if ($Language -eq "dotnet")
             Write-Host "DocDir $($Item)"
             Write-Host "PkgName $($PkgName)"
             Write-Host "DocVersion $($DocVersion)"
-            Upload-Blobs -DocDir "$($Item)" -PkgName $PkgName -DocVersion $DocVersion -PkgInfo $pkgList
+            Upload-Blobs -DocDir "$($Item)" -PkgName $PkgName -DocVersion $DocVersion #-PkgInfo $pkgList
         }
         else
         {
