@@ -74,7 +74,7 @@ namespace Azure.Core.Tests
         [Test]
         public void FormatsUnformattableMessageAsKeyValues()
         {
-            var eventTuples = ExpectMultipleEvents(() => TestSource.Log.LogUnformattableMessage("a message"),2);
+            var eventTuples = ExpectMultipleEvents(() => TestSource.Log.LogUnformattableMessage("a message"), 2);
             (EventWrittenEventArgs e, string message) = eventTuples[0];
             Assert.AreEqual("EventMessageFailedFormatting" + Environment.NewLine +
                             "eventSourceName = Test-source" + Environment.NewLine +
