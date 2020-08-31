@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core.Diagnostics;
 using System;
 using System.Diagnostics.Tracing;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using Azure.Core.Diagnostics;
 
 namespace Azure.Core.Shared
 {
