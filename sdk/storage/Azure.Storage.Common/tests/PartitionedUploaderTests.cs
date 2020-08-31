@@ -84,7 +84,7 @@ namespace Azure.Storage.Tests
         private Mock<PartitionedUploader<object, object>.CommitPartitionedUploadInternal> GetMockCommitPartitionedUploadInternal()
         {
             var mock = new Mock<PartitionedUploader<object, object>.CommitPartitionedUploadInternal>(MockBehavior.Strict);
-            mock.Setup(del => del(It.IsNotNull<List<(long Offset, long Size)>>(),It.IsAny<long>(), s_objectArgs, IsAsync, s_cancellation))
+            mock.Setup(del => del(It.IsNotNull<List<(long Offset, long Size)>>(), s_objectArgs, IsAsync, s_cancellation))
                 .Returns(Task.FromResult(new Mock<Response<object>>(MockBehavior.Loose).Object));
 
             return mock;

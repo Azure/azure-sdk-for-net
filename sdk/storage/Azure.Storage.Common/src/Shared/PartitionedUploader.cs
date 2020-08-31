@@ -159,7 +159,7 @@ namespace Azure.Storage
 
             Errors.VerifyStreamPosition(content, nameof(content));
 
-            if (content.Position > 0)
+            if (content.CanSeek && content.Position > 0)
             {
                 content = WindowStream.GetWindow(content, content.Length - content.Position, content.Position);
             }
