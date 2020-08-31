@@ -45,15 +45,5 @@ namespace Microsoft.Azure.WebJobs
             using StreamReader streamReader = new StreamReader(stream);
             return streamReader.ReadToEnd();
         }
-
-        public static async Task UploadEmptyPageAsync(this PageBlobClient blob)
-        {
-            if (blob == null)
-            {
-                throw new ArgumentNullException("blob");
-            }
-
-            await blob.UploadPagesAsync(new MemoryStream(), 0);
-        }
     }
 }

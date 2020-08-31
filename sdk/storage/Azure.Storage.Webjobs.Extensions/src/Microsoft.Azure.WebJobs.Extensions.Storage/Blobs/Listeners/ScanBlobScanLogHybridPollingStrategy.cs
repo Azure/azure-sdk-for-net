@@ -276,7 +276,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             }
 
             Logger.PollBlobContainer(_logger, container.Name, containerScanInfo.LastSweepCycleLatestModified, clientRequestId,
-                newBlobs.Count, sw.ElapsedMilliseconds, page.ContinuationToken != null);
+                newBlobs.Count, sw.ElapsedMilliseconds, !string.IsNullOrWhiteSpace(page.ContinuationToken));
 
             // record continuation token for next chunk retrieval
             containerScanInfo.ContinuationToken = page.ContinuationToken;

@@ -34,11 +34,6 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
             return instance;
         }
 
-        public static async Task UploadEmptyPageAsync(this PageBlobClient pageBlobClient, CancellationToken cancellationToken = default)
-        {
-            await pageBlobClient.UploadPagesAsync(new MemoryStream(), 0, cancellationToken: cancellationToken).ConfigureAwait(false);
-        }
-
         public static async Task UploadTextAsync(this BlockBlobClient blockBlobClient, string text, CancellationToken cancellationToken = default)
         {
             using Stream stream = new MemoryStream(Encoding.UTF8.GetBytes(text));
@@ -48,6 +43,7 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
         public static async Task UploadTextAsync(this AppendBlobClient appendBlobClient, string text, CancellationToken cancellationToken = default)
         {
             using Stream stream = new MemoryStream(Encoding.UTF8.GetBytes(text));
+            await appendBlobClient.CreateIfNotExistsAsync(cancellationToken: cancellationToken);
             await appendBlobClient.AppendBlockAsync(stream, cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 

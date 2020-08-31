@@ -126,14 +126,13 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Triggers
             return contract;
         }
 
-        private IReadOnlyDictionary<string, object> CreateBindingData(BlobBaseClient value)
+        private IReadOnlyDictionary<string, object> CreateBindingData(BlobBaseClient value, BlobProperties blobProperties)
         {
             var bindingData = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
             bindingData.Add("BlobTrigger", value.GetBlobPath());
             bindingData.Add("Uri", value.Uri);
-            // TODO (kasobol-msft) how do we handle that ?
-            //bindingData.Add("Properties", value.Properties);
-            //bindingData.Add("Metadata", value.Metadata);
+            bindingData.Add("Properties", blobProperties);
+            bindingData.Add("Metadata", blobProperties.Metadata);
 
             IReadOnlyDictionary<string, object> bindingDataFromPath = _path.CreateBindingData(value.ToBlobPath());
 
@@ -164,7 +163,10 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Triggers
                 throw new InvalidOperationException("Unable to convert trigger to IStorageBlob.");
             }
 
-            IReadOnlyDictionary<string, object> bindingData = CreateBindingData(conversionResult.Result);
+            BlobBaseClient blobClient = conversionResult.Result;
+            // TODO (kasobol-msft) can this be optimized ?
+            BlobProperties blobProperties = await blobClient.FetchPropertiesOrNullIfNotExistAsync(cancellationToken: context.CancellationToken).ConfigureAwait(false);
+            IReadOnlyDictionary<string, object> bindingData = CreateBindingData(blobClient, blobProperties);
 
             return new TriggerData(bindingData);
         }

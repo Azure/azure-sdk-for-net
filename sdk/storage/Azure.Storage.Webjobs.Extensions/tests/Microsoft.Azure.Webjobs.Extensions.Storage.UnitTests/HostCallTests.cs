@@ -235,7 +235,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             var container = client.GetBlobContainerClient(ContainerName);
             var blob = container.GetPageBlobClient(BlobName);
             await container.CreateIfNotExistsAsync();
-            await blob.UploadEmptyPageAsync();
+            await blob.CreateIfNotExistsAsync(512);
 
             // TODO: Remove argument once host.Call supports more flexibility.
             IDictionary<string, object> arguments = new Dictionary<string, object>
@@ -324,7 +324,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             var container = client.GetBlobContainerClient(ContainerName);
             var blob = container.GetPageBlobClient(BlobName);
             await container.CreateIfNotExistsAsync();
-            await blob.UploadEmptyPageAsync();
+            await blob.CreateIfNotExistsAsync(512);
 
             // TODO: Remove argument once host.Call supports more flexibility.
             IDictionary<string, object> arguments = new Dictionary<string, object>

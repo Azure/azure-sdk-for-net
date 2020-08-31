@@ -32,11 +32,13 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
         private readonly TestLoggerProvider _loggerProvider = new TestLoggerProvider();
         private readonly ILogger<BlobListener> _logger;
 
-        private Mock<BlobServiceClient> blobClientMock = new Mock<BlobServiceClient>(new Uri("https://fake.com/fakecontainer"), null);
-        private Mock<BlobContainerClient> blobContainerMock = new Mock<BlobContainerClient>(new Uri("https://fake.com/fakecontainer"));
-        private Mock<BlobContainerClient> secondBlobContainerMock = new Mock<BlobContainerClient>(new Uri("https://fake.com/fakecontainer2"));
+        private const string ContainerName = "fakecontainer";
+        private const string SecondContainerName = "fakecontainer2";
+        private Mock<BlobServiceClient> blobClientMock = new Mock<BlobServiceClient>(new Uri("https://fakeaccount.blob.core.windows.net/"), null);
+        private Mock<BlobContainerClient> blobContainerMock = new Mock<BlobContainerClient>(new Uri("https://fakeaccount.blob.core.windows.net/fakecontainer"), null);
+        private Mock<BlobContainerClient> secondBlobContainerMock = new Mock<BlobContainerClient>(new Uri("https://fakeaccount.blob.core.windows.net/fakecontainer2"), null);
+        private Mock<BlobContainerClient> logsContainerMock = new Mock<BlobContainerClient>(new Uri("https://fakeaccount.blob.core.windows.net/$logs"), null);
         private BlobServiceProperties serviceProperties = new BlobServiceProperties();
-        // private StorageCredentials storageCredentials = new StorageCredentials("fakeaccount", "key1"); // TODO (kasobol-msft) how to?
         private const string AccountName = "fakeaccount";
         private List<BlobItem> blobItems = new List<BlobItem>();
         private List<BlobItem> secondBlobItems = new List<BlobItem>();
@@ -46,55 +48,38 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             var loggerFactory = new LoggerFactory();
             loggerFactory.AddProvider(_loggerProvider);
             _logger = loggerFactory.CreateLogger<BlobListener>();
-
-            blobContainerMock.Object.SetInternalProperty("ServiceClient", blobClientMock.Object);
-            secondBlobContainerMock.Object.SetInternalProperty("ServiceClient", blobClientMock.Object);
+            blobClientMock.Setup(x => x.Uri).Returns(new Uri("https://fakeaccount.blob.core.windows.net/"));
+            blobClientMock.Setup(x => x.GetBlobContainerClient("fakecontainer")).Returns(blobContainerMock.Object);
+            blobClientMock.Setup(x => x.GetBlobContainerClient("fakecontainer2")).Returns(secondBlobContainerMock.Object);
+            blobClientMock.Setup(x => x.GetBlobContainerClient("$logs")).Returns(logsContainerMock.Object);
+            blobContainerMock.Setup(x => x.Uri).Returns(new Uri("https://fakeaccount.blob.core.windows.net/fakecontainer"));
+            blobContainerMock.Setup(x => x.Name).Returns(ContainerName);
+            blobContainerMock.Setup(x => x.AccountName).Returns(AccountName);
+            secondBlobContainerMock.Setup(x => x.Uri).Returns(new Uri("https://fakeaccount.blob.core.windows.net/fakecontainer2"));
+            secondBlobContainerMock.Setup(x => x.Name).Returns(SecondContainerName);
+            secondBlobContainerMock.Setup(x => x.AccountName).Returns(AccountName);
             blobClientMock.Setup(x => x.GetPropertiesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(Response.FromValue(serviceProperties, null));
-            // blobClientMock.Object.SetInternalProperty("Credentials", storageCredentials); TODO (kasobol-msft) wtf ?
-            /* blobContainerMock.Setup(x => x.ListBlobsSegmentedAsync(It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<BlobListingDetails>(), It.IsAny<int?>(), It.IsAny<BlobContinuationToken>(), It.IsAny<BlobRequestOptions>(), It.IsAny<OperationContext>(), It.IsAny<CancellationToken>()))
-                .Returns(
-                    (string prefix, bool useFlatBlobListing, BlobListingDetails blobListingDetails, int? maxResults, BlobContinuationToken currentToken, BlobRequestOptions options, OperationContext operationContext, CancellationToken cancellationToken) =>
-                    {
-                        int beginIndex = currentToken != null ? int.Parse(currentToken.NextMarker) : 0;
-                        int count = blobItems.Count - beginIndex;
-                        BlobContinuationToken continuationToken = null;
-                        if (maxResults.HasValue && maxResults.Value < count)
-                        {
-                            count = maxResults.Value;
-                            continuationToken = new BlobContinuationToken()
-                            {
-                                NextMarker = (beginIndex + count).ToString()
-                            };
-                        }
-                        return Task.FromResult(new BlobResultSegment(blobItems.GetRange(beginIndex, count), continuationToken));
-                    }
-                );
-            secondBlobContainerMock.Setup(x => x.ListBlobsSegmentedAsync(It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<BlobListingDetails>(), It.IsAny<int?>(), It.IsAny<BlobContinuationToken>(), It.IsAny<BlobRequestOptions>(), It.IsAny<OperationContext>(), It.IsAny<CancellationToken>()))
-                .Returns(
-                    (string prefix, bool useFlatBlobListing, BlobListingDetails blobListingDetails, int? maxResults, BlobContinuationToken currentToken, BlobRequestOptions options, OperationContext operationContext, CancellationToken cancellationToken) =>
-                    {
-                        int beginIndex = currentToken != null ? int.Parse(currentToken.NextMarker) : 0;
-                        int count = secondBlobItems.Count - beginIndex;
-                        BlobContinuationToken continuationToken = null;
-                        if (maxResults.HasValue && maxResults.Value < count)
-                        {
-                            count = maxResults.Value;
-                            continuationToken = new BlobContinuationToken()
-                            {
-                                NextMarker = (beginIndex + count).ToString()
-                            };
-                        }
-                        return Task.FromResult(new BlobResultSegment(secondBlobItems.GetRange(beginIndex, count), continuationToken));
-                    }
-                ); */ // TODO (kasobol-msft) how to?
+            blobContainerMock.Setup(x => x.GetBlobsAsync(It.IsAny<BlobTraits>(), It.IsAny<BlobStates>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+                .Returns(() =>
+                {
+                    return new TestAsyncPageable<BlobItem>(blobItems);
+                });
+            secondBlobContainerMock.Setup(x => x.GetBlobsAsync(It.IsAny<BlobTraits>(), It.IsAny<BlobStates>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+                 .Returns(() =>
+                 {
+                     return new TestAsyncPageable<BlobItem>(secondBlobItems);
+                 });
+            logsContainerMock.Setup(x => x.GetBlobsAsync(It.IsAny<BlobTraits>(), It.IsAny<BlobStates>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+                 .Returns(() =>
+                 {
+                     return new TestAsyncPageable<BlobItem>(new List<BlobItem>());
+                 });
         }
 
         [Fact]
-        public void ScanBlobScanLogHybridPollingStrategyTestBlobListener()
+         public void ScanBlobScanLogHybridPollingStrategyTestBlobListener()
         {
-            string containerName = Path.GetRandomFileName();
             var container = blobContainerMock.Object;
-            container.SetInternalProperty("Name", containerName);
             IBlobListenerStrategy product = new ScanBlobScanLogHybridPollingStrategy(new TestBlobScanInfoManager(), _exceptionHandler, _logger);
             LambdaBlobTriggerExecutor executor = new LambdaBlobTriggerExecutor();
             product.Register(blobClientMock.Object, container, executor);
@@ -102,7 +87,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
 
             RunExecuterWithExpectedBlobs(new List<string>(), product, executor);
 
-            string expectedBlobName = CreateBlobAndUploadToContainer(container, blobItems);
+            string expectedBlobName = CreateBlobAndUploadToContainer(blobContainerMock, blobItems);
 
             RunExecuterWithExpectedBlobs(new List<string>() { expectedBlobName }, product, executor);
 
@@ -117,7 +102,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             var initLog = logMessages.Single(m => m.EventId.Name == "InitializedScanInfo");
             Assert.Equal(Microsoft.Extensions.Logging.LogLevel.Debug, initLog.Level);
             Assert.Equal(3, initLog.State.Count());
-            Assert.Equal(containerName, initLog.GetStateValue<string>("containerName"));
+            Assert.Equal(ContainerName, initLog.GetStateValue<string>("containerName"));
             Assert.True(!string.IsNullOrWhiteSpace(initLog.GetStateValue<string>("latestScanInfo")));
             Assert.True(!string.IsNullOrWhiteSpace(initLog.GetStateValue<string>("{OriginalFormat}")));
 
@@ -129,7 +114,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             {
                 Assert.Equal(Microsoft.Extensions.Logging.LogLevel.Debug, pollingLog.Level);
                 Assert.Equal(7, pollingLog.State.Count());
-                Assert.Equal(containerName, pollingLog.GetStateValue<string>("containerName"));
+                Assert.Equal(ContainerName, pollingLog.GetStateValue<string>("containerName"));
                 Assert.Equal(expectedBlobCount, pollingLog.GetStateValue<int>("blobCount"));
                 Assert.True(!string.IsNullOrWhiteSpace(pollingLog.GetStateValue<string>("pollMinimumTime")));
                 Assert.True(!string.IsNullOrWhiteSpace(pollingLog.GetStateValue<string>("clientRequestId")));
@@ -147,9 +132,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
         public void TestBlobListenerWithContainerBiggerThanThreshold()
         {
             int testScanBlobLimitPerPoll = 1;
-            string containerName = Path.GetRandomFileName();
             var container = blobContainerMock.Object;
-            container.SetInternalProperty("Name", containerName);
             IBlobListenerStrategy product = new ScanBlobScanLogHybridPollingStrategy(new TestBlobScanInfoManager(), _exceptionHandler, NullLogger<BlobListener>.Instance);
             LambdaBlobTriggerExecutor executor = new LambdaBlobTriggerExecutor();
             typeof(ScanBlobScanLogHybridPollingStrategy)
@@ -163,7 +146,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             List<string> expectedNames = new List<string>();
             for (int i = 0; i < 5; i++)
             {
-                expectedNames.Add(CreateBlobAndUploadToContainer(container, blobItems));
+                expectedNames.Add(CreateBlobAndUploadToContainer(blobContainerMock, blobItems));
             }
 
             RunExecuteWithMultiPollingInterval(expectedNames, product, executor, testScanBlobLimitPerPoll);
@@ -176,12 +159,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
         public void TestBlobListenerWithMultipleContainers()
         {
             int testScanBlobLimitPerPoll = 6, containerCount = 2;
-            string firstContainerName = Path.GetRandomFileName();
-            string secondContainerName = Path.GetRandomFileName();
             var firstContainer = blobContainerMock.Object;
-            firstContainer.SetInternalProperty("Name", firstContainerName);
             var secondContainer = secondBlobContainerMock.Object;
-            secondContainer.SetInternalProperty("Name", secondContainerName);
             IBlobListenerStrategy product = new ScanBlobScanLogHybridPollingStrategy(new TestBlobScanInfoManager(), _exceptionHandler, NullLogger<BlobListener>.Instance);
             LambdaBlobTriggerExecutor executor = new LambdaBlobTriggerExecutor();
             typeof(ScanBlobScanLogHybridPollingStrategy)
@@ -197,7 +176,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             List<string> firstContainerExpectedNames = new List<string>();
             for (int i = 0; i < 5; i++)
             {
-                firstContainerExpectedNames.Add(CreateBlobAndUploadToContainer(firstContainer, blobItems));
+                firstContainerExpectedNames.Add(CreateBlobAndUploadToContainer(blobContainerMock, blobItems));
             }
 
             RunExecuteWithMultiPollingInterval(firstContainerExpectedNames, product, executor, testScanBlobLimitPerPoll / containerCount);
@@ -207,7 +186,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             List<string> secondContainerExpectedNames = new List<string>();
             for (int i = 0; i < 2; i++)
             {
-                secondContainerExpectedNames.Add(CreateBlobAndUploadToContainer(secondContainer, secondBlobItems));
+                secondContainerExpectedNames.Add(CreateBlobAndUploadToContainer(secondBlobContainerMock, secondBlobItems));
             }
 
             RunExecuteWithMultiPollingInterval(secondContainerExpectedNames, product, executor, testScanBlobLimitPerPoll / containerCount);
@@ -220,7 +199,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
         public void BlobPolling_IgnoresClockSkew()
         {
             int testScanBlobLimitPerPoll = 3;
-            string containerName = Path.GetRandomFileName();
             var now = DateTimeOffset.UtcNow;
             var timeMap = new Dictionary<string, DateTimeOffset>();
             var container = blobContainerMock.Object;
@@ -234,20 +212,19 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             product.Start();
 
             List<string> expectedNames = new List<string>();
-            expectedNames.Add(CreateBlobAndUploadToContainer(container, blobItems));
+            expectedNames.Add(CreateBlobAndUploadToContainer(blobContainerMock, blobItems));
             timeMap[expectedNames.Single()] = now.AddSeconds(-60);
             RunExecuterWithExpectedBlobs(expectedNames, product, executor);
 
-            expectedNames.Add(CreateBlobAndUploadToContainer(container, blobItems));
+            expectedNames.Add(CreateBlobAndUploadToContainer(blobContainerMock, blobItems));
             timeMap[expectedNames.Last()] = now.AddSeconds(-59);
 
             // We should see the new item. We'll see 2 blobs, but only process 1 (due to receipt).
             RunExecuterWithExpectedBlobs(expectedNames, product, executor, 1);
 
-            /* blobContainerMock.Verify
-                (x => x.ListBlobsSegmentedAsync(It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<BlobListingDetails>(), It.IsAny<int?>(), It.IsAny<BlobContinuationToken>(), It.IsAny<BlobRequestOptions>(), It.IsAny<OperationContext>(), It.IsAny<CancellationToken>()),
+            blobContainerMock.Verify(x => x.GetBlobsAsync(It.IsAny<BlobTraits>(), It.IsAny<BlobStates>(), It.IsAny<string>(), It.IsAny<CancellationToken>()),
                 Times.Exactly(2));
-            Assert.Equal(expectedNames, executor.BlobReceipts); */ // TODO (kasobol-msft) how to?
+            Assert.Equal(expectedNames, executor.BlobReceipts);
         }
 
         [Fact]
@@ -274,19 +251,18 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             product.Start();
 
             List<string> expectedNames = new List<string>();
-            expectedNames.Add(CreateBlobAndUploadToContainer(container, blobItems, lastModified: now));
+            expectedNames.Add(CreateBlobAndUploadToContainer(blobContainerMock, blobItems, lastModified: now));
 
             RunExecuterWithExpectedBlobs(expectedNames, product, executor);
 
-            expectedNames.Add(CreateBlobAndUploadToContainer(container, blobItems, lastModified: now));
+            expectedNames.Add(CreateBlobAndUploadToContainer(blobContainerMock, blobItems, lastModified: now));
 
             // We should see the new item. We'll see 2 blobs, but only process 1 (due to receipt).
             RunExecuterWithExpectedBlobs(expectedNames, product, executor, 1);
 
-            /* blobContainerMock.Verify
-                (x => x.ListBlobsSegmentedAsync(It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<BlobListingDetails>(), It.IsAny<int?>(), It.IsAny<BlobContinuationToken>(), It.IsAny<BlobRequestOptions>(), It.IsAny<OperationContext>(), It.IsAny<CancellationToken>()),
+            blobContainerMock.Verify(x => x.GetBlobsAsync(It.IsAny<BlobTraits>(), It.IsAny<BlobStates>(), It.IsAny<string>(), It.IsAny<CancellationToken>()),
                 Times.Exactly(2));
-            Assert.Equal(expectedNames, executor.BlobReceipts); */ // TODO (kasobol-msft) how to?
+            Assert.Equal(expectedNames, executor.BlobReceipts);
         }
 
         [Fact]
@@ -294,7 +270,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
         {
             if (Environment.Version.Major == 4)
             {
-                // TODO: figure out why this doesn't work on .NET Framework
+                // TODO (kasobol-msft) : figure out why this doesn't work on .NET Framework
                 return;
             }
             string containerName = Guid.NewGuid().ToString();
@@ -306,7 +282,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             // Create a few blobs.
             for (int i = 0; i < 5; i++)
             {
-                CreateBlobAndUploadToContainer(container, blobItems);
+                CreateBlobAndUploadToContainer(blobContainerMock, blobItems);
             }
 
             await scanInfoManager.UpdateLatestScanAsync(AccountName, containerName, DateTime.UtcNow);
@@ -316,7 +292,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             await Task.Delay(10);
 
             var expectedNames = new List<string>();
-            expectedNames.Add(CreateBlobAndUploadToContainer(container, blobItems));
+            expectedNames.Add(CreateBlobAndUploadToContainer(blobContainerMock, blobItems));
 
             RunExecuterWithExpectedBlobs(expectedNames, product, executor);
         }
@@ -325,16 +301,12 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
         public async Task ExecuteAsync_UpdatesScanInfoManager()
         {
             int testScanBlobLimitPerPoll = 6;
-            string firstContainerName = Guid.NewGuid().ToString();
-            string secondContainerName = Guid.NewGuid().ToString();
             BlobContainerClient firstContainer = blobContainerMock.Object;
-            firstContainer.SetInternalProperty("Name", firstContainerName);
             BlobContainerClient secondContainer = secondBlobContainerMock.Object;
-            secondContainer.SetInternalProperty("Name", secondContainerName);
             TestBlobScanInfoManager testScanInfoManager = new TestBlobScanInfoManager();
             string accountName = AccountName;
-            testScanInfoManager.SetScanInfo(accountName, firstContainerName, DateTime.MinValue);
-            testScanInfoManager.SetScanInfo(accountName, secondContainerName, DateTime.MinValue);
+            testScanInfoManager.SetScanInfo(accountName, ContainerName, DateTime.MinValue);
+            testScanInfoManager.SetScanInfo(accountName, SecondContainerName, DateTime.MinValue);
             IBlobListenerStrategy product = new ScanBlobScanLogHybridPollingStrategy(testScanInfoManager, _exceptionHandler, NullLogger<BlobListener>.Instance);
             LambdaBlobTriggerExecutor executor = new LambdaBlobTriggerExecutor();
             typeof(ScanBlobScanLogHybridPollingStrategy)
@@ -347,14 +319,14 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             var firstExpectedNames = new List<string>();
             for (int i = 0; i < 3; i++)
             {
-                firstExpectedNames.Add(CreateBlobAndUploadToContainer(firstContainer, blobItems));
+                firstExpectedNames.Add(CreateBlobAndUploadToContainer(blobContainerMock, blobItems));
             }
             RunExecuteWithMultiPollingInterval(firstExpectedNames, product, executor, testScanBlobLimitPerPoll / 2);
 
             // only expect the first container to have updated its scanInfo
-            Assert.Equal(1, testScanInfoManager.UpdateCounts[accountName][firstContainerName]);
+            Assert.Equal(1, testScanInfoManager.UpdateCounts[accountName][ContainerName]);
             int count;
-            testScanInfoManager.UpdateCounts[accountName].TryGetValue(secondContainerName, out count);
+            testScanInfoManager.UpdateCounts[accountName].TryGetValue(SecondContainerName, out count);
             Assert.Equal(0, count);
 
             await Task.Delay(10);
@@ -362,13 +334,13 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             var secondExpectedNames = new List<string>();
             for (int i = 0; i < 7; i++)
             {
-                secondExpectedNames.Add(CreateBlobAndUploadToContainer(secondContainer, secondBlobItems));
+                secondExpectedNames.Add(CreateBlobAndUploadToContainer(secondBlobContainerMock, secondBlobItems));
             }
             RunExecuteWithMultiPollingInterval(secondExpectedNames, product, executor, testScanBlobLimitPerPoll / 2);
 
             // this time, only expect the second container to have updated its scanInfo
-            Assert.Equal(1, testScanInfoManager.UpdateCounts[accountName][firstContainerName]);
-            Assert.Equal(1, testScanInfoManager.UpdateCounts[accountName][secondContainerName]);
+            Assert.Equal(1, testScanInfoManager.UpdateCounts[accountName][ContainerName]);
+            Assert.Equal(1, testScanInfoManager.UpdateCounts[accountName][SecondContainerName]);
         }
 
 
@@ -376,17 +348,15 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
         public async Task ExecuteAsync_UpdatesScanInfo_WithEarliestFailure()
         {
             int testScanBlobLimitPerPoll = 6;
-            string containerName = Guid.NewGuid().ToString();
 
             // we'll introduce multiple errors to make sure we take the earliest timestamp
             DateTime earliestErrorTime = DateTime.UtcNow;
 
             var container = blobContainerMock.Object;
-            container.SetInternalProperty("Name", containerName);
 
             TestBlobScanInfoManager testScanInfoManager = new TestBlobScanInfoManager();
             string accountName = AccountName;
-            testScanInfoManager.SetScanInfo(accountName, containerName, DateTime.MinValue);
+            testScanInfoManager.SetScanInfo(accountName, ContainerName, DateTime.MinValue);
             IBlobListenerStrategy product = new ScanBlobScanLogHybridPollingStrategy(testScanInfoManager, _exceptionHandler, NullLogger<BlobListener>.Instance);
             LambdaBlobTriggerExecutor executor = new LambdaBlobTriggerExecutor();
             typeof(ScanBlobScanLogHybridPollingStrategy)
@@ -402,23 +372,22 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
                 string name;
                 if (i % 3 == 0)
                 {
-                    name = CreateBlobAndUploadToContainer(container, blobItems, "throw", earliestErrorTime.AddMinutes(i));
+                    name = CreateBlobAndUploadToContainer(blobContainerMock, blobItems, "throw", earliestErrorTime.AddMinutes(i));
                 }
                 else
                 {
-                    name = CreateBlobAndUploadToContainer(container, blobItems, "test", earliestErrorTime.AddMinutes(10));
+                    name = CreateBlobAndUploadToContainer(blobContainerMock, blobItems, "test", earliestErrorTime.AddMinutes(10));
                 }
                 expectedNames.Add(name);
             }
 
             RunExecuteWithMultiPollingInterval(expectedNames, product, executor, testScanBlobLimitPerPoll);
 
-            DateTime? storedTime = await testScanInfoManager.LoadLatestScanAsync(accountName, containerName);
+            DateTime? storedTime = await testScanInfoManager.LoadLatestScanAsync(accountName, ContainerName);
             Assert.True(storedTime < earliestErrorTime);
-            Assert.Equal(1, testScanInfoManager.UpdateCounts[accountName][containerName]);
-            /* blobContainerMock.Verify
-                (x => x.ListBlobsSegmentedAsync(It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<BlobListingDetails>(), It.IsAny<int?>(), It.IsAny<BlobContinuationToken>(), It.IsAny<BlobRequestOptions>(), It.IsAny<OperationContext>(), It.IsAny<CancellationToken>()),
-                Times.Exactly(2)); */ // TODO (kasobol-msft) how to?
+            Assert.Equal(1, testScanInfoManager.UpdateCounts[accountName][ContainerName]);
+            blobContainerMock.Verify(x => x.GetBlobsAsync(It.IsAny<BlobTraits>(), It.IsAny<BlobStates>(), It.IsAny<string>(), It.IsAny<CancellationToken>()),
+                Times.Exactly(2));
         }
 
         private void RunExecuterWithExpectedBlobsInternal(IDictionary<string, int> blobNameMap, IBlobListenerStrategy product, LambdaBlobTriggerExecutor executor, int expectedCount)
@@ -487,7 +456,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             }
         }
 
-        private string CreateBlobAndUploadToContainer(BlobContainerClient container, List<BlobItem> blobItems, string blobContent = "test", DateTimeOffset lastModified = default)
+        private string CreateBlobAndUploadToContainer(Mock<BlobContainerClient> containerMock, List<BlobItem> blobItems, string blobContent = "test", DateTimeOffset lastModified = default)
         {
             string blobName = Path.GetRandomFileName().Replace(".", "");
             Mock<BlobBaseClient> item = new Mock<BlobBaseClient>();
@@ -499,11 +468,24 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             var blobProperties = BlobsModelFactory.BlobProperties(lastModified: lastModified);
 
             item.Setup(x => x.GetPropertiesAsync(null, It.IsAny<CancellationToken>())).ReturnsAsync(Response.FromValue(blobProperties, null));
-            // item.Setup(x => x.Container).Returns(container); TODO (kasobol-msft) check this
             item.Setup(x => x.Name).Returns(blobName);
-            // item.Setup(x => x.OpenReadAsync(It.IsAny<CancellationToken>())).ReturnsAsync(
-            //    () => new MemoryStream(Encoding.UTF8.GetBytes(blobContent))); TODO (kasobol-msft) how do we do this ??
-            // blobItems.Add(item.Object); TODO (kasobol-msft) how do we do this ??
+
+            BlobItemProperties blobItemProperties = BlobsModelFactory.BlobItemProperties(true, lastModified: lastModified);
+            BlobItem blobItem = BlobsModelFactory.BlobItem(
+                name: blobName,
+                properties: blobItemProperties
+                );
+
+            blobItems.Add(blobItem);
+
+            Mock<BlobClient> blobClientMock = new Mock<BlobClient>();
+            blobClientMock.Setup(x => x.Name).Returns(blobName);
+            blobClientMock.Setup(x => x.Download(It.IsAny<CancellationToken>())).Returns( () =>
+                Response.FromValue(BlobsModelFactory.BlobDownloadInfo(content: new MemoryStream(Encoding.UTF8.GetBytes(blobContent))), null));
+            blobClientMock.Setup(x => x.GetProperties(It.IsAny<BlobRequestConditions>(), It.IsAny<CancellationToken>()))
+                .Returns(Response.FromValue(blobProperties, null));
+            containerMock.Setup(x => x.GetBlobClient(blobName)).Returns(blobClientMock.Object);
+
             return blobName;
         }
 
