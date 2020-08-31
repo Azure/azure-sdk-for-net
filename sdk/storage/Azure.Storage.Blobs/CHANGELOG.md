@@ -1,6 +1,7 @@
 # Release History
 
 ## 12.6.0-preview.1 (Unreleased)
+- Fixed bug where BlobClient.Upload(), BlockBlobClient.Upload(), AppendBlobClient.AppendBlock(), and PageBlobClient.UploadPages() would deadlock if the content stream's position was not 0.
 - Fixed bug in BlobBaseClient.OpenRead() causing us to do more download called than necessary.
 
 ## 12.5.1 (2020-08-18)

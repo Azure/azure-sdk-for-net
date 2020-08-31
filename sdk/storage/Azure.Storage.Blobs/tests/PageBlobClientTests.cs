@@ -763,6 +763,61 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task UploadPagesAsync_InvalidStreamPosition()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+            long size = Constants.KB;
+            byte[] data = GetRandomBuffer(size);
+
+            using Stream stream = new MemoryStream(data)
+            {
+                Position = size
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                blob.UploadPagesAsync(
+                    content: stream,
+                    offset: 0),
+                e => Assert.AreEqual("content.Position must be less than content.Length. Please set content.Position to the start of the data to upload.", e.Message));
+        }
+
+        [Test]
+        public async Task UploadPagesAsync_NonZeroStreamPosition()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            long size = Constants.KB;
+            long position = 512;
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, size - position);
+            byte[] data = GetRandomBuffer(size);
+            byte[] expectedData = new byte[size - position];
+            Array.Copy(data, position, expectedData, 0, size - position);
+
+            using Stream stream = new MemoryStream(data)
+            {
+                Position = position
+            };
+
+            // Act
+            await blob.UploadPagesAsync(
+                content: stream,
+                offset: 0);
+
+            // Assert
+            Response<BlobDownloadInfo> response = await blob.DownloadAsync();
+
+            var actualData = new byte[512];
+            using var actualStream = new MemoryStream(actualData);
+            await response.Value.Content.CopyToAsync(actualStream);
+            TestHelper.AssertSequenceEqual(expectedData, actualData);
+        }
+
+        [Test]
         public async Task ClearPagesAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();

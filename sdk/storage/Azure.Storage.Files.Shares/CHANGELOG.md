@@ -1,6 +1,7 @@
 # Release History
 
 ## 12.4.0-preview.1 (Unreleased)
+- Fixed bug where ShareFileClient.Upload() and .UploadRange() would deadlock if the content stream's position was not zero.
 - Fixed bug in ShareFileClient.OpenRead() causing us to do more download called than necessary.
 - Fixed bug where ShareClient.Delete() could not delete Share Snapshots unless the includeSnapshots parameter was set to false.
 

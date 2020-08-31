@@ -853,6 +853,57 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task AppendBlockAsync_InvalidStreamPosition()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var blobName = GetNewBlobName();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            await blob.CreateAsync();
+            const int blobSize = Constants.KB;
+            var data = GetRandomBuffer(blobSize);
+
+            // Act
+            using Stream stream = new MemoryStream(data);
+            stream.Position = stream.Length;
+
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                blob.AppendBlockAsync(stream),
+                e => Assert.AreEqual("content.Position must be less than content.Length. Please set content.Position to the start of the data to upload.", e.Message));
+        }
+
+        [Test]
+        public async Task AppendBlockAsync_NonZeroStreamPosition()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var blobName = GetNewBlobName();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            await blob.CreateAsync();
+            const int blobSize = Constants.KB;
+            long position = 512;
+            byte[] data = GetRandomBuffer(blobSize);
+            byte[] expectedData = new byte[blobSize - position];
+            Array.Copy(data, position, expectedData, 0, blobSize - position);
+
+            // Act
+            using Stream stream = new MemoryStream(data)
+            {
+                Position = position
+            };
+            await blob.AppendBlockAsync(stream);
+
+            // Assert
+            Response<BlobDownloadInfo> result = await blob.DownloadAsync();
+            var dataResult = new MemoryStream();
+            await result.Value.Content.CopyToAsync(dataResult);
+            Assert.AreEqual(blobSize - position, dataResult.Length);
+            TestHelper.AssertSequenceEqual(expectedData, dataResult.ToArray());
+        }
+
+        [Test]
         public async Task AppendBlockFromUriAsync_Min()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
