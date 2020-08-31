@@ -1,1 +1,0 @@
-Start-AutoRestCodeGeneration -ResourceProvider "batch/data-plane" -AutoRestVersion "latest"

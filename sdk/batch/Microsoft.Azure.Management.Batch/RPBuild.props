@@ -1,5 +1,0 @@
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<PropertyGroup>
-		<IgnorePathTokens>$(IgnorePathTokens) Batch\Support\FileStaging\Batch.FileStaging.Tests Batch\Support\FileConventions\Tests\AzureBatchFileConventions.IntegrationTests Batch\DataPlane\Azure.Batch.IntegrationTests Batch\DataPlane\Azure.Batch.ProtocolTests</IgnorePathTokens>
-	</PropertyGroup>
-</Project>

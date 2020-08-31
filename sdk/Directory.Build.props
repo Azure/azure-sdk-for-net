@@ -1,7 +1,0 @@
-﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <IsMgmtProject Condition="'$(IsMgmtProject)' == '' and $(MSBuildProjectName.Contains('.Management.'))">true</IsMgmtProject>
-    <IsDataPlaneProject Condition="'$(IsDataPlaneProject)' == '' and $(MSBuildProjectName.StartsWith('Microsoft.Azure.')) and '$(IsMgmtProject)' != 'true'">true</IsDataPlaneProject>
-  </PropertyGroup>
-  <Import Project="..\Directory.Build.props" />
-</Project>
