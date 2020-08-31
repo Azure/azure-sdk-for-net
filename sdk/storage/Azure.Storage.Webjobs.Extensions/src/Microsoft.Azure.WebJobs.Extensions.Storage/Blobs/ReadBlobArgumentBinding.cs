@@ -7,7 +7,6 @@ using Microsoft.Azure.WebJobs.Host.Bindings;
 using System.Threading;
 using Azure.Storage.Blobs.Specialized;
 using Azure;
-using Azure.Storage.Blobs.Models;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs
 {
@@ -23,10 +22,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs
             Stream rawStream;
             try
             {
-                // TODO (kasobol-msft) find replacement
-                //rawStream = await blob.OpenReadAsync(cancellationToken).ConfigureAwait(false);
-                BlobDownloadInfo blobDownloadInfo = await blob.DownloadAsync(cancellationToken).ConfigureAwait(false);
-                rawStream = blobDownloadInfo.Content;
+                rawStream = await blob.OpenReadAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             catch (RequestFailedException exception)
             {

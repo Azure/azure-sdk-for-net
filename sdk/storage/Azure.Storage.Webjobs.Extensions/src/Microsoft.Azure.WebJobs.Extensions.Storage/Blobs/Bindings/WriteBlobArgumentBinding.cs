@@ -5,8 +5,8 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Azure.Storage.Blobs.Specialized;
-using System.IO.Pipelines;
 using Azure.Storage.Blobs;
+using System.IO;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
 {
@@ -25,12 +25,9 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
             // TODO (kasobol-msft) What is this ???
             //BlobCausalityManager.SetWriter(blob.Metadata, context.FunctionInstanceId);
 
-            var pipe = new Pipe();
-            // TODO (kasobol-msft) find replacement
-            //CloudBlobStream rawStream = await blockBlob.OpenWriteAsync(context.CancellationToken).ConfigureAwait(false);
-            _ = Task.Run(async () => await blockBlob.UploadAsync(pipe.Reader.AsStream()).ConfigureAwait(false));
+            Stream rawStream = await blockBlob.OpenWriteAsync(true).ConfigureAwait(false);
             IBlobCommitedAction committedAction = new BlobCommittedAction(container, blob, blobWrittenWatcher);
-            return await Task.FromResult(new WatchableCloudBlobStream(pipe.Writer.AsStream(), committedAction)).ConfigureAwait(false);
+            return await Task.FromResult(new WatchableCloudBlobStream(rawStream, committedAction)).ConfigureAwait(false);
         }
     }
 }
