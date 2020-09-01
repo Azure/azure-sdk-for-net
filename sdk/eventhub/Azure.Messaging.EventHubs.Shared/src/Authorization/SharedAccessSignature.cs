@@ -133,8 +133,12 @@ namespace Azure.Messaging.EventHubs.Authorization
 
             (SharedAccessKeyName, Resource, SignatureExpiration) = ParseSignature(sharedAccessSignature);
 
-            SharedAccessKey = sharedAccessKey;
             Value = sharedAccessSignature;
+
+            if (!string.IsNullOrEmpty(sharedAccessKey))
+            {
+                SharedAccessKey = sharedAccessKey;
+            }
         }
 
         /// <summary>
