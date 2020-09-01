@@ -24,7 +24,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             }
             catch (Exception ex)
             {
-                AzureMonitorTraceExporterEventSource.Log.WriteException(new Exception("Error creating SdkVersion:", ex));
+                AzureMonitorTraceExporterEventSource.Log.WriteException(new Exception("Error creating SdkVersion", ex));
                 return null;
             }
         }
