@@ -38,7 +38,7 @@ await foreach (var assignment in client.GetRoleAssignmentsAsync(KeyVaultRoleScop
 }
 ```
 
-# Creating a Role Assignment
+## Creating a Role Assignment
 
 Now let's assign a role to a service principal. To do this we'll need a role definition Id and a service principal object Id.
 
@@ -58,7 +58,7 @@ KeyVaultRoleAssignmentProperties properties = new KeyVaultRoleAssignmentProperti
 RoleAssignment createdAssignment = await client.CreateRoleAssignmentAsync(RoleAssignmentScope.Global, properties);
 ```
 
-# Getting a Role Assignment
+## Getting a Role Assignment
 
 To get an existing role assignment, we'll need the `Name` property from an existing assignment. Let's use the `createdAssignment` from the previous example.
 
@@ -66,7 +66,7 @@ To get an existing role assignment, we'll need the `Name` property from an exist
 KeyVaultRoleAssignment fetchedAssignment = await client.GetRoleAssignmentAsync(KeyVaultRoleScope.Global, createdAssignment.Name);
 ```
 
-# Deleting a Role Assignment
+## Deleting a Role Assignment
 To remove a role assignment from a service principal, the role assignment must be deleted. Let's delete the `createdAssignment` from the previous example.
 
 ```C# Snippet:DeleteRoleAssignmentAsync

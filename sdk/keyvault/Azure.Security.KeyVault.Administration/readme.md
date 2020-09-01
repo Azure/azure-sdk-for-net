@@ -4,6 +4,8 @@ Azure Key Vault is a cloud service for securely storing and accessing secrets. A
 
 The Azure Key Vault administration library clients support administrative tasks such as full backup / restore and key-level role-based access control (RBAC).
 
+[Source code][admin_client_src] | [Package (NuGet)][admin_client_nuget_package] | [API reference documentation][API_reference] | [Product documentation][keyvault_docs] | [Samples][admin_client_samples]
+
 ## Getting started
 
 ### Install the package
@@ -89,66 +91,35 @@ List<KeyVaultRoleAssignment> roleAssignments = client.GetRoleAssignments(KeyVaul
 
 ## Key concepts
 
-### RoleDefinition
-A `RoleDefinition` is a collection of permissions. A role definition defines the operations that can be performed, such as read, write, and delete. It can also define the operations that are excluded from allowed operations.
+### KeyVaultRoleDefinition
+A `KeyVaultRoleDefinition` is a collection of permissions. A role definition defines the operations that can be performed, such as read, write, and delete. It can also define the operations that are excluded from allowed operations.
 
-RoleDefinitions can be listed and specified as part of a `RoleAssignment`.
+RoleDefinitions can be listed and specified as part of a `KeyVaultRoleAssignment`.
 
 ### RoleAssignment. 
-A `RoleAssignment` is the association of a RoleDefinition to a service principal. They can be created, listed, fetched individually, and deleted.
+A `KeyVaultRoleAssignment` is the association of a KeyVaultRoleDefinition to a service principal. They can be created, listed, fetched individually, and deleted.
 
 ### KeyVaultAccessControlClient
-A `KeyVaultAccessControlClient` provides both synchronous and asynchronous operations allowing for management of `RoleDefinition` and `RoleAssignment` objects.
+A `KeyVaultAccessControlClient` provides both synchronous and asynchronous operations allowing for management of `KeyVaultRoleDefinition` and `KeyVaultRoleAssignment` objects.
 
 ## Examples
 The Azure.Security.KeyVault.Administration package supports synchronous and asynchronous APIs.
 
 The following section provides several code snippets using the `client` [created above](#create-keyvaultaccesscontrolclient), covering some of the most common Azure Key Vault access control related tasks:
 
-### List the role definitions
-List the role definitions available for assignment.
+### Sync examples
+- [Listing All Role Definitions](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample1_RbacHelloWorldSync.md#listing-all-role-definitions-sync)
+- [Listing All Role Assignments](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample1_RbacHelloWorldSync.md#listing-all-role-assignments)
+- [Creating a Role Assignment](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample1_RbacHelloWorldSync.md#creating-a-role-assignment)
+- [Getting a Role Assignment](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample1_RbacHelloWorldSync.md#getting-a-role-assignment)
+- [Deleting a Role Assignment](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample1_RbacHelloWorldSync.md#deleting-a-role-assignment)
 
-```C# Snippet:GetRoleDefinitions
-Pageable<KeyVaultRoleDefinition> allDefinitions = client.GetRoleDefinitions(KeyVaultRoleScope.Global);
-
-foreach (KeyVaultRoleDefinition roleDefinition in allDefinitions)
-{
-    Console.WriteLine(roleDefinition.Id);
-    Console.WriteLine(roleDefinition.RoleName);
-    Console.WriteLine(roleDefinition.Description);
-    Console.WriteLine();
-}
-```
-
-### Create, Get, and Delete a role assignment
-Assign a role to a service principal. This will require a role definition id from the list retrieved in the [above snippet](#list-the-role-definitions) and the principal object id retrieved in the [Create/Get credentials](#create/get-credentials)
-
-```C# Snippet:ReadmeCreateRoleAssignment
-// Replace <roleDefinitionId> with a role definition Id from the definitions returned from the List the role definitions section above
-string definitionIdToAssign = "<roleDefinitionId>";
-
-// Replace <objectId> with the service principal object id from the Create/Get credentials section above
-string servicePrincipalObjectId = "<objectId>";
-
-KeyVaultRoleAssignmentProperties properties = new KeyVaultRoleAssignmentProperties(definitionIdToAssign, servicePrincipalObjectId);
-RoleAssignment createdAssignment = client.CreateRoleAssignment(RoleAssignmentScope.Global, properties);
-
-Console.WriteLine(createdAssignment.Name);
-Console.WriteLine(createdAssignment.Properties.PrincipalId);
-Console.WriteLine(createdAssignment.Properties.RoleDefinitionId);
-
-KeyVaultRoleAssignment fetchedAssignment = client.GetRoleAssignment(KeyVaultRoleScope.Global, createdAssignment.Name);
-
-Console.WriteLine(fetchedAssignment.Name);
-Console.WriteLine(fetchedAssignment.Properties.PrincipalId);
-Console.WriteLine(fetchedAssignment.Properties.RoleDefinitionId);
-
-KeyVaultRoleAssignment deletedAssignment = client.DeleteRoleAssignment(KeyVaultRoleScope.Global, createdAssignment.Name);
-
-Console.WriteLine(deletedAssignment.Name);
-Console.WriteLine(deletedAssignment.Properties.PrincipalId);
-Console.WriteLine(deletedAssignment.Properties.RoleDefinitionId);
-```
+### Async examples
+- [Listing All Role Definitions](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample1_RbacHelloWorldAsync.md#listing-all-role-definitions-sync)
+- [Listing All Role Assignments](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample1_RbacHelloWorldAsync.md#listing-all-role-assignments)
+- [Creating a Role Assignment](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample1_RbacHelloWorldAsync.md#creating-a-role-assignment)
+- [Getting a Role Assignment](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample1_RbacHelloWorldAsync.md#getting-a-role-assignment)
+- [Deleting a Role Assignment](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample1_RbacHelloWorldAsync.md#deleting-a-role-assignment)
 
 ## Troubleshooting
 
@@ -181,9 +152,20 @@ Content-Length: 143
 Content-Type: application/json
 ```
 
+### Setting up console logging
+The simplest way to see the logs is to enable the console logging.
+To create an Azure SDK log listener that outputs messages to console use AzureEventSourceListener.CreateConsoleLogger method.
+
+```
+// Setup a listener to monitor logged events.
+using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
+```
+
+To learn more about other logging mechanisms see [here](logging).
+
 ## Next steps
 
-Content forthcoming
+Get started with our [samples](admin_client_samples).
 
 ## Contributing
 
@@ -205,9 +187,13 @@ additional questions or comments.
 [rbac_client]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/src/KeyVaultAccessControlClient.cs
 [keyvault_docs]: https://docs.microsoft.com/azure/key-vault/
 [keyvault_rest]: https://docs.microsoft.com/rest/api/keyvault/
+[admin_client_nuget_package]: https://www.nuget.org/packages/Azure.Security.KeyVault.Administration/
+[admin_client_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Administration/samples
+[admin_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Administration/src
 [JWK]: https://tools.ietf.org/html/rfc7517
 [nuget]: https://www.nuget.org/
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
+[logging]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md
 [contributing]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Microsoft.Azure.KeyVault/CONTRIBUTING.md
 
 
