@@ -64,6 +64,11 @@ namespace Azure.Identity
 
             try
             {
+                if (string.Equals(_tenantId, Constants.AdfsTenantId, StringComparison.Ordinal))
+                {
+                    throw new CredentialUnavailableException("VisualStudioCredential authentication unavailable. ADFS tenant/authorities are not supported.");
+                }
+
                 var tokenProviderPath = GetTokenProviderPath();
                 var tokenProviders = GetTokenProviders(tokenProviderPath);
 
