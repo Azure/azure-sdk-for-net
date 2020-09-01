@@ -19,19 +19,15 @@ namespace Microsoft.Azure.Management.HybridCompute.Tests
         private const string DEPENDENCY_AGENT_EXTENSION_NAME = "dependencyAgent";
         private const string RESOURCE_GROUP_NAME = "csharp-sdk-test";
         private const string MACHINE_NAME = "thinkpad";
-        private readonly MockContext _context;
+        private MockContext _context;
 
         private HybridComputeManagementClient _client;
         private Machine _machine;
         private bool _isLinux;
 
-        public HybridMachineExtensionTests()
-        {
-            _context = MockContext.Start(GetType().FullName);
-        }
-
         private void Initialize()
         {
+            _context = MockContext.Start(GetType().FullName);
             _client = this.GetHybridComputeManagementClient(_context);
             _machine = _client.Machines.Get(RESOURCE_GROUP_NAME, MACHINE_NAME);
             _isLinux = _machine.OsName.IndexOf("linux", StringComparison.OrdinalIgnoreCase) >= 0;
