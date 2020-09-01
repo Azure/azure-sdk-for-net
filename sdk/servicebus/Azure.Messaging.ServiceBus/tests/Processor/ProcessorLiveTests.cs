@@ -412,7 +412,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             await processor.StartProcessingAsync();
             await taskCompletionSource.Task;
             Assert.True(exceptionReceivedHandlerCalled);
-            await processor.StopProcessingAsync();
+            await processor.CloseAsync();
+
+            Assert.That(
+                async () => await processor.StartProcessingAsync(),
+                Throws.InstanceOf<ObjectDisposedException>());
         }
 
         [Test]
@@ -439,9 +443,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 processor.StopProcessingAsync(),
                 processor.StopProcessingAsync()
             };
-            Assert.That(
-                async () => await Task.WhenAll(stopTasks),
-                Throws.InstanceOf<InvalidOperationException>());
+            Assert.DoesNotThrowAsync(async () => await Task.WhenAll(stopTasks));
         }
 
         [Test]
