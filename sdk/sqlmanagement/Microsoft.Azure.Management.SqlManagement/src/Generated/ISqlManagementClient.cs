@@ -512,5 +512,10 @@ namespace Microsoft.Azure.Management.Sql
         /// </summary>
         IManagedInstanceOperations ManagedInstanceOperations { get; }
 
+        /// <summary>
+        /// Gets the IManagedInstanceAzureADOnlyAuthenticationsOperations.
+        /// </summary>
+        IManagedInstanceAzureADOnlyAuthenticationsOperations ManagedInstanceAzureADOnlyAuthentications { get; }
+
     }
 }

@@ -83,11 +83,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
-                var options = new ServiceBusClientOptions();
-                options.RetryOptions.TryTimeout = TimeSpan.FromSeconds(5);
-                options.RetryOptions.MaxRetries = 0;
-
-                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 ServiceBusMessage message1 = GetMessage("session1");
@@ -99,7 +95,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 }
                 Assert.That(
                     async () =>
-                    await client.CreateSessionReceiverAsync(scope.QueueName), Throws.InstanceOf<ServiceBusException>()
+                    await GetNoRetryClient().CreateSessionReceiverAsync(scope.QueueName), Throws.InstanceOf<ServiceBusException>()
                     .And.Property(nameof(ServiceBusException.Reason))
                     .EqualTo(ServiceBusFailureReason.ServiceTimeout));
             };
@@ -110,11 +106,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                var options = new ServiceBusClientOptions();
-                options.RetryOptions.TryTimeout = TimeSpan.FromSeconds(5);
-                options.RetryOptions.MaxRetries = 0;
-
-                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 ServiceBusMessage message = GetMessage();

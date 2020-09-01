@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         /// <summary> Initializes a new instance of TenantListResult. </summary>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         internal TenantListResult(string nextLink)
         {
             if (nextLink == null)
@@ -22,6 +24,7 @@ namespace Azure.ResourceManager.Resources.Models
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
+            Value = new ChangeTrackingList<TenantIdDescription>();
             NextLink = nextLink;
         }
 

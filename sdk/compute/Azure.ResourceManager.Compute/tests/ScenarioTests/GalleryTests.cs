@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Compute.Tests
             Assert.NotNull(imageVersionFromGet);
             ValidateGalleryImageVersion(inputImageVersion, imageVersionFromGet);
             imageVersionFromGet = await GalleryImageVersionsOperations.GetAsync(rgName, galleryName, galleryImageName,
-                galleryImageVersionName);
+                galleryImageVersionName, ReplicationStatusTypes.ReplicationStatus);
             Assert.AreEqual(StorageAccountType.StandardLRS, imageVersionFromGet.PublishingProfile.StorageAccountType);
             Assert.AreEqual(StorageAccountType.StandardLRS,
                 imageVersionFromGet.PublishingProfile.TargetRegions.First().StorageAccountType);
@@ -210,9 +210,9 @@ namespace Azure.ResourceManager.Compute.Tests
             Trace.TraceInformation("Deleted the virtual machine.");
             await WaitForCompletionAsync(await GalleryImagesOperations.StartDeleteAsync(rgName, galleryName, galleryImageName));
             Trace.TraceInformation("Deleted the gallery image.");
-            WaitSeconds(30);
+            WaitSeconds(100);
             await WaitForCompletionAsync(await GalleriesOperations.StartDeleteAsync(rgName, galleryName));
-            WaitSeconds(30);
+            WaitSeconds(100);
             Trace.TraceInformation("Deleted the gallery.");
         }
 
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 {
                     ReplicaCount = 1,
                     StorageAccountType = StorageAccountType.StandardLRS,
-                    TargetRegions = new List<TargetRegion> {
+                    TargetRegions = {
                         new TargetRegion(LocationEastUs2) {
                             RegionalReplicaCount = 1,
                             StorageAccountType = StorageAccountType.StandardLRS
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.Compute.Tests
             inputVM = returnTwoVM.Item2;
             Image imageInput = new Image(m_location)
             {
-                Tags = new Dictionary<string, string>()
+                Tags =
                 {
                     {"RG", "rg"},
                     {"testTag", "1"},
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 {
                     ReplicaCount = 1,
                     StorageAccountType = StorageAccountType.StandardLRS,
-                    TargetRegions = new List<TargetRegion> {
+                    TargetRegions = {
                         new TargetRegion(DefaultLocation){ RegionalReplicaCount = 1, StorageAccountType = StorageAccountType.StandardLRS }
                     },
                     EndOfLifeDate = Recording.UtcNow.AddDays(10)

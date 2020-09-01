@@ -14,6 +14,7 @@ namespace Azure.Management.Compute.Models
     {
         /// <summary> Initializes a new instance of ImageDiskReference. </summary>
         /// <param name="id"> A relative uri containing either a Platform Image Repository or user image reference. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public ImageDiskReference(string id)
         {
             if (id == null)

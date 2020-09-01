@@ -195,7 +195,7 @@ string snippet = "some snippet code";
 
 **\`\`\`**
 
-See the following example of a [snippet C# file](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/search/Azure.Search.Documents/tests/Samples/HelloWorld.cs) and a [snippet markdown file](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/search/Azure.Search.Documents/samples/Sample01a_HelloWorld.md). 
+See the following example of a [snippet C# file](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/search/Azure.Search.Documents/tests/Samples/Sample01_HelloWorld.cs) and a [snippet markdown file](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/search/Azure.Search.Documents/samples/Sample01a_HelloWorld.md). 
 Note that snippet names need to be globally unique under a given service directory.
 
 Snippets also can be integrated into XML doc comments. For example:
@@ -246,7 +246,35 @@ You can also achieve this from the command line.
 
 ```nuget.exe sources add -Name "Azure SDK for Net Dev Feed" -Source "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json"```
 
-You can then consume packages from this package source, remember to check the [Include prerelease](https://docs.microsoft.com/en-us/nuget/create-packages/prerelease-packages#installing-and-updating-pre-release-packages) box in Visual Studio when searching for the packages.
+Open your NuGet.config file to ensure that the dev feed source comes before the public repository source:
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <packageSources>
+    <add key="Azure SDK for Net Dev Feed" value="https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json" protocolVersion="3" />
+    <add key="nuget.org" value="https://api.nuget.org/v3/index.json" protocolVersion="3" />
+  </packageSources>
+</configuration>
+```
+
+You can then consume packages from this package source, remember to check the [Include prerelease](https://docs.microsoft.com/en-us/nuget/create-packages/prerelease-packages#installing-and-updating-pre-release-packages) box in Visual Studio when searching for the packages. 
+
+To see the list of packages you can browse the [dev feed](https://dev.azure.com/azure-sdk/public/_packaging?_a=feed&feed=azure-sdk-for-net) and search for the package you are interested in. Or you can do it from the command line via `nuget.exe list -Prelease -Source "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json"`
+
+To consume the a dev package set the exact version in your project or to consume the latest dev package set the version to `x.y.z-dev.*` for example:
+
+```xml
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.Identity" Version="1.2.0-dev.*" />
+  </ItemGroup>
+</Project>
+```
 
 # On-boarding New Libraries
 
@@ -255,7 +283,7 @@ You can then consume packages from this package source, remember to check the [I
 In `sdk\< Service Name >`, you will find projects for services that have already been implemented
 
 1. Client library projects needs to use the $(RequiredTargetFrameworks) *(defined in eng/Directory.Build.Data.props)* property in its TargetFramework while management library projects should use $(SdkTargetFx) _(defined in AzSdk.reference.props)_
-2. Projects of related packages are grouped together in a folder following the structure specified in [Repo Structure](https://github.com/Azure/azure-sdk/blob/master/docs/engineering-system/repo-structure.md)
+2. Projects of related packages are grouped together in a folder following the structure specified in [Repo Structure](https://github.com/Azure/azure-sdk/blob/master/docs/policies/repostructure.md)
    - Client library packages are in a folder name like **_Microsoft.Azure.< ServiceName >_**
    - Management library packages are in a folder named like **_Microsoft.Azure.Management.< Resource Provider Name >_**
 3. Each shipping package contains a project for their **generated** and /or **Customization** code

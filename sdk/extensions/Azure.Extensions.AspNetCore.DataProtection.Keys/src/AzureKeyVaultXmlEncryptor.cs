@@ -36,7 +36,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys
 
         public EncryptedXmlInfo Encrypt(XElement plaintextElement)
         {
-            return EncryptAsync(plaintextElement).GetAwaiter().GetResult();
+            return Task.Run(() => EncryptAsync(plaintextElement)).GetAwaiter().GetResult();
         }
 
         private async Task<EncryptedXmlInfo> EncryptAsync(XElement plaintextElement)

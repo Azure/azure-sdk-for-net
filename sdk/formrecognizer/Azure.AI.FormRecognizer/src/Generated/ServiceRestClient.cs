@@ -47,10 +47,11 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.0-preview", false);
+            uri.AppendRaw("/formrecognizer/v2.0", false);
             uri.AppendPath("/custom/models", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(trainRequest);
             request.Content = content;
@@ -110,7 +111,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.0-preview", false);
+            uri.AppendRaw("/formrecognizer/v2.0", false);
             uri.AppendPath("/custom/models/", false);
             uri.AppendPath(modelId, true);
             if (includeKeys != null)
@@ -118,6 +119,7 @@ namespace Azure.AI.FormRecognizer
                 uri.AppendQuery("includeKeys", includeKeys.Value, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -172,10 +174,11 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.0-preview", false);
+            uri.AppendRaw("/formrecognizer/v2.0", false);
             uri.AppendPath("/custom/models/", false);
             uri.AppendPath(modelId, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -218,7 +221,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.0-preview", false);
+            uri.AppendRaw("/formrecognizer/v2.0", false);
             uri.AppendPath("/custom/models/", false);
             uri.AppendPath(modelId, true);
             uri.AppendPath("/analyze", false);
@@ -228,6 +231,7 @@ namespace Azure.AI.FormRecognizer
             }
             request.Uri = uri;
             request.Headers.Add("Content-Type", contentType.ToSerialString());
+            request.Headers.Add("Accept", "application/json");
             request.Content = RequestContent.Create(fileStream);
             return message;
         }
@@ -291,7 +295,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.0-preview", false);
+            uri.AppendRaw("/formrecognizer/v2.0", false);
             uri.AppendPath("/custom/models/", false);
             uri.AppendPath(modelId, true);
             uri.AppendPath("/analyze", false);
@@ -301,6 +305,7 @@ namespace Azure.AI.FormRecognizer
             }
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (fileStream != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -355,12 +360,13 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.0-preview", false);
+            uri.AppendRaw("/formrecognizer/v2.0", false);
             uri.AppendPath("/custom/models/", false);
             uri.AppendPath(modelId, true);
             uri.AppendPath("/analyzeResults/", false);
             uri.AppendPath(resultId, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -415,12 +421,13 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.0-preview", false);
+            uri.AppendRaw("/formrecognizer/v2.0", false);
             uri.AppendPath("/custom/models/", false);
             uri.AppendPath(modelId, true);
             uri.AppendPath("/copy", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(copyRequest);
             request.Content = content;
@@ -482,12 +489,13 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.0-preview", false);
+            uri.AppendRaw("/formrecognizer/v2.0", false);
             uri.AppendPath("/custom/models/", false);
             uri.AppendPath(modelId, true);
             uri.AppendPath("/copyResults/", false);
             uri.AppendPath(resultId, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -542,9 +550,10 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.0-preview", false);
+            uri.AppendRaw("/formrecognizer/v2.0", false);
             uri.AppendPath("/custom/models/copyAuthorization", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -597,7 +606,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.0-preview", false);
+            uri.AppendRaw("/formrecognizer/v2.0", false);
             uri.AppendPath("/prebuilt/receipt/analyze", false);
             if (includeTextDetails != null)
             {
@@ -605,6 +614,7 @@ namespace Azure.AI.FormRecognizer
             }
             request.Uri = uri;
             request.Headers.Add("Content-Type", contentType.ToSerialString());
+            request.Headers.Add("Accept", "application/json");
             request.Content = RequestContent.Create(fileStream);
             return message;
         }
@@ -666,7 +676,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.0-preview", false);
+            uri.AppendRaw("/formrecognizer/v2.0", false);
             uri.AppendPath("/prebuilt/receipt/analyze", false);
             if (includeTextDetails != null)
             {
@@ -674,6 +684,7 @@ namespace Azure.AI.FormRecognizer
             }
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (fileStream != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -726,10 +737,11 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.0-preview", false);
+            uri.AppendRaw("/formrecognizer/v2.0", false);
             uri.AppendPath("/prebuilt/receipt/analyzeResults/", false);
             uri.AppendPath(resultId, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -782,10 +794,11 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.0-preview", false);
+            uri.AppendRaw("/formrecognizer/v2.0", false);
             uri.AppendPath("/layout/analyze", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", contentType.ToSerialString());
+            request.Headers.Add("Accept", "application/json");
             request.Content = RequestContent.Create(fileStream);
             return message;
         }
@@ -845,10 +858,11 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.0-preview", false);
+            uri.AppendRaw("/formrecognizer/v2.0", false);
             uri.AppendPath("/layout/analyze", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (fileStream != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -899,10 +913,11 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.0-preview", false);
+            uri.AppendRaw("/formrecognizer/v2.0", false);
             uri.AppendPath("/layout/analyzeResults/", false);
             uri.AppendPath(resultId, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -955,10 +970,11 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.0-preview", false);
+            uri.AppendRaw("/formrecognizer/v2.0", false);
             uri.AppendPath("/custom/models", false);
             uri.AppendQuery("op", "full", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1009,10 +1025,11 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.0-preview", false);
+            uri.AppendRaw("/formrecognizer/v2.0", false);
             uri.AppendPath("/custom/models", false);
             uri.AppendQuery("op", "summary", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1063,9 +1080,10 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.0-preview", false);
+            uri.AppendRaw("/formrecognizer/v2.0", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

@@ -149,7 +149,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
 
         internal ChangeFeedCursor GetCursor()
             => new ChangeFeedCursor(
-                urlHash: BlobChangeFeedExtensions.ComputeMD5(_containerClient.Uri.AbsoluteUri),
+                urlHost: _containerClient.Uri.Host,
                 endDateTime: _endTime,
                 currentSegmentCursor: _currentSegment.GetCursor());
 

@@ -19,6 +19,7 @@ namespace Microsoft.Extensions.Azure
         public Microsoft.Extensions.Azure.AzureClientFactoryBuilder ConfigureDefaults(Microsoft.Extensions.Configuration.IConfiguration configuration) { throw null; }
         public Microsoft.Extensions.Azure.AzureClientFactoryBuilder ConfigureDefaults(System.Action<Azure.Core.ClientOptions, System.IServiceProvider> configureOptions) { throw null; }
         public Microsoft.Extensions.Azure.AzureClientFactoryBuilder ConfigureDefaults(System.Action<Azure.Core.ClientOptions> configureOptions) { throw null; }
+        public Microsoft.Extensions.Azure.AzureClientFactoryBuilder UseConfiguration(System.Func<System.IServiceProvider, Microsoft.Extensions.Configuration.IConfiguration> configurationProvider) { throw null; }
         public Microsoft.Extensions.Azure.AzureClientFactoryBuilder UseCredential(Azure.Core.TokenCredential tokenCredential) { throw null; }
         public Microsoft.Extensions.Azure.AzureClientFactoryBuilder UseCredential(System.Func<System.IServiceProvider, Azure.Core.TokenCredential> tokenCredentialFactory) { throw null; }
     }

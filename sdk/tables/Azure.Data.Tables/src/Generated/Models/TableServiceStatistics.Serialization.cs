@@ -14,10 +14,10 @@ namespace Azure.Data.Tables.Models
     {
         internal static TableServiceStatistics DeserializeTableServiceStatistics(XElement element)
         {
-            TableGeoReplication geoReplication = default;
+            TableGeoReplicationInfo geoReplication = default;
             if (element.Element("GeoReplication") is XElement geoReplicationElement)
             {
-                geoReplication = TableGeoReplication.DeserializeTableGeoReplication(geoReplicationElement);
+                geoReplication = TableGeoReplicationInfo.DeserializeTableGeoReplicationInfo(geoReplicationElement);
             }
             return new TableServiceStatistics(geoReplication);
         }

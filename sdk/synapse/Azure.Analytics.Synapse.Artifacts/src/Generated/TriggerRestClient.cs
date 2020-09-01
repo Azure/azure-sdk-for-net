@@ -56,6 +56,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath("/triggers", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -115,6 +116,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 request.Headers.Add("If-Match", ifMatch);
             }
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(trigger);
             request.Content = content;
@@ -127,7 +129,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="ifMatch"> ETag of the trigger entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> or <paramref name="trigger"/> is null. </exception>
-        public async Task<Response<TriggerResource>> CreateOrUpdateTriggerAsync(string triggerName, TriggerResource trigger, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateTriggerAsync(string triggerName, TriggerResource trigger, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
             {
@@ -143,12 +145,8 @@ namespace Azure.Analytics.Synapse.Artifacts
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        TriggerResource value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TriggerResource.DeserializeTriggerResource(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 202:
+                    return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -160,7 +158,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="ifMatch"> ETag of the trigger entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> or <paramref name="trigger"/> is null. </exception>
-        public Response<TriggerResource> CreateOrUpdateTrigger(string triggerName, TriggerResource trigger, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdateTrigger(string triggerName, TriggerResource trigger, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
             {
@@ -176,12 +174,8 @@ namespace Azure.Analytics.Synapse.Artifacts
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        TriggerResource value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TriggerResource.DeserializeTriggerResource(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 202:
+                    return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -202,6 +196,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             {
                 request.Headers.Add("If-None-Match", ifNoneMatch);
             }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -276,6 +271,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath(triggerName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -295,6 +291,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             switch (message.Response.Status)
             {
                 case 200:
+                case 202:
                 case 204:
                     return message.Response;
                 default:
@@ -318,6 +315,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             switch (message.Response.Status)
             {
                 case 200:
+                case 202:
                 case 204:
                     return message.Response;
                 default:
@@ -337,6 +335,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath("/subscribeToEvents", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -398,6 +397,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath("/getEventSubscriptionStatus", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -467,6 +467,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath("/unsubscribeFromEvents", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -528,6 +529,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath("/start", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -587,6 +589,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath("/stop", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -643,6 +646,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendRaw(endpoint, false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

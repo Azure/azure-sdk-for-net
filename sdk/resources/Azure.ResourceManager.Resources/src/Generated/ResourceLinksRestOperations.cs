@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public ResourceLinksRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Deletes a resource link with the specified ID. </summary>
         /// <param name="linkId"> The fully qualified ID of the resource link. Use the format, /subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/{provider-namespace}/{resource-type}/{resource-name}/Microsoft.Resources/links/{link-name}. For example, /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
         public async Task<Response> DeleteAsync(string linkId, CancellationToken cancellationToken = default)
         {
             if (linkId == null)
@@ -82,6 +83,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Deletes a resource link with the specified ID. </summary>
         /// <param name="linkId"> The fully qualified ID of the resource link. Use the format, /subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/{provider-namespace}/{resource-type}/{resource-name}/Microsoft.Resources/links/{link-name}. For example, /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
         public Response Delete(string linkId, CancellationToken cancellationToken = default)
         {
             if (linkId == null)
@@ -123,6 +125,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="linkId"> The fully qualified ID of the resource link. Use the format, /subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/{provider-namespace}/{resource-type}/{resource-name}/Microsoft.Resources/links/{link-name}. For example, /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink. </param>
         /// <param name="parameters"> Parameters for creating or updating a resource link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<ResourceLink>> CreateOrUpdateAsync(string linkId, ResourceLink parameters, CancellationToken cancellationToken = default)
         {
             if (linkId == null)
@@ -143,14 +146,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceLink value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceLink.DeserializeResourceLink(document.RootElement);
-                        }
+                        value = ResourceLink.DeserializeResourceLink(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -162,6 +158,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="linkId"> The fully qualified ID of the resource link. Use the format, /subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/{provider-namespace}/{resource-type}/{resource-name}/Microsoft.Resources/links/{link-name}. For example, /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink. </param>
         /// <param name="parameters"> Parameters for creating or updating a resource link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> or <paramref name="parameters"/> is null. </exception>
         public Response<ResourceLink> CreateOrUpdate(string linkId, ResourceLink parameters, CancellationToken cancellationToken = default)
         {
             if (linkId == null)
@@ -182,14 +179,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceLink value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceLink.DeserializeResourceLink(document.RootElement);
-                        }
+                        value = ResourceLink.DeserializeResourceLink(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -214,6 +204,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets a resource link with the specified ID. </summary>
         /// <param name="linkId"> The fully qualified Id of the resource link. For example, /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
         public async Task<Response<ResourceLink>> GetAsync(string linkId, CancellationToken cancellationToken = default)
         {
             if (linkId == null)
@@ -229,14 +220,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceLink value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceLink.DeserializeResourceLink(document.RootElement);
-                        }
+                        value = ResourceLink.DeserializeResourceLink(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -247,6 +231,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets a resource link with the specified ID. </summary>
         /// <param name="linkId"> The fully qualified Id of the resource link. For example, /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
         public Response<ResourceLink> Get(string linkId, CancellationToken cancellationToken = default)
         {
             if (linkId == null)
@@ -262,14 +247,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceLink value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceLink.DeserializeResourceLink(document.RootElement);
-                        }
+                        value = ResourceLink.DeserializeResourceLink(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -309,14 +287,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceLinkResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceLinkResult.DeserializeResourceLinkResult(document.RootElement);
-                        }
+                        value = ResourceLinkResult.DeserializeResourceLinkResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -337,14 +308,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceLinkResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceLinkResult.DeserializeResourceLinkResult(document.RootElement);
-                        }
+                        value = ResourceLinkResult.DeserializeResourceLinkResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -371,6 +335,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets a list of resource links at and below the specified source scope. </summary>
         /// <param name="scope"> The fully qualified ID of the scope for getting the resource links. For example, to list resource links at and under a resource group, set the scope to /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public async Task<Response<ResourceLinkResult>> ListAtSourceScopeAsync(string scope, CancellationToken cancellationToken = default)
         {
             if (scope == null)
@@ -386,14 +351,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceLinkResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceLinkResult.DeserializeResourceLinkResult(document.RootElement);
-                        }
+                        value = ResourceLinkResult.DeserializeResourceLinkResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -404,6 +362,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets a list of resource links at and below the specified source scope. </summary>
         /// <param name="scope"> The fully qualified ID of the scope for getting the resource links. For example, to list resource links at and under a resource group, set the scope to /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public Response<ResourceLinkResult> ListAtSourceScope(string scope, CancellationToken cancellationToken = default)
         {
             if (scope == null)
@@ -419,14 +378,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceLinkResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceLinkResult.DeserializeResourceLinkResult(document.RootElement);
-                        }
+                        value = ResourceLinkResult.DeserializeResourceLinkResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -450,6 +402,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="filter"> The filter to apply on the list resource links operation. The supported filter for list resource links is targetId. For example, $filter=targetId eq {value}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<ResourceLinkResult>> ListAtSubscriptionNextPageAsync(string nextLink, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -465,14 +418,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceLinkResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceLinkResult.DeserializeResourceLinkResult(document.RootElement);
-                        }
+                        value = ResourceLinkResult.DeserializeResourceLinkResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -484,6 +430,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="filter"> The filter to apply on the list resource links operation. The supported filter for list resource links is targetId. For example, $filter=targetId eq {value}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<ResourceLinkResult> ListAtSubscriptionNextPage(string nextLink, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -499,14 +446,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceLinkResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceLinkResult.DeserializeResourceLinkResult(document.RootElement);
-                        }
+                        value = ResourceLinkResult.DeserializeResourceLinkResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -530,6 +470,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="scope"> The fully qualified ID of the scope for getting the resource links. For example, to list resource links at and under a resource group, set the scope to /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public async Task<Response<ResourceLinkResult>> ListAtSourceScopeNextPageAsync(string nextLink, string scope, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -549,14 +490,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceLinkResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceLinkResult.DeserializeResourceLinkResult(document.RootElement);
-                        }
+                        value = ResourceLinkResult.DeserializeResourceLinkResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -568,6 +502,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="scope"> The fully qualified ID of the scope for getting the resource links. For example, to list resource links at and under a resource group, set the scope to /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public Response<ResourceLinkResult> ListAtSourceScopeNextPage(string nextLink, string scope, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -587,14 +522,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         ResourceLinkResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ResourceLinkResult.DeserializeResourceLinkResult(document.RootElement);
-                        }
+                        value = ResourceLinkResult.DeserializeResourceLinkResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

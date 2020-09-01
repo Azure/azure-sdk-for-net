@@ -14,8 +14,8 @@ namespace Azure.Graph.Rbac.Models
     {
         internal static GraphError DeserializeGraphError(JsonElement element)
         {
-            string code = default;
-            string value = default;
+            Optional<string> code = default;
+            Optional<string> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("odata.error"))
@@ -24,10 +24,6 @@ namespace Azure.Graph.Rbac.Models
                     {
                         if (property0.NameEquals("code"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             code = property0.Value.GetString();
                             continue;
                         }
@@ -37,10 +33,6 @@ namespace Azure.Graph.Rbac.Models
                             {
                                 if (property1.NameEquals("value"))
                                 {
-                                    if (property1.Value.ValueKind == JsonValueKind.Null)
-                                    {
-                                        continue;
-                                    }
                                     value = property1.Value.GetString();
                                     continue;
                                 }
@@ -51,7 +43,7 @@ namespace Azure.Graph.Rbac.Models
                     continue;
                 }
             }
-            return new GraphError(code, value);
+            return new GraphError(code.Value, value.Value);
         }
     }
 }

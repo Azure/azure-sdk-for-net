@@ -15,13 +15,15 @@ namespace Azure.Security.KeyVault.Keys.Tests
 {
     [ClientTestFixture(
         KeyClientOptions.ServiceVersion.V7_0,
-        KeyClientOptions.ServiceVersion.V7_1_Preview)]
+        KeyClientOptions.ServiceVersion.V7_1)]
     [NonParallelizable]
     public abstract class KeysTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
         public const string AzureKeyVaultUrlEnvironmentVariable = "AZURE_KEYVAULT_URL";
 
-        protected readonly TimeSpan PollingInterval = TimeSpan.FromSeconds(5);
+        protected TimeSpan PollingInterval => Recording.Mode == RecordedTestMode.Playback
+            ? TimeSpan.Zero
+            : TimeSpan.FromSeconds(2);
 
         public KeyClient Client { get; set; }
 

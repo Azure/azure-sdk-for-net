@@ -15,42 +15,27 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static TagsListResult DeserializeTagsListResult(JsonElement element)
         {
-            IReadOnlyList<TagDetails> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<TagDetails>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<TagDetails> array = new List<TagDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(TagDetails.DeserializeTagDetails(item));
-                        }
+                        array.Add(TagDetails.DeserializeTagDetails(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new TagsListResult(value, nextLink);
+            return new TagsListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -24,12 +24,12 @@ namespace Azure.Messaging.EventGrid.Models
             if (Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data");
-                writer.WriteObjectValue(Data);
+                Data.Value.WriteTo(writer);
             }
             if (Optional.IsDefined(DataBase64))
             {
                 writer.WritePropertyName("data_base64");
-                writer.WriteStringValue(DataBase64);
+                writer.WriteBase64StringValue(DataBase64);
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
@@ -67,8 +67,8 @@ namespace Azure.Messaging.EventGrid.Models
         {
             string id = default;
             string source = default;
-            Optional<object> data = default;
-            Optional<string> dataBase64 = default;
+            Optional<JsonElement> data = default;
+            Optional<byte[]> dataBase64 = default;
             string type = default;
             Optional<DateTimeOffset> time = default;
             string specversion = default;
@@ -76,7 +76,7 @@ namespace Azure.Messaging.EventGrid.Models
             Optional<string> datacontenttype = default;
             Optional<string> subject = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -91,12 +91,12 @@ namespace Azure.Messaging.EventGrid.Models
                 }
                 if (property.NameEquals("data"))
                 {
-                    data = property.Value.GetObject();
+                    data = property.Value.Clone();
                     continue;
                 }
                 if (property.NameEquals("data_base64"))
                 {
-                    dataBase64 = property.Value.GetString();
+                    dataBase64 = property.Value.GetBytesFromBase64();
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -129,11 +129,10 @@ namespace Azure.Messaging.EventGrid.Models
                     subject = property.Value.GetString();
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CloudEventInternal(id, source, data.Value, dataBase64.Value, type, Optional.ToNullable(time), specversion, dataschema.Value, datacontenttype.Value, subject.Value, additionalProperties);
+            return new CloudEventInternal(id, source, Optional.ToNullable(data), dataBase64.Value, type, Optional.ToNullable(time), specversion, dataschema.Value, datacontenttype.Value, subject.Value, additionalProperties);
         }
     }
 }

@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Azure.AI.TextAnalytics.Models;
 
 namespace Azure.AI.TextAnalytics
 {
@@ -20,6 +21,14 @@ namespace Azure.AI.TextAnalytics
             ConfidenceScores = new SentimentConfidenceScores(positiveScore, neutralScore, negativeScore);
             Sentences = new ReadOnlyCollection<SentenceSentiment>(sentenceSentiments);
             Warnings = new ReadOnlyCollection<TextAnalyticsWarning>(warnings);
+        }
+
+        internal DocumentSentiment(DocumentSentimentInternal documentSentiment)
+        {
+            Sentiment = documentSentiment.Sentiment;
+            ConfidenceScores = documentSentiment.ConfidenceScores;
+            Sentences = ConvertToSentences(documentSentiment.Sentences);
+            Warnings = Transforms.ConvertToWarnings(documentSentiment.Warnings);
         }
 
         /// <summary>
@@ -43,5 +52,15 @@ namespace Azure.AI.TextAnalytics
         /// Gets the warnings encountered while processing the document.
         /// </summary>
         public IReadOnlyCollection<TextAnalyticsWarning> Warnings { get; }
+
+        private static List<SentenceSentiment> ConvertToSentences(IReadOnlyList<SentenceSentimentInternal> internalSentences)
+        {
+            var sentences = new List<SentenceSentiment>();
+            foreach (var sentence in internalSentences)
+            {
+                sentences.Add(new SentenceSentiment(sentence, internalSentences));
+            }
+            return sentences;
+        }
     }
 }

@@ -14,20 +14,16 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ManagedByTenant DeserializeManagedByTenant(JsonElement element)
         {
-            string tenantId = default;
+            Optional<string> tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tenantId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     tenantId = property.Value.GetString();
                     continue;
                 }
             }
-            return new ManagedByTenant(tenantId);
+            return new ManagedByTenant(tenantId.Value);
         }
     }
 }

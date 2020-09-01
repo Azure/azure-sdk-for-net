@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (PrincipalId != null)
+            if (Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId");
                 writer.WriteStringValue(PrincipalId);
             }
-            if (ClientId != null)
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId");
                 writer.WriteStringValue(ClientId);
@@ -30,30 +30,22 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static UserAssignedIdentity DeserializeUserAssignedIdentity(JsonElement element)
         {
-            string principalId = default;
-            string clientId = default;
+            Optional<string> principalId = default;
+            Optional<string> clientId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     principalId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("clientId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     clientId = property.Value.GetString();
                     continue;
                 }
             }
-            return new UserAssignedIdentity(principalId, clientId);
+            return new UserAssignedIdentity(principalId.Value, clientId.Value);
         }
     }
 }

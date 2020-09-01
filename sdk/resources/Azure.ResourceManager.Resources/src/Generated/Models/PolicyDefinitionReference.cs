@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         /// <summary> Initializes a new instance of PolicyDefinitionReference. </summary>
         /// <param name="policyDefinitionId"> The ID of the policy definition or policy set definition. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionId"/> is null. </exception>
         public PolicyDefinitionReference(string policyDefinitionId)
         {
             if (policyDefinitionId == null)
@@ -23,6 +25,8 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             PolicyDefinitionId = policyDefinitionId;
+            Parameters = new ChangeTrackingDictionary<string, ParameterValuesValue>();
+            GroupNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of PolicyDefinitionReference. </summary>
@@ -41,10 +45,10 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The ID of the policy definition or policy set definition. </summary>
         public string PolicyDefinitionId { get; set; }
         /// <summary> The parameter values for the referenced policy rule. The keys are the parameter names. </summary>
-        public IDictionary<string, ParameterValuesValue> Parameters { get; set; }
+        public IDictionary<string, ParameterValuesValue> Parameters { get; }
         /// <summary> A unique id (within the policy set definition) for this policy definition reference. </summary>
         public string PolicyDefinitionReferenceId { get; set; }
         /// <summary> The name of the groups that this policy definition reference belongs to. </summary>
-        public IList<string> GroupNames { get; set; }
+        public IList<string> GroupNames { get; }
     }
 }

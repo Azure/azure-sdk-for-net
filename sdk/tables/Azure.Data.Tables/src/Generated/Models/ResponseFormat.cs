@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Data.Tables.Models
 {
     /// <summary> The ResponseFormat. </summary>
-    public readonly partial struct ResponseFormat : IEquatable<ResponseFormat>
+    internal readonly partial struct ResponseFormat : IEquatable<ResponseFormat>
     {
         private readonly string _value;
 

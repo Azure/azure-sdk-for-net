@@ -58,7 +58,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
 
                 try
                 {
-                    // Randomly pick one of the available partitons.
+                    // Randomly pick one of the available partitions.
                     var partitions = await this.GetPartitionsAsync(ehClient);
                     var partitionId = partitions[new Random().Next(partitions.Length)];
                     TestUtility.Log($"Randomly picked partition {partitionId}");
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                     TestUtility.Log($"Creating a new receiver with offset EndOFStream");
                     receiver = ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, partitionId, EventPosition.FromEnd());
 
-                    // Attemp to receive the message. This should return only 1 message.
+                    // Attempt to receive the message. This should return only 1 message.
                     var receiveTask = receiver.ReceiveAsync(100);
 
                     // Send a new message which is expected to go to the end of stream.
@@ -609,7 +609,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                         ehClient.CloseAsync());
                 }
 
-                await Assert.ThrowsAsync<ObjectDisposedException>(async () =>
+                await Assert.ThrowsAsync<InvalidOperationException>(async () =>
                 {
                     TestUtility.Log("Receiving another event from partition 0 on the closed receiver, this should fail");
                     await pReceiver.ReceiveAsync(1);

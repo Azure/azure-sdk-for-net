@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ServiceEndpointPolicyDefinitionListResult. </summary>
         internal ServiceEndpointPolicyDefinitionListResult()
         {
+            Value = new ChangeTrackingList<ServiceEndpointPolicyDefinition>();
         }
 
         /// <summary> Initializes a new instance of ServiceEndpointPolicyDefinitionListResult. </summary>

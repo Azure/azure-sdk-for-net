@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="publisher"> The name of the gallery Image Definition publisher. </param>
         /// <param name="offer"> The name of the gallery Image Definition offer. </param>
         /// <param name="sku"> The name of the gallery Image Definition SKU. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisher"/>, <paramref name="offer"/>, or <paramref name="sku"/> is null. </exception>
         public GalleryImageIdentifier(string publisher, string offer, string sku)
         {
             if (publisher == null)

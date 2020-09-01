@@ -13,6 +13,11 @@ namespace Azure.Storage.Files.DataLake.Models
     public class DataLakeQueryCsvTextOptions : DataLakeQueryTextOptions
     {
         /// <summary>
+        /// Record Separator.
+        /// </summary>
+        public string RecordSeparator { get; set; }
+
+        /// <summary>
         /// Column separator.
         /// </summary>
         public string ColumnSeparator { get; set; }

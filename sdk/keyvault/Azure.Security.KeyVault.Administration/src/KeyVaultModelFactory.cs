@@ -22,7 +22,7 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <param name="roleType"> The role type. </param>
         /// <param name="permissions"> Role definition permissions. </param>
         /// <param name="assignableScopes"> Role definition assignable scopes. </param>
-        public static RoleDefinition RoleDefinition(string id, string name, string type, string roleName, string description, string roleType, IReadOnlyList<KeyVaultPermission> permissions, IReadOnlyList<string> assignableScopes) =>
+        public static RoleDefinition RoleDefinition(string id, string name, string type, string roleName, string description, string roleType, IList<KeyVaultPermission> permissions, IList<string> assignableScopes) =>
             new RoleDefinition(id, name, type, roleName, description, roleType, permissions, assignableScopes);
 
         /// <summary>

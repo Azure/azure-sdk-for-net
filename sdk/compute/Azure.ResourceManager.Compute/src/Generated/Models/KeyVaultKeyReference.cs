@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of KeyVaultKeyReference. </summary>
         /// <param name="keyUrl"> The URL referencing a key encryption key in Key Vault. </param>
         /// <param name="sourceVault"> The relative URL of the Key Vault containing the key. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyUrl"/> or <paramref name="sourceVault"/> is null. </exception>
         public KeyVaultKeyReference(string keyUrl, SubResource sourceVault)
         {
             if (keyUrl == null)

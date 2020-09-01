@@ -12,7 +12,7 @@ namespace Azure.Identity.Tests.Mock
         private readonly IVisualStudioCodeAdapter _vscAdapter;
 
         public TestDefaultAzureCredentialFactory(TokenCredentialOptions options, IFileSystemService fileSystem, IProcessService processService, IVisualStudioCodeAdapter vscAdapter)
-            : base(CredentialPipeline.GetInstance(options))
+            : base(options)
         {
             _fileSystem = fileSystem;
             _processService = processService;

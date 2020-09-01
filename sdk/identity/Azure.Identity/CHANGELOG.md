@@ -1,6 +1,26 @@
 # Release History
+## 1.3.0-preview.1 (Unreleased)
 
-## 1.2.0-preview.7 (Unreleased)
+### New Features
+- Restoring Application Authentication APIs from 1.2.0-preview.6
+- Added `IncludeX5CClaimHeader` to `ClientCertificateCredentialOptions` to enable subject name / issuer authentication with the `ClientCertificateCredential`.
+- Added `RedirectUri` to `InteractiveBrowserCredentialOptions` to enable authentication with user specified application with a custom redirect url.
+
+### Fixes and improvements
+- Fixed issue with non GUID Client Ids (Issue [#14585](https://github.com/Azure/azure-sdk-for-net/issues/14585))
+
+
+## 1.2.2 (2020-08-20)
+
+### Fixes and improvements
+- Fixed issue with `InteractiveBrowserCredential` not specifying correct redirectUrl (Issue [#13940](https://github.com/Azure/azure-sdk-for-net/issues/13940))
+
+## 1.2.1 (2020-08-18)
+
+### Fixes and improvements
+- Bug in TaskExtensions.EnsureCompleted method that causes it to unconditionally throw an exception in the environments with synchronization context
+
+## 1.2.0 (2020-08-10)
 
 ### Breaking Changes
 - Removing Application Authentication APIs for GA release. These will be reintroduced in 1.3.0-preview.
@@ -15,6 +35,10 @@
   - Removed methods `Authenticate` and `AuthenticateAsync` from `InteractiveBrowserCredential`
   - Removed methods `Authenticate` and `AuthenticateAsync` from `UsernamePasswordCredential`
   - Removed properties `AllowUnencryptedCache`and `AuthenticationRecord` from `SharedTokenCacheCredentialOptions`
+
+### Fixes and improvements
+- Fixed excess errors in `DefaultAzureCredential` tracing (Issue [#10659](https://github.com/Azure/azure-sdk-for-net/issues/10659))
+- Fixed concurrency issue in `DefaultAzureCredential` (Issue [#13044](https://github.com/Azure/azure-sdk-for-net/issues/13044))
 
 
 ## 1.2.0-preview.6 (2020-07-22)

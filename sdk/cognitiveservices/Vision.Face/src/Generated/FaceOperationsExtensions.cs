@@ -26,13 +26,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// Given query face's faceId, to search the similar-looking faces from a
             /// faceId array, a face list or a large face list. faceId array contains the
             /// faces created by [Face -
-            /// Detect](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395236),
+            /// Detect](https://docs.microsoft.com/rest/api/cognitiveservices/face/face/detectwithurl),
             /// which will expire 24 hours after creation. A "faceListId" is created by
             /// [FaceList -
-            /// Create](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f3039524b)
+            /// Create](https://docs.microsoft.com/rest/api/cognitiveservices/face/facelist/create)
             /// containing persistedFaceIds that will not expire. And a "largeFaceListId"
             /// is created by [LargeFaceList -
-            /// Create](/docs/services/563879b61984550e40cbbe8d/operations/5a157b68d2de3616c086f2cc)
+            /// Create](https://docs.microsoft.com/rest/api/cognitiveservices/face/largefacelist/create)
             /// containing persistedFaceIds that will also not expire. Depending on the
             /// input the returned similar faces list contains faceIds or persistedFaceIds
             /// ranked by similarity.
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// appear in the result if all faces found their counterparts.
             /// * Group API needs at least 2 candidate faces and 1000 at most. We suggest
             /// to try [Face -
-            /// Verify](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f3039523a)
+            /// Verify](https://docs.microsoft.com/rest/api/cognitiveservices/face/face/verifyfacetoface)
             /// when you only have 2 candidate faces.
             /// * The 'recognitionModel' associated with the query faces' faceIds should be
             /// the same.
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<GroupResult> GroupAsync(this IFaceOperations operations, IList<System.Guid> faceIds, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<GroupResult> GroupAsync(this IFaceOperations operations, IList<System.Guid?> faceIds, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GroupWithHttpMessagesAsync(faceIds, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -138,9 +138,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// largePersonGroupId), and return candidate person(s) for that face ranked by
             /// similarity confidence. The person group/large person group should be
             /// trained to make it ready for identification. See more in [PersonGroup -
-            /// Train](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395249)
+            /// Train](https://docs.microsoft.com/rest/api/cognitiveservices/face/persongroup/train)
             /// and [LargePersonGroup -
-            /// Train](/docs/services/563879b61984550e40cbbe8d/operations/599ae2d16ac60f11b48b5aa4).
+            /// Train](https://docs.microsoft.com/rest/api/cognitiveservices/face/largepersongroup/train).
             /// &lt;br/&gt;
             ///
             /// Remarks:&lt;br /&gt;
@@ -155,7 +155,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// and confidenceThreshold. If no person is identified, the returned
             /// candidates will be an empty array.
             /// * Try [Face - Find
-            /// Similar](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395237)
+            /// Similar](https://docs.microsoft.com/rest/api/cognitiveservices/face/face/findsimilar)
             /// when you need to find similar faces from a face list/large face list
             /// instead of a person group/large person group.
             /// * The 'recognitionModel' associated with the query faces' faceIds should be
@@ -192,7 +192,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<IdentifyResult>> IdentifyAsync(this IFaceOperations operations, IList<System.Guid> faceIds, string personGroupId = default(string), string largePersonGroupId = default(string), int? maxNumOfCandidatesReturned = 1, double? confidenceThreshold = default(double?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<IdentifyResult>> IdentifyAsync(this IFaceOperations operations, IList<System.Guid?> faceIds, string personGroupId = default(string), string largePersonGroupId = default(string), int? maxNumOfCandidatesReturned = 1, double? confidenceThreshold = default(double?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.IdentifyWithHttpMessagesAsync(faceIds, personGroupId, largePersonGroupId, maxNumOfCandidatesReturned, confidenceThreshold, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -241,11 +241,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// * No image will be stored. Only the extracted face feature will be stored
             /// on server. The faceId is an identifier of the face feature and will be used
             /// in [Face -
-            /// Identify](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395239),
+            /// Identify](https://docs.microsoft.com/rest/api/cognitiveservices/face/face/identify),
             /// [Face -
-            /// Verify](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f3039523a),
+            /// Verify](https://docs.microsoft.com/rest/api/cognitiveservices/face/face/verifyfacetoface),
             /// and [Face - Find
-            /// Similar](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395237).
+            /// Similar](https://docs.microsoft.com/rest/api/cognitiveservices/face/face/findsimilar).
             /// The stored face feature(s) will expire and be deleted 24 hours after the
             /// original detection call.
             /// * Optional parameters include faceId, landmarks, and attributes. Attributes
@@ -257,11 +257,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// * Up to 100 faces can be returned for an image. Faces are ranked by face
             /// rectangle size from large to small.
             /// * For optimal results when querying [Face -
-            /// Identify](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395239),
+            /// Identify](https://docs.microsoft.com/rest/api/cognitiveservices/face/face/identify),
             /// [Face -
-            /// Verify](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f3039523a),
+            /// Verify](https://docs.microsoft.com/rest/api/cognitiveservices/face/face/verifyfacetoface),
             /// and [Face - Find
-            /// Similar](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395237)
+            /// Similar](https://docs.microsoft.com/rest/api/cognitiveservices/face/face/findsimilar)
             /// ('returnFaceId' is true), please use faces that are: frontal, clear, and
             /// with a minimum size of 200x200 pixels (100 pixels between eyes).
             /// * The minimum detectable face size is 36x36 pixels in an image no larger
@@ -269,11 +269,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// will need a proportionally larger minimum face size.
             /// * Different 'detectionModel' values can be provided. To use and compare
             /// different detection models, please refer to [How to specify a detection
-            /// model](https://docs.microsoft.com/en-us/azure/cognitive-services/face/face-api-how-to-topics/specify-detection-model)
+            /// model](https://docs.microsoft.com/azure/cognitive-services/face/face-api-how-to-topics/specify-detection-model)
             /// | Model | Recommended use-case(s) |
             /// | ---------- | -------- |
             /// | 'detection_01': | The default detection model for [Face -
-            /// Detect](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395236).
+            /// Detect](https://docs.microsoft.com/rest/api/cognitiveservices/face/face/detectwithurl).
             /// Recommend for near frontal face detection. For scenarios with exceptionally
             /// large angle (head-pose) faces, occluded faces or wrong image orientation,
             /// the faces in such cases may not be detected. |
@@ -287,22 +287,23 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// explicitly specify the model you need in this parameter. Once specified,
             /// the detected faceIds will be associated with the specified recognition
             /// model. More details, please refer to [How to specify a recognition
-            /// model](https://docs.microsoft.com/en-us/azure/cognitive-services/face/face-api-how-to-topics/specify-recognition-model)
+            /// model](https://docs.microsoft.com/azure/cognitive-services/face/face-api-how-to-topics/specify-recognition-model)
             /// | Model | Recommended use-case(s) |
             /// | ---------- | -------- |
             /// | 'recognition_01': | The default recognition model for [Face -
-            /// Detect](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395236).
+            /// Detect](https://docs.microsoft.com/rest/api/cognitiveservices/face/face/detectwithurl).
             /// All those faceIds created before 2019 March are bonded with this
             /// recognition model. |
-            /// | 'recognition_02': | Recognition model released in 2019 March.
-            /// 'recognition_02' is recommended since its overall accuracy is improved
-            /// compared with 'recognition_01'. |
+            /// | 'recognition_02': | Recognition model released in 2019 March. |
+            /// | 'recognition_03': | Recognition model released in 2020 May.
+            /// 'recognition_03' is recommended since its overall accuracy is improved
+            /// compared with 'recognition_01' and 'recognition_02'. |
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='url'>
-            /// Publicly reachable URL of an image
+            /// Publicly reachable URL of an image.
             /// </param>
             /// <param name='returnFaceId'>
             /// A value indicating whether the operation should return faceIds of detected
@@ -326,7 +327,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// performing Face - Detect or (Large)FaceList - Create or (Large)PersonGroup
             /// - Create. The default value is 'recognition_01', if latest model needed,
             /// please explicitly specify the model you need. Possible values include:
-            /// 'recognition_01', 'recognition_02'
+            /// 'recognition_01', 'recognition_02', 'recognition_03'
             /// </param>
             /// <param name='returnRecognitionModel'>
             /// A value indicating whether the operation should return 'recognitionModel'
@@ -343,7 +344,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<DetectedFace>> DetectWithUrlAsync(this IFaceOperations operations, string url, bool? returnFaceId = true, bool? returnFaceLandmarks = false, IList<FaceAttributeType> returnFaceAttributes = default(IList<FaceAttributeType>), string recognitionModel = default(string), bool? returnRecognitionModel = false, string detectionModel = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<DetectedFace>> DetectWithUrlAsync(this IFaceOperations operations, string url, bool? returnFaceId = true, bool? returnFaceLandmarks = false, IList<FaceAttributeType?> returnFaceAttributes = default(IList<FaceAttributeType?>), string recognitionModel = default(string), bool? returnRecognitionModel = false, string detectionModel = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.DetectWithUrlWithHttpMessagesAsync(url, returnFaceId, returnFaceLandmarks, returnFaceAttributes, recognitionModel, returnRecognitionModel, detectionModel, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -395,11 +396,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// * No image will be stored. Only the extracted face feature will be stored
             /// on server. The faceId is an identifier of the face feature and will be used
             /// in [Face -
-            /// Identify](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395239),
+            /// Identify](https://docs.microsoft.com/rest/api/cognitiveservices/face/face/identify),
             /// [Face -
-            /// Verify](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f3039523a),
+            /// Verify](https://docs.microsoft.com/rest/api/cognitiveservices/face/face/verifyfacetoface),
             /// and [Face - Find
-            /// Similar](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395237).
+            /// Similar](https://docs.microsoft.com/rest/api/cognitiveservices/face/face/findsimilar).
             /// The stored face feature(s) will expire and be deleted 24 hours after the
             /// original detection call.
             /// * Optional parameters include faceId, landmarks, and attributes. Attributes
@@ -411,11 +412,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// * Up to 100 faces can be returned for an image. Faces are ranked by face
             /// rectangle size from large to small.
             /// * For optimal results when querying [Face -
-            /// Identify](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395239),
+            /// Identify](https://docs.microsoft.com/rest/api/cognitiveservices/face/face/identify),
             /// [Face -
-            /// Verify](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f3039523a),
+            /// Verify](https://docs.microsoft.com/rest/api/cognitiveservices/face/face/verifyfacetoface),
             /// and [Face - Find
-            /// Similar](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395237)
+            /// Similar](https://docs.microsoft.com/rest/api/cognitiveservices/face/face/findsimilar)
             /// ('returnFaceId' is true), please use faces that are: frontal, clear, and
             /// with a minimum size of 200x200 pixels (100 pixels between eyes).
             /// * The minimum detectable face size is 36x36 pixels in an image no larger
@@ -423,11 +424,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// will need a proportionally larger minimum face size.
             /// * Different 'detectionModel' values can be provided. To use and compare
             /// different detection models, please refer to [How to specify a detection
-            /// model](https://docs.microsoft.com/en-us/azure/cognitive-services/face/face-api-how-to-topics/specify-detection-model)
+            /// model](https://docs.microsoft.com/azure/cognitive-services/face/face-api-how-to-topics/specify-detection-model)
             /// | Model | Recommended use-case(s) |
             /// | ---------- | -------- |
             /// | 'detection_01': | The default detection model for [Face -
-            /// Detect](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395236).
+            /// Detect](https://docs.microsoft.com/rest/api/cognitiveservices/face/face/detectwithurl).
             /// Recommend for near frontal face detection. For scenarios with exceptionally
             /// large angle (head-pose) faces, occluded faces or wrong image orientation,
             /// the faces in such cases may not be detected. |
@@ -441,16 +442,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// explicitly specify the model you need in this parameter. Once specified,
             /// the detected faceIds will be associated with the specified recognition
             /// model. More details, please refer to [How to specify a recognition
-            /// model](https://docs.microsoft.com/en-us/azure/cognitive-services/face/face-api-how-to-topics/specify-recognition-model)
+            /// model](https://docs.microsoft.com/azure/cognitive-services/face/face-api-how-to-topics/specify-recognition-model)
             /// | Model | Recommended use-case(s) |
             /// | ---------- | -------- |
             /// | 'recognition_01': | The default recognition model for [Face -
-            /// Detect](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395236).
+            /// Detect](https://docs.microsoft.com/rest/api/cognitiveservices/face/face/detectwithurl).
             /// All those faceIds created before 2019 March are bonded with this
             /// recognition model. |
-            /// | 'recognition_02': | Recognition model released in 2019 March.
-            /// 'recognition_02' is recommended since its overall accuracy is improved
-            /// compared with 'recognition_01'. |
+            /// | 'recognition_02': | Recognition model released in 2019 March. |
+            /// | 'recognition_03': | Recognition model released in 2020 May.
+            /// 'recognition_03' is recommended since its overall accuracy is improved
+            /// compared with 'recognition_01' and 'recognition_02'. |
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -480,7 +482,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// performing Face - Detect or (Large)FaceList - Create or (Large)PersonGroup
             /// - Create. The default value is 'recognition_01', if latest model needed,
             /// please explicitly specify the model you need. Possible values include:
-            /// 'recognition_01', 'recognition_02'
+            /// 'recognition_01', 'recognition_02', 'recognition_03'
             /// </param>
             /// <param name='returnRecognitionModel'>
             /// A value indicating whether the operation should return 'recognitionModel'
@@ -497,7 +499,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<DetectedFace>> DetectWithStreamAsync(this IFaceOperations operations, Stream image, bool? returnFaceId = true, bool? returnFaceLandmarks = false, IList<FaceAttributeType> returnFaceAttributes = default(IList<FaceAttributeType>), string recognitionModel = default(string), bool? returnRecognitionModel = false, string detectionModel = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<DetectedFace>> DetectWithStreamAsync(this IFaceOperations operations, Stream image, bool? returnFaceId = true, bool? returnFaceLandmarks = false, IList<FaceAttributeType?> returnFaceAttributes = default(IList<FaceAttributeType?>), string recognitionModel = default(string), bool? returnRecognitionModel = false, string detectionModel = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.DetectWithStreamWithHttpMessagesAsync(image, returnFaceId, returnFaceLandmarks, returnFaceAttributes, recognitionModel, returnRecognitionModel, detectionModel, null, cancellationToken).ConfigureAwait(false))
                 {

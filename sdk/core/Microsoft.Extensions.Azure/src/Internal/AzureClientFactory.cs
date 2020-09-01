@@ -9,7 +9,7 @@ namespace Microsoft.Extensions.Azure
 {
     internal class AzureClientFactory<TClient, TOptions>: IAzureClientFactory<TClient>
     {
-        private readonly Dictionary<string, ClientRegistration<TClient, TOptions>> _clientRegistrations;
+        private readonly Dictionary<string, ClientRegistration<TClient>> _clientRegistrations;
 
         private readonly IServiceProvider _serviceProvider;
 
@@ -22,10 +22,11 @@ namespace Microsoft.Extensions.Azure
         public AzureClientFactory(
             IServiceProvider serviceProvider,
             IOptionsMonitor<AzureClientCredentialOptions<TClient>> clientsOptions,
-            IEnumerable<ClientRegistration<TClient, TOptions>> clientRegistrations, IOptionsMonitor<TOptions> monitor,
+            IEnumerable<ClientRegistration<TClient>> clientRegistrations,
+            IOptionsMonitor<TOptions> monitor,
             EventSourceLogForwarder logForwarder)
         {
-            _clientRegistrations = new Dictionary<string, ClientRegistration<TClient, TOptions>>();
+            _clientRegistrations = new Dictionary<string, ClientRegistration<TClient>>();
             foreach (var registration in clientRegistrations)
             {
                 _clientRegistrations[registration.Name] = registration;
@@ -39,7 +40,8 @@ namespace Microsoft.Extensions.Azure
 
         public TClient CreateClient(string name)
         {
-            if (!_clientRegistrations.TryGetValue(name, out ClientRegistration<TClient, TOptions> registration))
+            _logForwarder.Start();
+            if (!_clientRegistrations.TryGetValue(name, out ClientRegistration<TClient> registration))
             {
                 throw new InvalidOperationException($"Unable to find client registration with type '{typeof(TClient).Name}' and name '{name}'.");
             }

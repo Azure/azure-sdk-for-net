@@ -110,24 +110,6 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Questions");
             }
-            if (Answer != null)
-            {
-                if (Answer.Length > 25000)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "Answer", 25000);
-                }
-                if (Answer.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "Answer", 1);
-                }
-            }
-            if (Source != null)
-            {
-                if (Source.Length > 300)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "Source", 300);
-                }
-            }
             if (Metadata != null)
             {
                 foreach (var element in Metadata)
@@ -137,10 +119,6 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
                         element.Validate();
                     }
                 }
-            }
-            if (Context != null)
-            {
-                Context.Validate();
             }
         }
     }

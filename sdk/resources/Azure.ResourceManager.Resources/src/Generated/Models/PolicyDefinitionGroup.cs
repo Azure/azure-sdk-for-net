@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         /// <summary> Initializes a new instance of PolicyDefinitionGroup. </summary>
         /// <param name="name"> The name of the group. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public PolicyDefinitionGroup(string name)
         {
             if (name == null)

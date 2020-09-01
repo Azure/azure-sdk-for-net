@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of FirewallPolicy. </summary>
         public FirewallPolicy()
         {
+            RuleGroups = new ChangeTrackingList<SubResource>();
+            Firewalls = new ChangeTrackingList<SubResource>();
+            ChildPolicies = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of FirewallPolicy. </summary>
@@ -34,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="threatIntelWhitelist"> ThreatIntel Whitelist for Firewall Policy. </param>
         /// <param name="intrusionSystemMode"> The operation mode for Intrusion system. </param>
         /// <param name="transportSecurity"> TLS Configuration definition. </param>
-        internal FirewallPolicy(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, ManagedServiceIdentity identity, IList<SubResource> ruleGroups, ProvisioningState? provisioningState, SubResource basePolicy, IList<SubResource> firewalls, IList<SubResource> childPolicies, AzureFirewallThreatIntelMode? threatIntelMode, FirewallPolicyThreatIntelWhitelist threatIntelWhitelist, FirewallPolicyIntrusionSystemMode? intrusionSystemMode, FirewallPolicyTransportSecurity transportSecurity) : base(id, name, type, location, tags)
+        internal FirewallPolicy(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, ManagedServiceIdentity identity, IReadOnlyList<SubResource> ruleGroups, ProvisioningState? provisioningState, SubResource basePolicy, IReadOnlyList<SubResource> firewalls, IReadOnlyList<SubResource> childPolicies, AzureFirewallThreatIntelMode? threatIntelMode, FirewallPolicyThreatIntelWhitelist threatIntelWhitelist, FirewallPolicyIntrusionSystemMode? intrusionSystemMode, FirewallPolicyTransportSecurity transportSecurity) : base(id, name, type, location, tags)
         {
             Etag = etag;
             Identity = identity;
@@ -54,15 +58,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The identity of the firewall policy. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> List of references to FirewallPolicyRuleGroups. </summary>
-        public IList<SubResource> RuleGroups { get; }
+        public IReadOnlyList<SubResource> RuleGroups { get; }
         /// <summary> The provisioning state of the firewall policy resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The parent firewall policy from which rules are inherited. </summary>
         public SubResource BasePolicy { get; set; }
         /// <summary> List of references to Azure Firewalls that this Firewall Policy is associated with. </summary>
-        public IList<SubResource> Firewalls { get; }
+        public IReadOnlyList<SubResource> Firewalls { get; }
         /// <summary> List of references to Child Firewall Policies. </summary>
-        public IList<SubResource> ChildPolicies { get; }
+        public IReadOnlyList<SubResource> ChildPolicies { get; }
         /// <summary> The operation mode for Threat Intelligence. </summary>
         public AzureFirewallThreatIntelMode? ThreatIntelMode { get; set; }
         /// <summary> ThreatIntel Whitelist for Firewall Policy. </summary>

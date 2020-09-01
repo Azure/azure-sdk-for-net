@@ -26,7 +26,7 @@ namespace Azure.Messaging.EventGrid.Models
             writer.WritePropertyName("subject");
             writer.WriteStringValue(Subject);
             writer.WritePropertyName("data");
-            writer.WriteObjectValue(Data);
+            Data.WriteTo(writer);
             writer.WritePropertyName("eventType");
             writer.WriteStringValue(EventType);
             writer.WritePropertyName("eventTime");
@@ -41,7 +41,7 @@ namespace Azure.Messaging.EventGrid.Models
             string id = default;
             Optional<string> topic = default;
             string subject = default;
-            object data = default;
+            JsonElement data = default;
             string eventType = default;
             DateTimeOffset eventTime = default;
             Optional<string> metadataVersion = default;
@@ -65,7 +65,7 @@ namespace Azure.Messaging.EventGrid.Models
                 }
                 if (property.NameEquals("data"))
                 {
-                    data = property.Value.GetObject();
+                    data = property.Value.Clone();
                     continue;
                 }
                 if (property.NameEquals("eventType"))

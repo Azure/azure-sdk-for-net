@@ -152,6 +152,14 @@ directive:
 ``` yaml
 directive:
   from: swagger-document
+  where: $.definitions.SearchIndexerStatus
+  transform: >
+    $.properties.lastResult["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
   where: $.definitions.TextTranslationSkill
   transform: >
     $.properties.suggestedFrom["x-nullable"] = true;

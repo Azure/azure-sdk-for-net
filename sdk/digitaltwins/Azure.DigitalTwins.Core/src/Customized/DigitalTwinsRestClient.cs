@@ -181,7 +181,7 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal async Task<Response<string>> UpdateAsync(string id, string patchDocument, string ifMatch = null, CancellationToken cancellationToken = default)
+        internal async Task<Response> UpdateAsync(string id, string patchDocument, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -201,14 +201,8 @@ namespace Azure.DigitalTwins.Core
                 switch (message.Response.Status)
                 {
                     case 202:
-                        {
-                            string value = default;
-                            using JsonDocument document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            value = document.RootElement.GetRawText();
-                            return Response.FromValue(value, message.Response);
-                        }
                     case 204:
-                        return Response.FromValue<string>(null, message.Response);
+                        return message.Response;
 
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -221,7 +215,7 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal Response<string> Update(string id, string patchDocument, string ifMatch = null, CancellationToken cancellationToken = default)
+        internal Response Update(string id, string patchDocument, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -241,14 +235,8 @@ namespace Azure.DigitalTwins.Core
                 switch (message.Response.Status)
                 {
                     case 202:
-                        {
-                            string value = default;
-                            using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            value = document.RootElement.GetRawText();
-                            return Response.FromValue(value, message.Response);
-                        }
                     case 204:
-                        return Response.FromValue<string>(null, message.Response);
+                        return message.Response;
 
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -549,7 +537,7 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal async Task<Response<string>> UpdateComponentAsync(string id, string componentPath, string patchDocument = null, string ifMatch = null, CancellationToken cancellationToken = default)
+        internal async Task<Response> UpdateComponentAsync(string id, string componentPath, string patchDocument = null, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -569,14 +557,8 @@ namespace Azure.DigitalTwins.Core
                 switch (message.Response.Status)
                 {
                     case 202:
-                        {
-                            string value = default;
-                            using JsonDocument document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            value = document.RootElement.GetRawText();
-                            return Response.FromValue(value, message.Response);
-                        }
                     case 204:
-                        return Response.FromValue<string>(null, message.Response);
+                        return message.Response;
 
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -589,7 +571,7 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal Response<string> UpdateComponent(string id, string componentPath, string patchDocument = null, string ifMatch = null, CancellationToken cancellationToken = default)
+        internal Response UpdateComponent(string id, string componentPath, string patchDocument = null, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -609,14 +591,8 @@ namespace Azure.DigitalTwins.Core
                 switch (message.Response.Status)
                 {
                     case 202:
-                        {
-                            string value = default;
-                            using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            value = document.RootElement.GetRawText();
-                            return Response.FromValue(value, message.Response);
-                        }
                     case 204:
-                        return Response.FromValue<string>(null, message.Response);
+                        return message.Response;
 
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -654,6 +630,7 @@ namespace Azure.DigitalTwins.Core
                 {
                     case 204:
                         return message.Response;
+
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                 }
@@ -690,6 +667,7 @@ namespace Azure.DigitalTwins.Core
                 {
                     case 204:
                         return message.Response;
+
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                 }
@@ -730,6 +708,7 @@ namespace Azure.DigitalTwins.Core
                 {
                     case 204:
                         return message.Response;
+
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                 }
@@ -770,6 +749,7 @@ namespace Azure.DigitalTwins.Core
                 {
                     case 204:
                         return message.Response;
+
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                 }
@@ -797,6 +777,7 @@ namespace Azure.DigitalTwins.Core
             }
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json; charset=utf-8");
+            request.Headers.Add("Accept", "application/json");
             request.Content = new StringRequestContent(patchDocument);
             return message;
         }
@@ -815,6 +796,7 @@ namespace Azure.DigitalTwins.Core
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json; charset=utf-8");
+            request.Headers.Add("Accept", "application/json");
             if (relationship != null)
             {
                 request.Content = new StringRequestContent(relationship);
@@ -836,6 +818,7 @@ namespace Azure.DigitalTwins.Core
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json-patch+json; charset=utf-8");
+            request.Headers.Add("Accept", "application/json");
             if (patchDocument != null)
             {
                 request.Content = new StringRequestContent(patchDocument);
@@ -861,6 +844,7 @@ namespace Azure.DigitalTwins.Core
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json-patch+json; charset=utf-8");
+            request.Headers.Add("Accept", "application/json");
             if (ifMatch != null)
             {
                 request.Headers.Add(IfMatchHeaderKey, ifMatch);
@@ -890,6 +874,7 @@ namespace Azure.DigitalTwins.Core
                 request.Headers.Add("dt-timestamp", dtTimestamp);
             }
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (telemetry != null)
             {
                 request.Content = new StringRequestContent(telemetry);
@@ -917,6 +902,7 @@ namespace Azure.DigitalTwins.Core
                 request.Headers.Add("dt-timestamp", dtTimestamp);
             }
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (telemetry != null)
             {
                 request.Content = new StringRequestContent(telemetry);
@@ -925,6 +911,7 @@ namespace Azure.DigitalTwins.Core
         }
 
         #region null overrides
+
         // The following methods are only declared so that autorest does not create these functions in the generated code.
         // For methods that we need to override, when the parameter list is the same, autorest knows not to generate them again.
         // When the parameter list changes, autorest generates the methods again.
@@ -971,6 +958,7 @@ namespace Azure.DigitalTwins.Core
         private HttpMessage CreateAddRequest(string id, object twin) => null;
 
 #pragma warning restore CA1801, IDE0051, IDE0060 // Remove unused parameter
-        #endregion
+
+        #endregion null overrides
     }
 }

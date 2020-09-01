@@ -14,40 +14,28 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static OnErrorDeploymentExtended DeserializeOnErrorDeploymentExtended(JsonElement element)
         {
-            string provisioningState = default;
-            OnErrorDeploymentType? type = default;
-            string deploymentName = default;
+            Optional<string> provisioningState = default;
+            Optional<OnErrorDeploymentType> type = default;
+            Optional<string> deploymentName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     provisioningState = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString().ToOnErrorDeploymentType();
                     continue;
                 }
                 if (property.NameEquals("deploymentName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     deploymentName = property.Value.GetString();
                     continue;
                 }
             }
-            return new OnErrorDeploymentExtended(provisioningState, type, deploymentName);
+            return new OnErrorDeploymentExtended(provisioningState.Value, Optional.ToNullable(type), deploymentName.Value);
         }
     }
 }

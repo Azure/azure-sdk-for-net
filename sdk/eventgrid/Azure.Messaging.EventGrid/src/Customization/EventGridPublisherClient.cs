@@ -4,9 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
@@ -18,7 +20,7 @@ using Azure.Messaging.EventGrid.Models;
 namespace Azure.Messaging.EventGrid
 {
     /// <summary>
-    /// Client used to interact with the Event Grid service
+    /// Client used to interact with the Event Grid service.
     /// </summary>
     public class EventGridPublisherClient
     {
@@ -27,10 +29,10 @@ namespace Azure.Messaging.EventGrid
         private string _hostName => _endpoint.Host;
         private readonly Uri _endpoint;
         private readonly AzureKeyCredential _key;
-        private string _apiVersion;
-        private ObjectSerializer _serializer;
+        private readonly string _apiVersion;
+        private readonly ObjectSerializer _dataSerializer;
 
-        /// <summary>Initalizes an instance of EventGridClient</summary>
+        /// <summary>Initalizes an instance of EventGridClient.</summary>
         protected EventGridPublisherClient()
         {
         }
@@ -59,12 +61,12 @@ namespace Azure.Messaging.EventGrid
         {
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new EventGridPublisherClientOptions();
-            _serializer = options.Serializer ?? new JsonObjectSerializer();
-            _apiVersion = options.GetVersionString();
+            _apiVersion = options.Version.GetVersionString();
+            _dataSerializer = options.DataSerializer ?? new JsonObjectSerializer();
             _endpoint = endpoint;
             _key = credential;
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.SasKeyName));
-            _serviceRestClient = new ServiceRestClient(new ClientDiagnostics(options), pipeline, options.GetVersionString());
+            _serviceRestClient = new ServiceRestClient(new ClientDiagnostics(options), pipeline, options.Version.GetVersionString());
             _clientDiagnostics = new ClientDiagnostics(options);
         }
 
@@ -78,32 +80,32 @@ namespace Azure.Messaging.EventGrid
         {
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new EventGridPublisherClientOptions();
-            _serializer = options.Serializer ?? new JsonObjectSerializer();
+            _dataSerializer = options.DataSerializer ?? new JsonObjectSerializer();
             _endpoint = endpoint;
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new EventGridSharedAccessSignatureCredentialPolicy(credential));
-            _serviceRestClient = new ServiceRestClient(new ClientDiagnostics(options), pipeline, options.GetVersionString());
+            _serviceRestClient = new ServiceRestClient(new ClientDiagnostics(options), pipeline, options.Version.GetVersionString());
             _clientDiagnostics = new ClientDiagnostics(options);
         }
 
         /// <summary> Publishes a batch of EventGridEvents to an Azure Event Grid topic. </summary>
         /// <param name="events"> An array of events to be published to Event Grid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> PublishEventsAsync(IEnumerable<EventGridEvent> events, CancellationToken cancellationToken = default)
-            => await PublishEventsInternal(events, true /*async*/, cancellationToken).ConfigureAwait(false);
+        public virtual async Task<Response> SendEventsAsync(IEnumerable<EventGridEvent> events, CancellationToken cancellationToken = default)
+            => await SendEventsInternal(events, true /*async*/, cancellationToken).ConfigureAwait(false);
 
         /// <summary> Publishes a batch of EventGridEvents to an Azure Event Grid topic. </summary>
         /// <param name="events"> An array of events to be published to Event Grid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response PublishEvents(IEnumerable<EventGridEvent> events, CancellationToken cancellationToken = default)
-            => PublishEventsInternal(events, false /*async*/, cancellationToken).EnsureCompleted();
+        public virtual Response SendEvents(IEnumerable<EventGridEvent> events, CancellationToken cancellationToken = default)
+            => SendEventsInternal(events, false /*async*/, cancellationToken).EnsureCompleted();
 
         /// <summary> Publishes a batch of EventGridEvents to an Azure Event Grid topic. </summary>
         /// <param name="events"> An array of events to be published to Event Grid. </param>
-        /// <param name="async">Whether to invoke the operation asynchronously</param>
+        /// <param name="async">Whether to invoke the operation asynchronously.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        private async Task<Response> PublishEventsInternal(IEnumerable<EventGridEvent> events, bool async, CancellationToken cancellationToken = default)
+        private async Task<Response> SendEventsInternal(IEnumerable<EventGridEvent> events, bool async, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(EventGridPublisherClient)}.{nameof(PublishEvents)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(EventGridPublisherClient)}.{nameof(SendEvents)}");
             scope.Start();
 
             try
@@ -117,13 +119,27 @@ namespace Azure.Messaging.EventGrid
                     // Individual events cannot be null
                     Argument.AssertNotNull(egEvent, nameof(egEvent));
 
+                    JsonDocument data;
+                    if (egEvent.Data is BinaryData binaryEventData)
+                    {
+                        try
+                        {
+                            data = JsonDocument.Parse(binaryEventData);
+                        }
+                        catch (JsonException)
+                        {
+                            data = SerializeObjectToJsonDocument(binaryEventData.ToString(), typeof(string), cancellationToken);
+                        }
+                    }
+                    else
+                    {
+                        data = SerializeObjectToJsonDocument(egEvent.Data, egEvent.Data.GetType(), cancellationToken);
+                    }
+
                     EventGridEventInternal newEGEvent = new EventGridEventInternal(
                             egEvent.Id,
                             egEvent.Subject,
-                            new EventGridSerializer(
-                                egEvent.Data,
-                                _serializer,
-                                cancellationToken),
+                            data.RootElement,
                             egEvent.EventType,
                             egEvent.EventTime,
                             egEvent.DataVersion)
@@ -159,22 +175,22 @@ namespace Azure.Messaging.EventGrid
         /// <summary> Publishes a batch of CloudEvents to an Azure Event Grid topic. </summary>
         /// <param name="events"> An array of events to be published to Event Grid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> PublishCloudEventsAsync(IEnumerable<CloudEvent> events, CancellationToken cancellationToken = default)
-            => await PublishCloudEventsInternal(events, true /*async*/, cancellationToken).ConfigureAwait(false);
+        public virtual async Task<Response> SendEventsAsync(IEnumerable<CloudEvent> events, CancellationToken cancellationToken = default)
+            => await SendCloudEventsInternal(events, true /*async*/, cancellationToken).ConfigureAwait(false);
 
         /// <summary> Publishes a batch of CloudEvents to an Azure Event Grid topic. </summary>
         /// <param name="events"> An array of events to be published to Event Grid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response PublishCloudEvents(IEnumerable<CloudEvent> events, CancellationToken cancellationToken = default)
-            => PublishCloudEventsInternal(events, false /*async*/, cancellationToken).EnsureCompleted();
+        public virtual Response SendEvents(IEnumerable<CloudEvent> events, CancellationToken cancellationToken = default)
+            => SendCloudEventsInternal(events, false /*async*/, cancellationToken).EnsureCompleted();
 
         /// <summary> Publishes a batch of CloudEvents to an Azure Event Grid topic. </summary>
         /// <param name="events"> An array of events to be published to Event Grid. </param>
-        /// <param name="async">Whether to invoke the operation asynchronously</param>
+        /// <param name="async">Whether to invoke the operation asynchronously.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        private async Task<Response> PublishCloudEventsInternal(IEnumerable<CloudEvent> events, bool async, CancellationToken cancellationToken = default)
+        private async Task<Response> SendCloudEventsInternal(IEnumerable<CloudEvent> events, bool async, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(EventGridPublisherClient)}.{nameof(PublishCloudEvents)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(EventGridPublisherClient)}.{nameof(SendEvents)}");
             scope.Start();
 
             try
@@ -192,9 +208,10 @@ namespace Azure.Messaging.EventGrid
                         cloudEvent.Id,
                         cloudEvent.Source,
                         cloudEvent.Type,
-                        cloudEvent.SpecVersion)
+                        "1.0")
                     {
                         Time = cloudEvent.Time,
+                        DataBase64 = cloudEvent.DataBase64,
                         Datacontenttype = cloudEvent.DataContentType,
                         Dataschema = cloudEvent.DataSchema,
                         Subject = cloudEvent.Subject
@@ -202,27 +219,18 @@ namespace Azure.Messaging.EventGrid
 
                     foreach (KeyValuePair<string, object> kvp in cloudEvent.ExtensionAttributes)
                     {
-                        newCloudEvent.Add(kvp.Key, new EventGridSerializer(kvp.Value, _serializer, cancellationToken));
+                        newCloudEvent.Add(kvp.Key, new CustomModelSerializer(kvp.Value, _dataSerializer, cancellationToken));
                     }
 
                     // The 'Data' property is optional for CloudEvents
+                    // Additionally, if the type of data is binary, 'Data' will not be populated (data will be stored in 'DataBase64' instead)
                     if (cloudEvent.Data != null)
                     {
-                        if (cloudEvent.Data is IEnumerable<byte> enumerable)
-                        {
-                            newCloudEvent.DataBase64 = Convert.ToBase64String(enumerable.ToArray());
-                        }
-                        else if (cloudEvent.Data is ReadOnlyMemory<byte> memory)
-                        {
-                            newCloudEvent.DataBase64 = Convert.ToBase64String(memory.ToArray());
-                        }
-                        else
-                        {
-                            newCloudEvent.Data = new EventGridSerializer(
-                                cloudEvent.Data,
-                                _serializer,
-                                cancellationToken);
-                        }
+                        MemoryStream stream = new MemoryStream();
+                        _dataSerializer.Serialize(stream, cloudEvent.Data, cloudEvent.Data.GetType(), cancellationToken);
+                        stream.Position = 0;
+                        JsonDocument data = JsonDocument.Parse(stream);
+                        newCloudEvent.Data = data.RootElement;
                     }
                     eventsWithSerializedPayloads.Add(newCloudEvent);
                 }
@@ -252,29 +260,29 @@ namespace Azure.Messaging.EventGrid
         /// <summary> Publishes a batch of custom events to an Azure Event Grid topic. </summary>
         /// <param name="events"> An array of events to be published to Event Grid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> PublishCustomEventsAsync(IEnumerable<object> events, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> SendEventsAsync(IEnumerable<object> events, CancellationToken cancellationToken = default)
             => await PublishCustomEventsInternal(events, true /*async*/, cancellationToken).ConfigureAwait(false);
 
         /// <summary> Publishes a batch of custom events to an Azure Event Grid topic. </summary>
         /// <param name="events"> An array of events to be published to Event Grid. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response PublishCustomEvents(IEnumerable<object> events, CancellationToken cancellationToken = default)
+        public virtual Response SendEvents(IEnumerable<object> events, CancellationToken cancellationToken = default)
             => PublishCustomEventsInternal(events, false /*async*/, cancellationToken).EnsureCompleted();
 
         private async Task<Response> PublishCustomEventsInternal(IEnumerable<object> events, bool async, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(EventGridPublisherClient)}.{nameof(PublishCustomEvents)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(EventGridPublisherClient)}.{nameof(SendEvents)}");
             scope.Start();
 
             try
             {
-                List<EventGridSerializer> serializedEvents = new List<EventGridSerializer>();
+                List<CustomModelSerializer> serializedEvents = new List<CustomModelSerializer>();
                 foreach (object customEvent in events)
                 {
                     serializedEvents.Add(
-                        new EventGridSerializer(
+                        new CustomModelSerializer(
                             customEvent,
-                            _serializer,
+                            _dataSerializer,
                             cancellationToken));
                 }
                 if (async)
@@ -306,8 +314,8 @@ namespace Azure.Messaging.EventGrid
         /// <param name="expirationUtc">Time at which the SAS token becomes invalid for authentication.</param>
         /// <param name="key">Key credential used to generate the token.</param>
         /// <param name="apiVersion">Service version to use when handling requests made with the SAS token.</param>
-        /// <returns>Returns the generated SAS token string.</returns>
-        public static string BuildSharedAccessSignature(Uri endpoint, DateTimeOffset expirationUtc, AzureKeyCredential key, string apiVersion = "2018-01-01")
+        /// <returns>The generated SAS token string.</returns>
+        public static string BuildSharedAccessSignature(Uri endpoint, DateTimeOffset expirationUtc, AzureKeyCredential key, EventGridPublisherClientOptions.ServiceVersion apiVersion = EventGridPublisherClientOptions.LatestVersion)
         {
             const char Resource = 'r';
             const char Expiration = 'e';
@@ -315,8 +323,8 @@ namespace Azure.Messaging.EventGrid
 
             var uriBuilder = new RequestUriBuilder();
             uriBuilder.Reset(endpoint);
-            uriBuilder.AppendQuery("api-version", apiVersion, true);
-            string encodedResource = HttpUtility.UrlEncode(endpoint.ToString());
+            uriBuilder.AppendQuery("api-version", apiVersion.GetVersionString(), true);
+            string encodedResource = HttpUtility.UrlEncode(uriBuilder.ToString());
             var culture = CultureInfo.CreateSpecificCulture("en-US");
             var encodedExpirationUtc = HttpUtility.UrlEncode(expirationUtc.ToString(culture));
 
@@ -328,6 +336,16 @@ namespace Azure.Messaging.EventGrid
                 string signedSas = $"{unsignedSas}&{Signature}={encodedSignature}";
 
                 return signedSas;
+            }
+        }
+
+        private JsonDocument SerializeObjectToJsonDocument(object data, Type type, CancellationToken cancellationToken)
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                _dataSerializer.Serialize(stream, data, type, cancellationToken);
+                stream.Position = 0;
+                return JsonDocument.Parse(stream);
             }
         }
     }

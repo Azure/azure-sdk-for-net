@@ -15,42 +15,27 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static BastionActiveSessionListResult DeserializeBastionActiveSessionListResult(JsonElement element)
         {
-            IReadOnlyList<BastionActiveSession> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<BastionActiveSession>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<BastionActiveSession> array = new List<BastionActiveSession>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(BastionActiveSession.DeserializeBastionActiveSession(item));
-                        }
+                        array.Add(BastionActiveSession.DeserializeBastionActiveSession(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new BastionActiveSessionListResult(value, nextLink);
+            return new BastionActiveSessionListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

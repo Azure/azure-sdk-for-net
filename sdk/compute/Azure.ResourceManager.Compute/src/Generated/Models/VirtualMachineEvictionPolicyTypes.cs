@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="VirtualMachineEvictionPolicyTypes"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VirtualMachineEvictionPolicyTypes(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

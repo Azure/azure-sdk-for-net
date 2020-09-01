@@ -292,7 +292,7 @@ Several Azure Key Vault certificates client library samples are available to you
 * For Keys client library see [Keys client library][keys_client_library].
 
 ## Contributing
-See the [CONTRIBUTING.md][contributing] for details on building, testing, and contributing to these libraries.
+See the [CONTRIBUTING.md][https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/CONTRIBUTING.md] for details on building, testing, and contributing to these libraries.
 
 This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit https://cla.microsoft.com.
 

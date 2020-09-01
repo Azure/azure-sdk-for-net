@@ -83,6 +83,7 @@ namespace Azure.Management.Resources
         /// <param name="deploymentName"> The name of the deployment with the operation to get. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="deploymentName"/> is null. </exception>
         public virtual AsyncPageable<DeploymentOperation> ListAsync(string resourceGroupName, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -132,6 +133,7 @@ namespace Azure.Management.Resources
         /// <param name="deploymentName"> The name of the deployment with the operation to get. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="deploymentName"/> is null. </exception>
         public virtual Pageable<DeploymentOperation> List(string resourceGroupName, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)

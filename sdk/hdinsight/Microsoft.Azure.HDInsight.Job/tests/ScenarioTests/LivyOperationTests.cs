@@ -36,7 +36,7 @@ namespace Microsoft.Azure.HDInsight.Job.Tests
         }
 
         [Fact]
-        public void ListJobsSparkBatch()
+        public void ListSparkBatchJob()
         {
             using (var context = MockContext.Start(this.GetType()))
             using (var client = this.CommonData.GetHDInsightSparkJobClient(context))
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.HDInsight.Job.Tests
         }
 
         [Fact]
-        public void GetJobsSparkBatch()
+        public void GetSparkBatchJob()
         {
             using (var context = MockContext.Start(this.GetType()))
             using (var client = this.CommonData.GetHDInsightSparkJobClient(context))
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.HDInsight.Job.Tests
         }
 
         [Fact]
-        public void OperationJobsSparkBatch()
+        public void DeleteSparkBatchJob()
         {
             using (var context = MockContext.Start(this.GetType()))
             using (var client = this.CommonData.GetHDInsightSparkJobClient(context))
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.HDInsight.Job.Tests
         }
 
         [Fact]
-        public void ListJobsSparkSession()
+        public void ListSparkSessionJob()
         {
             using (var context = MockContext.Start(this.GetType()))
             using (var client = this.CommonData.GetHDInsightSparkJobClient(context))
@@ -146,7 +146,7 @@ namespace Microsoft.Azure.HDInsight.Job.Tests
         }
 
         [Fact]
-        public void GetJobsSparkSession()
+        public void GetSparkSessionJob()
         {
             using (var context = MockContext.Start(this.GetType()))
             using (var client = this.CommonData.GetHDInsightSparkJobClient(context))
@@ -168,7 +168,7 @@ namespace Microsoft.Azure.HDInsight.Job.Tests
         }
 
         [Fact]
-        public void OpeartionJobsSparkSession()
+        public void DeleteSparkSessionJob()
         {
             using (var context = MockContext.Start(this.GetType()))
             using (var client = this.CommonData.GetHDInsightSparkJobClient(context))
@@ -195,7 +195,7 @@ namespace Microsoft.Azure.HDInsight.Job.Tests
         }
 
         [Fact]
-        public void OperationJobsSparkSessionStatments()
+        public void SparkStatmentJobLifecycle()
         {
             using (var context = MockContext.Start(this.GetType()))
             using (var client = this.CommonData.GetHDInsightSparkJobClient(context))

@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         /// <summary> Initializes a new instance of TemplateLink. </summary>
         /// <param name="uri"> The URI of the template to deploy. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public TemplateLink(string uri)
         {
             if (uri == null)

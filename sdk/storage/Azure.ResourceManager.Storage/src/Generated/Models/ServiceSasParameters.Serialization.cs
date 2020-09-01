@@ -17,87 +17,87 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             writer.WritePropertyName("canonicalizedResource");
             writer.WriteStringValue(CanonicalizedResource);
-            if (Resource != null)
+            if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("signedResource");
                 writer.WriteStringValue(Resource.Value.ToString());
             }
-            if (Permissions != null)
+            if (Optional.IsDefined(Permissions))
             {
                 writer.WritePropertyName("signedPermission");
                 writer.WriteStringValue(Permissions.Value.ToString());
             }
-            if (IPAddressOrRange != null)
+            if (Optional.IsDefined(IPAddressOrRange))
             {
                 writer.WritePropertyName("signedIp");
                 writer.WriteStringValue(IPAddressOrRange);
             }
-            if (Protocols != null)
+            if (Optional.IsDefined(Protocols))
             {
                 writer.WritePropertyName("signedProtocol");
                 writer.WriteStringValue(Protocols.Value.ToSerialString());
             }
-            if (SharedAccessStartTime != null)
+            if (Optional.IsDefined(SharedAccessStartTime))
             {
                 writer.WritePropertyName("signedStart");
                 writer.WriteStringValue(SharedAccessStartTime.Value, "O");
             }
-            if (SharedAccessExpiryTime != null)
+            if (Optional.IsDefined(SharedAccessExpiryTime))
             {
                 writer.WritePropertyName("signedExpiry");
                 writer.WriteStringValue(SharedAccessExpiryTime.Value, "O");
             }
-            if (Identifier != null)
+            if (Optional.IsDefined(Identifier))
             {
                 writer.WritePropertyName("signedIdentifier");
                 writer.WriteStringValue(Identifier);
             }
-            if (PartitionKeyStart != null)
+            if (Optional.IsDefined(PartitionKeyStart))
             {
                 writer.WritePropertyName("startPk");
                 writer.WriteStringValue(PartitionKeyStart);
             }
-            if (PartitionKeyEnd != null)
+            if (Optional.IsDefined(PartitionKeyEnd))
             {
                 writer.WritePropertyName("endPk");
                 writer.WriteStringValue(PartitionKeyEnd);
             }
-            if (RowKeyStart != null)
+            if (Optional.IsDefined(RowKeyStart))
             {
                 writer.WritePropertyName("startRk");
                 writer.WriteStringValue(RowKeyStart);
             }
-            if (RowKeyEnd != null)
+            if (Optional.IsDefined(RowKeyEnd))
             {
                 writer.WritePropertyName("endRk");
                 writer.WriteStringValue(RowKeyEnd);
             }
-            if (KeyToSign != null)
+            if (Optional.IsDefined(KeyToSign))
             {
                 writer.WritePropertyName("keyToSign");
                 writer.WriteStringValue(KeyToSign);
             }
-            if (CacheControl != null)
+            if (Optional.IsDefined(CacheControl))
             {
                 writer.WritePropertyName("rscc");
                 writer.WriteStringValue(CacheControl);
             }
-            if (ContentDisposition != null)
+            if (Optional.IsDefined(ContentDisposition))
             {
                 writer.WritePropertyName("rscd");
                 writer.WriteStringValue(ContentDisposition);
             }
-            if (ContentEncoding != null)
+            if (Optional.IsDefined(ContentEncoding))
             {
                 writer.WritePropertyName("rsce");
                 writer.WriteStringValue(ContentEncoding);
             }
-            if (ContentLanguage != null)
+            if (Optional.IsDefined(ContentLanguage))
             {
                 writer.WritePropertyName("rscl");
                 writer.WriteStringValue(ContentLanguage);
             }
-            if (ContentType != null)
+            if (Optional.IsDefined(ContentType))
             {
                 writer.WritePropertyName("rsct");
                 writer.WriteStringValue(ContentType);

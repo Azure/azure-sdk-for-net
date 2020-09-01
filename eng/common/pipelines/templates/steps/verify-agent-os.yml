@@ -9,7 +9,7 @@ steps:
       script: |
         # Script verifies the operating system for the platform on which it is being run
         # Used in build pipelines to verify the build agent os
-        # Variable: The friendly name or image name of the os to verfy against
+        # Variable: The friendly name or image name of the os to verify against
         from __future__ import print_function
         import sys
         import platform

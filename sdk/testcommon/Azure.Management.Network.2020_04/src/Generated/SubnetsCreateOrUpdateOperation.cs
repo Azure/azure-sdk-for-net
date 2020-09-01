@@ -54,27 +54,13 @@ namespace Azure.Management.Network
         Subnet IOperationSource<Subnet>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return Subnet.DeserializeSubnet(document.RootElement);
-            }
+            return Subnet.DeserializeSubnet(document.RootElement);
         }
 
         async ValueTask<Subnet> IOperationSource<Subnet>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return Subnet.DeserializeSubnet(document.RootElement);
-            }
+            return Subnet.DeserializeSubnet(document.RootElement);
         }
     }
 }

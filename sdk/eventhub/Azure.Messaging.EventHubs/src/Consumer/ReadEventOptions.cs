@@ -26,11 +26,11 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <summary>
         ///   When populated, the owner level indicates that a reading is intended to be performed exclusively for events in the
         ///   requested partition and for the associated consumer group.  To do so, reading will attempt to assert ownership
-        ///   over the partition; in the case where more than one exclusive reader attempts to assert ownership for the same
-        ///   partition/consumer group pair, the one having a larger <see cref="OwnerLevel"/> value will "win."
+        ///   over the partition; in the case where more than one exclusive reader in the consumer group attempts to assert ownership
+        ///   for the same partition, the one having a larger <see cref="OwnerLevel"/> value will "win".
         ///
-        ///   When an exclusive reader is used, other readers which are non-exclusive or which have a lower owner level will either
-        ///   not be allowed to be created, if they already exist, will encounter an exception during the next attempted operation.
+        ///   <para>When an exclusive reader is used, other readers which are non-exclusive or which have a lower owner level will either
+        ///   not be allowed to be created, if they already exist, will encounter an exception during the next attempted operation.</para>
         /// </summary>
         ///
         /// <value>The relative priority to associate with an exclusive reader; for a non-exclusive reader, this value should be <c>null</c>.</value>
@@ -71,8 +71,8 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   If specified, should there be no events available before this waiting period expires, an empty event will be returned,
         ///   allowing control to return to the reader that was waiting.
         ///
-        ///   If <c>null</c>, the reader will wait forever for items to be available unless reading is canceled. Empty items will
-        ///   not be returned.
+        ///   <para>If <c>null</c>, the reader will wait forever for items to be available unless reading is canceled. Empty items will
+        ///   not be returned.</para>
         /// </value>
         ///
         public TimeSpan? MaximumWaitTime
