@@ -149,6 +149,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// along with all other information needed to decrypt it. This information should be stored with the encrypted data.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -204,6 +205,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// along with all other information needed to decrypt it. This information should be stored with the encrypted data.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -258,6 +260,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// along with information regarding the algorithm and key used to decrypt it.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -313,6 +316,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// along with information regarding the algorithm and key used to decrypt it.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -367,6 +371,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// along with all other information needed to unwrap it. This information should be stored with the wrapped key.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -422,6 +427,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// along with all other information needed to unwrap it. This information should be stored with the wrapped key.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -476,6 +482,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// along with information regarding the algorithm and key used to unwrap it.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -531,6 +538,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// along with information regarding the algorithm and key used to unwrap it.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -585,6 +593,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// along with all other information needed to verify it. This information should be stored with the signature.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -640,6 +649,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// along with all other information needed to verify it. This information should be stored with the signature.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -694,6 +704,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// The result of the verify operation. If the signature is valid the <see cref="VerifyResult.IsValid"/> property of the returned <see cref="VerifyResult"/> will be set to true.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -749,6 +760,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// The result of the verify operation. If the signature is valid the <see cref="VerifyResult.IsValid"/> property of the returned <see cref="VerifyResult"/> will be set to true.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -803,6 +815,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// along with all other information needed to verify it. This information should be stored with the signature.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -862,6 +875,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// along with all other information needed to verify it. This information should be stored with the signature.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -922,6 +936,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -982,6 +997,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -1041,6 +1057,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -1101,6 +1118,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -1160,6 +1178,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -1220,6 +1239,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>

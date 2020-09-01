@@ -28,7 +28,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         public virtual DecryptResult Decrypt(EncryptionAlgorithm algorithm, byte[] ciphertext, CancellationToken cancellationToken = default)
         {
-            throw ThrowOperationNotSupported(nameof(Decrypt));
+            throw CreateOperationNotSupported(nameof(Decrypt));
         }
 
         public virtual Task<DecryptResult> DecryptAsync(EncryptionAlgorithm algorithm, byte[] ciphertext, CancellationToken cancellationToken = default)
@@ -39,7 +39,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         public virtual EncryptResult Encrypt(EncryptionAlgorithm algorithm, byte[] plaintext, CancellationToken cancellationToken = default)
         {
-            throw ThrowOperationNotSupported(nameof(Encrypt));
+            throw CreateOperationNotSupported(nameof(Encrypt));
         }
 
         public virtual Task<EncryptResult> EncryptAsync(EncryptionAlgorithm algorithm, byte[] plaintext, CancellationToken cancellationToken = default)
@@ -50,7 +50,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         public virtual SignResult Sign(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken = default)
         {
-            throw ThrowOperationNotSupported(nameof(Sign));
+            throw CreateOperationNotSupported(nameof(Sign));
         }
 
         public virtual Task<SignResult> SignAsync(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken = default)
@@ -61,7 +61,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         public virtual UnwrapResult UnwrapKey(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken = default)
         {
-            throw ThrowOperationNotSupported(nameof(UnwrapKey));
+            throw CreateOperationNotSupported(nameof(UnwrapKey));
         }
 
         public virtual Task<UnwrapResult> UnwrapKeyAsync(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken = default)
@@ -72,7 +72,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         public virtual VerifyResult Verify(SignatureAlgorithm algorithm, byte[] digest, byte[] signature, CancellationToken cancellationToken = default)
         {
-            throw ThrowOperationNotSupported(nameof(Verify));
+            throw CreateOperationNotSupported(nameof(Verify));
         }
 
         public virtual Task<VerifyResult> VerifyAsync(SignatureAlgorithm algorithm, byte[] digest, byte[] signature, CancellationToken cancellationToken = default)
@@ -83,7 +83,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         public virtual WrapResult WrapKey(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken = default)
         {
-            throw ThrowOperationNotSupported(nameof(WrapKey));
+            throw CreateOperationNotSupported(nameof(WrapKey));
         }
 
         public virtual Task<WrapResult> WrapKeyAsync(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken = default)
@@ -93,7 +93,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static NotSupportedException ThrowOperationNotSupported(string name) => new NotSupportedException($"Operation {name} not supported with the given key");
+        internal static NotSupportedException CreateOperationNotSupported(string name) => new NotSupportedException($"Operation {name} not supported with the given key");
 
         protected void ThrowIfTimeInvalid()
         {

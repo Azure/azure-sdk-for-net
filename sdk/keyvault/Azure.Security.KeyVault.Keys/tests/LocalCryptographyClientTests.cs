@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Security.KeyVault.Keys.Cryptography;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 
 namespace Azure.Security.KeyVault.Keys.Tests
 {
@@ -60,40 +61,40 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         #region Encrypt / Decrypt
         [Test]
-        public async Task EncryptOperationNotSupported()
+        public void EncryptOperationNotSupported()
         {
             JsonWebKey jwk = new JsonWebKey(RSA.Create(), keyOps: Array.Empty<KeyOperation>());
             LocalCryptographyClient client = CreateClient<LocalCryptographyClient>(jwk);
 
-            await this.CatchAsync<NotSupportedException>(async () => await client.EncryptAsync(new EncryptionAlgorithm("ignored"), TestData));
+            Assert.ThrowsAsync<NotSupportedException>(async () => await client.EncryptAsync(new EncryptionAlgorithm("ignored"), TestData));
         }
 
         [Test]
-        public async Task EncryptAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Rsa), nameof(KeyType.RsaHsm) })] KeyType keyType)
+        public void EncryptAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Rsa), nameof(KeyType.RsaHsm) })] KeyType keyType)
         {
             JsonWebKey jwk = CreateKey(keyType);
             LocalCryptographyClient client = CreateClient<LocalCryptographyClient>(jwk);
 
-            await this.CatchAsync<NotSupportedException>(async () => await client.EncryptAsync(new EncryptionAlgorithm("ignored"), TestData));
+            Assert.ThrowsAsync<NotSupportedException>(async () => await client.EncryptAsync(new EncryptionAlgorithm("ignored"), TestData));
         }
 
 
         [Test]
-        public async Task DecryptOperationNotSupported()
+        public void DecryptOperationNotSupported()
         {
             JsonWebKey jwk = new JsonWebKey(RSA.Create(), keyOps: Array.Empty<KeyOperation>());
             LocalCryptographyClient client = CreateClient<LocalCryptographyClient>(jwk);
 
-            await this.CatchAsync<NotSupportedException>(async () => await client.DecryptAsync(new EncryptionAlgorithm("ignored"), TestData));
+            Assert.ThrowsAsync<NotSupportedException>(async () => await client.DecryptAsync(new EncryptionAlgorithm("ignored"), TestData));
         }
 
         [Test]
-        public async Task DecryptAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Rsa), nameof(KeyType.RsaHsm) })] KeyType keyType)
+        public void DecryptAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Rsa), nameof(KeyType.RsaHsm) })] KeyType keyType)
         {
             JsonWebKey jwk = CreateKey(keyType);
             LocalCryptographyClient client = CreateClient<LocalCryptographyClient>(jwk);
 
-            await this.CatchAsync<NotSupportedException>(async () => await client.DecryptAsync(new EncryptionAlgorithm("ignored"), TestData));
+            Assert.ThrowsAsync<NotSupportedException>(async () => await client.DecryptAsync(new EncryptionAlgorithm("ignored"), TestData));
         }
 
         [Test]
@@ -104,7 +105,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             EncryptResult encrypted = await client.EncryptAsync(EncryptionAlgorithm.RsaOaep, TestData);
 
-            await this.CatchAsync<CryptographicException>(async () => await client.DecryptAsync(EncryptionAlgorithm.RsaOaep, encrypted.Ciphertext));
+            Assert.ThrowsAsync(new InstanceOfTypeConstraint(typeof(CryptographicException)), async () => await client.DecryptAsync(EncryptionAlgorithm.RsaOaep, encrypted.Ciphertext));
         }
 
         [Test]
@@ -124,50 +125,50 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         #region Sign / Verify
         [Test]
-        public async Task SignOperationNotSupported()
+        public void SignOperationNotSupported()
         {
             JsonWebKey jwk = new JsonWebKey(RSA.Create(), keyOps: Array.Empty<KeyOperation>());
             LocalCryptographyClient client = CreateClient<LocalCryptographyClient>(jwk);
 
-            await this.CatchAsync<NotSupportedException>(async () => await client.SignAsync(new SignatureAlgorithm("ignored"), TestData));
+            Assert.ThrowsAsync<NotSupportedException>(async () => await client.SignAsync(new SignatureAlgorithm("ignored"), TestData));
         }
 
         [Test]
-        public async Task SignAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Rsa), nameof(KeyType.RsaHsm), nameof(KeyType.Ec), nameof(KeyType.EcHsm) })] KeyType keyType)
+        public void SignAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Rsa), nameof(KeyType.RsaHsm), nameof(KeyType.Ec), nameof(KeyType.EcHsm) })] KeyType keyType)
         {
             JsonWebKey jwk = CreateKey(keyType);
             LocalCryptographyClient client = CreateClient<LocalCryptographyClient>(jwk);
 
-            await this.CatchAsync<NotSupportedException>(async () => await client.SignAsync(new SignatureAlgorithm("ignored"), TestData));
+            Assert.ThrowsAsync<NotSupportedException>(async () => await client.SignAsync(new SignatureAlgorithm("ignored"), TestData));
         }
 
 
         [Test]
-        public async Task VerifyOperationNotSupported()
+        public void VerifyOperationNotSupported()
         {
             JsonWebKey jwk = new JsonWebKey(RSA.Create(), keyOps: Array.Empty<KeyOperation>());
             LocalCryptographyClient client = CreateClient<LocalCryptographyClient>(jwk);
 
-            await this.CatchAsync<NotSupportedException>(async () => await client.VerifyAsync(new SignatureAlgorithm("ignored"), TestData, TestData));
+            Assert.ThrowsAsync<NotSupportedException>(async () => await client.VerifyAsync(new SignatureAlgorithm("ignored"), TestData, TestData));
         }
 
         [Test]
-        public async Task VerifyAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Rsa), nameof(KeyType.RsaHsm), nameof(KeyType.Ec), nameof(KeyType.EcHsm) })] KeyType keyType)
+        public void VerifyAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Rsa), nameof(KeyType.RsaHsm), nameof(KeyType.Ec), nameof(KeyType.EcHsm) })] KeyType keyType)
         {
             JsonWebKey jwk = CreateKey(keyType);
             LocalCryptographyClient client = CreateClient<LocalCryptographyClient>(jwk);
 
-            await this.CatchAsync<NotSupportedException>(async () => await client.VerifyAsync(new SignatureAlgorithm("ignored"), TestData, TestData));
+            Assert.ThrowsAsync<NotSupportedException>(async () => await client.VerifyAsync(new SignatureAlgorithm("ignored"), TestData, TestData));
         }
 
         [Test]
-        public async Task SignRequiresPrivateKey([EnumValues] SignatureAlgorithm algorithm)
+        public void SignRequiresPrivateKey([EnumValues] SignatureAlgorithm algorithm)
         {
             JsonWebKey jwk = KeyUtilities.CreateKey(algorithm, keyOps: new[] { KeyOperation.Sign, KeyOperation.Verify });
             LocalCryptographyClient client = CreateClient<LocalCryptographyClient>(jwk);
 
             byte[] digest = algorithm.GetHashAlgorithm().ComputeHash(TestData);
-            await this.CatchAsync<CryptographicException>(async () => await client.SignAsync(algorithm, digest));
+            Assert.ThrowsAsync(new InstanceOfTypeConstraint(typeof(CryptographicException)), async () => await client.SignAsync(algorithm, digest));
         }
 
         [Test]
@@ -186,49 +187,49 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         #region SignData / VerifyData
         [Test]
-        public async Task SignDataOperationNotSupported()
+        public void SignDataOperationNotSupported()
         {
             JsonWebKey jwk = new JsonWebKey(RSA.Create(), keyOps: Array.Empty<KeyOperation>());
             LocalCryptographyClient client = CreateClient<LocalCryptographyClient>(jwk);
 
-            await this.CatchAsync<NotSupportedException>(async () => await client.SignDataAsync(new SignatureAlgorithm("ignored"), TestData));
+            Assert.ThrowsAsync<NotSupportedException>(async () => await client.SignDataAsync(new SignatureAlgorithm("ignored"), TestData));
         }
 
         [Test]
-        public async Task SignDataAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Rsa), nameof(KeyType.RsaHsm), nameof(KeyType.Ec), nameof(KeyType.EcHsm) })] KeyType keyType)
+        public void SignDataAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Rsa), nameof(KeyType.RsaHsm), nameof(KeyType.Ec), nameof(KeyType.EcHsm) })] KeyType keyType)
         {
             JsonWebKey jwk = CreateKey(keyType);
             LocalCryptographyClient client = CreateClient<LocalCryptographyClient>(jwk);
 
-            await this.CatchAsync<NotSupportedException>(async () => await client.SignDataAsync(new SignatureAlgorithm("ignored"), TestData));
+            Assert.ThrowsAsync<NotSupportedException>(async () => await client.SignDataAsync(new SignatureAlgorithm("ignored"), TestData));
         }
 
 
         [Test]
-        public async Task VerifyDataOperationNotSupported()
+        public void VerifyDataOperationNotSupported()
         {
             JsonWebKey jwk = new JsonWebKey(RSA.Create(), keyOps: Array.Empty<KeyOperation>());
             LocalCryptographyClient client = CreateClient<LocalCryptographyClient>(jwk);
 
-            await this.CatchAsync<NotSupportedException>(async () => await client.VerifyDataAsync(new SignatureAlgorithm("ignored"), TestData, TestData));
+            Assert.ThrowsAsync<NotSupportedException>(async () => await client.VerifyDataAsync(new SignatureAlgorithm("ignored"), TestData, TestData));
         }
 
         [Test]
-        public async Task VerifyDataAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Rsa), nameof(KeyType.RsaHsm), nameof(KeyType.Ec), nameof(KeyType.EcHsm) })] KeyType keyType)
+        public void VerifyDataAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Rsa), nameof(KeyType.RsaHsm), nameof(KeyType.Ec), nameof(KeyType.EcHsm) })] KeyType keyType)
         {
             JsonWebKey jwk = CreateKey(keyType);
             LocalCryptographyClient client = CreateClient<LocalCryptographyClient>(jwk);
 
-            await this.CatchAsync<NotSupportedException>(async () => await client.VerifyDataAsync(new SignatureAlgorithm("ignored"), TestData, TestData));
+            Assert.ThrowsAsync<NotSupportedException>(async () => await client.VerifyDataAsync(new SignatureAlgorithm("ignored"), TestData, TestData));
         }
 
         [Test]
-        public async Task SignDataRequiresPrivateKey([EnumValues] SignatureAlgorithm algorithm)
+        public void SignDataRequiresPrivateKey([EnumValues] SignatureAlgorithm algorithm)
         {
             JsonWebKey jwk = KeyUtilities.CreateKey(algorithm, keyOps: new[] { KeyOperation.Sign, KeyOperation.Verify });
             LocalCryptographyClient client = CreateClient<LocalCryptographyClient>(jwk);
 
-            await this.CatchAsync<CryptographicException>(async () => await client.SignDataAsync(algorithm, TestData));
+            Assert.ThrowsAsync(new InstanceOfTypeConstraint(typeof(CryptographicException)) , async () => await client.SignDataAsync(algorithm, TestData));
         }
 
         [Test]
@@ -246,49 +247,49 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         #region SignDataStream / VerifyDataStream
         [Test]
-        public async Task SignDataStreamOperationNotSupported()
+        public void SignDataStreamOperationNotSupported()
         {
             JsonWebKey jwk = new JsonWebKey(RSA.Create(), keyOps: Array.Empty<KeyOperation>());
             LocalCryptographyClient client = CreateClient<LocalCryptographyClient>(jwk);
 
-            await this.CatchAsync<NotSupportedException>(async () => await client.SignDataAsync(new SignatureAlgorithm("ignored"), TestStream));
+            Assert.ThrowsAsync<NotSupportedException>(async () => await client.SignDataAsync(new SignatureAlgorithm("ignored"), TestStream));
         }
 
         [Test]
-        public async Task SignDataStreamAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Rsa), nameof(KeyType.RsaHsm), nameof(KeyType.Ec), nameof(KeyType.EcHsm) })] KeyType keyType)
+        public void SignDataStreamAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Rsa), nameof(KeyType.RsaHsm), nameof(KeyType.Ec), nameof(KeyType.EcHsm) })] KeyType keyType)
         {
             JsonWebKey jwk = CreateKey(keyType);
             LocalCryptographyClient client = CreateClient<LocalCryptographyClient>(jwk);
 
-            await this.CatchAsync<NotSupportedException>(async () => await client.SignDataAsync(new SignatureAlgorithm("ignored"), TestStream));
+            Assert.ThrowsAsync<NotSupportedException>(async () => await client.SignDataAsync(new SignatureAlgorithm("ignored"), TestStream));
         }
 
 
         [Test]
-        public async Task VerifyDataStreamOperationNotSupported()
+        public void VerifyDataStreamOperationNotSupported()
         {
             JsonWebKey jwk = new JsonWebKey(RSA.Create(), keyOps: Array.Empty<KeyOperation>());
             LocalCryptographyClient client = CreateClient<LocalCryptographyClient>(jwk);
 
-            await this.CatchAsync<NotSupportedException>(async () => await client.VerifyDataAsync(new SignatureAlgorithm("ignored"), TestStream, TestData));
+            Assert.ThrowsAsync<NotSupportedException>(async () => await client.VerifyDataAsync(new SignatureAlgorithm("ignored"), TestStream, TestData));
         }
 
         [Test]
-        public async Task VerifyDataStreamAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Rsa), nameof(KeyType.RsaHsm), nameof(KeyType.Ec), nameof(KeyType.EcHsm) })] KeyType keyType)
+        public void VerifyDataStreamAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Rsa), nameof(KeyType.RsaHsm), nameof(KeyType.Ec), nameof(KeyType.EcHsm) })] KeyType keyType)
         {
             JsonWebKey jwk = CreateKey(keyType);
             LocalCryptographyClient client = CreateClient<LocalCryptographyClient>(jwk);
 
-            await this.CatchAsync<NotSupportedException>(async () => await client.VerifyDataAsync(new SignatureAlgorithm("ignored"), TestStream, TestData));
+            Assert.ThrowsAsync<NotSupportedException>(async () => await client.VerifyDataAsync(new SignatureAlgorithm("ignored"), TestStream, TestData));
         }
 
         [Test]
-        public async Task SignDataStreamRequiresPrivateKey([EnumValues] SignatureAlgorithm algorithm)
+        public void SignDataStreamRequiresPrivateKey([EnumValues] SignatureAlgorithm algorithm)
         {
             JsonWebKey jwk = KeyUtilities.CreateKey(algorithm, keyOps: new[] { KeyOperation.Sign, KeyOperation.Verify });
             LocalCryptographyClient client = CreateClient<LocalCryptographyClient>(jwk);
 
-            await this.CatchAsync<CryptographicException>(async () => await client.SignDataAsync(algorithm, TestStream));
+            Assert.ThrowsAsync(new InstanceOfTypeConstraint(typeof(CryptographicException)), async () => await client.SignDataAsync(algorithm, TestStream));
         }
 
         [Test]
@@ -306,40 +307,40 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
 #region WrapKey / UnwrapKey
         [Test]
-        public async Task WrapKeyOperationNotSupported()
+        public void WrapKeyOperationNotSupported()
         {
             JsonWebKey jwk = new JsonWebKey(RSA.Create(), keyOps: Array.Empty<KeyOperation>());
             LocalCryptographyClient client = CreateClient<LocalCryptographyClient>(jwk);
 
-            await this.CatchAsync<NotSupportedException>(async () => await client.WrapKeyAsync(new KeyWrapAlgorithm("ignored"), TestData));
+            Assert.ThrowsAsync<NotSupportedException>(async () => await client.WrapKeyAsync(new KeyWrapAlgorithm("ignored"), TestData));
         }
 
         [Test]
-        public async Task WrapKeyAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Ec), nameof(KeyType.EcHsm) })] KeyType keyType)
+        public void WrapKeyAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Ec), nameof(KeyType.EcHsm) })] KeyType keyType)
         {
             JsonWebKey jwk = CreateKey(keyType);
             LocalCryptographyClient client = CreateClient<LocalCryptographyClient>(jwk);
 
-            await this.CatchAsync<NotSupportedException>(async () => await client.WrapKeyAsync(new KeyWrapAlgorithm("ignored"), TestData));
+            Assert.ThrowsAsync<NotSupportedException>(async () => await client.WrapKeyAsync(new KeyWrapAlgorithm("ignored"), TestData));
         }
 
 
         [Test]
-        public async Task UnwrapKeyOperationNotSupported()
+        public void UnwrapKeyOperationNotSupported()
         {
             JsonWebKey jwk = new JsonWebKey(RSA.Create(), keyOps: Array.Empty<KeyOperation>());
             LocalCryptographyClient client = CreateClient<LocalCryptographyClient>(jwk);
 
-            await this.CatchAsync<NotSupportedException>(async () => await client.UnwrapKeyAsync(new KeyWrapAlgorithm("ignored"), TestData));
+            Assert.ThrowsAsync<NotSupportedException>(async () => await client.UnwrapKeyAsync(new KeyWrapAlgorithm("ignored"), TestData));
         }
 
         [Test]
-        public async Task UnwrapKeyAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Ec), nameof(KeyType.EcHsm) })] KeyType keyType)
+        public void UnwrapKeyAlgorithmNotSupported([EnumValues(Exclude = new[] { nameof(KeyType.Ec), nameof(KeyType.EcHsm) })] KeyType keyType)
         {
             JsonWebKey jwk = CreateKey(keyType);
             LocalCryptographyClient client = CreateClient<LocalCryptographyClient>(jwk);
 
-            await this.CatchAsync<NotSupportedException>(async () => await client.UnwrapKeyAsync(new KeyWrapAlgorithm("ignored"), TestData));
+            Assert.ThrowsAsync<NotSupportedException>(async () => await client.UnwrapKeyAsync(new KeyWrapAlgorithm("ignored"), TestData));
         }
 
         [Test]
@@ -350,7 +351,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             WrapResult wrapped = await client.WrapKeyAsync(KeyWrapAlgorithm.RsaOaep, TestData);
 
-            await this.CatchAsync<CryptographicException>(async () => await client.UnwrapKeyAsync(KeyWrapAlgorithm.RsaOaep, wrapped.EncryptedKey));
+            Assert.ThrowsAsync(new InstanceOfTypeConstraint(typeof(CryptographicException)), async () => await client.UnwrapKeyAsync(KeyWrapAlgorithm.RsaOaep, wrapped.EncryptedKey));
         }
 
         [Test]

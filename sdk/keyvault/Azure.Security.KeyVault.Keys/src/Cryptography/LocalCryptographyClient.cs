@@ -4,6 +4,7 @@
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -58,6 +59,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// along with all other information needed to decrypt it. This information should be stored with the encrypted data.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         public virtual async Task<EncryptResult> EncryptAsync(EncryptionAlgorithm algorithm, byte[] plaintext, CancellationToken cancellationToken = default)
@@ -68,7 +70,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 result = await _provider.EncryptAsync(algorithm, plaintext, cancellationToken).ConfigureAwait(false);
             }
 
-            return result ?? throw LocalCryptographyProvider.ThrowOperationNotSupported(nameof(KeyOperation.Encrypt));
+            return result ?? throw LocalCryptographyProvider.CreateOperationNotSupported(nameof(KeyOperation.Encrypt));
         }
 
         /// <summary>
@@ -82,6 +84,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// along with all other information needed to decrypt it. This information should be stored with the encrypted data.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         public virtual EncryptResult Encrypt(EncryptionAlgorithm algorithm, byte[] plaintext, CancellationToken cancellationToken = default)
@@ -92,7 +95,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 result = _provider.Encrypt(algorithm, plaintext, cancellationToken);
             }
 
-            return result ?? throw LocalCryptographyProvider.ThrowOperationNotSupported(nameof(KeyOperation.Encrypt));
+            return result ?? throw LocalCryptographyProvider.CreateOperationNotSupported(nameof(KeyOperation.Encrypt));
         }
 
         /// <summary>
@@ -106,6 +109,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// along with information regarding the algorithm and key used to decrypt it.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         public virtual async Task<DecryptResult> DecryptAsync(EncryptionAlgorithm algorithm, byte[] ciphertext, CancellationToken cancellationToken = default)
@@ -116,7 +120,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 result = await _provider.DecryptAsync(algorithm, ciphertext, cancellationToken).ConfigureAwait(false);
             }
 
-            return result ?? throw LocalCryptographyProvider.ThrowOperationNotSupported(nameof(KeyOperation.Decrypt));
+            return result ?? throw LocalCryptographyProvider.CreateOperationNotSupported(nameof(KeyOperation.Decrypt));
         }
 
         /// <summary>
@@ -130,6 +134,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// along with information regarding the algorithm and key used to decrypt it.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         public virtual DecryptResult Decrypt(EncryptionAlgorithm algorithm, byte[] ciphertext, CancellationToken cancellationToken = default)
@@ -140,7 +145,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 result = _provider.Decrypt(algorithm, ciphertext, cancellationToken);
             }
 
-            return result ?? throw LocalCryptographyProvider.ThrowOperationNotSupported(nameof(KeyOperation.Decrypt));
+            return result ?? throw LocalCryptographyProvider.CreateOperationNotSupported(nameof(KeyOperation.Decrypt));
         }
 
         /// <summary>
@@ -154,6 +159,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// along with all other information needed to unwrap it. This information should be stored with the wrapped key.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         public virtual async Task<WrapResult> WrapKeyAsync(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken = default)
@@ -164,7 +170,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 result = await _provider.WrapKeyAsync(algorithm, key, cancellationToken).ConfigureAwait(false);
             }
 
-            return result ?? throw LocalCryptographyProvider.ThrowOperationNotSupported(nameof(KeyOperation.WrapKey));
+            return result ?? throw LocalCryptographyProvider.CreateOperationNotSupported(nameof(KeyOperation.WrapKey));
         }
 
         /// <summary>
@@ -178,6 +184,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// along with all other information needed to unwrap it. This information should be stored with the wrapped key.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
 
@@ -189,7 +196,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 result = _provider.WrapKey(algorithm, key, cancellationToken);
             }
 
-            return result ?? throw LocalCryptographyProvider.ThrowOperationNotSupported(nameof(KeyOperation.WrapKey));
+            return result ?? throw LocalCryptographyProvider.CreateOperationNotSupported(nameof(KeyOperation.WrapKey));
         }
 
         /// <summary>
@@ -203,6 +210,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// along with information regarding the algorithm and key used to unwrap it.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
 
@@ -214,7 +222,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 result = await _provider.UnwrapKeyAsync(algorithm, encryptedKey, cancellationToken).ConfigureAwait(false);
             }
 
-            return result ?? throw LocalCryptographyProvider.ThrowOperationNotSupported(nameof(KeyOperation.UnwrapKey));
+            return result ?? throw LocalCryptographyProvider.CreateOperationNotSupported(nameof(KeyOperation.UnwrapKey));
         }
 
         /// <summary>
@@ -228,6 +236,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// along with information regarding the algorithm and key used to unwrap it.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
 
@@ -239,7 +248,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 result = _provider.UnwrapKey(algorithm, encryptedKey, cancellationToken);
             }
 
-            return result ?? throw LocalCryptographyProvider.ThrowOperationNotSupported(nameof(KeyOperation.UnwrapKey));
+            return result ?? throw LocalCryptographyProvider.CreateOperationNotSupported(nameof(KeyOperation.UnwrapKey));
         }
 
         /// <summary>
@@ -253,6 +262,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// along with all other information needed to verify it. This information should be stored with the signature.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
 
@@ -264,7 +274,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 result = await _provider.SignAsync(algorithm, digest, cancellationToken).ConfigureAwait(false);
             }
 
-            return result ?? throw LocalCryptographyProvider.ThrowOperationNotSupported(nameof(KeyOperation.Sign));
+            return result ?? throw LocalCryptographyProvider.CreateOperationNotSupported(nameof(KeyOperation.Sign));
         }
 
         /// <summary>
@@ -278,6 +288,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// along with all other information needed to verify it. This information should be stored with the signature.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
 
@@ -289,7 +300,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 result = _provider.Sign(algorithm, digest, cancellationToken);
             }
 
-            return result ?? throw LocalCryptographyProvider.ThrowOperationNotSupported(nameof(KeyOperation.Sign));
+            return result ?? throw LocalCryptographyProvider.CreateOperationNotSupported(nameof(KeyOperation.Sign));
         }
 
         /// <summary>
@@ -303,6 +314,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// The result of the verify operation. If the signature is valid the <see cref="VerifyResult.IsValid"/> property of the returned <see cref="VerifyResult"/> will be set to true.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
 
@@ -314,7 +326,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 result = await _provider.VerifyAsync(algorithm, digest, signature, cancellationToken).ConfigureAwait(false);
             }
 
-            return result ?? throw LocalCryptographyProvider.ThrowOperationNotSupported(nameof(KeyOperation.Verify));
+            return result ?? throw LocalCryptographyProvider.CreateOperationNotSupported(nameof(KeyOperation.Verify));
         }
 
         /// <summary>
@@ -328,6 +340,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// The result of the verify operation. If the signature is valid the <see cref="VerifyResult.IsValid"/> property of the returned <see cref="VerifyResult"/> will be set to true.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
 
@@ -339,7 +352,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 result = _provider.Verify(algorithm, digest, signature, cancellationToken);
             }
 
-            return result ?? throw LocalCryptographyProvider.ThrowOperationNotSupported(nameof(KeyOperation.Verify));
+            return result ?? throw LocalCryptographyProvider.CreateOperationNotSupported(nameof(KeyOperation.Verify));
         }
 
         /// <summary>
@@ -353,6 +366,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// along with all other information needed to verify it. This information should be stored with the signature.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
 
@@ -367,7 +381,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 result = await _provider.SignAsync(algorithm, digest,  cancellationToken).ConfigureAwait(false);
             }
 
-            return result ?? throw LocalCryptographyProvider.ThrowOperationNotSupported(nameof(KeyOperation.Sign));
+            return result ?? throw LocalCryptographyProvider.CreateOperationNotSupported(nameof(KeyOperation.Sign));
         }
 
         /// <summary>
@@ -381,6 +395,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// along with all other information needed to verify it. This information should be stored with the signature.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
 
@@ -395,7 +410,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 result = _provider.Sign(algorithm, digest, cancellationToken);
             }
 
-            return result ?? throw LocalCryptographyProvider.ThrowOperationNotSupported(nameof(KeyOperation.Sign));
+            return result ?? throw LocalCryptographyProvider.CreateOperationNotSupported(nameof(KeyOperation.Sign));
         }
 
         /// <summary>
@@ -410,6 +425,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
 
@@ -424,7 +440,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 result = await _provider.SignAsync(algorithm, digest, cancellationToken).ConfigureAwait(false);
             }
 
-            return result ?? throw LocalCryptographyProvider.ThrowOperationNotSupported(nameof(KeyOperation.Sign));
+            return result ?? throw LocalCryptographyProvider.CreateOperationNotSupported(nameof(KeyOperation.Sign));
         }
 
         /// <summary>
@@ -439,6 +455,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
 
@@ -453,7 +470,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 result = _provider.Sign(algorithm, digest, cancellationToken);
             }
 
-            return result ?? throw LocalCryptographyProvider.ThrowOperationNotSupported(nameof(KeyOperation.Sign));
+            return result ?? throw LocalCryptographyProvider.CreateOperationNotSupported(nameof(KeyOperation.Sign));
         }
 
         /// <summary>
@@ -468,6 +485,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
 
@@ -482,7 +500,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 result = await _provider.VerifyAsync(algorithm, digest, signature, cancellationToken).ConfigureAwait(false);
             }
 
-            return result ?? throw LocalCryptographyProvider.ThrowOperationNotSupported(nameof(KeyOperation.Verify));
+            return result ?? throw LocalCryptographyProvider.CreateOperationNotSupported(nameof(KeyOperation.Verify));
         }
 
         /// <summary>
@@ -497,6 +515,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
 
@@ -511,7 +530,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 result = _provider.Verify(algorithm, digest, signature, cancellationToken);
             }
 
-            return result ?? throw LocalCryptographyProvider.ThrowOperationNotSupported(nameof(KeyOperation.Verify));
+            return result ?? throw LocalCryptographyProvider.CreateOperationNotSupported(nameof(KeyOperation.Verify));
         }
 
         /// <summary>
@@ -526,6 +545,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
 
@@ -540,7 +560,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 result = await _provider.VerifyAsync(algorithm, digest, signature, cancellationToken).ConfigureAwait(false);
             }
 
-            return result ?? throw LocalCryptographyProvider.ThrowOperationNotSupported(nameof(KeyOperation.Verify));
+            return result ?? throw LocalCryptographyProvider.CreateOperationNotSupported(nameof(KeyOperation.Verify));
         }
 
         /// <summary>
@@ -555,6 +575,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
 
@@ -569,7 +590,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 result = _provider.Verify(algorithm, digest, signature, cancellationToken);
             }
 
-            return result ?? throw LocalCryptographyProvider.ThrowOperationNotSupported(nameof(KeyOperation.Verify));
+            return result ?? throw LocalCryptographyProvider.CreateOperationNotSupported(nameof(KeyOperation.Verify));
         }
 
         /// <inheritdoc/>
