@@ -29,18 +29,11 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         public void WriteVerbose(string message) => this.WriteEvent(5, message);
 
         [NonEvent]
-        public void WriteException(Exception ex, bool rethrow = false)
+        public void WriteException(Exception ex)
         {
             if (this.IsEnabled(EventLevel.Error, EventKeywords.All))
             {
                 this.WriteError(ex.ToInvariantString());
-            }
-
-            if (rethrow)
-            {
-                // re-throw with original stack trace
-                var capture = ExceptionDispatchInfo.Capture(ex);
-                capture?.Throw();
             }
         }
     }

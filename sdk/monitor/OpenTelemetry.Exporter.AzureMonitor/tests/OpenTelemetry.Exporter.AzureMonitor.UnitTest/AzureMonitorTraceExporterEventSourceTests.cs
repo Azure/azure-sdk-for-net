@@ -69,42 +69,6 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             Assert.IsTrue(test[0].Contains(message));
         }
 
-        /// <summary>
-        /// This test verifies that <see cref="AzureMonitorTraceExporterEventSource.WriteException(Exception, bool)"/> can re-throw an exception without creating a new one.
-        /// Creating a new exception would replace the call stack.
-        /// </summary>
-        [Test]
-        public void TestException_VerifyRethrow()
-        {
-            // The listener is required to enable the EventSource.
-            var listener = new InMemoryEventListener(AzureMonitorTraceExporterEventSource.Log);
-            Exception exception1 = null, exception2 = null;
-
-            try
-            {
-                try
-                {
-                    TestClassThrowsException.ThrowException(string.Empty);
-                }
-                catch (Exception ex1)
-                {
-                    exception1 = ex1;
-                    AzureMonitorTraceExporterEventSource.Log.WriteException(ex1, rethrow: true);
-                }
-            }
-            catch (Exception ex2)
-            {
-                // Exception2 IS the original exception, but this instance been re-thrown from the EventSource
-                exception2 = ex2;
-            }
-
-            // Exception2 was rethrown, but is expected to contain the contents of Exception1.
-            Assert.IsTrue(exception2.StackTrace.Contains(exception1.StackTrace));
-
-            // Exception2 will include a message indicating that it was re-thrown from a different location
-            Assert.IsTrue(exception2.StackTrace.Contains("--- End of stack trace from previous location where exception was thrown ---"));
-        }
-
         private class TestClassThrowsException
         {
             public static void ThrowException(string message) => One(message);
