@@ -114,86 +114,7 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        internal HttpMessage CreateBulkRegistryOperationsRequest(IEnumerable<ExportImportDevice> devices)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/devices", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            request.Headers.Add("Accept", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteStartArray();
-            foreach (var item in devices)
-            {
-                content.JsonWriter.WriteObjectValue(item);
-            }
-            content.JsonWriter.WriteEndArray();
-            request.Content = content;
-            return message;
-        }
-
-        /// <summary> Creates, updates, or deletes the identities of multiple devices from the IoT Hub identity registry. A device identity can be specified only once in the list. Different operations (create, update, delete) on different devices are allowed. A maximum of 100 devices can be specified per invocation. For large scale operations, use the import feature using blob storage(https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities). </summary>
-        /// <param name="devices"> The registry operations to perform. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="devices"/> is null. </exception>
-        public async Task<Response<BulkRegistryOperationResponse>> BulkRegistryOperationsAsync(IEnumerable<ExportImportDevice> devices, CancellationToken cancellationToken = default)
-        {
-            if (devices == null)
-            {
-                throw new ArgumentNullException(nameof(devices));
-            }
-
-            using var message = CreateBulkRegistryOperationsRequest(devices);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 400:
-                    {
-                        BulkRegistryOperationResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BulkRegistryOperationResponse.DeserializeBulkRegistryOperationResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Creates, updates, or deletes the identities of multiple devices from the IoT Hub identity registry. A device identity can be specified only once in the list. Different operations (create, update, delete) on different devices are allowed. A maximum of 100 devices can be specified per invocation. For large scale operations, use the import feature using blob storage(https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities). </summary>
-        /// <param name="devices"> The registry operations to perform. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="devices"/> is null. </exception>
-        public Response<BulkRegistryOperationResponse> BulkRegistryOperations(IEnumerable<ExportImportDevice> devices, CancellationToken cancellationToken = default)
-        {
-            if (devices == null)
-            {
-                throw new ArgumentNullException(nameof(devices));
-            }
-
-            using var message = CreateBulkRegistryOperationsRequest(devices);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 400:
-                    {
-                        BulkRegistryOperationResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BulkRegistryOperationResponse.DeserializeBulkRegistryOperationResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetDeviceRequest(string id)
+        internal HttpMessage CreateGetIdentityRequest(string id)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -212,14 +133,14 @@ namespace Azure.Iot.Hub.Service
         /// <param name="id"> The unique identifier of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async Task<Response<DeviceIdentity>> GetDeviceAsync(string id, CancellationToken cancellationToken = default)
+        public async Task<Response<DeviceIdentity>> GetIdentityAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            using var message = CreateGetDeviceRequest(id);
+            using var message = CreateGetIdentityRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -239,14 +160,14 @@ namespace Azure.Iot.Hub.Service
         /// <param name="id"> The unique identifier of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public Response<DeviceIdentity> GetDevice(string id, CancellationToken cancellationToken = default)
+        public Response<DeviceIdentity> GetIdentity(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            using var message = CreateGetDeviceRequest(id);
+            using var message = CreateGetIdentityRequest(id);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -288,7 +209,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary> Creates or updates the identity of a device in the identity registry of the IoT Hub. </summary>
         /// <param name="id"> The unique identifier of the device. </param>
         /// <param name="device"> The contents of the device identity. </param>
-        /// <param name="ifMatch"> The string representing a weak ETag for the device identity, as per RFC7232. Should not be set when creating a device, but may be set when updating a device. </param>
+        /// <param name="ifMatch"> The string representing a weak ETag for the device identity, as per RFC7232. This should not be set when creating a device, but may be set when updating a device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="device"/> is null. </exception>
         public async Task<Response<DeviceIdentity>> CreateOrUpdateIdentityAsync(string id, DeviceIdentity device, string ifMatch = null, CancellationToken cancellationToken = default)
@@ -321,7 +242,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary> Creates or updates the identity of a device in the identity registry of the IoT Hub. </summary>
         /// <param name="id"> The unique identifier of the device. </param>
         /// <param name="device"> The contents of the device identity. </param>
-        /// <param name="ifMatch"> The string representing a weak ETag for the device identity, as per RFC7232. Should not be set when creating a device, but may be set when updating a device. </param>
+        /// <param name="ifMatch"> The string representing a weak ETag for the device identity, as per RFC7232. This should not be set when creating a device, but may be set when updating a device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="device"/> is null. </exception>
         public Response<DeviceIdentity> CreateOrUpdateIdentity(string id, DeviceIdentity device, string ifMatch = null, CancellationToken cancellationToken = default)

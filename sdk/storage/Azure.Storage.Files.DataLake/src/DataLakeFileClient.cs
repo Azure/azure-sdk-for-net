@@ -1820,6 +1820,8 @@ namespace Azure.Storage.Files.DataLake
                     $"{nameof(leaseId)}: {leaseId}\n");
                 try
                 {
+                    Errors.VerifyStreamPosition(content, nameof(content));
+
                     Response<PathAppendDataResult> response = await DataLakeRestClient.Path.AppendDataAsync(
                         clientDiagnostics: ClientDiagnostics,
                         pipeline: Pipeline,
@@ -1827,7 +1829,7 @@ namespace Azure.Storage.Files.DataLake
                         body: content,
                         version: Version.ToVersionString(),
                         position: offset,
-                        contentLength: content?.Length ?? 0,
+                        contentLength: content?.Length - content?.Position ?? 0,
                         transactionalContentHash: contentHash,
                         leaseId: leaseId,
                         async: async,
@@ -4179,6 +4181,8 @@ namespace Azure.Storage.Files.DataLake
                     if (args?.Conditions != null)
                         args.Conditions = new DataLakeRequestConditions { LeaseId = args.Conditions.LeaseId };
 
+                    long newPosition = stream.Length - stream.Position;
+
                     // Append data
                     await client.AppendInternal(
                         stream,
@@ -4191,7 +4195,7 @@ namespace Azure.Storage.Files.DataLake
 
                     // Flush data
                     return await client.FlushInternal(
-                        position: stream.Length,
+                        position: newPosition,
                         retainUncommittedData: default,
                         close: default,
                         args.HttpHeaders,
@@ -4205,7 +4209,7 @@ namespace Azure.Storage.Files.DataLake
                         stream,
                         offset,
                         contentHash: default,
-                        args.Conditions.LeaseId,
+                        args?.Conditions?.LeaseId,
                         progressHandler,
                         async,
                         cancellationToken).ConfigureAwait(false),

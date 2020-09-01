@@ -15,9 +15,23 @@ namespace Microsoft.Extensions.Azure
 {
     internal static class ClientFactory
     {
+        private const string ServiceVersionParameterTypeName = "ServiceVersion";
+        private const string ConnectionStringParameterName = "connectionString";
+
         public static object CreateClient(Type clientType, Type optionsType, object options, IConfiguration configuration, TokenCredential credential)
         {
             List<object> arguments = new List<object>();
+            // Handle single values as connection strings
+            if (configuration is IConfigurationSection section && section.Value != null)
+            {
+                var connectionString = section.Value;
+                configuration = new ConfigurationBuilder()
+                    .AddInMemoryCollection(new[]
+                    {
+                        new KeyValuePair<string, string>(ConnectionStringParameterName, connectionString)
+                    })
+                    .Build();
+            }
             foreach (var constructor in clientType.GetConstructors().OrderByDescending(c => c.GetParameters().Length))
             {
                 if (!IsApplicableConstructor(constructor, optionsType))
@@ -119,6 +133,73 @@ namespace Microsoft.Extensions.Azure
             // TODO: More logging
             return null;
         }
+
+
+        internal static object CreateClientOptions(object version, Type optionsType)
+        {
+            ConstructorInfo parameterlessConstructor = null;
+            int versionParameterIndex = 0;
+            object[] constructorArguments = null;
+
+            foreach (var constructor in optionsType.GetConstructors())
+            {
+                var parameters = constructor.GetParameters();
+                if (parameters.Length == 0)
+                {
+                    parameterlessConstructor = constructor;
+                    continue;
+                }
+
+                bool allParametersHaveDefaultValue = true;
+                for (int i = 0; i < parameters.Length; i++)
+                {
+                    ParameterInfo parameter = parameters[i];
+                    if (parameter.HasDefaultValue)
+                    {
+                        if (IsServiceVersionParameter(parameter))
+                        {
+                            versionParameterIndex = i;
+                        }
+                    }
+                    else
+                    {
+                        allParametersHaveDefaultValue = false;
+                        break;
+                    }
+                }
+
+                if (allParametersHaveDefaultValue)
+                {
+                    constructorArguments = new object[parameters.Length];
+
+                    for (int i = 0; i < parameters.Length; i++)
+                    {
+                        constructorArguments[i] = parameters[i].DefaultValue;
+                    }
+                }
+            }
+
+            if (version != null)
+            {
+                if (constructorArguments != null)
+                {
+                    constructorArguments[versionParameterIndex] = version;
+                    return Activator.CreateInstance(optionsType, constructorArguments);
+                }
+
+                throw new InvalidOperationException("Unable to find constructor that takes service version");
+            }
+
+            if (parameterlessConstructor != null)
+            {
+                return Activator.CreateInstance(optionsType);
+            }
+
+            return Activator.CreateInstance(optionsType, constructorArguments);
+        }
+
+        private static bool IsServiceVersionParameter(ParameterInfo parameter) =>
+            parameter.ParameterType.Name == ServiceVersionParameterTypeName;
 
         private static bool IsCredentialParameter(ParameterInfo parameter)
         {

@@ -46,7 +46,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             serviceRestClient = new ServiceRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), endpoint: ingestionEndpoint);
         }
 
-        internal async ValueTask<int> AddBatchActivityAsync(IEnumerable<Activity> batchActivity, CancellationToken cancellationToken)
+        internal async ValueTask<int> AddBatchActivityAsync(Batch<Activity> batchActivity, bool async, CancellationToken cancellationToken)
         {
             if (cancellationToken.IsCancellationRequested)
             {
@@ -64,8 +64,18 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                 telemetryItems.Add(telemetryItem);
             }
 
+            Azure.Response<TrackResponse> response;
+
+            if (async)
+            {
+                response = await this.serviceRestClient.TrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                response = this.serviceRestClient.TrackAsync(telemetryItems, cancellationToken).Result;
+            }
+
             // TODO: Handle exception, check telemetryItems has items
-            var response = await this.serviceRestClient.TrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false);
             return response.Value.ItemsAccepted.GetValueOrDefault();
         }
 

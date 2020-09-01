@@ -21,10 +21,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
             plugin.AfterMessageReceiveAsync(msg);
             Assert.AreEqual("body", msg.Body.ToString());
             Assert.AreEqual("contentType", msg.ContentType);
-            Assert.AreEqual("propertyValue", msg.Properties["propertyKey"]);
+            Assert.AreEqual("propertyValue", msg.ApplicationProperties["propertyKey"]);
             Assert.AreEqual("deadLetterDescription", msg.DeadLetterErrorDescription);
             Assert.AreEqual("deadLetterReason", msg.DeadLetterReason);
-            Assert.AreEqual("label", msg.Label);
+            Assert.AreEqual("label", msg.Subject);
             Assert.AreEqual("messageId", msg.MessageId);
             Assert.AreEqual("partitionKey", msg.PartitionKey);
             Assert.AreEqual("replyTo", msg.ReplyTo);

@@ -1260,6 +1260,31 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string BinaryWithTarGZipDataset = @"
+{
+  ""name"": ""BinaryDataset"",
+  ""properties"": {
+    ""type"": ""Binary"",
+    ""linkedServiceName"": {
+      ""referenceName"": ""AzureBlobStorageLinkedService"",
+      ""type"": ""LinkedServiceReference""
+    },
+    ""typeProperties"": {
+      ""location"": {
+        ""type"": ""AzureBlobStorageLocation"",
+        ""container"": ""ContainerName"",
+        ""folderPath"": ""dataflow/test/input"",
+        ""fileName"": ""testTgz01""
+      },
+      ""compression"": {
+        ""type"": ""TarGZip"",
+        ""level"": ""Optimal""
+      }
+    }
+  }
+}";
+
+        [JsonSample]
         public const string OrcDataset = @"
 {
   ""name"": ""OrcDataset"",

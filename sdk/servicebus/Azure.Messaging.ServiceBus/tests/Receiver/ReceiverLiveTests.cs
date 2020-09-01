@@ -245,6 +245,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                         remainingMessages--;
                         messageEnum.MoveNext();
                         Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
+                        Assert.AreEqual(messageEnum.Current.Body.ToBytes().ToArray(), item.Body.ToBytes().ToArray());
                         await receiver.DeadLetterMessageAsync(item.LockToken);
                     }
                 }
@@ -307,13 +308,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 }
                 Assert.AreEqual(0, remainingMessages);
 
-                IReadOnlyList<ServiceBusReceivedMessage> deferedMessages = await receiver.ReceiveDeferredMessagesAsync(sequenceNumbers);
+                IReadOnlyList<ServiceBusReceivedMessage> deferredMessages = await receiver.ReceiveDeferredMessagesAsync(sequenceNumbers);
 
                 var messageList = messages.ToList();
-                Assert.AreEqual(messageList.Count, deferedMessages.Count);
+                Assert.AreEqual(messageList.Count, deferredMessages.Count);
                 for (int i = 0; i < messageList.Count; i++)
                 {
-                    Assert.AreEqual(messageList[i].MessageId, deferedMessages[i].MessageId);
+                    Assert.AreEqual(messageList[i].MessageId, deferredMessages[i].MessageId);
+                    Assert.AreEqual(messageList[i].Body.ToBytes().ToArray(), deferredMessages[i].Body.ToBytes().ToArray());
                 }
 
                 // verify that looking up a non-existent sequence number will throw

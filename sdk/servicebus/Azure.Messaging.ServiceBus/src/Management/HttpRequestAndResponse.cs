@@ -23,6 +23,7 @@ namespace Azure.Messaging.ServiceBus.Management
         private readonly TokenCredential _tokenCredential;
         private readonly int _port;
         private readonly ClientDiagnostics _diagnostics;
+        private readonly string _versionQuery;
 
         /// <summary>
         /// Initializes a new <see cref="HttpRequestAndResponse"/> which can be used to send http request and response.
@@ -31,10 +32,12 @@ namespace Azure.Messaging.ServiceBus.Management
             HttpPipeline pipeline,
             ClientDiagnostics diagnostics,
             TokenCredential tokenCredential,
-            string fullyQualifiedNamespace)
+            string fullyQualifiedNamespace,
+            ServiceBusManagementClientOptions.ServiceVersion version)
         {
             _pipeline = pipeline;
             _diagnostics = diagnostics;
+            _versionQuery = $"api-version={version.ToVersionString()}";
             _tokenCredential = tokenCredential;
             _fullyQualifiedNamespace = fullyQualifiedNamespace;
             _port = GetPort(_fullyQualifiedNamespace);
@@ -165,7 +168,7 @@ namespace Azure.Messaging.ServiceBus.Management
             bool enrich,
             CancellationToken cancellationToken)
         {
-            var queryString = $"{ManagementClientConstants.apiVersionQuery}&enrich={enrich}";
+            var queryString = $"{_versionQuery}&enrich={enrich}";
             if (query != null)
             {
                 queryString = queryString + "&" + query;
@@ -202,7 +205,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 Path = entityPath,
                 Port = _port,
                 Scheme = Uri.UriSchemeHttps,
-                Query = $"{ManagementClientConstants.apiVersionQuery}"
+                Query = _versionQuery
             }.Uri;
             var requestUriBuilder = new RequestUriBuilder();
             requestUriBuilder.Reset(uri);
@@ -249,7 +252,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 Path = entityPath,
                 Scheme = Uri.UriSchemeHttps,
                 Port = _port,
-                Query = ManagementClientConstants.apiVersionQuery
+                Query = _versionQuery
             }.Uri;
             var requestUriBuilder = new RequestUriBuilder();
             requestUriBuilder.Reset(uri);

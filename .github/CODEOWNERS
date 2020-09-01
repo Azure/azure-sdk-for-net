@@ -31,7 +31,7 @@
 /sdk/cognitiveservices/vision.face/             @TFR258 
 
 # PRLabel: %DigitalTwins
-/sdk/digitaltwins/                              @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @prmathur-microsoft @bikamani @barustum
+/sdk/digitaltwins/                              @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @bikamani @barustum
 
 # PRLabel: %Event Grid
 /sdk/eventgrid/                                 @Kishp01 @ahamad-MS
@@ -58,7 +58,7 @@
 
 # PRLabel: %Storage
 /sdk/storage/                                   @tg-msft
-/sdk/storage/Azure.Storage.*/                   @amishra-dev @seanmcc-msft @amnguye @kasobol-msft
+/sdk/storage/Azure.Storage.*/                   @amishra-dev @seanmcc-msft @amnguye @kasobol-msft @tg-msft
 
 # PRLabel: %Tables
 /sdk/tables/                                    @christothes

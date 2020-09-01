@@ -306,7 +306,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             {
                 ContentType = "contentType",
                 CorrelationId = "correlationId",
-                Label = "label",
+                Subject = "label",
                 MessageId = "messageId",
                 ReplyTo = "replyTo",
                 ReplyToSessionId = "replyToSessionId",
