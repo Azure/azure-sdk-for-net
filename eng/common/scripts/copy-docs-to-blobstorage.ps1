@@ -19,7 +19,7 @@ param (
   $UploadLatest=1,
   $RepoReplaceRegex
 )
-. (Join-Path $PSScriptRoot link-replacement.ps1)
+
 . (Join-Path $PSScriptRoot artifact-metadata-parsing.ps1)
 
 $Language = $Language.ToLower()
@@ -212,8 +212,14 @@ function Upload-Blobs
 
     # Use the step to replace master link to release tag link 
     if ($ReleaseTag) {
-        Write-Host "Replacing all readme master links with release tag $tag"
-        ReplaceLink -scanFolder $DocDir -fileSuffix ".html" -replacement $tag -customRegex $RepoReplaceRegex
+        foreach ($htmlFile in (Get-ChildItem $DocDir -include *.html -r)) 
+        {
+            $fileContent = Get-Content $htmlFile
+            $updatedFileContent = $fileContent -replace $repoReplacRegex, "`${1}$ReleaseTag`$2"
+            if ($fileContent -ne $updatedFileContent) {
+                $updatedFileContent = Set-Content $htmlFile
+            }
+        }
     } 
    
     Write-Host "Uploading $($PkgName)/$($DocVersion) to $($DocDest)..."
