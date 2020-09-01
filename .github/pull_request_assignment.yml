@@ -5,5 +5,4 @@
       - "sdk/**/Microsoft.Azure.Management*/**"
       - "sdk/**/Azure.ResourceManger*/**"
     reviewers:
-      - <your github ID>
-      - <your github ID>
+      - allenjzhang
