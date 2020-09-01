@@ -17,7 +17,7 @@ param (
   $BlobName,
   $ExitOnError=1,
   $UploadLatest=1,
-  $RepoReplaceRegex
+  $RepoReplaceRegex = "(https://github.com/.*/(?:blob|tree)/)master(/.*)"
 )
 
 . (Join-Path $PSScriptRoot artifact-metadata-parsing.ps1)
