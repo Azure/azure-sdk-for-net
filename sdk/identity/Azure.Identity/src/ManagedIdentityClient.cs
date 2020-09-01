@@ -6,17 +6,18 @@ using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.Identity
 {
     internal class ManagedIdentityClient
     {
         private const string AuthenticationResponseInvalidFormatError = "Invalid response, the authentication response was not in the expected format.";
+        private const string IdentityEndpointInvalidUriError = "The environment variable IDENTITY_ENDPOINT contains an invalid Uri.";
         private const string MsiEndpointInvalidUriError = "The environment variable MSI_ENDPOINT contains an invalid Uri.";
         internal const string MsiUnavailableError = "ManagedIdentityCredential authentication unavailable. No Managed Identity endpoint found.";
         internal const string IdentityUnavailableError = "ManagedIdentityCredential authentication unavailable. The requested identity has not been assigned to this resource.";
@@ -25,17 +26,11 @@ namespace Azure.Identity
         private static readonly Uri s_imdsEndpoint = new Uri("http://169.254.169.254/metadata/identity/oauth2/token");
         private static readonly IPAddress s_imdsHostIp = IPAddress.Parse("169.254.169.254");
         private const int s_imdsPort = 80;
-        private const string ImdsApiVersion = "2018-02-01";
         private const int ImdsAvailableTimeoutMs = 1000;
 
-        // MSI Constants. Docs for MSI are available here https://docs.microsoft.com/en-us/azure/app-service/overview-managed-identity
-        private const string AppServiceMsiApiVersion = "2017-09-01";
-
-        private static readonly SemaphoreSlim _initLock = new SemaphoreSlim(1, 1);
-        private MsiType _msiType;
-        private Uri _endpoint;
-
+        private readonly AsyncLockWithValue<IAuthRequestBuilder> _msiTypeAsyncLock = new AsyncLockWithValue<IAuthRequestBuilder>();
         private readonly CredentialPipeline _pipeline;
+        private string _identityUnavailableErrorMessage;
 
         protected ManagedIdentityClient()
         {
@@ -50,197 +45,115 @@ namespace Azure.Identity
 
         protected string ClientId { get; }
 
-        public virtual AccessToken Authenticate(string[] scopes, CancellationToken cancellationToken)
+        public virtual async ValueTask<AccessToken> AuthenticateAsync(bool async, string[] scopes, CancellationToken cancellationToken)
         {
-            MsiType msiType = GetMsiType(cancellationToken);
+            IAuthRequestBuilder requestBuilder = await GetAuthRequestBuilderAsync(async, cancellationToken).ConfigureAwait(false);
 
             // if msi is unavailable or we were unable to determine the type return CredentialUnavailable exception that no endpoint was found
-            if (msiType == MsiType.Unavailable || msiType == MsiType.Unknown)
+            if (requestBuilder == default)
             {
-                throw new CredentialUnavailableException(MsiUnavailableError);
+                throw new CredentialUnavailableException(_identityUnavailableErrorMessage ?? MsiUnavailableError);
             }
 
-            using Request request = CreateAuthRequest(msiType, scopes);
+            using Request request = requestBuilder.CreateRequest(scopes);
 
-            Response response = _pipeline.HttpPipeline.SendRequest(request, cancellationToken);
+            Response response = async
+                ? await _pipeline.HttpPipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false)
+                : _pipeline.HttpPipeline.SendRequest(request, cancellationToken);
 
-            if (response.Status == 200)
-            {
-                AccessToken result = Deserialize(response.ContentStream);
+            switch (response.Status) {
+                case 200:
+                    var isAppService2017 = requestBuilder is AppServiceV2017AuthRequestBuilder;
+                    return await DeserializeAsync(response.ContentStream, isAppService2017, async, cancellationToken).ConfigureAwait(false);
+                case 400 when requestBuilder is ImdsAuthRequestBuilder:
+                    string message = _identityUnavailableErrorMessage ?? await _pipeline.Diagnostics
+                        .CreateRequestFailedMessageAsync(response, IdentityUnavailableError, null, null, async)
+                        .ConfigureAwait(false);
 
-                return result;
+                    Interlocked.CompareExchange(ref _identityUnavailableErrorMessage, message, null);
+                    throw new CredentialUnavailableException(message);
+                default:
+                    throw async
+                        ? await _pipeline.Diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false)
+                        : _pipeline.Diagnostics.CreateRequestFailedException(response);
             }
-
-            if (response.Status == 400 && msiType == MsiType.Imds)
-            {
-                _msiType = MsiType.Unavailable;
-
-                string message = _pipeline.Diagnostics.CreateRequestFailedMessage(response, message: IdentityUnavailableError);
-
-                throw new CredentialUnavailableException(message);
-            }
-
-            throw _pipeline.Diagnostics.CreateRequestFailedException(response);
         }
 
-        public virtual async Task<AccessToken> AuthenticateAsync(string[] scopes, CancellationToken cancellationToken)
+        private protected virtual async ValueTask<IAuthRequestBuilder> GetAuthRequestBuilderAsync(bool async, CancellationToken cancellationToken)
         {
-            MsiType msiType = await GetMsiTypeAsync(cancellationToken).ConfigureAwait(false);
-
-            // if msi is unavailable or we were unable to determine the type return CredentialUnavailable exception that no endpoint was found
-            if (msiType == MsiType.Unavailable || msiType == MsiType.Unknown)
+            if (_identityUnavailableErrorMessage != default)
             {
-                throw new CredentialUnavailableException(MsiUnavailableError);
+                return default;
             }
 
-            using Request request = CreateAuthRequest(msiType, scopes);
-
-            Response response = await _pipeline.HttpPipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
-
-            if (response.Status == 200)
+            using var asyncLock = await _msiTypeAsyncLock.GetLockOrValueAsync(async, cancellationToken).ConfigureAwait(false);
+            if (asyncLock.HasValue)
             {
-                AccessToken result = await DeserializeAsync(response.ContentStream, cancellationToken).ConfigureAwait(false);
-
-                return result;
+                return asyncLock.Value;
             }
 
-            if (response.Status == 400 && msiType == MsiType.Imds)
-            {
-                _msiType = MsiType.Unavailable;
-
-                string message = await _pipeline.Diagnostics.CreateRequestFailedMessageAsync(response, message: IdentityUnavailableError, errorCode: null).ConfigureAwait(false);
-
-                throw new CredentialUnavailableException(message);
-            }
-
-            throw await _pipeline.Diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
+            IAuthRequestBuilder builder = await CreateAuthRequestBuilderAsync(async, cancellationToken).ConfigureAwait(false);
+            asyncLock.SetValue(builder);
+            return builder;
         }
 
-        protected virtual MsiType GetMsiType(CancellationToken cancellationToken)
+        private async ValueTask<IAuthRequestBuilder> CreateAuthRequestBuilderAsync(bool async, CancellationToken cancellationToken)
         {
-            // if we haven't already determined the msi type
-            if (_msiType == MsiType.Unknown)
-            {
-                // acquire the init lock
-                _initLock.Wait(cancellationToken);
+            string identityEndpoint = EnvironmentVariables.IdentityEndpoint;
+            string identityHeader = EnvironmentVariables.IdentityHeader;
 
+            if (!string.IsNullOrEmpty(identityEndpoint) && !string.IsNullOrEmpty(identityHeader))
+            {
+                Uri endpointUri;
                 try
                 {
-                    // check again if the we already determined the msiType now that we hold the lock
-                    if (_msiType == MsiType.Unknown)
-                    {
-                        string endpointEnvVar = EnvironmentVariables.MsiEndpoint;
-                        string secretEnvVar = EnvironmentVariables.MsiSecret;
-
-                        // if the env var MSI_ENDPOINT is set
-                        if (!string.IsNullOrEmpty(endpointEnvVar))
-                        {
-                            try
-                            {
-                                _endpoint = new Uri(endpointEnvVar);
-                            }
-                            catch (FormatException ex)
-                            {
-                                throw new AuthenticationFailedException(MsiEndpointInvalidUriError, ex);
-                            }
-
-                            // if BOTH the env vars MSI_ENDPOINT and MSI_SECRET are set the MsiType is AppService
-                            if (!string.IsNullOrEmpty(secretEnvVar))
-                            {
-                                _msiType = MsiType.AppService;
-                            }
-                            // if ONLY the env var MSI_ENDPOINT is set the MsiType is CloudShell
-                            else
-                            {
-                                _msiType = MsiType.CloudShell;
-                            }
-                        }
-                        // if MSI_ENDPOINT is NOT set AND the IMDS endpoint is available the MsiType is Imds
-                        else if (ImdsAvailable(cancellationToken))
-                        {
-                            _endpoint = s_imdsEndpoint;
-                            _msiType = MsiType.Imds;
-                        }
-                        // if MSI_ENDPOINT is NOT set and IMDS endpoint is not available ManagedIdentity is not available
-                        else
-                        {
-                            _msiType = MsiType.Unavailable;
-                        }
-                    }
+                    endpointUri = new Uri(identityEndpoint);
                 }
-                // release the init lock
-                finally
+                catch (FormatException ex)
                 {
-                    _initLock.Release();
+                    throw new AuthenticationFailedException(IdentityEndpointInvalidUriError, ex);
                 }
+
+                return new AppServiceV2019AuthRequestBuilder(_pipeline.HttpPipeline, endpointUri, identityHeader, ClientId);
             }
 
-            return _msiType;
-        }
+            string msiEndpoint = EnvironmentVariables.MsiEndpoint;
+            string msiSecret = EnvironmentVariables.MsiSecret;
 
-        protected virtual async Task<MsiType> GetMsiTypeAsync(CancellationToken cancellationToken)
-        {
-            // if we haven't already determined the msi type
-            if (_msiType == MsiType.Unknown)
+            // if the env var MSI_ENDPOINT is set
+            if (!string.IsNullOrEmpty(msiEndpoint))
             {
-                // acquire the init lock
-                await _initLock.WaitAsync(cancellationToken).ConfigureAwait(false);
-
+                Uri endpointUri;
                 try
                 {
-                    // check again if the we already determined the msiType now that we hold the lock
-                    if (_msiType == MsiType.Unknown)
-                    {
-                        string endpointEnvVar = EnvironmentVariables.MsiEndpoint;
-                        string secretEnvVar = EnvironmentVariables.MsiSecret;
-
-                        // if the env var MSI_ENDPOINT is set
-                        if (!string.IsNullOrEmpty(endpointEnvVar))
-                        {
-                            try
-                            {
-                                _endpoint = new Uri(endpointEnvVar);
-                            }
-                            catch (FormatException ex)
-                            {
-                                throw new AuthenticationFailedException(MsiEndpointInvalidUriError, ex);
-                            }
-
-                            // if BOTH the env vars MSI_ENDPOINT and MSI_SECRET are set the MsiType is AppService
-                            if (!string.IsNullOrEmpty(secretEnvVar))
-                            {
-                                _msiType = MsiType.AppService;
-                            }
-                            // if ONLY the env var MSI_ENDPOINT is set the MsiType is CloudShell
-                            else
-                            {
-                                _msiType = MsiType.CloudShell;
-                            }
-                        }
-                        // if MSI_ENDPOINT is NOT set AND the IMDS endpoint is available the MsiType is Imds
-                        else if (await ImdsAvailableAsync(cancellationToken).ConfigureAwait(false))
-                        {
-                            _endpoint = s_imdsEndpoint;
-                            _msiType = MsiType.Imds;
-                        }
-                        // if MSI_ENDPOINT is NOT set and IMDS endpoint is not available ManagedIdentity is not available
-                        else
-                        {
-                            _msiType = MsiType.Unavailable;
-                        }
-                    }
+                    endpointUri = new Uri(msiEndpoint);
                 }
-                // release the init lock
-                finally
+                catch (FormatException ex)
                 {
-                    _initLock.Release();
+                    throw new AuthenticationFailedException(MsiEndpointInvalidUriError, ex);
                 }
+
+                // if BOTH the env vars MSI_ENDPOINT and MSI_SECRET are set the MsiType is AppService
+                if (!string.IsNullOrEmpty(msiSecret))
+                {
+                    return new AppServiceV2017AuthRequestBuilder(_pipeline.HttpPipeline, endpointUri, msiSecret, ClientId);
+                }
+
+                // if ONLY the env var MSI_ENDPOINT is set the MsiType is CloudShell
+                return new CloudShellAuthRequestBuilder(_pipeline.HttpPipeline, endpointUri, ClientId);
             }
 
-            return _msiType;
+            // if MSI_ENDPOINT is NOT set AND the IMDS endpoint is available the MsiType is Imds
+            if (await ImdsAvailableAsync(async, cancellationToken).ConfigureAwait(false))
+            {
+                return new ImdsAuthRequestBuilder(_pipeline.HttpPipeline, s_imdsEndpoint, ClientId);
+            }
+            // if MSI_ENDPOINT is NOT set and IMDS endpoint is not available ManagedIdentity is not available
+
+            return default;
         }
 
-        protected virtual bool ImdsAvailable(CancellationToken cancellationToken)
+        protected virtual async ValueTask<bool> ImdsAvailableAsync(bool async, CancellationToken cancellationToken)
         {
             AzureIdentityEventSource.Singleton.ProbeImdsEndpoint(s_imdsEndpoint);
 
@@ -250,13 +163,20 @@ namespace Azure.Identity
             // IMDS is not available in this environment.
             try
             {
-                using (var client = new TcpClient())
+                using var client = new TcpClient();
+                Task connectTask = client.ConnectAsync(s_imdsHostIp, s_imdsPort);
+
+                if (async)
                 {
-                    var result = client.BeginConnect(s_imdsHostIp, s_imdsPort, null, null);
+                    using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
 
-                    var success = result.AsyncWaitHandle.WaitOne(ImdsAvailableTimeoutMs);
-
-                    available = success && client.Connected;
+                    cts.CancelAfter(ImdsAvailableTimeoutMs);
+                    await connectTask.AwaitWithCancellation(cts.Token);
+                    available = client.Connected;
+                }
+                else
+                {
+                    available = connectTask.Wait(ImdsAvailableTimeoutMs, cancellationToken) && client.Connected;
                 }
             }
             catch
@@ -276,149 +196,15 @@ namespace Azure.Identity
             return available;
         }
 
-        protected virtual async Task<bool> ImdsAvailableAsync(CancellationToken cancellationToken)
+        private static async ValueTask<AccessToken> DeserializeAsync(Stream content, bool isAppService2017, bool async, CancellationToken cancellationToken)
         {
-            AzureIdentityEventSource.Singleton.ProbeImdsEndpoint(s_imdsEndpoint);
-
-            bool available;
-            // try to create a TCP connection to the IMDS IP address. If the connection can be established
-            // we assume that IMDS is available. If connecting times out or fails to connect assume that
-            // IMDS is not available in this environment.
-            try
-            {
-                using (var client = new TcpClient())
-                {
-                    var result = client.BeginConnect(s_imdsHostIp, s_imdsPort, null, null);
-
-                    var success = await Task.Run<bool>(() => result.AsyncWaitHandle.WaitOne(ImdsAvailableTimeoutMs), cancellationToken).ConfigureAwait(false);
-
-                    available = success && client.Connected;
-                }
-            }
-            catch
-            {
-                available = false;
-            }
-
-            if (available)
-            {
-                AzureIdentityEventSource.Singleton.ImdsEndpointFound(s_imdsEndpoint);
-            }
-            else
-            {
-                AzureIdentityEventSource.Singleton.ImdsEndpointUnavailable(s_imdsEndpoint);
-            }
-
-            return available;
+            using JsonDocument json = async
+                ? await JsonDocument.ParseAsync(content, default, cancellationToken).ConfigureAwait(false)
+                : JsonDocument.Parse(content);
+            return Deserialize(json.RootElement, isAppService2017);
         }
 
-        private Request CreateAuthRequest(MsiType msiType, string[] scopes)
-        {
-            return msiType switch
-            {
-                MsiType.Imds => CreateImdsAuthRequest(scopes),
-                MsiType.AppService => CreateAppServiceAuthRequest(scopes),
-                MsiType.CloudShell => CreateCloudShellAuthRequest(scopes),
-                _ => default,
-            };
-        }
-
-        private Request CreateImdsAuthRequest(string[] scopes)
-        {
-            // covert the scopes to a resource string
-            string resource = ScopeUtilities.ScopesToResource(scopes);
-
-            Request request = _pipeline.HttpPipeline.CreateRequest();
-
-            request.Method = RequestMethod.Get;
-
-            request.Headers.Add("Metadata", "true");
-
-            request.Uri.Reset(_endpoint);
-
-            request.Uri.AppendQuery("api-version", ImdsApiVersion);
-
-            request.Uri.AppendQuery("resource", resource);
-
-            if (!string.IsNullOrEmpty(ClientId))
-            {
-                request.Uri.AppendQuery("client_id", ClientId);
-            }
-
-            return request;
-        }
-
-        private Request CreateAppServiceAuthRequest(string[] scopes)
-        {
-            // covert the scopes to a resource string
-            string resource = ScopeUtilities.ScopesToResource(scopes);
-
-            Request request = _pipeline.HttpPipeline.CreateRequest();
-
-            request.Method = RequestMethod.Get;
-
-            request.Headers.Add("secret", EnvironmentVariables.MsiSecret);
-
-            request.Uri.Reset(_endpoint);
-
-            request.Uri.AppendQuery("api-version", AppServiceMsiApiVersion);
-
-            request.Uri.AppendQuery("resource", resource);
-
-            if (!string.IsNullOrEmpty(ClientId))
-            {
-                request.Uri.AppendQuery("clientid", ClientId);
-            }
-
-            return request;
-        }
-
-        private Request CreateCloudShellAuthRequest(string[] scopes)
-        {
-            // covert the scopes to a resource string
-            string resource = ScopeUtilities.ScopesToResource(scopes);
-
-            Request request = _pipeline.HttpPipeline.CreateRequest();
-
-            request.Method = RequestMethod.Post;
-
-            request.Headers.Add(HttpHeader.Common.FormUrlEncodedContentType);
-
-            request.Uri.Reset(_endpoint);
-
-            request.Headers.Add("Metadata", "true");
-
-            var bodyStr = $"resource={Uri.EscapeDataString(resource)}";
-
-            if (!string.IsNullOrEmpty(ClientId))
-            {
-                bodyStr += $"&client_id={Uri.EscapeDataString(ClientId)}";
-            }
-
-            ReadOnlyMemory<byte> content = Encoding.UTF8.GetBytes(bodyStr).AsMemory();
-
-            request.Content = RequestContent.Create(content);
-
-            return request;
-        }
-
-        private async Task<AccessToken> DeserializeAsync(Stream content, CancellationToken cancellationToken)
-        {
-            using (JsonDocument json = await JsonDocument.ParseAsync(content, default, cancellationToken).ConfigureAwait(false))
-            {
-                return Deserialize(json.RootElement);
-            }
-        }
-
-        private AccessToken Deserialize(Stream content)
-        {
-            using (JsonDocument json = JsonDocument.Parse(content))
-            {
-                return Deserialize(json.RootElement);
-            }
-        }
-
-        private AccessToken Deserialize(JsonElement json)
+        private static AccessToken Deserialize(JsonElement json, bool isAppService2017)
         {
             string accessToken = null;
             JsonElement? expiresOnProp = null;
@@ -443,8 +229,8 @@ namespace Azure.Identity
             }
 
             DateTimeOffset expiresOn;
-            // if s_msiType is AppService expires_on will be a string formatted datetimeoffset
-            if (_msiType == MsiType.AppService)
+            // if s_msiType is AppService version 2017-09-01, expires_on will be a string formatted datetimeoffset
+            if (isAppService2017)
             {
                 if (!DateTimeOffset.TryParse(expiresOnProp.Value.GetString(), CultureInfo.InvariantCulture, DateTimeStyles.None, out expiresOn))
                 {
@@ -466,13 +252,6 @@ namespace Azure.Identity
             }
 
             return new AccessToken(accessToken, expiresOn);
-        }
-
-        private struct Error
-        {
-            public string Code { get; set; }
-
-            public string Message { get; set; }
         }
     }
 }

@@ -125,7 +125,7 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
-        public async Task VerifyAppServiceMsiRequestMockAsync()
+        public async Task VerifyAppService2017RequestMockAsync()
         {
             using (new TestEnvVar("MSI_ENDPOINT", "https://mock.msi.endpoint/"))
             using (new TestEnvVar("MSI_SECRET", "mock-msi-secret"))
@@ -164,7 +164,7 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
-        public async Task VerifyAppServiceMsiRequestWithClientIdMockAsync()
+        public async Task VerifyAppService2017RequestWithClientIdMockAsync()
         {
             using (new TestEnvVar("MSI_ENDPOINT", "https://mock.msi.endpoint/"))
             using (new TestEnvVar("MSI_SECRET", "mock-msi-secret"))
@@ -200,6 +200,69 @@ namespace Azure.Identity.Tests
                 Assert.IsTrue(request.Headers.TryGetValue("secret", out string actSecretValue));
 
                 Assert.AreEqual("mock-msi-secret", actSecretValue);
+            }
+        }
+
+        [NonParallelizable]
+        [Test]
+        public async Task VerifyAppService2019RequestMockAsync()
+        {
+            using (new TestEnvVar("IDENTITY_ENDPOINT", "https://identity.endpoint/"))
+            using (new TestEnvVar("IDENTITY_HEADER", "mock-identity-header"))
+            {
+                var expectedToken = "mock-access-token";
+                var response = new MockResponse(200);
+                response.SetContent($"{{ \"access_token\": \"{expectedToken}\", \"expires_on\": \"3600\" }}");
+
+                var mockTransport = new MockTransport(response);
+                var options = new TokenCredentialOptions { Transport = mockTransport };
+
+                ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(options: options));
+                AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+
+                Assert.AreEqual(expectedToken, token.Token);
+
+                MockRequest request = mockTransport.Requests[0];
+                Assert.IsTrue(request.Uri.ToString().StartsWith(EnvironmentVariables.IdentityEndpoint));
+
+                string query = request.Uri.Query;
+                Assert.IsTrue(query.Contains("api-version=2019-08-01"));
+                Assert.IsTrue(query.Contains($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
+                Assert.IsTrue(request.Headers.TryGetValue("X-IDENTITY-HEADER", out string identityHeader));
+
+                Assert.AreEqual(EnvironmentVariables.IdentityHeader, identityHeader);
+            }
+        }
+
+        [NonParallelizable]
+        [Test]
+        public async Task VerifyAppService2019RequestWithClientIdMockAsync()
+        {
+            using (new TestEnvVar("IDENTITY_ENDPOINT", "https://identity.endpoint/"))
+            using (new TestEnvVar("IDENTITY_HEADER", "mock-identity-header"))
+            {
+                var expectedToken = "mock-access-token";
+                var response = new MockResponse(200);
+                response.SetContent($"{{ \"access_token\": \"{expectedToken}\", \"expires_on\": \"3600\" }}");
+
+                var mockTransport = new MockTransport(response);
+                var options = new TokenCredentialOptions { Transport = mockTransport };
+
+                ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential("mock-client-id", options));
+                AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+
+                Assert.AreEqual(expectedToken, actualToken.Token);
+
+                MockRequest request = mockTransport.SingleRequest;
+                Assert.IsTrue(request.Uri.ToString().StartsWith(EnvironmentVariables.IdentityEndpoint));
+
+                string query = request.Uri.Query;
+                Assert.IsTrue(query.Contains("api-version=2019-08-01"));
+                Assert.IsTrue(query.Contains("client_id=mock-client-id"));
+                Assert.IsTrue(query.Contains($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
+                Assert.IsTrue(request.Headers.TryGetValue("X-IDENTITY-HEADER", out string identityHeader));
+
+                Assert.AreEqual(EnvironmentVariables.IdentityHeader, identityHeader);
             }
         }
 
@@ -298,7 +361,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task VerifyMsiUnavailableCredentialException()
         {
-            var mockClient = new MockManagedIdentityClient { MsiTypeFactory = () => MsiType.Unavailable };
+            var mockClient = new MockManagedIdentityClient { AuthRequestBuilderFactory = () => default };
 
             var credential = InstrumentClient(new ManagedIdentityCredential(CredentialPipeline.GetInstance(null), mockClient));
 
@@ -312,7 +375,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task VerifyClientGetMsiTypeThrows()
         {
-            var mockClient = new MockManagedIdentityClient { MsiTypeFactory = () => throw new MockClientException("message") };
+            var mockClient = new MockManagedIdentityClient { AuthRequestBuilderFactory = () => throw new MockClientException("message") };
 
             var credential = InstrumentClient(new ManagedIdentityCredential(CredentialPipeline.GetInstance(null), mockClient));
 
@@ -326,7 +389,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task VerifyClientAuthenticateThrows()
         {
-            var mockClient = new MockManagedIdentityClient { MsiTypeFactory = () => MsiType.Imds, TokenFactory = () => throw new MockClientException("message") };
+            var mockClient = new MockManagedIdentityClient { AuthRequestBuilderFactory = () => new ImdsAuthRequestBuilder(default, default, default), TokenFactory = () => throw new MockClientException("message") };
 
             var credential = InstrumentClient(new ManagedIdentityCredential(CredentialPipeline.GetInstance(null), mockClient));
 

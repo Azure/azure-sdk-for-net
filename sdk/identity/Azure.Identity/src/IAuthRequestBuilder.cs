@@ -1,14 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
 
 namespace Azure.Identity
 {
-    internal enum MsiType
+    internal interface IAuthRequestBuilder
     {
-        Unknown = 0,
-        Imds = 1,
-        AppService = 2,
-        CloudShell = 3
+        Request CreateRequest(string[] scopes);
     }
 }

@@ -15,6 +15,9 @@ namespace Azure.Core.Pipeline
 {
     internal static class TaskExtensions
     {
+        public static WithCancellationTaskAwaitable AwaitWithCancellation(this Task task, CancellationToken cancellationToken)
+            => new WithCancellationTaskAwaitable(task, cancellationToken);
+
         public static WithCancellationTaskAwaitable<T> AwaitWithCancellation<T>(this Task<T> task, CancellationToken cancellationToken)
             => new WithCancellationTaskAwaitable<T>(task, cancellationToken);
 
@@ -141,6 +144,20 @@ namespace Azure.Core.Pipeline
 #pragma warning restore AZC0107 // Do not call public asynchronous method in synchronous scope.
         }
 
+        public readonly struct WithCancellationTaskAwaitable
+        {
+            private readonly CancellationToken _cancellationToken;
+            private readonly ConfiguredTaskAwaitable _awaitable;
+
+            public WithCancellationTaskAwaitable(Task task, CancellationToken cancellationToken)
+            {
+                _awaitable = task.ConfigureAwait(false);
+                _cancellationToken = cancellationToken;
+            }
+
+            public WithCancellationTaskAwaiter GetAwaiter() => new WithCancellationTaskAwaiter(_awaitable.GetAwaiter(), _cancellationToken);
+        }
+
         public readonly struct WithCancellationTaskAwaitable<T>
         {
             private readonly CancellationToken _cancellationToken;
@@ -167,6 +184,39 @@ namespace Azure.Core.Pipeline
             }
 
             public WithCancellationValueTaskAwaiter<T> GetAwaiter() => new WithCancellationValueTaskAwaiter<T>(_awaitable.GetAwaiter(), _cancellationToken);
+        }
+
+        public readonly struct WithCancellationTaskAwaiter : ICriticalNotifyCompletion
+        {
+            private readonly CancellationToken _cancellationToken;
+            private readonly ConfiguredTaskAwaitable.ConfiguredTaskAwaiter _taskAwaiter;
+
+            public WithCancellationTaskAwaiter(ConfiguredTaskAwaitable.ConfiguredTaskAwaiter awaiter, CancellationToken cancellationToken)
+            {
+                _taskAwaiter = awaiter;
+                _cancellationToken = cancellationToken;
+            }
+
+            public bool IsCompleted => _taskAwaiter.IsCompleted || _cancellationToken.IsCancellationRequested;
+
+            public void OnCompleted(Action continuation) => _taskAwaiter.OnCompleted(WrapContinuation(continuation));
+
+            public void UnsafeOnCompleted(Action continuation) => _taskAwaiter.UnsafeOnCompleted(WrapContinuation(continuation));
+
+            public void GetResult()
+            {
+                Debug.Assert(IsCompleted);
+                if (!_taskAwaiter.IsCompleted)
+                {
+                    _cancellationToken.ThrowIfCancellationRequested();
+                }
+                _taskAwaiter.GetResult();
+            }
+
+            private Action WrapContinuation(in Action originalContinuation)
+                => _cancellationToken.CanBeCanceled
+                    ? new WithCancellationContinuationWrapper(originalContinuation, _cancellationToken).Continuation
+                    : originalContinuation;
         }
 
         public readonly struct WithCancellationTaskAwaiter<T> : ICriticalNotifyCompletion
