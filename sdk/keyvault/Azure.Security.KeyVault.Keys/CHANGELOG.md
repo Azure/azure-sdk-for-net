@@ -5,6 +5,7 @@
 ### Added
 
 - Added `KeyVaultKeyIdentifier` to parse key URIs.
+- Added `LocalCryptographyClient` to do cryptography operations locally using a `JsonWebKey`.
 
 ## 4.1.0 (2020-08-11)
 
