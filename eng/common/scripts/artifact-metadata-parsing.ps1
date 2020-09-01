@@ -390,7 +390,8 @@ function GetExistingTags($apiUrl) {
 # Retrieve release tag for artiface package. If multiple packages, then output the first one.
 function RetrieveReleaseTag($pkgRepository, $artifactLocation, $continueOnError = $true) {
   try {
-    $pkgs = RetrievePackages $pkgRepository, $artifactLocation
+    $pkgsInfo = RetrievePackages $pkgRepository, $artifactLocation
+    $pkgs = $pkgsInfo[0]
     if (!pkgs -or !$pkgs[0]) {
       return ""
     }
@@ -409,8 +410,9 @@ function RetrieveReleaseTag($pkgRepository, $artifactLocation, $continueOnError 
     Write-Error "No release tag retrieved from $artifactLocation"
   }
 }
-
-function RetrivePackages($pkgRepository, $artifactLocation, $ParsePkgInfoFn, $packagePattern) {
+function RetrivePackages($pkgRepository, $artifactLocation) {
+  $ParsePkgInfoFn = ""
+  $packagePattern = ""
   switch ($pkgRepository) {
     "Maven" {
       $ParsePkgInfoFn = "ParseMavenPackage"
@@ -445,15 +447,13 @@ function RetrivePackages($pkgRepository, $artifactLocation, $ParsePkgInfoFn, $pa
       exit(1)
     }
   }
-  return (Get-ChildItem -Path $artifactLocation -Include $packagePattern -Recurse -File)
+  return (Get-ChildItem -Path $artifactLocation -Include $packagePattern -Recurse -File), $ParsePkgInfoFn, $packagePattern
 }
 
 # Walk across all build artifacts, check them against the appropriate repository, return a list of tags/releases
 function VerifyPackages($pkgRepository, $artifactLocation, $workingDirectory, $apiUrl, $releaseSha,  $continueOnError = $false) {
   $pkgList = [array]@()
-  $ParsePkgInfoFn = ""
-  $packagePattern = ""
-  $pkgs = RetrivePackages $pkgRepository, $artifactLocation, $ParsePkgInfoFn, $packagePattern
+  $pkgs, $ParsePkgInfoFn, $packagePattern = RetrivePackages $pkgRepository, $artifactLocation
   Write-Host "The value of ParsePkgInfoFn: $ParsePkgInfoFn."
 
   foreach ($pkg in $pkgs) {
