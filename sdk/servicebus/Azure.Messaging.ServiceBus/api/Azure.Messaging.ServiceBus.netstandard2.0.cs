@@ -192,6 +192,7 @@ namespace Azure.Messaging.ServiceBus
         public bool AutoComplete { get { throw null; } }
         public string EntityPath { get { throw null; } }
         public string FullyQualifiedNamespace { get { throw null; } }
+        public bool IsClosed { get { throw null; } }
         public bool IsProcessing { get { throw null; } }
         public System.TimeSpan MaxAutoLockRenewalDuration { get { throw null; } }
         public int MaxConcurrentCalls { get { throw null; } }
@@ -369,6 +370,7 @@ namespace Azure.Messaging.ServiceBus
         public bool AutoComplete { get { throw null; } }
         public string EntityPath { get { throw null; } }
         public string FullyQualifiedNamespace { get { throw null; } }
+        public bool IsClosed { get { throw null; } }
         public bool IsProcessing { get { throw null; } }
         public System.TimeSpan MaxAutoLockRenewalDuration { get { throw null; } }
         public int MaxConcurrentCallsPerSession { get { throw null; } }
