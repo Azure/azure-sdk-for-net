@@ -23,7 +23,7 @@ param (
 . (Join-Path $PSScriptRoot artifact-metadata-parsing.ps1)
 
 $Language = $Language.ToLower()
-$DocDefaultName = 'docs'
+
 # Regex inspired but simplified from https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string
 $SEMVER_REGEX = "^(?<major>0|[1-9]\d*)\.(?<minor>0|[1-9]\d*)\.(?<patch>0|[1-9]\d*)(?:-?(?<prelabel>[a-zA-Z-]*)(?:\.?(?<prenumber>0|[1-9]\d*))?)?$"
 
@@ -209,7 +209,7 @@ function Upload-Blobs
     Write-Host "DocVersion $($DocVersion)"
     Write-Host "DocDir $($DocDir)"
     Write-Host "Final Dest $($DocDest)/$($PkgName)/$($DocVersion)"
-    Write-Host "Release tag $($ReleaseTag)."
+    Write-Host "Release Tag $($ReleaseTag)"
 
     # Use the step to replace master link to release tag link 
     if ($ReleaseTag) {
