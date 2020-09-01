@@ -18,7 +18,7 @@ In the project file use the `Version` property to define the `MAJOR.MINOR.PATCH-
 By default builds will replace any prerelease identifier with a `alpha.yyyyMMdd.r` to ensure we have unique package versions for dev builds. The date will come from either
 today's date or a property named `OfficialBuildId` which we will pass as part of our build pipelines.
 
-If we need to produce a package that is not an dev package with an alpha version and has the version in the project (i.e. stable or beta) then the `SkipDevBuildNumber` should
+If we need to produce a package that is not a dev package with an alpha version and has the version in the project (i.e. stable or beta) then the `SkipDevBuildNumber` should
 be passed as `true` to the packaging command.
 
 ## Incrementing the version
@@ -61,4 +61,3 @@ The versioning scheme imposes the following limits on these version parts:
 | Parameter                  | Description                                                  |
 | -------------------------- | ------------------------------------------------------------ |
 | OfficialBuildId            | ID of current build. The accepted format is `yyyyMMdd.r`. Should be passed to build in YAML official build defintion. |
-
