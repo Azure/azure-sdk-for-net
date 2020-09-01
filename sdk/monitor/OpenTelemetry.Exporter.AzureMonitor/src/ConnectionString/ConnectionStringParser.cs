@@ -37,8 +37,10 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
             }
             catch (Exception ex)
             {
-                AzureMonitorTraceExporterEventSource.Log.ConnectionStringError(ex);
-                throw new InvalidOperationException("Connection String Error: " + ex.Message, ex);
+                instrumentationKey = ingestionEndpoint = null;
+                AzureMonitorTraceExporterEventSource.Log.WriteException(
+                    ex: new InvalidOperationException("Connection String Error: " + ex.Message, ex),
+                    rethrow: true);
             }
         }
 
