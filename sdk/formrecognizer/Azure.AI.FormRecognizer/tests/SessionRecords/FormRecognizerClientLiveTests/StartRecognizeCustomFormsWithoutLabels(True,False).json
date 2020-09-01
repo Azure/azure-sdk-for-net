@@ -1,16 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models",
+      "RequestUri": "https://t00b5fddbfc124bd4-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Content-Length": "43",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-6c15bd8a7bc8054994c0b0649980e985-3f92a21c7205f94b-00",
+        "traceparent": "00-55e2f0809dd8f04dbfd5399fe3213564-5e93c2e995ca8149-00",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200820.1",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "bf19db8572f61e9b9de2890f0d9ee0ff",
         "x-ms-return-client-request-id": "true"
@@ -21,24 +22,25 @@
       },
       "StatusCode": 201,
       "ResponseHeaders": {
-        "apim-request-id": "5a904cba-8573-45ea-be0e-ad9dd3a04975",
+        "apim-request-id": "93d471d1-b925-4219-8abd-19f8c0dc73cc",
         "Content-Length": "0",
-        "Date": "Fri, 07 Aug 2020 02:20:01 GMT",
-        "Location": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/e8717191-9a5e-4218-85e4-75bbf82beff8",
+        "Date": "Thu, 20 Aug 2020 18:01:16 GMT",
+        "Location": "https://t00b5fddbfc124bd4-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/3a6a2b99-3ee4-4ec2-8164-f83eb63fd66f",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "5101"
+        "x-envoy-upstream-service-time": "51"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/e8717191-9a5e-4218-85e4-75bbf82beff8?includeKeys=true",
+      "RequestUri": "https://t00b5fddbfc124bd4-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/3a6a2b99-3ee4-4ec2-8164-f83eb63fd66f?includeKeys=true",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200820.1",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "cffa240829d68805334ddf4c6ac80888",
         "x-ms-return-client-request-id": "true"
@@ -46,31 +48,32 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "4ed53435-a786-48e2-9582-ebc7ac414b84",
+        "apim-request-id": "5f3bbded-821a-45cc-861e-621a126ec383",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Aug 2020 02:20:01 GMT",
+        "Date": "Thu, 20 Aug 2020 18:01:16 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "38"
+        "x-envoy-upstream-service-time": "52"
       },
       "ResponseBody": {
         "modelInfo": {
-          "modelId": "e8717191-9a5e-4218-85e4-75bbf82beff8",
+          "modelId": "3a6a2b99-3ee4-4ec2-8164-f83eb63fd66f",
           "status": "creating",
-          "createdDateTime": "2020-08-07T02:19:57Z",
-          "lastUpdatedDateTime": "2020-08-07T02:19:57Z"
+          "createdDateTime": "2020-08-20T18:01:16Z",
+          "lastUpdatedDateTime": "2020-08-20T18:01:16Z"
         }
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/e8717191-9a5e-4218-85e4-75bbf82beff8?includeKeys=true",
+      "RequestUri": "https://t00b5fddbfc124bd4-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/3a6a2b99-3ee4-4ec2-8164-f83eb63fd66f?includeKeys=true",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200820.1",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "a230594189cc16d241d06990d0f3414d",
         "x-ms-return-client-request-id": "true"
@@ -78,31 +81,32 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "a9f9dca1-c2ed-4dc8-a467-feacfd92c0e7",
+        "apim-request-id": "ca5f096b-e1c4-4875-8b39-2556ed0f0e56",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Aug 2020 02:20:03 GMT",
+        "Date": "Thu, 20 Aug 2020 18:01:17 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "18"
+        "x-envoy-upstream-service-time": "24"
       },
       "ResponseBody": {
         "modelInfo": {
-          "modelId": "e8717191-9a5e-4218-85e4-75bbf82beff8",
+          "modelId": "3a6a2b99-3ee4-4ec2-8164-f83eb63fd66f",
           "status": "creating",
-          "createdDateTime": "2020-08-07T02:19:57Z",
-          "lastUpdatedDateTime": "2020-08-07T02:19:57Z"
+          "createdDateTime": "2020-08-20T18:01:16Z",
+          "lastUpdatedDateTime": "2020-08-20T18:01:16Z"
         }
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/e8717191-9a5e-4218-85e4-75bbf82beff8?includeKeys=true",
+      "RequestUri": "https://t00b5fddbfc124bd4-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/3a6a2b99-3ee4-4ec2-8164-f83eb63fd66f?includeKeys=true",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200820.1",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "10046417363c5cd2d5908ca9924fb3d5",
         "x-ms-return-client-request-id": "true"
@@ -110,31 +114,32 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "0f26c93e-c046-4aa8-a076-4f7b507516da",
+        "apim-request-id": "92f1bc8a-d6b9-497a-a18b-fce42453ca86",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Aug 2020 02:20:04 GMT",
+        "Date": "Thu, 20 Aug 2020 18:01:18 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "20"
+        "x-envoy-upstream-service-time": "15"
       },
       "ResponseBody": {
         "modelInfo": {
-          "modelId": "e8717191-9a5e-4218-85e4-75bbf82beff8",
+          "modelId": "3a6a2b99-3ee4-4ec2-8164-f83eb63fd66f",
           "status": "creating",
-          "createdDateTime": "2020-08-07T02:19:57Z",
-          "lastUpdatedDateTime": "2020-08-07T02:19:57Z"
+          "createdDateTime": "2020-08-20T18:01:16Z",
+          "lastUpdatedDateTime": "2020-08-20T18:01:16Z"
         }
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/e8717191-9a5e-4218-85e4-75bbf82beff8?includeKeys=true",
+      "RequestUri": "https://t00b5fddbfc124bd4-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/3a6a2b99-3ee4-4ec2-8164-f83eb63fd66f?includeKeys=true",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200820.1",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "b3ce01da3d6d7f3252e38d06bf74b73f",
         "x-ms-return-client-request-id": "true"
@@ -142,31 +147,32 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "7a442d7d-030e-4a26-be72-541d7776b4f7",
+        "apim-request-id": "3dc077a6-1c98-4d5f-9430-bae2c88feb21",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Aug 2020 02:20:06 GMT",
+        "Date": "Thu, 20 Aug 2020 18:01:19 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "49"
+        "x-envoy-upstream-service-time": "36"
       },
       "ResponseBody": {
         "modelInfo": {
-          "modelId": "e8717191-9a5e-4218-85e4-75bbf82beff8",
+          "modelId": "3a6a2b99-3ee4-4ec2-8164-f83eb63fd66f",
           "status": "creating",
-          "createdDateTime": "2020-08-07T02:19:57Z",
-          "lastUpdatedDateTime": "2020-08-07T02:19:57Z"
+          "createdDateTime": "2020-08-20T18:01:16Z",
+          "lastUpdatedDateTime": "2020-08-20T18:01:16Z"
         }
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/e8717191-9a5e-4218-85e4-75bbf82beff8?includeKeys=true",
+      "RequestUri": "https://t00b5fddbfc124bd4-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/3a6a2b99-3ee4-4ec2-8164-f83eb63fd66f?includeKeys=true",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200820.1",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "0534910cf7c30a4c87d4cc3bfc2983f2",
         "x-ms-return-client-request-id": "true"
@@ -174,31 +180,32 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "3ce6a934-3d1b-4dce-9175-3772e13bedc1",
+        "apim-request-id": "27427160-ad83-498d-8a00-6a72340b3936",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Aug 2020 02:20:07 GMT",
+        "Date": "Thu, 20 Aug 2020 18:01:20 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "23"
+        "x-envoy-upstream-service-time": "15"
       },
       "ResponseBody": {
         "modelInfo": {
-          "modelId": "e8717191-9a5e-4218-85e4-75bbf82beff8",
+          "modelId": "3a6a2b99-3ee4-4ec2-8164-f83eb63fd66f",
           "status": "creating",
-          "createdDateTime": "2020-08-07T02:19:57Z",
-          "lastUpdatedDateTime": "2020-08-07T02:19:57Z"
+          "createdDateTime": "2020-08-20T18:01:16Z",
+          "lastUpdatedDateTime": "2020-08-20T18:01:16Z"
         }
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/e8717191-9a5e-4218-85e4-75bbf82beff8?includeKeys=true",
+      "RequestUri": "https://t00b5fddbfc124bd4-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/3a6a2b99-3ee4-4ec2-8164-f83eb63fd66f?includeKeys=true",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200820.1",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "cfb6941c8d24d9df3185be58a8cb9c61",
         "x-ms-return-client-request-id": "true"
@@ -206,31 +213,32 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "d5eb50cf-0a27-4058-99c2-9b2cc35356fb",
+        "apim-request-id": "956767eb-4906-4524-8e03-b5cbde9524b0",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Aug 2020 02:20:08 GMT",
+        "Date": "Thu, 20 Aug 2020 18:01:21 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "53"
+        "x-envoy-upstream-service-time": "16"
       },
       "ResponseBody": {
         "modelInfo": {
-          "modelId": "e8717191-9a5e-4218-85e4-75bbf82beff8",
+          "modelId": "3a6a2b99-3ee4-4ec2-8164-f83eb63fd66f",
           "status": "creating",
-          "createdDateTime": "2020-08-07T02:19:57Z",
-          "lastUpdatedDateTime": "2020-08-07T02:19:57Z"
+          "createdDateTime": "2020-08-20T18:01:16Z",
+          "lastUpdatedDateTime": "2020-08-20T18:01:16Z"
         }
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/e8717191-9a5e-4218-85e4-75bbf82beff8?includeKeys=true",
+      "RequestUri": "https://t00b5fddbfc124bd4-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/3a6a2b99-3ee4-4ec2-8164-f83eb63fd66f?includeKeys=true",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200820.1",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "019c4cd9ae1be212b5c32c9871f68228",
         "x-ms-return-client-request-id": "true"
@@ -238,31 +246,32 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "8933a4e8-dd55-4611-b272-77248c3d31a4",
+        "apim-request-id": "486b0371-2b3f-4fee-8e4c-810e857de6ad",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Aug 2020 02:20:13 GMT",
+        "Date": "Thu, 20 Aug 2020 18:01:23 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "5095"
+        "x-envoy-upstream-service-time": "18"
       },
       "ResponseBody": {
         "modelInfo": {
-          "modelId": "e8717191-9a5e-4218-85e4-75bbf82beff8",
+          "modelId": "3a6a2b99-3ee4-4ec2-8164-f83eb63fd66f",
           "status": "creating",
-          "createdDateTime": "2020-08-07T02:19:57Z",
-          "lastUpdatedDateTime": "2020-08-07T02:19:57Z"
+          "createdDateTime": "2020-08-20T18:01:16Z",
+          "lastUpdatedDateTime": "2020-08-20T18:01:16Z"
         }
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/e8717191-9a5e-4218-85e4-75bbf82beff8?includeKeys=true",
+      "RequestUri": "https://t00b5fddbfc124bd4-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/3a6a2b99-3ee4-4ec2-8164-f83eb63fd66f?includeKeys=true",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200820.1",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "2bea9b60e8be7f1bb15ad43d39f361bb",
         "x-ms-return-client-request-id": "true"
@@ -270,20 +279,86 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "c2598ea3-0e1e-4e61-8cf8-b0caaeb6bf47",
+        "apim-request-id": "6df2ffac-5c6d-42d6-97ed-da22a3ba8061",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Aug 2020 02:20:17 GMT",
+        "Date": "Thu, 20 Aug 2020 18:01:24 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "938"
+        "x-envoy-upstream-service-time": "14"
       },
       "ResponseBody": {
         "modelInfo": {
-          "modelId": "e8717191-9a5e-4218-85e4-75bbf82beff8",
+          "modelId": "3a6a2b99-3ee4-4ec2-8164-f83eb63fd66f",
+          "status": "creating",
+          "createdDateTime": "2020-08-20T18:01:16Z",
+          "lastUpdatedDateTime": "2020-08-20T18:01:16Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://t00b5fddbfc124bd4-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/3a6a2b99-3ee4-4ec2-8164-f83eb63fd66f?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200820.1",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
+        ],
+        "x-ms-client-request-id": "af626b38828c6ed681d419616047673a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "96b21cfd-062c-430d-8295-dc4fa2ba3d47",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 20 Aug 2020 18:01:25 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "13"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "3a6a2b99-3ee4-4ec2-8164-f83eb63fd66f",
+          "status": "creating",
+          "createdDateTime": "2020-08-20T18:01:16Z",
+          "lastUpdatedDateTime": "2020-08-20T18:01:16Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://t00b5fddbfc124bd4-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/3a6a2b99-3ee4-4ec2-8164-f83eb63fd66f?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200820.1",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
+        ],
+        "x-ms-client-request-id": "0df8950270e1f0a2311d4fc0d9d4a8c2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "e4998309-3ebb-4815-8636-3002b1ad61c0",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 20 Aug 2020 18:01:26 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "17"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "3a6a2b99-3ee4-4ec2-8164-f83eb63fd66f",
           "status": "ready",
-          "createdDateTime": "2020-08-07T02:19:57Z",
-          "lastUpdatedDateTime": "2020-08-07T02:20:11Z"
+          "createdDateTime": "2020-08-20T18:01:16Z",
+          "lastUpdatedDateTime": "2020-08-20T18:01:25Z"
         },
         "keys": {
           "clusters": {
@@ -352,100 +427,43 @@
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/e8717191-9a5e-4218-85e4-75bbf82beff8/analyze?includeTextDetails=false",
+      "RequestUri": "https://t00b5fddbfc124bd4-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/3a6a2b99-3ee4-4ec2-8164-f83eb63fd66f/analyze?includeTextDetails=false",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Content-Length": "479269",
         "Content-Type": "image/jpeg",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-67ea06a0f70f5e4f838175e8fff8eaa6-53e226cc72563c44-00",
+        "traceparent": "00-8b8b13a7bb58a34ea559c0dc5a7aae53-8467dacc0dc5d44c-00",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
-        ],
-        "x-ms-client-request-id": "af626b38828c6ed681d419616047673a",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 202,
-      "ResponseHeaders": {
-        "apim-request-id": "9e0c457c-1eb3-4bf4-8262-b7f4953dd204",
-        "Content-Length": "0",
-        "Date": "Fri, 07 Aug 2020 02:20:18 GMT",
-        "Operation-Location": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/e8717191-9a5e-4218-85e4-75bbf82beff8/analyzeresults/51a7f0a1-dbea-4801-8c1a-de9393649606",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "153"
-      },
-      "ResponseBody": []
-    },
-    {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/e8717191-9a5e-4218-85e4-75bbf82beff8/analyzeResults/51a7f0a1-dbea-4801-8c1a-de9393649606",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
-        ],
-        "x-ms-client-request-id": "0df8950270e1f0a2311d4fc0d9d4a8c2",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "a65ad6f6-b7d6-4f41-a836-14ce69c62b56",
-        "Content-Length": "109",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Aug 2020 02:20:18 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "24"
-      },
-      "ResponseBody": {
-        "status": "notStarted",
-        "createdDateTime": "2020-08-07T02:20:18Z",
-        "lastUpdatedDateTime": "2020-08-07T02:20:18Z"
-      }
-    },
-    {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/e8717191-9a5e-4218-85e4-75bbf82beff8/analyzeResults/51a7f0a1-dbea-4801-8c1a-de9393649606",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200820.1",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "06607161d394dd9cc47ba9eaceb91e6a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
-      "StatusCode": 200,
+      "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "eb125403-bd4b-43d4-9dbc-6803ca0f4077",
-        "Content-Length": "127",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Aug 2020 02:20:19 GMT",
+        "apim-request-id": "53644306-40b5-469d-99ed-c089e78779d8",
+        "Content-Length": "0",
+        "Date": "Thu, 20 Aug 2020 18:01:26 GMT",
+        "Operation-Location": "https://t00b5fddbfc124bd4-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/3a6a2b99-3ee4-4ec2-8164-f83eb63fd66f/analyzeresults/357375f7-3013-4d8b-aafc-80b166472392",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "24"
+        "x-envoy-upstream-service-time": "76"
       },
-      "ResponseBody": {
-        "status": "running",
-        "createdDateTime": "2020-08-07T02:20:18Z",
-        "lastUpdatedDateTime": "2020-08-07T02:20:18Z",
-        "analyzeResult": null
-      }
+      "ResponseBody": []
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/e8717191-9a5e-4218-85e4-75bbf82beff8/analyzeResults/51a7f0a1-dbea-4801-8c1a-de9393649606",
+      "RequestUri": "https://t00b5fddbfc124bd4-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/3a6a2b99-3ee4-4ec2-8164-f83eb63fd66f/analyzeResults/357375f7-3013-4d8b-aafc-80b166472392",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200820.1",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "a43b99f254fac7d9c8727e6f331694ad",
         "x-ms-return-client-request-id": "true"
@@ -453,29 +471,29 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "63ce4494-092e-4ad2-a4b4-605d97b6f5bb",
-        "Content-Length": "127",
+        "apim-request-id": "06a0317c-8253-47f9-8170-ea1b93fe3dc0",
+        "Content-Length": "109",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Aug 2020 02:20:20 GMT",
+        "Date": "Thu, 20 Aug 2020 18:01:26 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "25"
+        "x-envoy-upstream-service-time": "13"
       },
       "ResponseBody": {
-        "status": "running",
-        "createdDateTime": "2020-08-07T02:20:18Z",
-        "lastUpdatedDateTime": "2020-08-07T02:20:18Z",
-        "analyzeResult": null
+        "status": "notStarted",
+        "createdDateTime": "2020-08-20T18:01:26Z",
+        "lastUpdatedDateTime": "2020-08-20T18:01:26Z"
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/e8717191-9a5e-4218-85e4-75bbf82beff8/analyzeResults/51a7f0a1-dbea-4801-8c1a-de9393649606",
+      "RequestUri": "https://t00b5fddbfc124bd4-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/3a6a2b99-3ee4-4ec2-8164-f83eb63fd66f/analyzeResults/357375f7-3013-4d8b-aafc-80b166472392",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200820.1",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "eeff572b61e62fa6f91a4966c7b82278",
         "x-ms-return-client-request-id": "true"
@@ -483,29 +501,30 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "58b14975-a62e-49ec-be6c-29742079a19e",
+        "apim-request-id": "62a28b37-2368-43ea-8f33-827da455fd33",
         "Content-Length": "127",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Aug 2020 02:20:21 GMT",
+        "Date": "Thu, 20 Aug 2020 18:01:27 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "42"
+        "x-envoy-upstream-service-time": "15"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2020-08-07T02:20:18Z",
-        "lastUpdatedDateTime": "2020-08-07T02:20:18Z",
+        "createdDateTime": "2020-08-20T18:01:26Z",
+        "lastUpdatedDateTime": "2020-08-20T18:01:27Z",
         "analyzeResult": null
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/e8717191-9a5e-4218-85e4-75bbf82beff8/analyzeResults/51a7f0a1-dbea-4801-8c1a-de9393649606",
+      "RequestUri": "https://t00b5fddbfc124bd4-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/3a6a2b99-3ee4-4ec2-8164-f83eb63fd66f/analyzeResults/357375f7-3013-4d8b-aafc-80b166472392",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200820.1",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "40cde4fe04990dc798993e21542caaad",
         "x-ms-return-client-request-id": "true"
@@ -513,29 +532,30 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "3b5732c4-b6d1-414f-95a8-e07367dae337",
+        "apim-request-id": "d93c9689-1edf-4a8d-a1f4-9840f9821118",
         "Content-Length": "127",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Aug 2020 02:20:22 GMT",
+        "Date": "Thu, 20 Aug 2020 18:01:28 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "25"
+        "x-envoy-upstream-service-time": "15"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2020-08-07T02:20:18Z",
-        "lastUpdatedDateTime": "2020-08-07T02:20:18Z",
+        "createdDateTime": "2020-08-20T18:01:26Z",
+        "lastUpdatedDateTime": "2020-08-20T18:01:27Z",
         "analyzeResult": null
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/e8717191-9a5e-4218-85e4-75bbf82beff8/analyzeResults/51a7f0a1-dbea-4801-8c1a-de9393649606",
+      "RequestUri": "https://t00b5fddbfc124bd4-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/3a6a2b99-3ee4-4ec2-8164-f83eb63fd66f/analyzeResults/357375f7-3013-4d8b-aafc-80b166472392",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200820.1",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "76befce730b99184f20babdf0a73ff0f",
         "x-ms-return-client-request-id": "true"
@@ -543,18 +563,49 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "0affdd50-9b76-47e3-b780-9201a87d441b",
-        "Content-Length": "10529",
+        "apim-request-id": "f3f182f2-6189-43e8-a935-62b0d7f6d1c5",
+        "Content-Length": "127",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Aug 2020 02:20:23 GMT",
+        "Date": "Thu, 20 Aug 2020 18:01:29 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "26"
+        "x-envoy-upstream-service-time": "16"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2020-08-20T18:01:26Z",
+        "lastUpdatedDateTime": "2020-08-20T18:01:27Z",
+        "analyzeResult": null
+      }
+    },
+    {
+      "RequestUri": "https://t00b5fddbfc124bd4-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/3a6a2b99-3ee4-4ec2-8164-f83eb63fd66f/analyzeResults/357375f7-3013-4d8b-aafc-80b166472392",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200820.1",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
+        ],
+        "x-ms-client-request-id": "4f7106505349261390f2564c2384dacc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "961af22d-010b-47bb-8589-a87da882d673",
+        "Content-Length": "9147",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 20 Aug 2020 18:01:30 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "17"
       },
       "ResponseBody": {
         "status": "succeeded",
-        "createdDateTime": "2020-08-07T02:20:18Z",
-        "lastUpdatedDateTime": "2020-08-07T02:20:21Z",
+        "createdDateTime": "2020-08-20T18:01:26Z",
+        "lastUpdatedDateTime": "2020-08-20T18:01:30Z",
         "analyzeResult": {
           "version": "2.0.0",
           "readResults": [
@@ -602,9 +653,9 @@
                       365.0,
                       351.0,
                       365.0,
-                      381.0,
+                      382.0,
                       167.0,
-                      381.0
+                      382.0
                     ],
                     "elements": null
                   },
@@ -616,9 +667,9 @@
                       528.0,
                       351.0,
                       528.0,
-                      381.0,
+                      380.0,
                       371.0,
-                      381.0
+                      380.0
                     ],
                     "elements": null
                   },
@@ -630,9 +681,9 @@
                     "boundingBox": [
                       167.0,
                       392.0,
-                      271.0,
+                      269.0,
                       392.0,
-                      271.0,
+                      269.0,
                       420.0,
                       167.0,
                       420.0
@@ -642,13 +693,13 @@
                   "value": {
                     "text": "www.herolimited.com",
                     "boundingBox": [
-                      277.0,
-                      392.0,
-                      530.0,
-                      392.0,
-                      530.0,
+                      275.0,
+                      393.0,
+                      529.0,
+                      393.0,
+                      529.0,
                       420.0,
-                      277.0,
+                      275.0,
                       420.0
                     ],
                     "elements": null
@@ -660,13 +711,13 @@
                     "text": "Dated As:",
                     "boundingBox": [
                       1025.0,
-                      418.0,
+                      419.0,
                       1161.0,
-                      418.0,
+                      419.0,
                       1161.0,
-                      451.0,
+                      452.0,
                       1025.0,
-                      451.0
+                      452.0
                     ],
                     "elements": null
                   },
@@ -674,13 +725,13 @@
                     "text": "12/20/2020",
                     "boundingBox": [
                       1168.0,
-                      418.0,
-                      1319.0,
-                      418.0,
-                      1319.0,
-                      451.0,
+                      417.0,
+                      1320.0,
+                      417.0,
+                      1320.0,
+                      450.0,
                       1168.0,
-                      451.0
+                      450.0
                     ],
                     "elements": null
                   },
@@ -691,13 +742,13 @@
                     "text": "Email:",
                     "boundingBox": [
                       167.0,
-                      431.0,
-                      240.0,
-                      431.0,
-                      240.0,
-                      458.0,
+                      432.0,
+                      242.0,
+                      432.0,
+                      242.0,
+                      459.0,
                       167.0,
-                      458.0
+                      459.0
                     ],
                     "elements": null
                   },
@@ -706,9 +757,9 @@
                     "boundingBox": [
                       168.0,
                       480.0,
-                      476.0,
+                      477.0,
                       480.0,
-                      476.0,
+                      477.0,
                       505.0,
                       168.0,
                       505.0
@@ -722,9 +773,9 @@
                     "text": "Purchase Order #:",
                     "boundingBox": [
                       1027.0,
-                      460.0,
+                      459.0,
                       1275.0,
-                      460.0,
+                      459.0,
                       1275.0,
                       491.0,
                       1027.0,
@@ -740,9 +791,9 @@
                       1376.0,
                       460.0,
                       1376.0,
-                      491.0,
+                      492.0,
                       1282.0,
-                      491.0
+                      492.0
                     ],
                     "elements": null
                   },
@@ -753,13 +804,13 @@
                     "text": "Vendor Name:",
                     "boundingBox": [
                       162.0,
-                      610.0,
+                      609.0,
                       346.0,
-                      610.0,
+                      609.0,
                       346.0,
-                      640.0,
+                      639.0,
                       162.0,
-                      640.0
+                      639.0
                     ],
                     "elements": null
                   },
@@ -788,9 +839,9 @@
                       373.0,
                       646.0,
                       373.0,
-                      678.0,
+                      677.0,
                       162.0,
-                      678.0
+                      677.0
                     ],
                     "elements": null
                   },
@@ -798,13 +849,13 @@
                     "text": "Higgly Wiggly Books",
                     "boundingBox": [
                       379.0,
-                      646.0,
+                      647.0,
                       628.0,
-                      646.0,
+                      647.0,
                       628.0,
-                      678.0,
+                      679.0,
                       379.0,
-                      678.0
+                      679.0
                     ],
                     "elements": null
                   },
@@ -815,9 +866,9 @@
                     "text": "Address:",
                     "boundingBox": [
                       162.0,
-                      684.0,
+                      683.0,
                       272.0,
-                      684.0,
+                      683.0,
                       272.0,
                       715.0,
                       162.0,
@@ -833,9 +884,9 @@
                       569.0,
                       684.0,
                       569.0,
-                      752.0,
+                      753.0,
                       279.0,
-                      752.0
+                      753.0
                     ],
                     "elements": null
                   },
@@ -846,13 +897,13 @@
                     "text": "Phone:",
                     "boundingBox": [
                       615.0,
-                      723.0,
+                      721.0,
                       707.0,
-                      723.0,
+                      721.0,
                       707.0,
-                      752.0,
+                      751.0,
                       615.0,
-                      752.0
+                      751.0
                     ],
                     "elements": null
                   },
@@ -860,13 +911,13 @@
                     "text": "938-294-2949",
                     "boundingBox": [
                       713.0,
-                      723.0,
+                      722.0,
                       884.0,
-                      723.0,
+                      722.0,
                       884.0,
-                      752.0,
+                      749.0,
                       713.0,
-                      752.0
+                      749.0
                     ],
                     "elements": null
                   },
@@ -895,9 +946,9 @@
                       445.0,
                       852.0,
                       445.0,
-                      881.0,
+                      882.0,
                       258.0,
-                      881.0
+                      882.0
                     ],
                     "elements": null
                   },
@@ -908,13 +959,13 @@
                     "text": "Company Name:",
                     "boundingBox": [
                       169.0,
-                      888.0,
+                      887.0,
                       378.0,
-                      888.0,
+                      887.0,
                       378.0,
-                      919.0,
+                      920.0,
                       169.0,
-                      919.0
+                      920.0
                     ],
                     "elements": null
                   },
@@ -922,13 +973,13 @@
                     "text": "Jupiter Book Supply",
                     "boundingBox": [
                       385.0,
-                      888.0,
+                      889.0,
                       624.0,
-                      888.0,
+                      889.0,
                       624.0,
-                      919.0,
+                      920.0,
                       385.0,
-                      919.0
+                      920.0
                     ],
                     "elements": null
                   },
@@ -943,9 +994,9 @@
                       276.0,
                       924.0,
                       276.0,
-                      954.0,
+                      956.0,
                       168.0,
-                      954.0
+                      956.0
                     ],
                     "elements": null
                   },
@@ -970,13 +1021,13 @@
                     "text": "Phone:",
                     "boundingBox": [
                       760.0,
-                      964.0,
+                      963.0,
                       852.0,
-                      964.0,
+                      963.0,
                       852.0,
-                      992.0,
+                      991.0,
                       760.0,
-                      992.0
+                      991.0
                     ],
                     "elements": null
                   },
@@ -984,13 +1035,13 @@
                     "text": "932-299-0292",
                     "boundingBox": [
                       857.0,
-                      964.0,
+                      963.0,
                       1032.0,
-                      964.0,
+                      963.0,
                       1032.0,
-                      992.0,
+                      991.0,
                       857.0,
-                      992.0
+                      991.0
                     ],
                     "elements": null
                   },
@@ -1014,13 +1065,13 @@
                   "value": {
                     "text": "$140.00",
                     "boundingBox": [
-                      1434.0,
+                      1433.0,
                       1574.0,
                       1530.0,
                       1574.0,
                       1530.0,
                       1599.0,
-                      1434.0,
+                      1433.0,
                       1599.0
                     ],
                     "elements": null
@@ -1108,171 +1159,17 @@
                     "text": "Do not Jostle Box. Unpack carefully. Enjoy. Jupiter Book Supply will refund you 50% per book if returned within 60 days of reading and offer you 25% off you next total purchase.",
                     "boundingBox": [
                       170.0,
-                      1880.0,
+                      1881.0,
                       1511.0,
-                      1880.0,
+                      1881.0,
                       1511.0,
-                      1992.0,
+                      1993.0,
                       170.0,
-                      1992.0
+                      1993.0
                     ],
                     "elements": null
                   },
                   "confidence": 0.53
-                },
-                {
-                  "key": {
-                    "text": "__Tokens__1",
-                    "boundingBox": null,
-                    "elements": null
-                  },
-                  "value": {
-                    "text": "Purchase Order",
-                    "boundingBox": [
-                      141.0,
-                      140.0,
-                      348.0,
-                      140.0,
-                      348.0,
-                      168.0,
-                      141.0,
-                      168.0
-                    ],
-                    "elements": null
-                  },
-                  "confidence": 1.0
-                },
-                {
-                  "key": {
-                    "text": "__Tokens__2",
-                    "boundingBox": null,
-                    "elements": null
-                  },
-                  "value": {
-                    "text": "Purchase Order",
-                    "boundingBox": [
-                      1117.0,
-                      319.0,
-                      1551.0,
-                      319.0,
-                      1551.0,
-                      372.0,
-                      1117.0,
-                      372.0
-                    ],
-                    "elements": null
-                  },
-                  "confidence": 1.0
-                },
-                {
-                  "key": {
-                    "text": "__Tokens__3",
-                    "boundingBox": null,
-                    "elements": null
-                  },
-                  "value": {
-                    "text": "Shipped To",
-                    "boundingBox": [
-                      170.0,
-                      546.0,
-                      398.0,
-                      546.0,
-                      398.0,
-                      592.0,
-                      170.0,
-                      592.0
-                    ],
-                    "elements": null
-                  },
-                  "confidence": 1.0
-                },
-                {
-                  "key": {
-                    "text": "__Tokens__4",
-                    "boundingBox": null,
-                    "elements": null
-                  },
-                  "value": {
-                    "text": "Shipped From",
-                    "boundingBox": [
-                      169.0,
-                      784.0,
-                      445.0,
-                      784.0,
-                      445.0,
-                      831.0,
-                      169.0,
-                      831.0
-                    ],
-                    "elements": null
-                  },
-                  "confidence": 1.0
-                },
-                {
-                  "key": {
-                    "text": "__Tokens__5",
-                    "boundingBox": null,
-                    "elements": null
-                  },
-                  "value": {
-                    "text": "Bernie Sanders",
-                    "boundingBox": [
-                      485.0,
-                      1669.0,
-                      766.0,
-                      1669.0,
-                      766.0,
-                      1708.0,
-                      485.0,
-                      1708.0
-                    ],
-                    "elements": null
-                  },
-                  "confidence": 1.0
-                },
-                {
-                  "key": {
-                    "text": "__Tokens__6",
-                    "boundingBox": null,
-                    "elements": null
-                  },
-                  "value": {
-                    "text": "Bernie Sanders",
-                    "boundingBox": [
-                      544.0,
-                      1717.0,
-                      719.0,
-                      1717.0,
-                      719.0,
-                      1743.0,
-                      544.0,
-                      1743.0
-                    ],
-                    "elements": null
-                  },
-                  "confidence": 1.0
-                },
-                {
-                  "key": {
-                    "text": "__Tokens__7",
-                    "boundingBox": null,
-                    "elements": null
-                  },
-                  "value": {
-                    "text": "Manager",
-                    "boundingBox": [
-                      579.0,
-                      1752.0,
-                      687.0,
-                      1752.0,
-                      687.0,
-                      1777.0,
-                      579.0,
-                      1777.0
-                    ],
-                    "elements": null
-                  },
-                  "confidence": 1.0
                 }
               ],
               "tables": [
@@ -1286,13 +1183,13 @@
                       "columnIndex": 0,
                       "boundingBox": [
                         447.0,
-                        1047.0,
+                        1045.0,
                         551.0,
-                        1047.0,
+                        1045.0,
                         551.0,
-                        1080.0,
+                        1078.0,
                         447.0,
-                        1080.0
+                        1078.0
                       ],
                       "confidence": 1.0,
                       "rowSpan": 1,
@@ -1307,13 +1204,13 @@
                       "columnIndex": 1,
                       "boundingBox": [
                         890.0,
-                        1048.0,
+                        1046.0,
                         1028.0,
-                        1048.0,
+                        1046.0,
                         1028.0,
-                        1080.0,
+                        1078.0,
                         890.0,
-                        1080.0
+                        1078.0
                       ],
                       "confidence": 1.0,
                       "rowSpan": 1,
@@ -1328,13 +1225,13 @@
                       "columnIndex": 2,
                       "boundingBox": [
                         1113.0,
-                        1045.0,
+                        1046.0,
                         1267.0,
-                        1045.0,
+                        1046.0,
                         1267.0,
-                        1080.0,
+                        1081.0,
                         1113.0,
-                        1080.0
+                        1081.0
                       ],
                       "confidence": 1.0,
                       "rowSpan": 1,
@@ -1349,13 +1246,13 @@
                       "columnIndex": 3,
                       "boundingBox": [
                         1389.0,
-                        1046.0,
+                        1043.0,
                         1466.0,
-                        1046.0,
+                        1043.0,
                         1466.0,
-                        1080.0,
+                        1077.0,
                         1389.0,
-                        1080.0
+                        1077.0
                       ],
                       "confidence": 1.0,
                       "rowSpan": 1,
@@ -1370,13 +1267,13 @@
                       "columnIndex": 0,
                       "boundingBox": [
                         173.0,
-                        1094.0,
+                        1093.0,
                         282.0,
-                        1094.0,
+                        1093.0,
                         282.0,
-                        1122.0,
+                        1121.0,
                         173.0,
-                        1122.0
+                        1121.0
                       ],
                       "confidence": 1.0,
                       "rowSpan": 1,
@@ -1391,13 +1288,13 @@
                       "columnIndex": 1,
                       "boundingBox": [
                         863.0,
-                        1098.0,
+                        1095.0,
                         889.0,
-                        1098.0,
+                        1095.0,
                         889.0,
-                        1122.0,
+                        1119.0,
                         863.0,
-                        1122.0
+                        1119.0
                       ],
                       "confidence": 1.0,
                       "rowSpan": 1,
@@ -1433,13 +1330,13 @@
                       "columnIndex": 3,
                       "boundingBox": [
                         1466.0,
-                        1098.0,
+                        1095.0,
                         1531.0,
-                        1098.0,
+                        1095.0,
                         1531.0,
-                        1122.0,
+                        1119.0,
                         1466.0,
-                        1122.0
+                        1119.0
                       ],
                       "confidence": 1.0,
                       "rowSpan": 1,
@@ -1475,13 +1372,13 @@
                       "columnIndex": 1,
                       "boundingBox": [
                         862.0,
-                        1137.0,
+                        1132.0,
                         889.0,
-                        1137.0,
+                        1132.0,
                         889.0,
-                        1162.0,
+                        1157.0,
                         862.0,
-                        1162.0
+                        1157.0
                       ],
                       "confidence": 1.0,
                       "rowSpan": 1,
@@ -1496,13 +1393,13 @@
                       "columnIndex": 2,
                       "boundingBox": [
                         1243.0,
-                        1134.0,
+                        1132.0,
                         1292.0,
-                        1134.0,
+                        1132.0,
                         1292.0,
-                        1162.0,
+                        1160.0,
                         1243.0,
-                        1162.0
+                        1160.0
                       ],
                       "confidence": 1.0,
                       "rowSpan": 1,
@@ -1517,13 +1414,13 @@
                       "columnIndex": 3,
                       "boundingBox": [
                         1464.0,
-                        1138.0,
+                        1134.0,
                         1531.0,
-                        1138.0,
+                        1134.0,
                         1531.0,
-                        1162.0,
+                        1158.0,
                         1464.0,
-                        1162.0
+                        1158.0
                       ],
                       "confidence": 1.0,
                       "rowSpan": 1,
@@ -1538,13 +1435,13 @@
                       "columnIndex": 0,
                       "boundingBox": [
                         172.0,
-                        1179.0,
-                        404.0,
-                        1179.0,
-                        404.0,
-                        1205.0,
+                        1180.0,
+                        403.0,
+                        1180.0,
+                        403.0,
+                        1206.0,
                         172.0,
-                        1205.0
+                        1206.0
                       ],
                       "confidence": 1.0,
                       "rowSpan": 1,
@@ -1580,13 +1477,13 @@
                       "columnIndex": 2,
                       "boundingBox": [
                         1243.0,
-                        1179.0,
+                        1177.0,
                         1298.0,
-                        1179.0,
+                        1177.0,
                         1298.0,
-                        1205.0,
+                        1203.0,
                         1243.0,
-                        1205.0
+                        1203.0
                       ],
                       "confidence": 1.0,
                       "rowSpan": 1,
@@ -1622,9 +1519,9 @@
                       "columnIndex": 0,
                       "boundingBox": [
                         171.0,
-                        1224.0,
+                        1225.0,
                         426.0,
-                        1224.0,
+                        1225.0,
                         426.0,
                         1248.0,
                         171.0,
@@ -1642,13 +1539,13 @@
                       "rowIndex": 4,
                       "columnIndex": 1,
                       "boundingBox": [
-                        864.0,
+                        863.0,
                         1221.0,
-                        887.0,
+                        888.0,
                         1221.0,
-                        887.0,
+                        888.0,
                         1244.0,
-                        864.0,
+                        863.0,
                         1244.0
                       ],
                       "confidence": 1.0,
@@ -1664,13 +1561,13 @@
                       "columnIndex": 2,
                       "boundingBox": [
                         1242.0,
-                        1222.0,
+                        1221.0,
                         1291.0,
-                        1222.0,
+                        1221.0,
                         1291.0,
-                        1248.0,
+                        1247.0,
                         1242.0,
-                        1248.0
+                        1247.0
                       ],
                       "confidence": 1.0,
                       "rowSpan": 1,
@@ -1685,13 +1582,13 @@
                       "columnIndex": 3,
                       "boundingBox": [
                         1449.0,
-                        1225.0,
+                        1224.0,
                         1530.0,
-                        1225.0,
+                        1224.0,
                         1530.0,
-                        1248.0,
+                        1247.0,
                         1449.0,
-                        1248.0
+                        1247.0
                       ],
                       "confidence": 1.0,
                       "rowSpan": 1,
@@ -1712,27 +1609,28 @@
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/e8717191-9a5e-4218-85e4-75bbf82beff8",
+      "RequestUri": "https://t00b5fddbfc124bd4-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/3a6a2b99-3ee4-4ec2-8164-f83eb63fd66f",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-d2a9e4d2155d6a4884eef14f2ed89adc-7506b58e77fd3247-00",
+        "traceparent": "00-d7816d8841dae84fa543d122195ade0c-5cd21e022040354c-00",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200820.1",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
-        "x-ms-client-request-id": "4f7106505349261390f2564c2384dacc",
+        "x-ms-client-request-id": "ca7e9b70abf9cebe5f3b4d8e59e70224",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
-        "apim-request-id": "89ab9371-7a19-4430-afce-8530e69de684",
+        "apim-request-id": "bfe2a318-7e83-4f9c-b8dc-74c8e0fb1e23",
         "Content-Length": "0",
-        "Date": "Fri, 07 Aug 2020 02:20:23 GMT",
+        "Date": "Thu, 20 Aug 2020 18:01:30 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "67"
+        "x-envoy-upstream-service-time": "19"
       },
       "ResponseBody": []
     }
@@ -1740,7 +1638,7 @@
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
     "FORM_RECOGNIZER_BLOB_CONTAINER_SAS_URL": "https://sanitized.blob.core.windows.net",
-    "FORM_RECOGNIZER_ENDPOINT": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/",
+    "FORM_RECOGNIZER_ENDPOINT": "https://t00b5fddbfc124bd4-formrecognizer.cognitiveservices.azure.com",
     "RandomSeed": "216728248"
   }
 }

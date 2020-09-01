@@ -1,4 +1,7 @@
 parameters:
+- name: AdditionalPlatforms
+  type: object
+  default: []
 - name: PreSteps
   type: object
   default: []

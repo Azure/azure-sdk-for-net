@@ -11,9 +11,12 @@ parameters:
   PushArgs:
   WorkingDirectory: $(System.DefaultWorkingDirectory)
   PRTitle: not-specified
+  PRBody: ''
   ScriptDirectory: eng/common/scripts
   GHReviewersVariable: '' 
   GHTeamReviewersVariable: ''
+  # Multiple labels seperated by comma, e.g. "bug, APIView"
+  PRLabels: ''
 
 steps:
 
@@ -65,10 +68,13 @@ steps:
       -PRBranch "${{ parameters.PRBranchName }}"
       -AuthToken "$(azuresdk-github-pat)"
       -PRTitle "${{ parameters.PRTitle }}"
+      -PRBody "${{ coalesce(parameters.PRBody, parameters.CommitMsg, parameters.PRTitle) }}"
+      -PRLabels "${{ parameters.PRLabels}}"
 
 - task: PowerShell@2
   displayName: Tag a Reviewer on PR
   condition: and(succeeded(), eq(variables['HasChanges'], 'true'))
+  continueOnError: true
   inputs:
     pwsh: true
     workingDirectory: ${{ parameters.WorkingDirectory }}

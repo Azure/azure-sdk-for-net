@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.AI.TextAnalytics.Models;
+
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
@@ -11,12 +13,14 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public readonly struct CategorizedEntity
     {
-        internal CategorizedEntity(string text, string category, string subCategory, double score)
+        internal CategorizedEntity(Entity entity)
         {
-            Text = text;
-            Category = category;
-            SubCategory = subCategory;
-            ConfidenceScore = score;
+            // We shipped TA 5.0.0 Category == string.Empty if the service returned a null value for Category.
+            // Because we don't want to introduce a breaking change, we are transforming that null to string.Empty
+            Category = entity.Category ?? string.Empty;
+            Text = entity.Text;
+            SubCategory = entity.Subcategory;
+            ConfidenceScore = entity.ConfidenceScore;
         }
 
         /// <summary>

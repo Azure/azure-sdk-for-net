@@ -25,7 +25,8 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Initializes a new instance of the <see cref="FormRecognizerClientLiveTests"/> class.
         /// </summary>
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
-        public FormRecognizerClientLiveTests(bool isAsync) : base(isAsync)
+        public FormRecognizerClientLiveTests(bool isAsync)
+            : base(isAsync)
         {
         }
 
@@ -1197,7 +1198,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Recognizer cognitive service and handle returned errors.
         /// </summary>
         [Test]
-        [TestCase(true, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/12319")]
+        [TestCase(true)]
         [TestCase(false)]
         public async Task StartRecognizeCustomFormsFromUriThrowsForNonExistingContent(bool useTrainingLabels)
         {
@@ -1209,9 +1210,8 @@ namespace Azure.AI.FormRecognizer.Tests
             var operation = await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.ModelId, invalidUri);
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync(PollingInterval));
-            string expectedErrorCode = useTrainingLabels ? "3003" : "2003";
-            Assert.AreEqual(expectedErrorCode, ex.ErrorCode);
 
+            Assert.AreEqual("2003", ex.ErrorCode);
             Assert.True(operation.HasCompleted);
             Assert.False(operation.HasValue);
         }

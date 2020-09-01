@@ -199,11 +199,20 @@ namespace Azure.Search.Documents.Tests
 
             while (true)
             {
-                await DelayAsync(delay, cancellationToken: cts.Token);
+                SearchIndexerStatus status = null;
+                try
+                {
+                    await DelayAsync(delay, cancellationToken: cts.Token);
 
-                SearchIndexerStatus status = await client.GetIndexerStatusAsync(
-                    indexerName,
-                    cancellationToken: cts.Token);
+                    status = await client.GetIndexerStatusAsync(
+                        indexerName,
+                        cancellationToken: cts.Token);
+                }
+                catch (TaskCanceledException)
+                {
+                    // TODO: Remove this when we figure out a more correlative way of checking status.
+                    Assert.Inconclusive("Timed out while waiting for the indexer to complete");
+                }
 
                 if (status.Status == IndexerStatus.Running)
                 {

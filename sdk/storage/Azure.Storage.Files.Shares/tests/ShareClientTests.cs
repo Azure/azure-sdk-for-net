@@ -890,7 +890,7 @@ namespace Azure.Storage.Files.Shares.Test
             ShareClient snapshotShareClient = share.WithSnapshot(response.Value.Snapshot);
 
             // Act
-            await snapshotShareClient.DeleteAsync(false);
+            await snapshotShareClient.DeleteAsync();
 
             // Assert
             Response<bool> shareExistsResponse = await share.ExistsAsync();
@@ -915,7 +915,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                snapshotShareClient.DeleteAsync(),
-               e => Assert.AreEqual(ShareErrorCode.InvalidQueryParameterValue.ToString(), e.ErrorCode));
+               e => Assert.AreEqual("ShareSnapshotNotFound", e.ErrorCode));
         }
 
         [Test]

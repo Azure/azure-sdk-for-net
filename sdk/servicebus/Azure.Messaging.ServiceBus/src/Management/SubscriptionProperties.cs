@@ -26,7 +26,7 @@ namespace Azure.Messaging.ServiceBus.Management
         /// </summary>
         /// <param name="topicName">Name of the topic relative to the namespace base address.</param>
         /// <param name="subscriptionName">Name of the subscription.</param>
-        public SubscriptionProperties(string topicName, string subscriptionName)
+        internal SubscriptionProperties(string topicName, string subscriptionName)
         {
             TopicName = topicName;
             SubscriptionName = subscriptionName;
