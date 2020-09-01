@@ -8,36 +8,53 @@ using System.Reflection;
 
 namespace OpenTelemetry.Exporter.AzureMonitor
 {
-    internal static class SdkVersionUtils
+    internal class SdkVersionUtils
     {
-        internal static string SdkVersion = GetSdkVersion();
+        private static string sdkVersion;
+
+        internal static string SdkVersion {
+            get
+            {
+                return sdkVersion ??= GetSdkVersion();
+            }
+        }
 
         private static string GetSdkVersion()
         {
+            string sdkVer = null;
+
             try
             {
                 Version dotnetSdkVersion = GetVersion(typeof(object));
                 Version otelSdkVersion = GetVersion(typeof(OpenTelemetry.Sdk));
                 Version extensionVersion = GetVersion(typeof(OpenTelemetry.Exporter.AzureMonitor.AzureMonitorTraceExporter));
 
-                return string.Format(CultureInfo.InvariantCulture, $"dotnet{dotnetSdkVersion.ToString(2)}:otel{otelSdkVersion.ToString(3)}:ext{extensionVersion.ToString(3)}");
+                sdkVer = string.Format(CultureInfo.InvariantCulture, $"dotnet{dotnetSdkVersion.ToString(2)}:otel{otelSdkVersion.ToString(3)}:ext{extensionVersion.ToString(3)}");
             }
             catch (Exception ex)
             {
-                AzureMonitorTraceExporterEventSource.Log.WriteException(new Exception("Error creating SdkVersion:", ex));
-                return null;
+                AzureMonitorTraceExporterEventSource.Log.SdkVersionCreateFailed(ex);
             }
+
+            return sdkVer;
         }
 
         private static Version GetVersion(Type type)
         {
-            // TODO: Distinguish preview/stable release and minor versions. e.g: 5.0.0-preview.8.20365.13
-            string versionString = type
-                .Assembly
-                .GetCustomAttributes(false)
-                .OfType<AssemblyFileVersionAttribute>()
-                .First()
-                .Version;
+            string versionString = null;
+
+            try
+            {
+                // TODO: Distinguish preview/stable release and minor versions. e.g: 5.0.0-preview.8.20365.13
+                versionString = type.Assembly.GetCustomAttributes(false)
+                                                    .OfType<AssemblyFileVersionAttribute>()
+                                                    .First()
+                                                    .Version;
+            }
+            catch (Exception ex)
+            {
+                AzureMonitorTraceExporterEventSource.Log.SdkVersionCreateFailed(ex);
+            }
 
             // Return zeros rather then failing if the version string fails to parse
             return Version.TryParse(versionString, out var version) ? version : new Version();
