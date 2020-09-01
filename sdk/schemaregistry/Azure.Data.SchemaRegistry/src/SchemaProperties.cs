@@ -54,6 +54,6 @@ namespace Azure.Data.SchemaRegistry
         /// <summary>
         /// Version of the schema.
         /// </summary>
-        public int? Version { get; }
+        internal int? Version { get; }
     }
 }

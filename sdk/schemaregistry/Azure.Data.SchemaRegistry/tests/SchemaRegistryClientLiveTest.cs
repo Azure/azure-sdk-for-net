@@ -43,12 +43,12 @@ namespace Azure.Data.SchemaRegistry.Tests
     ]
 }";
 
-            var schemaProperties = await client.RegisterSchemaAsync(groupName, schemaName, schema, schemaType);
+            var schemaProperties = await client.RegisterSchemaAsync(groupName, schemaName, schemaType, schema);
             Assert.IsNotNull(schemaProperties.Value);
             //Assert.AreEqual(schemaName, schemaProperties.Value.Name);
             //Assert.AreEqual(groupName, schemaProperties.Value.GroupName);
             //Assert.AreEqual(schemaType, schemaProperties.Value.Type);
-            Assert.IsNotNull(schemaProperties.Value.Version);
+            //Assert.IsNotNull(schemaProperties.Value.Version);
             Assert.IsNotNull(schemaProperties.Value.Id);
             Assert.IsTrue(Guid.TryParse(schemaProperties.Value.Id, out Guid _));
             Assert.AreEqual(schema, schemaProperties.Value.Content);
@@ -73,13 +73,13 @@ namespace Azure.Data.SchemaRegistry.Tests
     ]
 }";
 
-            await client.RegisterSchemaAsync(groupName, schemaName, schema, schemaType);
-            var schemaProperties = await client.GetSchemaIdAsync(groupName, schemaName, schema, schemaType);
+            await client.RegisterSchemaAsync(groupName, schemaName, schemaType, schema);
+            var schemaProperties = await client.GetSchemaIdAsync(groupName, schemaName, schemaType, schema);
             Assert.IsNotNull(schemaProperties.Value);
             //Assert.AreEqual(schemaName, schemaProperties.Value.Name);
             //Assert.AreEqual(groupName, schemaProperties.Value.GroupName);
             //Assert.AreEqual(schemaType, schemaProperties.Value.Type);
-            Assert.IsNotNull(schemaProperties.Value.Version);
+            //Assert.IsNotNull(schemaProperties.Value.Version);
             Assert.IsNotNull(schemaProperties.Value.Id);
             Assert.IsTrue(Guid.TryParse(schemaProperties.Value.Id, out Guid _));
             Assert.AreEqual(schema, schemaProperties.Value.Content);
@@ -103,7 +103,7 @@ namespace Azure.Data.SchemaRegistry.Tests
     ]
 }";
 
-            var registerProperties = await client.RegisterSchemaAsync(groupName, schemaName, schema, schemaType);
+            var registerProperties = await client.RegisterSchemaAsync(groupName, schemaName, schemaType, schema);
             Assert.IsNotNull(registerProperties.Value.Id);
             Assert.IsTrue(Guid.TryParse(registerProperties.Value.Id, out Guid _));
 
@@ -112,7 +112,7 @@ namespace Azure.Data.SchemaRegistry.Tests
             //Assert.AreEqual(schemaName, schemaProperties.Value.Name);
             //Assert.AreEqual(groupName, schemaProperties.Value.GroupName);
             //Assert.AreEqual(schemaType, schemaProperties.Value.Type);
-            Assert.IsNotNull(schemaProperties.Value.Version);
+            //Assert.IsNotNull(schemaProperties.Value.Version);
             Assert.IsNotNull(schemaProperties.Value.Id);
             Assert.IsTrue(Guid.TryParse(schemaProperties.Value.Id, out Guid _));
             Assert.AreEqual(schema, schemaProperties.Value.Content);

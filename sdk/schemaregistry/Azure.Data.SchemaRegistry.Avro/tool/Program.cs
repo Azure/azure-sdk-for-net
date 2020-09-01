@@ -1,9 +1,14 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using System.Threading;
 using Avro;
 using Avro.IO;
 using Avro.Specific;
+using Azure.Data.SchemaRegistry;
+using Azure.Data.SchemaRegistry.Avro;
+using Azure.Data.SchemaRegistry.Models;
+using Azure.Identity;
 using TestSchema;
 
 namespace ApacheAvroTestTool
@@ -13,10 +18,26 @@ namespace ApacheAvroTestTool
 
         static void Main(string[] args)
         {
+            //Testing();
             var employee = new Employee { Age = 42, Name = "Caketown" };
+            var schemaName = "test1";
+            var groupName = "miyanni_srgroup";
+            var schemaType = SerializationType.Avro;
+            var endpoint = "";
+            var creds = new ClientSecretCredential(
+                "",
+                "",
+                ""
+            );
+            var client = new SchemaRegistryClient(endpoint, creds);
+            var memoryStream = new MemoryStream();
 
+            var serializer = new AvroObjectSerializer(client, groupName, new AvroObjectSerializerOptions { AutoRegisterSchemas = true });
+            serializer.Serialize(memoryStream, employee, typeof(Employee), CancellationToken.None);
 
-
+            var deserializedObject = serializer.Deserialize(memoryStream, typeof(Employee), CancellationToken.None) as Employee;
+            Console.WriteLine(deserializedObject?.Name);
+            Console.WriteLine(deserializedObject?.Age);
         }
 
         private static void Testing()

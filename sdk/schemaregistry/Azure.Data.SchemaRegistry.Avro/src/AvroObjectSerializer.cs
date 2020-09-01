@@ -14,6 +14,8 @@ using Avro.IO;
 using Avro.Specific;
 using Azure.Core.Serialization;
 using Azure.Data.SchemaRegistry.Models;
+using Decoder = Avro.IO.Decoder;
+using Encoder = Avro.IO.Encoder;
 
 namespace Azure.Data.SchemaRegistry.Avro
 {
@@ -173,8 +175,8 @@ namespace Azure.Data.SchemaRegistry.Avro
             {
                 var schema = GetSchemaFromType(inputType);
                 var schemaProperties = _options.AutoRegisterSchemas
-                    ? _client.RegisterSchema(_groupName, schema.Fullname, schema.ToString(), SerializationType.Avro)
-                    : _client.GetSchemaId(_groupName, schema.Fullname, schema.ToString(), SerializationType.Avro);
+                    ? _client.RegisterSchema(_groupName, schema.Fullname, SerializationType.Avro, schema.ToString())
+                    : _client.GetSchemaId(_groupName, schema.Fullname, SerializationType.Avro, schema.ToString());
 
                 //https://stackoverflow.com/a/1151470/294804
                 var datumWriterType = typeof(SpecificDatumWriter<>).MakeGenericType(inputType);
@@ -183,10 +185,12 @@ namespace Azure.Data.SchemaRegistry.Avro
 
 
                 stream.Write(s_emptyRecordFormatIndicator, 0, 4);
-                stream.Write(Encoding.UTF8.GetBytes(schemaProperties.Value.Id), 0, 32);
+                var schemaId = Encoding.UTF8.GetBytes(schemaProperties.Value.Id);
+                stream.Write(schemaId, 0, 32);
 
                 var binaryEncoder = new BinaryEncoder(stream);
-                writer?.Write(value, binaryEncoder);
+                var writeMethod = datumWriterType.GetMethod("Write", new[] { inputType, typeof(Encoder) });
+                writeMethod?.Invoke(writer, new[] { value, binaryEncoder });
                 binaryEncoder.Flush();
             }
 
@@ -220,6 +224,7 @@ namespace Azure.Data.SchemaRegistry.Avro
             if (isSpecific)
             {
                 using var memoryStream = new MemoryStream();
+                stream.Position = 0;
                 stream.CopyTo(memoryStream);
                 var message = new Memory<byte>(memoryStream.ToArray());
 
@@ -228,9 +233,11 @@ namespace Azure.Data.SchemaRegistry.Avro
                 {
                     throw new InvalidDataContractException("The record format identifier for the message is invalid.");
                 }
-                var schemaId = Encoding.UTF8.GetString(message.Slice(3, 32).ToArray());
+
+                var schemaIdBytes = message.Slice(4, 32).ToArray();
+                var schemaId = Encoding.UTF8.GetString(schemaIdBytes);
                 var schema = Schema.Parse(_client.GetSchema(schemaId).Value.Content);
-                var valueStream = new MemoryStream(message.Slice(35, message.Length - 36).ToArray());
+                var valueStream = new MemoryStream(message.Slice(36, message.Length - 36).ToArray());
 
                 var binaryDecoder = new BinaryDecoder(valueStream);
                 //https://stackoverflow.com/a/1151470/294804
@@ -238,7 +245,8 @@ namespace Azure.Data.SchemaRegistry.Avro
                 //https://stackoverflow.com/a/2451341/294804
                 dynamic reader = Activator.CreateInstance(datumReaderType, schema, schema);
 
-                return reader?.Read(null, binaryDecoder);
+                var readMethod = datumReaderType.GetMethod("Read", new[] { returnType, typeof(Decoder) });
+                return readMethod?.Invoke(reader, new object[] { null, binaryDecoder });
             }
 
             return null;

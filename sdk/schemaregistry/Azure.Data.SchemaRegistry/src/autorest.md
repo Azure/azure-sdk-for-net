@@ -3,5 +3,5 @@
 Run `dotnet msbuild /t:GenerateCode` to generate code.
 
 ``` yaml
-require: https://github.com/Azure/azure-rest-api-specs/blob/b4e233b74adf6d6c586c48dd07df0797db4a6a27/specification/schemaregistry/data-plane/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/a90b9146e543d3eec11381bd52d3b6ff271b1b78/specification/schemaregistry/data-plane/readme.md
 ```
