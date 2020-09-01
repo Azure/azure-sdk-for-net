@@ -150,7 +150,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <value>
-        /// <c>true</c> if the client is closed; otherwise, <c>false</c>.
+        /// <c>true</c> if the processor is closed; otherwise, <c>false</c>.
         /// </value>
         public bool IsClosed
         {
