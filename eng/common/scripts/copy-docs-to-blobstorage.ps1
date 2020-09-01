@@ -209,13 +209,14 @@ function Upload-Blobs
     Write-Host "DocVersion $($DocVersion)"
     Write-Host "DocDir $($DocDir)"
     Write-Host "Final Dest $($DocDest)/$($PkgName)/$($DocVersion)"
+    Write-Host "Release tag $($ReleaseTag)."
 
     # Use the step to replace master link to release tag link 
     if ($ReleaseTag) {
         foreach ($htmlFile in (Get-ChildItem $DocDir -include *.html -r)) 
         {
             $fileContent = Get-Content $htmlFile
-            $updatedFileContent = $fileContent -replace $repoReplacRegex, "`${1}$ReleaseTag`$2"
+            $updatedFileContent = $fileContent -replace $RepoReplaceRegex, "`${1}$ReleaseTag`$2"
             if ($fileContent -ne $updatedFileContent) {
                 $updatedFileContent = Set-Content $htmlFile
             }
@@ -243,6 +244,7 @@ function RetrieveReleaseTag([Object[]]$pkgs) {
         Write-Warning "There is no release tag retrieved out from current package. "
         return ""
     }
+    Write-Host "Here is the release tag: $($pkgs[0].Tag)."
     return $pkgs[0].Tag
 }
 
@@ -254,7 +256,7 @@ $pkgList = VerifyPackages -pkgRepository $packageRepository `
     -apiUrl $apiUrl -releaseSha $releaseSha `
     -continueOnError $continueOnError
 
-$releaseTag = RetrieveReleaseTag($pkgList)
+$releaseTag = RetrieveReleaseTag $pkgList
 
 if ($Language -eq "javascript")
 {
@@ -279,7 +281,7 @@ if ($Language -eq "javascript")
 
 if ($Language -eq "dotnet")
 {
-    $PublishedPkgs = Get-ChildItem "$($DocLocation)/packages" | Where-Object -FilterScript {$_.Name.EndsWith(".nupkg") -and -not $_.Name.EndsWith(".symbols.nupkg")}
+    $PublishedPkgs = Get-ChildItem "$($DocLocation)" | Where-Object -FilterScript {$_.Name.EndsWith(".nupkg") -and -not $_.Name.EndsWith(".symbols.nupkg")}
     $PublishedDocs = Get-ChildItem "$($DocLocation)" | Where-Object -FilterScript {$_.Name.StartsWith("Docs.")}
 
     foreach ($Item in $PublishedDocs) {
