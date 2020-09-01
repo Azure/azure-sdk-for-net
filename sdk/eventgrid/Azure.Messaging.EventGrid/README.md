@@ -7,7 +7,7 @@ Use the client library for Azure Event Grid to:
 - Consume events that have been delivered to event handlers
 - Generate SAS tokens to authenticate the client publishing events to Azure Event Grid topics
 
-  [Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventgrid/Azure.Messaging.EventGrid) | [Package (NuGet)]() | [API reference documentation](https://azure.github.io/azure-sdk-for-net/eventgrid.html) | [Product documentation](https://docs.microsoft.com/en-us/azure/event-grid/)
+  [Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventgrid/Azure.Messaging.EventGrid) | [Package (NuGet)]() | [API reference documentation](https://azure.github.io/azure-sdk-for-net/eventgrid.html) | [Product documentation](https://docs.microsoft.com/en-us/azure/event-grid/) | [Samples](samples)
 
 ## Getting started
 
@@ -70,7 +70,13 @@ For information about general Event Grid concepts: [Concepts in Azure Event Grid
 A **publisher** sends events to the Event Grid service. Microsoft publishes events for several Azure services. You can publish events from your own application using the `EventGridPublisherClient`.
 
 ### Event schemas
-An **event** is the smallest amount of information that fully describes something that happened in the system. Event Grid supports multiple schemas for encoding events. When a custom topic or domain is created, you specify the schema that will be used when publishing events. While you may configure your topic to use a custom schema, it is more common to use the already-defined [Event Grid schema](https://docs.microsoft.com/en-us/azure/event-grid/event-schema) or [CloudEvents 1.0 schema](https://docs.microsoft.com/en-us/azure/event-grid/cloud-event-schema). [CloudEvents](https://cloudevents.io/) is a Cloud Native Computing Foundation project which produces a specification for describing event data in a common way.
+An **event** is the smallest amount of information that fully describes something that happened in the system. Event Grid supports multiple schemas for encoding events. When a custom topic or domain is created, you specify the schema that will be used when publishing events.
+
+#### Event Grid schema
+While you may configure your topic to use a custom schema, it is more common to use the already-defined Event Grid schema. See the specifications and requirements [here](https://docs.microsoft.com/en-us/azure/event-grid/event-schema).
+
+#### CloudEvents v1.0 schema
+Another option is to use the CloudEvents v1.0 schema. [CloudEvents](https://cloudevents.io/) is a Cloud Native Computing Foundation project which produces a specification for describing event data in a common way. The service summary of CloudEvents can be found [here](https://docs.microsoft.com/en-us/azure/event-grid/cloud-event-schema).
 
 Regardless of what schema your topic or domain is configured to use, `EventGridPublisherClient` will be used to publish events to it.
 
@@ -207,9 +213,10 @@ foreach (CloudEvent cloudEvent in cloudEvents)
             TestPayload testPayload = await cloudEvent.GetDataAsync<TestPayload>(myCustomSerializer);
             Console.WriteLine(testPayload.Name);
             break;
-        case "Microsoft.EventGrid.SubscriptionValidationEvent":
-            SubscriptionValidationEventData subscriptionValidated = cloudEvent.GetData<SubscriptionValidationEventData>();
-            Console.WriteLine(subscriptionValidated.ValidationCode);
+        case "Microsoft.Storage.BlobDeleted":
+            // Example for deserializing system events using GetData<T>
+            StorageBlobDeletedEventData blobDeleted = cloudEvent.GetData<StorageBlobDeletedEventData>();
+            Console.WriteLine(blobDeleted.BlobType);
             break;
     }
 }
@@ -217,13 +224,24 @@ foreach (CloudEvent cloudEvent in cloudEvents)
 
 ## Troubleshooting
 
-#### Service Responses
+### Service Responses
 `SendEvents()` returns a HTTP response code from the service. A `RequestFailedException` is thrown as a service response for any unsuccessful requests. The exception contains information about what response code was returned from the service.
 
-#### Deserializing Event Data
+### Deserializing Event Data
 - An `InvalidCastException` will be thrown during `GetData<T>()` if the event data cannot be cast to the specified type.
 
 - An `InvalidOperationException` will be thrown during `GetData<T>()` if a custom serializer is passed into `GetData<T>()` with non-serialized event data (for example, if the event was created by the user and not created by parsing from JSON).
+
+### Setting up console logging
+The simplest way to see the logs is to enable the console logging.
+To create an Azure SDK log listener that outputs messages to console use the AzureEventSourceListener.CreateConsoleLogger method.
+
+```C#
+// Setup a listener to monitor logged events.
+using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
+```
+
+To learn more about other logging mechanisms see [Diagnostics Samples](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md).
 
 ## Next steps
 
