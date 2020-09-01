@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>This is the Microsoft Azure Synapse Analytics Spark client library</Description>
     <AssemblyTitle>Azure.Analytics.Synapse.Spark</AssemblyTitle>
-    <Version>1.0.0-preview.1</Version>
+    <Version>1.0.0-preview.2</Version>
     <PackageTags>Microsoft Azure Synapse Spark;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 
@@ -15,7 +15,6 @@
     </NoWarn>
 
     <AssemblyName>Azure.Analytics.Synapse.Spark</AssemblyName>
-    <TemporaryUsePreviousGeneratorVersion>true</TemporaryUsePreviousGeneratorVersion>
   </PropertyGroup>
 
   <Import Project="..\..\Azure.Analytics.Synapse.Shared\src\Azure.Analytics.Synapse.Shared.projitems" Label="Shared" />
