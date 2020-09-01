@@ -242,11 +242,11 @@ function RetrieveReleaseTag([Object[]]$pkgs) {
 
 # VERIFY PACKAGES
 $apiUrl = "https://api.github.com/repos/$repoId"
-$pkgList = VerifyPackages -pkgRepository $packageRepository 
--artifactLocation $artifactLocation 
--workingDirectory $workingDirectory 
--apiUrl $apiUrl -releaseSha $releaseSha 
--continueOnError $continueOnError
+$pkgList = VerifyPackages -pkgRepository $packageRepository `
+    -artifactLocation $artifactLocation `
+    -workingDirectory $workingDirectory `
+    -apiUrl $apiUrl -releaseSha $releaseSha `
+    -continueOnError $continueOnError
 
 $releaseTag = RetrieveReleaseTag($pkgList)
 
