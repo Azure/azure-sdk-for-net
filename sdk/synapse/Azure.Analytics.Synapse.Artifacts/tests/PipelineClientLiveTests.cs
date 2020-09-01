@@ -34,5 +34,27 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
                 Assert.AreEqual(expectedPipeline.Id, actualPipeline.Id);
             }
         }
+
+        [Test]
+        public async Task TestCreatePipeline()
+        {
+            var operation = await PipelineClient.StartCreateOrUpdatePipelineAsync("MyPipeline", new PipelineResource());
+            while (!operation.HasValue)
+            {
+                operation.UpdateStatus();
+            }
+            Assert.AreEqual("MyPipeline", operation.Value.Name);
+        }
+
+        [Test]
+        public async Task TestDeletePipeline()
+        {
+            var operation = await PipelineClient.StartDeletePipelineAsync("MyPipeline");
+            while (!operation.HasValue)
+            {
+                operation.UpdateStatus();
+            }
+            Assert.AreEqual(200, operation.Value.Status);
+        }
     }
 }

@@ -24,7 +24,7 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <summary>
         /// Initializes a new instance of the <see cref="RuleProperties" /> class with default values.
         /// </summary>
-        public RuleProperties()
+        internal RuleProperties()
             : this(DefaultRuleName, TrueRuleFilter.Default)
         {
         }
@@ -32,7 +32,7 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <summary>
         /// Initializes a new instance of the <see cref="RuleProperties" /> class with the specified name.
         /// </summary>
-        public RuleProperties(string name)
+        internal RuleProperties(string name)
             : this(name, TrueRuleFilter.Default)
         {
         }
@@ -42,7 +42,7 @@ namespace Azure.Messaging.ServiceBus.Management
         /// </summary>
         /// <param name="name"></param>
         /// <param name="filter">The filter expression used to match messages.</param>
-        public RuleProperties(string name, RuleFilter filter)
+        internal RuleProperties(string name, RuleFilter filter)
         {
             Argument.AssertNotNull(filter, nameof(filter));
             Filter = filter;

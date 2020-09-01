@@ -22,14 +22,18 @@ namespace Azure.Messaging.ServiceBus.Management
         private string _userMetadata = null;
 
         /// <summary>
-        /// Initializes a new instance of QueueDescription class with the specified relative name.
+        /// Initializes a new instance of QueueProperties class with the specified relative name.
         /// </summary>
         /// <param name="name">Name of the queue relative to the namespace base address.</param>
-        public QueueProperties(string name)
+        internal QueueProperties(string name)
         {
             Name = name;
         }
 
+        /// <summary>
+        /// Initializes a new instance of QueueProperties from the provided options.
+        /// </summary>
+        /// <param name="options">Options used to create the properties instance.</param>
         internal QueueProperties(CreateQueueOptions options)
         {
             Name = options.Name;
@@ -47,7 +51,6 @@ namespace Azure.Messaging.ServiceBus.Management
             Status = options.Status;
             ForwardTo = options.ForwardTo;
             ForwardDeadLetteredMessagesTo = options.ForwardDeadLetteredMessagesTo;
-            EnableBatchedOperations = options.EnableBatchedOperations;
             if (options.UserMetadata != null)
             {
                 UserMetadata = options.UserMetadata;
@@ -83,8 +86,8 @@ namespace Azure.Messaging.ServiceBus.Management
         public long MaxSizeInMegabytes { get; set; } = 1024;
 
         /// <summary>
-        /// This value indicates if the queue requires guard against duplicate messages. If true, duplicate messages having same
-        /// <see cref="ServiceBusMessage.MessageId"/> and sent to queue within duration of <see cref="DuplicateDetectionHistoryTimeWindow"/>
+        /// This value indicates if the queue requires guard against duplicate messages. If true, duplicate messages having the same
+        /// <see cref="ServiceBusMessage.MessageId"/> and sent to the queue within duration of <see cref="DuplicateDetectionHistoryTimeWindow"/>
         /// will be discarded.
         /// </summary>
         /// <remarks>Defaults to false.</remarks>

@@ -408,5 +408,20 @@ namespace Azure.Storage.Files.DataLake
                 Position = error.Position
             };
         }
+
+        internal static BlobOpenReadOptions ToBlobOpenReadOptions(this DataLakeOpenReadOptions options)
+        {
+            if (options == null)
+            {
+                return null;
+            }
+
+            return new BlobOpenReadOptions(options.Conditions == null)
+            {
+                BufferSize = options.BufferSize,
+                Conditions = options.Conditions.ToBlobRequestConditions(),
+                Position = options.Position
+            };
+        }
     }
 }

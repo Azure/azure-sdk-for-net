@@ -2,6 +2,9 @@
 
 ## 1.5.0-preview.1 (Unreleased)
 
+### Changed
+- `ETag` now supports weak ETags and implements an overload for `ToString` that accepts a format string.
+
 ### Added
 - HttpWebRequest-based transport implementation. Enabled by-default on .NET Framework. Can be disabled using `AZURE_CORE_DISABLE_HTTPWEBREQUESTTRANSPORT` environment variable or `Azure.Core.Pipeline.DisableHttpWebRequestTransport` AppContext switch. To use the app context switch add the following snippet to your `.csproj`:
 

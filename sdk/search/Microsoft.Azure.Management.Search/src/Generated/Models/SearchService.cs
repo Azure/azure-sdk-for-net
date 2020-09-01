@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Search.Models
     /// Describes an Azure Cognitive Search service and its current state.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class SearchService : Resource
+    public partial class SearchService : TrackedResource
     {
         /// <summary>
         /// Initializes a new instance of the SearchService class.
@@ -34,17 +34,15 @@ namespace Microsoft.Azure.Management.Search.Models
         /// <summary>
         /// Initializes a new instance of the SearchService class.
         /// </summary>
-        /// <param name="id">The ID of the resource. This can be used with the
-        /// Azure Resource Manager to link resources together.</param>
-        /// <param name="name">The name of the resource.</param>
-        /// <param name="type">The resource type.</param>
-        /// <param name="location">The geographic location of the resource.
-        /// This must be one of the supported and registered Azure Geo Regions
-        /// (for example, West US, East US, Southeast Asia, and so forth). This
-        /// property is required when creating a new resource.</param>
-        /// <param name="tags">Tags to help categorize the resource in the
-        /// Azure portal.</param>
-        /// <param name="identity">The identity of the resource.</param>
+        /// <param name="location">The geo-location where the resource
+        /// lives</param>
+        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. Ex-
+        /// Microsoft.Compute/virtualMachines or
+        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="tags">Resource tags.</param>
         /// <param name="replicaCount">The number of replicas in the Search
         /// service. If specified, it must be a value between 1 and 12
         /// inclusive for standard SKUs or between 1 and 3 inclusive for basic
@@ -107,8 +105,9 @@ namespace Microsoft.Azure.Management.Search.Models
         /// <param name="sku">The SKU of the Search Service, which determines
         /// price tier and capacity limits. This property is required when
         /// creating a new Search Service.</param>
-        public SearchService(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), int? replicaCount = default(int?), int? partitionCount = default(int?), HostingMode? hostingMode = default(HostingMode?), PublicNetworkAccess? publicNetworkAccess = default(PublicNetworkAccess?), SearchServiceStatus? status = default(SearchServiceStatus?), string statusDetails = default(string), ProvisioningState? provisioningState = default(ProvisioningState?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), IList<SharedPrivateLinkResource> sharedPrivateLinkResources = default(IList<SharedPrivateLinkResource>), Sku sku = default(Sku))
-            : base(id, name, type, location, tags, identity)
+        /// <param name="identity">The identity of the resource.</param>
+        public SearchService(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), int? replicaCount = default(int?), int? partitionCount = default(int?), HostingMode? hostingMode = default(HostingMode?), PublicNetworkAccess? publicNetworkAccess = default(PublicNetworkAccess?), SearchServiceStatus? status = default(SearchServiceStatus?), string statusDetails = default(string), ProvisioningState? provisioningState = default(ProvisioningState?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), IList<SharedPrivateLinkResource> sharedPrivateLinkResources = default(IList<SharedPrivateLinkResource>), Sku sku = default(Sku), Identity identity = default(Identity))
+            : base(location, id, name, type, tags)
         {
             ReplicaCount = replicaCount;
             PartitionCount = partitionCount;
@@ -121,6 +120,7 @@ namespace Microsoft.Azure.Management.Search.Models
             PrivateEndpointConnections = privateEndpointConnections;
             SharedPrivateLinkResources = sharedPrivateLinkResources;
             Sku = sku;
+            Identity = identity;
             CustomInit();
         }
 
@@ -242,6 +242,12 @@ namespace Microsoft.Azure.Management.Search.Models
         public Sku Sku { get; set; }
 
         /// <summary>
+        /// Gets or sets the identity of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public Identity Identity { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -265,6 +271,10 @@ namespace Microsoft.Azure.Management.Search.Models
             if (PartitionCount < 1)
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "PartitionCount", 1);
+            }
+            if (Identity != null)
+            {
+                Identity.Validate();
             }
         }
     }

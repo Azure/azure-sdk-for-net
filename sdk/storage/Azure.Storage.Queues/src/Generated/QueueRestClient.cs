@@ -1849,8 +1849,8 @@ namespace Azure.Storage.Queues
             /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
-            /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="message">A Message object which can be stored in a Queue</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="visibilitytimeout">Optional. Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds. A specified value must be larger than or equal to 1 second, and cannot be larger than 7 days, or larger than 2 hours on REST protocol versions prior to version 2011-08-18. The visibility timeout of a message can be set to a value later than the expiry time.</param>
             /// <param name="messageTimeToLive">Optional. Specifies the time-to-live interval for the message, in seconds. Prior to version 2017-07-29, the maximum time-to-live allowed is 7 days. For version 2017-07-29 or later, the maximum time-to-live can be any positive number, as well as -1 indicating that the message does not expire. If this parameter is omitted, the default time-to-live is 7 days.</param>
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
@@ -1863,8 +1863,8 @@ namespace Azure.Storage.Queues
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
+                Azure.Storage.Queues.Models.QueueSendMessage message,
                 string version,
-                Azure.Storage.Queues.Models.QueueSendMessage message = default,
                 int? visibilitytimeout = default,
                 int? messageTimeToLive = default,
                 int? timeout = default,
@@ -1881,8 +1881,8 @@ namespace Azure.Storage.Queues
                     using (Azure.Core.HttpMessage _message = EnqueueAsync_CreateMessage(
                         pipeline,
                         resourceUri,
-                        version,
                         message,
+                        version,
                         visibilitytimeout,
                         messageTimeToLive,
                         timeout,
@@ -1920,8 +1920,8 @@ namespace Azure.Storage.Queues
             /// </summary>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, queue or message that is the targe of the desired operation.</param>
-            /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="message">A Message object which can be stored in a Queue</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="visibilitytimeout">Optional. Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds. A specified value must be larger than or equal to 1 second, and cannot be larger than 7 days, or larger than 2 hours on REST protocol versions prior to version 2011-08-18. The visibility timeout of a message can be set to a value later than the expiry time.</param>
             /// <param name="messageTimeToLive">Optional. Specifies the time-to-live interval for the message, in seconds. Prior to version 2017-07-29, the maximum time-to-live allowed is 7 days. For version 2017-07-29 or later, the maximum time-to-live can be any positive number, as well as -1 indicating that the message does not expire. If this parameter is omitted, the default time-to-live is 7 days.</param>
             /// <param name="timeout">The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a></param>
@@ -1930,8 +1930,8 @@ namespace Azure.Storage.Queues
             internal static Azure.Core.HttpMessage EnqueueAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
+                Azure.Storage.Queues.Models.QueueSendMessage message,
                 string version,
-                Azure.Storage.Queues.Models.QueueSendMessage message = default,
                 int? visibilitytimeout = default,
                 int? messageTimeToLive = default,
                 int? timeout = default,
@@ -1941,6 +1941,10 @@ namespace Azure.Storage.Queues
                 if (resourceUri == null)
                 {
                     throw new System.ArgumentNullException(nameof(resourceUri));
+                }
+                if (message == null)
+                {
+                    throw new System.ArgumentNullException(nameof(message));
                 }
                 if (version == null)
                 {
@@ -1963,14 +1967,11 @@ namespace Azure.Storage.Queues
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
                 // Create the body
-                if (message != null)
-                {
-                    System.Xml.Linq.XElement _body = Azure.Storage.Queues.Models.QueueSendMessage.ToXml(message, "QueueMessage", "");
-                    string _text = _body.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);
-                    _request.Headers.SetValue("Content-Type", "application/xml");
-                    _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
-                    _request.Content = Azure.Core.RequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
-                }
+                System.Xml.Linq.XElement _body = Azure.Storage.Queues.Models.QueueSendMessage.ToXml(message, "QueueMessage", "");
+                string _text = _body.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);
+                _request.Headers.SetValue("Content-Type", "application/xml");
+                _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                _request.Content = Azure.Core.RequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
 
                 return _message;
             }

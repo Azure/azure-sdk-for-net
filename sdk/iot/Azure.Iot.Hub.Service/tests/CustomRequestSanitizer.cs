@@ -20,7 +20,8 @@ namespace Azure.Iot.Hub.Service.Tests
             // Sanitize SAS tokens in request body
             JsonPathSanitizers.Add("outputBlobContainerUri");
             JsonPathSanitizers.Add("inputBlobContainerUri");
-            JsonPathSanitizers.Add("symmetricKey");
+            JsonPathSanitizers.Add("..primaryKey");
+            JsonPathSanitizers.Add("..secondaryKey");
         }
 
         public override string SanitizeUri(string uri)

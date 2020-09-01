@@ -5,6 +5,8 @@ using System;
 using System.Threading.Tasks;
 using Azure.Iot.Hub.Service.Authentication;
 using CommandLine;
+using Microsoft.Azure.Storage;
+using Microsoft.Azure.Storage.Blob;
 
 namespace Azure.Iot.Hub.Service.Samples
 {
@@ -42,23 +44,32 @@ namespace Azure.Iot.Hub.Service.Samples
 
             // Run the samples
 
-            var deviceIdentityLifecycleSamples = new DeviceIdentityLifecycleSamples(hubClient);
+            var deviceIdentityLifecycleSamples = new DeviceIdentityLifecycleSample(hubClient);
             await deviceIdentityLifecycleSamples.RunSampleAsync();
 
-            var moduleIdentityLifecycleSamples = new ModuleIdentityLifecycleSamples(hubClient);
+            var moduleIdentityLifecycleSamples = new ModuleIdentityLifecycleSample(hubClient);
             await moduleIdentityLifecycleSamples.RunSampleAsync();
 
-            var bulkDeviceIdentityLifecycleSamples = new BulkDeviceIdentityLifecycleSamples(hubClient);
+            var bulkDeviceIdentityLifecycleSamples = new BulkDeviceIdentityLifecycleSample(hubClient);
             await bulkDeviceIdentityLifecycleSamples.RunSampleAsync();
 
-            var bulkModuledentityLifecycleSamples = new BulkModuleIdentityLifecycleSamples(hubClient);
+            var bulkModuledentityLifecycleSamples = new BulkModuleIdentityLifecycleSample(hubClient);
             await bulkModuledentityLifecycleSamples.RunSampleAsync();
 
-            var querySamples = new QueryTwinSamples(hubClient);
+            var querySamples = new QueryTwinSample(hubClient);
             await querySamples.RunSampleAsync();
 
-            var statisticsSample = new StatisticsSamples(hubClient);
+            var statisticsSample = new StatisticsSample(hubClient);
             await statisticsSample.RunSampleAsync();
+
+            var configurationsSample = new ConfigurationSample(hubClient);
+            await configurationsSample.RunSampleAsync();
+
+            // Get SAS token to 'jobs' container in the  storage account.
+            Uri containerSasUri = await GetSasUriAsync(options.StorageAccountConnectionString, "jobs").ConfigureAwait(false);
+
+            var jobsSample = new JobsSample(hubClient, containerSasUri);
+            await jobsSample.RunSampleAsync();
 
             // Run samples that require the device sample to be running.
             if (options.IsDeviceSampleRunning == true)
@@ -67,6 +78,31 @@ namespace Azure.Iot.Hub.Service.Samples
                 var methodInvocationSamples = new MethodInvocationSamples(hubClient);
                 await methodInvocationSamples.RunSampleAsync();
             }
+        }
+
+        private static async Task<Uri> GetSasUriAsync(string storageAccountConnectionString, string containerName)
+        {
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(storageAccountConnectionString);
+            CloudBlobClient cloudBlobClient = storageAccount.CreateCloudBlobClient();
+            CloudBlobContainer CloudBlobContainer = cloudBlobClient.GetContainerReference(containerName);
+            await CloudBlobContainer.CreateIfNotExistsAsync().ConfigureAwait(false);
+
+            Uri containerUri = CloudBlobContainer.Uri;
+            var constraints = new SharedAccessBlobPolicy
+            {
+                SharedAccessExpiryTime = DateTimeOffset.UtcNow.AddHours(1),
+                Permissions = SharedAccessBlobPermissions.Read
+                    | SharedAccessBlobPermissions.Write
+                    | SharedAccessBlobPermissions.Create
+                    | SharedAccessBlobPermissions.List
+                    | SharedAccessBlobPermissions.Add
+                    | SharedAccessBlobPermissions.Delete,
+                SharedAccessStartTime = DateTimeOffset.UtcNow,
+            };
+
+            string sasContainerToken = CloudBlobContainer.GetSharedAccessSignature(constraints);
+            Uri sasUri = new Uri($"{containerUri}{sasContainerToken}");
+            return sasUri;
         }
     }
 }
