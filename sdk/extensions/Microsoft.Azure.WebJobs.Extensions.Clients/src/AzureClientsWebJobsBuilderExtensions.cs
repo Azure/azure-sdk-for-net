@@ -2,11 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Extensions.WebJobs;
+using System.Collections.Generic;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Primitives;
 
 namespace Microsoft.Extensions.Hosting
 {
