@@ -21,7 +21,7 @@ For more details on creating a SAS token using the `BlobServiceClient`, see the 
 Alternatively, it is possible to [generate a SAS token in Storage Explorer](https://docs.microsoft.com/en-us/azure/vs-azure-tools-storage-manage-with-storage-explorer?tabs=windows#generate-a-shared-access-signature-in-storage-explorer)
 
 To ensure you have some keys for backup, you may want to first create a key using the `KeyClient`.
-To create a new `KeyClient` to create a key, see the [Creating a KeyClient](creating_https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Keys/samples/Sample1_HelloWorld.md#creating-a-keyclientkeyvault) and [Creating a key](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Keys/samples/Sample1_HelloWorld.md#creating-a-key) samples.
+To create a new `KeyClient` to create a key, see the [Creating a KeyClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Keys/samples/Sample1_HelloWorld.md#creating-a-keyclientkeyvault) and [Creating a key](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Keys/samples/Sample1_HelloWorld.md#creating-a-key) samples.
 
 In the sample below, you can set `blobStorageUrl`, `blobContainerName`, and `sasToken` based on a environment variables, configuration settings, or any way that works for your application.
 
