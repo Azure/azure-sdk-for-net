@@ -1,11 +1,14 @@
-2020-08-31 04:37:21 UTC
-
-1) azure-rest-api-specs repository information
-GitHub user: Azure
+﻿Installing AutoRest version: latest
+AutoRest installed successfully.
+Commencing code generation
+Generating CSharp code
+Executing AutoRest command
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/databox/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=D:\1\oldProcess\azure-sdk-for-net\sdk
+2020-09-01 11:52:38 UTC
+Azure-rest-api-specs repository information
+GitHub fork: Azure
 Branch:      master
-Commit:      e84a61630139738316ee8531960b5966e8f1baeb
-
-2) AutoRest information
+Commit:      e77323387ae041bf21a51ae61bf3a1ce95541a3f
+AutoRest information
 Requested version: latest
-Bootstrapper version:    C:\Users\dhja\AppData\Local\nvs\default +-- autorest@3.0.6187  `-- oad@0.1.7   `-- autorest@1.9.1  
-Latest installed version:    
+Bootstrapper version:    autorest@1.9.1
