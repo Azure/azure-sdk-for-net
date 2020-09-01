@@ -218,7 +218,7 @@ function Upload-Blobs
             $fileContent = Get-Content $htmlFile
             $updatedFileContent = $fileContent -replace $RepoReplaceRegex, "`${1}$ReleaseTag`$2"
             if ($fileContent -ne $updatedFileContent) {
-                $updatedFileContent = Set-Content $htmlFile
+                $updatedFileContent | Set-Content $htmlFile
             }
         }
     } 
