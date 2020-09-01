@@ -27,7 +27,7 @@ namespace Azure.Security.KeyVault.Administration.Samples
             _objectId = TestEnvironment.ClientObjectId;
         }
 
-        [Test]
+        [RecordedTest]
         [SyncOnly]
         public void CreateClient()
         {
@@ -40,7 +40,7 @@ namespace Azure.Security.KeyVault.Administration.Samples
             client = Client;
         }
 
-        [Test]
+        [RecordedTest]
         [SyncOnly]
         public void GetDefinitionsAndAssignmentsSync()
         {
@@ -59,7 +59,7 @@ namespace Azure.Security.KeyVault.Administration.Samples
 
         }
 
-        [Test]
+        [RecordedTest]
         [AsyncOnly]
         public async Task GetDefinitionsAndAssignmentsAsync()
         {
@@ -85,7 +85,7 @@ namespace Azure.Security.KeyVault.Administration.Samples
             #endregion
         }
 
-        [Test]
+        [RecordedTest]
         [SyncOnly]
         public void CreateRoleAssignment()
         {
@@ -119,7 +119,7 @@ namespace Azure.Security.KeyVault.Administration.Samples
             #endregion
         }
 
-        [Test]
+        [RecordedTest]
         [AsyncOnly]
         public async Task CreateRoleAssignmentAsync()
         {

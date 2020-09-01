@@ -26,7 +26,7 @@ namespace Azure.Security.KeyVault.Administration.Samples
             _objectId = TestEnvironment.ClientObjectId;
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateRoleAssignmentAsync()
         {
             // Replace client with the Instrumented Client.

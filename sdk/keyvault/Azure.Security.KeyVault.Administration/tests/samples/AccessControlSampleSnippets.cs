@@ -27,7 +27,7 @@ namespace Azure.Security.KeyVault.Administration.Samples
             _objectId = TestEnvironment.ClientObjectId;
         }
 
-        [Test]
+        [RecordedTest]
         [SyncOnly]
         public void CreateClient()
         {
@@ -48,7 +48,7 @@ namespace Azure.Security.KeyVault.Administration.Samples
             #endregion
         }
 
-        [Test]
+        [RecordedTest]
         [SyncOnly]
         public void GetRoleDefinitions()
         {
@@ -66,13 +66,18 @@ namespace Azure.Security.KeyVault.Administration.Samples
             #endregion
         }
 
-        [Test]
+        [RecordedTest]
         [SyncOnly]
-        public async Task CreateRoleAssignment()
+        public void CreateRoleAssignment()
         {
             client = Client;
-            List<KeyVaultRoleDefinition> definitions = await Client.GetRoleDefinitionsAsync(KeyVaultRoleScope.Global).ToEnumerableAsync().ConfigureAwait(false);
-            _roleDefinitionId = definitions.FirstOrDefault(d => d.RoleName == RoleName).Id;
+            Pageable<KeyVaultRoleDefinition> definitions = client.GetRoleDefinitions(KeyVaultRoleScope.Global);
+            List<KeyVaultRoleDefinition> allDefinitions = new List<KeyVaultRoleDefinition>();
+            foreach (KeyVaultRoleDefinition roleDefinition in definitions)
+            {
+                allDefinitions.Add(roleDefinition);
+            }
+            _roleDefinitionId = allDefinitions.FirstOrDefault(d => d.RoleName == RoleName).Id;
 
             // Replace roleDefinitionId with a role definition Id from the definitions returned from the List the role definitions section above
             string definitionIdToAssign = _roleDefinitionId;
@@ -110,7 +115,7 @@ namespace Azure.Security.KeyVault.Administration.Samples
             #endregion
         }
 
-        [Test]
+        [RecordedTest]
         [SyncOnly]
         public void RoleAssignmentNotFound()
         {

@@ -15,7 +15,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         public AccessControlClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Playback /* To record tests, change this argument to RecordedTestMode.Record */)
         { }
 
-        [Test]
+        [RecordedTest]
         public async Task GetRoleDefinitions()
         {
             List<KeyVaultRoleDefinition> results = await Client.GetRoleDefinitionsAsync(KeyVaultRoleScope.Global).ToEnumerableAsync().ConfigureAwait(false);
@@ -31,11 +31,11 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Assert.That(results[0].Type, Is.Not.Null);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateRoleAssignment()
         {
             List<KeyVaultRoleDefinition> definitions = await Client.GetRoleDefinitionsAsync(KeyVaultRoleScope.Global).ToEnumerableAsync().ConfigureAwait(false);
-            var definitionToAssign = definitions.FirstOrDefault(d => d.RoleName == RoleName);
+            var definitionToAssign = definitions.FirstOrDefault(d => d.RoleName.Contains(RoleName));
 
             var properties = new KeyVaultRoleAssignmentProperties(definitionToAssign.Id, TestEnvironment.ClientObjectId);
             KeyVaultRoleAssignment result = await Client.CreateRoleAssignmentAsync(KeyVaultRoleScope.Global, properties, _roleAssignmentId).ConfigureAwait(false);
@@ -49,11 +49,11 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Assert.That(result.Properties.RoleDefinitionId, Is.EqualTo(properties.RoleDefinitionId));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetRoleAssignment()
         {
             List<KeyVaultRoleDefinition> definitions = await Client.GetRoleDefinitionsAsync(KeyVaultRoleScope.Global).ToEnumerableAsync().ConfigureAwait(false);
-            var definitionToAssign = definitions.FirstOrDefault(d => d.RoleName == RoleName);
+            var definitionToAssign = definitions.FirstOrDefault(d => d.RoleName.Contains(RoleName));
 
             var properties = new KeyVaultRoleAssignmentProperties(definitionToAssign.Id, TestEnvironment.ClientObjectId);
             KeyVaultRoleAssignment assignment = await Client.CreateRoleAssignmentAsync(KeyVaultRoleScope.Global, properties, _roleAssignmentId).ConfigureAwait(false);
@@ -70,11 +70,11 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Assert.That(result.Properties.Scope, Is.EqualTo(assignment.Properties.Scope));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DeleteRoleAssignment()
         {
             List<KeyVaultRoleDefinition> definitions = await Client.GetRoleDefinitionsAsync(KeyVaultRoleScope.Global).ToEnumerableAsync().ConfigureAwait(false);
-            var definitionToAssign = definitions.FirstOrDefault(d => d.RoleName == RoleName);
+            var definitionToAssign = definitions.FirstOrDefault(d => d.RoleName.Contains(RoleName));
 
             var properties = new KeyVaultRoleAssignmentProperties(definitionToAssign.Id, TestEnvironment.ClientObjectId);
             KeyVaultRoleAssignment assignment = await Client.CreateRoleAssignmentAsync(KeyVaultRoleScope.Global, properties, _roleAssignmentId).ConfigureAwait(false);

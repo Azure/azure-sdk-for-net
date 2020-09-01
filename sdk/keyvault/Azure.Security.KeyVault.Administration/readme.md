@@ -10,7 +10,7 @@ The Azure Key Vault administration library clients support administrative tasks 
 Install the Azure Key Vault administration client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-Install-Package Azure.Security.KeyVault.Administration --version 4.0.0-beta.1
+dotnet install Azure.Security.KeyVault.Administration --version 4.0.0-beta.1
 ```
 
 ### Prerequisites
@@ -27,7 +27,7 @@ Client secret credential authentication is being used in this getting started se
 or other credential providers provided with the Azure SDK, you should install the Azure.Identity package:
 
 ```PowerShell
-Install-Package Azure.Identity
+dotnet install Azure.Identity
 ```
 
 #### Create/Get credentials
