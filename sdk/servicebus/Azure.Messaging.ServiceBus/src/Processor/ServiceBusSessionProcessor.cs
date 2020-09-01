@@ -138,7 +138,6 @@ namespace Azure.Messaging.ServiceBus
         {
             add
             {
-                var msg = new ServiceBusMessage("sd");
                 _innerProcessor.ProcessErrorAsync += value;
             }
 
