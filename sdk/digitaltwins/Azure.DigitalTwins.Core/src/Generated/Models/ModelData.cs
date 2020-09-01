@@ -14,6 +14,28 @@ namespace Azure.DigitalTwins.Core
     /// <summary> A model definition and metadata for that model. </summary>
     public partial class ModelData
     {
+
+        /// <summary> Initializes a new instance of ModelData. </summary>
+        /// <param name="displayName"> A language map that contains the localized display names as specified in the model definition. </param>
+        /// <param name="description"> A language map that contains the localized descriptions as specified in the model definition. </param>
+        /// <param name="id"> The id of the model as specified in the model definition. </param>
+        /// <param name="uploadTime"> The time the model was uploaded to the service. </param>
+        /// <param name="decommissioned"> Indicates if the model is decommissioned. Decommissioned models cannot be referenced by newly created digital twins. </param>
+        /// <param name="model"> The model definition. </param>
+        internal ModelData(IReadOnlyDictionary<string, string> displayName, IReadOnlyDictionary<string, string> description, string id, DateTimeOffset? uploadTime, bool? decommissioned, string model)
+        {
+            DisplayName = displayName;
+            Description = description;
+            Id = id;
+            UploadTime = uploadTime;
+            Decommissioned = decommissioned;
+            Model = model;
+        }
+
+        /// <summary> A language map that contains the localized display names as specified in the model definition. </summary>
+        public IReadOnlyDictionary<string, string> DisplayName { get; }
+        /// <summary> A language map that contains the localized descriptions as specified in the model definition. </summary>
+        public IReadOnlyDictionary<string, string> Description { get; }
         /// <summary> The id of the model as specified in the model definition. </summary>
         public string Id { get; }
         /// <summary> The time the model was uploaded to the service. </summary>

@@ -92,8 +92,8 @@ namespace Azure.DigitalTwins.Core
     {
         internal ModelData() { }
         public bool? Decommissioned { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Description { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> DisplayName { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> Description { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> DisplayName { get { throw null; } }
         public string Id { get { throw null; } }
         public string Model { get { throw null; } }
         public System.DateTimeOffset? UploadTime { get { throw null; } }

@@ -19,8 +19,6 @@ namespace Azure.Messaging.ServiceBus.Management
         public const string XmlSchemaNamespace = "http://www.w3.org/2001/XMLSchema";
         public const string SerializationNamespace = "http://schemas.microsoft.com/2003/10/Serialization/";
         public const string AtomContentType = "application/atom+xml";
-        public const string apiVersionQuery = "api-version=" + ApiVersion;
-        public const string ApiVersion = "2017-04";
 
         public const string ServiceBusSupplementartyAuthorizationHeaderName = "ServiceBusSupplementaryAuthorization";
         public const string ServiceBusDlqSupplementaryAuthorizationHeaderName = "ServiceBusDlqSupplementaryAuthorization";

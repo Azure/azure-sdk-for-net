@@ -3,7 +3,7 @@
     <Description>This is the implementation of the Azure SDK Client Library for Azure Identity</Description>
     <AssemblyTitle>Microsoft Azure.Identity Component</AssemblyTitle>
     <Version>1.3.0-preview.1</Version>
-    <ApiCompatVersion>1.2.0</ApiCompatVersion>
+    <ApiCompatVersion>1.2.2</ApiCompatVersion>
     <PackageTags>Microsoft Azure Identity;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021</NoWarn>

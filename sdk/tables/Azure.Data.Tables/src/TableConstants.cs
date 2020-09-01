@@ -36,7 +36,8 @@ namespace Azure.Data.Tables
             public const string TimeStamp = "Timestamp";
             public const string PartitionKey = "PartitionKey";
             public const string RowKey = "RowKey";
-            public const string Etag = "odata.etag";
+            public const string EtagOdata = "odata.etag";
+            public const string ETag = nameof(ITableEntity.ETag);
         }
 
         internal static class Odata
@@ -127,6 +128,31 @@ namespace Azure.Data.Tables
             {
                 public const string Table = "t";
             }
+
+        }
+        /// <summary>
+        /// Table Connection String constant values.
+        /// </summary>
+        internal static class ConnectionStrings
+        {
+            internal const int TableEndpointPortNumber = 10002;
+            internal const string UseDevelopmentSetting = "UseDevelopmentStorage";
+            internal const string DevelopmentProxyUriSetting = "DevelopmentStorageProxyUri";
+            internal const string DefaultEndpointsProtocolSetting = "DefaultEndpointsProtocol";
+            internal const string AccountNameSetting = "AccountName";
+            internal const string AccountKeyNameSetting = "AccountKeyName";
+            internal const string AccountKeySetting = "AccountKey";
+            internal const string TableEndpointSetting = "TableEndpoint";
+            internal const string TableSecondaryEndpointSetting = "TableSecondaryEndpoint";
+            internal const string EndpointSuffixSetting = "EndpointSuffix";
+            internal const string SharedAccessSignatureSetting = "SharedAccessSignature";
+            internal const string DevStoreAccountName = "devstoreaccount1";
+            internal const string DevStoreAccountKey =
+                "Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==";
+            internal const string SecondaryLocationAccountSuffix = "-secondary";
+            internal const string DefaultEndpointSuffix = "core.windows.net";
+            internal const string DefaultTableHostnamePrefix = "table";
+            internal const string Localhost = "127.0.0.1";
         }
     }
 }

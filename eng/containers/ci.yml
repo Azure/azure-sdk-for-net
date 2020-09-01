@@ -1,0 +1,34 @@
+pr: none
+
+trigger:
+  branches:
+    include:
+    - master
+  paths:
+    include:
+    - eng/containers/
+
+pool:
+  vmImage: 'ubuntu-18.04'
+
+variables:
+  dockerfile: ./eng/containers/UbuntuNetCore2Keyring/Dockerfile
+  containerRegistry: 'azsdkengsys'
+  imageRepository: 'dotnet/ubuntu_netcore2_keyring'
+  imageTag: $(build.buildid)
+
+steps:
+- task: Docker@2
+  displayName: Build Docker Image
+  inputs:
+    command: build
+    Dockerfile: $(dockerfile)
+    tags: $(imageTag)
+    arguments: '-t $(containerRegistry).azurecr.io/$(imageRepository):$(imageTag)'
+- task: Docker@2
+  displayName: Push Docker Image
+  inputs:
+    containerRegistry: $(containerRegistry)
+    repository: $(imageRepository)
+    command: push
+    tags: $(imageTag)

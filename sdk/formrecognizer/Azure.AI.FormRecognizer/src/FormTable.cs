@@ -22,6 +22,21 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="FormTable"/> class.
+        /// </summary>
+        /// <param name="pageNumber">The 1-based number of the page in which this table is present.</param>
+        /// <param name="columnCount">The number of columns in this table.</param>
+        /// <param name="rowCount">The number of rows in this table.</param>
+        /// <param name="cells">A list of cells contained in this table.</param>
+        internal FormTable(int pageNumber, int columnCount, int rowCount, IReadOnlyList<FormTableCell> cells)
+        {
+            PageNumber = pageNumber;
+            ColumnCount = columnCount;
+            RowCount = rowCount;
+            Cells = cells;
+        }
+
+        /// <summary>
         /// The 1-based number of the page in which this table is present.
         /// </summary>
         public int PageNumber { get; }

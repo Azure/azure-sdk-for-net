@@ -75,5 +75,4 @@ For additional insight and context, the development, release, and issue history 
 [sdk_design_guidelines]: https://azure.github.io/azure-sdk/general_introduction.html
 [sdk_design_guidelines_dotnet]: https://azure.github.io/azure-sdk/dotnet_introduction.html
 [sdk_dotnet_code_readme]: ../../sdk/core/Azure.Core/README.md
-[tests_sanitized]: ./Azure.Data.AppConfiguration/tests/ConfigurationRecordedTestSanitizer.cs
 [email_opencode]: mailto:opencode@microsoft.com

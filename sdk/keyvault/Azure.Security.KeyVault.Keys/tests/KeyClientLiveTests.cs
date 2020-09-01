@@ -586,7 +586,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             DeleteKeyOperation operation = await Client.StartDeleteKeyAsync(keyName);
 
-            DeletedKey deletedKey = await operation.WaitForCompletionAsync();
+            DeletedKey deletedKey = await operation.WaitForCompletionAsync(PollingInterval, default);
 
             Assert.NotNull(deletedKey.DeletedOn);
             Assert.NotNull(deletedKey.RecoveryId);
@@ -608,7 +608,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             DeleteKeyOperation operation = await Client.StartDeleteKeyAsync(keyName);
 
-            DeletedKey deletedKey = await operation.WaitForCompletionAsync();
+            DeletedKey deletedKey = await operation.WaitForCompletionAsync(PollingInterval, default);
 
             Assert.NotNull(deletedKey.DeletedOn);
             Assert.NotNull(deletedKey.RecoveryId);
@@ -660,7 +660,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             DeleteKeyOperation operation = await Client.StartDeleteKeyAsync(keyName);
 
-            DeletedKey deletedKey = await operation.WaitForCompletionAsync();
+            DeletedKey deletedKey = await operation.WaitForCompletionAsync(PollingInterval, default);
 
             await WaitForDeletedKey(keyName);
 
@@ -686,7 +686,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             DeleteKeyOperation operation = await Client.StartDeleteKeyAsync(keyName);
 
-            DeletedKey deletedKey = await operation.WaitForCompletionAsync();
+            DeletedKey deletedKey = await operation.WaitForCompletionAsync(PollingInterval, default);
 
             await WaitForDeletedKey(keyName);
 
@@ -745,7 +745,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             DeleteKeyOperation deleteOperation = await Client.StartDeleteKeyAsync(keyName);
 
-            DeletedKey deletedKey = await deleteOperation.WaitForCompletionAsync();
+            DeletedKey deletedKey = await deleteOperation.WaitForCompletionAsync(PollingInterval, default);
 
             await WaitForDeletedKey(keyName);
 
@@ -753,7 +753,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             RecoverDeletedKeyOperation recoverOperation = await Client.StartRecoverDeletedKeyAsync(keyName);
 
-            KeyVaultKey recoverKeyResult = await recoverOperation.WaitForCompletionAsync();
+            KeyVaultKey recoverKeyResult = await recoverOperation.WaitForCompletionAsync(PollingInterval, default);
 
             await WaitForKey(keyName);
 
@@ -777,7 +777,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             DeleteKeyOperation deleteOperation = await Client.StartDeleteKeyAsync(keyName);
 
-            DeletedKey deletedKey = await deleteOperation.WaitForCompletionAsync();
+            DeletedKey deletedKey = await deleteOperation.WaitForCompletionAsync(PollingInterval, default);
 
             await WaitForDeletedKey(keyName);
 
@@ -785,7 +785,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             RecoverDeletedKeyOperation recoverOperation = await Client.StartRecoverDeletedKeyAsync(keyName);
 
-            KeyVaultKey recoverKeyResult = await recoverOperation.WaitForCompletionAsync();
+            KeyVaultKey recoverKeyResult = await recoverOperation.WaitForCompletionAsync(PollingInterval, default);
 
             await WaitForKey(keyName);
 

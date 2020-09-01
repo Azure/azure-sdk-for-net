@@ -30,6 +30,27 @@ namespace Azure.AI.FormRecognizer.Training
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="CustomFormModel"/> class.
+        /// </summary>
+        /// <param name="modelId">The unique identifier of this model.</param>
+        /// <param name="status">A status indicating this model's readiness for use.</param>
+        /// <param name="trainingStartedOn">The date and time (UTC) when model training was started.</param>
+        /// <param name="trainingCompletedOn">The date and time (UTC) when model training completed.</param>
+        /// <param name="submodels">A list of submodels that are part of this model, each of which can recognize and extract fields from a different type of form.</param>
+        /// <param name="trainingDocuments">A list of meta-data about each of the documents used to train the model.</param>
+        /// <param name="errors">A list of errors ocurred during the training operation.</param>
+        internal CustomFormModel(string modelId, CustomFormModelStatus status, DateTimeOffset trainingStartedOn, DateTimeOffset trainingCompletedOn, IReadOnlyList<CustomFormSubmodel> submodels, IReadOnlyList<TrainingDocumentInfo> trainingDocuments, IReadOnlyList<FormRecognizerError> errors)
+        {
+            ModelId = modelId;
+            Status = status;
+            TrainingStartedOn = trainingStartedOn;
+            TrainingCompletedOn = trainingCompletedOn;
+            Submodels = submodels;
+            TrainingDocuments = trainingDocuments;
+            Errors = errors;
+        }
+
+        /// <summary>
         /// The unique identifier of this model.
         /// </summary>
         public string ModelId { get; }

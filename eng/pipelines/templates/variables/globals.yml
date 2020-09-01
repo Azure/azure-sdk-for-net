@@ -10,3 +10,4 @@ variables:
   ${{ if eq(variables['System.TeamProject'], 'internal') }}:
     BuildConfiguration: 'Release'
   DocFxVersion: 'v2.56.1'
+  CollectCoverage: false
