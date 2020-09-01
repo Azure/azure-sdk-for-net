@@ -763,6 +763,61 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task UploadPagesAsync_InvalidStreamPosition()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+            long size = Constants.KB;
+            byte[] data = GetRandomBuffer(size);
+
+            using Stream stream = new MemoryStream(data)
+            {
+                Position = size
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                blob.UploadPagesAsync(
+                    content: stream,
+                    offset: 0),
+                e => Assert.AreEqual("content.Position must be less than content.Length. Please set content.Position to the start of the data to upload.", e.Message));
+        }
+
+        [Test]
+        public async Task UploadPagesAsync_NonZeroStreamPosition()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            long size = Constants.KB;
+            long position = 512;
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, size - position);
+            byte[] data = GetRandomBuffer(size);
+            byte[] expectedData = new byte[size - position];
+            Array.Copy(data, position, expectedData, 0, size - position);
+
+            using Stream stream = new MemoryStream(data)
+            {
+                Position = position
+            };
+
+            // Act
+            await blob.UploadPagesAsync(
+                content: stream,
+                offset: 0);
+
+            // Assert
+            Response<BlobDownloadInfo> response = await blob.DownloadAsync();
+
+            var actualData = new byte[512];
+            using var actualStream = new MemoryStream(actualData);
+            await response.Value.Content.CopyToAsync(actualStream);
+            TestHelper.AssertSequenceEqual(expectedData, actualData);
+        }
+
+        [Test]
         public async Task ClearPagesAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -3018,6 +3073,44 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task OpenWriteAsync_NewBlob_WithUsing()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 16 * Constants.KB);
+
+            PageBlobOpenWriteOptions options = new PageBlobOpenWriteOptions
+            {
+                BufferSize = Constants.KB
+            };
+
+            byte[] data = GetRandomBuffer(16 * Constants.KB);
+
+            // Act
+            using (Stream stream = await blob.OpenWriteAsync(
+                overwrite: false,
+                position: 0,
+                options: options))
+            {
+                await stream.WriteAsync(data, 0, 512);
+                await stream.WriteAsync(data, 512, 1024);
+                await stream.WriteAsync(data, 1536, 2048);
+                await stream.WriteAsync(data, 3584, 77);
+                await stream.WriteAsync(data, 3661, 2066);
+                await stream.WriteAsync(data, 5727, 4096);
+                await stream.WriteAsync(data, 9823, 6561);
+            }
+
+            // Assert
+            Response<BlobDownloadInfo> result = await blob.DownloadAsync(new HttpRange(0, data.Length));
+            var dataResult = new MemoryStream();
+            await result.Value.Content.CopyToAsync(dataResult);
+            Assert.AreEqual(data.Length, dataResult.Length);
+            TestHelper.AssertSequenceEqual(data, dataResult.ToArray());
+        }
+
+        [Test]
         public async Task OpenWriteAsync_UpdateExistingBlob()
         {
             // Arrange
@@ -3327,6 +3420,47 @@ namespace Azure.Storage.Blobs.Test
                         await openWriteStream.FlushAsync();
                     });
             }
+        }
+
+        [Test]
+        public async Task OpenWriteAsync_Position()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, Constants.KB);
+
+            byte[] data0 = GetRandomBuffer(512);
+            byte[] data1 = GetRandomBuffer(512);
+            using Stream dataStream0 = new MemoryStream(data0);
+            using Stream dataStream1 = new MemoryStream(data1);
+            byte[] expectedData = new byte[Constants.KB];
+            Array.Copy(data0, expectedData, 512);
+            Array.Copy(data1, 0, expectedData, 512, 512);
+
+            // Act
+            Stream openWriteStream = await blob.OpenWriteAsync(
+                overwrite: false,
+                position: 0);
+
+            Assert.AreEqual(0, openWriteStream.Position);
+
+            await dataStream0.CopyToAsync(openWriteStream);
+
+            Assert.AreEqual(512, openWriteStream.Position);
+
+            await dataStream1.CopyToAsync(openWriteStream);
+
+            Assert.AreEqual(1024, openWriteStream.Position);
+
+            await openWriteStream.FlushAsync();
+
+            Assert.AreEqual(1024, openWriteStream.Position);
+
+            Response<BlobDownloadInfo> result = await blob.DownloadAsync();
+            MemoryStream dataResult = new MemoryStream();
+            await result.Value.Content.CopyToAsync(dataResult);
+            Assert.AreEqual(expectedData.Length, dataResult.Length);
+            TestHelper.AssertSequenceEqual(expectedData, dataResult.ToArray());
         }
 
         private PageBlobRequestConditions BuildAccessConditions(

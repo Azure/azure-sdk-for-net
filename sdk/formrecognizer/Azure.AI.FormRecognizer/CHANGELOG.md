@@ -1,5 +1,8 @@
 # Release History
 
+## 3.1.0-preview.1 (Unreleased)
+
+
 ## 3.0.0 (2020-08-20)
 
 - First stable release of the Azure.AI.FormRecognizer package.

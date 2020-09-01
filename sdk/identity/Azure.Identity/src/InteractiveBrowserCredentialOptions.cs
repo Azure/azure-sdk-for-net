@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading;
 
 namespace Azure.Identity
@@ -35,6 +36,12 @@ namespace Azure.Identity
         /// If set to true the credential will fall back to storing tokens in an unencrypted file if no OS level user encryption is available.
         /// </summary>
         public bool AllowUnencryptedCache { get; set; }
+
+        /// <summary>
+        /// Uri where the STS will call back the application with the security token. This parameter is not required if the caller is not using a custom <see cref="ClientId"/>. In
+        /// the case that the caller is using their own <see cref="ClientId"/> the value must match the redirect url specified when creating the application registration.
+        /// </summary>
+        public Uri RedirectUri { get; set; }
 
         /// <summary>
         /// The <see cref="Identity.AuthenticationRecord"/> captured from a previous authentication.

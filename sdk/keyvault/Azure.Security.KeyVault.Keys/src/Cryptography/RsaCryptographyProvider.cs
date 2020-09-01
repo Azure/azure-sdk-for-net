@@ -9,7 +9,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     internal class RsaCryptographyProvider : LocalCryptographyProvider
     {
-        internal RsaCryptographyProvider(KeyVaultKey key) : base(key)
+        internal RsaCryptographyProvider(JsonWebKey keyMaterial, KeyProperties keyProperties) : base(keyMaterial, keyProperties)
         {
         }
 
@@ -222,13 +222,13 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         private byte[] Encrypt(byte[] data, RSAEncryptionPadding padding)
         {
-            using RSA rsa = KeyMaterial.ToRSA(true);
+            using RSA rsa = KeyMaterial.ToRSA();
             return rsa.Encrypt(data, padding);
         }
 
         private byte[] Decrypt(byte[] data, RSAEncryptionPadding padding)
         {
-            using RSA rsa = KeyMaterial.ToRSA();
+            using RSA rsa = KeyMaterial.ToRSA(true);
             return rsa.Decrypt(data, padding);
         }
     }

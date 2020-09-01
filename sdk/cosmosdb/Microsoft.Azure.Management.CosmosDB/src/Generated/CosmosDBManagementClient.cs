@@ -160,11 +160,6 @@ namespace Microsoft.Azure.Management.CosmosDB
         public virtual IGremlinResourcesOperations GremlinResources { get; private set; }
 
         /// <summary>
-        /// Gets the IRestorableDatabaseAccountsOperations.
-        /// </summary>
-        public virtual IRestorableDatabaseAccountsOperations RestorableDatabaseAccounts { get; private set; }
-
-        /// <summary>
         /// Gets the INotebookWorkspacesOperations.
         /// </summary>
         public virtual INotebookWorkspacesOperations NotebookWorkspaces { get; private set; }
@@ -438,7 +433,6 @@ namespace Microsoft.Azure.Management.CosmosDB
             TableResources = new TableResourcesOperations(this);
             CassandraResources = new CassandraResourcesOperations(this);
             GremlinResources = new GremlinResourcesOperations(this);
-            RestorableDatabaseAccounts = new RestorableDatabaseAccountsOperations(this);
             NotebookWorkspaces = new NotebookWorkspacesOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
@@ -472,10 +466,6 @@ namespace Microsoft.Azure.Management.CosmosDB
                         new Iso8601TimeSpanConverter()
                     }
             };
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<BackupPolicy>("type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<BackupPolicy>("type"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DatabaseAccountCreateUpdateProperties>("createMode"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DatabaseAccountCreateUpdateProperties>("createMode"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());

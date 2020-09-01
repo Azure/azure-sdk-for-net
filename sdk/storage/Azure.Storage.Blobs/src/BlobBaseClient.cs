@@ -1328,6 +1328,60 @@ namespace Azure.Storage.Blobs.Specialized
         /// Opens a stream for reading from the blob.  The stream will only download
         /// the blob as the stream is read from.
         /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns a stream that will download the blob as the stream
+        /// is read from.
+        /// </returns>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual Stream OpenRead(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            BlobOpenReadOptions options,
+            CancellationToken cancellationToken = default)
+            => OpenReadInternal(
+                options?.Position ?? 0,
+                options?.BufferSize,
+                options?.Conditions,
+                async: false,
+                cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// Opens a stream for reading from the blob.  The stream will only download
+        /// the blob as the stream is read from.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns a stream that will download the blob as the stream
+        /// is read from.
+        /// </returns>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual async Task<Stream> OpenReadAsync(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            BlobOpenReadOptions options,
+            CancellationToken cancellationToken = default)
+            => await OpenReadInternal(
+                options.Position,
+                options?.BufferSize,
+                options?.Conditions,
+                async: true,
+                cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Opens a stream for reading from the blob.  The stream will only download
+        /// the blob as the stream is read from.
+        /// </summary>
         /// <param name="position">
         /// The position within the blob to begin the stream.
         /// Defaults to the beginning of the blob.
@@ -1348,10 +1402,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// Returns a stream that will download the blob as the stream
         /// is read from.
         /// </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenRead(
 #pragma warning restore AZC0015 // Unexpected client method return type.
-            long position = 0,
+            long position = 0 ,
             int? bufferSize = default,
             BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
@@ -1385,6 +1440,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Returns a stream that will download the blob as the stream
         /// is read from.
         /// </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenRead(
 #pragma warning restore AZC0015 // Unexpected client method return type.
@@ -1422,6 +1478,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Returns a stream that will download the blob as the stream
         /// is read from.
         /// </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Stream> OpenReadAsync(
 #pragma warning restore AZC0015 // Unexpected client method return type.
@@ -1459,11 +1516,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// Returns a stream that will download the blob as the stream
         /// is read from.
         /// </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Stream> OpenReadAsync(
 #pragma warning restore AZC0015 // Unexpected client method return type.
             bool allowBlobModifications,
-            long position = 0,
+            long position = 0 ,
             int? bufferSize = default,
             CancellationToken cancellationToken = default)
                 => await OpenReadAsync(

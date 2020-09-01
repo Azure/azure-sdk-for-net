@@ -30,8 +30,8 @@ var bytes = Encoding.UTF8.GetBytes("some data");
 // when using the ReadOnlySpan constructor the underlying data is copied.
 var data = new BinaryData(new ReadOnlySpan<byte>(bytes));
 
-// when using the FromMemory method, the data is wrapped
-data = BinaryData.FromMemory(bytes);
+// when using the static factory method, the data is wrapped
+data = BinaryData.FromBytes(bytes);
 
 // there is an implicit cast defined for ReadOnlyMemory<byte>
 ReadOnlyMemory<byte> rom = data;
@@ -59,8 +59,8 @@ var model = new CustomModel
     C = true
 };
 
-var data = BinaryData.Serialize(model);
-model = data.Deserialize<CustomModel>();
+var data = BinaryData.FromObject(model);
+model = data.ToObject<CustomModel>();
 ```
 
 
