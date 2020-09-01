@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿ // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -6,13 +6,14 @@ using System;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// Specialized types of Sentiment Analysis, like for example Opinion Mining.
+    /// Additional types of Sentiment Analysis to be applied to the
+    /// AnalyzeSentiment method, like for example Opinion Mining.
     /// </summary>
     [Flags]
-    public enum AnalyzeSentimentType
+    public enum AdditionalSentimentAnalyses
     {
         /// <summary>
-        /// Sentiment analysis for documents and its sentences.
+        /// Use standard sentiment analysis for documents and its sentences.
         /// </summary>
         None = 0,
 

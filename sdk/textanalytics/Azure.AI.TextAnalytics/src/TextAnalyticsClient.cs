@@ -788,7 +788,7 @@ namespace Azure.AI.TextAnalytics
             try
             {
                 var documents = new List<MultiLanguageInput>() { ConvertToMultiLanguageInput(document, language) };
-                bool opinionMining = options.IncludeAnalysis.HasFlag(AnalyzeSentimentType.OpinionMining) ? true : false;
+                bool opinionMining = options.AdditionalSentimentAnalyses.HasFlag(AdditionalSentimentAnalyses.OpinionMining);
                 Response<SentimentResponse> result = await _serviceRestClient.SentimentAsync(
                     new MultiLanguageBatchInput(documents),
                     options.ModelVersion,
@@ -849,7 +849,7 @@ namespace Azure.AI.TextAnalytics
             try
             {
                 var documents = new List<MultiLanguageInput>() { ConvertToMultiLanguageInput(document, language) };
-                bool opinionMining = options.IncludeAnalysis.HasFlag(AnalyzeSentimentType.OpinionMining) ? true : false;
+                bool opinionMining = options.AdditionalSentimentAnalyses.HasFlag(AdditionalSentimentAnalyses.OpinionMining);
                 Response<SentimentResponse> result = _serviceRestClient.Sentiment(
                     new MultiLanguageBatchInput(documents),
                     options.ModelVersion,
@@ -1128,7 +1128,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                bool opinionMining = options.IncludeAnalysis.HasFlag(AnalyzeSentimentType.OpinionMining) ? true : false;
+                bool opinionMining = options.AdditionalSentimentAnalyses.HasFlag(AdditionalSentimentAnalyses.OpinionMining);
                 Response<SentimentResponse> result = await _serviceRestClient.SentimentAsync(
                     batchInput,
                     options.ModelVersion,
@@ -1156,7 +1156,7 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                bool opinionMining = options.IncludeAnalysis.HasFlag(AnalyzeSentimentType.OpinionMining) ? true : false;
+                bool opinionMining = options.AdditionalSentimentAnalyses.HasFlag(AdditionalSentimentAnalyses.OpinionMining);
                 Response<SentimentResponse> result = _serviceRestClient.Sentiment(
                     batchInput,
                     options.ModelVersion,

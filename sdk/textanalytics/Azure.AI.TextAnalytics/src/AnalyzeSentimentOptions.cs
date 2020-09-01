@@ -23,9 +23,9 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Specifies the types of analysis to apply, like for example,
-        /// Opinion mining.
+        /// Additional types of Sentiment Analysis to be applied to the
+        /// AnalyzeSentiment method, like for example Opinion Mining.
         /// </summary>
-        public AnalyzeSentimentType IncludeAnalysis { get; set; }
+        public AdditionalSentimentAnalyses AdditionalSentimentAnalyses { get; set; }
 }
 }
