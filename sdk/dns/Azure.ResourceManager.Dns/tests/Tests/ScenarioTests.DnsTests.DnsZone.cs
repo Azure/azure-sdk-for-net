@@ -138,15 +138,76 @@ namespace Azure.Management.Dns.Tests
         {
             string zoneNameOne = "dns.zoneonename.io";
             string zoneNameTwo = "dns.zonetwoname.io";
+            string zoneNameThree = "dns.zonethreename.io";
             var aZone = new Zone("Global");
             await ZonesOperations.CreateOrUpdateAsync(resourceGroup, zoneNameOne, aZone);
             aZone = new Zone("Global");
             await ZonesOperations.CreateOrUpdateAsync(resourceGroup, zoneNameTwo, aZone);
             var response = ZonesOperations.ListByResourceGroupAsync(resourceGroup, 1);
-            var asPages = response.AsPages().ToEnumerableAsync().Result;
-            Assert.AreEqual(asPages.Count, 3);
+            var it = response.AsPages().GetAsyncEnumerator();
+            await it.MoveNextAsync();
+            Assert.AreEqual(it.Current.Values.Count, 1);
+            aZone = new Zone("Global");
+            await ZonesOperations.CreateOrUpdateAsync(resourceGroup, zoneNameThree, aZone);
+            response = ZonesOperations.ListByResourceGroupAsync(resourceGroup, 2);
+            it = response.AsPages().GetAsyncEnumerator();
+            await it.MoveNextAsync();
+            Assert.AreEqual(it.Current.Values.Count, 2);
+            response = ZonesOperations.ListByResourceGroupAsync(resourceGroup, 10);
+            it = response.AsPages().GetAsyncEnumerator();
+            await it.MoveNextAsync();
+            Assert.AreEqual(it.Current.Values.Count, 3);
+
+            await ZonesOperations.StartDeleteAsync(resourceGroup, zoneNameOne);
+            await ZonesOperations.StartDeleteAsync(resourceGroup, zoneNameTwo);
+            await ZonesOperations.StartDeleteAsync(resourceGroup, zoneNameThree);
         }
 
+        [TestCase]
+        public async Task DnsListZonesWithTopParameterExtremeParams()
+        {
+            bool zeroFail = false;
+            bool negativeFail = false;
+            bool largeNumberFail = false;
+            try{
+                var response = ZonesOperations.ListByResourceGroupAsync(resourceGroup, 0);
+                await response.AsPages().GetAsyncEnumerator().MoveNextAsync();
+            }
+            catch (Azure.RequestFailedException)
+            {
+                zeroFail = true;
+            }
+            finally
+            {
+                Assert.True(zeroFail);
+            }
+
+            try{
+                var response = ZonesOperations.ListByResourceGroupAsync(resourceGroup, -1);
+                await response.AsPages().GetAsyncEnumerator().MoveNextAsync();
+            }
+            catch (Azure.RequestFailedException)
+            {
+                negativeFail = true;
+            }
+            finally
+            {
+                Assert.True(negativeFail);
+            }
+
+            try{
+                var response = ZonesOperations.ListByResourceGroupAsync(resourceGroup, 1000000);
+                await response.AsPages().GetAsyncEnumerator().MoveNextAsync();
+            }
+            catch (Azure.RequestFailedException)
+            {
+                largeNumberFail = true;
+            }
+            finally
+            {
+                Assert.True(largeNumberFail);
+            }
+        }
 
         [TestCase]
         public async Task DnsUpdateZonePreconditionFailed()
