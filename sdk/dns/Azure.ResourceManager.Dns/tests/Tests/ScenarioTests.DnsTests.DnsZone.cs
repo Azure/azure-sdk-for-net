@@ -172,7 +172,7 @@ namespace Azure.Management.Dns.Tests
             response = ZonesOperations.ListByResourceGroupAsync(resourceGroup, -1);
             Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await response.AsPages().GetAsyncEnumerator().MoveNextAsync());
 
-            response = ZonesOperations.ListByResourceGroupAsync(resourceGroup, 100000);
+            response = ZonesOperations.ListByResourceGroupAsync(resourceGroup, 1000000);
             Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await response.AsPages().GetAsyncEnumerator().MoveNextAsync());
         }
 
