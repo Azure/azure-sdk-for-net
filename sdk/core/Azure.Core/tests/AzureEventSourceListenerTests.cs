@@ -86,10 +86,7 @@ namespace Azure.Core.Tests
                             "payload = a message", message);
         }
 
-        private static (EventWrittenEventArgs, string) ExpectSingleEvent(Action logDelegate)
-        {
-            return ExpectMultipleEvents(logDelegate,1).Single();
-        }
+        private static (EventWrittenEventArgs, string) ExpectSingleEvent(Action logDelegate) => ExpectMultipleEvents(logDelegate,1).Single();
 
         private static IList<(EventWrittenEventArgs, string)> ExpectMultipleEvents(Action logDelegate, int eventCount)
         {
