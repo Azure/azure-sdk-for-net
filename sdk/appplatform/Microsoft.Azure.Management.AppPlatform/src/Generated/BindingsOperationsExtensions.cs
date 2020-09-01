@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='bindingResource'>
             /// Parameters for the create or update operation
             /// </param>
-            public static BindingResource CreateOrUpdate(this IBindingsOperations operations, string resourceGroupName, string serviceName, string appName, string bindingName, BindingResource bindingResource = default(BindingResource))
+            public static BindingResource CreateOrUpdate(this IBindingsOperations operations, string resourceGroupName, string serviceName, string appName, string bindingName, BindingResource bindingResource)
             {
                 return operations.CreateOrUpdateAsync(resourceGroupName, serviceName, appName, bindingName, bindingResource).GetAwaiter().GetResult();
             }
@@ -127,7 +127,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BindingResource> CreateOrUpdateAsync(this IBindingsOperations operations, string resourceGroupName, string serviceName, string appName, string bindingName, BindingResource bindingResource = default(BindingResource), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BindingResource> CreateOrUpdateAsync(this IBindingsOperations operations, string resourceGroupName, string serviceName, string appName, string bindingName, BindingResource bindingResource, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, appName, bindingName, bindingResource, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -208,7 +208,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='bindingResource'>
             /// Parameters for the update operation
             /// </param>
-            public static BindingResource Update(this IBindingsOperations operations, string resourceGroupName, string serviceName, string appName, string bindingName, BindingResource bindingResource = default(BindingResource))
+            public static BindingResource Update(this IBindingsOperations operations, string resourceGroupName, string serviceName, string appName, string bindingName, BindingResource bindingResource)
             {
                 return operations.UpdateAsync(resourceGroupName, serviceName, appName, bindingName, bindingResource).GetAwaiter().GetResult();
             }
@@ -238,7 +238,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BindingResource> UpdateAsync(this IBindingsOperations operations, string resourceGroupName, string serviceName, string appName, string bindingName, BindingResource bindingResource = default(BindingResource), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BindingResource> UpdateAsync(this IBindingsOperations operations, string resourceGroupName, string serviceName, string appName, string bindingName, BindingResource bindingResource, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, appName, bindingName, bindingResource, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -289,6 +289,177 @@ namespace Microsoft.Azure.Management.AppPlatform
             public static async Task<IPage<BindingResource>> ListAsync(this IBindingsOperations operations, string resourceGroupName, string serviceName, string appName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, serviceName, appName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Create a new Binding or update an exiting Binding.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            /// <param name='appName'>
+            /// The name of the App resource.
+            /// </param>
+            /// <param name='bindingName'>
+            /// The name of the Binding resource.
+            /// </param>
+            /// <param name='bindingResource'>
+            /// Parameters for the create or update operation
+            /// </param>
+            public static BindingResource BeginCreateOrUpdate(this IBindingsOperations operations, string resourceGroupName, string serviceName, string appName, string bindingName, BindingResource bindingResource)
+            {
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, serviceName, appName, bindingName, bindingResource).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create a new Binding or update an exiting Binding.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            /// <param name='appName'>
+            /// The name of the App resource.
+            /// </param>
+            /// <param name='bindingName'>
+            /// The name of the Binding resource.
+            /// </param>
+            /// <param name='bindingResource'>
+            /// Parameters for the create or update operation
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BindingResource> BeginCreateOrUpdateAsync(this IBindingsOperations operations, string resourceGroupName, string serviceName, string appName, string bindingName, BindingResource bindingResource, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, appName, bindingName, bindingResource, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Operation to delete a Binding.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            /// <param name='appName'>
+            /// The name of the App resource.
+            /// </param>
+            /// <param name='bindingName'>
+            /// The name of the Binding resource.
+            /// </param>
+            public static void BeginDelete(this IBindingsOperations operations, string resourceGroupName, string serviceName, string appName, string bindingName)
+            {
+                operations.BeginDeleteAsync(resourceGroupName, serviceName, appName, bindingName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Operation to delete a Binding.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            /// <param name='appName'>
+            /// The name of the App resource.
+            /// </param>
+            /// <param name='bindingName'>
+            /// The name of the Binding resource.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDeleteAsync(this IBindingsOperations operations, string resourceGroupName, string serviceName, string appName, string bindingName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, serviceName, appName, bindingName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Operation to update an exiting Binding.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            /// <param name='appName'>
+            /// The name of the App resource.
+            /// </param>
+            /// <param name='bindingName'>
+            /// The name of the Binding resource.
+            /// </param>
+            /// <param name='bindingResource'>
+            /// Parameters for the update operation
+            /// </param>
+            public static BindingResource BeginUpdate(this IBindingsOperations operations, string resourceGroupName, string serviceName, string appName, string bindingName, BindingResource bindingResource)
+            {
+                return operations.BeginUpdateAsync(resourceGroupName, serviceName, appName, bindingName, bindingResource).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Operation to update an exiting Binding.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            /// <param name='appName'>
+            /// The name of the App resource.
+            /// </param>
+            /// <param name='bindingName'>
+            /// The name of the Binding resource.
+            /// </param>
+            /// <param name='bindingResource'>
+            /// Parameters for the update operation
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BindingResource> BeginUpdateAsync(this IBindingsOperations operations, string resourceGroupName, string serviceName, string appName, string bindingName, BindingResource bindingResource, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, appName, bindingName, bindingResource, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

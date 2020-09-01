@@ -1,8 +1,7 @@
-
 . (Join-Path $PSScriptRoot common.ps1)
 Install-Module -Name powershell-yaml -RequiredVersion 0.4.1 -Force -Scope CurrentUser
-$ymlfiles = Get-ChildItem $RepoRoot | Where-Object {$_ -like '*.yml'}
-$affectedRepos = @()
+$ymlfiles = Get-ChildItem $RepoRoot -recurse | Where-Object {$_ -like '*.yml'}
+$affectedRepos = [System.Collections.ArrayList]::new()
 
 foreach ($file in $ymlfiles)
 {
@@ -21,7 +20,7 @@ foreach ($file in $ymlfiles)
         if (-not ($repo.Contains("ref")))
         {
           $errorMessage = "File: ${file}, Repository: ${repoName}."
-          $affectedRepos.Add($errorMessage)
+          [void]$affectedRepos.Add($errorMessage)
         }
       }
     }
@@ -30,14 +29,14 @@ foreach ($file in $ymlfiles)
 
 if ($affectedRepos.Count -gt 0)
 {
-    Write-Error "Ref not found in the following Repository Resources."
+    Write-Output "Ref not found in the following Repository Resources."
     foreach ($errorMessage in $affectedRepos)
     {
-        Write-Information $errorMessage
+        Write-Output "`t$errorMessage"
     }
-    Write-Information "Please ensure you add a Ref: when using repository resources"
-    Write-Information "More Info at https://aka.ms/azsdk/engsys/tools-versioning"
+    Write-Output "Please ensure you add a Ref: when using repository resources"
+    Write-Output "More Info at https://aka.ms/azsdk/engsys/tools-versioning"
     exit 1
 }
 
-Write-Information "All repository resources in yaml files reference a valid tag"
+Write-Output "All repository resources in yaml files reference a valid tag"

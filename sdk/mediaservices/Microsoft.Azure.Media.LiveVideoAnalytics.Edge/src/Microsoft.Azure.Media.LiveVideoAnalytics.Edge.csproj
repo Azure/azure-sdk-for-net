@@ -16,6 +16,7 @@
     <PackageReference Include="Microsoft.Azure.Devices.Client" />
     <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.Authentication" />
     <PackageReference Include="System.ValueTuple" />
+    <PackageReference Include="Newtonsoft.Json" VersionOverride="12.0.3"/>
   </ItemGroup>
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>

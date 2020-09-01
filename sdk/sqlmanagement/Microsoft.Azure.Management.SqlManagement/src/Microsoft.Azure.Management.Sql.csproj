@@ -15,6 +15,7 @@ New features:
 - Added auto complete restore and last backup name parameters for Azure SQL Managed Database
 - Added support for Azure Active Directory only authentication for Azure SQL DB
 - Azure SQL Managed Instance create, update and drop API version 2020-02-02-preview
+- Azure SQL Managed Instance storageAccountType to API version 2020-02-02-preview
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

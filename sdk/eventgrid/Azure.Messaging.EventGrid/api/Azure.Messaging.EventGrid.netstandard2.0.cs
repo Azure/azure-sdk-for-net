@@ -1,9 +1,15 @@
 namespace Azure.Messaging.EventGrid
 {
+    public static partial class BinaryDataExtensions
+    {
+        public static Azure.Messaging.EventGrid.CloudEvent ToCloudEvent(this Azure.BinaryData binaryData) { throw null; }
+        public static Azure.Messaging.EventGrid.EventGridEvent ToEventGridEvent(this Azure.BinaryData binaryData) { throw null; }
+    }
     public partial class CloudEvent
     {
         public CloudEvent(string source, string type) { }
-        public object Data { get { throw null; } set { } }
+        public CloudEvent(string source, string type, Azure.BinaryData data, string dataContentType = null) { }
+        public CloudEvent(string source, string type, object data, string dataContentType = null) { }
         public string DataContentType { get { throw null; } set { } }
         public string DataSchema { get { throw null; } set { } }
         public System.Collections.Generic.Dictionary<string, object> ExtensionAttributes { get { throw null; } }
@@ -12,32 +18,28 @@ namespace Azure.Messaging.EventGrid
         public string Subject { get { throw null; } set { } }
         public System.DateTimeOffset? Time { get { throw null; } set { } }
         public string Type { get { throw null; } set { } }
-    }
-    public partial class EventGridConsumer
-    {
-        public EventGridConsumer() { }
-        public EventGridConsumer(Azure.Messaging.EventGrid.EventGridConsumerOptions options) { }
-        public virtual Azure.Messaging.EventGrid.CloudEvent[] DeserializeCloudEvents(string requestContent, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Messaging.EventGrid.CloudEvent[]> DeserializeCloudEventsAsync(string requestContent, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Messaging.EventGrid.EventGridEvent[] DeserializeEventGridEvents(string requestContent, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Messaging.EventGrid.EventGridEvent[]> DeserializeEventGridEventsAsync(string requestContent, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class EventGridConsumerOptions
-    {
-        public EventGridConsumerOptions() { }
-        public System.Collections.Generic.IDictionary<string, System.Type> CustomEventTypeMappings { get { throw null; } }
-        public Azure.Core.Serialization.ObjectSerializer DataSerializer { get { throw null; } set { } }
+        public object GetData() { throw null; }
+        public System.Threading.Tasks.Task<T> GetDataAsync<T>(Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public T GetData<T>(Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public T GetData<T>(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Messaging.EventGrid.CloudEvent[] Parse(Azure.BinaryData requestContent) { throw null; }
+        public static Azure.Messaging.EventGrid.CloudEvent[] Parse(string requestContent) { throw null; }
     }
     public partial class EventGridEvent
     {
-        public EventGridEvent(string subject, object data, string eventType, string dataVersion) { }
-        public object Data { get { throw null; } set { } }
+        public EventGridEvent(object data, string subject, string eventType, string dataVersion) { }
         public string DataVersion { get { throw null; } set { } }
         public System.DateTimeOffset EventTime { get { throw null; } set { } }
         public string EventType { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
         public string Subject { get { throw null; } set { } }
         public string Topic { get { throw null; } set { } }
+        public object GetData() { throw null; }
+        public System.Threading.Tasks.Task<T> GetDataAsync<T>(Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public T GetData<T>(Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public T GetData<T>(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Messaging.EventGrid.EventGridEvent[] Parse(Azure.BinaryData requestContent) { throw null; }
+        public static Azure.Messaging.EventGrid.EventGridEvent[] Parse(string requestContent) { throw null; }
     }
     public partial class EventGridPublisherClient
     {
@@ -1035,6 +1037,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string Sequencer { get { throw null; } }
         public string SourceUrl { get { throw null; } }
         public object StorageDiagnostics { get { throw null; } }
+    }
+    public partial class StorageLifecyclePolicyActionSummaryDetail
+    {
+        internal StorageLifecyclePolicyActionSummaryDetail() { }
+        public string ErrorList { get { throw null; } }
+        public long? SuccessCount { get { throw null; } }
+        public long? TotalObjectsCount { get { throw null; } }
+    }
+    public partial class StorageLifecyclePolicyCompletedEventData
+    {
+        internal StorageLifecyclePolicyCompletedEventData() { }
+        public Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyActionSummaryDetail DeleteSummary { get { throw null; } }
+        public string ScheduleTime { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyActionSummaryDetail TierToArchiveSummary { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.StorageLifecyclePolicyActionSummaryDetail TierToCoolSummary { get { throw null; } }
     }
     public partial class SubscriptionDeletedEventData
     {

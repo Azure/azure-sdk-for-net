@@ -1,4 +1,7 @@
 parameters:
+- name: AdditionalPlatforms
+  type: object
+  default: []
 - name: PreSteps
   type: object
   default: []
@@ -28,98 +31,56 @@ parameters:
   default: not-specified
 
 jobs:
-  - job: "Test"
-    variables:
-      - template: ../variables/globals.yml
-      - name: SubscriptionConfiguration
-        value: ${{ parameters.SubscriptionConfiguration }}
-      - name: Location
-        value: ${{ parameters.Location }}
+- template: archetype-sdk-tests-jobs.yml
+  parameters:
+    PreSteps: ${{ parameters.PreSteps }}
+    PostSteps: ${{ parameters.PostSteps }}
+    EnvVars: ${{ parameters.EnvVars }}
+    MaxParallel: ${{ parameters.MaxParallel }}
+    BuildInParallel: ${{ parameters.BuildInParallel }}
+    TimeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
+    Location: ${{ parameters.Location }}
+    SubscriptionConfiguration: ${{ parameters.SubscriptionConfiguration }}
+    ServiceDirectory: ${{ parameters.ServiceDirectory }}
+    platforms:
+      - DisplayName: "Test on Linux"
+        OSVmImage: "ubuntu-18.04"
+        TestTargetFramework: netcoreapp2.1
+        PreSteps:
+          - template: /eng/common/pipelines/templates/steps/bypass-local-dns.yml
+      - DisplayName: "Test on Windows for NetCoreApp"
+        OSVmImage: "windows-2019"
+        TestTargetFramework: netcoreapp2.1
+      - DisplayName: "Test on Windows for NetCoreApp with UseProjectReferenceToAzureClients=true"
+        OSVmImage: "windows-2019"
+        TestTargetFramework: netcoreapp2.1
+        AdditionalTestArguments: /p:UseProjectReferenceToAzureClients=true
+      - DisplayName: "Test on Windows for .Net Framework"
+        OSVmImage: "windows-2019"
+        TestTargetFramework: net461
+      - DisplayName: "Test on Windows for .Net Framework with UseProjectReferenceToAzureClients=true"
+        OSVmImage: "windows-2019"
+        TestTargetFramework: net461
+        AdditionalTestArguments: /p:UseProjectReferenceToAzureClients=true
+      - DisplayName: "Test on MacOS"
+        OSVmImage: "macOS-10.15"
+        TestTargetFramework: netcoreapp2.1
+      - DisplayName: "Record on Windows for NetCoreApp"
+        OSVmImage: "windows-2019"
+        TestMode: Record
+        TestTargetFramework: netcoreapp2.1
+        AdditionalTestArguments: /p:AutoUpdateSessionRecords=true
+        PostSteps:
+          - task: CopyFiles@2
+            displayName: "Copy Test Recordings"
+            inputs:
+              sourceFolder: '$(Build.SourcesDirectory)'
+              contents: 'sdk/${{ parameters.ServiceDirectory }}/**/SessionRecords/**/*.json'
+              targetFolder: '$(Build.ArtifactStagingDirectory)/SessionRecords'
+          - task: PublishBuildArtifacts@1
+            displayName: "Publish Test Recordings"
+            inputs:
+              pathToPublish: '$(Build.ArtifactStagingDirectory)/SessionRecords'
+              artifactName: SessionRecords
 
-    timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
-
-    strategy:
-      maxParallel: ${{ parameters.MaxParallel }}
-      matrix:
-        Linux:
-          OSVmImage: "ubuntu-18.04"
-          TestTargetFramework: netcoreapp2.1
-        Windows_NetCoreApp:
-          OSVmImage: "windows-2019"
-          TestTargetFramework: netcoreapp2.1
-        Windows_NetCoreApp_ProjectReferences:
-          OSVmImage: "windows-2019"
-          TestTargetFramework: netcoreapp2.1
-          ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
-        Windows_NetFramework:
-          OSVmImage: "windows-2019"
-          TestTargetFramework: net461
-        Windows_NetFramework_ProjectReferences:
-          OSVmImage: "windows-2019"
-          TestTargetFramework: net461
-          ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
-        MacOs:
-          OSVmImage: "macOS-10.15"
-          TestTargetFramework: netcoreapp2.1
-    pool:
-      vmImage: "$(OSVmImage)"
-
-    steps:
-      - template: /eng/common/pipelines/templates/steps/bypass-local-dns.yml
-      
-      - ${{ parameters.PreSteps }}
-
-      - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
-
-      - task: UseDotNet@2
-        displayName: "Use .NET Core runtime $(DotNetCoreRuntimeVersion)"
-        inputs:
-          packageType: runtime
-          version: "$(DotNetCoreRuntimeVersion)"
-
-      - task: UseDotNet@2
-        displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
-        inputs:
-          packageType: sdk
-          version: "$(DotNetCoreSDKVersion)"
-
-      - template: /eng/common/TestResources/deploy-test-resources.yml
-        parameters:
-          Location: $(Location)
-          ServiceDirectory: '${{ parameters.ServiceDirectory }}'
-          SubscriptionConfiguration: $(SubscriptionConfiguration)
-
-      - script: >
-          dotnet test eng/service.proj
-          --framework $(TestTargetFramework)
-          --filter "TestCategory!=Manually"
-          --logger "trx"
-          --logger:"console;verbosity=normal"
-          /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
-          /p:IncludeSrc=false /p:IncludeSamples=false
-          /p:BuildInParallel=${{ parameters.BuildInParallel }}
-          $(ConvertToProjectReferenceOption)
-
-        displayName: "Build & Test (all tests for $(TestTargetFramework))"
-        env:
-          DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
-          DOTNET_CLI_TELEMETRY_OPTOUT: 1
-          DOTNET_MULTILEVEL_LOOKUP: 0
-          AZURE_TEST_MODE: "None"
-          ${{ insert }}: ${{ parameters.EnvVars }}
-
-      - template: /eng/common/TestResources/remove-test-resources.yml
-        parameters:
-          ServiceDirectory: '${{ parameters.ServiceDirectory }}'
-          SubscriptionConfiguration: $(SubscriptionConfiguration)
-
-      - task: PublishTestResults@2
-        condition: always()
-        displayName: "Publish Results ($(TestTargetFramework))"
-        inputs:
-          testResultsFiles: "**/*.trx"
-          testRunTitle: "$(OSName) $(TestTargetFramework)"
-          testResultsFormat: "VSTest"
-          mergeTestResults: true
-
-      - ${{ parameters.PostSteps }}
+      - ${{ parameters.AdditionalPlatforms }}

@@ -17,7 +17,7 @@ namespace Azure.Iot.Hub.Service.Tests
         public E2eTestBase(bool isAsync)
          : base(isAsync, TestSettings.Instance.TestMode)
         {
-            Sanitizer = new TestConnectionStringSanitizer();
+            Sanitizer = new CustomRequestSanitizer();
         }
 
         public E2eTestBase(bool isAsync, RecordedTestMode testMode)

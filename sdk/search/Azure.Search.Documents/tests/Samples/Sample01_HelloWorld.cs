@@ -348,7 +348,15 @@ namespace Azure.Search.Documents.Tests.Samples
                 cleanUpTasks.Push(() => indexerClient.DeleteIndexerAsync(indexerName));
 
                 // Wait till the indexer is done.
-                await WaitForIndexingAsync(indexerClient, indexerName);
+                try
+                {
+                    await WaitForIndexingAsync(indexerClient, indexerName);
+                }
+                catch (TaskCanceledException)
+                {
+                    // TODO: Remove this when we figure out a more correlative way of checking status.
+                    Assert.Inconclusive("Timed out while waiting for the indexer to complete");
+                }
 
                 #region Snippet:Azure_Search_Tests_Samples_CreateIndexerAsync_Query
                 // Get a SearchClient from the SearchIndexClient to share its pipeline.

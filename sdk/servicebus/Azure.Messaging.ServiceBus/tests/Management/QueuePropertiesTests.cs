@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Azure.Messaging.ServiceBus.Management;
 using NUnit.Framework;
@@ -93,6 +94,42 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             var sub = new CreateQueueOptions("Fake SubscriptionName");
             sub.Name = $"{baseUrl}{longName}";
             Assert.AreEqual($"{baseUrl}{longName}", sub.Name);
+        }
+
+        [Test]
+        public void CanCreateQueuePropertiesFromFactory()
+        {
+            var properties = ServiceBusModelFactory.QueueProperties(
+                "queueName",
+                TimeSpan.FromSeconds(30),
+                100,
+                true,
+                true,
+                TimeSpan.FromSeconds(10),
+                TimeSpan.FromMinutes(5),
+                true,
+                TimeSpan.FromMinutes(10),
+                5,
+                false,
+                EntityStatus.Active,
+                "forward",
+                "dlq",
+                "metadata");
+            Assert.AreEqual("queueName", properties.Name);
+            Assert.AreEqual(TimeSpan.FromSeconds(30), properties.LockDuration);
+            Assert.AreEqual(100, properties.MaxSizeInMegabytes);
+            Assert.IsTrue(properties.RequiresDuplicateDetection);
+            Assert.IsTrue(properties.RequiresSession);
+            Assert.AreEqual(TimeSpan.FromSeconds(10), properties.DefaultMessageTimeToLive);
+            Assert.AreEqual(TimeSpan.FromMinutes(5), properties.AutoDeleteOnIdle);
+            Assert.IsTrue(properties.DeadLetteringOnMessageExpiration);
+            Assert.AreEqual(TimeSpan.FromMinutes(10), properties.DuplicateDetectionHistoryTimeWindow);
+            Assert.AreEqual(5, properties.MaxDeliveryCount);
+            Assert.IsFalse(properties.EnableBatchedOperations);
+            Assert.AreEqual(EntityStatus.Active, properties.Status);
+            Assert.AreEqual("forward", properties.ForwardTo);
+            Assert.AreEqual("dlq", properties.ForwardDeadLetteredMessagesTo);
+            Assert.AreEqual("metadata", properties.UserMetadata);
         }
     }
 }

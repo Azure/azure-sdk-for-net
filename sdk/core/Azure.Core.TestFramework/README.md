@@ -185,14 +185,28 @@ By default tests are run in playback mode. To change the mode use the `AZURE_TES
 
 In development scenarios where it's required to change mode quickly without restarting the Visual Studio use the two-parameter constructor of `RecordedTestBase` to change the mode:
 
+Recorded tests can be attributed with the `RecordedTestAttribute` in lieu of the standard `TestAttribute` to enable functionality to automatically re-record tests that fail due to recording session file mismatches.
+Tests that are auto-rerecorded will fail with the following error and succeed if re-run.
+
+```
+Error Message:
+   Test failed playback, but was successfully re-recorded (it should pass if re-run). Please copy updated recording to SessionFiles.
+```
+
 ``` C#
 public class ConfigurationLiveTests: RecordedTestBase<AppConfigurationTestEnvironment>
 {
     public ConfigurationLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
     {
+        [RecordedTest]
+        public void MyTest()
+        {
+            //...
+        }
     }
 }
 ```
+
 
 ## Recording
 
@@ -369,3 +383,27 @@ For example:
 
 ## Management libraries
 Testing of management libraries uses the Test Framework and should generally be very similar to tests that you write for data plane libraries. There is an intermediate test class that you will likely want to derive from that lives within the management code base - [ManagementRecordedTestBase](https://github.com/Azure/azure-sdk-for-net/blob/babee31b3151e4512ac5a77a55c426c136335fbb/common/ManagementTestShared/ManagementRecordedTestBase.cs). To see examples of Track 2 Management tests using the Test Framework, take a look at the [Storage tests](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.ResourceManager.Storage/tests/Tests).
+
+## Recording tests on CI
+
+Test framework provides an ability to re-record tests remotely using an Azure DevOps test pipeline. To re-record tests you need to have an open GitHub pull request.
+
+To start recording invoke the `Start-DevOpsRecordings.ps1` script passing the PR number and sdk directories to re-record:
+
+```powershell
+> .\eng\scripts\Start-DevOpsRecordings.ps1 14153 storage iot tables
+```
+
+The `Start-DevOpsRecordings.ps1` would cancel all active recording runs unless `-NoCancel` switch is used.
+
+After runs finish an artifact with recordings will be published.
+
+To download and unpack all artifacts use the `Download-DevOpsRecordings.ps1` script passing the PR number.
+
+```powershell
+> .\eng\scripts\Download-DevOpsRecordings.ps1 14153
+```
+
+The `Download-DevOpsRecordings.ps1` would wait for active runs to finish before retrieving artifacts unless `-NoWait` switch is used.
+
+**NOTE:** these scripts require being signed in with Azure CLI (https://docs.microsoft.com/en-us/cli/azure/authenticate-azure-cli?view=azure-cli-latest) and access to the internal DevOps project (https://dev.azure.com/azure-sdk/internal/) 

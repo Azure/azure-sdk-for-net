@@ -17,7 +17,8 @@ namespace Azure.Iot.Hub.Service.Tests
     {
         public const string IotHubEnvironmentVariablesPrefix = "IOT";
         public const string IotHubConnectionString = "IOT_HUB_CONNECTION_STRING";
-        public const string TestModeEnvVariable = "AZURE_IOT_TEST_MODE";
+        public const string StorageSasToken = "STORAGE_SAS_TOKEN";
+        public const string TestModeEnvVariable = "AZURE_TEST_MODE";
 
         public static TestSettings Instance { get; private set; }
 

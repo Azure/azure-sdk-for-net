@@ -2741,6 +2741,94 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public async Task UploadAsync_Stream_InvalidStreamPosition()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = test.FileSystem.GetFileClient(GetNewFileName());
+            long size = Constants.KB;
+            byte[] data = GetRandomBuffer(size);
+
+            using Stream stream = new MemoryStream(data)
+            {
+                Position = size
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                file.UploadAsync(
+                content: stream),
+                e => Assert.AreEqual("content.Position must be less than content.Length. Please set content.Position to the start of the data to upload.", e.Message));
+        }
+
+        [Test]
+        public async Task UploadAsync_NonZeroStreamPosition()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = test.FileSystem.GetFileClient(GetNewFileName());
+
+            long size = Constants.KB;
+            long position = 512;
+            byte[] data = GetRandomBuffer(size);
+            byte[] expectedData = new byte[size - position];
+            Array.Copy(data, position, expectedData, 0, size - position);
+
+            using Stream stream = new MemoryStream(data)
+            {
+                Position = position
+            };
+
+            // Act
+            await file.UploadAsync(stream);
+
+            // Assert
+            Response<FileDownloadInfo> downloadResponse = await file.ReadAsync();
+            var actual = new MemoryStream();
+            await downloadResponse.Value.Content.CopyToAsync(actual);
+            TestHelper.AssertSequenceEqual(expectedData, actual.ToArray());
+        }
+
+        [Test]
+        public async Task UploadAsync_NonZeroStreamPositionMultipleBlocks()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = test.FileSystem.GetFileClient(GetNewFileName());
+
+            long size = 2 * Constants.KB;
+            long position = 300;
+            byte[] data = GetRandomBuffer(size);
+            byte[] expectedData = new byte[size - position];
+            Array.Copy(data, position, expectedData, 0, size - position);
+
+            using Stream stream = new MemoryStream(data)
+            {
+                Position = position
+            };
+
+            DataLakeFileUploadOptions options = new DataLakeFileUploadOptions
+            {
+                TransferOptions = new StorageTransferOptions
+                {
+                    MaximumTransferSize = 512,
+                    InitialTransferSize = 512
+                }
+            };
+
+            // Act
+            await file.UploadAsync(
+                stream,
+                options);
+
+            // Assert
+            Response<FileDownloadInfo> downloadResponse = await file.ReadAsync();
+            var actual = new MemoryStream();
+            await downloadResponse.Value.Content.CopyToAsync(actual);
+            TestHelper.AssertSequenceEqual(expectedData, actual.ToArray());
+        }
+
+        [Test]
         [Ignore("Live tests will run out of memory")]
         public async Task UploadAsync_FileLarge()
         {
@@ -3567,8 +3655,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             using Stream stream = new MemoryStream(data);
             await file.UploadAsync(stream);
 
+            DataLakeOpenReadOptions options = new DataLakeOpenReadOptions(allowModifications: false)
+            {
+                BufferSize = size / 8
+            };
+
             // Act
-            Stream outputStream = await file.OpenReadAsync(bufferSize: size / 8).ConfigureAwait(false);
+            Stream outputStream = await file.OpenReadAsync(options).ConfigureAwait(false);
             byte[] outputBytes = new byte[size];
             int downloadedBytes = 0;
 
@@ -3596,11 +3689,14 @@ namespace Azure.Storage.Files.DataLake.Tests
             byte[] expected = new byte[size];
             Array.Copy(data, size / 2, expected, size / 2, size / 2);
 
+            DataLakeOpenReadOptions options = new DataLakeOpenReadOptions(allowModifications: false)
+            {
+                Position = size / 2,
+                BufferSize = size / 8
+            };
+
             // Act
-            Stream outputStream = await file.OpenReadAsync(
-                position: size / 2,
-                bufferSize: size / 8)
-                .ConfigureAwait(false);
+            Stream outputStream = await file.OpenReadAsync(options).ConfigureAwait(false);
             byte[] outputBytes = new byte[size];
 
             int downloadedBytes = size / 2;
@@ -3652,10 +3748,14 @@ namespace Azure.Storage.Files.DataLake.Tests
                     parameters: parameters,
                     lease: true);
 
+                DataLakeOpenReadOptions options = new DataLakeOpenReadOptions(allowModifications: false)
+                {
+                    BufferSize = size / 4,
+                    Conditions = accessConditions
+                };
+
                 // Act
-                Stream outputStream = await file.OpenReadAsync(
-                    bufferSize: size / 4,
-                    conditions: accessConditions).ConfigureAwait(false);
+                Stream outputStream = await file.OpenReadAsync(options).ConfigureAwait(false);
                 byte[] outputBytes = new byte[size];
 
                 int downloadedBytes = 0;
@@ -3690,10 +3790,14 @@ namespace Azure.Storage.Files.DataLake.Tests
                 parameters.NoneMatch = await SetupPathMatchCondition(file, parameters.NoneMatch);
                 DataLakeRequestConditions accessConditions = BuildDataLakeRequestConditions(parameters);
 
+                DataLakeOpenReadOptions options = new DataLakeOpenReadOptions(allowModifications: false)
+                {
+                    BufferSize = size / 4,
+                    Conditions = accessConditions
+                };
+
                 // Act
-                Stream outputStream = await file.OpenReadAsync(
-                    bufferSize: size / 4,
-                    conditions: accessConditions).ConfigureAwait(false);
+                Stream outputStream = await file.OpenReadAsync(options).ConfigureAwait(false);
                 byte[] outputBytes = new byte[size];
 
                 await TestHelper.CatchAsync<Exception>(
@@ -3705,7 +3809,6 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/13510
         public async Task OpenReadAsync_StrangeOffsetsTest()
         {
             // Arrange
@@ -3718,7 +3821,14 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 await file.UploadAsync(stream);
             }
-            Stream outputStream = await file.OpenReadAsync(position: 0, bufferSize: 157);
+
+            DataLakeOpenReadOptions options = new DataLakeOpenReadOptions(allowModifications: false)
+            {
+                Position = 0,
+                BufferSize = 157
+            };
+
+            Stream outputStream = await file.OpenReadAsync(options);
             byte[] actualData = new byte[length];
             int offset = 0;
 
@@ -3753,8 +3863,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             using Stream stream = new MemoryStream(data);
             await file.UploadAsync(stream);
 
+            DataLakeOpenReadOptions options = new DataLakeOpenReadOptions(allowModifications: false)
+            {
+                BufferSize = size / 2
+            };
+
             // Act
-            Stream outputStream = await file.OpenReadAsync();
+            Stream outputStream = await file.OpenReadAsync(options);
             byte[] outputBytes = new byte[size];
             await outputStream.ReadAsync(outputBytes, 0, size / 2);
 
@@ -3786,8 +3901,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             using Stream stream0 = new MemoryStream(data0);
             await file.UploadAsync(stream0);
 
+            DataLakeOpenReadOptions options = new DataLakeOpenReadOptions(allowModifications: true);
+
             // Act
-            Stream outputStream = await file.OpenReadAsync(allowfileModifications: true);
+            Stream outputStream = await file.OpenReadAsync(options);
             byte[] outputBytes = new byte[size * 2];
             await outputStream.ReadAsync(outputBytes, 0, size);
 
@@ -3844,6 +3961,26 @@ namespace Azure.Storage.Files.DataLake.Tests
                 }
                 offset += readSize;
             }
+        }
+
+        [Test]
+        public async Task OpenReadAsync_CopyReadStreamToAnotherStream()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            long size = 4 * Constants.MB;
+            byte[] exectedData = GetRandomBuffer(size);
+            DataLakeFileClient fileClient = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            using Stream stream = new MemoryStream(exectedData);
+            await fileClient.UploadAsync(stream);
+
+            MemoryStream outputStream = new MemoryStream();
+
+            // Act
+            using Stream blobStream = await fileClient.OpenReadAsync();
+            await blobStream.CopyToAsync(outputStream);
+
+            TestHelper.AssertSequenceEqual(exectedData, outputStream.ToArray());
         }
 
         [Test]

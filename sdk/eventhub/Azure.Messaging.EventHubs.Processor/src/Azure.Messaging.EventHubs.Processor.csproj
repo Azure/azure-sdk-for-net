@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Messaging.EventHubs" VersionOverride="5.2.0-preview.2" /> <!--Version override exists to bind to the preview; this will be removed when v5.2.0 is released for GA -->
+    <PackageReference Include="Azure.Messaging.EventHubs" VersionOverride="5.2.0-preview.3" /> <!--Version override exists to bind to the preview; this will be removed when v5.2.0 is released for GA -->
     <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Microsoft.Azure.Amqp" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" />

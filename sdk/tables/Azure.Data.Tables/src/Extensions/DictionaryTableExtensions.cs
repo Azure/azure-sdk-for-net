@@ -25,6 +25,9 @@ namespace Azure.Data.Tables
         /// </summary>
         internal static Dictionary<string, object> ToOdataAnnotatedDictionary(this IDictionary<string, object> tableEntityProperties)
         {
+            // Remove the ETag property, as it does not need to be serialized
+            tableEntityProperties.Remove(TableConstants.PropertyNames.ETag);
+
             var annotatedDictionary = new Dictionary<string, object>(tableEntityProperties.Keys.Count * 2);
 
             foreach (var item in tableEntityProperties)
@@ -53,6 +56,8 @@ namespace Azure.Data.Tables
                     case DateTime _:
                         annotatedDictionary[item.Key.ToOdataTypeString()] = TableConstants.Odata.EdmDateTime;
                         break;
+                    case Enum enumValue:
+                        throw new NotSupportedException("Enum values are only supported for custom model types implementing ITableEntity.");
                 }
             }
 
@@ -167,15 +172,22 @@ namespace Azure.Data.Tables
                     }
                     else
                     {
-                        property.SetValue(result, propertyValue);
+                        if (property.PropertyType.IsEnum)
+                        {
+                            typeActions[typeof(Enum)](property, propertyValue, result);
+                        }
+                        else
+                        {
+                            property.SetValue(result, propertyValue);
+                        }
                     }
                 }
             }
 
             // Populate the ETag if present.
-            if (entity.TryGetValue(TableConstants.PropertyNames.Etag, out var etag))
+            if (entity.TryGetValue(TableConstants.PropertyNames.EtagOdata, out var etag))
             {
-                result.ETag = etag as string;
+                result.ETag = new ETag((etag as string)!);
             }
             return result;
         }
@@ -198,6 +210,7 @@ namespace Azure.Data.Tables
             {typeof(string), (property, propertyValue, result) =>  property.SetValue(result, propertyValue as string)},
             {typeof(int), (property, propertyValue, result) =>  property.SetValue(result, (int)propertyValue)},
             {typeof(int?), (property, propertyValue, result) =>  property.SetValue(result, (int?)propertyValue)},
+            {typeof(Enum), (property, propertyValue, result) =>  property.SetValue(result, Enum.Parse(property.PropertyType, propertyValue as string ))},
         };
     }
 }
