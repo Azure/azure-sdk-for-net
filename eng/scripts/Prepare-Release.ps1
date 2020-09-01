@@ -219,7 +219,7 @@ $fields = @{
     "Library Type"=$libraryType
     "Release Type"=$releaseType
     "Version Number"=$newVersion
-    "Notes"=$notes.Replace("`n", "<br>")
+    "Notes"="<pre>"+$notes.Replace("`n", "<br>")+"</pre>"
 }
 
 Write-Host
