@@ -10,7 +10,7 @@ The Azure Key Vault administration library clients support administrative tasks 
 Install the Azure Key Vault administration client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-Install-Package Azure.Security.KeyVault.Administration --version 4.2.0-beta.1
+Install-Package Azure.Security.KeyVault.Administration --version 4.0.0-beta.1
 ```
 
 ### Prerequisites
