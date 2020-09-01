@@ -46,13 +46,14 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             Assert.Equal(6, _numBlobsRead);
         }
 
+        /*
         [Fact]
         public async Task BindToCloudBlobDirectory()
         {
             await _fixture.JobHost.CallAsync(typeof(BlobBindingEndToEndTests).GetMethod("CloudBlobDirectoryBinding"));
 
             Assert.Equal(3, _numBlobsRead);
-        }
+        } */ // TODO (kasobol-msft) do we support directories?
 
         [Fact]
         public async Task BindToCloudBlobContainer_WithModelBinding()

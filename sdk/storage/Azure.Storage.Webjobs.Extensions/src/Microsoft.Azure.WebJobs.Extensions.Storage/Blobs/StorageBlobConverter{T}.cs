@@ -15,14 +15,14 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs
                 return default(T);
             }
 
-            T appendBlob = input as T;
+            T blob = input as T;
 
-            if (appendBlob == null)
+            if (blob == null)
             {
                 throw new InvalidOperationException($"The blob is not an {typeof(T).Name}.");
             }
 
-            return appendBlob;
+            return blob;
         }
     }
 }

@@ -229,7 +229,21 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
                 {
                     // TODO (kasobol-msft) wtf? should we resolve by type ?
                     //var src = (ICloudBlob)blobItem;
-                    var src = blobContainerClient.GetBlobClient(blobItem.Name);
+                    BlobBaseClient src = null;
+                    switch (blobItem.Properties.BlobType)
+                    {
+                        case BlobType.Block:
+                            src = blobContainerClient.GetBlockBlobClient(blobItem.Name);
+                            break;
+                        case BlobType.Append:
+                            src = blobContainerClient.GetAppendBlobClient(blobItem.Name);
+                            break;
+                        case BlobType.Page:
+                            src = blobContainerClient.GetPageBlobClient(blobItem.Name);
+                            break;
+                        default:
+                            throw new InvalidOperationException($"Unexpected blob type {blobItem.Properties.BlobType}");
+                    }
 
                     var funcCtx = new FunctionBindingContext(Guid.Empty, CancellationToken.None);
                     var valueCtx = new ValueBindingContext(funcCtx, CancellationToken.None);
