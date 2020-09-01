@@ -38,7 +38,8 @@ namespace Azure.Identity.Tests
                 DisableAutomaticAuthentication = true,
                 EnablePersistentCache = true,
                 AllowUnencryptedCache = true,
-                AuthenticationRecord = new AuthenticationRecord()
+                AuthenticationRecord = new AuthenticationRecord(),
+                RedirectUri = new Uri("https://localhost:8080"),
             };
 
             credential = new InteractiveBrowserCredential(options);
@@ -118,6 +119,15 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(options.EnablePersistentCache, credential.Client.EnablePersistentCache);
             Assert.AreEqual(options.AllowUnencryptedCache, credential.Client.AllowUnencryptedCache);
             Assert.AreEqual(options.AuthenticationRecord, credential.Record);
+
+            if (options.RedirectUri != null)
+            {
+                Assert.AreEqual(options.RedirectUri, new Uri(credential.Client.RedirectUrl));
+            }
+            else
+            {
+                Assert.AreEqual(Constants.DefaultRedirectUrl, credential.Client.RedirectUrl);
+            }
         }
 
     }

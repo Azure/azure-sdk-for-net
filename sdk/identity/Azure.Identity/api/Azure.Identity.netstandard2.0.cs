@@ -178,6 +178,7 @@ namespace Azure.Identity
         public string ClientId { get { throw null; } set { } }
         public bool DisableAutomaticAuthentication { get { throw null; } set { } }
         public bool EnablePersistentCache { get { throw null; } set { } }
+        public System.Uri RedirectUri { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
     }
     public partial class ManagedIdentityCredential : Azure.Core.TokenCredential

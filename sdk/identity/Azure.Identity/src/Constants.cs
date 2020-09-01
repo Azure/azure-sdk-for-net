@@ -20,6 +20,8 @@ namespace Azure.Identity
 
         public static readonly TimeSpan SharedTokenCacheAccessRetryDelay = TimeSpan.FromMilliseconds(600);
 
+        public const string DefaultRedirectUrl = "http://localhost";
+
         public static readonly string DefaultMsalTokenCacheDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), ".IdentityService");
 
         public const string DefaultMsalTokenCacheKeychainService = "Microsoft.Developer.IdentityService";
