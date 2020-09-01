@@ -111,8 +111,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 // Craft request as per the MSI protocol
                 var requestUrl = isAppServicesMsiAvailable
                     ? $"{msiEndpoint}?resource={resource}{clientIdParameter}&api-version=2019-08-01"
-                    : $"{AzureVmImdsEndpoint}{ImdsTokenRoute}?resource={resource}{clientIdParameter}" +
-                        $"&api-version={ImdsTokenApiVersion}";
+                    : $"{AzureVmImdsEndpoint}{ImdsTokenRoute}?resource={resource}{clientIdParameter}&api-version={ImdsTokenApiVersion}";
 
                 Func<HttpRequestMessage> getRequestMessage = () =>
                 {
