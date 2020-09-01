@@ -216,9 +216,13 @@ function Upload-Blobs
         foreach ($htmlFile in (Get-ChildItem $DocDir -include *.html -r)) 
         {
             $fileContent = Get-Content -Path $htmlFile
-            $updatedFileContent = $fileContent -replace $RepoReplaceRegex, "`${1}$ReleaseTag`$2"
-            if ($fileContent -ne $updatedFileContent) {
-                Set-Content -Path $htmlFile -Value $updatedFileContent
+            $checkPattern = $false
+            while ($fileContent -match $RepoReplaceRegex) {
+                $fileContent = $fileContent -replace $RepoReplaceRegex, "`${1}$ReleaseTag`$2"
+                $checkPattern = $true
+            }
+            if ($checkPattern) {
+                Set-Content -Path $htmlFile -Value $fileContent
             }
         }
     } 
