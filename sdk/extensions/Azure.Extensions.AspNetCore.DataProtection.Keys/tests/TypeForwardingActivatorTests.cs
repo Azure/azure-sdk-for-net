@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using Azure.Identity;
 using Microsoft.AspNetCore.DataProtection;
@@ -42,7 +43,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             // Act & Assert
             var name = "Microsoft.AspNet.DataProtection.TypeForwardingActivatorTests+NonExistentClassWithParameterlessCtor, Microsoft.AspNet.DataProtection.Tests";
-            var exception = Assert.Throws(Is.InstanceOf<Exception>(), () => activator.CreateInstance(typeof(object), name));
+            var exception = Assert.Throws<FileNotFoundException>(() => activator.CreateInstance(typeof(object), name));
 
             StringAssert.Contains("Microsoft.AspNet.DataProtection.Test", exception.Message);
         }
