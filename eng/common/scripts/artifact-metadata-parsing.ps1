@@ -387,12 +387,30 @@ function GetExistingTags($apiUrl) {
   }
 }
 
-# Walk across all build artifacts, check them against the appropriate repository, return a list of tags/releases
-function VerifyPackages($pkgRepository, $artifactLocation, $workingDirectory, $apiUrl, $releaseSha,  $continueOnError = $false) {
-  $pkgList = [array]@()
-  $ParsePkgInfoFn = ""
-  $packagePattern = ""
+# Retrieve release tag for artiface package. If multiple packages, then output the first one.
+function RetrieveReleaseTag($pkgRepository, $artifactLocation, $continueOnError = $true) {
+  try {
+    $pkgs = RetrievePackages $pkgRepository, $artifactLocation
+    if (!pkgs -or !$pkgs[0]) {
+      return ""
+    }
+    $parsedPackage = &$ParsePkgInfoFn -pkg $pkgs[0]
+    $tag = if ($parsedPackage.packageId) {
+      "$($parsedPackage.packageId)_$($parsedPackage.PackageVersion)"
+    } else {
+      $parsedPackage.PackageVersion
+    }
+    return $tag
+  }
+  catch {
+    if ($continueOnError) {
+      return ""
+    }
+    Write-Error "No release tag retrieved from $artifactLocation"
+  }
+}
 
+function RetrivePackages($pkgRepository, $artifactLocation, $ParsePkgInfoFn, $packagePattern) {
   switch ($pkgRepository) {
     "Maven" {
       $ParsePkgInfoFn = "ParseMavenPackage"
@@ -427,8 +445,16 @@ function VerifyPackages($pkgRepository, $artifactLocation, $workingDirectory, $a
       exit(1)
     }
   }
+  return (Get-ChildItem -Path $artifactLocation -Include $packagePattern -Recurse -File)
+}
 
-  $pkgs = (Get-ChildItem -Path $artifactLocation -Include $packagePattern -Recurse -File)
+# Walk across all build artifacts, check them against the appropriate repository, return a list of tags/releases
+function VerifyPackages($pkgRepository, $artifactLocation, $workingDirectory, $apiUrl, $releaseSha,  $continueOnError = $false) {
+  $pkgList = [array]@()
+  $ParsePkgInfoFn = ""
+  $packagePattern = ""
+  $pkgs = RetrievePackages $pkgRepository, $artifactLocation, $ParsePkgInfoFn, $packagePattern
+  Write-Host "The value of ParsePkgInfoFn: $ParsePkgInfoFn."
 
   foreach ($pkg in $pkgs) {
     try {
