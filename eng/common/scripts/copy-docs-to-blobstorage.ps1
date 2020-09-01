@@ -199,7 +199,7 @@ function Upload-Blobs
         [Parameter(Mandatory=$true)] [String]$DocDir,
         [Parameter(Mandatory=$true)] [String]$PkgName,
         [Parameter(Mandatory=$true)] [String]$DocVersion,
-        [Parameter(Mandatory=$false)] [Object[]]$PkgInfo
+        [Parameter(Mandatory=$false)] [String]$ReleaseTag
     )
     #eg : $BlobName = "https://azuresdkdocs.blob.core.windows.net"
     $DocDest = "$($BlobName)/`$web/$($Language)"
@@ -211,21 +211,10 @@ function Upload-Blobs
     Write-Host "Final Dest $($DocDest)/$($PkgName)/$($DocVersion)"
 
     # Use the step to replace master link to release tag link 
-    $tag = ''
-    if (!$PkgInfo) {
-        $tag = if ($PkgName -ne $DocDefaultName) {
-            "$($PkgName)_$($DocVersion)"
-        } else {
-            $DocVersion
-        }
-    } else {
-        Write-Host "The package name retieved from artifacts: $($PkgInfo[0].PackageId)."
-        Write-Host "The package version retieved from artifacts: $($PkgInfo[0].PackageVersion)."
-        $tag = $PkgInfo[0].Tag
-    }
-    
-    Write-Host "Replacing all readme master links with release tag $tag"
-    ReplaceLink -scanFolder $DocDir -fileSuffix ".html" -replacement $tag -customRegex $RepoReplaceRegex
+    if ($ReleaseTag) {
+        Write-Host "Replacing all readme master links with release tag $tag"
+        ReplaceLink -scanFolder $DocDir -fileSuffix ".html" -replacement $tag -customRegex $RepoReplaceRegex
+    } 
    
     Write-Host "Uploading $($PkgName)/$($DocVersion) to $($DocDest)..."
     & $($AzCopy) cp "$($DocDir)/**" "$($DocDest)/$($PkgName)/$($DocVersion)$($SASKey)" --recursive=true
@@ -242,9 +231,25 @@ function Upload-Blobs
         & $($AzCopy) cp "$($DocDir)/**" "$($DocDest)/$($PkgName)/latest$($SASKey)" --recursive=true
     }
 }
+
+function RetrieveReleaseTag([Object[]]$pkgs) {
+    if (!$pkgs -or !$pkgs[0]) {
+        Write-Warning "There is no release tag retrieved out from current package. "
+        return ""
+    }
+    return $pkgs[0].Tag
+}
+
 # VERIFY PACKAGES
 $apiUrl = "https://api.github.com/repos/$repoId"
-$pkgList = VerifyPackages -pkgRepository $packageRepository -artifactLocation $artifactLocation -workingDirectory $workingDirectory -apiUrl $apiUrl -releaseSha $releaseSha -continueOnError $continueOnError
+$pkgList = VerifyPackages -pkgRepository $packageRepository 
+-artifactLocation $artifactLocation 
+-workingDirectory $workingDirectory 
+-apiUrl $apiUrl -releaseSha $releaseSha 
+-continueOnError $continueOnError
+
+$releaseTag = RetrieveReleaseTag($pkgList)
+
 if ($Language -eq "javascript")
 {
     $PublishedDocs = Get-ChildItem "$($DocLocation)/documentation" | Where-Object -FilterScript {$_.Name.EndsWith(".zip")}
@@ -258,7 +263,7 @@ if ($Language -eq "javascript")
         if($dirList.Length -eq 1){
             $DocVersion = $dirList[0].Name
             Write-Host "Uploading Doc for $($PkgName) Version:- $($DocVersion)..."
-            Upload-Blobs -DocDir "$($DocLocation)/documentation/$($Item.BaseName)/$($Item.BaseName)/$($DocVersion)" -PkgName $PkgName -DocVersion $DocVersion -PkgInfo $pkgList
+            Upload-Blobs -DocDir "$($DocLocation)/documentation/$($Item.BaseName)/$($Item.BaseName)/$($DocVersion)" -PkgName $PkgName -DocVersion $DocVersion -ReleaseTag $releaseTag
         }
         else{
             Write-Host "found more than 1 folder under the documentation for package - $($Item.Name)"
@@ -268,7 +273,7 @@ if ($Language -eq "javascript")
 
 if ($Language -eq "dotnet")
 {
-    $PublishedPkgs = Get-ChildItem "$($DocLocation)" | Where-Object -FilterScript {$_.Name.EndsWith(".nupkg") -and -not $_.Name.EndsWith(".symbols.nupkg")}
+    $PublishedPkgs = Get-ChildItem "$($DocLocation)/packages" | Where-Object -FilterScript {$_.Name.EndsWith(".nupkg") -and -not $_.Name.EndsWith(".symbols.nupkg")}
     $PublishedDocs = Get-ChildItem "$($DocLocation)" | Where-Object -FilterScript {$_.Name.StartsWith("Docs.")}
 
     foreach ($Item in $PublishedDocs) {
@@ -283,7 +288,7 @@ if ($Language -eq "dotnet")
             Write-Host "DocDir $($Item)"
             Write-Host "PkgName $($PkgName)"
             Write-Host "DocVersion $($DocVersion)"
-            Upload-Blobs -DocDir "$($Item)" -PkgName $PkgName -DocVersion $DocVersion -PkgInfo $pkgList
+            Upload-Blobs -DocDir "$($Item)" -PkgName $PkgName -DocVersion $DocVersion -ReleaseTag $releaseTag
         }
         else
         {
@@ -310,7 +315,7 @@ if ($Language -eq "python")
         Write-Host "Discovered Package Name: $PkgName"
         Write-Host "Discovered Package Version: $Version"
         Write-Host "Directory for Upload: $UnzippedDocumentationPath"
-        Upload-Blobs -DocDir $UnzippedDocumentationPath -PkgName $PkgName -DocVersion $Version -PkgInfo $pkgList
+        Upload-Blobs -DocDir $UnzippedDocumentationPath -PkgName $PkgName -DocVersion $Version -ReleaseTag $releaseTag
     }
 }
 
@@ -356,7 +361,7 @@ if ($Language -eq "java")
             Write-Host "DocDir $($UnjarredDocumentationPath)"
             Write-Host "PkgName $($ArtifactId)"
             Write-Host "DocVersion $($Version)"
-            Upload-Blobs -DocDir $UnjarredDocumentationPath -PkgName $ArtifactId -DocVersion $Version -PkgInfo $pkgList
+            Upload-Blobs -DocDir $UnjarredDocumentationPath -PkgName $ArtifactId -DocVersion $Version -ReleaseTag $releaseTag
 
         } Finally {
             if (![string]::IsNullOrEmpty($UnjarredDocumentationPath)) {
@@ -378,11 +383,11 @@ if ($Language -eq "c")
     # Those loops are left over from previous versions of this script which were
     # used to publish multiple docs packages in a single invocation.
     $pkgInfo = Get-Content $DocLocation/package-info.json | ConvertFrom-Json
-    Upload-Blobs -DocDir $DocLocation -PkgName 'docs' -DocVersion $pkgInfo.version -PkgInfo $pkgList
+    Upload-Blobs -DocDir $DocLocation -PkgName 'docs' -DocVersion $pkgInfo.version -ReleaseTag $releaseTag
 }
 
 if ($Language -eq "cpp")
 {
     $packageInfo = (Get-Content (Join-Path $DocLocation 'package-info.json') | ConvertFrom-Json)
-    Upload-Blobs -DocDir $DocLocation -PkgName $packageInfo.name -DocVersion $packageInfo.version -PkgInfo $pkgList
+    Upload-Blobs -DocDir $DocLocation -PkgName $packageInfo.name -DocVersion $packageInfo.version -ReleaseTag $releaseTag
 }
