@@ -18,6 +18,7 @@ param (
 . (Join-Path $PSScriptRoot SemVer.ps1)
 
 $releaseReplaceRegex = "(https://github.com/$RepoId/(?:blob|tree)/)master(/.*)"
+
 function GetMetaData($lang){
   switch ($lang) {
     "java" {
@@ -53,10 +54,7 @@ function GetAdjustedReadmeContent($pkgInfo, $lang){
 
     # the namespace is not expected to be present for js.
     $pkgId = $pkgInfo.PackageId.Replace("@azure/", "")
-    Write-Host "$pkgId"
-    Write-Host $pkgInfo.PackageId
-    Write-Host $pkgInfo.PackageVersion
-    Write-Host $pkgInfo.Tag
+
     try {
       $metadata = GetMetaData -lang $lang
 
@@ -79,8 +77,8 @@ function GetAdjustedReadmeContent($pkgInfo, $lang){
     if ($headerContentMatches) {
       $foundTitle = $headerContentMatches.Matches[0]
       $fileContent = $pkgInfo.ReadmeContent -replace $foundTitle, "$foundTitle - Version $($pkgInfo.PackageVersion) `n"
+
       # Replace github master link with release tag.
-      Write-Host "Print out the tag $($pkgInfo.Tag)."
       $ReplacementPattern = "`${1}$($pkgInfo.Tag)`$2"
       $fileContent = $fileContent -replace $releaseReplaceRegex, $ReplacementPattern
     }

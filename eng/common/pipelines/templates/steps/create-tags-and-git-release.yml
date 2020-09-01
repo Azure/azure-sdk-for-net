@@ -8,7 +8,6 @@ parameters:
 
 steps:
 - task: PowerShell@2
-  name: releaseTag
   displayName: 'Verify Package Tags and Create Git Releases'
   inputs:
     filePath: ${{ parameters.ScriptDirectory }}/create-tags-and-git-release.ps1
