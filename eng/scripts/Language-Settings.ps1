@@ -1,10 +1,10 @@
 $Language = "dotnet"
-$Lang = "net"
+$LanguageShort = "net"
 $PackageRepository = "Nuget"
 $packagePattern = "*.nupkg"
 $MetadataUri = "https://raw.githubusercontent.com/Azure/azure-sdk/master/_data/releases/latest/dotnet-packages.csv"
 
-function Extract-dotnet-PkgProperties ($pkgPath, $serviceName, $pkgName)
+function Get-dotnet-PackageInfoFromRepo ($pkgPath, $serviceDirectory, $pkgName)
 {
   $projectPath = Join-Path $pkgPath "src" "$pkgName.csproj"
   if (Test-Path $projectPath)
@@ -12,7 +12,7 @@ function Extract-dotnet-PkgProperties ($pkgPath, $serviceName, $pkgName)
     $projectData = New-Object -TypeName XML
     $projectData.load($projectPath)
     $pkgVersion = Select-XML -Xml $projectData -XPath '/Project/PropertyGroup/Version'
-    return [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceName)
+    return [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceDirectory)
   }
   else
   {
@@ -21,13 +21,13 @@ function Extract-dotnet-PkgProperties ($pkgPath, $serviceName, $pkgName)
 }
 
 # Returns the nuget publish status of a package id and version.
-function IsNugetPackageVersionPublished($pkgId, $pkgVersion) 
+function IsNugetPackageVersionPublished ($pkgId, $pkgVersion) 
 {
   $nugetUri = "https://api.nuget.org/v3-flatcontainer/$($pkgId.ToLowerInvariant())/index.json"
 
   try
   {
-    $nugetVersions = Invoke-RestMethod -MaximumRetryCount 3 -uri $nugetUri -Method "GET"
+    $nugetVersions = Invoke-RestMethod -MaximumRetryCount 3 -RetryIntervalSec 10 -uri $nugetUri -Method "GET"
     return $nugetVersions.versions.Contains($pkgVersion)
   }
   catch
@@ -48,7 +48,7 @@ function IsNugetPackageVersionPublished($pkgId, $pkgVersion)
 }
 
 # Parse out package publishing information given a nupkg ZIP format.
-function Parse-dotnet-Package($pkg, $workingDirectory) 
+function Get-dotnet-PackageInfoFromPackageFile ($pkg, $workingDirectory) 
 {
   $workFolder = "$workingDirectory$($pkg.Basename)"
   $origFolder = Get-Location
@@ -88,7 +88,7 @@ function Parse-dotnet-Package($pkg, $workingDirectory)
 }
 
 # Stage and Upload Docs to blob Storage
-function StageAndUpload-dotnet-Docs ()
+function Publish-dotnet-GithubIODocs ()
 {
   $PublishedPkgs = Get-ChildItem "$($DocLocation)/packages" | Where-Object -FilterScript {$_.Name.EndsWith(".nupkg") -and -not $_.Name.EndsWith(".symbols.nupkg")}
   $PublishedDocs = Get-ChildItem "$($DocLocation)" | Where-Object -FilterScript {$_.Name.StartsWith("Docs.")}

@@ -2,6 +2,9 @@
 
 ## 0.1.0-preview.5 (Unreleased)
 
+### Added
+- `JsonPatchDocument` type to represent JSON Path document.
+
 ## 0.1.0-preview.4 (2020-08-18)
 
 ### Fixed

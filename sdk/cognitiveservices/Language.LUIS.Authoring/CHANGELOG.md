@@ -1,5 +1,8 @@
 # Release History
 
+## 3.2.0-preview.4 (Unreleased)
+
+
 ## 3.2.0-preview.3 (Unreleased)
 ### Added
 - Enable nesting of children in luis models

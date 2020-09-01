@@ -13,6 +13,40 @@ namespace Azure.Messaging.ServiceBus.Management
     public class ServiceBusManagementClientOptions : ClientOptions
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceBusManagementClientOptions"/> class.
+        /// </summary>
+        /// <param name="version">
+        /// The <see cref="ServiceVersion"/> of the service API used when
+        /// making requests.
+        /// </param>
+        public ServiceBusManagementClientOptions(ServiceVersion version = ServiceVersion.V2017_04)
+        {
+            Version = version;
+        }
+
+        /// <summary>
+        /// The versions of Service Bus Management supported by this client
+        /// library.
+        /// </summary>
+        public enum ServiceVersion
+        {
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+            /// <summary>
+            /// The 2019-02-02 service version described at
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/version-2019-02-02">
+            /// Version 2019-02-02</see>
+            /// </summary>
+            V2017_04 = 1
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+        }
+
+        /// <summary>
+        /// Gets the <see cref="ServiceVersion"/> of the service API used when
+        /// making requests.
+        /// </summary>
+        public ServiceVersion Version { get; }
+
+        /// <summary>
         ///   Determines whether the specified <see cref="object" /> is equal to this instance.
         /// </summary>
         ///

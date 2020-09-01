@@ -99,12 +99,14 @@ namespace Azure.Messaging.ServiceBus.Management
                 BuildAudienceResource(connectionStringProperties.Endpoint.Host));
 
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options);
+            _clientDiagnostics = new ClientDiagnostics(options);
+
             _httpRequestAndResponse = new HttpRequestAndResponse(
                 pipeline,
-                new ClientDiagnostics(options),
+                _clientDiagnostics,
                 tokenCredential,
-                _fullyQualifiedNamespace);
-            _clientDiagnostics = new ClientDiagnostics(options);
+                _fullyQualifiedNamespace,
+                options.Version);
         }
 
         /// <summary>
@@ -159,8 +161,8 @@ namespace Azure.Messaging.ServiceBus.Management
                 pipeline,
                 _clientDiagnostics,
                 tokenCredential,
-                _fullyQualifiedNamespace);
-
+                _fullyQualifiedNamespace,
+                options.Version);
         }
 
         /// <summary>

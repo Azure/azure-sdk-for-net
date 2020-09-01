@@ -139,7 +139,20 @@ namespace Azure.Messaging.ServiceBus
                 _retryPolicy = connection.RetryOptions.ToRetryPolicy();
                 ReceiveMode = options.ReceiveMode;
                 PrefetchCount = options.PrefetchCount;
-                EntityPath = entityPath;
+
+                switch (options.SubQueue)
+                {
+                    case SubQueue.None:
+                        EntityPath = entityPath;
+                        break;
+                    case SubQueue.DeadLetter:
+                        EntityPath = EntityNameFormatter.FormatDeadLetterPath(entityPath);
+                        break;
+                    case SubQueue.TransferDeadLetter:
+                        EntityPath = EntityNameFormatter.FormatTransferDeadLetterPath(entityPath);
+                        break;
+                }
+
                 IsSessionReceiver = isSessionEntity;
                 _innerReceiver = _connection.CreateTransportReceiver(
                     entityPath: EntityPath,
@@ -447,7 +460,7 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        public virtual async Task CompleteMessageAsync(
+        internal virtual async Task CompleteMessageAsync(
             string lockToken,
             CancellationToken cancellationToken = default)
         {
@@ -523,7 +536,7 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        public virtual async Task AbandonMessageAsync(
+        internal virtual async Task AbandonMessageAsync(
             string lockToken,
             IDictionary<string, object> propertiesToModify = null,
             CancellationToken cancellationToken = default)
@@ -564,10 +577,11 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <remarks>
-        /// In order to receive a message from the deadletter queue, you can call
-        /// <see cref="ServiceBusClient.CreateDeadLetterReceiver(string, ServiceBusReceiverOptions)"/>
-        /// or <see cref="ServiceBusClient.CreateDeadLetterReceiver(string, string, ServiceBusReceiverOptions)"/>
-        /// to create a receiver for the queue or subscription.
+        /// In order to receive a message from the deadletter queue or transfer deadletter queue,
+        /// set the <see cref="ServiceBusReceiverOptions.SubQueue"/> property to <see cref="SubQueue.DeadLetter"/>
+        /// or <see cref="SubQueue.TransferDeadLetter"/> when calling
+        /// <see cref="ServiceBusClient.CreateReceiver(string, ServiceBusReceiverOptions)"/> or
+        /// <see cref="ServiceBusClient.CreateReceiver(string, string, ServiceBusReceiverOptions)"/>.
         /// This operation can only be performed when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
         /// </remarks>
         public virtual async Task DeadLetterMessageAsync(
@@ -591,13 +605,14 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <remarks>
-        /// In order to receive a message from the deadletter queue, you can call
-        /// <see cref="ServiceBusClient.CreateDeadLetterReceiver(string, ServiceBusReceiverOptions)"/>
-        /// or <see cref="ServiceBusClient.CreateDeadLetterReceiver(string, string, ServiceBusReceiverOptions)"/>
-        /// to create a receiver for the queue or subscription.
+        /// In order to receive a message from the deadletter queue or transfer deadletter queue,
+        /// set the <see cref="ServiceBusReceiverOptions.SubQueue"/> property to <see cref="SubQueue.DeadLetter"/>
+        /// or <see cref="SubQueue.TransferDeadLetter"/> when calling
+        /// <see cref="ServiceBusClient.CreateReceiver(string, ServiceBusReceiverOptions)"/> or
+        /// <see cref="ServiceBusClient.CreateReceiver(string, string, ServiceBusReceiverOptions)"/>.
         /// This operation can only be performed when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
         /// </remarks>
-        public virtual async Task DeadLetterMessageAsync(
+        internal virtual async Task DeadLetterMessageAsync(
             string lockToken,
             IDictionary<string, object> propertiesToModify = null,
             CancellationToken cancellationToken = default) =>
@@ -652,7 +667,7 @@ namespace Azure.Messaging.ServiceBus
         /// You can use EntityNameHelper.FormatDeadLetterPath(string) to help with this.
         /// This operation can only be performed on messages that were received by this receiver.
         /// </remarks>
-        public virtual async Task DeadLetterMessageAsync(
+        internal virtual async Task DeadLetterMessageAsync(
             string lockToken,
             string deadLetterReason,
             string deadLetterErrorDescription = null,
@@ -762,7 +777,7 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        public virtual async Task DeferMessageAsync(
+        internal virtual async Task DeferMessageAsync(
             string lockToken,
             IDictionary<string, object> propertiesToModify = null,
             CancellationToken cancellationToken = default)
@@ -916,7 +931,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="lockToken">The lockToken of the <see cref="ServiceBusReceivedMessage"/> to renew the lock for.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        public virtual async Task<DateTimeOffset> RenewMessageLockAsync(
+        internal virtual async Task<DateTimeOffset> RenewMessageLockAsync(
             string lockToken,
             CancellationToken cancellationToken = default)
         {

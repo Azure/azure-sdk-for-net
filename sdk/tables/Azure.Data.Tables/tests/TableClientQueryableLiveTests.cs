@@ -24,7 +24,7 @@ namespace Azure.Data.Tables.Tests
         public TableClientQueryableLiveTests(bool isAsync, TableEndpointType endpointType) : base(isAsync, endpointType /* To record tests, add this argument, RecordedTestMode.Record */)
         { }
 
-        [Test]
+        [RecordedTest]
         public async Task TableQueryableExecuteQueryDictionary()
         {
             var entitiesToCreate = CreateTableEntities(PartitionKeyValue, 1);
@@ -42,7 +42,7 @@ namespace Azure.Data.Tables.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableQueryableExecuteQueryGeneric()
         {
             var entitiesToCreate = CreateComplexTableEntities(PartitionKeyValue, 1);
@@ -60,7 +60,7 @@ namespace Azure.Data.Tables.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableQueryableFilterPredicate()
         {
             var entitiesToCreate = CreateComplexTableEntities(PartitionKeyValue, 4);
@@ -91,7 +91,7 @@ namespace Azure.Data.Tables.Tests
             Assert.That(results.Count, Is.EqualTo(entitiesToCreate.Count - 1));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableQueryableComplexFilter()
         {
             var entitiesToCreate = CreateComplexTableEntities(PartitionKeyValue, 4);
@@ -110,7 +110,7 @@ namespace Azure.Data.Tables.Tests
             Assert.That(results.Count, Is.EqualTo(2));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableQueryableComplexFilterWithCreateFilter()
         {
             var entitiesToCreate = CreateComplexTableEntities(PartitionKeyValue, 4);
@@ -130,7 +130,7 @@ namespace Azure.Data.Tables.Tests
             Assert.That(results.Count, Is.EqualTo(2));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableQueryableNestedParanthesis()
         {
             var entitiesToCreate = CreateComplexTableEntities(PartitionKeyValue, 4);
@@ -152,7 +152,7 @@ namespace Azure.Data.Tables.Tests
             Assert.That(results.Count, Is.EqualTo(2));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableQueryableUnary()
         {
             var entitiesToCreate = CreateComplexTableEntities(PartitionKeyValue, 4);
@@ -189,7 +189,7 @@ namespace Azure.Data.Tables.Tests
             Assert.That(results.Count, Is.EqualTo(entitiesToCreate.Count));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableTakeWithContinuationTask()
         {
             var entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 20);
@@ -208,7 +208,7 @@ namespace Azure.Data.Tables.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableQueryableMultipleTake()
         {
             var entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 10);
@@ -227,7 +227,7 @@ namespace Azure.Data.Tables.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableQueryableDictionaryTableEntityQuery()
         {
             var entitiesToCreate = CreateComplexTableEntities(PartitionKeyValue, 2);
@@ -246,7 +246,7 @@ namespace Azure.Data.Tables.Tests
             Assert.That(entity.RowKey, Is.EqualTo(entitiesToCreate[1].RowKey));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableQueryableMultipleWhere()
         {
             var entitiesToCreate = CreateComplexTableEntities(PartitionKeyValue, 2);
@@ -264,7 +264,7 @@ namespace Azure.Data.Tables.Tests
 
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableQueryableEnumerateTwice()
         {
             var entitiesToCreate = CreateComplexTableEntities(PartitionKeyValue, 2);
@@ -298,7 +298,7 @@ namespace Azure.Data.Tables.Tests
         }
 
 
-        [Test]
+        [RecordedTest]
         public async Task TableQueryableOnSupportedTypes()
         {
             var entitiesToCreate = CreateComplexTableEntities(PartitionKeyValue, 4);
@@ -400,7 +400,7 @@ namespace Azure.Data.Tables.Tests
             Assert.That(results.Count, Is.EqualTo(2));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableQueryableWithDictionaryTypeOnSupportedTypes()
         {
             var entitiesToCreate = CreateComplexTableEntities(PartitionKeyValue, 4);
@@ -507,7 +507,7 @@ namespace Azure.Data.Tables.Tests
             Assert.That(results.Count, Is.EqualTo(2));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TableQueryableWithInvalidQuery()
         {
             var entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 1);
