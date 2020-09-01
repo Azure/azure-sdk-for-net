@@ -3,6 +3,7 @@ using System.IO;
 using System.Reflection;
 using System.Threading;
 using Avro;
+using Avro.Generic;
 using Avro.IO;
 using Avro.Specific;
 using Azure.Data.SchemaRegistry;
@@ -35,9 +36,43 @@ namespace ApacheAvroTestTool
             var serializer = new AvroObjectSerializer(client, groupName, new AvroObjectSerializerOptions { AutoRegisterSchemas = true });
             serializer.Serialize(memoryStream, employee, typeof(Employee), CancellationToken.None);
 
-            var deserializedObject = serializer.Deserialize(memoryStream, typeof(Employee), CancellationToken.None) as Employee;
-            Console.WriteLine(deserializedObject?.Name);
-            Console.WriteLine(deserializedObject?.Age);
+            var deserializedObject = serializer.Deserialize(memoryStream, typeof(Employee), CancellationToken.None);
+            var readEmployee = deserializedObject as Employee;
+            Console.WriteLine(readEmployee?.Name);
+            Console.WriteLine(readEmployee?.Age);
+
+
+
+
+            var record = new GenericRecord((RecordSchema)Employee._SCHEMA);
+            record.Add("Name", "Yanni");
+            record.Add("Age", 33);
+
+            var currentDirectory = Directory.GetCurrentDirectory();
+            var employeePath = Path.Combine(currentDirectory, "GenericEmployee.avro");
+            var writeFileStream = new FileStream(employeePath, FileMode.Create);
+
+            //memoryStream = new MemoryStream();
+            serializer = new AvroObjectSerializer(client, groupName, new AvroObjectSerializerOptions { AutoRegisterSchemas = true });
+            serializer.Serialize(writeFileStream, record, typeof(GenericRecord), CancellationToken.None);
+            writeFileStream.Close();
+
+
+            var readFileStream = new FileStream(employeePath, FileMode.Open);
+            deserializedObject = serializer.Deserialize(readFileStream, typeof(GenericRecord), CancellationToken.None);
+            var readRecord = deserializedObject as GenericRecord;
+            Console.WriteLine(readRecord?.GetValue(0));
+            Console.WriteLine(readRecord?.GetValue(1));
+
+            readFileStream.Close();
+
+            //int
+            //serializer = new AvroObjectSerializer(client, groupName, new AvroObjectSerializerOptions { AutoRegisterSchemas = true });
+            //serializer.Serialize(memoryStream, 42, typeof(int), CancellationToken.None);
+
+            //deserializedObject = serializer.Deserialize(memoryStream, typeof(int), CancellationToken.None);
+            //var readInt = (int)deserializedObject;
+            //Console.WriteLine(readInt);
         }
 
         private static void Testing()
