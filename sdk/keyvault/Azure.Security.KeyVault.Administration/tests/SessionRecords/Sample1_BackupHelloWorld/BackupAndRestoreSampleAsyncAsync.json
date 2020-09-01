@@ -346,6 +346,7 @@
   "Variables": {
     "BLOB_PRIMARY_STORAGE_ACCOUNT_KEY": "Sanitized",
     "BLOB_STORAGE_ACCOUNT_NAME": "chrissprim",
-    "RandomSeed": "380846839"
+    "RandomSeed": "380846839",
+    "AZURE_KEYVAULT_URL": "https://eastus2.chriss-eu2.managedhsm-int.azure-int.net"
   }
 }
