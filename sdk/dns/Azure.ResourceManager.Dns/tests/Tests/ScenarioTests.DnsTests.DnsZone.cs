@@ -164,49 +164,16 @@ namespace Azure.Management.Dns.Tests
         }
 
         [TestCase]
-        public async Task DnsListZonesWithTopParameterExtremeParams()
+        public void DnsListZonesWithTopParameterExtremeParams()
         {
-            bool zeroFail = false;
-            bool negativeFail = false;
-            bool largeNumberFail = false;
-            try{
-                var response = ZonesOperations.ListByResourceGroupAsync(resourceGroup, 0);
-                await response.AsPages().GetAsyncEnumerator().MoveNextAsync();
-            }
-            catch (Azure.RequestFailedException)
-            {
-                zeroFail = true;
-            }
-            finally
-            {
-                Assert.True(zeroFail);
-            }
+            var response = ZonesOperations.ListByResourceGroupAsync(resourceGroup, 0);
+            Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await response.AsPages().GetAsyncEnumerator().MoveNextAsync());
 
-            try{
-                var response = ZonesOperations.ListByResourceGroupAsync(resourceGroup, -1);
-                await response.AsPages().GetAsyncEnumerator().MoveNextAsync();
-            }
-            catch (Azure.RequestFailedException)
-            {
-                negativeFail = true;
-            }
-            finally
-            {
-                Assert.True(negativeFail);
-            }
+            response = ZonesOperations.ListByResourceGroupAsync(resourceGroup, -1);
+            Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await response.AsPages().GetAsyncEnumerator().MoveNextAsync());
 
-            try{
-                var response = ZonesOperations.ListByResourceGroupAsync(resourceGroup, 1000000);
-                await response.AsPages().GetAsyncEnumerator().MoveNextAsync();
-            }
-            catch (Azure.RequestFailedException)
-            {
-                largeNumberFail = true;
-            }
-            finally
-            {
-                Assert.True(largeNumberFail);
-            }
+            response = ZonesOperations.ListByResourceGroupAsync(resourceGroup, 100000);
+            Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await response.AsPages().GetAsyncEnumerator().MoveNextAsync());
         }
 
         [TestCase]
@@ -215,38 +182,15 @@ namespace Azure.Management.Dns.Tests
             var aZone = new Zone("Global");
             aZone.Tags.Add("key1", "value1");
             var response = await ZonesOperations.CreateOrUpdateAsync(resourceGroup, this.defaultZoneName, aZone);
-            bool exceptionCaught = false;
-            try
-            {
-                await ZonesOperations.CreateOrUpdateAsync(resourceGroup, this.defaultZoneName, response, "somegibberish", null);
-            }
-            catch (Azure.RequestFailedException)
-            {
-                exceptionCaught = true;
-            }
-            finally
-            {
-                Assert.True(exceptionCaught);
-                await ZonesOperations.StartDeleteAsync(resourceGroup, this.defaultZoneName);
-            }
+            Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await ZonesOperations.CreateOrUpdateAsync(resourceGroup, this.defaultZoneName, response, "somegibberish", null));
+            await ZonesOperations.StartDeleteAsync(resourceGroup, this.defaultZoneName);
+
         }
 
         [TestCase]
-        public async Task GetNonExistingZoneFailsAsExpected()
+        public void GetNonExistingZoneFailsAsExpected()
         {
-            bool exceptionCaught = false;
-            try
-            {
-                await ZonesOperations.GetAsync(resourceGroup, "somegibberish");
-            }
-            catch (Azure.RequestFailedException)
-            {
-                exceptionCaught = true;
-            }
-            finally
-            {
-                Assert.True(exceptionCaught);
-            }
+            Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await ZonesOperations.GetAsync(resourceGroup, "somegibberish"));
         }
     }
 }
