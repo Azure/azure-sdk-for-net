@@ -412,7 +412,6 @@ namespace Azure.DigitalTwins.Core
         /// </example>
         public virtual Task<Response> UpdateComponentAsync(string digitalTwinId, string componentPath, string componentUpdateOperations, RequestOptions requestOptions = default, CancellationToken cancellationToken = default)
         {
-            // TODO how can we make this patch easier to construct?
             return _dtRestClient.UpdateComponentAsync(digitalTwinId, componentPath, componentUpdateOperations, requestOptions?.IfMatch, cancellationToken);
         }
 
@@ -896,7 +895,6 @@ namespace Azure.DigitalTwins.Core
         /// </exception>
         public virtual Task<Response> UpdateRelationshipAsync(string digitalTwinId, string relationshipId, string relationshipUpdateOperations, RequestOptions requestOptions = default, CancellationToken cancellationToken = default)
         {
-            // TODO how can we make this patch easier to construct?
             return _dtRestClient.UpdateRelationshipAsync(digitalTwinId, relationshipId, relationshipUpdateOperations, requestOptions?.IfMatch, cancellationToken);
         }
 
