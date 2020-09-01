@@ -16,6 +16,7 @@ namespace Azure.Storage.Shared
         protected long _bufferSize;
         protected readonly IProgress<long> _progressHandler;
         protected readonly PooledMemoryStream _buffer;
+        private bool disposed;
 
         protected StorageWriteStream(
             long position,
@@ -195,6 +196,23 @@ namespace Azure.Storage.Shared
             {
                 throw new ArgumentOutOfRangeException($"{nameof(offset)} + {nameof(count)} cannot exceed {nameof(buffer)} length.");
             }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                Flush();
+            }
+
+            disposed = true;
+
+            base.Dispose(disposing);
         }
     }
 }
