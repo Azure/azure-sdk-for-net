@@ -453,7 +453,7 @@ function VerifyPackages($pkgRepository, $artifactLocation, $workingDirectory, $a
   $pkgList = [array]@()
   $ParsePkgInfoFn = ""
   $packagePattern = ""
-  $pkgs = RetrievePackages $pkgRepository, $artifactLocation, $ParsePkgInfoFn, $packagePattern
+  $pkgs = RetrivePackages $pkgRepository, $artifactLocation, $ParsePkgInfoFn, $packagePattern
   Write-Host "The value of ParsePkgInfoFn: $ParsePkgInfoFn."
 
   foreach ($pkg in $pkgs) {
