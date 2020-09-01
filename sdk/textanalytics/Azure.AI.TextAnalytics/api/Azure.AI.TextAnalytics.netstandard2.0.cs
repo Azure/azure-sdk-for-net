@@ -1,9 +1,15 @@
 namespace Azure.AI.TextAnalytics
 {
+    [System.FlagsAttribute]
+    public enum AdditionalSentimentAnalyses
+    {
+        None = 0,
+        OpinionMining = 1,
+    }
     public partial class AnalyzeSentimentOptions : Azure.AI.TextAnalytics.TextAnalyticsRequestOptions
     {
         public AnalyzeSentimentOptions() { }
-        public Azure.AI.TextAnalytics.AnalyzeSentimentType IncludeAnalysis { get { throw null; } set { } }
+        public Azure.AI.TextAnalytics.AdditionalSentimentAnalyses AdditionalSentimentAnalyses { get { throw null; } set { } }
     }
     public partial class AnalyzeSentimentResult : Azure.AI.TextAnalytics.TextAnalyticsResult
     {
@@ -15,12 +21,6 @@ namespace Azure.AI.TextAnalytics
         internal AnalyzeSentimentResultCollection() : base (default(System.Collections.Generic.IList<Azure.AI.TextAnalytics.AnalyzeSentimentResult>)) { }
         public string ModelVersion { get { throw null; } }
         public Azure.AI.TextAnalytics.TextDocumentBatchStatistics Statistics { get { throw null; } }
-    }
-    [System.FlagsAttribute]
-    public enum AnalyzeSentimentType
-    {
-        None = 0,
-        OpinionMining = 1,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AspectSentiment
