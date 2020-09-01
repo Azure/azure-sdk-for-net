@@ -4508,6 +4508,100 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string CopyActivity_DelimitedText_AzureBlob_UntarGZip = @"{
+  ""properties"": {
+    ""activities"": [
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""DelimitedTextSource"",
+            ""storeSettings"": {
+              ""type"": ""AzureBlobStorageReadSettings"",
+              ""recursive"": true
+            },
+            ""formatSettings"": {
+              ""type"": ""DelimitedTextReadSettings"",
+              ""compressionProperties"": {
+                   ""type"": ""TarGZipReadSettings"",
+                   ""preserveCompressionFileNameAsFolder"": false
+                 }
+             }
+          },
+          ""sink"": {
+            ""type"": ""DelimitedTextSink"",
+            ""storeSettings"": {
+               ""type"": ""AzureDataLakeStoreWriteSettings"",
+               ""recursive"": true
+            },
+            ""formatSettings"": {
+              ""type"": ""DelimitedTextWriteSettings"",
+              ""fileExtension"": "".txt""
+            }
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""name"": ""DelimitedTextToBlob_UntarGZip""
+      },
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+            ""source"": {
+                ""type"": ""DelimitedTextSource"",
+                ""storeSettings"": {
+                    ""type"": ""AzureBlobStorageReadSettings"",
+                    ""recursive"": true
+                },
+                ""formatSettings"": {
+                    ""type"": ""DelimitedTextReadSettings"",
+                    ""compressionProperties"": {
+                        ""type"": ""ZipDeflateReadSettings"",
+                        ""preserveZipFileNameAsFolder"": false
+                    }
+                }
+            },
+            ""sink"": {
+                ""type"": ""DelimitedTextSink"",
+                ""storeSettings"": {
+                    ""type"": ""AzureBlobStorageWriteSettings"",
+                    ""recursive"": true
+                },
+                ""formatSettings"": {
+                    ""type"": ""DelimitedTextWriteSettings"",
+                    ""fileExtension"": "".txt""
+                }
+            }
+        },
+        ""name"": ""DelimitedTextToBlob_Unzip"",
+        ""inputs"": [
+            {
+                ""referenceName"": ""SourceBlobDataset"",
+                ""type"": ""DatasetReference""
+            }
+        ],
+        ""outputs"": [
+            {
+                ""referenceName"": ""SinkBlobDataset"",
+                ""type"": ""DatasetReference""
+            }
+        ]
+      }
+    ]
+  }
+}";
+
+        [JsonSample]
         public const string CopyActivity_DelimitedText_BlobFS = @"{
   ""properties"": {
     ""activities"": [

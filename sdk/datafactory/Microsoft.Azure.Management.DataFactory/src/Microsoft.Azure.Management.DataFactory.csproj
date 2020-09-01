@@ -11,6 +11,7 @@
     <PackageReleaseNotes>
   <![CDATA[
 - Added logLevel/enableReliableLogging to LogStorageSettings
+- Support Tar GZip compression type in Data Factory
   ]]></PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>

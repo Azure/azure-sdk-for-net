@@ -3,6 +3,7 @@
 ## Version 4.12.0
 ###  Feature Additions
 - Added logLevel/enableReliableLogging to LogStorageSettings
+- Support Tar GZip compression type in Data Factory
 
 ## Version 4.11.0
 ###  Feature Additions
