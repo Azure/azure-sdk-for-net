@@ -12,9 +12,9 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
 {
 
     /// <summary>
-    /// Defines values for RuntimeVersion.
+    /// Defines values for SupportedRuntimeVersion.
     /// </summary>
-    public static class RuntimeVersion
+    public static class SupportedRuntimeVersion
     {
         public const string Java8 = "Java_8";
         public const string Java11 = "Java_11";
