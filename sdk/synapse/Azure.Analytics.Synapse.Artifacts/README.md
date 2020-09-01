@@ -71,11 +71,7 @@ Notebook notebook = new Notebook(
     new List<NotebookCell>()
 );
 var operation = notebookClient.StartCreateOrUpdateNotebook("MyNotebook", new NotebookResource(notebook));
-while (!operation.HasValue)
-{
-    operation.UpdateStatus();
-}
-NotebookResource notebookResource = operation.Value;
+NotebookResource notebookResource = operation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
 ```
 
 ### Retrieve a notebook

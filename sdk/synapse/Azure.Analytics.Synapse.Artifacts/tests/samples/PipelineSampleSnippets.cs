@@ -33,11 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
         {
             #region Snippet:CreatePipeline
             var operation = PipelineClient.StartCreateOrUpdatePipeline("MyPipeline", new PipelineResource());
-            while (!operation.HasValue)
-            {
-                operation.UpdateStatus();
-            }
-            PipelineResource pipeline = operation.Value;
+            PipelineResource pipeline = operation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
             #endregion
         }
 

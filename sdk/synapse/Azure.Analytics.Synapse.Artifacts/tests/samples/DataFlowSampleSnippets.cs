@@ -33,11 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
         {
             #region Snippet:CreateDataFlow
             var operation = DataFlowClient.StartCreateOrUpdateDataFlow("MyDataFlow", new DataFlowResource(new DataFlow()));
-            while (!operation.HasValue)
-            {
-                operation.UpdateStatus();
-            }
-            DataFlowResource dataFlow = operation.Value;
+            DataFlowResource dataFlow = operation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
             #endregion
         }
 

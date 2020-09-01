@@ -33,11 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
         {
             #region Snippet:CreateTrigger
             var operation = TriggerClient.StartCreateOrUpdateTrigger("MyTrigger", new TriggerResource(new Trigger()));
-            while (!operation.HasValue)
-            {
-                operation.UpdateStatus();
-            }
-            TriggerResource trigger = operation.Value;
+            TriggerResource trigger = operation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
             #endregion
         }
 
