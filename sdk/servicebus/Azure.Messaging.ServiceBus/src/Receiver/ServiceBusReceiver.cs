@@ -60,13 +60,13 @@ namespace Azure.Messaging.ServiceBus
         internal string Identifier { get; }
 
         /// <summary>
-        ///   Indicates whether or not this <see cref="ServiceBusReceiver"/> has been disposed.
+        ///   Indicates whether or not this <see cref="ServiceBusReceiver"/> has been closed.
         /// </summary>
         ///
         /// <value>
-        /// <c>true</c> if the client is disposed; otherwise, <c>false</c>.
+        /// <c>true</c> if the client is closed; otherwise, <c>false</c>.
         /// </value>
-        public bool IsDisposed { get; private set; } = false;
+        public bool IsClosed { get; private set; } = false;
 
         /// <summary>
         /// The policy to use for determining retry behavior for when an operation fails.
@@ -185,6 +185,33 @@ namespace Azure.Messaging.ServiceBus
         protected ServiceBusReceiver() { }
 
         /// <summary>
+        ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusReceiver" />.
+        /// </summary>
+        /// <param name="closeMode">The mode indicating what should happen to the link when closing.</param>
+        /// <param name="cancellationToken"> An optional<see cref="CancellationToken"/> instance to signal the
+        /// request to cancel the operation.</param>
+        public virtual async Task CloseAsync(
+            LinkCloseMode closeMode = LinkCloseMode.Detach,
+            CancellationToken cancellationToken = default)
+        {
+            IsClosed = true;
+            Type clientType = GetType();
+
+            Logger.ClientCloseStart(clientType, Identifier);
+            try
+            {
+                await InnerReceiver.CloseAsync(CancellationToken.None).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                Logger.ClientCloseException(clientType, Identifier, ex);
+                throw;
+            }
+
+            Logger.ClientCloseComplete(clientType, Identifier);
+        }
+
+        /// <summary>
         /// Receives a list of <see cref="ServiceBusReceivedMessage" /> from the entity using <see cref="ReceiveMode"/> mode.
         /// <see cref="ReceiveMode"/> defaults to PeekLock mode.
         /// This method doesn't guarantee to return exact `maxMessages` messages,
@@ -203,7 +230,7 @@ namespace Azure.Messaging.ServiceBus
            CancellationToken cancellationToken = default)
         {
             Argument.AssertAtLeast(maxMessages, 1, nameof(maxMessages));
-            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusReceiver));
+            Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
             if (maxWaitTime.HasValue)
             {
                 Argument.AssertPositive(maxWaitTime.Value, nameof(maxWaitTime));
@@ -388,7 +415,7 @@ namespace Azure.Messaging.ServiceBus
             int maxMessages,
             CancellationToken cancellationToken)
         {
-            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusReceiver));
+            Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.PeekMessageStart(Identifier, sequenceNumber, maxMessages);
             using DiagnosticScope scope = ScopeFactory.CreateScope(
@@ -465,7 +492,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             ThrowIfLockTokenIsEmpty(lockToken);
-            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusReceiver));
+            Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
             Argument.AssertNotNullOrEmpty(lockToken, nameof(lockToken));
             ThrowIfNotPeekLockMode();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -542,7 +569,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             ThrowIfLockTokenIsEmpty(lockToken);
-            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusReceiver));
+            Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
             ThrowIfNotPeekLockMode();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.AbandonMessageStart(Identifier, 1, lockToken);
@@ -703,7 +730,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             ThrowIfLockTokenIsEmpty(lockToken);
-            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusReceiver));
+            Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ThrowIfNotPeekLockMode();
             Logger.DeadLetterMessageStart(Identifier, 1, lockToken);
@@ -783,7 +810,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             ThrowIfLockTokenIsEmpty(lockToken);
-            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusReceiver));
+            Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
             ThrowIfNotPeekLockMode();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.DeferMessageStart(Identifier, 1, lockToken);
@@ -863,7 +890,7 @@ namespace Azure.Messaging.ServiceBus
             IEnumerable<long> sequenceNumbers,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusReceiver));
+            Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
             Argument.AssertNotNullOrEmpty(sequenceNumbers, nameof(sequenceNumbers));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             var sequenceNumbersList = sequenceNumbers.ToList();
@@ -936,7 +963,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             ThrowIfLockTokenIsEmpty(lockToken);
-            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusReceiver));
+            Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
             ThrowIfNotPeekLockMode();
             ThrowIfSessionReceiver();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -978,28 +1005,13 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         /// Performs the task needed to clean up resources used by the <see cref="ServiceBusReceiver" />.
+        /// This is equivalent to calling <see cref="CloseAsync"/> with the default <see cref="LinkCloseMode"/>.
         /// </summary>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "This signature must match the IAsyncDisposable interface.")]
-        public virtual async ValueTask DisposeAsync()
-        {
-            IsDisposed = true;
-            Type clientType = GetType();
-
-            Logger.ClientDisposeStart(clientType, Identifier);
-            try
-            {
-                await InnerReceiver.CloseAsync(CancellationToken.None).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                Logger.ClientDisposeException(clientType, Identifier, ex);
-                throw;
-            }
-
-            Logger.ClientDisposeComplete(clientType, Identifier);
-        }
+        public virtual async ValueTask DisposeAsync() =>
+            await CloseAsync().ConfigureAwait(false);
 
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
