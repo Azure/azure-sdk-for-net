@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.ContainerService.Models
 {
 
     /// <summary>
-    /// Defines values for ScaleSetPriority.
+    /// Defines values for NetworkMode.
     /// </summary>
-    public static class ScaleSetPriority
+    public static class NetworkMode
     {
-        public const string Spot = "Spot";
-        public const string Regular = "Regular";
+        public const string Transparent = "transparent";
+        public const string Bridge = "bridge";
     }
 }

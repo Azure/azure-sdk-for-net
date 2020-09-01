@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.ContainerService.Models
 {
 
     /// <summary>
-    /// Defines values for ScaleSetPriority.
+    /// Defines values for AgentPoolMode.
     /// </summary>
-    public static class ScaleSetPriority
+    public static class AgentPoolMode
     {
-        public const string Spot = "Spot";
-        public const string Regular = "Regular";
+        public const string System = "System";
+        public const string User = "User";
     }
 }
