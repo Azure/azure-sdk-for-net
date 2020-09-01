@@ -208,9 +208,6 @@ stages:
 
               pool:
                 vmImage: windows-2019
-
-              variables: 
-                tempVar: $[dependencies.PublishPackage.outputs['passVar.ReleaseTag'] ]
               strategy:
                 runOnce:
                   deploy:
@@ -235,7 +232,6 @@ stages:
                           ArtifactLocation: $(Pipeline.Workspace)/${{artifact.safeName}}
                           PackageRepository: Nuget
                           ReleaseSha: $(Build.SourceVersion)
-                          ReleaseTag: ${{ variables.tempVar }}
                           FolderForUpload: '$(Pipeline.Workspace)/${{artifact.safeName}}'
                           BlobSASKey: '$(azure-sdk-docs-prod-sas)'
                           BlobName: '$(azure-sdk-docs-prod-blob-name)'
