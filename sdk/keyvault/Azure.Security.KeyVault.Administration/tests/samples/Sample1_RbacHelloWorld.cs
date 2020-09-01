@@ -69,7 +69,7 @@ namespace Azure.Security.KeyVault.Administration.Samples
             // Retrieve all the role definitions.
             #region Snippet:GetRoleDefinitionsAsync
             List<KeyVaultRoleDefinition> roleDefinitions = new List<KeyVaultRoleDefinition>();
-            await foreach (var definition in client.GetRoleDefinitionsAsync(KeyVaultRoleScope.Global))
+            await foreach (KeyVaultRoleDefinition definition in client.GetRoleDefinitionsAsync(KeyVaultRoleScope.Global))
             {
                 roleDefinitions.Add(definition);
             }
@@ -78,7 +78,7 @@ namespace Azure.Security.KeyVault.Administration.Samples
             // Retrieve all the role assignments.
             #region Snippet:GetRoleAssignmentsAsync
             List<KeyVaultRoleAssignment> roleAssignments = new List<KeyVaultRoleAssignment>();
-            await foreach (var assignment in client.GetRoleAssignmentsAsync(KeyVaultRoleScope.Global))
+            await foreach (KeyVaultRoleAssignment assignment in client.GetRoleAssignmentsAsync(KeyVaultRoleScope.Global))
             {
                 roleAssignments.Add(assignment);
             }

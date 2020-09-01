@@ -1,7 +1,7 @@
 # Performing a full key backup and restore (Async)
 
-This sample demonstrates how to a full key backup and restore in Azure Key Vault.
-To get started, you'll need a URI to an Azure Key Vault. See the [README](../README.md) for links and instructions.
+This sample demonstrates how to a perform full key backup and restore in Azure Key Vault.
+To get started, you'll need a URI to an Azure Key Vault. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/README.md) for links and instructions.
 
 ## Creating a KeyVaultBackupClient
 
@@ -16,7 +16,7 @@ KeyVaultBackupClient client = new KeyVaultBackupClient(new Uri(keyVaultUrl), new
 
 ## Performing a full key backup
 
-Using the `KeyVaultBackupClient`, you can backup your entire collection of keys. The backing store for full key backups is a blob storage container using Shared Access Signature authentication. 
+Using the `KeyVaultBackupClient`, you can back up your entire collection of keys. The backing store for full key backups is a blob storage container using Shared Access Signature authentication. 
 For more details on creating a SAS token using the `BlobServiceClient`, see the [Azure Storage Blobs client README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Blobs/README.md) and the [authentication samples](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Blobs/samples/Sample02_Auth.cs).
 Alternatively, it is possible to [generate a SAS token in Storage Explorer](https://docs.microsoft.com/en-us/azure/vs-azure-tools-storage-manage-with-storage-explorer?tabs=windows#generate-a-shared-access-signature-in-storage-explorer)
 
@@ -36,7 +36,7 @@ UriBuilder builder = new UriBuilder(blobStorageUrl)
 BackupOperation backupOperation = await Client.StartBackupAsync(builder.Uri, sasToken);
 
 // Wait for completion of the BackupOperation.
-var backupResult = await backupOperation.WaitForCompletionAsync();
+Response<Uri> backupResult = await backupOperation.WaitForCompletionAsync();
 
 // Get the Uri for the location of you backup blob.
 Uri backupBlobUri = backupResult.Value;
@@ -50,14 +50,14 @@ Alternatively, it is possible to [generate a SAS token in Storage Explorer](http
 
 ```C# Snippet:HelloFullRestoreAsync
 // Get the folder name from the backupBlobUri returned from a previous BackupOperation
-var uriSegments = backupBlobUri.Segments;
+string[] uriSegments = backupBlobUri.Segments;
 string folderName = uriSegments[uriSegments.Length - 1];
 
 // Start the restore.
 RestoreOperation restoreOperation = await Client.StartRestoreAsync(builder.Uri, sasToken, folderName);
 
 // Wait for completion of the RestoreOperation.
-var restoreResult = await restoreOperation.WaitForCompletionAsync();
+Response restoreResult = await restoreOperation.WaitForCompletionAsync();
 ```
 
 <!-- LINKS -->

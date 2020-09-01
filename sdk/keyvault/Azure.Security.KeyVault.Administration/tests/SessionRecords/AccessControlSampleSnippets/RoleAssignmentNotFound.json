@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://eastus2.chriss-eu2.managedhsm-int.azure-int.net/providers/Microsoft.Authorization/roleAssignments/invalid-name?api-version=7.2-preview",
+      "RequestUri": "https://eastus2.chriss-eu2.managedhsm-int.azure-int.net/providers/Microsoft.Authorization/roleAssignments/example-name?api-version=7.2-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -24,13 +24,13 @@
         "X-Content-Type-Options": "nosniff",
         "X-Frame-Options": "SAMEORIGIN",
         "x-ms-build-version": "1.0.20200901-1-40187cd0-develop",
-        "x-ms-request-id": "147983c8-ec70-11ea-84e4-0242ac120003",
-        "x-ms-server-latency": "0"
+        "x-ms-request-id": "47087520-ec74-11ea-be1e-0242ac120005",
+        "x-ms-server-latency": "1"
       },
       "ResponseBody": "OK"
     },
     {
-      "RequestUri": "https://eastus2.chriss-eu2.managedhsm-int.azure-int.net/providers/Microsoft.Authorization/roleAssignments/invalid-name?api-version=7.2-preview",
+      "RequestUri": "https://eastus2.chriss-eu2.managedhsm-int.azure-int.net/providers/Microsoft.Authorization/roleAssignments/example-name?api-version=7.2-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -53,13 +53,13 @@
         "X-Content-Type-Options": "nosniff",
         "X-Frame-Options": "SAMEORIGIN",
         "x-ms-build-version": "1.0.20200901-1-40187cd0-develop",
-        "x-ms-request-id": "147983c8-ec70-11ea-84e4-0242ac120003",
-        "x-ms-server-latency": "1"
+        "x-ms-request-id": "47087520-ec74-11ea-be1e-0242ac120005",
+        "x-ms-server-latency": "2"
       },
       "ResponseBody": {
         "error": {
           "code": "RoleAssignmentNotFound",
-          "message": "Requested role assignment not found (Activity ID: 147983c8-ec70-11ea-84e4-0242ac120003)"
+          "message": "Requested role assignment not found (Activity ID: 47087520-ec74-11ea-be1e-0242ac120005)"
         }
       }
     }

@@ -44,7 +44,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             BackupOperation backupOperation = await Client.StartBackupAsync(builder.Uri, sasToken);
 
             // Wait for completion of the BackupOperation.
-            var backupResult = await backupOperation.WaitForCompletionAsync();
+            Response<Uri> backupResult = await backupOperation.WaitForCompletionAsync();
 
             // Get the Uri for the location of you backup blob.
             Uri backupBlobUri = backupResult.Value;
@@ -55,14 +55,14 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             #region Snippet:HelloFullRestoreAsync
             // Get the folder name from the backupBlobUri returned from a previous BackupOperation
-            var uriSegments = backupBlobUri.Segments;
+            string[] uriSegments = backupBlobUri.Segments;
             string folderName = uriSegments[uriSegments.Length - 1];
 
             // Start the restore.
             RestoreOperation restoreOperation = await Client.StartRestoreAsync(builder.Uri, sasToken, folderName);
 
             // Wait for completion of the RestoreOperation.
-            var restoreResult = await restoreOperation.WaitForCompletionAsync();
+            Response restoreResult = await restoreOperation.WaitForCompletionAsync();
             #endregion
             Assert.That(restoreResult, Is.Not.Null);
             Assert.That(restoreOperation.HasValue, Is.True);
@@ -102,7 +102,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             #region Snippet:HelloFullRestoreSync
             // Get the folder name from the backupBlobUri returned from a previous BackupOperation
-            var uriSegments = backupBlobUri.Segments;
+            string[] uriSegments = backupBlobUri.Segments;
             string folderName = uriSegments[uriSegments.Length - 1];
 
             // Start the restore.
@@ -114,7 +114,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
                 restoreOperation.UpdateStatus();
                 Thread.Sleep(3000);
             }
-            var restoreResult = backupOperation.Value;
+            Uri restoreResult = backupOperation.Value;
             #endregion
 
             Assert.That(restoreResult, Is.Not.Null);

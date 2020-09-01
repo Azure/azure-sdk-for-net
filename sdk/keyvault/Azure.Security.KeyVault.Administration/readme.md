@@ -130,7 +130,7 @@ For example, if you try to retrieve a role assignment that doesn't exist in your
 ```C# Snippet:RoleAssignmentNotFound
 try
 {
-    KeyVaultRoleAssignment roleAssignment = client.GetRoleAssignment(KeyVaultRoleScope.Global, "invalid-name");
+    KeyVaultRoleAssignment roleAssignment = client.GetRoleAssignment(KeyVaultRoleScope.Global, "example-name");
 }
 catch (RequestFailedException ex)
 {
@@ -161,11 +161,11 @@ To create an Azure SDK log listener that outputs messages to console use AzureEv
 using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
 ```
 
-To learn more about other logging mechanisms see [here](logging).
+To learn more about other logging mechanisms see [here][logging].
 
 ## Next steps
 
-Get started with our [samples](admin_client_samples).
+Get started with our [samples][admin_client_samples].
 
 ## Contributing
 

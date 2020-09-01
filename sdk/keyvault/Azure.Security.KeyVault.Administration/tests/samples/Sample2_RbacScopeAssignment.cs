@@ -52,7 +52,7 @@ namespace Azure.Security.KeyVault.Administration.Samples
 
             RegisterForCleanup(keysScopedAssignment);
 
-            var keyClient = KeyClient;
+            KeyClient keyClient = KeyClient;
             List<KeyProperties> keyProperties = await keyClient.GetPropertiesOfKeysAsync().ToEnumerableAsync().ConfigureAwait(false);
             string keyName = keyProperties.First().Name;
 

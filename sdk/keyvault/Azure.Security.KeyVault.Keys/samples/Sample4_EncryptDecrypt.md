@@ -1,7 +1,7 @@
 # Encrypting and decrypt keys
 
 This sample demonstrates how to encrypt and decrypt a single block of plain text with an RSA key.
-To get started, you'll need a URI to an Azure Key Vault. See the [README](../README.md) for links and instructions.
+To get started, you'll need a URI to an Azure Key Vault. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/README.md) for links and instructions.
 
 ## Creating a KeyClient
 

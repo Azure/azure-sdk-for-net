@@ -1,7 +1,7 @@
 # Setting, getting, updating, and deleting certificates
 
 This sample demonstrates how to set, get, update, and delete a certificate.
-To get started, you'll need a URI to an Azure Key Vault. See the [README](../README.md) for links and instructions.
+To get started, you'll need a URI to an Azure Key Vault. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/README.md) for links and instructions.
 
 ## Creating a CertificateClient
 

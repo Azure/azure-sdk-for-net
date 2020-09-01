@@ -1,7 +1,7 @@
 # Creating, getting, updating, and deleting keys
 
 This sample demonstrates how to create, get, update, and delete a key in Azure Key Vault.
-To get started, you'll need a URI to an Azure Key Vault. See the [README](../README.md) for links and instructions.
+To get started, you'll need a URI to an Azure Key Vault. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/README.md) for links and instructions.
 
 ## Creating a KeyClient
 
