@@ -3977,6 +3977,44 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public async Task OpenWriteAsync_NewFile_WithUsing()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            await file.CreateAsync();
+
+            DataLakeFileOpenWriteOptions options = new DataLakeFileOpenWriteOptions
+            {
+                BufferSize = Constants.KB
+            };
+
+            byte[] data = GetRandomBuffer(16 * Constants.KB);
+
+            // Act
+            using (Stream stream = await file.OpenWriteAsync(
+                overwrite: false,
+                options))
+            {
+
+                await stream.WriteAsync(data, 0, 512);
+                await stream.WriteAsync(data, 512, 1024);
+                await stream.WriteAsync(data, 1536, 2048);
+                await stream.WriteAsync(data, 3584, 77);
+                await stream.WriteAsync(data, 3661, 2066);
+                await stream.WriteAsync(data, 5727, 4096);
+                await stream.WriteAsync(data, 9823, 6561);
+            }
+
+            // Assert
+            Response<FileDownloadInfo> result = await file.ReadAsync();
+            var dataResult = new MemoryStream();
+            await result.Value.Content.CopyToAsync(dataResult);
+            Assert.AreEqual(data.Length, dataResult.Length);
+            TestHelper.AssertSequenceEqual(data, dataResult.ToArray());
+        }
+
+        [Test]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/13510")]
         public async Task OpenWriteAsync_AppendExistingFile()
         {
