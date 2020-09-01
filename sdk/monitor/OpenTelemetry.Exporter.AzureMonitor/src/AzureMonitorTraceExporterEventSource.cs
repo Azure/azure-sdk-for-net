@@ -13,11 +13,11 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         public static AzureMonitorTraceExporterEventSource Log = new AzureMonitorTraceExporterEventSource();
 
         [NonEvent]
-        public void ConfigurationStringParseWarning(string message)
+        public void FailedExport(Exception ex)
         {
-            if (this.IsEnabled(EventLevel.Warning, EventKeywords.All))
+            if (this.IsEnabled(EventLevel.Error, EventKeywords.All))
             {
-                this.WarnToParseConfigurationString(message);
+                this.FailedExport(ex.ToInvariantString());
             }
         }
 
@@ -30,10 +30,22 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             }
         }
 
-        [Event(1, Message = "{0}", Level = EventLevel.Warning)]
-        public void WarnToParseConfigurationString(string message) => this.WriteEvent(1, message);
+        [NonEvent]
+        public void ConnectionStringError(Exception ex)
+        {
+            if (this.IsEnabled(EventLevel.Error, EventKeywords.All))
+            {
+                this.ConnectionStringError(ex.ToInvariantString());
+            }
+        }
+
+        [Event(1, Message = "Failed to export activities: '{0}'", Level = EventLevel.Error)]
+        public void FailedExport(string exception) => this.WriteEvent(1, exception);
 
         [Event(2, Message = "Error creating SdkVersion : '{0}'", Level = EventLevel.Warning)]
         public void WarnSdkVersionCreateException(string message) => this.WriteEvent(2, message);
+
+        [Event(3, Message = "Connection String Error: '{0}'", Level = EventLevel.Error)]
+        public void ConnectionStringError(string message) => this.WriteEvent(3, message);
     }
 }

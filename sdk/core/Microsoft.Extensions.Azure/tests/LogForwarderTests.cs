@@ -23,6 +23,7 @@ namespace Microsoft.Extensions.Azure.Tests
             var loggerFactory = new MockLoggerFactory();
             using (var forwarder = new EventSourceLogForwarder(loggerFactory))
             {
+                forwarder.Start();
                 typeof(TestSource).GetMethod(eventLevel.ToString(), BindingFlags.Instance | BindingFlags.Public).Invoke(TestSource.Log, Array.Empty<object>());
             }
 
@@ -35,6 +36,7 @@ namespace Microsoft.Extensions.Azure.Tests
         public void WorksWithNullLoggerFactory()
         {
             using var forwarder = new EventSourceLogForwarder( null);
+            forwarder.Start();
             TestSource.Log.Informational();
         }
 

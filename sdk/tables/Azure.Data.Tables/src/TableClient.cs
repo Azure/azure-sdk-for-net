@@ -27,22 +27,22 @@ namespace Azure.Data.Tables
         private readonly TableRestClient _tableOperations;
         private readonly string _version;
         private readonly bool _isPremiumEndpoint;
-        private ResponseFormat _returnNoContent = ResponseFormat.ReturnNoContent;
+        private readonly ResponseFormat _returnNoContent = ResponseFormat.ReturnNoContent;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TableClient"/>.
         /// </summary>
-        /// <param name="tableName">The name of the table with which this client instance will interact.</param>
         /// <param name="endpoint">
         /// A <see cref="Uri"/> referencing the table service account.
         /// This is likely to be similar to "https://{account_name}.table.core.windows.net/" or "https://{account_name}.table.cosmos.azure.com/".
         /// </param>
+        /// <param name="tableName">The name of the table with which this client instance will interact.</param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
         /// </param>
         /// <exception cref="ArgumentException"><paramref name="endpoint"/> is not https.</exception>
-        public TableClient(string tableName, Uri endpoint, TableClientOptions options = null)
-            : this(tableName, endpoint, default(TableSharedKeyPipelinePolicy), options)
+        public TableClient(Uri endpoint, string tableName, TableClientOptions options = null)
+            : this(endpoint, tableName, default(TableSharedKeyPipelinePolicy), options)
         {
             Argument.AssertNotNull(tableName, nameof(tableName));
 
@@ -55,15 +55,15 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Initializes a new instance of the <see cref="TableClient"/>.
         /// </summary>
-        /// <param name="tableName">The name of the table with which this client instance will interact.</param>
         /// <param name="endpoint">
         /// A <see cref="Uri"/> referencing the table service account.
         /// This is likely to be similar to "https://{account_name}.table.core.windows.net/" or "https://{account_name}.table.cosmos.azure.com/".
         /// </param>
+        /// <param name="tableName">The name of the table with which this client instance will interact.</param>
         /// <param name="credential">The shared key credential used to sign requests.</param>
         /// <exception cref="ArgumentNullException"><paramref name="tableName"/> or <paramref name="credential"/> is null.</exception>
-        public TableClient(string tableName, Uri endpoint, TableSharedKeyCredential credential)
-            : this(tableName, endpoint, new TableSharedKeyPipelinePolicy(credential), null)
+        public TableClient(Uri endpoint, string tableName, TableSharedKeyCredential credential)
+            : this(endpoint, tableName, new TableSharedKeyPipelinePolicy(credential), null)
         {
             Argument.AssertNotNull(tableName, nameof(tableName));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -72,24 +72,83 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Initializes a new instance of the <see cref="TableClient"/>.
         /// </summary>
-        /// <param name="tableName">The name of the table with which this client instance will interact.</param>
         /// <param name="endpoint">
         /// A <see cref="Uri"/> referencing the table service account.
         /// This is likely to be similar to "https://{account_name}.table.core.windows.net/" or "https://{account_name}.table.cosmos.azure.com/".
         /// </param>
+        /// <param name="tableName">The name of the table with which this client instance will interact.</param>
         /// <param name="credential">The shared key credential used to sign requests.</param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
         /// </param>
         /// <exception cref="ArgumentNullException"><paramref name="tableName"/> or <paramref name="credential"/> is null.</exception>
-        public TableClient(string tableName, Uri endpoint, TableSharedKeyCredential credential, TableClientOptions options = null)
-            : this(tableName, endpoint, new TableSharedKeyPipelinePolicy(credential), options)
+        public TableClient(Uri endpoint, string tableName, TableSharedKeyCredential credential, TableClientOptions options = null)
+            : this(endpoint, tableName, new TableSharedKeyPipelinePolicy(credential), options)
         {
             Argument.AssertNotNull(tableName, nameof(tableName));
             Argument.AssertNotNull(credential, nameof(credential));
         }
 
-        internal TableClient(string tableName, Uri endpoint, TableSharedKeyPipelinePolicy policy, TableClientOptions options)
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TableServiceClient"/>.
+        /// </summary>
+        /// <param name="connectionString">
+        /// A connection string includes the authentication information
+        /// required for your application to access data in an Azure Storage
+        /// account at runtime.
+        ///
+        /// For more information,
+        /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
+        /// Configure Azure Storage connection strings</see>.
+        /// </param>
+        /// <param name="tableName">The name of the table with which this client instance will interact.</param>
+        public TableClient(string connectionString, string tableName)
+            : this(connectionString, tableName, default)
+        { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TableServiceClient"/>.
+        /// </summary>
+        /// <param name="connectionString">
+        /// A connection string includes the authentication information
+        /// required for your application to access data in an Azure Storage
+        /// account at runtime.
+        ///
+        /// For more information,
+        /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
+        /// Configure Azure Storage connection strings</see>.
+        /// </param>
+        /// <param name="tableName">The name of the table with which this client instance will interact.</param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
+        /// </param>
+        public TableClient(string connectionString, string tableName, TableClientOptions options = null)
+        {
+            Argument.AssertNotNull(connectionString, nameof(connectionString));
+
+            TableConnectionString connString = TableConnectionString.Parse(connectionString);
+
+            options ??= new TableClientOptions();
+            var endpointString = connString.TableStorageUri.PrimaryUri.ToString();
+
+            TableSharedKeyPipelinePolicy policy = connString.Credentials switch
+            {
+                TableSharedKeyCredential credential => new TableSharedKeyPipelinePolicy(credential),
+                _ => default
+            };
+
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, policy);
+
+            _diagnostics = new ClientDiagnostics(options);
+            _tableOperations = new TableRestClient(_diagnostics, pipeline, endpointString);
+            _version = options.VersionString;
+            _table = tableName;
+            _format = OdataMetadataFormat.ApplicationJsonOdataMinimalmetadata;
+            _isPremiumEndpoint = TableServiceClient.IsPremiumEndpoint(connString.TableStorageUri.PrimaryUri);
+        }
+
+        internal TableClient(Uri endpoint, string tableName, TableSharedKeyPipelinePolicy policy, TableClientOptions options)
         {
             Argument.AssertNotNull(tableName, nameof(tableName));
             Argument.AssertNotNull(endpoint, nameof(endpoint));
@@ -103,7 +162,6 @@ namespace Azure.Data.Tables
             _table = tableName;
             _format = OdataMetadataFormat.ApplicationJsonOdataMinimalmetadata;
             _isPremiumEndpoint = TableServiceClient.IsPremiumEndpoint(endpoint);
-            ;
         }
 
         internal TableClient(string table, TableRestClient tableOperations, string version, ClientDiagnostics diagnostics, bool isPremiumEndpoint)
@@ -907,82 +965,22 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Placeholder for batch operations. This is just being used for testing.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="entities"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        internal virtual async Task<Response<List<Response>>> BatchTestAsync<T>(IEnumerable<T> entities, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
-        {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(BatchTest)}");
-            scope.Start();
-            try
-            {
-                var batch = TableRestClient.CreateBatchContent();
-                var changeset = batch.AddChangeset();
-                foreach (var entity in entities)
-                {
-                    _tableOperations.AddInsertEntityRequest(
-                        changeset,
-                        _table,
-                        null,
-                        null,
-                        null,
-                        tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                        queryOptions: new QueryOptions() { Format = _format });
-                }
-                return await _tableOperations.SendBatchRequestAsync(_tableOperations.CreateBatchRequest(batch, null, null), cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Placeholder for batch operations. This is just being used for testing.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="entities"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        internal virtual Response<List<Response>> BatchTest<T>(IEnumerable<T> entities, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
-        {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(BatchTest)}");
-            scope.Start();
-            try
-            {
-                var batch = TableRestClient.CreateBatchContent();
-                var changeset = batch.AddChangeset();
-                foreach (var entity in entities)
-                {
-                    _tableOperations.AddInsertEntityRequest(
-                        changeset,
-                        _table,
-                        null,
-                        null,
-                        null,
-                        tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                        queryOptions: new QueryOptions() { Format = _format });
-                }
-                return _tableOperations.SendBatchRequest(_tableOperations.CreateBatchRequest(batch, null, null), cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Creates an Odata filter query string from the provided expression.
         /// </summary>
         /// <typeparam name="T">The type of the entity being queried. Typically this will be derrived from <see cref="ITableEntity"/> or <see cref="Dictionary{String, Object}"/>.</typeparam>
         /// <param name="filter">A filter expresssion.</param>
         /// <returns>The string representation of the filter expression.</returns>
         public static string CreateQueryFilter<T>(Expression<Func<T, bool>> filter) => Bind(filter);
+
+        /// <summary>
+        /// Create a <see cref="TablesBatch" /> for the given partitionkey value.
+        /// </summary>
+        /// <param name="partitionKey">The partitionKey context for the batch.</param>
+        /// <returns></returns>
+        internal virtual TablesBatch CreateBatch(string partitionKey)
+        {
+            return new TablesBatch(_table, _tableOperations, _format);
+        }
 
         internal static string Bind(Expression expression)
         {

@@ -1,16 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models",
+      "RequestUri": "https://t00b5fddbfc124bd4-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Content-Length": "43",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-f83294570d36e742b85678b2f430771d-2c3ec321a339a645-00",
+        "traceparent": "00-b8942673182c8543b430ce581e20b29d-a45cf730979fdf4f-00",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200820.1",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "ffb32260b8585b85e211233437e2d8fb",
         "x-ms-return-client-request-id": "true"
@@ -21,24 +22,25 @@
       },
       "StatusCode": 201,
       "ResponseHeaders": {
-        "apim-request-id": "bb72db93-a86d-4fc6-88a8-0f4c5d0b0644",
+        "apim-request-id": "57341099-fdfa-4f53-8483-55170579b29b",
         "Content-Length": "0",
-        "Date": "Fri, 07 Aug 2020 02:20:23 GMT",
-        "Location": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/acad0d9d-a576-48e3-a57c-25bc34f08a7c",
+        "Date": "Thu, 20 Aug 2020 18:01:30 GMT",
+        "Location": "https://t00b5fddbfc124bd4-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/3420c97d-20b6-458a-8766-d36c8e244b75",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "88"
+        "x-envoy-upstream-service-time": "48"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/acad0d9d-a576-48e3-a57c-25bc34f08a7c?includeKeys=true",
+      "RequestUri": "https://t00b5fddbfc124bd4-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/3420c97d-20b6-458a-8766-d36c8e244b75?includeKeys=true",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200820.1",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "e2bdf6eada1737b27d1a551fc7475910",
         "x-ms-return-client-request-id": "true"
@@ -46,31 +48,32 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "c132ac26-7f74-49cc-b164-df2994b58b7a",
+        "apim-request-id": "7ad97738-73b8-4cf8-ab31-62cd1d211253",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Aug 2020 02:20:23 GMT",
+        "Date": "Thu, 20 Aug 2020 18:01:30 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "34"
+        "x-envoy-upstream-service-time": "19"
       },
       "ResponseBody": {
         "modelInfo": {
-          "modelId": "acad0d9d-a576-48e3-a57c-25bc34f08a7c",
+          "modelId": "3420c97d-20b6-458a-8766-d36c8e244b75",
           "status": "creating",
-          "createdDateTime": "2020-08-07T02:20:24Z",
-          "lastUpdatedDateTime": "2020-08-07T02:20:24Z"
+          "createdDateTime": "2020-08-20T18:01:30Z",
+          "lastUpdatedDateTime": "2020-08-20T18:01:30Z"
         }
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/acad0d9d-a576-48e3-a57c-25bc34f08a7c?includeKeys=true",
+      "RequestUri": "https://t00b5fddbfc124bd4-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/3420c97d-20b6-458a-8766-d36c8e244b75?includeKeys=true",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200820.1",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "c42bcbefad88a5fa10bea29aff388778",
         "x-ms-return-client-request-id": "true"
@@ -78,31 +81,32 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "95822052-b3a4-4223-b603-e2d7ac306db5",
+        "apim-request-id": "e0803c61-f315-44e3-afea-31da8ba8322c",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Aug 2020 02:20:24 GMT",
+        "Date": "Thu, 20 Aug 2020 18:01:31 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "23"
+        "x-envoy-upstream-service-time": "17"
       },
       "ResponseBody": {
         "modelInfo": {
-          "modelId": "acad0d9d-a576-48e3-a57c-25bc34f08a7c",
+          "modelId": "3420c97d-20b6-458a-8766-d36c8e244b75",
           "status": "creating",
-          "createdDateTime": "2020-08-07T02:20:24Z",
-          "lastUpdatedDateTime": "2020-08-07T02:20:24Z"
+          "createdDateTime": "2020-08-20T18:01:30Z",
+          "lastUpdatedDateTime": "2020-08-20T18:01:30Z"
         }
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/acad0d9d-a576-48e3-a57c-25bc34f08a7c?includeKeys=true",
+      "RequestUri": "https://t00b5fddbfc124bd4-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/3420c97d-20b6-458a-8766-d36c8e244b75?includeKeys=true",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200820.1",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "7fae1080a43a86fc707b813d6365939a",
         "x-ms-return-client-request-id": "true"
@@ -110,31 +114,32 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "9b94daef-4e26-45f9-8115-61c0147957f6",
+        "apim-request-id": "f13413e7-21b8-4689-95ca-d9fcef72c1a0",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Aug 2020 02:20:25 GMT",
+        "Date": "Thu, 20 Aug 2020 18:01:32 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "26"
+        "x-envoy-upstream-service-time": "19"
       },
       "ResponseBody": {
         "modelInfo": {
-          "modelId": "acad0d9d-a576-48e3-a57c-25bc34f08a7c",
+          "modelId": "3420c97d-20b6-458a-8766-d36c8e244b75",
           "status": "creating",
-          "createdDateTime": "2020-08-07T02:20:24Z",
-          "lastUpdatedDateTime": "2020-08-07T02:20:24Z"
+          "createdDateTime": "2020-08-20T18:01:30Z",
+          "lastUpdatedDateTime": "2020-08-20T18:01:30Z"
         }
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/acad0d9d-a576-48e3-a57c-25bc34f08a7c?includeKeys=true",
+      "RequestUri": "https://t00b5fddbfc124bd4-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/3420c97d-20b6-458a-8766-d36c8e244b75?includeKeys=true",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200820.1",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "6b4513b813b73d72fc18d15937173844",
         "x-ms-return-client-request-id": "true"
@@ -142,31 +147,32 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "1c12662d-87f3-463a-9716-26f81b1d3746",
+        "apim-request-id": "fc8deda7-eadd-4bdc-945f-ae2f373cabd2",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Aug 2020 02:20:26 GMT",
+        "Date": "Thu, 20 Aug 2020 18:01:33 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "25"
+        "x-envoy-upstream-service-time": "18"
       },
       "ResponseBody": {
         "modelInfo": {
-          "modelId": "acad0d9d-a576-48e3-a57c-25bc34f08a7c",
+          "modelId": "3420c97d-20b6-458a-8766-d36c8e244b75",
           "status": "creating",
-          "createdDateTime": "2020-08-07T02:20:24Z",
-          "lastUpdatedDateTime": "2020-08-07T02:20:24Z"
+          "createdDateTime": "2020-08-20T18:01:30Z",
+          "lastUpdatedDateTime": "2020-08-20T18:01:30Z"
         }
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/acad0d9d-a576-48e3-a57c-25bc34f08a7c?includeKeys=true",
+      "RequestUri": "https://t00b5fddbfc124bd4-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/3420c97d-20b6-458a-8766-d36c8e244b75?includeKeys=true",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200820.1",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "b79edc93d9994ad5cea5540d2bbd42aa",
         "x-ms-return-client-request-id": "true"
@@ -174,31 +180,32 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "9da2895a-6a94-4e57-bfb6-7ac5f0e007d8",
+        "apim-request-id": "fc6e2f9b-1e52-47d9-9ff2-81acf6158736",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Aug 2020 02:20:28 GMT",
+        "Date": "Thu, 20 Aug 2020 18:01:34 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "22"
+        "x-envoy-upstream-service-time": "14"
       },
       "ResponseBody": {
         "modelInfo": {
-          "modelId": "acad0d9d-a576-48e3-a57c-25bc34f08a7c",
+          "modelId": "3420c97d-20b6-458a-8766-d36c8e244b75",
           "status": "creating",
-          "createdDateTime": "2020-08-07T02:20:24Z",
-          "lastUpdatedDateTime": "2020-08-07T02:20:24Z"
+          "createdDateTime": "2020-08-20T18:01:30Z",
+          "lastUpdatedDateTime": "2020-08-20T18:01:30Z"
         }
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/acad0d9d-a576-48e3-a57c-25bc34f08a7c?includeKeys=true",
+      "RequestUri": "https://t00b5fddbfc124bd4-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/3420c97d-20b6-458a-8766-d36c8e244b75?includeKeys=true",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200820.1",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "ebe2082a1bf36cc19e708322d2a34e58",
         "x-ms-return-client-request-id": "true"
@@ -206,31 +213,32 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "80fb9387-ffb8-468d-afa3-f2df833a42a6",
+        "apim-request-id": "16cf1f51-70dd-4a12-894e-817b65ed9d5c",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Aug 2020 02:20:29 GMT",
+        "Date": "Thu, 20 Aug 2020 18:01:36 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "20"
+        "x-envoy-upstream-service-time": "16"
       },
       "ResponseBody": {
         "modelInfo": {
-          "modelId": "acad0d9d-a576-48e3-a57c-25bc34f08a7c",
+          "modelId": "3420c97d-20b6-458a-8766-d36c8e244b75",
           "status": "creating",
-          "createdDateTime": "2020-08-07T02:20:24Z",
-          "lastUpdatedDateTime": "2020-08-07T02:20:24Z"
+          "createdDateTime": "2020-08-20T18:01:30Z",
+          "lastUpdatedDateTime": "2020-08-20T18:01:30Z"
         }
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/acad0d9d-a576-48e3-a57c-25bc34f08a7c?includeKeys=true",
+      "RequestUri": "https://t00b5fddbfc124bd4-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/3420c97d-20b6-458a-8766-d36c8e244b75?includeKeys=true",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200820.1",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "87a93c42dcc6de013dfa9d11be64123f",
         "x-ms-return-client-request-id": "true"
@@ -238,31 +246,32 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "e2a2d381-1d11-4570-b254-52ffd9081a5d",
+        "apim-request-id": "e7d7cc24-ba4c-43e7-a283-947136384dc1",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Aug 2020 02:20:30 GMT",
+        "Date": "Thu, 20 Aug 2020 18:01:37 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "26"
+        "x-envoy-upstream-service-time": "16"
       },
       "ResponseBody": {
         "modelInfo": {
-          "modelId": "acad0d9d-a576-48e3-a57c-25bc34f08a7c",
+          "modelId": "3420c97d-20b6-458a-8766-d36c8e244b75",
           "status": "creating",
-          "createdDateTime": "2020-08-07T02:20:24Z",
-          "lastUpdatedDateTime": "2020-08-07T02:20:24Z"
+          "createdDateTime": "2020-08-20T18:01:30Z",
+          "lastUpdatedDateTime": "2020-08-20T18:01:30Z"
         }
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/acad0d9d-a576-48e3-a57c-25bc34f08a7c?includeKeys=true",
+      "RequestUri": "https://t00b5fddbfc124bd4-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/3420c97d-20b6-458a-8766-d36c8e244b75?includeKeys=true",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200820.1",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "2f2e26d64d3477511a32192856b2782a",
         "x-ms-return-client-request-id": "true"
@@ -270,31 +279,32 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "1ee02235-ce5d-4cf7-acea-a37ef4e129b0",
+        "apim-request-id": "5dceec13-7eb9-4668-b21a-9c4a42e70e2d",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Aug 2020 02:20:31 GMT",
+        "Date": "Thu, 20 Aug 2020 18:01:38 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "27"
+        "x-envoy-upstream-service-time": "15"
       },
       "ResponseBody": {
         "modelInfo": {
-          "modelId": "acad0d9d-a576-48e3-a57c-25bc34f08a7c",
+          "modelId": "3420c97d-20b6-458a-8766-d36c8e244b75",
           "status": "creating",
-          "createdDateTime": "2020-08-07T02:20:24Z",
-          "lastUpdatedDateTime": "2020-08-07T02:20:24Z"
+          "createdDateTime": "2020-08-20T18:01:30Z",
+          "lastUpdatedDateTime": "2020-08-20T18:01:30Z"
         }
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/acad0d9d-a576-48e3-a57c-25bc34f08a7c?includeKeys=true",
+      "RequestUri": "https://t00b5fddbfc124bd4-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/3420c97d-20b6-458a-8766-d36c8e244b75?includeKeys=true",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200820.1",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "eecbfb56ba134ee40603aef87eafae39",
         "x-ms-return-client-request-id": "true"
@@ -302,20 +312,20 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "9a0b9947-9a5f-4e2e-a270-9072fc0d49c3",
+        "apim-request-id": "fc683b74-e2ef-4fb9-84d3-1a794bf2ad9c",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Aug 2020 02:20:32 GMT",
+        "Date": "Thu, 20 Aug 2020 18:01:39 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "24"
+        "x-envoy-upstream-service-time": "17"
       },
       "ResponseBody": {
         "modelInfo": {
-          "modelId": "acad0d9d-a576-48e3-a57c-25bc34f08a7c",
+          "modelId": "3420c97d-20b6-458a-8766-d36c8e244b75",
           "status": "ready",
-          "createdDateTime": "2020-08-07T02:20:24Z",
-          "lastUpdatedDateTime": "2020-08-07T02:20:32Z"
+          "createdDateTime": "2020-08-20T18:01:30Z",
+          "lastUpdatedDateTime": "2020-08-20T18:01:38Z"
         },
         "keys": {
           "clusters": {
@@ -384,16 +394,17 @@
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/acad0d9d-a576-48e3-a57c-25bc34f08a7c/analyze?includeTextDetails=true",
+      "RequestUri": "https://t00b5fddbfc124bd4-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/3420c97d-20b6-458a-8766-d36c8e244b75/analyze?includeTextDetails=true",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Content-Length": "22",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-156acde5fec32c48b1546e6f830f01da-29eb0eb572933b46-00",
+        "traceparent": "00-b806f0eeb7f938469ea939c11740181d-a34c04578672c849-00",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200820.1",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "ab4c445e1e75f524eb316c94c3d8888a",
         "x-ms-return-client-request-id": "true"
@@ -403,24 +414,25 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "4e9c3144-86d3-4f99-ab8c-638e8d2c6409",
+        "apim-request-id": "5c71236f-ba9e-40d7-a23d-f5fac3969fc9",
         "Content-Length": "0",
-        "Date": "Fri, 07 Aug 2020 02:20:33 GMT",
-        "Operation-Location": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/acad0d9d-a576-48e3-a57c-25bc34f08a7c/analyzeresults/c1f629d9-f5ac-4a05-9cb1-5850c30eee83",
+        "Date": "Thu, 20 Aug 2020 18:01:39 GMT",
+        "Operation-Location": "https://t00b5fddbfc124bd4-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/3420c97d-20b6-458a-8766-d36c8e244b75/analyzeresults/15eaf5a2-34cd-4591-a420-62ca74d0bad3",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "266"
+        "x-envoy-upstream-service-time": "95"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/acad0d9d-a576-48e3-a57c-25bc34f08a7c/analyzeResults/c1f629d9-f5ac-4a05-9cb1-5850c30eee83",
+      "RequestUri": "https://t00b5fddbfc124bd4-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/3420c97d-20b6-458a-8766-d36c8e244b75/analyzeResults/15eaf5a2-34cd-4591-a420-62ca74d0bad3",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200820.1",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "c3ba728223991b2b42e028319e58f96b",
         "x-ms-return-client-request-id": "true"
@@ -428,28 +440,29 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "cb044cf8-5d35-46cb-82ee-988b5aee35f8",
+        "apim-request-id": "b4a028a8-dc32-45b9-afb9-3d2329aebf15",
         "Content-Length": "109",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Aug 2020 02:20:33 GMT",
+        "Date": "Thu, 20 Aug 2020 18:01:39 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "20"
+        "x-envoy-upstream-service-time": "17"
       },
       "ResponseBody": {
         "status": "notStarted",
-        "createdDateTime": "2020-08-07T02:20:33Z",
-        "lastUpdatedDateTime": "2020-08-07T02:20:33Z"
+        "createdDateTime": "2020-08-20T18:01:39Z",
+        "lastUpdatedDateTime": "2020-08-20T18:01:39Z"
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/acad0d9d-a576-48e3-a57c-25bc34f08a7c/analyzeResults/c1f629d9-f5ac-4a05-9cb1-5850c30eee83",
+      "RequestUri": "https://t00b5fddbfc124bd4-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/3420c97d-20b6-458a-8766-d36c8e244b75/analyzeResults/15eaf5a2-34cd-4591-a420-62ca74d0bad3",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200820.1",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "11c9df84cc6638b5d7d503e14e4f8a2e",
         "x-ms-return-client-request-id": "true"
@@ -457,28 +470,30 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "74fb62a6-612f-4118-8aef-b9feba415793",
-        "Content-Length": "109",
+        "apim-request-id": "3d95faca-16e0-4518-8601-04a01726be39",
+        "Content-Length": "127",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Aug 2020 02:20:34 GMT",
+        "Date": "Thu, 20 Aug 2020 18:01:40 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "102"
+        "x-envoy-upstream-service-time": "16"
       },
       "ResponseBody": {
-        "status": "notStarted",
-        "createdDateTime": "2020-08-07T02:20:33Z",
-        "lastUpdatedDateTime": "2020-08-07T02:20:33Z"
+        "status": "running",
+        "createdDateTime": "2020-08-20T18:01:39Z",
+        "lastUpdatedDateTime": "2020-08-20T18:01:40Z",
+        "analyzeResult": null
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/acad0d9d-a576-48e3-a57c-25bc34f08a7c/analyzeResults/c1f629d9-f5ac-4a05-9cb1-5850c30eee83",
+      "RequestUri": "https://t00b5fddbfc124bd4-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/3420c97d-20b6-458a-8766-d36c8e244b75/analyzeResults/15eaf5a2-34cd-4591-a420-62ca74d0bad3",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200820.1",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "0b76237aebf43ba018316994f6f35692",
         "x-ms-return-client-request-id": "true"
@@ -486,29 +501,30 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "8676b8dc-dd0b-4389-9a95-65e3891089d4",
+        "apim-request-id": "a96d7dd2-a0ab-4ff2-af68-6a62f4517d78",
         "Content-Length": "127",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Aug 2020 02:20:35 GMT",
+        "Date": "Thu, 20 Aug 2020 18:01:41 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "30"
+        "x-envoy-upstream-service-time": "16"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2020-08-07T02:20:33Z",
-        "lastUpdatedDateTime": "2020-08-07T02:20:34Z",
+        "createdDateTime": "2020-08-20T18:01:39Z",
+        "lastUpdatedDateTime": "2020-08-20T18:01:40Z",
         "analyzeResult": null
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/acad0d9d-a576-48e3-a57c-25bc34f08a7c/analyzeResults/c1f629d9-f5ac-4a05-9cb1-5850c30eee83",
+      "RequestUri": "https://t00b5fddbfc124bd4-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/3420c97d-20b6-458a-8766-d36c8e244b75/analyzeResults/15eaf5a2-34cd-4591-a420-62ca74d0bad3",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200820.1",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "e4100138770fb524bc82ebc32049cdf3",
         "x-ms-return-client-request-id": "true"
@@ -516,29 +532,30 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "5250601f-a67a-47ec-b032-abc6e50bff6a",
+        "apim-request-id": "5cb453e2-de08-46b4-872e-37d910c3bad1",
         "Content-Length": "127",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Aug 2020 02:20:36 GMT",
+        "Date": "Thu, 20 Aug 2020 18:01:43 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "25"
+        "x-envoy-upstream-service-time": "22"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2020-08-07T02:20:33Z",
-        "lastUpdatedDateTime": "2020-08-07T02:20:34Z",
+        "createdDateTime": "2020-08-20T18:01:39Z",
+        "lastUpdatedDateTime": "2020-08-20T18:01:40Z",
         "analyzeResult": null
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/acad0d9d-a576-48e3-a57c-25bc34f08a7c/analyzeResults/c1f629d9-f5ac-4a05-9cb1-5850c30eee83",
+      "RequestUri": "https://t00b5fddbfc124bd4-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/3420c97d-20b6-458a-8766-d36c8e244b75/analyzeResults/15eaf5a2-34cd-4591-a420-62ca74d0bad3",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200820.1",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "7bb6fa55ede199763e8ef834632041e4",
         "x-ms-return-client-request-id": "true"
@@ -546,18 +563,18 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "22600cf5-24d6-49a3-ac60-ea6dbace923c",
-        "Content-Length": "32866",
+        "apim-request-id": "5325b4d0-2db1-4b42-aae9-d4db3af63e3f",
+        "Content-Length": "31054",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Aug 2020 02:20:37 GMT",
+        "Date": "Thu, 20 Aug 2020 18:01:44 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "30"
+        "x-envoy-upstream-service-time": "22"
       },
       "ResponseBody": {
         "status": "succeeded",
-        "createdDateTime": "2020-08-07T02:20:33Z",
-        "lastUpdatedDateTime": "2020-08-07T02:20:37Z",
+        "createdDateTime": "2020-08-20T18:01:39Z",
+        "lastUpdatedDateTime": "2020-08-20T18:01:43Z",
         "analyzeResult": {
           "version": "2.0.0",
           "readResults": [
@@ -585,26 +602,26 @@
                       "text": "Purchase",
                       "boundingBox": [
                         141.0,
-                        140.0,
+                        139.0,
                         267.0,
-                        140.0,
+                        139.0,
                         267.0,
-                        168.0,
+                        167.0,
                         141.0,
-                        168.0
+                        167.0
                       ]
                     },
                     {
                       "text": "Order",
                       "boundingBox": [
                         273.0,
-                        140.0,
+                        142.0,
                         348.0,
-                        140.0,
+                        142.0,
                         348.0,
-                        168.0,
+                        169.0,
                         273.0,
-                        168.0
+                        169.0
                       ]
                     }
                   ]
@@ -630,9 +647,9 @@
                         793.0,
                         203.0,
                         793.0,
-                        271.0,
+                        272.0,
                         620.0,
-                        271.0
+                        272.0
                       ]
                     },
                     {
@@ -643,9 +660,9 @@
                         1078.0,
                         203.0,
                         1078.0,
-                        271.0,
+                        270.0,
                         811.0,
-                        271.0
+                        270.0
                       ]
                     }
                   ]
@@ -671,9 +688,9 @@
                         1380.0,
                         319.0,
                         1380.0,
-                        372.0,
+                        371.0,
                         1117.0,
-                        372.0
+                        371.0
                       ]
                     },
                     {
@@ -684,9 +701,9 @@
                         1551.0,
                         319.0,
                         1551.0,
-                        372.0,
+                        374.0,
                         1397.0,
-                        372.0
+                        374.0
                       ]
                     }
                   ]
@@ -699,9 +716,9 @@
                     365.0,
                     351.0,
                     365.0,
-                    381.0,
+                    382.0,
                     167.0,
-                    381.0
+                    382.0
                   ],
                   "words": [
                     {
@@ -712,9 +729,9 @@
                         276.0,
                         351.0,
                         276.0,
-                        381.0,
+                        383.0,
                         167.0,
-                        381.0
+                        383.0
                       ]
                     },
                     {
@@ -740,9 +757,9 @@
                     528.0,
                     351.0,
                     528.0,
-                    381.0,
+                    380.0,
                     371.0,
-                    381.0
+                    380.0
                   ],
                   "words": [
                     {
@@ -753,9 +770,9 @@
                         528.0,
                         351.0,
                         528.0,
-                        381.0,
+                        380.0,
                         371.0,
-                        381.0
+                        380.0
                       ]
                     }
                   ]
@@ -765,9 +782,9 @@
                   "boundingBox": [
                     167.0,
                     392.0,
-                    271.0,
+                    269.0,
                     392.0,
-                    271.0,
+                    269.0,
                     420.0,
                     167.0,
                     420.0
@@ -778,9 +795,9 @@
                       "boundingBox": [
                         167.0,
                         392.0,
-                        271.0,
+                        269.0,
                         392.0,
-                        271.0,
+                        269.0,
                         420.0,
                         167.0,
                         420.0
@@ -791,26 +808,26 @@
                 {
                   "text": "www.herolimited.com",
                   "boundingBox": [
-                    277.0,
-                    392.0,
-                    530.0,
-                    392.0,
-                    530.0,
+                    275.0,
+                    393.0,
+                    529.0,
+                    393.0,
+                    529.0,
                     420.0,
-                    277.0,
+                    275.0,
                     420.0
                   ],
                   "words": [
                     {
                       "text": "www.herolimited.com",
                       "boundingBox": [
-                        277.0,
-                        392.0,
-                        530.0,
-                        392.0,
-                        530.0,
+                        275.0,
+                        393.0,
+                        529.0,
+                        393.0,
+                        529.0,
                         420.0,
-                        277.0,
+                        275.0,
                         420.0
                       ]
                     }
@@ -820,26 +837,26 @@
                   "text": "Dated As:",
                   "boundingBox": [
                     1025.0,
-                    418.0,
+                    419.0,
                     1161.0,
-                    418.0,
+                    419.0,
                     1161.0,
-                    451.0,
+                    452.0,
                     1025.0,
-                    451.0
+                    452.0
                   ],
                   "words": [
                     {
                       "text": "Dated",
                       "boundingBox": [
                         1025.0,
-                        418.0,
+                        419.0,
                         1111.0,
-                        418.0,
+                        419.0,
                         1111.0,
-                        451.0,
+                        452.0,
                         1025.0,
-                        451.0
+                        452.0
                       ]
                     },
                     {
@@ -861,26 +878,26 @@
                   "text": "12/20/2020",
                   "boundingBox": [
                     1168.0,
-                    418.0,
-                    1319.0,
-                    418.0,
-                    1319.0,
-                    451.0,
+                    417.0,
+                    1320.0,
+                    417.0,
+                    1320.0,
+                    450.0,
                     1168.0,
-                    451.0
+                    450.0
                   ],
                   "words": [
                     {
                       "text": "12/20/2020",
                       "boundingBox": [
                         1168.0,
-                        418.0,
-                        1319.0,
-                        418.0,
-                        1319.0,
-                        451.0,
+                        417.0,
+                        1320.0,
+                        417.0,
+                        1320.0,
+                        450.0,
                         1168.0,
-                        451.0
+                        450.0
                       ]
                     }
                   ]
@@ -889,26 +906,26 @@
                   "text": "Email:",
                   "boundingBox": [
                     167.0,
-                    431.0,
-                    240.0,
-                    431.0,
-                    240.0,
-                    458.0,
+                    432.0,
+                    242.0,
+                    432.0,
+                    242.0,
+                    459.0,
                     167.0,
-                    458.0
+                    459.0
                   ],
                   "words": [
                     {
                       "text": "Email:",
                       "boundingBox": [
                         167.0,
-                        431.0,
-                        240.0,
-                        431.0,
-                        240.0,
-                        458.0,
+                        432.0,
+                        242.0,
+                        432.0,
+                        242.0,
+                        459.0,
                         167.0,
-                        458.0
+                        459.0
                       ]
                     }
                   ]
@@ -917,9 +934,9 @@
                   "text": "Purchase Order #:",
                   "boundingBox": [
                     1027.0,
-                    460.0,
+                    459.0,
                     1275.0,
-                    460.0,
+                    459.0,
                     1275.0,
                     491.0,
                     1027.0,
@@ -930,9 +947,9 @@
                       "text": "Purchase",
                       "boundingBox": [
                         1027.0,
-                        460.0,
+                        458.0,
                         1153.0,
-                        460.0,
+                        458.0,
                         1153.0,
                         491.0,
                         1027.0,
@@ -943,26 +960,26 @@
                       "text": "Order",
                       "boundingBox": [
                         1160.0,
-                        460.0,
+                        461.0,
                         1241.0,
-                        460.0,
+                        461.0,
                         1241.0,
-                        491.0,
+                        492.0,
                         1160.0,
-                        491.0
+                        492.0
                       ]
                     },
                     {
                       "text": "#:",
                       "boundingBox": [
                         1248.0,
-                        460.0,
+                        461.0,
                         1275.0,
-                        460.0,
+                        461.0,
                         1275.0,
-                        491.0,
+                        492.0,
                         1248.0,
-                        491.0
+                        492.0
                       ]
                     }
                   ]
@@ -975,9 +992,9 @@
                     1376.0,
                     460.0,
                     1376.0,
-                    491.0,
+                    492.0,
                     1282.0,
-                    491.0
+                    492.0
                   ],
                   "words": [
                     {
@@ -988,9 +1005,9 @@
                         1376.0,
                         460.0,
                         1376.0,
-                        491.0,
+                        492.0,
                         1282.0,
-                        491.0
+                        492.0
                       ]
                     }
                   ]
@@ -1000,9 +1017,9 @@
                   "boundingBox": [
                     168.0,
                     480.0,
-                    476.0,
+                    477.0,
                     480.0,
-                    476.0,
+                    477.0,
                     505.0,
                     168.0,
                     505.0
@@ -1013,9 +1030,9 @@
                       "boundingBox": [
                         168.0,
                         480.0,
-                        476.0,
+                        477.0,
                         480.0,
-                        476.0,
+                        477.0,
                         505.0,
                         168.0,
                         505.0
@@ -1031,9 +1048,9 @@
                     398.0,
                     546.0,
                     398.0,
-                    592.0,
+                    593.0,
                     170.0,
-                    592.0
+                    593.0
                   ],
                   "words": [
                     {
@@ -1041,24 +1058,24 @@
                       "boundingBox": [
                         170.0,
                         546.0,
-                        343.0,
+                        340.0,
                         546.0,
-                        343.0,
-                        592.0,
+                        340.0,
+                        593.0,
                         170.0,
-                        592.0
+                        593.0
                       ]
                     },
                     {
                       "text": "To",
                       "boundingBox": [
-                        352.0,
-                        546.0,
+                        349.0,
+                        547.0,
                         398.0,
-                        546.0,
+                        547.0,
                         398.0,
                         592.0,
-                        352.0,
+                        349.0,
                         592.0
                       ]
                     }
@@ -1068,26 +1085,26 @@
                   "text": "Vendor Name:",
                   "boundingBox": [
                     162.0,
-                    610.0,
+                    609.0,
                     346.0,
-                    610.0,
+                    609.0,
                     346.0,
-                    640.0,
+                    639.0,
                     162.0,
-                    640.0
+                    639.0
                   ],
                   "words": [
                     {
                       "text": "Vendor",
                       "boundingBox": [
                         162.0,
-                        610.0,
+                        609.0,
                         256.0,
-                        610.0,
+                        609.0,
                         256.0,
-                        640.0,
+                        639.0,
                         162.0,
-                        640.0
+                        639.0
                       ]
                     },
                     {
@@ -1134,14 +1151,14 @@
                     {
                       "text": "Swank",
                       "boundingBox": [
-                        441.0,
-                        610.0,
+                        440.0,
+                        611.0,
                         519.0,
-                        610.0,
+                        611.0,
                         519.0,
-                        640.0,
-                        441.0,
-                        640.0
+                        641.0,
+                        440.0,
+                        641.0
                       ]
                     }
                   ]
@@ -1154,31 +1171,31 @@
                     373.0,
                     646.0,
                     373.0,
-                    678.0,
+                    677.0,
                     162.0,
-                    678.0
+                    677.0
                   ],
                   "words": [
                     {
                       "text": "Company",
                       "boundingBox": [
                         162.0,
-                        646.0,
+                        645.0,
                         283.0,
-                        646.0,
+                        645.0,
                         283.0,
-                        678.0,
+                        677.0,
                         162.0,
-                        678.0
+                        677.0
                       ]
                     },
                     {
                       "text": "Name:",
                       "boundingBox": [
                         289.0,
-                        646.0,
+                        647.0,
                         373.0,
-                        646.0,
+                        647.0,
                         373.0,
                         678.0,
                         289.0,
@@ -1191,52 +1208,52 @@
                   "text": "Higgly Wiggly Books",
                   "boundingBox": [
                     379.0,
-                    646.0,
+                    647.0,
                     628.0,
-                    646.0,
+                    647.0,
                     628.0,
-                    678.0,
+                    679.0,
                     379.0,
-                    678.0
+                    679.0
                   ],
                   "words": [
                     {
                       "text": "Higgly",
                       "boundingBox": [
                         379.0,
-                        646.0,
+                        647.0,
                         457.0,
-                        646.0,
+                        647.0,
                         457.0,
-                        678.0,
+                        679.0,
                         379.0,
-                        678.0
+                        679.0
                       ]
                     },
                     {
                       "text": "Wiggly",
                       "boundingBox": [
                         463.0,
-                        646.0,
+                        647.0,
                         549.0,
-                        646.0,
+                        647.0,
                         549.0,
-                        678.0,
+                        679.0,
                         463.0,
-                        678.0
+                        679.0
                       ]
                     },
                     {
                       "text": "Books",
                       "boundingBox": [
                         555.0,
-                        646.0,
+                        647.0,
                         628.0,
-                        646.0,
+                        647.0,
                         628.0,
-                        678.0,
+                        679.0,
                         555.0,
-                        678.0
+                        679.0
                       ]
                     }
                   ]
@@ -1245,9 +1262,9 @@
                   "text": "Address:",
                   "boundingBox": [
                     162.0,
-                    684.0,
+                    683.0,
                     272.0,
-                    684.0,
+                    683.0,
                     272.0,
                     715.0,
                     162.0,
@@ -1258,9 +1275,9 @@
                       "text": "Address:",
                       "boundingBox": [
                         162.0,
-                        684.0,
+                        683.0,
                         272.0,
-                        684.0,
+                        683.0,
                         272.0,
                         715.0,
                         162.0,
@@ -1286,13 +1303,13 @@
                       "text": "938",
                       "boundingBox": [
                         279.0,
-                        684.0,
+                        683.0,
                         326.0,
-                        684.0,
+                        683.0,
                         326.0,
-                        715.0,
+                        714.0,
                         279.0,
-                        715.0
+                        714.0
                       ]
                     },
                     {
@@ -1325,13 +1342,13 @@
                       "text": "Road",
                       "boundingBox": [
                         464.0,
-                        684.0,
+                        686.0,
                         526.0,
-                        684.0,
+                        686.0,
                         526.0,
-                        715.0,
+                        716.0,
                         464.0,
-                        715.0
+                        716.0
                       ]
                     }
                   ]
@@ -1340,22 +1357,22 @@
                   "text": "Boulder City, CO 92848",
                   "boundingBox": [
                     283.0,
-                    720.0,
+                    721.0,
                     569.0,
-                    720.0,
+                    721.0,
                     569.0,
-                    752.0,
+                    753.0,
                     283.0,
-                    752.0
+                    753.0
                   ],
                   "words": [
                     {
                       "text": "Boulder",
                       "boundingBox": [
                         283.0,
-                        720.0,
+                        721.0,
                         377.0,
-                        720.0,
+                        721.0,
                         377.0,
                         752.0,
                         283.0,
@@ -1370,9 +1387,9 @@
                         437.0,
                         720.0,
                         437.0,
-                        752.0,
+                        753.0,
                         384.0,
-                        752.0
+                        753.0
                       ]
                     },
                     {
@@ -1383,22 +1400,22 @@
                         482.0,
                         720.0,
                         482.0,
-                        752.0,
+                        753.0,
                         443.0,
-                        752.0
+                        753.0
                       ]
                     },
                     {
                       "text": "92848",
                       "boundingBox": [
                         489.0,
-                        720.0,
+                        721.0,
                         569.0,
-                        720.0,
+                        721.0,
                         569.0,
-                        752.0,
+                        753.0,
                         489.0,
-                        752.0
+                        753.0
                       ]
                     }
                   ]
@@ -1407,26 +1424,26 @@
                   "text": "Phone:",
                   "boundingBox": [
                     615.0,
-                    723.0,
+                    721.0,
                     707.0,
-                    723.0,
+                    721.0,
                     707.0,
-                    752.0,
+                    751.0,
                     615.0,
-                    752.0
+                    751.0
                   ],
                   "words": [
                     {
                       "text": "Phone:",
                       "boundingBox": [
                         615.0,
-                        723.0,
+                        721.0,
                         707.0,
-                        723.0,
+                        721.0,
                         707.0,
-                        752.0,
+                        751.0,
                         615.0,
-                        752.0
+                        751.0
                       ]
                     }
                   ]
@@ -1435,26 +1452,26 @@
                   "text": "938-294-2949",
                   "boundingBox": [
                     713.0,
-                    723.0,
+                    722.0,
                     884.0,
-                    723.0,
+                    722.0,
                     884.0,
-                    752.0,
+                    749.0,
                     713.0,
-                    752.0
+                    749.0
                   ],
                   "words": [
                     {
                       "text": "938-294-2949",
                       "boundingBox": [
                         713.0,
-                        723.0,
+                        722.0,
                         884.0,
-                        723.0,
+                        722.0,
                         884.0,
-                        752.0,
+                        749.0,
                         713.0,
-                        752.0
+                        749.0
                       ]
                     }
                   ]
@@ -1480,22 +1497,22 @@
                         335.0,
                         784.0,
                         335.0,
-                        831.0,
+                        832.0,
                         169.0,
-                        831.0
+                        832.0
                       ]
                     },
                     {
                       "text": "From",
                       "boundingBox": [
                         345.0,
-                        784.0,
+                        785.0,
                         445.0,
-                        784.0,
+                        785.0,
                         445.0,
-                        831.0,
+                        830.0,
                         345.0,
-                        831.0
+                        830.0
                       ]
                     }
                   ]
@@ -1536,9 +1553,9 @@
                     445.0,
                     852.0,
                     445.0,
-                    881.0,
+                    882.0,
                     258.0,
-                    881.0
+                    882.0
                   ],
                   "words": [
                     {
@@ -1558,13 +1575,13 @@
                       "text": "Sanders",
                       "boundingBox": [
                         347.0,
-                        852.0,
+                        853.0,
                         445.0,
-                        852.0,
+                        853.0,
                         445.0,
-                        881.0,
+                        882.0,
                         347.0,
-                        881.0
+                        882.0
                       ]
                     }
                   ]
@@ -1573,35 +1590,35 @@
                   "text": "Company Name:",
                   "boundingBox": [
                     169.0,
-                    888.0,
+                    887.0,
                     378.0,
-                    888.0,
+                    887.0,
                     378.0,
-                    919.0,
+                    920.0,
                     169.0,
-                    919.0
+                    920.0
                   ],
                   "words": [
                     {
                       "text": "Company",
                       "boundingBox": [
                         169.0,
-                        888.0,
+                        886.0,
                         286.0,
-                        888.0,
+                        886.0,
                         286.0,
-                        919.0,
+                        920.0,
                         169.0,
-                        919.0
+                        920.0
                       ]
                     },
                     {
                       "text": "Name:",
                       "boundingBox": [
                         292.0,
-                        888.0,
+                        889.0,
                         378.0,
-                        888.0,
+                        889.0,
                         378.0,
                         919.0,
                         292.0,
@@ -1614,22 +1631,22 @@
                   "text": "Jupiter Book Supply",
                   "boundingBox": [
                     385.0,
-                    888.0,
+                    889.0,
                     624.0,
-                    888.0,
+                    889.0,
                     624.0,
-                    919.0,
+                    920.0,
                     385.0,
-                    919.0
+                    920.0
                   ],
                   "words": [
                     {
                       "text": "Jupiter",
                       "boundingBox": [
                         385.0,
-                        888.0,
+                        889.0,
                         470.0,
-                        888.0,
+                        889.0,
                         470.0,
                         919.0,
                         385.0,
@@ -1640,13 +1657,13 @@
                       "text": "Book",
                       "boundingBox": [
                         477.0,
-                        888.0,
+                        889.0,
                         541.0,
-                        888.0,
+                        889.0,
                         541.0,
-                        919.0,
+                        920.0,
                         477.0,
-                        919.0
+                        920.0
                       ]
                     },
                     {
@@ -1657,9 +1674,9 @@
                         624.0,
                         888.0,
                         624.0,
-                        919.0,
+                        921.0,
                         547.0,
-                        919.0
+                        921.0
                       ]
                     }
                   ]
@@ -1672,9 +1689,9 @@
                     276.0,
                     924.0,
                     276.0,
-                    954.0,
+                    956.0,
                     168.0,
-                    954.0
+                    956.0
                   ],
                   "words": [
                     {
@@ -1685,9 +1702,9 @@
                         276.0,
                         924.0,
                         276.0,
-                        954.0,
+                        956.0,
                         168.0,
-                        954.0
+                        956.0
                       ]
                     }
                   ]
@@ -1748,9 +1765,9 @@
                       "text": "Road",
                       "boundingBox": [
                         457.0,
-                        924.0,
+                        925.0,
                         524.0,
-                        924.0,
+                        925.0,
                         524.0,
                         954.0,
                         457.0,
@@ -1764,9 +1781,9 @@
                   "boundingBox": [
                     285.0,
                     962.0,
-                    515.0,
+                    514.0,
                     962.0,
-                    515.0,
+                    514.0,
                     992.0,
                     285.0,
                     992.0
@@ -1776,9 +1793,9 @@
                       "text": "Seattle,",
                       "boundingBox": [
                         285.0,
-                        962.0,
+                        961.0,
                         380.0,
-                        962.0,
+                        961.0,
                         380.0,
                         992.0,
                         285.0,
@@ -1789,9 +1806,9 @@
                       "text": "WA",
                       "boundingBox": [
                         386.0,
-                        962.0,
+                        963.0,
                         432.0,
-                        962.0,
+                        963.0,
                         432.0,
                         992.0,
                         386.0,
@@ -1802,10 +1819,10 @@
                       "text": "38383",
                       "boundingBox": [
                         438.0,
-                        962.0,
-                        515.0,
-                        962.0,
-                        515.0,
+                        963.0,
+                        514.0,
+                        963.0,
+                        514.0,
                         992.0,
                         438.0,
                         992.0
@@ -1817,26 +1834,26 @@
                   "text": "Phone:",
                   "boundingBox": [
                     760.0,
-                    964.0,
+                    963.0,
                     852.0,
-                    964.0,
+                    963.0,
                     852.0,
-                    992.0,
+                    991.0,
                     760.0,
-                    992.0
+                    991.0
                   ],
                   "words": [
                     {
                       "text": "Phone:",
                       "boundingBox": [
                         760.0,
-                        964.0,
+                        963.0,
                         852.0,
-                        964.0,
+                        963.0,
                         852.0,
-                        992.0,
+                        991.0,
                         760.0,
-                        992.0
+                        991.0
                       ]
                     }
                   ]
@@ -1845,26 +1862,26 @@
                   "text": "932-299-0292",
                   "boundingBox": [
                     857.0,
-                    964.0,
+                    963.0,
                     1032.0,
-                    964.0,
+                    963.0,
                     1032.0,
-                    992.0,
+                    991.0,
                     857.0,
-                    992.0
+                    991.0
                   ],
                   "words": [
                     {
                       "text": "932-299-0292",
                       "boundingBox": [
                         857.0,
-                        964.0,
+                        963.0,
                         1032.0,
-                        964.0,
+                        963.0,
                         1032.0,
-                        992.0,
+                        991.0,
                         857.0,
-                        992.0
+                        991.0
                       ]
                     }
                   ]
@@ -1873,26 +1890,26 @@
                   "text": "Details",
                   "boundingBox": [
                     447.0,
-                    1047.0,
+                    1045.0,
                     551.0,
-                    1047.0,
+                    1045.0,
                     551.0,
-                    1080.0,
+                    1078.0,
                     447.0,
-                    1080.0
+                    1078.0
                   ],
                   "words": [
                     {
                       "text": "Details",
                       "boundingBox": [
                         447.0,
-                        1047.0,
+                        1045.0,
                         551.0,
-                        1047.0,
+                        1045.0,
                         551.0,
-                        1080.0,
+                        1078.0,
                         447.0,
-                        1080.0
+                        1078.0
                       ]
                     }
                   ]
@@ -1901,26 +1918,26 @@
                   "text": "Quantity",
                   "boundingBox": [
                     890.0,
-                    1048.0,
+                    1046.0,
                     1028.0,
-                    1048.0,
+                    1046.0,
                     1028.0,
-                    1080.0,
+                    1078.0,
                     890.0,
-                    1080.0
+                    1078.0
                   ],
                   "words": [
                     {
                       "text": "Quantity",
                       "boundingBox": [
                         890.0,
-                        1048.0,
+                        1046.0,
                         1028.0,
-                        1048.0,
+                        1046.0,
                         1028.0,
-                        1080.0,
+                        1078.0,
                         890.0,
-                        1080.0
+                        1078.0
                       ]
                     }
                   ]
@@ -1929,13 +1946,13 @@
                   "text": "Unit Price",
                   "boundingBox": [
                     1113.0,
-                    1045.0,
+                    1046.0,
                     1267.0,
-                    1045.0,
+                    1046.0,
                     1267.0,
-                    1080.0,
+                    1081.0,
                     1113.0,
-                    1080.0
+                    1081.0
                   ],
                   "words": [
                     {
@@ -1955,13 +1972,13 @@
                       "text": "Price",
                       "boundingBox": [
                         1191.0,
-                        1045.0,
+                        1046.0,
                         1267.0,
-                        1045.0,
+                        1046.0,
                         1267.0,
-                        1080.0,
+                        1081.0,
                         1191.0,
-                        1080.0
+                        1081.0
                       ]
                     }
                   ]
@@ -1970,26 +1987,26 @@
                   "text": "Total",
                   "boundingBox": [
                     1389.0,
-                    1046.0,
+                    1043.0,
                     1466.0,
-                    1046.0,
+                    1043.0,
                     1466.0,
-                    1080.0,
+                    1077.0,
                     1389.0,
-                    1080.0
+                    1077.0
                   ],
                   "words": [
                     {
                       "text": "Total",
                       "boundingBox": [
                         1389.0,
-                        1046.0,
+                        1043.0,
                         1466.0,
-                        1046.0,
+                        1043.0,
                         1466.0,
-                        1080.0,
+                        1077.0,
                         1389.0,
-                        1080.0
+                        1077.0
                       ]
                     }
                   ]
@@ -1998,26 +2015,26 @@
                   "text": "Bindings",
                   "boundingBox": [
                     173.0,
-                    1094.0,
+                    1093.0,
                     282.0,
-                    1094.0,
+                    1093.0,
                     282.0,
-                    1122.0,
+                    1121.0,
                     173.0,
-                    1122.0
+                    1121.0
                   ],
                   "words": [
                     {
                       "text": "Bindings",
                       "boundingBox": [
                         173.0,
-                        1094.0,
+                        1093.0,
                         282.0,
-                        1094.0,
+                        1093.0,
                         282.0,
-                        1122.0,
+                        1121.0,
                         173.0,
-                        1122.0
+                        1121.0
                       ]
                     }
                   ]
@@ -2026,26 +2043,26 @@
                   "text": "20",
                   "boundingBox": [
                     863.0,
-                    1098.0,
+                    1095.0,
                     889.0,
-                    1098.0,
+                    1095.0,
                     889.0,
-                    1122.0,
+                    1119.0,
                     863.0,
-                    1122.0
+                    1119.0
                   ],
                   "words": [
                     {
                       "text": "20",
                       "boundingBox": [
                         863.0,
-                        1098.0,
+                        1095.0,
                         889.0,
-                        1098.0,
+                        1095.0,
                         889.0,
-                        1122.0,
+                        1119.0,
                         863.0,
-                        1122.0
+                        1119.0
                       ]
                     }
                   ]
@@ -2082,26 +2099,26 @@
                   "text": "20.00",
                   "boundingBox": [
                     1466.0,
-                    1098.0,
+                    1095.0,
                     1531.0,
-                    1098.0,
+                    1095.0,
                     1531.0,
-                    1122.0,
+                    1119.0,
                     1466.0,
-                    1122.0
+                    1119.0
                   ],
                   "words": [
                     {
                       "text": "20.00",
                       "boundingBox": [
                         1466.0,
-                        1098.0,
+                        1095.0,
                         1531.0,
-                        1098.0,
+                        1095.0,
                         1531.0,
-                        1122.0,
+                        1119.0,
                         1466.0,
-                        1122.0
+                        1119.0
                       ]
                     }
                   ]
@@ -2127,22 +2144,22 @@
                         257.0,
                         1136.0,
                         257.0,
-                        1162.0,
+                        1161.0,
                         172.0,
-                        1162.0
+                        1161.0
                       ]
                     },
                     {
                       "text": "Small",
                       "boundingBox": [
                         262.0,
-                        1136.0,
+                        1137.0,
                         331.0,
-                        1136.0,
+                        1137.0,
                         331.0,
-                        1162.0,
+                        1163.0,
                         262.0,
-                        1162.0
+                        1163.0
                       ]
                     }
                   ]
@@ -2151,26 +2168,26 @@
                   "text": "20",
                   "boundingBox": [
                     862.0,
-                    1137.0,
+                    1132.0,
                     889.0,
-                    1137.0,
+                    1132.0,
                     889.0,
-                    1162.0,
+                    1157.0,
                     862.0,
-                    1162.0
+                    1157.0
                   ],
                   "words": [
                     {
                       "text": "20",
                       "boundingBox": [
                         862.0,
-                        1137.0,
+                        1132.0,
                         889.0,
-                        1137.0,
+                        1132.0,
                         889.0,
-                        1162.0,
+                        1157.0,
                         862.0,
-                        1162.0
+                        1157.0
                       ]
                     }
                   ]
@@ -2179,26 +2196,26 @@
                   "text": "1.00",
                   "boundingBox": [
                     1243.0,
-                    1134.0,
+                    1132.0,
                     1292.0,
-                    1134.0,
+                    1132.0,
                     1292.0,
-                    1162.0,
+                    1160.0,
                     1243.0,
-                    1162.0
+                    1160.0
                   ],
                   "words": [
                     {
                       "text": "1.00",
                       "boundingBox": [
                         1243.0,
-                        1134.0,
+                        1132.0,
                         1292.0,
-                        1134.0,
+                        1132.0,
                         1292.0,
-                        1162.0,
+                        1160.0,
                         1243.0,
-                        1162.0
+                        1160.0
                       ]
                     }
                   ]
@@ -2207,26 +2224,26 @@
                   "text": "20.00",
                   "boundingBox": [
                     1464.0,
-                    1138.0,
+                    1134.0,
                     1531.0,
-                    1138.0,
+                    1134.0,
                     1531.0,
-                    1162.0,
+                    1158.0,
                     1464.0,
-                    1162.0
+                    1158.0
                   ],
                   "words": [
                     {
                       "text": "20.00",
                       "boundingBox": [
                         1464.0,
-                        1138.0,
+                        1134.0,
                         1531.0,
-                        1138.0,
+                        1134.0,
                         1531.0,
-                        1162.0,
+                        1158.0,
                         1464.0,
-                        1162.0
+                        1158.0
                       ]
                     }
                   ]
@@ -2235,22 +2252,22 @@
                   "text": "Feather Bookmark",
                   "boundingBox": [
                     172.0,
-                    1179.0,
-                    404.0,
-                    1179.0,
-                    404.0,
-                    1205.0,
+                    1180.0,
+                    403.0,
+                    1180.0,
+                    403.0,
+                    1206.0,
                     172.0,
-                    1205.0
+                    1206.0
                   ],
                   "words": [
                     {
                       "text": "Feather",
                       "boundingBox": [
                         172.0,
-                        1179.0,
+                        1178.0,
                         271.0,
-                        1179.0,
+                        1178.0,
                         271.0,
                         1205.0,
                         172.0,
@@ -2261,13 +2278,13 @@
                       "text": "Bookmark",
                       "boundingBox": [
                         276.0,
-                        1179.0,
-                        404.0,
-                        1179.0,
-                        404.0,
-                        1205.0,
+                        1181.0,
+                        403.0,
+                        1181.0,
+                        403.0,
+                        1206.0,
                         276.0,
-                        1205.0
+                        1206.0
                       ]
                     }
                   ]
@@ -2304,26 +2321,26 @@
                   "text": "5.00",
                   "boundingBox": [
                     1243.0,
-                    1179.0,
+                    1177.0,
                     1298.0,
-                    1179.0,
+                    1177.0,
                     1298.0,
-                    1205.0,
+                    1203.0,
                     1243.0,
-                    1205.0
+                    1203.0
                   ],
                   "words": [
                     {
                       "text": "5.00",
                       "boundingBox": [
                         1243.0,
-                        1179.0,
+                        1177.0,
                         1298.0,
-                        1179.0,
+                        1177.0,
                         1298.0,
-                        1205.0,
+                        1203.0,
                         1243.0,
-                        1205.0
+                        1203.0
                       ]
                     }
                   ]
@@ -2360,9 +2377,9 @@
                   "text": "Copper Swirl Marker",
                   "boundingBox": [
                     171.0,
-                    1224.0,
+                    1225.0,
                     426.0,
-                    1224.0,
+                    1225.0,
                     426.0,
                     1248.0,
                     171.0,
@@ -2377,35 +2394,35 @@
                         265.0,
                         1224.0,
                         265.0,
-                        1248.0,
+                        1247.0,
                         171.0,
-                        1248.0
+                        1247.0
                       ]
                     },
                     {
                       "text": "Swirl",
                       "boundingBox": [
                         270.0,
-                        1224.0,
+                        1225.0,
                         334.0,
-                        1224.0,
+                        1225.0,
                         334.0,
-                        1248.0,
+                        1249.0,
                         270.0,
-                        1248.0
+                        1249.0
                       ]
                     },
                     {
                       "text": "Marker",
                       "boundingBox": [
                         339.0,
-                        1224.0,
+                        1225.0,
                         426.0,
-                        1224.0,
+                        1225.0,
                         426.0,
-                        1248.0,
+                        1249.0,
                         339.0,
-                        1248.0
+                        1249.0
                       ]
                     }
                   ]
@@ -2413,26 +2430,26 @@
                 {
                   "text": "20",
                   "boundingBox": [
-                    864.0,
+                    863.0,
                     1221.0,
-                    887.0,
+                    888.0,
                     1221.0,
-                    887.0,
+                    888.0,
                     1244.0,
-                    864.0,
+                    863.0,
                     1244.0
                   ],
                   "words": [
                     {
                       "text": "20",
                       "boundingBox": [
-                        864.0,
+                        863.0,
                         1221.0,
-                        887.0,
+                        888.0,
                         1221.0,
-                        887.0,
+                        888.0,
                         1244.0,
-                        864.0,
+                        863.0,
                         1244.0
                       ]
                     }
@@ -2442,26 +2459,26 @@
                   "text": "5.00",
                   "boundingBox": [
                     1242.0,
-                    1222.0,
+                    1221.0,
                     1291.0,
-                    1222.0,
+                    1221.0,
                     1291.0,
-                    1248.0,
+                    1247.0,
                     1242.0,
-                    1248.0
+                    1247.0
                   ],
                   "words": [
                     {
                       "text": "5.00",
                       "boundingBox": [
                         1242.0,
-                        1222.0,
+                        1221.0,
                         1291.0,
-                        1222.0,
+                        1221.0,
                         1291.0,
-                        1248.0,
+                        1247.0,
                         1242.0,
-                        1248.0
+                        1247.0
                       ]
                     }
                   ]
@@ -2470,26 +2487,26 @@
                   "text": "100.00",
                   "boundingBox": [
                     1449.0,
-                    1225.0,
+                    1224.0,
                     1530.0,
-                    1225.0,
+                    1224.0,
                     1530.0,
-                    1248.0,
+                    1247.0,
                     1449.0,
-                    1248.0
+                    1247.0
                   ],
                   "words": [
                     {
                       "text": "100.00",
                       "boundingBox": [
                         1449.0,
-                        1225.0,
+                        1224.0,
                         1530.0,
-                        1225.0,
+                        1224.0,
                         1530.0,
-                        1248.0,
+                        1247.0,
                         1449.0,
-                        1248.0
+                        1247.0
                       ]
                     }
                   ]
@@ -2525,26 +2542,26 @@
                 {
                   "text": "$140.00",
                   "boundingBox": [
-                    1434.0,
+                    1433.0,
                     1574.0,
                     1530.0,
                     1574.0,
                     1530.0,
                     1599.0,
-                    1434.0,
+                    1433.0,
                     1599.0
                   ],
                   "words": [
                     {
                       "text": "$140.00",
                       "boundingBox": [
-                        1434.0,
+                        1433.0,
                         1574.0,
                         1530.0,
                         1574.0,
                         1530.0,
                         1599.0,
-                        1434.0,
+                        1433.0,
                         1599.0
                       ]
                     }
@@ -2610,13 +2627,13 @@
                   "text": "Bernie Sanders",
                   "boundingBox": [
                     485.0,
-                    1669.0,
+                    1670.0,
                     766.0,
-                    1669.0,
+                    1670.0,
                     766.0,
-                    1708.0,
+                    1709.0,
                     485.0,
-                    1708.0
+                    1709.0
                   ],
                   "words": [
                     {
@@ -2627,22 +2644,22 @@
                         605.0,
                         1669.0,
                         605.0,
-                        1708.0,
+                        1707.0,
                         485.0,
-                        1708.0
+                        1707.0
                       ]
                     },
                     {
                       "text": "Sanders",
                       "boundingBox": [
                         613.0,
-                        1669.0,
+                        1670.0,
                         766.0,
-                        1669.0,
+                        1670.0,
                         766.0,
-                        1708.0,
+                        1710.0,
                         613.0,
-                        1708.0
+                        1710.0
                       ]
                     }
                   ]
@@ -2707,9 +2724,9 @@
                   "text": "Bernie Sanders",
                   "boundingBox": [
                     544.0,
-                    1717.0,
+                    1718.0,
                     719.0,
-                    1717.0,
+                    1718.0,
                     719.0,
                     1743.0,
                     544.0,
@@ -2724,22 +2741,22 @@
                         622.0,
                         1717.0,
                         622.0,
-                        1743.0,
+                        1742.0,
                         544.0,
-                        1743.0
+                        1742.0
                       ]
                     },
                     {
                       "text": "Sanders",
                       "boundingBox": [
                         627.0,
-                        1717.0,
+                        1718.0,
                         719.0,
-                        1717.0,
+                        1718.0,
                         719.0,
-                        1743.0,
+                        1744.0,
                         627.0,
-                        1743.0
+                        1744.0
                       ]
                     }
                   ]
@@ -2789,9 +2806,9 @@
                       "text": "Additional",
                       "boundingBox": [
                         175.0,
-                        1797.0,
+                        1796.0,
                         358.0,
-                        1797.0,
+                        1796.0,
                         358.0,
                         1834.0,
                         175.0,
@@ -2802,13 +2819,13 @@
                       "text": "Notes:",
                       "boundingBox": [
                         366.0,
-                        1797.0,
+                        1799.0,
                         479.0,
-                        1797.0,
+                        1799.0,
                         479.0,
-                        1834.0,
+                        1835.0,
                         366.0,
-                        1834.0
+                        1835.0
                       ]
                     }
                   ]
@@ -2817,9 +2834,9 @@
                   "text": "Do not Jostle Box. Unpack carefully. Enjoy.",
                   "boundingBox": [
                     176.0,
-                    1880.0,
+                    1881.0,
                     707.0,
-                    1880.0,
+                    1881.0,
                     707.0,
                     1910.0,
                     176.0,
@@ -2834,9 +2851,9 @@
                         208.0,
                         1880.0,
                         208.0,
-                        1910.0,
+                        1908.0,
                         176.0,
-                        1910.0
+                        1908.0
                       ]
                     },
                     {
@@ -2847,31 +2864,31 @@
                         258.0,
                         1880.0,
                         258.0,
-                        1910.0,
+                        1908.0,
                         213.0,
-                        1910.0
+                        1908.0
                       ]
                     },
                     {
                       "text": "Jostle",
                       "boundingBox": [
                         264.0,
-                        1880.0,
+                        1881.0,
                         338.0,
-                        1880.0,
+                        1881.0,
                         338.0,
-                        1910.0,
+                        1909.0,
                         264.0,
-                        1910.0
+                        1909.0
                       ]
                     },
                     {
                       "text": "Box.",
                       "boundingBox": [
                         343.0,
-                        1880.0,
+                        1881.0,
                         404.0,
-                        1880.0,
+                        1881.0,
                         404.0,
                         1910.0,
                         343.0,
@@ -2882,39 +2899,39 @@
                       "text": "Unpack",
                       "boundingBox": [
                         410.0,
-                        1880.0,
+                        1881.0,
                         503.0,
-                        1880.0,
+                        1881.0,
                         503.0,
-                        1910.0,
+                        1911.0,
                         410.0,
-                        1910.0
+                        1911.0
                       ]
                     },
                     {
                       "text": "carefully.",
                       "boundingBox": [
                         509.0,
-                        1880.0,
-                        628.0,
-                        1880.0,
-                        628.0,
-                        1910.0,
+                        1881.0,
+                        626.0,
+                        1881.0,
+                        626.0,
+                        1912.0,
                         509.0,
-                        1910.0
+                        1912.0
                       ]
                     },
                     {
                       "text": "Enjoy.",
                       "boundingBox": [
-                        633.0,
+                        631.0,
                         1880.0,
                         707.0,
                         1880.0,
                         707.0,
-                        1910.0,
-                        633.0,
-                        1910.0
+                        1912.0,
+                        631.0,
+                        1912.0
                       ]
                     }
                   ]
@@ -2927,9 +2944,9 @@
                     1511.0,
                     1925.0,
                     1511.0,
-                    1959.0,
+                    1960.0,
                     173.0,
-                    1959.0
+                    1960.0
                   ],
                   "words": [
                     {
@@ -2949,9 +2966,9 @@
                       "text": "Book",
                       "boundingBox": [
                         280.0,
-                        1925.0,
+                        1926.0,
                         361.0,
-                        1925.0,
+                        1926.0,
                         361.0,
                         1959.0,
                         280.0,
@@ -2962,9 +2979,9 @@
                       "text": "Supply",
                       "boundingBox": [
                         367.0,
-                        1925.0,
+                        1926.0,
                         470.0,
-                        1925.0,
+                        1926.0,
                         470.0,
                         1959.0,
                         367.0,
@@ -2975,104 +2992,104 @@
                       "text": "will",
                       "boundingBox": [
                         477.0,
-                        1925.0,
+                        1926.0,
                         523.0,
-                        1925.0,
+                        1926.0,
                         523.0,
-                        1959.0,
+                        1960.0,
                         477.0,
-                        1959.0
+                        1960.0
                       ]
                     },
                     {
                       "text": "refund",
                       "boundingBox": [
                         530.0,
-                        1925.0,
+                        1926.0,
                         628.0,
-                        1925.0,
+                        1926.0,
                         628.0,
-                        1959.0,
+                        1960.0,
                         530.0,
-                        1959.0
+                        1960.0
                       ]
                     },
                     {
                       "text": "you",
                       "boundingBox": [
                         635.0,
-                        1925.0,
+                        1926.0,
                         693.0,
-                        1925.0,
+                        1926.0,
                         693.0,
-                        1959.0,
+                        1960.0,
                         635.0,
-                        1959.0
+                        1960.0
                       ]
                     },
                     {
                       "text": "50%",
                       "boundingBox": [
-                        699.0,
-                        1925.0,
-                        766.0,
-                        1925.0,
-                        766.0,
-                        1959.0,
-                        699.0,
-                        1959.0
+                        700.0,
+                        1926.0,
+                        767.0,
+                        1926.0,
+                        767.0,
+                        1960.0,
+                        700.0,
+                        1960.0
                       ]
                     },
                     {
                       "text": "per",
                       "boundingBox": [
                         773.0,
-                        1925.0,
+                        1926.0,
                         827.0,
-                        1925.0,
+                        1926.0,
                         827.0,
-                        1959.0,
+                        1960.0,
                         773.0,
-                        1959.0
+                        1960.0
                       ]
                     },
                     {
                       "text": "book",
                       "boundingBox": [
                         833.0,
-                        1925.0,
+                        1926.0,
                         907.0,
-                        1925.0,
+                        1926.0,
                         907.0,
-                        1959.0,
+                        1960.0,
                         833.0,
-                        1959.0
+                        1960.0
                       ]
                     },
                     {
                       "text": "if",
                       "boundingBox": [
-                        913.0,
-                        1925.0,
+                        914.0,
+                        1926.0,
                         934.0,
-                        1925.0,
+                        1926.0,
                         934.0,
-                        1959.0,
-                        913.0,
-                        1959.0
+                        1960.0,
+                        914.0,
+                        1960.0
                       ]
                     },
                     {
                       "text": "returned",
                       "boundingBox": [
                         940.0,
-                        1925.0,
-                        1067.0,
-                        1925.0,
-                        1067.0,
-                        1959.0,
+                        1926.0,
+                        1068.0,
+                        1926.0,
+                        1068.0,
+                        1960.0,
                         940.0,
-                        1959.0
+                        1960.0
                       ]
                     },
                     {
@@ -3083,9 +3100,9 @@
                         1161.0,
                         1925.0,
                         1161.0,
-                        1959.0,
+                        1960.0,
                         1074.0,
-                        1959.0
+                        1960.0
                       ]
                     },
                     {
@@ -3096,9 +3113,9 @@
                         1210.0,
                         1925.0,
                         1210.0,
-                        1959.0,
+                        1960.0,
                         1168.0,
-                        1959.0
+                        1960.0
                       ]
                     },
                     {
@@ -3109,9 +3126,9 @@
                         1288.0,
                         1925.0,
                         1288.0,
-                        1959.0,
+                        1960.0,
                         1219.0,
-                        1959.0
+                        1960.0
                       ]
                     },
                     {
@@ -3122,31 +3139,31 @@
                         1324.0,
                         1925.0,
                         1324.0,
-                        1959.0,
+                        1960.0,
                         1295.0,
-                        1959.0
+                        1960.0
                       ]
                     },
                     {
                       "text": "reading",
                       "boundingBox": [
-                        1330.0,
-                        1925.0,
-                        1446.0,
-                        1925.0,
-                        1446.0,
-                        1959.0,
-                        1330.0,
-                        1959.0
+                        1331.0,
+                        1924.0,
+                        1447.0,
+                        1924.0,
+                        1447.0,
+                        1960.0,
+                        1331.0,
+                        1960.0
                       ]
                     },
                     {
                       "text": "and",
                       "boundingBox": [
                         1453.0,
-                        1925.0,
+                        1924.0,
                         1511.0,
-                        1925.0,
+                        1924.0,
                         1511.0,
                         1959.0,
                         1453.0,
@@ -3160,21 +3177,21 @@
                   "boundingBox": [
                     170.0,
                     1959.0,
-                    782.0,
+                    780.0,
                     1959.0,
-                    782.0,
-                    1992.0,
+                    780.0,
+                    1993.0,
                     170.0,
-                    1992.0
+                    1993.0
                   ],
                   "words": [
                     {
                       "text": "offer",
                       "boundingBox": [
                         170.0,
-                        1959.0,
+                        1958.0,
                         239.0,
-                        1959.0,
+                        1958.0,
                         239.0,
                         1992.0,
                         170.0,
@@ -3185,9 +3202,9 @@
                       "text": "you",
                       "boundingBox": [
                         246.0,
-                        1959.0,
+                        1958.0,
                         304.0,
-                        1959.0,
+                        1958.0,
                         304.0,
                         1992.0,
                         246.0,
@@ -3212,12 +3229,12 @@
                       "boundingBox": [
                         386.0,
                         1959.0,
-                        425.0,
+                        426.0,
                         1959.0,
-                        425.0,
-                        1992.0,
+                        426.0,
+                        1993.0,
                         386.0,
-                        1992.0
+                        1993.0
                       ]
                     },
                     {
@@ -3225,51 +3242,51 @@
                       "boundingBox": [
                         432.0,
                         1959.0,
-                        490.0,
+                        488.0,
                         1959.0,
-                        490.0,
-                        1992.0,
+                        488.0,
+                        1993.0,
                         432.0,
-                        1992.0
+                        1993.0
                       ]
                     },
                     {
                       "text": "next",
                       "boundingBox": [
-                        496.0,
-                        1959.0,
+                        494.0,
+                        1960.0,
                         561.0,
-                        1959.0,
+                        1960.0,
                         561.0,
-                        1992.0,
-                        496.0,
-                        1992.0
+                        1993.0,
+                        494.0,
+                        1993.0
                       ]
                     },
                     {
                       "text": "total",
                       "boundingBox": [
                         567.0,
-                        1959.0,
-                        634.0,
-                        1959.0,
-                        634.0,
-                        1992.0,
+                        1960.0,
+                        632.0,
+                        1960.0,
+                        632.0,
+                        1993.0,
                         567.0,
-                        1992.0
+                        1993.0
                       ]
                     },
                     {
                       "text": "purchase.",
                       "boundingBox": [
-                        641.0,
-                        1959.0,
-                        782.0,
-                        1959.0,
-                        782.0,
-                        1992.0,
-                        641.0,
-                        1992.0
+                        638.0,
+                        1961.0,
+                        780.0,
+                        1961.0,
+                        780.0,
+                        1994.0,
+                        638.0,
+                        1994.0
                       ]
                     }
                   ]
@@ -3315,9 +3332,9 @@
                       365.0,
                       351.0,
                       365.0,
-                      381.0,
+                      382.0,
                       167.0,
-                      381.0
+                      382.0
                     ],
                     "elements": [
                       "#/readResults/0/lines/3/words/0",
@@ -3332,9 +3349,9 @@
                       528.0,
                       351.0,
                       528.0,
-                      381.0,
+                      380.0,
                       371.0,
-                      381.0
+                      380.0
                     ],
                     "elements": [
                       "#/readResults/0/lines/4/words/0"
@@ -3348,9 +3365,9 @@
                     "boundingBox": [
                       167.0,
                       392.0,
-                      271.0,
+                      269.0,
                       392.0,
-                      271.0,
+                      269.0,
                       420.0,
                       167.0,
                       420.0
@@ -3362,13 +3379,13 @@
                   "value": {
                     "text": "www.herolimited.com",
                     "boundingBox": [
-                      277.0,
-                      392.0,
-                      530.0,
-                      392.0,
-                      530.0,
+                      275.0,
+                      393.0,
+                      529.0,
+                      393.0,
+                      529.0,
                       420.0,
-                      277.0,
+                      275.0,
                       420.0
                     ],
                     "elements": [
@@ -3382,13 +3399,13 @@
                     "text": "Dated As:",
                     "boundingBox": [
                       1025.0,
-                      418.0,
+                      419.0,
                       1161.0,
-                      418.0,
+                      419.0,
                       1161.0,
-                      451.0,
+                      452.0,
                       1025.0,
-                      451.0
+                      452.0
                     ],
                     "elements": [
                       "#/readResults/0/lines/7/words/0",
@@ -3399,13 +3416,13 @@
                     "text": "12/20/2020",
                     "boundingBox": [
                       1168.0,
-                      418.0,
-                      1319.0,
-                      418.0,
-                      1319.0,
-                      451.0,
+                      417.0,
+                      1320.0,
+                      417.0,
+                      1320.0,
+                      450.0,
                       1168.0,
-                      451.0
+                      450.0
                     ],
                     "elements": [
                       "#/readResults/0/lines/8/words/0"
@@ -3418,13 +3435,13 @@
                     "text": "Email:",
                     "boundingBox": [
                       167.0,
-                      431.0,
-                      240.0,
-                      431.0,
-                      240.0,
-                      458.0,
+                      432.0,
+                      242.0,
+                      432.0,
+                      242.0,
+                      459.0,
                       167.0,
-                      458.0
+                      459.0
                     ],
                     "elements": [
                       "#/readResults/0/lines/9/words/0"
@@ -3435,9 +3452,9 @@
                     "boundingBox": [
                       168.0,
                       480.0,
-                      476.0,
+                      477.0,
                       480.0,
-                      476.0,
+                      477.0,
                       505.0,
                       168.0,
                       505.0
@@ -3453,9 +3470,9 @@
                     "text": "Purchase Order #:",
                     "boundingBox": [
                       1027.0,
-                      460.0,
+                      459.0,
                       1275.0,
-                      460.0,
+                      459.0,
                       1275.0,
                       491.0,
                       1027.0,
@@ -3475,9 +3492,9 @@
                       1376.0,
                       460.0,
                       1376.0,
-                      491.0,
+                      492.0,
                       1282.0,
-                      491.0
+                      492.0
                     ],
                     "elements": [
                       "#/readResults/0/lines/11/words/0"
@@ -3490,13 +3507,13 @@
                     "text": "Vendor Name:",
                     "boundingBox": [
                       162.0,
-                      610.0,
+                      609.0,
                       346.0,
-                      610.0,
+                      609.0,
                       346.0,
-                      640.0,
+                      639.0,
                       162.0,
-                      640.0
+                      639.0
                     ],
                     "elements": [
                       "#/readResults/0/lines/14/words/0",
@@ -3531,9 +3548,9 @@
                       373.0,
                       646.0,
                       373.0,
-                      678.0,
+                      677.0,
                       162.0,
-                      678.0
+                      677.0
                     ],
                     "elements": [
                       "#/readResults/0/lines/16/words/0",
@@ -3544,13 +3561,13 @@
                     "text": "Higgly Wiggly Books",
                     "boundingBox": [
                       379.0,
-                      646.0,
+                      647.0,
                       628.0,
-                      646.0,
+                      647.0,
                       628.0,
-                      678.0,
+                      679.0,
                       379.0,
-                      678.0
+                      679.0
                     ],
                     "elements": [
                       "#/readResults/0/lines/17/words/0",
@@ -3565,9 +3582,9 @@
                     "text": "Address:",
                     "boundingBox": [
                       162.0,
-                      684.0,
+                      683.0,
                       272.0,
-                      684.0,
+                      683.0,
                       272.0,
                       715.0,
                       162.0,
@@ -3585,9 +3602,9 @@
                       569.0,
                       684.0,
                       569.0,
-                      752.0,
+                      753.0,
                       279.0,
-                      752.0
+                      753.0
                     ],
                     "elements": [
                       "#/readResults/0/lines/19/words/0",
@@ -3607,13 +3624,13 @@
                     "text": "Phone:",
                     "boundingBox": [
                       615.0,
-                      723.0,
+                      721.0,
                       707.0,
-                      723.0,
+                      721.0,
                       707.0,
-                      752.0,
+                      751.0,
                       615.0,
-                      752.0
+                      751.0
                     ],
                     "elements": [
                       "#/readResults/0/lines/21/words/0"
@@ -3623,13 +3640,13 @@
                     "text": "938-294-2949",
                     "boundingBox": [
                       713.0,
-                      723.0,
+                      722.0,
                       884.0,
-                      723.0,
+                      722.0,
                       884.0,
-                      752.0,
+                      749.0,
                       713.0,
-                      752.0
+                      749.0
                     ],
                     "elements": [
                       "#/readResults/0/lines/22/words/0"
@@ -3662,9 +3679,9 @@
                       445.0,
                       852.0,
                       445.0,
-                      881.0,
+                      882.0,
                       258.0,
-                      881.0
+                      882.0
                     ],
                     "elements": [
                       "#/readResults/0/lines/25/words/0",
@@ -3678,13 +3695,13 @@
                     "text": "Company Name:",
                     "boundingBox": [
                       169.0,
-                      888.0,
+                      887.0,
                       378.0,
-                      888.0,
+                      887.0,
                       378.0,
-                      919.0,
+                      920.0,
                       169.0,
-                      919.0
+                      920.0
                     ],
                     "elements": [
                       "#/readResults/0/lines/26/words/0",
@@ -3695,13 +3712,13 @@
                     "text": "Jupiter Book Supply",
                     "boundingBox": [
                       385.0,
-                      888.0,
+                      889.0,
                       624.0,
-                      888.0,
+                      889.0,
                       624.0,
-                      919.0,
+                      920.0,
                       385.0,
-                      919.0
+                      920.0
                     ],
                     "elements": [
                       "#/readResults/0/lines/27/words/0",
@@ -3720,9 +3737,9 @@
                       276.0,
                       924.0,
                       276.0,
-                      954.0,
+                      956.0,
                       168.0,
-                      954.0
+                      956.0
                     ],
                     "elements": [
                       "#/readResults/0/lines/28/words/0"
@@ -3757,13 +3774,13 @@
                     "text": "Phone:",
                     "boundingBox": [
                       760.0,
-                      964.0,
+                      963.0,
                       852.0,
-                      964.0,
+                      963.0,
                       852.0,
-                      992.0,
+                      991.0,
                       760.0,
-                      992.0
+                      991.0
                     ],
                     "elements": [
                       "#/readResults/0/lines/31/words/0"
@@ -3773,13 +3790,13 @@
                     "text": "932-299-0292",
                     "boundingBox": [
                       857.0,
-                      964.0,
+                      963.0,
                       1032.0,
-                      964.0,
+                      963.0,
                       1032.0,
-                      992.0,
+                      991.0,
                       857.0,
-                      992.0
+                      991.0
                     ],
                     "elements": [
                       "#/readResults/0/lines/32/words/0"
@@ -3807,13 +3824,13 @@
                   "value": {
                     "text": "$140.00",
                     "boundingBox": [
-                      1434.0,
+                      1433.0,
                       1574.0,
                       1530.0,
                       1574.0,
                       1530.0,
                       1599.0,
-                      1434.0,
+                      1433.0,
                       1599.0
                     ],
                     "elements": [
@@ -3914,13 +3931,13 @@
                     "text": "Do not Jostle Box. Unpack carefully. Enjoy. Jupiter Book Supply will refund you 50% per book if returned within 60 days of reading and offer you 25% off you next total purchase.",
                     "boundingBox": [
                       170.0,
-                      1880.0,
+                      1881.0,
                       1511.0,
-                      1880.0,
+                      1881.0,
                       1511.0,
-                      1992.0,
+                      1993.0,
                       170.0,
-                      1992.0
+                      1993.0
                     ],
                     "elements": [
                       "#/readResults/0/lines/63/words/0",
@@ -3958,180 +3975,6 @@
                     ]
                   },
                   "confidence": 0.53
-                },
-                {
-                  "key": {
-                    "text": "__Tokens__1",
-                    "boundingBox": null,
-                    "elements": null
-                  },
-                  "value": {
-                    "text": "Purchase Order",
-                    "boundingBox": [
-                      141.0,
-                      140.0,
-                      348.0,
-                      140.0,
-                      348.0,
-                      168.0,
-                      141.0,
-                      168.0
-                    ],
-                    "elements": [
-                      "#/readResults/0/lines/0/words/0",
-                      "#/readResults/0/lines/0/words/1"
-                    ]
-                  },
-                  "confidence": 1.0
-                },
-                {
-                  "key": {
-                    "text": "__Tokens__2",
-                    "boundingBox": null,
-                    "elements": null
-                  },
-                  "value": {
-                    "text": "Purchase Order",
-                    "boundingBox": [
-                      1117.0,
-                      319.0,
-                      1551.0,
-                      319.0,
-                      1551.0,
-                      372.0,
-                      1117.0,
-                      372.0
-                    ],
-                    "elements": [
-                      "#/readResults/0/lines/2/words/0",
-                      "#/readResults/0/lines/2/words/1"
-                    ]
-                  },
-                  "confidence": 1.0
-                },
-                {
-                  "key": {
-                    "text": "__Tokens__3",
-                    "boundingBox": null,
-                    "elements": null
-                  },
-                  "value": {
-                    "text": "Shipped To",
-                    "boundingBox": [
-                      170.0,
-                      546.0,
-                      398.0,
-                      546.0,
-                      398.0,
-                      592.0,
-                      170.0,
-                      592.0
-                    ],
-                    "elements": [
-                      "#/readResults/0/lines/13/words/0",
-                      "#/readResults/0/lines/13/words/1"
-                    ]
-                  },
-                  "confidence": 1.0
-                },
-                {
-                  "key": {
-                    "text": "__Tokens__4",
-                    "boundingBox": null,
-                    "elements": null
-                  },
-                  "value": {
-                    "text": "Shipped From",
-                    "boundingBox": [
-                      169.0,
-                      784.0,
-                      445.0,
-                      784.0,
-                      445.0,
-                      831.0,
-                      169.0,
-                      831.0
-                    ],
-                    "elements": [
-                      "#/readResults/0/lines/23/words/0",
-                      "#/readResults/0/lines/23/words/1"
-                    ]
-                  },
-                  "confidence": 1.0
-                },
-                {
-                  "key": {
-                    "text": "__Tokens__5",
-                    "boundingBox": null,
-                    "elements": null
-                  },
-                  "value": {
-                    "text": "Bernie Sanders",
-                    "boundingBox": [
-                      485.0,
-                      1669.0,
-                      766.0,
-                      1669.0,
-                      766.0,
-                      1708.0,
-                      485.0,
-                      1708.0
-                    ],
-                    "elements": [
-                      "#/readResults/0/lines/57/words/0",
-                      "#/readResults/0/lines/57/words/1"
-                    ]
-                  },
-                  "confidence": 1.0
-                },
-                {
-                  "key": {
-                    "text": "__Tokens__6",
-                    "boundingBox": null,
-                    "elements": null
-                  },
-                  "value": {
-                    "text": "Bernie Sanders",
-                    "boundingBox": [
-                      544.0,
-                      1717.0,
-                      719.0,
-                      1717.0,
-                      719.0,
-                      1743.0,
-                      544.0,
-                      1743.0
-                    ],
-                    "elements": [
-                      "#/readResults/0/lines/60/words/0",
-                      "#/readResults/0/lines/60/words/1"
-                    ]
-                  },
-                  "confidence": 1.0
-                },
-                {
-                  "key": {
-                    "text": "__Tokens__7",
-                    "boundingBox": null,
-                    "elements": null
-                  },
-                  "value": {
-                    "text": "Manager",
-                    "boundingBox": [
-                      579.0,
-                      1752.0,
-                      687.0,
-                      1752.0,
-                      687.0,
-                      1777.0,
-                      579.0,
-                      1777.0
-                    ],
-                    "elements": [
-                      "#/readResults/0/lines/61/words/0"
-                    ]
-                  },
-                  "confidence": 1.0
                 }
               ],
               "tables": [
@@ -4145,13 +3988,13 @@
                       "columnIndex": 0,
                       "boundingBox": [
                         447.0,
-                        1047.0,
+                        1045.0,
                         551.0,
-                        1047.0,
+                        1045.0,
                         551.0,
-                        1080.0,
+                        1078.0,
                         447.0,
-                        1080.0
+                        1078.0
                       ],
                       "confidence": 1.0,
                       "rowSpan": 1,
@@ -4168,13 +4011,13 @@
                       "columnIndex": 1,
                       "boundingBox": [
                         890.0,
-                        1048.0,
+                        1046.0,
                         1028.0,
-                        1048.0,
+                        1046.0,
                         1028.0,
-                        1080.0,
+                        1078.0,
                         890.0,
-                        1080.0
+                        1078.0
                       ],
                       "confidence": 1.0,
                       "rowSpan": 1,
@@ -4191,13 +4034,13 @@
                       "columnIndex": 2,
                       "boundingBox": [
                         1113.0,
-                        1045.0,
+                        1046.0,
                         1267.0,
-                        1045.0,
+                        1046.0,
                         1267.0,
-                        1080.0,
+                        1081.0,
                         1113.0,
-                        1080.0
+                        1081.0
                       ],
                       "confidence": 1.0,
                       "rowSpan": 1,
@@ -4215,13 +4058,13 @@
                       "columnIndex": 3,
                       "boundingBox": [
                         1389.0,
-                        1046.0,
+                        1043.0,
                         1466.0,
-                        1046.0,
+                        1043.0,
                         1466.0,
-                        1080.0,
+                        1077.0,
                         1389.0,
-                        1080.0
+                        1077.0
                       ],
                       "confidence": 1.0,
                       "rowSpan": 1,
@@ -4238,13 +4081,13 @@
                       "columnIndex": 0,
                       "boundingBox": [
                         173.0,
-                        1094.0,
+                        1093.0,
                         282.0,
-                        1094.0,
+                        1093.0,
                         282.0,
-                        1122.0,
+                        1121.0,
                         173.0,
-                        1122.0
+                        1121.0
                       ],
                       "confidence": 1.0,
                       "rowSpan": 1,
@@ -4261,13 +4104,13 @@
                       "columnIndex": 1,
                       "boundingBox": [
                         863.0,
-                        1098.0,
+                        1095.0,
                         889.0,
-                        1098.0,
+                        1095.0,
                         889.0,
-                        1122.0,
+                        1119.0,
                         863.0,
-                        1122.0
+                        1119.0
                       ],
                       "confidence": 1.0,
                       "rowSpan": 1,
@@ -4307,13 +4150,13 @@
                       "columnIndex": 3,
                       "boundingBox": [
                         1466.0,
-                        1098.0,
+                        1095.0,
                         1531.0,
-                        1098.0,
+                        1095.0,
                         1531.0,
-                        1122.0,
+                        1119.0,
                         1466.0,
-                        1122.0
+                        1119.0
                       ],
                       "confidence": 1.0,
                       "rowSpan": 1,
@@ -4354,13 +4197,13 @@
                       "columnIndex": 1,
                       "boundingBox": [
                         862.0,
-                        1137.0,
+                        1132.0,
                         889.0,
-                        1137.0,
+                        1132.0,
                         889.0,
-                        1162.0,
+                        1157.0,
                         862.0,
-                        1162.0
+                        1157.0
                       ],
                       "confidence": 1.0,
                       "rowSpan": 1,
@@ -4377,13 +4220,13 @@
                       "columnIndex": 2,
                       "boundingBox": [
                         1243.0,
-                        1134.0,
+                        1132.0,
                         1292.0,
-                        1134.0,
+                        1132.0,
                         1292.0,
-                        1162.0,
+                        1160.0,
                         1243.0,
-                        1162.0
+                        1160.0
                       ],
                       "confidence": 1.0,
                       "rowSpan": 1,
@@ -4400,13 +4243,13 @@
                       "columnIndex": 3,
                       "boundingBox": [
                         1464.0,
-                        1138.0,
+                        1134.0,
                         1531.0,
-                        1138.0,
+                        1134.0,
                         1531.0,
-                        1162.0,
+                        1158.0,
                         1464.0,
-                        1162.0
+                        1158.0
                       ],
                       "confidence": 1.0,
                       "rowSpan": 1,
@@ -4423,13 +4266,13 @@
                       "columnIndex": 0,
                       "boundingBox": [
                         172.0,
-                        1179.0,
-                        404.0,
-                        1179.0,
-                        404.0,
-                        1205.0,
+                        1180.0,
+                        403.0,
+                        1180.0,
+                        403.0,
+                        1206.0,
                         172.0,
-                        1205.0
+                        1206.0
                       ],
                       "confidence": 1.0,
                       "rowSpan": 1,
@@ -4470,13 +4313,13 @@
                       "columnIndex": 2,
                       "boundingBox": [
                         1243.0,
-                        1179.0,
+                        1177.0,
                         1298.0,
-                        1179.0,
+                        1177.0,
                         1298.0,
-                        1205.0,
+                        1203.0,
                         1243.0,
-                        1205.0
+                        1203.0
                       ],
                       "confidence": 1.0,
                       "rowSpan": 1,
@@ -4516,9 +4359,9 @@
                       "columnIndex": 0,
                       "boundingBox": [
                         171.0,
-                        1224.0,
+                        1225.0,
                         426.0,
-                        1224.0,
+                        1225.0,
                         426.0,
                         1248.0,
                         171.0,
@@ -4540,13 +4383,13 @@
                       "rowIndex": 4,
                       "columnIndex": 1,
                       "boundingBox": [
-                        864.0,
+                        863.0,
                         1221.0,
-                        887.0,
+                        888.0,
                         1221.0,
-                        887.0,
+                        888.0,
                         1244.0,
-                        864.0,
+                        863.0,
                         1244.0
                       ],
                       "confidence": 1.0,
@@ -4564,13 +4407,13 @@
                       "columnIndex": 2,
                       "boundingBox": [
                         1242.0,
-                        1222.0,
+                        1221.0,
                         1291.0,
-                        1222.0,
+                        1221.0,
                         1291.0,
-                        1248.0,
+                        1247.0,
                         1242.0,
-                        1248.0
+                        1247.0
                       ],
                       "confidence": 1.0,
                       "rowSpan": 1,
@@ -4587,13 +4430,13 @@
                       "columnIndex": 3,
                       "boundingBox": [
                         1449.0,
-                        1225.0,
+                        1224.0,
                         1530.0,
-                        1225.0,
+                        1224.0,
                         1530.0,
-                        1248.0,
+                        1247.0,
                         1449.0,
-                        1248.0
+                        1247.0
                       ],
                       "confidence": 1.0,
                       "rowSpan": 1,
@@ -4616,14 +4459,15 @@
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/acad0d9d-a576-48e3-a57c-25bc34f08a7c",
+      "RequestUri": "https://t00b5fddbfc124bd4-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/custom/models/3420c97d-20b6-458a-8766-d36c8e244b75",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-a63745d3e218514a8a3a31260d241413-62ac8e26ef80a245-00",
+        "traceparent": "00-01345393cb1e8946a6e1f2c3289e3f57-49fe4177c790b745-00",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200820.1",
+          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
         ],
         "x-ms-client-request-id": "4ca9707fa63e031efec04f71ffdd1ace",
         "x-ms-return-client-request-id": "true"
@@ -4631,12 +4475,12 @@
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
-        "apim-request-id": "12be70ac-2862-4cf0-952b-228a0b5c1576",
+        "apim-request-id": "9defd975-691b-47be-8d0f-5e0ba3464933",
         "Content-Length": "0",
-        "Date": "Fri, 07 Aug 2020 02:20:37 GMT",
+        "Date": "Thu, 20 Aug 2020 18:01:44 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "28"
+        "x-envoy-upstream-service-time": "72"
       },
       "ResponseBody": []
     }
@@ -4644,7 +4488,7 @@
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
     "FORM_RECOGNIZER_BLOB_CONTAINER_SAS_URL": "https://sanitized.blob.core.windows.net",
-    "FORM_RECOGNIZER_ENDPOINT": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/",
+    "FORM_RECOGNIZER_ENDPOINT": "https://t00b5fddbfc124bd4-formrecognizer.cognitiveservices.azure.com",
     "RandomSeed": "568266774"
   }
 }

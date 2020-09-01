@@ -38,7 +38,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             // Start the restore.
             RestoreOperation restoreOperation = await Client.StartRestoreAsync(builder.Uri, "?" + SasToken, folderName, source.Token);
 
-            // Wa
+            // Wait for completion of the LRO
             var restoreResult = await restoreOperation.WaitForCompletionAsync(source.Token);
 
             Assert.That(source.IsCancellationRequested, Is.False);

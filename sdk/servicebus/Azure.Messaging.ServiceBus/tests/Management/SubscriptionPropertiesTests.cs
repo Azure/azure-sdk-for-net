@@ -61,5 +61,37 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             sub.ForwardDeadLetteredMessagesTo = $"{baseUrl}{longName}";
             Assert.AreEqual($"{baseUrl}{longName}", sub.ForwardDeadLetteredMessagesTo);
         }
+
+        [Test]
+        public void CanCreateSubscriptionPropertiesFromFactory()
+        {
+            var properties = ServiceBusModelFactory.SubscriptionProperties(
+                "topicName",
+                "subscriptionName",
+                TimeSpan.FromSeconds(30),
+                true,
+                TimeSpan.FromSeconds(10),
+                TimeSpan.FromMinutes(5),
+                true,
+                5,
+                false,
+                EntityStatus.Active,
+                "forward",
+                "dlq",
+                "metadata");
+            Assert.AreEqual("topicName", properties.TopicName);
+            Assert.AreEqual("subscriptionName", properties.SubscriptionName);
+            Assert.AreEqual(TimeSpan.FromSeconds(30), properties.LockDuration);
+            Assert.IsTrue(properties.RequiresSession);
+            Assert.AreEqual(TimeSpan.FromSeconds(10), properties.DefaultMessageTimeToLive);
+            Assert.AreEqual(TimeSpan.FromMinutes(5), properties.AutoDeleteOnIdle);
+            Assert.IsTrue(properties.DeadLetteringOnMessageExpiration);
+            Assert.AreEqual(5, properties.MaxDeliveryCount);
+            Assert.IsFalse(properties.EnableBatchedOperations);
+            Assert.AreEqual(EntityStatus.Active, properties.Status);
+            Assert.AreEqual("forward", properties.ForwardTo);
+            Assert.AreEqual("dlq", properties.ForwardDeadLetteredMessagesTo);
+            Assert.AreEqual("metadata", properties.UserMetadata);
+        }
     }
 }

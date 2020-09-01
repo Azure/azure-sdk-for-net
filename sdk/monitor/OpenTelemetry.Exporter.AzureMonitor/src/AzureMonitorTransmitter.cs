@@ -9,6 +9,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+
+using OpenTelemetry.Exporter.AzureMonitor.ConnectionString;
 using OpenTelemetry.Exporter.AzureMonitor.Models;
 using OpenTelemetry.Trace;
 
@@ -18,6 +20,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
     {
         private readonly ServiceRestClient serviceRestClient;
         private readonly AzureMonitorExporterOptions options;
+        private readonly string instrumentationKey;
 
         private static readonly IReadOnlyDictionary<TelemetryType, string> Telemetry_Base_Type_Mapping = new Dictionary<TelemetryType, string>
         {
@@ -37,11 +40,13 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
         public AzureMonitorTransmitter(AzureMonitorExporterOptions exporterOptions)
         {
+            ConnectionStringParser.GetValues(exporterOptions.ConnectionString, out this.instrumentationKey, out string ingestionEndpoint);
+
             options = exporterOptions;
-            serviceRestClient = new ServiceRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options));
+            serviceRestClient = new ServiceRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), endpoint: ingestionEndpoint);
         }
 
-        internal async ValueTask<int> AddBatchActivityAsync(IEnumerable<Activity> batchActivity, CancellationToken cancellationToken)
+        internal async ValueTask<int> AddBatchActivityAsync(Batch<Activity> batchActivity, bool async, CancellationToken cancellationToken)
         {
             if (cancellationToken.IsCancellationRequested)
             {
@@ -54,12 +59,23 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             foreach (var activity in batchActivity)
             {
                 telemetryItem = GeneratePartAEnvelope(activity);
+                telemetryItem.IKey = this.instrumentationKey;
                 telemetryItem.Data = GenerateTelemetryData(activity);
                 telemetryItems.Add(telemetryItem);
             }
 
+            Azure.Response<TrackResponse> response;
+
+            if (async)
+            {
+                response = await this.serviceRestClient.TrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                response = this.serviceRestClient.TrackAsync(telemetryItems, cancellationToken).Result;
+            }
+
             // TODO: Handle exception, check telemetryItems has items
-            var response = await this.serviceRestClient.TrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false);
             return response.Value.ItemsAccepted.GetValueOrDefault();
         }
 
@@ -67,8 +83,6 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         {
             // TODO: Get TelemetryEnvelope name changed in swagger
             TelemetryEnvelope envelope = new TelemetryEnvelope(PartA_Name_Mapping[activity.GetTelemetryType()], activity.StartTimeUtc);
-            // TODO: Extract IKey from connectionstring
-            envelope.IKey = "IKey";
             // TODO: Validate if Azure SDK has common function to generate role instance
             envelope.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = "testRoleInstance";
 

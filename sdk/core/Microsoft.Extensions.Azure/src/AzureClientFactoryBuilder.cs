@@ -25,6 +25,7 @@ namespace Microsoft.Extensions.Azure
             _serviceCollection = serviceCollection;
             _serviceCollection.AddOptions();
             _serviceCollection.TryAddSingleton<EventSourceLogForwarder>();
+            _serviceCollection.TryAddSingleton(typeof(IAzureClientFactory<>), typeof(FallbackAzureClientFactory<>));
         }
 
         IAzureClientBuilder<TClient, TOptions> IAzureClientFactoryBuilder.RegisterClientFactory<TClient, TOptions>(Func<TOptions, TClient> clientFactory)
@@ -91,7 +92,7 @@ namespace Microsoft.Extensions.Azure
 
         IAzureClientBuilder<TClient, TOptions> IAzureClientFactoryBuilderWithCredential.RegisterClientFactory<TClient, TOptions>(Func<TOptions, TokenCredential, TClient> clientFactory, bool requiresCredential)
         {
-            var clientRegistration = new ClientRegistration<TClient, TOptions>(DefaultClientName, clientFactory);
+            var clientRegistration = new ClientRegistration<TClient>(DefaultClientName, (options, credential) => clientFactory((TOptions)options, credential));
             clientRegistration.RequiresTokenCredential = requiresCredential;
 
             _serviceCollection.AddSingleton(clientRegistration);
@@ -128,5 +129,18 @@ namespace Microsoft.Extensions.Azure
             _serviceCollection.Configure<AzureClientsGlobalOptions>(options => options.CredentialFactory = tokenCredentialFactory);
             return this;
         }
+
+        /// <summary>
+        /// Sets the configuration instance that is used to resolve clients that were not explicitly registered.
+        /// </summary>
+        /// <param name="configurationProvider">The delegate that returns a configuration instance that's used to resolve client configuration from.</param>
+        /// <returns>This instance.</returns>
+        public AzureClientFactoryBuilder UseConfiguration(Func<IServiceProvider, IConfiguration> configurationProvider)
+        {
+            _serviceCollection.Configure<AzureClientsGlobalOptions>(options => options.ConfigurationRootResolver = configurationProvider);
+
+            return this;
+        }
+
     }
 }

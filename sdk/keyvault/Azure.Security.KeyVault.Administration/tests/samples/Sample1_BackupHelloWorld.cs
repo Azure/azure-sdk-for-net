@@ -12,7 +12,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
 {
     public class Sample1_BackupHelloWorld : BackupRestoreTestBase
     {
-        public Sample1_BackupHelloWorld(bool isAsync) : base(isAsync, RecordedTestMode.Record /* To record tests, change this argument to RecordedTestMode.Record */)
+        public Sample1_BackupHelloWorld(bool isAsync) : base(isAsync, RecordedTestMode.Playback /* To record tests, change this argument to RecordedTestMode.Record */)
         { }
 
         [Test]
@@ -25,7 +25,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             #endregion
         }
 
-        [Test]
+        [RecordedTest]
         [AsyncOnly]
         public async Task BackupAndRestoreSampleAsync()
         {
@@ -68,7 +68,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Assert.That(restoreOperation.HasValue, Is.True);
         }
 
-        [Test]
+        [RecordedTest]
         [SyncOnly]
         public void BackupAndRestoreSampleSync()
         {
