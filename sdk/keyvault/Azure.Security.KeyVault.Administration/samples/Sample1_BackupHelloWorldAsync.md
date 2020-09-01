@@ -17,11 +17,11 @@ KeyVaultBackupClient client = new KeyVaultBackupClient(new Uri(keyVaultUrl), new
 ## Performing a full key backup
 
 Using the `KeyVaultBackupClient`, you can backup your entire collection of keys. The backing store for full key backups is a blob storage container using Shared Access Signature authentication. 
-For more details on creating a SAS token using the `BlobServiceClient`, see the [Azure Storage Blobs client README](blob_readme) and the [authentication samples](blob_auth).
-Alternatively, it is possible to [generate a SAS token in Storage Explorer](storage_explorer_sas)
+For more details on creating a SAS token using the `BlobServiceClient`, see the [Azure Storage Blobs client README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Blobs/README.md) and the [authentication samples](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Blobs/samples/Sample02_Auth.cs).
+Alternatively, it is possible to [generate a SAS token in Storage Explorer](https://docs.microsoft.com/en-us/azure/vs-azure-tools-storage-manage-with-storage-explorer?tabs=windows#generate-a-shared-access-signature-in-storage-explorer)
 
 To ensure you have some keys for backup, you may want to first create a key using the `KeyClient`.
-To create a new `KeyClient` to create a key, see the [Creating a KeyClient](creating_keyvault) and [Creating a key](creating_key) samples.
+To create a new `KeyClient` to create a key, see the [Creating a KeyClient](creating_https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Keys/samples/Sample1_HelloWorld.md#creating-a-keyclientkeyvault) and [Creating a key](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Keys/samples/Sample1_HelloWorld.md#creating-a-key) samples.
 
 In the sample below, you can set `blobStorageUrl`, `blobContainerName`, and `sasToken` based on a environment variables, configuration settings, or any way that works for your application.
 
@@ -62,8 +62,3 @@ var restoreResult = await restoreOperation.WaitForCompletionAsync();
 
 <!-- LINKS -->
 [DefaultAzureCredential]: ../../../identity/Azure.Identity/README.md
-[creating_keyvault]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Keys/samples/Sample1_HelloWorld.md#creating-a-keyclient
-[creating_key]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Keys/samples/Sample1_HelloWorld.md#creating-a-key
-[blob_readme]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Blobs/README.md
-[blob_auth]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Blobs/samples/Sample02_Auth.cs
-[storage_explorer_sas]: https://docs.microsoft.com/en-us/azure/vs-azure-tools-storage-manage-with-storage-explorer?tabs=windows#generate-a-shared-access-signature-in-storage-explorer

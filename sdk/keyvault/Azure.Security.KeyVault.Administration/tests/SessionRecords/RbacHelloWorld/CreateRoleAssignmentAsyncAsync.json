@@ -4,6 +4,7 @@
       "RequestUri": "https://eastus2.chriss-eu2.managedhsm-int.azure-int.net/providers/Microsoft.Authorization/roleDefinitions?api-version=7.2-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Administration/4.0.0-dev.20200901.1",
           "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
@@ -22,8 +23,8 @@
         "WWW-Authenticate": "Bearer authorization=\u0022https://login.windows-ppe.net/f686d426-8d16-42db-81b7-ab578e110ccd\u0022, resource=\u0022https://managedhsm-int.azure-int.net\u0022",
         "X-Content-Type-Options": "nosniff",
         "X-Frame-Options": "SAMEORIGIN",
-        "x-ms-build-version": "1.0.20200827-3-83ffcc79-develop",
-        "x-ms-request-id": "42ff7f78-ec65-11ea-84f2-0242ac120003",
+        "x-ms-build-version": "1.0.20200901-1-40187cd0-develop",
+        "x-ms-request-id": "147983c8-ec70-11ea-84e4-0242ac120003",
         "x-ms-server-latency": "1"
       },
       "ResponseBody": "OK"
@@ -32,6 +33,7 @@
       "RequestUri": "https://eastus2.chriss-eu2.managedhsm-int.azure-int.net/providers/Microsoft.Authorization/roleDefinitions?api-version=7.2-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Administration/4.0.0-dev.20200901.1",
@@ -50,11 +52,11 @@
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "X-Frame-Options": "SAMEORIGIN",
-        "x-ms-build-version": "1.0.20200827-3-83ffcc79-develop",
+        "x-ms-build-version": "1.0.20200901-1-40187cd0-develop",
         "x-ms-keyvault-network-info": "addr=70.121.15.5",
         "x-ms-keyvault-region": "EASTUS",
-        "x-ms-request-id": "42ff7f78-ec65-11ea-84f2-0242ac120003",
-        "x-ms-server-latency": "0"
+        "x-ms-request-id": "147983c8-ec70-11ea-84e4-0242ac120003",
+        "x-ms-server-latency": "1"
       },
       "ResponseBody": {
         "value": [
@@ -287,10 +289,11 @@
       "RequestUri": "https://eastus2.chriss-eu2.managedhsm-int.azure-int.net/providers/Microsoft.Authorization/roleAssignments/e7ae2aff-eb17-4c9d-84f0-d12f7f468f16?api-version=7.2-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "196",
         "Content-Type": "application/json",
-        "traceparent": "00-90bb22465679c4488498f035be7a61e8-7c594aea6935c643-00",
+        "traceparent": "00-01775931a8157946ba5f2b5821fb836e-f5f7fe64272f914d-00",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Administration/4.0.0-dev.20200901.1",
           "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
@@ -315,8 +318,8 @@
         "X-Frame-Options": "SAMEORIGIN",
         "x-ms-keyvault-network-info": "addr=70.121.15.5",
         "x-ms-keyvault-region": "EASTUS",
-        "x-ms-request-id": "42ff7f78-ec65-11ea-84f2-0242ac120003",
-        "x-ms-server-latency": "233"
+        "x-ms-request-id": "147983c8-ec70-11ea-84e4-0242ac120003",
+        "x-ms-server-latency": "268"
       },
       "ResponseBody": {
         "id": "/providers/Microsoft.Authorization/roleAssignments/e7ae2aff-eb17-4c9d-84f0-d12f7f468f16",
@@ -333,8 +336,9 @@
       "RequestUri": "https://eastus2.chriss-eu2.managedhsm-int.azure-int.net/providers/Microsoft.Authorization/roleAssignments/e7ae2aff-eb17-4c9d-84f0-d12f7f468f16?api-version=7.2-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-96957834b475a14686cd5d50e98aa47e-b4d37e92ecf78643-00",
+        "traceparent": "00-b8c14f5a5017c34b80ead88b217c598c-44dcb7563d0c4447-00",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Administration/4.0.0-dev.20200901.1",
           "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
@@ -352,11 +356,11 @@
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "X-Frame-Options": "SAMEORIGIN",
-        "x-ms-build-version": "1.0.20200827-3-83ffcc79-develop",
+        "x-ms-build-version": "1.0.20200901-1-40187cd0-develop",
         "x-ms-keyvault-network-info": "addr=70.121.15.5",
         "x-ms-keyvault-region": "EASTUS",
-        "x-ms-request-id": "42ff7f78-ec65-11ea-84f2-0242ac120003",
-        "x-ms-server-latency": "0"
+        "x-ms-request-id": "147983c8-ec70-11ea-84e4-0242ac120003",
+        "x-ms-server-latency": "1"
       },
       "ResponseBody": {
         "id": "/providers/Microsoft.Authorization/roleAssignments/e7ae2aff-eb17-4c9d-84f0-d12f7f468f16",
@@ -373,8 +377,9 @@
       "RequestUri": "https://eastus2.chriss-eu2.managedhsm-int.azure-int.net/providers/Microsoft.Authorization/roleAssignments/e7ae2aff-eb17-4c9d-84f0-d12f7f468f16?api-version=7.2-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-4b739b0a1ba502478ff336852be587cf-82a93fb2459bfe4c-00",
+        "traceparent": "00-bb353a570de4ef4e98f851cb32fd74c6-725cb67b9774a647-00",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Administration/4.0.0-dev.20200901.1",
           "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
@@ -394,8 +399,8 @@
         "X-Frame-Options": "SAMEORIGIN",
         "x-ms-keyvault-network-info": "addr=70.121.15.5",
         "x-ms-keyvault-region": "EASTUS",
-        "x-ms-request-id": "42ff7f78-ec65-11ea-84f2-0242ac120003",
-        "x-ms-server-latency": "275"
+        "x-ms-request-id": "147983c8-ec70-11ea-84e4-0242ac120003",
+        "x-ms-server-latency": "331"
       },
       "ResponseBody": {
         "id": "/providers/Microsoft.Authorization/roleAssignments/e7ae2aff-eb17-4c9d-84f0-d12f7f468f16",

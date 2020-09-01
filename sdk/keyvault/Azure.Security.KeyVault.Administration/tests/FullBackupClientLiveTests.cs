@@ -14,7 +14,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         public FullBackupClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Playback /* To record tests, change this argument to RecordedTestMode.Record */)
         { }
 
-        [Test]
+        [RecordedTest]
         public async Task BackupAndRestore()
         {
             var source = new CancellationTokenSource(TimeSpan.FromMinutes(2));
