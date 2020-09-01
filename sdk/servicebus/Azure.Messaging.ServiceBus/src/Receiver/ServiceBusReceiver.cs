@@ -66,7 +66,14 @@ namespace Azure.Messaging.ServiceBus
         /// <value>
         /// <c>true</c> if the client is closed; otherwise, <c>false</c>.
         /// </value>
-        public bool IsClosed { get; private set; } = false;
+        public bool IsClosed
+        {
+            get => _closed;
+            private set => _closed = value;
+        }
+
+        /// <summary>Indicates whether or not this instance has been closed.</summary>
+        private volatile bool _closed = false;
 
         /// <summary>
         /// The policy to use for determining retry behavior for when an operation fails.

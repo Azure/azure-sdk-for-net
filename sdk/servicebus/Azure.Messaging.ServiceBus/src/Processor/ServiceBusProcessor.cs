@@ -150,9 +150,16 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <value>
-        ///   <c>true</c> if the processor is closed; otherwise, <c>false</c>.
+        /// <c>true</c> if the client is closed; otherwise, <c>false</c>.
         /// </value>
-        public bool IsClosed { get; private set; } = false;
+        public bool IsClosed
+        {
+            get => _closed;
+            private set => _closed = value;
+        }
+
+        /// <summary>Indicates whether or not this instance has been closed.</summary>
+        private volatile bool _closed = false;
 
         private readonly string[] _sessionIds;
         private readonly EntityScopeFactory _scopeFactory;
