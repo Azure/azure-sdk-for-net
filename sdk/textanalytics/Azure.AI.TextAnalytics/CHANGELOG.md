@@ -1,12 +1,13 @@
 # Release History
 
-## 5.1.0-preview.1 (Unreleased)
-### Breaking changes
-- It defaults to the latest supported API version, which currently is `3.1-preview.1`.
-Note that new functionality hasn't been implemented in the client library.
+## 5.1.0-beta.1 (Unreleased)
 
 ### New Features
+- It defaults to the latest supported API version, which currently is `3.1-preview.2`.
 - `ErrorCode` value returned from the service is now surfaced in `RequestFailedException`.
+- Support added for Opinion Mining. This feature is available in the Text Analytics service v3.1-preview.1 and above.
+- Added `Offset` and `Length` properties for `CategorizedEntity`, `SentenceSentiment`, and `LinkedEntityMatch`. The default encoding is UTF-16 code units. For additional information see https://aka.ms/text-analytics-offsets
+- `TextAnalyticsError` and `TextAnalyticsWarning` now are marked as immutable.
 
 ## 5.0.0 (2020-07-27)
 - Re-release of version `1.0.1` with updated version `5.0.0`.

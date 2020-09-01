@@ -105,7 +105,7 @@ az deployment group create --resource-group $ResourceGroup --name $IotHubName --
 # and we have to use that casing in order to get them from the deployment outputs.
 $iotHubConnectionString = az deployment group show -g $ResourceGroup -n $IotHubName --query 'properties.outputs.iot_hub_connection_string.value' --output tsv
 $iotHubHostName = az deployment group show -g $ResourceGroup -n $IotHubName --query 'properties.outputs.iot_hub_endpoint_url.value' --output tsv
-$storageSasToken = az deployment group show -g $ResourceGroup -n $IotHubName --query 'properties.outputs.storage_account_sas_token.value' --output tsv
+$storageSasToken = az deployment group show -g $ResourceGroup -n $IotHubName --query 'properties.outputs.storage_sas_token.value' --output tsv
 
 Write-Host("Set a new client secret for $appId`n")
 $appSecret = az ad app credential reset --id $appId --years 2 --query 'password' --output tsv

@@ -27,6 +27,10 @@ namespace Azure.Messaging.ServiceBus.Management
             Name = name;
         }
 
+        /// <summary>
+        /// Initializes a new instance of TopicProperties from the provided options.
+        /// </summary>
+        /// <param name="options">Options used to create the properties instance.</param>
         internal TopicProperties(CreateTopicOptions options)
         {
             Name = options.Name;

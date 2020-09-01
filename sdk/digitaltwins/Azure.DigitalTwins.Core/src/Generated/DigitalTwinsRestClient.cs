@@ -54,6 +54,7 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -72,6 +73,7 @@ namespace Azure.DigitalTwins.Core
             {
                 request.Headers.Add("If-Match", ifMatch);
             }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -149,6 +151,7 @@ namespace Azure.DigitalTwins.Core
                 request.Headers.Add("If-Match", ifMatch);
             }
             request.Headers.Add("Content-Type", "application/json-patch+json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStartArray();
             foreach (var item in patchDocument)
@@ -173,6 +176,7 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(relationshipId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -191,6 +195,7 @@ namespace Azure.DigitalTwins.Core
             request.Uri = uri;
             request.Headers.Add("If-None-Match", "*");
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (relationship != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -217,6 +222,7 @@ namespace Azure.DigitalTwins.Core
             {
                 request.Headers.Add("If-Match", ifMatch);
             }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -304,6 +310,7 @@ namespace Azure.DigitalTwins.Core
                 request.Headers.Add("If-Match", ifMatch);
             }
             request.Headers.Add("Content-Type", "application/json-patch+json");
+            request.Headers.Add("Accept", "application/json");
             if (patchDocument != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -334,6 +341,7 @@ namespace Azure.DigitalTwins.Core
             }
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -417,6 +425,7 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath("/incomingrelationships", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -504,6 +513,7 @@ namespace Azure.DigitalTwins.Core
                 request.Headers.Add("dt-timestamp", dtTimestamp);
             }
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(telemetry);
             request.Content = content;
@@ -530,6 +540,7 @@ namespace Azure.DigitalTwins.Core
                 request.Headers.Add("dt-timestamp", dtTimestamp);
             }
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(telemetry);
             request.Content = content;
@@ -549,6 +560,7 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(componentPath, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -570,6 +582,7 @@ namespace Azure.DigitalTwins.Core
                 request.Headers.Add("If-Match", ifMatch);
             }
             request.Headers.Add("Content-Type", "application/json-patch+json");
+            request.Headers.Add("Accept", "application/json");
             if (patchDocument != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -593,6 +606,7 @@ namespace Azure.DigitalTwins.Core
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -683,6 +697,7 @@ namespace Azure.DigitalTwins.Core
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

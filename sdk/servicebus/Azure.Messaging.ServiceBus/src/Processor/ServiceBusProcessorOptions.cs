@@ -8,14 +8,15 @@ using Azure.Core;
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    /// The baseline set of options that can be specified when creating a <see cref="ServiceBusProcessor" />
-    /// to configure its behavior.
+    /// The set of options that can be specified when creating a
+    /// <see cref="ServiceBusProcessor" /> to configure its behavior.
     /// </summary>
     public class ServiceBusProcessorOptions
     {
         /// <summary>
-        /// The number of messages that will be eagerly requested from Queues or Subscriptions and queued locally without regard to
-        /// whether a processing is currently active, intended to help maximize throughput by allowing the receiver to receive
+        /// Gets or sets the number of messages that will be eagerly requested
+        /// from Queues or Subscriptions and queued locally, intended to help
+        /// maximize throughput by allowing the processor to receive
         /// from a local cache rather than waiting on a service request.
         /// </summary>
         public int PrefetchCount
@@ -33,14 +34,19 @@ namespace Azure.Messaging.ServiceBus
         private int _prefetchCount = 0;
 
         /// <summary>
-        /// The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.
+        /// Gets or sets the <see cref="ReceiveMode"/> used to specify how messages
+        /// are received. Defaults to PeekLock mode.
         /// </summary>
         public ReceiveMode ReceiveMode { get; set; } = ReceiveMode.PeekLock;
 
-        /// <summary>Gets or sets a value that indicates whether the processor should call
-        /// Receiver.CompleteAsync() on messages after the callback has completed processing.
-        /// The default value is true.</summary>
-        /// <value>true to complete the message processing automatically on successful execution of the operation; otherwise, false.</value>
+        /// <summary>
+        /// Gets or sets a value that indicates whether the processor
+        /// should automatically complete messages after the <see cref="ServiceBusProcessor.ProcessMessageAsync"/> handler has
+        /// completed processing. If the message handler triggers an exception, the message will not be automatically completed.
+        /// The default value is true.
+        /// </summary>
+        ///
+        /// <value>true to complete the message automatically on successful execution of the message handler; otherwise, false.</value>
         public bool AutoComplete { get; set; } = true;
 
         /// <summary>
@@ -48,7 +54,7 @@ namespace Azure.Messaging.ServiceBus
         /// value should be greater than the longest message lock duration; for example, the LockDuration Property.
         /// </summary>
         ///
-        /// <value>The maximum duration during which locks are automatically renewed.</value>
+        /// <value>The maximum duration during which message locks are automatically renewed.</value>
         ///
         /// <remarks>The message renew can continue for sometime in the background
         /// after completion of message and result in a few false MessageLockLostExceptions temporarily.</remarks>
@@ -68,10 +74,6 @@ namespace Azure.Messaging.ServiceBus
         /// The maximum amount of time to wait for each Receive call using the processor's underlying receiver.
         /// If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.
         /// </summary>
-        /// <remarks>When using a <see cref="ServiceBusSessionProcessor"/>, if no message is returned for a call
-        /// to Receive, a new session will be requested by the processor.
-        /// Hence, if this value is set to be too low, it could cause new sessions to be requested
-        /// more often than necessary.</remarks>
         public TimeSpan? MaxReceiveWaitTime
         {
             get => _maxReceiveWaitTime;
@@ -88,9 +90,12 @@ namespace Azure.Messaging.ServiceBus
         }
         private TimeSpan? _maxReceiveWaitTime;
 
-        /// <summary>Gets or sets the maximum number of concurrent calls to the callback the processor should initiate.
-        /// The default is 1.</summary>
-        /// <value>The maximum number of concurrent calls to the callback.</value>
+        /// <summary>Gets or sets the maximum number of concurrent calls to the
+        /// message handler the processor should initiate.
+        /// The default is 1.
+        /// </summary>
+        ///
+        /// <value>The maximum number of concurrent calls to the message handler.</value>
         public int MaxConcurrentCalls
         {
             get => _maxConcurrentCalls;

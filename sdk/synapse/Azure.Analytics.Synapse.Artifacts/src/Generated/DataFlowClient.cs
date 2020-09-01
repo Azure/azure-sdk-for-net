@@ -37,46 +37,6 @@ namespace Azure.Analytics.Synapse.Artifacts
             _pipeline = pipeline;
         }
 
-        /// <summary> Creates or updates a data flow. </summary>
-        /// <param name="dataFlowName"> The data flow name. </param>
-        /// <param name="dataFlow"> Data flow resource definition. </param>
-        /// <param name="ifMatch"> ETag of the data flow entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DataFlowResource>> CreateOrUpdateDataFlowAsync(string dataFlowName, DataFlowResource dataFlow, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DataFlowClient.CreateOrUpdateDataFlow");
-            scope.Start();
-            try
-            {
-                return await RestClient.CreateOrUpdateDataFlowAsync(dataFlowName, dataFlow, ifMatch, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a data flow. </summary>
-        /// <param name="dataFlowName"> The data flow name. </param>
-        /// <param name="dataFlow"> Data flow resource definition. </param>
-        /// <param name="ifMatch"> ETag of the data flow entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DataFlowResource> CreateOrUpdateDataFlow(string dataFlowName, DataFlowResource dataFlow, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DataFlowClient.CreateOrUpdateDataFlow");
-            scope.Start();
-            try
-            {
-                return RestClient.CreateOrUpdateDataFlow(dataFlowName, dataFlow, ifMatch, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Gets a data flow. </summary>
         /// <param name="dataFlowName"> The data flow name. </param>
         /// <param name="ifNoneMatch"> ETag of the data flow entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
@@ -107,42 +67,6 @@ namespace Azure.Analytics.Synapse.Artifacts
             try
             {
                 return RestClient.GetDataFlow(dataFlowName, ifNoneMatch, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a data flow. </summary>
-        /// <param name="dataFlowName"> The data flow name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteDataFlowAsync(string dataFlowName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DataFlowClient.DeleteDataFlow");
-            scope.Start();
-            try
-            {
-                return await RestClient.DeleteDataFlowAsync(dataFlowName, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a data flow. </summary>
-        /// <param name="dataFlowName"> The data flow name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DeleteDataFlow(string dataFlowName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DataFlowClient.DeleteDataFlow");
-            scope.Start();
-            try
-            {
-                return RestClient.DeleteDataFlow(dataFlowName, cancellationToken);
             }
             catch (Exception e)
             {
@@ -223,6 +147,118 @@ namespace Azure.Analytics.Synapse.Artifacts
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Creates or updates a data flow. </summary>
+        /// <param name="dataFlowName"> The data flow name. </param>
+        /// <param name="dataFlow"> Data flow resource definition. </param>
+        /// <param name="ifMatch"> ETag of the data flow entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataFlowName"/> or <paramref name="dataFlow"/> is null. </exception>
+        public virtual async Task<DataFlowCreateOrUpdateDataFlowOperation> StartCreateOrUpdateDataFlowAsync(string dataFlowName, DataFlowResource dataFlow, string ifMatch = null, CancellationToken cancellationToken = default)
+        {
+            if (dataFlowName == null)
+            {
+                throw new ArgumentNullException(nameof(dataFlowName));
+            }
+            if (dataFlow == null)
+            {
+                throw new ArgumentNullException(nameof(dataFlow));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("DataFlowClient.StartCreateOrUpdateDataFlow");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.CreateOrUpdateDataFlowAsync(dataFlowName, dataFlow, ifMatch, cancellationToken).ConfigureAwait(false);
+                return new DataFlowCreateOrUpdateDataFlowOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateOrUpdateDataFlowRequest(dataFlowName, dataFlow, ifMatch).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates or updates a data flow. </summary>
+        /// <param name="dataFlowName"> The data flow name. </param>
+        /// <param name="dataFlow"> Data flow resource definition. </param>
+        /// <param name="ifMatch"> ETag of the data flow entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataFlowName"/> or <paramref name="dataFlow"/> is null. </exception>
+        public virtual DataFlowCreateOrUpdateDataFlowOperation StartCreateOrUpdateDataFlow(string dataFlowName, DataFlowResource dataFlow, string ifMatch = null, CancellationToken cancellationToken = default)
+        {
+            if (dataFlowName == null)
+            {
+                throw new ArgumentNullException(nameof(dataFlowName));
+            }
+            if (dataFlow == null)
+            {
+                throw new ArgumentNullException(nameof(dataFlow));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("DataFlowClient.StartCreateOrUpdateDataFlow");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.CreateOrUpdateDataFlow(dataFlowName, dataFlow, ifMatch, cancellationToken);
+                return new DataFlowCreateOrUpdateDataFlowOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateOrUpdateDataFlowRequest(dataFlowName, dataFlow, ifMatch).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a data flow. </summary>
+        /// <param name="dataFlowName"> The data flow name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataFlowName"/> is null. </exception>
+        public virtual async Task<DataFlowDeleteDataFlowOperation> StartDeleteDataFlowAsync(string dataFlowName, CancellationToken cancellationToken = default)
+        {
+            if (dataFlowName == null)
+            {
+                throw new ArgumentNullException(nameof(dataFlowName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("DataFlowClient.StartDeleteDataFlow");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.DeleteDataFlowAsync(dataFlowName, cancellationToken).ConfigureAwait(false);
+                return new DataFlowDeleteDataFlowOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteDataFlowRequest(dataFlowName).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a data flow. </summary>
+        /// <param name="dataFlowName"> The data flow name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataFlowName"/> is null. </exception>
+        public virtual DataFlowDeleteDataFlowOperation StartDeleteDataFlow(string dataFlowName, CancellationToken cancellationToken = default)
+        {
+            if (dataFlowName == null)
+            {
+                throw new ArgumentNullException(nameof(dataFlowName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("DataFlowClient.StartDeleteDataFlow");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.DeleteDataFlow(dataFlowName, cancellationToken);
+                return new DataFlowDeleteDataFlowOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteDataFlowRequest(dataFlowName).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

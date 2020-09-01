@@ -101,7 +101,7 @@ az deployment group create --resource-group $ResourceGroup --name $($DigitalTwin
 
 # Even though the output variable names are all capital letters in the script, ARM turns them into a strange casing
 # and we have to use that casing in order to get them from the deployment outputs.
-$dtHostName = az deployment group show -g $ResourceGroup -n $($DigitalTwinName.ToLower()) --query 'properties.outputs.digitaltwinS_ADT_INSTANCE_ENDPOINT_URL.value' --output tsv
+$dtHostName = az deployment group show -g $ResourceGroup -n $($DigitalTwinName.ToLower()) --query 'properties.outputs.digitaltwinS_URL.value' --output tsv
 
 Write-Host("`nSet a new client secret for $appId`n")
 $appSecret = az ad app credential reset --id $appId --years 2 --query 'password' --output tsv

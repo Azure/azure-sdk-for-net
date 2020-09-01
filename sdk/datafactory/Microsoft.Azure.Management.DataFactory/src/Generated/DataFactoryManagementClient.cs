@@ -151,6 +151,16 @@ namespace Microsoft.Azure.Management.DataFactory
         public virtual IDataFlowDebugSessionOperations DataFlowDebugSession { get; private set; }
 
         /// <summary>
+        /// Gets the IManagedVirtualNetworksOperations.
+        /// </summary>
+        public virtual IManagedVirtualNetworksOperations ManagedVirtualNetworks { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagedPrivateEndpointsOperations.
+        /// </summary>
+        public virtual IManagedPrivateEndpointsOperations ManagedPrivateEndpoints { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the DataFactoryManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -406,6 +416,8 @@ namespace Microsoft.Azure.Management.DataFactory
             TriggerRuns = new TriggerRunsOperations(this);
             DataFlows = new DataFlowsOperations(this);
             DataFlowDebugSession = new DataFlowDebugSessionOperations(this);
+            ManagedVirtualNetworks = new ManagedVirtualNetworksOperations(this);
+            ManagedPrivateEndpoints = new ManagedPrivateEndpointsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2018-06-01";
             AcceptLanguage = "en-US";
