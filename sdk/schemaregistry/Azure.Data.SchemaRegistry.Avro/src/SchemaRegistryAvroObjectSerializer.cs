@@ -19,18 +19,18 @@ using Azure.Data.SchemaRegistry.Models;
 namespace Azure.Data.SchemaRegistry.Avro
 {
     /// <summary>
-    /// A <see cref="AvroObjectSerializer"/> implementation that uses <see cref="SchemaRegistryClient"/> for SpecificRecord serialization/deserialization.
+    /// A <see cref="SchemaRegistryAvroObjectSerializer"/> implementation that uses <see cref="SchemaRegistryClient"/> for SpecificRecord serialization/deserialization.
     /// </summary>
-    public class AvroObjectSerializer : ObjectSerializer
+    public class SchemaRegistryAvroObjectSerializer : ObjectSerializer
     {
         private readonly SchemaRegistryClient _client;
         private readonly string _groupName;
-        private readonly AvroObjectSerializerOptions _options;
+        private readonly SchemaRegistryAvroObjectSerializerOptions _options;
 
         /// <summary>
-        /// Initializes new instance of <see cref="AvroObjectSerializer"/>.
+        /// Initializes new instance of <see cref="SchemaRegistryAvroObjectSerializer"/>.
         /// </summary>
-        public AvroObjectSerializer(SchemaRegistryClient client, string groupName, AvroObjectSerializerOptions options = null)
+        public SchemaRegistryAvroObjectSerializer(SchemaRegistryClient client, string groupName, SchemaRegistryAvroObjectSerializerOptions options = null)
         {
             _client = client ?? throw new ArgumentNullException(nameof(client));
             _groupName = groupName ?? throw new ArgumentNullException(nameof(groupName));
@@ -112,7 +112,6 @@ namespace Azure.Data.SchemaRegistry.Avro
         public override async ValueTask SerializeAsync(Stream stream, object value, Type inputType, CancellationToken cancellationToken)
         {
             //TODO: Null check input
-            //await Task.Run(() => Serialize(stream, value, inputType, cancellationToken), cancellationToken).ConfigureAwait(false);
             var supportedType = GetSupportedTypeOrThrow(inputType);
             var writer = GetWriterAndSchema(value, supportedType, out var schema);
             var schemaId = await GetSchemaIdAsync(schema, cancellationToken).ConfigureAwait(false);
@@ -209,64 +208,11 @@ namespace Azure.Data.SchemaRegistry.Avro
 
             var reader = GetReader(schema, supportedType);
             return reader.Read(reuse: null, binaryDecoder);
-
-
-
-            //var isSpecific = typeof(ISpecificRecord).IsAssignableFrom(returnType);
-            //if (isSpecific)
-            //{
-            //    using var memoryStream = new MemoryStream();
-            //    stream.Position = 0;
-            //    stream.CopyTo(memoryStream);
-            //    var message = new Memory<byte>(memoryStream.ToArray());
-
-            //    var recordFormatIdentifier = message.Slice(0, 4).ToArray();
-            //    if (!recordFormatIdentifier.SequenceEqual(s_emptyRecordFormatIndicator))
-            //    {
-            //        throw new InvalidDataContractException("The record format identifier for the message is invalid.");
-            //    }
-
-            //    var schemaIdBytes = message.Slice(4, 32).ToArray();
-            //    var schemaId = Encoding.UTF8.GetString(schemaIdBytes);
-            //    var schema = Schema.Parse(_client.GetSchema(schemaId).Value.Content);
-            //    var valueStream = new MemoryStream(message.Slice(36, message.Length - 36).ToArray());
-
-            //    var binaryDecoder = new BinaryDecoder(valueStream);
-            //    var reader = new SpecificDatumReader<object>(schema, schema);
-            //    return reader.Read(null, binaryDecoder);
-            //}
-
-            //var isGeneric = typeof(GenericRecord).IsAssignableFrom(returnType);
-            //if (isGeneric)
-            //{
-            //    using var memoryStream = new MemoryStream();
-            //    stream.Position = 0;
-            //    stream.CopyTo(memoryStream);
-            //    var message = new ReadOnlyMemory<byte>(memoryStream.ToArray());
-
-            //    var recordFormatIdentifier = message.Slice(0, 4).ToArray();
-            //    if (!recordFormatIdentifier.SequenceEqual(s_emptyRecordFormatIndicator))
-            //    {
-            //        throw new InvalidDataContractException("The record format identifier for the message is invalid.");
-            //    }
-
-            //    var schemaIdBytes = message.Slice(4, 32).ToArray();
-            //    var schemaId = Encoding.UTF8.GetString(schemaIdBytes);
-            //    var schema = Schema.Parse(_client.GetSchema(schemaId).Value.Content);
-            //    var valueStream = new MemoryStream(message.Slice(36, message.Length - 36).ToArray());
-
-            //    var binaryDecoder = new BinaryDecoder(valueStream);
-            //    var reader = new GenericDatumReader<object>(schema, schema);
-            //    return reader.Read(null, binaryDecoder);
-            //}
-
-            //return null;
         }
 
         /// <inheritdoc />
         public override async ValueTask<object> DeserializeAsync(Stream stream, Type returnType, CancellationToken cancellationToken)
         {
-            //return await Task.Run(() => Deserialize(stream, returnType, cancellationToken), cancellationToken).ConfigureAwait(false);
             //TODO: Null check input
             var supportedType = GetSupportedTypeOrThrow(returnType);
             var message = CopyToReadOnlyMemory(stream);

@@ -4,12 +4,12 @@
 namespace Azure.Data.SchemaRegistry.Avro
 {
     /// <summary>
-    /// Options for <see cref="AvroObjectSerializer"/>.
+    /// Options for <see cref="SchemaRegistryAvroObjectSerializer"/>.
     /// </summary>
-    public class AvroObjectSerializerOptions
+    public class SchemaRegistryAvroObjectSerializerOptions
     {
         /// <summary>
-        /// When true, automatically registers the provided value's schema with the SchemaRegistry during serialization.
+        /// When true, automatically registers the provided schema with the SchemaRegistry during serialization.
         /// When false, the schema is only acquired from the SchemaRegistry.
         /// </summary>
         public bool AutoRegisterSchemas { get; set; }

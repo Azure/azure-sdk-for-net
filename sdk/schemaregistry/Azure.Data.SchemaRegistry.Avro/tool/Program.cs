@@ -33,7 +33,7 @@ namespace ApacheAvroTestTool
             var client = new SchemaRegistryClient(endpoint, creds);
             var memoryStream = new MemoryStream();
 
-            var serializer = new AvroObjectSerializer(client, groupName, new AvroObjectSerializerOptions { AutoRegisterSchemas = true });
+            var serializer = new SchemaRegistryAvroObjectSerializer(client, groupName, new SchemaRegistryAvroObjectSerializerOptions { AutoRegisterSchemas = true });
             serializer.Serialize(memoryStream, employee, typeof(Employee), CancellationToken.None);
 
             var deserializedObject = serializer.Deserialize(memoryStream, typeof(Employee), CancellationToken.None);
@@ -53,7 +53,7 @@ namespace ApacheAvroTestTool
             var writeFileStream = new FileStream(employeePath, FileMode.Create);
 
             //memoryStream = new MemoryStream();
-            serializer = new AvroObjectSerializer(client, groupName, new AvroObjectSerializerOptions { AutoRegisterSchemas = true });
+            serializer = new SchemaRegistryAvroObjectSerializer(client, groupName, new SchemaRegistryAvroObjectSerializerOptions { AutoRegisterSchemas = true });
             serializer.Serialize(writeFileStream, record, typeof(GenericRecord), CancellationToken.None);
             writeFileStream.Close();
 
@@ -67,7 +67,7 @@ namespace ApacheAvroTestTool
             readFileStream.Close();
 
             //int
-            //serializer = new AvroObjectSerializer(client, groupName, new AvroObjectSerializerOptions { AutoRegisterSchemas = true });
+            //serializer = new SchemaRegistryAvroObjectSerializer(client, groupName, new SchemaRegistryAvroObjectSerializerOptions { AutoRegisterSchemas = true });
             //serializer.Serialize(memoryStream, 42, typeof(int), CancellationToken.None);
 
             //deserializedObject = serializer.Deserialize(memoryStream, typeof(int), CancellationToken.None);
