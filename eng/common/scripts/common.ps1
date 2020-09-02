@@ -1,24 +1,28 @@
-$global:RepoRoot = Resolve-Path "${PSScriptRoot}..\..\..\.."
-$global:EngDir = Join-Path $global:RepoRoot "eng"
-$global:EngCommonDir = Join-Path $global:EngDir "common"
-$global:EngCommonScriptsDir = Join-Path $global:EngCommonDir "scripts"
-$global:EngScriptsDir = Join-Path $global:EngDir "scripts"
+$RepoRoot = Resolve-Path "${PSScriptRoot}..\..\..\.."
+$EngDir = Join-Path $RepoRoot "eng"
+$EngCommonDir = Join-Path $EngDir "common"
+$EngCommonScriptsDir = Join-Path $EngCommonDir "scripts"
+$EngScriptsDir = Join-Path $EngDir "scripts"
 
 # Import required scripts
-. (Join-Path $global:EngCommonScriptsDir SemVer.ps1)
-. (Join-Path $global:EngCommonScriptsDir Changelog-Operations.ps1)
-. (Join-Path $global:EngCommonScriptsDir Package-Properties.ps1)
+. (Join-Path $EngCommonScriptsDir SemVer.ps1)
+. (Join-Path $EngCommonScriptsDir ChangeLog-Operations.ps1)
+. (Join-Path $EngCommonScriptsDir Package-Properties.ps1)
 
 # Setting expected from common languages settings
-$global:Language = "Unknown"
-$global:PackageRepository = "Unknown"
-$global:packagePattern = "Unknown"
-$global:MetadataUri = "Unknown"
+$Language = "Unknown"
+$PackageRepository = "Unknown"
+$packagePattern = "Unknown"
+$MetadataUri = "Unknown"
 
 # Import common language settings
-$EngScriptsLanguageSettings = Join-path $global:EngScriptsDir "Language-Settings.ps1"
+$EngScriptsLanguageSettings = Join-path $EngScriptsDir "Language-Settings.ps1"
 if (Test-Path $EngScriptsLanguageSettings) {
   . $EngScriptsLanguageSettings
+}
+If ($LanguageShort -eq $null)
+{
+  $LangaugeShort = $Language
 }
 
 # Transformed Functions
