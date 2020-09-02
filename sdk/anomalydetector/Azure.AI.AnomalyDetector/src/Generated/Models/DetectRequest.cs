@@ -11,14 +11,14 @@ using System.Linq;
 
 namespace Azure.AI.AnomalyDetector.Models
 {
-    /// <summary> The Request. </summary>
-    public partial class Request
+    /// <summary> The DetectRequest. </summary>
+    public partial class DetectRequest
     {
-        /// <summary> Initializes a new instance of Request. </summary>
+        /// <summary> Initializes a new instance of DetectRequest. </summary>
         /// <param name="series"> Time series data points. Points should be sorted by timestamp in ascending order to match the anomaly detection result. If the data is not sorted correctly or there is duplicated timestamp, the API will not work. In such case, an error message will be returned. </param>
         /// <param name="granularity"> Can only be one of yearly, monthly, weekly, daily, hourly, minutely or secondly. Granularity is used for verify whether input series is valid. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="series"/> is null. </exception>
-        public Request(IEnumerable<Point> series, Granularity granularity)
+        public DetectRequest(IEnumerable<TimeSeriesPoint> series, TimeGranularity granularity)
         {
             if (series == null)
             {
@@ -30,9 +30,9 @@ namespace Azure.AI.AnomalyDetector.Models
         }
 
         /// <summary> Time series data points. Points should be sorted by timestamp in ascending order to match the anomaly detection result. If the data is not sorted correctly or there is duplicated timestamp, the API will not work. In such case, an error message will be returned. </summary>
-        public IList<Point> Series { get; }
+        public IList<TimeSeriesPoint> Series { get; }
         /// <summary> Can only be one of yearly, monthly, weekly, daily, hourly, minutely or secondly. Granularity is used for verify whether input series is valid. </summary>
-        public Granularity Granularity { get; }
+        public TimeGranularity Granularity { get; }
         /// <summary> Custom Interval is used to set non-standard time interval, for example, if the series is 5 minutes, request can be set as {&quot;granularity&quot;:&quot;minutely&quot;, &quot;customInterval&quot;:5}. </summary>
         public int? CustomInterval { get; set; }
         /// <summary> Optional argument, periodic value of a time series. If the value is null or does not present, the API will determine the period automatically. </summary>

@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
 {
-    internal partial class APIError
+    internal partial class AnomalyDetectorError
     {
-        internal static APIError DeserializeAPIError(JsonElement element)
+        internal static AnomalyDetectorError DeserializeAnomalyDetectorError(JsonElement element)
         {
             Optional<AnomalyDetectorErrorCodes> code = default;
             Optional<string> message = default;
@@ -29,7 +29,7 @@ namespace Azure.AI.AnomalyDetector.Models
                     continue;
                 }
             }
-            return new APIError(Optional.ToNullable(code), message.Value);
+            return new AnomalyDetectorError(Optional.ToNullable(code), message.Value);
         }
     }
 }

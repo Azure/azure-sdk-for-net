@@ -6,8 +6,6 @@
     <PackageTags>Microsoft Azure Anomaly Detector</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateAPIListing>false</GenerateAPIListing>
-    <!-- Disable warning for avoiding single word type names -->
-    <NoWarn>$(NoWarn);AZC0012</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
