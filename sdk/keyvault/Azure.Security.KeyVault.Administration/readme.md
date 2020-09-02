@@ -24,7 +24,7 @@ See the final two steps in the next section for details on creating the Key Vaul
 
 ### Authenticate the client
 In order to control permissions to the Key Vault service, you'll need to create an instance of the [KeyVaultAccessControlClient][rbac_client] class. 
-You need a **vault url**, which you may see as "DNS Name" in the portal,  and **client secret credentials (client id, client secret, tenant id)** 
+You need a **vault URL**, which you may see as "DNS Name" in the portal,  and **client secret credentials (client id, client secret, tenant id)** 
 to instantiate a client object.
 
 Client secret credential authentication is being used in this getting started section but you can find more ways to authenticate with 
