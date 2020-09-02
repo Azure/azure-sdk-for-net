@@ -3,8 +3,6 @@
 
 using System.Diagnostics;
 
-using OpenTelemetry.Exporter.AzureMonitor.Extensions;
-
 namespace OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
 {
     public static class DemoTrace
