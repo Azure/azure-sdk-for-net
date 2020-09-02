@@ -204,6 +204,7 @@ namespace Azure.Storage.Queues
             _clientDiagnostics = new ClientDiagnostics(options);
             _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions);
             _messageEncoding = options.MessageEncoding;
+            AssertEncodingForEncryption();
         }
 
         /// <summary>
@@ -297,6 +298,7 @@ namespace Azure.Storage.Queues
             _clientDiagnostics = new ClientDiagnostics(options);
             _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions);
             _messageEncoding = options.MessageEncoding;
+            AssertEncodingForEncryption();
         }
 
         /// <summary>
@@ -339,6 +341,7 @@ namespace Azure.Storage.Queues
             _clientDiagnostics = clientDiagnostics;
             _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(encryptionOptions);
             _messageEncoding = messageEncoding;
+            AssertEncodingForEncryption();
         }
         #endregion ctors
 
@@ -1766,7 +1769,6 @@ namespace Azure.Storage.Queues
                 {
                     if (UsingClientSideEncryption)
                     {
-                        AssertEncodingForEncryption();
                         message = await new QueueClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
                             .ClientSideEncryptInternal(message.Value, async, cancellationToken).ConfigureAwait(false);
                     }
@@ -1985,7 +1987,6 @@ namespace Azure.Storage.Queues
                     }
                     else if (UsingClientSideEncryption)
                     {
-                        AssertEncodingForEncryption();
                         return Response.FromValue(
                             await new QueueClientSideDecryptor(ClientSideEncryption)
                                 .ClientSideDecryptMessagesInternal(response.Value.Select(x => QueueMessage.ToQueueMessage(x, _messageEncoding)).ToArray(), async, cancellationToken).ConfigureAwait(false),
@@ -2114,7 +2115,6 @@ namespace Azure.Storage.Queues
                     }
                     else if (UsingClientSideEncryption)
                     {
-                        AssertEncodingForEncryption();
                         return Response.FromValue(
                             await new QueueClientSideDecryptor(ClientSideEncryption)
                                 .ClientSideDecryptMessagesInternal(response.Value.Select(x => PeekedMessage.ToPeekedMessage(x, _messageEncoding)).ToArray(), async, cancellationToken).ConfigureAwait(false),
@@ -2473,7 +2473,6 @@ namespace Azure.Storage.Queues
                 {
                     if (UsingClientSideEncryption)
                     {
-                        AssertEncodingForEncryption();
                         message = await new QueueClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
                             .ClientSideEncryptInternal(message.Value, async, cancellationToken).ConfigureAwait(false);
                     }
@@ -2523,9 +2522,9 @@ namespace Azure.Storage.Queues
 
         private void AssertEncodingForEncryption()
         {
-            if (_messageEncoding != QueueMessageEncoding.UTF8)
+            if (UsingClientSideEncryption && _messageEncoding != QueueMessageEncoding.UTF8)
             {
-                throw new ArgumentException("Message encoding must be None if encryption is enabled");
+                throw new ArgumentException($"In transit message encoding must be {QueueMessageEncoding.UTF8} if encryption is enabled.");
             }
         }
         #endregion Encoding
