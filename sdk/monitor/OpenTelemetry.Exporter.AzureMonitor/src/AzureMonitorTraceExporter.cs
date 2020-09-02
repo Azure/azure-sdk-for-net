@@ -38,10 +38,9 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             }
             catch (Exception ex)
             {
-                AzureMonitorTraceExporterEventSource.Log.WriteException(new Exception("Failed to export activities", ex));
+                AzureMonitorTraceExporterEventSource.Log.WriteException("Failed to export activities.", ex);
                 return ExportResult.Failure;
             }
-
         }
     }
 }

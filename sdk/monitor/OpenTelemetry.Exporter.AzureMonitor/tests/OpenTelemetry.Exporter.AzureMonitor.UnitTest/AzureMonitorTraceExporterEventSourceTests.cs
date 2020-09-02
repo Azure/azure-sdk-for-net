@@ -53,6 +53,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         {
             var listener = new InMemoryEventListener(AzureMonitorTraceExporterEventSource.Log);
             string message = "test message";
+            string prefix = "my custom prefix";
 
             try
             {
@@ -60,12 +61,13 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             }
             catch (Exception ex)
             {
-                AzureMonitorTraceExporterEventSource.Log.WriteException(ex);
+                AzureMonitorTraceExporterEventSource.Log.WriteException(prefix, ex);
             }
 
             listener.Messages.TryDequeue(out string result);
 
             var test = result.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+            Assert.IsTrue(test[0].StartsWith(prefix));
             Assert.IsTrue(test[0].Contains(message));
         }
 
