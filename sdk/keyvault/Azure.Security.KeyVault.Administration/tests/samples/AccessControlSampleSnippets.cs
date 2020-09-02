@@ -38,8 +38,7 @@ namespace Azure.Security.KeyVault.Administration.Samples
             // Create a new access control client using the default credential from Azure.Identity using environment variables previously set,
             // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
             KeyVaultAccessControlClient client = new KeyVaultAccessControlClient(vaultUri: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
-            /*@@*/
-            client = Client;
+            /*@@*/ client = Client;
 
             // Retrieve all the role definitions.
             List<KeyVaultRoleDefinition> roleDefinitions = client.GetRoleDefinitions(KeyVaultRoleScope.Global).ToList();
