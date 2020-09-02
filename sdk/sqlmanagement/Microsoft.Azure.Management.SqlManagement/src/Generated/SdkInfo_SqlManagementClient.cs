@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.Sql
                 new Tuple<string, string, string>("Sql", "ManagedInstances", "2020-02-02-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedRestorableDroppedDatabaseBackupShortTermRetentionPolicies", "2017-03-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedServerSecurityAlertPolicies", "2017-03-01-preview"),
-                new Tuple<string, string, string>("Sql", "Operations", "2020-02-02-preview"),
+                new Tuple<string, string, string>("Sql", "Operations", "2015-05-01-preview"),
                 new Tuple<string, string, string>("Sql", "PrivateEndpointConnections", "2018-06-01-preview"),
                 new Tuple<string, string, string>("Sql", "PrivateLinkResources", "2018-06-01-preview"),
                 new Tuple<string, string, string>("Sql", "RecommendedElasticPools", "2014-04-01"),

@@ -7,13 +7,12 @@
 		<PackageId>Microsoft.Azure.Management.Sql</PackageId>
 		<Description>Azure SQL Management SDK library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Sql</AssemblyName>
-		<Version>1.44.1-preview</Version>
+		<Version>1.45.1-preview</Version>
 		<PackageTags>Microsoft Azure SQL Management;SQL;SQL Management;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
 New features:
-- Azure SQL Managed Instance Azure Active Directory Only authentication support.
-- Added Short Term Retention for SQL Databases APIs (2020-02-02-preview)
+- Added SQL DB Short Term Retention APIs(2020-02-02-preview)
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
