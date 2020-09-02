@@ -110,7 +110,7 @@ namespace Azure.Storage.Queues.Samples
             foreach (PeekedMessage message in queue.PeekMessages(maxMessages: 10).Value)
             {
                 // Inspect the message
-                Console.WriteLine($"Message: {message.MessageText}");
+                Console.WriteLine($"Message: {message.Body}");
             }
         }
 
