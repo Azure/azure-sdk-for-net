@@ -32,10 +32,10 @@ namespace Microsoft.Azure.Management.Search
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "v2";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/arv100kri/azure-rest-api-specs/blob/arv100kri/fixes/specification/search/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --tag=package-2020-08 --csharp-sdks-folder=D:\\src\\azure-sdk-for-net\\sdk";
-      public static readonly String GithubForkName = "arv100kri";
-      public static readonly String GithubBranchName = "arv100kri/fixes";
-      public static readonly String GithubCommidId = "42f8d4598eb7f705eb2cce502594f93e1052b1cb";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/search/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=D:\\src\\azure-sdk-for-net\\sdk";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "master";
+      public static readonly String GithubCommidId = "8a98a5bf0f5c543cf2a340fcf77407658d59addb";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

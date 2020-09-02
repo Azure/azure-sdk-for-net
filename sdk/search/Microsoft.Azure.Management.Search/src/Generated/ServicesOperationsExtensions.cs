@@ -35,11 +35,11 @@ namespace Microsoft.Azure.Management.Search
             /// obtain this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='searchServiceName'>
-            /// The name of the Azure Cognitive Search service to create or update. search
+            /// The name of the Azure Cognitive Search service to create or update. Search
             /// service names must only contain lowercase letters, digits or dashes, cannot
             /// use dash as the first two or last one characters, cannot contain
             /// consecutive dashes, and must be between 2 and 60 characters in length.
-            /// search service names must be globally unique since they are part of the
+            /// Search service names must be globally unique since they are part of the
             /// service URI (https://&lt;name&gt;.search.windows.net). You cannot change
             /// the service name after the service is created.
             /// </param>
@@ -68,11 +68,11 @@ namespace Microsoft.Azure.Management.Search
             /// obtain this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='searchServiceName'>
-            /// The name of the Azure Cognitive Search service to create or update. search
+            /// The name of the Azure Cognitive Search service to create or update. Search
             /// service names must only contain lowercase letters, digits or dashes, cannot
             /// use dash as the first two or last one characters, cannot contain
             /// consecutive dashes, and must be between 2 and 60 characters in length.
-            /// search service names must be globally unique since they are part of the
+            /// Search service names must be globally unique since they are part of the
             /// service URI (https://&lt;name&gt;.search.windows.net). You cannot change
             /// the service name after the service is created.
             /// </param>
@@ -334,7 +334,7 @@ namespace Microsoft.Azure.Management.Search
 
             /// <summary>
             /// Checks whether or not the given search service name is available for use.
-            /// search service names must be globally unique since they are part of the
+            /// Search service names must be globally unique since they are part of the
             /// service URI (https://&lt;name&gt;.search.windows.net).
             /// <see href="https://aka.ms/search-manage" />
             /// </summary>
@@ -342,7 +342,7 @@ namespace Microsoft.Azure.Management.Search
             /// The operations group for this extension method.
             /// </param>
             /// <param name='name'>
-            /// The search service name to validate. search service names must only contain
+            /// The search service name to validate. Search service names must only contain
             /// lowercase letters, digits or dashes, cannot use dash as the first two or
             /// last one characters, cannot contain consecutive dashes, and must be between
             /// 2 and 60 characters in length.
@@ -357,7 +357,7 @@ namespace Microsoft.Azure.Management.Search
 
             /// <summary>
             /// Checks whether or not the given search service name is available for use.
-            /// search service names must be globally unique since they are part of the
+            /// Search service names must be globally unique since they are part of the
             /// service URI (https://&lt;name&gt;.search.windows.net).
             /// <see href="https://aka.ms/search-manage" />
             /// </summary>
@@ -365,7 +365,7 @@ namespace Microsoft.Azure.Management.Search
             /// The operations group for this extension method.
             /// </param>
             /// <param name='name'>
-            /// The search service name to validate. search service names must only contain
+            /// The search service name to validate. Search service names must only contain
             /// lowercase letters, digits or dashes, cannot use dash as the first two or
             /// last one characters, cannot contain consecutive dashes, and must be between
             /// 2 and 60 characters in length.
@@ -398,11 +398,11 @@ namespace Microsoft.Azure.Management.Search
             /// obtain this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='searchServiceName'>
-            /// The name of the Azure Cognitive Search service to create or update. search
+            /// The name of the Azure Cognitive Search service to create or update. Search
             /// service names must only contain lowercase letters, digits or dashes, cannot
             /// use dash as the first two or last one characters, cannot contain
             /// consecutive dashes, and must be between 2 and 60 characters in length.
-            /// search service names must be globally unique since they are part of the
+            /// Search service names must be globally unique since they are part of the
             /// service URI (https://&lt;name&gt;.search.windows.net). You cannot change
             /// the service name after the service is created.
             /// </param>
@@ -431,11 +431,11 @@ namespace Microsoft.Azure.Management.Search
             /// obtain this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='searchServiceName'>
-            /// The name of the Azure Cognitive Search service to create or update. search
+            /// The name of the Azure Cognitive Search service to create or update. Search
             /// service names must only contain lowercase letters, digits or dashes, cannot
             /// use dash as the first two or last one characters, cannot contain
             /// consecutive dashes, and must be between 2 and 60 characters in length.
-            /// search service names must be globally unique since they are part of the
+            /// Search service names must be globally unique since they are part of the
             /// service URI (https://&lt;name&gt;.search.windows.net). You cannot change
             /// the service name after the service is created.
             /// </param>
