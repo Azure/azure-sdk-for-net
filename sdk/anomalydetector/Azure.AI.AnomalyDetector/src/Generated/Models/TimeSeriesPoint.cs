@@ -9,13 +9,13 @@ using System;
 
 namespace Azure.AI.AnomalyDetector.Models
 {
-    /// <summary> The Point. </summary>
-    public partial class Point
+    /// <summary> The TimeSeriesPoint. </summary>
+    public partial class TimeSeriesPoint
     {
-        /// <summary> Initializes a new instance of Point. </summary>
+        /// <summary> Initializes a new instance of TimeSeriesPoint. </summary>
         /// <param name="timestamp"> Timestamp of a data point (ISO8601 format). </param>
         /// <param name="value"> The measurement of that point, should be float. </param>
-        public Point(DateTimeOffset timestamp, float value)
+        public TimeSeriesPoint(DateTimeOffset timestamp, float value)
         {
             Timestamp = timestamp;
             Value = value;

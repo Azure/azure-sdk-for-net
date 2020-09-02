@@ -8,17 +8,17 @@
 namespace Azure.AI.AnomalyDetector.Models
 {
     /// <summary> Error information returned by the API. </summary>
-    internal partial class APIError
+    internal partial class AnomalyDetectorError
     {
-        /// <summary> Initializes a new instance of APIError. </summary>
-        internal APIError()
+        /// <summary> Initializes a new instance of AnomalyDetectorError. </summary>
+        internal AnomalyDetectorError()
         {
         }
 
-        /// <summary> Initializes a new instance of APIError. </summary>
+        /// <summary> Initializes a new instance of AnomalyDetectorError. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> A message explaining the error reported by the service. </param>
-        internal APIError(AnomalyDetectorErrorCodes? code, string message)
+        internal AnomalyDetectorError(AnomalyDetectorErrorCodes? code, string message)
         {
             Code = code;
             Message = message;
