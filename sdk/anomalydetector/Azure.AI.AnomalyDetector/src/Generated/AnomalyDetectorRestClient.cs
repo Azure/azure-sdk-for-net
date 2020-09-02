@@ -39,7 +39,7 @@ namespace Azure.AI.AnomalyDetector
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateEntireDetectRequest(Models.Request body)
+        internal HttpMessage CreateDetectEntireSeriesRequest(DetectRequest body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -61,14 +61,14 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="body"> Time series points and period if needed. Advanced model parameters can also be set in the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<Response<EntireDetectResponse>> EntireDetectAsync(Models.Request body, CancellationToken cancellationToken = default)
+        public async Task<Response<EntireDetectResponse>> DetectEntireSeriesAsync(DetectRequest body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateEntireDetectRequest(body);
+            using var message = CreateDetectEntireSeriesRequest(body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -88,14 +88,14 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="body"> Time series points and period if needed. Advanced model parameters can also be set in the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public Response<EntireDetectResponse> EntireDetect(Models.Request body, CancellationToken cancellationToken = default)
+        public Response<EntireDetectResponse> DetectEntireSeries(DetectRequest body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateEntireDetectRequest(body);
+            using var message = CreateDetectEntireSeriesRequest(body);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -111,7 +111,7 @@ namespace Azure.AI.AnomalyDetector
             }
         }
 
-        internal HttpMessage CreateLastDetectRequest(Models.Request body)
+        internal HttpMessage CreateDetectLastPointRequest(DetectRequest body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -133,14 +133,14 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="body"> Time series points and period if needed. Advanced model parameters can also be set in the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<Response<LastDetectResponse>> LastDetectAsync(Models.Request body, CancellationToken cancellationToken = default)
+        public async Task<Response<LastDetectResponse>> DetectLastPointAsync(DetectRequest body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateLastDetectRequest(body);
+            using var message = CreateDetectLastPointRequest(body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -160,14 +160,14 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="body"> Time series points and period if needed. Advanced model parameters can also be set in the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public Response<LastDetectResponse> LastDetect(Models.Request body, CancellationToken cancellationToken = default)
+        public Response<LastDetectResponse> DetectLastPoint(DetectRequest body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateLastDetectRequest(body);
+            using var message = CreateDetectLastPointRequest(body);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -183,7 +183,7 @@ namespace Azure.AI.AnomalyDetector
             }
         }
 
-        internal HttpMessage CreateChangePointDetectRequest(ChangePointDetectRequest body)
+        internal HttpMessage CreateDetectChangePointRequest(ChangePointDetectRequest body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -205,14 +205,14 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="body"> Time series points and granularity is needed. Advanced model parameters can also be set in the request if needed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<Response<ChangePointDetectResponse>> ChangePointDetectAsync(ChangePointDetectRequest body, CancellationToken cancellationToken = default)
+        public async Task<Response<ChangePointDetectResponse>> DetectChangePointAsync(ChangePointDetectRequest body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateChangePointDetectRequest(body);
+            using var message = CreateDetectChangePointRequest(body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -232,14 +232,14 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="body"> Time series points and granularity is needed. Advanced model parameters can also be set in the request if needed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public Response<ChangePointDetectResponse> ChangePointDetect(ChangePointDetectRequest body, CancellationToken cancellationToken = default)
+        public Response<ChangePointDetectResponse> DetectChangePoint(ChangePointDetectRequest body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateChangePointDetectRequest(body);
+            using var message = CreateDetectChangePointRequest(body);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

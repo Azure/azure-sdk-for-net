@@ -1,9 +1,15 @@
 namespace Azure.AI.TextAnalytics
 {
+    [System.FlagsAttribute]
+    public enum AdditionalSentimentAnalyses
+    {
+        None = 0,
+        OpinionMining = 1,
+    }
     public partial class AnalyzeSentimentOptions : Azure.AI.TextAnalytics.TextAnalyticsRequestOptions
     {
         public AnalyzeSentimentOptions() { }
-        public bool IncludeOpinionMining { get { throw null; } set { } }
+        public Azure.AI.TextAnalytics.AdditionalSentimentAnalyses AdditionalSentimentAnalyses { get { throw null; } set { } }
     }
     public partial class AnalyzeSentimentResult : Azure.AI.TextAnalytics.TextAnalyticsResult
     {

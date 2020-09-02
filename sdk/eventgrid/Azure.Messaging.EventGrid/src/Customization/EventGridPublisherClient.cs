@@ -226,10 +226,7 @@ namespace Azure.Messaging.EventGrid
                     // Additionally, if the type of data is binary, 'Data' will not be populated (data will be stored in 'DataBase64' instead)
                     if (cloudEvent.Data != null)
                     {
-                        MemoryStream stream = new MemoryStream();
-                        _dataSerializer.Serialize(stream, cloudEvent.Data, cloudEvent.Data.GetType(), cancellationToken);
-                        stream.Position = 0;
-                        JsonDocument data = JsonDocument.Parse(stream);
+                        JsonDocument data = SerializeObjectToJsonDocument(cloudEvent.Data, cloudEvent.Data.GetType(), cancellationToken);
                         newCloudEvent.Data = data.RootElement;
                     }
                     eventsWithSerializedPayloads.Add(newCloudEvent);
