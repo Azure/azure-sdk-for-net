@@ -191,7 +191,7 @@ foreach ($item in $workItems)
     $id = $item.fields."System.ID";
     $title = $item.fields."System.Title";
     $path = $item.fields."System.IterationPath";
-    Write-Host "$id - $path - $title" 
+    Write-Host "$id - $path - $title"
 }
 
 # Sort using fuzzy match
@@ -205,12 +205,21 @@ if (!$issueId)
     $issueId = $mostProbable.fields."System.ID"
 }
 
+$changeLogEntry = Get-ChangeLogEntry -ChangeLogLocation "$packageDirectory/CHANGELOG.md" -VersionString $newVersion
+
+$githubAnchor = $changeLogEntry.ReleaseTitle.Replace("## ", "").Replace(".", "").Replace("(", "").Replace(")", "").Replace(" ", "-")
+
+$notes = "> dotnet add package $package --version $newVersion`n`n";
+$notes += "### $package [Changelog](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/$serviceDirectory/$package/CHANGELOG.md#$githubAnchor)`n"
+$changeLogEntry.ReleaseContent | %{ $notes += "$_`n" }
+
 $fields = @{
     "Permalink usetag"="https://github.com/Azure/azure-sdk-for-net/sdk/$serviceDirectory/$package/README.md"
     "Package Registry Permalink"="https://nuget.org/packages/$package/$newVersion"
     "Library Type"=$libraryType
     "Release Type"=$releaseType
     "Version Number"=$newVersion
+    "Notes"="<pre>"+$notes.Replace("`n", "<br>")+"</pre>"
 }
 
 Write-Host
@@ -232,12 +241,6 @@ if ($decision -eq 0)
     }
 }
 
-$changeLogEntry = Get-ChangeLogEntry -ChangeLogLocation "$packageDirectory/CHANGELOG.md" -VersionString $newVersion
-
-$githubAnchor = $changeLogEntry.ReleaseTitle.Replace("## ", "").Replace(".", "").Replace("(", "").Replace(")", "").Replace(" ", "-")
 Write-Host
 Write-Host "Snippet for the centralized CHANGELOG:" -ForegroundColor Green
-Write-Host "dotnet add package $package --version $newVersion"
-Write-Host "### $package [Changelog](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/$serviceDirectory/$package/CHANGELOG.md#$githubAnchor)"
-$changeLogEntry.ReleaseContent | Write-Host 
-
+Write-Host $notes
