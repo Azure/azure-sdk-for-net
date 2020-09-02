@@ -16,7 +16,6 @@ namespace Azure.Data.SchemaRegistry
     public class SchemaRegistryClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly HttpPipeline _pipeline;
         internal SchemaRestClient RestClient { get; }
 
         /// <summary>
@@ -32,25 +31,25 @@ namespace Azure.Data.SchemaRegistry
         public SchemaRegistryClient(string endpoint, TokenCredential credential, SchemaRegistryClientOptions options) : this(
             new ClientDiagnostics(options),
             HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, "https://eventhubs.azure.net/.default")),
-            endpoint)
+            endpoint,
+            options.Version)
         {
         }
 
-        /// <summary> Initializes a new instance of SchemaRegistryClient for mocking. </summary>
+        /// <summary> Initializes a new instance of <see cref="SchemaRegistryClient"/> for mocking. </summary>
         protected SchemaRegistryClient()
         {
         }
 
-        /// <summary> Initializes a new instance of SchemaRegistryClient. </summary>
+        /// <summary> Initializes a new instance of <see cref="SchemaRegistryClient"/>. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> The vault name, for example https://myvault.vault.azure.net. </param>
-        internal SchemaRegistryClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint)
+        /// <param name="endpoint"> The endpoint URI. For example, myschemaregistry.servicebus.windows.net. </param>
+        /// <param name="apiVersion"> The API version of the service. </param>
+        internal SchemaRegistryClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion)
         {
-            //TODO: Hardcoded API version.
-            RestClient = new SchemaRestClient(clientDiagnostics, pipeline, endpoint, "2017-04");
+            RestClient = new SchemaRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
             _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
         }
 
         /// <summary>

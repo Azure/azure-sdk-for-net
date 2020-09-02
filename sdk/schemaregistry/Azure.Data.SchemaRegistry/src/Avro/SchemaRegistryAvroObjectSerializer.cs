@@ -13,6 +13,7 @@ using Avro;
 using Avro.Generic;
 using Avro.IO;
 using Avro.Specific;
+using Azure.Core;
 using Azure.Core.Serialization;
 using Azure.Data.SchemaRegistry.Models;
 
@@ -97,10 +98,14 @@ namespace Azure.Data.SchemaRegistry.Avro
         /// <inheritdoc />
         public override void Serialize(Stream stream, object value, Type inputType, CancellationToken cancellationToken)
         {
-            //TODO: Null check input
+            Argument.AssertNotNull(stream, nameof(stream));
+            Argument.AssertNotNull(value, nameof(value));
+            Argument.AssertNotNull(inputType, nameof(inputType));
+
             var supportedType = GetSupportedTypeOrThrow(inputType);
             var writer = GetWriterAndSchema(value, supportedType, out var schema);
             var schemaId = GetSchemaId(schema, cancellationToken);
+
             var binaryEncoder = new BinaryEncoder(stream);
             stream.Write(s_emptyRecordFormatIndicator, 0, 4);
             stream.Write(Encoding.UTF8.GetBytes(schemaId), 0, 32);
@@ -111,10 +116,14 @@ namespace Azure.Data.SchemaRegistry.Avro
         /// <inheritdoc />
         public override async ValueTask SerializeAsync(Stream stream, object value, Type inputType, CancellationToken cancellationToken)
         {
-            //TODO: Null check input
+            Argument.AssertNotNull(stream, nameof(stream));
+            Argument.AssertNotNull(value, nameof(value));
+            Argument.AssertNotNull(inputType, nameof(inputType));
+
             var supportedType = GetSupportedTypeOrThrow(inputType);
             var writer = GetWriterAndSchema(value, supportedType, out var schema);
             var schemaId = await GetSchemaIdAsync(schema, cancellationToken).ConfigureAwait(false);
+
             var binaryEncoder = new BinaryEncoder(stream);
             await stream.WriteAsync(s_emptyRecordFormatIndicator, 0, 4, cancellationToken).ConfigureAwait(false);
             await stream.WriteAsync(Encoding.UTF8.GetBytes(schemaId), 0, 32, cancellationToken).ConfigureAwait(false);
@@ -198,14 +207,16 @@ namespace Azure.Data.SchemaRegistry.Avro
         /// <inheritdoc />
         public override object Deserialize(Stream stream, Type returnType, CancellationToken cancellationToken)
         {
-            //TODO: Null check input
+            Argument.AssertNotNull(stream, nameof(stream));
+            Argument.AssertNotNull(returnType, nameof(returnType));
+
             var supportedType = GetSupportedTypeOrThrow(returnType);
             var message = CopyToReadOnlyMemory(stream);
             ValidateRecordFormatIdentifier(message);
             var schema = GetSchema(message, cancellationToken);
             using var valueStream = new MemoryStream(message.Slice(36, message.Length - 36).ToArray());
-            var binaryDecoder = new BinaryDecoder(valueStream);
 
+            var binaryDecoder = new BinaryDecoder(valueStream);
             var reader = GetReader(schema, supportedType);
             return reader.Read(reuse: null, binaryDecoder);
         }
@@ -213,14 +224,16 @@ namespace Azure.Data.SchemaRegistry.Avro
         /// <inheritdoc />
         public override async ValueTask<object> DeserializeAsync(Stream stream, Type returnType, CancellationToken cancellationToken)
         {
-            //TODO: Null check input
+            Argument.AssertNotNull(stream, nameof(stream));
+            Argument.AssertNotNull(returnType, nameof(returnType));
+
             var supportedType = GetSupportedTypeOrThrow(returnType);
             var message = CopyToReadOnlyMemory(stream);
             ValidateRecordFormatIdentifier(message);
             var schema = await GetSchemaAsync(message, cancellationToken).ConfigureAwait(false);
             using var valueStream = new MemoryStream(message.Slice(36, message.Length - 36).ToArray());
-            var binaryDecoder = new BinaryDecoder(valueStream);
 
+            var binaryDecoder = new BinaryDecoder(valueStream);
             var reader = GetReader(schema, supportedType);
             return reader.Read(reuse: null, binaryDecoder);
         }

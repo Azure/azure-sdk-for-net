@@ -23,7 +23,7 @@ namespace Azure.Data.SchemaRegistry
             Name = slashSplit[2];
             GroupName = slashSplit[0];
             Type = xSchemaType;
-            Version = xSchemaVersion;
+            Version = xSchemaVersion ?? 0;
         }
 
         /// <summary>
@@ -54,6 +54,6 @@ namespace Azure.Data.SchemaRegistry
         /// <summary>
         /// Version of the schema.
         /// </summary>
-        internal int? Version { get; }
+        internal int Version { get; }
     }
 }

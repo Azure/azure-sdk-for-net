@@ -5,21 +5,21 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Data.SchemaRegistry.Tests
 {
-    public class SchemaRegistryClientLiveTest : RecordedTestBase<SchemaRegistryClientTestEnvironment>
+    public class SchemaRegistryAvroObjectSerializerLiveTest : RecordedTestBase<SchemaRegistryClientTestEnvironment>
     {
-        public SchemaRegistryClientLiveTest(bool isAsync) : base(isAsync)
+        public SchemaRegistryAvroObjectSerializerLiveTest(bool isAsync) : base(isAsync)
         {
             TestDiagnostics = false;
         }
 
-        //        private SchemaRegistryClient CreateClient()
-        //        {
-        //            return InstrumentClient(new SchemaRegistryClient(
-        //                TestEnvironment.SchemaRegistryUri,
-        //                TestEnvironment.Credential,
-        //                Recording.InstrumentClientOptions(new SchemaRegistryClientOptions())
-        //            ));
-        //        }
+        private SchemaRegistryClient CreateClient()
+        {
+            return InstrumentClient(new SchemaRegistryClient(
+                TestEnvironment.SchemaRegistryUri,
+                TestEnvironment.Credential,
+                Recording.InstrumentClientOptions(new SchemaRegistryClientOptions())
+            ));
+        }
 
         //        [Test]
         //        public async Task CanRegisterSchema()
@@ -39,19 +39,16 @@ namespace Azure.Data.SchemaRegistry.Tests
         //    ]
         //}";
 
-        //            var schemaProperties = await client.RegisterSchemaAsync(groupName, schemaName, schema, schemaType);
+        //            var schemaProperties = await client.RegisterSchemaAsync(groupName, schemaName, schemaType, schema);
         //            Assert.IsNotNull(schemaProperties.Value);
-        //            Assert.AreEqual(schemaName, schemaProperties.Value.Name);
-        //            Assert.AreEqual(groupName, schemaProperties.Value.GroupName);
-        //            Assert.AreEqual(schemaType, schemaProperties.Value.Type);
-        //            Assert.IsNotNull(schemaProperties.Value.Version);
         //            Assert.IsNotNull(schemaProperties.Value.Id);
         //            Assert.IsTrue(Guid.TryParse(schemaProperties.Value.Id, out Guid _));
+        //            Assert.AreEqual(schema, schemaProperties.Value.Content);
         //        }
 
 
         //        [Test]
-        //        public async Task CanGetSchemaViaContent()
+        //        public async Task CanGetSchemaId()
         //        {
         //            var client = CreateClient();
         //            var schemaName = "test1";
@@ -68,19 +65,16 @@ namespace Azure.Data.SchemaRegistry.Tests
         //    ]
         //}";
 
-        //            await client.RegisterSchemaAsync(groupName, schemaName, schema, schemaType);
-        //            var schemaProperties = await client.GetSchemaAsync(groupName, schemaName, schema, schemaType);
+        //            await client.RegisterSchemaAsync(groupName, schemaName, schemaType, schema);
+        //            var schemaProperties = await client.GetSchemaIdAsync(groupName, schemaName, schemaType, schema);
         //            Assert.IsNotNull(schemaProperties.Value);
-        //            Assert.AreEqual(schemaName, schemaProperties.Value.Name);
-        //            Assert.AreEqual(groupName, schemaProperties.Value.GroupName);
-        //            Assert.AreEqual(schemaType, schemaProperties.Value.Type);
-        //            Assert.IsNotNull(schemaProperties.Value.Version);
         //            Assert.IsNotNull(schemaProperties.Value.Id);
         //            Assert.IsTrue(Guid.TryParse(schemaProperties.Value.Id, out Guid _));
+        //            Assert.AreEqual(schema, schemaProperties.Value.Content);
         //        }
 
         //        [Test]
-        //        public async Task CanGetSchemaViaId()
+        //        public async Task CanGetSchema()
         //        {
         //            var client = CreateClient();
         //            var schemaName = "test1";
@@ -97,18 +91,15 @@ namespace Azure.Data.SchemaRegistry.Tests
         //    ]
         //}";
 
-        //            var registerProperties = await client.RegisterSchemaAsync(groupName, schemaName, schema, schemaType);
+        //            var registerProperties = await client.RegisterSchemaAsync(groupName, schemaName, schemaType, schema);
         //            Assert.IsNotNull(registerProperties.Value.Id);
         //            Assert.IsTrue(Guid.TryParse(registerProperties.Value.Id, out Guid _));
 
         //            var schemaProperties = await client.GetSchemaAsync(registerProperties.Value.Id);
         //            Assert.IsNotNull(schemaProperties.Value);
-        //            Assert.AreEqual(schemaName, schemaProperties.Value.Name);
-        //            Assert.AreEqual(groupName, schemaProperties.Value.GroupName);
-        //            Assert.AreEqual(schemaType, schemaProperties.Value.Type);
-        //            Assert.IsNotNull(schemaProperties.Value.Version);
         //            Assert.IsNotNull(schemaProperties.Value.Id);
         //            Assert.IsTrue(Guid.TryParse(schemaProperties.Value.Id, out Guid _));
+        //            Assert.AreEqual(schema, schemaProperties.Value.Content);
         //        }
     }
 }

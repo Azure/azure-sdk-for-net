@@ -45,10 +45,6 @@ namespace Azure.Data.SchemaRegistry.Tests
 
             var schemaProperties = await client.RegisterSchemaAsync(groupName, schemaName, schemaType, schema);
             Assert.IsNotNull(schemaProperties.Value);
-            //Assert.AreEqual(schemaName, schemaProperties.Value.Name);
-            //Assert.AreEqual(groupName, schemaProperties.Value.GroupName);
-            //Assert.AreEqual(schemaType, schemaProperties.Value.Type);
-            //Assert.IsNotNull(schemaProperties.Value.Version);
             Assert.IsNotNull(schemaProperties.Value.Id);
             Assert.IsTrue(Guid.TryParse(schemaProperties.Value.Id, out Guid _));
             Assert.AreEqual(schema, schemaProperties.Value.Content);
@@ -76,10 +72,6 @@ namespace Azure.Data.SchemaRegistry.Tests
             await client.RegisterSchemaAsync(groupName, schemaName, schemaType, schema);
             var schemaProperties = await client.GetSchemaIdAsync(groupName, schemaName, schemaType, schema);
             Assert.IsNotNull(schemaProperties.Value);
-            //Assert.AreEqual(schemaName, schemaProperties.Value.Name);
-            //Assert.AreEqual(groupName, schemaProperties.Value.GroupName);
-            //Assert.AreEqual(schemaType, schemaProperties.Value.Type);
-            //Assert.IsNotNull(schemaProperties.Value.Version);
             Assert.IsNotNull(schemaProperties.Value.Id);
             Assert.IsTrue(Guid.TryParse(schemaProperties.Value.Id, out Guid _));
             Assert.AreEqual(schema, schemaProperties.Value.Content);
@@ -109,10 +101,6 @@ namespace Azure.Data.SchemaRegistry.Tests
 
             var schemaProperties = await client.GetSchemaAsync(registerProperties.Value.Id);
             Assert.IsNotNull(schemaProperties.Value);
-            //Assert.AreEqual(schemaName, schemaProperties.Value.Name);
-            //Assert.AreEqual(groupName, schemaProperties.Value.GroupName);
-            //Assert.AreEqual(schemaType, schemaProperties.Value.Type);
-            //Assert.IsNotNull(schemaProperties.Value.Version);
             Assert.IsNotNull(schemaProperties.Value.Id);
             Assert.IsTrue(Guid.TryParse(schemaProperties.Value.Id, out Guid _));
             Assert.AreEqual(schema, schemaProperties.Value.Content);
