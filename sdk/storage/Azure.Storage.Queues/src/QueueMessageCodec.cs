@@ -27,7 +27,11 @@ namespace Azure.Storage.Queues
 
         public static BinaryData DecodeMessageBody(string messageText, QueueMessageEncoding messageEncoding)
         {
-            // TODO (kasobol-msft) nulls?
+            if (messageText == null)
+            {
+                return new BinaryData(string.Empty);
+            }
+
             switch (messageEncoding)
             {
                 case QueueMessageEncoding.UTF8:
