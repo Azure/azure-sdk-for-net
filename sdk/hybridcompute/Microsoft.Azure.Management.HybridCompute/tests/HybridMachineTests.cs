@@ -14,102 +14,99 @@ using Xunit;
 
 namespace Microsoft.Azure.Management.HybridCompute.Tests
 {
-    public class HybridMachineTests : TestBase, IDisposable
+    public class HybridMachineTests : TestBase
     {
         const string _resourceGroupName = "AzcmagentTest";
         const string _machineName = "0.10.20225.002";
         const string _location = "eastus2euap";
-        private readonly MockContext _context;
-
-        private HybridComputeManagementClient _client;
-
-        public HybridMachineTests()
-        {
-            _context = MockContext.Start(GetType().FullName);
-        }
-
-        private void Initialize()
-        {
-            _client = this.GetHybridComputeManagementClient(_context);
-        }
-
-        public void Dispose()
-        {
-            _context.Dispose();
-        }
 
         [Fact]
         public void Machines_GetMachine()
         {
-            Initialize();
-            Machine hybridMachine = _client.Machines.Get(_resourceGroupName, _machineName);
-            Assert.Equal(_machineName, hybridMachine.Name);
-            Assert.Equal(_location, hybridMachine.Location);
+            using (MockContext context = MockContext.Start(GetType().FullName))
+            {
+                var client = this.GetHybridComputeManagementClient(context);
+                Machine hybridMachine = client.Machines.Get(_resourceGroupName, _machineName);
+                Assert.Equal(_machineName, hybridMachine.Name);
+                Assert.Equal(_location, hybridMachine.Location);
+            }
         }
 
         [Fact]
         public async Task Machines_GetMachineAsync()
         {
-            Initialize();
-            Machine hybridMachine = await _client.Machines.GetAsync(_resourceGroupName, _machineName).ConfigureAwait(false);
-            Assert.Equal(_machineName, hybridMachine.Name);
-            Assert.Equal(_location, hybridMachine.Location);
+            using (MockContext context = MockContext.Start(GetType().FullName))
+            {
+                var client = this.GetHybridComputeManagementClient(context);
+                Machine hybridMachine = await client.Machines.GetAsync(_resourceGroupName, _machineName).ConfigureAwait(false);
+                Assert.Equal(_machineName, hybridMachine.Name);
+                Assert.Equal(_location, hybridMachine.Location);
+            }
         }
 
         [Fact]
         public void Machines_DeleteMachine()
         {
-            Initialize();
-            Machine machine = _client.Machines.ListByResourceGroup(_resourceGroupName)
-                // grab a random machine in the resource group but make sure it's not the one used in the other tests.
-                .First(m => m.Name != _machineName);
-            _client.Machines.Delete(_resourceGroupName, machine.Name);
-            Assert.ThrowsAsync<Exception>(async () => await _client.Machines.GetAsync(_resourceGroupName, _machineName).ConfigureAwait(false));
+            using (MockContext context = MockContext.Start(GetType().FullName))
+            {
+                var client = this.GetHybridComputeManagementClient(context);
+                Machine machine = client.Machines.ListByResourceGroup(_resourceGroupName)
+                    // grab a random machine in the resource group but make sure it's not the one used in the other tests.
+                    .First(m => m.Name != _machineName);
+                client.Machines.Delete(_resourceGroupName, machine.Name);
+                Assert.ThrowsAsync<Exception>(async () => await client.Machines.GetAsync(_resourceGroupName, _machineName).ConfigureAwait(false));
+            }
         }
 
         [Fact]
         public void Machines_ListByResourceGroup()
         {
-            Initialize();
-            int count = 0;
-            IPage<Machine> listResponse = _client.Machines.ListByResourceGroup(_resourceGroupName);
-            Assert.NotNull(listResponse);
-            foreach (Machine machine in listResponse)
+            using (MockContext context = MockContext.Start(GetType().FullName))
             {
-                count++;
-            }
-
-            string nextLink = listResponse.NextPageLink;
-            while (!string.IsNullOrEmpty(nextLink))
-            {
-                IPage<Machine> listNextResponse = _client.Machines.ListByResourceGroupNext(nextLink);
-                Assert.NotNull(listNextResponse);
-                foreach (Machine machine in listNextResponse)
+                var client = this.GetHybridComputeManagementClient(context);
+                int count = 0;
+                IPage<Machine> listResponse = client.Machines.ListByResourceGroup(_resourceGroupName);
+                Assert.NotNull(listResponse);
+                foreach (Machine machine in listResponse)
                 {
                     count++;
                 }
-                nextLink = listNextResponse.NextPageLink;
+
+                string nextLink = listResponse.NextPageLink;
+                while (!string.IsNullOrEmpty(nextLink))
+                {
+                    IPage<Machine> listNextResponse = client.Machines.ListByResourceGroupNext(nextLink);
+                    Assert.NotNull(listNextResponse);
+                    foreach (Machine machine in listNextResponse)
+                    {
+                        count++;
+                    }
+                    nextLink = listNextResponse.NextPageLink;
+                }
+                Assert.True(count >= 400);
             }
-            Assert.True(count >= 400);
         }
 
         [Fact]
         public void Machines_ListBySubscription()
         {
-            Initialize();
-            IPage<Machine> listResponse = _client.Machines.ListBySubscription();
-            Assert.NotNull(listResponse);
-            int count = listResponse.Count();
-
-            string nextLink = listResponse.NextPageLink;
-            while (!string.IsNullOrEmpty(nextLink))
+            using (MockContext context = MockContext.Start(GetType().FullName))
             {
-                IPage<Machine> listNextResponse = _client.Machines.ListBySubscriptionNext(nextLink);
-                Assert.NotNull(listNextResponse);
-                count += listNextResponse.Count();
-                nextLink = listNextResponse.NextPageLink;
+                var client = this.GetHybridComputeManagementClient(context);
+                IPage<Machine> listResponse = client.Machines.ListBySubscription();
+                Assert.NotNull(listResponse);
+                int count = listResponse.Count();
+
+                string nextLink = listResponse.NextPageLink;
+                while (!string.IsNullOrEmpty(nextLink))
+                {
+                    IPage<Machine> listNextResponse = client.Machines.ListBySubscriptionNext(nextLink);
+                    Assert.NotNull(listNextResponse);
+                    count += listNextResponse.Count();
+                    nextLink = listNextResponse.NextPageLink;
+                }
+                Assert.True(count >= 400);
             }
-            Assert.True(count >= 400);
         }
     }
 }

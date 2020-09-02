@@ -27,7 +27,6 @@ namespace Microsoft.Azure.Management.HybridCompute.Tests
 
         private void Initialize()
         {
-            _context = MockContext.Start(GetType().FullName);
             _client = this.GetHybridComputeManagementClient(_context);
             _machine = _client.Machines.Get(RESOURCE_GROUP_NAME, MACHINE_NAME);
             _isLinux = _machine.OsName.IndexOf("linux", StringComparison.OrdinalIgnoreCase) >= 0;
@@ -90,6 +89,7 @@ namespace Microsoft.Azure.Management.HybridCompute.Tests
         [Fact]
         public void MachineExtensions_Get()
         {
+            _context = MockContext.Start(GetType().FullName);
             Initialize();
             PopulateExtensions();
             MachineExtension extension = _client.MachineExtensions.Get(RESOURCE_GROUP_NAME, MACHINE_NAME, CUSTOM_SCRIPT_EXTENSION_NAME);
@@ -101,6 +101,7 @@ namespace Microsoft.Azure.Management.HybridCompute.Tests
         [Fact]
         public async Task MachineExtensions_GetAsync()
         {
+            _context = MockContext.Start(GetType().FullName);
             Initialize();
             PopulateExtensions();
             MachineExtension extension = await _client.MachineExtensions.GetAsync(RESOURCE_GROUP_NAME, MACHINE_NAME, DEPENDENCY_AGENT_EXTENSION_NAME).ConfigureAwait(false);
@@ -112,6 +113,7 @@ namespace Microsoft.Azure.Management.HybridCompute.Tests
         [Fact]
         public void MachineExtensions_List()
         {
+            _context = MockContext.Start(GetType().FullName);
             Initialize();
             PopulateExtensions();
             IPage<MachineExtension> extensions = _client.MachineExtensions.List(RESOURCE_GROUP_NAME, MACHINE_NAME);
@@ -131,6 +133,7 @@ namespace Microsoft.Azure.Management.HybridCompute.Tests
         [Fact]
         public async Task MachineExtensions_ListAsync()
         {
+            _context = MockContext.Start(GetType().FullName);
             Initialize();
             PopulateExtensions();
             IPage<MachineExtension> extensions = await _client.MachineExtensions.ListAsync(RESOURCE_GROUP_NAME, MACHINE_NAME).ConfigureAwait(false);
@@ -150,6 +153,7 @@ namespace Microsoft.Azure.Management.HybridCompute.Tests
         [Fact]
         public void MachineExtensions_CreateOrUpdate()
         {
+            _context = MockContext.Start(GetType().FullName);
             Initialize();
             const string extensionName = "custom";
 
@@ -185,6 +189,7 @@ namespace Microsoft.Azure.Management.HybridCompute.Tests
         [Fact]
         public async Task MachineExtensions_CreateOrUpdateAsync()
         {
+            _context = MockContext.Start(GetType().FullName);
             Initialize();
             const string extensionName = "custom";
 
@@ -220,6 +225,7 @@ namespace Microsoft.Azure.Management.HybridCompute.Tests
         [Fact]
         public void MachineExtensions_Delete()
         {
+            _context = MockContext.Start(GetType().FullName);
             Initialize();
             PopulateExtensions();
             _client.MachineExtensions.Delete(RESOURCE_GROUP_NAME, MACHINE_NAME, CUSTOM_SCRIPT_EXTENSION_NAME);
@@ -229,6 +235,7 @@ namespace Microsoft.Azure.Management.HybridCompute.Tests
         [Fact]
         public async Task MachineExtensions_DeleteAsync()
         {
+            _context = MockContext.Start(GetType().FullName);
             Initialize();
             PopulateExtensions();
             await _client.MachineExtensions.DeleteAsync(RESOURCE_GROUP_NAME, MACHINE_NAME, CUSTOM_SCRIPT_EXTENSION_NAME).ConfigureAwait(false);
@@ -238,6 +245,7 @@ namespace Microsoft.Azure.Management.HybridCompute.Tests
         [Fact]
         public void MachineExtensions_Update()
         {
+            _context = MockContext.Start(GetType().FullName);
             Initialize();
             PopulateExtensions();
             const string newCommand = "echo 'goodbye'";
@@ -258,6 +266,7 @@ namespace Microsoft.Azure.Management.HybridCompute.Tests
         [Fact]
         public async Task MachineExtensions_UpdateAsync()
         {
+            _context = MockContext.Start(GetType().FullName);
             Initialize();
             PopulateExtensions();
             const string newCommand = "echo 'goodbye'";
