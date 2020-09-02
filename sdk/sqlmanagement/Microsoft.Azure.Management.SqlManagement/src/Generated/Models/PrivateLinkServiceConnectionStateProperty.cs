@@ -29,12 +29,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Initializes a new instance of the
         /// PrivateLinkServiceConnectionStateProperty class.
         /// </summary>
-        /// <param name="status">The private link service connection
-        /// status.</param>
+        /// <param name="status">The private link service connection status.
+        /// Possible values include: 'Approved', 'Pending', 'Rejected',
+        /// 'Disconnected'</param>
         /// <param name="description">The private link service connection
         /// description.</param>
         /// <param name="actionsRequired">The actions required for private link
-        /// service connection.</param>
+        /// service connection. Possible values include: 'None'</param>
         public PrivateLinkServiceConnectionStateProperty(string status, string description, string actionsRequired = default(string))
         {
             Status = status;
@@ -49,7 +50,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the private link service connection status.
+        /// Gets or sets the private link service connection status. Possible
+        /// values include: 'Approved', 'Pending', 'Rejected', 'Disconnected'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public string Status { get; set; }
@@ -62,6 +64,7 @@ namespace Microsoft.Azure.Management.Sql.Models
 
         /// <summary>
         /// Gets the actions required for private link service connection.
+        /// Possible values include: 'None'
         /// </summary>
         [JsonProperty(PropertyName = "actionsRequired")]
         public string ActionsRequired { get; private set; }

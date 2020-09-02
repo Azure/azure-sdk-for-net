@@ -11,6 +11,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.Azure"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.Azure.Tests", "..\Microsoft.Extensions.Azure\tests\Microsoft.Extensions.Azure.Tests.csproj", "{5B093527-8B04-4D2B-B23D-441D4B5EE305}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{EB0781C6-6C18-4C2A-8BDB-D61A1460AB09}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Experimental", "..\Azure.Core.Experimental\src\Azure.Core.Experimental.csproj", "{08159FC6-D991-4728-A12C-55A05C906465}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Experimental.Tests", "..\Azure.Core.Experimental\tests\Azure.Core.Experimental.Tests.csproj", "{2310EC12-5F3A-4328-9926-0212A22696F5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Core.NewtonsoftJson", "..\Microsoft.Azure.Core.NewtonsoftJson\src\Microsoft.Azure.Core.NewtonsoftJson.csproj", "{0CF90583-C79F-44F8-B81F-5558D90CF621}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Core.NewtonsoftJson.Tests", "..\Microsoft.Azure.Core.NewtonsoftJson\tests\Microsoft.Azure.Core.NewtonsoftJson.Tests.csproj", "{3F70FC18-5F83-4AEE-A9BD-AE100A0B1BF8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +43,26 @@ Global
 		{5B093527-8B04-4D2B-B23D-441D4B5EE305}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B093527-8B04-4D2B-B23D-441D4B5EE305}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B093527-8B04-4D2B-B23D-441D4B5EE305}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB0781C6-6C18-4C2A-8BDB-D61A1460AB09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB0781C6-6C18-4C2A-8BDB-D61A1460AB09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB0781C6-6C18-4C2A-8BDB-D61A1460AB09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB0781C6-6C18-4C2A-8BDB-D61A1460AB09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08159FC6-D991-4728-A12C-55A05C906465}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08159FC6-D991-4728-A12C-55A05C906465}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08159FC6-D991-4728-A12C-55A05C906465}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08159FC6-D991-4728-A12C-55A05C906465}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2310EC12-5F3A-4328-9926-0212A22696F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2310EC12-5F3A-4328-9926-0212A22696F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2310EC12-5F3A-4328-9926-0212A22696F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2310EC12-5F3A-4328-9926-0212A22696F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CF90583-C79F-44F8-B81F-5558D90CF621}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CF90583-C79F-44F8-B81F-5558D90CF621}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CF90583-C79F-44F8-B81F-5558D90CF621}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CF90583-C79F-44F8-B81F-5558D90CF621}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F70FC18-5F83-4AEE-A9BD-AE100A0B1BF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F70FC18-5F83-4AEE-A9BD-AE100A0B1BF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F70FC18-5F83-4AEE-A9BD-AE100A0B1BF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F70FC18-5F83-4AEE-A9BD-AE100A0B1BF8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

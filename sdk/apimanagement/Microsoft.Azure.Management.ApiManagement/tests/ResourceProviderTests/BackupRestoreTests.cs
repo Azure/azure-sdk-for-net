@@ -26,10 +26,25 @@ namespace ApiManagement.Tests.ResourceProviderTests
             {
                 var testBase = new ApiManagementTestBase(context);
 
+                // add min ApiVersion constraint
+                testBase.serviceProperties.ApiVersionConstraint = new ApiVersionConstraint(minApiVersion: "2019-01-01");
                 var createdService = testBase.client.ApiManagementService.CreateOrUpdate(
                     resourceGroupName: testBase.rgName,
                     serviceName: testBase.serviceName,
                     parameters: testBase.serviceProperties);
+
+                ValidateService(createdService,
+                    testBase.serviceName,
+                    testBase.rgName,
+                    testBase.subscriptionId,
+                    testBase.location,
+                    testBase.serviceProperties.PublisherEmail,
+                    testBase.serviceProperties.PublisherName,
+                    testBase.serviceProperties.Sku.Name,
+                    testBase.tags);
+                // validate apiversion constraint is set
+                Assert.NotNull(createdService.ApiVersionConstraint);
+                Assert.Equal("2019-01-01", createdService.ApiVersionConstraint.MinApiVersion);
 
                 var storageAccountName = TestUtilities.GenerateName("sdkapimbackup");
                 Assert.True(testBase.storageClient.StorageAccounts.CheckNameAvailability(storageAccountName).NameAvailable);

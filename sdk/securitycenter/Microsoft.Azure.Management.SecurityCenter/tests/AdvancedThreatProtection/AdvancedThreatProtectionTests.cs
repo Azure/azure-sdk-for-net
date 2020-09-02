@@ -16,9 +16,9 @@ namespace SecurityCenter.Tests
     {
         #region Test setup
 
-        private static string SubscriptionId = "487bb485-b5b0-471e-9c0d-10717612f869";
-        private static string RgName = "DefaultResourceGroup-CUS";
-        private static string StorageAccountName = "samplestorageaccount2";
+        private static string SubscriptionId = "7e5c35c3-c2d0-43c7-ab12-2528b6b8dada"; // Rome-DataProtection-StorageAnalytics-Test1
+        private static string RgName = "NetSdkTests";
+        private static string StorageAccountName = "netsdkstorage";
 
         public static TestEnvironment TestEnvironment { get; private set; }
 

@@ -48,11 +48,15 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="readBehavior">The read behavior for the operation.
         /// Default is Query. Possible values include: 'Query',
         /// 'QueryAll'</param>
-        public SalesforceServiceCloudSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object query = default(object), string readBehavior = default(string))
+        /// <param name="additionalColumns">Specifies the additional columns to
+        /// be added to source data. Type: array of objects (or Expression with
+        /// resultType array of objects).</param>
+        public SalesforceServiceCloudSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object query = default(object), string readBehavior = default(string), IList<AdditionalColumns> additionalColumns = default(IList<AdditionalColumns>))
             : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
         {
             Query = query;
             ReadBehavior = readBehavior;
+            AdditionalColumns = additionalColumns;
             CustomInit();
         }
 
@@ -74,6 +78,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "readBehavior")]
         public string ReadBehavior { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the additional columns to be added to source
+        /// data. Type: array of objects (or Expression with resultType array
+        /// of objects).
+        /// </summary>
+        [JsonProperty(PropertyName = "additionalColumns")]
+        public IList<AdditionalColumns> AdditionalColumns { get; set; }
 
     }
 }

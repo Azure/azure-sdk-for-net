@@ -48,6 +48,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// connection.</param>
         /// <param name="radiusServerSecret">The radius secret property of the
         /// VirtualNetworkGateway resource for vpn client connection.</param>
+        /// <param name="radiusServers">The radiusServers property for multiple
+        /// radius server configuration.</param>
         /// <param name="aadTenant">The AADTenant property of the
         /// VirtualNetworkGateway resource for vpn client connection used for
         /// AAD authentication.</param>
@@ -57,7 +59,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="aadIssuer">The AADIssuer property of the
         /// VirtualNetworkGateway resource for vpn client connection used for
         /// AAD authentication.</param>
-        public VpnClientConfiguration(AddressSpace vpnClientAddressPool = default(AddressSpace), IList<VpnClientRootCertificate> vpnClientRootCertificates = default(IList<VpnClientRootCertificate>), IList<VpnClientRevokedCertificate> vpnClientRevokedCertificates = default(IList<VpnClientRevokedCertificate>), IList<string> vpnClientProtocols = default(IList<string>), IList<IpsecPolicy> vpnClientIpsecPolicies = default(IList<IpsecPolicy>), string radiusServerAddress = default(string), string radiusServerSecret = default(string), string aadTenant = default(string), string aadAudience = default(string), string aadIssuer = default(string))
+        public VpnClientConfiguration(AddressSpace vpnClientAddressPool = default(AddressSpace), IList<VpnClientRootCertificate> vpnClientRootCertificates = default(IList<VpnClientRootCertificate>), IList<VpnClientRevokedCertificate> vpnClientRevokedCertificates = default(IList<VpnClientRevokedCertificate>), IList<string> vpnClientProtocols = default(IList<string>), IList<IpsecPolicy> vpnClientIpsecPolicies = default(IList<IpsecPolicy>), string radiusServerAddress = default(string), string radiusServerSecret = default(string), IList<RadiusServer> radiusServers = default(IList<RadiusServer>), string aadTenant = default(string), string aadAudience = default(string), string aadIssuer = default(string))
         {
             VpnClientAddressPool = vpnClientAddressPool;
             VpnClientRootCertificates = vpnClientRootCertificates;
@@ -66,6 +68,7 @@ namespace Microsoft.Azure.Management.Network.Models
             VpnClientIpsecPolicies = vpnClientIpsecPolicies;
             RadiusServerAddress = radiusServerAddress;
             RadiusServerSecret = radiusServerSecret;
+            RadiusServers = radiusServers;
             AadTenant = aadTenant;
             AadAudience = aadAudience;
             AadIssuer = aadIssuer;
@@ -123,6 +126,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "radiusServerSecret")]
         public string RadiusServerSecret { get; set; }
+
+        /// <summary>
+        /// Gets or sets the radiusServers property for multiple radius server
+        /// configuration.
+        /// </summary>
+        [JsonProperty(PropertyName = "radiusServers")]
+        public IList<RadiusServer> RadiusServers { get; set; }
 
         /// <summary>
         /// Gets or sets the AADTenant property of the VirtualNetworkGateway

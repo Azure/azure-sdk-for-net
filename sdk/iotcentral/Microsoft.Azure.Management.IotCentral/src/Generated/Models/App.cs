@@ -111,20 +111,6 @@ namespace Microsoft.Azure.Management.IotCentral.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Sku");
             }
-            if (DisplayName != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(DisplayName, "^.{1,200}$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "DisplayName", "^.{1,200}$");
-                }
-            }
-            if (Subdomain != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(Subdomain, "^[a-z0-9-]{1,63}$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "Subdomain", "^[a-z0-9-]{1,63}$");
-                }
-            }
             if (Sku != null)
             {
                 Sku.Validate();

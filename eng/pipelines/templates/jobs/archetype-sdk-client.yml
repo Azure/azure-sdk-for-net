@@ -9,7 +9,7 @@ jobs:
           echo "##vso[build.addbuildtag]Scheduled"
         displayName: "Tag scheduled builds"
         condition: and(eq(variables['Build.SourceBranchName'],'master'),eq(variables['Build.Reason'],'Schedule'))
-      - template: tools/daily-dev-build-variable/daily-dev-build-variable.yml@azure-sdk-tools
+      - template: /eng/common/pipelines/templates/steps/daily-dev-build-variable.yml
       - pwsh: |
           $skipDevBuildNumber = "false"
           # For .NET builds the only case we want to not have dev build numbers on our packages is when it is manually queued and
@@ -20,10 +20,16 @@ jobs:
           $versioningProperties = "/p:OfficialBuildId=$(OfficialBuildId) /p:SkipDevBuildNumber=$skipDevBuildNumber";
           echo "##vso[task.setvariable variable=VersioningProperties]$versioningProperties"
         displayName: "Setup .NET specific versioning properties"
-      - task: DotNetCoreInstaller@2
-        displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
+      - task: UsePythonVersion@0
+        displayName: 'Use Python 3.6'
         inputs:
-          version: "$(DotNetCoreSDKVersion)"
+          versionSpec: '3.6'
+      - template: /eng/common/pipelines/templates/steps/replace-relative-links.yml
+        parameters:
+          TargetFolder: '.'
+          RootFolder: '.'
+          BuildSHA: $(Build.SourceVersion)
+          RepoId: 'Azure/azure-sdk-for-net'
       - script: >-
           dotnet pack eng/service.proj -o $(Build.ArtifactStagingDirectory) -warnaserror /p:ServiceDirectory=${{parameters.ServiceToBuild}}
           /p:PublicSign=false $(VersioningProperties) /p:Configuration=$(BuildConfiguration) /p:CommitSHA=$(Build.SourceVersion)
@@ -56,28 +62,15 @@ jobs:
         displayName: "Use Python 3.6"
         inputs:
           versionSpec: "3.6"
+      - template: /eng/common/pipelines/templates/steps/verify-links.yml
+        parameters:
+          Directory: sdk/${{ parameters.ServiceDirectory }}
       - script: |
           pip install setuptools wheel
           pip install doc-warden==$(DocWardenVersion)
           ward scan -d $(Build.SourcesDirectory) -c $(Build.SourcesDirectory)/eng/.docsettings.yml
         displayName: "Verify Readmes"
-      - task: DotNetCoreInstaller@2
-        displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
-        inputs:
-          version: "$(DotNetCoreSDKVersion)"
-      - task: DotNetCoreInstaller@2
-        displayName: "Use .NET Core runtime $(DotNetCoreRuntimeVersion)"
-        inputs:
-          packageType: runtime
-          version: "$(DotNetCoreRuntimeVersion)"
-      - task: DownloadPipelineArtifact@2
-        displayName: "Download Build Artifacts"
-        condition: succeededOrFailed()
-        inputs:
-          artifact: packages
-          path: $(Pipeline.Workspace)/packages
-          patterns: "*.nupkg"
-      - template: eng/pipelines/templates/scripts/verify-path-length.yml@azure-sdk-tools
+      - template: /eng/common/pipelines/templates/steps/verify-path-length.yml
         parameters:
           SourceDirectory: $(Build.SourcesDirectory)
       - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
@@ -99,7 +92,8 @@ jobs:
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
           DOTNET_MULTILEVEL_LOOKUP: 0
         inputs:
-          filePath: "eng/CodeChecks.ps1"
+          filePath: "eng/scripts/CodeChecks.ps1"
+          arguments: -ServiceDirectory ${{parameters.ServiceToBuild}}
           pwsh: true
           failOnStderr:  false
   - job: "Test"
@@ -110,45 +104,36 @@ jobs:
       maxParallel: $[ variables['MaxParallelTestJobs'] ]
       matrix:
         Linux:
-          OSName: "Linux"
-          OSVmImage: "ubuntu-16.04"
+          OSVmImage: "ubuntu-18.04"
           TestTargetFramework: netcoreapp2.1
         Windows_NetCoreApp:
-          OSName: "Windows"
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
+          ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+            CollectCoverage: true
         Windows_NetCoreApp_ProjectReferences:
-          OSName: "Windows"
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
           ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
         Windows_NetFramework:
-          OSName: "Windows"
           OSVmImage: "windows-2019"
           TestTargetFramework: net461
+        Windows_NetFramework_ProjectReferences:
+          OSVmImage: "windows-2019"
+          TestTargetFramework: net461
+          ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
         MacOs:
-          OSName: "MacOS"
-          OSVmImage: "macOS-10.13"
+          OSVmImage: "macOS-10.15"
           TestTargetFramework: netcoreapp2.1
     pool:
       vmImage: "$(OSVmImage)"
     steps:
-      - template: eng/pipelines/templates/scripts/verify-agent-os.yml@azure-sdk-tools
-        parameters:
-          OSName: $(OSName)
-      - task: DotNetCoreInstaller@2
-        displayName: "Use .NET Core runtime $(DotNetCoreRuntimeVersion)"
-        inputs:
-          packageType: runtime
-          version: "$(DotNetCoreRuntimeVersion)"
-      - task: DotNetCoreInstaller@2
-        displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
-        inputs:
-          packageType: sdk
-          version: "$(DotNetCoreSDKVersion)"
+      - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
       - script: >-
-          dotnet test eng/service.proj --filter TestCategory!=Live --framework $(TestTargetFramework) --logger "trx;LogFileName=$(TestTargetFramework).trx"
-          /p:ServiceDirectory=${{parameters.ServiceToBuild}} /p:IncludeSrc=false /p:IncludeSamples=false /p:Configuration=$(BuildConfiguration) $(ConvertToProjectReferenceOption)
+          dotnet test eng/service.proj --filter TestCategory!=Live --framework $(TestTargetFramework)
+          --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
+          /p:ServiceDirectory=${{parameters.ServiceToBuild}} /p:IncludeSrc=false /p:IncludeSamples=false
+          /p:Configuration=$(BuildConfiguration) $(ConvertToProjectReferenceOption) /p:CollectCoverage=$(CollectCoverage)
         displayName: "Build & Test ($(TestTargetFramework))"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
@@ -162,3 +147,16 @@ jobs:
           testRunTitle: "$(OSName) $(TestTargetFramework)"
           testResultsFormat: "VSTest"
           mergeTestResults: true
+      - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
+        condition: and(succeeded(), eq(variables['CollectCoverage'], 'true'))
+        displayName: ReportGenerator
+        inputs:
+          reports: '**/*coverage.netcoreapp2.1.cobertura.xml'
+          targetdir: '$(Build.SourcesDirectory)'
+          reporttypes: Cobertura
+      - task: PublishCodeCoverageResults@1
+        condition: and(succeeded(), eq(variables['CollectCoverage'], 'true'))
+        displayName: 'Publish code coverage report'
+        inputs:
+          codeCoverageTool: 'Cobertura'
+          summaryFileLocation: 'Cobertura.xml'

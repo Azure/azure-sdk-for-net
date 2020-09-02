@@ -3,7 +3,7 @@
 
 using System;
 using System.Threading;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Castle.DynamicProxy;
 using NUnit.Framework;
 

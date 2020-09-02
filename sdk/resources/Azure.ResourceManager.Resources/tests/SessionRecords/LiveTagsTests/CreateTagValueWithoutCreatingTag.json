@@ -1,0 +1,40 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/csmtg2613/tagValues/csmtgv7500?api-version=2019-10-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-a2795d2527b2b04abd880c3f29cf4307-fcbd3adcf11bca4a-00",
+        "User-Agent": [
+          "azsdk-net-Management.Resources/1.0.0-dev.20200529.1",
+          "(.NET Framework 4.8.4180.0; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "3b0f51ab8b50fee20ecef3724ad5d476",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "110",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 29 May 2020 02:33:40 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "70231a69-fbce-4be0-9b7f-b9b695cb1604",
+        "x-ms-failure-cause": "gateway",
+        "x-ms-ratelimit-remaining-subscription-writes": "1194",
+        "x-ms-request-id": "70231a69-fbce-4be0-9b7f-b9b695cb1604",
+        "x-ms-routing-request-id": "KOREASOUTH:20200529T023341Z:70231a69-fbce-4be0-9b7f-b9b695cb1604"
+      },
+      "ResponseBody": "{\u0022error\u0022:{\u0022code\u0022:\u0022PredefinedTagNameNotFound\u0022,\u0022message\u0022:\u0022Predefined tag name \u0027csmtg2613\u0027 could not be found.\u0022}}"
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "101047170",
+    "SUBSCRIPTION_ID": "b9f138a1-1d64-4108-8413-9ea3be1c1b2d"
+  }
+}

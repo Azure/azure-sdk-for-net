@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.Support/operations?api-version=2019-05-01-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3VwcG9ydC9vcGVyYXRpb25zP2FwaS12ZXJzaW9uPTIwMTktMDUtMDEtcHJldmlldw==",
+      "RequestUri": "/providers/Microsoft.Support/operations?api-version=2020-04-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3VwcG9ydC9vcGVyYXRpb25zP2FwaS12ZXJzaW9uPTIwMjAtMDQtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "06b39d17-3ef0-4bc4-bece-b9d12375110f"
+          "b6a1e6af-a7c4-42ae-88cd-b7f89884b46e"
         ],
         "accept-language": [
           "en-US"
@@ -24,7 +24,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 29 Jan 2020 06:41:30 GMT"
+          "Thu, 12 Mar 2020 01:59:14 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -33,19 +33,19 @@
           "Kestrel"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "11994"
+          "11987"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "3b950160-af02-4ba6-bf0c-ddf60df0140e"
+          "6f946156-0c9b-46f3-8d51-210490e13f94"
         ],
         "x-ms-correlation-request-id": [
-          "3b950160-af02-4ba6-bf0c-ddf60df0140e"
+          "6f946156-0c9b-46f3-8d51-210490e13f94"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUSEUAP:20200129T064130Z:3b950160-af02-4ba6-bf0c-ddf60df0140e"
+          "CENTRALUSEUAP:20200312T015915Z:6f946156-0c9b-46f3-8d51-210490e13f94"
         ],
         "X-Content-Type-Options": [
           "nosniff"

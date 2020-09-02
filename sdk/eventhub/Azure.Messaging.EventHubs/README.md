@@ -1,6 +1,6 @@
 # Azure Event Hubs client library for .NET
 
-Azure Event Hubs is a highly scalable publish-subscribe service that can ingest millions of events per second and stream them to multiple consumers. This lets you process and analyze the massive amounts of data produced by your connected devices and applications. Once Event Hubs has collected the data, you can retrieve, transform and store it by using any real-time analytics provider or with batching/storage adapters.  If you would like to know more about Azure Event Hubs, you may wish to review: [What is Event Hubs](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-about)?
+Azure Event Hubs is a highly scalable publish-subscribe service that can ingest millions of events per second and stream them to multiple consumers. This lets you process and analyze the massive amounts of data produced by your connected devices and applications. Once Event Hubs has collected the data, you can retrieve, transform and store it by using any real-time analytics provider or with batching/storage adapters.  If you would like to know more about Azure Event Hubs, you may wish to review: [What is Event Hubs](https://docs.microsoft.com/azure/event-hubs/event-hubs-about)?
 
 The Azure Event Hubs client library allows for publishing and consuming of Azure Event Hubs events and may be used to:
 
@@ -12,37 +12,39 @@ The Azure Event Hubs client library allows for publishing and consuming of Azure
 
 - Receive events from one or more publishers, transform them to better meet the needs of your ecosystem, then publish the transformed events to a new stream for consumers to observe.
 
-[Source code](.) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Messaging.EventHubs/) | [API reference documentation](https://aka.ms/azsdk-dotnet-eventhubs-docs) | [Product documentation](https://docs.microsoft.com/en-us/azure/event-hubs/)
+[Source code](.) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Messaging.EventHubs/) | [API reference documentation](https://aka.ms/azsdk-dotnet-eventhubs-docs) | [Product documentation](https://docs.microsoft.com/azure/event-hubs/)
 
 ## Getting started
 
 ### Prerequisites
 
-- **Microsoft Azure Subscription:**  To use Azure services, including Azure Event Hubs, you'll need a subscription.  If you do not have an existing Azure account, you may sign up for a free trial or use your MSDN subscriber benefits when you [create an account](https://account.windowsazure.com/Home/Index).
+- **Azure Subscription:**  To use Azure services, including Azure Event Hubs, you'll need a subscription.  If you do not have an existing Azure account, you may sign up for a [free trial](https://azure.microsoft.com/free) or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you [create an account](https://account.windowsazure.com/Home/Index).
 
-- **Event Hubs namespace with an Event Hub:** To interact with Azure Event Hubs, you'll also need to have a namespace and Event Hub available.  If you are not familiar with creating Azure resources, you may wish to follow the step-by-step guide for [creating an Event Hub using the Azure portal](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-create).  There, you can also find detailed instructions for using the Azure CLI, Azure PowerShell, or Azure Resource Manager (ARM) templates to create an Event Hub.
+- **Event Hubs namespace with an Event Hub:** To interact with Azure Event Hubs, you'll also need to have a namespace and Event Hub available.  If you are not familiar with creating Azure resources, you may wish to follow the step-by-step guide for [creating an Event Hub using the Azure portal](https://docs.microsoft.com/azure/event-hubs/event-hubs-create).  There, you can also find detailed instructions for using the Azure CLI, Azure PowerShell, or Azure Resource Manager (ARM) templates to create an Event Hub.
 
-- **C# 8.0:** The Azure Event Hubs client library makes use of new features that were introduced in C# 8.0.  You can still use the library with older versions of C#, but some of its functionality won't be available.  In order to enable these features, you need to [target .NET Core 3.0](https://docs.microsoft.com/en-us/dotnet/standard/frameworks#how-to-specify-target-frameworks) or [specify the language version](https://docs.microsoft.com/en-gb/dotnet/csharp/language-reference/configure-language-version#override-a-default) you want to use (8.0 or above).  If you are using Visual Studio, versions prior to Visual Studio 2019 are not compatible with the tools needed to build C# 8.0 projects.  Visual Studio 2019, including the free Community edition, can be downloaded [here](https://visualstudio.microsoft.com/vs/).
+- **C# 8.0:** The Azure Event Hubs client library makes use of new features that were introduced in C# 8.0.  In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK 2.1.x using a language version of `preview`.  Visual Studio users wishing to take advantage of the C# 8.0 syntax will need to use Visual Studio 2019 or later.  Visual Studio 2019, including the free Community edition, can be downloaded [here](https://visualstudio.microsoft.com).
 
-  **Important Note:** The use of C# 8.0 is mandatory to run the [examples](#examples) and the [samples](#next-steps) without modification.  You can still run the samples if you decide to tweak them.
+  You can still use the library with previous C# language versions, but will need to manage asynchronous enumerable and asynchronous disposable members manually rather than benefiting from the new syntax.  You may still target any framework version supported by your .NET Core SDK, including earlier versions of .NET Core or the .NET framework.  For more information, see: [how to specify target frameworks](https://docs.microsoft.com/dotnet/standard/frameworks#how-to-specify-target-frameworks).  
+  
+  **Important Note:** In order to build or run the [examples](#examples) and the [samples](#next-steps) without modification, use of C# 8.0 is mandatory.  You can still run the samples if you decide to tweak them for other language versions.
 
 To quickly create the needed Event Hubs resources in Azure and to receive a connection string for them, you can deploy our sample template by clicking:
 
 [![](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmaster%2Fsdk%2Feventhub%2FAzure.Messaging.EventHubs%2Fassets%2Fsamples-azure-deploy.json)
 
-If you'd like to run samples that use [Azure.Identity](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity), you'll also need a service principal with the correct roles. To make configuration for the identity samples easier, a [PowerShell script](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/assets/identity-tests-azure-setup.ps1) script is available. Please see the [Contributing Guide](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/CONTRIBUTING.md#Azure-Identity-Samples) for more details about the script.
+If you'd like to run samples that use [Azure.Identity](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity), you'll also need a service principal with the correct roles. To make configuration for the identity samples easier, a [PowerShell script](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/assets/identity-samples-azure-setup.ps1) script is available. Please see the [Contributing Guide](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/CONTRIBUTING.md#Azure-Identity-Samples) for more details about the script.
 
 ### Install the package
 
 Install the Azure Event Hubs client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```PowerShell
-Install-Package Azure.Messaging.EventHubs
+dotnet add package Azure.Messaging.EventHubs
 ```
 
-### Obtain a connection string
+### Authenticate the client
 
-For the Event Hubs client library to interact with an Event Hub, it will need to understand how to connect and authorize with it.  The easiest means for doing so is to use a connection string, which is created automatically when creating an Event Hubs namespace.  If you aren't familiar with shared access policies in Azure, you may wish to follow the step-by-step guide to [get an Event Hubs connection string](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string).
+For the Event Hubs client library to interact with an Event Hub, it will need to understand how to connect and authorize with it.  The easiest means for doing so is to use a connection string, which is created automatically when creating an Event Hubs namespace.  If you aren't familiar with shared access policies in Azure, you may wish to follow the step-by-step guide to [get an Event Hubs connection string](https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string).
 
 ## Key concepts
 
@@ -56,7 +58,7 @@ For the Event Hubs client library to interact with an Event Hub, it will need to
 
 - A **consumer group** is a view of an entire Event Hub. Consumer groups enable multiple consuming applications to each have a separate view of the event stream, and to read the stream independently at their own pace and from their own position.  There can be at most 5 concurrent readers on a partition per consumer group; however it is recommended that there is only one active consumer for a given partition and consumer group pairing. Each active reader receives all of the events from its partition; if there are multiple readers on the same partition, then they will receive duplicate events. 
 
-For more concepts and deeper discussion, see: [Event Hubs Features](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-features).
+For more concepts and deeper discussion, see: [Event Hubs Features](https://docs.microsoft.com/azure/event-hubs/event-hubs-features).
 
 ## Examples
 
@@ -184,7 +186,7 @@ To make use of an Active Directory principal, one of the available identity toke
 var fullyQualifiedNamespace = "<< FULLY-QUALIFIED EVENT HUBS NAMESPACE (like something.servicebus.windows.net)>>"
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 
-TokenCredential credential = new DefaultAzureIdentity();
+TokenCredential credential = new DefaultAzureCredential();
 
 await using (var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential))
 {
@@ -192,7 +194,7 @@ await using (var producer = new EventHubProducerClient(fullyQualifiedNamespace, 
 }
 ```
 
-When using Azure Active Directory, your principal must be assigned a role which allows access to Event Hubs, such as the `Azure Event Hubs Data Owner` role. For more information about using Azure Active Directory authorization with Event Hubs, please refer to [the associated documentation](https://docs.microsoft.com/en-us/azure/event-hubs/authorize-access-azure-active-directory).
+When using Azure Active Directory, your principal must be assigned a role which allows access to Event Hubs, such as the `Azure Event Hubs Data Owner` role. For more information about using Azure Active Directory authorization with Event Hubs, please refer to [the associated documentation](https://docs.microsoft.com/azure/event-hubs/authorize-access-azure-active-directory).
 
 ## Troubleshooting
 
@@ -208,10 +210,9 @@ An `EventHubsException` is triggered when an operation specific to Event Hubs ha
 
   - **Service Timeout** : This indicates that the Event Hubs service did not respond to an operation within the expected amount of time.  This may have been caused by a transient network issue or service problem.  The Event Hubs service may or may not have successfully completed the request; the status is not known.  It is recommended to attempt to verify the current state and retry if necessary.  
 
-  - **Quota Exceeded** : This typically indicates that there are too many active read operations for a single consumer group.  This limit depends on the tier of the Event Hubs namespace, and moving to a higher tier may be desired.  An alternative would be to create additional consumer groups and ensure that the number of consumer client reads for any group is within the limit.  Please see [Azure Event Hubs quotas and limits](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-quotas) for more information.
+  - **Quota Exceeded** : This typically indicates that there are too many active read operations for a single consumer group.  This limit depends on the tier of the Event Hubs namespace, and moving to a higher tier may be desired.  An alternative would be to create additional consumer groups and ensure that the number of consumer client reads for any group is within the limit.  Please see [Azure Event Hubs quotas and limits](https://docs.microsoft.com/azure/event-hubs/event-hubs-quotas) for more information.
 
-  - **Message Size Exceeded** : Event data as a maximum size allowed for both an individual event and a batch of events.  This includes the data of the event, as well as any associated metadata and system overhead.  The best approach for resolving this error is to reduce the number of events being sent in a batch or the size of data included in the message.  Because size limits are subject to change, please refer to [Azure Event Hubs quotas and limits](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-quotas) for specifics.  
-  
+  - **Message Size Exceeded** : Event data as a maximum size allowed for both an individual event and a batch of events.  This includes the data of the event, as well as any associated metadata and system overhead.  The best approach for resolving this error is to reduce the number of events being sent in a batch or the size of data included in the message.  Because size limits are subject to change, please refer to [Azure Event Hubs quotas and limits](https://docs.microsoft.com/azure/event-hubs/event-hubs-quotas) for specifics.  
   - **Consumer Disconnected** : A consumer client was disconnected by the Event Hub service from the Event Hub instance.  This typically occurs when a consumer with a higher owner level asserts ownership over a partition and consumer group pairing.
   
   - **Resource Not Found**: An Event Hubs resource, such as an Event Hub, consumer group, or partition, could not be found by the Event Hubs service.  This may indicate that it has been deleted from the service or that there is an issue with the Event Hubs service itself.
@@ -222,7 +223,7 @@ try
 {
     // Read events using the consumer client
 }
-catch (EventHubsException ex) where 
+catch (EventHubsException ex) when 
     (ex.Reason == EventHubsException.FailureReason.ConsumerDisconnected)
 {
     // Take action based on a consumer being disconnected
@@ -231,7 +232,7 @@ catch (EventHubsException ex) where
   
 ### Other exceptions
 
-For detailed information about the failures represented by the `EventHubsException` and other exceptions that may occur, please refer to [Event Hubs messaging exceptions](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-messaging-exceptions).
+For detailed information about the failures represented by the `EventHubsException` and other exceptions that may occur, please refer to [Event Hubs messaging exceptions](https://docs.microsoft.com/azure/event-hubs/event-hubs-messaging-exceptions).
 
 ## Next steps
 

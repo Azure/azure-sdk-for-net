@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Moq;
@@ -84,7 +84,13 @@ namespace Azure.Storage.Blobs.Test
 
             SetupDownload(blockClient, dataSource);
 
-            PartitionedDownloader downloader = new PartitionedDownloader(blockClient.Object, new StorageTransferOptions() { MaximumTransferLength = 10});
+            PartitionedDownloader downloader = new PartitionedDownloader(
+                blockClient.Object,
+                new StorageTransferOptions()
+                {
+                    MaximumTransferLength = 10,
+                    InitialTransferLength = 20
+                });
 
             Response result = await InvokeDownloadToAsync(downloader, stream);
 
@@ -108,7 +114,13 @@ namespace Azure.Storage.Blobs.Test
 
             SetupDownload(blockClient, dataSource);
 
-            PartitionedDownloader downloader = new PartitionedDownloader(blockClient.Object, new StorageTransferOptions() { MaximumTransferLength = 10});
+            PartitionedDownloader downloader = new PartitionedDownloader(
+                blockClient.Object,
+                new StorageTransferOptions()
+                {
+                    MaximumTransferLength = 10,
+                    InitialTransferLength = 10
+                });
 
             Response result = await InvokeDownloadToAsync(downloader, stream);
 

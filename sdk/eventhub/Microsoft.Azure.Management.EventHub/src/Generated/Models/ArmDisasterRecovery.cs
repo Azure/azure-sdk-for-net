@@ -33,9 +33,9 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// <summary>
         /// Initializes a new instance of the ArmDisasterRecovery class.
         /// </summary>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
+        /// <param name="id">Resource ID.</param>
+        /// <param name="name">Resource name.</param>
+        /// <param name="type">Resource type.</param>
         /// <param name="provisioningState">Provisioning state of the
         /// Alias(Disaster Recovery configuration) - possible values 'Accepted'
         /// or 'Succeeded' or 'Failed'. Possible values include: 'Accepted',

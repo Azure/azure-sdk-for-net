@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// update.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class GalleryUpdate : UpdateResource
+    public partial class GalleryUpdate : UpdateResourceDefinition
     {
         /// <summary>
         /// Initializes a new instance of the GalleryUpdate class.
@@ -35,16 +35,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the GalleryUpdate class.
         /// </summary>
-        /// <param name="tags">Resource tags</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="tags">Resource tags</param>
         /// <param name="description">The description of this Shared Image
         /// Gallery resource. This property is updatable.</param>
         /// <param name="provisioningState">The current state of the
         /// gallery.</param>
-        public GalleryUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), string id = default(string), string name = default(string), string type = default(string), string description = default(string), GalleryIdentifier identifier = default(GalleryIdentifier), string provisioningState = default(string))
-            : base(tags, id, name, type)
+        public GalleryUpdate(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), GalleryIdentifier identifier = default(GalleryIdentifier), string provisioningState = default(string))
+            : base(id, name, type, tags)
         {
             Description = description;
             Identifier = identifier;

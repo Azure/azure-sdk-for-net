@@ -91,16 +91,16 @@ namespace Microsoft.Azure.Management.Peering.Models
         public string SessionPrefixV6 { get; set; }
 
         /// <summary>
-        /// Gets the IPv4 session address on Microsoft's end.
+        /// Gets or sets the IPv4 session address on Microsoft's end.
         /// </summary>
         [JsonProperty(PropertyName = "microsoftSessionIPv4Address")]
-        public string MicrosoftSessionIPv4Address { get; private set; }
+        public string MicrosoftSessionIPv4Address { get; set; }
 
         /// <summary>
-        /// Gets the IPv6 session address on Microsoft's end.
+        /// Gets or sets the IPv6 session address on Microsoft's end.
         /// </summary>
         [JsonProperty(PropertyName = "microsoftSessionIPv6Address")]
-        public string MicrosoftSessionIPv6Address { get; private set; }
+        public string MicrosoftSessionIPv6Address { get; set; }
 
         /// <summary>
         /// Gets or sets the IPv4 session address on peer's end.

@@ -35,7 +35,7 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The size of subsequent ranges.
         /// </summary>
-        private readonly int _rangeSize;
+        private readonly long _rangeSize;
 
         public PartitionedDownloader(
             BlobBaseClient client,
@@ -44,16 +44,10 @@ namespace Azure.Storage.Blobs
             _client = client;
 
             // Set _maxWorkerCount
-            if (transferOptions.MaximumConcurrency.HasValue)
+            if (transferOptions.MaximumConcurrency.HasValue
+                && transferOptions.MaximumConcurrency > 0)
             {
-                if (transferOptions.MaximumConcurrency < 1)
-                {
-                    _maxWorkerCount = Constants.Blob.Block.DefaultConcurrentTransfersCount;
-                }
-                else
-                {
-                    _maxWorkerCount = transferOptions.MaximumConcurrency.Value;
-                }
+                _maxWorkerCount = transferOptions.MaximumConcurrency.Value;
             }
             else
             {
@@ -61,16 +55,10 @@ namespace Azure.Storage.Blobs
             }
 
             // Set _rangeSize
-            if (transferOptions.MaximumTransferLength.HasValue)
+            if (transferOptions.MaximumTransferSize.HasValue
+                && transferOptions.MaximumTransferSize.Value > 0)
             {
-                if (transferOptions.MaximumTransferLength.Value < 1)
-                {
-                    _rangeSize = Constants.DefaultBufferSize;
-                }
-                else
-                {
-                    _rangeSize = Math.Min(transferOptions.MaximumTransferLength.Value, Constants.Blob.Block.MaxDownloadBytes);
-                }
+                _rangeSize = Math.Min(transferOptions.MaximumTransferSize.Value, Constants.Blob.Block.MaxDownloadBytes);
             }
             else
             {
@@ -78,21 +66,14 @@ namespace Azure.Storage.Blobs
             }
 
             // Set _initialRangeSize
-            if (transferOptions.InitialTransferLength.HasValue)
+            if (transferOptions.InitialTransferSize.HasValue
+                && transferOptions.InitialTransferSize.Value > 0)
             {
-                if (transferOptions.InitialTransferLength.Value < 1)
-                {
-                    _initialRangeSize = Constants.DefaultBufferSize;
-                }
-                else
-                {
-                    _initialRangeSize = Math.Min(transferOptions.MaximumTransferLength.Value, Constants.DefaultBufferSize);
-                }
+                _initialRangeSize = transferOptions.MaximumTransferSize.Value;
             }
             else
             {
-                // Set _initialRangeSize to _rangeSize if it wasn't specified by the customer.  This is by design.
-                _initialRangeSize = _rangeSize;
+                _initialRangeSize = Constants.Blob.Block.DefaultInitalDownloadRangeSize;
             }
         }
 
@@ -119,8 +100,21 @@ namespace Azure.Storage.Blobs
                         conditions,
                         rangeGetContentHash: false,
                         cancellationToken);
-                Response<BlobDownloadInfo> initialResponse =
-                    await initialResponseTask.ConfigureAwait(false);
+
+                Response<BlobDownloadInfo> initialResponse = null;
+                try
+                {
+                    initialResponse = await initialResponseTask.ConfigureAwait(false);
+                }
+                catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.InvalidRange)
+                {
+                    initialResponse = await _client.DownloadAsync(
+                        range: default,
+                        conditions,
+                        false,
+                        cancellationToken)
+                        .ConfigureAwait(false);
+                }
 
                 // If the initial request returned no content (i.e., a 304),
                 // we'll pass that back to the user immediately
@@ -237,11 +231,24 @@ namespace Azure.Storage.Blobs
                 // a large blob, we'll get its full size in Content-Range and
                 // can keep downloading it in segments.
                 var initialRange = new HttpRange(0, _initialRangeSize);
-                Response<BlobDownloadInfo> initialResponse = _client.Download(
-                    initialRange,
+                Response<BlobDownloadInfo> initialResponse;
+
+                try
+                {
+                    initialResponse = _client.Download(
+                        initialRange,
+                        conditions,
+                        rangeGetContentHash: false,
+                        cancellationToken);
+                }
+                catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.InvalidRange)
+                {
+                    initialResponse = _client.Download(
+                    range: default,
                     conditions,
                     rangeGetContentHash: false,
                     cancellationToken);
+                }
 
                 // If the initial request returned no content (i.e., a 304),
                 // we'll pass that back to the user immediately
@@ -296,6 +303,10 @@ namespace Azure.Storage.Blobs
 
         private static long ParseRangeTotalLength(string range)
         {
+            if (range == null)
+            {
+                return 0;
+            }
             int lengthSeparator = range.IndexOf("/", StringComparison.InvariantCultureIgnoreCase);
             if (lengthSeparator == -1)
             {
@@ -317,12 +328,17 @@ namespace Azure.Storage.Blobs
         private static async Task CopyToAsync(
             BlobDownloadInfo result,
             Stream destination,
-            CancellationToken cancellationToken) =>
-            await result.Content.CopyToAsync(
+            CancellationToken cancellationToken)
+        {
+            using Stream source = result.Content;
+
+            await source.CopyToAsync(
                 destination,
                 Constants.DefaultDownloadCopyBufferSize,
                 cancellationToken)
                 .ConfigureAwait(false);
+        }
+
 
         private static void CopyTo(
             BlobDownloadInfo result,
@@ -331,6 +347,7 @@ namespace Azure.Storage.Blobs
         {
             cancellationToken.ThrowIfCancellationRequested();
             result.Content.CopyTo(destination, Constants.DefaultDownloadCopyBufferSize);
+            result.Content.Dispose();
         }
 
         private IEnumerable<HttpRange> GetRanges(long initialLength, long totalLength)

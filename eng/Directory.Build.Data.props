@@ -23,12 +23,12 @@
       CA1815; <!-- Equality members on structs -->
       CA2007; <!-- Do not directly await a Task without calling ConfigureAwait (replaced by AZC0012) -->
       CA2231; <!-- Override Equality operators -->
-      CA2237; <!-- [Serializeable] on exceptions -->
       CA2225; <!-- Provide alternative to implicit operators -->
       CA1714; <!-- Flags should have plural names -->
     </NoWarn>
 
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>symbols.nupkg</SymbolPackageFormat>
     <!-- Avoid implicitly added preview feeds -->
@@ -36,16 +36,34 @@
   </PropertyGroup>
 
   <PropertyGroup>
+    <IsMgmtClientLibrary Condition="'$(IsMgmtClientLibrary)' == '' and ($(MSBuildProjectName.StartsWith('Azure.Management.')) or $(MSBuildProjectName.StartsWith('Azure.ResourceManager.')))">true</IsMgmtClientLibrary>
     <IsTestProject Condition="$(MSBuildProjectName.EndsWith('.Tests'))">true</IsTestProject>
     <IsSamplesProject Condition="$(MSBuildProjectName.EndsWith('.Samples'))">true</IsSamplesProject>
     <IsTestSupportProject Condition="'$(IsTestProject)' != 'true' and ($(MSBuildProjectDirectory.Contains('/tests/')) or $(MSBuildProjectDirectory.Contains('\tests\')))">true</IsTestSupportProject>
     <IsShippingClientLibrary Condition="'$(IsClientLibrary)' == 'true' and '$(IsTestProject)' != 'true' and '$(IsTestSupportProject)' != 'true' and '$(IsSamplesProject)' != 'true'">true</IsShippingClientLibrary>
+    <IsShippingDataPlaneLibrary Condition="'$(IsDataPlaneProject)' == 'true' and '$(IsTestProject)' != 'true' and '$(IsTestSupportProject)' != 'true' and '$(IsSamplesProject)' != 'true'">true</IsShippingDataPlaneLibrary>
 
     <EnableClientSdkAnalyzers Condition="'$(IsShippingClientLibrary)' == 'true'">true</EnableClientSdkAnalyzers>
     <EnableFxCopAnalyzers Condition="'$(IsShippingClientLibrary)' == 'true'">true</EnableFxCopAnalyzers>
     <EnableStyleCopAnalyzers Condition="'$(EnableStyleCopAnalyzers)' == '' and '$(IsClientLibrary)' == 'true'">true</EnableStyleCopAnalyzers>
     <GenerateAPIListing Condition="'$(IsShippingClientLibrary)' == 'true'">true</GenerateAPIListing>
-    <EnableApiCompat Condition="'$(EnableApiCompat)' == '' and '$(IsShippingClientLibrary)' == 'true'">true</EnableApiCompat>
+    <UpdateSourceOnBuild Condition="'$(UpdateSourceOnBuild)' == ''">$(AZURE_DEV_UPDATESOURCESONBUILD)</UpdateSourceOnBuild>
+    <PowerShellExe Condition="'$(PowerShellExe)' == ''">pwsh</PowerShellExe>
+    <CoverletOutputFormat Condition="'$(CoverletOutputFormat)' == '' and '$(CollectCoverage)' == 'true'">cobertura</CoverletOutputFormat>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(IsShippingClientLibrary)' == 'true' and '$(TF_BUILD)' == 'true'">
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+  </PropertyGroup>
+
+  <!-- TODO. REVIEW -->
+  <PropertyGroup Condition="'$(IsMgmtClientLibrary)' == 'true'">
+    <NoWarn>
+      $(NoWarn);
+      CA1812;  <!-- Avoid uninstantiated internal classes. (Result from below including the Azure.Core source) -->
+      AZC0012; <!-- Single word class names -->
+      AZC0008;
+    </NoWarn>
   </PropertyGroup>
 
   <!-- CodeAnalysis RuleSet -->
@@ -68,6 +86,9 @@
     <RequiredTargetFrameworks>netcoreapp2.1</RequiredTargetFrameworks>
     <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">netcoreapp2.1;net461</RequiredTargetFrameworks>
   </PropertyGroup>
+
+  <Import Project="$(RepoRoot)/sdk/core/Azure.Core/src/Azure.Core.props" Condition="'$(IsMgmtClientLibrary)' == 'true'"/>
+  <Import Project="TestFramework.props" Condition="'$(IsTestProject)' == 'true'"/>
 
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
@@ -120,6 +141,7 @@
     <!-- The set of tags that should be added to the packages -->
     <PackageCommonTags>windowsazureofficial;azureofficial</PackageCommonTags>
     <AzureCoreSharedSources>$(MSBuildThisFileDirectory)/../sdk/core/Azure.Core/src/Shared/</AzureCoreSharedSources>
+    <AzureCoreTestFramework>$(MSBuildThisFileDirectory)/../sdk/core/Azure.Core.TestFramework/src/Azure.Core.TestFramework.csproj</AzureCoreTestFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true' or '$(IsSamplesProject)' == 'true'">

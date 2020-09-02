@@ -13,10 +13,10 @@ namespace Microsoft.Azure.Search.Serialization
     /// Serializes doubles to and from the OData EDM wire format.
     /// </summary>
     /// <remarks>
-    /// This JSON converter treats all but three <c cref="System.Double">System.Double</c> values as JSON numbers. The three exceptions
-    /// are <c cref="System.Double.NaN">NaN</c>, which converts to and from the JSON string "NaN",
-    /// <c cref="System.Double.PositiveInfinity">PositiveInfinity</c>, which converts to and from the JSON string "INF", and
-    /// <c cref="System.Double.NegativeInfinity">NegativeInfinity</c>, which converts to and from the JSON string "-INF".
+    /// This JSON converter treats all but three <see cref="System.Double" /> values as JSON numbers. The three exceptions
+    /// are <see cref="System.Double.NaN" />, which converts to and from the JSON string "NaN",
+    /// <see cref="System.Double.PositiveInfinity" />, which converts to and from the JSON string "INF", and
+    /// <see cref="System.Double.NegativeInfinity" />, which converts to and from the JSON string "-INF".
     /// </remarks>
     internal class EdmDoubleConverter : JsonConverter
     {

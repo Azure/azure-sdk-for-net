@@ -33,11 +33,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// class.
         /// </summary>
         /// <param name="tags">Resource tags</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        public ProximityPlacementGroupUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), string id = default(string), string name = default(string), string type = default(string))
-            : base(tags, id, name, type)
+        public ProximityPlacementGroupUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>))
+            : base(tags)
         {
             CustomInit();
         }

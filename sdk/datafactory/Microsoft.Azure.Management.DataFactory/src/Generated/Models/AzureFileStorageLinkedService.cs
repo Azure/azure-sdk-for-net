@@ -37,8 +37,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the AzureFileStorageLinkedService
         /// class.
         /// </summary>
-        /// <param name="host">Host name of the server. Type: string (or
-        /// Expression with resultType string).</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
@@ -46,19 +44,42 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="parameters">Parameters for linked service.</param>
         /// <param name="annotations">List of tags that can be used for
         /// describing the linked service.</param>
+        /// <param name="host">Host name of the server. Type: string (or
+        /// Expression with resultType string).</param>
         /// <param name="userId">User ID to logon the server. Type: string (or
         /// Expression with resultType string).</param>
         /// <param name="password">Password to logon the server.</param>
+        /// <param name="connectionString">The connection string. It is
+        /// mutually exclusive with sasUri property. Type: string, SecureString
+        /// or AzureKeyVaultSecretReference.</param>
+        /// <param name="accountKey">The Azure key vault secret reference of
+        /// accountKey in connection string.</param>
+        /// <param name="sasUri">SAS URI of the Azure File resource. It is
+        /// mutually exclusive with connectionString property. Type: string,
+        /// SecureString or AzureKeyVaultSecretReference.</param>
+        /// <param name="sasToken">The Azure key vault secret reference of
+        /// sasToken in sas uri.</param>
+        /// <param name="fileShare">The azure file share name. It is required
+        /// when auth with accountKey/sasToken. Type: string (or Expression
+        /// with resultType string).</param>
+        /// <param name="snapshot">The azure file share snapshot version. Type:
+        /// string (or Expression with resultType string).</param>
         /// <param name="encryptedCredential">The encrypted credential used for
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public AzureFileStorageLinkedService(object host, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object userId = default(object), SecretBase password = default(SecretBase), object encryptedCredential = default(object))
+        public AzureFileStorageLinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object host = default(object), object userId = default(object), SecretBase password = default(SecretBase), object connectionString = default(object), AzureKeyVaultSecretReference accountKey = default(AzureKeyVaultSecretReference), object sasUri = default(object), AzureKeyVaultSecretReference sasToken = default(AzureKeyVaultSecretReference), object fileShare = default(object), object snapshot = default(object), object encryptedCredential = default(object))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             Host = host;
             UserId = userId;
             Password = password;
+            ConnectionString = connectionString;
+            AccountKey = accountKey;
+            SasUri = sasUri;
+            SasToken = sasToken;
+            FileShare = fileShare;
+            Snapshot = snapshot;
             EncryptedCredential = encryptedCredential;
             CustomInit();
         }
@@ -89,6 +110,51 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public SecretBase Password { get; set; }
 
         /// <summary>
+        /// Gets or sets the connection string. It is mutually exclusive with
+        /// sasUri property. Type: string, SecureString or
+        /// AzureKeyVaultSecretReference.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.connectionString")]
+        public object ConnectionString { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Azure key vault secret reference of accountKey in
+        /// connection string.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.accountKey")]
+        public AzureKeyVaultSecretReference AccountKey { get; set; }
+
+        /// <summary>
+        /// Gets or sets SAS URI of the Azure File resource. It is mutually
+        /// exclusive with connectionString property. Type: string,
+        /// SecureString or AzureKeyVaultSecretReference.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.sasUri")]
+        public object SasUri { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Azure key vault secret reference of sasToken in
+        /// sas uri.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.sasToken")]
+        public AzureKeyVaultSecretReference SasToken { get; set; }
+
+        /// <summary>
+        /// Gets or sets the azure file share name. It is required when auth
+        /// with accountKey/sasToken. Type: string (or Expression with
+        /// resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.fileShare")]
+        public object FileShare { get; set; }
+
+        /// <summary>
+        /// Gets or sets the azure file share snapshot version. Type: string
+        /// (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.snapshot")]
+        public object Snapshot { get; set; }
+
+        /// <summary>
         /// Gets or sets the encrypted credential used for authentication.
         /// Credentials are encrypted using the integration runtime credential
         /// manager. Type: string (or Expression with resultType string).
@@ -105,9 +171,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public override void Validate()
         {
             base.Validate();
-            if (Host == null)
+            if (AccountKey != null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Host");
+                AccountKey.Validate();
+            }
+            if (SasToken != null)
+            {
+                SasToken.Validate();
             }
         }
     }

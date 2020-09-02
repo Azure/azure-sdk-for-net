@@ -13,23 +13,38 @@ namespace Azure.Messaging.EventHubs.Diagnostics
     ///
     internal static class EventDataInstrumentation
     {
-        /// <summary>The client diagnostics instance responsible for managing scope.</summary>
-        public static DiagnosticScopeFactory ScopeFactory { get; } = new DiagnosticScopeFactory("Azure.Messaging.EventHubs", "Microsoft.EventHub", true);
+        /// <summary>The namespace used for the Event Hubs diagnostic scope.</summary>
+        public const string DiagnosticNamespace = "Azure.Messaging.EventHubs";
+
+        /// <summary>The namespace used for the Azure Resource Manager provider namespace.</summary>
+        public const string ResourceProviderNamespace = "Microsoft.EventHub";
+
+        /// <summary>
+        ///   The client diagnostics instance responsible for managing scope.
+        /// </summary>
+        ///
+        public static DiagnosticScopeFactory ScopeFactory { get; } = new DiagnosticScopeFactory(DiagnosticNamespace, ResourceProviderNamespace, true);
 
         /// <summary>
         ///   Applies diagnostics instrumentation to a given event.
         /// </summary>
         ///
         /// <param name="eventData">The event to instrument.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to use for instrumentation.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub to associate the event with.</param>
         ///
         /// <returns><c>true</c> if the event was instrumented in response to this request; otherwise, <c>false</c>.</returns>
         ///
-        public static bool InstrumentEvent(EventData eventData)
+        public static bool InstrumentEvent(EventData eventData,
+                                           string fullyQualifiedNamespace,
+                                           string eventHubName)
         {
             if (!eventData.Properties.ContainsKey(DiagnosticProperty.DiagnosticIdAttribute))
             {
                 using DiagnosticScope messageScope = ScopeFactory.CreateScope(DiagnosticProperty.EventActivityName);
                 messageScope.AddAttribute(DiagnosticProperty.KindAttribute, DiagnosticProperty.ProducerKind);
+                messageScope.AddAttribute(DiagnosticProperty.EventHubAttribute, eventHubName);
+                messageScope.AddAttribute(DiagnosticProperty.EndpointAttribute, fullyQualifiedNamespace);
                 messageScope.Start();
 
                 Activity activity = Activity.Current;

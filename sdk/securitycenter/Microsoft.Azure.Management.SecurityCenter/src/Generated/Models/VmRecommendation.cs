@@ -34,11 +34,14 @@ namespace Microsoft.Azure.Management.Security.Models
         /// 'NoStatus'</param>
         /// <param name="recommendationAction">Possible values include:
         /// 'Recommended', 'Add', 'Remove'</param>
-        public VmRecommendation(string configurationStatus = default(string), string recommendationAction = default(string), string resourceId = default(string))
+        /// <param name="enforcementSupport">Possible values include:
+        /// 'Supported', 'NotSupported', 'Unknown'</param>
+        public VmRecommendation(string configurationStatus = default(string), string recommendationAction = default(string), string resourceId = default(string), string enforcementSupport = default(string))
         {
             ConfigurationStatus = configurationStatus;
             RecommendationAction = recommendationAction;
             ResourceId = resourceId;
+            EnforcementSupport = enforcementSupport;
             CustomInit();
         }
 
@@ -65,6 +68,13 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </summary>
         [JsonProperty(PropertyName = "resourceId")]
         public string ResourceId { get; set; }
+
+        /// <summary>
+        /// Gets or sets possible values include: 'Supported', 'NotSupported',
+        /// 'Unknown'
+        /// </summary>
+        [JsonProperty(PropertyName = "enforcementSupport")]
+        public string EnforcementSupport { get; set; }
 
     }
 }

@@ -5,7 +5,7 @@ To get started, you'll need a URI to an Azure Key Vault. See the [README](../REA
 
 ## Creating a SecretClient
 
-To create a new `SecretClient` to create, get, update, or delete secrets, you need the endpoint to a Key Vault and credentials.
+To create a new `SecretClient` to create, get, update, or delete secrets, you need the endpoint to an Azure Key Vault and credentials.
 You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.
 
 In the sample below, you can set `keyVaultUrl` based on an environment variable, configuration setting, or any way that works for your application.
@@ -17,7 +17,7 @@ var client = new SecretClient(new Uri(keyVaultUrl), new DefaultAzureCredential()
 ## Creating secrets
 
 Let's next create secrets holding a bank account credential and storage account password valid for 1 year.
-If the secret already exists in the Key Vault, a new version of the secret is created.
+If the secret already exists in the Azure Key Vault, a new version of the secret is created.
 
 ```C# Snippet:SecretsSample3CreateSecret
 string bankSecretName = $"BankAccountPassword-{Guid.NewGuid()}";
@@ -65,8 +65,8 @@ foreach (SecretProperties secret in secrets)
 
 ## Listing secret versions
 
-The bank account password was updated, so you want to update the secret in Key Vault to ensure it reflects the new password.
-Calling `SetSecret` on an existing secret creates a new version of the secret in the Key Vault with the new value.
+The bank account password was updated, so you want to update the secret in Azure Key Vault to ensure it reflects the new password.
+Calling `SetSecret` on an existing secret creates a new version of the secret in the Azure Key Vault with the new value.
 You need to check that all previous values are different from the new value.
 
 ```C# Snippet:SecretsSample3ListSecretVersions
@@ -93,7 +93,7 @@ client.SetSecret(bankSecretName, newBankSecretPassword);
 
 ## Deleting secrets
 
-The bank account was closed. You need to delete the credential from the Key Vault.
+The bank account was closed. You need to delete the credential from the Azure Key Vault.
 You also want to delete information about your storage account.
 To list deleted secrets, we also need to wait until they are fully deleted.
 
@@ -113,7 +113,7 @@ while (!bankSecretOperation.HasCompleted || !storageSecretOperation.HasCompleted
 
 ## Listing deleted secrets
 
-You can now list all the deleted and non-purged secrets, assuming Key Vault is soft delete-enabled.
+You can now list all the deleted and non-purged secrets, assuming Azure Key Vault is soft delete-enabled.
 
 ```C# Snippet:SecretsSample3ListDeletedSecrets
 IEnumerable<DeletedSecret> secretsDeleted = client.GetDeletedSecrets();

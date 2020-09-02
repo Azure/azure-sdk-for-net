@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Management.Network" Version="20.0.2-preview" />
     <PackageReference Include="WindowsAzure.Storage" Version="8.1.4" />
     <PackageReference Include="Microsoft.Azure.KeyVault" Version="3.0.2" />
     <PackageReference Include="Microsoft.Azure.Management.Authorization" Version="2.11.0-preview" />

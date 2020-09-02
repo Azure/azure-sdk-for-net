@@ -1,0 +1,10 @@
+{
+  "parameters": {
+    "api-version": "2020-05-31-preview",
+    "id": "myTwinId",
+    "relationshipId": "myRelationshipId"
+  },
+  "responses": {
+    "204": {}
+  }
+}

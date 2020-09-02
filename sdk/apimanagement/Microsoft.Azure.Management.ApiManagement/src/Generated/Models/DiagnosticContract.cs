@@ -45,17 +45,15 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// HTTP messages to the Gateway.</param>
         /// <param name="backend">Diagnostic settings for incoming/outgoing
         /// HTTP messages to the Backend</param>
-        /// <param name="enableHttpCorrelationHeaders">Whether to process
-        /// Correlation Headers coming to Api Management Service. Only
-        /// applicable to Application Insights diagnostics. Default is
-        /// true.</param>
+        /// <param name="logClientIp">Log the ClientIP. Default is
+        /// false.</param>
         /// <param name="httpCorrelationProtocol">Sets correlation protocol to
         /// use for Application Insights diagnostics. Possible values include:
         /// 'None', 'Legacy', 'W3C'</param>
         /// <param name="verbosity">The verbosity level applied to traces
         /// emitted by trace policies. Possible values include: 'verbose',
         /// 'information', 'error'</param>
-        public DiagnosticContract(string loggerId, string id = default(string), string name = default(string), string type = default(string), string alwaysLog = default(string), SamplingSettings sampling = default(SamplingSettings), PipelineDiagnosticSettings frontend = default(PipelineDiagnosticSettings), PipelineDiagnosticSettings backend = default(PipelineDiagnosticSettings), bool? enableHttpCorrelationHeaders = default(bool?), string httpCorrelationProtocol = default(string), string verbosity = default(string))
+        public DiagnosticContract(string loggerId, string id = default(string), string name = default(string), string type = default(string), string alwaysLog = default(string), SamplingSettings sampling = default(SamplingSettings), PipelineDiagnosticSettings frontend = default(PipelineDiagnosticSettings), PipelineDiagnosticSettings backend = default(PipelineDiagnosticSettings), bool? logClientIp = default(bool?), string httpCorrelationProtocol = default(string), string verbosity = default(string))
             : base(id, name, type)
         {
             AlwaysLog = alwaysLog;
@@ -63,7 +61,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             Sampling = sampling;
             Frontend = frontend;
             Backend = backend;
-            EnableHttpCorrelationHeaders = enableHttpCorrelationHeaders;
+            LogClientIp = logClientIp;
             HttpCorrelationProtocol = httpCorrelationProtocol;
             Verbosity = verbosity;
             CustomInit();
@@ -108,12 +106,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public PipelineDiagnosticSettings Backend { get; set; }
 
         /// <summary>
-        /// Gets or sets whether to process Correlation Headers coming to Api
-        /// Management Service. Only applicable to Application Insights
-        /// diagnostics. Default is true.
+        /// Gets or sets log the ClientIP. Default is false.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.enableHttpCorrelationHeaders")]
-        public bool? EnableHttpCorrelationHeaders { get; set; }
+        [JsonProperty(PropertyName = "properties.logClientIp")]
+        public bool? LogClientIp { get; set; }
 
         /// <summary>
         /// Gets or sets sets correlation protocol to use for Application

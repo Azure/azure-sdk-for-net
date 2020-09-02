@@ -36,9 +36,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the DedicatedHostUpdate class.
         /// </summary>
         /// <param name="tags">Resource tags</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
         /// <param name="platformFaultDomain">Fault domain of the dedicated
         /// host within a dedicated host group.</param>
         /// <param name="autoReplaceOnFailure">Specifies whether the dedicated
@@ -62,8 +59,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// appears in the response.</param>
         /// <param name="instanceView">The dedicated host instance
         /// view.</param>
-        public DedicatedHostUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), string id = default(string), string name = default(string), string type = default(string), int? platformFaultDomain = default(int?), bool? autoReplaceOnFailure = default(bool?), string hostId = default(string), IList<SubResourceReadOnly> virtualMachines = default(IList<SubResourceReadOnly>), DedicatedHostLicenseTypes? licenseType = default(DedicatedHostLicenseTypes?), System.DateTime? provisioningTime = default(System.DateTime?), string provisioningState = default(string), DedicatedHostInstanceView instanceView = default(DedicatedHostInstanceView))
-            : base(tags, id, name, type)
+        public DedicatedHostUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), int? platformFaultDomain = default(int?), bool? autoReplaceOnFailure = default(bool?), string hostId = default(string), IList<SubResourceReadOnly> virtualMachines = default(IList<SubResourceReadOnly>), DedicatedHostLicenseTypes? licenseType = default(DedicatedHostLicenseTypes?), System.DateTime? provisioningTime = default(System.DateTime?), string provisioningState = default(string), DedicatedHostInstanceView instanceView = default(DedicatedHostInstanceView))
+            : base(tags)
         {
             PlatformFaultDomain = platformFaultDomain;
             AutoReplaceOnFailure = autoReplaceOnFailure;

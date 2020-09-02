@@ -19,7 +19,7 @@ namespace Azure.Messaging.ServiceBus.Core
         ///   The recommended timeout to associate with the session.
         /// </summary>
         ///
-        public abstract TimeSpan SessionTimeout { get; }
+        public TimeSpan SessionTimeout { get; } = TimeSpan.FromSeconds(30);
 
         /// <summary>
         /// Disposes of the connection scope.

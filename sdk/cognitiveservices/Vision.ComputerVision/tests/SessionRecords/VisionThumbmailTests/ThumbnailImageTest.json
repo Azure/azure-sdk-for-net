@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/vision/v2.1/generateThumbnail?width=64&height=64&smartCropping=false",
-      "EncodedRequestUri": "L3Zpc2lvbi92Mi4xL2dlbmVyYXRlVGh1bWJuYWlsP3dpZHRoPTY0JmhlaWdodD02NCZzbWFydENyb3BwaW5nPWZhbHNl",
+      "RequestUri": "/vision/v3.0/generateThumbnail?width=64&height=64&smartCropping=false",
+      "EncodedRequestUri": "L3Zpc2lvbi92My4wL2dlbmVyYXRlVGh1bWJuYWlsP3dpZHRoPTY0JmhlaWdodD02NCZzbWFydENyb3BwaW5nPWZhbHNl",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/psSdkJson6/src/SDKs/CognitiveServices/dataPlane/Vision/ComputerVision/ComputerVision.Tests/TestImages/house.jpg\"\r\n}",
       "RequestHeaders": {

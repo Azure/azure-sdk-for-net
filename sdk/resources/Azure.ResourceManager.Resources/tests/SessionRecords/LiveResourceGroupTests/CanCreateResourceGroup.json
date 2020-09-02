@@ -1,0 +1,132 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourcegroups/csmrg3061?api-version=2019-10-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "84",
+        "Content-Type": "application/json",
+        "traceparent": "00-aed910337dc6c64d949667203a04c85c-b3eb3ebe47b7b344-00",
+        "User-Agent": [
+          "azsdk-net-Management.Resources/1.0.0-dev.20200529.1",
+          "(.NET Framework 4.8.4180.0; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "35a4a87529b748ba9252d59eb2c8c666",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "South Central US",
+        "tags": {
+          "department": "finance",
+          "tagname": "tagvalue"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "276",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 29 May 2020 02:44:49 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "7d9ec204-55f4-4c74-ae59-73723473ec00",
+        "x-ms-ratelimit-remaining-subscription-writes": "1196",
+        "x-ms-request-id": "7d9ec204-55f4-4c74-ae59-73723473ec00",
+        "x-ms-routing-request-id": "EASTASIA:20200529T024449Z:7d9ec204-55f4-4c74-ae59-73723473ec00"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/csmrg3061",
+        "name": "csmrg3061",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "southcentralus",
+        "tags": {
+          "department": "finance",
+          "tagname": "tagvalue"
+        },
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourcegroups?api-version=2019-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Management.Resources/1.0.0-dev.20200529.1",
+          "(.NET Framework 4.8.4180.0; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "83e7a032dd9aa241707de8a45d30bebf",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "13526",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 29 May 2020 02:44:50 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "b23b8a9b-7fe8-413c-9413-17bfe953ac7e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11967",
+        "x-ms-request-id": "b23b8a9b-7fe8-413c-9413-17bfe953ac7e",
+        "x-ms-routing-request-id": "EASTASIA:20200529T024450Z:b23b8a9b-7fe8-413c-9413-17bfe953ac7e"
+      },
+      "ResponseBody": "{\u0022value\u0022:[{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/csmrg9308\u0022,\u0022name\u0022:\u0022csmrg9308\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022southcentralus\u0022,\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/csmrg189\u0022,\u0022name\u0022:\u0022csmrg189\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022southcentralus\u0022,\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/csmrg2077\u0022,\u0022name\u0022:\u0022csmrg2077\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022southcentralus\u0022,\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/csmrg8085\u0022,\u0022name\u0022:\u0022csmrg8085\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022southcentralus\u0022,\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/csmrg9418\u0022,\u0022name\u0022:\u0022csmrg9418\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022southcentralus\u0022,\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/csmrg3814\u0022,\u0022name\u0022:\u0022csmrg3814\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022southcentralus\u0022,\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/csmrg981\u0022,\u0022name\u0022:\u0022csmrg981\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022southcentralus\u0022,\u0022tags\u0022:{\u0022department\u0022:\u0022finance\u0022,\u0022tagname\u0022:\u0022tagvalue\u0022},\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/csmrg3542\u0022,\u0022name\u0022:\u0022csmrg3542\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022southcentralus\u0022,\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/csmrg3061\u0022,\u0022name\u0022:\u0022csmrg3061\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022southcentralus\u0022,\u0022tags\u0022:{\u0022department\u0022:\u0022finance\u0022,\u0022tagname\u0022:\u0022tagvalue\u0022},\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/testGroup\u0022,\u0022name\u0022:\u0022testGroup\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022centralus\u0022,\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/RG01\u0022,\u0022name\u0022:\u0022RG01\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022centralus\u0022,\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/RG-Test01\u0022,\u0022name\u0022:\u0022RG-Test01\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022centralus\u0022,\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/testResourceGroup\u0022,\u0022name\u0022:\u0022testResourceGroup\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022centralus\u0022,\u0022tags\u0022:{},\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/csmrg66\u0022,\u0022name\u0022:\u0022csmrg66\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022centralus\u0022,\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/csmrg7594\u0022,\u0022name\u0022:\u0022csmrg7594\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022centralus\u0022,\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/cli_test_cross_tenant_deployo2ea2gply4mqam72dtwr4b5dxtqtc45vm7iinxfltyltpg4\u0022,\u0022name\u0022:\u0022cli_test_cross_tenant_deployo2ea2gply4mqam72dtwr4b5dxtqtc45vm7iinxfltyltpg4\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022eastus\u0022,\u0022tags\u0022:{\u0022product\u0022:\u0022azurecli\u0022,\u0022cause\u0022:\u0022automation\u0022,\u0022date\u0022:\u00222020-05-08T05:46:21Z\u0022},\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/cli_test_cross_tenant_deployhskidcdbg46owavixb6hbltamfgxkcxngp2jonygimatjpn\u0022,\u0022name\u0022:\u0022cli_test_cross_tenant_deployhskidcdbg46owavixb6hbltamfgxkcxngp2jonygimatjpn\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022eastus\u0022,\u0022tags\u0022:{\u0022product\u0022:\u0022azurecli\u0022,\u0022cause\u0022:\u0022automation\u0022,\u0022date\u0022:\u00222020-05-08T05:48:53Z\u0022},\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/cli_test_cross_tenant_deploywd5zl6wsmzgrlzv7zl6dnconv2rdqkkgmqkn2yoalmlxmrq\u0022,\u0022name\u0022:\u0022cli_test_cross_tenant_deploywd5zl6wsmzgrlzv7zl6dnconv2rdqkkgmqkn2yoalmlxmrq\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022eastus\u0022,\u0022tags\u0022:{\u0022product\u0022:\u0022azurecli\u0022,\u0022cause\u0022:\u0022automation\u0022,\u0022date\u0022:\u00222020-05-11T01:15:49Z\u0022},\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/rg-001\u0022,\u0022name\u0022:\u0022rg-001\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022eastus\u0022,\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/cloud-shell-storage-westus\u0022,\u0022name\u0022:\u0022cloud-shell-storage-westus\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022westus\u0022,\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/NetworkWatcherRG\u0022,\u0022name\u0022:\u0022NetworkWatcherRG\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022westus\u0022,\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/ps_test_subscription_deployment\u0022,\u0022name\u0022:\u0022ps_test_subscription_deployment\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022westus\u0022,\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/test_tag_create_or_update_resourcegroupgna6bh7bmyg2kywvh2npq2gtxkmnvya2xj4e\u0022,\u0022name\u0022:\u0022test_tag_create_or_update_resourcegroupgna6bh7bmyg2kywvh2npq2gtxkmnvya2xj4e\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022westus\u0022,\u0022tags\u0022:{\u0022product\u0022:\u0022azurecli\u0022,\u0022cause\u0022:\u0022automation\u0022,\u0022date\u0022:\u00222020-04-23T18:15:35Z\u0022},\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/test_tag_create_or_update_resourcegroupd4ok7zau2j4bovpdzgvykzecxpzsdh6tyjxh\u0022,\u0022name\u0022:\u0022test_tag_create_or_update_resourcegroupd4ok7zau2j4bovpdzgvykzecxpzsdh6tyjxh\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022westus\u0022,\u0022tags\u0022:{\u0022product\u0022:\u0022azurecli\u0022,\u0022cause\u0022:\u0022automation\u0022,\u0022date\u0022:\u00222020-04-23T18:17:50Z\u0022},\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/test_tag_create_or_update_resourcegroup7hmiwq6lsygnsgxdcj4jvbjchynjculg5cv7\u0022,\u0022name\u0022:\u0022test_tag_create_or_update_resourcegroup7hmiwq6lsygnsgxdcj4jvbjchynjculg5cv7\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022westus\u0022,\u0022tags\u0022:{\u0022product\u0022:\u0022azurecli\u0022,\u0022cause\u0022:\u0022automation\u0022,\u0022date\u0022:\u00222020-04-23T18:18:28Z\u0022},\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/test_tag_create_or_update_resourcegroupzpyvlotdc5xr5rd5fl2sithrjgson4g4uiok\u0022,\u0022name\u0022:\u0022test_tag_create_or_update_resourcegroupzpyvlotdc5xr5rd5fl2sithrjgson4g4uiok\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022westus\u0022,\u0022tags\u0022:{\u0022product\u0022:\u0022azurecli\u0022,\u0022cause\u0022:\u0022automation\u0022,\u0022date\u0022:\u00222020-04-23T18:19:17Z\u0022},\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/test_tag_create_or_update_resourcegroupxzmq2lpxr76s5ogqno24yoilcip7boxhtsmv\u0022,\u0022name\u0022:\u0022test_tag_create_or_update_resourcegroupxzmq2lpxr76s5ogqno24yoilcip7boxhtsmv\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022westus\u0022,\u0022tags\u0022:{\u0022product\u0022:\u0022azurecli\u0022,\u0022cause\u0022:\u0022automation\u0022,\u0022date\u0022:\u00222020-04-23T18:33:50Z\u0022},\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/test_tag_create_or_update_resourcexsdi4t2d7m7gelzoe3jyqq6nmwaw2zd5uatr765qd\u0022,\u0022name\u0022:\u0022test_tag_create_or_update_resourcexsdi4t2d7m7gelzoe3jyqq6nmwaw2zd5uatr765qd\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022westus\u0022,\u0022tags\u0022:{\u0022product\u0022:\u0022azurecli\u0022,\u0022cause\u0022:\u0022automation\u0022,\u0022date\u0022:\u00222020-04-23T18:44:26Z\u0022},\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/cli_test_lock_with_resource_idnttjuftsazkqwvurcpyjh2ljwwpms5mzw5nr3z2bnd3hd\u0022,\u0022name\u0022:\u0022cli_test_lock_with_resource_idnttjuftsazkqwvurcpyjh2ljwwpms5mzw5nr3z2bnd3hd\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022westus\u0022,\u0022tags\u0022:{\u0022product\u0022:\u0022azurecli\u0022,\u0022cause\u0022:\u0022automation\u0022,\u0022date\u0022:\u00222020-04-24T03:48:35Z\u0022},\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/cli_test_resource_group_deployment\u0022,\u0022name\u0022:\u0022cli_test_resource_group_deployment\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022westus\u0022,\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/cli_test_resource_create_policy_assignment_random3x2gkt7hek7hypro3lny37iqzk\u0022,\u0022name\u0022:\u0022cli_test_resource_create_policy_assignment_random3x2gkt7hek7hypro3lny37iqzk\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022westus\u0022,\u0022tags\u0022:{\u0022product\u0022:\u0022azurecli\u0022,\u0022cause\u0022:\u0022automation\u0022,\u0022date\u0022:\u00222020-05-01T05:38:24Z\u0022},\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/cli_test_rg_scenariopmirdco5zn76yphscd4wqrrx6q3xsh32i5bqxasi3k2curmt27oj5fy\u0022,\u0022name\u0022:\u0022cli_test_rg_scenariopmirdco5zn76yphscd4wqrrx6q3xsh32i5bqxasi3k2curmt27oj5fy\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022westus\u0022,\u0022managedBy\u0022:\u0022test_admin\u0022,\u0022tags\u0022:{\u0022a\u0022:\u0022{\u0027k\u0027: \u0027v\u0027}\u0022,\u0022b\u0022:\u0022{\\\u0022k\\\u0022:\\\u0022v\\\u0022}\u0022},\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/cli_test_deployment_scriptsfsiv7amh2kiabyuiatut764r3dsoubxjb4nngyz7xbaqo74x\u0022,\u0022name\u0022:\u0022cli_test_deployment_scriptsfsiv7amh2kiabyuiatut764r3dsoubxjb4nngyz7xbaqo74x\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022westus\u0022,\u0022tags\u0022:{\u0022product\u0022:\u0022azurecli\u0022,\u0022cause\u0022:\u0022automation\u0022,\u0022date\u0022:\u00222020-05-08T21:49:23Z\u0022},\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/cli_test_rg_scenario7ldouq7mgxqgyevcaiumq2epnrgsdq4jesmctwx2tqcjjvtpcw7gkgo\u0022,\u0022name\u0022:\u0022cli_test_rg_scenario7ldouq7mgxqgyevcaiumq2epnrgsdq4jesmctwx2tqcjjvtpcw7gkgo\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022westus\u0022,\u0022managedBy\u0022:\u0022test_admin\u0022,\u0022tags\u0022:{\u0022a\u0022:\u0022{\u0027k\u0027: \u0027v\u0027}\u0022,\u0022b\u0022:\u0022{\\\u0022k\\\u0022:\\\u0022v\\\u0022}\u0022},\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/cli_test_rg_scenario24vwgz4c42mhxw3upgn4krln2ozempoajwefhhfjayfpxip32svqrkh\u0022,\u0022name\u0022:\u0022cli_test_rg_scenario24vwgz4c42mhxw3upgn4krln2ozempoajwefhhfjayfpxip32svqrkh\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022westus\u0022,\u0022managedBy\u0022:\u0022test_admin\u0022,\u0022tags\u0022:{\u0022a\u0022:\u0022{\u0027k\u0027: \u0027v\u0027}\u0022,\u0022b\u0022:\u0022{\\\u0022k\\\u0022:\\\u0022v\\\u0022}\u0022},\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/csmrg468\u0022,\u0022name\u0022:\u0022csmrg468\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022westus\u0022,\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/csmrg3221\u0022,\u0022name\u0022:\u0022csmrg3221\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022westus\u0022,\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/csmrg3458\u0022,\u0022name\u0022:\u0022csmrg3458\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022westus\u0022,\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/csmrg6140\u0022,\u0022name\u0022:\u0022csmrg6140\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022westus\u0022,\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/csmrg7247\u0022,\u0022name\u0022:\u0022csmrg7247\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022westus\u0022,\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/csmrg5213\u0022,\u0022name\u0022:\u0022csmrg5213\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022westus\u0022,\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/ps3749\u0022,\u0022name\u0022:\u0022ps3749\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022westus2\u0022,\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/ps1661\u0022,\u0022name\u0022:\u0022ps1661\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022westus2\u0022,\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/azsmnet8004\u0022,\u0022name\u0022:\u0022azsmnet8004\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022eastus2\u0022,\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/AppConfigTestResource\u0022,\u0022name\u0022:\u0022AppConfigTestResource\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022westus\u0022,\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}},{\u0022id\u0022:\u0022/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/TagsApiSDK\u0022,\u0022name\u0022:\u0022TagsApiSDK\u0022,\u0022type\u0022:\u0022Microsoft.Resources/resourceGroups\u0022,\u0022location\u0022:\u0022westus\u0022,\u0022tags\u0022:{\u0022cliName3\u0022:\u0022clivalue3\u0022,\u0022cliName4\u0022:\u0022clivalue4\u0022},\u0022properties\u0022:{\u0022provisioningState\u0022:\u0022Succeeded\u0022}}]}"
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourcegroups/csmrg3061?api-version=2019-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4c78cda6927d2840b8f5f50846fa793f-075e5096164f134c-00",
+        "User-Agent": [
+          "azsdk-net-Management.Resources/1.0.0-dev.20200529.1",
+          "(.NET Framework 4.8.4180.0; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "9c12d6b3722693eaf7feae925ebd5214",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "276",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 29 May 2020 02:44:50 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "c96106b8-ae5e-4ef3-951f-2d923873aeae",
+        "x-ms-ratelimit-remaining-subscription-reads": "11966",
+        "x-ms-request-id": "c96106b8-ae5e-4ef3-951f-2d923873aeae",
+        "x-ms-routing-request-id": "EASTASIA:20200529T024450Z:c96106b8-ae5e-4ef3-951f-2d923873aeae"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/csmrg3061",
+        "name": "csmrg3061",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "southcentralus",
+        "tags": {
+          "department": "finance",
+          "tagname": "tagvalue"
+        },
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "2086273293",
+    "SUBSCRIPTION_ID": "b9f138a1-1d64-4108-8413-9ea3be1c1b2d"
+  }
+}

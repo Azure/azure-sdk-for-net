@@ -35,9 +35,9 @@
             HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath.AbsolutePath), @"..\..\..\SessionRecords");
 
             // Clean up previous run of projects at the start of this test.
-            var client = new CustomVisionTrainingClient()
+            var credentials = new ApiKeyServiceClientCredentials(TrainingKey);
+            var client = new CustomVisionTrainingClient(credentials)
             {
-                ApiKey = TrainingKey,
                 Endpoint = Endpoint
             };
             ProjectBuilderHelper.CleanUpOldProjects(client);
@@ -51,11 +51,11 @@
 
         public static ICustomVisionTrainingClient GetTrainingClient(bool addHandler = true)
         {
+            var credentials = new ApiKeyServiceClientCredentials(TrainingKey);
             ICustomVisionTrainingClient client = (addHandler) ?
-                new CustomVisionTrainingClient(handlers: HttpMockServer.CreateInstance()) :
-                new CustomVisionTrainingClient();
+                new CustomVisionTrainingClient(credentials, handlers: HttpMockServer.CreateInstance()) :
+                new CustomVisionTrainingClient(credentials);
 
-            client.ApiKey = TrainingKey;
             client.Endpoint = Endpoint;
 
             return client;

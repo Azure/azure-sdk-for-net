@@ -55,11 +55,6 @@ namespace Microsoft.Azure.Management.KeyVault
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Client Api Version.
-        /// </summary>
-        public string ApiVersion { get; private set; }
-
-        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
@@ -83,9 +78,24 @@ namespace Microsoft.Azure.Management.KeyVault
         public virtual IVaultsOperations Vaults { get; private set; }
 
         /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagedHsmsOperations.
+        /// </summary>
+        public virtual IManagedHsmsOperations ManagedHsms { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the KeyVaultManagementClient class.
@@ -329,9 +339,11 @@ namespace Microsoft.Azure.Management.KeyVault
         private void Initialize()
         {
             Vaults = new VaultsOperations(this);
+            PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
+            PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             Operations = new Operations(this);
+            ManagedHsms = new ManagedHsmsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-02-14";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

@@ -1,17 +1,8 @@
 trigger: none
 
-resources:
-  repositories:
-    - repository: azure-sdk-tools
-      type: github
-      name: Azure/azure-sdk-tools
-      endpoint: azure
-
-jobs:
-- template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
+extends:
+  template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
   parameters:
     MaxParallel: 4
     ServiceDirectory: servicebus
     TimeoutInMinutes: 120
-    EnvVars:
-      SERVICE_BUS_CONNECTION_STRING: $(net-service-bus-test-connection-string)

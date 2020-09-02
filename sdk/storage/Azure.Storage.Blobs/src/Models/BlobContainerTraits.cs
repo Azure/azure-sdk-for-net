@@ -8,7 +8,8 @@ namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// Specifies options for listing blob containers with the
-    /// <see cref="BlobServiceClient.GetBlobContainersAsync"/> operation.
+    /// <see cref="BlobServiceClient.GetBlobContainersAsync(BlobContainerTraits, BlobContainerStates, string, System.Threading.CancellationToken)"/>
+    /// operation.
     /// </summary>
     [Flags]
     public enum BlobContainerTraits
@@ -23,23 +24,5 @@ namespace Azure.Storage.Blobs.Models
         /// be included.
         /// </summary>
         Metadata = 1,
-    }
-}
-
-namespace Azure.Storage.Blobs
-{
-    /// <summary>
-    /// BlobContainerTraits enum extensions
-    /// </summary>
-    internal static partial class BlobExtensions
-    {
-        /// <summary>
-        /// Convert the details into a ListBlobContainersIncludeType value.
-        /// </summary>
-        /// <returns>A ListBlobContainersIncludeType value.</returns>
-        internal static ListBlobContainersIncludeType? AsIncludeType(this BlobContainerTraits traits)
-            => (traits & BlobContainerTraits.Metadata) == BlobContainerTraits.Metadata ?
-                ListBlobContainersIncludeType.Metadata :
-                (ListBlobContainersIncludeType?)null;
     }
 }

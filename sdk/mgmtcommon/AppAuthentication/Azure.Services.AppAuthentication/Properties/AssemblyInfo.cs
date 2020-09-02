@@ -4,8 +4,8 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyTitle("Microsoft.Azure.Services.AppAuthentication")]
 [assembly: AssemblyDescription("Enables a service to authenticate to Azure services using the developer's Azure Active Directory/ Microsoft account during development, and authenticate as itself (using OAuth 2.0 Client Credentials flow) when deployed to Azure.")]
 
-[assembly: AssemblyVersion("1.4.0.0")]
-[assembly: AssemblyFileVersion("1.4.0.0")]
+[assembly: AssemblyVersion("1.5.0.0")]
+[assembly: AssemblyFileVersion("1.5.0.0")]
 [assembly: AssemblyCompany("Microsoft Corporation")]
 [assembly: AssemblyProduct("Microsoft Azure")]
 [assembly: AssemblyCopyright("Copyright (c) Microsoft Corporation. All rights reserved.")]

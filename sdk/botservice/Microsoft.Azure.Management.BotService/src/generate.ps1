@@ -1,1 +1,1 @@
-﻿Start-AutoRestCodeGeneration -ResourceProvider "botservice/resource-manager" -AutoRestVersion "latest" -SdkGenerationDirectory "$PSScriptRoot\Generated"
+﻿Start-AutoRestCodeGeneration -ResourceProvider "botservice/resource-manager" -AutoRestVersion "v2" -SdkGenerationDirectory "$PSScriptRoot\Generated"

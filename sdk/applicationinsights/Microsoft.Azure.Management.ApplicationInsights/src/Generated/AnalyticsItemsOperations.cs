@@ -139,17 +139,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "scopePath");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (Client.ApiVersion != null)
-            {
-                if (Client.ApiVersion.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
-                }
-            }
+            string apiVersion = "2015-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -160,6 +150,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("resourceName", resourceName);
                 tracingParameters.Add("scopePath", scopePath);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("scope", scope);
                 tracingParameters.Add("type", type);
                 tracingParameters.Add("includeContent", includeContent);
@@ -174,9 +165,9 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(resourceName));
             _url = _url.Replace("{scopePath}", System.Uri.EscapeDataString(scopePath));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (scope != null)
             {
@@ -397,17 +388,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "scopePath");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (Client.ApiVersion != null)
-            {
-                if (Client.ApiVersion.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
-                }
-            }
+            string apiVersion = "2015-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -418,6 +399,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("resourceName", resourceName);
                 tracingParameters.Add("scopePath", scopePath);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("id", id);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -431,9 +413,9 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(resourceName));
             _url = _url.Replace("{scopePath}", System.Uri.EscapeDataString(scopePath));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (id != null)
             {
@@ -652,21 +634,11 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "scopePath");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (Client.ApiVersion != null)
-            {
-                if (Client.ApiVersion.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
-                }
-            }
             if (itemProperties == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "itemProperties");
             }
+            string apiVersion = "2015-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -677,6 +649,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("resourceName", resourceName);
                 tracingParameters.Add("scopePath", scopePath);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("overrideItem", overrideItem);
                 tracingParameters.Add("itemProperties", itemProperties);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -690,9 +663,9 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(resourceName));
             _url = _url.Replace("{scopePath}", System.Uri.EscapeDataString(scopePath));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (overrideItem != null)
             {
@@ -908,17 +881,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "scopePath");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (Client.ApiVersion != null)
-            {
-                if (Client.ApiVersion.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
-                }
-            }
+            string apiVersion = "2015-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -929,6 +892,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("resourceName", resourceName);
                 tracingParameters.Add("scopePath", scopePath);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("id", id);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -942,9 +906,9 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(resourceName));
             _url = _url.Replace("{scopePath}", System.Uri.EscapeDataString(scopePath));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (id != null)
             {

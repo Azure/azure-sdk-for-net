@@ -37,14 +37,21 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="resourceId">The ID of the resource corresponding to
         /// this hop.</param>
         /// <param name="nextHopIds">List of next hop identifiers.</param>
+        /// <param name="previousHopIds">List of previous hop
+        /// identifiers.</param>
+        /// <param name="links">List of hop links.</param>
+        /// <param name="previousLinks">List of previous hop links.</param>
         /// <param name="issues">List of issues.</param>
-        public ConnectivityHop(string type = default(string), string id = default(string), string address = default(string), string resourceId = default(string), IList<string> nextHopIds = default(IList<string>), IList<ConnectivityIssue> issues = default(IList<ConnectivityIssue>))
+        public ConnectivityHop(string type = default(string), string id = default(string), string address = default(string), string resourceId = default(string), IList<string> nextHopIds = default(IList<string>), IList<string> previousHopIds = default(IList<string>), IList<HopLink> links = default(IList<HopLink>), IList<HopLink> previousLinks = default(IList<HopLink>), IList<ConnectivityIssue> issues = default(IList<ConnectivityIssue>))
         {
             Type = type;
             Id = id;
             Address = address;
             ResourceId = resourceId;
             NextHopIds = nextHopIds;
+            PreviousHopIds = previousHopIds;
+            Links = links;
+            PreviousLinks = previousLinks;
             Issues = issues;
             CustomInit();
         }
@@ -83,6 +90,24 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "nextHopIds")]
         public IList<string> NextHopIds { get; private set; }
+
+        /// <summary>
+        /// Gets list of previous hop identifiers.
+        /// </summary>
+        [JsonProperty(PropertyName = "previousHopIds")]
+        public IList<string> PreviousHopIds { get; private set; }
+
+        /// <summary>
+        /// Gets list of hop links.
+        /// </summary>
+        [JsonProperty(PropertyName = "links")]
+        public IList<HopLink> Links { get; private set; }
+
+        /// <summary>
+        /// Gets list of previous hop links.
+        /// </summary>
+        [JsonProperty(PropertyName = "previousLinks")]
+        public IList<HopLink> PreviousLinks { get; private set; }
 
         /// <summary>
         /// Gets list of issues.

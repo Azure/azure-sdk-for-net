@@ -20,19 +20,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         private readonly HttpClient _httpClient;
         private NonInteractiveAzureServiceTokenProviderBase _tokenProvider;
 
-        // Key Vault constants and well-known values
         private const string KeyVaultRestApiVersion = "2016-10-01";
-        private const string AzureKeyVaultDnsSuffix = "vault.azure.net";
-        private const string ChinaKeyVaultDnsSuffix = "vault.azure.cn";
-        private const string USGovernmentKeyVaultDnsSuffix = "vault.usgovcloudapi.net";
-        private const string GermanKeyVaultDnsSuffix = "vault.microsoftazure.de";
-        private readonly List<string> WellKnownKeyVaultDnsSuffixes = new List<string>()
-        {
-            AzureKeyVaultDnsSuffix,
-            ChinaKeyVaultDnsSuffix,
-            USGovernmentKeyVaultDnsSuffix,
-            GermanKeyVaultDnsSuffix
-        };
 
         // Error messages
         internal const string BearerChallengeMissingOrInvalidError = "A bearer challenge was not returned or is invalid.";
@@ -40,7 +28,6 @@ namespace Microsoft.Azure.Services.AppAuthentication
         internal const string KeyVaultAccessTokenRetrievalError = "Unable to get a Key Vault access token to acquire certificate.";
         internal const string KeyVaultResponseError = "Key Vault returned an error.";
         internal const string SecretBundleInvalidContentTypeError = "Specified secret identifier does not contain private key data. Please check you are providing the secret identifier for the Key Vault client certificate.";
-        internal const string SecretIdentifierInvalidHostError = "Specified secret identifier has an unrecognized hostname.";
         internal const string SecretIdentifierInvalidSchemeError = "Specified identifier must use HTTPS.";
         internal const string SecretIdentifierInvalidTypeError = "Specified identifier is not a secret identifier.";
         internal const string SecretIdentifierInvalidUriError = "Specified secret identifier is not a valid URI.";
@@ -51,7 +38,11 @@ namespace Microsoft.Azure.Services.AppAuthentication
         internal KeyVaultClient(int msiRetryTimeoutInSeconds = 0, HttpClient httpClient = null, NonInteractiveAzureServiceTokenProviderBase tokenProvider = null)
         {
             _msiRetryTimeoutInSeconds = msiRetryTimeoutInSeconds;
+#if NETSTANDARD1_4 || net452 || net461
             _httpClient = httpClient ?? new HttpClient();
+#else
+            _httpClient = httpClient ?? new HttpClient(new HttpClientHandler() { CheckCertificateRevocationList = true });
+#endif
             _tokenProvider = tokenProvider;
         }
 
@@ -59,7 +50,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         {
         }
 
-        internal async Task<X509Certificate2> GetCertificateAsync(string secretIdentifier, CancellationToken cancellationToken = default(CancellationToken))
+        internal async Task<X509Certificate2> GetCertificateAsync(string secretIdentifier, CancellationToken cancellationToken = default)
         {
             try
             {
@@ -126,10 +117,6 @@ namespace Microsoft.Azure.Services.AppAuthentication
             // Ensure secret URI is using HTTPS scheme
             if (!secretUri.Scheme.Equals("https", StringComparison.OrdinalIgnoreCase))
                 throw new Exception(SecretIdentifierInvalidSchemeError);
-
-            // Ensure secret URI host ends in well-known Key Vault DNS suffix
-            if (!WellKnownKeyVaultDnsSuffixes.Any(dnsSuffix => secretUri.Host.EndsWith(dnsSuffix, StringComparison.OrdinalIgnoreCase)))
-                throw new Exception(SecretIdentifierInvalidHostError);
 
             // Ensure secret URI is actually a secret identifier (and not key or certificate identifier)
             if (!secretUri.LocalPath.StartsWith("/secrets/", StringComparison.OrdinalIgnoreCase))

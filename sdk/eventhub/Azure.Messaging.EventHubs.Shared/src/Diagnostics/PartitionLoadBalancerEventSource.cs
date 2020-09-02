@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
+using Azure.Core.Diagnostics;
 
 namespace Azure.Messaging.EventHubs.Diagnostics
 {
@@ -15,9 +16,12 @@ namespace Azure.Messaging.EventHubs.Diagnostics
     ///   the StopEvent.Id must be exactly StartEvent.Id + 1.
     /// </remarks>
     ///
-    [EventSource(Name = "Azure-Messaging-EventHubs-Processor-PartitionLoadBalancer")]
+    [EventSource(Name = EventSourceName)]
     internal class PartitionLoadBalancerEventSource : EventSource
     {
+        /// <summary>The name to use for the event source.</summary>
+        private const string EventSourceName = "Azure-Messaging-EventHubs-Processor-PartitionLoadBalancer";
+
         /// <summary>
         ///   Provides a singleton instance of the event source for callers to
         ///   use for logging.
@@ -30,7 +34,9 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///   outside the scope of this library.
         /// </summary>
         ///
-        internal PartitionLoadBalancerEventSource() { }
+        internal PartitionLoadBalancerEventSource() : base(EventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue)
+        {
+        }
 
         /// <summary>
         ///   Indicates the minimum amount of partitions every event processor needs to own when the distribution is balanced.

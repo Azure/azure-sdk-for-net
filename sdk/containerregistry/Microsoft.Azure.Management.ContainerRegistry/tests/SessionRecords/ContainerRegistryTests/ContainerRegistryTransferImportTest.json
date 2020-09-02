@@ -1,0 +1,585 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/b4e411f5-1305-4cd7-bed9-d8eb1f2bf5ad/providers/Microsoft.ContainerRegistry?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjRlNDExZjUtMTMwNS00Y2Q3LWJlZDktZDhlYjFmMmJmNWFkL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29udGFpbmVyUmVnaXN0cnk/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "fcacfb62-fc9a-46d8-964e-2f927c7157d1"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 28 Jul 2020 23:48:27 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-request-id": [
+          "f91929ac-7fc7-4987-8eec-ce988816359c"
+        ],
+        "x-ms-correlation-request-id": [
+          "f91929ac-7fc7-4987-8eec-ce988816359c"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20200728T234827Z:f91929ac-7fc7-4987-8eec-ce988816359c"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "27649"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b4e411f5-1305-4cd7-bed9-d8eb1f2bf5ad/providers/Microsoft.ContainerRegistry\",\r\n  \"namespace\": \"Microsoft.ContainerRegistry\",\r\n  \"authorizations\": [\r\n    {\r\n      \"applicationId\": \"6a0ec4d3-30cb-4a83-91c0-ae56bc0e3d26\",\r\n      \"roleDefinitionId\": \"78e18383-93eb-418a-9887-bc9271046576\"\r\n    },\r\n    {\r\n      \"applicationId\": \"737d58c1-397a-46e7-9d12-7d8c830883c2\",\r\n      \"roleDefinitionId\": \"716bb53a-0390-4428-bf41-b1bedde7d751\"\r\n    },\r\n    {\r\n      \"applicationId\": \"918d0db8-4a38-4938-93c1-9313bdfe0272\",\r\n      \"roleDefinitionId\": \"dcd2d2c9-3f80-4d72-95a8-2593111b4b12\"\r\n    },\r\n    {\r\n      \"applicationId\": \"d2fa1650-4805-4a83-bcb9-cf41fe63539c\",\r\n      \"roleDefinitionId\": \"c15f8dab-b103-4f8d-9afb-fbe4b8e98de2\"\r\n    },\r\n    {\r\n      \"applicationId\": \"a4c95b9e-3994-40cc-8953-5dc66d48348d\",\r\n      \"roleDefinitionId\": \"dc88c655-90fa-48d9-8d51-003cc8738508\"\r\n    },\r\n    {\r\n      \"applicationId\": \"62c559cd-db0c-4da0-bab2-972528c65d42\",\r\n      \"roleDefinitionId\": \"437b639a-6d74-491d-959f-d172e8c5c1fc\"\r\n    }\r\n  ],\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"registries\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"South Central US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central India\",\r\n        \"Korea Central\",\r\n        \"France Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"Brazil South\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"North Central US\",\r\n        \"West Central US\",\r\n        \"West US 2\",\r\n        \"Switzerland North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-12-01-preview\",\r\n        \"2019-05-01\",\r\n        \"2017-10-01\",\r\n        \"2017-03-01\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SystemAssignedResourceIdentity\"\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/scopeMaps\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"South Central US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central India\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"Brazil South\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"North Central US\",\r\n        \"West Central US\",\r\n        \"West US 2\",\r\n        \"Korea Central\",\r\n        \"France Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"Switzerland North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-05-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/tokens\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"South Central US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central India\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"Brazil South\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"North Central US\",\r\n        \"West Central US\",\r\n        \"West US 2\",\r\n        \"Korea Central\",\r\n        \"France Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"Switzerland North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-05-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/generateCredentials\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"South Central US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central India\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"Brazil South\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"North Central US\",\r\n        \"West Central US\",\r\n        \"West US 2\",\r\n        \"Korea Central\",\r\n        \"France Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"Switzerland North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-05-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/privateEndpointConnections\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"South Central US\",\r\n        \"West Europe\",\r\n        \"Switzerland North\",\r\n        \"North Europe\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central India\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"Brazil South\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"North Central US\",\r\n        \"West Central US\",\r\n        \"West US 2\",\r\n        \"Korea Central\",\r\n        \"France Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/privateEndpointConnectionProxies\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"South Central US\",\r\n        \"West Europe\",\r\n        \"Switzerland North\",\r\n        \"North Europe\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central India\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"Brazil South\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"North Central US\",\r\n        \"West Central US\",\r\n        \"West US 2\",\r\n        \"Korea Central\",\r\n        \"France Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/privateEndpointConnectionProxies/validate\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"South Central US\",\r\n        \"West Europe\",\r\n        \"Switzerland North\",\r\n        \"North Europe\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central India\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"Brazil South\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"North Central US\",\r\n        \"West Central US\",\r\n        \"West US 2\",\r\n        \"Korea Central\",\r\n        \"France Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/privateLinkResources\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"South Central US\",\r\n        \"West Europe\",\r\n        \"Switzerland North\",\r\n        \"North Europe\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central India\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"Brazil South\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"North Central US\",\r\n        \"West Central US\",\r\n        \"West US 2\",\r\n        \"Korea Central\",\r\n        \"France Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/importImage\",\r\n      \"locations\": [\r\n        \"South Central US\",\r\n        \"West Central US\",\r\n        \"East US\",\r\n        \"West Europe\",\r\n        \"West US\",\r\n        \"Japan East\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"North Central US\",\r\n        \"East US 2\",\r\n        \"West US 2\",\r\n        \"Brazil South\",\r\n        \"Australia East\",\r\n        \"Central India\",\r\n        \"Korea Central\",\r\n        \"France Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"Central US\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia Southeast\",\r\n        \"East Asia\",\r\n        \"Japan West\",\r\n        \"South India\",\r\n        \"Switzerland North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-12-01-preview\",\r\n        \"2019-05-01\",\r\n        \"2017-10-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/exportPipelines\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"South Central US\",\r\n        \"West Europe\",\r\n        \"Switzerland North\",\r\n        \"North Europe\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central India\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"Brazil South\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"North Central US\",\r\n        \"West Central US\",\r\n        \"West US 2\",\r\n        \"Korea Central\",\r\n        \"France Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-12-01-preview\"\r\n      ],\r\n      \"capabilities\": \"SystemAssignedResourceIdentity\"\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/importPipelines\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"South Central US\",\r\n        \"West Europe\",\r\n        \"Switzerland North\",\r\n        \"North Europe\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central India\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"Brazil South\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"North Central US\",\r\n        \"West Central US\",\r\n        \"West US 2\",\r\n        \"Korea Central\",\r\n        \"France Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-12-01-preview\"\r\n      ],\r\n      \"capabilities\": \"SystemAssignedResourceIdentity\"\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/pipelineRuns\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"South Central US\",\r\n        \"West Europe\",\r\n        \"Switzerland North\",\r\n        \"North Europe\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central India\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"Brazil South\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"North Central US\",\r\n        \"West Central US\",\r\n        \"West US 2\",\r\n        \"Korea Central\",\r\n        \"France Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/listBuildSourceUploadUrl\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West Europe\",\r\n        \"West US 2\",\r\n        \"South Central US\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West US\",\r\n        \"West Central US\",\r\n        \"France Central\",\r\n        \"Korea Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"Switzerland North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-06-01-preview\",\r\n        \"2019-04-01\",\r\n        \"2018-09-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/scheduleRun\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West Europe\",\r\n        \"West US 2\",\r\n        \"South Central US\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West US\",\r\n        \"West Central US\",\r\n        \"France Central\",\r\n        \"Korea Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"Switzerland North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-06-01-preview\",\r\n        \"2019-04-01\",\r\n        \"2018-09-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/runs\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West Europe\",\r\n        \"West US 2\",\r\n        \"South Central US\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West US\",\r\n        \"West Central US\",\r\n        \"France Central\",\r\n        \"Korea Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"Switzerland North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-06-01-preview\",\r\n        \"2019-04-01\",\r\n        \"2018-09-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/taskRuns\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West Europe\",\r\n        \"West US 2\",\r\n        \"South Central US\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West US\",\r\n        \"West Central US\",\r\n        \"France Central\",\r\n        \"Korea Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"Switzerland North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-06-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/taskRuns/listDetails\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West Europe\",\r\n        \"West US 2\",\r\n        \"South Central US\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West US\",\r\n        \"West Central US\",\r\n        \"France Central\",\r\n        \"Korea Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"Switzerland North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-06-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/agentPools\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West US 2\",\r\n        \"South Central US\",\r\n        \"East US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-06-01-preview\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/agentPools/listQueueStatus\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West US 2\",\r\n        \"South Central US\",\r\n        \"East US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-06-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/runs/listLogSasUrl\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West Europe\",\r\n        \"West US 2\",\r\n        \"South Central US\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West US\",\r\n        \"West Central US\",\r\n        \"France Central\",\r\n        \"Korea Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"Switzerland North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-06-01-preview\",\r\n        \"2019-04-01\",\r\n        \"2018-09-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/runs/cancel\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West Europe\",\r\n        \"West US 2\",\r\n        \"South Central US\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West US\",\r\n        \"West Central US\",\r\n        \"France Central\",\r\n        \"Korea Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"Switzerland North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-06-01-preview\",\r\n        \"2019-04-01\",\r\n        \"2018-09-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/tasks\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West Europe\",\r\n        \"West US 2\",\r\n        \"South Central US\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West US\",\r\n        \"West Central US\",\r\n        \"France Central\",\r\n        \"Korea Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"Switzerland North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-06-01-preview\",\r\n        \"2019-04-01\",\r\n        \"2018-09-01\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SystemAssignedResourceIdentity\"\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/tasks/listDetails\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West Europe\",\r\n        \"West US 2\",\r\n        \"South Central US\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West US\",\r\n        \"West Central US\",\r\n        \"France Central\",\r\n        \"Korea Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"Switzerland North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-06-01-preview\",\r\n        \"2019-04-01\",\r\n        \"2018-09-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/getBuildSourceUploadUrl\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West Europe\",\r\n        \"West US 2\",\r\n        \"South Central US\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West US\",\r\n        \"West Central US\",\r\n        \"France Central\",\r\n        \"Korea Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"Switzerland North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2018-02-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/queueBuild\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West Europe\",\r\n        \"West US 2\",\r\n        \"South Central US\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West US\",\r\n        \"West Central US\",\r\n        \"France Central\",\r\n        \"Korea Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"Switzerland North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2018-02-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/builds\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West Europe\",\r\n        \"West US 2\",\r\n        \"South Central US\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West US\",\r\n        \"West Central US\",\r\n        \"France Central\",\r\n        \"Korea Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"Switzerland North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2018-02-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/builds/getLogLink\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West Europe\",\r\n        \"West US 2\",\r\n        \"South Central US\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West US\",\r\n        \"West Central US\",\r\n        \"France Central\",\r\n        \"Korea Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"Switzerland North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2018-02-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/builds/cancel\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West Europe\",\r\n        \"West US 2\",\r\n        \"South Central US\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West US\",\r\n        \"West Central US\",\r\n        \"France Central\",\r\n        \"Korea Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"Switzerland North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2018-02-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/buildTasks\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West Europe\",\r\n        \"West US 2\",\r\n        \"South Central US\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West US\",\r\n        \"West Central US\",\r\n        \"France Central\",\r\n        \"Korea Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"Switzerland North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2018-02-01-preview\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/buildTasks/listSourceRepositoryProperties\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West Europe\",\r\n        \"West US 2\",\r\n        \"South Central US\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West US\",\r\n        \"West Central US\",\r\n        \"France Central\",\r\n        \"Korea Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"Switzerland North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2018-02-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/buildTasks/steps\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West Europe\",\r\n        \"West US 2\",\r\n        \"South Central US\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West US\",\r\n        \"West Central US\",\r\n        \"France Central\",\r\n        \"Korea Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"Switzerland North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2018-02-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/buildTasks/steps/listBuildArguments\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West Europe\",\r\n        \"West US 2\",\r\n        \"South Central US\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West US\",\r\n        \"West Central US\",\r\n        \"France Central\",\r\n        \"Korea Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"Switzerland North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2018-02-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/replications\",\r\n      \"locations\": [\r\n        \"South Central US\",\r\n        \"West Central US\",\r\n        \"East US\",\r\n        \"West Europe\",\r\n        \"West US\",\r\n        \"Japan East\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"North Central US\",\r\n        \"East US 2\",\r\n        \"West US 2\",\r\n        \"Brazil South\",\r\n        \"Australia East\",\r\n        \"Central India\",\r\n        \"Korea Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"France Central\",\r\n        \"Central US\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia Southeast\",\r\n        \"East Asia\",\r\n        \"Japan West\",\r\n        \"South India\",\r\n        \"Switzerland North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-12-01-preview\",\r\n        \"2019-05-01\",\r\n        \"2017-10-01\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/webhooks\",\r\n      \"locations\": [\r\n        \"West Central US\",\r\n        \"East US\",\r\n        \"West Europe\",\r\n        \"South Central US\",\r\n        \"West US\",\r\n        \"Japan East\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"North Central US\",\r\n        \"East US 2\",\r\n        \"West US 2\",\r\n        \"Brazil South\",\r\n        \"Australia East\",\r\n        \"Central India\",\r\n        \"Korea Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"France Central\",\r\n        \"Central US\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia Southeast\",\r\n        \"East Asia\",\r\n        \"Japan West\",\r\n        \"South India\",\r\n        \"Switzerland North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-12-01-preview\",\r\n        \"2019-05-01\",\r\n        \"2017-10-01\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/webhooks/ping\",\r\n      \"locations\": [\r\n        \"West Central US\",\r\n        \"East US\",\r\n        \"West Europe\",\r\n        \"South Central US\",\r\n        \"West US\",\r\n        \"Japan East\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"North Central US\",\r\n        \"East US 2\",\r\n        \"West US 2\",\r\n        \"Brazil South\",\r\n        \"Australia East\",\r\n        \"Central India\",\r\n        \"Korea Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"France Central\",\r\n        \"Central US\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia Southeast\",\r\n        \"East Asia\",\r\n        \"Japan West\",\r\n        \"South India\",\r\n        \"Switzerland North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-12-01-preview\",\r\n        \"2019-05-01\",\r\n        \"2017-10-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/webhooks/getCallbackConfig\",\r\n      \"locations\": [\r\n        \"West Central US\",\r\n        \"East US\",\r\n        \"West Europe\",\r\n        \"South Central US\",\r\n        \"West US\",\r\n        \"Japan East\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"North Central US\",\r\n        \"East US 2\",\r\n        \"West US 2\",\r\n        \"Brazil South\",\r\n        \"Australia East\",\r\n        \"Central India\",\r\n        \"Korea Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"France Central\",\r\n        \"Central US\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia Southeast\",\r\n        \"East Asia\",\r\n        \"Japan West\",\r\n        \"South India\",\r\n        \"Switzerland North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-12-01-preview\",\r\n        \"2019-05-01\",\r\n        \"2017-10-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/webhooks/listEvents\",\r\n      \"locations\": [\r\n        \"West Central US\",\r\n        \"East US\",\r\n        \"West Europe\",\r\n        \"South Central US\",\r\n        \"West US\",\r\n        \"Japan East\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"North Central US\",\r\n        \"East US 2\",\r\n        \"West US 2\",\r\n        \"Brazil South\",\r\n        \"Australia East\",\r\n        \"Central India\",\r\n        \"Korea Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"France Central\",\r\n        \"Central US\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia Southeast\",\r\n        \"East Asia\",\r\n        \"Japan West\",\r\n        \"South India\",\r\n        \"Switzerland North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-12-01-preview\",\r\n        \"2019-05-01\",\r\n        \"2017-10-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/setupAuth\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West Europe\",\r\n        \"West US 2\",\r\n        \"South Central US\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West US\",\r\n        \"West Central US\",\r\n        \"France Central\",\r\n        \"Korea Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"Switzerland North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2018-02-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/authorize\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West Europe\",\r\n        \"West US 2\",\r\n        \"South Central US\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West US\",\r\n        \"West Central US\",\r\n        \"France Central\",\r\n        \"Korea Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"Switzerland North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2018-02-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operationResults\",\r\n      \"locations\": [\r\n        \"West Central US\",\r\n        \"East US\",\r\n        \"West Europe\",\r\n        \"South Central US\",\r\n        \"West US\",\r\n        \"Japan East\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"North Central US\",\r\n        \"East US 2\",\r\n        \"West US 2\",\r\n        \"Brazil South\",\r\n        \"Australia East\",\r\n        \"Central India\",\r\n        \"Korea Central\",\r\n        \"France Central\",\r\n        \"Central US\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia Southeast\",\r\n        \"East Asia\",\r\n        \"Japan West\",\r\n        \"South India\",\r\n        \"Switzerland North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-12-01-preview\",\r\n        \"2019-05-01-preview\",\r\n        \"2019-05-01\",\r\n        \"2017-10-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/deleteVirtualNetworkOrSubnets\",\r\n      \"locations\": [\r\n        \"West Central US\",\r\n        \"East US\",\r\n        \"West Europe\",\r\n        \"South Central US\",\r\n        \"West US\",\r\n        \"Japan East\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"North Central US\",\r\n        \"East US 2\",\r\n        \"West US 2\",\r\n        \"Brazil South\",\r\n        \"Australia East\",\r\n        \"Central India\",\r\n        \"Korea Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"France Central\",\r\n        \"Central US\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia Southeast\",\r\n        \"East Asia\",\r\n        \"Japan West\",\r\n        \"South India\",\r\n        \"Switzerland North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-05-01\",\r\n        \"2017-10-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/GetCredentials\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"South Central US\",\r\n        \"West Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2016-06-27-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/listCredentials\",\r\n      \"locations\": [\r\n        \"South Central US\",\r\n        \"East US\",\r\n        \"West US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central India\",\r\n        \"Korea Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"France Central\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"Brazil South\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"North Central US\",\r\n        \"West Central US\",\r\n        \"West US 2\",\r\n        \"Switzerland North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-12-01-preview\",\r\n        \"2019-05-01\",\r\n        \"2017-10-01\",\r\n        \"2017-03-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/regenerateCredential\",\r\n      \"locations\": [\r\n        \"South Central US\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central India\",\r\n        \"Korea Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"France Central\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"Brazil South\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"North Central US\",\r\n        \"West Central US\",\r\n        \"West US 2\",\r\n        \"Switzerland North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-12-01-preview\",\r\n        \"2019-05-01\",\r\n        \"2017-10-01\",\r\n        \"2017-03-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/listUsages\",\r\n      \"locations\": [\r\n        \"West Central US\",\r\n        \"East US\",\r\n        \"West Europe\",\r\n        \"South Central US\",\r\n        \"West US\",\r\n        \"Japan East\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"North Central US\",\r\n        \"East US 2\",\r\n        \"West US 2\",\r\n        \"Brazil South\",\r\n        \"Australia East\",\r\n        \"Central India\",\r\n        \"Korea Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"France Central\",\r\n        \"Central US\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia Southeast\",\r\n        \"East Asia\",\r\n        \"Japan West\",\r\n        \"South India\",\r\n        \"Switzerland North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-12-01-preview\",\r\n        \"2019-05-01\",\r\n        \"2017-10-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/listPolicies\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"South Central US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central India\",\r\n        \"Korea Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"France Central\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"Brazil South\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"North Central US\",\r\n        \"West Central US\",\r\n        \"West US 2\",\r\n        \"Switzerland North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-10-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/updatePolicies\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"South Central US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central India\",\r\n        \"Korea Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"France Central\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"Brazil South\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"North Central US\",\r\n        \"West Central US\",\r\n        \"West US 2\",\r\n        \"Switzerland North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-10-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/regenerateCredentials\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"South Central US\",\r\n        \"West Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2016-06-27-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/eventGridFilters\",\r\n      \"locations\": [\r\n        \"South Central US\",\r\n        \"West Central US\",\r\n        \"East US\",\r\n        \"West Europe\",\r\n        \"West US\",\r\n        \"Japan East\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"North Central US\",\r\n        \"East US 2\",\r\n        \"West US 2\",\r\n        \"Brazil South\",\r\n        \"Australia East\",\r\n        \"Central India\",\r\n        \"Korea Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"France Central\",\r\n        \"Central US\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia Southeast\",\r\n        \"East Asia\",\r\n        \"Japan West\",\r\n        \"South India\",\r\n        \"Switzerland North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-05-01\",\r\n        \"2017-10-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkNameAvailability\",\r\n      \"locations\": [\r\n        \"South Central US\",\r\n        \"East US\",\r\n        \"West US\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"North Central US\",\r\n        \"West Central US\",\r\n        \"West US 2\",\r\n        \"Brazil South\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central India\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"Korea Central\",\r\n        \"France Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"Switzerland North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-12-01-preview\",\r\n        \"2019-05-01\",\r\n        \"2017-10-01\",\r\n        \"2017-06-01-preview\",\r\n        \"2017-03-01\",\r\n        \"2016-06-27-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [\r\n        \"South Central US\",\r\n        \"East US\",\r\n        \"West US\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"North Central US\",\r\n        \"West Central US\",\r\n        \"West US 2\",\r\n        \"Brazil South\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central India\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"Korea Central\",\r\n        \"France Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"Switzerland North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-12-01-preview\",\r\n        \"2019-05-01\",\r\n        \"2017-10-01\",\r\n        \"2017-06-01-preview\",\r\n        \"2017-03-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations\",\r\n      \"locations\": [\r\n        \"South Central US\",\r\n        \"East US\",\r\n        \"West US\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"North Central US\",\r\n        \"West Central US\",\r\n        \"West US 2\",\r\n        \"Brazil South\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central India\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"Korea Central\",\r\n        \"France Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"Switzerland North\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-12-01-preview\",\r\n        \"2019-05-01-preview\",\r\n        \"2019-05-01\",\r\n        \"2017-10-01\",\r\n        \"2017-06-01-preview\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b4e411f5-1305-4cd7-bed9-d8eb1f2bf5ad/resourcegroups/acr_rg8091?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjRlNDExZjUtMTMwNS00Y2Q3LWJlZDktZDhlYjFmMmJmNWFkL3Jlc291cmNlZ3JvdXBzL2Fjcl9yZzgwOTE/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"West US\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "6ee3624f-ea5b-4419-9ea9-d297baf39b0d"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "29"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 28 Jul 2020 23:48:27 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "904171bc-b620-4abb-a3bc-33bda4252156"
+        ],
+        "x-ms-correlation-request-id": [
+          "904171bc-b620-4abb-a3bc-33bda4252156"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20200728T234828Z:904171bc-b620-4abb-a3bc-33bda4252156"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "173"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b4e411f5-1305-4cd7-bed9-d8eb1f2bf5ad/resourceGroups/acr_rg8091\",\r\n  \"name\": \"acr_rg8091\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/b4e411f5-1305-4cd7-bed9-d8eb1f2bf5ad/resourceGroups/acr_rg8091/providers/Microsoft.ContainerRegistry/registries/acrregistry5654?api-version=2019-12-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjRlNDExZjUtMTMwNS00Y2Q3LWJlZDktZDhlYjFmMmJmNWFkL3Jlc291cmNlR3JvdXBzL2Fjcl9yZzgwOTEvcHJvdmlkZXJzL01pY3Jvc29mdC5Db250YWluZXJSZWdpc3RyeS9yZWdpc3RyaWVzL2FjcnJlZ2lzdHJ5NTY1ND9hcGktdmVyc2lvbj0yMDE5LTEyLTAxLXByZXZpZXc=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Premium\"\r\n  },\r\n  \"location\": \"westus\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "d3e6d415-45e4-4ebe-a985-914367a72f26"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.ContainerRegistry.ContainerRegistryManagementClient/5.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "133"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 28 Jul 2020 23:48:29 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-request-id": [
+          "dcd25bd5-56c9-4895-8f8f-c4276d1f23df"
+        ],
+        "x-ms-correlation-request-id": [
+          "dcd25bd5-56c9-4895-8f8f-c4276d1f23df"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20200728T234830Z:dcd25bd5-56c9-4895-8f8f-c4276d1f23df"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "932"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Premium\",\r\n    \"tier\": \"Premium\"\r\n  },\r\n  \"type\": \"Microsoft.ContainerRegistry/registries\",\r\n  \"id\": \"/subscriptions/b4e411f5-1305-4cd7-bed9-d8eb1f2bf5ad/resourceGroups/acr_rg8091/providers/Microsoft.ContainerRegistry/registries/acrregistry5654\",\r\n  \"name\": \"acrregistry5654\",\r\n  \"location\": \"westus\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"loginServer\": \"acrregistry5654.azurecr.io\",\r\n    \"creationDate\": \"2020-07-28T23:48:29.4262706Z\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"adminUserEnabled\": false,\r\n    \"networkRuleSet\": {\r\n      \"defaultAction\": \"Allow\",\r\n      \"virtualNetworkRules\": [],\r\n      \"ipRules\": []\r\n    },\r\n    \"policies\": {\r\n      \"quarantinePolicy\": {\r\n        \"status\": \"disabled\"\r\n      },\r\n      \"trustPolicy\": {\r\n        \"type\": \"Notary\",\r\n        \"status\": \"disabled\"\r\n      },\r\n      \"retentionPolicy\": {\r\n        \"days\": 7,\r\n        \"lastUpdatedTime\": \"2020-07-28T16:48:29.9577972-07:00\",\r\n        \"status\": \"disabled\"\r\n      }\r\n    },\r\n    \"encryption\": {\r\n      \"status\": \"disabled\"\r\n    },\r\n    \"dataEndpointEnabled\": false,\r\n    \"dataEndpointHostNames\": [],\r\n    \"privateEndpointConnections\": [],\r\n    \"publicNetworkAccess\": \"Enabled\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b4e411f5-1305-4cd7-bed9-d8eb1f2bf5ad/resourceGroups/acr_rg8091/providers/Microsoft.ContainerRegistry/registries/acrregistry5654/importPipelines/acrimportpipeline8790?api-version=2019-12-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjRlNDExZjUtMTMwNS00Y2Q3LWJlZDktZDhlYjFmMmJmNWFkL3Jlc291cmNlR3JvdXBzL2Fjcl9yZzgwOTEvcHJvdmlkZXJzL01pY3Jvc29mdC5Db250YWluZXJSZWdpc3RyeS9yZWdpc3RyaWVzL2FjcnJlZ2lzdHJ5NTY1NC9pbXBvcnRQaXBlbGluZXMvYWNyaW1wb3J0cGlwZWxpbmU4NzkwP2FwaS12ZXJzaW9uPTIwMTktMTItMDEtcHJldmlldw==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"westus\",\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\"\r\n  },\r\n  \"properties\": {\r\n    \"source\": {\r\n      \"type\": \"AzureStorageBlobContainer\",\r\n      \"uri\": \"https://accountname.blob.core.windows.net/containername\",\r\n      \"keyVaultUri\": \"https://vaultname.vault.azure.net/secrets/exportsas\"\r\n    },\r\n    \"trigger\": {\r\n      \"sourceTrigger\": {\r\n        \"status\": \"Enabled\"\r\n      }\r\n    }\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "9ba764e4-5a7f-4c74-a66d-9298a8fc4bcc"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.ContainerRegistry.ContainerRegistryManagementClient/5.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "413"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 28 Jul 2020 23:48:34 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-request-id": [
+          "a0193d49-decc-4d31-a285-ede6fa1cf54d"
+        ],
+        "x-ms-correlation-request-id": [
+          "a0193d49-decc-4d31-a285-ede6fa1cf54d"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20200728T234835Z:a0193d49-decc-4d31-a285-ede6fa1cf54d"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "718"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"type\": \"Microsoft.ContainerRegistry/registries/importPipelines\",\r\n  \"location\": \"WESTUS\",\r\n  \"identity\": {\r\n    \"principalId\": \"bee1ee19-6547-4ca7-b751-5d48233e3c39\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"type\": \"systemAssigned\"\r\n  },\r\n  \"id\": \"/subscriptions/b4e411f5-1305-4cd7-bed9-d8eb1f2bf5ad/resourceGroups/acr_rg8091/providers/Microsoft.ContainerRegistry/registries/acrregistry5654/importPipelines/acrimportpipeline8790\",\r\n  \"name\": \"acrimportpipeline8790\",\r\n  \"properties\": {\r\n    \"source\": {\r\n      \"type\": \"AzureStorageBlobContainer\",\r\n      \"uri\": \"https://accountname.blob.core.windows.net/containername\",\r\n      \"keyVaultUri\": \"https://vaultname.vault.azure.net/secrets/exportsas\"\r\n    },\r\n    \"trigger\": {\r\n      \"sourceTrigger\": {\r\n        \"status\": \"Enabled\"\r\n      }\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b4e411f5-1305-4cd7-bed9-d8eb1f2bf5ad/resourceGroups/acr_rg8091/providers/Microsoft.ContainerRegistry/registries/acrregistry5654/importPipelines?api-version=2019-12-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjRlNDExZjUtMTMwNS00Y2Q3LWJlZDktZDhlYjFmMmJmNWFkL3Jlc291cmNlR3JvdXBzL2Fjcl9yZzgwOTEvcHJvdmlkZXJzL01pY3Jvc29mdC5Db250YWluZXJSZWdpc3RyeS9yZWdpc3RyaWVzL2FjcnJlZ2lzdHJ5NTY1NC9pbXBvcnRQaXBlbGluZXM/YXBpLXZlcnNpb249MjAxOS0xMi0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "a40cee30-8134-4a9d-8fcf-ec7cdfdb6e65"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.ContainerRegistry.ContainerRegistryManagementClient/5.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 28 Jul 2020 23:48:34 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "x-ms-request-id": [
+          "2cc7e70b-010c-4fd5-bbbd-df3b5f58909a"
+        ],
+        "x-ms-correlation-request-id": [
+          "2cc7e70b-010c-4fd5-bbbd-df3b5f58909a"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20200728T234835Z:2cc7e70b-010c-4fd5-bbbd-df3b5f58909a"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "730"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"type\": \"Microsoft.ContainerRegistry/registries/importPipelines\",\r\n      \"location\": \"WESTUS\",\r\n      \"identity\": {\r\n        \"principalId\": \"bee1ee19-6547-4ca7-b751-5d48233e3c39\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"type\": \"systemAssigned\"\r\n      },\r\n      \"id\": \"/subscriptions/b4e411f5-1305-4cd7-bed9-d8eb1f2bf5ad/resourceGroups/acr_rg8091/providers/Microsoft.ContainerRegistry/registries/acrregistry5654/importPipelines/acrimportpipeline8790\",\r\n      \"name\": \"acrimportpipeline8790\",\r\n      \"properties\": {\r\n        \"source\": {\r\n          \"type\": \"AzureStorageBlobContainer\",\r\n          \"uri\": \"https://accountname.blob.core.windows.net/containername\",\r\n          \"keyVaultUri\": \"https://vaultname.vault.azure.net/secrets/exportsas\"\r\n        },\r\n        \"trigger\": {\r\n          \"sourceTrigger\": {\r\n            \"status\": \"Enabled\"\r\n          }\r\n        },\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b4e411f5-1305-4cd7-bed9-d8eb1f2bf5ad/resourceGroups/acr_rg8091/providers/Microsoft.ContainerRegistry/registries/acrregistry5654/importPipelines/acrimportpipeline8790?api-version=2019-12-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjRlNDExZjUtMTMwNS00Y2Q3LWJlZDktZDhlYjFmMmJmNWFkL3Jlc291cmNlR3JvdXBzL2Fjcl9yZzgwOTEvcHJvdmlkZXJzL01pY3Jvc29mdC5Db250YWluZXJSZWdpc3RyeS9yZWdpc3RyaWVzL2FjcnJlZ2lzdHJ5NTY1NC9pbXBvcnRQaXBlbGluZXMvYWNyaW1wb3J0cGlwZWxpbmU4NzkwP2FwaS12ZXJzaW9uPTIwMTktMTItMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "b535db21-046f-42ff-b27d-a6922dd89c7a"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.ContainerRegistry.ContainerRegistryManagementClient/5.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 28 Jul 2020 23:48:34 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11997"
+        ],
+        "x-ms-request-id": [
+          "8271e7ae-4443-42de-af3e-f17931b95eca"
+        ],
+        "x-ms-correlation-request-id": [
+          "8271e7ae-4443-42de-af3e-f17931b95eca"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20200728T234835Z:8271e7ae-4443-42de-af3e-f17931b95eca"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "718"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"type\": \"Microsoft.ContainerRegistry/registries/importPipelines\",\r\n  \"location\": \"WESTUS\",\r\n  \"identity\": {\r\n    \"principalId\": \"bee1ee19-6547-4ca7-b751-5d48233e3c39\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"type\": \"systemAssigned\"\r\n  },\r\n  \"id\": \"/subscriptions/b4e411f5-1305-4cd7-bed9-d8eb1f2bf5ad/resourceGroups/acr_rg8091/providers/Microsoft.ContainerRegistry/registries/acrregistry5654/importPipelines/acrimportpipeline8790\",\r\n  \"name\": \"acrimportpipeline8790\",\r\n  \"properties\": {\r\n    \"source\": {\r\n      \"type\": \"AzureStorageBlobContainer\",\r\n      \"uri\": \"https://accountname.blob.core.windows.net/containername\",\r\n      \"keyVaultUri\": \"https://vaultname.vault.azure.net/secrets/exportsas\"\r\n    },\r\n    \"trigger\": {\r\n      \"sourceTrigger\": {\r\n        \"status\": \"Enabled\"\r\n      }\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b4e411f5-1305-4cd7-bed9-d8eb1f2bf5ad/resourceGroups/acr_rg8091/providers/Microsoft.ContainerRegistry/registries/acrregistry5654/importPipelines/acrimportpipeline8790?api-version=2019-12-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjRlNDExZjUtMTMwNS00Y2Q3LWJlZDktZDhlYjFmMmJmNWFkL3Jlc291cmNlR3JvdXBzL2Fjcl9yZzgwOTEvcHJvdmlkZXJzL01pY3Jvc29mdC5Db250YWluZXJSZWdpc3RyeS9yZWdpc3RyaWVzL2FjcnJlZ2lzdHJ5NTY1NC9pbXBvcnRQaXBlbGluZXMvYWNyaW1wb3J0cGlwZWxpbmU4NzkwP2FwaS12ZXJzaW9uPTIwMTktMTItMDEtcHJldmlldw==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "f6e016b1-97d1-4e66-88c3-97408c08d2b3"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.ContainerRegistry.ContainerRegistryManagementClient/5.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 28 Jul 2020 23:48:34 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
+        ],
+        "x-ms-request-id": [
+          "1352761f-420c-4315-9e22-078da936f517"
+        ],
+        "x-ms-correlation-request-id": [
+          "1352761f-420c-4315-9e22-078da936f517"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20200728T234835Z:1352761f-420c-4315-9e22-078da936f517"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b4e411f5-1305-4cd7-bed9-d8eb1f2bf5ad/resourceGroups/acr_rg8091/providers/Microsoft.ContainerRegistry/registries/acrregistry5654/importPipelines/acrimportpipeline8790?api-version=2019-12-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjRlNDExZjUtMTMwNS00Y2Q3LWJlZDktZDhlYjFmMmJmNWFkL3Jlc291cmNlR3JvdXBzL2Fjcl9yZzgwOTEvcHJvdmlkZXJzL01pY3Jvc29mdC5Db250YWluZXJSZWdpc3RyeS9yZWdpc3RyaWVzL2FjcnJlZ2lzdHJ5NTY1NC9pbXBvcnRQaXBlbGluZXMvYWNyaW1wb3J0cGlwZWxpbmU4NzkwP2FwaS12ZXJzaW9uPTIwMTktMTItMDEtcHJldmlldw==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "237e3ff1-8347-4366-b6cd-e4def487eb12"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.ContainerRegistry.ContainerRegistryManagementClient/5.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 28 Jul 2020 23:48:34 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14998"
+        ],
+        "x-ms-request-id": [
+          "3c005d86-8046-45fd-8c45-4c90915adcbc"
+        ],
+        "x-ms-correlation-request-id": [
+          "3c005d86-8046-45fd-8c45-4c90915adcbc"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20200728T234835Z:3c005d86-8046-45fd-8c45-4c90915adcbc"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 204
+    },
+    {
+      "RequestUri": "/subscriptions/b4e411f5-1305-4cd7-bed9-d8eb1f2bf5ad/resourceGroups/acr_rg8091/providers/Microsoft.ContainerRegistry/registries/acrregistry5654?api-version=2019-12-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjRlNDExZjUtMTMwNS00Y2Q3LWJlZDktZDhlYjFmMmJmNWFkL3Jlc291cmNlR3JvdXBzL2Fjcl9yZzgwOTEvcHJvdmlkZXJzL01pY3Jvc29mdC5Db250YWluZXJSZWdpc3RyeS9yZWdpc3RyaWVzL2FjcnJlZ2lzdHJ5NTY1ND9hcGktdmVyc2lvbj0yMDE5LTEyLTAxLXByZXZpZXc=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "6e9e22d9-5d49-4197-8474-fa3e540792dd"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.ContainerRegistry.ContainerRegistryManagementClient/5.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 28 Jul 2020 23:48:36 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14997"
+        ],
+        "x-ms-request-id": [
+          "cd9157c9-e24e-4146-a50f-bfcfb3e4c401"
+        ],
+        "x-ms-correlation-request-id": [
+          "cd9157c9-e24e-4146-a50f-bfcfb3e4c401"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20200728T234837Z:cd9157c9-e24e-4146-a50f-bfcfb3e4c401"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "CreateResourceGroup": [
+      "acr_rg8091"
+    ],
+    "CreateManagedContainerRegistry": [
+      "acrregistry5654"
+    ],
+    "ContainerRegistryTransferImportTest": [
+      "acrimportpipeline8790"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "b4e411f5-1305-4cd7-bed9-d8eb1f2bf5ad"
+  }
+}

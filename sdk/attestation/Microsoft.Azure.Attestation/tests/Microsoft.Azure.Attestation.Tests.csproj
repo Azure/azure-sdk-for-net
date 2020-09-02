@@ -26,6 +26,15 @@
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="DataFiles\" />
     <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="DataFiles\cert1.pem">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DataFiles\cert2.signed.add.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using System.Text;
 using NUnit.Framework.Constraints;
 
@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
     {
         private const int PagedSecretCount = 50;
 
-        public SecretClientLiveTests(bool isAsync) : base(isAsync)
+        public SecretClientLiveTests(bool isAsync, SecretClientOptions.ServiceVersion serviceVersion) : base(isAsync, serviceVersion)
         {
         }
 
@@ -52,7 +52,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         public async Task SetSecretWithExtendedProps()
         {
             string secretName = Recording.GenerateId();
-            IResolveConstraint createdUpdatedConstraint = Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1565114301));
+            IResolveConstraint createdUpdatedConstraint = Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1596061817));
 
             KeyVaultSecret setResult = null;
 

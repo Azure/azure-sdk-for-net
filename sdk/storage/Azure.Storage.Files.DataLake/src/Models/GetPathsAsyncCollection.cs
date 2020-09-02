@@ -29,20 +29,17 @@ namespace Azure.Storage.Files.DataLake.Models
         public override async ValueTask<Page<PathItem>> GetNextPageAsync(
             string continuationToken,
             int? pageSizeHint,
-            bool isAsync,
+            bool async,
             CancellationToken cancellationToken)
         {
-            Task<Response<PathSegment>> task = _client.GetPathsInternal(
+            Response<PathSegment> response = await _client.GetPathsInternal(
                 _path,
                 _recursive,
                 _upn,
                 continuationToken,
                 pageSizeHint,
-                isAsync,
-                cancellationToken);
-            Response<PathSegment> response = isAsync ?
-                await task.ConfigureAwait(false) :
-                task.EnsureCompleted();
+                async,
+                cancellationToken).ConfigureAwait(false);
 
             return Page<PathItem>.FromValues(
                 response.Value.Paths.ToArray(),

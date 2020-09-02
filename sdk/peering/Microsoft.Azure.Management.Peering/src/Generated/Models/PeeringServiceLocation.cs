@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Peering.Models
     using System.Linq;
 
     /// <summary>
-    /// PeeringService location
+    /// The peering service location.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class PeeringServiceLocation : Resource

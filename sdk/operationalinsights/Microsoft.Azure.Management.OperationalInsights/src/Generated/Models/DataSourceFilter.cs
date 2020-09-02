@@ -29,13 +29,22 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// <summary>
         /// Initializes a new instance of the DataSourceFilter class.
         /// </summary>
-        /// <param name="kind">Possible values include: 'AzureActivityLog',
-        /// 'ChangeTrackingPath', 'ChangeTrackingDefaultPath',
-        /// 'ChangeTrackingDefaultRegistry', 'ChangeTrackingCustomRegistry',
-        /// 'CustomLog', 'CustomLogCollection', 'GenericDataSource', 'IISLogs',
-        /// 'LinuxPerformanceObject', 'LinuxPerformanceCollection',
-        /// 'LinuxSyslog', 'LinuxSyslogCollection', 'WindowsEvent',
-        /// 'WindowsPerformanceCounter'</param>
+        /// <param name="kind">Possible values include: 'WindowsEvent',
+        /// 'WindowsPerformanceCounter', 'IISLogs', 'LinuxSyslog',
+        /// 'LinuxSyslogCollection', 'LinuxPerformanceObject',
+        /// 'LinuxPerformanceCollection', 'CustomLog', 'CustomLogCollection',
+        /// 'AzureAuditLog', 'AzureActivityLog', 'GenericDataSource',
+        /// 'ChangeTrackingCustomPath', 'ChangeTrackingPath',
+        /// 'ChangeTrackingServices', 'ChangeTrackingDataTypeConfiguration',
+        /// 'ChangeTrackingDefaultRegistry', 'ChangeTrackingRegistry',
+        /// 'ChangeTrackingLinuxPath', 'LinuxChangeTrackingPath',
+        /// 'ChangeTrackingContentLocation', 'WindowsTelemetry', 'Office365',
+        /// 'SecurityWindowsBaselineConfiguration',
+        /// 'SecurityCenterSecurityWindowsBaselineConfiguration',
+        /// 'SecurityEventCollectionConfiguration',
+        /// 'SecurityInsightsSecurityEventCollectionConfiguration',
+        /// 'ImportComputerGroup', 'NetworkMonitoring', 'Itsm', 'DnsAnalytics',
+        /// 'ApplicationInsights', 'SqlDataClassification'</param>
         public DataSourceFilter(string kind = default(string))
         {
             Kind = kind;
@@ -48,13 +57,22 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets possible values include: 'AzureActivityLog',
-        /// 'ChangeTrackingPath', 'ChangeTrackingDefaultPath',
-        /// 'ChangeTrackingDefaultRegistry', 'ChangeTrackingCustomRegistry',
-        /// 'CustomLog', 'CustomLogCollection', 'GenericDataSource', 'IISLogs',
-        /// 'LinuxPerformanceObject', 'LinuxPerformanceCollection',
-        /// 'LinuxSyslog', 'LinuxSyslogCollection', 'WindowsEvent',
-        /// 'WindowsPerformanceCounter'
+        /// Gets or sets possible values include: 'WindowsEvent',
+        /// 'WindowsPerformanceCounter', 'IISLogs', 'LinuxSyslog',
+        /// 'LinuxSyslogCollection', 'LinuxPerformanceObject',
+        /// 'LinuxPerformanceCollection', 'CustomLog', 'CustomLogCollection',
+        /// 'AzureAuditLog', 'AzureActivityLog', 'GenericDataSource',
+        /// 'ChangeTrackingCustomPath', 'ChangeTrackingPath',
+        /// 'ChangeTrackingServices', 'ChangeTrackingDataTypeConfiguration',
+        /// 'ChangeTrackingDefaultRegistry', 'ChangeTrackingRegistry',
+        /// 'ChangeTrackingLinuxPath', 'LinuxChangeTrackingPath',
+        /// 'ChangeTrackingContentLocation', 'WindowsTelemetry', 'Office365',
+        /// 'SecurityWindowsBaselineConfiguration',
+        /// 'SecurityCenterSecurityWindowsBaselineConfiguration',
+        /// 'SecurityEventCollectionConfiguration',
+        /// 'SecurityInsightsSecurityEventCollectionConfiguration',
+        /// 'ImportComputerGroup', 'NetworkMonitoring', 'Itsm', 'DnsAnalytics',
+        /// 'ApplicationInsights', 'SqlDataClassification'
         /// </summary>
         [JsonProperty(PropertyName = "kind")]
         public string Kind { get; set; }

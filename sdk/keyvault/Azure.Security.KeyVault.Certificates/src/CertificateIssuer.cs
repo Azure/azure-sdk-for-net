@@ -185,7 +185,6 @@ namespace Azure.Security.KeyVault.Certificates
                             admin.ReadProperties(elem);
                             AdministratorContacts.Add(admin);
                         }
-                        Password = prop.Value.GetString();
                         break;
                 }
             }

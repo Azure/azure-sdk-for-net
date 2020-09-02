@@ -1,19 +1,18 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Testing;
 using Azure.Identity;
 using NUnit.Framework;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Security.KeyVault.Tests;
 
 namespace Azure.Security.KeyVault.Secrets.Samples
 {
     /// <summary>
     /// Samples that are used in the associated README.md file.
     /// </summary>
-    [LiveOnly]
     public partial class Snippets
     {
 #pragma warning disable IDE1006 // Naming Styles
@@ -24,7 +23,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
         public void CreateClient()
         {
             // Environment variable with the Key Vault endpoint.
-            string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
+            string keyVaultUrl = TestEnvironment.KeyVaultUrl;
 
             #region Snippet:CreateSecretClient
             // Create a new secret client using the default credential from Azure.Identity using environment variables previously set,

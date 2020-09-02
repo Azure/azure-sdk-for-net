@@ -1,5 +1,9 @@
 # Release History
 
+## 1.0.1 (2020-07-07)
+
+- Update the tag list for the AzConfig package
+
 ## 1.0.0
 
 ### Breaking changes

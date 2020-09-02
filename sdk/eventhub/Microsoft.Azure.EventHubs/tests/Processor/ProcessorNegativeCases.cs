@@ -10,7 +10,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
 
     public class NegativeCases : ProcessorTestBase
     {
-
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]

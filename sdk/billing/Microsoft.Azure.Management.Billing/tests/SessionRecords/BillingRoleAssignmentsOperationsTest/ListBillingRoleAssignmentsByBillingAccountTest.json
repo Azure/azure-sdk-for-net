@@ -1,27 +1,30 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.Billing/billingAccounts/723c8ce0-33ba-5ba7-ef23-e1b72f15f1d8%3A4ce5b530-c82b-44e8-97ec-49f3cce9f14d_2019-05-31/billingRoleAssignments?api-version=2019-10-01-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmlsbGluZy9iaWxsaW5nQWNjb3VudHMvNzIzYzhjZTAtMzNiYS01YmE3LWVmMjMtZTFiNzJmMTVmMWQ4JTNBNGNlNWI1MzAtYzgyYi00NGU4LTk3ZWMtNDlmM2NjZTlmMTRkXzIwMTktMDUtMzEvYmlsbGluZ1JvbGVBc3NpZ25tZW50cz9hcGktdmVyc2lvbj0yMDE5LTEwLTAxLXByZXZpZXc=",
+      "RequestUri": "/providers/Microsoft.Billing/billingAccounts/692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31/billingRoleAssignments?api-version=2020-05-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmlsbGluZy9iaWxsaW5nQWNjb3VudHMvNjkyYTFlZjYtNTk1YS01NTc4LTg3NzYtZGUxMGM5ZDY0ODYxJTNBNTg2OWVhMTAtYTIxZS00MjNmLTkyMTMtMmNhMGQxOTM4OTA4XzIwMTktMDUtMzEvYmlsbGluZ1JvbGVBc3NpZ25tZW50cz9hcGktdmVyc2lvbj0yMDIwLTA1LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "df65ec09-8a24-45f5-bd63-65a3a217fe79"
+          "bdcaff94-7128-427c-8e8b-48d0e12e64e5"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28008.01",
+          "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Billing.BillingManagementClient/3.1.1.0"
+          "Microsoft.Azure.Management.Billing.BillingManagementClient/4.0.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
+        ],
+        "Date": [
+          "Wed, 03 Jun 2020 19:42:36 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -29,38 +32,35 @@
         "Vary": [
           "Accept-Encoding"
         ],
-        "x-ms-ratelimit-remaining-tenant-reads": [
-          "11999"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-service-version": [
-          "9.11.1047.343"
+          "10.6.1249.547"
         ],
         "api-supported-versions": [
-          "2019-10-01-preview"
+          "2019-10-01-preview, 2020-05-01"
         ],
         "X-Frame-Options": [
           "DENY"
         ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14999"
+        ],
         "x-ms-request-id": [
-          "7d8e039f-3fb4-4ed0-8cd5-fd53fa0a3b0c"
+          "cefb4f73-c7b7-4c42-9c95-0393cbd544d0"
         ],
         "x-ms-correlation-request-id": [
-          "7d8e039f-3fb4-4ed0-8cd5-fd53fa0a3b0c"
+          "cefb4f73-c7b7-4c42-9c95-0393cbd544d0"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20191118T234125Z:7d8e039f-3fb4-4ed0-8cd5-fd53fa0a3b0c"
+          "NORTHEUROPE:20200603T194237Z:cefb4f73-c7b7-4c42-9c95-0393cbd544d0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "Date": [
-          "Mon, 18 Nov 2019 23:41:24 GMT"
-        ],
         "Content-Length": [
-          "2822"
+          "4295"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -69,12 +69,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/providers/Microsoft.Billing/billingAccounts/723c8ce0-33ba-5ba7-ef23-e1b72f15f1d8:4ce5b530-c82b-44e8-97ec-49f3cce9f14d_2019-05-31/billingRoleAssignments/50000000-aaaa-bbbb-cccc-100000000000_5c4fad53-9cfb-4e22-9635-e7f420ab3ca7\",\r\n      \"name\": \"50000000-aaaa-bbbb-cccc-100000000000_5c4fad53-9cfb-4e22-9635-e7f420ab3ca7\",\r\n      \"properties\": {\r\n        \"createdOn\": \"2019-10-16T11:04:12-07:00\",\r\n        \"createdByPrincipalId\": \"5c4fad53-9cfb-4e22-9635-e7f420ab3ca7\",\r\n        \"principalId\": \"5c4fad53-9cfb-4e22-9635-e7f420ab3ca7\",\r\n        \"principalTenantId\": \"98deed94-8d1b-4075-bf56-eaa3d9f5c852\",\r\n        \"roleDefinitionId\": \"/providers/Microsoft.Billing/billingAccounts/723c8ce0-33ba-5ba7-ef23-e1b72f15f1d8:4ce5b530-c82b-44e8-97ec-49f3cce9f14d_2019-05-31/billingRoleDefinitions/50000000-aaaa-bbbb-cccc-100000000000\",\r\n        \"scope\": \"/providers/Microsoft.Billing/billingAccounts/723c8ce0-33ba-5ba7-ef23-e1b72f15f1d8:4ce5b530-c82b-44e8-97ec-49f3cce9f14d_2019-05-31\"\r\n      },\r\n      \"type\": \"Microsoft.Billing/billingRoleAssignments\"\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Billing/billingAccounts/723c8ce0-33ba-5ba7-ef23-e1b72f15f1d8:4ce5b530-c82b-44e8-97ec-49f3cce9f14d_2019-05-31/billingRoleAssignments/50000000-aaaa-bbbb-cccc-100000000000_d0ff8ab8-c5e8-4df8-a0f0-57ce8748e870\",\r\n      \"name\": \"50000000-aaaa-bbbb-cccc-100000000000_d0ff8ab8-c5e8-4df8-a0f0-57ce8748e870\",\r\n      \"properties\": {\r\n        \"createdOn\": \"2019-10-16T11:13:26-07:00\",\r\n        \"createdByPrincipalId\": \"\",\r\n        \"principalId\": \"d0ff8ab8-c5e8-4df8-a0f0-57ce8748e870\",\r\n        \"principalTenantId\": \"98deed94-8d1b-4075-bf56-eaa3d9f5c852\",\r\n        \"roleDefinitionId\": \"/providers/Microsoft.Billing/billingAccounts/723c8ce0-33ba-5ba7-ef23-e1b72f15f1d8:4ce5b530-c82b-44e8-97ec-49f3cce9f14d_2019-05-31/billingRoleDefinitions/50000000-aaaa-bbbb-cccc-100000000000\",\r\n        \"scope\": \"/providers/Microsoft.Billing/billingAccounts/723c8ce0-33ba-5ba7-ef23-e1b72f15f1d8:4ce5b530-c82b-44e8-97ec-49f3cce9f14d_2019-05-31\"\r\n      },\r\n      \"type\": \"Microsoft.Billing/billingRoleAssignments\"\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Billing/billingAccounts/723c8ce0-33ba-5ba7-ef23-e1b72f15f1d8:4ce5b530-c82b-44e8-97ec-49f3cce9f14d_2019-05-31/billingRoleAssignments/50000000-aaaa-bbbb-cccc-100000000000_d950c0a7-aacb-4e39-87d6-94b9c95770f4\",\r\n      \"name\": \"50000000-aaaa-bbbb-cccc-100000000000_d950c0a7-aacb-4e39-87d6-94b9c95770f4\",\r\n      \"properties\": {\r\n        \"createdOn\": \"2019-11-13T19:53:12-08:00\",\r\n        \"createdByPrincipalId\": \"5c4fad53-9cfb-4e22-9635-e7f420ab3ca7\",\r\n        \"principalId\": \"d950c0a7-aacb-4e39-87d6-94b9c95770f4\",\r\n        \"principalTenantId\": \"98deed94-8d1b-4075-bf56-eaa3d9f5c852\",\r\n        \"roleDefinitionId\": \"/providers/Microsoft.Billing/billingAccounts/723c8ce0-33ba-5ba7-ef23-e1b72f15f1d8:4ce5b530-c82b-44e8-97ec-49f3cce9f14d_2019-05-31/billingRoleDefinitions/50000000-aaaa-bbbb-cccc-100000000000\",\r\n        \"scope\": \"/providers/Microsoft.Billing/billingAccounts/723c8ce0-33ba-5ba7-ef23-e1b72f15f1d8:4ce5b530-c82b-44e8-97ec-49f3cce9f14d_2019-05-31\"\r\n      },\r\n      \"type\": \"Microsoft.Billing/billingRoleAssignments\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/providers/Microsoft.Billing/billingAccounts/692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31/billingRoleAssignments/50000000-aaaa-bbbb-cccc-100000000000_9ae0765f-fe58-40d0-9657-55bd0c421523\",\r\n      \"name\": \"50000000-aaaa-bbbb-cccc-100000000000_9ae0765f-fe58-40d0-9657-55bd0c421523\",\r\n      \"properties\": {\r\n        \"createdOn\": \"2020-04-23T22:09:27-07:00\",\r\n        \"createdByPrincipalTenantId\": \"\",\r\n        \"createdByPrincipalId\": \"\",\r\n        \"modifiedOn\": \"0001-01-01T00:00:00-08:00\",\r\n        \"notificationFrequency\": \"None\",\r\n        \"principalId\": \"9ae0765f-fe58-40d0-9657-55bd0c421523\",\r\n        \"principalTenantId\": \"8c8f6430-70cf-4911-8f57-6abad57142c6\",\r\n        \"roleDefinitionId\": \"/providers/Microsoft.Billing/billingAccounts/692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31/billingRoleDefinitions/50000000-aaaa-bbbb-cccc-100000000000\",\r\n        \"scope\": \"/providers/Microsoft.Billing/billingAccounts/692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31\"\r\n      },\r\n      \"type\": \"Microsoft.Billing/billingRoleAssignments\"\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Billing/billingAccounts/692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31/billingRoleAssignments/50000000-aaaa-bbbb-cccc-100000000002_6122be6a-c224-4789-bdbd-0c70be227672\",\r\n      \"name\": \"50000000-aaaa-bbbb-cccc-100000000002_6122be6a-c224-4789-bdbd-0c70be227672\",\r\n      \"properties\": {\r\n        \"createdOn\": \"2020-05-12T15:02:47-07:00\",\r\n        \"createdByPrincipalTenantId\": \"8c8f6430-70cf-4911-8f57-6abad57142c6\",\r\n        \"createdByPrincipalId\": \"9ae0765f-fe58-40d0-9657-55bd0c421523\",\r\n        \"modifiedOn\": \"0001-01-01T00:00:00-08:00\",\r\n        \"notificationFrequency\": \"None\",\r\n        \"principalId\": \"6122be6a-c224-4789-bdbd-0c70be227672\",\r\n        \"principalTenantId\": \"8c8f6430-70cf-4911-8f57-6abad57142c6\",\r\n        \"roleDefinitionId\": \"/providers/Microsoft.Billing/billingAccounts/692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31/billingRoleDefinitions/50000000-aaaa-bbbb-cccc-100000000002\",\r\n        \"scope\": \"/providers/Microsoft.Billing/billingAccounts/692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31\"\r\n      },\r\n      \"type\": \"Microsoft.Billing/billingRoleAssignments\"\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Billing/billingAccounts/692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31/billingRoleAssignments/50000000-aaaa-bbbb-cccc-100000000000_6122be6a-c224-4789-bdbd-0c70be227672\",\r\n      \"name\": \"50000000-aaaa-bbbb-cccc-100000000000_6122be6a-c224-4789-bdbd-0c70be227672\",\r\n      \"properties\": {\r\n        \"createdOn\": \"2020-05-13T17:46:27-07:00\",\r\n        \"createdByPrincipalTenantId\": \"8c8f6430-70cf-4911-8f57-6abad57142c6\",\r\n        \"createdByPrincipalId\": \"9ae0765f-fe58-40d0-9657-55bd0c421523\",\r\n        \"modifiedOn\": \"0001-01-01T00:00:00-08:00\",\r\n        \"notificationFrequency\": \"None\",\r\n        \"principalId\": \"6122be6a-c224-4789-bdbd-0c70be227672\",\r\n        \"principalTenantId\": \"8c8f6430-70cf-4911-8f57-6abad57142c6\",\r\n        \"roleDefinitionId\": \"/providers/Microsoft.Billing/billingAccounts/692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31/billingRoleDefinitions/50000000-aaaa-bbbb-cccc-100000000000\",\r\n        \"scope\": \"/providers/Microsoft.Billing/billingAccounts/692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31\"\r\n      },\r\n      \"type\": \"Microsoft.Billing/billingRoleAssignments\"\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Billing/billingAccounts/692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31/billingRoleAssignments/50000000-aaaa-bbbb-cccc-100000000000_6b2b6e01-e32e-4369-b880-b75312535a18\",\r\n      \"name\": \"50000000-aaaa-bbbb-cccc-100000000000_6b2b6e01-e32e-4369-b880-b75312535a18\",\r\n      \"properties\": {\r\n        \"createdOn\": \"2020-05-27T18:05:17-07:00\",\r\n        \"createdByPrincipalTenantId\": \"8c8f6430-70cf-4911-8f57-6abad57142c6\",\r\n        \"createdByPrincipalId\": \"9ae0765f-fe58-40d0-9657-55bd0c421523\",\r\n        \"modifiedOn\": \"0001-01-01T00:00:00-08:00\",\r\n        \"notificationFrequency\": \"None\",\r\n        \"principalId\": \"6b2b6e01-e32e-4369-b880-b75312535a18\",\r\n        \"principalTenantId\": \"8c8f6430-70cf-4911-8f57-6abad57142c6\",\r\n        \"roleDefinitionId\": \"/providers/Microsoft.Billing/billingAccounts/692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31/billingRoleDefinitions/50000000-aaaa-bbbb-cccc-100000000000\",\r\n        \"scope\": \"/providers/Microsoft.Billing/billingAccounts/692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31\"\r\n      },\r\n      \"type\": \"Microsoft.Billing/billingRoleAssignments\"\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "df6e24cd-21d5-4f70-ac15-32bb1f8b4536"
+    "SubscriptionId": "0195fcc8-69cd-4440-852b-237bdae4e36c"
   }
 }

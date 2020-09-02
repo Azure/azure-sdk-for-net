@@ -43,6 +43,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="subnet">Reference to the subnet resource.</param>
         /// <param name="publicIPAddress">Reference to the PublicIP
         /// resource.</param>
+        /// <param name="privateLinkConfiguration">Reference to the application
+        /// gateway private link configuration.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// frontend IP configuration resource. Possible values include:
         /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
@@ -51,13 +53,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         /// <param name="type">Type of the resource.</param>
-        public ApplicationGatewayFrontendIPConfiguration(string id = default(string), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), SubResource subnet = default(SubResource), SubResource publicIPAddress = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
+        public ApplicationGatewayFrontendIPConfiguration(string id = default(string), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), SubResource subnet = default(SubResource), SubResource publicIPAddress = default(SubResource), SubResource privateLinkConfiguration = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
             PrivateIPAddress = privateIPAddress;
             PrivateIPAllocationMethod = privateIPAllocationMethod;
             Subnet = subnet;
             PublicIPAddress = publicIPAddress;
+            PrivateLinkConfiguration = privateLinkConfiguration;
             ProvisioningState = provisioningState;
             Name = name;
             Etag = etag;
@@ -95,6 +98,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicIPAddress")]
         public SubResource PublicIPAddress { get; set; }
+
+        /// <summary>
+        /// Gets or sets reference to the application gateway private link
+        /// configuration.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.privateLinkConfiguration")]
+        public SubResource PrivateLinkConfiguration { get; set; }
 
         /// <summary>
         /// Gets the provisioning state of the frontend IP configuration

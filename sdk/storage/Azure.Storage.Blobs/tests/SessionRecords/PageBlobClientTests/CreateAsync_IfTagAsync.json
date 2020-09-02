@@ -1,0 +1,177 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://huxcanadac.blob.core.windows.net/test-container-96a7cd30-6e65-0b07-1f95-3b31248cc047?restype=container",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-b3ca93e223da00489998effbaa121321-25706c06a366174c-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Blobs/12.5.0-dev.20200603.1",
+          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-blob-public-access": "container",
+        "x-ms-client-request-id": "53254a7e-bdc0-a81c-cf74-03ef8bebcdaf",
+        "x-ms-date": "Wed, 03 Jun 2020 17:29:02 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-12-12"
+      },
+      "RequestBody": null,
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Wed, 03 Jun 2020 17:29:01 GMT",
+        "ETag": "\u00220x8D807E39B602EB6\u0022",
+        "Last-Modified": "Wed, 03 Jun 2020 17:29:01 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "53254a7e-bdc0-a81c-cf74-03ef8bebcdaf",
+        "x-ms-request-id": "7b41e145-301e-000e-61cc-39daaa000000",
+        "x-ms-version": "2019-12-12"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://huxcanadac.blob.core.windows.net/test-container-96a7cd30-6e65-0b07-1f95-3b31248cc047/test-blob-ba5b81fe-7a03-165a-0389-35fcfc4548db",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "0",
+        "traceparent": "00-4369f93ce0dfc14fbc847dbaee09136e-94618da5b1481041-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Blobs/12.5.0-dev.20200603.1",
+          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-blob-content-length": "1024",
+        "x-ms-blob-type": "PageBlob",
+        "x-ms-client-request-id": "40c3c19b-b3e8-036f-ef0f-50378820ab89",
+        "x-ms-date": "Wed, 03 Jun 2020 17:29:02 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-12-12"
+      },
+      "RequestBody": null,
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Wed, 03 Jun 2020 17:29:01 GMT",
+        "ETag": "\u00220x8D807E39B6AD5F1\u0022",
+        "Last-Modified": "Wed, 03 Jun 2020 17:29:01 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "40c3c19b-b3e8-036f-ef0f-50378820ab89",
+        "x-ms-request-id": "7b41e171-301e-000e-05cc-39daaa000000",
+        "x-ms-request-server-encrypted": "true",
+        "x-ms-version": "2019-12-12",
+        "x-ms-version-id": "2020-06-03T17:29:01.9375890Z"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://huxcanadac.blob.core.windows.net/test-container-96a7cd30-6e65-0b07-1f95-3b31248cc047/test-blob-ba5b81fe-7a03-165a-0389-35fcfc4548db?comp=tags",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "78",
+        "Content-Type": "application/xml",
+        "traceparent": "00-33fd46ce2b39164089c0323a2d72506f-57155a41cb95884b-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Blobs/12.5.0-dev.20200603.1",
+          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "3b60bef7-0882-73f2-58af-ea571c4ef662",
+        "x-ms-date": "Wed, 03 Jun 2020 17:29:02 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-12-12"
+      },
+      "RequestBody": "\u003CTags\u003E\u003CTagSet\u003E\u003CTag\u003E\u003CKey\u003EcoolTag\u003C/Key\u003E\u003CValue\u003Etrue\u003C/Value\u003E\u003C/Tag\u003E\u003C/TagSet\u003E\u003C/Tags\u003E",
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Date": "Wed, 03 Jun 2020 17:29:01 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "3b60bef7-0882-73f2-58af-ea571c4ef662",
+        "x-ms-request-id": "7b41e190-301e-000e-20cc-39daaa000000",
+        "x-ms-version": "2019-12-12"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://huxcanadac.blob.core.windows.net/test-container-96a7cd30-6e65-0b07-1f95-3b31248cc047/test-blob-ba5b81fe-7a03-165a-0389-35fcfc4548db",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "0",
+        "traceparent": "00-9895ae2ed85de74597f46b86b12a738a-e546960828b55c4c-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Blobs/12.5.0-dev.20200603.1",
+          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-blob-content-length": "1024",
+        "x-ms-blob-type": "PageBlob",
+        "x-ms-client-request-id": "ca40280f-6fbf-2306-3454-6b8808f174ac",
+        "x-ms-date": "Wed, 03 Jun 2020 17:29:02 GMT",
+        "x-ms-if-tags": "\u0022coolTag\u0022 = \u0027true\u0027",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-12-12"
+      },
+      "RequestBody": null,
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Wed, 03 Jun 2020 17:29:01 GMT",
+        "ETag": "\u00220x8D807E39B7E13ED\u0022",
+        "Last-Modified": "Wed, 03 Jun 2020 17:29:02 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "ca40280f-6fbf-2306-3454-6b8808f174ac",
+        "x-ms-request-id": "7b41e1c6-301e-000e-4ccc-39daaa000000",
+        "x-ms-request-server-encrypted": "true",
+        "x-ms-version": "2019-12-12",
+        "x-ms-version-id": "2020-06-03T17:29:02.0646937Z"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://huxcanadac.blob.core.windows.net/test-container-96a7cd30-6e65-0b07-1f95-3b31248cc047?restype=container",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-a121f68b5159224e9f632e62ae705dca-f8e7a7b9fb63964e-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Blobs/12.5.0-dev.20200603.1",
+          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "f4480bf5-2c0e-bda2-a1fb-babe62b69f87",
+        "x-ms-date": "Wed, 03 Jun 2020 17:29:02 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-12-12"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Wed, 03 Jun 2020 17:29:01 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "f4480bf5-2c0e-bda2-a1fb-babe62b69f87",
+        "x-ms-request-id": "7b41e241-301e-000e-38cc-39daaa000000",
+        "x-ms-version": "2019-12-12"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1117869656",
+    "Storage_TestConfigDefault": "ProductionTenant\nhuxcanadac\nU2FuaXRpemVk\nhttps://huxcanadac.blob.core.windows.net\nhttps://huxcanadac.file.core.windows.net\nhttps://huxcanadac.queue.core.windows.net\nhttps://huxcanadac.table.core.windows.net\n\n\n\n\nhttps://huxcanadac-secondary.blob.core.windows.net\nhttps://huxcanadac-secondary.file.core.windows.net\nhttps://huxcanadac-secondary.queue.core.windows.net\nhttps://huxcanadac-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://huxcanadac.blob.core.windows.net/;QueueEndpoint=https://huxcanadac.queue.core.windows.net/;FileEndpoint=https://huxcanadac.file.core.windows.net/;BlobSecondaryEndpoint=https://huxcanadac-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://huxcanadac-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://huxcanadac-secondary.file.core.windows.net/;AccountName=huxcanadac;AccountKey=Sanitized\nseanscope1"
+  }
+}

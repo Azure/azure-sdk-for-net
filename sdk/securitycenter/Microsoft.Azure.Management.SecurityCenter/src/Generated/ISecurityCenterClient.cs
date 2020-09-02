@@ -92,6 +92,11 @@ namespace Microsoft.Azure.Management.Security
         ISettingsOperations Settings { get; }
 
         /// <summary>
+        /// Gets the IAdvancedThreatProtectionOperations.
+        /// </summary>
+        IAdvancedThreatProtectionOperations AdvancedThreatProtection { get; }
+
+        /// <summary>
         /// Gets the IDeviceSecurityGroupsOperations.
         /// </summary>
         IDeviceSecurityGroupsOperations DeviceSecurityGroups { get; }
@@ -117,11 +122,6 @@ namespace Microsoft.Azure.Management.Security
         IIotSecuritySolutionsAnalyticsRecommendationOperations IotSecuritySolutionsAnalyticsRecommendation { get; }
 
         /// <summary>
-        /// Gets the IAllowedConnectionsOperations.
-        /// </summary>
-        IAllowedConnectionsOperations AllowedConnections { get; }
-
-        /// <summary>
         /// Gets the IDiscoveredSecuritySolutionsOperations.
         /// </summary>
         IDiscoveredSecuritySolutionsOperations DiscoveredSecuritySolutions { get; }
@@ -130,16 +130,6 @@ namespace Microsoft.Azure.Management.Security
         /// Gets the IExternalSecuritySolutionsOperations.
         /// </summary>
         IExternalSecuritySolutionsOperations ExternalSecuritySolutions { get; }
-
-        /// <summary>
-        /// Gets the IJitNetworkAccessPoliciesOperations.
-        /// </summary>
-        IJitNetworkAccessPoliciesOperations JitNetworkAccessPolicies { get; }
-
-        /// <summary>
-        /// Gets the IAdaptiveApplicationControlsOperations.
-        /// </summary>
-        IAdaptiveApplicationControlsOperations AdaptiveApplicationControls { get; }
 
         /// <summary>
         /// Gets the ILocationsOperations.
@@ -155,16 +145,6 @@ namespace Microsoft.Azure.Management.Security
         /// Gets the ITasksOperations.
         /// </summary>
         ITasksOperations Tasks { get; }
-
-        /// <summary>
-        /// Gets the ITopologyOperations.
-        /// </summary>
-        ITopologyOperations Topology { get; }
-
-        /// <summary>
-        /// Gets the IAdvancedThreatProtectionOperations.
-        /// </summary>
-        IAdvancedThreatProtectionOperations AdvancedThreatProtection { get; }
 
         /// <summary>
         /// Gets the IAutoProvisioningSettingsOperations.
@@ -215,6 +195,46 @@ namespace Microsoft.Azure.Management.Security
         /// Gets the ISubAssessmentsOperations.
         /// </summary>
         ISubAssessmentsOperations SubAssessments { get; }
+
+        /// <summary>
+        /// Gets the IAutomationsOperations.
+        /// </summary>
+        IAutomationsOperations Automations { get; }
+
+        /// <summary>
+        /// Gets the IAssessmentsMetadataOperations.
+        /// </summary>
+        IAssessmentsMetadataOperations AssessmentsMetadata { get; }
+
+        /// <summary>
+        /// Gets the IAssessmentsOperations.
+        /// </summary>
+        IAssessmentsOperations Assessments { get; }
+
+        /// <summary>
+        /// Gets the IAdaptiveApplicationControlsOperations.
+        /// </summary>
+        IAdaptiveApplicationControlsOperations AdaptiveApplicationControls { get; }
+
+        /// <summary>
+        /// Gets the IAdaptiveNetworkHardeningsOperations.
+        /// </summary>
+        IAdaptiveNetworkHardeningsOperations AdaptiveNetworkHardenings { get; }
+
+        /// <summary>
+        /// Gets the IAllowedConnectionsOperations.
+        /// </summary>
+        IAllowedConnectionsOperations AllowedConnections { get; }
+
+        /// <summary>
+        /// Gets the ITopologyOperations.
+        /// </summary>
+        ITopologyOperations Topology { get; }
+
+        /// <summary>
+        /// Gets the IJitNetworkAccessPoliciesOperations.
+        /// </summary>
+        IJitNetworkAccessPoliciesOperations JitNetworkAccessPolicies { get; }
 
     }
 }

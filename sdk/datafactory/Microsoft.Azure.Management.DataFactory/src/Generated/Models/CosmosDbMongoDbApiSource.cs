@@ -56,13 +56,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="queryTimeout">Query timeout. Type: string (or
         /// Expression with resultType string), pattern:
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
-        public CosmosDbMongoDbApiSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object filter = default(object), MongoDbCursorMethodsProperties cursorMethods = default(MongoDbCursorMethodsProperties), object batchSize = default(object), object queryTimeout = default(object))
+        /// <param name="additionalColumns">Specifies the additional columns to
+        /// be added to source data. Type: array of objects (or Expression with
+        /// resultType array of objects).</param>
+        public CosmosDbMongoDbApiSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object filter = default(object), MongoDbCursorMethodsProperties cursorMethods = default(MongoDbCursorMethodsProperties), object batchSize = default(object), object queryTimeout = default(object), IList<AdditionalColumns> additionalColumns = default(IList<AdditionalColumns>))
             : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
         {
             Filter = filter;
             CursorMethods = cursorMethods;
             BatchSize = batchSize;
             QueryTimeout = queryTimeout;
+            AdditionalColumns = additionalColumns;
             CustomInit();
         }
 
@@ -104,6 +108,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "queryTimeout")]
         public object QueryTimeout { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the additional columns to be added to source
+        /// data. Type: array of objects (or Expression with resultType array
+        /// of objects).
+        /// </summary>
+        [JsonProperty(PropertyName = "additionalColumns")]
+        public IList<AdditionalColumns> AdditionalColumns { get; set; }
 
     }
 }

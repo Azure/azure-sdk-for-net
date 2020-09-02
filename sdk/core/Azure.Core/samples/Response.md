@@ -75,9 +75,9 @@ This sample requires C# 8 compiler.
 
 ```C# Snippet:AsyncPageable
 // call a service method, which returns AsyncPageable<T>
-AsyncPageable<SecretProperties> response = client.GetPropertiesOfSecretsAsync();
+AsyncPageable<SecretProperties> allSecretProperties = client.GetPropertiesOfSecretsAsync();
 
-await foreach (SecretProperties secretProperties in response)
+await foreach (SecretProperties secretProperties in allSecretProperties)
 {
     Console.WriteLine(secretProperties.Name);
 }
@@ -89,9 +89,9 @@ If your project doesn't have C# 8.0 enabled you can still iterate over `AsyncPag
 
 ```C# Snippet:AsyncPageableLoop
 // call a service method, which returns AsyncPageable<T>
-AsyncPageable<SecretProperties> response = client.GetPropertiesOfSecretsAsync();
+AsyncPageable<SecretProperties> allSecretProperties = client.GetPropertiesOfSecretsAsync();
 
-IAsyncEnumerator<SecretProperties> enumerator = response.GetAsyncEnumerator();
+IAsyncEnumerator<SecretProperties> enumerator = allSecretProperties.GetAsyncEnumerator();
 try
 {
     while (await enumerator.MoveNextAsync())
@@ -112,9 +112,9 @@ If you want to have control over receiving pages of values from the service use 
 
 ```C# Snippet:AsyncPageableAsPages
 // call a service method, which returns AsyncPageable<T>
-AsyncPageable<SecretProperties> response = client.GetPropertiesOfSecretsAsync();
+AsyncPageable<SecretProperties> allSecretProperties = client.GetPropertiesOfSecretsAsync();
 
-await foreach (Page<SecretProperties> page in response.AsPages())
+await foreach (Page<SecretProperties> page in allSecretProperties.AsPages())
 {
     // enumerate through page items
     foreach (SecretProperties secretProperties in page.Values)
@@ -133,9 +133,9 @@ await foreach (Page<SecretProperties> page in response.AsPages())
 
 ```C# Snippet:Pageable
 // call a service method, which returns Pageable<T>
-Pageable<SecretProperties> response = client.GetPropertiesOfSecrets();
+Pageable<SecretProperties> allSecretProperties = client.GetPropertiesOfSecrets();
 
-foreach (SecretProperties secretProperties in response)
+foreach (SecretProperties secretProperties in allSecretProperties)
 {
     Console.WriteLine(secretProperties.Name);
 }
@@ -148,7 +148,7 @@ When a service call fails `Azure.RequestFailedException` would get thrown. The e
 ```C# Snippet:RequestFailedException
 try
 {
-    KeyVaultSecret properties = client.GetSecret("NonexistentSecret");
+    KeyVaultSecret secret = client.GetSecret("NonexistentSecret");
 }
 // handle exception with status code 404
 catch (RequestFailedException e) when (e.Status == 404)

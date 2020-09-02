@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Specialized;
 
 namespace Azure.Storage.Blobs.Models
@@ -167,10 +168,9 @@ namespace Azure.Storage.Blobs.Models
             }
 
             // Get the latest status
-            Task<Response<BlobProperties>> task = _client.GetPropertiesAsync(cancellationToken: cancellationToken);
-            Response<BlobProperties> update = async ?
-                await task.ConfigureAwait(false) :
-                task.EnsureCompleted();
+            Response<BlobProperties> update = async
+                ? await _client.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false)
+                : _client.GetProperties(cancellationToken: cancellationToken);
 
             // Check if the operation is no longer running
             if (Id != update.Value.CopyId ||

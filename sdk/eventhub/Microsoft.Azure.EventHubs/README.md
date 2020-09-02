@@ -67,19 +67,19 @@ Tests in the Event Hubs client library are split into two categories:
 
 The Live tests read information from the following environment variables:
 
-`EVENT_HUBS_RESOURCEGROUP`  
+`EVENTHUB_RESOURCE_GROUP`  
  The name of the Azure resource group that contains the Event Hubs namespace
    
-`EVENT_HUBS_SUBSCRIPTION`  
+`EVENTHUB_SUBSCRIPTION_ID`  
  The identifier (GUID) of the Azure subscription to which the service principal belongs
     
-`EVENT_HUBS_TENANT`  
+`EVENTHUB_TENANT_ID`  
  The identifier (GUID) of the Azure Active Directory tenant that contains the service principal
 
-`EVENT_HUBS_CLIENT`  
+`EVENTHUB_CLIENT_ID`  
  The identifier (GUID) of the Azure Active Directory application that is associated with the service principal
    
-`EVENT_HUBS_SECRET`  
+`EVENTHUB_CLIENT_SECRET`  
  The client secret (password) of the Azure Active Directory application that is associated with the service principal
  
 To make setting up your environment easier, a [PowerShell script](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/assets/live-tests-azure-setup.ps1) is included in the repository and will create and/or configure the needed Azure resources.  To use this script, open a PowerShell instance and login to your Azure account using `Login-AzAccount`, then execute the script.  You will need to provide some information, after which the script will configure the Azure resources and then output the set of environment variables with the correct values for running tests.

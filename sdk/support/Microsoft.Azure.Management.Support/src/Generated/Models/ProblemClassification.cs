@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Support.Models
     using System.Linq;
 
     /// <summary>
-    /// ProblemClassification resource object
+    /// ProblemClassification resource object.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class ProblemClassification
@@ -32,10 +32,10 @@ namespace Microsoft.Azure.Management.Support.Models
         /// <summary>
         /// Initializes a new instance of the ProblemClassification class.
         /// </summary>
-        /// <param name="id">Id of the resource</param>
-        /// <param name="name">Name of the resource</param>
+        /// <param name="id">Id of the resource.</param>
+        /// <param name="name">Name of the resource.</param>
         /// <param name="type">Type of the resource
-        /// 'Microsoft.Support/problemClassification'</param>
+        /// 'Microsoft.Support/problemClassification'.</param>
         /// <param name="displayName">Localized name of problem
         /// classification.</param>
         public ProblemClassification(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string))
@@ -53,19 +53,20 @@ namespace Microsoft.Azure.Management.Support.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets id of the resource
+        /// Gets id of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets name of the resource
+        /// Gets name of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets type of the resource 'Microsoft.Support/problemClassification'
+        /// Gets type of the resource
+        /// 'Microsoft.Support/problemClassification'.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }

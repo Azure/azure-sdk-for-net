@@ -29,10 +29,10 @@ namespace Microsoft.Azure.Management.Peering
             /// The operations group for this extension method.
             /// </param>
             /// <param name='peeringServiceLocation'>
-            /// Gets or sets the PeeringServiceLocation
+            /// Gets or sets the peering service location.
             /// </param>
             /// <param name='peeringServiceProvider'>
-            /// Gets or sets the PeeringServiceProvider
+            /// Gets or sets the peering service provider.
             /// </param>
             public static string CheckServiceProviderAvailability(this IPeeringManagementClient operations, string peeringServiceLocation = default(string), string peeringServiceProvider = default(string))
             {
@@ -47,10 +47,10 @@ namespace Microsoft.Azure.Management.Peering
             /// The operations group for this extension method.
             /// </param>
             /// <param name='peeringServiceLocation'>
-            /// Gets or sets the PeeringServiceLocation
+            /// Gets or sets the peering service location.
             /// </param>
             /// <param name='peeringServiceProvider'>
-            /// Gets or sets the PeeringServiceProvider
+            /// Gets or sets the peering service provider.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

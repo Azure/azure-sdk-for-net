@@ -19,6 +19,12 @@ namespace EventGrid.Tests.TestHelper
         internal const string EventGridPrefix = "sdk-EventGrid-";
         internal const string ResourceGroupPrefix = "sdk-EventGrid-RG-";
 
+        internal const string PartnerRegistrationPrefix = "sdk-PartReg-";
+        internal const string PartnerNamespacePrefix = "sdk-PartNs-";
+        internal const string EventChannelPrefix = "sdk-EvtChnl-";
+        internal const string PartnerTopicPrefix = "sdk-PartTop-";
+        internal const string SystemTopicPrefix = "sdk-SystemTopic-";
+
         public static EventGridManagementClient GetEventGridManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
             if (handler != null)

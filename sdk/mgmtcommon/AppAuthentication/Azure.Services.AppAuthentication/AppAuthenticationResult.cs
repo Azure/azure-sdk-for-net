@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
             return ExpiresOn < DateTimeOffset.UtcNow.AddMinutes(5);
         }
 
-        internal static AppAuthenticationResult Create(TokenResponse response, CultureInfo datetimeCulture = null)
+        internal static AppAuthenticationResult Create(TokenResponse response)
         {
             if (response == null)
             {
@@ -54,12 +54,11 @@ namespace Microsoft.Azure.Services.AppAuthentication
             string expiresOnString = response.ExpiresOn ?? response.ExpiresOn2;
             DateTimeOffset expiresOn = DateTimeOffset.MinValue;
 
-            double seconds;
-            if (double.TryParse(expiresOnString, out seconds))
+            if (double.TryParse(expiresOnString, out double seconds))
             {
                 expiresOn = AppAuthentication.AccessToken.UnixTimeEpoch.AddSeconds(seconds);
             }
-            else if (!DateTimeOffset.TryParse(expiresOnString, datetimeCulture, DateTimeStyles.None, out expiresOn))
+            else if (!DateTimeOffset.TryParse(expiresOnString, out expiresOn))
             {
                 throw new ArgumentException("ExpiresOn in token response could not be parsed");
             }

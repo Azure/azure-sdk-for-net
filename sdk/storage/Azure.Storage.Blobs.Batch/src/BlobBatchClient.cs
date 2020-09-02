@@ -665,7 +665,6 @@ namespace Azure.Storage.Blobs.Specialized
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
-#pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
         /// The SetBlobsAccessTierAsync operation sets the tier on blobs.  The

@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.Security.Models
     /// <summary>
     /// A List custom alert rule.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("ListCustomAlertRule")]
     public partial class ListCustomAlertRule : CustomAlertRule
     {
         /// <summary>
@@ -30,15 +31,14 @@ namespace Microsoft.Azure.Management.Security.Models
         /// Initializes a new instance of the ListCustomAlertRule class.
         /// </summary>
         /// <param name="isEnabled">Status of the custom alert.</param>
-        /// <param name="ruleType">The type of the custom alert rule.</param>
         /// <param name="displayName">The display name of the custom
         /// alert.</param>
         /// <param name="description">The description of the custom
         /// alert.</param>
         /// <param name="valueType">The value type of the items in the list.
         /// Possible values include: 'IpCidr', 'String'</param>
-        public ListCustomAlertRule(bool isEnabled, string ruleType, string displayName = default(string), string description = default(string), string valueType = default(string))
-            : base(isEnabled, ruleType, displayName, description)
+        public ListCustomAlertRule(bool isEnabled, string displayName = default(string), string description = default(string), string valueType = default(string))
+            : base(isEnabled, displayName, description)
         {
             ValueType = valueType;
             CustomInit();

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Test;
@@ -20,6 +20,8 @@ namespace Azure.Storage.Blobs.Test
         public BlobBatchClientTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
+            // Batch delimiters are random so disable body comparison
+            Matcher = new RecordMatcher(compareBodies: false);
         }
 
         [SetUp]
@@ -569,6 +571,53 @@ namespace Azure.Storage.Blobs.Test
             scenario.AssertStatus(202, responses);
             await scenario.AssertDeleted(blobs);
         }
+
+        [Test]
+        [Ignore("service bug - https://github.com/Azure/azure-sdk-for-net/issues/13507")]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetBlobAccessTier_Snapshot()
+        {
+            await using TestScenario scenario = Scenario();
+            BlockBlobClient[] blobs = await scenario.CreateBlockBlobsAsync(1);
+            Response<BlobSnapshotInfo> blobSnapshotResponse = await blobs[0].CreateSnapshotAsync();
+            blobs[0] = blobs[0].WithSnapshot(blobSnapshotResponse.Value.Snapshot);
+
+            BlobBatchClient client = scenario.GetBlobBatchClient();
+            using BlobBatch batch = client.CreateBatch();
+            Response[] responses = new Response[]
+            {
+                batch.SetBlobAccessTier(blobs[0].Uri, AccessTier.Cool),
+            };
+            Response response = await client.SubmitBatchAsync(batch);
+
+            scenario.AssertStatus(202, response);
+            scenario.AssertStatus(200, responses);
+            await scenario.AssertTiers(AccessTier.Cool, blobs);
+        }
+
+        [Test]
+        [Ignore("service bug - https://github.com/Azure/azure-sdk-for-net/issues/13507")]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetBlobAccessTier_Version()
+        {
+            await using TestScenario scenario = Scenario();
+            BlockBlobClient[] blobs = await scenario.CreateBlockBlobsAsync(1);
+            Response<BlobInfo> setMetadataResponse = await blobs[0].SetMetadataAsync(BuildMetadata());
+
+            blobs[0] = blobs[0].WithVersion(setMetadataResponse.Value.VersionId);
+
+            BlobBatchClient client = scenario.GetBlobBatchClient();
+            using BlobBatch batch = client.CreateBatch();
+            Response[] responses = new Response[]
+            {
+                batch.SetBlobAccessTier(blobs[0].Uri, AccessTier.Cool),
+            };
+            Response response = await client.SubmitBatchAsync(batch);
+
+            scenario.AssertStatus(202, response);
+            scenario.AssertStatus(200, responses);
+            await scenario.AssertTiers(AccessTier.Cool, blobs);
+        }
         #endregion SetBlobAccessTier
 
         #region Scenario helper
@@ -609,8 +658,22 @@ namespace Azure.Storage.Blobs.Test
                 return blobs;
             }
 
+            public async Task<BlockBlobClient[]> CreateBlockBlobsAsync(BlobContainerClient container, int count)
+            {
+                BlockBlobClient[] blobs = new BlockBlobClient[count];
+                for (int i = 0; i < count; i++)
+                {
+                    blobs[i] = _test.InstrumentClient(container.GetBlockBlobClient("blob" + (++_blobId)));
+                    await blobs[i].UploadAsync(new MemoryStream(_test.GetRandomBuffer(Constants.KB)));
+                }
+                return blobs;
+            }
+
             public async Task<BlobClient[]> CreateBlobsAsync(int count) =>
                 await CreateBlobsAsync(await CreateContainerAsync(), count);
+
+            public async Task<BlockBlobClient[]> CreateBlockBlobsAsync(int count) =>
+                await CreateBlockBlobsAsync(await CreateContainerAsync(), count);
 
             public async Task<Uri[]> CreateBlobUrisAsync(BlobContainerClient container, int count) =>
                 (await CreateBlobsAsync(container, count)).Select(b => b.Uri).ToArray();
@@ -661,7 +724,22 @@ namespace Azure.Storage.Blobs.Test
                 }
             }
 
+            public async Task AssertTiers(AccessTier tier, BlockBlobClient blob)
+            {
+                try
+                {
+                    BlobProperties properties = await blob.GetPropertiesAsync();
+                    Assert.AreEqual(tier.ToString(), properties.AccessTier.ToString());
+                }
+                catch (RequestFailedException)
+                {
+                }
+            }
+
             public Task AssertTiers(AccessTier tier, BlobClient[] blobs) =>
+                Task.WhenAll(blobs.Select(b => AssertTiers(tier, b)));
+
+            public Task AssertTiers(AccessTier tier, BlockBlobClient[] blobs) =>
                 Task.WhenAll(blobs.Select(b => AssertTiers(tier, b)));
 
             public void AssertStatus(int status, params Response[] responses) =>

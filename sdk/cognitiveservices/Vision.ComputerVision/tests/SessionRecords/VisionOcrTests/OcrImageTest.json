@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/vision/v2.1/ocr?detectOrientation=true&language=de",
-      "EncodedRequestUri": "L3Zpc2lvbi92Mi4xL29jcj9kZXRlY3RPcmllbnRhdGlvbj10cnVlJmxhbmd1YWdlPWRl",
+      "RequestUri": "/vision/v3.0/ocr?detectOrientation=true&language=de",
+      "EncodedRequestUri": "L3Zpc2lvbi92My4wL29jcj9kZXRlY3RPcmllbnRhdGlvbj10cnVlJmxhbmd1YWdlPWRl",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/psSdkJson6/src/SDKs/CognitiveServices/dataPlane/Vision/ComputerVision/ComputerVision.Tests/TestImages/achtung.jpg\"\r\n}",
       "RequestHeaders": {

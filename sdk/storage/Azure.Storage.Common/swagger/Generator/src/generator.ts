@@ -1177,8 +1177,8 @@ function generateSerialize(w: IndentWriter, service: IService, type: IObjectType
                 w.line(`${current} = new System.Xml.Linq.XElement(${xname});`);
             }
             if (isObjectType(property.model)) {
-                if (!property.model.deserialize) {
-                    throw `Cannot deserialize ${types.getName(type)} if ${types.getName(property.model)} can't be deserialized!`;
+                if (!property.model.serialize) {
+                    throw `Cannot serialize ${types.getName(type)} if ${types.getName(property.model)} can't be serialized!`;
                 }
                 w.line(`${current}.Add(${types.getName(property.model)}.${toName}(value.${naming.property(property.name)}, "${xmlName}", "${xmlNs}"));`);
             } else if (isPrimitiveType(property.model) && property.model.itemType) {

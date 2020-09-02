@@ -1,0 +1,11 @@
+parameters:
+  SourceFolder: '' # ArtifactName (aka "packages")
+  TargetFolder: '' # artifact.safename (azuretemplate)
+  FileFilter: '' #${{artifact.name}}.[0-9]*.[0-9]*.[0-9]*
+  
+steps:
+  - pwsh: |
+      New-Item -Force -Type Directory -Name ${{parameters.TargetFolder}} -Path $(Pipeline.Workspace)
+      Write-Host "Copy-Item -Force -Recurse $(Pipeline.Workspace)/${{parameters.SourceFolder}}/${{parameters.FileFilter}} $(Pipeline.Workspace)/${{parameters.TargetFolder}}"
+      Copy-Item -Force -Recurse $(Pipeline.Workspace)/${{parameters.SourceFolder}}/${{parameters.FileFilter}} $(Pipeline.Workspace)/${{parameters.TargetFolder}}
+    displayName: Stage artifacts

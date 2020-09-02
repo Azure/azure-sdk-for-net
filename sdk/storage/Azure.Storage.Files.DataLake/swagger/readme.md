@@ -4,7 +4,7 @@
 ## Configuration
 ``` yaml
 # Generate file storage
-input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/storage-dataplane-preview/specification/storage/data-plane/Microsoft.StorageDataLake/stable/2018-11-09/DataLakeStorage.json
+input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/storage-dataplane-preview/specification/storage/data-plane/Microsoft.StorageDataLake/stable/2019-12-12/DataLakeStorage.json
 output-folder: ../src/Generated
 clear-output-folder: false
 
@@ -212,6 +212,19 @@ directive:
     $.patch.responses["200"]["x-az-public"] = false;
 ```
 
+### /{filesystem}/{path}?action=setAccessControlRecursive"
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?action=setAccessControlRecursive"]
+  transform: >
+    $.patch.responses["200"].schema = {
+        "type": "object",
+        "format": "file"
+    };
+    $.patch.responses["200"]["x-az-public"] = false;
+```
+
 ### Hide FileSystemList/FileSystem/PathList/Path/
 ``` yaml
 directive:
@@ -224,6 +237,25 @@ directive:
     $.Path["x-az-public"] = false;
 ```
 
+### Hide AclFailedEntryList/SetAccessControlRecursiveResponse
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.AclFailedEntry["x-az-public"] = false;
+    $.SetAccessControlRecursiveResponse["x-az-public"] = false;
+```
+
+### Hide PathSetAccessControlRecursiveMode
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.PathSetAccessControlRecursiveMode
+  transform: >
+    $["x-az-public"] = false;
+```
+
 ### Treat the API version as a parameter instead of a constant
 ``` yaml
 directive:
@@ -231,6 +263,25 @@ directive:
   where: $.parameters.ApiVersionParameter
   transform: >
     delete $.enum
+```
+
+### Make PathSetExpiryResult internal
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?comp=expiry"]
+  transform: >
+    $.put.responses["200"]["x-az-public"] = false;
+    $.put.responses["200"]["x-az-response-name"] = "PathSetExpiryInternal";
+```
+
+### Make PathExpiryOptions internal
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters
+  transform: >
+    $.PathExpiryOptions["x-az-public"] = false;
 ```
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Files.DataLake%2Fswagger%2Freadme.png)

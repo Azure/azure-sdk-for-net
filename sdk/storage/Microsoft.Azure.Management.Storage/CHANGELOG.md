@@ -1,5 +1,51 @@
 ## Microsoft.Azure.Management.Storage release notes
 
+### Changes in 17.2.0
+- Update BlobServiceProperties.RestorePolicy: add new property "MinRestoreTime", deprecate old property "LastEnabledTime"
+
+### Changes in 17.1.0
+
+- Support Create or Update Storage Account with MinimumTlsVersion, AllowBlobPublicAccess
+
+### Changes in 17.0.0
+
+- Support Table and Queue create/get/list/remove
+- Support list deleted blob containers
+- Support create/update File share with access tier
+
+**Breaking changes**
+
+- The type of Microsoft.Azure.Management.Storage.Models.FileShare.ShareUsageBytes change from int? to long?.
+
+### Changes in 16.0.0
+
+- Support TagFilter in ManagementPolicy
+- Support enable File share soft delete in File service properties, list shares include deleted shares, and restore deleted share
+- Support create File share with EnabledProtocols, RootSquash, AccessTier
+- Support Update File share with RootSquash, AccessTier
+- Support get File share with ShareUsageBytes
+
+**Breaking changes**
+
+- In StorageManagementClient.FileShares.Create(), StorageManagementClient.FileShares.Update(), add a madatory parameter with type Microsoft.Azure.Management.Storage.Models.FileShare, to input all share properties, and remove 2 parameters to input share properties: metadata, shareQuota.
+
+### Changes in 15.1.0
+- Support create/update/remove/get/list Object Replication Policy on Storage account
+
+### Changes in 15.0.0
+
+- Support create blob contaienr with EncryptionScope
+- In get Storage Account, return 2 new properties: CurrentVersionedKeyIdentifier, LastKeyRotationTimestamp, in returned account Encryption KeyVaultProperties
+
+**Breaking changes**
+
+- In StorageManagementClient.BlobContainers.Create(), StorageManagementClient.BlobContainers.Update(), add a madatory parameter with type Microsoft.Azure.Management.Storage.Models.BlobContainer, to input all container properties, and remove 2 parameters to input container properties: metadata, publicAccess.
+
+### Changes in 14.5.0
+
+- Support allowProtectedAppendWrites in blob container ImmutabilityPolicy
+- Support create/update/get/list EncryptionScope
+
 ### Changes in 14.4.0
 
 - Support Point In Time Restore, to restore blob ranges

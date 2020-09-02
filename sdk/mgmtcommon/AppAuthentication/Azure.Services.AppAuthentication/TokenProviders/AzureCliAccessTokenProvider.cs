@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
         // The default install paths are used to find Azure CLI. This is for security, so that any path in the calling program's Path environment is not used to execute Azure CLI.
         private readonly string _azureCliDefaultPathWindows =
-            $"{EnvironmentHelper.GetEnvironmentVariable("ProgramFiles(x86)")}\\Microsoft SDKs\\Azure\\CLI2\\wbin; {EnvironmentHelper.GetEnvironmentVariable("ProgramFiles")}\\Microsoft SDKs\\Azure\\CLI2\\wbin"
+            $"{EnvironmentHelper.GetEnvironmentVariable("ProgramFiles(x86)")}\\Microsoft SDKs\\Azure\\CLI2\\wbin;{EnvironmentHelper.GetEnvironmentVariable("ProgramFiles")}\\Microsoft SDKs\\Azure\\CLI2\\wbin"
         ;
 
         // Default path for non-Windows. 
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 startInfo = new ProcessStartInfo
                 {
                     FileName = Bash,
-                    Arguments = $"{GetTokenCommand} {ResourceArgumentName} {resource}"
+                    Arguments = $"-c \"{GetTokenCommand} {ResourceArgumentName} {resource}\""
                 };
 
                 azureCliPath = $"{EnvironmentHelper.GetEnvironmentVariable(AzureCliPath)}:{AzureCliDefaultPath}";
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
 
         public override async Task<AppAuthenticationResult> GetAuthResultAsync(string resource, string authority,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             try
             {

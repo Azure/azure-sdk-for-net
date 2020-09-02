@@ -1,6 +1,0 @@
-Breaking Changes
-================
-
-Next Preview
---------------------------
-- New Azure.Storage.Blobs.Cryptography client library.

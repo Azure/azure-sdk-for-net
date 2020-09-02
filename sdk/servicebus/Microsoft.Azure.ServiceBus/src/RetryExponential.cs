@@ -23,11 +23,17 @@ namespace Microsoft.Azure.ServiceBus
         {
         }
 
-        internal RetryExponential(TimeSpan minBackoff, TimeSpan maxBackoff, TimeSpan deltaBackoff, int maxRetryCount)
+        /// <summary>
+        /// Returns a new RetryExponential retry policy object.
+        /// </summary>
+        /// <param name="minimumBackoff">Minimum backoff interval.</param>
+        /// <param name="maximumBackoff">Maximum backoff interval.</param>
+        /// <param name="deltaBackoff">Delta backoff interval.</param>
+        public RetryExponential(TimeSpan minimumBackoff, TimeSpan maximumBackoff, TimeSpan deltaBackoff, int maxRetryCount)
         {
             TimeoutHelper.ThrowIfNonPositiveArgument(deltaBackoff, nameof(deltaBackoff));
-            TimeoutHelper.ThrowIfNegativeArgument(minBackoff, nameof(minBackoff));
-            TimeoutHelper.ThrowIfNonPositiveArgument(maxBackoff, nameof(maxBackoff));
+            TimeoutHelper.ThrowIfNegativeArgument(minimumBackoff, nameof(minimumBackoff));
+            TimeoutHelper.ThrowIfNonPositiveArgument(maximumBackoff, nameof(maximumBackoff));
 
             if (maxRetryCount <= 0)
             {
@@ -36,13 +42,13 @@ namespace Microsoft.Azure.ServiceBus
                     Resources.ArgumentMustBePositive.FormatForUser(nameof(maxRetryCount)));
             }
 
-            if (minBackoff >= maxBackoff)
+            if (minimumBackoff >= maximumBackoff)
             {
-                throw new ArgumentException(Resources.ExponentialRetryBackoffRange.FormatForUser(minBackoff, maxBackoff));
+                throw new ArgumentException(Resources.ExponentialRetryBackoffRange.FormatForUser(minimumBackoff, maximumBackoff));
             }
 
-            this.MinimalBackoff = minBackoff;
-            this.MaximumBackoff = maxBackoff;
+            this.MinimalBackoff = minimumBackoff;
+            this.MaximumBackoff = maximumBackoff;
             this.DeltaBackoff = deltaBackoff;
             this.MaxRetryCount = maxRetryCount;
         }

@@ -1,0 +1,45 @@
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ManagementTestSharedSources>$(MSBuildThisFileDirectory)/../common/ManagementTestShared</ManagementTestSharedSources>
+    <RbacSharedSources>$(MSBuildThisFileDirectory)/../sdk/testcommon/Azure.Graph.Rbac/src</RbacSharedSources>
+    <Resources201705SharedSources>$(MSBuildThisFileDirectory)/../sdk/testcommon/Azure.Management.Resources.2017_05/src</Resources201705SharedSources>
+    <Compute201912SharedSources>$(MSBuildThisFileDirectory)/../sdk/testcommon/Azure.Management.Compute.2019_12/src</Compute201912SharedSources>
+    <Network202004SharedSources>$(MSBuildThisFileDirectory)/../sdk/testcommon/Azure.Management.Network.2020_04/src</Network202004SharedSources>
+    <Storage201906SharedSources>$(MSBuildThisFileDirectory)/../sdk/testcommon/Azure.Management.Storage.2019_06/src</Storage201906SharedSources>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(TestHelperProjects)' != ''">
+    <Compile Include="$(ManagementTestSharedSources)/**/*.cs"
+             Link="TestShared/%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(TestHelperProjects.Contains('Rbac1.6'))">
+    <Compile Include="$(RbacSharedSources)/**/*.cs"
+             Link="Rbac/%(RecursiveDir)%(Filename)%(Extension)"
+             Exclude="$(RbacSharedSources)/Properties/AssemblyInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(TestHelperProjects.Contains('Resources201705'))">
+    <Compile Include="$(Resources201705SharedSources)/**/*.cs"
+             Link="Resources201705/%(RecursiveDir)%(Filename)%(Extension)"
+             Exclude="$(Resources201705SharedSources)/Properties/AssemblyInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(TestHelperProjects.Contains('Compute201912'))">
+    <Compile Include="$(Compute201912SharedSources)/**/*.cs"
+             Link="Compute201912/%(RecursiveDir)%(Filename)%(Extension)"
+             Exclude="$(Compute201912SharedSources)/Properties/AssemblyInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(TestHelperProjects.Contains('Network202004'))">
+    <Compile Include="$(Network202004SharedSources)/**/*.cs"
+             Link="Network202004/%(RecursiveDir)%(Filename)%(Extension)"
+             Exclude="$(Network202004SharedSources)/Properties/AssemblyInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(TestHelperProjects.Contains('Storage201906'))">
+    <Compile Include="$(Storage201906SharedSources)/**/*.cs"
+             Link="Storage201906/%(RecursiveDir)%(Filename)%(Extension)"
+             Exclude="$(Storage201906SharedSources)/Properties/AssemblyInfo.cs" />
+  </ItemGroup>
+</Project>

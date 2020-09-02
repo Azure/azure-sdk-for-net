@@ -1,15 +1,10 @@
 trigger: none
 
-resources:
-  repositories:
-    - repository: azure-sdk-tools
-      type: github
-      name: Azure/azure-sdk-tools
-      endpoint: azure
-
-jobs:
-  - template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
-    parameters:
-      ServiceDirectory: storage
-      BuildInParallel: false
-      TimeoutInMinutes: 300
+extends:
+  template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
+  parameters:
+    ServiceDirectory: storage
+    BuildInParallel: false
+    TimeoutInMinutes: 300
+    Location: canadacentral
+    SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)

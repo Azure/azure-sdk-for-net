@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Azure.Messaging.EventHubs.Core;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
@@ -262,9 +263,41 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void ParseDoesNotAllowAnInvalidEndpointFormat()
+        [TestCase("test.endpoint.com")]
+        [TestCase("sb://test.endpoint.com")]
+        [TestCase("sb://test.endpoint.com:80")]
+        [TestCase("amqp://test.endpoint.com")]
+        [TestCase("http://test.endpoint.com")]
+        [TestCase("https://test.endpoint.com:8443")]
+        public void ParseDoesAcceptsHostNamesAndUrisForTheEndpoint(string endpointValue)
         {
-            var connectionString = $"Endpoint=notvalid=[broke]";
+            var connectionString = $"Endpoint={ endpointValue };EntityPath=dummy";
+            var parsed = ConnectionStringParser.Parse(connectionString);
+
+            if (!Uri.TryCreate(endpointValue, UriKind.Absolute, out var valueUri))
+            {
+                valueUri = new Uri($"fake://{ endpointValue }");
+            }
+
+            Assert.That(parsed.Endpoint.Port, Is.EqualTo(-1), "The default port should be used.");
+            Assert.That(parsed.Endpoint.Host, Does.Not.Contain(" "), "The host name should not contain any spaces.");
+            Assert.That(parsed.Endpoint.Host, Does.Not.Contain(":"), "The host name should not contain any port separators (:).");
+            Assert.That(parsed.Endpoint.Host, Does.Not.Contain(valueUri.Port), "The host name should not contain the port.");
+            Assert.That(parsed.Endpoint.Host, Is.EqualTo(valueUri.Host), "The host name should have been normalized.");
+            Assert.That(parsed.Endpoint.ToString(), Does.StartWith(GetEventHubsEndpointScheme()), "The parser's endpoint scheme should have been used.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="ConnectionStringParser.Parse" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase("test.endpoint.com:443")]
+        [TestCase("notvalid=[broke]")]
+        public void ParseDoesNotAllowAnInvalidEndpointFormat(string endpointValue)
+        {
+            var connectionString = $"Endpoint={endpointValue }";
             Assert.That(() => ConnectionStringParser.Parse(connectionString), Throws.InstanceOf<FormatException>());
         }
 
@@ -284,5 +317,18 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             Assert.That(() => ConnectionStringParser.Parse(connectionString), Throws.InstanceOf<FormatException>());
         }
+
+        /// <summary>
+        ///   Gets the Event Hubs endpoint scheme used by the <see cref="ConnectionStringParser" />
+        ///   using its private field.
+        /// </summary>
+        ///
+        /// <returns>The endpoint scheme used by the parser.</returns>
+        ///
+        private static string GetEventHubsEndpointScheme() =>
+            (string)
+                typeof(ConnectionStringParser)
+                    .GetField("EventHubsEndpointScheme", BindingFlags.Static | BindingFlags.NonPublic)
+                    .GetValue(null);
     }
 }

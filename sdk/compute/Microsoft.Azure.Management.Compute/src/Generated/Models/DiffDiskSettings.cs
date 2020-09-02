@@ -33,9 +33,22 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         /// <param name="option">Specifies the ephemeral disk settings for
         /// operating system disk. Possible values include: 'Local'</param>
-        public DiffDiskSettings(string option = default(string))
+        /// <param name="placement">Specifies the ephemeral disk placement for
+        /// operating system disk.&lt;br&gt;&lt;br&gt; Possible values are:
+        /// &lt;br&gt;&lt;br&gt; **CacheDisk** &lt;br&gt;&lt;br&gt;
+        /// **ResourceDisk** &lt;br&gt;&lt;br&gt; Default: **CacheDisk** if one
+        /// is configured for the VM size otherwise **ResourceDisk** is
+        /// used.&lt;br&gt;&lt;br&gt; Refer to VM size documentation for
+        /// Windows VM at
+        /// https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes
+        /// and Linux VM at
+        /// https://docs.microsoft.com/en-us/azure/virtual-machines/linux/sizes
+        /// to check which VM sizes exposes a cache disk. Possible values
+        /// include: 'CacheDisk', 'ResourceDisk'</param>
+        public DiffDiskSettings(string option = default(string), string placement = default(string))
         {
             Option = option;
+            Placement = placement;
             CustomInit();
         }
 
@@ -50,6 +63,24 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "option")]
         public string Option { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the ephemeral disk placement for operating
+        /// system disk.&amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Possible values
+        /// are: &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **CacheDisk**
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **ResourceDisk**
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Default: **CacheDisk** if one
+        /// is configured for the VM size otherwise **ResourceDisk** is
+        /// used.&amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Refer to VM size
+        /// documentation for Windows VM at
+        /// https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes
+        /// and Linux VM at
+        /// https://docs.microsoft.com/en-us/azure/virtual-machines/linux/sizes
+        /// to check which VM sizes exposes a cache disk. Possible values
+        /// include: 'CacheDisk', 'ResourceDisk'
+        /// </summary>
+        [JsonProperty(PropertyName = "placement")]
+        public string Placement { get; set; }
 
     }
 }

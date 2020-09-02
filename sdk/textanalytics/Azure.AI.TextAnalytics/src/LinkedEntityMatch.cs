@@ -1,25 +1,30 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
+
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// Details regarding the specific substring in the input document matching
-    /// the linked entity, or well-known item, that the text analytics model
+    /// Details regarding the specific substring in the document matching
+    /// the linked entity, or well-known item, that the Text Analytics model
     /// identified.
     /// </summary>
-    public readonly struct LinkedEntityMatch
+    [CodeGenModel("Match")]
+    public readonly partial struct LinkedEntityMatch
     {
-        internal LinkedEntityMatch(string text, double score, int offset, int length)
+        internal LinkedEntityMatch(double confidenceScore, string text, int offset, int length)
         {
-            Text = text;
-            Score = score;
+            // We shipped TA 5.0.0 Text == string.Empty if the service returned a null value for Text.
+            // Because we don't want to introduce a breaking change, we are transforming that null to string.Empty
+            Text = text ?? string.Empty;
+            ConfidenceScore = confidenceScore;
             Offset = offset;
             Length = length;
         }
 
         /// <summary>
-        /// Gets the entity text as it appears in the input document.
+        /// Gets the entity text as it appears in the document.
         /// </summary>
         public string Text { get; }
 
@@ -27,17 +32,15 @@ namespace Azure.AI.TextAnalytics
         /// Gets a score between 0 and 1, indicating the confidence that this
         /// substring matches the corresponding linked entity.
         /// </summary>
-        public double Score { get; }
+        public double ConfidenceScore { get; }
 
         /// <summary>
-        /// Gets the start position for the matching text in the input document.
-        /// The offset unit is unicode character count.
+        /// Gets the starting position (in UTF-16 code units) for the matching text in the document.
         /// </summary>
         public int Offset { get; }
 
         /// <summary>
-        /// Gets the length of the matching text in the input document.
-        /// The length unit is unicode character count.
+        /// Gets the length (in UTF-16 code units) of the matching text in the document.
         /// </summary>
         public int Length { get; }
     }

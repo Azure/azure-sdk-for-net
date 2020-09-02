@@ -14,6 +14,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
     using Models;
     using System.Collections;
     using System.Collections.Generic;
+    using System.IO;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -241,5 +242,88 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// Thrown when a required parameter is null
         /// </exception>
         Task<HttpOperationResponse<OperationStatus>> DeleteUnlabelledUtteranceWithHttpMessagesAsync(System.Guid appId, string versionId, string utterance, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Imports a new version into a LUIS application.
+        /// </summary>
+        /// <param name='appId'>
+        /// The application ID.
+        /// </param>
+        /// <param name='luisAppV2'>
+        /// A LUIS application structure.
+        /// </param>
+        /// <param name='versionId'>
+        /// The new versionId to import. If not specified, the versionId will
+        /// be read from the imported object.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse<string>> ImportV2AppWithHttpMessagesAsync(System.Guid appId, LuisAppV2 luisAppV2, string versionId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Imports a new version into a LUIS application.
+        /// </summary>
+        /// <param name='appId'>
+        /// The application ID.
+        /// </param>
+        /// <param name='luisAppLu'>
+        /// An LU representing the LUIS application structure.
+        /// </param>
+        /// <param name='versionId'>
+        /// The new versionId to import. If not specified, the versionId will
+        /// be read from the imported object.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse<string>> ImportLuFormatWithHttpMessagesAsync(System.Guid appId, string luisAppLu, string versionId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Exports a LUIS application to text format.
+        /// </summary>
+        /// <param name='appId'>
+        /// The application ID.
+        /// </param>
+        /// <param name='versionId'>
+        /// The version ID.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.HttpOperationException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse<Stream>> ExportLuFormatWithHttpMessagesAsync(System.Guid appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

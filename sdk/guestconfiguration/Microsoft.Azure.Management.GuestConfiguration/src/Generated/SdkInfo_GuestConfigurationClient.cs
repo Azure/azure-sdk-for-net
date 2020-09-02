@@ -19,19 +19,21 @@ namespace Microsoft.Azure.Management.GuestConfiguration
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Compute", "GuestConfigurationAssignmentReports", "2018-11-20"),
-                new Tuple<string, string, string>("Compute", "GuestConfigurationAssignments", "2018-11-20"),
-                new Tuple<string, string, string>("GuestConfiguration", "Operations", "2018-11-20"),
+                new Tuple<string, string, string>("Compute", "GuestConfigurationAssignmentReports", "2020-06-25"),
+                new Tuple<string, string, string>("Compute", "GuestConfigurationAssignments", "2020-06-25"),
+                new Tuple<string, string, string>("GuestConfiguration", "Operations", "2020-06-25"),
+                new Tuple<string, string, string>("HybridCompute", "GuestConfigurationHCRPAssignmentReports", "2020-06-25"),
+                new Tuple<string, string, string>("HybridCompute", "GuestConfigurationHCRPAssignments", "2020-06-25"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "latest";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/guestconfiguration/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=D:\\AzSdkdNet-AF\\azure-sdk-for-net\\src\\SDKs";
+      public static readonly String AutoRestVersion = "v2";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/guestconfiguration/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\data\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "930987c7c8999093ed3055e18708437a29d9f530";
+      public static readonly String GithubCommidId = "cfd53fbb24ddb3551abddf6f1096983378e9e1e2";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

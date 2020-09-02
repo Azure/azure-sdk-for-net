@@ -7,9 +7,9 @@
 		<PackageId>Microsoft.Azure.Management.Websites</PackageId>
 		<Description>Provides website management capabilities for Microsoft Azure.</Description>
 		<AssemblyName>Microsoft.Azure.Management.Websites</AssemblyName>
-		<Version>2.2.0</Version>
+		<Version>3.0.1</Version>
 		<PackageTags>Microsoft Azure website management;website management;</PackageTags>
-		<PackageReleaseNotes><![CDATA[This is the Azure App Service SDK for .NET, based on the Azure App Service REST API, version 2018-11-01 of Certificates and Web Apps, and 2018-02-01 of all other resources]]></PackageReleaseNotes>
+		<PackageReleaseNotes><![CDATA[This is the Azure App Service SDK for .NET, based on the Azure App Service REST API, version 2019-08-01 of Certificates and Web Apps, and 2019-08-01 of all other resources. This release includes client library functions for the new BasicPublishingCredentialsPolicies resource.]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>

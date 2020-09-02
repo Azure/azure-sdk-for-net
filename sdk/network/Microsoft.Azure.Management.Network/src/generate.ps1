@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "network/resource-manager" -AutoRestVersion "latest"
+Start-AutoRestCodeGeneration -ResourceProvider "network/resource-manager" -AutoRestVersion "v2"

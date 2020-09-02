@@ -39,7 +39,7 @@ namespace Azure.Messaging.ServiceBus {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Microsoft.Azure.ServiceBus.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Azure.Messaging.ServiceBus.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -124,11 +124,47 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Messages cannot be locked when working with session-enabled entities. Locks are handled at the session level..
+        /// </summary>
+        internal static string CannotLockMessageOnSessionEntity {
+            get {
+                return ResourceManager.GetString("CannotLockMessageOnSessionEntity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When using a sessionful entity, the Session event handler must be used..
+        /// </summary>
+        internal static string CannotRegisterNonSessionEventHandlerWhenUsingSession {
+            get {
+                return ResourceManager.GetString("CannotRegisterNonSessionEventHandlerWhenUsingSession", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When not using a sessionful entity, the non-session event handler must be used..
+        /// </summary>
+        internal static string CannotRegisterSessionEventHandlerWhenNotUsingSessions {
+            get {
+                return ResourceManager.GetString("CannotRegisterSessionEventHandlerWhenNotUsingSessions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sending empty {0} is not a valid operation..
         /// </summary>
         internal static string CannotSendAnEmptyMessage {
             get {
                 return ResourceManager.GetString("CannotSendAnEmptyMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot begin processing without {0} handler set..
+        /// </summary>
+        internal static string CannotStartMessageProcessorWithoutHandler {
+            get {
+                return ResourceManager.GetString("CannotStartMessageProcessorWithoutHandler", resourceCulture);
             }
         }
         
@@ -142,20 +178,38 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} has already been closed and cannot perform the requested operation..
+        /// </summary>
+        internal static string ClosedInstanceCannotPerformOperation {
+            get {
+                return ResourceManager.GetString("ClosedInstanceCannotPerformOperation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to acquire an access token using the provided credential..
+        /// </summary>
+        internal static string CouldNotAcquireAccessToken {
+            get {
+                return ResourceManager.GetString("CouldNotAcquireAccessToken", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to create the items needed to communicate with the Service Bus service..
+        /// </summary>
+        internal static string CouldNotCreateLink {
+            get {
+                return ResourceManager.GetString("CouldNotCreateLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This request has been blocked because the entity or namespace is being throttled. Please retry the operation, and if condition continues, please slow down your rate of request..
         /// </summary>
         internal static string DefaultServerBusyException {
             get {
                 return ResourceManager.GetString("DefaultServerBusyException", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The entity path/name &apos;{0}&apos; exceeds the &apos;{1}&apos; character limit..
-        /// </summary>
-        internal static string EntityNameLengthExceedsLimit {
-            get {
-                return ResourceManager.GetString("EntityNameLengthExceedsLimit", resourceCulture);
             }
         }
         
@@ -178,6 +232,24 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Another handler has already been assigned to this event and there can be only one..
+        /// </summary>
+        internal static string HandlerHasAlreadyBeenAssigned {
+            get {
+                return ResourceManager.GetString("HandlerHasAlreadyBeenAssigned", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This handler has not been previously assigned to this event..
+        /// </summary>
+        internal static string HandlerHasNotBeenAssigned {
+            get {
+                return ResourceManager.GetString("HandlerHasNotBeenAssigned", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} is not a supported user property type..
         /// </summary>
         internal static string InvalidAmqpMessageProperty {
@@ -196,11 +268,47 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The connection string could not be parsed; either it was malformed or contains no well-known tokens..
+        /// </summary>
+        internal static string InvalidConnectionString {
+            get {
+                return ResourceManager.GetString("InvalidConnectionString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The string has an invalid encoding format..
         /// </summary>
         internal static string InvalidEncoding {
             get {
                 return ResourceManager.GetString("InvalidEncoding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The value &apos;{0}&apos; is not a well-formed Service Bus fully qualified namespace..
+        /// </summary>
+        internal static string InvalidFullyQualifiedNamespace {
+            get {
+                return ResourceManager.GetString("InvalidFullyQualifiedNamespace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The shared access signature could not be parsed; it was either malformed or incorrectly encoded..
+        /// </summary>
+        internal static string InvalidSharedAccessSignature {
+            get {
+                return ResourceManager.GetString("InvalidSharedAccessSignature", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The requested transport type, &apos;{0}&apos; is not supported..
+        /// </summary>
+        internal static string InvalidTransportType {
+            get {
+                return ResourceManager.GetString("InvalidTransportType", resourceCulture);
             }
         }
         
@@ -214,11 +322,20 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The specified value &apos;{0}&apos; is invalid. &quot;maxConcurrentCalls&quot; must be greater than zero..
+        ///   Looks up a localized string similar to The maximum permitted length of {0} was exceeded..
         /// </summary>
-        internal static string MaxConcurrentCallsMustBeGreaterThanZero {
+        internal static string MaxPermittedLengthExceeded {
             get {
-                return ResourceManager.GetString("MaxConcurrentCallsMustBeGreaterThanZero", resourceCulture);
+                return ResourceManager.GetString("MaxPermittedLengthExceeded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The message batch is currently being used in communication with the Service Bus service; messages may not be added until the active operation is complete..
+        /// </summary>
+        internal static string MessageBatchIsLocked {
+            get {
+                return ResourceManager.GetString("MessageBatchIsLocked", resourceCulture);
             }
         }
         
@@ -241,6 +358,33 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The message processor is not currently running. It needs to be started before it can be stopped..
+        /// </summary>
+        internal static string MessageProcessorIsNotRunning {
+            get {
+                return ResourceManager.GetString("MessageProcessorIsNotRunning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The message (id:{0}, size:{1} bytes) is larger than is currently allowed ({2} bytes)..
+        /// </summary>
+        internal static string MessageSizeExceeded {
+            get {
+                return ResourceManager.GetString("MessageSizeExceeded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The connection string used for an Service Bus entity client must specify the Service Bus namespace host, and a Shared Access Signature (both the name and value) to be valid. The path to an Service Bus entity must be included in the connection string or specified separately..
+        /// </summary>
+        internal static string MissingConnectionInformation {
+            get {
+                return ResourceManager.GetString("MissingConnectionInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;{0}&apos; is not a supported type..
         /// </summary>
         internal static string NotSupportedPropertyType {
@@ -250,7 +394,25 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This operation is only supported for a message receiver in &apos;PeekLock&apos; receive mode..
+        ///   Looks up a localized string similar to The path to an Service Bus entity may be specified as part of the connection string or as a separate value, but not both..
+        /// </summary>
+        internal static string OnlyOneEntityNameMayBeSpecified {
+            get {
+                return ResourceManager.GetString("OnlyOneEntityNameMayBeSpecified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The operation is only supported in &apos;PeekLock&apos; receive mode..
+        /// </summary>
+        internal static string OperationNotSupported {
+            get {
+                return ResourceManager.GetString("OperationNotSupported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This operation is not supported for peeked messages. Only messages received in PeekLock mode can be settled..
         /// </summary>
         internal static string PeekLockModeRequired {
             get {
@@ -268,11 +430,38 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A proxy may only be used for a web sockets connection..
+        /// </summary>
+        internal static string ProxyMustUseWebSockets {
+            get {
+                return ResourceManager.GetString("ProxyMustUseWebSockets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Provided rule filter {0} is not supported. Supported values are: {1}, {2}.
         /// </summary>
         internal static string RuleFilterNotSupported {
             get {
                 return ResourceManager.GetString("RuleFilterNotSupported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The message processor is already running and needs to be stopped in order to perform this operation..
+        /// </summary>
+        internal static string RunningMessageProcessorCannotPerformOperation {
+            get {
+                return ResourceManager.GetString("RunningMessageProcessorCannotPerformOperation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When sending via a different entity, an entity path is not allowed to specified in the connection string..
+        /// </summary>
+        internal static string SendViaCannotBeUsedWithEntityInConnectionString {
+            get {
+                return ResourceManager.GetString("SendViaCannotBeUsedWithEntityInConnectionString", resourceCulture);
             }
         }
         
@@ -295,7 +484,7 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The session lock has expired on the MessageSession. Accept a new MessageSession..
+        ///   Looks up a localized string similar to The session lock was lost. Request a new session receiver..
         /// </summary>
         internal static string SessionLockExpiredOnMessageSession {
             get {
@@ -304,20 +493,38 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of the filter action statement is {0}, which exceeds the maximum length of {1}..
+        ///   Looks up a localized string similar to The operation is not supported for peeked message. Only received message can be settled..
         /// </summary>
-        internal static string SqlFilterActionStatmentTooLong {
+        internal static string SettlementOperationNotSupported {
             get {
-                return ResourceManager.GetString("SqlFilterActionStatmentTooLong", resourceCulture);
+                return ResourceManager.GetString("SettlementOperationNotSupported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In order to update the signature, a shared access key must have been provided when the shared access signature was created..
+        /// </summary>
+        internal static string SharedAccessKeyIsRequired {
+            get {
+                return ResourceManager.GetString("SharedAccessKeyIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A shared key credential is unable to generate a token directly. Please use this credential when creating an Service Bus entity Client, for proper generation of shared key tokens..
+        /// </summary>
+        internal static string SharedKeyCredentialCannotGenerateTokens {
+            get {
+                return ResourceManager.GetString("SharedKeyCredentialCannotGenerateTokens", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to The length of the filter statement is {0}, which exceeds the maximum length of {1}.
         /// </summary>
-        internal static string SqlFilterStatmentTooLong {
+        internal static string SqlRuleFilterStatmentTooLong {
             get {
-                return ResourceManager.GetString("SqlFilterStatmentTooLong", resourceCulture);
+                return ResourceManager.GetString("SqlRuleFilterStatmentTooLong", resourceCulture);
             }
         }
         
@@ -363,6 +570,33 @@ namespace Azure.Messaging.ServiceBus {
         internal static string TokenMissingExpiresOn {
             get {
                 return ResourceManager.GetString("TokenMissingExpiresOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The specified connection type, &quot;{0}&quot;, is not recognized as valid in this context..
+        /// </summary>
+        internal static string UnknownConnectionType {
+            get {
+                return ResourceManager.GetString("UnknownConnectionType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The requested retry mode, &apos;{0}&apos;, is not known; a retry delay canot be determined..
+        /// </summary>
+        internal static string UnknownRetryMode {
+            get {
+                return ResourceManager.GetString("UnknownRetryMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The requested transport event type, &apos;{0}&apos;, is not supported by the active transport client..
+        /// </summary>
+        internal static string UnsupportedTransportEventType {
+            get {
+                return ResourceManager.GetString("UnsupportedTransportEventType", resourceCulture);
             }
         }
     }

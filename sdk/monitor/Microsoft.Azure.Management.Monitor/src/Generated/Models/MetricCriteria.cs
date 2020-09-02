@@ -37,14 +37,16 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <param name="metricName">Name of the metric.</param>
         /// <param name="timeAggregation">the criteria time aggregation
         /// types.</param>
-        /// <param name="operatorProperty">the criteria operator.</param>
+        /// <param name="operatorProperty">the criteria operator. Possible
+        /// values include: 'Equals', 'NotEquals', 'GreaterThan',
+        /// 'GreaterThanOrEqual', 'LessThan', 'LessThanOrEqual'</param>
         /// <param name="threshold">the criteria threshold value that activates
         /// the alert.</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="metricNamespace">Namespace of the metric.</param>
         /// <param name="dimensions">List of dimension conditions.</param>
-        public MetricCriteria(string name, string metricName, object timeAggregation, object operatorProperty, double threshold, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string metricNamespace = default(string), IList<MetricDimension> dimensions = default(IList<MetricDimension>))
+        public MetricCriteria(string name, string metricName, object timeAggregation, string operatorProperty, double threshold, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string metricNamespace = default(string), IList<MetricDimension> dimensions = default(IList<MetricDimension>))
             : base(name, metricName, timeAggregation, additionalProperties, metricNamespace, dimensions)
         {
             OperatorProperty = operatorProperty;
@@ -58,10 +60,12 @@ namespace Microsoft.Azure.Management.Monitor.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the criteria operator.
+        /// Gets or sets the criteria operator. Possible values include:
+        /// 'Equals', 'NotEquals', 'GreaterThan', 'GreaterThanOrEqual',
+        /// 'LessThan', 'LessThanOrEqual'
         /// </summary>
         [JsonProperty(PropertyName = "operator")]
-        public object OperatorProperty { get; set; }
+        public string OperatorProperty { get; set; }
 
         /// <summary>
         /// Gets or sets the criteria threshold value that activates the alert.

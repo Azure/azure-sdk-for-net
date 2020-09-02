@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "guestconfiguration/resource-manager" -AutoRestVersion "latest"
+Start-AutoRestCodeGeneration -ResourceProvider "guestconfiguration/resource-manager" -AutoRestVersion "v2"

@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Support.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -32,17 +34,20 @@ namespace Microsoft.Azure.Management.Support.Models
         /// <summary>
         /// Initializes a new instance of the Service class.
         /// </summary>
-        /// <param name="id">Id of the resource</param>
-        /// <param name="name">Name of the resource</param>
+        /// <param name="id">Id of the resource.</param>
+        /// <param name="name">Name of the resource.</param>
         /// <param name="type">Type of the resource
-        /// 'Microsoft.Support/services'</param>
-        /// <param name="displayName">Localized name of Azure service</param>
-        public Service(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string))
+        /// 'Microsoft.Support/services'.</param>
+        /// <param name="displayName">Localized name of the Azure
+        /// service.</param>
+        /// <param name="resourceTypes">ARM Resource types.</param>
+        public Service(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), IList<string> resourceTypes = default(IList<string>))
         {
             Id = id;
             Name = name;
             Type = type;
             DisplayName = displayName;
+            ResourceTypes = resourceTypes;
             CustomInit();
         }
 
@@ -52,28 +57,34 @@ namespace Microsoft.Azure.Management.Support.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets id of the resource
+        /// Gets id of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets name of the resource
+        /// Gets name of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets type of the resource 'Microsoft.Support/services'
+        /// Gets type of the resource 'Microsoft.Support/services'.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets or sets localized name of Azure service
+        /// Gets or sets localized name of the Azure service.
         /// </summary>
         [JsonProperty(PropertyName = "properties.displayName")]
         public string DisplayName { get; set; }
+
+        /// <summary>
+        /// Gets or sets ARM Resource types.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.resourceTypes")]
+        public IList<string> ResourceTypes { get; set; }
 
     }
 }

@@ -43,7 +43,7 @@
             }
 
             // Write the info back into the project ids.txt
-            File.WriteAllText(GetIdsFileName(), sb.ToString());
+            File.WriteAllText(idFilename, sb.ToString());
 #endif
         }
     }

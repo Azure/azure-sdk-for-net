@@ -24,7 +24,7 @@ These libraries follow the [Azure SDK Design Guidelines for .NET][sdk_design_gui
 
 ## Public API changes  
 
-To update [`Azure.Data.AppConfiguration.netstandard2.0.cs`][azconfig_api] after making changes to the public API, execute [`./eng/Export-API.ps1`][azconfig_export_api]. 
+To update [`Azure.Data.AppConfiguration.netstandard2.0.cs`][azconfig_api] after making changes to the public API, execute [`./eng/scripts/Export-API.ps1`][azconfig_export_api]. 
 
 ## Testing
 
@@ -63,11 +63,11 @@ For additional insight and context, the development, release, and issue history 
 <!-- LINKS -->
 [azconfig_root]: ../../sdk/appconfiguration
 [azconfig_api]: ./Azure.Data.AppConfiguration/api/Azure.Data.AppConfiguration.netstandard2.0.cs
-[azconfig_export_api]: ../../eng/Export-API.ps1
+[azconfig_export_api]: ../../eng/scripts/Export-API.ps1
 [cla]: https://cla.microsoft.com
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
-[core_tests]: ../../sdk/core/Azure.Core/tests/TestFramework
+[core_tests]: https://github.com/azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/tests
 [nunit]: https://github.com/nunit/docs/wiki
 [open_issues]: https://github.com/Azure/azure-sdk-for-net/issues?utf8=%E2%9C%93&q=is%3Aopen+is%3Aissue+label%3AClient+label%3AAzConfig
 [sdk_readme]: https://github.com/Azure/azure-sdk
@@ -75,5 +75,4 @@ For additional insight and context, the development, release, and issue history 
 [sdk_design_guidelines]: https://azure.github.io/azure-sdk/general_introduction.html
 [sdk_design_guidelines_dotnet]: https://azure.github.io/azure-sdk/dotnet_introduction.html
 [sdk_dotnet_code_readme]: ../../sdk/core/Azure.Core/README.md
-[tests_sanitized]: ./Azure.Data.AppConfiguration/tests/ConfigurationRecordedTestSanitizer.cs
 [email_opencode]: mailto:opencode@microsoft.com

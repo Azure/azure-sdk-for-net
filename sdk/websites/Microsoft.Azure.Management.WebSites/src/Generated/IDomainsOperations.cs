@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Check if a domain is available for registration.
         /// </summary>
         /// <remarks>
-        /// Check if a domain is available for registration.
+        /// Description for Check if a domain is available for registration.
         /// </remarks>
         /// <param name='identifier'>
         /// Name of the domain.
@@ -47,12 +47,12 @@ namespace Microsoft.Azure.Management.WebSites
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DomainAvailablilityCheckResult>> CheckAvailabilityWithHttpMessagesAsync(NameIdentifier identifier, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DomainAvailabilityCheckResult>> CheckAvailabilityWithHttpMessagesAsync(NameIdentifier identifier, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get all domains in a subscription.
         /// </summary>
         /// <remarks>
-        /// Get all domains in a subscription.
+        /// Description for Get all domains in a subscription.
         /// </remarks>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -74,7 +74,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// Generate a single sign-on request for the domain management portal.
         /// </summary>
         /// <remarks>
-        /// Generate a single sign-on request for the domain management portal.
+        /// Description for Generate a single sign-on request for the domain
+        /// management portal.
         /// </remarks>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -96,7 +97,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get domain name recommendations based on keywords.
         /// </summary>
         /// <remarks>
-        /// Get domain name recommendations based on keywords.
+        /// Description for Get domain name recommendations based on keywords.
         /// </remarks>
         /// <param name='parameters'>
         /// Search parameters for domain name recommendations.
@@ -121,7 +122,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get all domains in a resource group.
         /// </summary>
         /// <remarks>
-        /// Get all domains in a resource group.
+        /// Description for Get all domains in a resource group.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -146,7 +147,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get a domain.
         /// </summary>
         /// <remarks>
-        /// Get a domain.
+        /// Description for Get a domain.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -174,7 +175,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Creates or updates a domain.
         /// </summary>
         /// <remarks>
-        /// Creates or updates a domain.
+        /// Description for Creates or updates a domain.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -205,7 +206,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Delete a domain.
         /// </summary>
         /// <remarks>
-        /// Delete a domain.
+        /// Description for Delete a domain.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -224,7 +225,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="DefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
@@ -235,7 +236,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Creates or updates a domain.
         /// </summary>
         /// <remarks>
-        /// Creates or updates a domain.
+        /// Description for Creates or updates a domain.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -266,7 +267,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Lists domain ownership identifiers.
         /// </summary>
         /// <remarks>
-        /// Lists domain ownership identifiers.
+        /// Description for Lists domain ownership identifiers.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -294,7 +295,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get ownership identifier for domain
         /// </summary>
         /// <remarks>
-        /// Get ownership identifier for domain
+        /// Description for Get ownership identifier for domain
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -326,8 +327,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// details for an existing identifer
         /// </summary>
         /// <remarks>
-        /// Creates an ownership identifier for a domain or updates identifier
-        /// details for an existing identifer
+        /// Description for Creates an ownership identifier for a domain or
+        /// updates identifier details for an existing identifer
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -361,7 +362,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Delete ownership identifier for domain
         /// </summary>
         /// <remarks>
-        /// Delete ownership identifier for domain
+        /// Description for Delete ownership identifier for domain
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -378,7 +379,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="DefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
@@ -390,8 +391,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// details for an existing identifer
         /// </summary>
         /// <remarks>
-        /// Creates an ownership identifier for a domain or updates identifier
-        /// details for an existing identifer
+        /// Description for Creates an ownership identifier for a domain or
+        /// updates identifier details for an existing identifer
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -425,7 +426,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Renew a domain.
         /// </summary>
         /// <remarks>
-        /// Renew a domain.
+        /// Description for Renew a domain.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -439,7 +440,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="DefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
@@ -450,7 +451,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Creates or updates a domain.
         /// </summary>
         /// <remarks>
-        /// Creates or updates a domain.
+        /// Description for Creates or updates a domain.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -481,7 +482,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get all domains in a subscription.
         /// </summary>
         /// <remarks>
-        /// Get all domains in a subscription.
+        /// Description for Get all domains in a subscription.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -506,7 +507,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get domain name recommendations based on keywords.
         /// </summary>
         /// <remarks>
-        /// Get domain name recommendations based on keywords.
+        /// Description for Get domain name recommendations based on keywords.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -531,7 +532,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get all domains in a resource group.
         /// </summary>
         /// <remarks>
-        /// Get all domains in a resource group.
+        /// Description for Get all domains in a resource group.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -556,7 +557,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Lists domain ownership identifiers.
         /// </summary>
         /// <remarks>
-        /// Lists domain ownership identifiers.
+        /// Description for Lists domain ownership identifiers.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

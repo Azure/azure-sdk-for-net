@@ -47,9 +47,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Subscription credentials which uniquely identify Microsoft Azure
-        /// subscription. The subscription ID forms part of the URI for every service
-        /// call.
+        /// The ID of the target subscription.
         /// </summary>
         public string SubscriptionId { get; set; }
 
@@ -374,6 +372,8 @@ namespace Microsoft.Azure.Management.AlertsManagement
             };
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ActionRuleProperties>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ActionRuleProperties>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<AlertsMetaDataProperties>("metadataIdentifier"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<AlertsMetaDataProperties>("metadataIdentifier"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());

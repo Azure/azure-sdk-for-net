@@ -19,7 +19,8 @@ Install the Azure App Configuration client library for .NET with [NuGet][nuget]:
 Install-Package Azure.Data.AppConfiguration
 ```
 
-**Prerequisites** 
+### Prerequisites 
+
 * An [Azure subscription][azure_sub].
 * An existing [Configuration Store][configuration_store].  
 

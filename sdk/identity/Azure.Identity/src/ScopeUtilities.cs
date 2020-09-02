@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Azure.Identity
@@ -12,7 +13,10 @@ namespace Azure.Identity
     internal static class ScopeUtilities
     {
         private const string DefaultSuffix = "/.default";
+        private const string ScopePattern = "^[0-9a-zA-Z-.:/]+$";
 
+        private const string InvalidScopeMessage = "The specified scope is not in expected format. Only alphanumeric characters, '.', '-', ':', and '/' are allowed";
+        private static readonly Regex scopeRegex = new Regex(ScopePattern);
 
         public static string ScopesToResource(string[] scopes)
         {
@@ -39,5 +43,14 @@ namespace Azure.Identity
             return new string[] { resource + "/.default" };
         }
 
+        public static void ValidateScope(string scope)
+        {
+            bool isScopeMatch = scopeRegex.IsMatch(scope);
+
+            if (!isScopeMatch)
+            {
+                throw new ArgumentException(InvalidScopeMessage, nameof(scope));
+            }
+        }
     }
 }

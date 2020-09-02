@@ -189,8 +189,8 @@
             CertificateBuilder.CreateSelfSignedInFile("Foo", cerFilePath, CertificateBuilder.Sha1Algorithm);
             CertificateBuilder.CreateSelfSignedInFile("Foo", pfxFilePath, CertificateBuilder.Sha1Algorithm, password: CommonResources.CertificatePassword);
 
-            Certificate cerCertificate = batchClient.CertificateOperations.CreateCertificate(cerFilePath);
-            Certificate pfxCertificate = batchClient.CertificateOperations.CreateCertificate(pfxFilePath, CommonResources.CertificatePassword);
+            Certificate cerCertificate = batchClient.CertificateOperations.CreateCertificateFromCer(cerFilePath);
+            Certificate pfxCertificate = batchClient.CertificateOperations.CreateCertificateFromPfx(pfxFilePath, CommonResources.CertificatePassword);
 
             return new List<Certificate>
                 {

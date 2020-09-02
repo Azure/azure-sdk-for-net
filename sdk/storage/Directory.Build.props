@@ -30,7 +30,7 @@
     <DefineConstants>DEBUG;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
 
-  <Import Condition="'$(IsClientLibrary)' == 'true'" Project="$(MSBuildThisFileDirectory)..\core\Azure.Core\src\Azure.Core.props" />
+  <Import Condition="'$(IsClientLibrary)' == 'true' AND '$(IsMgmtClientLibrary)' != 'true'" Project="$(MSBuildThisFileDirectory)..\core\Azure.Core\src\Azure.Core.props" />
 
   <!-- Add references for CLIENT LIBRARY projects -->
   <ItemGroup Condition="'$(IsTestProject)' != 'true' and '$(IsClientLibrary)' == 'true'">
@@ -49,12 +49,9 @@
     <PackageReference Include="BenchmarkDotNet" />
     <PackageReference Include="System.Memory" />
     <PackageReference Include="System.Text.Json" />
-    <None Include="SessionRecords\**\*.json" CopyToOutputDirectory="PreserveNewest" />
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
   </ItemGroup>
 
-
-  <!-- Pull in Azure.Core helpers for TEST projects -->
-  <Import Condition="'$(IsTestProject)' == 'true' and '$(IsClientLibrary)' == 'true'" Project="$(MSBuildThisFileDirectory)..\core\Azure.Core\tests\TestFramework.props" />
   
   <!--Add shared storage properties-->
   <PropertyGroup>

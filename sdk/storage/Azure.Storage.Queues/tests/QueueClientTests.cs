@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Storage.Test;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues.Tests;
@@ -260,6 +260,173 @@ namespace Azure.Storage.Queues.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 queue.CreateAsync(metadata: new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase) { { "key", "value" } }),
                 actualException => Assert.AreEqual("QueueAlreadyExists", actualException.ErrorCode));
+        }
+
+        [Test]
+        public async Task CreateIfNotExistsAsync_NotExists()
+        {
+            // Arrange
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
+
+            // Act
+            Response response = await queue.CreateIfNotExistsAsync();
+
+            // Assert
+            Assert.IsNotNull(response);
+
+            // Cleanup
+            await queue.DeleteAsync();
+        }
+
+        [Test]
+        public async Task CreateIfNotExistsAsync_Exists()
+        {
+            // Arrange
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
+            await queue.CreateAsync();
+
+            // Act
+            Response response = await queue.CreateIfNotExistsAsync();
+
+            // Assert
+            Assert.IsNull(response);
+
+            // Cleanup
+            await queue.DeleteAsync();
+        }
+
+        [Test]
+        public async Task CreateIfNotExistsAsync_ExistsDifferentMetadata()
+        {
+            // Arrange
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
+
+            await queue.CreateAsync(BuildMetadata());
+
+            // Act
+            Response response = await queue.CreateIfNotExistsAsync();
+
+            // Assert
+            Assert.IsNull(response);
+
+            // Cleanup
+            await queue.DeleteAsync();
+        }
+
+        [Test]
+        public async Task CreateIfNotExistsAsync_Error()
+        {
+            // Arrange
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
+            QueueClient unauthorizedQueueClient = InstrumentClient(new QueueClient(queue.Uri, GetOptions()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                unauthorizedQueueClient.CreateIfNotExistsAsync(),
+                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+        }
+
+        [Test]
+        public async Task ExistsAsync_Exists()
+        {
+            // Arrange
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
+            await queue.CreateAsync();
+
+            // Act
+            Response<bool> response = await queue.ExistsAsync();
+
+            // Assert
+            Assert.IsTrue(response.Value);
+
+            // Cleanup
+            await queue.DeleteAsync();
+        }
+
+        [Test]
+        public async Task ExistsAsync_NotExists()
+        {
+            // Arrange
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
+
+            // Act
+            Response<bool> response = await queue.ExistsAsync();
+
+            // Assert
+            Assert.IsFalse(response.Value);
+        }
+
+        [Test]
+        public async Task ExistsAsync_Error()
+        {
+            // Arrange
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
+            QueueClient unauthorizedQueueClient = InstrumentClient(new QueueClient(queue.Uri, GetOptions()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                unauthorizedQueueClient.ExistsAsync(),
+                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+        }
+
+        [Test]
+        public async Task DeleteIfExistsAsync_Exists()
+        {
+            // Arrange
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
+            await queue.CreateAsync();
+
+            // Act
+            Response<bool> response = await queue.DeleteIfExistsAsync();
+
+            // Assert
+            Assert.IsTrue(response.Value);
+        }
+
+        [Test]
+        public async Task DeleteIfExistsAsync_NotExists()
+        {
+            // Arrange
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
+
+            // Act
+            Response<bool> response = await queue.DeleteIfExistsAsync();
+
+            // Assert
+            Assert.IsFalse(response.Value);
+        }
+
+        [Test]
+        public async Task DeleteIfExistsAsync_Error()
+        {
+            // Arrange
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
+            QueueClient unauthorizedQueueClient = InstrumentClient(new QueueClient(queue.Uri, GetOptions()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                unauthorizedQueueClient.DeleteIfExistsAsync(),
+                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -866,6 +1033,27 @@ namespace Azure.Storage.Queues.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 test.Queue.UpdateMessageAsync(GetNewMessageId(), GetNewString(), string.Empty),
                 actualException => Assert.AreEqual("MessageNotFound", actualException.ErrorCode));
+        }
+
+        [Test]
+        public async Task UpdateMessageAsync_UpdateVisibilityTimeoutOnlyPreservesContent()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            var message = "foo";
+            Models.SendReceipt enqueuedMessage = (await test.Queue.SendMessageAsync(message)).Value;
+
+            // Act
+            Response<Models.UpdateReceipt> result = await test.Queue.UpdateMessageAsync(
+                enqueuedMessage.MessageId,
+                enqueuedMessage.PopReceipt,
+                visibilityTimeout: new TimeSpan(100));
+            var receivedMessage = (await test.Queue.ReceiveMessagesAsync(1)).Value.First();
+
+            // Assert
+            Assert.AreEqual(enqueuedMessage.MessageId, receivedMessage.MessageId);
+            Assert.AreEqual(message, receivedMessage.MessageText);
         }
     }
 }

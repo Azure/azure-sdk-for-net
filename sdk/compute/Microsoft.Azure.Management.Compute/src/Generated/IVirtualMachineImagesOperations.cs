@@ -12,7 +12,6 @@ namespace Microsoft.Azure.Management.Compute
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
-    using Microsoft.Rest.Azure.OData;
     using Models;
     using System.Collections;
     using System.Collections.Generic;
@@ -74,8 +73,12 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='skus'>
         /// A valid image SKU.
         /// </param>
-        /// <param name='odataQuery'>
-        /// OData parameters to apply to the operation.
+        /// <param name='expand'>
+        /// The expand expression to apply on the operation.
+        /// </param>
+        /// <param name='top'>
+        /// </param>
+        /// <param name='orderby'>
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -92,7 +95,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IList<VirtualMachineImageResource>>> ListWithHttpMessagesAsync(string location, string publisherName, string offer, string skus, ODataQuery<VirtualMachineImageResource> odataQuery = default(ODataQuery<VirtualMachineImageResource>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IList<VirtualMachineImageResource>>> ListWithHttpMessagesAsync(string location, string publisherName, string offer, string skus, string expand = default(string), int? top = default(int?), string orderby = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a list of virtual machine image offers for the specified
         /// location and publisher.

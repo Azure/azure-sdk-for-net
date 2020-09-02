@@ -38,6 +38,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// run has to happen.</param>
         /// <param name="isArchiveEnabled">The value that indicates whether
         /// archiving is enabled for the run or not.</param>
+        /// <param name="agentPoolName">The dedicated agent pool for the
+        /// run.</param>
         /// <param name="valuesFilePath">The values/parameters file path
         /// relative to the source.</param>
         /// <param name="values">The collection of overridable values that can
@@ -51,8 +53,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// calling listBuildSourceUploadUrl API.</param>
         /// <param name="credentials">The properties that describes a set of
         /// credentials that will be used when this run is invoked.</param>
-        public FileTaskRunRequest(string taskFilePath, PlatformProperties platform, bool? isArchiveEnabled = default(bool?), string valuesFilePath = default(string), IList<SetValue> values = default(IList<SetValue>), int? timeout = default(int?), AgentProperties agentConfiguration = default(AgentProperties), string sourceLocation = default(string), Credentials credentials = default(Credentials))
-            : base(isArchiveEnabled)
+        public FileTaskRunRequest(string taskFilePath, PlatformProperties platform, bool? isArchiveEnabled = default(bool?), string agentPoolName = default(string), string valuesFilePath = default(string), IList<SetValue> values = default(IList<SetValue>), int? timeout = default(int?), AgentProperties agentConfiguration = default(AgentProperties), string sourceLocation = default(string), Credentials credentials = default(Credentials))
+            : base(isArchiveEnabled, agentPoolName)
         {
             TaskFilePath = taskFilePath;
             ValuesFilePath = valuesFilePath;

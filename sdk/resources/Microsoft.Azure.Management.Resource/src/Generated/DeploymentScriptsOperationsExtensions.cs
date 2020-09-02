@@ -272,9 +272,14 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='scriptName'>
             /// Name of the deployment script.
             /// </param>
-            public static ScriptLog GetLogsDefault(this IDeploymentScriptsOperations operations, string resourceGroupName, string scriptName)
+            /// <param name='tail'>
+            /// The number of lines to show from the tail of the deployment script log.
+            /// Valid value is a positive number up to 1000. If 'tail' is not provided, all
+            /// available logs are shown up to container instance log capacity of 4mb.
+            /// </param>
+            public static ScriptLog GetLogsDefault(this IDeploymentScriptsOperations operations, string resourceGroupName, string scriptName, int? tail = default(int?))
             {
-                return operations.GetLogsDefaultAsync(resourceGroupName, scriptName).GetAwaiter().GetResult();
+                return operations.GetLogsDefaultAsync(resourceGroupName, scriptName, tail).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -289,12 +294,17 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='scriptName'>
             /// Name of the deployment script.
             /// </param>
+            /// <param name='tail'>
+            /// The number of lines to show from the tail of the deployment script log.
+            /// Valid value is a positive number up to 1000. If 'tail' is not provided, all
+            /// available logs are shown up to container instance log capacity of 4mb.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ScriptLog> GetLogsDefaultAsync(this IDeploymentScriptsOperations operations, string resourceGroupName, string scriptName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ScriptLog> GetLogsDefaultAsync(this IDeploymentScriptsOperations operations, string resourceGroupName, string scriptName, int? tail = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetLogsDefaultWithHttpMessagesAsync(resourceGroupName, scriptName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetLogsDefaultWithHttpMessagesAsync(resourceGroupName, scriptName, tail, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

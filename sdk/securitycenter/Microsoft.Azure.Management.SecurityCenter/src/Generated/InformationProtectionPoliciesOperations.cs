@@ -254,6 +254,12 @@ namespace Microsoft.Azure.Management.Security
         /// Name of the information protection policy. Possible values include:
         /// 'effective', 'custom'
         /// </param>
+        /// <param name='labels'>
+        /// Dictionary of sensitivity labels.
+        /// </param>
+        /// <param name='informationTypes'>
+        /// The sensitivity information types.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -275,7 +281,7 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<InformationProtectionPolicy>> CreateOrUpdateWithHttpMessagesAsync(string scope, string informationProtectionPolicyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<InformationProtectionPolicy>> CreateOrUpdateWithHttpMessagesAsync(string scope, string informationProtectionPolicyName, IDictionary<string, SensitivityLabel> labels = default(IDictionary<string, SensitivityLabel>), IDictionary<string, InformationType> informationTypes = default(IDictionary<string, InformationType>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (scope == null)
             {
@@ -286,6 +292,12 @@ namespace Microsoft.Azure.Management.Security
                 throw new ValidationException(ValidationRules.CannotBeNull, "informationProtectionPolicyName");
             }
             string apiVersion = "2017-08-01-preview";
+            InformationProtectionPolicy informationProtectionPolicy = new InformationProtectionPolicy();
+            if (labels != null || informationTypes != null)
+            {
+                informationProtectionPolicy.Labels = labels;
+                informationProtectionPolicy.InformationTypes = informationTypes;
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -296,6 +308,7 @@ namespace Microsoft.Azure.Management.Security
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("scope", scope);
                 tracingParameters.Add("informationProtectionPolicyName", informationProtectionPolicyName);
+                tracingParameters.Add("informationProtectionPolicy", informationProtectionPolicy);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
             }
@@ -347,6 +360,12 @@ namespace Microsoft.Azure.Management.Security
 
             // Serialize Request
             string _requestContent = null;
+            if(informationProtectionPolicy != null)
+            {
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(informationProtectionPolicy, Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
             // Set Credentials
             if (Client.Credentials != null)
             {

@@ -82,11 +82,6 @@ namespace Microsoft.Azure.Management.Authorization
         public virtual IProviderOperationsMetadataOperations ProviderOperationsMetadata { get; private set; }
 
         /// <summary>
-        /// Gets the IRoleAssignmentsOperations.
-        /// </summary>
-        public virtual IRoleAssignmentsOperations RoleAssignments { get; private set; }
-
-        /// <summary>
         /// Gets the IPermissionsOperations.
         /// </summary>
         public virtual IPermissionsOperations Permissions { get; private set; }
@@ -100,6 +95,11 @@ namespace Microsoft.Azure.Management.Authorization
         /// Gets the IDenyAssignmentsOperations.
         /// </summary>
         public virtual IDenyAssignmentsOperations DenyAssignments { get; private set; }
+
+        /// <summary>
+        /// Gets the IRoleAssignmentsOperations.
+        /// </summary>
+        public virtual IRoleAssignmentsOperations RoleAssignments { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the AuthorizationManagementClient class.
@@ -345,10 +345,10 @@ namespace Microsoft.Azure.Management.Authorization
             ClassicAdministrators = new ClassicAdministratorsOperations(this);
             GlobalAdministrator = new GlobalAdministratorOperations(this);
             ProviderOperationsMetadata = new ProviderOperationsMetadataOperations(this);
-            RoleAssignments = new RoleAssignmentsOperations(this);
             Permissions = new PermissionsOperations(this);
             RoleDefinitions = new RoleDefinitionsOperations(this);
             DenyAssignments = new DenyAssignmentsOperations(this);
+            RoleAssignments = new RoleAssignmentsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

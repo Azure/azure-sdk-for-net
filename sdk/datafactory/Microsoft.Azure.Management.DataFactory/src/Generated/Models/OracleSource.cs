@@ -51,13 +51,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// 'PhysicalPartitionsOfTable', 'DynamicRange'</param>
         /// <param name="partitionSettings">The settings that will be leveraged
         /// for Oracle source partitioning.</param>
-        public OracleSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object oracleReaderQuery = default(object), object queryTimeout = default(object), string partitionOption = default(string), OraclePartitionSettings partitionSettings = default(OraclePartitionSettings))
+        /// <param name="additionalColumns">Specifies the additional columns to
+        /// be added to source data. Type: array of objects (or Expression with
+        /// resultType array of objects).</param>
+        public OracleSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object oracleReaderQuery = default(object), object queryTimeout = default(object), string partitionOption = default(string), OraclePartitionSettings partitionSettings = default(OraclePartitionSettings), IList<AdditionalColumns> additionalColumns = default(IList<AdditionalColumns>))
             : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
         {
             OracleReaderQuery = oracleReaderQuery;
             QueryTimeout = queryTimeout;
             PartitionOption = partitionOption;
             PartitionSettings = partitionSettings;
+            AdditionalColumns = additionalColumns;
             CustomInit();
         }
 
@@ -95,6 +99,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "partitionSettings")]
         public OraclePartitionSettings PartitionSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the additional columns to be added to source
+        /// data. Type: array of objects (or Expression with resultType array
+        /// of objects).
+        /// </summary>
+        [JsonProperty(PropertyName = "additionalColumns")]
+        public IList<AdditionalColumns> AdditionalColumns { get; set; }
 
     }
 }

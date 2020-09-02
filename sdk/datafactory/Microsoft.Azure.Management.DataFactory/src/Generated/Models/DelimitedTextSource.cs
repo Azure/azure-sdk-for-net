@@ -43,11 +43,15 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Expression with resultType integer).</param>
         /// <param name="storeSettings">DelimitedText store settings.</param>
         /// <param name="formatSettings">DelimitedText format settings.</param>
-        public DelimitedTextSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), StoreReadSettings storeSettings = default(StoreReadSettings), DelimitedTextReadSettings formatSettings = default(DelimitedTextReadSettings))
+        /// <param name="additionalColumns">Specifies the additional columns to
+        /// be added to source data. Type: array of objects (or Expression with
+        /// resultType array of objects).</param>
+        public DelimitedTextSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), StoreReadSettings storeSettings = default(StoreReadSettings), DelimitedTextReadSettings formatSettings = default(DelimitedTextReadSettings), IList<AdditionalColumns> additionalColumns = default(IList<AdditionalColumns>))
             : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
         {
             StoreSettings = storeSettings;
             FormatSettings = formatSettings;
+            AdditionalColumns = additionalColumns;
             CustomInit();
         }
 
@@ -67,6 +71,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "formatSettings")]
         public DelimitedTextReadSettings FormatSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the additional columns to be added to source
+        /// data. Type: array of objects (or Expression with resultType array
+        /// of objects).
+        /// </summary>
+        [JsonProperty(PropertyName = "additionalColumns")]
+        public IList<AdditionalColumns> AdditionalColumns { get; set; }
 
     }
 }

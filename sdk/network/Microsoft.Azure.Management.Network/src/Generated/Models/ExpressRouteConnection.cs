@@ -45,7 +45,10 @@ namespace Microsoft.Azure.Management.Network.Models
         /// connection.</param>
         /// <param name="enableInternetSecurity">Enable internet
         /// security.</param>
-        public ExpressRouteConnection(ExpressRouteCircuitPeeringId expressRouteCircuitPeering, string name, string id = default(string), string provisioningState = default(string), string authorizationKey = default(string), int? routingWeight = default(int?), bool? enableInternetSecurity = default(bool?))
+        /// <param name="routingConfiguration">The Routing Configuration
+        /// indicating the associated and propagated route tables on this
+        /// connection.</param>
+        public ExpressRouteConnection(ExpressRouteCircuitPeeringId expressRouteCircuitPeering, string name, string id = default(string), string provisioningState = default(string), string authorizationKey = default(string), int? routingWeight = default(int?), bool? enableInternetSecurity = default(bool?), RoutingConfiguration routingConfiguration = default(RoutingConfiguration))
             : base(id)
         {
             ProvisioningState = provisioningState;
@@ -53,6 +56,7 @@ namespace Microsoft.Azure.Management.Network.Models
             AuthorizationKey = authorizationKey;
             RoutingWeight = routingWeight;
             EnableInternetSecurity = enableInternetSecurity;
+            RoutingConfiguration = routingConfiguration;
             Name = name;
             CustomInit();
         }
@@ -93,6 +97,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableInternetSecurity")]
         public bool? EnableInternetSecurity { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Routing Configuration indicating the associated
+        /// and propagated route tables on this connection.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.routingConfiguration")]
+        public RoutingConfiguration RoutingConfiguration { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the resource.

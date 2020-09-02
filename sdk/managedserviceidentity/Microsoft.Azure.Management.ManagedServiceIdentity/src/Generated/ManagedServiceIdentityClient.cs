@@ -75,6 +75,11 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the ISystemAssignedIdentitiesOperations.
+        /// </summary>
+        public virtual ISystemAssignedIdentitiesOperations SystemAssignedIdentities { get; private set; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
@@ -325,6 +330,7 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity
         /// </summary>
         private void Initialize()
         {
+            SystemAssignedIdentities = new SystemAssignedIdentitiesOperations(this);
             Operations = new Operations(this);
             UserAssignedIdentities = new UserAssignedIdentitiesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");

@@ -94,9 +94,12 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='prefix'>
             /// The prefix from which your traffic originates.
             /// </param>
-            public static PeeringServicePrefix CreateOrUpdate(this IPrefixesOperations operations, string resourceGroupName, string peeringServiceName, string prefixName, string prefix = default(string))
+            /// <param name='peeringServicePrefixKey'>
+            /// The peering service prefix key
+            /// </param>
+            public static PeeringServicePrefix CreateOrUpdate(this IPrefixesOperations operations, string resourceGroupName, string peeringServiceName, string prefixName, string prefix = default(string), string peeringServicePrefixKey = default(string))
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, peeringServiceName, prefixName, prefix).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, peeringServiceName, prefixName, prefix, peeringServicePrefixKey).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -118,12 +121,15 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='prefix'>
             /// The prefix from which your traffic originates.
             /// </param>
+            /// <param name='peeringServicePrefixKey'>
+            /// The peering service prefix key
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PeeringServicePrefix> CreateOrUpdateAsync(this IPrefixesOperations operations, string resourceGroupName, string peeringServiceName, string prefixName, string prefix = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PeeringServicePrefix> CreateOrUpdateAsync(this IPrefixesOperations operations, string resourceGroupName, string peeringServiceName, string prefixName, string prefix = default(string), string peeringServicePrefixKey = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, peeringServiceName, prefixName, prefix, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, peeringServiceName, prefixName, prefix, peeringServicePrefixKey, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

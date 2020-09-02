@@ -110,6 +110,11 @@ namespace Azure.Security.KeyVault.Keys
         public DateTimeOffset? UpdatedOn { get => _attributes.UpdatedOn; internal set => _attributes.UpdatedOn = value; }
 
         /// <summary>
+        /// Gets the number of days a key is retained before being deleted for a soft delete-enabled Key Vault.
+        /// </summary>
+        public int? RecoverableDays { get => _attributes.RecoverableDays; internal set => _attributes.RecoverableDays = value; }
+
+        /// <summary>
         /// Gets the recovery level currently in effect for keys in the Key Vault.
         /// If <c>Purgeable</c>, the key can be permanently deleted by an authorized user;
         /// otherwise, only the service can purge the keys at the end of the retention interval.

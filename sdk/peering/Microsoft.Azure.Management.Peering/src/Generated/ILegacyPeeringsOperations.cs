@@ -34,6 +34,9 @@ namespace Microsoft.Azure.Management.Peering
         /// The kind of the peering. Possible values include: 'Direct',
         /// 'Exchange'
         /// </param>
+        /// <param name='asn'>
+        /// The ASN number associated with a legacy peering.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -49,7 +52,7 @@ namespace Microsoft.Azure.Management.Peering
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<PeeringModel>>> ListWithHttpMessagesAsync(string peeringLocation, string kind, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<PeeringModel>>> ListWithHttpMessagesAsync(string peeringLocation, string kind, int? asn = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all of the legacy peerings under the given subscription
         /// matching the specified kind and location.

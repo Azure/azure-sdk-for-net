@@ -92,12 +92,12 @@ namespace ApiManagement.Tests.ManagementApiTests
                 {
                     testBase.client.Cache.Delete(testBase.rgName, testBase.serviceName, cacheid, "*");
                     // clean up all properties
-                    var listOfProperties = testBase.client.Property.ListByService(
+                    var listOfProperties = testBase.client.NamedValue.ListByService(
                         testBase.rgName,
                         testBase.serviceName);
                     foreach (var property in listOfProperties)
                     {
-                        testBase.client.Property.Delete(
+                        testBase.client.NamedValue.Delete(
                             testBase.rgName,
                             testBase.serviceName,
                             property.Name,

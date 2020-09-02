@@ -22,7 +22,11 @@ namespace Microsoft.Azure.Services.AppAuthentication
         private readonly string _managedIdentityClientId;
 
         // HttpClient is intended to be instantiated once and re-used throughout the life of an application. 
+#if NETSTANDARD1_4 || net452 || net461
         private static readonly HttpClient DefaultHttpClient = new HttpClient();
+#else
+        private static readonly HttpClient DefaultHttpClient = new HttpClient(new HttpClientHandler() { CheckCertificateRevocationList = true });
+#endif
 
         // Azure Instance Metadata Service (IMDS) endpoint
         private const string AzureVmImdsEndpoint = "http://169.254.169.254/metadata/identity/oauth2/token";
@@ -34,7 +38,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         // Configurable timeout for MSI retry logic
         internal readonly int _retryTimeoutInSeconds = 0;
 
-        internal MsiAccessTokenProvider(int retryTimeoutInSeconds = 0, string managedIdentityClientId = default(string))
+        internal MsiAccessTokenProvider(int retryTimeoutInSeconds = 0, string managedIdentityClientId = default)
         {
             // require storeLocation if using subject name or thumbprint identifier
             if (retryTimeoutInSeconds < 0)
@@ -55,7 +59,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         }
 
         public override async Task<AppAuthenticationResult> GetAuthResultAsync(string resource, string authority,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             // Use the httpClient specified in the constructor. If it was not specified in the constructor, use the default httpClient. 
             HttpClient httpClient = _httpClient ?? DefaultHttpClient;
@@ -63,9 +67,9 @@ namespace Microsoft.Azure.Services.AppAuthentication
             try
             {
                 // Check if App Services MSI is available. If both these environment variables are set, then it is. 
-                string msiEndpoint = Environment.GetEnvironmentVariable("MSI_ENDPOINT");
-                string msiSecret = Environment.GetEnvironmentVariable("MSI_SECRET");
-                var isAppServicesMsiAvailable = !string.IsNullOrWhiteSpace(msiEndpoint) && !string.IsNullOrWhiteSpace(msiSecret);
+                string msiEndpoint = Environment.GetEnvironmentVariable("IDENTITY_ENDPOINT");
+                string msiHeader = Environment.GetEnvironmentVariable("IDENTITY_HEADER");
+                var isAppServicesMsiAvailable = !string.IsNullOrWhiteSpace(msiEndpoint) && !string.IsNullOrWhiteSpace(msiHeader);
 
                 // if App Service MSI is not available then Azure VM IMDS may be available, test with a probe request
                 if (!isAppServicesMsiAvailable)
@@ -95,14 +99,13 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 }
 
                 // If managed identity is specified, include client ID parameter in request
-                string clientIdParameterName = isAppServicesMsiAvailable ? "clientid" : "client_id";
-                string clientIdParameter = _managedIdentityClientId != default(string)
-                    ? $"&{clientIdParameterName}={_managedIdentityClientId}"
+                string clientIdParameter = _managedIdentityClientId != default
+                    ? $"&client_id={_managedIdentityClientId}"
                     : string.Empty;
 
                 // Craft request as per the MSI protocol
                 var requestUrl = isAppServicesMsiAvailable
-                    ? $"{msiEndpoint}?resource={resource}{clientIdParameter}&api-version=2017-09-01"
+                    ? $"{msiEndpoint}?resource={resource}{clientIdParameter}&api-version=2019-08-01"
                     : $"{AzureVmImdsEndpoint}?resource={resource}{clientIdParameter}&api-version=2018-02-01";
 
                 Func<HttpRequestMessage> getRequestMessage = () =>
@@ -111,7 +114,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
                     if (isAppServicesMsiAvailable)
                     {
-                        request.Headers.Add("Secret", msiSecret);
+                        request.Headers.Add("X-IDENTITY-HEADER", msiHeader);
                     }
                     else
                     {
@@ -150,13 +153,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
                         PrincipalUsed.AppId = token.AppId;
                         PrincipalUsed.TenantId = token.TenantId;
                     }
-
-                    // App Services MSI returns en-US format datetime strings
-                    var datetimeCulture = isAppServicesMsiAvailable
-                        ? new CultureInfo("en-US")
-                        : null;
                     
-                    return AppAuthenticationResult.Create(tokenResponse, datetimeCulture);
+                    return AppAuthenticationResult.Create(tokenResponse);
                 }
 
                 string errorStatusDetail = response.IsRetryableStatusCode()

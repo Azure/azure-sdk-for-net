@@ -48,12 +48,46 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="shareQuota">The maximum size of the share, in
         /// gigabytes. Must be greater than 0, and less than or equal to 5TB
         /// (5120). For Large File Shares, the maximum size is 102400.</param>
-        public FileShareItem(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), System.DateTime? lastModifiedTime = default(System.DateTime?), IDictionary<string, string> metadata = default(IDictionary<string, string>), int? shareQuota = default(int?))
+        /// <param name="enabledProtocols">The authentication protocol that is
+        /// used for the file share. Can only be specified when creating a
+        /// share. Possible values include: 'SMB', 'NFS'</param>
+        /// <param name="rootSquash">The property is for NFS share only. The
+        /// default is NoRootSquash. Possible values include: 'NoRootSquash',
+        /// 'RootSquash', 'AllSquash'</param>
+        /// <param name="version">The version of the share.</param>
+        /// <param name="deleted">Indicates whether the share was
+        /// deleted.</param>
+        /// <param name="deletedTime">The deleted time if the share was
+        /// deleted.</param>
+        /// <param name="remainingRetentionDays">Remaining retention days for
+        /// share that was soft deleted.</param>
+        /// <param name="accessTier">Access tier for specific share. GpV2
+        /// account can choose between TransactionOptimized (default), Hot, and
+        /// Cool. FileStorage account can choose Premium. Possible values
+        /// include: 'TransactionOptimized', 'Hot', 'Cool', 'Premium'</param>
+        /// <param name="accessTierChangeTime">Indicates the last modification
+        /// time for share access tier.</param>
+        /// <param name="accessTierStatus">Indicates if there is a pending
+        /// transition for access tier.</param>
+        /// <param name="shareUsageBytes">The approximate size of the data
+        /// stored on the share. Note that this value may not include all
+        /// recently created or recently resized files.</param>
+        public FileShareItem(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), System.DateTime? lastModifiedTime = default(System.DateTime?), IDictionary<string, string> metadata = default(IDictionary<string, string>), int? shareQuota = default(int?), string enabledProtocols = default(string), string rootSquash = default(string), string version = default(string), bool? deleted = default(bool?), System.DateTime? deletedTime = default(System.DateTime?), int? remainingRetentionDays = default(int?), string accessTier = default(string), System.DateTime? accessTierChangeTime = default(System.DateTime?), string accessTierStatus = default(string), long? shareUsageBytes = default(long?))
             : base(id, name, type, etag)
         {
             LastModifiedTime = lastModifiedTime;
             Metadata = metadata;
             ShareQuota = shareQuota;
+            EnabledProtocols = enabledProtocols;
+            RootSquash = rootSquash;
+            Version = version;
+            Deleted = deleted;
+            DeletedTime = deletedTime;
+            RemainingRetentionDays = remainingRetentionDays;
+            AccessTier = accessTier;
+            AccessTierChangeTime = accessTierChangeTime;
+            AccessTierStatus = accessTierStatus;
+            ShareUsageBytes = shareUsageBytes;
             CustomInit();
         }
 
@@ -82,6 +116,75 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.shareQuota")]
         public int? ShareQuota { get; set; }
+
+        /// <summary>
+        /// Gets or sets the authentication protocol that is used for the file
+        /// share. Can only be specified when creating a share. Possible values
+        /// include: 'SMB', 'NFS'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enabledProtocols")]
+        public string EnabledProtocols { get; set; }
+
+        /// <summary>
+        /// Gets or sets the property is for NFS share only. The default is
+        /// NoRootSquash. Possible values include: 'NoRootSquash',
+        /// 'RootSquash', 'AllSquash'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.rootSquash")]
+        public string RootSquash { get; set; }
+
+        /// <summary>
+        /// Gets the version of the share.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.version")]
+        public string Version { get; private set; }
+
+        /// <summary>
+        /// Gets indicates whether the share was deleted.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.deleted")]
+        public bool? Deleted { get; private set; }
+
+        /// <summary>
+        /// Gets the deleted time if the share was deleted.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.deletedTime")]
+        public System.DateTime? DeletedTime { get; private set; }
+
+        /// <summary>
+        /// Gets remaining retention days for share that was soft deleted.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.remainingRetentionDays")]
+        public int? RemainingRetentionDays { get; private set; }
+
+        /// <summary>
+        /// Gets or sets access tier for specific share. GpV2 account can
+        /// choose between TransactionOptimized (default), Hot, and Cool.
+        /// FileStorage account can choose Premium. Possible values include:
+        /// 'TransactionOptimized', 'Hot', 'Cool', 'Premium'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.accessTier")]
+        public string AccessTier { get; set; }
+
+        /// <summary>
+        /// Gets indicates the last modification time for share access tier.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.accessTierChangeTime")]
+        public System.DateTime? AccessTierChangeTime { get; private set; }
+
+        /// <summary>
+        /// Gets indicates if there is a pending transition for access tier.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.accessTierStatus")]
+        public string AccessTierStatus { get; private set; }
+
+        /// <summary>
+        /// Gets the approximate size of the data stored on the share. Note
+        /// that this value may not include all recently created or recently
+        /// resized files.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.shareUsageBytes")]
+        public long? ShareUsageBytes { get; private set; }
 
         /// <summary>
         /// Validate the object.

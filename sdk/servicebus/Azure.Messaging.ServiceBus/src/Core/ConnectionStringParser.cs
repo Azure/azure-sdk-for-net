@@ -105,7 +105,7 @@ namespace Azure.Messaging.ServiceBus.Core
 
                     if (string.IsNullOrEmpty(value))
                     {
-                        throw new FormatException(Resources1.InvalidConnectionString);
+                        throw new FormatException(Resources.InvalidConnectionString);
                     }
 
                     // Compare the token against the known connection string properties and capture the
@@ -115,7 +115,8 @@ namespace Azure.Messaging.ServiceBus.Core
                     {
                         parsedValues.EndpointToken = new UriBuilder(value)
                         {
-                            Scheme = ServiceBusEndpointScheme
+                            Scheme = ServiceBusEndpointScheme,
+                            Port = -1
                         };
                     }
                     else if (string.Compare(EntityName, token, StringComparison.OrdinalIgnoreCase) == 0)
@@ -136,7 +137,7 @@ namespace Azure.Messaging.ServiceBus.Core
                     // This wasn't a legal pair and it is not simply a trailing delimiter; consider
                     // the connection string to be malformed.
 
-                    throw new FormatException(Resources1.InvalidConnectionString);
+                    throw new FormatException(Resources.InvalidConnectionString);
                 }
 
                 tokenPositionModifier = 0;

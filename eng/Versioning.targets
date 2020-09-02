@@ -5,6 +5,7 @@
     <_BuildNumber Condition="'$(OfficialBuildId)' == ''">$([System.DateTime]::Now.ToString(yyyyMMdd)).1</_BuildNumber>
     <HasReleaseVersion>true</HasReleaseVersion>
     <HasReleaseVersion Condition="$(Version.Contains('preview'))">false</HasReleaseVersion>
+    <_VersionInProject>$(Version)</_VersionInProject>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(SkipDevBuildNumber)' != 'true'">

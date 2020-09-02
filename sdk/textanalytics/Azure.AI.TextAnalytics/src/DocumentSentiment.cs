@@ -1,10 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
+using Azure.AI.TextAnalytics.Models;
 
 namespace Azure.AI.TextAnalytics
 {
@@ -16,29 +15,52 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public class DocumentSentiment
     {
-        internal DocumentSentiment(DocumentSentimentLabel sentiment, double positiveScore, double neutralScore, double negativeScore, List<SentenceSentiment> sentenceSentiments)
+        internal DocumentSentiment(TextSentiment sentiment, double positiveScore, double neutralScore, double negativeScore, List<SentenceSentiment> sentenceSentiments, IList<TextAnalyticsWarning> warnings)
         {
             Sentiment = sentiment;
-            ConfidenceScores = new SentimentConfidenceScorePerLabel(positiveScore, neutralScore, negativeScore);
+            ConfidenceScores = new SentimentConfidenceScores(positiveScore, neutralScore, negativeScore);
             Sentences = new ReadOnlyCollection<SentenceSentiment>(sentenceSentiments);
+            Warnings = new ReadOnlyCollection<TextAnalyticsWarning>(warnings);
+        }
+
+        internal DocumentSentiment(DocumentSentimentInternal documentSentiment)
+        {
+            Sentiment = documentSentiment.Sentiment;
+            ConfidenceScores = documentSentiment.ConfidenceScores;
+            Sentences = ConvertToSentences(documentSentiment.Sentences);
+            Warnings = Transforms.ConvertToWarnings(documentSentiment.Warnings);
         }
 
         /// <summary>
-        /// Gets the predicted sentiment for the analyzed input document
-        /// or substring.
+        /// Gets the predicted sentiment for the analyzed document.
         /// </summary>
-        public DocumentSentimentLabel Sentiment { get; }
+        public TextSentiment Sentiment { get; }
 
         /// <summary>
         /// Gets the sentiment confidence score (Softmax score) between 0 and 1,
-        /// for each sentiment label. Higher values signify higher confidence.
+        /// for each sentiment. Higher values signify higher confidence.
         /// </summary>
-        public SentimentConfidenceScorePerLabel ConfidenceScores { get; }
+        public SentimentConfidenceScores ConfidenceScores { get; }
 
         /// <summary>
         /// Gets the predicted sentiment for each sentence in the corresponding
         /// document.
         /// </summary>
         public IReadOnlyCollection<SentenceSentiment> Sentences { get; }
+
+        /// <summary>
+        /// Gets the warnings encountered while processing the document.
+        /// </summary>
+        public IReadOnlyCollection<TextAnalyticsWarning> Warnings { get; }
+
+        private static List<SentenceSentiment> ConvertToSentences(IReadOnlyList<SentenceSentimentInternal> internalSentences)
+        {
+            var sentences = new List<SentenceSentiment>();
+            foreach (var sentence in internalSentences)
+            {
+                sentences.Add(new SentenceSentiment(sentence, internalSentences));
+            }
+            return sentences;
+        }
     }
 }

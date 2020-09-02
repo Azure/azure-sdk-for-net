@@ -314,7 +314,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var ownerLevel = 123L;
             var tokenValue = "123ABC";
             var retryPolicy = new BasicRetryPolicy(retryOptions);
-            var retriableException = AmqpError.CreateExceptionForError(new Error { Value = AmqpError.ServerBusyError }, "dummy");
+            var retriableException = AmqpError.CreateExceptionForError(new Error { Condition = AmqpError.ServerBusyError }, "dummy");
             var mockConverter = new Mock<AmqpMessageConverter>();
             var mockCredential = new Mock<TokenCredential>();
             var mockScope = new Mock<AmqpConnectionScope>();

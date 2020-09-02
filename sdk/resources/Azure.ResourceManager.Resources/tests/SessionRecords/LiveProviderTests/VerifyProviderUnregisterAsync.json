@@ -1,0 +1,604 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/providers/Microsoft.Scheduler/register?api-version=2019-10-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-dc2e3c2aea07c244843683c8f0030399-dc0c4f209f848843-00",
+        "User-Agent": [
+          "azsdk-net-Management.Resources/1.0.0-dev.20200529.1",
+          "(.NET Framework 4.8.4180.0; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "80e5687b2473cb99b7ff5968e881e605",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1833",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 29 May 2020 02:46:44 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "9de15cf4-0979-40a8-894c-0b541e26105b",
+        "x-ms-ratelimit-remaining-subscription-writes": "1195",
+        "x-ms-request-id": "9de15cf4-0979-40a8-894c-0b541e26105b",
+        "x-ms-routing-request-id": "KOREASOUTH:20200529T024644Z:9de15cf4-0979-40a8-894c-0b541e26105b"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/providers/Microsoft.Scheduler",
+        "namespace": "Microsoft.Scheduler",
+        "resourceTypes": [
+          {
+            "resourceType": "jobcollections",
+            "locations": [
+              "North Central US",
+              "South Central US",
+              "North Europe",
+              "West Europe",
+              "East Asia",
+              "Southeast Asia",
+              "West US",
+              "East US",
+              "Japan West",
+              "Japan East",
+              "Brazil South",
+              "Central US",
+              "East US 2",
+              "Australia East",
+              "Australia Southeast",
+              "South India",
+              "Central India",
+              "West India",
+              "Canada Central",
+              "Canada East",
+              "West US 2",
+              "West Central US",
+              "UK South",
+              "UK West",
+              "Korea Central",
+              "Korea South"
+            ],
+            "apiVersions": [
+              "2016-03-01",
+              "2016-01-01",
+              "2014-08-01-preview"
+            ],
+            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
+          },
+          {
+            "resourceType": "operations",
+            "locations": [
+              "North Central US",
+              "South Central US",
+              "North Europe",
+              "West Europe",
+              "East Asia",
+              "Southeast Asia",
+              "West US",
+              "East US",
+              "Japan West",
+              "Japan East",
+              "Brazil South",
+              "Central US",
+              "East US 2",
+              "Australia East",
+              "Australia Southeast",
+              "South India",
+              "Central India",
+              "West India",
+              "Canada Central",
+              "Canada East",
+              "West US 2",
+              "West Central US",
+              "UK South",
+              "UK West",
+              "Korea Central",
+              "Korea South"
+            ],
+            "apiVersions": [
+              "2016-03-01",
+              "2016-01-01",
+              "2014-08-01-preview"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "operationResults",
+            "locations": [
+              "North Central US",
+              "South Central US",
+              "North Europe",
+              "West Europe",
+              "East Asia",
+              "Southeast Asia",
+              "West US",
+              "East US",
+              "Japan West",
+              "Japan East",
+              "Brazil South",
+              "Central US",
+              "East US 2",
+              "Australia East",
+              "Australia Southeast",
+              "South India",
+              "Central India",
+              "West India",
+              "Canada Central",
+              "Canada East",
+              "West US 2",
+              "West Central US",
+              "UK South",
+              "UK West",
+              "Korea Central",
+              "Korea South"
+            ],
+            "apiVersions": [
+              "2016-03-01",
+              "2016-01-01",
+              "2014-08-01-preview"
+            ],
+            "capabilities": "None"
+          }
+        ],
+        "registrationState": "Registered",
+        "registrationPolicy": "RegistrationRequired"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/providers/Microsoft.Scheduler?api-version=2019-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-c6720342dab55c4bac7408f89e7d343f-92af47cb24a33749-00",
+        "User-Agent": [
+          "azsdk-net-Management.Resources/1.0.0-dev.20200529.1",
+          "(.NET Framework 4.8.4180.0; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "5d21d7bd5ac384686dc299793d132b46",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1833",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 29 May 2020 02:46:44 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "cee231da-9f08-49eb-bc04-fe86be50b11e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11992",
+        "x-ms-request-id": "cee231da-9f08-49eb-bc04-fe86be50b11e",
+        "x-ms-routing-request-id": "KOREASOUTH:20200529T024645Z:cee231da-9f08-49eb-bc04-fe86be50b11e"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/providers/Microsoft.Scheduler",
+        "namespace": "Microsoft.Scheduler",
+        "resourceTypes": [
+          {
+            "resourceType": "jobcollections",
+            "locations": [
+              "North Central US",
+              "South Central US",
+              "North Europe",
+              "West Europe",
+              "East Asia",
+              "Southeast Asia",
+              "West US",
+              "East US",
+              "Japan West",
+              "Japan East",
+              "Brazil South",
+              "Central US",
+              "East US 2",
+              "Australia East",
+              "Australia Southeast",
+              "South India",
+              "Central India",
+              "West India",
+              "Canada Central",
+              "Canada East",
+              "West US 2",
+              "West Central US",
+              "UK South",
+              "UK West",
+              "Korea Central",
+              "Korea South"
+            ],
+            "apiVersions": [
+              "2016-03-01",
+              "2016-01-01",
+              "2014-08-01-preview"
+            ],
+            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
+          },
+          {
+            "resourceType": "operations",
+            "locations": [
+              "North Central US",
+              "South Central US",
+              "North Europe",
+              "West Europe",
+              "East Asia",
+              "Southeast Asia",
+              "West US",
+              "East US",
+              "Japan West",
+              "Japan East",
+              "Brazil South",
+              "Central US",
+              "East US 2",
+              "Australia East",
+              "Australia Southeast",
+              "South India",
+              "Central India",
+              "West India",
+              "Canada Central",
+              "Canada East",
+              "West US 2",
+              "West Central US",
+              "UK South",
+              "UK West",
+              "Korea Central",
+              "Korea South"
+            ],
+            "apiVersions": [
+              "2016-03-01",
+              "2016-01-01",
+              "2014-08-01-preview"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "operationResults",
+            "locations": [
+              "North Central US",
+              "South Central US",
+              "North Europe",
+              "West Europe",
+              "East Asia",
+              "Southeast Asia",
+              "West US",
+              "East US",
+              "Japan West",
+              "Japan East",
+              "Brazil South",
+              "Central US",
+              "East US 2",
+              "Australia East",
+              "Australia Southeast",
+              "South India",
+              "Central India",
+              "West India",
+              "Canada Central",
+              "Canada East",
+              "West US 2",
+              "West Central US",
+              "UK South",
+              "UK West",
+              "Korea Central",
+              "Korea South"
+            ],
+            "apiVersions": [
+              "2016-03-01",
+              "2016-01-01",
+              "2014-08-01-preview"
+            ],
+            "capabilities": "None"
+          }
+        ],
+        "registrationState": "Registered",
+        "registrationPolicy": "RegistrationRequired"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/providers/Microsoft.Scheduler/unregister?api-version=2019-10-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-5de881bfd4af594bb5e0f1aa1a04add1-f66cde9a3c69cc43-00",
+        "User-Agent": [
+          "azsdk-net-Management.Resources/1.0.0-dev.20200529.1",
+          "(.NET Framework 4.8.4180.0; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "445149b8424ac508bab5e904ac172a11",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1836",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 29 May 2020 02:46:46 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "87df36dc-7820-4d43-b3bb-9ee140c69337",
+        "x-ms-ratelimit-remaining-subscription-writes": "1194",
+        "x-ms-request-id": "87df36dc-7820-4d43-b3bb-9ee140c69337",
+        "x-ms-routing-request-id": "KOREASOUTH:20200529T024646Z:87df36dc-7820-4d43-b3bb-9ee140c69337"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/providers/Microsoft.Scheduler",
+        "namespace": "Microsoft.Scheduler",
+        "resourceTypes": [
+          {
+            "resourceType": "jobcollections",
+            "locations": [
+              "North Central US",
+              "South Central US",
+              "North Europe",
+              "West Europe",
+              "East Asia",
+              "Southeast Asia",
+              "West US",
+              "East US",
+              "Japan West",
+              "Japan East",
+              "Brazil South",
+              "Central US",
+              "East US 2",
+              "Australia East",
+              "Australia Southeast",
+              "South India",
+              "Central India",
+              "West India",
+              "Canada Central",
+              "Canada East",
+              "West US 2",
+              "West Central US",
+              "UK South",
+              "UK West",
+              "Korea Central",
+              "Korea South"
+            ],
+            "apiVersions": [
+              "2016-03-01",
+              "2016-01-01",
+              "2014-08-01-preview"
+            ],
+            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
+          },
+          {
+            "resourceType": "operations",
+            "locations": [
+              "North Central US",
+              "South Central US",
+              "North Europe",
+              "West Europe",
+              "East Asia",
+              "Southeast Asia",
+              "West US",
+              "East US",
+              "Japan West",
+              "Japan East",
+              "Brazil South",
+              "Central US",
+              "East US 2",
+              "Australia East",
+              "Australia Southeast",
+              "South India",
+              "Central India",
+              "West India",
+              "Canada Central",
+              "Canada East",
+              "West US 2",
+              "West Central US",
+              "UK South",
+              "UK West",
+              "Korea Central",
+              "Korea South"
+            ],
+            "apiVersions": [
+              "2016-03-01",
+              "2016-01-01",
+              "2014-08-01-preview"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "operationResults",
+            "locations": [
+              "North Central US",
+              "South Central US",
+              "North Europe",
+              "West Europe",
+              "East Asia",
+              "Southeast Asia",
+              "West US",
+              "East US",
+              "Japan West",
+              "Japan East",
+              "Brazil South",
+              "Central US",
+              "East US 2",
+              "Australia East",
+              "Australia Southeast",
+              "South India",
+              "Central India",
+              "West India",
+              "Canada Central",
+              "Canada East",
+              "West US 2",
+              "West Central US",
+              "UK South",
+              "UK West",
+              "Korea Central",
+              "Korea South"
+            ],
+            "apiVersions": [
+              "2016-03-01",
+              "2016-01-01",
+              "2014-08-01-preview"
+            ],
+            "capabilities": "None"
+          }
+        ],
+        "registrationState": "Unregistering",
+        "registrationPolicy": "RegistrationRequired"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/providers/Microsoft.Scheduler?api-version=2019-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-17a649621b31734ba8ad721cabbc92ef-29b457d4f63cbc45-00",
+        "User-Agent": [
+          "azsdk-net-Management.Resources/1.0.0-dev.20200529.1",
+          "(.NET Framework 4.8.4180.0; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "a4503917723e20aeff6012b18a1f8da3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1836",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 29 May 2020 02:46:46 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "0e0afb47-f7f7-44b0-955c-82ff4f5a1512",
+        "x-ms-ratelimit-remaining-subscription-reads": "11991",
+        "x-ms-request-id": "0e0afb47-f7f7-44b0-955c-82ff4f5a1512",
+        "x-ms-routing-request-id": "KOREASOUTH:20200529T024646Z:0e0afb47-f7f7-44b0-955c-82ff4f5a1512"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/providers/Microsoft.Scheduler",
+        "namespace": "Microsoft.Scheduler",
+        "resourceTypes": [
+          {
+            "resourceType": "jobcollections",
+            "locations": [
+              "North Central US",
+              "South Central US",
+              "North Europe",
+              "West Europe",
+              "East Asia",
+              "Southeast Asia",
+              "West US",
+              "East US",
+              "Japan West",
+              "Japan East",
+              "Brazil South",
+              "Central US",
+              "East US 2",
+              "Australia East",
+              "Australia Southeast",
+              "South India",
+              "Central India",
+              "West India",
+              "Canada Central",
+              "Canada East",
+              "West US 2",
+              "West Central US",
+              "UK South",
+              "UK West",
+              "Korea Central",
+              "Korea South"
+            ],
+            "apiVersions": [
+              "2016-03-01",
+              "2016-01-01",
+              "2014-08-01-preview"
+            ],
+            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
+          },
+          {
+            "resourceType": "operations",
+            "locations": [
+              "North Central US",
+              "South Central US",
+              "North Europe",
+              "West Europe",
+              "East Asia",
+              "Southeast Asia",
+              "West US",
+              "East US",
+              "Japan West",
+              "Japan East",
+              "Brazil South",
+              "Central US",
+              "East US 2",
+              "Australia East",
+              "Australia Southeast",
+              "South India",
+              "Central India",
+              "West India",
+              "Canada Central",
+              "Canada East",
+              "West US 2",
+              "West Central US",
+              "UK South",
+              "UK West",
+              "Korea Central",
+              "Korea South"
+            ],
+            "apiVersions": [
+              "2016-03-01",
+              "2016-01-01",
+              "2014-08-01-preview"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "operationResults",
+            "locations": [
+              "North Central US",
+              "South Central US",
+              "North Europe",
+              "West Europe",
+              "East Asia",
+              "Southeast Asia",
+              "West US",
+              "East US",
+              "Japan West",
+              "Japan East",
+              "Brazil South",
+              "Central US",
+              "East US 2",
+              "Australia East",
+              "Australia Southeast",
+              "South India",
+              "Central India",
+              "West India",
+              "Canada Central",
+              "Canada East",
+              "West US 2",
+              "West Central US",
+              "UK South",
+              "UK West",
+              "Korea Central",
+              "Korea South"
+            ],
+            "apiVersions": [
+              "2016-03-01",
+              "2016-01-01",
+              "2014-08-01-preview"
+            ],
+            "capabilities": "None"
+          }
+        ],
+        "registrationState": "Unregistering",
+        "registrationPolicy": "RegistrationRequired"
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1567566132",
+    "SUBSCRIPTION_ID": "b9f138a1-1d64-4108-8413-9ea3be1c1b2d"
+  }
+}

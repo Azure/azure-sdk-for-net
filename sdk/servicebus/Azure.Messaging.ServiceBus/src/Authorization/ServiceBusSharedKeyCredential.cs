@@ -11,7 +11,7 @@ namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
     ///   Provides a credential based on a shared access signature for a given
-    ///   Service Bus entity instance.
+    ///   Service Bus entity.
     /// </summary>
     ///
     /// <seealso cref="Azure.Core.TokenCredential" />
@@ -69,7 +69,7 @@ namespace Azure.Messaging.ServiceBus
         public override AccessToken GetToken(
             TokenRequestContext requestContext,
             CancellationToken cancellationToken) =>
-            throw new InvalidOperationException(Resources1.SharedKeyCredentialCannotGenerateTokens);
+            throw new InvalidOperationException(Resources.SharedKeyCredentialCannotGenerateTokens);
 
         /// <summary>
         ///   Retrieves the token that represents the shared access signature credential, for
@@ -84,7 +84,7 @@ namespace Azure.Messaging.ServiceBus
         public override ValueTask<AccessToken> GetTokenAsync(
             TokenRequestContext requestContext,
             CancellationToken cancellationToken) =>
-            throw new InvalidOperationException(Resources1.SharedKeyCredentialCannotGenerateTokens);
+            throw new InvalidOperationException(Resources.SharedKeyCredentialCannotGenerateTokens);
 
         /// <summary>
         ///   Allows the rotation of Shared Access Signatures.
@@ -111,16 +111,16 @@ namespace Azure.Messaging.ServiceBus
         ///   It retains a reference to the generated SharedAccessSignatureCredential.
         /// </summary>
         ///
-        /// <param name="eventHubResource">The Service Bus resource to which the token is intended to serve as authorization.</param>
+        /// <param name="serviceBusResource">The Service Bus resource to which the token is intended to serve as authorization.</param>
         /// <param name="signatureValidityDuration">The duration that the signature should be considered valid; if not specified, a default will be assumed.</param>
         ///
         /// <returns>A new <see cref="SharedAccessSignatureCredential" /> based on the requested shared access key.</returns>
         ///
         internal SharedAccessSignatureCredential AsSharedAccessSignatureCredential(
-            string eventHubResource,
+            string serviceBusResource,
             TimeSpan? signatureValidityDuration = default)
         {
-            SharedAccessSignatureCredential = new SharedAccessSignatureCredential(new SharedAccessSignature(eventHubResource, SharedAccessKeyName, SharedAccessKey, signatureValidityDuration));
+            SharedAccessSignatureCredential = new SharedAccessSignatureCredential(new SharedAccessSignature(serviceBusResource, SharedAccessKeyName, SharedAccessKey, signatureValidityDuration));
 
             return SharedAccessSignatureCredential;
         }

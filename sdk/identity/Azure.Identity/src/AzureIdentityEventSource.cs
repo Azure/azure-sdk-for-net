@@ -80,7 +80,7 @@ namespace Azure.Identity
             }
         }
 
-        [Event(ProbeImdsEndpointEvent, Level = EventLevel.Informational, Message = "Probiing IMDS endpoint for availability. Endpoint: {0}")]
+        [Event(ProbeImdsEndpointEvent, Level = EventLevel.Informational, Message = "Probing IMDS endpoint for availability. Endpoint: {0}")]
         public void ProbeImdsEndpoint(string uri)
         {
             WriteEvent(ProbeImdsEndpointEvent, uri);

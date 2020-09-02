@@ -36,12 +36,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// updatable.</param>
         /// <param name="storageAccountType">Specifies the storage account type
         /// to be used to store the image. This property is not updatable.
-        /// Possible values include: 'Standard_LRS', 'Standard_ZRS'</param>
-        public TargetRegion(string name, int? regionalReplicaCount = default(int?), string storageAccountType = default(string))
+        /// Possible values include: 'Standard_LRS', 'Standard_ZRS',
+        /// 'Premium_LRS'</param>
+        public TargetRegion(string name, int? regionalReplicaCount = default(int?), string storageAccountType = default(string), EncryptionImages encryption = default(EncryptionImages))
         {
             Name = name;
             RegionalReplicaCount = regionalReplicaCount;
             StorageAccountType = storageAccountType;
+            Encryption = encryption;
             CustomInit();
         }
 
@@ -66,10 +68,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets specifies the storage account type to be used to store
         /// the image. This property is not updatable. Possible values include:
-        /// 'Standard_LRS', 'Standard_ZRS'
+        /// 'Standard_LRS', 'Standard_ZRS', 'Premium_LRS'
         /// </summary>
         [JsonProperty(PropertyName = "storageAccountType")]
         public string StorageAccountType { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "encryption")]
+        public EncryptionImages Encryption { get; set; }
 
         /// <summary>
         /// Validate the object.

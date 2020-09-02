@@ -35,6 +35,7 @@ namespace ManagedServiceIdentity.Tests.Tests
         [Fact]
         public async Task TestIdentityCRUD()
         {
+            Identity i = new Identity();
             var handler = new RecordedDelegatingHandler { IsPassThrough = true };
             using (MockContext context = MockContext.Start(this.GetType()))
             {
@@ -72,7 +73,7 @@ namespace ManagedServiceIdentity.Tests.Tests
                 VerifyIdentity(getResponse2.Body, msiMgmtClient.SubscriptionId, secondIdentityName, CanaryCentralRegion, firstTagValue, secondTagValue);
 
                 /*-------------PATCH-------------*/
-                var updateParameters = new Identity(location: CanaryCentralRegion, tags: new Dictionary<string, string>() { { FirstTagKey, updatedFirstTagValue }, { SecondTagKey, updatedSecondTagValue } });
+                var updateParameters = new IdentityUpdate(location: CanaryCentralRegion, tags: new Dictionary<string, string>() { { FirstTagKey, updatedFirstTagValue }, { SecondTagKey, updatedSecondTagValue } });
                 var updateResponse = await msiMgmtClient.UserAssignedIdentities.UpdateWithHttpMessagesAsync(ResourceGroupName, firstIdentityName, updateParameters);
                 Assert.Equal(HttpStatusCode.OK, updateResponse.Response.StatusCode);
                 VerifyIdentity(updateResponse.Body, msiMgmtClient.SubscriptionId, firstIdentityName, CanaryCentralRegion, updatedFirstTagValue, updatedSecondTagValue);
@@ -129,7 +130,6 @@ namespace ManagedServiceIdentity.Tests.Tests
             Assert.Equal(location, identity.Location);
             Assert.Equal(identityName, identity.Name);
             Assert.NotNull(identity.ClientId);
-            Assert.Null(identity.ClientSecretUrl);
             Assert.NotNull(identity.PrincipalId);
             Assert.NotNull(identity.TenantId);
             string firstTagValue, secondTagValue;

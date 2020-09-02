@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -79,18 +78,11 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (Certificate != null)
-            {
-                if (Certificate.Count > 32)
-                {
-                    throw new ValidationException(ValidationRules.MaxItems, "Certificate", 32);
-                }
-            }
             if (Authorization != null)
             {
                 Authorization.Validate();

@@ -948,14 +948,14 @@ namespace BatchClientIntegrationTests
                             PoolFixture.VMSize,
                             new VirtualMachineConfiguration(
                                 new ImageReference(
-                                    $"/subscriptions/{TestCommon.Configuration.BatchSubscription}/resourceGroups/{TestCommon.Configuration.BatchAccountResourceGroup}/providers/Microsoft.Compute/images/FakeImage"),
+                                    $"/subscriptions/{TestCommon.Configuration.BatchSubscription}/resourceGroups/{TestCommon.Configuration.BatchAccountResourceGroup}/providers/Microsoft.Compute/galleries/FakeGallery/images/FakeImage/versions/FakeImageVersion"),
                                 imageDetails.NodeAgentSkuId),
                             targetDedicated);
                         var exception = Assert.Throws<BatchException>(() => pool.Commit());
 
                         Assert.Equal("InsufficientPermissions", exception.RequestInformation.BatchError.Code);
                         Assert.Contains(
-                            "The user identity used for this operation does not have the required privelege Microsoft.Compute/images/read on the specified resource",
+                            "The user identity used for this operation does not have the required privelege Microsoft.Compute/galleries/images/versions/read on the specified resource",
                             exception.RequestInformation.BatchError.Values.Single().Value);
                     }
                     finally
@@ -1137,6 +1137,48 @@ namespace BatchClientIntegrationTests
                 }
             };
             await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
+        }
+
+        [Fact]
+        [LiveTest]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
+        public void TestCreatePoolEncryptionEnabled()
+        {
+            Action test = () =>
+            {
+                using (BatchClient batchCli = TestUtilities.OpenBatchClientFromEnvironmentAsync().Result)
+                {
+                    string poolId = nameof(TestCreatePoolEncryptionEnabled) + TestUtilities.GetMyName();
+                    const int targetDedicated = 0;
+                    try
+                    {
+                        var imageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
+
+                        //Create a pool
+                        CloudPool pool = batchCli.PoolOperations.CreatePool(
+                            poolId,
+                            PoolFixture.VMSize,
+                            new VirtualMachineConfiguration(
+                                imageDetails.ImageReference,
+                                imageDetails.NodeAgentSkuId)
+                            {
+                                DiskEncryptionConfiguration = new DiskEncryptionConfiguration(new List<DiskEncryptionTarget> { DiskEncryptionTarget.TemporaryDisk })
+                            },
+                            targetDedicated);
+                        pool.Commit();
+                        pool.Refresh();
+
+                        Assert.Single(pool.VirtualMachineConfiguration.DiskEncryptionConfiguration.Targets, DiskEncryptionTarget.TemporaryDisk);
+                    }
+                    finally
+                    {
+                        //Delete the pool
+                        TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).Wait();
+                    }
+                }
+            };
+
+            SynchronizationContextHelper.RunTest(test, LongTestTimeout);
         }
 
         #region Test helpers

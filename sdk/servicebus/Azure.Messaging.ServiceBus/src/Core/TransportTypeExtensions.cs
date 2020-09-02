@@ -32,7 +32,7 @@ namespace Azure.Messaging.ServiceBus.Core
                     return AmqpUriScheme;
 
                 default:
-                    throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources1.InvalidTransportType, instance.ToString(), nameof(instance)));
+                    throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.InvalidTransportType, instance.ToString(), nameof(instance)));
             }
         }
 

@@ -53,7 +53,15 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// values include: 'on', 'off'</param>
         /// <param name="offlineDataTransferShareName">Offline data transfer
         /// share name</param>
-        public ServerEndpointCreateParameters(string id = default(string), string name = default(string), string type = default(string), string serverLocalPath = default(string), string cloudTiering = default(string), int? volumeFreeSpacePercent = default(int?), int? tierFilesOlderThanDays = default(int?), string friendlyName = default(string), string serverResourceId = default(string), string offlineDataTransfer = default(string), string offlineDataTransferShareName = default(string))
+        /// <param name="initialDownloadPolicy">Policy for how namespace and
+        /// files are recalled during FastDr. Possible values include:
+        /// 'NamespaceOnly', 'NamespaceThenModifiedFiles',
+        /// 'AvoidTieredFiles'</param>
+        /// <param name="localCacheMode">Policy for enabling follow-the-sun
+        /// business models: link local cache to cloud behavior to pre-populate
+        /// before local access. Possible values include:
+        /// 'DownloadNewAndModifiedFiles', 'UpdateLocallyCachedFiles'</param>
+        public ServerEndpointCreateParameters(string id = default(string), string name = default(string), string type = default(string), string serverLocalPath = default(string), string cloudTiering = default(string), int? volumeFreeSpacePercent = default(int?), int? tierFilesOlderThanDays = default(int?), string friendlyName = default(string), string serverResourceId = default(string), string offlineDataTransfer = default(string), string offlineDataTransferShareName = default(string), string initialDownloadPolicy = default(string), string localCacheMode = default(string))
             : base(id, name, type)
         {
             ServerLocalPath = serverLocalPath;
@@ -64,6 +72,8 @@ namespace Microsoft.Azure.Management.StorageSync.Models
             ServerResourceId = serverResourceId;
             OfflineDataTransfer = offlineDataTransfer;
             OfflineDataTransferShareName = offlineDataTransferShareName;
+            InitialDownloadPolicy = initialDownloadPolicy;
+            LocalCacheMode = localCacheMode;
             CustomInit();
         }
 
@@ -121,6 +131,23 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.offlineDataTransferShareName")]
         public string OfflineDataTransferShareName { get; set; }
+
+        /// <summary>
+        /// Gets or sets policy for how namespace and files are recalled during
+        /// FastDr. Possible values include: 'NamespaceOnly',
+        /// 'NamespaceThenModifiedFiles', 'AvoidTieredFiles'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.initialDownloadPolicy")]
+        public string InitialDownloadPolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets policy for enabling follow-the-sun business models:
+        /// link local cache to cloud behavior to pre-populate before local
+        /// access. Possible values include: 'DownloadNewAndModifiedFiles',
+        /// 'UpdateLocallyCachedFiles'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.localCacheMode")]
+        public string LocalCacheMode { get; set; }
 
         /// <summary>
         /// Validate the object.

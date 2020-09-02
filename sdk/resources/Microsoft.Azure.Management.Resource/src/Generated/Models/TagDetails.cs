@@ -10,6 +10,8 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -18,7 +20,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     /// <summary>
     /// Tag details.
     /// </summary>
-    public partial class TagDetails
+    public partial class TagDetails : IResource
     {
         /// <summary>
         /// Initializes a new instance of the TagDetails class.

@@ -1,6 +1,10 @@
 Breaking Changes
 ================
 
+12.0.0
+--------------------------
+- Removed DataLakeFileClient.GetRootDirectory().
+
 12.0.0-preview.9
 --------------------------
 - Renamed LeaseDurationType, LeaseState, and LeaseStatus to DataLakeLeaseDuration, DataLakeLeaseState, and DataLakeLeaseStatus

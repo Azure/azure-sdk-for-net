@@ -8,12 +8,12 @@
     <Description>Provides management capabilities for Microsoft Azure Healthcare Apis.</Description>
     <AssemblyTitle>Microsoft Azure Healthcare Apis Management</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.HealthcareApis</AssemblyName>
-    <Version>1.0.2</Version>
+    <Version>1.1.0</Version>
     <RootNamespace>Microsoft.Azure.Management.HealthcareApis</RootNamespace>
     <PackageTags>Microsoft Azure Healthcare Apis;HealthcareApis management;HealthcareApis;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-    1) Change: SDK changes required to refer to stable api version
+    1) Change: Add support for managed identity and export settings
     ]]></PackageReleaseNotes>
     <PackageReleaseNotes>Management SDK for Healthcare APIs.</PackageReleaseNotes>
   </PropertyGroup>

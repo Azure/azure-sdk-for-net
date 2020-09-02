@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Microsoft.Azure.Amqp.Encoding;
+
 namespace Azure.Messaging.ServiceBus.Amqp
 {
-    using Microsoft.Azure.Amqp.Encoding;
-
     internal static class ManagementConstants
     {
         public const string Microsoft = "com.microsoft";
@@ -71,9 +71,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
             public static readonly MapKey RuleName = new MapKey("rule-name");
             public static readonly MapKey RuleDescription = new MapKey("rule-description");
             public static readonly MapKey RuleCreatedAt = new MapKey("rule-created-at");
-            public static readonly MapKey SqlFilter = new MapKey("sql-filter");
+            public static readonly MapKey SqlRuleFilter = new MapKey("sql-filter");
             public static readonly MapKey SqlRuleAction = new MapKey("sql-rule-action");
-            public static readonly MapKey CorrelationFilter = new MapKey("correlation-filter");
+            public static readonly MapKey CorrelationRuleFilter = new MapKey("correlation-filter");
             public static readonly MapKey Expression = new MapKey("expression");
             public static readonly MapKey CorrelationId = new MapKey("correlation-id");
             public static readonly MapKey To = new MapKey("to");
@@ -81,7 +81,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             public static readonly MapKey Label = new MapKey("label");
             public static readonly MapKey ReplyToSessionId = new MapKey("reply-to-session-id");
             public static readonly MapKey ContentType = new MapKey("content-type");
-            public static readonly MapKey CorrelationFilterProperties = new MapKey("properties");
+            public static readonly MapKey CorrelationRuleFilterProperties = new MapKey("properties");
         }
     }
 }

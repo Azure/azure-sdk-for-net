@@ -34,8 +34,8 @@ namespace Microsoft.Azure.Management.Search
         /// portal.
         /// </param>
         /// <param name='searchServiceName'>
-        /// The name of the Azure Search service associated with the specified
-        /// resource group.
+        /// The name of the Azure Cognitive Search service associated with the
+        /// specified resource group.
         /// </param>
         /// <param name='name'>
         /// The name of the new query API key.
@@ -60,8 +60,8 @@ namespace Microsoft.Azure.Management.Search
         /// </exception>
         Task<AzureOperationResponse<QueryKey>> CreateWithHttpMessagesAsync(string resourceGroupName, string searchServiceName, string name, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Returns the list of query API keys for the given Azure Search
-        /// service.
+        /// Returns the list of query API keys for the given Azure Cognitive
+        /// Search service.
         /// <see href="https://aka.ms/search-manage" />
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -70,8 +70,8 @@ namespace Microsoft.Azure.Management.Search
         /// portal.
         /// </param>
         /// <param name='searchServiceName'>
-        /// The name of the Azure Search service associated with the specified
-        /// resource group.
+        /// The name of the Azure Cognitive Search service associated with the
+        /// specified resource group.
         /// </param>
         /// <param name='searchManagementRequestOptions'>
         /// Additional parameters for the operation
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.Search
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<QueryKey>>> ListBySearchServiceWithHttpMessagesAsync(string resourceGroupName, string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<QueryKey>>> ListBySearchServiceWithHttpMessagesAsync(string resourceGroupName, string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes the specified query key. Unlike admin keys, query keys are
         /// not regenerated. The process for regenerating a query key is to
@@ -104,8 +104,8 @@ namespace Microsoft.Azure.Management.Search
         /// portal.
         /// </param>
         /// <param name='searchServiceName'>
-        /// The name of the Azure Search service associated with the specified
-        /// resource group.
+        /// The name of the Azure Cognitive Search service associated with the
+        /// specified resource group.
         /// </param>
         /// <param name='key'>
         /// The query key to be deleted. Query keys are identified by value,
@@ -127,5 +127,32 @@ namespace Microsoft.Azure.Management.Search
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string searchServiceName, string key, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Returns the list of query API keys for the given Azure Cognitive
+        /// Search service.
+        /// <see href="https://aka.ms/search-manage" />
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='searchManagementRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<QueryKey>>> ListBySearchServiceNextWithHttpMessagesAsync(string nextPageLink, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

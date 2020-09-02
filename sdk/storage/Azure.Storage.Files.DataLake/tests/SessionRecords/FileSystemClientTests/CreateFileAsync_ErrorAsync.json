@@ -1,45 +1,45 @@
 {
   "Entries": [
     {
-      "RequestUri": "http://seanstagehierarchical.dfs.core.windows.net/test-filesystem-3692c517-8d07-537f-5771-0d5b91c14762/test-file-5116614f-8c98-44cf-d971-b1a5f338d74b?resource=file",
+      "RequestUri": "http://seannsecanary.dfs.core.windows.net/test-filesystem-3692c517-8d07-537f-5771-0d5b91c14762/test-file-5116614f-8c98-44cf-d971-b1a5f338d74b?resource=file",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-8a4a73ea26953343bcb823c2afeed75e-500bcf08b5731d48-00",
+        "traceparent": "00-7c964c950fa35a44b07bd759fbfa7b58-96cc7a83fd1f8f4c-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.DataLake/12.0.0-dev.20191223.1\u002Bfd005823f205b17066d91fefd3c5556dfeb42e21",
-          "(.NET Core 4.6.28207.04; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Storage.Files.DataLake/12.1.0-dev.20200403.1",
+          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "3f757061-59f9-8a33-f54e-5d96dbda5f1f",
-        "x-ms-date": "Mon, 23 Dec 2019 21:03:25 GMT",
+        "x-ms-date": "Fri, 03 Apr 2020 21:04:59 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-07-07"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 404,
       "ResponseHeaders": {
         "Content-Length": "175",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 23 Dec 2019 21:03:25 GMT",
+        "Date": "Fri, 03 Apr 2020 21:04:58 GMT",
         "Server": [
           "Windows-Azure-HDFS/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "3f757061-59f9-8a33-f54e-5d96dbda5f1f",
         "x-ms-error-code": "FilesystemNotFound",
-        "x-ms-request-id": "7e1ba3d5-d01f-0015-5ed4-b98588000000",
-        "x-ms-version": "2019-07-07"
+        "x-ms-request-id": "fa440403-201f-0097-56fb-091bad000000",
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": {
         "error": {
           "code": "FilesystemNotFound",
-          "message": "The specified filesystem does not exist.\nRequestId:7e1ba3d5-d01f-0015-5ed4-b98588000000\nTime:2019-12-23T21:03:25.2007527Z"
+          "message": "The specified filesystem does not exist.\nRequestId:fa440403-201f-0097-56fb-091bad000000\nTime:2020-04-03T21:04:58.4838913Z"
         }
       }
     }
   ],
   "Variables": {
     "RandomSeed": "215945842",
-    "Storage_TestConfigHierarchicalNamespace": "NamespaceTenant\nseanstagehierarchical\nU2FuaXRpemVk\nhttp://seanstagehierarchical.blob.core.windows.net\nhttp://seanstagehierarchical.file.core.windows.net\nhttp://seanstagehierarchical.queue.core.windows.net\nhttp://seanstagehierarchical.table.core.windows.net\n\n\n\n\nhttp://seanstagehierarchical-secondary.blob.core.windows.net\nhttp://seanstagehierarchical-secondary.file.core.windows.net\nhttp://seanstagehierarchical-secondary.queue.core.windows.net\nhttp://seanstagehierarchical-secondary.table.core.windows.net\n68390a19-a643-458b-b726-408abf67b4fc\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=http://seanstagehierarchical.blob.core.windows.net/;QueueEndpoint=http://seanstagehierarchical.queue.core.windows.net/;FileEndpoint=http://seanstagehierarchical.file.core.windows.net/;BlobSecondaryEndpoint=http://seanstagehierarchical-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://seanstagehierarchical-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://seanstagehierarchical-secondary.file.core.windows.net/;AccountName=seanstagehierarchical;AccountKey=Sanitized\n"
+    "Storage_TestConfigHierarchicalNamespace": "NamespaceTenant\nseannsecanary\nU2FuaXRpemVk\nhttp://seannsecanary.blob.core.windows.net\nhttp://seannsecanary.file.core.windows.net\nhttp://seannsecanary.queue.core.windows.net\nhttp://seannsecanary.table.core.windows.net\n\n\n\n\nhttp://seannsecanary-secondary.blob.core.windows.net\nhttp://seannsecanary-secondary.file.core.windows.net\nhttp://seannsecanary-secondary.queue.core.windows.net\nhttp://seannsecanary-secondary.table.core.windows.net\n68390a19-a643-458b-b726-408abf67b4fc\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=http://seannsecanary.blob.core.windows.net/;QueueEndpoint=http://seannsecanary.queue.core.windows.net/;FileEndpoint=http://seannsecanary.file.core.windows.net/;BlobSecondaryEndpoint=http://seannsecanary-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://seannsecanary-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://seannsecanary-secondary.file.core.windows.net/;AccountName=seannsecanary;AccountKey=Sanitized\n"
   }
 }

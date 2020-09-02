@@ -14,8 +14,8 @@ namespace Microsoft.Azure.Management.Search.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines the SKU of an Azure Search Service, which determines price tier
-    /// and capacity limits.
+    /// Defines the SKU of an Azure Cognitive Search Service, which determines
+    /// price tier and capacity limits.
     /// <see
     /// href="https://azure.microsoft.com/documentation/articles/search-sku-tier/"
     /// />

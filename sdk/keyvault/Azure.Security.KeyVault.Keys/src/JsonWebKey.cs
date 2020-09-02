@@ -14,7 +14,7 @@ namespace Azure.Security.KeyVault.Keys
     /// <summary>
     /// A JSON Web Key (JWK) is a JavaScript Object Notation (JSON) data
     /// structure that represents a cryptographic key.
-    /// For more information, see <see href="http://tools.ietf.org/html/draft-ietf-jose-json-web-key-18"/>.
+    /// For more information, see <see href="http://tools.ietf.org/html/draft-ietf-jose-json-web-key-18">JSON Web Key (JWK)</see>.
     /// </summary>
     public class JsonWebKey : IJsonDeserializable, IJsonSerializable
     {
@@ -62,12 +62,12 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// Gets the identifier of the key. This is not limited to a <see cref="Uri"/>.
         /// </summary>
-        public string Id { get; internal set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// Gets the <see cref="KeyType"/> for this <see cref="JsonWebKey"/>.
         /// </summary>
-        public KeyType KeyType { get; internal set; }
+        public KeyType KeyType { get; set; }
 
         /// <summary>
         /// Gets a list of <see cref="KeyOperation"/> values supported by this key.
@@ -78,7 +78,14 @@ namespace Azure.Security.KeyVault.Keys
         {
         }
 
-        internal JsonWebKey(IEnumerable<KeyOperation> keyOps)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="JsonWebKey"/> class with the given key operations.
+        /// </summary>
+        /// <param name="keyOps">
+        /// A list of supported <see cref="KeyOperation"/> values.
+        /// If null, no operations will be permitted and subsequent cryptography operations may fail.
+        /// </param>
+        public JsonWebKey(IEnumerable<KeyOperation> keyOps)
         {
             _keyOps = keyOps is null ? new List<KeyOperation>() : new List<KeyOperation>(keyOps);
             KeyOps = new ReadOnlyCollection<KeyOperation>(_keyOps);
@@ -162,12 +169,12 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// Gets the RSA modulus.
         /// </summary>
-        public byte[] N { get; internal set; }
+        public byte[] N { get; set; }
 
         /// <summary>
         /// Gets RSA public exponent.
         /// </summary>
-        public byte[] E { get; internal set; }
+        public byte[] E { get; set; }
 
         #endregion
 
@@ -176,27 +183,27 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// Gets the RSA private key parameter.
         /// </summary>
-        public byte[] DP { get; internal set; }
+        public byte[] DP { get; set; }
 
         /// <summary>
         /// Gets the RSA private key parameter.
         /// </summary>
-        public byte[] DQ { get; internal set; }
+        public byte[] DQ { get; set; }
 
         /// <summary>
         /// Gets the RSA private key parameter.
         /// </summary>
-        public byte[] QI { get; internal set; }
+        public byte[] QI { get; set; }
 
         /// <summary>
         /// Gets the RSA secret prime.
         /// </summary>
-        public byte[] P { get; internal set; }
+        public byte[] P { get; set; }
 
         /// <summary>
         /// Gets the RSA secret prime.
         /// </summary>
-        public byte[] Q { get; internal set; }
+        public byte[] Q { get; set; }
 
         #endregion
 
@@ -205,17 +212,17 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// Gets the name of the elliptical curve.
         /// </summary>
-        public KeyCurveName? CurveName { get; internal set; }
+        public KeyCurveName? CurveName { get; set; }
 
         /// <summary>
         /// Gets the X coordinate of the elliptic curve point.
         /// </summary>
-        public byte[] X { get; internal set; }
+        public byte[] X { get; set; }
 
         /// <summary>
         /// Gets the Y coordinate for the elliptic curve point.
         /// </summary>
-        public byte[] Y { get; internal set; }
+        public byte[] Y { get; set; }
 
         #endregion
 
@@ -224,7 +231,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// Gets the RSA private exponent or EC private key.
         /// </summary>
-        public byte[] D { get; internal set; }
+        public byte[] D { get; set; }
 
         #endregion
 
@@ -233,14 +240,14 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// Gets the symmetric key.
         /// </summary>
-        public byte[] K { get; internal set; }
+        public byte[] K { get; set; }
 
         #endregion
 
         /// <summary>
         /// Gets the HSM token used with "Bring Your Own Key".
         /// </summary>
-        public byte[] T { get; internal set; }
+        public byte[] T { get; set; }
 
         internal bool HasPrivateKey
         {

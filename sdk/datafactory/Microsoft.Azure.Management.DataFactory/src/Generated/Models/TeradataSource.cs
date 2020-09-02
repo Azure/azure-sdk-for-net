@@ -44,6 +44,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="queryTimeout">Query timeout. Type: string (or
         /// Expression with resultType string), pattern:
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
+        /// <param name="additionalColumns">Specifies the additional columns to
+        /// be added to source data. Type: array of objects (or Expression with
+        /// resultType array of objects).</param>
         /// <param name="query">Teradata query. Type: string (or Expression
         /// with resultType string).</param>
         /// <param name="partitionOption">The partition mechanism that will be
@@ -51,8 +54,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// 'None', 'Hash', 'DynamicRange'</param>
         /// <param name="partitionSettings">The settings that will be leveraged
         /// for teradata source partitioning.</param>
-        public TeradataSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object queryTimeout = default(object), object query = default(object), string partitionOption = default(string), TeradataPartitionSettings partitionSettings = default(TeradataPartitionSettings))
-            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, queryTimeout)
+        public TeradataSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object queryTimeout = default(object), IList<AdditionalColumns> additionalColumns = default(IList<AdditionalColumns>), object query = default(object), string partitionOption = default(string), TeradataPartitionSettings partitionSettings = default(TeradataPartitionSettings))
+            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, queryTimeout, additionalColumns)
         {
             Query = query;
             PartitionOption = partitionOption;

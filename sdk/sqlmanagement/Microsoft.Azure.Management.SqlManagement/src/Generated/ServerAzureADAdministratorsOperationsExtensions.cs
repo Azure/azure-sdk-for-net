@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.Sql
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -24,101 +22,7 @@ namespace Microsoft.Azure.Management.Sql
     public static partial class ServerAzureADAdministratorsOperationsExtensions
     {
             /// <summary>
-            /// Creates a new Server Active Directory Administrator or updates an existing
-            /// server Active Directory Administrator.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='properties'>
-            /// The required parameters for creating or updating an Active Directory
-            /// Administrator.
-            /// </param>
-            public static ServerAzureADAdministrator CreateOrUpdate(this IServerAzureADAdministratorsOperations operations, string resourceGroupName, string serverName, ServerAzureADAdministrator properties)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, serverName, properties).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates a new Server Active Directory Administrator or updates an existing
-            /// server Active Directory Administrator.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='properties'>
-            /// The required parameters for creating or updating an Active Directory
-            /// Administrator.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ServerAzureADAdministrator> CreateOrUpdateAsync(this IServerAzureADAdministratorsOperations operations, string resourceGroupName, string serverName, ServerAzureADAdministrator properties, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, properties, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Deletes an existing server Active Directory Administrator.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            public static ServerAzureADAdministrator Delete(this IServerAzureADAdministratorsOperations operations, string resourceGroupName, string serverName)
-            {
-                return operations.DeleteAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes an existing server Active Directory Administrator.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ServerAzureADAdministrator> DeleteAsync(this IServerAzureADAdministratorsOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Returns an server Administrator.
+            /// Gets a Azure Active Directory administrator.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -136,7 +40,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns an server Administrator.
+            /// Gets a Azure Active Directory administrator.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -160,7 +64,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns a list of server Administrators.
+            /// Creates or updates an existing Azure Active Directory administrator.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -172,13 +76,61 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            public static IEnumerable<ServerAzureADAdministrator> ListByServer(this IServerAzureADAdministratorsOperations operations, string resourceGroupName, string serverName)
+            /// <param name='parameters'>
+            /// The requested Azure Active Directory administrator Resource state.
+            /// </param>
+            public static ServerAzureADAdministrator CreateOrUpdate(this IServerAzureADAdministratorsOperations operations, string resourceGroupName, string serverName, ServerAzureADAdministrator parameters)
             {
-                return operations.ListByServerAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, serverName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Returns a list of server Administrators.
+            /// Creates or updates an existing Azure Active Directory administrator.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='parameters'>
+            /// The requested Azure Active Directory administrator Resource state.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ServerAzureADAdministrator> CreateOrUpdateAsync(this IServerAzureADAdministratorsOperations operations, string resourceGroupName, string serverName, ServerAzureADAdministrator parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes the Azure Active Directory administrator with the given name.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            public static void Delete(this IServerAzureADAdministratorsOperations operations, string resourceGroupName, string serverName)
+            {
+                operations.DeleteAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes the Azure Active Directory administrator with the given name.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -193,7 +145,46 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<ServerAzureADAdministrator>> ListByServerAsync(this IServerAzureADAdministratorsOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IServerAzureADAdministratorsOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Gets a list of Azure Active Directory administrators in a server.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            public static IPage<ServerAzureADAdministrator> ListByServer(this IServerAzureADAdministratorsOperations operations, string resourceGroupName, string serverName)
+            {
+                return operations.ListByServerAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a list of Azure Active Directory administrators in a server.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ServerAzureADAdministrator>> ListByServerAsync(this IServerAzureADAdministratorsOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByServerWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -202,8 +193,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Creates a new Server Active Directory Administrator or updates an existing
-            /// server Active Directory Administrator.
+            /// Creates or updates an existing Azure Active Directory administrator.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -215,18 +205,16 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            /// <param name='properties'>
-            /// The required parameters for creating or updating an Active Directory
-            /// Administrator.
+            /// <param name='parameters'>
+            /// The requested Azure Active Directory administrator Resource state.
             /// </param>
-            public static ServerAzureADAdministrator BeginCreateOrUpdate(this IServerAzureADAdministratorsOperations operations, string resourceGroupName, string serverName, ServerAzureADAdministrator properties)
+            public static ServerAzureADAdministrator BeginCreateOrUpdate(this IServerAzureADAdministratorsOperations operations, string resourceGroupName, string serverName, ServerAzureADAdministrator parameters)
             {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, serverName, properties).GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, serverName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Creates a new Server Active Directory Administrator or updates an existing
-            /// server Active Directory Administrator.
+            /// Creates or updates an existing Azure Active Directory administrator.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -238,23 +226,22 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            /// <param name='properties'>
-            /// The required parameters for creating or updating an Active Directory
-            /// Administrator.
+            /// <param name='parameters'>
+            /// The requested Azure Active Directory administrator Resource state.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ServerAzureADAdministrator> BeginCreateOrUpdateAsync(this IServerAzureADAdministratorsOperations operations, string resourceGroupName, string serverName, ServerAzureADAdministrator properties, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ServerAzureADAdministrator> BeginCreateOrUpdateAsync(this IServerAzureADAdministratorsOperations operations, string resourceGroupName, string serverName, ServerAzureADAdministrator parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, properties, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Deletes an existing server Active Directory Administrator.
+            /// Deletes the Azure Active Directory administrator with the given name.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -266,13 +253,13 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            public static ServerAzureADAdministrator BeginDelete(this IServerAzureADAdministratorsOperations operations, string resourceGroupName, string serverName)
+            public static void BeginDelete(this IServerAzureADAdministratorsOperations operations, string resourceGroupName, string serverName)
             {
-                return operations.BeginDeleteAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Deletes an existing server Active Directory Administrator.
+            /// Deletes the Azure Active Directory administrator with the given name.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -287,9 +274,40 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ServerAzureADAdministrator> BeginDeleteAsync(this IServerAzureADAdministratorsOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginDeleteAsync(this IServerAzureADAdministratorsOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Gets a list of Azure Active Directory administrators in a server.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<ServerAzureADAdministrator> ListByServerNext(this IServerAzureADAdministratorsOperations operations, string nextPageLink)
+            {
+                return operations.ListByServerNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a list of Azure Active Directory administrators in a server.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ServerAzureADAdministrator>> ListByServerNextAsync(this IServerAzureADAdministratorsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByServerNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

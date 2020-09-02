@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// List all recommendations for a subscription.
         /// </summary>
         /// <remarks>
-        /// List all recommendations for a subscription.
+        /// Description for List all recommendations for a subscription.
         /// </remarks>
         /// <param name='featured'>
         /// Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical
@@ -94,7 +94,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -104,7 +107,6 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("featured", featured);
                 tracingParameters.Add("filter", filter);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -121,9 +123,9 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 _queryParameters.Add(string.Format("$filter={0}", filter));
             }
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -249,7 +251,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// Reset all recommendation opt-out settings for a subscription.
         /// </summary>
         /// <remarks>
-        /// Reset all recommendation opt-out settings for a subscription.
+        /// Description for Reset all recommendation opt-out settings for a
+        /// subscription.
         /// </remarks>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -257,7 +260,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="CloudException">
+        /// <exception cref="DefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -275,7 +278,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -283,7 +289,6 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ResetAllFilters", tracingParameters);
             }
@@ -292,9 +297,9 @@ namespace Microsoft.Azure.Management.WebSites
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations/reset").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -356,14 +361,13 @@ namespace Microsoft.Azure.Management.WebSites
             string _responseContent = null;
             if ((int)_statusCode != 204)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new DefaultErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
+                    DefaultErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<DefaultErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
-                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -373,10 +377,6 @@ namespace Microsoft.Azure.Management.WebSites
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
@@ -408,8 +408,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// future.
         /// </summary>
         /// <remarks>
-        /// Disables the specified rule so it will not apply to a subscription in the
-        /// future.
+        /// Description for Disables the specified rule so it will not apply to a
+        /// subscription in the future.
         /// </remarks>
         /// <param name='name'>
         /// Rule name
@@ -420,7 +420,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="CloudException">
+        /// <exception cref="DefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -442,7 +442,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -451,7 +454,6 @@ namespace Microsoft.Azure.Management.WebSites
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("name", name);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "DisableRecommendationForSubscription", tracingParameters);
             }
@@ -461,9 +463,9 @@ namespace Microsoft.Azure.Management.WebSites
             _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -525,14 +527,13 @@ namespace Microsoft.Azure.Management.WebSites
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new DefaultErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
+                    DefaultErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<DefaultErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
-                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -542,10 +543,6 @@ namespace Microsoft.Azure.Management.WebSites
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
@@ -577,8 +574,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// range.
         /// </summary>
         /// <remarks>
-        /// Get past recommendations for an app, optionally specified by the time
-        /// range.
+        /// Description for Get past recommendations for an app, optionally specified
+        /// by the time range.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -647,7 +644,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -659,7 +659,6 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("hostingEnvironmentName", hostingEnvironmentName);
                 tracingParameters.Add("expiredOnly", expiredOnly);
                 tracingParameters.Add("filter", filter);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListHistoryForHostingEnvironment", tracingParameters);
             }
@@ -678,9 +677,9 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 _queryParameters.Add(string.Format("$filter={0}", filter));
             }
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -806,7 +805,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get all recommendations for an app.
         /// </summary>
         /// <remarks>
-        /// Get all recommendations for an app.
+        /// Description for Get all recommendations for an app.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -874,7 +873,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -886,7 +888,6 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("hostingEnvironmentName", hostingEnvironmentName);
                 tracingParameters.Add("featured", featured);
                 tracingParameters.Add("filter", filter);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListRecommendedRulesForHostingEnvironment", tracingParameters);
             }
@@ -905,9 +906,9 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 _queryParameters.Add(string.Format("$filter={0}", filter));
             }
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1033,7 +1034,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Disable all recommendations for an app.
         /// </summary>
         /// <remarks>
-        /// Disable all recommendations for an app.
+        /// Description for Disable all recommendations for an app.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -1049,7 +1050,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="CloudException">
+        /// <exception cref="DefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -1094,7 +1095,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1105,7 +1109,6 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("environmentName", environmentName);
                 tracingParameters.Add("hostingEnvironmentName", hostingEnvironmentName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "DisableAllForHostingEnvironment", tracingParameters);
             }
@@ -1120,9 +1123,9 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 _queryParameters.Add(string.Format("environmentName={0}", System.Uri.EscapeDataString(environmentName)));
             }
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1184,14 +1187,13 @@ namespace Microsoft.Azure.Management.WebSites
             string _responseContent = null;
             if ((int)_statusCode != 204)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new DefaultErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
+                    DefaultErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<DefaultErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
-                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -1201,10 +1203,6 @@ namespace Microsoft.Azure.Management.WebSites
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
@@ -1235,7 +1233,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Reset all recommendation opt-out settings for an app.
         /// </summary>
         /// <remarks>
-        /// Reset all recommendation opt-out settings for an app.
+        /// Description for Reset all recommendation opt-out settings for an app.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -1251,7 +1249,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="CloudException">
+        /// <exception cref="DefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -1296,7 +1294,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1307,7 +1308,6 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("environmentName", environmentName);
                 tracingParameters.Add("hostingEnvironmentName", hostingEnvironmentName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ResetAllFiltersForHostingEnvironment", tracingParameters);
             }
@@ -1322,9 +1322,9 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 _queryParameters.Add(string.Format("environmentName={0}", System.Uri.EscapeDataString(environmentName)));
             }
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1386,14 +1386,13 @@ namespace Microsoft.Azure.Management.WebSites
             string _responseContent = null;
             if ((int)_statusCode != 204)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new DefaultErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
+                    DefaultErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<DefaultErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
-                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -1403,10 +1402,6 @@ namespace Microsoft.Azure.Management.WebSites
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
@@ -1437,7 +1432,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get a recommendation rule for an app.
         /// </summary>
         /// <remarks>
-        /// Get a recommendation rule for an app.
+        /// Description for Get a recommendation rule for an app.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -1510,7 +1505,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1523,7 +1521,6 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("updateSeen", updateSeen);
                 tracingParameters.Add("recommendationId", recommendationId);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetRuleDetailsByHostingEnvironment", tracingParameters);
             }
@@ -1543,9 +1540,9 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 _queryParameters.Add(string.Format("recommendationId={0}", System.Uri.EscapeDataString(recommendationId)));
             }
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1671,7 +1668,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Disables the specific rule for a web site permanently.
         /// </summary>
         /// <remarks>
-        /// Disables the specific rule for a web site permanently.
+        /// Description for Disables the specific rule for a web site permanently.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -1690,7 +1687,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="CloudException">
+        /// <exception cref="DefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -1739,7 +1736,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1751,7 +1751,6 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("environmentName", environmentName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("hostingEnvironmentName", hostingEnvironmentName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "DisableRecommendationForHostingEnvironment", tracingParameters);
             }
@@ -1767,9 +1766,9 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 _queryParameters.Add(string.Format("environmentName={0}", System.Uri.EscapeDataString(environmentName)));
             }
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1831,14 +1830,13 @@ namespace Microsoft.Azure.Management.WebSites
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new DefaultErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
+                    DefaultErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<DefaultErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
-                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -1848,10 +1846,6 @@ namespace Microsoft.Azure.Management.WebSites
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
@@ -1883,8 +1877,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// range.
         /// </summary>
         /// <remarks>
-        /// Get past recommendations for an app, optionally specified by the time
-        /// range.
+        /// Description for Get past recommendations for an app, optionally specified
+        /// by the time range.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -1953,7 +1947,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1965,7 +1962,6 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("siteName", siteName);
                 tracingParameters.Add("expiredOnly", expiredOnly);
                 tracingParameters.Add("filter", filter);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListHistoryForWebApp", tracingParameters);
             }
@@ -1984,9 +1980,9 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 _queryParameters.Add(string.Format("$filter={0}", filter));
             }
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2112,7 +2108,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get all recommendations for an app.
         /// </summary>
         /// <remarks>
-        /// Get all recommendations for an app.
+        /// Description for Get all recommendations for an app.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -2180,7 +2176,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2192,7 +2191,6 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("siteName", siteName);
                 tracingParameters.Add("featured", featured);
                 tracingParameters.Add("filter", filter);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListRecommendedRulesForWebApp", tracingParameters);
             }
@@ -2211,9 +2209,9 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 _queryParameters.Add(string.Format("$filter={0}", filter));
             }
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2339,7 +2337,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Disable all recommendations for an app.
         /// </summary>
         /// <remarks>
-        /// Disable all recommendations for an app.
+        /// Description for Disable all recommendations for an app.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -2353,7 +2351,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="CloudException">
+        /// <exception cref="DefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -2394,7 +2392,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2404,7 +2405,6 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("siteName", siteName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "DisableAllForWebApp", tracingParameters);
             }
@@ -2415,9 +2415,9 @@ namespace Microsoft.Azure.Management.WebSites
             _url = _url.Replace("{siteName}", System.Uri.EscapeDataString(siteName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2479,14 +2479,13 @@ namespace Microsoft.Azure.Management.WebSites
             string _responseContent = null;
             if ((int)_statusCode != 204)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new DefaultErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
+                    DefaultErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<DefaultErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
-                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -2496,10 +2495,6 @@ namespace Microsoft.Azure.Management.WebSites
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
@@ -2530,7 +2525,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Reset all recommendation opt-out settings for an app.
         /// </summary>
         /// <remarks>
-        /// Reset all recommendation opt-out settings for an app.
+        /// Description for Reset all recommendation opt-out settings for an app.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -2544,7 +2539,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="CloudException">
+        /// <exception cref="DefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -2585,7 +2580,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2595,7 +2593,6 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("siteName", siteName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ResetAllFiltersForWebApp", tracingParameters);
             }
@@ -2606,9 +2603,9 @@ namespace Microsoft.Azure.Management.WebSites
             _url = _url.Replace("{siteName}", System.Uri.EscapeDataString(siteName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2670,14 +2667,13 @@ namespace Microsoft.Azure.Management.WebSites
             string _responseContent = null;
             if ((int)_statusCode != 204)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new DefaultErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
+                    DefaultErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<DefaultErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
-                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -2687,10 +2683,6 @@ namespace Microsoft.Azure.Management.WebSites
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
@@ -2721,7 +2713,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get a recommendation rule for an app.
         /// </summary>
         /// <remarks>
-        /// Get a recommendation rule for an app.
+        /// Description for Get a recommendation rule for an app.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -2794,7 +2786,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2807,7 +2802,6 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("updateSeen", updateSeen);
                 tracingParameters.Add("recommendationId", recommendationId);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetRuleDetailsByWebApp", tracingParameters);
             }
@@ -2827,9 +2821,9 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 _queryParameters.Add(string.Format("recommendationId={0}", System.Uri.EscapeDataString(recommendationId)));
             }
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2955,7 +2949,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Disables the specific rule for a web site permanently.
         /// </summary>
         /// <remarks>
-        /// Disables the specific rule for a web site permanently.
+        /// Description for Disables the specific rule for a web site permanently.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -2972,7 +2966,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="CloudException">
+        /// <exception cref="DefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -3017,7 +3011,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -3028,7 +3025,6 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("siteName", siteName);
                 tracingParameters.Add("name", name);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "DisableRecommendationForSite", tracingParameters);
             }
@@ -3040,9 +3036,9 @@ namespace Microsoft.Azure.Management.WebSites
             _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -3104,14 +3100,13 @@ namespace Microsoft.Azure.Management.WebSites
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new DefaultErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
+                    DefaultErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<DefaultErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
-                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -3121,10 +3116,6 @@ namespace Microsoft.Azure.Management.WebSites
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
@@ -3155,7 +3146,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// List all recommendations for a subscription.
         /// </summary>
         /// <remarks>
-        /// List all recommendations for a subscription.
+        /// Description for List all recommendations for a subscription.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -3327,8 +3318,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// range.
         /// </summary>
         /// <remarks>
-        /// Get past recommendations for an app, optionally specified by the time
-        /// range.
+        /// Description for Get past recommendations for an app, optionally specified
+        /// by the time range.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -3499,7 +3490,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get all recommendations for an app.
         /// </summary>
         /// <remarks>
-        /// Get all recommendations for an app.
+        /// Description for Get all recommendations for an app.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -3671,8 +3662,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// range.
         /// </summary>
         /// <remarks>
-        /// Get past recommendations for an app, optionally specified by the time
-        /// range.
+        /// Description for Get past recommendations for an app, optionally specified
+        /// by the time range.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -3843,7 +3834,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get all recommendations for an app.
         /// </summary>
         /// <remarks>
-        /// Get all recommendations for an app.
+        /// Description for Get all recommendations for an app.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

@@ -31,20 +31,38 @@ Tests in the Event Hubs client library are split into two categories:
 
 The Live tests read information from the following environment variables:
 
-`EVENT_HUBS_RESOURCEGROUP`  
+- `EVENTHUB_RESOURCE_GROUP`  
  The name of the Azure resource group that contains the Event Hubs namespace
 
-`EVENT_HUBS_SUBSCRIPTION`  
+- `EVENTHUB_SUBSCRIPTION_ID`  
  The identifier (GUID) of the Azure subscription to which the service principal belongs
 
-`EVENT_HUBS_TENANT`  
+- `EVENTHUB_TENANT_ID`  
  The identifier (GUID) of the Azure Active Directory tenant that contains the service principal
 
-`EVENT_HUBS_CLIENT`  
+- `EVENTHUB_CLIENT_ID`  
  The identifier (GUID) of the Azure Active Directory application that is associated with the service principal
 
-`EVENT_HUBS_SECRET`  
+- `EVENTHUB_CLIENT_SECRET`  
  The client secret (password) of the Azure Active Directory application that is associated with the service principal
+ 
+- `EVENTHUB_PER_TEST_LIMIT_MINUTES`
+The maximum duration, in minutes, that a single test is permitted to run before it is considered at-risk for being hung.  If not provided, a default suitable for most local development environment runs is assumed.
+
+- `EVENTHUB_NAMESPACE_CONNECTION_STRING` _**(optional)**_  
+  The connection string to an existing Event Hubs namespace to use for testing.  If specified, this namespace will be used as the basis for the test run, with Event Hub instances dynamically managed by the tests.  When the run is complete, the namespace will be left in the state that it was in before the test run took place.  If not specified, a new namespace will be dynamically created for the test run and removed at the end of the run.
+  
+- `EVENTHUB_PROCESSOR_STORAGE_CONNECTION_STRING` _**(optional)**_  
+  The connection string to an existing Blob Storage account to use for `EventProcessorClient` testing.  If specified, this account will be used as the basis for the test run, with container instances dynamically managed by the tests.  When the run is complete, the account will be left in the state that it was in before the test run took place.  If not specified, a new storage account will be dynamically created for the test run and removed at the end of the run.
+  
+- `AZURE_AUTHORITY_HOST` _**(optional)**_  
+  The name of the Azure Authority to use for authenticating resource management operations.  The default for this is appropriate for use with the Azure public cloud; when testing in other cloud instances, this may be needed.
+  
+- `SERVICE_MANAGEMENT_URL` _**(optional)**_  
+  The URL of the endpoint responsible for service management operations in Azure.  The default for this is appropriate for use with the Azure public cloud; when testing in other cloud instances, this may be needed.
+  
+- `RESOURCE_MANAGER_URL` _**(optional)**_  
+  The URL of the endpoint responsible for resource management operations in Azure.  The default for this is appropriate for use with the Azure public cloud; when testing in other cloud instances, this may be needed.
 
 To make setting up your environment easier, a [PowerShell script](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/assets/live-tests-azure-setup.ps1) is included in the repository and will create and/or configure the needed Azure resources.  To use this script, open a PowerShell instance and login to your Azure account using `Login-AzAccount`, then execute the script.  You will need to provide some information, after which the script will configure the Azure resources and then output the set of environment variables with the correct values for running tests.
 

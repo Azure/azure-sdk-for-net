@@ -7,7 +7,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
@@ -16,8 +16,13 @@ using NUnit.Framework;
 
 namespace Azure.Storage.Files.DataLake.Tests
 {
+    [ClientTestFixture(
+        DataLakeClientOptions.ServiceVersion.V2019_02_02,
+        DataLakeClientOptions.ServiceVersion.V2019_07_07,
+        DataLakeClientOptions.ServiceVersion.V2019_12_12)]
     public abstract class DataLakeTestBase : StorageTestBase
     {
+        protected readonly DataLakeClientOptions.ServiceVersion _serviceVersion;
         public readonly string ReceivedETag = "\"received\"";
         public readonly string GarbageETag = "\"garbage\"";
         public readonly string ReceivedLeaseId = "received";
@@ -30,11 +35,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             = PathAccessControlExtensions.ParseAccessControlList("user::rwx,group::r--,other::---,mask::rwx");
         public readonly PathPermissions PathPermissions = PathPermissions.ParseSymbolicPermissions("rwxrwxrwx");
 
-        public DataLakeTestBase(bool async) : this(async, null) { }
-
-        public DataLakeTestBase(bool async, RecordedTestMode? mode = null)
+        public DataLakeTestBase(bool async, DataLakeClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode = null)
             : base(async, mode)
         {
+            _serviceVersion = serviceVersion;
         }
 
         public DateTimeOffset OldDate => Recording.Now.AddDays(-1);
@@ -42,7 +46,9 @@ namespace Azure.Storage.Files.DataLake.Tests
         public string GetGarbageLeaseId() => Recording.Random.NewGuid().ToString();
         public string GetNewFileSystemName() => $"test-filesystem-{Recording.Random.NewGuid()}";
         public string GetNewDirectoryName() => $"test-directory-{Recording.Random.NewGuid()}";
+        public string GetNewNonAsciiDirectoryName() => $"test-dire¢t Ø®ϒ%3A-{Recording.Random.NewGuid()}";
         public string GetNewFileName() => $"test-file-{Recording.Random.NewGuid()}";
+        public string GetNewNonAsciiFileName() => $"test-ƒ¡£€‽%3A-{Recording.Random.NewGuid()}";
 
         public DataLakeClientOptions GetOptions(bool parallelRange = false)
         {
@@ -363,8 +369,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                     AccessPolicy =
                         new DataLakeAccessPolicy
                         {
-                            StartsOn = Recording.UtcNow.AddHours(-1),
-                            ExpiresOn =  Recording.UtcNow.AddHours(1),
+                            PolicyStartsOn = Recording.UtcNow.AddHours(-1),
+                            PolicyExpiresOn =  Recording.UtcNow.AddHours(1),
                             Permissions = "rcw"
                         }
                 }

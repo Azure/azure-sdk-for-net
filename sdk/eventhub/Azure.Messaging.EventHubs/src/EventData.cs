@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using Azure.Core;
 using Azure.Messaging.EventHubs.Consumer;
 
 namespace Azure.Messaging.EventHubs
@@ -16,6 +17,9 @@ namespace Azure.Messaging.EventHubs
     ///
     public class EventData
     {
+        /// <summary>The sequence number associated with publishing of the event.</summary>
+        private int? _publishedSequenceNumber = null;
+
         /// <summary>
         ///   The data associated with the event.
         /// </summary>
@@ -54,7 +58,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   The set of free-form event properties which may be used for passing metadata associated with the event with the event body
+        ///   The set of free-form event properties which may be used for passing metadata associated with the event body
         ///   during Event Hubs operations.
         /// </summary>
         ///
@@ -85,12 +89,43 @@ namespace Azure.Messaging.EventHubs
         public IReadOnlyDictionary<string, object> SystemProperties { get; }
 
         /// <summary>
+        ///   The publishing sequence number assigned to the event at the time it was successfully published.
+        /// </summary>
+        ///
+        /// <value>
+        ///   The sequence number that was assigned during publishing, if the event was successfully
+        ///   published by a sequence-aware producer.  If the producer was not configured to apply
+        ///   sequence numbering or if the event has not yet been successfully published, this member
+        ///   will be <c>null</c>.
+        /// </value>
+        ///
+        /// <remarks>
+        ///   The published sequence number is only populated and relevant when certain features
+        ///   of the producer are enabled.  For example, it is used by idempotent publishing.
+        /// </remarks>
+        ///
+        public int? PublishedSequenceNumber
+        {
+            get => _publishedSequenceNumber;
+
+            internal set
+            {
+                if (value.HasValue)
+                {
+                    Argument.AssertAtLeast(value.Value, 0, nameof(PublishedSequenceNumber));
+                }
+
+                _publishedSequenceNumber = value;
+            }
+        }
+
+        /// <summary>
         ///   The sequence number assigned to the event when it was enqueued in the associated Event Hub partition.
         /// </summary>
         ///
         /// <remarks>
         ///   This property is only populated for events received from the Event Hubs service. If this
-        ///   EventData was not recived from the Event Hubs service, the value is <see cref="long.MinValue"/>.
+        ///   EventData was not received from the Event Hubs service, the value is <see cref="long.MinValue"/>.
         /// </remarks>
         ///
         public long SequenceNumber { get; }
@@ -101,7 +136,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <remarks>
         ///   This property is only populated for events received from the Event Hubs service. If this
-        ///   EventData was not recived from the Event Hubs service, the value is <see cref="long.MinValue"/>.
+        ///   EventData was not received from the Event Hubs service, the value is <see cref="long.MinValue"/>.
         /// </remarks>
         ///
         public long Offset { get; }
@@ -112,7 +147,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <remarks>
         ///   This property is only populated for events received from the Event Hubs service. If this
-        ///   EventData was not recived from the Event Hubs service, the value <c>default(DateTimeOffset)</c>.
+        ///   EventData was not received from the Event Hubs service, the value <c>default(DateTimeOffset)</c>.
         /// </remarks>
         ///
         public DateTimeOffset EnqueuedTime { get; }
@@ -199,7 +234,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="lastPartitionSequenceNumber">The sequence number that was last enqueued into the Event Hub partition.</param>
         /// <param name="lastPartitionOffset">The offset that was last enqueued into the Event Hub partition.</param>
         /// <param name="lastPartitionEnqueuedTime">The date and time, in UTC, of the event that was last enqueued into the Event Hub partition.</param>
-        /// <param name="lastPartitionPropertiesRetrievalTime">The date and time, in UTC, that the last event information for the Event Hub partition was retrieved from the serivce.</param>
+        /// <param name="lastPartitionPropertiesRetrievalTime">The date and time, in UTC, that the last event information for the Event Hub partition was retrieved from the service.</param>
         ///
         internal EventData(ReadOnlyMemory<byte> eventBody,
                            IDictionary<string, object> properties = null,
@@ -276,5 +311,27 @@ namespace Azure.Messaging.EventHubs
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
+
+        /// <summary>
+        ///   Creates a new copy of the current <see cref="EventData" />, cloning its attributes into a new instance.
+        /// </summary>
+        ///
+        /// <returns>A new copy of <see cref="EventData" />.</returns>
+        ///
+        internal EventData Clone() =>
+            new EventData
+            (
+                Body,
+                new Dictionary<string, object>(Properties),
+                SystemProperties,
+                SequenceNumber,
+                Offset,
+                EnqueuedTime,
+                PartitionKey,
+                LastPartitionSequenceNumber,
+                LastPartitionOffset,
+                LastPartitionEnqueuedTime,
+                LastPartitionPropertiesRetrievalTime
+            );
     }
 }

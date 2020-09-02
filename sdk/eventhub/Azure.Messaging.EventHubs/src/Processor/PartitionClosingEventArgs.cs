@@ -46,6 +46,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
             PartitionId = partitionId;
             Reason = reason;
+            CancellationToken = cancellationToken;
         }
     }
 }

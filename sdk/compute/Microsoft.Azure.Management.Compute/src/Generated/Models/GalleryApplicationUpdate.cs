@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// want to update.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class GalleryApplicationUpdate : UpdateResource
+    public partial class GalleryApplicationUpdate : UpdateResourceDefinition
     {
         /// <summary>
         /// Initializes a new instance of the GalleryApplicationUpdate class.
@@ -40,10 +40,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt;
         /// **Windows** &lt;br&gt;&lt;br&gt; **Linux**. Possible values
         /// include: 'Windows', 'Linux'</param>
-        /// <param name="tags">Resource tags</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="tags">Resource tags</param>
         /// <param name="description">The description of this gallery
         /// Application Definition resource. This property is
         /// updatable.</param>
@@ -55,8 +55,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="endOfLifeDate">The end of life date of the gallery
         /// Application Definition. This property can be used for
         /// decommissioning purposes. This property is updatable.</param>
-        public GalleryApplicationUpdate(OperatingSystemTypes supportedOSType, IDictionary<string, string> tags = default(IDictionary<string, string>), string id = default(string), string name = default(string), string type = default(string), string description = default(string), string eula = default(string), string privacyStatementUri = default(string), string releaseNoteUri = default(string), System.DateTime? endOfLifeDate = default(System.DateTime?))
-            : base(tags, id, name, type)
+        public GalleryApplicationUpdate(OperatingSystemTypes supportedOSType, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), string eula = default(string), string privacyStatementUri = default(string), string releaseNoteUri = default(string), System.DateTime? endOfLifeDate = default(System.DateTime?))
+            : base(id, name, type, tags)
         {
             Description = description;
             Eula = eula;

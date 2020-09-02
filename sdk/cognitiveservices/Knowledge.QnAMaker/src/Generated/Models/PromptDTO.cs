@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -79,25 +78,5 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
         [JsonProperty(PropertyName = "displayText")]
         public string DisplayText { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Qna != null)
-            {
-                Qna.Validate();
-            }
-            if (DisplayText != null)
-            {
-                if (DisplayText.Length > 200)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "DisplayText", 200);
-                }
-            }
-        }
     }
 }

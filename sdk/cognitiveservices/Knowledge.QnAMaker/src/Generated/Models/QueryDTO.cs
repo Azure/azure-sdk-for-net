@@ -47,7 +47,10 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
         /// using a question only Ranker.</param>
         /// <param name="strictFilters">Find only answers that contain these
         /// metadata.</param>
-        public QueryDTO(string qnaId = default(string), string question = default(string), int? top = default(int?), string userId = default(string), bool? isTest = default(bool?), double? scoreThreshold = default(double?), QueryDTOContext context = default(QueryDTOContext), string rankerType = default(string), IList<MetadataDTO> strictFilters = default(IList<MetadataDTO>))
+        /// <param name="strictFiltersCompoundOperationType">Optional field.
+        /// Set to OR for using OR as Operation for Strict Filters. Possible
+        /// values include: 'AND', 'OR'</param>
+        public QueryDTO(string qnaId = default(string), string question = default(string), int? top = default(int?), string userId = default(string), bool? isTest = default(bool?), double? scoreThreshold = default(double?), QueryDTOContext context = default(QueryDTOContext), string rankerType = default(string), IList<MetadataDTO> strictFilters = default(IList<MetadataDTO>), string strictFiltersCompoundOperationType = default(string))
         {
             QnaId = qnaId;
             Question = question;
@@ -58,6 +61,7 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
             Context = context;
             RankerType = rankerType;
             StrictFilters = strictFilters;
+            StrictFiltersCompoundOperationType = strictFiltersCompoundOperationType;
             CustomInit();
         }
 
@@ -121,6 +125,13 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
         /// </summary>
         [JsonProperty(PropertyName = "strictFilters")]
         public IList<MetadataDTO> StrictFilters { get; set; }
+
+        /// <summary>
+        /// Gets or sets optional field. Set to OR for using OR as Operation
+        /// for Strict Filters. Possible values include: 'AND', 'OR'
+        /// </summary>
+        [JsonProperty(PropertyName = "strictFiltersCompoundOperationType")]
+        public string StrictFiltersCompoundOperationType { get; set; }
 
     }
 }

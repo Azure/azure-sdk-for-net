@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26228.4
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Resource.Tests", "tests\Microsoft.Azure.Management.Resource.Tests.csproj", "{04B4A8C0-95B4-4139-BE8E-885E087F5205}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.ResourceManager", "src\Microsoft.Azure.Management.ResourceManager.csproj", "{5F659AC2-FC75-4C17-B021-6AA6F9360790}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Management.ManagementGroups", "..\..\ManagementGroups\Microsoft.Azure.Management.ManagementGroups\src\Microsoft.Azure.Management.ManagementGroups.csproj", "{11A09EEE-98C4-47B1-B7B9-942ED8D7CF85}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.ManagementGroups", "..\..\ManagementGroups\Microsoft.Azure.Management.ManagementGroups\src\Microsoft.Azure.Management.ManagementGroups.csproj", "{11A09EEE-98C4-47B1-B7B9-942ED8D7CF85}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.ManagementGroups.Tests", "..\..\ManagementGroups\Microsoft.Azure.Management.ManagementGroups\tests\Microsoft.Azure.Management.ManagementGroups.Tests.csproj", "{E94AF5A6-DB04-4436-8777-61CC5E7768CD}"
 EndProject

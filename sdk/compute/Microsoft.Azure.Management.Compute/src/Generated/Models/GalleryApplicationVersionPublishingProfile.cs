@@ -51,7 +51,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// purposes. This property is updatable.</param>
         /// <param name="storageAccountType">Specifies the storage account type
         /// to be used to store the image. This property is not updatable.
-        /// Possible values include: 'Standard_LRS', 'Standard_ZRS'</param>
+        /// Possible values include: 'Standard_LRS', 'Standard_ZRS',
+        /// 'Premium_LRS'</param>
         /// <param name="contentType">Optional. May be used to help process
         /// this file. The type of file contained in the source, e.g. zip,
         /// json, etc.</param>

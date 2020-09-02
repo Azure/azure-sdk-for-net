@@ -14,9 +14,9 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// The latest service version supported by this client library.
         /// For more information, see
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/keyvault/key-vault-versions"/>.
+        /// <see href="https://docs.microsoft.com/rest/api/keyvault/key-vault-versions">Key Vault versions</see>.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V7_0;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V7_1;
 
         /// <summary>
         /// The versions of Azure Key Vault supported by this client
@@ -28,14 +28,19 @@ namespace Azure.Security.KeyVault.Certificates
             /// <summary>
             /// The Key Vault API version 7.0.
             /// </summary>
-            V7_0 = 0
+            V7_0 = 0,
+
+            /// <summary>
+            /// The Key Vault API version 7.1.
+            /// </summary>
+            V7_1 = 1,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
         /// <summary>
         /// Gets the <see cref="ServiceVersion"/> of the service API used when
         /// making requests. For more information, see
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/keyvault/key-vault-versions"/>.
+        /// <see href="https://docs.microsoft.com/rest/api/keyvault/key-vault-versions">Key Vault versions</see>.
         /// </summary>
         public ServiceVersion Version { get; }
 
@@ -47,7 +52,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// The <see cref="ServiceVersion"/> of the service API used when
         /// making requests.
         /// </param>
-        public CertificateClientOptions(ServiceVersion version = ServiceVersion.V7_0)
+        public CertificateClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version;
 
@@ -56,13 +61,12 @@ namespace Azure.Security.KeyVault.Certificates
 
         internal string GetVersionString()
         {
-            var version = Version switch
+            return Version switch
             {
                 ServiceVersion.V7_0 => "7.0",
-
+                ServiceVersion.V7_1 => "7.1",
                 _ => throw new ArgumentException(Version.ToString()),
             };
-            return version;
         }
     }
 }

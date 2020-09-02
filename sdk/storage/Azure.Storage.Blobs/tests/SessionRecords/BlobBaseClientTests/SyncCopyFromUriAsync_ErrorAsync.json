@@ -1,0 +1,109 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://seanmcccanary.blob.core.windows.net/test-container-3387a1ed-a959-1e2f-afb2-1ea1be4549c2?restype=container",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-d52514a6549991468c1acbc5cadbcd53-0b67cca7cd439042-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Blobs/12.5.0-dev.20200428.1",
+          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-blob-public-access": "container",
+        "x-ms-client-request-id": "2d70efdd-3804-10b7-1792-432879cb2123",
+        "x-ms-date": "Tue, 28 Apr 2020 19:33:10 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-12-12"
+      },
+      "RequestBody": null,
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Tue, 28 Apr 2020 19:33:10 GMT",
+        "ETag": "\u00220x8D7EBAAFC6976FE\u0022",
+        "Last-Modified": "Tue, 28 Apr 2020 19:33:10 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "2d70efdd-3804-10b7-1792-432879cb2123",
+        "x-ms-request-id": "17afc63a-201e-003e-7293-1ddadf000000",
+        "x-ms-version": "2019-12-12"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://seanmcccanary.blob.core.windows.net/test-container-3387a1ed-a959-1e2f-afb2-1ea1be4549c2/test-blob-cec341d3-1bd5-c1bd-3fc5-a29e7e94fa37",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-d110edc62078f44bae14f948e74fbeed-7954602019066a44-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Blobs/12.5.0-dev.20200428.1",
+          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "375409c1-5308-b14d-efaa-54513c40ad4f",
+        "x-ms-copy-source": "https://seanmcccanary.blob.core.windows.net/test-container-3387a1ed-a959-1e2f-afb2-1ea1be4549c2/test-blob-936cadcd-df17-2bdf-e413-30b621b6d139",
+        "x-ms-date": "Tue, 28 Apr 2020 19:33:11 GMT",
+        "x-ms-requires-sync": "true",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-12-12"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Content-Length": "225",
+        "Content-Type": "application/xml",
+        "Date": "Tue, 28 Apr 2020 19:33:10 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "375409c1-5308-b14d-efaa-54513c40ad4f",
+        "x-ms-error-code": "CannotVerifyCopySource",
+        "x-ms-request-id": "17afc63e-201e-003e-7493-1ddadf000000",
+        "x-ms-version": "2019-12-12"
+      },
+      "ResponseBody": [
+        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003ECannotVerifyCopySource\u003C/Code\u003E\u003CMessage\u003EThe specified blob does not exist.\n",
+        "RequestId:17afc63e-201e-003e-7493-1ddadf000000\n",
+        "Time:2020-04-28T19:33:10.9863740Z\u003C/Message\u003E\u003C/Error\u003E"
+      ]
+    },
+    {
+      "RequestUri": "https://seanmcccanary.blob.core.windows.net/test-container-3387a1ed-a959-1e2f-afb2-1ea1be4549c2?restype=container",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-41381ea73197544dbb5f23a3065e1024-a434d9f8551ba945-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Blobs/12.5.0-dev.20200428.1",
+          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "74dc41d6-c33f-2d2f-16f9-b05ff773c2cf",
+        "x-ms-date": "Tue, 28 Apr 2020 19:33:11 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-12-12"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Tue, 28 Apr 2020 19:33:10 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "74dc41d6-c33f-2d2f-16f9-b05ff773c2cf",
+        "x-ms-request-id": "17afc645-201e-003e-7893-1ddadf000000",
+        "x-ms-version": "2019-12-12"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "768573185",
+    "Storage_TestConfigDefault": "ProductionTenant\nseanmcccanary\nU2FuaXRpemVk\nhttps://seanmcccanary.blob.core.windows.net\nhttps://seanmcccanary.file.core.windows.net\nhttps://seanmcccanary.queue.core.windows.net\nhttps://seanmcccanary.table.core.windows.net\n\n\n\n\nhttps://seanmcccanary-secondary.blob.core.windows.net\nhttps://seanmcccanary-secondary.file.core.windows.net\nhttps://seanmcccanary-secondary.queue.core.windows.net\nhttps://seanmcccanary-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanmcccanary.blob.core.windows.net/;QueueEndpoint=https://seanmcccanary.queue.core.windows.net/;FileEndpoint=https://seanmcccanary.file.core.windows.net/;BlobSecondaryEndpoint=https://seanmcccanary-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanmcccanary-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanmcccanary-secondary.file.core.windows.net/;AccountName=seanmcccanary;AccountKey=Sanitized\nseanscope1"
+  }
+}

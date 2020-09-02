@@ -1,0 +1,153 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourcegroups/csmrg66?api-version=2019-10-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "24",
+        "Content-Type": "application/json",
+        "traceparent": "00-7b62812b104ae6468d02cda1d6c95da7-5827bf39eb768e41-00",
+        "User-Agent": [
+          "azsdk-net-Management.Resources/1.0.0-dev.20200529.1",
+          "(.NET Framework 4.8.4180.0; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "552111dd83dd41640074d328fc515bb6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "centralus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "214",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 29 May 2020 02:38:27 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "4b300193-4fc9-4b27-9743-f0ef39bb9b47",
+        "x-ms-ratelimit-remaining-subscription-writes": "1185",
+        "x-ms-request-id": "4b300193-4fc9-4b27-9743-f0ef39bb9b47",
+        "x-ms-routing-request-id": "EASTASIA:20200529T023828Z:4b300193-4fc9-4b27-9743-f0ef39bb9b47"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/csmrg66",
+        "name": "csmrg66",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "centralus",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourcegroups/csmrg66/providers/Sendgrid.Email//accounts/csmr554?api-version=2015-01-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "243",
+        "Content-Type": "application/json",
+        "traceparent": "00-64b6c55a62db124a8c86721f11cea225-9948916829527945-00",
+        "User-Agent": [
+          "azsdk-net-Management.Resources/1.0.0-dev.20200529.1",
+          "(.NET Framework 4.8.4180.0; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "e97440eafab01c6f6dd7499e0a00216b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "plan": {
+          "name": "free",
+          "publisher": "Sendgrid",
+          "product": "sendgrid_azure",
+          "promotionCode": ""
+        },
+        "properties": {
+          "password": "p@ss5648",
+          "acceptMarketingEmails": false,
+          "email": "tiano@email.com"
+        },
+        "location": "centralus",
+        "tags": {
+          "provision_source": "RMS"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "must-revalidate, no-cache",
+        "Content-Length": "356",
+        "Content-Type": "application/json",
+        "Date": "Fri, 29 May 2020 02:39:25 GMT",
+        "Expires": "0",
+        "Server": "nginx",
+        "Set-Cookie": "sendgrid_frontend=ec3460ff21c104994bb6ae8540e60871:01af719a7f9f426bc5ac6aed2b76ac8ec43ac63b; expires=Sun, 28-Jun-2020 02:38:48 GMT; path=/; httponly",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "48566331-9df8-4884-b0d4-80bfcff2df29",
+        "x-ms-ratelimit-remaining-subscription-writes": "1184",
+        "X-Ms-Request-Id": "5ed075b8d17ab5-33609739",
+        "x-ms-routing-request-id": "EASTASIA:20200529T023925Z:48566331-9df8-4884-b0d4-80bfcff2df29"
+      },
+      "ResponseBody": {
+        "plan": {
+          "name": "free",
+          "publisher": "Sendgrid",
+          "product": "sendgrid_azure",
+          "promotionCode": ""
+        },
+        "properties": {
+          "email": "tiano@email.com",
+          "provisioningState": "Succeeded",
+          "status": "Running",
+          "username": "azure_6a80b3e74d471fe5cba37701a19d6ad6@azure.com",
+          "smtpServer": "smtp.sendgrid.net",
+          "planLabel": "Free"
+        },
+        "location": "centralus",
+        "tags": {
+          "provision_source": "RMS"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourcegroups/csmrg66/providers/Sendgrid.Email//accounts/csmr554?api-version=2015-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-09838f05e6bb1d45a374242e2257c94e-2a74a4d7a2e2724a-00",
+        "User-Agent": [
+          "azsdk-net-Management.Resources/1.0.0-dev.20200529.1",
+          "(.NET Framework 4.8.4180.0; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "677a5f8806a0e3c6a205e70639c63700",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "must-revalidate, no-cache",
+        "Content-Length": "700",
+        "Content-Type": "application/json",
+        "Date": "Fri, 29 May 2020 02:39:25 GMT",
+        "Expires": "0",
+        "Server": "nginx",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "a75cf621-1f1c-4269-8ce2-0d7ee5f6c348",
+        "x-ms-ratelimit-remaining-subscription-reads": "11990",
+        "X-Ms-Request-Id": "5ed075ddcf0810-29788172",
+        "x-ms-routing-request-id": "EASTASIA:20200529T023926Z:a75cf621-1f1c-4269-8ce2-0d7ee5f6c348"
+      },
+      "ResponseBody": "{\u0022id\u0022:\u0022\\/subscriptions\\/b9f138a1-1d64-4108-8413-9ea3be1c1b2d\\/resourceGroups\\/csmrg66\\/providers\\/Sendgrid.Email\\/accounts\\/csmr554\u0022,\u0022name\u0022:\u0022csmr554\u0022,\u0022type\u0022:\u0022Sendgrid.Email\\/accounts\u0022,\u0022location\u0022:\u0022centralus\u0022,\u0022subscriptionId\u0022:\u0022b9f138a1-1d64-4108-8413-9ea3be1c1b2d\u0022,\u0022resourceGroup\u0022:\u0022csmrg66\u0022,\u0022plan\u0022:{\u0022name\u0022:\u0022free\u0022,\u0022publisher\u0022:\u0022Sendgrid\u0022,\u0022product\u0022:\u0022sendgrid_azure\u0022,\u0022promotionCode\u0022:\u0022\u0022},\u0022tags\u0022:{\u0022provision_source\u0022:\u0022RMS\u0022},\u0022properties\u0022:{\u0022status\u0022:\u0022Running\u0022,\u0022username\u0022:\u0022azure_6a80b3e74d471fe5cba37701a19d6ad6@azure.com\u0022,\u0022smtpServer\u0022:\u0022smtp.sendgrid.net\u0022,\u0022email\u0022:\u0022tiano@email.com\u0022,\u0022planLabel\u0022:\u0022Free\u0022,\u0022isFromPortalV1\u0022:false,\u0022firstName\u0022:\u0022Sender\u0022,\u0022lastName\u0022:\u0022Whiz\u0022,\u0022company\u0022:\u0022Company\u0022,\u0022website\u0022:\u0022http:\\/\\/Website\u0022}}"
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1727952815",
+    "SUBSCRIPTION_ID": "b9f138a1-1d64-4108-8413-9ea3be1c1b2d"
+  }
+}

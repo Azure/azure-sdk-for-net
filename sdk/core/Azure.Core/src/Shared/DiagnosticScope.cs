@@ -49,13 +49,21 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        public void AddLink(string id)
+        public void AddLink(string id, IDictionary<string, string>? attributes = null)
         {
             if (_activity != null)
             {
                 var linkedActivity = new Activity("LinkedActivity");
                 linkedActivity.SetW3CFormat();
                 linkedActivity.SetParentId(id);
+
+                if (attributes != null)
+                {
+                    foreach (var kvp in attributes)
+                    {
+                        linkedActivity.AddTag(kvp.Key, kvp.Value);
+                    }
+                }
 
                 _activity.AddLink(linkedActivity);
             }
@@ -68,6 +76,8 @@ namespace Azure.Core.Pipeline
                 _source.StartActivity(_activity, _activity);
             }
         }
+
+        public void SetStartTime(DateTime dateTime) => _activity?.SetStartTime(dateTime);
 
         public void Dispose()
         {

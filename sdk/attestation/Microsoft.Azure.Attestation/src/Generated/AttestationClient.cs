@@ -75,9 +75,14 @@ namespace Microsoft.Azure.Attestation
         public virtual IPolicyOperations Policy { get; private set; }
 
         /// <summary>
-        /// Gets the ICertsOperations.
+        /// Gets the IPolicyCertificatesOperations.
         /// </summary>
-        public virtual ICertsOperations Certs { get; private set; }
+        public virtual IPolicyCertificatesOperations PolicyCertificates { get; private set; }
+
+        /// <summary>
+        /// Gets the ISigningCertificatesOperations.
+        /// </summary>
+        public virtual ISigningCertificatesOperations SigningCertificates { get; private set; }
 
         /// <summary>
         /// Gets the IMetadataConfigurationOperations.
@@ -212,7 +217,8 @@ namespace Microsoft.Azure.Attestation
         private void Initialize()
         {
             Policy = new PolicyOperations(this);
-            Certs = new CertsOperations(this);
+            PolicyCertificates = new PolicyCertificatesOperations(this);
+            SigningCertificates = new SigningCertificatesOperations(this);
             MetadataConfiguration = new MetadataConfigurationOperations(this);
             BaseUri = "{tenantBaseUrl}";
             ApiVersion = "2018-09-01-preview";

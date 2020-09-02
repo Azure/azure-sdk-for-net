@@ -5,7 +5,7 @@ To get started, you'll need a URI to an Azure Key Vault. See the [README](../REA
 
 ## Creating a KeyClient
 
-To create a new `KeyClient` to create, get, update, or delete keys, you need the endpoint to a Key Vault and credentials.
+To create a new `KeyClient` to create, get, update, or delete keys, you need the endpoint to an Azure Key Vault and credentials.
 You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.
 
 In the sample below, you can set `keyVaultUrl` based on an environment variable, configuration setting, or any way that works for your application.
@@ -17,7 +17,7 @@ var client = new KeyClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
 ## Creating keys
 
 Let's create EC and RSA keys valid for 1 year.
-If the key already exists in the Key Vault, then a new version of the key is created.
+If the key already exists in the Azure Key Vault, then a new version of the key is created.
 
 ```C# Snippet:KeysSample3CreateKey
 string rsaKeyName = $"CloudRsaKey-{Guid.NewGuid()}";
@@ -40,7 +40,7 @@ client.CreateEcKey(ecKey);
 
 ## Listing keys
 
-You need to check the type of keys that already exist in your Key Vault.
+You need to check the type of keys that already exist in your Azure Key Vault.
 Let's list the keys and print their types. List operations don't return the actual key, but only properties of the key.
 So, for each returned key we call GetKey to get the actual key.
 
@@ -55,8 +55,8 @@ foreach (KeyProperties key in keys)
 
 ## Updating RSA key size
 
-We need the cloud RSA key with bigger key size, so you want to update the key in Key Vault to ensure it has the required size.
-Calling `CreateRsaKey` on an existing key creates a new version of the key in the Key Vault with the new specified size.
+We need the cloud RSA key with bigger key size, so you want to update the key in Azure Key Vault to ensure it has the required size.
+Calling `CreateRsaKey` on an existing key creates a new version of the key in the Azure Key Vault with the new specified size.
 
 ```C# Snippet:KeysSample3UpdateKey
 var newRsaKey = new CreateRsaKeyOptions(rsaKeyName, hardwareProtected: false)
@@ -84,7 +84,7 @@ foreach (KeyProperties key in keysVersions)
 ## Deleting keys
 
 The cloud RSA Key and the cloud EC keys are no longer needed.
-You need to delete them from the Key Vault.
+You need to delete them from the Azure Key Vault.
 
 ```C# Snippet:KeysSample3DeletedKeys
 DeleteKeyOperation rsaKeyOperation = client.StartDeleteKey(rsaKeyName);
@@ -102,7 +102,7 @@ while (!rsaKeyOperation.HasCompleted || !ecKeyOperation.HasCompleted)
 
 ## Listing deleted keys
 
-You can list all the deleted and non-purged keys, assuming Key Vault is soft delete-enabled.
+You can list all the deleted and non-purged keys, assuming Azure Key Vault is soft delete-enabled.
 
 ```C# Snippet:KeysSample3ListDeletedKeys
 IEnumerable<DeletedKey> keysDeleted = client.GetDeletedKeys();

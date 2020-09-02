@@ -25,9 +25,9 @@ namespace Azure.Messaging.ServiceBus.Core
             {
                 Mode = instance.Mode,
                 CustomRetryPolicy = instance.CustomRetryPolicy,
-                MaximumRetries = instance.MaximumRetries,
+                MaxRetries = instance.MaxRetries,
                 Delay = instance.Delay,
-                MaximumDelay = instance.MaximumDelay,
+                MaxDelay = instance.MaxDelay,
                 TryTimeout = instance.TryTimeout
             };
 
@@ -77,9 +77,9 @@ namespace Azure.Messaging.ServiceBus.Core
             return
             (
                 instance.Mode == other.Mode
-                && instance.MaximumRetries == other.MaximumRetries
+                && instance.MaxRetries == other.MaxRetries
                 && instance.Delay == other.Delay
-                && instance.MaximumDelay == other.MaximumDelay
+                && instance.MaxDelay == other.MaxDelay
                 && instance.TryTimeout == other.TryTimeout
                 && instance.CustomRetryPolicy == other.CustomRetryPolicy
             );

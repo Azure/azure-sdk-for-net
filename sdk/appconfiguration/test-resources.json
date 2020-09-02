@@ -40,6 +40,10 @@
                 "description": "The location of the resource. By default, this is the same as the resource group."
             }
         },
+        "sku": {
+            "defaultValue": "Standard",
+            "type": "string"
+        },
         "azConfigPrefix": {
             "defaultValue": "azconfig-net",
             "type": "string"
@@ -57,9 +61,12 @@
     "resources": [
         {
             "type": "Microsoft.AppConfiguration/configurationStores",
-            "apiVersion": "2019-02-01-preview",
+            "apiVersion": "2019-10-01",
             "name": "[variables('uniqueAzConfigName')]",
-            "location":"[parameters('location')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "[parameters('sku')]"
+            },
             "properties": {
                 "endpoint":"[variables('endpointValue')]"
             }
@@ -75,18 +82,7 @@
         }
     ],
     "outputs": {
-        "AZURE_TENANT_ID": {
-            "type": "string",
-            "value": "[parameters('tenantId')]"
-        },
-        "AZURE_CLIENT_ID": {
-            "type": "string",
-            "value": "[parameters('testApplicationId')]"
-        },
-        "AZURE_CLIENT_SECRET": {
-            "type": "string",
-            "value": "[parameters('testApplicationSecret')]"
-        },
+
         "APPCONFIGURATION_CONNECTION_STRING": {
             "type": "string",
             "value": "[listKeys(resourceId('Microsoft.AppConfiguration/configurationStores',variables('uniqueAzConfigName')), '2019-02-01-preview').value[0].connectionString]"

@@ -56,11 +56,24 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <param name="servicePackageActivationMode">The activation Mode of
         /// the service package. Possible values include: 'SharedProcess',
         /// 'ExclusiveProcess'</param>
+        /// <param name="serviceDnsName">Dns name used for the service. If this
+        /// is specified, then the service can be accessed via its DNS name
+        /// instead of service name.</param>
         /// <param name="instanceCount">The instance count.</param>
-        public StatelessServiceProperties(string placementConstraints = default(string), IList<ServiceCorrelationDescription> correlationScheme = default(IList<ServiceCorrelationDescription>), IList<ServiceLoadMetricDescription> serviceLoadMetrics = default(IList<ServiceLoadMetricDescription>), IList<ServicePlacementPolicyDescription> servicePlacementPolicies = default(IList<ServicePlacementPolicyDescription>), string defaultMoveCost = default(string), string provisioningState = default(string), string serviceTypeName = default(string), PartitionSchemeDescription partitionDescription = default(PartitionSchemeDescription), string servicePackageActivationMode = default(string), int? instanceCount = default(int?))
-            : base(placementConstraints, correlationScheme, serviceLoadMetrics, servicePlacementPolicies, defaultMoveCost, provisioningState, serviceTypeName, partitionDescription, servicePackageActivationMode)
+        /// <param name="instanceCloseDelayDuration">Delay duration for
+        /// RequestDrain feature to ensures that the endpoint advertised by the
+        /// stateless instance is removed before the delay starts prior to
+        /// closing the instance. This delay enables existing requests to drain
+        /// gracefully before the instance actually goes down
+        /// (https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-application-upgrade-advanced#avoid-connection-drops-during-stateless-service-planned-downtime-preview).
+        /// It is first interpreted as a string representing an ISO 8601
+        /// duration. If that fails, then it is interpreted as a number
+        /// representing the total number of milliseconds.</param>
+        public StatelessServiceProperties(string placementConstraints = default(string), IList<ServiceCorrelationDescription> correlationScheme = default(IList<ServiceCorrelationDescription>), IList<ServiceLoadMetricDescription> serviceLoadMetrics = default(IList<ServiceLoadMetricDescription>), IList<ServicePlacementPolicyDescription> servicePlacementPolicies = default(IList<ServicePlacementPolicyDescription>), string defaultMoveCost = default(string), string provisioningState = default(string), string serviceTypeName = default(string), PartitionSchemeDescription partitionDescription = default(PartitionSchemeDescription), string servicePackageActivationMode = default(string), string serviceDnsName = default(string), int? instanceCount = default(int?), string instanceCloseDelayDuration = default(string))
+            : base(placementConstraints, correlationScheme, serviceLoadMetrics, servicePlacementPolicies, defaultMoveCost, provisioningState, serviceTypeName, partitionDescription, servicePackageActivationMode, serviceDnsName)
         {
             InstanceCount = instanceCount;
+            InstanceCloseDelayDuration = instanceCloseDelayDuration;
             CustomInit();
         }
 
@@ -74,6 +87,20 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// </summary>
         [JsonProperty(PropertyName = "instanceCount")]
         public int? InstanceCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets delay duration for RequestDrain feature to ensures
+        /// that the endpoint advertised by the stateless instance is removed
+        /// before the delay starts prior to closing the instance. This delay
+        /// enables existing requests to drain gracefully before the instance
+        /// actually goes down
+        /// (https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-application-upgrade-advanced#avoid-connection-drops-during-stateless-service-planned-downtime-preview).
+        /// It is first interpreted as a string representing an ISO 8601
+        /// duration. If that fails, then it is interpreted as a number
+        /// representing the total number of milliseconds.
+        /// </summary>
+        [JsonProperty(PropertyName = "instanceCloseDelayDuration")]
+        public string InstanceCloseDelayDuration { get; set; }
 
         /// <summary>
         /// Validate the object.

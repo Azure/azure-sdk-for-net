@@ -361,7 +361,7 @@ namespace Microsoft.Azure.Management.HybridData
             DataStoreTypes = new DataStoreTypesOperations(this);
             PublicKeys = new PublicKeysOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2016-06-01";
+            ApiVersion = "2019-06-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

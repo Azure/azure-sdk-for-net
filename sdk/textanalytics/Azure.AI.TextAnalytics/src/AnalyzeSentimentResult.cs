@@ -32,7 +32,7 @@ namespace Azure.AI.TextAnalytics
                 if (HasError)
                 {
 #pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
-                    throw new InvalidOperationException($"Cannot access result for document {Id}, due to error {Error.Code}: {Error.Message}");
+                    throw new InvalidOperationException($"Cannot access result for document {Id}, due to error {Error.ErrorCode}: {Error.Message}");
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
                 }
                 return _documentSentiment;

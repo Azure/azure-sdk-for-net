@@ -102,6 +102,16 @@ namespace Microsoft.Azure.Management.EventGrid
         public virtual ITopicsOperations Topics { get; private set; }
 
         /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
+
+        /// <summary>
         /// Gets the ITopicTypesOperations.
         /// </summary>
         public virtual ITopicTypesOperations TopicTypes { get; private set; }
@@ -352,9 +362,11 @@ namespace Microsoft.Azure.Management.EventGrid
             EventSubscriptions = new EventSubscriptionsOperations(this);
             Operations = new Operations(this);
             Topics = new TopicsOperations(this);
+            PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
+            PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             TopicTypes = new TopicTypesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-04-01-preview";
+            ApiVersion = "2020-06-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

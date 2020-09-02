@@ -69,9 +69,14 @@ namespace Microsoft.Azure.Attestation
         IPolicyOperations Policy { get; }
 
         /// <summary>
-        /// Gets the ICertsOperations.
+        /// Gets the IPolicyCertificatesOperations.
         /// </summary>
-        ICertsOperations Certs { get; }
+        IPolicyCertificatesOperations PolicyCertificates { get; }
+
+        /// <summary>
+        /// Gets the ISigningCertificatesOperations.
+        /// </summary>
+        ISigningCertificatesOperations SigningCertificates { get; }
 
         /// <summary>
         /// Gets the IMetadataConfigurationOperations.

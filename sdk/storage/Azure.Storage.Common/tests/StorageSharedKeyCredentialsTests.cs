@@ -4,7 +4,7 @@
 using System;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
 using Azure.Storage.Test;
 using NUnit.Framework;

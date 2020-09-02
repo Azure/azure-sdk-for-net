@@ -92,6 +92,11 @@ namespace Microsoft.Azure.Management.Compute
         IDedicatedHostsOperations DedicatedHosts { get; }
 
         /// <summary>
+        /// Gets the ISshPublicKeysOperations.
+        /// </summary>
+        ISshPublicKeysOperations SshPublicKeys { get; }
+
+        /// <summary>
         /// Gets the IVirtualMachineExtensionImagesOperations.
         /// </summary>
         IVirtualMachineExtensionImagesOperations VirtualMachineExtensionImages { get; }
@@ -180,6 +185,11 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the IDiskEncryptionSetsOperations.
         /// </summary>
         IDiskEncryptionSetsOperations DiskEncryptionSets { get; }
+
+        /// <summary>
+        /// Gets the IDiskAccessesOperations.
+        /// </summary>
+        IDiskAccessesOperations DiskAccesses { get; }
 
         /// <summary>
         /// Gets the IGalleriesOperations.

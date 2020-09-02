@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
@@ -13,12 +14,51 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// The <see cref="DateTimeOffset"/> the policy becomes active.
         /// </summary>
-        public DateTimeOffset StartsOn { get; set; }
+        public DateTimeOffset? PolicyStartsOn { get; set; }
 
         /// <summary>
         /// The <see cref="DateTimeOffset"/> the policy expires.
         /// </summary>
-        public DateTimeOffset ExpiresOn { get; set; }
+        public DateTimeOffset? PolicyExpiresOn { get; set; }
+
+
+        /// <summary>
+        /// The <see cref="DateTimeOffset"/> the policy becomes active.
+        /// This value is non-nullable, please use <see cref="PolicyStartsOn"/>.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public System.DateTimeOffset StartsOn
+        {
+            get
+            {
+                return PolicyStartsOn == default ?
+                    StartsOn :
+                    (DateTimeOffset)PolicyStartsOn;
+            }
+            set
+            {
+                PolicyStartsOn = value;
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="DateTimeOffset"/> the policy expires.
+        /// This value is non-nullable, please use <see cref="PolicyExpiresOn"/>.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public System.DateTimeOffset ExpiresOn
+        {
+            get
+            {
+                return PolicyExpiresOn == default ?
+                    ExpiresOn :
+                    (DateTimeOffset)PolicyExpiresOn;
+            }
+            set
+            {
+                PolicyExpiresOn = value;
+            }
+        }
 
         /// <summary>
         /// The file permissions for the policy.

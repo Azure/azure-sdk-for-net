@@ -35,6 +35,9 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Initializes a new instance of the ManagedInstanceUpdate class.
         /// </summary>
         /// <param name="sku">Managed instance sku</param>
+        /// <param name="provisioningState">Possible values include:
+        /// 'Creating', 'Deleting', 'Updating', 'Unknown', 'Succeeded',
+        /// 'Failed'</param>
         /// <param name="managedInstanceCreateMode">Specifies the mode of
         /// database creation.
         ///
@@ -94,10 +97,18 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Europe Standard Time".</param>
         /// <param name="instancePoolId">The Id of the instance pool this
         /// managed server belongs to.</param>
+        /// <param name="minimalTlsVersion">Minimal TLS version. Allowed
+        /// values: 'None', '1.0', '1.1', '1.2'</param>
+        /// <param name="storageAccountType">The storage account type used to
+        /// store backups for this instance. The options are LRS
+        /// (LocallyRedundantStorage), ZRS (ZoneRedundantStorage) and GRS
+        /// (GeoRedundantStorage). Possible values include: 'GRS', 'LRS',
+        /// 'ZRS'</param>
         /// <param name="tags">Resource tags.</param>
-        public ManagedInstanceUpdate(Sku sku = default(Sku), string managedInstanceCreateMode = default(string), string fullyQualifiedDomainName = default(string), string administratorLogin = default(string), string administratorLoginPassword = default(string), string subnetId = default(string), string state = default(string), string licenseType = default(string), int? vCores = default(int?), int? storageSizeInGB = default(int?), string collation = default(string), string dnsZone = default(string), string dnsZonePartner = default(string), bool? publicDataEndpointEnabled = default(bool?), string sourceManagedInstanceId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), string proxyOverride = default(string), string timezoneId = default(string), string instancePoolId = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ManagedInstanceUpdate(Sku sku = default(Sku), string provisioningState = default(string), string managedInstanceCreateMode = default(string), string fullyQualifiedDomainName = default(string), string administratorLogin = default(string), string administratorLoginPassword = default(string), string subnetId = default(string), string state = default(string), string licenseType = default(string), int? vCores = default(int?), int? storageSizeInGB = default(int?), string collation = default(string), string dnsZone = default(string), string dnsZonePartner = default(string), bool? publicDataEndpointEnabled = default(bool?), string sourceManagedInstanceId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), string proxyOverride = default(string), string timezoneId = default(string), string instancePoolId = default(string), string maintenanceConfigurationId = default(string), string minimalTlsVersion = default(string), string storageAccountType = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Sku = sku;
+            ProvisioningState = provisioningState;
             ManagedInstanceCreateMode = managedInstanceCreateMode;
             FullyQualifiedDomainName = fullyQualifiedDomainName;
             AdministratorLogin = administratorLogin;
@@ -116,6 +127,8 @@ namespace Microsoft.Azure.Management.Sql.Models
             ProxyOverride = proxyOverride;
             TimezoneId = timezoneId;
             InstancePoolId = instancePoolId;
+            MinimalTlsVersion = minimalTlsVersion;
+            StorageAccountType = storageAccountType;
             Tags = tags;
             CustomInit();
         }
@@ -130,6 +143,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public Sku Sku { get; set; }
+
+        /// <summary>
+        /// Gets possible values include: 'Creating', 'Deleting', 'Updating',
+        /// 'Unknown', 'Succeeded', 'Failed'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets specifies the mode of database creation.
@@ -269,6 +289,22 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.instancePoolId")]
         public string InstancePoolId { get; set; }
+
+        /// <summary>
+        /// Gets or sets minimal TLS version. Allowed values: 'None', '1.0',
+        /// '1.1', '1.2'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.minimalTlsVersion")]
+        public string MinimalTlsVersion { get; set; }
+
+        /// <summary>
+        /// Gets or sets the storage account type used to store backups for
+        /// this instance. The options are LRS (LocallyRedundantStorage), ZRS
+        /// (ZoneRedundantStorage) and GRS (GeoRedundantStorage). Possible
+        /// values include: 'GRS', 'LRS', 'ZRS'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.storageAccountType")]
+        public string StorageAccountType { get; set; }
 
         /// <summary>
         /// Gets or sets resource tags.

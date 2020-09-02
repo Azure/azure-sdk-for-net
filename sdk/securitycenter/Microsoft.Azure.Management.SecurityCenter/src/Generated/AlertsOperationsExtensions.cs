@@ -312,13 +312,9 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='alertName'>
             /// Name of the alert object
             /// </param>
-            /// <param name='alertUpdateActionType'>
-            /// Type of the action to do on the alert. Possible values include: 'Dismiss',
-            /// 'Reactivate'
-            /// </param>
-            public static void UpdateSubscriptionLevelAlertState(this IAlertsOperations operations, string alertName, string alertUpdateActionType)
+            public static void UpdateSubscriptionLevelAlertStateToDismiss(this IAlertsOperations operations, string alertName)
             {
-                operations.UpdateSubscriptionLevelAlertStateAsync(alertName, alertUpdateActionType).GetAwaiter().GetResult();
+                operations.UpdateSubscriptionLevelAlertStateToDismissAsync(alertName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -329,17 +325,13 @@ namespace Microsoft.Azure.Management.Security
             /// </param>
             /// <param name='alertName'>
             /// Name of the alert object
-            /// </param>
-            /// <param name='alertUpdateActionType'>
-            /// Type of the action to do on the alert. Possible values include: 'Dismiss',
-            /// 'Reactivate'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateSubscriptionLevelAlertStateAsync(this IAlertsOperations operations, string alertName, string alertUpdateActionType, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateSubscriptionLevelAlertStateToDismissAsync(this IAlertsOperations operations, string alertName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateSubscriptionLevelAlertStateWithHttpMessagesAsync(alertName, alertUpdateActionType, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdateSubscriptionLevelAlertStateToDismissWithHttpMessagesAsync(alertName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -351,17 +343,44 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='alertName'>
             /// Name of the alert object
             /// </param>
-            /// <param name='alertUpdateActionType'>
-            /// Type of the action to do on the alert. Possible values include: 'Dismiss',
-            /// 'Reactivate'
+            public static void UpdateSubscriptionLevelAlertStateToReactivate(this IAlertsOperations operations, string alertName)
+            {
+                operations.UpdateSubscriptionLevelAlertStateToReactivateAsync(alertName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update the alert's state
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='alertName'>
+            /// Name of the alert object
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task UpdateSubscriptionLevelAlertStateToReactivateAsync(this IAlertsOperations operations, string alertName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.UpdateSubscriptionLevelAlertStateToReactivateWithHttpMessagesAsync(alertName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Update the alert's state
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='alertName'>
+            /// Name of the alert object
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group within the user's subscription. The name is
             /// case insensitive.
             /// </param>
-            public static void UpdateResourceGroupLevelAlertState(this IAlertsOperations operations, string alertName, string alertUpdateActionType, string resourceGroupName)
+            public static void UpdateResourceGroupLevelAlertStateToDismiss(this IAlertsOperations operations, string alertName, string resourceGroupName)
             {
-                operations.UpdateResourceGroupLevelAlertStateAsync(alertName, alertUpdateActionType, resourceGroupName).GetAwaiter().GetResult();
+                operations.UpdateResourceGroupLevelAlertStateToDismissAsync(alertName, resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -373,9 +392,44 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='alertName'>
             /// Name of the alert object
             /// </param>
-            /// <param name='alertUpdateActionType'>
-            /// Type of the action to do on the alert. Possible values include: 'Dismiss',
-            /// 'Reactivate'
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task UpdateResourceGroupLevelAlertStateToDismissAsync(this IAlertsOperations operations, string alertName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.UpdateResourceGroupLevelAlertStateToDismissWithHttpMessagesAsync(alertName, resourceGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Update the alert's state
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='alertName'>
+            /// Name of the alert object
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            public static void UpdateResourceGroupLevelAlertStateToReactivate(this IAlertsOperations operations, string alertName, string resourceGroupName)
+            {
+                operations.UpdateResourceGroupLevelAlertStateToReactivateAsync(alertName, resourceGroupName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update the alert's state
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='alertName'>
+            /// Name of the alert object
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group within the user's subscription. The name is
@@ -384,9 +438,9 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateResourceGroupLevelAlertStateAsync(this IAlertsOperations operations, string alertName, string alertUpdateActionType, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateResourceGroupLevelAlertStateToReactivateAsync(this IAlertsOperations operations, string alertName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateResourceGroupLevelAlertStateWithHttpMessagesAsync(alertName, alertUpdateActionType, resourceGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdateResourceGroupLevelAlertStateToReactivateWithHttpMessagesAsync(alertName, resourceGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

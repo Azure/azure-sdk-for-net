@@ -8,8 +8,8 @@ using System.Resources;
 [assembly: AssemblyTitle("Microsoft Azure Search Management Library")]
 [assembly: AssemblyDescription("Makes it easy to manage Azure Search services from a .NET application.")]
 
-[assembly: AssemblyVersion("3.0.0.0")]
-[assembly: AssemblyFileVersion("3.0.0.0")]
+[assembly: AssemblyVersion("4.0.0.0")]
+[assembly: AssemblyFileVersion("4.0.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]

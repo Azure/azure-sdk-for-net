@@ -1,0 +1,44 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "http://seandevtest.queue.core.windows.net/test-queue-aff723de-e994-6569-4650-2ac6093a606a?comp=metadata",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-acb7eae60932784bbb5da4ae379e81ed-61ba826384a18e46-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Queues/12.3.0-dev.20200219.1",
+          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "38d92809-d922-d516-a4d1-fae4077b430f",
+        "x-ms-date": "Wed, 19 Feb 2020 23:38:19 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2018-11-09"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Content-Length": "217",
+        "Content-Type": "application/xml",
+        "Date": "Wed, 19 Feb 2020 23:38:18 GMT",
+        "Server": [
+          "Windows-Azure-Queue/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": "Origin",
+        "x-ms-error-code": "QueueNotFound",
+        "x-ms-request-id": "a939ec30-d003-0009-147d-e71084000000",
+        "x-ms-version": "2018-11-09"
+      },
+      "ResponseBody": [
+        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EQueueNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified queue does not exist.\n",
+        "RequestId:a939ec30-d003-0009-147d-e71084000000\n",
+        "Time:2020-02-19T23:38:19.7019054Z\u003C/Message\u003E\u003C/Error\u003E"
+      ]
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "278933454",
+    "Storage_TestConfigDefault": "ProductionTenant\nseandevtest\nU2FuaXRpemVk\nhttps://seandevtest.blob.core.windows.net\nhttp://seandevtest.file.core.windows.net\nhttp://seandevtest.queue.core.windows.net\nhttp://seandevtest.table.core.windows.net\n\n\n\n\nhttp://seandevtest-secondary.blob.core.windows.net\nhttp://seandevtest-secondary.file.core.windows.net\nhttp://seandevtest-secondary.queue.core.windows.net\nhttp://seandevtest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seandevtest.blob.core.windows.net/;QueueEndpoint=http://seandevtest.queue.core.windows.net/;FileEndpoint=http://seandevtest.file.core.windows.net/;BlobSecondaryEndpoint=http://seandevtest-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://seandevtest-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://seandevtest-secondary.file.core.windows.net/;AccountName=seandevtest;AccountKey=Sanitized\nseanscope1"
+  }
+}

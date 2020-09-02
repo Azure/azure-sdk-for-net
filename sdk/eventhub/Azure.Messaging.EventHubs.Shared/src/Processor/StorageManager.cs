@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Azure.Messaging.EventHubs.Processor
+namespace Azure.Messaging.EventHubs.Primitives
 {
     /// <summary>
     ///   Deals with the interaction with the chosen storage service.  It's able to create checkpoints and
@@ -25,10 +25,10 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>An enumerable containing all the existing ownership for the associated Event Hub and consumer group.</returns>
         ///
-        public abstract Task<IEnumerable<PartitionOwnership>> ListOwnershipAsync(string fullyQualifiedNamespace,
-                                                                                 string eventHubName,
-                                                                                 string consumerGroup,
-                                                                                 CancellationToken cancellationToken);
+        public abstract Task<IEnumerable<EventProcessorPartitionOwnership>> ListOwnershipAsync(string fullyQualifiedNamespace,
+                                                                                               string eventHubName,
+                                                                                               string consumerGroup,
+                                                                                               CancellationToken cancellationToken);
 
         /// <summary>
         ///   Attempts to claim ownership of partitions for processing.
@@ -39,8 +39,8 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>An enumerable containing the successfully claimed ownership instances.</returns>
         ///
-        public abstract Task<IEnumerable<PartitionOwnership>> ClaimOwnershipAsync(IEnumerable<PartitionOwnership> partitionOwnership,
-                                                                                  CancellationToken cancellationToken);
+        public abstract Task<IEnumerable<EventProcessorPartitionOwnership>> ClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> partitionOwnership,
+                                                                                                CancellationToken cancellationToken);
 
 
         /// <summary>
@@ -54,19 +54,21 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>An enumerable containing all the existing checkpoints for the associated Event Hub and consumer group.</returns>
         ///
-        public abstract Task<IEnumerable<Checkpoint>> ListCheckpointsAsync(string fullyQualifiedNamespace,
-                                                                           string eventHubName,
-                                                                           string consumerGroup,
-                                                                           CancellationToken cancellationToken);
+        public abstract Task<IEnumerable<EventProcessorCheckpoint>> ListCheckpointsAsync(string fullyQualifiedNamespace,
+                                                                                         string eventHubName,
+                                                                                         string consumerGroup,
+                                                                                         CancellationToken cancellationToken);
 
         /// <summary>
         ///   Updates the checkpoint using the given information for the associated partition and consumer group in the chosen storage service.
         /// </summary>
         ///
         /// <param name="checkpoint">The checkpoint containing the information to be stored.</param>
+        /// <param name="eventData">The event to use as the basis for the checkpoint's starting position.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        public abstract Task UpdateCheckpointAsync(Checkpoint checkpoint,
+        public abstract Task UpdateCheckpointAsync(EventProcessorCheckpoint checkpoint,
+                                                   EventData eventData,
                                                    CancellationToken cancellationToken);
     }
 }

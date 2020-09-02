@@ -1091,7 +1091,7 @@ namespace Azure.Storage.Files.DataLake
             /// <param name="contentType">Optional. Sets the blob's content type. If specified, this property is stored with the blob and returned with a read request.</param>
             /// <param name="renameSource">An optional file or directory to be renamed.  The value must have the following format: "/{filesystem}/{path}".  If "x-ms-properties" is specified, the properties will overwrite the existing properties; otherwise, the existing properties will be preserved. This value must be a URL percent-encoded string. Note that the string may only contain ASCII characters in the ISO-8859-1 character set.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
-            /// <param name="sourceLeaseId">A lease ID for the source path. If specified, the source path must have an active lease and the leaase ID must match.</param>
+            /// <param name="sourceLeaseId">A lease ID for the source path. If specified, the source path must have an active lease and the lease ID must match.</param>
             /// <param name="properties">Optional. User-defined properties to be stored with the filesystem, in the format of a comma-separated list of name and value pairs "n1=v1, n2=v2, ...", where each value is a base64 encoded string. Note that the string may only contain ASCII characters in the ISO-8859-1 character set.  If the filesystem exists, any properties not included in the list will be removed.  All properties are removed if the header is omitted.  To merge new and existing properties, first get all existing properties and the current E-Tag, then make a conditional request with the E-Tag and include values for all properties.</param>
             /// <param name="permissions">Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access permissions for the file owner, the file owning group, and others. Each class may be granted read, write, or execute permission.  The sticky bit is also supported.  Both symbolic (rwxrw-rw-) and 4-digit octal notation (e.g. 0766) are supported.</param>
             /// <param name="umask">Optional and only valid if Hierarchical Namespace is enabled for the account. When creating a file or directory and the parent folder does not have a default ACL, the umask restricts the permissions of the file or directory to be created.  The resulting permission is given by p bitwise and not u, where p is the permission and u is the umask.  For example, if p is 0777 and u is 0057, then the resulting permission is 0720.  The default permission is 0777 for a directory and 0666 for a file.  The default umask is 0027.  The umask must be specified in 4-digit octal notation (e.g. 0766).</param>
@@ -1219,7 +1219,7 @@ namespace Azure.Storage.Files.DataLake
             /// <param name="contentType">Optional. Sets the blob's content type. If specified, this property is stored with the blob and returned with a read request.</param>
             /// <param name="renameSource">An optional file or directory to be renamed.  The value must have the following format: "/{filesystem}/{path}".  If "x-ms-properties" is specified, the properties will overwrite the existing properties; otherwise, the existing properties will be preserved. This value must be a URL percent-encoded string. Note that the string may only contain ASCII characters in the ISO-8859-1 character set.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
-            /// <param name="sourceLeaseId">A lease ID for the source path. If specified, the source path must have an active lease and the leaase ID must match.</param>
+            /// <param name="sourceLeaseId">A lease ID for the source path. If specified, the source path must have an active lease and the lease ID must match.</param>
             /// <param name="properties">Optional. User-defined properties to be stored with the filesystem, in the format of a comma-separated list of name and value pairs "n1=v1, n2=v2, ...", where each value is a base64 encoded string. Note that the string may only contain ASCII characters in the ISO-8859-1 character set.  If the filesystem exists, any properties not included in the list will be removed.  All properties are removed if the header is omitted.  To merge new and existing properties, first get all existing properties and the current E-Tag, then make a conditional request with the E-Tag and include values for all properties.</param>
             /// <param name="permissions">Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access permissions for the file owner, the file owning group, and others. Each class may be granted read, write, or execute permission.  The sticky bit is also supported.  Both symbolic (rwxrw-rw-) and 4-digit octal notation (e.g. 0766) are supported.</param>
             /// <param name="umask">Optional and only valid if Hierarchical Namespace is enabled for the account. When creating a file or directory and the parent folder does not have a default ACL, the umask restricts the permissions of the file or directory to be created.  The resulting permission is given by p bitwise and not u, where p is the permission and u is the umask.  For example, if p is 0777 and u is 0057, then the resulting permission is 0720.  The default permission is 0777 for a directory and 0666 for a file.  The default umask is 0027.  The umask must be specified in 4-digit octal notation (e.g. 0766).</param>
@@ -1372,10 +1372,13 @@ namespace Azure.Storage.Files.DataLake
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
-            /// <param name="action">The action must be "append" to upload data to be appended to a file, "flush" to flush previously uploaded data to a file, "setProperties" to set the properties of a file or directory, or "setAccessControl" to set the owner, group, permissions, or access control list for a file or directory.  Note that Hierarchical Namespace must be enabled for the account in order to use access control.  Also note that the Access Control List (ACL) includes permissions for the owner, owning group, and others, so the x-ms-permissions and x-ms-acl request headers are mutually exclusive.</param>
+            /// <param name="action">The action must be "append" to upload data to be appended to a file, "flush" to flush previously uploaded data to a file, "setProperties" to set the properties of a file or directory, "setAccessControl" to set the owner, group, permissions, or access control list for a file or directory, or  "setAccessControlRecursive" to set the access control list for a directory recursively. Note that Hierarchical Namespace must be enabled for the account in order to use access control.  Also note that the Access Control List (ACL) includes permissions for the owner, owning group, and others, so the x-ms-permissions and x-ms-acl request headers are mutually exclusive.</param>
+            /// <param name="mode">Mode "set" sets POSIX access control rights on files and directories, "modify" modifies one or more POSIX access control rights  that pre-exist on files and directories, "remove" removes one or more POSIX access control rights  that were present earlier on files and directories</param>
             /// <param name="body">Initial data</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="maxRecords">Optional. Valid for "SetAccessControlRecursive" operation. It specifies the maximum number of files or directories on which the acl change will be applied. If omitted or greater than 2,000, the request will process up to 2,000 items</param>
+            /// <param name="continuation">Optional. The number of paths processed with each invocation is limited. If the number of paths to be processed exceeds this limit, a continuation token is returned in the response header x-ms-continuation. When a continuation token is  returned in the response, it must be percent-encoded and specified in a subsequent invocation of setAcessControlRecursive operation.</param>
             /// <param name="position">This parameter allows the caller to upload data in parallel and control the order in which it is appended to the file.  It is required when uploading data to be appended to the file and when flushing previously uploaded data to the file.  The value must be the position where the data is to be appended.  Uploaded data is not immediately flushed, or written, to the file.  To flush, the previously uploaded data must be contiguous, the position parameter must be specified and equal to the length of the file after all data has been written, and there must not be a request entity body included with the request.</param>
             /// <param name="retainUncommittedData">Valid only for flush operations.  If "true", uncommitted data is retained after the flush operation completes; otherwise, the uncommitted data is deleted after the flush operation.  The default is false.  Data at offsets less than the specified position are written to the file when flush succeeds, but this optional parameter allows data after the flush position to be retained for a future flush operation.</param>
             /// <param name="close">Azure Storage Events allow applications to receive notifications when files change. When Azure Storage Events are enabled, a file changed event is raised. This event has a property indicating whether this is the final change to distinguish the difference between an intermediate flush to a file stream and the final close of a file stream. The close query parameter is valid only when the action is "flush" and change notifications are enabled. If the value of close is "true" and the flush operation completes successfully, the service raises a file change notification with a property indicating that this is the final update (the file stream has been closed). If "false" a change notification is raised indicating the file has changed. The default is false. This query parameter is set to true by the Hadoop ABFS driver to indicate that the file stream has been closed."</param>
@@ -1406,9 +1409,12 @@ namespace Azure.Storage.Files.DataLake
                 System.Uri resourceUri,
                 string version,
                 Azure.Storage.Files.DataLake.Models.PathUpdateAction action,
+                Azure.Storage.Files.DataLake.Models.PathSetAccessControlRecursiveMode mode,
                 System.IO.Stream body,
                 string requestId = default,
                 int? timeout = default,
+                int? maxRecords = default,
+                string continuation = default,
                 long? position = default,
                 bool? retainUncommittedData = default,
                 bool? close = default,
@@ -1443,9 +1449,12 @@ namespace Azure.Storage.Files.DataLake
                         resourceUri,
                         version,
                         action,
+                        mode,
                         body,
                         requestId,
                         timeout,
+                        maxRecords,
+                        continuation,
                         position,
                         retainUncommittedData,
                         close,
@@ -1500,10 +1509,13 @@ namespace Azure.Storage.Files.DataLake
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
-            /// <param name="action">The action must be "append" to upload data to be appended to a file, "flush" to flush previously uploaded data to a file, "setProperties" to set the properties of a file or directory, or "setAccessControl" to set the owner, group, permissions, or access control list for a file or directory.  Note that Hierarchical Namespace must be enabled for the account in order to use access control.  Also note that the Access Control List (ACL) includes permissions for the owner, owning group, and others, so the x-ms-permissions and x-ms-acl request headers are mutually exclusive.</param>
+            /// <param name="action">The action must be "append" to upload data to be appended to a file, "flush" to flush previously uploaded data to a file, "setProperties" to set the properties of a file or directory, "setAccessControl" to set the owner, group, permissions, or access control list for a file or directory, or  "setAccessControlRecursive" to set the access control list for a directory recursively. Note that Hierarchical Namespace must be enabled for the account in order to use access control.  Also note that the Access Control List (ACL) includes permissions for the owner, owning group, and others, so the x-ms-permissions and x-ms-acl request headers are mutually exclusive.</param>
+            /// <param name="mode">Mode "set" sets POSIX access control rights on files and directories, "modify" modifies one or more POSIX access control rights  that pre-exist on files and directories, "remove" removes one or more POSIX access control rights  that were present earlier on files and directories</param>
             /// <param name="body">Initial data</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="maxRecords">Optional. Valid for "SetAccessControlRecursive" operation. It specifies the maximum number of files or directories on which the acl change will be applied. If omitted or greater than 2,000, the request will process up to 2,000 items</param>
+            /// <param name="continuation">Optional. The number of paths processed with each invocation is limited. If the number of paths to be processed exceeds this limit, a continuation token is returned in the response header x-ms-continuation. When a continuation token is  returned in the response, it must be percent-encoded and specified in a subsequent invocation of setAcessControlRecursive operation.</param>
             /// <param name="position">This parameter allows the caller to upload data in parallel and control the order in which it is appended to the file.  It is required when uploading data to be appended to the file and when flushing previously uploaded data to the file.  The value must be the position where the data is to be appended.  Uploaded data is not immediately flushed, or written, to the file.  To flush, the previously uploaded data must be contiguous, the position parameter must be specified and equal to the length of the file after all data has been written, and there must not be a request entity body included with the request.</param>
             /// <param name="retainUncommittedData">Valid only for flush operations.  If "true", uncommitted data is retained after the flush operation completes; otherwise, the uncommitted data is deleted after the flush operation.  The default is false.  Data at offsets less than the specified position are written to the file when flush succeeds, but this optional parameter allows data after the flush position to be retained for a future flush operation.</param>
             /// <param name="close">Azure Storage Events allow applications to receive notifications when files change. When Azure Storage Events are enabled, a file changed event is raised. This event has a property indicating whether this is the final change to distinguish the difference between an intermediate flush to a file stream and the final close of a file stream. The close query parameter is valid only when the action is "flush" and change notifications are enabled. If the value of close is "true" and the flush operation completes successfully, the service raises a file change notification with a property indicating that this is the final update (the file stream has been closed). If "false" a change notification is raised indicating the file has changed. The default is false. This query parameter is set to true by the Hadoop ABFS driver to indicate that the file stream has been closed."</param>
@@ -1530,9 +1542,12 @@ namespace Azure.Storage.Files.DataLake
                 System.Uri resourceUri,
                 string version,
                 Azure.Storage.Files.DataLake.Models.PathUpdateAction action,
+                Azure.Storage.Files.DataLake.Models.PathSetAccessControlRecursiveMode mode,
                 System.IO.Stream body,
                 string requestId = default,
                 int? timeout = default,
+                int? maxRecords = default,
+                string continuation = default,
                 long? position = default,
                 bool? retainUncommittedData = default,
                 bool? close = default,
@@ -1576,7 +1591,10 @@ namespace Azure.Storage.Files.DataLake
                 _request.Method = Azure.Core.RequestMethod.Patch;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("action", Azure.Storage.Files.DataLake.DataLakeRestClient.Serialization.ToString(action));
+                _request.Uri.AppendQuery("mode", Azure.Storage.Files.DataLake.DataLakeRestClient.Serialization.ToString(mode));
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+                if (maxRecords != null) { _request.Uri.AppendQuery("maxRecords", maxRecords.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+                if (continuation != null) { _request.Uri.AppendQuery("continuation", continuation); }
                 if (position != null) { _request.Uri.AppendQuery("position", position.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (retainUncommittedData != null) {
                 #pragma warning disable CA1308 // Normalize strings to uppercase
@@ -1632,7 +1650,9 @@ namespace Azure.Storage.Files.DataLake
                     case 200:
                     {
                         // Create the result
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.DataLake.Models.PathUpdateResult _value = new Azure.Storage.Files.DataLake.Models.PathUpdateResult();
+                        _value.Body = Azure.Storage.Files.DataLake.Models.SetAccessControlRecursiveResponse.FromXml(_xml.Root);
 
                         // Get response headers
                         string _header;
@@ -1683,6 +1703,10 @@ namespace Azure.Storage.Files.DataLake
                         if (response.Headers.TryGetValue("x-ms-properties", out _header))
                         {
                             _value.Properties = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-continuation", out _header))
+                        {
+                            _value.XMSContinuation = _header;
                         }
 
                         // Create the response
@@ -2997,6 +3021,185 @@ namespace Azure.Storage.Files.DataLake
             }
             #endregion Path.SetAccessControlAsync
 
+            #region Path.SetAccessControlRecursiveAsync
+            /// <summary>
+            /// Set the access control list for a path and subpaths.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="mode">Mode "set" sets POSIX access control rights on files and directories, "modify" modifies one or more POSIX access control rights  that pre-exist on files and directories, "remove" removes one or more POSIX access control rights  that were present earlier on files and directories</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="continuation">Optional.  When deleting a directory, the number of paths that are deleted with each invocation is limited.  If the number of paths to be deleted exceeds this limit, a continuation token is returned in this response header.  When a continuation token is returned in the response, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory.</param>
+            /// <param name="maxRecords">Optional. It specifies the maximum number of files or directories on which the acl change will be applied. If omitted or greater than 2,000, the request will process up to 2,000 items</param>
+            /// <param name="acl">Sets POSIX access control rights on files and directories. The value is a comma-separated list of access control entries. Each access control entry (ACE) consists of a scope, a type, a user or group identifier, and permissions in the format "[scope:][type]:[id]:[permissions]".</param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
+            /// <returns>Azure.Response{Azure.Storage.Files.DataLake.Models.PathSetAccessControlRecursiveResult}</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.DataLake.Models.PathSetAccessControlRecursiveResult>> SetAccessControlRecursiveAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                Azure.Storage.Files.DataLake.Models.PathSetAccessControlRecursiveMode mode,
+                string version,
+                int? timeout = default,
+                string continuation = default,
+                int? maxRecords = default,
+                string acl = default,
+                string requestId = default,
+                bool async = true,
+                string operationName = "PathClient.SetAccessControlRecursive",
+                System.Threading.CancellationToken cancellationToken = default)
+            {
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                try
+                {
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.HttpMessage _message = SetAccessControlRecursiveAsync_CreateMessage(
+                        pipeline,
+                        resourceUri,
+                        mode,
+                        version,
+                        timeout,
+                        continuation,
+                        maxRecords,
+                        acl,
+                        requestId))
+                    {
+                        if (async)
+                        {
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return SetAccessControlRecursiveAsync_CreateResponse(clientDiagnostics, _response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
+                }
+            }
+
+            /// <summary>
+            /// Create the Path.SetAccessControlRecursiveAsync request.
+            /// </summary>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="mode">Mode "set" sets POSIX access control rights on files and directories, "modify" modifies one or more POSIX access control rights  that pre-exist on files and directories, "remove" removes one or more POSIX access control rights  that were present earlier on files and directories</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="continuation">Optional.  When deleting a directory, the number of paths that are deleted with each invocation is limited.  If the number of paths to be deleted exceeds this limit, a continuation token is returned in this response header.  When a continuation token is returned in the response, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory.</param>
+            /// <param name="maxRecords">Optional. It specifies the maximum number of files or directories on which the acl change will be applied. If omitted or greater than 2,000, the request will process up to 2,000 items</param>
+            /// <param name="acl">Sets POSIX access control rights on files and directories. The value is a comma-separated list of access control entries. Each access control entry (ACE) consists of a scope, a type, a user or group identifier, and permissions in the format "[scope:][type]:[id]:[permissions]".</param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <returns>The Path.SetAccessControlRecursiveAsync Message.</returns>
+            internal static Azure.Core.HttpMessage SetAccessControlRecursiveAsync_CreateMessage(
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                Azure.Storage.Files.DataLake.Models.PathSetAccessControlRecursiveMode mode,
+                string version,
+                int? timeout = default,
+                string continuation = default,
+                int? maxRecords = default,
+                string acl = default,
+                string requestId = default)
+            {
+                // Validation
+                if (resourceUri == null)
+                {
+                    throw new System.ArgumentNullException(nameof(resourceUri));
+                }
+                if (version == null)
+                {
+                    throw new System.ArgumentNullException(nameof(version));
+                }
+
+                // Create the request
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
+                Azure.Core.Request _request = _message.Request;
+
+                // Set the endpoint
+                _request.Method = Azure.Core.RequestMethod.Patch;
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("action", "setAccessControlRecursive", escapeValue: false);
+                _request.Uri.AppendQuery("mode", Azure.Storage.Files.DataLake.DataLakeRestClient.Serialization.ToString(mode));
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+                if (continuation != null) { _request.Uri.AppendQuery("continuation", continuation); }
+                if (maxRecords != null) { _request.Uri.AppendQuery("maxRecords", maxRecords.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+
+                // Add request headers
+                _request.Headers.SetValue("x-ms-version", version);
+                if (acl != null) { _request.Headers.SetValue("x-ms-acl", acl); }
+                if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
+
+                return _message;
+            }
+
+            /// <summary>
+            /// Create the Path.SetAccessControlRecursiveAsync response or throw a failure exception.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
+            /// <param name="response">The raw Response.</param>
+            /// <returns>The Path.SetAccessControlRecursiveAsync Azure.Response{Azure.Storage.Files.DataLake.Models.PathSetAccessControlRecursiveResult}.</returns>
+            internal static Azure.Response<Azure.Storage.Files.DataLake.Models.PathSetAccessControlRecursiveResult> SetAccessControlRecursiveAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Response response)
+            {
+                // Process the response
+                switch (response.Status)
+                {
+                    case 200:
+                    {
+                        // Create the result
+                        Azure.Storage.Files.DataLake.Models.PathSetAccessControlRecursiveResult _value = new Azure.Storage.Files.DataLake.Models.PathSetAccessControlRecursiveResult();
+                        _value.Body = response.ContentStream; // You should manually wrap with RetriableStream!
+
+                        // Get response headers
+                        string _header;
+                        if (response.Headers.TryGetValue("x-ms-client-request-id", out _header))
+                        {
+                            _value.ClientRequestId = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-continuation", out _header))
+                        {
+                            _value.Continuation = _header;
+                        }
+
+                        // Create the response
+                        return Response.FromValue(_value, response);
+                    }
+                    default:
+                    {
+                        // Create the result
+                        string _value;
+                        using (System.IO.StreamReader _streamReader = new System.IO.StreamReader(response.ContentStream))
+                        {
+                            _value = _streamReader.ReadToEnd();
+                        }
+
+                        throw _value.CreateException(clientDiagnostics, response);
+                    }
+                }
+            }
+            #endregion Path.SetAccessControlRecursiveAsync
+
             #region Path.FlushDataAsync
             /// <summary>
             /// Set the owner, group, permissions, or access control list for a path.
@@ -3442,6 +3645,176 @@ namespace Azure.Storage.Files.DataLake
                 }
             }
             #endregion Path.AppendDataAsync
+
+            #region Path.SetExpiryAsync
+            /// <summary>
+            /// Sets the time a blob will expire and be deleted.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="expiryOptions">Required. Indicates mode of the expiry time</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="expiresOn">The time to set the blob to expiry</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
+            /// <returns>Azure.Response{Azure.Storage.Files.DataLake.Models.PathSetExpiryInternal}</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.DataLake.Models.PathSetExpiryInternal>> SetExpiryAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string version,
+                Azure.Storage.Files.DataLake.Models.PathExpiryOptions expiryOptions,
+                int? timeout = default,
+                string requestId = default,
+                string expiresOn = default,
+                bool async = true,
+                string operationName = "PathClient.SetExpiry",
+                System.Threading.CancellationToken cancellationToken = default)
+            {
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                try
+                {
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.HttpMessage _message = SetExpiryAsync_CreateMessage(
+                        pipeline,
+                        resourceUri,
+                        version,
+                        expiryOptions,
+                        timeout,
+                        requestId,
+                        expiresOn))
+                    {
+                        if (async)
+                        {
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return SetExpiryAsync_CreateResponse(clientDiagnostics, _response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
+                }
+            }
+
+            /// <summary>
+            /// Create the Path.SetExpiryAsync request.
+            /// </summary>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="expiryOptions">Required. Indicates mode of the expiry time</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="expiresOn">The time to set the blob to expiry</param>
+            /// <returns>The Path.SetExpiryAsync Message.</returns>
+            internal static Azure.Core.HttpMessage SetExpiryAsync_CreateMessage(
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string version,
+                Azure.Storage.Files.DataLake.Models.PathExpiryOptions expiryOptions,
+                int? timeout = default,
+                string requestId = default,
+                string expiresOn = default)
+            {
+                // Validation
+                if (resourceUri == null)
+                {
+                    throw new System.ArgumentNullException(nameof(resourceUri));
+                }
+                if (version == null)
+                {
+                    throw new System.ArgumentNullException(nameof(version));
+                }
+
+                // Create the request
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
+                Azure.Core.Request _request = _message.Request;
+
+                // Set the endpoint
+                _request.Method = Azure.Core.RequestMethod.Put;
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "expiry", escapeValue: false);
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+
+                // Add request headers
+                _request.Headers.SetValue("x-ms-version", version);
+                _request.Headers.SetValue("x-ms-expiry-option", expiryOptions.ToString());
+                if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
+                if (expiresOn != null) { _request.Headers.SetValue("x-ms-expiry-time", expiresOn); }
+
+                return _message;
+            }
+
+            /// <summary>
+            /// Create the Path.SetExpiryAsync response or throw a failure exception.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
+            /// <param name="response">The raw Response.</param>
+            /// <returns>The Path.SetExpiryAsync Azure.Response{Azure.Storage.Files.DataLake.Models.PathSetExpiryInternal}.</returns>
+            internal static Azure.Response<Azure.Storage.Files.DataLake.Models.PathSetExpiryInternal> SetExpiryAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Response response)
+            {
+                // Process the response
+                switch (response.Status)
+                {
+                    case 200:
+                    {
+                        // Create the result
+                        Azure.Storage.Files.DataLake.Models.PathSetExpiryInternal _value = new Azure.Storage.Files.DataLake.Models.PathSetExpiryInternal();
+
+                        // Get response headers
+                        string _header;
+                        if (response.Headers.TryGetValue("ETag", out _header))
+                        {
+                            _value.ETag = new Azure.ETag(_header);
+                        }
+                        if (response.Headers.TryGetValue("Last-Modified", out _header))
+                        {
+                            _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-client-request-id", out _header))
+                        {
+                            _value.ClientRequestId = _header;
+                        }
+
+                        // Create the response
+                        return Response.FromValue(_value, response);
+                    }
+                    default:
+                    {
+                        // Create the result
+                        string _value;
+                        using (System.IO.StreamReader _streamReader = new System.IO.StreamReader(response.ContentStream))
+                        {
+                            _value = _streamReader.ReadToEnd();
+                        }
+
+                        throw _value.CreateException(clientDiagnostics, response);
+                    }
+                }
+            }
+            #endregion Path.SetExpiryAsync
         }
         #endregion Path operations
     }
@@ -3449,6 +3822,69 @@ namespace Azure.Storage.Files.DataLake
 #endregion Service
 
 #region Models
+#region class AclFailedEntry
+namespace Azure.Storage.Files.DataLake.Models
+{
+    /// <summary>
+    /// AclFailedEntry
+    /// </summary>
+    internal partial class AclFailedEntry
+    {
+        /// <summary>
+        /// name
+        /// </summary>
+        public string Name { get; internal set; }
+
+        /// <summary>
+        /// type
+        /// </summary>
+        public string Type { get; internal set; }
+
+        /// <summary>
+        /// errorMessage
+        /// </summary>
+        public string ErrorMessage { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of AclFailedEntry instances.
+        /// You can use DataLakeModelFactory.AclFailedEntry instead.
+        /// </summary>
+        internal AclFailedEntry() { }
+
+        /// <summary>
+        /// Deserializes XML into a new AclFailedEntry instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized AclFailedEntry instance.</returns>
+        internal static Azure.Storage.Files.DataLake.Models.AclFailedEntry FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Files.DataLake.Models.AclFailedEntry _value = new Azure.Storage.Files.DataLake.Models.AclFailedEntry();
+            _child = element.Element(System.Xml.Linq.XName.Get("name", ""));
+            if (_child != null)
+            {
+                _value.Name = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("type", ""));
+            if (_child != null)
+            {
+                _value.Type = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("errorMessage", ""));
+            if (_child != null)
+            {
+                _value.ErrorMessage = _child.Value;
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.DataLake.Models.AclFailedEntry value);
+    }
+}
+#endregion class AclFailedEntry
+
 #region class FileSystem
 namespace Azure.Storage.Files.DataLake.Models
 {
@@ -4136,6 +4572,38 @@ namespace Azure.Storage.Files.DataLake.Models
 }
 #endregion class PathReadResult
 
+#region class PathSetAccessControlRecursiveResult
+namespace Azure.Storage.Files.DataLake.Models
+{
+    /// <summary>
+    /// Path SetAccessControlRecursiveResult
+    /// </summary>
+    internal partial class PathSetAccessControlRecursiveResult
+    {
+        /// <summary>
+        /// If a client request id header is sent in the request, this header will be present in the response with the same value.
+        /// </summary>
+        public string ClientRequestId { get; internal set; }
+
+        /// <summary>
+        /// When performing setAccessControlRecursive on a directory, the number of paths that are processed with each invocation is limited.  If the number of paths to be processed exceeds this limit, a continuation token is returned in this response header.  When a continuation token is returned in the response, it must be specified in a subsequent invocation of the setAccessControlRecursive operation to continue the setAccessControlRecursive operation on the directory.
+        /// </summary>
+        public string Continuation { get; internal set; }
+
+        /// <summary>
+        /// Body
+        /// </summary>
+        public System.IO.Stream Body { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of PathSetAccessControlRecursiveResult instances.
+        /// You can use DataLakeModelFactory.PathSetAccessControlRecursiveResult instead.
+        /// </summary>
+        internal PathSetAccessControlRecursiveResult() { }
+    }
+}
+#endregion class PathSetAccessControlRecursiveResult
+
 #region class PathSetAccessControlResult
 namespace Azure.Storage.Files.DataLake.Models
 {
@@ -4237,13 +4705,118 @@ namespace Azure.Storage.Files.DataLake.Models
         public string Properties { get; internal set; }
 
         /// <summary>
-        /// Prevent direct instantiation of PathUpdateResult instances.
-        /// You can use DataLakeModelFactory.PathUpdateResult instead.
+        /// When performing setAccessControlRecursive on a directory, the number of paths that are processed with each invocation is limited.  If the number of paths to be processed exceeds this limit, a continuation token is returned in this response header.  When a continuation token is returned in the response, it must be specified in a subsequent invocation of the setAccessControlRecursive operation to continue the setAccessControlRecursive operation on the directory.
         /// </summary>
-        internal PathUpdateResult() { }
+        public string XMSContinuation { get; internal set; }
+
+        /// <summary>
+        /// Body
+        /// </summary>
+        public Azure.Storage.Files.DataLake.Models.SetAccessControlRecursiveResponse Body { get; internal set; }
+
+        /// <summary>
+        /// Creates a new PathUpdateResult instance
+        /// </summary>
+        public PathUpdateResult()
+        {
+            Body = new Azure.Storage.Files.DataLake.Models.SetAccessControlRecursiveResponse();
+        }
     }
 }
 #endregion class PathUpdateResult
+
+#region enum strings PathExpiryOptions
+namespace Azure.Storage.Files.DataLake.Models
+{
+    /// <summary>
+    /// Required. Indicates mode of the expiry time
+    /// </summary>
+    internal readonly struct PathExpiryOptions : System.IEquatable<PathExpiryOptions>
+    {
+        /// <summary>
+        /// The PathExpiryOptions value.
+        /// </summary>
+        private readonly string _value;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PathExpiryOptions"/> structure.
+        /// </summary>
+        /// <param name="value">The string value of the instance.</param>
+        public PathExpiryOptions(string value) { _value = value ?? throw new System.ArgumentNullException(nameof(value)); }
+
+        /// <summary>
+        /// NeverExpire
+        /// </summary>
+        public static Azure.Storage.Files.DataLake.Models.PathExpiryOptions NeverExpire { get; } = new PathExpiryOptions(@"NeverExpire");
+
+        /// <summary>
+        /// RelativeToCreation
+        /// </summary>
+        public static Azure.Storage.Files.DataLake.Models.PathExpiryOptions RelativeToCreation { get; } = new PathExpiryOptions(@"RelativeToCreation");
+
+        /// <summary>
+        /// RelativeToNow
+        /// </summary>
+        public static Azure.Storage.Files.DataLake.Models.PathExpiryOptions RelativeToNow { get; } = new PathExpiryOptions(@"RelativeToNow");
+
+        /// <summary>
+        /// Absolute
+        /// </summary>
+        public static Azure.Storage.Files.DataLake.Models.PathExpiryOptions Absolute { get; } = new PathExpiryOptions(@"Absolute");
+
+        /// <summary>
+        /// Determines if two <see cref="PathExpiryOptions"/> values are the same.
+        /// </summary>
+        /// <param name="left">The first <see cref="PathExpiryOptions"/> to compare.</param>
+        /// <param name="right">The second <see cref="PathExpiryOptions"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are the same; otherwise, false.</returns>
+        public static bool operator ==(Azure.Storage.Files.DataLake.Models.PathExpiryOptions left, Azure.Storage.Files.DataLake.Models.PathExpiryOptions right) => left.Equals(right);
+
+        /// <summary>
+        /// Determines if two <see cref="PathExpiryOptions"/> values are different.
+        /// </summary>
+        /// <param name="left">The first <see cref="PathExpiryOptions"/> to compare.</param>
+        /// <param name="right">The second <see cref="PathExpiryOptions"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are different; otherwise, false.</returns>
+        public static bool operator !=(Azure.Storage.Files.DataLake.Models.PathExpiryOptions left, Azure.Storage.Files.DataLake.Models.PathExpiryOptions right) => !left.Equals(right);
+
+        /// <summary>
+        /// Converts a string to a <see cref="PathExpiryOptions"/>.
+        /// </summary>
+        /// <param name="value">The string value to convert.</param>
+        /// <returns>The PathExpiryOptions value.</returns>
+        public static implicit operator PathExpiryOptions(string value) => new Azure.Storage.Files.DataLake.Models.PathExpiryOptions(value);
+
+        /// <summary>
+        /// Check if two <see cref="PathExpiryOptions"/> instances are equal.
+        /// </summary>
+        /// <param name="obj">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is Azure.Storage.Files.DataLake.Models.PathExpiryOptions other && Equals(other);
+
+        /// <summary>
+        /// Check if two <see cref="PathExpiryOptions"/> instances are equal.
+        /// </summary>
+        /// <param name="other">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        public bool Equals(Azure.Storage.Files.DataLake.Models.PathExpiryOptions other) => string.Equals(_value, other._value, System.StringComparison.Ordinal);
+
+        /// <summary>
+        /// Get a hash code for the <see cref="PathExpiryOptions"/>.
+        /// </summary>
+        /// <returns>Hash code for the PathExpiryOptions.</returns>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+
+        /// <summary>
+        /// Convert the <see cref="PathExpiryOptions"/> to a string.
+        /// </summary>
+        /// <returns>String representation of the PathExpiryOptions.</returns>
+        public override string ToString() => _value;
+    }
+}
+#endregion enum strings PathExpiryOptions
 
 #region enum PathGetPropertiesAction
 namespace Azure.Storage.Files.DataLake.Models
@@ -4490,11 +5063,100 @@ namespace Azure.Storage.Files.DataLake
 }
 #endregion enum PathResourceType
 
+#region enum PathSetAccessControlRecursiveMode
+namespace Azure.Storage.Files.DataLake.Models
+{
+    /// <summary>
+    /// Mode "set" sets POSIX access control rights on files and directories, "modify" modifies one or more POSIX access control rights  that pre-exist on files and directories, "remove" removes one or more POSIX access control rights  that were present earlier on files and directories
+    /// </summary>
+    internal enum PathSetAccessControlRecursiveMode
+    {
+        /// <summary>
+        /// set
+        /// </summary>
+        Set,
+
+        /// <summary>
+        /// modify
+        /// </summary>
+        Modify,
+
+        /// <summary>
+        /// remove
+        /// </summary>
+        Remove
+    }
+}
+
+namespace Azure.Storage.Files.DataLake
+{
+    internal static partial class DataLakeRestClient
+    {
+        public static partial class Serialization
+        {
+            public static string ToString(Azure.Storage.Files.DataLake.Models.PathSetAccessControlRecursiveMode value)
+            {
+                return value switch
+                {
+                    Azure.Storage.Files.DataLake.Models.PathSetAccessControlRecursiveMode.Set => "set",
+                    Azure.Storage.Files.DataLake.Models.PathSetAccessControlRecursiveMode.Modify => "modify",
+                    Azure.Storage.Files.DataLake.Models.PathSetAccessControlRecursiveMode.Remove => "remove",
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.DataLake.Models.PathSetAccessControlRecursiveMode value.")
+                };
+            }
+
+            public static Azure.Storage.Files.DataLake.Models.PathSetAccessControlRecursiveMode ParsePathSetAccessControlRecursiveMode(string value)
+            {
+                return value switch
+                {
+                    "set" => Azure.Storage.Files.DataLake.Models.PathSetAccessControlRecursiveMode.Set,
+                    "modify" => Azure.Storage.Files.DataLake.Models.PathSetAccessControlRecursiveMode.Modify,
+                    "remove" => Azure.Storage.Files.DataLake.Models.PathSetAccessControlRecursiveMode.Remove,
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.DataLake.Models.PathSetAccessControlRecursiveMode value.")
+                };
+            }
+        }
+    }
+}
+#endregion enum PathSetAccessControlRecursiveMode
+
+#region class PathSetExpiryInternal
+namespace Azure.Storage.Files.DataLake.Models
+{
+    /// <summary>
+    /// PathSetExpiryInternal
+    /// </summary>
+    internal partial class PathSetExpiryInternal
+    {
+        /// <summary>
+        /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
+        /// </summary>
+        public Azure.ETag ETag { get; internal set; }
+
+        /// <summary>
+        /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
+        /// </summary>
+        public System.DateTimeOffset LastModified { get; internal set; }
+
+        /// <summary>
+        /// If a client request id header is sent in the request, this header will be present in the response with the same value.
+        /// </summary>
+        public string ClientRequestId { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of PathSetExpiryInternal instances.
+        /// You can use DataLakeModelFactory.PathSetExpiryInternal instead.
+        /// </summary>
+        internal PathSetExpiryInternal() { }
+    }
+}
+#endregion class PathSetExpiryInternal
+
 #region enum PathUpdateAction
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
-    /// The action must be "append" to upload data to be appended to a file, "flush" to flush previously uploaded data to a file, "setProperties" to set the properties of a file or directory, or "setAccessControl" to set the owner, group, permissions, or access control list for a file or directory.  Note that Hierarchical Namespace must be enabled for the account in order to use access control.  Also note that the Access Control List (ACL) includes permissions for the owner, owning group, and others, so the x-ms-permissions and x-ms-acl request headers are mutually exclusive.
+    /// The action must be "append" to upload data to be appended to a file, "flush" to flush previously uploaded data to a file, "setProperties" to set the properties of a file or directory, "setAccessControl" to set the owner, group, permissions, or access control list for a file or directory, or  "setAccessControlRecursive" to set the access control list for a directory recursively. Note that Hierarchical Namespace must be enabled for the account in order to use access control.  Also note that the Access Control List (ACL) includes permissions for the owner, owning group, and others, so the x-ms-permissions and x-ms-acl request headers are mutually exclusive.
     /// </summary>
     public enum PathUpdateAction
     {
@@ -4516,7 +5178,12 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// setAccessControl
         /// </summary>
-        SetAccessControl
+        SetAccessControl,
+
+        /// <summary>
+        /// setAccessControlRecursive
+        /// </summary>
+        SetAccessControlRecursive
     }
 }
 
@@ -4534,6 +5201,7 @@ namespace Azure.Storage.Files.DataLake
                     Azure.Storage.Files.DataLake.Models.PathUpdateAction.Flush => "flush",
                     Azure.Storage.Files.DataLake.Models.PathUpdateAction.SetProperties => "setProperties",
                     Azure.Storage.Files.DataLake.Models.PathUpdateAction.SetAccessControl => "setAccessControl",
+                    Azure.Storage.Files.DataLake.Models.PathUpdateAction.SetAccessControlRecursive => "setAccessControlRecursive",
                     _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.DataLake.Models.PathUpdateAction value.")
                 };
             }
@@ -4546,6 +5214,7 @@ namespace Azure.Storage.Files.DataLake
                     "flush" => Azure.Storage.Files.DataLake.Models.PathUpdateAction.Flush,
                     "setProperties" => Azure.Storage.Files.DataLake.Models.PathUpdateAction.SetProperties,
                     "setAccessControl" => Azure.Storage.Files.DataLake.Models.PathUpdateAction.SetAccessControl,
+                    "setAccessControlRecursive" => Azure.Storage.Files.DataLake.Models.PathUpdateAction.SetAccessControlRecursive,
                     _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.DataLake.Models.PathUpdateAction value.")
                 };
             }
@@ -4587,5 +5256,91 @@ namespace Azure.Storage.Files.DataLake.Models
     }
 }
 #endregion class ServiceListFileSystemsResult
+
+#region class SetAccessControlRecursiveResponse
+namespace Azure.Storage.Files.DataLake.Models
+{
+    /// <summary>
+    /// SetAccessControlRecursiveResponse
+    /// </summary>
+    internal partial class SetAccessControlRecursiveResponse
+    {
+        /// <summary>
+        /// directoriesSuccessful
+        /// </summary>
+        public int? DirectoriesSuccessful { get; internal set; }
+
+        /// <summary>
+        /// filesSuccessful
+        /// </summary>
+        public int? FilesSuccessful { get; internal set; }
+
+        /// <summary>
+        /// failureCount
+        /// </summary>
+        public int? FailureCount { get; internal set; }
+
+        /// <summary>
+        /// failedEntries
+        /// </summary>
+        public System.Collections.Generic.IEnumerable<Azure.Storage.Files.DataLake.Models.AclFailedEntry> FailedEntries { get; internal set; }
+
+        /// <summary>
+        /// Creates a new SetAccessControlRecursiveResponse instance
+        /// </summary>
+        public SetAccessControlRecursiveResponse()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new SetAccessControlRecursiveResponse instance
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal SetAccessControlRecursiveResponse(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                FailedEntries = new System.Collections.Generic.List<Azure.Storage.Files.DataLake.Models.AclFailedEntry>();
+            }
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new SetAccessControlRecursiveResponse instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized SetAccessControlRecursiveResponse instance.</returns>
+        internal static Azure.Storage.Files.DataLake.Models.SetAccessControlRecursiveResponse FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Files.DataLake.Models.SetAccessControlRecursiveResponse _value = new Azure.Storage.Files.DataLake.Models.SetAccessControlRecursiveResponse(true);
+            _child = element.Element(System.Xml.Linq.XName.Get("directoriesSuccessful", ""));
+            if (_child != null)
+            {
+                _value.DirectoriesSuccessful = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("filesSuccessful", ""));
+            if (_child != null)
+            {
+                _value.FilesSuccessful = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("failureCount", ""));
+            if (_child != null)
+            {
+                _value.FailureCount = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _value.FailedEntries = System.Linq.Enumerable.ToList(
+                System.Linq.Enumerable.Select(
+                    element.Elements(System.Xml.Linq.XName.Get("AclFailedEntry", "")),
+                    e => Azure.Storage.Files.DataLake.Models.AclFailedEntry.FromXml(e)));
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.DataLake.Models.SetAccessControlRecursiveResponse value);
+    }
+}
+#endregion class SetAccessControlRecursiveResponse
 #endregion Models
 

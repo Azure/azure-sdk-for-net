@@ -42,10 +42,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// connection count for the source data store. Type: integer (or
         /// Expression with resultType integer).</param>
         /// <param name="storeSettings">Json store settings.</param>
-        public JsonSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), StoreReadSettings storeSettings = default(StoreReadSettings))
+        /// <param name="formatSettings">Json format settings.</param>
+        /// <param name="additionalColumns">Specifies the additional columns to
+        /// be added to source data. Type: array of objects (or Expression with
+        /// resultType array of objects).</param>
+        public JsonSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), StoreReadSettings storeSettings = default(StoreReadSettings), JsonReadSettings formatSettings = default(JsonReadSettings), IList<AdditionalColumns> additionalColumns = default(IList<AdditionalColumns>))
             : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
         {
             StoreSettings = storeSettings;
+            FormatSettings = formatSettings;
+            AdditionalColumns = additionalColumns;
             CustomInit();
         }
 
@@ -59,6 +65,20 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "storeSettings")]
         public StoreReadSettings StoreSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets json format settings.
+        /// </summary>
+        [JsonProperty(PropertyName = "formatSettings")]
+        public JsonReadSettings FormatSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the additional columns to be added to source
+        /// data. Type: array of objects (or Expression with resultType array
+        /// of objects).
+        /// </summary>
+        [JsonProperty(PropertyName = "additionalColumns")]
+        public IList<AdditionalColumns> AdditionalColumns { get; set; }
 
     }
 }

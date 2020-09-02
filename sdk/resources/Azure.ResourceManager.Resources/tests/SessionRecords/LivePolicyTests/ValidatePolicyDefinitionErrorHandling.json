@@ -1,0 +1,189 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/providers/Microsoft.Authorization/policyDefinitions/9121?api-version=2019-09-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "97",
+        "Content-Type": "application/json",
+        "traceparent": "00-87c86c551326264ab00830ac7fa1fc32-aa2c50facdb6ad4c-00",
+        "User-Agent": [
+          "azsdk-net-Management.Resources/1.0.0-dev.20200529.1",
+          "(.NET Framework 4.8.4180.0; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "490fec4eacfe500d77f9094496fe925c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "displayName": "ValidatePolicyDefinitionErrorHandling - Missing Rule [Auto Test]"
+        }
+      },
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "210",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 29 May 2020 05:36:15 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "19757d27-d8e8-47c7-a5d6-58e6f7f898d3",
+        "x-ms-ratelimit-remaining-subscription-writes": "1172",
+        "x-ms-request-id": "koreasouth:4f15e0cf-ed3f-4be0-8a3a-fec40d495d5c",
+        "x-ms-routing-request-id": "KOREASOUTH:20200529T053615Z:19757d27-d8e8-47c7-a5d6-58e6f7f898d3"
+      },
+      "ResponseBody": "{\u0022error\u0022:{\u0022code\u0022:\u0022InvalidRequestContent\u0022,\u0022message\u0022:\u0022The request content was invalid and could not be deserialized: \u0027Required property \u0027policyRule\u0027 not found in JSON. Path \u0027properties\u0027, line 1, position 96.\u0027.\u0022}}"
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/providers/Microsoft.Authorization/policyDefinitions/9121?api-version=2019-09-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "257",
+        "Content-Type": "application/json",
+        "traceparent": "00-bde6f3a77144964fb776b47e8e5cf927-c809ba383126914e-00",
+        "User-Agent": [
+          "azsdk-net-Management.Resources/1.0.0-dev.20200529.1",
+          "(.NET Framework 4.8.4180.0; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "a7a93456a03708ccf2f5faccb0a3d987",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "mode": "Foo",
+          "displayName": "ValidatePolicyDefinitionErrorHandling - Bad Mode $[Auto Test]",
+          "policyRule": {
+            "if": {
+              "source": "action",
+              "equals": "ResourceProviderTestHost/TestResourceType/TestResourceTypeNestedOne/write"
+            },
+            "then": {
+              "effect": "deny"
+            }
+          }
+        }
+      },
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "368",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 29 May 2020 05:36:15 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "09ff098e-fb36-4ec9-b6c2-e12b1f4d00ec",
+        "x-ms-ratelimit-remaining-subscription-writes": "1171",
+        "x-ms-request-id": "koreasouth:5d0c333c-9e8e-454f-abca-728835db2ced",
+        "x-ms-routing-request-id": "KOREASOUTH:20200529T053616Z:09ff098e-fb36-4ec9-b6c2-e12b1f4d00ec"
+      },
+      "ResponseBody": "{\u0022error\u0022:{\u0022code\u0022:\u0022InvalidPolicyDefinitionMode\u0022,\u0022message\u0022:\u0022The policy mode \u0027Foo\u0027 is invalid for policy with id \u00279121\u0027. The allowed values are \u0027All, Indexed, Microsoft.ContainerService.Data, Microsoft.CustomerLockbox.Data, Microsoft.DataCatalog.Data, Microsoft.KeyVault.Data, Microsoft.Kubernetes.Data, Microsoft.MachineLearningServices.Data, Microsoft.Network.Data\u0027.\u0022}}"
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/providers/Microsoft.Authorization/policyDefinitions/9121?api-version=2019-09-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "291",
+        "Content-Type": "application/json",
+        "traceparent": "00-0e5c18ad37ac8443b448cdaead1b3be3-4bdbf6304e2b2d4a-00",
+        "User-Agent": [
+          "azsdk-net-Management.Resources/1.0.0-dev.20200529.1",
+          "(.NET Framework 4.8.4180.0; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "71c772bf061d428b660ff544e5de39e8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "displayName": "ValidatePolicyDefinitionErrorHandling - Unused Parameter $[Auto Test]",
+          "policyRule": {
+            "if": {
+              "source": "action",
+              "equals": "ResourceProviderTestHost/TestResourceType/TestResourceTypeNestedOne/write"
+            },
+            "then": {
+              "effect": "deny"
+            }
+          },
+          "parameters": {
+            "foo": {
+              "type": "String"
+            }
+          }
+        }
+      },
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "248",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 29 May 2020 05:36:16 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "f16104b8-f5ab-4d00-be1b-872776efd97e",
+        "x-ms-ratelimit-remaining-subscription-writes": "1170",
+        "x-ms-request-id": "koreasouth:e6ee4491-0a61-4656-b1b4-47efafe17c12",
+        "x-ms-routing-request-id": "KOREASOUTH:20200529T053616Z:f16104b8-f5ab-4d00-be1b-872776efd97e"
+      },
+      "ResponseBody": "{\u0022error\u0022:{\u0022code\u0022:\u0022UnusedPolicyParameters\u0022,\u0022message\u0022:\u0022The policy \u00279121\u0027 has defined parameters \u0027foo\u0027 which are not used in the policy rule. Please either remove these parameters from the definition or ensure that they are used in the policy rule.\u0022}}"
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/providers/Microsoft.Authorization/policyDefinitions/9121?api-version=2019-09-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "209",
+        "Content-Type": "application/json",
+        "traceparent": "00-34f1b77f2bb74743be076eb204606647-06ecd3a78b1a4744-00",
+        "User-Agent": [
+          "azsdk-net-Management.Resources/1.0.0-dev.20200529.1",
+          "(.NET Framework 4.8.4180.0; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "dc1d32784e30aeda1f065708b141a0d3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "displayName": "ValidatePolicyDefinitionErrorHandling - Missing Parameter $[Auto Test]",
+          "policyRule": {
+            "if": {
+              "source": "action",
+              "equals": "[parameters(\u0027foo\u0027)]"
+            },
+            "then": {
+              "effect": "deny"
+            }
+          }
+        }
+      },
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "417",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 29 May 2020 05:36:16 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "25952441-dc8e-4bba-b7e8-f1e34a61654a",
+        "x-ms-ratelimit-remaining-subscription-writes": "1169",
+        "x-ms-request-id": "koreasouth:3125aaf9-5dbb-4998-ad34-5fd8641bfbda",
+        "x-ms-routing-request-id": "KOREASOUTH:20200529T053616Z:25952441-dc8e-4bba-b7e8-f1e34a61654a"
+      },
+      "ResponseBody": "{\u0022error\u0022:{\u0022code\u0022:\u0022InvalidPolicyParameters\u0022,\u0022message\u0022:\u0022A function or parameter in policy \u00279121\u0027 could not be validated. If using template functions, try following the tips in: https://aka.ms/policy-avoiding-template-failures. The inner exception \u0027The policy \u00279121\u0027 has undefined parameter \u0027foo\u0027 which is used in the policy rule. Please either define it in policy definition or remove the reference in policy rule.\u0027.\u0022}}"
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "324997194",
+    "SUBSCRIPTION_ID": "b9f138a1-1d64-4108-8413-9ea3be1c1b2d"
+  }
+}

@@ -36,14 +36,21 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <param name="width">Width of the image.</param>
         /// <param name="height">Height of the image.</param>
         /// <param name="resizedImageUri">The URI to the (resized) image used
-        /// for training.</param>
+        /// for training. If VNET feature is enabled this will be a relative
+        /// path to be used with GetArtifact, otherwise this will be an
+        /// absolute URI to the resource.</param>
         /// <param name="thumbnailUri">The URI to the thumbnail of the original
-        /// image.</param>
+        /// image. If VNET feature is enabled this will be a relative path to
+        /// be used with GetArtifact, otherwise this will be an absolute URI to
+        /// the resource.</param>
         /// <param name="originalImageUri">The URI to the original uploaded
-        /// image.</param>
+        /// image. If VNET feature is enabled this will be a relative path to
+        /// be used with GetArtifact, otherwise this will be an absolute URI to
+        /// the resource.</param>
         /// <param name="tags">Tags associated with this image.</param>
         /// <param name="regions">Regions associated with this image.</param>
-        public Image(System.Guid id = default(System.Guid), System.DateTime created = default(System.DateTime), int width = default(int), int height = default(int), string resizedImageUri = default(string), string thumbnailUri = default(string), string originalImageUri = default(string), IList<ImageTag> tags = default(IList<ImageTag>), IList<ImageRegion> regions = default(IList<ImageRegion>))
+        /// <param name="metadata">Metadata associated with this image.</param>
+        public Image(System.Guid id = default(System.Guid), System.DateTime created = default(System.DateTime), int width = default(int), int height = default(int), string resizedImageUri = default(string), string thumbnailUri = default(string), string originalImageUri = default(string), IList<ImageTag> tags = default(IList<ImageTag>), IList<ImageRegion> regions = default(IList<ImageRegion>), IDictionary<string, string> metadata = default(IDictionary<string, string>))
         {
             Id = id;
             Created = created;
@@ -54,6 +61,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
             OriginalImageUri = originalImageUri;
             Tags = tags;
             Regions = regions;
+            Metadata = metadata;
             CustomInit();
         }
 
@@ -87,19 +95,27 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         public int Height { get; private set; }
 
         /// <summary>
-        /// Gets the URI to the (resized) image used for training.
+        /// Gets the URI to the (resized) image used for training. If VNET
+        /// feature is enabled this will be a relative path to be used with
+        /// GetArtifact, otherwise this will be an absolute URI to the
+        /// resource.
         /// </summary>
         [JsonProperty(PropertyName = "resizedImageUri")]
         public string ResizedImageUri { get; private set; }
 
         /// <summary>
-        /// Gets the URI to the thumbnail of the original image.
+        /// Gets the URI to the thumbnail of the original image. If VNET
+        /// feature is enabled this will be a relative path to be used with
+        /// GetArtifact, otherwise this will be an absolute URI to the
+        /// resource.
         /// </summary>
         [JsonProperty(PropertyName = "thumbnailUri")]
         public string ThumbnailUri { get; private set; }
 
         /// <summary>
-        /// Gets the URI to the original uploaded image.
+        /// Gets the URI to the original uploaded image. If VNET feature is
+        /// enabled this will be a relative path to be used with GetArtifact,
+        /// otherwise this will be an absolute URI to the resource.
         /// </summary>
         [JsonProperty(PropertyName = "originalImageUri")]
         public string OriginalImageUri { get; private set; }
@@ -115,6 +131,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// </summary>
         [JsonProperty(PropertyName = "regions")]
         public IList<ImageRegion> Regions { get; private set; }
+
+        /// <summary>
+        /// Gets metadata associated with this image.
+        /// </summary>
+        [JsonProperty(PropertyName = "metadata")]
+        public IDictionary<string, string> Metadata { get; private set; }
 
     }
 }

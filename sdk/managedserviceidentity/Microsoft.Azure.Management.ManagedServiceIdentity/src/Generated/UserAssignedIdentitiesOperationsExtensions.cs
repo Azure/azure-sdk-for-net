@@ -150,7 +150,7 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity
             /// <param name='parameters'>
             /// Parameters to update the identity
             /// </param>
-            public static Identity Update(this IUserAssignedIdentitiesOperations operations, string resourceGroupName, string resourceName, Identity parameters)
+            public static Identity Update(this IUserAssignedIdentitiesOperations operations, string resourceGroupName, string resourceName, IdentityUpdate parameters)
             {
                 return operations.UpdateAsync(resourceGroupName, resourceName, parameters).GetAwaiter().GetResult();
             }
@@ -173,7 +173,7 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Identity> UpdateAsync(this IUserAssignedIdentitiesOperations operations, string resourceGroupName, string resourceName, Identity parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Identity> UpdateAsync(this IUserAssignedIdentitiesOperations operations, string resourceGroupName, string resourceName, IdentityUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, resourceName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {

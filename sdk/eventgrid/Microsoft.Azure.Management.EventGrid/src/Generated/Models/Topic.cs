@@ -37,8 +37,8 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <param name="location">Location of the resource.</param>
         /// <param name="id">Fully qualified identifier of the
         /// resource.</param>
-        /// <param name="name">Name of the resource</param>
-        /// <param name="type">Type of the resource</param>
+        /// <param name="name">Name of the resource.</param>
+        /// <param name="type">Type of the resource.</param>
         /// <param name="tags">Tags of the resource.</param>
         /// <param name="provisioningState">Provisioning state of the topic.
         /// Possible values include: 'Creating', 'Updating', 'Deleting',
@@ -54,21 +54,24 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// properties of the EventGridEvent schema.</param>
         /// <param name="metricResourceId">Metric resource id for the
         /// topic.</param>
-        /// <param name="allowTrafficFromAllIPs">This determines if IP
-        /// filtering rules ought to be evaluated or not. By default it will
-        /// not evaluate and will allow traffic from all IPs.</param>
-        /// <param name="inboundIpRules">This determines the IP filtering rules
-        /// that ought to be applied when events are received on this
-        /// topic.</param>
-        public Topic(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), string endpoint = default(string), string inputSchema = default(string), InputSchemaMapping inputSchemaMapping = default(InputSchemaMapping), string metricResourceId = default(string), bool? allowTrafficFromAllIPs = default(bool?), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>))
+        /// <param name="publicNetworkAccess">This determines if traffic is
+        /// allowed over public network. By default it is enabled.
+        /// You can further restrict to specific IPs by configuring &lt;seealso
+        /// cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.TopicProperties.InboundIpRules"
+        /// /&gt;. Possible values include: 'Enabled', 'Disabled'</param>
+        /// <param name="inboundIpRules">This can be used to restrict traffic
+        /// from specific IPs instead of all IPs. Note: These are considered
+        /// only if PublicNetworkAccess is enabled.</param>
+        public Topic(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string provisioningState = default(string), string endpoint = default(string), string inputSchema = default(string), InputSchemaMapping inputSchemaMapping = default(InputSchemaMapping), string metricResourceId = default(string), string publicNetworkAccess = default(string), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>))
             : base(location, id, name, type, tags)
         {
+            PrivateEndpointConnections = privateEndpointConnections;
             ProvisioningState = provisioningState;
             Endpoint = endpoint;
             InputSchema = inputSchema;
             InputSchemaMapping = inputSchemaMapping;
             MetricResourceId = metricResourceId;
-            AllowTrafficFromAllIPs = allowTrafficFromAllIPs;
+            PublicNetworkAccess = publicNetworkAccess;
             InboundIpRules = inboundIpRules;
             CustomInit();
         }
@@ -77,6 +80,11 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.privateEndpointConnections")]
+        public IList<PrivateEndpointConnection> PrivateEndpointConnections { get; set; }
 
         /// <summary>
         /// Gets provisioning state of the topic. Possible values include:
@@ -117,16 +125,20 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         public string MetricResourceId { get; private set; }
 
         /// <summary>
-        /// Gets or sets this determines if IP filtering rules ought to be
-        /// evaluated or not. By default it will not evaluate and will allow
-        /// traffic from all IPs.
+        /// Gets or sets this determines if traffic is allowed over public
+        /// network. By default it is enabled.
+        /// You can further restrict to specific IPs by configuring
+        /// &amp;lt;seealso
+        /// cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.TopicProperties.InboundIpRules"
+        /// /&amp;gt;. Possible values include: 'Enabled', 'Disabled'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.allowTrafficFromAllIPs")]
-        public bool? AllowTrafficFromAllIPs { get; set; }
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
 
         /// <summary>
-        /// Gets or sets this determines the IP filtering rules that ought to
-        /// be applied when events are received on this topic.
+        /// Gets or sets this can be used to restrict traffic from specific IPs
+        /// instead of all IPs. Note: These are considered only if
+        /// PublicNetworkAccess is enabled.
         /// </summary>
         [JsonProperty(PropertyName = "properties.inboundIpRules")]
         public IList<InboundIpRule> InboundIpRules { get; set; }

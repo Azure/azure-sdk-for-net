@@ -1,44 +1,44 @@
-# Analyzing the Sentiment of Text Inputs
+# Analyzing the Sentiment of Documents
 
-This sample demonstrates how to analyze the sentiment in one or more text inputs. To get started you'll need a Text Analytics endpoint and credentials.  See [README][README] for links and instructions.
+This sample demonstrates how to analyze the sentiment in one or more documents. To get started you'll need a Text Analytics endpoint and credentials.  See [README][README] for links and instructions.
 
 ## Creating a `TextAnalyticsClient`
 
-To create a new `TextAnalyticsClient` to analyze the sentiment in a text input, you need a Text Analytics endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Text Analytics API key credential by creating a `TextAnalyticsApiKeyCredential` object, that if neded, will allow you to update the API key without creating a new client.
+To create a new `TextAnalyticsClient` to analyze the sentiment in a document, you need a Text Analytics endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Text Analytics API key credential by creating an `AzureKeyCredential` object, that if needed, will allow you to update the API key without creating a new client.
 
 You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
 
 ```C# Snippet:TextAnalyticsSample2CreateClient
-var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
+var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
 
-## Analyzing the sentiment of a single text input
+## Analyzing the sentiment of a single document
 
-To analyze the sentiment of a single text input, pass the input string to the client's `AnalyzeSentiment` method.  The returned `AnalyzeSentimentResult` contains a `DocumentSentiment` describing the sentiment of the full input, as well as a collection of `Sentences` indicating the sentiment of each individual sentence.
+To analyze the sentiment of a document, use the `AnalyzeSentiment` method.  The returned `DocumentSentiment` describes the sentiment of the document, as well as a collection of `Sentences` indicating the sentiment of each individual sentence.
 
 ```C# Snippet:AnalyzeSentiment
-string input = "That was the best day of my life!";
+string document = "That was the best day of my life!";
 
-DocumentSentiment docSentiment = client.AnalyzeSentiment(input);
+DocumentSentiment docSentiment = client.AnalyzeSentiment(document);
 
 Console.WriteLine($"Sentiment was {docSentiment.Sentiment}, with confidence scores: ");
-Console.WriteLine($"    Positive confidence score: {docSentiment.ConfidenceScores.Positive:0.00}.");
-Console.WriteLine($"    Neutral confidence score: {docSentiment.ConfidenceScores.Neutral:0.00}.");
-Console.WriteLine($"    Negative confidence score: {docSentiment.ConfidenceScores.Negative:0.00}.");
+Console.WriteLine($"    Positive confidence score: {docSentiment.ConfidenceScores.Positive}.");
+Console.WriteLine($"    Neutral confidence score: {docSentiment.ConfidenceScores.Neutral}.");
+Console.WriteLine($"    Negative confidence score: {docSentiment.ConfidenceScores.Negative}.");
 ```
 
-## Analyzing the sentiment of multipile text inputs
+## Analyzing the sentiment of multipile documents
 
-To analyze the sentiment of a collection of text inputs in the same language, call `AnalyzeSentimentBatch` on an `IEnumerable` of strings.  The results are returned as a `AnalyzeSentimentResultCollection`.
+To analyze the sentiment of a collection of documents in the same language, call `AnalyzeSentimentBatch` on an `IEnumerable` of strings.  The results are returned as a `AnalyzeSentimentResultCollection`.
 
 ```C# Snippet:TextAnalyticsSample2AnalyzeSentimentConvenience
-AnalyzeSentimentResultCollection results = client.AnalyzeSentimentBatch(inputs);
+AnalyzeSentimentResultCollection results = client.AnalyzeSentimentBatch(documents);
 ```
 
-To analyze the sentiment of a collection of text inputs in different languages, call `AnalyzeSentimentBatch` on an `IEnumerable` of `TextDocumentInput` objects, setting the `Language` on each input.
+To analyze the sentiment of a collection of documents in different languages, call `AnalyzeSentimentBatch` on an `IEnumerable` of `TextDocumentInput` objects, setting the `Language` on each document.
 
 ```C# Snippet:TextAnalyticsSample2AnalyzeSentimentBatch
-var inputs = new List<TextDocumentInput>
+var documents = new List<TextDocumentInput>
 {
     new TextDocumentInput("1", "That was the best day of my life!")
     {
@@ -58,14 +58,17 @@ var inputs = new List<TextDocumentInput>
     }
 };
 
-AnalyzeSentimentResultCollection results = client.AnalyzeSentimentBatch(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+AnalyzeSentimentResultCollection results = client.AnalyzeSentimentBatch(documents, new TextAnalyticsRequestOptions { IncludeStatistics = true });
 ```
 
 To see the full example source files, see:
 
-* [Sample2_AnalyzeSentiment.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample2_AnalyzeSentiment.cs)
-* [Sample2_AnalyzeSentimentBatch.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample2_AnalyzeSentimentBatch.cs)
-* [Sample2_AnalyzeSentimentBatchConvenience.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample2_AnalyzeSentimentBatchConvenience.cs)
+* [Synchronous AnalyzeSentiment](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample2_AnalyzeSentiment.cs)
+* [Asynchronous AnalyzeSentiment](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample2_AnalyzeSentimentAsync.cs)
+* [Synchronous AnalyzeSentimentBatch](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample2_AnalyzeSentimentBatch.cs)
+* [Asynchronous AnalyzeSentimentBatch](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample2_AnalyzeSentimentBatchAsync.cs)
+* [Synchronous AnalyzeSentimentBatchConvenience](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample2_AnalyzeSentimentBatchConvenience.cs)
+* [Asynchronous AnalyzeSentimentBatchConvenience](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample2_AnalyzeSentimentBatchConvenienceAsync.cs)
 
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/README.md

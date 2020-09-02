@@ -2,11 +2,12 @@
   <PropertyGroup>
     <Description>This is the implementation of the Azure Client Pipeline</Description>
     <AssemblyTitle>Microsoft Azure Client Pipeline</AssemblyTitle>
-    <Version>1.1.0-preview.1</Version>
+    <Version>1.5.0-preview.1</Version>
+    <ApiCompatVersion>1.4.1</ApiCompatVersion>
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
     <Nullable>enable</Nullable>
     <DefineConstants>$(DefineConstants);AZURE_NULLABLE</DefineConstants>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks);net461</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
   </PropertyGroup>
@@ -18,11 +19,13 @@
     <PackageReference Include="System.Memory" />
     <PackageReference Include="System.Numerics.Vectors" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
+    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="Shared\**\*.cs" />
     <Compile Include="Shared\Argument.cs" />
+    <Compile Include="Shared\AzureKeyCredentialPolicy.cs" />
     <Compile Include="Shared\EventSourceEventFormatting.cs" />
     <Compile Include="Shared\HashCodeBuilder.cs" />
     <Compile Include="Shared\ClientDiagnostics.cs" />
@@ -31,5 +34,6 @@
     <Compile Include="Shared\ContentTypeUtilities.cs" />
     <Compile Include="Shared\DiagnosticScopeFactory.cs" />
     <Compile Include="Shared\DiagnosticScope.cs" />
+    <Compile Include="Shared\TaskExtensions.cs" />
   </ItemGroup>
 </Project>

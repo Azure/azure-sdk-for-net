@@ -35,11 +35,13 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// etc.</param>
         /// <param name="operation">Type of operation: get, read, delete,
         /// etc.</param>
-        public OperationDisplay(string provider = default(string), string resource = default(string), string operation = default(string))
+        /// <param name="description">Description of operation</param>
+        public OperationDisplay(string provider = default(string), string resource = default(string), string operation = default(string), string description = default(string))
         {
             Provider = provider;
             Resource = resource;
             Operation = operation;
+            Description = description;
             CustomInit();
         }
 
@@ -65,6 +67,12 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// </summary>
         [JsonProperty(PropertyName = "operation")]
         public string Operation { get; set; }
+
+        /// <summary>
+        /// Gets or sets description of operation
+        /// </summary>
+        [JsonProperty(PropertyName = "description")]
+        public string Description { get; set; }
 
     }
 }

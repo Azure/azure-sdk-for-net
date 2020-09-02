@@ -3,6 +3,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Globalization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventHubs.Consumer
@@ -85,7 +86,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <returns>The position of the specified event.</returns>
         ///
         public static EventPosition FromOffset(long offset,
-                                               bool isInclusive = true) => FromOffset(offset.ToString(), isInclusive);
+                                               bool isInclusive = true) => FromOffset(offset.ToString(CultureInfo.InvariantCulture), isInclusive);
 
         /// <summary>
         ///   Corresponds to the event in the partition having a specified sequence number associated with it.
@@ -131,14 +132,8 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///
         /// <returns><c>true</c> if the specified <see cref="EventPosition" /> is equal to this instance; otherwise, <c>false</c>.</returns>
         ///
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public bool Equals(EventPosition other)
         {
-            if (ReferenceEquals(this, other))
-            {
-                return true;
-            }
-
             return (Offset == other.Offset)
                 && (SequenceNumber == other.SequenceNumber)
                 && (EnqueuedTime == other.EnqueuedTime)
@@ -158,7 +153,7 @@ namespace Azure.Messaging.EventHubs.Consumer
             obj switch
             {
                 EventPosition other => Equals(other),
-                _ => ReferenceEquals(this, obj)
+                _ => false
             };
 
         /// <summary>
@@ -186,7 +181,16 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string ToString() => base.ToString();
+        public override string ToString() =>
+            this switch
+            {
+                EventPosition _ when (Offset == StartOfStreamOffset) => nameof(Earliest),
+                EventPosition _ when (Offset == EndOfStreamOffset) => nameof(Latest),
+                EventPosition _ when (!string.IsNullOrEmpty(Offset)) => $"Offset: [{ Offset }] | Inclusive: [{ IsInclusive }]",
+                EventPosition _ when (SequenceNumber.HasValue) => $"Sequence Number: [{ SequenceNumber }] | Inclusive: [{ IsInclusive }]",
+                EventPosition _ when (EnqueuedTime.HasValue) => $"Enqueued: [{ EnqueuedTime }]",
+                _ => base.ToString()
+            };
 
         /// <summary>
         ///   Corresponds to the event in the partition at the provided offset.
@@ -213,24 +217,24 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   Determines whether the specified <see cref="EventPosition" /> instances are equal to each other.
         /// </summary>
         ///
-        /// <param name="first">The first <see cref="EventPosition" /> to consider.</param>
-        /// <param name="second">The second <see cref="EventPosition" /> to consider.</param>
+        /// <param name="left">The first <see cref="EventPosition" /> to consider.</param>
+        /// <param name="right">The second <see cref="EventPosition" /> to consider.</param>
         ///
         /// <returns><c>true</c> if the two specified <see cref="EventPosition" /> instances are equal; otherwise, <c>false</c>.</returns>
         ///
-        public static bool operator ==(EventPosition first,
-                                       EventPosition second) => first.Equals(second);
+        public static bool operator ==(EventPosition left,
+                                       EventPosition right) => left.Equals(right);
 
         /// <summary>
         ///   Determines whether the specified <see cref="EventPosition" /> instances are not equal to each other.
         /// </summary>
         ///
-        /// <param name="first">The first <see cref="EventPosition" /> to consider.</param>
-        /// <param name="second">The second <see cref="EventPosition" /> to consider.</param>
+        /// <param name="left">The first <see cref="EventPosition" /> to consider.</param>
+        /// <param name="right">The second <see cref="EventPosition" /> to consider.</param>
         ///
         /// <returns><c>true</c> if the two specified <see cref="EventPosition" /> instances are not equal; otherwise, <c>false</c>.</returns>
         ///
-        public static bool operator !=(EventPosition first,
-                                       EventPosition second) => (!first.Equals(second));
+        public static bool operator !=(EventPosition left,
+                                       EventPosition right) => (!left.Equals(right));
     }
 }

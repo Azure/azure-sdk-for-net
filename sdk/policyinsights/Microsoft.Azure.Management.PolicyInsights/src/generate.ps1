@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "policyinsights/resource-manager" -AutoRestVersion "latest"
+Start-AutoRestCodeGeneration -ResourceProvider "policyinsights/resource-manager" -AutoRestVersion "v2"

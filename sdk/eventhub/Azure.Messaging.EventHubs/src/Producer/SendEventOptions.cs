@@ -7,10 +7,10 @@ namespace Azure.Messaging.EventHubs.Producer
 {
     /// <summary>
     ///   The set of options that can be specified to influence the way in which events
-    ///   are sent to the Event Hubs service.
+    ///   are published to the Event Hubs service.
     /// </summary>
     ///
-    internal class SendEventOptions
+    public class SendEventOptions
     {
         /// <summary>
         ///   Allows a hashing key to be provided for the batch of events, which instructs the Event Hubs
@@ -80,7 +80,7 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <param name="partitionKey">The hashing key to use for influencing the partition to which the events are routed.</param>
         ///
         internal SendEventOptions(string partitionId,
-                             string partitionKey)
+                                  string partitionKey)
         {
             PartitionId = partitionId;
             PartitionKey = partitionKey;

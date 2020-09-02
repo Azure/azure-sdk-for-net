@@ -1028,6 +1028,43 @@ namespace DataFactory.Tests.JsonSamples
 	}
   }
 }";
+        [JsonSample]
+        public const string ExcelDataset = @"
+{
+  ""name"": ""ExcelDataset"",
+  ""properties"": {
+    ""type"": ""Excel"",
+    ""typeProperties"": {
+      ""location"": {
+        ""type"": ""AzureBlobStorageLocation"",
+        ""container"": ""exceltest"",
+        ""fileName"": ""releases-1.xlsx""
+      },
+      ""compression"": {
+        ""type"": ""GZip"",
+        ""level"": ""Fastest""
+      },
+      ""sheetName"": ""test01"",
+      ""firstRowAsHeader"": true,
+      ""range"": ""A4:H9"",
+      ""nullValue"": ""N/A""
+    },
+    ""linkedServiceName"": {
+      ""referenceName"": ""MyLinkedService"",
+      ""type"": ""LinkedServiceReference""
+    },
+    ""schema"": [
+      {
+        ""name"": ""title"",
+        ""type"": ""string""
+      },
+      {
+        ""name"": ""movieId"",
+        ""type"": ""string""
+      }
+    ]
+  }
+}";
 
         [JsonSample]
         public const string ParquetDataset = @"
@@ -1124,6 +1161,34 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string XmlDataset = @"
+{
+  name: ""MyXml"",
+  properties: {
+    type: ""Xml"",
+    linkedServiceName: 
+    {  
+        referenceName : ""ls"",
+        type : ""LinkedServiceReference""
+    },
+    typeProperties: {
+        location: {
+            type: ""AzureBlobStorageLocation"",
+            folderPath: ""testFolder"",
+            fileName: ""test.json"",
+            container: ""MyContainer""
+        },
+        encodingName: ""UTF-8"",
+        nullValue: ""null"",
+        compression: {
+            type: ""GZip"",
+            level: ""Optimal""
+        }
+    }
+  }
+}";
+
+        [JsonSample]
         public const string Json = @"
 {
   name: ""MyJson"",
@@ -1189,6 +1254,31 @@ namespace DataFactory.Tests.JsonSamples
       ""compression"": {
         ""type"": ""Deflate"",
         ""level"": ""Fastest""
+      }
+    }
+  }
+}";
+
+        [JsonSample]
+        public const string BinaryWithTarGZipDataset = @"
+{
+  ""name"": ""BinaryDataset"",
+  ""properties"": {
+    ""type"": ""Binary"",
+    ""linkedServiceName"": {
+      ""referenceName"": ""AzureBlobStorageLinkedService"",
+      ""type"": ""LinkedServiceReference""
+    },
+    ""typeProperties"": {
+      ""location"": {
+        ""type"": ""AzureBlobStorageLocation"",
+        ""container"": ""ContainerName"",
+        ""folderPath"": ""dataflow/test/input"",
+        ""fileName"": ""testTgz01""
+      },
+      ""compression"": {
+        ""type"": ""TarGZip"",
+        ""level"": ""Optimal""
       }
     }
   }
@@ -1855,5 +1945,25 @@ namespace DataFactory.Tests.JsonSamples
         },
     }
 }";
+
+        [JsonSample]
+        public const string SharePointOnlineListResource = @"
+{
+    name: ""SharePointOnlineListResourceDataset"",
+    properties:
+    {
+        type: ""SharePointOnlineListResource"",
+        linkedServiceName: 
+        {  
+            referenceName : ""ls"",
+            type : ""LinkedServiceReference""
+        },
+        typeProperties:
+        {            
+            listName: ""listName""
+        }
+    }
+}
+";
     }
 }

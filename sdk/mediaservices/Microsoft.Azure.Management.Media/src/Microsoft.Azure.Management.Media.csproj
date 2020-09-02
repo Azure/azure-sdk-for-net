@@ -6,7 +6,7 @@
     <PropertyGroup>
         <PackageId>Microsoft.Azure.Management.Media</PackageId>
         <Description>Provides developers with libraries for managing Azure Media Services using the Azure Resource Manager API.</Description>
-        <Version>2.0.4</Version>
+        <Version>2.0.5</Version>
         <AssemblyName>Microsoft.Azure.Management.Media</AssemblyName>
         <PackageTags>Microsoft Azure Media management;Media;Media management;</PackageTags>
         <PackageReleaseNotes>

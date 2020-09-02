@@ -33,9 +33,8 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         /// GuestConfigurationAssignmentReportProperties class.
         /// </summary>
         /// <param name="complianceStatus">A value indicating compliance status
-        /// of the virtual machine for the assigned guest configuration.
-        /// Possible values include: 'Compliant', 'NonCompliant',
-        /// 'Pending'</param>
+        /// of the machine for the assigned guest configuration. Possible
+        /// values include: 'Compliant', 'NonCompliant', 'Pending'</param>
         /// <param name="reportId">GUID that identifies the guest configuration
         /// assignment report under a subscription, resource group.</param>
         /// <param name="assignment">Configuration details of the guest
@@ -64,9 +63,9 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets a value indicating compliance status of the virtual machine
-        /// for the assigned guest configuration. Possible values include:
-        /// 'Compliant', 'NonCompliant', 'Pending'
+        /// Gets a value indicating compliance status of the machine for the
+        /// assigned guest configuration. Possible values include: 'Compliant',
+        /// 'NonCompliant', 'Pending'
         /// </summary>
         [JsonProperty(PropertyName = "complianceStatus")]
         public string ComplianceStatus { get; private set; }

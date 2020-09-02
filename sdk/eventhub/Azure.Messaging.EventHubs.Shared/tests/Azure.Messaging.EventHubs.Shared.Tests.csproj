@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="../../Azure.Messaging.EventHubs/src/Azure.Messaging.EventHubs.csproj" />
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
   </ItemGroup>
 
   <!-- Import Azure.Core shared source -->
@@ -35,7 +36,9 @@
 
   <ItemGroup>
     <Compile Include="..\src\Testing\EventDataExtensions.cs" Link="SharedSource\Testing\EventDataExtensions.cs" />
-    <Compile Include="..\src\Testing\MockCheckPointStorage.cs" Link="SharedSource\Testing\MockCheckPointStorage.cs" />
+    <Compile Include="..\src\Testing\InMemoryStorageManager.cs" Link="SharedSource\Testing\InMemoryStorageManager.cs" />
+    <Compile Include="..\src\Testing\MockEventData.cs" Link="SharedSource\Testing\MockEventData.cs" />
+    <Compile Include="..\src\Testing\TaskExtensions.cs" Link="SharedSource\Testing\TaskExtensions.cs" />
   </ItemGroup>
 
   <!--Embed the shared resources -->
@@ -59,7 +62,4 @@
 
   <!-- Import the Azure.Core reference -->
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
-
-  <!-- Import the Azure.Core test framework (shared source) -->
-  <Import Project="..\..\..\core\Azure.Core\tests\TestFramework.props" />
 </Project>
