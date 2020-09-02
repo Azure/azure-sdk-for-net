@@ -4,12 +4,9 @@
 using OpenTelemetry.Trace;
 using System;
 
-namespace OpenTelemetry.Exporter.AzureMonitor
+namespace OpenTelemetry.Exporter.AzureMonitor.Extensions
 {
-    /// <summary>
-    /// test
-    /// </summary>
-    public static class AzureMonitorExporterHelperExtensions
+    public static class TracerProviderBuilderExtensions
     {
         /// <summary>
         /// Registers an Azure Monitor trace exporter that will receive <see cref="System.Diagnostics.Activity"/> instances.

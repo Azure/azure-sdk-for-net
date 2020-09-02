@@ -4,6 +4,8 @@
 using System;
 using System.Diagnostics.Tracing;
 
+using OpenTelemetry.Exporter.AzureMonitor.Extensions;
+
 namespace OpenTelemetry.Exporter.AzureMonitor
 {
     [EventSource(Name = EventSourceName)]

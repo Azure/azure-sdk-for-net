@@ -4,7 +4,7 @@
 using System.Diagnostics;
 using OpenTelemetry.Trace;
 
-namespace OpenTelemetry.Exporter.AzureMonitor
+namespace OpenTelemetry.Exporter.AzureMonitor.Extensions
 {
     internal static class ActivityExtensions
     {
