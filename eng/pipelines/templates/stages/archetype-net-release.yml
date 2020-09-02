@@ -48,127 +48,127 @@ stages:
         dependsOn: Signing
         condition: and(succeeded(), ne(variables['SetDevVersion'], 'true'), ne(variables['Skip.Release'], 'true'), ne(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net-pr'))
         jobs:
-#          - deployment: TagRepository
-#            displayName: "Create release tag"
-#            condition: ne(variables['Skip.TagRepository'], 'true')
-#            environment: github
-#
-#            pool:
-#              vmImage: windows-2019
-#
-#            strategy:
-#              runOnce:
-#                deploy:
-#                  steps:
-#                    - checkout: self
-#                    - template: /eng/common/pipelines/templates/steps/verify-changelog.yml
-#                      parameters:
-#                        PackageName: ${{artifact.name}}
-#                        ServiceName: ${{parameters.ServiceDirectory}}
-#                        ForRelease: true
-#                    - template: /eng/common/pipelines/templates/steps/create-tags-and-git-release.yml
-#                      parameters:
-#                        ArtifactLocation: $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}
-#                        PackageRepository: Nuget
-#                        ReleaseSha: $(Build.SourceVersion)
-#                        RepoId: Azure/azure-sdk-for-net
-#
-#          - ${{if ne(artifact.options.skipPublishPackage, 'true')}}:
-#            - deployment: PublishPackage
-#              displayName: Publish package to Nuget.org and DevOps Feed
-#              condition: and(succeeded(), ne(variables['Skip.PublishPackage'], 'true'))
-#              environment: nuget
-#              dependsOn: TagRepository
-#
-#              pool:
-#                vmImage: ubuntu-18.04
-#
-#              strategy:
-#                runOnce:
-#                  deploy:
-#                    steps:
-#                      - checkout: none
-#                      - task: NuGetCommand@2
-#                        displayName: 'Publish ${{artifact.name}} package to NuGet.org'
-#                        inputs:
-#                          command: push
-#                          packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)//${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
-#                          nuGetFeedType: external
-#                          publishFeedCredentials: Nuget.org
-#                      - task: NuGetCommand@2
-#                        displayName: 'Publish to DevOps Feed'
-#                        inputs:
-#                          command: push
-#                          packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
-#                          publishVstsFeed: ${{ parameters.DevOpsFeedID }}
-#
-#          - ${{if ne(artifact.options.skipSymbolsUpload, 'true')}}:
-#            - deployment: UploadSymbols
-#              displayName: Upload Symbols to Symbols Server
-#              condition: and(succeeded(), ne(variables['Skip.SymbolsUpload'], 'true'))
-#              environment: nuget
-#              dependsOn: PublishPackage
-#
-#              pool:
-#                vmImage: windows-2019
-#
-#              strategy:
-#                runOnce:
-#                  deploy:
-#                    steps:
-#                      - checkout: none
-#                      - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
-#                      - task: MSBuild@1
-#                        displayName: 'Upload Symbols for ${{artifact.name}}'
-#                        inputs:
-#                          solution: '$(AzureSDKBuildToolsPath)/tools/symboltool/SymbolUploader.proj'
-#                          msbuildArguments: '/p:PackagesPath=$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}} /p:MSPublicSymbolsPAT=$(azuresdk-microsoftpublicsymbols-devops-pat) /p:MSSymbolsPAT=$(azuresdk-microsoft-devops-pat) /p:AzureSDKSymbolsPAT=$(azuresdk-azure-sdk-devops-pat)'
-#
-#          - ${{if ne(artifact.options.skipPublishDocs, 'true')}}:
-#            - deployment: PublicDocsMS
-#              displayName: Publish to Docs.MS
-#              condition: and(succeeded(), ne(variables['Skip.PublishDocs'], 'true'))
-#              environment: githubio
-#              dependsOn: PublishPackage
-#
-#              variables:
-#                CIConfigs: "{'targets':[{'path_to_config':'bundlepackages/azure-dotnet-preview.csv','Mode':'Preview'},{'path_to_config':'bundlepackages/azure-dotnet.csv','mode':'Latest'}]}"
-#
-#              pool:
-#                vmImage: windows-2019
-#
-#              strategy:
-#                runOnce:
-#                  deploy:
-#                    steps:
-#                      - checkout: self
-#                      - template: /eng/common/pipelines/templates/steps/get-pr-owners.yml
-#                        parameters:
-#                          TargetVariable: "OwningGHUser"
-#                          ServiceDirectory: ${{parameters.ServiceDirectory}}
-#                      - template: /eng/common/pipelines/templates/steps/docs-metadata-release.yml
-#                        parameters:
-#                          ArtifactLocation: $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}
-#                          PackageRepository: Nuget
-#                          ReleaseSha: $(Build.SourceVersion)
-#                          RepoId: Azure/azure-sdk-for-net
-#                          WorkingDirectory: $(System.DefaultWorkingDirectory)
-#                          TargetDocRepoOwner: ${{parameters.TargetDocRepoOwner}}
-#                          TargetDocRepoName: ${{parameters.TargetDocRepoName}}
-#                          PRBranchName: onboarding-${{artifact.name}}-$(Build.BuildId)
-#                          ArtifactName: ${{artifact.name}}
-#                          Language: '.net'
-#                          DocRepoDestinationPath: 'api/overview/azure/' 
-#                          GHReviewersVariable: 'OwningGHUser'
-#                          CIConfigs: $(CIConfigs)
-#                          OnboardingBranch: 'onboarding'
+          - deployment: TagRepository
+            displayName: "Create release tag"
+            condition: ne(variables['Skip.TagRepository'], 'true')
+            environment: github
+
+            pool:
+              vmImage: windows-2019
+
+            strategy:
+              runOnce:
+                deploy:
+                  steps:
+                    - checkout: self
+                    - template: /eng/common/pipelines/templates/steps/verify-changelog.yml
+                      parameters:
+                        PackageName: ${{artifact.name}}
+                        ServiceName: ${{parameters.ServiceDirectory}}
+                        ForRelease: true
+                    - template: /eng/common/pipelines/templates/steps/create-tags-and-git-release.yml
+                      parameters:
+                        ArtifactLocation: $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}
+                        PackageRepository: Nuget
+                        ReleaseSha: $(Build.SourceVersion)
+                        RepoId: Azure/azure-sdk-for-net
+
+          - ${{if ne(artifact.options.skipPublishPackage, 'true')}}:
+            - deployment: PublishPackage
+              displayName: Publish package to Nuget.org and DevOps Feed
+              condition: and(succeeded(), ne(variables['Skip.PublishPackage'], 'true'))
+              environment: nuget
+              dependsOn: TagRepository
+
+              pool:
+                vmImage: ubuntu-18.04
+
+              strategy:
+                runOnce:
+                  deploy:
+                    steps:
+                      - checkout: none
+                      - task: NuGetCommand@2
+                        displayName: 'Publish ${{artifact.name}} package to NuGet.org'
+                        inputs:
+                          command: push
+                          packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)//${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
+                          nuGetFeedType: external
+                          publishFeedCredentials: Nuget.org
+                      - task: NuGetCommand@2
+                        displayName: 'Publish to DevOps Feed'
+                        inputs:
+                          command: push
+                          packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
+                          publishVstsFeed: ${{ parameters.DevOpsFeedID }}
+
+          - ${{if ne(artifact.options.skipSymbolsUpload, 'true')}}:
+            - deployment: UploadSymbols
+              displayName: Upload Symbols to Symbols Server
+              condition: and(succeeded(), ne(variables['Skip.SymbolsUpload'], 'true'))
+              environment: nuget
+              dependsOn: PublishPackage
+
+              pool:
+                vmImage: windows-2019
+
+              strategy:
+                runOnce:
+                  deploy:
+                    steps:
+                      - checkout: none
+                      - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
+                      - task: MSBuild@1
+                        displayName: 'Upload Symbols for ${{artifact.name}}'
+                        inputs:
+                          solution: '$(AzureSDKBuildToolsPath)/tools/symboltool/SymbolUploader.proj'
+                          msbuildArguments: '/p:PackagesPath=$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}} /p:MSPublicSymbolsPAT=$(azuresdk-microsoftpublicsymbols-devops-pat) /p:MSSymbolsPAT=$(azuresdk-microsoft-devops-pat) /p:AzureSDKSymbolsPAT=$(azuresdk-azure-sdk-devops-pat)'
+
+          - ${{if ne(artifact.options.skipPublishDocs, 'true')}}:
+            - deployment: PublicDocsMS
+              displayName: Publish to Docs.MS
+              condition: and(succeeded(), ne(variables['Skip.PublishDocs'], 'true'))
+              environment: githubio
+              dependsOn: PublishPackage
+
+              variables:
+                CIConfigs: "{'targets':[{'path_to_config':'bundlepackages/azure-dotnet-preview.csv','Mode':'Preview'},{'path_to_config':'bundlepackages/azure-dotnet.csv','mode':'Latest'}]}"
+
+              pool:
+                vmImage: windows-2019
+
+              strategy:
+                runOnce:
+                  deploy:
+                    steps:
+                      - checkout: self
+                      - template: /eng/common/pipelines/templates/steps/get-pr-owners.yml
+                        parameters:
+                          TargetVariable: "OwningGHUser"
+                          ServiceDirectory: ${{parameters.ServiceDirectory}}
+                      - template: /eng/common/pipelines/templates/steps/docs-metadata-release.yml
+                        parameters:
+                          ArtifactLocation: $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}
+                          PackageRepository: Nuget
+                          ReleaseSha: $(Build.SourceVersion)
+                          RepoId: Azure/azure-sdk-for-net
+                          WorkingDirectory: $(System.DefaultWorkingDirectory)
+                          TargetDocRepoOwner: ${{parameters.TargetDocRepoOwner}}
+                          TargetDocRepoName: ${{parameters.TargetDocRepoName}}
+                          PRBranchName: onboarding-${{artifact.name}}-$(Build.BuildId)
+                          ArtifactName: ${{artifact.name}}
+                          Language: '.net'
+                          DocRepoDestinationPath: 'api/overview/azure/' 
+                          GHReviewersVariable: 'OwningGHUser'
+                          CIConfigs: $(CIConfigs)
+                          OnboardingBranch: 'onboarding'
 
           - ${{if ne(artifact.options.skipPublishDocs, 'true')}}:
             - deployment: PublishDocs
               displayName: Publish Docs to GitHub pages
               condition: and(succeeded(), ne(variables['Skip.PublishDocs'], 'true'))
               environment: githubio
-              #dependsOn: PublishPackage
+              dependsOn: PublishPackage
 
               pool:
                 vmImage: windows-2019
