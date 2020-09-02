@@ -13,8 +13,32 @@ namespace Azure.Identity
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _clientId;
+        private const string MsiEndpointInvalidUriError = "The environment variable MSI_ENDPOINT contains an invalid Uri.";
 
-        public CloudShellAuthRequestBuilder(HttpPipeline pipeline, Uri endpoint, string clientId)
+        public static IAuthRequestBuilder TryCreate(HttpPipeline pipeline, string clientId)
+        {
+            string msiEndpoint = EnvironmentVariables.MsiEndpoint;
+
+            // if ONLY the env var MSI_ENDPOINT is set the MsiType is CloudShell
+            if (string.IsNullOrEmpty(msiEndpoint))
+            {
+                return default;
+            }
+
+            Uri endpointUri;
+            try
+            {
+                endpointUri = new Uri(msiEndpoint);
+            }
+            catch (FormatException ex)
+            {
+                throw new AuthenticationFailedException(MsiEndpointInvalidUriError, ex);
+            }
+
+            return new CloudShellAuthRequestBuilder(pipeline, endpointUri, clientId);
+        }
+
+        private CloudShellAuthRequestBuilder(HttpPipeline pipeline, Uri endpoint, string clientId)
         {
             _pipeline = pipeline;
             _endpoint = endpoint;

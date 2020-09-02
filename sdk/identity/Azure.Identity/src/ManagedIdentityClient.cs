@@ -17,16 +17,8 @@ namespace Azure.Identity
     internal class ManagedIdentityClient
     {
         private const string AuthenticationResponseInvalidFormatError = "Invalid response, the authentication response was not in the expected format.";
-        private const string IdentityEndpointInvalidUriError = "The environment variable IDENTITY_ENDPOINT contains an invalid Uri.";
-        private const string MsiEndpointInvalidUriError = "The environment variable MSI_ENDPOINT contains an invalid Uri.";
         internal const string MsiUnavailableError = "ManagedIdentityCredential authentication unavailable. No Managed Identity endpoint found.";
         internal const string IdentityUnavailableError = "ManagedIdentityCredential authentication unavailable. The requested identity has not been assigned to this resource.";
-
-        // IMDS constants. Docs for IMDS are available here https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/how-to-use-vm-token#get-a-token-using-http
-        private static readonly Uri s_imdsEndpoint = new Uri("http://169.254.169.254/metadata/identity/oauth2/token");
-        private static readonly IPAddress s_imdsHostIp = IPAddress.Parse("169.254.169.254");
-        private const int s_imdsPort = 80;
-        private const int ImdsAvailableTimeoutMs = 1000;
 
         private readonly AsyncLockWithValue<IAuthRequestBuilder> _msiTypeAsyncLock = new AsyncLockWithValue<IAuthRequestBuilder>();
         private readonly CredentialPipeline _pipeline;
@@ -99,101 +91,10 @@ namespace Azure.Identity
 
         private async ValueTask<IAuthRequestBuilder> CreateAuthRequestBuilderAsync(bool async, CancellationToken cancellationToken)
         {
-            string identityEndpoint = EnvironmentVariables.IdentityEndpoint;
-            string identityHeader = EnvironmentVariables.IdentityHeader;
-
-            if (!string.IsNullOrEmpty(identityEndpoint) && !string.IsNullOrEmpty(identityHeader))
-            {
-                Uri endpointUri;
-                try
-                {
-                    endpointUri = new Uri(identityEndpoint);
-                }
-                catch (FormatException ex)
-                {
-                    throw new AuthenticationFailedException(IdentityEndpointInvalidUriError, ex);
-                }
-
-                return new AppServiceV2019AuthRequestBuilder(_pipeline.HttpPipeline, endpointUri, identityHeader, ClientId);
-            }
-
-            string msiEndpoint = EnvironmentVariables.MsiEndpoint;
-            string msiSecret = EnvironmentVariables.MsiSecret;
-
-            // if the env var MSI_ENDPOINT is set
-            if (!string.IsNullOrEmpty(msiEndpoint))
-            {
-                Uri endpointUri;
-                try
-                {
-                    endpointUri = new Uri(msiEndpoint);
-                }
-                catch (FormatException ex)
-                {
-                    throw new AuthenticationFailedException(MsiEndpointInvalidUriError, ex);
-                }
-
-                // if BOTH the env vars MSI_ENDPOINT and MSI_SECRET are set the MsiType is AppService
-                if (!string.IsNullOrEmpty(msiSecret))
-                {
-                    return new AppServiceV2017AuthRequestBuilder(_pipeline.HttpPipeline, endpointUri, msiSecret, ClientId);
-                }
-
-                // if ONLY the env var MSI_ENDPOINT is set the MsiType is CloudShell
-                return new CloudShellAuthRequestBuilder(_pipeline.HttpPipeline, endpointUri, ClientId);
-            }
-
-            // if MSI_ENDPOINT is NOT set AND the IMDS endpoint is available the MsiType is Imds
-            if (await ImdsAvailableAsync(async, cancellationToken).ConfigureAwait(false))
-            {
-                return new ImdsAuthRequestBuilder(_pipeline.HttpPipeline, s_imdsEndpoint, ClientId);
-            }
-            // if MSI_ENDPOINT is NOT set and IMDS endpoint is not available ManagedIdentity is not available
-
-            return default;
-        }
-
-        protected virtual async ValueTask<bool> ImdsAvailableAsync(bool async, CancellationToken cancellationToken)
-        {
-            AzureIdentityEventSource.Singleton.ProbeImdsEndpoint(s_imdsEndpoint);
-
-            bool available;
-            // try to create a TCP connection to the IMDS IP address. If the connection can be established
-            // we assume that IMDS is available. If connecting times out or fails to connect assume that
-            // IMDS is not available in this environment.
-            try
-            {
-                using var client = new TcpClient();
-                Task connectTask = client.ConnectAsync(s_imdsHostIp, s_imdsPort);
-
-                if (async)
-                {
-                    using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-
-                    cts.CancelAfter(ImdsAvailableTimeoutMs);
-                    await connectTask.AwaitWithCancellation(cts.Token);
-                    available = client.Connected;
-                }
-                else
-                {
-                    available = connectTask.Wait(ImdsAvailableTimeoutMs, cancellationToken) && client.Connected;
-                }
-            }
-            catch
-            {
-                available = false;
-            }
-
-            if (available)
-            {
-                AzureIdentityEventSource.Singleton.ImdsEndpointFound(s_imdsEndpoint);
-            }
-            else
-            {
-                AzureIdentityEventSource.Singleton.ImdsEndpointUnavailable(s_imdsEndpoint);
-            }
-
-            return available;
+            return AppServiceV2019AuthRequestBuilder.TryCreate(_pipeline.HttpPipeline, ClientId)
+                ?? AppServiceV2017AuthRequestBuilder.TryCreate(_pipeline.HttpPipeline, ClientId)
+                ?? CloudShellAuthRequestBuilder.TryCreate(_pipeline.HttpPipeline, ClientId)
+                ?? await ImdsAuthRequestBuilder.TryCreateAsync(_pipeline.HttpPipeline, ClientId, async, cancellationToken).ConfigureAwait(false);
         }
 
         private static async ValueTask<AccessToken> DeserializeAsync(Stream content, bool isAppService2017, bool async, CancellationToken cancellationToken)

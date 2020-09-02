@@ -11,13 +11,38 @@ namespace Azure.Identity
     {
         // MSI Constants. Docs for MSI are available here https://docs.microsoft.com/en-us/azure/app-service/overview-managed-identity
         private const string AppServiceMsiApiVersion = "2017-09-01";
+        private const string MsiEndpointInvalidUriError = "The environment variable MSI_ENDPOINT contains an invalid Uri.";
 
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _secret;
         private readonly string _clientId;
 
-        public AppServiceV2017AuthRequestBuilder(HttpPipeline pipeline, Uri endpoint, string secret, string clientId)
+        public static IAuthRequestBuilder TryCreate(HttpPipeline pipeline, string clientId)
+        {
+            string msiEndpoint = EnvironmentVariables.MsiEndpoint;
+            string msiSecret = EnvironmentVariables.MsiSecret;
+
+            // if BOTH the env vars MSI_ENDPOINT and MSI_SECRET are set the MsiType is AppService
+            if (string.IsNullOrEmpty(msiEndpoint) || string.IsNullOrEmpty(msiSecret))
+            {
+                return default;
+            }
+
+            Uri endpointUri;
+            try
+            {
+                endpointUri = new Uri(msiEndpoint);
+            }
+            catch (FormatException ex)
+            {
+                throw new AuthenticationFailedException(MsiEndpointInvalidUriError, ex);
+            }
+
+            return new AppServiceV2017AuthRequestBuilder(pipeline, endpointUri, msiSecret, clientId);
+        }
+
+        private AppServiceV2017AuthRequestBuilder(HttpPipeline pipeline, Uri endpoint, string secret, string clientId)
         {
             _pipeline = pipeline;
             _endpoint = endpoint;

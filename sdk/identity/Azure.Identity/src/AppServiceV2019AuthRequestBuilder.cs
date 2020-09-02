@@ -10,13 +10,37 @@ namespace Azure.Identity
     internal class AppServiceV2019AuthRequestBuilder : IAuthRequestBuilder
     {
         private const string AppServiceMsiApiVersion = "2019-08-01";
+        private const string IdentityEndpointInvalidUriError = "The environment variable IDENTITY_ENDPOINT contains an invalid Uri.";
 
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _secret;
         private readonly string _clientId;
 
-        public AppServiceV2019AuthRequestBuilder(HttpPipeline pipeline, Uri endpoint, string secret, string clientId)
+        public static IAuthRequestBuilder TryCreate(HttpPipeline pipeline, string clientId)
+        {
+            string identityEndpoint = EnvironmentVariables.IdentityEndpoint;
+            string identityHeader = EnvironmentVariables.IdentityHeader;
+
+            if (string.IsNullOrEmpty(identityEndpoint) || string.IsNullOrEmpty(identityHeader))
+            {
+                return default;
+            }
+
+            Uri endpointUri;
+            try
+            {
+                endpointUri = new Uri(identityEndpoint);
+            }
+            catch (FormatException ex)
+            {
+                throw new AuthenticationFailedException(IdentityEndpointInvalidUriError, ex);
+            }
+
+            return new AppServiceV2019AuthRequestBuilder(pipeline, endpointUri, identityHeader, clientId);
+        }
+
+        private AppServiceV2019AuthRequestBuilder(HttpPipeline pipeline, Uri endpoint, string secret, string clientId)
         {
             _pipeline = pipeline;
             _endpoint = endpoint;
