@@ -397,9 +397,26 @@ namespace Azure.AI.TextAnalytics
         /// <param name="url">Sets the <see cref="LinkedEntity.Url"/> property.</param>
         /// <param name="matches">Sets the <see cref="LinkedEntity.Matches"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.LinkedEntity"/> for mocking purposes.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static LinkedEntity LinkedEntity(string name, string dataSourceEntityId, string language, string dataSource, Uri url, IEnumerable<LinkedEntityMatch> matches)
         {
-            return new LinkedEntity(name, matches, language, dataSourceEntityId, url.AbsoluteUri, dataSource, default);
+            return new LinkedEntity(name, matches, language, dataSourceEntityId, url, dataSource, default);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.LinkedEntity"/> for mocking purposes.
+        /// </summary>
+        /// <param name="name">Sets the <see cref="LinkedEntity.Name"/> property.</param>
+        /// <param name="dataSourceEntityId">Sets the <see cref="LinkedEntity.DataSourceEntityId"/> property.</param>
+        /// <param name="language">Sets the <see cref="LinkedEntity.Language"/> property.</param>
+        /// <param name="dataSource">Sets the <see cref="LinkedEntity.DataSource"/> property.</param>
+        /// <param name="url">Sets the <see cref="LinkedEntity.Url"/> property.</param>
+        /// <param name="matches">Sets the <see cref="LinkedEntity.Matches"/> property.</param>
+        /// <param name="bingEntitySearchApiId">Sets the <see cref="LinkedEntity.BingEntitySearchApiId"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.LinkedEntity"/> for mocking purposes.</returns>
+        public static LinkedEntity LinkedEntity(string name, string dataSourceEntityId, string language, string dataSource, Uri url, IEnumerable<LinkedEntityMatch> matches, string bingEntitySearchApiId)
+        {
+            return new LinkedEntity(name, matches, language, dataSourceEntityId, url, dataSource, bingEntitySearchApiId);
         }
 
         /// <summary>
