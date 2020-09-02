@@ -22,14 +22,14 @@ namespace Azure.Storage.Queues.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string MessageText
         {
-            get => Message.ToString();
-            internal set => Message = new BinaryData(value);
+            get => Body.ToString();
+            internal set => Body = new BinaryData(value);
         }
 
         /// <summary>
         /// The content of the Message.
         /// </summary>
-        public BinaryData Message { get; internal set; }
+        public BinaryData Body { get; internal set; }
 
         /// <summary>
         /// The time the Message was inserted into the Queue.
@@ -58,7 +58,7 @@ namespace Azure.Storage.Queues.Models
             {
                 MessageId = peekedMessageItem.MessageId,
                 DequeueCount = peekedMessageItem.DequeueCount,
-                Message = QueueMessageCodec.DecodeMessageBody(peekedMessageItem.MessageText, messageEncoding),
+                Body = QueueMessageCodec.DecodeMessageBody(peekedMessageItem.MessageText, messageEncoding),
                 ExpiresOn = peekedMessageItem.ExpirationTime,
                 InsertedOn = peekedMessageItem.InsertionTime,
             };

@@ -30,14 +30,14 @@ namespace Azure.Storage.Queues.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string MessageText
         {
-            get => Message.ToString();
-            internal set => Message = new BinaryData(value);
+            get => Body.ToString();
+            internal set => Body = new BinaryData(value);
         }
 
         /// <summary>
         /// The content of the Message.
         /// </summary>
-        public BinaryData Message { get; internal set; }
+        public BinaryData Body { get; internal set; }
 
         /// <summary>
         /// The time that the message will again become visible in the Queue.
@@ -70,7 +70,7 @@ namespace Azure.Storage.Queues.Models
             QueuesModelFactory.QueueMessage(
                 MessageId,
                 updated.PopReceipt,
-                MessageText,
+                Body,
                 DequeueCount,
                 updated.NextVisibleOn,
                 InsertedOn,
@@ -82,7 +82,7 @@ namespace Azure.Storage.Queues.Models
             {
                 MessageId = dequeuedMessageItem.MessageId,
                 PopReceipt = dequeuedMessageItem.PopReceipt,
-                Message = QueueMessageCodec.DecodeMessageBody(dequeuedMessageItem.MessageText, messageEncoding),
+                Body = QueueMessageCodec.DecodeMessageBody(dequeuedMessageItem.MessageText, messageEncoding),
                 DequeueCount = dequeuedMessageItem.DequeueCount,
                 NextVisibleOn = dequeuedMessageItem.TimeNextVisible,
                 InsertedOn = dequeuedMessageItem.InsertionTime,

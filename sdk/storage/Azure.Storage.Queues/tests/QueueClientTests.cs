@@ -750,7 +750,7 @@ namespace Azure.Storage.Queues.Test
             QueueMessage receivedMessage = (await encodingClient.ReceiveMessagesAsync()).Value.First();
 
             // Assert
-            CollectionAssert.AreEqual(content, receivedMessage.Message.Bytes.ToArray());
+            CollectionAssert.AreEqual(content, receivedMessage.Body.Bytes.ToArray());
         }
 
         [Test]

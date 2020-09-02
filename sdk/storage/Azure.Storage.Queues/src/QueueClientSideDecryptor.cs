@@ -7,6 +7,7 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues.Specialized;
@@ -32,7 +33,7 @@ namespace Azure.Storage.Queues
             {
                 try
                 {
-                    message.MessageText = await ClientSideDecryptInternal(message.MessageText, async, cancellationToken).ConfigureAwait(false);
+                    message.Body = await ClientSideDecryptInternal(message.Body, async, cancellationToken).ConfigureAwait(false);
                     filteredMessages.Add(message);
                 }
                 catch (Exception e) when (Options.UsingDecryptionFailureHandler)
@@ -49,7 +50,7 @@ namespace Azure.Storage.Queues
             {
                 try
                 {
-                    message.MessageText = await ClientSideDecryptInternal(message.MessageText, async, cancellationToken).ConfigureAwait(false);
+                    message.Body = await ClientSideDecryptInternal(message.Body, async, cancellationToken).ConfigureAwait(false);
                     filteredMessages.Add(message);
                 }
                 catch (Exception e) when (Options.UsingDecryptionFailureHandler)
@@ -60,7 +61,7 @@ namespace Azure.Storage.Queues
             return filteredMessages.ToArray();
         }
 
-        private async Task<string> ClientSideDecryptInternal(string downloadedMessage, bool async, CancellationToken cancellationToken)
+        private async Task<BinaryData> ClientSideDecryptInternal(BinaryData downloadedMessage, bool async, CancellationToken cancellationToken)
         {
             if (!EncryptedMessageSerializer.TryDeserialize(downloadedMessage, out var encryptedMessage))
             {
@@ -82,7 +83,9 @@ namespace Azure.Storage.Queues
                 return downloadedMessage;
             }
 
-            return new StreamReader(decryptedMessageStream, Encoding.UTF8).ReadToEnd();
+            return async ?
+                await BinaryData.FromStreamAsync(decryptedMessageStream, cancellationToken).ConfigureAwait(false) :
+                BinaryData.FromStream(decryptedMessageStream);
         }
     }
 }

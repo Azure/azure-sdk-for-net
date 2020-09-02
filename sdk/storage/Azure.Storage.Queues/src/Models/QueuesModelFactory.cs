@@ -28,7 +28,7 @@ namespace Azure.Storage.Queues.Models
             {
                 MessageId = messageId,
                 PopReceipt = popReceipt,
-                Message = new BinaryData(messageText),
+                Body = new BinaryData(messageText),
                 DequeueCount = dequeueCount,
                 NextVisibleOn = nextVisibleOn,
                 InsertedOn = insertedOn,
@@ -42,7 +42,7 @@ namespace Azure.Storage.Queues.Models
         public static QueueMessage QueueMessage(
             string messageId,
             string popReceipt,
-            BinaryData message,
+            BinaryData body,
             long dequeueCount,
             System.DateTimeOffset? nextVisibleOn = default,
             System.DateTimeOffset? insertedOn = default,
@@ -52,7 +52,7 @@ namespace Azure.Storage.Queues.Models
             {
                 MessageId = messageId,
                 PopReceipt = popReceipt,
-                Message = message,
+                Body = body,
                 DequeueCount = dequeueCount,
                 NextVisibleOn = nextVisibleOn,
                 InsertedOn = insertedOn,
@@ -74,7 +74,7 @@ namespace Azure.Storage.Queues.Models
             return new PeekedMessage()
             {
                 MessageId = messageId,
-                Message = new BinaryData(messageText),
+                Body = new BinaryData(messageText),
                 DequeueCount = dequeueCount,
                 InsertedOn = insertedOn,
                 ExpiresOn = expiresOn,
@@ -94,7 +94,7 @@ namespace Azure.Storage.Queues.Models
             return new PeekedMessage()
             {
                 MessageId = messageId,
-                Message = message,
+                Body = message,
                 DequeueCount = dequeueCount,
                 InsertedOn = insertedOn,
                 ExpiresOn = expiresOn,

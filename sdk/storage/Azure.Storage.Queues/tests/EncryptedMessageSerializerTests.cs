@@ -8,6 +8,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
+using Azure.Core;
 using Azure.Core.Cryptography;
 using Azure.Core.Pipeline;
 using Azure.Storage.Cryptography;
@@ -138,7 +139,7 @@ namespace Azure.Storage.Queues.Test
         [TestCase("ᛁᚳ᛫ᛗᚨᚷ᛫ᚷᛚᚨᛋ᛫ᛖᚩᛏᚪᚾ᛫ᚩᚾᛞ᛫ᚻᛁᛏ᛫ᚾᛖ᛫ᚻᛖᚪᚱᛗᛁᚪᚧ᛫ᛗᛖ")]
         public void TryDeserializeGracefulOnBadInput(string input)
         {
-            bool tryResult = EncryptedMessageSerializer.TryDeserialize(input, out var parsedEncryptedMessage);
+            bool tryResult = EncryptedMessageSerializer.TryDeserialize(new BinaryData(input), out var parsedEncryptedMessage);
 
             Assert.AreEqual(false, tryResult);
             Assert.IsNull(parsedEncryptedMessage?.EncryptedMessageText);

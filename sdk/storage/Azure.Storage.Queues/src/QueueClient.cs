@@ -1768,8 +1768,8 @@ namespace Azure.Storage.Queues
                     {
                         AssertEncodingForEncryption();
                         // TODO (kasobol-msft) propagete bytes to encryptor
-                        message = new BinaryData(await new QueueClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
-                            .ClientSideEncryptInternal(message.Value.ToString(), async, cancellationToken).ConfigureAwait(false));
+                        message = await new QueueClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
+                            .ClientSideEncryptInternal(message.Value, async, cancellationToken).ConfigureAwait(false);
                     }
 
                     Response<IEnumerable<SendReceipt>> messages =
@@ -2476,8 +2476,8 @@ namespace Azure.Storage.Queues
                     {
                         AssertEncodingForEncryption();
                         // TODO (kasobol-msft) pass bytes to encryptor
-                        message = new BinaryData(await new QueueClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
-                            .ClientSideEncryptInternal(message.Value.ToString(), async, cancellationToken).ConfigureAwait(false));
+                        message = await new QueueClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
+                            .ClientSideEncryptInternal(message.Value, async, cancellationToken).ConfigureAwait(false);
                     }
                     QueueSendMessage queueSendMessage = null;
                     if (message.HasValue)
