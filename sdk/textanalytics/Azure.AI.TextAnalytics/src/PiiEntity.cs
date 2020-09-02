@@ -8,7 +8,7 @@ namespace Azure.AI.TextAnalytics
     /// <summary>
     /// A word or phrase identified as a Personally Identifiable Information
     /// that can be categorized as known type in a given taxonomy.
-    /// The set of categories recognized by the text analytics service is described at
+    /// The set of categories recognized by the Text Analytics service is described at
     /// <a href="https://aka.ms/tanerpii"/>.
     /// </summary>
     public readonly struct PiiEntity

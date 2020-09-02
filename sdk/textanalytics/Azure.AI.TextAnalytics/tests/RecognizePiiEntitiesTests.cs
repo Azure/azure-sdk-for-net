@@ -42,6 +42,7 @@ namespace Azure.AI.TextAnalytics.Tests
             PiiEntityCollection entities = await client.RecognizePiiEntitiesAsync(document);
 
             Assert.AreEqual(2, entities.Count);
+            Assert.IsNotNull(entities.RedactedText);
 
             var entitiesList = new List<string> { "859-98-0987", "800-102-1100" };
             foreach (PiiEntity entity in entities)
@@ -60,6 +61,7 @@ namespace Azure.AI.TextAnalytics.Tests
             PiiEntityCollection entities = await client.RecognizePiiEntitiesAsync(document, "en");
 
             Assert.AreEqual(2, entities.Count);
+            Assert.IsNotNull(entities.RedactedText);
         }
 
         [Test]
@@ -73,6 +75,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(1, entities.Count);
             Assert.AreEqual("atest@microsoft.com", entities.FirstOrDefault().Text);
             Assert.AreEqual(EntityCategory.Email, entities.FirstOrDefault().Category);
+            Assert.IsNotNull(entities.RedactedText);
         }
 
         [Test]
