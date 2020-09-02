@@ -35,10 +35,26 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// URI.</param>
         /// <param name="excludeKeys">The value indicating whether keys should
         /// be excluded during export.</param>
-        public ExportDevicesRequest(string exportBlobContainerUri, bool excludeKeys)
+        /// <param name="exportBlobName">The name of the blob that will be
+        /// created in the provided output blob container. This blob will
+        /// contain the exported device registry information for the IoT
+        /// Hub.</param>
+        /// <param name="authenticationType">Specifies authentication type
+        /// being used for connecting to the storage account. Possible values
+        /// include: 'keyBased', 'identityBased'</param>
+        /// <param name="includeConfigurations">The value indicating whether
+        /// configurations should be exported.</param>
+        /// <param name="configurationsBlobName">The name of the blob that will
+        /// be created in the provided output blob container. This blob will
+        /// contain the exported configurations for the Iot Hub.</param>
+        public ExportDevicesRequest(string exportBlobContainerUri, bool excludeKeys, string exportBlobName = default(string), string authenticationType = default(string), bool? includeConfigurations = default(bool?), string configurationsBlobName = default(string))
         {
             ExportBlobContainerUri = exportBlobContainerUri;
             ExcludeKeys = excludeKeys;
+            ExportBlobName = exportBlobName;
+            AuthenticationType = authenticationType;
+            IncludeConfigurations = includeConfigurations;
+            ConfigurationsBlobName = configurationsBlobName;
             CustomInit();
         }
 
@@ -59,6 +75,37 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// </summary>
         [JsonProperty(PropertyName = "excludeKeys")]
         public bool ExcludeKeys { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the blob that will be created in the
+        /// provided output blob container. This blob will contain the exported
+        /// device registry information for the IoT Hub.
+        /// </summary>
+        [JsonProperty(PropertyName = "exportBlobName")]
+        public string ExportBlobName { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies authentication type being used for
+        /// connecting to the storage account. Possible values include:
+        /// 'keyBased', 'identityBased'
+        /// </summary>
+        [JsonProperty(PropertyName = "authenticationType")]
+        public string AuthenticationType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the value indicating whether configurations should be
+        /// exported.
+        /// </summary>
+        [JsonProperty(PropertyName = "includeConfigurations")]
+        public bool? IncludeConfigurations { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the blob that will be created in the
+        /// provided output blob container. This blob will contain the exported
+        /// configurations for the Iot Hub.
+        /// </summary>
+        [JsonProperty(PropertyName = "configurationsBlobName")]
+        public string ConfigurationsBlobName { get; set; }
 
         /// <summary>
         /// Validate the object.

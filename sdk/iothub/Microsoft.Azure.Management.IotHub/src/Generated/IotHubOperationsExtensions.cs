@@ -22,22 +22,25 @@ namespace Microsoft.Azure.Management.IotHub
     public static partial class IotHubOperationsExtensions
     {
             /// <summary>
-            /// Manual Failover Fail over
+            /// Manually initiate a failover for the IoT Hub to its secondary region
             /// </summary>
             /// <remarks>
-            /// Perform manual fail over of given hub
+            /// Manually initiate a failover for the IoT Hub to its secondary region. To
+            /// learn more, see https://aka.ms/manualfailover
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='iotHubName'>
-            /// IotHub to fail over
+            /// Name of the IoT hub to failover
             /// </param>
             /// <param name='failoverInput'>
-            /// Region to failover to. Must be a azure DR pair
+            /// Region to failover to. Must be the Azure paired region. Get the value from
+            /// the secondary location in the locations property. To learn more, see
+            /// https://aka.ms/manualfailover/region
             /// </param>
             /// <param name='resourceGroupName'>
-            /// resource group which Iot Hub belongs to
+            /// Name of the resource group containing the IoT hub resource
             /// </param>
             public static void ManualFailover(this IIotHubOperations operations, string iotHubName, FailoverInput failoverInput, string resourceGroupName)
             {
@@ -45,22 +48,25 @@ namespace Microsoft.Azure.Management.IotHub
             }
 
             /// <summary>
-            /// Manual Failover Fail over
+            /// Manually initiate a failover for the IoT Hub to its secondary region
             /// </summary>
             /// <remarks>
-            /// Perform manual fail over of given hub
+            /// Manually initiate a failover for the IoT Hub to its secondary region. To
+            /// learn more, see https://aka.ms/manualfailover
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='iotHubName'>
-            /// IotHub to fail over
+            /// Name of the IoT hub to failover
             /// </param>
             /// <param name='failoverInput'>
-            /// Region to failover to. Must be a azure DR pair
+            /// Region to failover to. Must be the Azure paired region. Get the value from
+            /// the secondary location in the locations property. To learn more, see
+            /// https://aka.ms/manualfailover/region
             /// </param>
             /// <param name='resourceGroupName'>
-            /// resource group which Iot Hub belongs to
+            /// Name of the resource group containing the IoT hub resource
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -71,22 +77,25 @@ namespace Microsoft.Azure.Management.IotHub
             }
 
             /// <summary>
-            /// Manual Failover Fail over
+            /// Manually initiate a failover for the IoT Hub to its secondary region
             /// </summary>
             /// <remarks>
-            /// Perform manual fail over of given hub
+            /// Manually initiate a failover for the IoT Hub to its secondary region. To
+            /// learn more, see https://aka.ms/manualfailover
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='iotHubName'>
-            /// IotHub to fail over
+            /// Name of the IoT hub to failover
             /// </param>
             /// <param name='failoverInput'>
-            /// Region to failover to. Must be a azure DR pair
+            /// Region to failover to. Must be the Azure paired region. Get the value from
+            /// the secondary location in the locations property. To learn more, see
+            /// https://aka.ms/manualfailover/region
             /// </param>
             /// <param name='resourceGroupName'>
-            /// resource group which Iot Hub belongs to
+            /// Name of the resource group containing the IoT hub resource
             /// </param>
             public static void BeginManualFailover(this IIotHubOperations operations, string iotHubName, FailoverInput failoverInput, string resourceGroupName)
             {
@@ -94,22 +103,25 @@ namespace Microsoft.Azure.Management.IotHub
             }
 
             /// <summary>
-            /// Manual Failover Fail over
+            /// Manually initiate a failover for the IoT Hub to its secondary region
             /// </summary>
             /// <remarks>
-            /// Perform manual fail over of given hub
+            /// Manually initiate a failover for the IoT Hub to its secondary region. To
+            /// learn more, see https://aka.ms/manualfailover
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='iotHubName'>
-            /// IotHub to fail over
+            /// Name of the IoT hub to failover
             /// </param>
             /// <param name='failoverInput'>
-            /// Region to failover to. Must be a azure DR pair
+            /// Region to failover to. Must be the Azure paired region. Get the value from
+            /// the secondary location in the locations property. To learn more, see
+            /// https://aka.ms/manualfailover/region
             /// </param>
             /// <param name='resourceGroupName'>
-            /// resource group which Iot Hub belongs to
+            /// Name of the resource group containing the IoT hub resource
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
