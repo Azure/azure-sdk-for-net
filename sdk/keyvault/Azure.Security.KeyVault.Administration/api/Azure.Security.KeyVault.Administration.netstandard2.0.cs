@@ -148,21 +148,4 @@ namespace Azure.Security.KeyVault.Administration.Models
         public string RoleType { get { throw null; } set { } }
         public string Type { get { throw null; } }
     }
-    public partial class KeyVaultServiceError
-    {
-        internal KeyVaultServiceError() { }
-        public string Code { get { throw null; } }
-        public Azure.Security.KeyVault.Administration.Models.KeyVaultServiceError InnerError { get { throw null; } }
-        public string Message { get { throw null; } }
-    }
-    public partial class SelectiveKeyRestoreDetails
-    {
-        internal SelectiveKeyRestoreDetails() { }
-        public System.DateTimeOffset? EndTime { get { throw null; } }
-        public Azure.Security.KeyVault.Administration.Models.KeyVaultServiceError Error { get { throw null; } }
-        public string JobId { get { throw null; } }
-        public System.DateTimeOffset? StartTime { get { throw null; } }
-        public string Status { get { throw null; } }
-        public string StatusDetails { get { throw null; } }
-    }
 }

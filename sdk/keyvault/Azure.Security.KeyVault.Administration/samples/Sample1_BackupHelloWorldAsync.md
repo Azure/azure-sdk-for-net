@@ -1,7 +1,7 @@
 # Performing a full key backup and restore (Async)
 
 This sample demonstrates how to a perform full key backup and restore in Azure Key Vault.
-To get started, you'll need a URI to an Azure Key Vault. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/README.md) for links and instructions.
+To get started, you'll need a URI to an Azure Key Vault. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/readme.md) for links and instructions.
 
 ## Creating a KeyVaultBackupClient
 
