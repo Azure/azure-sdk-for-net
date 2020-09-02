@@ -71,9 +71,9 @@ namespace Azure.Storage.Queues
         /// </summary>
         internal virtual ClientSideEncryptionOptions ClientSideEncryption => _clientSideEncryption;
 
-        private readonly QueueClientOptions.MessageEncoding _messageEncoding;
+        private readonly QueueMessageEncoding _messageEncoding;
 
-        internal virtual QueueClientOptions.MessageEncoding MessageEncoding => _messageEncoding;
+        internal virtual QueueMessageEncoding MessageEncoding => _messageEncoding;
 
         /// <summary>
         /// The Storage account name corresponding to the service client.
@@ -149,7 +149,7 @@ namespace Azure.Storage.Queues
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions);
-            _messageEncoding = options.Encoding;
+            _messageEncoding = options.MessageEncoding;
         }
 
         /// <summary>
@@ -237,7 +237,7 @@ namespace Azure.Storage.Queues
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions);
-            _messageEncoding = options.Encoding;
+            _messageEncoding = options.MessageEncoding;
         }
         #endregion ctors
 

@@ -153,10 +153,10 @@ namespace Azure.Storage.Queues.Tests
 
         public QueueClient GetEncodingClient(
             string queueName,
-            QueueClientOptions.MessageEncoding encoding)
+            QueueMessageEncoding encoding)
         {
             var options = GetOptions();
-            options.Encoding = encoding;
+            options.MessageEncoding = encoding;
             var service = GetServiceClient_SharedKey(options);
             return InstrumentClient(service.GetQueueClient(queueName));
         }

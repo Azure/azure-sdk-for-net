@@ -121,9 +121,9 @@ namespace Azure.Storage.Queues
         /// </summary>
         private string _name;
 
-        private QueueClientOptions.MessageEncoding _messageEncoding;
+        private QueueMessageEncoding _messageEncoding;
 
-        internal virtual QueueClientOptions.MessageEncoding MessageEncoding => _messageEncoding;
+        internal virtual QueueMessageEncoding MessageEncoding => _messageEncoding;
 
         /// <summary>
         /// Gets the name of the queue.
@@ -203,7 +203,7 @@ namespace Azure.Storage.Queues
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions);
-            _messageEncoding = options.Encoding;
+            _messageEncoding = options.MessageEncoding;
         }
 
         /// <summary>
@@ -296,7 +296,7 @@ namespace Azure.Storage.Queues
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions);
-            _messageEncoding = options.Encoding;
+            _messageEncoding = options.MessageEncoding;
         }
 
         /// <summary>
@@ -330,7 +330,7 @@ namespace Azure.Storage.Queues
             QueueClientOptions.ServiceVersion version,
             ClientDiagnostics clientDiagnostics,
             ClientSideEncryptionOptions encryptionOptions,
-            QueueClientOptions.MessageEncoding messageEncoding)
+            QueueMessageEncoding messageEncoding)
         {
             _uri = queueUri;
             _messagesUri = queueUri.AppendToPath(Constants.Queue.MessagesUri);
@@ -1777,7 +1777,7 @@ namespace Azure.Storage.Queues
                             ClientDiagnostics,
                             Pipeline,
                             MessagesUri,
-                            message: new QueueSendMessage { MessageText = EncodeMessageBody(message) },
+                            message: new QueueSendMessage { MessageText = QueueMessageCodec.EncodeMessageBody(message, _messageEncoding) },
                             version: Version.ToVersionString(),
                             visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
                             messageTimeToLive: (int?)timeToLive?.TotalSeconds,
@@ -1989,12 +1989,12 @@ namespace Azure.Storage.Queues
                         AssertEncodingForEncryption();
                         return Response.FromValue(
                             await new QueueClientSideDecryptor(ClientSideEncryption)
-                                .ClientSideDecryptMessagesInternal(response.Value.Select(x => ToQueueMessage(x)).ToArray(), async, cancellationToken).ConfigureAwait(false),
+                                .ClientSideDecryptMessagesInternal(response.Value.Select(x => QueueMessage.ToQueueMessage(x, _messageEncoding)).ToArray(), async, cancellationToken).ConfigureAwait(false),
                             response.GetRawResponse());
                     }
                     else
                     {
-                        return Response.FromValue(response.Value.Select(x => ToQueueMessage(x)).ToArray(), response.GetRawResponse());
+                        return Response.FromValue(response.Value.Select(x => QueueMessage.ToQueueMessage(x, _messageEncoding)).ToArray(), response.GetRawResponse());
                     }
                 }
                 catch (Exception ex)
@@ -2007,20 +2007,6 @@ namespace Azure.Storage.Queues
                     Pipeline.LogMethodExit(nameof(QueueClient));
                 }
             }
-        }
-
-        private QueueMessage ToQueueMessage(DequeuedMessageItem dequeuedMessageItem)
-        {
-            return new QueueMessage()
-            {
-                MessageId = dequeuedMessageItem.MessageId,
-                PopReceipt = dequeuedMessageItem.PopReceipt,
-                Message = DecodeMessageBody(dequeuedMessageItem.MessageText),
-                DequeueCount = dequeuedMessageItem.DequeueCount,
-                NextVisibleOn = dequeuedMessageItem.TimeNextVisible,
-                InsertedOn = dequeuedMessageItem.InsertionTime,
-                ExpiresOn = dequeuedMessageItem.ExpirationTime,
-            };
         }
         #endregion ReceiveMessages
 
@@ -2132,12 +2118,12 @@ namespace Azure.Storage.Queues
                         AssertEncodingForEncryption();
                         return Response.FromValue(
                             await new QueueClientSideDecryptor(ClientSideEncryption)
-                                .ClientSideDecryptMessagesInternal(response.Value.Select(x => ToPeekedMessage(x)).ToArray(), async, cancellationToken).ConfigureAwait(false),
+                                .ClientSideDecryptMessagesInternal(response.Value.Select(x => PeekedMessage.ToPeekedMessage(x, _messageEncoding)).ToArray(), async, cancellationToken).ConfigureAwait(false),
                             response.GetRawResponse());
                     }
                     else
                     {
-                        return Response.FromValue(response.Value.Select(x => ToPeekedMessage(x)).ToArray(), response.GetRawResponse());
+                        return Response.FromValue(response.Value.Select(x => PeekedMessage.ToPeekedMessage(x, _messageEncoding)).ToArray(), response.GetRawResponse());
                     }
                 }
                 catch (Exception ex)
@@ -2150,18 +2136,6 @@ namespace Azure.Storage.Queues
                     Pipeline.LogMethodExit(nameof(QueueClient));
                 }
             }
-        }
-
-        private PeekedMessage ToPeekedMessage(PeekedMessageItem peekedMessageItem)
-        {
-            return new PeekedMessage()
-            {
-                MessageId = peekedMessageItem.MessageId,
-                DequeueCount = peekedMessageItem.DequeueCount,
-                Message = DecodeMessageBody(peekedMessageItem.MessageText),
-                ExpiresOn = peekedMessageItem.ExpirationTime,
-                InsertedOn = peekedMessageItem.InsertionTime,
-            };
         }
         #endregion PeekMessages
 
@@ -2508,7 +2482,7 @@ namespace Azure.Storage.Queues
                     QueueSendMessage queueSendMessage = null;
                     if (message.HasValue)
                     {
-                        queueSendMessage = new QueueSendMessage { MessageText = EncodeMessageBody(message.Value) };
+                        queueSendMessage = new QueueSendMessage { MessageText = QueueMessageCodec.EncodeMessageBody(message.Value, _messageEncoding) };
                     }
 
                     return await QueueRestClient.MessageId.UpdateAsync(
@@ -2549,40 +2523,9 @@ namespace Azure.Storage.Queues
             }
         }
 
-        private string EncodeMessageBody(BinaryData? binaryData)
-        {
-            if (!binaryData.HasValue)
-            {
-                return null;
-            }
-            switch (_messageEncoding)
-            {
-                case QueueClientOptions.MessageEncoding.None:
-                    return binaryData.Value.ToString();
-                case QueueClientOptions.MessageEncoding.Base64:
-                    return Convert.ToBase64String(binaryData.Value.Bytes.ToArray());
-                default:
-                    throw new ArgumentException($"Unsupported message encoding {_messageEncoding}");
-            }
-        }
-
-        private BinaryData DecodeMessageBody(string messageText)
-        {
-            // TODO (kasobol-msft) nulls?
-            switch (_messageEncoding)
-            {
-                case QueueClientOptions.MessageEncoding.None:
-                    return new BinaryData(messageText);
-                case QueueClientOptions.MessageEncoding.Base64:
-                    return new BinaryData(Convert.FromBase64String(messageText));
-                default:
-                    throw new ArgumentException($"Unsupported message encoding {_messageEncoding}");
-            }
-        }
-
         private void AssertEncodingForEncryption()
         {
-            if (_messageEncoding != QueueClientOptions.MessageEncoding.None)
+            if (_messageEncoding != QueueMessageEncoding.UTF8)
             {
                 throw new ArgumentException("Message encoding must be None if encryption is enabled");
             }

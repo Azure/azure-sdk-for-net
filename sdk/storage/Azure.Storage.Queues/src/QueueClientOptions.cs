@@ -99,23 +99,7 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// TODO (kasobol-msft) add docs.
         /// </summary>
-        public enum MessageEncoding
-        {
-            /// <summary>
-            /// TODO (kasobol-msft) add docs.
-            /// </summary>
-            None = 1,
-
-            /// <summary>
-            /// TODO (kasobol-msft) add docs.
-            /// </summary>
-            Base64 = 2,
-        }
-
-        /// <summary>
-        /// TODO (kasobol-msft) add docs.
-        /// </summary>
-        public MessageEncoding Encoding { get; set; } = MessageEncoding.None;
+        public QueueMessageEncoding MessageEncoding { get; set; } = QueueMessageEncoding.UTF8;
 
         #region Advanced Options
         internal ClientSideEncryptionOptions _clientSideEncryptionOptions;

@@ -75,5 +75,19 @@ namespace Azure.Storage.Queues.Models
                 updated.NextVisibleOn,
                 InsertedOn,
                 ExpiresOn);
+
+        internal static QueueMessage ToQueueMessage(DequeuedMessageItem dequeuedMessageItem, QueueMessageEncoding messageEncoding)
+        {
+            return new QueueMessage()
+            {
+                MessageId = dequeuedMessageItem.MessageId,
+                PopReceipt = dequeuedMessageItem.PopReceipt,
+                Message = QueueMessageCodec.DecodeMessageBody(dequeuedMessageItem.MessageText, messageEncoding),
+                DequeueCount = dequeuedMessageItem.DequeueCount,
+                NextVisibleOn = dequeuedMessageItem.TimeNextVisible,
+                InsertedOn = dequeuedMessageItem.InsertionTime,
+                ExpiresOn = dequeuedMessageItem.ExpirationTime,
+            };
+        }
     }
 }

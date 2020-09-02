@@ -674,7 +674,7 @@ namespace Azure.Storage.Queues.Test
         {
             // Arrange
             await using DisposingQueue test = await GetTestQueueAsync();
-            var encodingClient = GetEncodingClient(test.Queue.Name, QueueClientOptions.MessageEncoding.Base64);
+            var encodingClient = GetEncodingClient(test.Queue.Name, QueueMessageEncoding.Base64);
             var messageText = GetNewString();
             var encodedText = Convert.ToBase64String(Encoding.UTF8.GetBytes(messageText));
 
@@ -695,7 +695,7 @@ namespace Azure.Storage.Queues.Test
         {
             // Arrange
             await using DisposingQueue test = await GetTestQueueAsync();
-            var encodingClient = GetEncodingClient(test.Queue.Name, QueueClientOptions.MessageEncoding.Base64);
+            var encodingClient = GetEncodingClient(test.Queue.Name, QueueMessageEncoding.Base64);
             var messageText = GetNewString();
             var encodedText = Convert.ToBase64String(Encoding.UTF8.GetBytes(messageText));
             // Act
@@ -716,7 +716,7 @@ namespace Azure.Storage.Queues.Test
         {
             // Arrange
             await using DisposingQueue test = await GetTestQueueAsync();
-            var encodingClient = GetEncodingClient(test.Queue.Name, QueueClientOptions.MessageEncoding.Base64);
+            var encodingClient = GetEncodingClient(test.Queue.Name, QueueMessageEncoding.Base64);
             var messageText = GetNewString();
             var encodedText = Convert.ToBase64String(Encoding.UTF8.GetBytes(messageText));
             // Act
@@ -737,7 +737,7 @@ namespace Azure.Storage.Queues.Test
         {
             // Arrange
             await using DisposingQueue test = await GetTestQueueAsync();
-            var encodingClient = GetEncodingClient(test.Queue.Name, QueueClientOptions.MessageEncoding.Base64);
+            var encodingClient = GetEncodingClient(test.Queue.Name, QueueMessageEncoding.Base64);
             byte[] content = new byte[] { 0xFF, 0x00 }; // Not a valid UTF-8 byte sequence.
 
             // Act

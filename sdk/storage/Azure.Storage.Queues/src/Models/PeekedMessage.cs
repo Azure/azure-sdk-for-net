@@ -51,5 +51,17 @@ namespace Azure.Storage.Queues.Models
         /// You can use QueuesModelFactory.PeekedMessage instead.
         /// </summary>
         internal PeekedMessage() { }
+
+        internal static PeekedMessage ToPeekedMessage(PeekedMessageItem peekedMessageItem, QueueMessageEncoding messageEncoding)
+        {
+            return new PeekedMessage()
+            {
+                MessageId = peekedMessageItem.MessageId,
+                DequeueCount = peekedMessageItem.DequeueCount,
+                Message = QueueMessageCodec.DecodeMessageBody(peekedMessageItem.MessageText, messageEncoding),
+                ExpiresOn = peekedMessageItem.ExpirationTime,
+                InsertedOn = peekedMessageItem.InsertionTime,
+            };
+        }
     }
 }
