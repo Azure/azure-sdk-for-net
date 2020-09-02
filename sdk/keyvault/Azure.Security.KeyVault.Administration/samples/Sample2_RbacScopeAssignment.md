@@ -7,7 +7,7 @@ For information about interacting with a `KeyVaultKey` with a `KeyClient`, see t
 
 Let's assign a role to a service principal so that it applies to all keys. To do this we'll need a service principal object Id and a role definition Id.
 
-See the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/readme.md) for links and instructions on how to generate a new service principal and obtain it's object Id.
+See the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/README.md) for links and instructions on how to generate a new service principal and obtain it's object Id.
 You can also get the object Id for your currently signed in account by running the following [Azure CLI][azure_cli] command.
 ```
 az ad signed-in-user show --query objectId
