@@ -1,7 +1,7 @@
 # Azure KeyVault Administration client library for .NET
 
-Azure Key Vault is a cloud service for securely storing and accessing secrets. A secret is anything that you want to tightly control 
-access to, such as API keys, passwords, or certificates. A vault is a logical group of secrets.
+Azure Key Vault is a cloud service for securely storing and accessing secrets. A secret is anything to which you want to tightly control 
+access, such as API keys, passwords, or certificates. A vault is a logical group of secrets.
 
 The Azure Key Vault administration library clients support administrative tasks such as full backup / restore and key-level role-based access control (RBAC).
 
