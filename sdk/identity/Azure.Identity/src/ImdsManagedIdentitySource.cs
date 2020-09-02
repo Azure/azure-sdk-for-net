@@ -121,8 +121,7 @@ namespace Azure.Identity
             if (response.Status == 400)
             {
                 string message = _identityUnavailableErrorMessage ?? await diagnostics
-                    .CreateRequestFailedMessageAsync(response, IdentityUnavailableError, null, null,
-                        async)
+                    .CreateRequestFailedMessageAsync(response, IdentityUnavailableError, null, null, async)
                     .ConfigureAwait(false);
 
                 Interlocked.CompareExchange(ref _identityUnavailableErrorMessage, message, null);
