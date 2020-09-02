@@ -960,7 +960,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     }
                 }
                 await tcs.Task;
-                await processor.StopProcessingAsync();
+                await processor.CloseAsync();
 
                 Assert.AreEqual(specifiedSessionCount, messageCt);
 
@@ -1109,7 +1109,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     }
                 }
                 await tcs.Task;
-                await processor.StopProcessingAsync();
+                await processor.CloseAsync();
                 foreach (var sessionId in sessionIds)
                 {
                     Assert.True(receivedMessagesAfterLockLost.ContainsKey(sessionId));
@@ -1486,7 +1486,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         [TestCase(10, 10, 1)]
         [TestCase(10, 5, 2)]
         [TestCase(10, 20, 5)]
-        [Timeout(60 * 1000 * 10)]
+        [Timeout(60 * 1000 * 15)]
         public async Task MaxCallsPerSessionRespected(int numSessions, int maxConcurrentSessions, int maxCallsPerSession)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(
@@ -1569,6 +1569,69 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await processor.StopProcessingAsync();
 
                 Assert.AreEqual(totalMessages, messageCt);
+            }
+        }
+
+        [Test]
+        public async Task StopProcessingDoesNotCloseLink()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(
+                enablePartitioning: false,
+                enableSession: true))
+            {
+                await using var client = GetClient();
+                var sender = client.CreateSender(scope.QueueName);
+                await sender.SendMessageAsync(GetMessage("sessionId"));
+                var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
+                {
+                    AutoComplete = false,
+                    MaxConcurrentSessions = 1
+                });
+                TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+                Task ProcessMessage(ProcessSessionMessageEventArgs args)
+                {
+                    tcs.TrySetResult(true);
+                    return Task.CompletedTask;
+                }
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ExceptionHandler;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+                await processor.StopProcessingAsync();
+                Assert.IsFalse(processor.IsClosed);
+                Assert.IsFalse(processor.IsProcessing);
+
+                Assert.That(
+                    async () => await GetNoRetryClient().CreateSessionReceiverAsync(
+                        scope.QueueName,
+                        new ServiceBusSessionReceiverOptions { SessionId = "sessionId" }),
+                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).
+                    EqualTo(ServiceBusFailureReason.SessionCannotBeLocked));
+
+                // can restart
+                tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+                await sender.SendMessageAsync(GetMessage("sessionId"));
+                await processor.StartProcessingAsync();
+                Assert.IsTrue(processor.IsProcessing);
+
+                await tcs.Task;
+
+                // dispose will close the link, so we should be able to receive from this session
+                await processor.DisposeAsync();
+                Assert.IsTrue(processor.IsClosed);
+                await sender.SendMessageAsync(GetMessage("sessionId"));
+                var receiver = await client.CreateSessionReceiverAsync(scope.QueueName, new ServiceBusSessionReceiverOptions
+                {
+                    SessionId = "sessionId"
+                });
+                var msg = await receiver.ReceiveMessageAsync();
+                Assert.IsNotNull(msg);
+
+                Assert.That(
+                    async () => await processor.StartProcessingAsync(),
+                    Throws.InstanceOf<ObjectDisposedException>());
             }
         }
     }

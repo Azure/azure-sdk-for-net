@@ -5,6 +5,7 @@
 - Restoring Application Authentication APIs from 1.2.0-preview.6
 - Added `IncludeX5CClaimHeader` to `ClientCertificateCredentialOptions` to enable subject name / issuer authentication with the `ClientCertificateCredential`.
 - Added `RedirectUri` to `InteractiveBrowserCredentialOptions` to enable authentication with user specified application with a custom redirect url.
+- Added `IdentityModelFactory` to enable constructing models from the Azure.Identity library for mocking.
 
 ### Fixes and improvements
 - Fixed issue with non GUID Client Ids (Issue [#14585](https://github.com/Azure/azure-sdk-for-net/issues/14585))

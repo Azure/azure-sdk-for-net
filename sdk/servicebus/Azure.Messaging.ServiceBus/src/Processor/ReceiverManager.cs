@@ -69,7 +69,8 @@ namespace Azure.Messaging.ServiceBus
         }
 
         public virtual async Task CloseReceiverIfNeeded(
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            bool forceClose = false)
         {
             try
             {
@@ -269,7 +270,7 @@ namespace Azure.Messaging.ServiceBus
                     TimeSpan delay = CalculateRenewDelay(message.LockedUntil);
 
                     await Task.Delay(delay, cancellationToken).ConfigureAwait(false);
-                    if (Receiver.IsDisposed)
+                    if (Receiver.IsClosed)
                     {
                         break;
                     }
