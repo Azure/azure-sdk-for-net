@@ -2524,7 +2524,7 @@ namespace Azure.Storage.Queues
         {
             if (UsingClientSideEncryption && _messageEncoding != QueueMessageEncoding.UTF8)
             {
-                throw new ArgumentException($"In transit message encoding must be {QueueMessageEncoding.UTF8} if encryption is enabled.");
+                throw new ArgumentException($"Message encoding can't be customized if encryption-enabled QueueClient is used.");
             }
         }
         #endregion Encoding
