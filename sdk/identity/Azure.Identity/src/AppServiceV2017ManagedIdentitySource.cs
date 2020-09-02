@@ -2,12 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Globalization;
+using System.Text.Json;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Identity
 {
-    internal class AppServiceV2017AuthRequestBuilder : IAuthRequestBuilder
+    internal class AppServiceV2017ManagedIdentitySource : IManagedIdentitySource
     {
         // MSI Constants. Docs for MSI are available here https://docs.microsoft.com/en-us/azure/app-service/overview-managed-identity
         private const string AppServiceMsiApiVersion = "2017-09-01";
@@ -18,7 +21,7 @@ namespace Azure.Identity
         private readonly string _secret;
         private readonly string _clientId;
 
-        public static IAuthRequestBuilder TryCreate(HttpPipeline pipeline, string clientId)
+        public static IManagedIdentitySource TryCreate(HttpPipeline pipeline, string clientId)
         {
             string msiEndpoint = EnvironmentVariables.MsiEndpoint;
             string msiSecret = EnvironmentVariables.MsiSecret;
@@ -39,10 +42,10 @@ namespace Azure.Identity
                 throw new AuthenticationFailedException(MsiEndpointInvalidUriError, ex);
             }
 
-            return new AppServiceV2017AuthRequestBuilder(pipeline, endpointUri, msiSecret, clientId);
+            return new AppServiceV2017ManagedIdentitySource(pipeline, endpointUri, msiSecret, clientId);
         }
 
-        private AppServiceV2017AuthRequestBuilder(HttpPipeline pipeline, Uri endpoint, string secret, string clientId)
+        private AppServiceV2017ManagedIdentitySource(HttpPipeline pipeline, Uri endpoint, string secret, string clientId)
         {
             _pipeline = pipeline;
             _endpoint = endpoint;
@@ -70,5 +73,18 @@ namespace Azure.Identity
 
             return request;
         }
+
+        public AccessToken GetAccessTokenFromJson(in JsonElement jsonAccessToken, in JsonElement jsonExpiresOn)
+        {
+            // AppService version 2017-09-01 sends expires_on as a string formatted datetimeoffset
+            if (DateTimeOffset.TryParse(jsonExpiresOn.GetString(), CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTimeOffset expiresOn))
+            {
+                return new AccessToken(jsonAccessToken.GetString(), expiresOn);
+            }
+
+            throw new AuthenticationFailedException(ManagedIdentityClient.AuthenticationResponseInvalidFormatError);
+        }
+
+        public ValueTask HandleFailedRequestAsync(Response response, ClientDiagnostics diagnostics, bool async) => new ValueTask();
     }
 }

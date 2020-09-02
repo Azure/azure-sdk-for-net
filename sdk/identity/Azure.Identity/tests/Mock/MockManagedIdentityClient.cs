@@ -27,14 +27,14 @@ namespace Azure.Identity.Tests.Mock
         {
 
         }
-        public Func<IAuthRequestBuilder> AuthRequestBuilderFactory { get; set; }
+        public Func<IManagedIdentitySource> AuthRequestBuilderFactory { get; set; }
 
         public Func<AccessToken> TokenFactory { get; set; }
 
         public override ValueTask<AccessToken> AuthenticateAsync(bool async, string[] scopes, CancellationToken cancellationToken)
               => TokenFactory != null ? new ValueTask<AccessToken>(TokenFactory()) : base.AuthenticateAsync(async, scopes, cancellationToken);
 
-        private protected override ValueTask<IAuthRequestBuilder> GetAuthRequestBuilderAsync(bool async, CancellationToken cancellationToken)
-            => AuthRequestBuilderFactory != null ? new ValueTask<IAuthRequestBuilder>(AuthRequestBuilderFactory()) : base.GetAuthRequestBuilderAsync(async, cancellationToken);
+        private protected override ValueTask<IManagedIdentitySource> GetManagedIdentitySourceAsync(bool async, CancellationToken cancellationToken)
+            => AuthRequestBuilderFactory != null ? new ValueTask<IManagedIdentitySource>(AuthRequestBuilderFactory()) : base.GetManagedIdentitySourceAsync(async, cancellationToken);
     }
 }

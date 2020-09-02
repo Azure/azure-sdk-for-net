@@ -3,19 +3,21 @@
 
 using System;
 using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Identity
 {
-    internal class CloudShellAuthRequestBuilder : IAuthRequestBuilder
+    internal class CloudShellManagedIdentitySource : IManagedIdentitySource
     {
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _clientId;
         private const string MsiEndpointInvalidUriError = "The environment variable MSI_ENDPOINT contains an invalid Uri.";
 
-        public static IAuthRequestBuilder TryCreate(HttpPipeline pipeline, string clientId)
+        public static IManagedIdentitySource TryCreate(HttpPipeline pipeline, string clientId)
         {
             string msiEndpoint = EnvironmentVariables.MsiEndpoint;
 
@@ -35,10 +37,10 @@ namespace Azure.Identity
                 throw new AuthenticationFailedException(MsiEndpointInvalidUriError, ex);
             }
 
-            return new CloudShellAuthRequestBuilder(pipeline, endpointUri, clientId);
+            return new CloudShellManagedIdentitySource(pipeline, endpointUri, clientId);
         }
 
-        private CloudShellAuthRequestBuilder(HttpPipeline pipeline, Uri endpoint, string clientId)
+        private CloudShellManagedIdentitySource(HttpPipeline pipeline, Uri endpoint, string clientId)
         {
             _pipeline = pipeline;
             _endpoint = endpoint;
@@ -71,5 +73,20 @@ namespace Azure.Identity
             request.Content = RequestContent.Create(content);
             return request;
         }
+
+        public AccessToken GetAccessTokenFromJson(in JsonElement jsonAccessToken, in JsonElement jsonExpiresOn)
+        {
+            // the seconds from epoch may be returned as a Json number or a Json string which is a number
+            // depending on the environment.  If neither of these are the case we throw an AuthException.
+            if (jsonExpiresOn.ValueKind == JsonValueKind.Number && jsonExpiresOn.TryGetInt64(out long expiresOnSec) ||
+                jsonExpiresOn.ValueKind == JsonValueKind.String && long.TryParse(jsonExpiresOn.GetString(), out expiresOnSec))
+            {
+                return new AccessToken(jsonAccessToken.GetString(), DateTimeOffset.FromUnixTimeSeconds(expiresOnSec));
+            }
+
+            throw new AuthenticationFailedException(ManagedIdentityClient.AuthenticationResponseInvalidFormatError);
+        }
+
+        public ValueTask HandleFailedRequestAsync(Response response, ClientDiagnostics diagnostics, bool async) => new ValueTask();
     }
 }

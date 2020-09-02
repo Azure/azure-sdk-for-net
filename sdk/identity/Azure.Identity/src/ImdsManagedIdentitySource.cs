@@ -4,6 +4,7 @@
 using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -11,7 +12,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Identity
 {
-    internal class ImdsAuthRequestBuilder : IAuthRequestBuilder
+    internal class ImdsManagedIdentitySource : IManagedIdentitySource
     {
         // IMDS constants. Docs for IMDS are available here https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/how-to-use-vm-token#get-a-token-using-http
         private static readonly Uri s_imdsEndpoint = new Uri("http://169.254.169.254/metadata/identity/oauth2/token");
@@ -20,10 +21,14 @@ namespace Azure.Identity
         private const int ImdsAvailableTimeoutMs = 1000;
         private const string ImdsApiVersion = "2018-02-01";
 
+        internal const string IdentityUnavailableError = "ManagedIdentityCredential authentication unavailable. The requested identity has not been assigned to this resource.";
+
         private readonly HttpPipeline _pipeline;
         private readonly string _clientId;
 
-        public static async ValueTask<IAuthRequestBuilder> TryCreateAsync(HttpPipeline pipeline, string clientId, bool async, CancellationToken cancellationToken)
+        private string _identityUnavailableErrorMessage;
+
+        public static async ValueTask<IManagedIdentitySource> TryCreateAsync(HttpPipeline pipeline, string clientId, bool async, CancellationToken cancellationToken)
         {
             AzureIdentityEventSource.Singleton.ProbeImdsEndpoint(s_imdsEndpoint);
 
@@ -63,10 +68,10 @@ namespace Azure.Identity
                 AzureIdentityEventSource.Singleton.ImdsEndpointUnavailable(s_imdsEndpoint);
             }
 
-            return available ? new ImdsAuthRequestBuilder(pipeline, clientId) : default;
+            return available ? new ImdsManagedIdentitySource(pipeline, clientId) : default;
         }
 
-        internal ImdsAuthRequestBuilder(HttpPipeline pipeline, string clientId)
+        internal ImdsManagedIdentitySource(HttpPipeline pipeline, string clientId)
         {
             _pipeline = pipeline;
             _clientId = clientId;
@@ -74,6 +79,11 @@ namespace Azure.Identity
 
         public Request CreateRequest(string[] scopes)
         {
+            if (_identityUnavailableErrorMessage != default)
+            {
+                throw new CredentialUnavailableException(_identityUnavailableErrorMessage);
+            }
+
             // covert the scopes to a resource string
             string resource = ScopeUtilities.ScopesToResource(scopes);
 
@@ -91,6 +101,33 @@ namespace Azure.Identity
             }
 
             return request;
+        }
+
+        public AccessToken GetAccessTokenFromJson(in JsonElement jsonAccessToken, in JsonElement jsonExpiresOn)
+        {
+            // the seconds from epoch may be returned as a Json number or a Json string which is a number
+            // depending on the environment.  If neither of these are the case we throw an AuthException.
+            if (jsonExpiresOn.ValueKind == JsonValueKind.Number && jsonExpiresOn.TryGetInt64(out long expiresOnSec) ||
+                jsonExpiresOn.ValueKind == JsonValueKind.String && long.TryParse(jsonExpiresOn.GetString(), out expiresOnSec))
+            {
+                return new AccessToken(jsonAccessToken.GetString(), DateTimeOffset.FromUnixTimeSeconds(expiresOnSec));
+            }
+
+            throw new AuthenticationFailedException(ManagedIdentityClient.AuthenticationResponseInvalidFormatError);
+        }
+
+        public async ValueTask HandleFailedRequestAsync(Response response, ClientDiagnostics diagnostics, bool async)
+        {
+            if (response.Status == 400)
+            {
+                string message = _identityUnavailableErrorMessage ?? await diagnostics
+                    .CreateRequestFailedMessageAsync(response, IdentityUnavailableError, null, null,
+                        async)
+                    .ConfigureAwait(false);
+
+                Interlocked.CompareExchange(ref _identityUnavailableErrorMessage, message, null);
+                throw new CredentialUnavailableException(message);
+            }
         }
     }
 }

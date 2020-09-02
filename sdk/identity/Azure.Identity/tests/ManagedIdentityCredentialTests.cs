@@ -39,7 +39,7 @@ namespace Azure.Identity.Tests
 
                 var pipeline = CredentialPipeline.GetInstance(options);
 
-                var client = new MockManagedIdentityClient(pipeline, "mock-client-id") { AuthRequestBuilderFactory = () => new ImdsAuthRequestBuilder(pipeline.HttpPipeline, "mock-client-id") };
+                var client = new MockManagedIdentityClient(pipeline, "mock-client-id") { AuthRequestBuilderFactory = () => new ImdsManagedIdentitySource(pipeline.HttpPipeline, "mock-client-id") };
 
                 ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(pipeline, client));
 
@@ -80,7 +80,7 @@ namespace Azure.Identity.Tests
 
                 var pipeline = CredentialPipeline.GetInstance(options);
 
-                var client = new MockManagedIdentityClient(pipeline, "mock-client-id") { AuthRequestBuilderFactory = () => new ImdsAuthRequestBuilder(pipeline.HttpPipeline, "mock-client-id") };
+                var client = new MockManagedIdentityClient(pipeline, "mock-client-id") { AuthRequestBuilderFactory = () => new ImdsManagedIdentitySource(pipeline.HttpPipeline, "mock-client-id") };
 
                 ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(pipeline, client));
 
@@ -370,7 +370,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task VerifyClientAuthenticateThrows()
         {
-            var mockClient = new MockManagedIdentityClient { AuthRequestBuilderFactory = () => new ImdsAuthRequestBuilder(default, default), TokenFactory = () => throw new MockClientException("message") };
+            var mockClient = new MockManagedIdentityClient { AuthRequestBuilderFactory = () => new ImdsManagedIdentitySource(default, default), TokenFactory = () => throw new MockClientException("message") };
 
             var credential = InstrumentClient(new ManagedIdentityCredential(CredentialPipeline.GetInstance(null), mockClient));
 
