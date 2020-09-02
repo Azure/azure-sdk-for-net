@@ -1767,7 +1767,6 @@ namespace Azure.Storage.Queues
                     if (UsingClientSideEncryption)
                     {
                         AssertEncodingForEncryption();
-                        // TODO (kasobol-msft) propagete bytes to encryptor
                         message = await new QueueClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
                             .ClientSideEncryptInternal(message.Value, async, cancellationToken).ConfigureAwait(false);
                     }
@@ -2475,7 +2474,6 @@ namespace Azure.Storage.Queues
                     if (UsingClientSideEncryption)
                     {
                         AssertEncodingForEncryption();
-                        // TODO (kasobol-msft) pass bytes to encryptor
                         message = await new QueueClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
                             .ClientSideEncryptInternal(message.Value, async, cancellationToken).ConfigureAwait(false);
                     }
