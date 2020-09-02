@@ -53,6 +53,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 Assert.IsNotNull(entity.Language);
                 Assert.IsNotNull(entity.Url);
                 Assert.IsNotNull(entity.Matches);
+                Assert.IsNotNull(entity.BingEntitySearchApiId);
 
                 LinkedEntityMatch match = entity.Matches.First();
                 Assert.IsNotNull(match.ConfidenceScore);
