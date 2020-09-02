@@ -178,5 +178,15 @@ namespace Azure.Identity.Tests
             var credential = InstrumentClient(new VisualStudioCredential(default, default, fileSystem, testProcessFactory));
             Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[]{"https://vault.azure.net/"}), CancellationToken.None));
         }
+
+        [Test]
+        public void AdfsTenantThrowsCredentialUnavailable()
+        {
+            var options = new VisualStudioCredentialOptions { TenantId = "adfs", Transport = new MockTransport() };
+
+            VisualStudioCredential credential = InstrumentClient(new VisualStudioCredential(options));
+
+            Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[] { "https://vault.azure.net/.default" }), CancellationToken.None));
+        }
     }
 }
