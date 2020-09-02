@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading.Tasks;
 using Azure.AI.TextAnalytics.Tests;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -12,7 +13,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples : SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
-        public void RecognizePiiEntities()
+        public async Task RecognizePiiEntitiesAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
@@ -24,7 +25,7 @@ namespace Azure.AI.TextAnalytics.Samples
             #region Snippet:RecognizePiiEntities
             string document = "A developer with SSN 859-98-0987 whose phone number is 800-102-1100 is building tools with our APIs.";
 
-            PiiEntityCollection entities = client.RecognizePiiEntities(document).Value;
+            PiiEntityCollection entities = await client.RecognizePiiEntitiesAsync(document);
 
             Console.WriteLine($"Redacted Text: {entities.RedactedText}");
             if (entities.Count > 0)
