@@ -23,7 +23,7 @@ dotnet install Azure.Security.KeyVault.Administration --version 4.0.0-beta.1
 See the final two steps in the next section for details on creating the Key Vault with the Azure CLI.
 
 ### Authenticate the client
-In order to interact with the Key Vault service, you'll need to create an instance of the [KeyVaultAccessControlClient][rbac_client] class. 
+In order to control permissions to the Key Vault service, you'll need to create an instance of the [KeyVaultAccessControlClient][rbac_client] class. 
 You need a **vault url**, which you may see as "DNS Name" in the portal,  and **client secret credentials (client id, client secret, tenant id)** 
 to instantiate a client object.
 
