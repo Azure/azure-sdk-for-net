@@ -14,24 +14,36 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
     using System.Linq;
 
     /// <summary>
-    /// The object representing the policy for taking backups on an account.
+    /// An error response from the service.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("BackupPolicy")]
-    public partial class BackupPolicy
+    public partial class DefaultErrorResponse
     {
         /// <summary>
-        /// Initializes a new instance of the BackupPolicy class.
+        /// Initializes a new instance of the DefaultErrorResponse class.
         /// </summary>
-        public BackupPolicy()
+        public DefaultErrorResponse()
         {
             CustomInit();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the DefaultErrorResponse class.
+        /// </summary>
+        public DefaultErrorResponse(ErrorResponse error = default(ErrorResponse))
+        {
+            Error = error;
+            CustomInit();
+        }
 
         /// <summary>
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "error")]
+        public ErrorResponse Error { get; set; }
 
     }
 }
