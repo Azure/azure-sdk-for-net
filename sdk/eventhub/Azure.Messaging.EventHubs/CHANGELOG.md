@@ -1,7 +1,6 @@
 # Release History
 
-## 5.2.0-preview.3 (Unreleased)
-
+## 5.2.0-preview.4 (Unreleased)
 
 ## 5.2.0-preview.3 (2020-08-18)
 
