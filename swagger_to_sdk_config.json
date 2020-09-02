@@ -1,19 +1,66 @@
 {
-  "$schema": "https://raw.githubusercontent.com/lmazuel/swagger-to-sdk/master/swagger_to_sdk_config.schema.json",
-  "meta": {
-    "autorest_options": {
-      "version": "V2",
-      "csharp": "",
-      "reflect-api-versions": "",
-      "license-header": "MICROSOFT_MIT_NO_VERSION",
-      "sdkrel:csharp-sdks-folder": "./sdk",
-      "use": "@microsoft.azure/autorest.csharp@2.3.82"
-    },
     "advanced_options": {
       "create_sdk_pull_requests": true,
-      "sdk_generation_pull_request_base": "integration_branch",
-      "main_branch": "master"
+      "run_mode": "onePassMultipleReadmeMd" // or multiplePassSingleReadmeMd
     },
-    "version": "0.2.0"
+    "init_options": {
+      "init_script_path": "./eng/tools/sdk_init"
+    },
+    "generate_options": {
+      "generate_script_path": "./eng/tools/sdk_generate" // Param: <path_to_generate_input.json> <path_to_generate_output.json>
+      "parse_generate_output": false,
+   },
+    "build_options": {
+      "package_folder_from_generation_output": false,
+      "package_folder_search_regex": ".*\.sln", // Skip this field if package_folder_from_generation_output is true
+      // Will skip build_script if it's not present
+      "build_script_path": "./eng/tools/sdk_package", // Param: <path_to_package_folder>
+      
+      "changelog_from_generation_output": false, // Must be false if package_folder_from_generation_output is false
+      // Will skip breaking change script if script is not provided and is not parsed from generation output
+      "changelog_script_path": "./eng/tools/sdk_breaking_change", // Param: <path_to_package_folder>
+      "changelog_breaking_change_keyword": "** Breaking Change **"
+    },
+    "artifact_options": {
+      "artifact_path_from_generation_output": false, // Must be false if package_folder_from_generation_output is false
+      "artifact_regex": ".*\.(nuget|zip)", // Skip this field if artifact_path_from_generation_output is true
+      "install_instruction_template_path": "./eng/tools/sdk_install_instruction.handlebars",
+    }
   }
+}
+ 
+generate_input.json
+{
+  "spec_folder": "/z/work/azure-rest-api-specs",
+  "head_sha": "somesha",
+  "repo": "git@github.com:Azure/azure-rest-api-specs.git",
+  "head": "refs/pull/1234/merge", // or refs/head/master
+  "changed_files": [
+    "specification/cdn/something/cdn.json"
+  ],
+  "related_readmemd": {
+    "specification/cdn/something/readme.md"
+  }
+}
+
+generate_output.json
+{
+  "packages": [
+    {
+      "displayName": "Microsoft.Cdn"
+      "path": "sdk/cdn",
+      "changelog": {
+        "logs": "Feature: something \n Breaking Changes: something\n"
+      },
+      "artifacts": [
+        {
+          "path": "sdk/cdn/cdn.nuget"
+        },
+        {
+          "path": "sdk/cdn/cdn.snuget"
+        }
+        }
+      ]
+    }
+  ]
 }
