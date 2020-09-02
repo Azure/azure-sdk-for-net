@@ -24,15 +24,15 @@ extends:
                 echo "##vso[task.setvariable variable=DBUS_SESSION_BUS_PID]$DBUS_SESSION_BUS_PID"
                 echo "##vso[task.setvariable variable=GNOME_KEYRING_CONTROL]$GNOME_KEYRING_CONTROL"
           
-          PreSteps:
-            - pwsh: |
-                [System.Convert]::FromBase64String($env:PFX_CONTENTS) | Set-Content -Path $(Agent.TempDirectory)/test.pfx -AsByteStream
-                Set-Content -Path $(Agent.TempDirectory)/test.pem -Value $env:PEM_CONTENTS
-                [System.Convert]::FromBase64String($env:SNI_CONTENTS) | Set-Content -Path $(Agent.TempDirectory)/testsni.pfx -AsByteStream
-              env:
-                PFX_CONTENTS: $(net-identity-spcert-pfx)
-                PEM_CONTENTS: $(net-identity-spcert-pem)
-                SNI_CONTENTS: $(net-identity-spcert-sni)
+        PreSteps:
+          - pwsh: |
+              [System.Convert]::FromBase64String($env:PFX_CONTENTS) | Set-Content -Path $(Agent.TempDirectory)/test.pfx -AsByteStream
+              Set-Content -Path $(Agent.TempDirectory)/test.pem -Value $env:PEM_CONTENTS
+              [System.Convert]::FromBase64String($env:SNI_CONTENTS) | Set-Content -Path $(Agent.TempDirectory)/testsni.pfx -AsByteStream
+            env:
+              PFX_CONTENTS: $(net-identity-spcert-pfx)
+              PEM_CONTENTS: $(net-identity-spcert-pem)
+              SNI_CONTENTS: $(net-identity-spcert-sni)
         EnvVars:
           AZURE_IDENTITY_TEST_TENANTID: $(net-identity-tenantid)
           AZURE_IDENTITY_TEST_USERNAME: $(net-identity-username)
@@ -64,25 +64,25 @@ extends:
                 echo "##vso[task.setvariable variable=DBUS_SESSION_BUS_PID]$DBUS_SESSION_BUS_PID"
                 echo "##vso[task.setvariable variable=GNOME_KEYRING_CONTROL]$GNOME_KEYRING_CONTROL"
     
-          PreSteps:
-            - pwsh: |
-                [System.Convert]::FromBase64String($env:PFX_CONTENTS) | Set-Content -Path $(Agent.TempDirectory)/test.pfx -AsByteStream
-                Set-Content -Path $(Agent.TempDirectory)/test.pem -Value $env:PEM_CONTENTS
-                [System.Convert]::FromBase64String($env:SNI_CONTENTS) | Set-Content -Path $(Agent.TempDirectory)/testsni.pfx -AsByteStream
-              env:
-                PFX_CONTENTS: $(net-identity-spcert-pfx)
-                PEM_CONTENTS: $(net-identity-spcert-pem)
-                SNI_CONTENTS: $(net-identity-spcert-sni)
-          EnvVars:
-            AZURE_IDENTITY_TEST_TENANTID: $(net-identity-tenantid-gov)
-            AZURE_IDENTITY_TEST_USERNAME: $(net-identity-username-gov)
-            AZURE_IDENTITY_TEST_PASSWORD: $(net-identity-password-gov)
-            IDENTITY_SP_CLIENT_ID: $(net-identity-sp-clientid-gov)
-            IDENTITY_SP_TENANT_ID: $(net-identity-sp-tenantid-gov)
-            IDENTITY_SP_CLIENT_SECRET: $(net-identity-sp-clientsecret-gov)
-            IDENTITY_SP_CERT_PFX: $(Agent.TempDirectory)/test.pfx
-            IDENTITY_SP_CERT_PEM: $(Agent.TempDirectory)/test.pem
-            IDENTITY_SP_CERT_SNI: $(Agent.TempDirectory)/testsni.pfx
+        PreSteps:
+          - pwsh: |
+              [System.Convert]::FromBase64String($env:PFX_CONTENTS) | Set-Content -Path $(Agent.TempDirectory)/test.pfx -AsByteStream
+              Set-Content -Path $(Agent.TempDirectory)/test.pem -Value $env:PEM_CONTENTS
+              [System.Convert]::FromBase64String($env:SNI_CONTENTS) | Set-Content -Path $(Agent.TempDirectory)/testsni.pfx -AsByteStream
+            env:
+              PFX_CONTENTS: $(net-identity-spcert-pfx)
+              PEM_CONTENTS: $(net-identity-spcert-pem)
+              SNI_CONTENTS: $(net-identity-spcert-sni)
+        EnvVars:
+          AZURE_IDENTITY_TEST_TENANTID: $(net-identity-tenantid-gov)
+          AZURE_IDENTITY_TEST_USERNAME: $(net-identity-username-gov)
+          AZURE_IDENTITY_TEST_PASSWORD: $(net-identity-password-gov)
+          IDENTITY_SP_CLIENT_ID: $(net-identity-sp-clientid-gov)
+          IDENTITY_SP_TENANT_ID: $(net-identity-sp-tenantid-gov)
+          IDENTITY_SP_CLIENT_SECRET: $(net-identity-sp-clientsecret-gov)
+          IDENTITY_SP_CERT_PFX: $(Agent.TempDirectory)/test.pfx
+          IDENTITY_SP_CERT_PEM: $(Agent.TempDirectory)/test.pem
+          IDENTITY_SP_CERT_SNI: $(Agent.TempDirectory)/testsni.pfx
 
       # AzureChinaCloud
       - ServiceDirectory: identity
@@ -104,15 +104,15 @@ extends:
                 echo "##vso[task.setvariable variable=DBUS_SESSION_BUS_PID]$DBUS_SESSION_BUS_PID"
                 echo "##vso[task.setvariable variable=GNOME_KEYRING_CONTROL]$GNOME_KEYRING_CONTROL"
     
-          PreSteps:
-            - pwsh: |
-                [System.Convert]::FromBase64String($env:PFX_CONTENTS) | Set-Content -Path $(Agent.TempDirectory)/test.pfx -AsByteStream
-                Set-Content -Path $(Agent.TempDirectory)/test.pem -Value $env:PEM_CONTENTS
-                [System.Convert]::FromBase64String($env:SNI_CONTENTS) | Set-Content -Path $(Agent.TempDirectory)/testsni.pfx -AsByteStream
-              env:
-                PFX_CONTENTS: $(net-identity-spcert-pfx)
-                PEM_CONTENTS: $(net-identity-spcert-pem)
-                SNI_CONTENTS: $(net-identity-spcert-sni)
+        PreSteps:
+          - pwsh: |
+              [System.Convert]::FromBase64String($env:PFX_CONTENTS) | Set-Content -Path $(Agent.TempDirectory)/test.pfx -AsByteStream
+              Set-Content -Path $(Agent.TempDirectory)/test.pem -Value $env:PEM_CONTENTS
+              [System.Convert]::FromBase64String($env:SNI_CONTENTS) | Set-Content -Path $(Agent.TempDirectory)/testsni.pfx -AsByteStream
+            env:
+              PFX_CONTENTS: $(net-identity-spcert-pfx)
+              PEM_CONTENTS: $(net-identity-spcert-pem)
+              SNI_CONTENTS: $(net-identity-spcert-sni)
         EnvVars:
           AZURE_IDENTITY_TEST_TENANTID: $(net-identity-tenantid-cn)
           AZURE_IDENTITY_TEST_USERNAME: $(net-identity-username-cn)
