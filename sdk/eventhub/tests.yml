@@ -33,7 +33,7 @@ extends:
       # AzureChinaCloud
       - ServiceDirectory: eventhub
         MaxParallel: 6
-        TimeoutInMinutes: 120
+        TimeoutInMinutes: 240
         ScenarioName: AzureChinaCloud
         SubscriptionConfiguration: $(sub-config-cn-test-resources)
         ArmTemplateParameters: "@{ storageEndpointSuffix = 'core.chinacloudapi.cn' }"
