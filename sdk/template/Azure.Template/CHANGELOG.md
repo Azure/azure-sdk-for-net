@@ -1,5 +1,8 @@
 # Release History
 
+## 1.0.3-beta.7 (Unreleased)
+
+
 ## 1.0.3-beta.6 (2020-09-02)
 - Test release pipeline
 
