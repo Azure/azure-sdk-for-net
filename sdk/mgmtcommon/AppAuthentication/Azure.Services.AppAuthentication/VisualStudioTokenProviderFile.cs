@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
     [DataContract]
     internal class VisualStudioTokenProviderFile
     {
-        private const string FormatExceptionMessage = "VisualStudio Token Provider File is not in the expected format.";
+        internal const string FormatExceptionMessage = "Visual Studio token provider file is not in the expected format.";
 
         [DataMember(Name = "TokenProviders")]
         public List<VisualStudioTokenProvider> TokenProviders;

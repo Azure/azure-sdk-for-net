@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             // Ensure exception is thrown when getting the token
             var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => msiAccessTokenProvider.GetAuthResultAsync(Constants.KeyVaultResourceId, Constants.TenantId));
 
-            Assert.Contains(Constants.FailedToGetTokenError, exception.ToString());
+            Assert.Contains(AzureServiceTokenProviderException.GenericErrorMessage, exception.Message);
             Assert.Contains(Constants.CannotBeNullError, exception.ToString());
         }
 

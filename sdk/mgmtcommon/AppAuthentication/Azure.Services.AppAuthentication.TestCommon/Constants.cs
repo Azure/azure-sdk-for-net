@@ -28,7 +28,6 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
         public static readonly string NotInProperFormatError = "not in a proper format. Expected format is Key1=Value1;Key2=Value2;";
         public static readonly string NoMethodWorkedToGetTokenError = "methods to get an access token, but none of them worked";
         public static readonly string ProgramNotFoundError = "No such file";
-        public static readonly string FailedToGetTokenError = "Access token could not be acquired";
         public static readonly string MustUseHttpsError = "must use https";
         public static readonly string CannotBeNullError = "Value cannot be null";
         public static readonly string NoConnectionString = "[No connection string specified]";
@@ -114,10 +113,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
         public static readonly string ServiceConfigFileArgument = "C:\\Program Files (x86)\\Microsoft Visual Studio\\Preview\\Enterprise\\Common7\\servicehub.config.json";
         public static readonly string ServiceConfigFileArgumentName = "--serviceConfigFile";
         public static readonly string LocalAppDataEnv = "LOCALAPPDATA";
-        public static readonly string TokenProviderFileNotFound = "Visual Studio Token provider file not found at ";
-        public static readonly string TokenProviderExceptionMessage = "Exception for Visual Studio token provider";
         public static readonly string PreferenceNotFound = "'Preference' was not found";
-        public static readonly string TokenProviderFileFormatExceptionMessage = "VisualStudio Token Provider File is not in the expected format.";
 
         // Test files path
         public static readonly string TestFilesPath = "TestFiles";

@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         {
             Exception exception = Assert.Throws<FormatException>(() => VisualStudioTokenProviderFile.Parse(File.ReadAllText(Path.Combine(Constants.TestFilesPath, "VisualStudioTokenProviderMissingPreference.json"))));
 
-            Assert.Contains(Constants.TokenProviderFileFormatExceptionMessage, exception.Message);
+            Assert.Contains(VisualStudioTokenProviderFile.FormatExceptionMessage, exception.Message);
             Assert.Contains(Constants.PreferenceNotFound, exception.Message);
         }
     }

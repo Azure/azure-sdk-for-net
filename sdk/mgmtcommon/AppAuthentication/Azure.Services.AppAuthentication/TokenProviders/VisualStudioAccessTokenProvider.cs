@@ -17,7 +17,9 @@ namespace Microsoft.Azure.Services.AppAuthentication
     {
         // Represents the token provider file, which has information about executable to call to get token.
         private VisualStudioTokenProviderFile _visualStudioTokenProviderFile;
-        
+        internal string _visualStudioTokenProviderFilePath = Path.Combine(EnvironmentHelper.GetEnvironmentVariable(LocalAppDataPathEnv),
+            TokenProviderFilePath);
+
         // Allows for unit testing, by mocking IProcessManager
         private readonly IProcessManager _processManager;
 
@@ -26,7 +28,10 @@ namespace Microsoft.Azure.Services.AppAuthentication
         private const string LocalAppDataPathEnv = "LOCALAPPDATA";
         private const string NoAppDataEnvironmentVariableError = "Environment variable LOCALAPPDATA not set.";
         private const string TokenProviderFilePath = ".IdentityService\\AzureServiceAuth\\tokenprovider.json";
-        private const string TokenProviderFileNotFound = "Visual Studio Token provider file not found at";
+
+        internal const string TokenProviderGenericError = "Exception for Visual Studio token provider";
+        internal const string TokenProviderFileNotFound = "Visual Studio token provider file not found at";
+        internal const string TokenProvidersNotFound = "No valid Visual Studio token providers were found in the Visual Studio token provider file";
 
         internal VisualStudioAccessTokenProvider(IProcessManager processManager, VisualStudioTokenProviderFile visualStudioTokenProviderFile = null)
         {
@@ -46,15 +51,12 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 throw new Exception(NoAppDataEnvironmentVariableError);    
             }
 
-            string tokenProviderPath = Path.Combine(EnvironmentHelper.GetEnvironmentVariable(LocalAppDataPathEnv),
-                TokenProviderFilePath);
-
-            if (!File.Exists(tokenProviderPath))
+            if (!File.Exists(_visualStudioTokenProviderFilePath))
             {
-                throw new Exception($"{TokenProviderFileNotFound} \"{tokenProviderPath}\"");
+                throw new Exception($"{TokenProviderFileNotFound} \"{_visualStudioTokenProviderFilePath}\"");
             }
 
-            return VisualStudioTokenProviderFile.Parse(File.ReadAllText(tokenProviderPath));
+            return VisualStudioTokenProviderFile.Parse(File.ReadAllText(_visualStudioTokenProviderFilePath));
         }
 
         /// <summary>
@@ -95,6 +97,11 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
                     processStartInfos.Add(startInfo);
                 }
+            }
+
+            if (processStartInfos.Count == 0)
+            {
+                throw new Exception($"{TokenProvidersNotFound} \"{_visualStudioTokenProviderFilePath}\"");
             }
 
             return processStartInfos;
@@ -157,7 +164,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 foreach (string key in exceptionDictionary.Keys)
                 {
                     message += Environment.NewLine +
-                               $"Exception for Visual Studio token provider {key} : {exceptionDictionary[key]} ";
+                               $"{TokenProviderGenericError} {key} : {exceptionDictionary[key]} ";
                 }
 
                 // Throw exception if none of the token providers worked
