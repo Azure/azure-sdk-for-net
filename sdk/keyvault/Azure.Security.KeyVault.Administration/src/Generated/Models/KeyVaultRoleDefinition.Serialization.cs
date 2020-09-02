@@ -11,9 +11,53 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    public partial class RoleDefinition
+    public partial class KeyVaultRoleDefinition : IUtf8JsonSerializable
     {
-        internal static RoleDefinition DeserializeRoleDefinition(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties");
+            writer.WriteStartObject();
+            if (Optional.IsDefined(RoleName))
+            {
+                writer.WritePropertyName("roleName");
+                writer.WriteStringValue(RoleName);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description");
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(RoleType))
+            {
+                writer.WritePropertyName("type");
+                writer.WriteStringValue(RoleType);
+            }
+            if (Optional.IsCollectionDefined(Permissions))
+            {
+                writer.WritePropertyName("permissions");
+                writer.WriteStartArray();
+                foreach (var item in Permissions)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(AssignableScopes))
+            {
+                writer.WritePropertyName("assignableScopes");
+                writer.WriteStartArray();
+                foreach (var item in AssignableScopes)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WriteEndObject();
+            writer.WriteEndObject();
+        }
+
+        internal static KeyVaultRoleDefinition DeserializeKeyVaultRoleDefinition(JsonElement element)
         {
             Optional<string> id = default;
             Optional<string> name = default;
@@ -83,7 +127,7 @@ namespace Azure.Security.KeyVault.Administration.Models
                     continue;
                 }
             }
-            return new RoleDefinition(id.Value, name.Value, type.Value, roleName.Value, description.Value, type0.Value, Optional.ToList(permissions), Optional.ToList(assignableScopes));
+            return new KeyVaultRoleDefinition(id.Value, name.Value, type.Value, roleName.Value, description.Value, type0.Value, Optional.ToList(permissions), Optional.ToList(assignableScopes));
         }
     }
 }

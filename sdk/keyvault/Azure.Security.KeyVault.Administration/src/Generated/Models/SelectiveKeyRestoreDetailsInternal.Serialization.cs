@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    public partial class SelectiveKeyRestoreDetails
+    internal partial class SelectiveKeyRestoreDetailsInternal
     {
-        internal static SelectiveKeyRestoreDetails DeserializeSelectiveKeyRestoreDetails(JsonElement element)
+        internal static SelectiveKeyRestoreDetailsInternal DeserializeSelectiveKeyRestoreDetailsInternal(JsonElement element)
         {
             Optional<string> status = default;
             Optional<string> statusDetails = default;
@@ -64,7 +64,7 @@ namespace Azure.Security.KeyVault.Administration.Models
                     continue;
                 }
             }
-            return new SelectiveKeyRestoreDetails(status.Value, statusDetails.Value, error.Value, jobId.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime));
+            return new SelectiveKeyRestoreDetailsInternal(status.Value, statusDetails.Value, error.Value, jobId.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime));
         }
     }
 }

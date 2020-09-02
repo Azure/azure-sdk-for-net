@@ -8,19 +8,19 @@
 namespace Azure.Security.KeyVault.Administration.Models
 {
     /// <summary> Role Assignments. </summary>
-    public partial class RoleAssignment
+    public partial class KeyVaultRoleAssignment
     {
-        /// <summary> Initializes a new instance of RoleAssignment. </summary>
-        internal RoleAssignment()
+        /// <summary> Initializes a new instance of KeyVaultRoleAssignment. </summary>
+        internal KeyVaultRoleAssignment()
         {
         }
 
-        /// <summary> Initializes a new instance of RoleAssignment. </summary>
+        /// <summary> Initializes a new instance of KeyVaultRoleAssignment. </summary>
         /// <param name="id"> The role assignment ID. </param>
         /// <param name="name"> The role assignment name. </param>
         /// <param name="type"> The role assignment type. </param>
         /// <param name="properties"> Role assignment properties. </param>
-        internal RoleAssignment(string id, string name, string type, RoleAssignmentPropertiesWithScope properties)
+        internal KeyVaultRoleAssignment(string id, string name, string type, KeyVaultRoleAssignmentPropertiesWithScope properties)
         {
             Id = id;
             Name = name;
@@ -35,6 +35,6 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <summary> The role assignment type. </summary>
         public string Type { get; }
         /// <summary> Role assignment properties. </summary>
-        public RoleAssignmentPropertiesWithScope Properties { get; }
+        public KeyVaultRoleAssignmentPropertiesWithScope Properties { get; }
     }
 }

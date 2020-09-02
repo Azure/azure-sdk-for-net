@@ -10,13 +10,13 @@ using System;
 namespace Azure.Security.KeyVault.Administration.Models
 {
     /// <summary> Role assignment properties. </summary>
-    public partial class RoleAssignmentProperties
+    public partial class KeyVaultRoleAssignmentProperties
     {
-        /// <summary> Initializes a new instance of RoleAssignmentProperties. </summary>
+        /// <summary> Initializes a new instance of KeyVaultRoleAssignmentProperties. </summary>
         /// <param name="roleDefinitionId"> The role definition ID used in the role assignment. </param>
         /// <param name="principalId"> The principal ID assigned to the role. This maps to the ID inside the Active Directory. It can point to a user, service principal, or security group. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> or <paramref name="principalId"/> is null. </exception>
-        public RoleAssignmentProperties(string roleDefinitionId, string principalId)
+        public KeyVaultRoleAssignmentProperties(string roleDefinitionId, string principalId)
         {
             if (roleDefinitionId == null)
             {

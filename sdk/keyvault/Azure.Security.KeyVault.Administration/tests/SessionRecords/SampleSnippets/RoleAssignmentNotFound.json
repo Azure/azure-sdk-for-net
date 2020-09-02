@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://eastus.clitest.managedhsm-preview.azure.net/providers/Microsoft.Authorization/roleAssignments/invalid-name?api-version=7.2-preview",
+      "RequestUri": "https://eastus2.chriss-eu2.managedhsm-int.azure-int.net/providers/Microsoft.Authorization/roleAssignments/invalid-name?api-version=7.2-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "User-Agent": [
@@ -23,7 +23,7 @@
       "ResponseBody": "OK"
     },
     {
-      "RequestUri": "https://eastus.clitest.managedhsm-preview.azure.net/providers/Microsoft.Authorization/roleAssignments/invalid-name?api-version=7.2-preview",
+      "RequestUri": "https://eastus2.chriss-eu2.managedhsm-int.azure-int.net/providers/Microsoft.Authorization/roleAssignments/invalid-name?api-version=7.2-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -51,7 +51,7 @@
     }
   ],
   "Variables": {
-    "AZURE_KEYVAULT_URL": "https://eastus.clitest.managedhsm-preview.azure.net",
+    "AZURE_KEYVAULT_URL": "https://eastus2.chriss-eu2.managedhsm-int.azure-int.net",
     "CLIENT_OBJECTID": "693a17da-7022-4cdd-9d4e-4e72e4ad449d",
     "RandomSeed": "1834870442"
   }

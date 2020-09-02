@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    public partial class RoleAssignment
+    public partial class KeyVaultRoleAssignment
     {
-        internal static RoleAssignment DeserializeRoleAssignment(JsonElement element)
+        internal static KeyVaultRoleAssignment DeserializeKeyVaultRoleAssignment(JsonElement element)
         {
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
-            Optional<RoleAssignmentPropertiesWithScope> properties = default;
+            Optional<KeyVaultRoleAssignmentPropertiesWithScope> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -37,11 +37,11 @@ namespace Azure.Security.KeyVault.Administration.Models
                 }
                 if (property.NameEquals("properties"))
                 {
-                    properties = RoleAssignmentPropertiesWithScope.DeserializeRoleAssignmentPropertiesWithScope(property.Value);
+                    properties = KeyVaultRoleAssignmentPropertiesWithScope.DeserializeKeyVaultRoleAssignmentPropertiesWithScope(property.Value);
                     continue;
                 }
             }
-            return new RoleAssignment(id.Value, name.Value, type.Value, properties.Value);
+            return new KeyVaultRoleAssignment(id.Value, name.Value, type.Value, properties.Value);
         }
     }
 }

@@ -11,16 +11,16 @@ using Azure.Core;
 namespace Azure.Security.KeyVault.Administration.Models
 {
     /// <summary> Role definition. </summary>
-    public partial class RoleDefinition
+    public partial class KeyVaultRoleDefinition
     {
-        /// <summary> Initializes a new instance of RoleDefinition. </summary>
-        internal RoleDefinition()
+        /// <summary> Initializes a new instance of KeyVaultRoleDefinition. </summary>
+        public KeyVaultRoleDefinition()
         {
             Permissions = new ChangeTrackingList<KeyVaultPermission>();
             AssignableScopes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RoleDefinition. </summary>
+        /// <summary> Initializes a new instance of KeyVaultRoleDefinition. </summary>
         /// <param name="id"> The role definition ID. </param>
         /// <param name="name"> The role definition name. </param>
         /// <param name="type"> The role definition type. </param>
@@ -29,7 +29,7 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <param name="roleType"> The role type. </param>
         /// <param name="permissions"> Role definition permissions. </param>
         /// <param name="assignableScopes"> Role definition assignable scopes. </param>
-        internal RoleDefinition(string id, string name, string type, string roleName, string description, string roleType, IList<KeyVaultPermission> permissions, IList<string> assignableScopes)
+        internal KeyVaultRoleDefinition(string id, string name, string type, string roleName, string description, string roleType, IList<KeyVaultPermission> permissions, IList<string> assignableScopes)
         {
             Id = id;
             Name = name;
@@ -48,10 +48,14 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <summary> The role definition type. </summary>
         public string Type { get; }
         /// <summary> The role name. </summary>
-        public string RoleName { get; }
+        public string RoleName { get; set; }
         /// <summary> The role definition description. </summary>
-        public string Description { get; }
+        public string Description { get; set; }
         /// <summary> The role type. </summary>
-        public string RoleType { get; }
+        public string RoleType { get; set; }
+        /// <summary> Role definition permissions. </summary>
+        public IList<KeyVaultPermission> Permissions { get; }
+        /// <summary> Role definition assignable scopes. </summary>
+        public IList<string> AssignableScopes { get; }
     }
 }

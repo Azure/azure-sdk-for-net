@@ -8,18 +8,18 @@
 namespace Azure.Security.KeyVault.Administration.Models
 {
     /// <summary> Role assignment properties with scope. </summary>
-    public partial class RoleAssignmentPropertiesWithScope
+    public partial class KeyVaultRoleAssignmentPropertiesWithScope
     {
-        /// <summary> Initializes a new instance of RoleAssignmentPropertiesWithScope. </summary>
-        internal RoleAssignmentPropertiesWithScope()
+        /// <summary> Initializes a new instance of KeyVaultRoleAssignmentPropertiesWithScope. </summary>
+        internal KeyVaultRoleAssignmentPropertiesWithScope()
         {
         }
 
-        /// <summary> Initializes a new instance of RoleAssignmentPropertiesWithScope. </summary>
+        /// <summary> Initializes a new instance of KeyVaultRoleAssignmentPropertiesWithScope. </summary>
         /// <param name="scope"> The role assignment scope. </param>
         /// <param name="roleDefinitionId"> The role definition ID. </param>
         /// <param name="principalId"> The principal ID. </param>
-        internal RoleAssignmentPropertiesWithScope(string scope, string roleDefinitionId, string principalId)
+        internal KeyVaultRoleAssignmentPropertiesWithScope(string scope, string roleDefinitionId, string principalId)
         {
             Scope = scope;
             RoleDefinitionId = roleDefinitionId;
