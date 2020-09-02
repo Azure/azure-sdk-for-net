@@ -30,7 +30,7 @@ namespace Microsoft.Extensions.Hosting
             }
 
             builder.Services.AddAzureClients(builder =>
-                builder.UseConfiguration(provider => provider.GetRequiredService<IConfiguration>().GetWebJobsRootConfiguration()));
+                builder.UseConfiguration(provider => new WebJobsConfiguration(provider.GetRequiredService<IConfiguration>())));
             builder.AddExtension<AzureClientsExtensionConfigProvider>();
 
             return builder;

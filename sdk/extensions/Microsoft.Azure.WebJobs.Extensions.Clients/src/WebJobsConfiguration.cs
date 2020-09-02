@@ -27,8 +27,7 @@ namespace Microsoft.Extensions.Hosting
 
         public string this[string key]
         {
-            get => throw new NotImplementedException();
-            // pass through the set
+            get => _configuration[key];
             set => _configuration[key] = value;
         }
 
@@ -36,6 +35,22 @@ namespace Microsoft.Extensions.Hosting
 
         public IChangeToken GetReloadToken() => _configuration.GetReloadToken();
 
-        public IConfigurationSection GetSection(string key) => _configuration.GetSection(key);
+        public IConfigurationSection GetSection(string key)
+        {
+            var section = _configuration.GetSection(key);
+            if (section.Exists())
+            {
+                return section;
+            }
+
+            var prefixedKey = DefaultConfigurationRootSectionName + key;
+            section = _configuration.GetSection(prefixedKey);
+            if (section.Exists())
+            {
+                return section;
+            }
+
+            return _configuration.GetSection("ConnectionStrings").GetSection(key);
+        }
     }
 }
