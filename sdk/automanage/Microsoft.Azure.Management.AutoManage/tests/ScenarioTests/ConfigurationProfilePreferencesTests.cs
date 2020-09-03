@@ -27,7 +27,7 @@ namespace AutoManage.Tests.ScenarioTests
 
         [Fact]
         [Trait("Category", "Scenario")]
-        public async Task ConfigurationProfilesPreferencesListsPreferences()
+        public void ConfigurationProfilesPreferencesListsPreferences()
         {
             var thisType = this.GetType();
             using (MockContext context = MockContext.Start(thisType))
@@ -40,7 +40,7 @@ namespace AutoManage.Tests.ScenarioTests
 
         [Fact]
         [Trait("Category", "Scenario")]
-        public async Task ConfigurationProfilesPreferencesGetReturnsExpectedPreferences()
+        public void ConfigurationProfilesPreferencesGetReturnsExpectedPreferences()
         {
             var thisType = this.GetType();
             using (MockContext context = MockContext.Start(thisType))
