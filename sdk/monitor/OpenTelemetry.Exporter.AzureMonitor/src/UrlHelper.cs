@@ -12,6 +12,12 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         private const string SchemePostfix = "://";
         private const string Colon = ":";
 
+        /// <summary>
+        /// This method follows OpenTelemetry specification to retrieve http URL.
+        /// Reference: https://github.com/open-telemetry/opentelemetry-specification/blob/master/specification/trace/semantic_conventions/http.md#http-client.
+        /// </summary>
+        /// <param name="tags">Activity Tags</param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static string GetUrl(Dictionary<string, string> tags)
         {
