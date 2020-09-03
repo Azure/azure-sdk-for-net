@@ -18,6 +18,7 @@ extends:
               SNI_CONTENTS: $(net-identity-spcert-sni)
         EnvVars:
           AZURE_AUTHORITY_HOST: $(aad-azure-sdk-test-authority-uri)
+          AZURE_KEYVAULT_SCOPE: "https://vault.azure.net/.default"
           AZURE_IDENTITY_TEST_TENANTID: $(net-identity-tenantid)
           AZURE_IDENTITY_TEST_USERNAME: $(net-identity-username)
           AZURE_IDENTITY_TEST_PASSWORD: $(net-identity-password)
@@ -42,6 +43,7 @@ extends:
               SNI_CONTENTS: $(net-identity-spcert-sni)
         EnvVars:
           AZURE_AUTHORITY_HOST: $(aad-azure-sdk-test-authority-uri-gov)
+          AZURE_KEYVAULT_SCOPE: "https://vault.usgovcloudapi.net/.default"
           AZURE_IDENTITY_TEST_TENANTID: $(net-identity-tenantid-gov)
           AZURE_IDENTITY_TEST_USERNAME: $(net-identity-username-gov)
           AZURE_IDENTITY_TEST_PASSWORD: $(net-identity-password-gov)
@@ -66,6 +68,7 @@ extends:
               SNI_CONTENTS: $(net-identity-spcert-sni)
         EnvVars:
           AZURE_AUTHORITY_HOST: $(aad-azure-sdk-test-authority-uri-cn)
+          AZURE_KEYVAULT_SCOPE: "https://vault.azure.cn/.default"
           AZURE_IDENTITY_TEST_TENANTID: $(net-identity-tenantid-cn)
           AZURE_IDENTITY_TEST_USERNAME: $(net-identity-username-cn)
           AZURE_IDENTITY_TEST_PASSWORD: $(net-identity-password-cn)
