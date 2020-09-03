@@ -72,6 +72,12 @@ else {
 }
 
 Write-Host "New Version: ${packageSemVer}"
+
+# Allow the prerelease label to also be preview until all those ship as GA
+if ($packageSemVer.PrereleaseLabel -eq "preview") {
+  $packageSemVer.DefaultPrereleaseLabel = "preview"
+}
+
 if ($packageSemVer.HasValidPrereleaseLabel() -ne $true){
   Write-Error "Invalid prerelease label"
   exit 1
