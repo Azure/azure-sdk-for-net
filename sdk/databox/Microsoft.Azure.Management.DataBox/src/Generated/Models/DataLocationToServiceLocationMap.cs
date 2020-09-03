@@ -14,29 +14,28 @@ namespace Microsoft.Azure.Management.DataBox.Models
     using System.Linq;
 
     /// <summary>
-    /// Map of destination location to service location.
+    /// Map of data location to service location
     /// </summary>
-    public partial class DestinationToServiceLocationMap
+    public partial class DataLocationToServiceLocationMap
     {
         /// <summary>
-        /// Initializes a new instance of the DestinationToServiceLocationMap
+        /// Initializes a new instance of the DataLocationToServiceLocationMap
         /// class.
         /// </summary>
-        public DestinationToServiceLocationMap()
+        public DataLocationToServiceLocationMap()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DestinationToServiceLocationMap
+        /// Initializes a new instance of the DataLocationToServiceLocationMap
         /// class.
         /// </summary>
-        /// <param name="destinationLocation">Location of the
-        /// destination.</param>
+        /// <param name="dataLocation">Location of the data.</param>
         /// <param name="serviceLocation">Location of the service.</param>
-        public DestinationToServiceLocationMap(string destinationLocation = default(string), string serviceLocation = default(string))
+        public DataLocationToServiceLocationMap(string dataLocation = default(string), string serviceLocation = default(string))
         {
-            DestinationLocation = destinationLocation;
+            DataLocation = dataLocation;
             ServiceLocation = serviceLocation;
             CustomInit();
         }
@@ -47,10 +46,10 @@ namespace Microsoft.Azure.Management.DataBox.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets location of the destination.
+        /// Gets location of the data.
         /// </summary>
-        [JsonProperty(PropertyName = "destinationLocation")]
-        public string DestinationLocation { get; private set; }
+        [JsonProperty(PropertyName = "dataLocation")]
+        public string DataLocation { get; private set; }
 
         /// <summary>
         /// Gets location of the service.

@@ -15,32 +15,35 @@ namespace Microsoft.Azure.Management.DataBox.Models
     using System.Linq;
 
     /// <summary>
-    /// Details for the destination storage account.
+    /// Details for the storage account.
     /// </summary>
     [Newtonsoft.Json.JsonObject("StorageAccount")]
-    public partial class DestinationStorageAccountDetails : DestinationAccountDetails
+    public partial class StorageAccountDetails : DataAccountDetails
     {
         /// <summary>
-        /// Initializes a new instance of the DestinationStorageAccountDetails
-        /// class.
+        /// Initializes a new instance of the StorageAccountDetails class.
         /// </summary>
-        public DestinationStorageAccountDetails()
+        public StorageAccountDetails()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DestinationStorageAccountDetails
-        /// class.
+        /// Initializes a new instance of the StorageAccountDetails class.
         /// </summary>
-        /// <param name="storageAccountId">Destination Storage Account Arm
-        /// Id.</param>
-        /// <param name="accountId">Arm Id of the destination where the data
-        /// has to be moved.</param>
-        /// <param name="sharePassword">Share password to be shared by all
-        /// shares in SA.</param>
-        public DestinationStorageAccountDetails(string storageAccountId, string accountId = default(string), string sharePassword = default(string))
-            : base(accountId, sharePassword)
+        /// <param name="storageAccountId">Storage Account Resource Id.</param>
+        /// <param name="sharePassword">Password for all the shares to be
+        /// created on the device. Should not be passed for
+        /// TransferType:ExportFromAzure jobs. If this is not passed, the
+        /// service will generate password itself. This will not be returned in
+        /// Get Call. Password Requirements :  Password must be minimum of 12
+        /// and maximum of 64 characters. Password must have at least one
+        /// uppercase alphabet, one number and one special character. Password
+        /// cannot have the following characters : IilLoO0 Password can have
+        /// only alphabets, numbers and these characters :
+        /// @#\-$%^!+=;:_()]+</param>
+        public StorageAccountDetails(string storageAccountId, string sharePassword = default(string))
+            : base(sharePassword)
         {
             StorageAccountId = storageAccountId;
             CustomInit();
@@ -52,7 +55,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets destination Storage Account Arm Id.
+        /// Gets or sets storage Account Resource Id.
         /// </summary>
         [JsonProperty(PropertyName = "storageAccountId")]
         public string StorageAccountId { get; set; }

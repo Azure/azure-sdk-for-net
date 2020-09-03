@@ -15,34 +15,38 @@ namespace Microsoft.Azure.Management.DataBox.Models
     using System.Linq;
 
     /// <summary>
-    /// Details for the destination compute disks.
+    /// Details of the managed disks.
     /// </summary>
     [Newtonsoft.Json.JsonObject("ManagedDisk")]
-    public partial class DestinationManagedDiskDetails : DestinationAccountDetails
+    public partial class ManagedDiskDetails : DataAccountDetails
     {
         /// <summary>
-        /// Initializes a new instance of the DestinationManagedDiskDetails
-        /// class.
+        /// Initializes a new instance of the ManagedDiskDetails class.
         /// </summary>
-        public DestinationManagedDiskDetails()
+        public ManagedDiskDetails()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DestinationManagedDiskDetails
-        /// class.
+        /// Initializes a new instance of the ManagedDiskDetails class.
         /// </summary>
-        /// <param name="resourceGroupId">Destination Resource Group Id where
-        /// the Compute disks should be created.</param>
-        /// <param name="stagingStorageAccountId">Arm Id of the storage account
-        /// that can be used to copy the vhd for staging.</param>
-        /// <param name="accountId">Arm Id of the destination where the data
-        /// has to be moved.</param>
-        /// <param name="sharePassword">Share password to be shared by all
-        /// shares in SA.</param>
-        public DestinationManagedDiskDetails(string resourceGroupId, string stagingStorageAccountId, string accountId = default(string), string sharePassword = default(string))
-            : base(accountId, sharePassword)
+        /// <param name="resourceGroupId">Resource Group Id of the compute
+        /// disks.</param>
+        /// <param name="stagingStorageAccountId">Resource Id of the storage
+        /// account that can be used to copy the vhd for staging.</param>
+        /// <param name="sharePassword">Password for all the shares to be
+        /// created on the device. Should not be passed for
+        /// TransferType:ExportFromAzure jobs. If this is not passed, the
+        /// service will generate password itself. This will not be returned in
+        /// Get Call. Password Requirements :  Password must be minimum of 12
+        /// and maximum of 64 characters. Password must have at least one
+        /// uppercase alphabet, one number and one special character. Password
+        /// cannot have the following characters : IilLoO0 Password can have
+        /// only alphabets, numbers and these characters :
+        /// @#\-$%^!+=;:_()]+</param>
+        public ManagedDiskDetails(string resourceGroupId, string stagingStorageAccountId, string sharePassword = default(string))
+            : base(sharePassword)
         {
             ResourceGroupId = resourceGroupId;
             StagingStorageAccountId = stagingStorageAccountId;
@@ -55,15 +59,14 @@ namespace Microsoft.Azure.Management.DataBox.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets destination Resource Group Id where the Compute disks
-        /// should be created.
+        /// Gets or sets resource Group Id of the compute disks.
         /// </summary>
         [JsonProperty(PropertyName = "resourceGroupId")]
         public string ResourceGroupId { get; set; }
 
         /// <summary>
-        /// Gets or sets arm Id of the storage account that can be used to copy
-        /// the vhd for staging.
+        /// Gets or sets resource Id of the storage account that can be used to
+        /// copy the vhd for staging.
         /// </summary>
         [JsonProperty(PropertyName = "stagingStorageAccountId")]
         public string StagingStorageAccountId { get; set; }
