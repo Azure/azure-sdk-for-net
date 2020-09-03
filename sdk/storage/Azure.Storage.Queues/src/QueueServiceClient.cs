@@ -71,6 +71,10 @@ namespace Azure.Storage.Queues
         /// </summary>
         internal virtual ClientSideEncryptionOptions ClientSideEncryption => _clientSideEncryption;
 
+        private readonly QueueMessageEncoding _messageEncoding;
+
+        internal virtual QueueMessageEncoding MessageEncoding => _messageEncoding;
+
         /// <summary>
         /// The Storage account name corresponding to the service client.
         /// </summary>
@@ -145,6 +149,7 @@ namespace Azure.Storage.Queues
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions);
+            _messageEncoding = options.MessageEncoding;
         }
 
         /// <summary>
@@ -232,6 +237,7 @@ namespace Azure.Storage.Queues
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions);
+            _messageEncoding = options.MessageEncoding;
         }
         #endregion ctors
 
@@ -248,7 +254,7 @@ namespace Azure.Storage.Queues
         /// A <see cref="QueueClient"/> for the desired queue.
         /// </returns>
         public virtual QueueClient GetQueueClient(string queueName)
-            => new QueueClient(Uri.AppendToPath(queueName), Pipeline, Version, ClientDiagnostics, ClientSideEncryption);
+            => new QueueClient(Uri.AppendToPath(queueName), Pipeline, Version, ClientDiagnostics, ClientSideEncryption, MessageEncoding);
 
         #region GetQueues
         /// <summary>

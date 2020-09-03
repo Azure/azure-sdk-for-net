@@ -96,6 +96,11 @@ namespace Azure.Storage.Queues
         /// </summary>
         public Uri GeoRedundantSecondaryUri { get; set; }
 
+        /// <summary>
+        /// TODO (kasobol-msft) add docs.
+        /// </summary>
+        public QueueMessageEncoding MessageEncoding { get; set; } = QueueMessageEncoding.UTF8;
+
         #region Advanced Options
         internal ClientSideEncryptionOptions _clientSideEncryptionOptions;
         #endregion

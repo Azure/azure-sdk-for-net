@@ -12,6 +12,8 @@ using Azure.Storage.Queues.Tests;
 using NUnit.Framework;
 using Azure.Core;
 using Azure.Storage.Sas;
+using System.Buffers.Text;
+using System.Text;
 
 namespace Azure.Storage.Queues.Test
 {
@@ -647,6 +649,108 @@ namespace Azure.Storage.Queues.Test
 
             // Assert
             Assert.NotNull(response.Value);
+        }
+
+        [Test]
+        public async Task SendReceiveNullMessageAsync()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            // Act
+            Response<Models.SendReceipt> response = await test.Queue.SendMessageAsync(messageText: null);
+
+            // Assert
+            Assert.NotNull(response.Value);
+
+            // Act
+            QueueMessage receivedMessage = (await test.Queue.ReceiveMessagesAsync()).Value.First();
+
+            Assert.AreEqual(string.Empty, receivedMessage.MessageText);
+        }
+
+        [Test]
+        public async Task EncodesOutgoingMessage()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+            var encodingClient = GetEncodingClient(test.Queue.Name, QueueMessageEncoding.Base64);
+            var messageText = GetNewString();
+            var encodedText = Convert.ToBase64String(Encoding.UTF8.GetBytes(messageText));
+
+            // Act
+            Response<Models.SendReceipt> response = await encodingClient.SendMessageAsync(messageText: messageText);
+
+            // Assert
+            Assert.NotNull(response.Value);
+
+            // Act
+            QueueMessage receivedMessage = (await test.Queue.ReceiveMessagesAsync()).Value.First();
+
+            Assert.AreEqual(encodedText, receivedMessage.MessageText);
+        }
+
+        [Test]
+        public async Task DecodesReceivedMessage()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+            var encodingClient = GetEncodingClient(test.Queue.Name, QueueMessageEncoding.Base64);
+            var messageText = GetNewString();
+            var encodedText = Convert.ToBase64String(Encoding.UTF8.GetBytes(messageText));
+            // Act
+            Response<Models.SendReceipt> response = await test.Queue.SendMessageAsync(messageText: encodedText);
+
+            // Assert
+            Assert.NotNull(response.Value);
+
+            // Act
+            QueueMessage receivedMessage = (await encodingClient.ReceiveMessagesAsync()).Value.First();
+
+            // Assert
+            Assert.AreEqual(messageText, receivedMessage.MessageText);
+        }
+
+        [Test]
+        public async Task DecodesPeekedMessage()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+            var encodingClient = GetEncodingClient(test.Queue.Name, QueueMessageEncoding.Base64);
+            var messageText = GetNewString();
+            var encodedText = Convert.ToBase64String(Encoding.UTF8.GetBytes(messageText));
+            // Act
+            Response<Models.SendReceipt> response = await test.Queue.SendMessageAsync(messageText: encodedText);
+
+            // Assert
+            Assert.NotNull(response.Value);
+
+            // Act
+            PeekedMessage receivedMessage = (await encodingClient.PeekMessagesAsync()).Value.First();
+
+            // Assert
+            Assert.AreEqual(messageText, receivedMessage.MessageText);
+        }
+
+        [Test]
+        public async Task CanSendAndReceiveNonUTFBytes()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+            var encodingClient = GetEncodingClient(test.Queue.Name, QueueMessageEncoding.Base64);
+            byte[] content = new byte[] { 0xFF, 0x00 }; // Not a valid UTF-8 byte sequence.
+
+            // Act
+            Response<Models.SendReceipt> response = await encodingClient.SendMessageAsync(message: BinaryData.FromMemory(content));
+
+            // Assert
+            Assert.NotNull(response.Value);
+
+            // Act
+            QueueMessage receivedMessage = (await encodingClient.ReceiveMessagesAsync()).Value.First();
+
+            // Assert
+            CollectionAssert.AreEqual(content, receivedMessage.Body.Bytes.ToArray());
         }
 
         [Test]
