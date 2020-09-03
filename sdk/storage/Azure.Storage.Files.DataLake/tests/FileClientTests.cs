@@ -2861,7 +2861,9 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task UploadAsync_MinFile()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task UploadAsync_MinFile(bool readOnlyFile)
         {
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -2878,12 +2880,18 @@ namespace Azure.Storage.Files.DataLake.Tests
                 {
                     File.WriteAllBytes(path, data);
 
+                    if (readOnlyFile)
+                    {
+                        File.SetAttributes(path, FileAttributes.ReadOnly);
+                    }
+
                     await file.UploadAsync(path);
                 }
                 finally
                 {
                     if (File.Exists(path))
                     {
+                        File.SetAttributes(path, FileAttributes.Normal);
                         File.Delete(path);
                     }
                 }
