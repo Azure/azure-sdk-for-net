@@ -20,8 +20,8 @@ $PACKAGE_REFERENCE_XPATH = '//Project/ItemGroup/PackageReference'
 # Matches the dev.yyyymmdd portion of the version string
 $DEV_DATE_REGEX = 'dev\.(\d{8})'
 
-$NIGHTLY_FEED_NAME = 'NightlyFeed'
-$NIGHTLY_FEED_URL = 'https://azuresdkartifacts.blob.core.windows.net/azure-sdk-for-net/index.json'
+$NIGHTLY_FEED_NAME = 'NightlyFeedNew'
+$NIGHTLY_FEED_URL = 'https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json'
 
 function Log-Warning($message) {
     if ($CI) {
@@ -63,7 +63,9 @@ $csproj |
         $targetVersion = ($allPackages |
             Where-Object { $_.Name -eq $packageName } |
             Where-Object { -not ( $PACKAGE_EXCLUSIONS.ContainsKey($packageName) -and $PACKAGE_EXCLUSIONS[$packageName].ContainsKey($_.Version)) } |
-            Select-Object -Last 1).Version
+            ForEach-Object { $_.Version } |
+            Sort-Object |
+            Select-Object -Last 1)
 
         if ($targetVersion -eq $null) {
             return
