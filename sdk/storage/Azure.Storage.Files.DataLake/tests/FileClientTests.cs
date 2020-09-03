@@ -1015,6 +1015,57 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetAccessControlRecursiveAsync()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file = await directory.CreateFileAsync(GetNewFileName());
+
+            // Act
+            AccessControlChangeResult result = await file.SetAccessControlRecursiveAsync(AccessControlList, null);
+
+            // Assert
+            Assert.AreEqual(0, result.Counters.ChangedDirectoriesCount);
+            Assert.AreEqual(1, result.Counters.ChangedFilesCount);
+            Assert.AreEqual(0, result.Counters.FailedChangesCount);
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task UpdateAccessControlRecursiveAsync()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file = await directory.CreateFileAsync(GetNewFileName());
+
+            // Act
+            AccessControlChangeResult result = await file.UpdateAccessControlRecursiveAsync(AccessControlList, null);
+
+            // Assert
+            Assert.AreEqual(0, result.Counters.ChangedDirectoriesCount);
+            Assert.AreEqual(1, result.Counters.ChangedFilesCount);
+            Assert.AreEqual(0, result.Counters.FailedChangesCount);
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task RemoveAccessControlRecursiveAsync()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file = await directory.CreateFileAsync(GetNewFileName());
+
+            // Act
+            AccessControlChangeResult result = await file.RemoveAccessControlRecursiveAsync(RemoveAccessControlList, null);
+
+            // Assert
+            Assert.AreEqual(0, result.Counters.ChangedDirectoriesCount);
+            Assert.AreEqual(1, result.Counters.ChangedFilesCount);
+            Assert.AreEqual(0, result.Counters.FailedChangesCount);
+        }
+
+        [Test]
         public async Task SetPermissionsAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
