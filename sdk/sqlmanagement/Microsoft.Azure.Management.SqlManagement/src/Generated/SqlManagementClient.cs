@@ -397,11 +397,6 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IInstanceFailoverGroupsOperations InstanceFailoverGroups { get; private set; }
 
         /// <summary>
-        /// Gets the IBackupShortTermRetentionPoliciesOperations.
-        /// </summary>
-        public virtual IBackupShortTermRetentionPoliciesOperations BackupShortTermRetentionPolicies { get; private set; }
-
-        /// <summary>
         /// Gets the ITdeCertificatesOperations.
         /// </summary>
         public virtual ITdeCertificatesOperations TdeCertificates { get; private set; }
@@ -452,11 +447,6 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IUsagesOperations Usages { get; private set; }
 
         /// <summary>
-        /// Gets the IManagedInstancesOperations.
-        /// </summary>
-        public virtual IManagedInstancesOperations ManagedInstances { get; private set; }
-
-        /// <summary>
         /// Gets the IPrivateEndpointConnectionsOperations.
         /// </summary>
         public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
@@ -487,6 +477,16 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IManagedInstanceLongTermRetentionPoliciesOperations ManagedInstanceLongTermRetentionPolicies { get; private set; }
 
         /// <summary>
+        /// Gets the IWorkloadGroupsOperations.
+        /// </summary>
+        public virtual IWorkloadGroupsOperations WorkloadGroups { get; private set; }
+
+        /// <summary>
+        /// Gets the IWorkloadClassifiersOperations.
+        /// </summary>
+        public virtual IWorkloadClassifiersOperations WorkloadClassifiers { get; private set; }
+
+        /// <summary>
         /// Gets the IManagedInstanceOperations.
         /// </summary>
         public virtual IManagedInstanceOperations ManagedInstanceOperations { get; private set; }
@@ -507,6 +507,16 @@ namespace Microsoft.Azure.Management.Sql
         public virtual ISyncMembersOperations SyncMembers { get; private set; }
 
         /// <summary>
+        /// Gets the IManagedInstancesOperations.
+        /// </summary>
+        public virtual IManagedInstancesOperations ManagedInstances { get; private set; }
+
+        /// <summary>
+        /// Gets the IBackupShortTermRetentionPoliciesOperations.
+        /// </summary>
+        public virtual IBackupShortTermRetentionPoliciesOperations BackupShortTermRetentionPolicies { get; private set; }
+
+        /// <summary>
         /// Gets the IManagedDatabaseRestoreDetailsOperations.
         /// </summary>
         public virtual IManagedDatabaseRestoreDetailsOperations ManagedDatabaseRestoreDetails { get; private set; }
@@ -520,6 +530,11 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IServerAzureADOnlyAuthenticationsOperations.
         /// </summary>
         public virtual IServerAzureADOnlyAuthenticationsOperations ServerAzureADOnlyAuthentications { get; private set; }
+
+        /// <summary>
+        /// Gets the IImportExportOperations.
+        /// </summary>
+        public virtual IImportExportOperations ImportExport { get; private set; }
 
         /// <summary>
         /// Gets the IManagedInstanceAzureADOnlyAuthenticationsOperations.
@@ -792,7 +807,6 @@ namespace Microsoft.Azure.Management.Sql
             ManagedDatabaseVulnerabilityAssessmentScans = new ManagedDatabaseVulnerabilityAssessmentScansOperations(this);
             ManagedDatabaseVulnerabilityAssessments = new ManagedDatabaseVulnerabilityAssessmentsOperations(this);
             InstanceFailoverGroups = new InstanceFailoverGroupsOperations(this);
-            BackupShortTermRetentionPolicies = new BackupShortTermRetentionPoliciesOperations(this);
             TdeCertificates = new TdeCertificatesOperations(this);
             ManagedInstanceTdeCertificates = new ManagedInstanceTdeCertificatesOperations(this);
             ManagedInstanceKeys = new ManagedInstanceKeysOperations(this);
@@ -803,20 +817,24 @@ namespace Microsoft.Azure.Management.Sql
             ManagedDatabaseSensitivityLabels = new ManagedDatabaseSensitivityLabelsOperations(this);
             InstancePools = new InstancePoolsOperations(this);
             Usages = new UsagesOperations(this);
-            ManagedInstances = new ManagedInstancesOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             Servers = new ServersOperations(this);
             Capabilities = new CapabilitiesOperations(this);
             LongTermRetentionManagedInstanceBackups = new LongTermRetentionManagedInstanceBackupsOperations(this);
             ManagedInstanceLongTermRetentionPolicies = new ManagedInstanceLongTermRetentionPoliciesOperations(this);
+            WorkloadGroups = new WorkloadGroupsOperations(this);
+            WorkloadClassifiers = new WorkloadClassifiersOperations(this);
             ManagedInstanceOperations = new ManagedInstanceOperations(this);
             ServerAzureADAdministrators = new ServerAzureADAdministratorsOperations(this);
             SyncGroups = new SyncGroupsOperations(this);
             SyncMembers = new SyncMembersOperations(this);
+            ManagedInstances = new ManagedInstancesOperations(this);
+            BackupShortTermRetentionPolicies = new BackupShortTermRetentionPoliciesOperations(this);
             ManagedDatabaseRestoreDetails = new ManagedDatabaseRestoreDetailsOperations(this);
             ManagedDatabases = new ManagedDatabasesOperations(this);
             ServerAzureADOnlyAuthentications = new ServerAzureADOnlyAuthenticationsOperations(this);
+            ImportExport = new ImportExportOperations(this);
             ManagedInstanceAzureADOnlyAuthentications = new ManagedInstanceAzureADOnlyAuthenticationsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";

@@ -10,13 +10,96 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for ServerKeyType.
     /// </summary>
-    public static class ServerKeyType
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(ServerKeyTypeConverter))]
+    public struct ServerKeyType : System.IEquatable<ServerKeyType>
     {
-        public const string ServiceManaged = "ServiceManaged";
-        public const string AzureKeyVault = "AzureKeyVault";
+        private ServerKeyType(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly ServerKeyType ServiceManaged = "ServiceManaged";
+
+        public static readonly ServerKeyType AzureKeyVault = "AzureKeyVault";
+
+
+        /// <summary>
+        /// Underlying value of enum ServerKeyType
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for ServerKeyType
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type ServerKeyType
+        /// </summary>
+        public bool Equals(ServerKeyType e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to ServerKeyType
+        /// </summary>
+        public static implicit operator ServerKeyType(string value)
+        {
+            return new ServerKeyType(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert ServerKeyType to string
+        /// </summary>
+        public static implicit operator string(ServerKeyType e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum ServerKeyType
+        /// </summary>
+        public static bool operator == (ServerKeyType e1, ServerKeyType e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum ServerKeyType
+        /// </summary>
+        public static bool operator != (ServerKeyType e1, ServerKeyType e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for ServerKeyType
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is ServerKeyType && Equals((ServerKeyType)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode ServerKeyType
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

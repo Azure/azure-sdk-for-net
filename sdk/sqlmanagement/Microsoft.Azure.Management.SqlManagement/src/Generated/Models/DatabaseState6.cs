@@ -10,14 +10,98 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for DatabaseState6.
     /// </summary>
-    public static class DatabaseState6
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(DatabaseState6Converter))]
+    public struct DatabaseState6 : System.IEquatable<DatabaseState6>
     {
-        public const string All = "All";
-        public const string Live = "Live";
-        public const string Deleted = "Deleted";
+        private DatabaseState6(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly DatabaseState6 All = "All";
+
+        public static readonly DatabaseState6 Live = "Live";
+
+        public static readonly DatabaseState6 Deleted = "Deleted";
+
+
+        /// <summary>
+        /// Underlying value of enum DatabaseState6
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for DatabaseState6
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type DatabaseState6
+        /// </summary>
+        public bool Equals(DatabaseState6 e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to DatabaseState6
+        /// </summary>
+        public static implicit operator DatabaseState6(string value)
+        {
+            return new DatabaseState6(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert DatabaseState6 to string
+        /// </summary>
+        public static implicit operator string(DatabaseState6 e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum DatabaseState6
+        /// </summary>
+        public static bool operator == (DatabaseState6 e1, DatabaseState6 e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum DatabaseState6
+        /// </summary>
+        public static bool operator != (DatabaseState6 e1, DatabaseState6 e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for DatabaseState6
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is DatabaseState6 && Equals((DatabaseState6)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode DatabaseState6
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

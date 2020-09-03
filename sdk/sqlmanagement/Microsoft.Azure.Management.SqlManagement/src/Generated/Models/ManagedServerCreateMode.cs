@@ -10,13 +10,96 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for ManagedServerCreateMode.
     /// </summary>
-    public static class ManagedServerCreateMode
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(ManagedServerCreateModeConverter))]
+    public struct ManagedServerCreateMode : System.IEquatable<ManagedServerCreateMode>
     {
-        public const string Default = "Default";
-        public const string PointInTimeRestore = "PointInTimeRestore";
+        private ManagedServerCreateMode(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly ManagedServerCreateMode Default = "Default";
+
+        public static readonly ManagedServerCreateMode PointInTimeRestore = "PointInTimeRestore";
+
+
+        /// <summary>
+        /// Underlying value of enum ManagedServerCreateMode
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for ManagedServerCreateMode
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type ManagedServerCreateMode
+        /// </summary>
+        public bool Equals(ManagedServerCreateMode e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to ManagedServerCreateMode
+        /// </summary>
+        public static implicit operator ManagedServerCreateMode(string value)
+        {
+            return new ManagedServerCreateMode(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert ManagedServerCreateMode to string
+        /// </summary>
+        public static implicit operator string(ManagedServerCreateMode e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum ManagedServerCreateMode
+        /// </summary>
+        public static bool operator == (ManagedServerCreateMode e1, ManagedServerCreateMode e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum ManagedServerCreateMode
+        /// </summary>
+        public static bool operator != (ManagedServerCreateMode e1, ManagedServerCreateMode e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for ManagedServerCreateMode
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is ManagedServerCreateMode && Equals((ManagedServerCreateMode)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode ManagedServerCreateMode
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

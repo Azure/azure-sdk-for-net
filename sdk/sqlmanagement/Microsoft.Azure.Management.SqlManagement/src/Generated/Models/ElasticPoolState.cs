@@ -10,14 +10,98 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for ElasticPoolState.
     /// </summary>
-    public static class ElasticPoolState
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(ElasticPoolStateConverter))]
+    public struct ElasticPoolState : System.IEquatable<ElasticPoolState>
     {
-        public const string Creating = "Creating";
-        public const string Ready = "Ready";
-        public const string Disabled = "Disabled";
+        private ElasticPoolState(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly ElasticPoolState Creating = "Creating";
+
+        public static readonly ElasticPoolState Ready = "Ready";
+
+        public static readonly ElasticPoolState Disabled = "Disabled";
+
+
+        /// <summary>
+        /// Underlying value of enum ElasticPoolState
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for ElasticPoolState
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type ElasticPoolState
+        /// </summary>
+        public bool Equals(ElasticPoolState e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to ElasticPoolState
+        /// </summary>
+        public static implicit operator ElasticPoolState(string value)
+        {
+            return new ElasticPoolState(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert ElasticPoolState to string
+        /// </summary>
+        public static implicit operator string(ElasticPoolState e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum ElasticPoolState
+        /// </summary>
+        public static bool operator == (ElasticPoolState e1, ElasticPoolState e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum ElasticPoolState
+        /// </summary>
+        public static bool operator != (ElasticPoolState e1, ElasticPoolState e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for ElasticPoolState
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is ElasticPoolState && Equals((ElasticPoolState)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode ElasticPoolState
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

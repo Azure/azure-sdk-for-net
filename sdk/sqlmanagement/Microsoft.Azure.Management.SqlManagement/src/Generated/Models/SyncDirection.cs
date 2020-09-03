@@ -10,14 +10,98 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for SyncDirection.
     /// </summary>
-    public static class SyncDirection
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(SyncDirectionConverter))]
+    public struct SyncDirection : System.IEquatable<SyncDirection>
     {
-        public const string Bidirectional = "Bidirectional";
-        public const string OneWayMemberToHub = "OneWayMemberToHub";
-        public const string OneWayHubToMember = "OneWayHubToMember";
+        private SyncDirection(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly SyncDirection Bidirectional = "Bidirectional";
+
+        public static readonly SyncDirection OneWayMemberToHub = "OneWayMemberToHub";
+
+        public static readonly SyncDirection OneWayHubToMember = "OneWayHubToMember";
+
+
+        /// <summary>
+        /// Underlying value of enum SyncDirection
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for SyncDirection
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type SyncDirection
+        /// </summary>
+        public bool Equals(SyncDirection e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to SyncDirection
+        /// </summary>
+        public static implicit operator SyncDirection(string value)
+        {
+            return new SyncDirection(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert SyncDirection to string
+        /// </summary>
+        public static implicit operator string(SyncDirection e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum SyncDirection
+        /// </summary>
+        public static bool operator == (SyncDirection e1, SyncDirection e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum SyncDirection
+        /// </summary>
+        public static bool operator != (SyncDirection e1, SyncDirection e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for SyncDirection
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is SyncDirection && Equals((SyncDirection)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode SyncDirection
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

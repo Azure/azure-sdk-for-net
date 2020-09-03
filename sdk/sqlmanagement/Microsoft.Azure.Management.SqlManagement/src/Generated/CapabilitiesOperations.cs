@@ -59,7 +59,8 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='include'>
         /// If specified, restricts the response to only include the selected item.
         /// Possible values include: 'supportedEditions',
-        /// 'supportedElasticPoolEditions', 'supportedManagedInstanceVersions'
+        /// 'supportedElasticPoolEditions', 'supportedManagedInstanceVersions',
+        /// 'supportedInstancePoolEditions', 'supportedManagedInstanceEditions'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -82,7 +83,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<LocationCapabilities>> ListByLocationWithHttpMessagesAsync(string locationName, string include = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<LocationCapabilities>> ListByLocationWithHttpMessagesAsync(string locationName, CapabilityGroup? include = default(CapabilityGroup?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (locationName == null)
             {
@@ -92,7 +93,7 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2017-10-01-preview";
+            string apiVersion = "2018-06-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -114,7 +115,7 @@ namespace Microsoft.Azure.Management.Sql
             List<string> _queryParameters = new List<string>();
             if (include != null)
             {
-                _queryParameters.Add(string.Format("include={0}", System.Uri.EscapeDataString(include)));
+                _queryParameters.Add(string.Format("include={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(include, Client.SerializationSettings).Trim('"'))));
             }
             if (apiVersion != null)
             {

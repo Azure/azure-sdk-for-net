@@ -10,16 +10,102 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for ElasticPoolEdition.
     /// </summary>
-    public static class ElasticPoolEdition
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(ElasticPoolEditionConverter))]
+    public struct ElasticPoolEdition : System.IEquatable<ElasticPoolEdition>
     {
-        public const string Basic = "Basic";
-        public const string Standard = "Standard";
-        public const string Premium = "Premium";
-        public const string GeneralPurpose = "GeneralPurpose";
-        public const string BusinessCritical = "BusinessCritical";
+        private ElasticPoolEdition(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly ElasticPoolEdition Basic = "Basic";
+
+        public static readonly ElasticPoolEdition Standard = "Standard";
+
+        public static readonly ElasticPoolEdition Premium = "Premium";
+
+        public static readonly ElasticPoolEdition GeneralPurpose = "GeneralPurpose";
+
+        public static readonly ElasticPoolEdition BusinessCritical = "BusinessCritical";
+
+
+        /// <summary>
+        /// Underlying value of enum ElasticPoolEdition
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for ElasticPoolEdition
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type ElasticPoolEdition
+        /// </summary>
+        public bool Equals(ElasticPoolEdition e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to ElasticPoolEdition
+        /// </summary>
+        public static implicit operator ElasticPoolEdition(string value)
+        {
+            return new ElasticPoolEdition(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert ElasticPoolEdition to string
+        /// </summary>
+        public static implicit operator string(ElasticPoolEdition e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum ElasticPoolEdition
+        /// </summary>
+        public static bool operator == (ElasticPoolEdition e1, ElasticPoolEdition e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum ElasticPoolEdition
+        /// </summary>
+        public static bool operator != (ElasticPoolEdition e1, ElasticPoolEdition e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for ElasticPoolEdition
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is ElasticPoolEdition && Equals((ElasticPoolEdition)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode ElasticPoolEdition
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }
