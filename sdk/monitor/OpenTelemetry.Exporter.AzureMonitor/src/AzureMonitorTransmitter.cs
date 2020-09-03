@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 
 using OpenTelemetry.Exporter.AzureMonitor.ConnectionString;
-using OpenTelemetry.Exporter.AzureMonitor.Extensions;
 using OpenTelemetry.Exporter.AzureMonitor.Models;
 using OpenTelemetry.Trace;
 
