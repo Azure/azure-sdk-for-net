@@ -63,7 +63,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Infrastructure
             },
             TimeGranularity.Monthly);
 
-        public static EntireDetectResponse ExpectedEntireResult = new EntireDetectResponse(
+        public static EntireDetectResponse ExpectedEntireDetectResult = new EntireDetectResponse(
             12,
             new List<float>
             {

@@ -259,7 +259,7 @@ $fields = @{
     "Release Type"=$releaseType
     "Version Number"=$newVersion
     "Planned Release Date"=$releaseDateString
-    "Notes"="<pre>"+$notes.Replace("`n", "<br>")+"</pre>"
+    "Notes"=[System.Net.WebUtility]::HtmlEncode($notes).Replace("`n", "<br>")
 }
 
 Write-Host

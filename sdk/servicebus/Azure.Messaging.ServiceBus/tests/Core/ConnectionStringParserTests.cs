@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using Azure.Messaging.ServiceBus.Core;
 using NUnit.Framework;
 
-namespace Azure.Messaging.ServiceBus.Tests.Client
+namespace Azure.Messaging.ServiceBus.Tests.Core
 {
     public class ConnectionStringParserTests
     {
