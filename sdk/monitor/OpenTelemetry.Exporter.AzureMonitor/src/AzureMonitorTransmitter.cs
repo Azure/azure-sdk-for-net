@@ -22,11 +22,6 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         private const string StatusCode200 = "200";
         private const string StatusCode0 = "0";
         private const string StatusCodeOk = "Ok";
-        private const string HttpScheme = "http://";
-        private const string SchemePostfix = "://";
-        private const char Colon = '/';
-        private const string HttpPort80 = "80";
-        private const string HttpPort443 = "443";
 
         private readonly ServiceRestClient serviceRestClient;
         private readonly AzureMonitorExporterOptions options;
@@ -120,7 +115,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
             if (telemetryType == TelemetryType.Request)
             {
-                var url = activity.Kind == ActivityKind.Server ? GetUrl(tags) : GetMessagingUrl(tags);
+                var url = activity.Kind == ActivityKind.Server ? UrlHelper.GetUrl(tags) : GetMessagingUrl(tags);
                 var statusCode = GetStatus(tags, out bool success) ;
                 var request = new RequestData(2, activity.Context.SpanId.ToHexString(), activity.Duration.ToString("c", CultureInfo.InvariantCulture), success, statusCode)
                 {
@@ -148,7 +143,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
                 if (activityType == PartBType.Http)
                 {
-                    dependency.Data = GetUrl(tags);
+                    dependency.Data = UrlHelper.GetUrl(tags);
                     dependency.Type = "HTTP"; // TODO: Parse for storage / SB.
                     dependency.ResultCode = statusCode;
                 }
@@ -158,57 +153,6 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             }
 
             return telemetry;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static string GetUrl(Dictionary<string, string> tags)
-        {
-            if (tags.TryGetValue(SemanticConventions.AttributeHttpUrl, out var url))
-            {
-                Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out var uri);
-
-                if (uri.IsAbsoluteUri)
-                {
-                    return url;
-                }
-            }
-
-            if (tags.TryGetValue(SemanticConventions.AttributeHttpScheme, out var httpScheme))
-            {
-                tags.TryGetValue(SemanticConventions.AttributeHttpTarget, out var httpTarget);
-                if (tags.TryGetValue(SemanticConventions.AttributeHttpHost, out var httpHost))
-                {
-                    tags.TryGetValue(SemanticConventions.AttributeHttpHost, out var httpPort);
-                    if (httpPort != null && httpPort != HttpPort80 && httpPort != HttpPort443)
-                    {
-                        url = $"{httpScheme}{SchemePostfix}{httpHost}{Colon}{httpPort}{httpTarget}";
-                    }
-                    else
-                    {
-                        url = $"{httpScheme}{SchemePostfix}{httpHost}{httpTarget}";
-                    }
-
-                    return url;
-                }
-                else if (tags.TryGetValue(SemanticConventions.AttributeNetPeerName, out var netPeerName)
-                         && tags.TryGetValue(SemanticConventions.AttributeNetPeerPort, out var netPeerPort))
-                {
-                    return $"{httpScheme}{SchemePostfix}{netPeerName}{Colon}{netPeerPort}{httpTarget}";
-                }
-                else if (tags.TryGetValue(SemanticConventions.AttributeNetPeerIp, out var netPeerIP)
-                         && tags.TryGetValue(SemanticConventions.AttributeNetPeerPort, out netPeerPort))
-                {
-                    return $"{httpScheme}{SchemePostfix}{netPeerIP}{Colon}{netPeerPort}{httpTarget}";
-                }
-            }
-
-            if (tags.TryGetValue(SemanticConventions.AttributeHttpHost, out var host))
-            {
-                tags.TryGetValue(SemanticConventions.AttributeHttpTarget, out var httpTarget);
-                url = $"{HttpScheme}{host}{Colon}{(httpTarget ?? url)}";
-            }
-
-            return url;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
