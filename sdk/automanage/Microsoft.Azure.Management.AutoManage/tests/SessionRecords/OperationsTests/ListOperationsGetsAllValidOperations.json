@@ -2,53 +2,59 @@
   "Entries": [
     {
       "RequestUri": "/providers/Microsoft.Automanage/operations?api-version=2020-06-30-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQWxlcnRzTWFuYWdlbWVudC9vcGVyYXRpb25zP2FwaS12ZXJzaW9uPTIwMTktMDUtMDUtcHJldmlldw==",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0b21hbmFnZS9vcGVyYXRpb25zP2FwaS12ZXJzaW9uPTIwMjAtMDYtMzAtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ec75485c-a09e-4f05-944f-d73c7eaadcc9"
+          "8aef84e6-db4a-415c-964e-2f5af757bd99"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.28207.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.Automanage.AutomanageClient/1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.AutoManage.AutomanageClient/0.6.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
-          "no-store, no-cache"
-        ],
-        "Date": [
-          "Thu, 06 Jun 2019 07:16:15 GMT"
+          "no-cache"
         ],
         "Pragma": [
           "no-cache"
         ],
-        "x-ms-request-id": [
-          "87c9c58c-9bc9-41b8-b60b-f0772dd35017"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
+        "Request-Context": [
+          "appId=cid-v1:a4d240dc-d543-4b4e-a019-0a571290b85d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
+        "Server": [
+          "Kestrel"
+        ],
         "x-ms-ratelimit-remaining-tenant-reads": [
           "11999"
         ],
+        "x-ms-request-id": [
+          "a665304b-9144-4ef3-a133-90cb34aa3184"
+        ],
         "x-ms-correlation-request-id": [
-          "e3abda35-41bb-4b82-8f14-5b82191a3abe"
+          "a665304b-9144-4ef3-a133-90cb34aa3184"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190606T071615Z:e3abda35-41bb-4b82-8f14-5b82191a3abe"
+          "NORTHCENTRALUS:20200903T143152Z:a665304b-9144-4ef3-a133-90cb34aa3184"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Thu, 03 Sep 2020 14:31:51 GMT"
         ],
         "Content-Length": [
-          "4604"
+          "2075"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -57,13 +63,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\"value\":[{\"name\":\"Microsoft.Automanage/register/Action\",\"display\":{\"provider\":\"Microsoft Automanage\",\"resource\":\"Automanage Provider\",\"operation\":\"Registers the Automanage Provider\",\"description\":\"Registers the subscription for the Automanage Provider.\"},\"origin\":\"system\",\"isDataAction\":false},{\"name\":\"Microsoft.Automanage/accounts/Delete\",\"display\":{\"provider\":\"Microsoft Automanage\",\"resource\":\"Automanage Accounts\",\"operation\":\"Delete Automanage Accounts\",\"description\":\"Delete any Automanage Accounts\"},\"origin\":\"system\",\"isDataAction\":false},{\"name\":\"Microsoft.Automanage/accounts/Read\",\"display\":{\"provider\":\"Microsoft Automanage\",\"resource\":\"Automanage Accounts\",\"operation\":\"Read Automanage Accounts\",\"description\":\"Read any Automanage Accounts\"},\"origin\":\"system\",\"isDataAction\":false},{\"name\":\"Microsoft.Automanage/accounts/Write\",\"display\":{\"provider\":\"Microsoft Automanage\",\"resource\":\"Automanage Accounts\",\"operation\":\"Create or Update Automanage Accounts\",\"description\":\"Create or Update any Automanage Accounts\"},\"origin\":\"system\",\"isDataAction\":false},{\"name\":\"Microsoft.Automanage/configurationProfileAssignments/Delete\",\"display\":{\"provider\":\"Microsoft Automanage\",\"resource\":\"Automanage Configuration Profile Assignments\",\"operation\":\"Delete Configuration Profile Assignments\",\"description\":\"Delete any Configuration Profile Assignments\"},\"origin\":\"system\",\"isDataAction\":false},{\"name\":\"Microsoft.Automanage/configurationProfileAssignments/Read\",\"display\":{\"provider\":\"Microsoft Automanage\",\"resource\":\"Automanage Configuration Profile Assignments\",\"operation\":\"Read Configuration Profile Assignments\",\"description\":\"Read any Configuration Profile Assignments\"},\"origin\":\"system\",\"isDataAction\":false},{\"name\":\"Microsoft.Automanage/configurationProfileAssignments/Write\",\"display\":{\"provider\":\"Microsoft Automanage\",\"resource\":\"Automanage Configuration Profile Assignments\",\"operation\":\"Create or Update Configuration Profile Assignments\",\"description\":\"Create or Update any Configuration Profile Assignments\"},\"origin\":\"system\",\"isDataAction\":false}]}",
-
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"Microsoft.Automanage/register/Action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Automanage\",\r\n        \"resource\": \"Automanage Provider\",\r\n        \"operation\": \"Registers the Automanage Provider\",\r\n        \"description\": \"Registers the subscription for the Automanage Provider.\"\r\n      },\r\n      \"origin\": \"system\",\r\n      \"isDataAction\": false\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Automanage/accounts/Delete\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Automanage\",\r\n        \"resource\": \"Automanage Accounts\",\r\n        \"operation\": \"Delete Automanage Accounts\",\r\n        \"description\": \"Delete any Automanage Accounts\"\r\n      },\r\n      \"origin\": \"system\",\r\n      \"isDataAction\": false\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Automanage/accounts/Read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Automanage\",\r\n        \"resource\": \"Automanage Accounts\",\r\n        \"operation\": \"Read Automanage Accounts\",\r\n        \"description\": \"Read any Automanage Accounts\"\r\n      },\r\n      \"origin\": \"system\",\r\n      \"isDataAction\": false\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Automanage/accounts/Write\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Automanage\",\r\n        \"resource\": \"Automanage Accounts\",\r\n        \"operation\": \"Create or Update Automanage Accounts\",\r\n        \"description\": \"Create or Update any Automanage Accounts\"\r\n      },\r\n      \"origin\": \"system\",\r\n      \"isDataAction\": false\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Automanage/configurationProfileAssignments/Delete\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Automanage\",\r\n        \"resource\": \"Automanage Configuration Profile Assignments\",\r\n        \"operation\": \"Delete Configuration Profile Assignments\",\r\n        \"description\": \"Delete any Configuration Profile Assignments\"\r\n      },\r\n      \"origin\": \"system\",\r\n      \"isDataAction\": false\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Automanage/configurationProfileAssignments/Read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Automanage\",\r\n        \"resource\": \"Automanage Configuration Profile Assignments\",\r\n        \"operation\": \"Read Configuration Profile Assignments\",\r\n        \"description\": \"Read any Configuration Profile Assignments\"\r\n      },\r\n      \"origin\": \"system\",\r\n      \"isDataAction\": false\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Automanage/configurationProfileAssignments/Write\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Automanage\",\r\n        \"resource\": \"Automanage Configuration Profile Assignments\",\r\n        \"operation\": \"Create or Update Configuration Profile Assignments\",\r\n        \"description\": \"Create or Update any Configuration Profile Assignments\"\r\n      },\r\n      \"origin\": \"system\",\r\n      \"isDataAction\": false\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "dd91de05-d791-4ceb-b6dc-988682dc7d72"
+    "SubscriptionId": "cdd53a71-7d81-493d-bce6-224fec7223a9"
   }
 }
