@@ -91,8 +91,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             RecognizePiiEntitiesResultCollection results = await client.RecognizePiiEntitiesBatchAsync(documents);
 
-            Assert.IsTrue(!results[0].HasError);
-            Assert.IsTrue(!results[2].HasError);
+            Assert.IsFalse(results[0].HasError);
+            Assert.IsFalse(results[2].HasError);
 
             var exceptionMessage = "Cannot access result for document 1, due to error InvalidDocument: Document text is empty.";
             Assert.IsTrue(results[1].HasError);
@@ -127,10 +127,10 @@ namespace Azure.AI.TextAnalytics.Tests
                 Assert.GreaterOrEqual(result.Entities.Count(), 2);
             }
 
-            Assert.IsNotNull(results.Statistics.DocumentCount);
-            Assert.IsNotNull(results.Statistics.InvalidDocumentCount);
-            Assert.IsNotNull(results.Statistics.TransactionCount);
-            Assert.IsNotNull(results.Statistics.ValidDocumentCount);
+            Assert.Greater(results.Statistics.DocumentCount, 0);
+            Assert.AreEqual(0, results.Statistics.InvalidDocumentCount);
+            Assert.Greater(results.Statistics.TransactionCount, 0);
+            Assert.Greater(results.Statistics.ValidDocumentCount, 0);
         }
 
         [Test]
@@ -160,10 +160,10 @@ namespace Azure.AI.TextAnalytics.Tests
                 Assert.GreaterOrEqual(result.Entities.Count(), 2);
             }
 
-            Assert.IsNotNull(results.Statistics.DocumentCount);
-            Assert.IsNotNull(results.Statistics.InvalidDocumentCount);
-            Assert.IsNotNull(results.Statistics.TransactionCount);
-            Assert.IsNotNull(results.Statistics.ValidDocumentCount);
+            Assert.Greater(results.Statistics.DocumentCount, 0);
+            Assert.AreEqual(0, results.Statistics.InvalidDocumentCount);
+            Assert.Greater(results.Statistics.TransactionCount, 0);
+            Assert.Greater(results.Statistics.ValidDocumentCount, 0);
         }
     }
 }

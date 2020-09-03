@@ -54,11 +54,18 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
                 else
                 {
-                    Console.WriteLine($"    Redacted Text: {result.Entities.RedactedText}");
-                    Console.WriteLine($"    Recognized the following {result.Entities.Count} PII entit{(result.Entities.Count > 1 ? "ies" : "y ")}:");
-                    foreach (PiiEntity entity in result.Entities)
+                    if (result.Entities.Count > 0)
                     {
-                        Console.WriteLine($"        Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
+                        Console.WriteLine($"    Redacted Text: {result.Entities.RedactedText}");
+                        Console.WriteLine($"    Recognized the following {result.Entities.Count} PII entit{(result.Entities.Count > 1 ? "ies" : "y ")}:");
+                        foreach (PiiEntity entity in result.Entities)
+                        {
+                            Console.WriteLine($"        Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No entities were found.");
                     }
 
                     Console.WriteLine($"    Document statistics:");

@@ -24,7 +24,7 @@ namespace Azure.AI.TextAnalytics.Samples
             var documents = new List<string>
             {
                 "A developer with SSN 859-98-0987 whose phone number is 800-102-1100 is building tools with our APIs.",
-            "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check."
+                "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check."
             };
 
             #region Snippet:TextAnalyticsSample5RecognizePiiEntitiesConvenience
@@ -35,12 +35,19 @@ namespace Azure.AI.TextAnalytics.Samples
             foreach (RecognizePiiEntitiesResult result in results)
             {
                 Console.WriteLine($"For document: {documents[i++]}");
-                Console.WriteLine($"Redacted Text: {result.Entities.RedactedText}");
-                Console.WriteLine($"The following {result.Entities.Count} PII entit{(result.Entities.Count > 1 ? "ies were" : "y was")} found:");
-
-                foreach (PiiEntity entity in result.Entities)
+                if (result.Entities.Count > 0)
                 {
-                    Console.WriteLine($"    Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
+                    Console.WriteLine($"Redacted Text: {result.Entities.RedactedText}");
+                    Console.WriteLine($"The following {result.Entities.Count} PII entit{(result.Entities.Count > 1 ? "ies were" : "y was")} found:");
+
+                    foreach (PiiEntity entity in result.Entities)
+                    {
+                        Console.WriteLine($"    Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("No entities were found.");
                 }
             }
         }
