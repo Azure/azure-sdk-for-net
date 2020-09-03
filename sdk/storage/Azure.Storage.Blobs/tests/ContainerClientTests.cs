@@ -1779,7 +1779,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(2, page.Values.Count);
-            Assert.IsTrue(page.Values.All(b => b.Metadata == null));
+            Assert.IsTrue(page.Values.All(b => b.Metadata.Count == 0));
         }
 
         [Test]
