@@ -26,8 +26,7 @@ namespace Sql.Tests
         {
             get
             {
-                return "WestCentralUs";
-                ////return GetValueFromEnvironment("DefaultLocation");
+                return GetValueFromEnvironment("DefaultLocation");
             }
         }
         public static string DefaultLocationId
