@@ -136,7 +136,7 @@ namespace Azure.Messaging.EventGrid
         }
 
         /// <summary>
-        /// Deserializes the event payload into a specified event type <see cref="ObjectSerializer"/>.
+        /// Deserializes the event payload into a specified event type using the provided <see cref="ObjectSerializer"/>.
         /// </summary>
         /// <typeparam name="T"> Type of event to deserialize to. </typeparam>
         /// <param name="serializer"> Custom serializer used to deserialize the payload. </param>
@@ -155,7 +155,7 @@ namespace Azure.Messaging.EventGrid
         }
 
         /// <summary>
-        /// Deserializes the event payload into a specified event type <see cref="JsonObjectSerializer"/>.
+        /// Deserializes the event payload into a specified event type using the provided <see cref="JsonObjectSerializer"/>.
         /// </summary>
         /// <typeparam name="T"> Type of event to deserialize to. </typeparam>
         /// <param name="cancellationToken"> The cancellation token to use during deserialization. </param>

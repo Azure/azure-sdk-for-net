@@ -63,6 +63,11 @@ namespace Azure.Identity
             {
                 GetUserSettings(out var tenant, out var environmentName);
 
+                if (string.Equals(tenant, Constants.AdfsTenantId, StringComparison.Ordinal))
+                {
+                    throw new CredentialUnavailableException("VisualStudioCodeCredential authentication unavailable. ADFS tenant / authorities are not supported.");
+                }
+
                 var cloudInstance = GetAzureCloudInstance(environmentName);
                 var storedCredentials = _vscAdapter.GetCredentials(CredentialsSection, environmentName);
 

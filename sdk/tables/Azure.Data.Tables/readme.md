@@ -3,7 +3,7 @@
 Azure Table storage is a service that stores large amounts of structured NoSQL data in the cloud, providing 
 a key/attribute store with a schema-less design. 
 
-Azure Cosmos DB provides a Table API for applications that are written for Azure Table storage and that need premium capabilities like:
+Azure Cosmos DB provides a Table API for applications that are written for Azure Table storage that need premium capabilities like:
 
 - Turnkey global distribution.
 - Dedicated throughput worldwide.
@@ -11,12 +11,14 @@ Azure Cosmos DB provides a Table API for applications that are written for Azure
 - Guaranteed high availability.
 - Automatic secondary indexing.
 
-The Azure Tables client library can seamlessly target either Azure table storage or Azure Cosmos DB table service endpoints with no code changes.
+The Azure Tables client library can seamlessly target either Azure Table storage or Azure Cosmos DB table service endpoints with no code changes.
+
+[Source code][table_client_src] | [Package (NuGet)][table_client_nuget_package] | [API reference documentation][api_reference] | [Samples][table_client_samples]
 
 ## Getting started
 
 ### Install the package
-Install the Azure Tables client library for .NET with [NuGet][nuget]:
+Install the Azure Tables client library for .NET with [NuGet][table_client_nuget_package]:
 
 ```
 dotnet add package Azure.Data.Tables --version 3.0.0-beta.1
@@ -49,6 +51,11 @@ az cosmosdb table create --name MyTableName --resource-group MyResourceGroup --a
 
 ## Key concepts
 
+- `TableServiceClient` - Client that provides methods to interact at the Table Service level such as creating, listing, and deleting tables
+- `TableClient` - Client that provides methods to interact at an table entity level such as creating, querying, and deleting entities within a table.
+- `Table` - Tables store data as collections of entities.
+- `Entity` - Entities are similar to rows. An entity has a primary key and a set of properties. A property is a name value pair, similar to a column.
+
 Common uses of the Table service include:
 
 - Storing TBs of structured data capable of serving web scale applications
@@ -56,11 +63,21 @@ Common uses of the Table service include:
 - Quickly querying data using a clustered index
 - Accessing data using the OData protocol and LINQ filter expressions
 
+### Authenticate the Client
+
 Learn more about options for authentication _(including Connection Strings, Shared Key, and Shared Key Signatures)_ [in our samples.](samples/Sample0Auth.md)
 
 ## Examples
+- [Create the Table service client](#Create-the-Table-service-client)
+    - [Create an Azure table](#Create-an-Azure-table)
+    - [Get an Azure table](#Get-an-Azure-table)
+    - [Delete an Azure table](#Delete-an-Azure-table)
+- [Create the Table client](#Create-the-Table-client)
+    - [Add table entities](#Add-table-entities)
+    - [Query table entities ](#Query-table-entities)
+    - [Delete table entities](#Delete-table-entities)
 
-### Create, Get, and Delete an Azure table
+### Create the Table service client
 
 First, we need to construct a `TableServiceClient`.
 
@@ -72,6 +89,7 @@ var serviceClient = new TableServiceClient(
     new TableSharedKeyCredential(accountName, storageAccountKey));
 ```
 
+### Create an Azure table
 Next, we can create a new table.
 
 ```C# Snippet:TablesSample1CreateTable
@@ -81,6 +99,7 @@ TableItem table = serviceClient.CreateTable(tableName);
 Console.WriteLine($"The created table's name is {table.TableName}.");
 ```
 
+### Get an Azure table
 The set of existing Azure tables can be queries using an OData filter.
 
 ```C# Snippet:TablesSample3QueryTables
@@ -98,6 +117,8 @@ foreach (TableItem table in queryTableResults)
 }
 ```
 
+### Delete an Azure table
+
 Individual tables can be deleted from the service.
 
 ```C# Snippet:TablesSample1DeleteTable
@@ -106,7 +127,7 @@ Individual tables can be deleted from the service.
 serviceClient.DeleteTable(tableName);
 ```
 
-### Add, Query, and Delete table entities
+### Create the Table client
 
 To interact with table entities, we must first construct a `TableClient`.
 
@@ -121,6 +142,8 @@ var tableClient = new TableClient(
 // Create the table in the service.
 tableClient.Create();
 ```
+
+### Add table entities
 
 Let's define a new `TableEntity` so that we can add it to the table.
 
@@ -145,6 +168,8 @@ Using the `TableClient` we can now add our new entity to the table.
 tableClient.AddEntity(entity);
 ```
 
+### Query table entities
+
 To inspect the set of existing table entities, we can query the table using an OData filter.
 
 ```C# Snippet:TablesSample4QueryEntitiesFilter
@@ -159,6 +184,8 @@ foreach (TableEntity qEntity in queryResultsFilter)
 
 Console.WriteLine($"The query returned {queryResultsFilter.Count()} entities.");
 ```
+
+### Delete table entities
 
 If we no longer need our new table entity, it can be deleted.
 
@@ -198,10 +225,25 @@ catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflic
 }
 ```
 
+### Setting up console logging
+
+The simplest way to see the logs is to enable the console logging.
+To create an Azure SDK log listener that outputs messages to console use AzureEventSourceListener.CreateConsoleLogger method.
+
+```C#
+// Setup a listener to monitor logged events.
+using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
+```
+
+To learn more about other logging mechanisms see [here][logging].
+
 ## Next steps
 
-Get started with our [Table samples](samples/README.MD):
+Get started with our [Table samples][table_client_samples].
 
+## Known Issues
+
+A list of currently known issues relating to Cosmos DB table endpoints can be found [here](https://aka.ms/tablesknownissues).
 
 ## Contributing
 
@@ -218,6 +260,11 @@ For more information see the [Code of Conduct FAQ][coc_faq] or contact
 [tables_rest]: https://docs.microsoft.com/en-us/rest/api/storageservices/table-service-rest-api
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/
+[table_client_nuget_package]: https://www.nuget.org/packages?q=Azure.Data.Tables
+[table_client_samples]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/samples
+[table_client_src]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/src
+[api_reference]: https://docs.microsoft.com/en-us/azure/cosmos-db/table-introduction
+[logging]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md
 [contrib]: ./CONTRIBUTING.md
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/

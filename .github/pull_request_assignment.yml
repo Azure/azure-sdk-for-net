@@ -1,0 +1,8 @@
+---
+- rule:
+    # management
+    paths:
+      - "sdk/**/Microsoft.Azure.Management*/**"
+      - "sdk/**/Azure.ResourceManger*/**"
+    reviewers:
+      - allenjzhang
