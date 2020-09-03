@@ -26,6 +26,13 @@ namespace CosmosDB.Tests.ScenarioTests
         const string triggerName = "triggerName";
         const string userDefinedFunctionName = "userDefinedFunctionName";
 
+        const string roleDefinitionId = "roleDefinitionId";
+        const string roleDefinitionId2 = "roleDefinitionId2";
+        const string roleAssignmentId = "roleAssignmentId";
+        const string roleAssignmentId2 = "roleAssignmentId2";
+        const string principalId = "principalId";
+        const string principalId2 = "principalId2";
+
         const string sqlThroughputType = "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/throughputSettings";
 
         const int sampleThroughput = 700;
@@ -250,16 +257,6 @@ namespace CosmosDB.Tests.ScenarioTests
             }
         }
 
-        private void VerifySqlContainerCreation(SqlContainerGetResults sqlContainerGetResults, SqlContainerCreateUpdateParameters sqlContainerCreateUpdateParameters)
-        {
-            Assert.Equal(sqlContainerGetResults.Resource.Id, sqlContainerCreateUpdateParameters.Resource.Id);
-            Assert.Equal(sqlContainerGetResults.Resource.IndexingPolicy.IndexingMode.ToLower(), sqlContainerCreateUpdateParameters.Resource.IndexingPolicy.IndexingMode.ToLower());
-            //Assert.Equal(sqlContainerGetResults.Resource.IndexingPolicy.ExcludedPaths, sqlContainerCreateUpdateParameters.Resource.IndexingPolicy.ExcludedPaths);
-            Assert.Equal(sqlContainerGetResults.Resource.PartitionKey.Kind, sqlContainerCreateUpdateParameters.Resource.PartitionKey.Kind);
-            Assert.Equal(sqlContainerGetResults.Resource.PartitionKey.Paths, sqlContainerCreateUpdateParameters.Resource.PartitionKey.Paths);
-            Assert.Equal(sqlContainerGetResults.Resource.DefaultTtl, sqlContainerCreateUpdateParameters.Resource.DefaultTtl);
-        }
-
         [Fact]
         public void SqlRoleTests()
         {
@@ -291,15 +288,14 @@ namespace CosmosDB.Tests.ScenarioTests
                     Assert.Equal(databaseAccount.Name, databaseAccountName);
                 }
 
-                string subscriptionId = new Guid().ToString();
                 SqlRoleDefinitionCreateUpdateParameters sqlRoleDefinitionCreateUpdateParameters = new SqlRoleDefinitionCreateUpdateParameters
                 {
-                    RoleName = "Contoso Finance Records Reader",
+                    RoleName = "roleName",
                     Type = RoleDefinitionType.CustomRole,
                     AssignableScopes = new List<string>
                     {
-                        string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.DocumentDB/databaseAccounts/{2}/dbs/sales", subscriptionId, resourceGroupName, databaseAccountName),
-                        string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.DocumentDB/databaseAccounts/{2}/dbs/purchases", subscriptionId, resourceGroupName, databaseAccountName)
+                        string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.DocumentDB/databaseAccounts/{2}/dbs/sales", cosmosDBManagementClient.SubscriptionId, resourceGroupName, databaseAccountName),
+                        string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.DocumentDB/databaseAccounts/{2}/dbs/purchases", cosmosDBManagementClient.SubscriptionId, resourceGroupName, databaseAccountName)
                     },
                     Permissions = new List<Permission>
                     {
@@ -314,9 +310,6 @@ namespace CosmosDB.Tests.ScenarioTests
                     }
                 };
 
-                string roleDefinitionId = new Guid().ToString();
-                string roleDefinitionId2 = new Guid().ToString();
-
                 SqlRoleDefinitionGetResults sqlRoleDefinitionGetResults = cosmosDBManagementClient.SqlResources.CreateUpdateRoleDefinitionWithHttpMessagesAsync(roleDefinitionId, resourceGroupName, databaseAccountName, sqlRoleDefinitionCreateUpdateParameters).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlRoleDefinitionGetResults);
                 Assert.Equal(roleDefinitionId, sqlRoleDefinitionGetResults.Name);
@@ -329,14 +322,12 @@ namespace CosmosDB.Tests.ScenarioTests
 
                 SqlRoleDefinitionCreateUpdateParameters sqlRoleDefinitionCreateUpdateParameters2 = new SqlRoleDefinitionCreateUpdateParameters
                 {
-                    RoleName = "Contoso Manager",
+                    RoleName = "roleName2",
                     Type = RoleDefinitionType.CustomRole,
                     AssignableScopes = new List<string>
                     {
-                        string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.DocumentDB/databaseAccounts/{2}/dbs/sales", subscriptionId, resourceGroupName, databaseAccountName),
-                        string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.DocumentDB/databaseAccounts/{2}/dbs/purchases", subscriptionId, resourceGroupName, databaseAccountName),
-                        string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.DocumentDB/databaseAccounts/{2}/dbs/customers", subscriptionId, resourceGroupName, databaseAccountName),
-                        string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.DocumentDB/databaseAccounts/{2}/dbs/employees", subscriptionId, resourceGroupName, databaseAccountName)
+                        string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.DocumentDB/databaseAccounts/{2}/dbs/sales", cosmosDBManagementClient.SubscriptionId, resourceGroupName, databaseAccountName),
+                        string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.DocumentDB/databaseAccounts/{2}/dbs/purchases", cosmosDBManagementClient.SubscriptionId, resourceGroupName, databaseAccountName)
                     },
                     Permissions = new List<Permission>
                     {
@@ -360,15 +351,10 @@ namespace CosmosDB.Tests.ScenarioTests
                 IEnumerable<SqlRoleDefinitionGetResults> sqlRoleDefinitions = cosmosDBManagementClient.SqlResources.ListRoleDefinitionsWithHttpMessagesAsync(resourceGroupName, databaseAccountName).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlRoleDefinitions);
 
-                string principalId = new Guid().ToString();
-                string principalId2 = new Guid().ToString();
-                string roleAssignmentId = new Guid().ToString();
-                string roleAssignmentId2 = new Guid().ToString();
-
                 SqlRoleAssignmentCreateUpdateParameters sqlRoleAssignmentCreateUpdateParameters = new SqlRoleAssignmentCreateUpdateParameters
                 {
                     RoleDefinitionId = roleDefinitionId,
-                    Scope = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.DocumentDB/databaseAccounts/{2}/dbs/salescolls/sales", subscriptionId, resourceGroupName, databaseAccountName),
+                    Scope = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.DocumentDB/databaseAccounts/{2}/dbs/salescolls/sales", cosmosDBManagementClient.SubscriptionId, resourceGroupName, databaseAccountName),
                     PrincipalId = principalId
                 };
 
@@ -385,7 +371,7 @@ namespace CosmosDB.Tests.ScenarioTests
                 SqlRoleAssignmentCreateUpdateParameters sqlRoleAssignmentCreateUpdateParameters2 = new SqlRoleAssignmentCreateUpdateParameters
                 {
                     RoleDefinitionId = roleDefinitionId2,
-                    Scope = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.DocumentDB/databaseAccounts/{2}/dbs/salescolls/sales", subscriptionId, resourceGroupName, databaseAccountName),
+                    Scope = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.DocumentDB/databaseAccounts/{2}/dbs/salescolls/sales", cosmosDBManagementClient.SubscriptionId, resourceGroupName, databaseAccountName),
                     PrincipalId = principalId2
                 };
 
@@ -394,8 +380,30 @@ namespace CosmosDB.Tests.ScenarioTests
                 Assert.Equal(roleAssignmentId2, sqlRoleAssignmentGetResults3.Name);
 
                 IEnumerable<SqlRoleAssignmentGetResults> sqlRoleAssignments = cosmosDBManagementClient.SqlResources.ListRoleAssignmentsWithHttpMessagesAsync(resourceGroupName, databaseAccountName).GetAwaiter().GetResult().Body;
+
+
+                foreach (SqlRoleAssignmentGetResults sqlRoleAssignment in sqlRoleAssignments)
+                {
+                    cosmosDBManagementClient.SqlResources.DeleteRoleAssignmentWithHttpMessagesAsync(sqlRoleAssignment.Id, resourceGroupName, databaseAccountName);
+                }
+
+                foreach (SqlRoleDefinitionGetResults sqlRoleDefinition in sqlRoleDefinitions)
+                {
+                    cosmosDBManagementClient.SqlResources.DeleteRoleDefinitionWithHttpMessagesAsync(sqlRoleDefinition.Id, resourceGroupName, databaseAccountName);
+                }
             }
         }
+
+        private void VerifySqlContainerCreation(SqlContainerGetResults sqlContainerGetResults, SqlContainerCreateUpdateParameters sqlContainerCreateUpdateParameters)
+        {
+            Assert.Equal(sqlContainerGetResults.Resource.Id, sqlContainerCreateUpdateParameters.Resource.Id);
+            Assert.Equal(sqlContainerGetResults.Resource.IndexingPolicy.IndexingMode.ToLower(), sqlContainerCreateUpdateParameters.Resource.IndexingPolicy.IndexingMode.ToLower());
+            //Assert.Equal(sqlContainerGetResults.Resource.IndexingPolicy.ExcludedPaths, sqlContainerCreateUpdateParameters.Resource.IndexingPolicy.ExcludedPaths);
+            Assert.Equal(sqlContainerGetResults.Resource.PartitionKey.Kind, sqlContainerCreateUpdateParameters.Resource.PartitionKey.Kind);
+            Assert.Equal(sqlContainerGetResults.Resource.PartitionKey.Paths, sqlContainerCreateUpdateParameters.Resource.PartitionKey.Paths);
+            Assert.Equal(sqlContainerGetResults.Resource.DefaultTtl, sqlContainerCreateUpdateParameters.Resource.DefaultTtl);
+        }
+
         private void VerifyEqualSqlDatabases(SqlDatabaseGetResults expectedValue, SqlDatabaseGetResults actualValue)
         {
             Assert.Equal(expectedValue.Resource.Id, actualValue.Resource.Id);
