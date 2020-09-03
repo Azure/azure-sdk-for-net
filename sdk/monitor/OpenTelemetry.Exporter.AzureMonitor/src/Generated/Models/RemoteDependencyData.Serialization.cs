@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Text.Json;
 using Azure.Core;
 
@@ -48,7 +47,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
                 writer.WriteStringValue(Target);
             }
             writer.WritePropertyName("duration");
-            writer.WriteStringValue(Duration);
+            writer.WriteStringValue(Duration, "P");
             if (Optional.IsDefined(Success))
             {
                 writer.WritePropertyName("success");
@@ -171,7 +170,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
                     continue;
                 }
             }
-            return new RemoteDependencyData(test.Value, ver, id.Value, name, resultCode.Value, data.Value, type.Value, target.Value, duration.ToString("c", CultureInfo.InvariantCulture), Optional.ToNullable(success), Optional.ToDictionary(properties), Optional.ToDictionary(measurements));
+            return new RemoteDependencyData(test.Value, ver, id.Value, name, resultCode.Value, data.Value, type.Value, target.Value, duration, Optional.ToNullable(success), Optional.ToDictionary(properties), Optional.ToDictionary(measurements));
         }
     }
 }

@@ -3,7 +3,7 @@
 
 using System.Diagnostics;
 
-namespace OpenTelemetry.Exporter.AzureMonitor.Extensions
+namespace OpenTelemetry.Exporter.AzureMonitor
 {
     internal static class ActivityExtensions
     {

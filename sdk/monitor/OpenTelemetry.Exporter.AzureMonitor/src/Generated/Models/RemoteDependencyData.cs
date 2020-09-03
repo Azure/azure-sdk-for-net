@@ -19,7 +19,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
         /// <param name="name"> Name of the command initiated with this dependency call. Low cardinality value. Examples are stored procedure name and URL path template. </param>
         /// <param name="duration"> Request duration in format: DD.HH:MM:SS.MMMMMM. Must be less than 1000 days. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public RemoteDependencyData(int ver, string name, string duration)
+        public RemoteDependencyData(int ver, string name, TimeSpan duration)
         {
             if (name == null)
             {
@@ -46,7 +46,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
         /// <param name="success"> Indication of successfull or unsuccessfull call. </param>
         /// <param name="properties"> Collection of custom properties. TODO: max key length validate. </param>
         /// <param name="measurements"> Collection of custom measurements. TODO: max key length validate. </param>
-        internal RemoteDependencyData(string test, int ver, string id, string name, string resultCode, string data, string type, string target, string duration, bool? success, IDictionary<string, string> properties, IDictionary<string, double> measurements) : base(test)
+        internal RemoteDependencyData(string test, int ver, string id, string name, string resultCode, string data, string type, string target, TimeSpan duration, bool? success, IDictionary<string, string> properties, IDictionary<string, double> measurements) : base(test)
         {
             Ver = ver;
             Id = id;
@@ -75,6 +75,8 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
         public string Type { get; set; }
         /// <summary> Target site of a dependency call. Examples are server name, host address. </summary>
         public string Target { get; set; }
+        /// <summary> Request duration in format: DD.HH:MM:SS.MMMMMM. Must be less than 1000 days. </summary>
+        public TimeSpan Duration { get; set; }
         /// <summary> Indication of successfull or unsuccessfull call. </summary>
         public bool? Success { get; set; }
         /// <summary> Collection of custom properties. TODO: max key length validate. </summary>

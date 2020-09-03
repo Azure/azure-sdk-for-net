@@ -10,7 +10,6 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
-using OpenTelemetry.Exporter.AzureMonitor.Extensions;
 
 using OpenTelemetry.Exporter.AzureMonitor.ConnectionString;
 using OpenTelemetry.Exporter.AzureMonitor.Models;
@@ -128,7 +127,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             }
             else if (telemetryType == TelemetryType.Dependency)
             {
-                var dependency = new RemoteDependencyData(2, activity.DisplayName, activity.Duration.ToString("c", CultureInfo.InvariantCulture))
+                var dependency = new RemoteDependencyData(2, activity.DisplayName, activity.Duration)
                 {
                     Id = activity.Context.SpanId.ToHexString()
                 };
