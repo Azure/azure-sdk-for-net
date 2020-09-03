@@ -249,7 +249,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public void CopyModelError()
         {
-            Assert.AreEqual("Key", TestEnvironment.ApiKey);
+            Assert.AreEqual("Key", Environment.GetEnvironmentVariable("FORM_RECOGNIZER_API_KEY"));
             Assert.AreEqual("Endpoint", TestEnvironment.Endpoint);
 
             var sourceClient = CreateFormTrainingClient();
