@@ -3,7 +3,7 @@
 Azure Table storage is a service that stores large amounts of structured NoSQL data in the cloud, providing 
 a key/attribute store with a schema-less design. 
 
-Azure Cosmos DB provides a Table API for applications that are written for Azure Table storage and that need premium capabilities like:
+Azure Cosmos DB provides a Table API for applications that are written for Azure Table storage that need premium capabilities like:
 
 - Turnkey global distribution.
 - Dedicated throughput worldwide.
@@ -11,14 +11,14 @@ Azure Cosmos DB provides a Table API for applications that are written for Azure
 - Guaranteed high availability.
 - Automatic secondary indexing.
 
-The Azure Tables client library can seamlessly target either Azure table storage or Azure Cosmos DB table service endpoints with no code changes.
+The Azure Tables client library can seamlessly target either Azure Table storage or Azure Cosmos DB table service endpoints with no code changes.
 
 [Source code][table_client_src] | [Package (NuGet)][table_client_nuget_package] | [API reference documentation][api_reference] | [Samples][table_client_samples]
 
 ## Getting started
 
 ### Install the package
-Install the Azure Tables client library for .NET with [NuGet][nuget]:
+Install the Azure Tables client library for .NET with [NuGet][table_client_nuget_package]:
 
 ```
 dotnet add package Azure.Data.Tables --version 3.0.0-beta.1
@@ -230,7 +230,7 @@ catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflic
 The simplest way to see the logs is to enable the console logging.
 To create an Azure SDK log listener that outputs messages to console use AzureEventSourceListener.CreateConsoleLogger method.
 
-```
+```C#
 // Setup a listener to monitor logged events.
 using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
 ```
@@ -239,8 +239,11 @@ To learn more about other logging mechanisms see [here][logging].
 
 ## Next steps
 
-Get started with our [Table samples][table_client_samples]:
+Get started with our [Table samples][table_client_samples].
 
+## Known Issues
+
+A list of currently known issues relating to Cosmos DB table endpoints can be found [here](https://aka.ms/tablesknownissues).
 
 ## Contributing
 

@@ -17,9 +17,9 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
     public partial class EventGridSamples : SamplesBase<EventGridTestEnvironment>
     {
         // Example JSON payloads
-        private readonly string jsonPayloadSampleOne = "[{ \"id\": \"2d1781af-3a4c\", \"topic\": \"/examples/test/payload\", \"subject\": \"\",  \"data\": { \"name\": \"example\",\"age\": 20 },\"eventType\": \"MyApp.Models.CustomEventType\",\"eventTime\": \"2018-01-25T22:12:19.4556811Z\",\"dataVersion\": \"1\"}]";
+        private readonly string jsonPayloadSampleOne = "[{ \"id\": \"2d1781af-3a4c\", \"topic\": \"/examples/test/payload\", \"subject\": \"\",  \"data\": { \"Name\": \"example\",\"Age\": 20 },\"eventType\": \"MyApp.Models.CustomEventType\",\"eventTime\": \"2018-01-25T22:12:19.4556811Z\",\"dataVersion\": \"1\"}]";
 
-        private readonly string jsonPayloadSampleTwo = "[{ \"id\": \"2d1781af-3a4c\", \"source\": \"/examples/test/payload\", \"data\": { \"Name\": \"example\",\"Age\": 20, },\"type\": \"MyApp.Models.CustomEventType\",\"time\": \"2018-01-25T22:12:19.4556811Z\",\"specversion\": \"1\"},]";
+        private readonly string jsonPayloadSampleTwo = "[{ \"id\": \"2d1781af-3a4c\", \"source\": \"/examples/test/payload\", \"data\": { \"name\": \"example\",\"age\": 20 },\"type\": \"MyApp.Models.CustomEventType\",\"time\": \"2018-01-25T22:12:19.4556811Z\",\"specversion\": \"1\"}]";
 
         // This sample demonstrates how to parse EventGridEvents from JSON and access event data using GetData()
         [Test]
@@ -65,7 +65,6 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
             JsonObjectSerializer myCustomSerializer = new JsonObjectSerializer(
             new JsonSerializerOptions()
             {
-                AllowTrailingCommas = true,
                 PropertyNameCaseInsensitive = true
             });
 

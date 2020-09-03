@@ -1583,6 +1583,9 @@ namespace Azure.Storage.Blobs.Specialized
                 {
                     scope.Start();
 
+                    // This also makes sure that we fail fast if file doesn't exist.
+                    var blobProperties = await GetPropertiesInternal(conditions: conditions, async, cancellationToken).ConfigureAwait(false);
+
                     return new LazyLoadingReadOnlyStream<BlobRequestConditions, BlobProperties>(
                         async (HttpRange range,
                         BlobRequestConditions conditions,
@@ -1604,6 +1607,7 @@ namespace Azure.Storage.Blobs.Specialized
                         (ETag? eTag) => new BlobRequestConditions { IfMatch = eTag },
                         async (bool async, CancellationToken cancellationToken)
                             => await GetPropertiesInternal(conditions: default, async, cancellationToken).ConfigureAwait(false),
+                        blobProperties.Value.ContentLength,
                         position,
                         bufferSize,
                         conditions);

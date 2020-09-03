@@ -1,4 +1,4 @@
-﻿# Note: This script will add or replace version title in change log
+# Note: This script will add or replace version title in change log
 
 # Parameter description
 # Version : Version to add or replace in change log
