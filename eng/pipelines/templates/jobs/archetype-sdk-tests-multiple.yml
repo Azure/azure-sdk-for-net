@@ -9,9 +9,6 @@ resources:
 parameters:
   - name: jobs
     type: object
-    default: []  
-  - name: AdditionalPlatforms
-    type: object
     default: []
 
 jobs:

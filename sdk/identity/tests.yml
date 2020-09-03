@@ -3,22 +3,6 @@ trigger: none
 extends:
   template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests-multiple.yml
   parameters:
-    AdditionalPlatforms:
-      DisplayName: 'Test on Linux with keyring'
-      OSVmImage: "ubuntu-18.04"
-      TestTargetFramework: netcoreapp2.1
-      Container:
-        image: 'azsdkengsys.azurecr.io/dotnet/ubuntu_netcore2_keyring:504600'
-        endpoint: 'azsdkengsys'
-        options: -ti --cap-add=IPC_LOCK
-      PreSteps:
-        - script: |
-            set -x
-            export $(dbus-launch)
-            gnome-keyring-daemon --start --daemonize --components=secrets
-            echo "##vso[task.setvariable variable=DBUS_SESSION_BUS_ADDRESS]$DBUS_SESSION_BUS_ADDRESS"
-            echo "##vso[task.setvariable variable=DBUS_SESSION_BUS_PID]$DBUS_SESSION_BUS_PID"
-            echo "##vso[task.setvariable variable=GNOME_KEYRING_CONTROL]$GNOME_KEYRING_CONTROL"
     jobs:
       # Azure Cloud
       - ServiceDirectory: identity
@@ -33,6 +17,7 @@ extends:
               PEM_CONTENTS: $(net-identity-spcert-pem)
               SNI_CONTENTS: $(net-identity-spcert-sni)
         EnvVars:
+          AZURE_AUTHORITY_HOST: https://login.microsoftonline.com
           AZURE_IDENTITY_TEST_TENANTID: $(net-identity-tenantid)
           AZURE_IDENTITY_TEST_USERNAME: $(net-identity-username)
           AZURE_IDENTITY_TEST_PASSWORD: $(net-identity-password)
@@ -56,6 +41,7 @@ extends:
               PEM_CONTENTS: $(net-identity-spcert-pem)
               SNI_CONTENTS: $(net-identity-spcert-sni)
         EnvVars:
+          AZURE_AUTHORITY_HOST: https://login.microsoftonline.us
           AZURE_IDENTITY_TEST_TENANTID: $(net-identity-tenantid-gov)
           AZURE_IDENTITY_TEST_USERNAME: $(net-identity-username-gov)
           AZURE_IDENTITY_TEST_PASSWORD: $(net-identity-password-gov)
@@ -79,6 +65,7 @@ extends:
               PEM_CONTENTS: $(net-identity-spcert-pem)
               SNI_CONTENTS: $(net-identity-spcert-sni)
         EnvVars:
+          AZURE_AUTHORITY_HOST: https://login.chinacloudapi.cn
           AZURE_IDENTITY_TEST_TENANTID: $(net-identity-tenantid-cn)
           AZURE_IDENTITY_TEST_USERNAME: $(net-identity-username-cn)
           AZURE_IDENTITY_TEST_PASSWORD: $(net-identity-password-cn)
