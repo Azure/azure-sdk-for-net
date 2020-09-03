@@ -1,0 +1,7 @@
+{
+  "Entries": [],
+  "Variables": {
+    "ANOMALY_DETECTOR_API_KEY": "Sanitized",
+    "ANOMALY_DETECTOR_ENDPOINT": "https://anomalydetector-use2.cognitiveservices.azure.com/"
+  }
+}

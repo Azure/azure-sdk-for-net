@@ -14,8 +14,13 @@ using NUnit.Framework;
 
 namespace Azure.AI.AnomalyDetector.Tests.Samples
 {
-    public partial class AnomalyDetectorSamples : SamplesBase<AnomalyDetectorTestEnvironment>
+    public partial class AnomalyDetectorSamples : RecordedTestBase<AnomalyDetectorTestEnvironment>
     {
+        public AnomalyDetectorSamples(bool isAsync) : base(isAsync)
+        {
+            Sanitizer = new AnomalyDetectorRecordedTestSanitizer();
+        }
+
         [Test]
         public async Task DetectEntireSeriesAnomaly()
         {

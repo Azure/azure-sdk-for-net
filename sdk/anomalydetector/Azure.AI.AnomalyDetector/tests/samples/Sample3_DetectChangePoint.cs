@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.AnomalyDetector.Tests.Samples
 {
-    public partial class AnomalyDetectorSamples : SamplesBase<AnomalyDetectorTestEnvironment>
+    public partial class AnomalyDetectorSamples : RecordedTestBase<AnomalyDetectorTestEnvironment>
     {
         [Test]
         public async Task DetectChangePoint()
