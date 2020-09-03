@@ -1,0 +1,23 @@
+<Project>
+  <ItemGroup Condition="'$(IsTestProject)' == 'true'">
+    <PackageReference Include="coverlet.msbuild">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+<!-- Allows Collection of Code Coverage for Deterministic Builds 
+    https://github.com/coverlet-coverage/coverlet/blob/master/Documentation/DeterministicBuild.md -->
+  <ItemGroup>
+    <SourceRoot Include="$(NuGetPackageRoot)" />
+  </ItemGroup>
+
+  <Target Name="CoverletGetPathMap"
+          DependsOnTargets="InitializeSourceRootMappedPaths"
+          Returns="@(_LocalTopLevelSourceRoot)"
+          Condition="'$(DeterministicSourcePaths)' == 'true'">
+    <ItemGroup>
+      <_LocalTopLevelSourceRoot Include="@(SourceRoot)" Condition="'%(SourceRoot.NestedRoot)' == ''"/>
+    </ItemGroup>
+  </Target>
+</Project>

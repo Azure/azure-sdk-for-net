@@ -16,16 +16,15 @@ namespace Azure.Core.Tests
 
     [TestFixture(typeof(HttpClientTransport), true)]
     [TestFixture(typeof(HttpClientTransport), false)]
-// TODO: Uncomment after release
-#if false && NETFRAMEWORK
+#if NETFRAMEWORK
     [TestFixture(typeof(HttpWebRequestTransport), true)]
     [TestFixture(typeof(HttpWebRequestTransport), false)]
 #endif
-    public class HttpPipelineFunctionalTests: PipelineTestBase
+    public class HttpPipelineFunctionalTests : PipelineTestBase
     {
         private readonly Type _transportType;
 
-        public HttpPipelineFunctionalTests(Type transportType, bool isAsync): base(isAsync)
+        public HttpPipelineFunctionalTests(Type transportType, bool isAsync) : base(isAsync)
         {
             _transportType = transportType;
         }
@@ -33,7 +32,7 @@ namespace Azure.Core.Tests
         private TestOptions GetOptions()
         {
             var options = new TestOptions();
-            options.Transport = (HttpPipelineTransport) Activator.CreateInstance(_transportType);
+            options.Transport = (HttpPipelineTransport)Activator.CreateInstance(_transportType);
             return options;
         }
 

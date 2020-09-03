@@ -11,13 +11,13 @@ using Azure.Messaging.ServiceBus.Plugins;
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    /// Represents a thread-safe abstraction around a single session receiver that threads
-    /// spawned by the ServiceBusProcessor use to receive and process messages. Depending on how the
-    /// MaxConcurrentCalls and SessionIds options are configured, there may be multiple threads using the same
-    /// SessionReceiverManager (i.e. if MaxConcurrentCalls is greater than the number of specified sessions).
-    /// The manager will delegate to the user provided callbacks and handle automatic locking of sessions.
-    /// The receiver instance will only be closed when no other threads are using it, or when the user has
-    /// called StopProcessingAsync.
+    /// Represents a thread-safe abstraction around a single session receiver that threads spawned
+    /// by the <see cref="ServiceBusSessionProcessor"/> use to receive and process messages.
+    /// If <see cref="ServiceBusSessionProcessor.MaxConcurrentCallsPerSession"/> > 1, there may be
+    /// multiple threads using the same <see cref="SessionReceiverManager"/>. The manager will delegate
+    /// to the user provided callbacks and handle automatic locking of sessions.
+    /// The receiver instance will only be closed when no other threads are using it, or when the user
+    /// has called <see cref="ServiceBusSessionProcessor.StopProcessingAsync"/>.
     /// </summary>
 #pragma warning disable CA1001 // Types that own disposable fields should be disposable.
     // Doesn't own _concurrentAcceptSessionsSemaphore
@@ -163,8 +163,14 @@ namespace Azure.Messaging.ServiceBus
         }
 
         public override async Task CloseReceiverIfNeeded(
-            CancellationToken processorCancellationToken)
+            CancellationToken processorCancellationToken,
+            bool forceClose = false)
         {
+            if (forceClose)
+            {
+                await CloseReceiver(processorCancellationToken).ConfigureAwait(false);
+                return;
+            }
             bool releaseSemaphore = false;
             try
             {
@@ -177,7 +183,7 @@ namespace Azure.Messaging.ServiceBus
                     return;
                 }
                 _threadCount--;
-                if (_threadCount == 0)
+                if (_threadCount == 0 && !processorCancellationToken.IsCancellationRequested)
                 {
                     if (!_keepOpenOnReceiveTimeout ||
                         !AutoRenewLock ||
@@ -198,7 +204,7 @@ namespace Azure.Messaging.ServiceBus
 
         private async Task CloseReceiver(CancellationToken cancellationToken)
         {
-            if (_receiver == null || _receiver.IsDisposed)
+            if (_receiver == null || _receiver.IsClosed)
             {
                 return;
             }
@@ -329,7 +335,7 @@ namespace Azure.Messaging.ServiceBus
                     TimeSpan delay = CalculateRenewDelay(_receiver.SessionLockedUntil);
 
                     await Task.Delay(delay, sessionLockRenewalCancellationToken).ConfigureAwait(false);
-                    if (_receiver.IsDisposed)
+                    if (_receiver.IsClosed)
                     {
                         break;
                     }

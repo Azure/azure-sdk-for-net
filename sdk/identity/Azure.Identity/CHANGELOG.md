@@ -1,12 +1,25 @@
 # Release History
-
 ## 1.3.0-preview.1 (Unreleased)
 
+### New Features
 - Restoring Application Authentication APIs from 1.2.0-preview.6
+- Added `IncludeX5CClaimHeader` to `ClientCertificateCredentialOptions` to enable subject name / issuer authentication with the `ClientCertificateCredential`.
+- Added `RedirectUri` to `InteractiveBrowserCredentialOptions` to enable authentication with user specified application with a custom redirect url.
+- Added `IdentityModelFactory` to enable constructing models from the Azure.Identity library for mocking.
+
+### Fixes and improvements
+- Fixed issue with non GUID Client Ids (Issue [#14585](https://github.com/Azure/azure-sdk-for-net/issues/14585))
+- Update `VisualStudioCredential` and `VisualStudioCodeCredential` to throw `CredentialUnavailableException` for ADFS tenant (Issue [#14639](https://github.com/Azure/azure-sdk-for-net/issues/14639))
+
+
+## 1.2.2 (2020-08-20)
+
+### Fixes and improvements
+- Fixed issue with `InteractiveBrowserCredential` not specifying correct redirectUrl (Issue [#13940](https://github.com/Azure/azure-sdk-for-net/issues/13940))
 
 ## 1.2.1 (2020-08-18)
 
-### Fixed
+### Fixes and improvements
 - Bug in TaskExtensions.EnsureCompleted method that causes it to unconditionally throw an exception in the environments with synchronization context
 
 ## 1.2.0 (2020-08-10)

@@ -19,9 +19,13 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="length"> The length of the opinion. </param>
         /// <param name="text"> The aspect text detected. </param>
         /// <param name="isNegated"> The indicator representing if the opinion is negated. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="confidenceScores"/> or <paramref name="text"/> is null. </exception>
-        internal SentenceOpinion(SentenceOpinionSentiment sentiment, AspectConfidenceScoreLabel confidenceScores, int offset, int length, string text, bool isNegated)
+        /// <exception cref="ArgumentNullException"> <paramref name="sentiment"/>, <paramref name="confidenceScores"/>, or <paramref name="text"/> is null. </exception>
+        internal SentenceOpinion(string sentiment, AspectConfidenceScoreLabel confidenceScores, int offset, int length, string text, bool isNegated)
         {
+            if (sentiment == null)
+            {
+                throw new ArgumentNullException(nameof(sentiment));
+            }
             if (confidenceScores == null)
             {
                 throw new ArgumentNullException(nameof(confidenceScores));
@@ -38,9 +42,6 @@ namespace Azure.AI.TextAnalytics.Models
             Text = text;
             IsNegated = isNegated;
         }
-
-        /// <summary> Opinion level sentiment for the aspect in the sentence. </summary>
-        public SentenceOpinionSentiment Sentiment { get; }
         /// <summary> Opinion level sentiment confidence scores for the aspect in the sentence. </summary>
         public AspectConfidenceScoreLabel ConfidenceScores { get; }
         /// <summary> The opinion offset from the start of the sentence. </summary>

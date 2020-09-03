@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,9 +12,10 @@ using Azure.Messaging.ServiceBus.Plugins;
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    /// Represents a single receiver instance that multiple threads spawned by the ServiceBusProcessor
-    /// may be using to receive and process messages. The manager will delegate to the user provided
-    /// callbacks and handle automatic locking of messages.
+    /// Represents a single receiver instance that multiple threads spawned by the
+    /// <see cref="ServiceBusProcessor"/> may be using to receive and process messages.
+    /// The manager will delegate to the user provided callbacks and handle automatic
+    /// locking of messages.
     /// </summary>
     internal class ReceiverManager
     {
@@ -69,7 +69,8 @@ namespace Azure.Messaging.ServiceBus
         }
 
         public virtual async Task CloseReceiverIfNeeded(
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            bool forceClose = false)
         {
             try
             {
@@ -269,7 +270,7 @@ namespace Azure.Messaging.ServiceBus
                     TimeSpan delay = CalculateRenewDelay(message.LockedUntil);
 
                     await Task.Delay(delay, cancellationToken).ConfigureAwait(false);
-                    if (Receiver.IsDisposed)
+                    if (Receiver.IsClosed)
                     {
                         break;
                     }

@@ -22,8 +22,8 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <param name="roleType"> The role type. </param>
         /// <param name="permissions"> Role definition permissions. </param>
         /// <param name="assignableScopes"> Role definition assignable scopes. </param>
-        public static RoleDefinition RoleDefinition(string id, string name, string type, string roleName, string description, string roleType, IList<KeyVaultPermission> permissions, IList<string> assignableScopes) =>
-            new RoleDefinition(id, name, type, roleName, description, roleType, permissions, assignableScopes);
+        public static KeyVaultRoleDefinition RoleDefinition(string id, string name, string type, string roleName, string description, string roleType, IList<KeyVaultPermission> permissions, IList<string> assignableScopes) =>
+            new KeyVaultRoleDefinition(id, name, type, roleName, description, roleType, permissions, assignableScopes);
 
         /// <summary>
         /// Initializes a new instance of RoleAssignment.
@@ -32,8 +32,8 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <param name="name"> The role assignment name. </param>
         /// <param name="type"> The role assignment type. </param>
         /// <param name="properties"> Role assignment properties. </param>
-        public static RoleAssignment RoleAssignment(string id, string name, string type, RoleAssignmentPropertiesWithScope properties) =>
-            new RoleAssignment(id, name, type, properties);
+        public static KeyVaultRoleAssignment RoleAssignment(string id, string name, string type, KeyVaultRoleAssignmentPropertiesWithScope properties) =>
+            new KeyVaultRoleAssignment(id, name, type, properties);
 
         /// <summary>
         /// Initializes a new instance of a FullRestoreOperation for mocking purposes.

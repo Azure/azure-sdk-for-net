@@ -4,6 +4,7 @@
     <PackageId>Azure.Management.Compute</PackageId>
     <Description>Azure management client SDK for Azure resource provider Microsoft.Compute</Description>
     <PackageTags>azure;management;compute</PackageTags>
+    <TemporaryUsePreviousGeneratorVersion>true</TemporaryUsePreviousGeneratorVersion>
   </PropertyGroup>
 
     <PropertyGroup>

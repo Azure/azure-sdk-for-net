@@ -11,7 +11,7 @@ namespace Azure.AI.FormRecognizer.Models
     public class FormTableCell : FormElement
     {
         internal FormTableCell(DataTableCell dataTableCell, IReadOnlyList<ReadResult> readResults, int pageNumber)
-            : base(new BoundingBox(dataTableCell.BoundingBox), pageNumber, dataTableCell.Text)
+            : base(new FieldBoundingBox(dataTableCell.BoundingBox), pageNumber, dataTableCell.Text)
         {
             ColumnIndex = dataTableCell.ColumnIndex;
             ColumnSpan = dataTableCell.ColumnSpan ?? 1;
@@ -39,7 +39,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="isFooter"><c>true</c> if this cell is a footer cell. Otherwise, <c>false</c>.</param>
         /// <param name="confidence">Measures the degree of certainty of the recognition result.</param>
         /// <param name="fieldElements">A list of references to the field elements constituting this cell.</param>
-        internal FormTableCell(BoundingBox boundingBox, int pageNumber, string text, int columnIndex, int rowIndex, int columnSpan, int rowSpan, bool isHeader, bool isFooter, float confidence, IReadOnlyList<FormElement> fieldElements)
+        internal FormTableCell(FieldBoundingBox boundingBox, int pageNumber, string text, int columnIndex, int rowIndex, int columnSpan, int rowSpan, bool isHeader, bool isFooter, float confidence, IReadOnlyList<FormElement> fieldElements)
             : base(boundingBox, pageNumber, text)
         {
             ColumnIndex = columnIndex;

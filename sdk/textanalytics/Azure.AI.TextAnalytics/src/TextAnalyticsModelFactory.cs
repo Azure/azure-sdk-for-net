@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.AI.TextAnalytics.Models;
 
@@ -58,7 +59,7 @@ namespace Azure.AI.TextAnalytics
         /// <returns>A new instance of <see cref="TextAnalytics.TextAnalyticsWarning"/> for mocking purposes.</returns>
         public static TextAnalyticsWarning TextAnalyticsWarning(string code, string message)
         {
-            return new TextAnalyticsWarning(code, message);
+            return new TextAnalyticsWarning(new TextAnalyticsWarningInternal(code, message));
         }
 
         #endregion Common
@@ -101,9 +102,70 @@ namespace Azure.AI.TextAnalytics
         /// <param name="neutralScore">Sets the <see cref="SentimentConfidenceScores.Neutral"/> property.</param>
         /// <param name="negativeScore">Sets the <see cref="SentimentConfidenceScores.Negative"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.SentenceSentiment"/> for mocking purposes.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static SentenceSentiment SentenceSentiment(TextSentiment sentiment, string text, double positiveScore, double neutralScore, double negativeScore)
         {
-            return new SentenceSentiment(sentiment, text, positiveScore, neutralScore, negativeScore);
+            return new SentenceSentiment(sentiment, text, positiveScore, neutralScore, negativeScore, default, default, new List<MinedOpinion>());
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.SentenceSentiment"/> for mocking purposes.
+        /// </summary>
+        /// <param name="sentiment">Sets the <see cref="SentenceSentiment.Sentiment"/> property.</param>
+        /// <param name="text">Sets the <see cref="SentenceSentiment.Text"/> property.</param>
+        /// <param name="positiveScore">Sets the <see cref="SentimentConfidenceScores.Positive"/> property.</param>
+        /// <param name="neutralScore">Sets the <see cref="SentimentConfidenceScores.Neutral"/> property.</param>
+        /// <param name="negativeScore">Sets the <see cref="SentimentConfidenceScores.Negative"/> property.</param>
+        /// <param name="offset">Sets the <see cref="SentenceSentiment.Offset"/> property.</param>
+        /// <param name="length">Sets the <see cref="SentenceSentiment.Length"/> property.</param>
+        /// <param name="minedOpinions">Sets the <see cref="SentenceSentiment.MinedOpinions"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.SentenceSentiment"/> for mocking purposes.</returns>
+        public static SentenceSentiment SentenceSentiment(TextSentiment sentiment, string text, double positiveScore, double neutralScore, double negativeScore, int offset, int length, IReadOnlyList<MinedOpinion> minedOpinions)
+        {
+            minedOpinions ??= new List<MinedOpinion>();
+            return new SentenceSentiment(sentiment, text, positiveScore, neutralScore, negativeScore, offset, length, minedOpinions);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.AspectSentiment"/> for mocking purposes.
+        /// </summary>
+        /// <param name="sentiment">Sets the <see cref="AspectSentiment.Sentiment"/> property.</param>
+        /// <param name="text">Sets the <see cref="AspectSentiment.Text"/> property.</param>
+        /// <param name="positiveScore">Sets the <see cref="SentimentConfidenceScores.Positive"/> property.</param>
+        /// <param name="negativeScore">Sets the <see cref="SentimentConfidenceScores.Negative"/> property.</param>
+        /// <param name="offset">Sets the <see cref="AspectSentiment.Offset"/> property.</param>
+        /// <param name="length">Sets the <see cref="AspectSentiment.Length"/> property.</param>
+        /// <returns>>A new instance of <see cref="TextAnalytics.AspectSentiment"/> for mocking purposes.</returns>
+        public static AspectSentiment AspectSentiment(TextSentiment sentiment, string text, double positiveScore, double negativeScore, int offset, int length)
+        {
+            return new AspectSentiment(sentiment, text, positiveScore, negativeScore, offset, length);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.OpinionSentiment"/> for mocking purposes.
+        /// </summary>
+        /// <param name="sentiment">Sets the <see cref="OpinionSentiment.Sentiment"/> property.</param>
+        /// <param name="positiveScore">Sets the <see cref="SentimentConfidenceScores.Positive"/> property.</param>
+        /// <param name="negativeScore">Sets the <see cref="SentimentConfidenceScores.Negative"/> property.</param>
+        /// <param name="text">Sets the <see cref="OpinionSentiment.Text"/> property.</param>
+        /// <param name="isNegated">Sets the <see cref="OpinionSentiment.IsNegated"/> property.</param>
+        /// <param name="offset">Sets the <see cref="OpinionSentiment.Offset"/> property.</param>
+        /// <param name="length">Sets the <see cref="OpinionSentiment.Length"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.OpinionSentiment"/> for mocking purposes.</returns>
+        public static OpinionSentiment OpinionSentiment(TextSentiment sentiment, double positiveScore, double negativeScore, string text, bool isNegated, int offset, int length)
+        {
+            return new OpinionSentiment(sentiment, positiveScore, negativeScore, text, isNegated, offset, length);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.MinedOpinion"/> for mocking purposes.
+        /// </summary>
+        /// <param name="aspect">Sets the <see cref="MinedOpinion.Aspect"/> property.</param>
+        /// <param name="opinions">Sets the <see cref="MinedOpinion.Opinions"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.MinedOpinion"/> for mocking purposes.</returns>
+        public static MinedOpinion MinedOpinion(AspectSentiment aspect, IReadOnlyList<OpinionSentiment> opinions)
+        {
+            return new MinedOpinion(aspect, opinions);
         }
 
         /// <summary>
@@ -204,9 +266,25 @@ namespace Azure.AI.TextAnalytics
         /// <param name="subCategory">Sets the <see cref="CategorizedEntity.SubCategory"/> property.</param>
         /// <param name="score">Sets the <see cref="CategorizedEntity.ConfidenceScore"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.CategorizedEntity"/> for mocking purposes.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static CategorizedEntity CategorizedEntity(string text, string category, string subCategory, double score)
         {
-            return new CategorizedEntity(text, category, subCategory, score);
+            return new CategorizedEntity(new Entity(text, category, subCategory, default, default, score));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.CategorizedEntity"/> for mocking purposes.
+        /// </summary>
+        /// <param name="text">Sets the <see cref="CategorizedEntity.Text"/> property.</param>
+        /// <param name="category">Sets the <see cref="CategorizedEntity.Category"/> property.</param>
+        /// <param name="subCategory">Sets the <see cref="CategorizedEntity.SubCategory"/> property.</param>
+        /// <param name="score">Sets the <see cref="CategorizedEntity.ConfidenceScore"/> property.</param>
+        /// <param name="offset">Sets the <see cref="CategorizedEntity.Offset"/> property.</param>
+        /// <param name="length">Sets the <see cref="CategorizedEntity.Length"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.CategorizedEntity"/> for mocking purposes.</returns>
+        public static CategorizedEntity CategorizedEntity(string text, string category, string subCategory, double score, int offset, int length)
+        {
+            return new CategorizedEntity(new Entity(text, category, subCategory, offset, length, score));
         }
 
         /// <summary>
@@ -319,9 +397,26 @@ namespace Azure.AI.TextAnalytics
         /// <param name="url">Sets the <see cref="LinkedEntity.Url"/> property.</param>
         /// <param name="matches">Sets the <see cref="LinkedEntity.Matches"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.LinkedEntity"/> for mocking purposes.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static LinkedEntity LinkedEntity(string name, string dataSourceEntityId, string language, string dataSource, Uri url, IEnumerable<LinkedEntityMatch> matches)
         {
-            return new LinkedEntity(name, dataSourceEntityId, language, dataSource, url, matches);
+            return new LinkedEntity(name, matches, language, dataSourceEntityId, url, dataSource, default);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.LinkedEntity"/> for mocking purposes.
+        /// </summary>
+        /// <param name="name">Sets the <see cref="LinkedEntity.Name"/> property.</param>
+        /// <param name="dataSourceEntityId">Sets the <see cref="LinkedEntity.DataSourceEntityId"/> property.</param>
+        /// <param name="language">Sets the <see cref="LinkedEntity.Language"/> property.</param>
+        /// <param name="dataSource">Sets the <see cref="LinkedEntity.DataSource"/> property.</param>
+        /// <param name="url">Sets the <see cref="LinkedEntity.Url"/> property.</param>
+        /// <param name="matches">Sets the <see cref="LinkedEntity.Matches"/> property.</param>
+        /// <param name="bingEntitySearchApiId">Sets the <see cref="LinkedEntity.BingEntitySearchApiId"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.LinkedEntity"/> for mocking purposes.</returns>
+        public static LinkedEntity LinkedEntity(string name, string dataSourceEntityId, string language, string dataSource, Uri url, IEnumerable<LinkedEntityMatch> matches, string bingEntitySearchApiId)
+        {
+            return new LinkedEntity(name, matches, language, dataSourceEntityId, url, dataSource, bingEntitySearchApiId);
         }
 
         /// <summary>
@@ -330,9 +425,23 @@ namespace Azure.AI.TextAnalytics
         /// <param name="text">Sets the <see cref="LinkedEntityMatch.Text"/> property.</param>
         /// <param name="score">Sets the <see cref="LinkedEntityMatch.ConfidenceScore"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.LinkedEntityMatch"/> for mocking purposes.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static LinkedEntityMatch LinkedEntityMatch(string text, double score)
         {
-            return new LinkedEntityMatch(text, score);
+            return new LinkedEntityMatch(score, text, default, default);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.LinkedEntityMatch"/> for mocking purposes.
+        /// </summary>
+        /// <param name="text">Sets the <see cref="LinkedEntityMatch.Text"/> property.</param>
+        /// <param name="score">Sets the <see cref="LinkedEntityMatch.ConfidenceScore"/> property.</param>
+        /// <param name="offset">Sets the <see cref="LinkedEntityMatch.Offset"/> property.</param>
+        /// <param name="length">Sets the <see cref="LinkedEntityMatch.Length"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.LinkedEntityMatch"/> for mocking purposes.</returns>
+        public static LinkedEntityMatch LinkedEntityMatch(string text, double score, int offset, int length)
+        {
+            return new LinkedEntityMatch(score, text, offset, length);
         }
 
         /// <summary>

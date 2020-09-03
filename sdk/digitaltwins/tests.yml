@@ -6,6 +6,3 @@ extends:
     ServiceDirectory: digitaltwins
     Location: westus2
     SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
-    EnvVars:
-      # Runs live tests.
-      AZURE_DIGITALTWINS_TEST_MODE: Live
