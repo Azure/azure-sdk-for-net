@@ -137,6 +137,7 @@ namespace Azure.Identity.Tests
 
             var client = PublicClientApplicationBuilder.Create(clientId)
                 .WithTenantId(testEnvironment.TestTenantId)
+                .WithAuthority(testEnvironment.AuthorityHostUrl)
                 .Build();
 
             var retriever = new RefreshTokenRetriever(client.UserTokenCache);
