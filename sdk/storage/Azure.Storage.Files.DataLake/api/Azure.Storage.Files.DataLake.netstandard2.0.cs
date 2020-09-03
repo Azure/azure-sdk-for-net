@@ -874,8 +874,8 @@ namespace Azure.Storage.Sas
         List = 32,
         Move = 64,
         Execute = 128,
-        Ownership = 256,
-        Permissions = 512,
+        ModifyOwnership = 256,
+        ModifyPermissions = 512,
     }
     public sealed partial class DataLakeSasQueryParameters : Azure.Storage.Sas.SasQueryParameters
     {

@@ -423,8 +423,8 @@ namespace Azure.Storage
                 public const char FilterByTags = 'f';
                 public const char Move = 'm';
                 public const char Execute = 'e';
-                public const char Ownership = 'o';
-                public const char Permission = 'p';
+                public const char ModifyOwnership = 'o';
+                public const char ModifyPermission = 'p';
             }
 
             internal static class Parameters

@@ -87,15 +87,19 @@ namespace Azure.Storage.Sas
         /// <summary>
         /// The name of the path being made accessible, or
         /// <see cref="String.Empty"/> for a file system SAS.
+        /// Beginning in version 2020-02-10, setting
+        /// <see cref="IsDirectory"/> to true means we will accept the
+        /// Path as a directory for a directory SAS. If not set, this
+        /// value is assumed to be a File Path for a File Path SAS.
         /// </summary>
         public string Path { get; set; }
 
         /// <summary>
-        /// Defines whether or not the path is a directory. If set to true,
-        /// the path will be assumed to be a directory for a directory SAS.
-        /// If set to false or default, the path will be assumed as a path
-        /// for a path SAS. If <see cref="Path"/> is empty, we assume a
-        /// for a file ssytem SAS.
+        /// Beginning in version 2020-02-10, this value defines whether or
+        /// not the <see cref="Path"/> is a directory. If this value is
+        /// set to true, the Path is a Directory for a Directory SAS.
+        /// If set to false or default, the Path is a File Path for a
+        /// File Path SAS.
         /// </summary>
         public bool? IsDirectory { get; set; }
 
@@ -266,7 +270,7 @@ namespace Azure.Storage.Sas
         /// User Delegation SAS.
         /// </summary>
         /// <param name="objectId">
-        /// This value witll be used for the AAD Object of a user authorized by the
+        /// This value will be used for the AAD Object of a user authorized by the
         /// owner of the UserDelegationKey to perform the action granted by the SAS.
         /// </param>
         /// <param name="performPosixCheck">
@@ -292,8 +296,8 @@ namespace Azure.Storage.Sas
             Constants.Sas.Permissions.List,
             Constants.Sas.Permissions.Move,
             Constants.Sas.Permissions.Execute,
-            Constants.Sas.Permissions.Ownership,
-            Constants.Sas.Permissions.Permission,
+            Constants.Sas.Permissions.ModifyOwnership,
+            Constants.Sas.Permissions.ModifyPermission,
         };
 
         /// <summary>
