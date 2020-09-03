@@ -19,10 +19,6 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 {
     internal class AzureMonitorTransmitter
     {
-        private const string StatusCode200 = "200";
-        private const string StatusCode0 = "0";
-        private const string StatusCodeOk = "Ok";
-
         private readonly ServiceRestClient serviceRestClient;
         private readonly AzureMonitorExporterOptions options;
         private readonly string instrumentationKey;
@@ -116,7 +112,8 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             if (telemetryType == TelemetryType.Request)
             {
                 var url = activity.Kind == ActivityKind.Server ? UrlHelper.GetUrl(tags) : GetMessagingUrl(tags);
-                var statusCode = GetStatus(tags, out bool success) ;
+                var statusCode = GetHttpStatusCode(tags);
+                var success = GetSuccessFromHttpStatusCode(statusCode);
                 var request = new RequestData(2, activity.Context.SpanId.ToHexString(), activity.Duration.ToString("c", CultureInfo.InvariantCulture), success, statusCode)
                 {
                     Name = activity.DisplayName,
@@ -131,11 +128,9 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             }
             else if (telemetryType == TelemetryType.Dependency)
             {
-                var statusCode = GetStatus(tags, out bool success);
                 var dependency = new RemoteDependencyData(2, activity.DisplayName, activity.Duration.ToString("c", CultureInfo.InvariantCulture))
                 {
-                    Id = activity.Context.SpanId.ToHexString(),
-                    Success = success
+                    Id = activity.Context.SpanId.ToHexString()
                 };
 
                 // TODO: Handle activity.TagObjects
@@ -145,7 +140,9 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                 {
                     dependency.Data = UrlHelper.GetUrl(tags);
                     dependency.Type = "HTTP"; // TODO: Parse for storage / SB.
+                    var statusCode = GetHttpStatusCode(tags);
                     dependency.ResultCode = statusCode;
+                    dependency.Success = GetSuccessFromHttpStatusCode(statusCode);
                 }
 
                 // TODO: Handle dependency.target.
@@ -156,12 +153,20 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static string GetStatus(Dictionary<string, string> tags, out bool success)
+        private static string GetHttpStatusCode(Dictionary<string, string> tags)
         {
-            tags.TryGetValue(SemanticConventions.AttributeHttpStatusCode, out var status);
-            success = status == StatusCode200 || status == StatusCodeOk;
+            if (tags.TryGetValue(SemanticConventions.AttributeHttpStatusCode, out var status))
+            {
+                return status;
+            }
 
-            return status ?? StatusCode0;
+            return "0";
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static bool GetSuccessFromHttpStatusCode(string statusCode)
+        {
+            return statusCode == "200" || statusCode == "Ok";
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

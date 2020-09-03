@@ -11,17 +11,13 @@ namespace OpenTelemetry.Exporter.AzureMonitor
     {
         private const string SchemePostfix = "://";
         private const string Colon = ":";
-        private const string HttpPort80 = "80";
-        private const string HttpPort443 = "443";
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static string GetUrl(Dictionary<string, string> tags)
         {
             if (tags.TryGetValue(SemanticConventions.AttributeHttpUrl, out var url))
             {
-                Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out var uri);
-
-                if (uri?.IsAbsoluteUri == true)
+                if (Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out var uri) && uri.IsAbsoluteUri)
                 {
                     return url;
                 }
@@ -33,7 +29,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                 if (tags.TryGetValue(SemanticConventions.AttributeHttpHost, out var httpHost) && !string.IsNullOrWhiteSpace(httpHost))
                 {
                     tags.TryGetValue(SemanticConventions.AttributeHttpHostPort, out var httpPort);
-                    if (httpPort != null && httpPort != HttpPort80 && httpPort != HttpPort443)
+                    if (httpPort != null && httpPort != "80" && httpPort != "443")
                     {
                         url = $"{httpScheme}{SchemePostfix}{httpHost}{Colon}{httpPort}{httpTarget}";
                     }
