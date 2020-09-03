@@ -18,11 +18,8 @@ namespace Azure.AI.TextAnalytics.Samples
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
-            #region Snippet:TextAnalyticsSample5CreateClient
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-            #endregion
 
-            #region Snippet:RecognizePiiEntities
             string document = "A developer with SSN 859-98-0987 whose phone number is 800-102-1100 is building tools with our APIs.";
 
             PiiEntityCollection entities = await client.RecognizePiiEntitiesAsync(document);
@@ -40,7 +37,6 @@ namespace Azure.AI.TextAnalytics.Samples
             {
                 Console.WriteLine("No entities were found.");
             }
-            #endregion
         }
     }
 }

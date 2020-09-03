@@ -28,9 +28,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check."
             };
 
-            #region Snippet:TextAnalyticsSample5RecognizePiiEntitiesConvenience
             RecognizePiiEntitiesResultCollection results = await client.RecognizePiiEntitiesBatchAsync(documents);
-            #endregion
 
             int i = 0;
             foreach (RecognizePiiEntitiesResult result in results)

@@ -22,7 +22,6 @@ namespace Azure.AI.TextAnalytics.Samples
             // Instantiate a client that will be used to call the service.
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            #region Snippet:TextAnalyticsSample5RecognizePiiEntitiesBatch
             var documents = new List<TextDocumentInput>
             {
                 new TextDocumentInput("1", "A developer with SSN 859-98-0987 whose phone number is 800-102-1100 is building tools with our APIs.")
@@ -36,7 +35,6 @@ namespace Azure.AI.TextAnalytics.Samples
             };
 
             RecognizePiiEntitiesResultCollection results = await client.RecognizePiiEntitiesBatchAsync(documents, new RecognizePiiEntitiesOptions { IncludeStatistics = true });
-            #endregion
 
             int i = 0;
             Console.WriteLine($"Results of Azure Text Analytics \"Pii Entity Recognition\" Model, version: \"{results.ModelVersion}\"");
