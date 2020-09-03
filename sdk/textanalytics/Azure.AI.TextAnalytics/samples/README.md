@@ -24,12 +24,12 @@ Azure Cognitive Services Text Analytics is a cloud service that provides advance
 - [Analyze Sentiment](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample2_AnalyzeSentiment.md)
 - [Extract Key Phrases](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample3_ExtractKeyPhrases.md)
 - [Recognize Entities](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample4_RecognizeEntities.md)
-- [Recognize PII Entities](https://github.com/Azure/azure-sdk-for-net/tree/a0b01ea1678646c93385d0c675885c9f6177c561/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample5_RecognizePiiEntities.md)
+- [Recognize PII Entities](https://github.com/Azure/azure-sdk-for-net/tree/cd74dde9546ea675f9289e1b4e6fd804bda2a3bc/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample5_RecognizePiiEntities.md)
 <!--- [Recognize PII Entities](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample5_RecognizePiiEntities.md)-->
 - [Recognize Linked Entities](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample6_RecognizeLinkedEntities.md)
 
 ## Advanced samples
-- [Analyze Sentiment with Opinion Mining](https://github.com/maririos/azure-sdk-for-net/blob/f781a29042bb26e3d9f28b66dd78ed9e8487c434/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample2.1_AnalyzeSentimentWithOpinionMining.md)
+- [Analyze Sentiment with Opinion Mining](https://github.com/maririos/azure-sdk-for-net/blob/cd74dde9546ea675f9289e1b4e6fd804bda2a3bc/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample2.1_AnalyzeSentimentWithOpinionMining.md)
 <!--- [Analyze Sentiment with Opinion Mining](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample2.1_AnalyzeSentimentWithOpinionMining.md)-->
 - [Mock client](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_MockClient.md)
 
