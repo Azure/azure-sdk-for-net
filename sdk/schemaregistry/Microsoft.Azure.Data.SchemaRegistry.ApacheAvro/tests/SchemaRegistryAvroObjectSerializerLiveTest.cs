@@ -1,15 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core.TestFramework;
+using Azure.Data.SchemaRegistry;
+using NUnit.Framework;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using Azure.Data.SchemaRegistry.Avro;
-using NUnit.Framework;
 using TestSchema;
 
-namespace Azure.Data.SchemaRegistry.Tests
+namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
 {
     public class SchemaRegistryAvroObjectSerializerLiveTest : RecordedTestBase<SchemaRegistryClientTestEnvironment>
     {
