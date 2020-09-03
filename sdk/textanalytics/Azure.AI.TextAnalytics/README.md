@@ -161,7 +161,7 @@ Console.WriteLine($"    Negative confidence score: {docSentiment.ConfidenceScore
 ```
 For samples on using the production recommended option `AnalyzeSentimentBatch` see [here][analyze_sentiment_sample].
 
-To get more granular information about the opinions related to aspects of a product/service, also knows as Aspect-based Sentiment Analysis in Natural Language Processing (NLP), see sample on sentiment analysis with opinion mining [here][analyze_sentiment_opinion_mining_sample].
+To get more granular information about the opinions related to aspects of a product/service, also known as Aspect-based Sentiment Analysis in Natural Language Processing (NLP), see a sample on sentiment analysis with opinion mining [here][analyze_sentiment_opinion_mining_sample].
 
 Please refer to the service documentation for a conceptual discussion of [sentiment analysis][sentiment_analysis].
 
