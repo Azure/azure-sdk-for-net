@@ -63,6 +63,7 @@ $csproj |
         $targetVersion = ($allPackages |
             Where-Object { $_.Name -eq $packageName } |
             Where-Object { -not ( $PACKAGE_EXCLUSIONS.ContainsKey($packageName) -and $PACKAGE_EXCLUSIONS[$packageName].ContainsKey($_.Version)) } |
+            Where-Object { $_.Version -like "*dev*" } |
             ForEach-Object { $_.Version } |
             Sort-Object |
             Select-Object -Last 1)
