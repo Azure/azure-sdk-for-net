@@ -1,4 +1,9 @@
-param($month)
+[CmdletBinding()]
+param(
+  [Parameter(Mandatory=$true)]
+  [ValidateRange(1, 12)]
+  [int] $Month
+)
 
 $repoRoot = Resolve-Path "$PSScriptRoot/../..";
 . ${repoRoot}\eng\common\scripts\SemVer.ps1
@@ -37,5 +42,4 @@ Get-ChildItem "$repoRoot/sdk" -Filter CHANGELOG.md -Recurse | Sort-Object -Prope
     }
 }
 
-$InstallNotes | Write-Host;
-$ReleaseNotes | Write-Host;
+return $InstallNotes, $ReleaseNotes
