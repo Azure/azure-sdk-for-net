@@ -27,15 +27,6 @@ namespace Azure.Storage.Files.Shares.Models
         public string Snapshot { get; set; }
 
         /// <summary>
-        /// Specifies that the response will contain only ranges that were
-        /// changed between target file and previous snapshot.  Changed ranges
-        /// include both updated and cleared ranges. The target file may be a
-        /// snapshot, as long as the snapshot specified by
-        /// <see cref="PreviousSnapshot"/> is the older of the two.
-        /// </summary>
-        public string PreviousSnapshot { get; set; }
-
-        /// <summary>
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on getting the range.
         /// </summary>
