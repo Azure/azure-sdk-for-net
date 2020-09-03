@@ -3,10 +3,6 @@ jobs:
     pool:
       vmImage: windows-2019
     steps:
-      - task: UseDotNet@2
-        displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
-        inputs:
-          version: "$(DotNetCoreSDKVersion)"
       #- script: "echo $(system.pullrequest.pullrequestnumber), https://github.com/$(build.repository.id), https://github.com/$(build.repository.ID)"
       - script: |
           if "$(BuildConfiguration)" == "Release" (set SkipTests=true) else (set SkipTests=false)
@@ -49,10 +45,6 @@ jobs:
       vmImage: "$(OSVmImage)"
     steps:
       - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
-      - task: UseDotNet@2
-        displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
-        inputs:
-          version: "$(DotNetCoreSDKVersion)"
       - script: "echo $(system.pullrequest.pullrequestnumber), http://github.com/$(build.repository.id), http://github.com/$(build.repository.ID)"
       - script: "dotnet msbuild mgmt.proj /v:n /t:RunTests /p:Scope=${{parameters.Scope}} /p:ForPublishing=$(ShouldPublish) /clp:ShowtimeStamp $(RPScopeArgs)"
         displayName: "Build & Run Tests"

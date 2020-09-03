@@ -38,17 +38,15 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="snapshotId">snapshotId</param>
-        /// <param name="fileSystemId">fileSystemId</param>
         /// <param name="created">name</param>
         /// <param name="provisioningState">Azure lifecycle management</param>
-        public Snapshot(string location, string id = default(string), string name = default(string), string type = default(string), string snapshotId = default(string), string fileSystemId = default(string), System.DateTime? created = default(System.DateTime?), string provisioningState = default(string))
+        public Snapshot(string location, string id = default(string), string name = default(string), string type = default(string), string snapshotId = default(string), System.DateTime? created = default(System.DateTime?), string provisioningState = default(string))
         {
             Location = location;
             Id = id;
             Name = name;
             Type = type;
             SnapshotId = snapshotId;
-            FileSystemId = fileSystemId;
             Created = created;
             ProvisioningState = provisioningState;
             CustomInit();
@@ -93,15 +91,6 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public string SnapshotId { get; private set; }
 
         /// <summary>
-        /// Gets or sets fileSystemId
-        /// </summary>
-        /// <remarks>
-        /// UUID v4 used to identify the FileSystem
-        /// </remarks>
-        [JsonProperty(PropertyName = "properties.fileSystemId")]
-        public string FileSystemId { get; set; }
-
-        /// <summary>
         /// Gets name
         /// </summary>
         /// <remarks>
@@ -141,21 +130,6 @@ namespace Microsoft.Azure.Management.NetApp.Models
                 if (!System.Text.RegularExpressions.Regex.IsMatch(SnapshotId, "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"))
                 {
                     throw new ValidationException(ValidationRules.Pattern, "SnapshotId", "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$");
-                }
-            }
-            if (FileSystemId != null)
-            {
-                if (FileSystemId.Length > 36)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "FileSystemId", 36);
-                }
-                if (FileSystemId.Length < 36)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "FileSystemId", 36);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(FileSystemId, "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "FileSystemId", "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$");
                 }
             }
         }

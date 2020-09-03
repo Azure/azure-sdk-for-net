@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "netapp/resource-manager" -AutoRestVersion "v2"
+Start-AutoRestCodeGeneration -ResourceProvider "netapp/resource-manager" -AutoRestVersion "v2" -ConfigFileTag package-netapp-2020-02-01

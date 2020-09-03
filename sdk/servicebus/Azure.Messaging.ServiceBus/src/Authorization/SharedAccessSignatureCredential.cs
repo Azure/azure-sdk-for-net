@@ -59,7 +59,11 @@ namespace Azure.Messaging.ServiceBus.Authorization
             TokenRequestContext requestContext,
             CancellationToken cancellationToken)
         {
-            if (SharedAccessSignature.SignatureExpiration <= DateTimeOffset.UtcNow.Add(SignatureRefreshBuffer))
+            // If the signature was derived from a shared key rather than being provided externally,
+            // determine if the expiration is approaching and attempt to extend the token.
+
+            if ((!string.IsNullOrEmpty(SharedAccessSignature.SharedAccessKey))
+                && (SharedAccessSignature.SignatureExpiration <= DateTimeOffset.UtcNow.Add(SignatureRefreshBuffer)))
             {
                 lock (SignatureSyncRoot)
                 {

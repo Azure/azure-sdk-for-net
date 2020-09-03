@@ -5,3 +5,4 @@
 ### Added
 
 - Add `KeyVaultAccessControlClient`.
+- Add `KeyVaultBackupClient`.

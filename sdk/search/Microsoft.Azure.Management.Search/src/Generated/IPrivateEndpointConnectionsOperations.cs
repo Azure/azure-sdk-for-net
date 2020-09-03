@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Search
     public partial interface IPrivateEndpointConnectionsOperations
     {
         /// <summary>
-        /// Updates a Private Endpoint connection to the Search service in the
+        /// Updates a Private Endpoint connection to the search service in the
         /// given resource group.
         /// <see href="https://aka.ms/search-manage" />
         /// </summary>
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Search
         /// </exception>
         Task<AzureOperationResponse<PrivateEndpointConnection>> UpdateWithHttpMessagesAsync(string resourceGroupName, string searchServiceName, string privateEndpointConnectionName, PrivateEndpointConnection privateEndpointConnection, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the details of the private endpoint connection to the Search
+        /// Gets the details of the private endpoint connection to the search
         /// service in the given resource group.
         /// <see href="https://aka.ms/search-manage" />
         /// </summary>
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.Management.Search
         Task<AzureOperationResponse<PrivateEndpointConnection>> GetWithHttpMessagesAsync(string resourceGroupName, string searchServiceName, string privateEndpointConnectionName, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Disconnects the private endpoint connection and deletes it from the
-        /// Search service.
+        /// search service.
         /// <see href="https://aka.ms/search-manage" />
         /// </summary>
         /// <param name='resourceGroupName'>
