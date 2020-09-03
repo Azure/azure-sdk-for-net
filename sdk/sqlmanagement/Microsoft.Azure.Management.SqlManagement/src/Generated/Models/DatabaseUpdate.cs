@@ -138,29 +138,31 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="earliestRestoreDate">This records the earliest start
         /// date and time that restore is available for this database (ISO8601
         /// format).</param>
-        /// <param name="readScale">If enabled, connections that have
-        /// application intent set to readonly in their connection string may
-        /// be routed to a readonly secondary replica. This property is only
-        /// settable for Premium and Business Critical databases. Possible
-        /// values include: 'Enabled', 'Disabled'</param>
+        /// <param name="readScale">The state of read-only routing. If enabled,
+        /// connections that have application intent set to readonly in their
+        /// connection string may be routed to a readonly secondary replica in
+        /// the same region. Possible values include: 'Enabled',
+        /// 'Disabled'</param>
         /// <param name="readReplicaCount">The number of readonly secondary
-        /// replicas associated with the database to which readonly application
-        /// intent connections may be routed. This property is only settable
-        /// for Hyperscale edition databases.</param>
+        /// replicas associated with the database.</param>
         /// <param name="currentSku">The name and tier of the SKU.</param>
         /// <param name="autoPauseDelay">Time in minutes after which database
         /// is automatically paused. A value of -1 means that automatic pause
         /// is disabled</param>
+        /// <param name="storageAccountType">The storage account type used to
+        /// store backups for this database. Currently the only supported
+        /// option is GRS (GeoRedundantStorage). Possible values include:
+        /// 'GRS', 'LRS', 'ZRS'</param>
         /// <param name="minCapacity">Minimal capacity that database will
         /// always have allocated, if not paused</param>
         /// <param name="pausedDate">The date when database was paused by user
-        /// configuration or action (ISO8601 format). Null if the database is
+        /// configuration or action(ISO8601 format). Null if the database is
         /// ready.</param>
         /// <param name="resumedDate">The date when database was resumed by
         /// user action or database login (ISO8601 format). Null if the
         /// database is paused.</param>
         /// <param name="tags">Resource tags.</param>
-        public DatabaseUpdate(Sku sku = default(Sku), CreateMode? createMode = default(CreateMode?), string collation = default(string), long? maxSizeBytes = default(long?), SampleName? sampleName = default(SampleName?), string elasticPoolId = default(string), string sourceDatabaseId = default(string), DatabaseStatus? status = default(DatabaseStatus?), System.Guid? databaseId = default(System.Guid?), System.DateTime? creationDate = default(System.DateTime?), string currentServiceObjectiveName = default(string), string requestedServiceObjectiveName = default(string), string defaultSecondaryLocation = default(string), string failoverGroupId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), System.DateTime? sourceDatabaseDeletionDate = default(System.DateTime?), string recoveryServicesRecoveryPointId = default(string), string longTermRetentionBackupResourceId = default(string), string recoverableDatabaseId = default(string), string restorableDroppedDatabaseId = default(string), CatalogCollationType? catalogCollation = default(CatalogCollationType?), bool? zoneRedundant = default(bool?), DatabaseLicenseType? licenseType = default(DatabaseLicenseType?), long? maxLogSizeBytes = default(long?), System.DateTime? earliestRestoreDate = default(System.DateTime?), DatabaseReadScale? readScale = default(DatabaseReadScale?), int? readReplicaCount = default(int?), Sku currentSku = default(Sku), int? autoPauseDelay = default(int?), double? minCapacity = default(double?), System.DateTime? pausedDate = default(System.DateTime?), System.DateTime? resumedDate = default(System.DateTime?), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public DatabaseUpdate(Sku sku = default(Sku), CreateMode? createMode = default(CreateMode?), string collation = default(string), long? maxSizeBytes = default(long?), SampleName? sampleName = default(SampleName?), string elasticPoolId = default(string), string sourceDatabaseId = default(string), DatabaseStatus? status = default(DatabaseStatus?), System.Guid? databaseId = default(System.Guid?), System.DateTime? creationDate = default(System.DateTime?), string currentServiceObjectiveName = default(string), string requestedServiceObjectiveName = default(string), string defaultSecondaryLocation = default(string), string failoverGroupId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), System.DateTime? sourceDatabaseDeletionDate = default(System.DateTime?), string recoveryServicesRecoveryPointId = default(string), string longTermRetentionBackupResourceId = default(string), string recoverableDatabaseId = default(string), string restorableDroppedDatabaseId = default(string), CatalogCollationType? catalogCollation = default(CatalogCollationType?), bool? zoneRedundant = default(bool?), DatabaseLicenseType? licenseType = default(DatabaseLicenseType?), long? maxLogSizeBytes = default(long?), System.DateTime? earliestRestoreDate = default(System.DateTime?), DatabaseReadScale? readScale = default(DatabaseReadScale?), int? readReplicaCount = default(int?), Sku currentSku = default(Sku), int? autoPauseDelay = default(int?), StorageAccountType? storageAccountType = default(StorageAccountType?), double? minCapacity = default(double?), System.DateTime? pausedDate = default(System.DateTime?), System.DateTime? resumedDate = default(System.DateTime?), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Sku = sku;
             CreateMode = createMode;
@@ -191,6 +193,7 @@ namespace Microsoft.Azure.Management.Sql.Models
             ReadReplicaCount = readReplicaCount;
             CurrentSku = currentSku;
             AutoPauseDelay = autoPauseDelay;
+            StorageAccountType = storageAccountType;
             MinCapacity = minCapacity;
             PausedDate = pausedDate;
             ResumedDate = resumedDate;
@@ -416,20 +419,17 @@ namespace Microsoft.Azure.Management.Sql.Models
         public System.DateTime? EarliestRestoreDate { get; private set; }
 
         /// <summary>
-        /// Gets or sets if enabled, connections that have application intent
-        /// set to readonly in their connection string may be routed to a
-        /// readonly secondary replica. This property is only settable for
-        /// Premium and Business Critical databases. Possible values include:
-        /// 'Enabled', 'Disabled'
+        /// Gets or sets the state of read-only routing. If enabled,
+        /// connections that have application intent set to readonly in their
+        /// connection string may be routed to a readonly secondary replica in
+        /// the same region. Possible values include: 'Enabled', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.readScale")]
         public DatabaseReadScale? ReadScale { get; set; }
 
         /// <summary>
         /// Gets or sets the number of readonly secondary replicas associated
-        /// with the database to which readonly application intent connections
-        /// may be routed. This property is only settable for Hyperscale
-        /// edition databases.
+        /// with the database.
         /// </summary>
         [JsonProperty(PropertyName = "properties.readReplicaCount")]
         public int? ReadReplicaCount { get; set; }
@@ -448,6 +448,14 @@ namespace Microsoft.Azure.Management.Sql.Models
         public int? AutoPauseDelay { get; set; }
 
         /// <summary>
+        /// Gets or sets the storage account type used to store backups for
+        /// this database. Currently the only supported option is GRS
+        /// (GeoRedundantStorage). Possible values include: 'GRS', 'LRS', 'ZRS'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.storageAccountType")]
+        public StorageAccountType? StorageAccountType { get; set; }
+
+        /// <summary>
         /// Gets or sets minimal capacity that database will always have
         /// allocated, if not paused
         /// </summary>
@@ -456,7 +464,7 @@ namespace Microsoft.Azure.Management.Sql.Models
 
         /// <summary>
         /// Gets the date when database was paused by user configuration or
-        /// action (ISO8601 format). Null if the database is ready.
+        /// action(ISO8601 format). Null if the database is ready.
         /// </summary>
         [JsonProperty(PropertyName = "properties.pausedDate")]
         public System.DateTime? PausedDate { get; private set; }
