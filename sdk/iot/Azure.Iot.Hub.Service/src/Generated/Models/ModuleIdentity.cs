@@ -27,7 +27,7 @@ namespace Azure.Iot.Hub.Service.Models
         /// <param name="connectionStateUpdatedTime"> The date and time the connection state was last updated. </param>
         /// <param name="lastActivityTime"> The date and time the device last connected, received, or sent a message. </param>
         /// <param name="cloudToDeviceMessageCount"> The number of cloud-to-module messages currently queued to be sent to the module. </param>
-        /// <param name="authentication"> . </param>
+        /// <param name="authentication"> The authentication mechanism used by the module when connecting to the service and edge hub. </param>
         internal ModuleIdentity(string moduleId, string managedBy, string deviceId, string generationId, string etag, ModuleConnectionState? connectionState, DateTimeOffset? connectionStateUpdatedTime, DateTimeOffset? lastActivityTime, int? cloudToDeviceMessageCount, AuthenticationMechanism authentication)
         {
             ModuleId = moduleId;
@@ -60,6 +60,7 @@ namespace Azure.Iot.Hub.Service.Models
         public DateTimeOffset? LastActivityTime { get; set; }
         /// <summary> The number of cloud-to-module messages currently queued to be sent to the module. </summary>
         public int? CloudToDeviceMessageCount { get; set; }
+        /// <summary> The authentication mechanism used by the module when connecting to the service and edge hub. </summary>
         public AuthenticationMechanism Authentication { get; set; }
     }
 }

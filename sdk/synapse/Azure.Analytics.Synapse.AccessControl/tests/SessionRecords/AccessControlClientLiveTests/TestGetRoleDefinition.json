@@ -4,10 +4,11 @@
       "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/rbac/roles?api-version=2020-02-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.AccessControl/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Analytics.Synapse.AccessControl/1.0.0-dev.20200826.1",
+          "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "8f88c26ee61806225a35fe3b5a364eb0",
         "x-ms-return-client-request-id": "true"
@@ -17,7 +18,7 @@
       "ResponseHeaders": {
         "Content-Length": "272",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:53:34 GMT",
+        "Date": "Wed, 26 Aug 2020 03:49:52 GMT",
         "Server": [
           "Microsoft-HTTPAPI/2.0",
           "Microsoft-HTTPAPI/2.0"
@@ -25,8 +26,8 @@
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "x-ms-client-request-id": "8f88c26ee61806225a35fe3b5a364eb0",
         "x-ms-request-id": [
-          "7ebf2237-a9ff-45d6-9298-baa31b24bb5a",
-          "7ebf2237-a9ff-45d6-9298-baa31b24bb5a"
+          "dbc96ed9-e869-41b3-b88e-0fb028c2f017",
+          "dbc96ed9-e869-41b3-b88e-0fb028c2f017"
         ]
       },
       "ResponseBody": {
@@ -53,11 +54,12 @@
       "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/rbac/roles/6e4bf58a-b8e1-4cc3-bbf9-d73143322b78?api-version=2020-02-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-9470ca7f91961c48854b07760d8a37cd-f83b351f1679b448-00",
+        "traceparent": "00-0753095c83de9444b3f98f2d84cf5b16-10d38557ce26874c-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.AccessControl/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Analytics.Synapse.AccessControl/1.0.0-dev.20200826.1",
+          "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "49019b07a50e04483777cee9802600f4",
         "x-ms-return-client-request-id": "true"
@@ -67,7 +69,7 @@
       "ResponseHeaders": {
         "Content-Length": "87",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:53:34 GMT",
+        "Date": "Wed, 26 Aug 2020 03:49:52 GMT",
         "Server": [
           "Microsoft-HTTPAPI/2.0",
           "Microsoft-HTTPAPI/2.0"
@@ -75,8 +77,8 @@
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "x-ms-client-request-id": "49019b07a50e04483777cee9802600f4",
         "x-ms-request-id": [
-          "9a3bcca4-b149-42c0-b474-7c2f3c609943",
-          "9a3bcca4-b149-42c0-b474-7c2f3c609943"
+          "8b8204cf-4d84-4271-91cd-3a296cd24506",
+          "8b8204cf-4d84-4271-91cd-3a296cd24506"
         ]
       },
       "ResponseBody": {
@@ -89,11 +91,12 @@
       "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/rbac/roles/c3a6d2f1-a26f-4810-9b0f-591308d5cbf1?api-version=2020-02-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-bd8702a4e2cf964594be282d8d45a55e-c8326ed5dbc31344-00",
+        "traceparent": "00-c3bcdae9970ba44caeb7c1db206d8199-1bd9011b00d1284d-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.AccessControl/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Analytics.Synapse.AccessControl/1.0.0-dev.20200826.1",
+          "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "2d13906b7980ff470efa84d09d2e4a2c",
         "x-ms-return-client-request-id": "true"
@@ -103,7 +106,7 @@
       "ResponseHeaders": {
         "Content-Length": "90",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:53:35 GMT",
+        "Date": "Wed, 26 Aug 2020 03:49:52 GMT",
         "Server": [
           "Microsoft-HTTPAPI/2.0",
           "Microsoft-HTTPAPI/2.0"
@@ -111,8 +114,8 @@
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "x-ms-client-request-id": "2d13906b7980ff470efa84d09d2e4a2c",
         "x-ms-request-id": [
-          "22ea4671-6a44-4b15-bfff-142423847029",
-          "22ea4671-6a44-4b15-bfff-142423847029"
+          "5bd9fabd-18d7-4699-9fca-96c1f66bc3eb",
+          "5bd9fabd-18d7-4699-9fca-96c1f66bc3eb"
         ]
       },
       "ResponseBody": {
@@ -125,11 +128,12 @@
       "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/rbac/roles/7af0c69a-a548-47d6-aea3-d00e69bd83aa?api-version=2020-02-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-dce74ce3eaac5c47af5bb063e85c1cbe-13091ea6f80fb240-00",
+        "traceparent": "00-2cc4496b7f102d43b339ee1058446e5f-8e018402057e854f-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.AccessControl/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Analytics.Synapse.AccessControl/1.0.0-dev.20200826.1",
+          "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "a415bc2966d3c8fb7a8457a017388533",
         "x-ms-return-client-request-id": "true"
@@ -139,7 +143,7 @@
       "ResponseHeaders": {
         "Content-Length": "81",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:53:35 GMT",
+        "Date": "Wed, 26 Aug 2020 03:49:52 GMT",
         "Server": [
           "Microsoft-HTTPAPI/2.0",
           "Microsoft-HTTPAPI/2.0"
@@ -147,8 +151,8 @@
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "x-ms-client-request-id": "a415bc2966d3c8fb7a8457a017388533",
         "x-ms-request-id": [
-          "b9465d1f-b603-4230-af65-c3bcd10cd345",
-          "b9465d1f-b603-4230-af65-c3bcd10cd345"
+          "edf8ef55-e5a9-4699-9670-8817b0e03140",
+          "edf8ef55-e5a9-4699-9670-8817b0e03140"
         ]
       },
       "ResponseBody": {

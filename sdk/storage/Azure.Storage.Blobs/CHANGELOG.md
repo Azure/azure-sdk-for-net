@@ -1,5 +1,8 @@
 # Release History
 
+## 12.7.0-preview.1 (Unreleased)
+- Fixed bug where Stream returned from AppendBlobClient.OpenWrite(), BlockBlobClient.OpenWrite() and PageBlobClient.OpenWrite() did not flush while disposing preventing compatibility with using keyword.
+
 ## 12.6.0 (2020-08-31)
 - Fixed bug where BlobClient.Upload(), BlockBlobClient.Upload(), AppendBlobClient.AppendBlock(), and PageBlobClient.UploadPages() would deadlock if the content stream's position was not 0.
 - Fixed bug in BlobBaseClient.OpenRead() causing us to do more download called than necessary.

@@ -49,6 +49,7 @@ namespace Azure.AI.TextAnalytics.Tests
             {
                 Assert.IsTrue(entitiesList.Contains(entity.Text));
                 Assert.IsNotNull(entity.ConfidenceScore);
+                Assert.Greater(entity.Length, 0);
             }
         }
 

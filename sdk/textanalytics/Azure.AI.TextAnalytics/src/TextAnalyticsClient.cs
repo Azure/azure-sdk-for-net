@@ -26,6 +26,10 @@ namespace Azure.AI.TextAnalytics
         private readonly string DefaultCognitiveScope = "https://cognitiveservices.azure.com/.default";
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
 
+        // Specifies the method used to interpret string offsets. Default to <see cref="StringIndexType.Utf16CodeUnit"/>.
+        private readonly StringIndexType _stringCodeUnit = StringIndexType.Utf16CodeUnit;
+
+
         /// <summary>
         /// Protected constructor to allow mocking.
         /// </summary>
@@ -424,7 +428,10 @@ namespace Azure.AI.TextAnalytics
             {
                 var documents = new List<MultiLanguageInput>() { ConvertToMultiLanguageInput(document, language) };
 
-                Response<EntitiesResult> result = await _serviceRestClient.EntitiesRecognitionGeneralAsync(new MultiLanguageBatchInput(documents), cancellationToken: cancellationToken).ConfigureAwait(false);
+                Response<EntitiesResult> result = await _serviceRestClient.EntitiesRecognitionGeneralAsync(
+                    new MultiLanguageBatchInput(documents),
+                    stringIndexType: _stringCodeUnit,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
                 Response response = result.GetRawResponse();
 
                 if (result.Value.Errors.Count > 0)
@@ -479,7 +486,10 @@ namespace Azure.AI.TextAnalytics
             {
                 var documents = new List<MultiLanguageInput>() { ConvertToMultiLanguageInput(document, language) };
 
-                Response<EntitiesResult> result = _serviceRestClient.EntitiesRecognitionGeneral(new MultiLanguageBatchInput(documents), cancellationToken: cancellationToken);
+                Response<EntitiesResult> result = _serviceRestClient.EntitiesRecognitionGeneral(
+                    new MultiLanguageBatchInput(documents),
+                    stringIndexType: _stringCodeUnit,
+                    cancellationToken: cancellationToken);
                 Response response = result.GetRawResponse();
 
                 if (result.Value.Errors.Count > 0)
@@ -639,7 +649,12 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                Response<EntitiesResult> result = await _serviceRestClient.EntitiesRecognitionGeneralAsync(batchInput, options.ModelVersion, options.IncludeStatistics, null, cancellationToken).ConfigureAwait(false);
+                Response<EntitiesResult> result = await _serviceRestClient.EntitiesRecognitionGeneralAsync(
+                    batchInput,
+                    options.ModelVersion,
+                    options.IncludeStatistics,
+                    _stringCodeUnit,
+                    cancellationToken).ConfigureAwait(false);
                 var response = result.GetRawResponse();
 
                 IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
@@ -660,7 +675,12 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                Response<EntitiesResult> result = _serviceRestClient.EntitiesRecognitionGeneral(batchInput, options.ModelVersion, options.IncludeStatistics, null, cancellationToken);
+                Response<EntitiesResult> result = _serviceRestClient.EntitiesRecognitionGeneral(
+                    batchInput,
+                    options.ModelVersion,
+                    options.IncludeStatistics,
+                    _stringCodeUnit,
+                    cancellationToken);
                 var response = result.GetRawResponse();
 
                 IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
@@ -768,12 +788,13 @@ namespace Azure.AI.TextAnalytics
             try
             {
                 var documents = new List<MultiLanguageInput>() { ConvertToMultiLanguageInput(document, language) };
+                bool opinionMining = options.AdditionalSentimentAnalyses.HasFlag(AdditionalSentimentAnalyses.OpinionMining);
                 Response<SentimentResponse> result = await _serviceRestClient.SentimentAsync(
                     new MultiLanguageBatchInput(documents),
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    options.IncludeOpinionMining,
-                    null,
+                    opinionMining,
+                    _stringCodeUnit,
                     cancellationToken).ConfigureAwait(false);
                 Response response = result.GetRawResponse();
 
@@ -828,12 +849,13 @@ namespace Azure.AI.TextAnalytics
             try
             {
                 var documents = new List<MultiLanguageInput>() { ConvertToMultiLanguageInput(document, language) };
+                bool opinionMining = options.AdditionalSentimentAnalyses.HasFlag(AdditionalSentimentAnalyses.OpinionMining);
                 Response<SentimentResponse> result = _serviceRestClient.Sentiment(
                     new MultiLanguageBatchInput(documents),
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    options.IncludeOpinionMining,
-                    null,
+                    opinionMining,
+                    _stringCodeUnit,
                     cancellationToken);
                 Response response = result.GetRawResponse();
 
@@ -1106,7 +1128,14 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                Response<SentimentResponse> result = await _serviceRestClient.SentimentAsync(batchInput, options.ModelVersion, options.IncludeStatistics, options.IncludeOpinionMining, null, cancellationToken).ConfigureAwait(false);
+                bool opinionMining = options.AdditionalSentimentAnalyses.HasFlag(AdditionalSentimentAnalyses.OpinionMining);
+                Response<SentimentResponse> result = await _serviceRestClient.SentimentAsync(
+                    batchInput,
+                    options.ModelVersion,
+                    options.IncludeStatistics,
+                    opinionMining,
+                    _stringCodeUnit,
+                    cancellationToken).ConfigureAwait(false);
                 var response = result.GetRawResponse();
 
                 IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
@@ -1127,7 +1156,14 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                Response<SentimentResponse> result = _serviceRestClient.Sentiment(batchInput, options.ModelVersion, options.IncludeStatistics, options.IncludeOpinionMining, null, cancellationToken);
+                bool opinionMining = options.AdditionalSentimentAnalyses.HasFlag(AdditionalSentimentAnalyses.OpinionMining);
+                Response<SentimentResponse> result = _serviceRestClient.Sentiment(
+                    batchInput,
+                    options.ModelVersion,
+                    options.IncludeStatistics,
+                    opinionMining,
+                    _stringCodeUnit,
+                    cancellationToken);
                 var response = result.GetRawResponse();
 
                 IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
@@ -1461,7 +1497,10 @@ namespace Azure.AI.TextAnalytics
             {
                 var documents = new List<MultiLanguageInput>() { ConvertToMultiLanguageInput(document, language) };
 
-                Response<EntityLinkingResult> result = await _serviceRestClient.EntitiesLinkingAsync(new MultiLanguageBatchInput(documents), cancellationToken: cancellationToken).ConfigureAwait(false);
+                Response<EntityLinkingResult> result = await _serviceRestClient.EntitiesLinkingAsync(
+                    new MultiLanguageBatchInput(documents),
+                    stringIndexType: _stringCodeUnit,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
                 Response response = result.GetRawResponse();
 
                 if (result.Value.Errors.Count > 0)
@@ -1514,7 +1553,10 @@ namespace Azure.AI.TextAnalytics
             {
                 var documents = new List<MultiLanguageInput>() { ConvertToMultiLanguageInput(document, language) };
 
-                Response<EntityLinkingResult> result = _serviceRestClient.EntitiesLinking(new MultiLanguageBatchInput(documents), cancellationToken: cancellationToken);
+                Response<EntityLinkingResult> result = _serviceRestClient.EntitiesLinking(
+                    new MultiLanguageBatchInput(documents),
+                    stringIndexType: _stringCodeUnit,
+                    cancellationToken: cancellationToken);
                 Response response = result.GetRawResponse();
 
                 if (result.Value.Errors.Count > 0)
@@ -1666,7 +1708,12 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                Response<EntityLinkingResult> result = await _serviceRestClient.EntitiesLinkingAsync(batchInput, options.ModelVersion, options.IncludeStatistics, null, cancellationToken).ConfigureAwait(false);
+                Response<EntityLinkingResult> result = await _serviceRestClient.EntitiesLinkingAsync(
+                    batchInput,
+                    options.ModelVersion,
+                    options.IncludeStatistics,
+                    _stringCodeUnit,
+                    cancellationToken).ConfigureAwait(false);
                 var response = result.GetRawResponse();
 
                 IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
@@ -1687,7 +1734,11 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                Response<EntityLinkingResult> result = _serviceRestClient.EntitiesLinking(batchInput, options.ModelVersion, options.IncludeStatistics, null, cancellationToken);
+                Response<EntityLinkingResult> result = _serviceRestClient.EntitiesLinking(batchInput,
+                    options.ModelVersion,
+                    options.IncludeStatistics,
+                    _stringCodeUnit,
+                    cancellationToken);
                 var response = result.GetRawResponse();
 
                 IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);

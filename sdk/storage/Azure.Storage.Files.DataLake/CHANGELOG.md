@@ -1,5 +1,8 @@
 # Release History
 
+## 12.5.0-preview.1 (Unreleased)
+- Fixed bug where Stream returned from DataLakeFileClient.OpenWrite() did not flush while disposing preventing compatibility with using keyword.
+
 ## 12.4.0 (2020-08-31)
 - Fixed bug where DataLakeFileClient.Upload() would deadlock if the content stream's position was not 0.
 - Fixed bug in DataLakeFileClient.OpenRead() causing us to do more download called than necessary.
