@@ -5,7 +5,6 @@ using System;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 
 namespace Microsoft.Azure.WebJobs.Host.Timers
 {
