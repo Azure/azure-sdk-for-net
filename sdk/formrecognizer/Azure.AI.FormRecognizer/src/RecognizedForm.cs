@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -10,7 +11,7 @@ namespace Azure.AI.FormRecognizer.Models
     /// </summary>
     public class RecognizedForm
     {
-        internal RecognizedForm(PageResult_internal pageResult, IReadOnlyList<ReadResult_internal> readResults, int pageIndex)
+        internal RecognizedForm(PageResult pageResult, IReadOnlyList<ReadResult> readResults, int pageIndex)
         {
             // Recognized form from a model trained without labels.
             FormType = $"form-{pageResult.ClusterId}";
@@ -23,7 +24,7 @@ namespace Azure.AI.FormRecognizer.Models
             Pages = new List<FormPage> { new FormPage(pageResult, readResults, pageIndex) };
         }
 
-        internal RecognizedForm(DocumentResult_internal documentResult, IReadOnlyList<PageResult_internal> pageResults, IReadOnlyList<ReadResult_internal> readResults)
+        internal RecognizedForm(DocumentResult documentResult, IReadOnlyList<PageResult> pageResults, IReadOnlyList<ReadResult> readResults)
         {
             // Recognized form from a model trained with labels.
             FormType = documentResult.DocType;
@@ -40,6 +41,21 @@ namespace Azure.AI.FormRecognizer.Models
                 ? new Dictionary<string, FormField>()
                 : ConvertSupervisedFields(documentResult.Fields, readResults);
             Pages = ConvertSupervisedPages(pageResults, readResults);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RecognizedForm"/> class.
+        /// </summary>
+        /// <param name="formType">The type of form the model identified the submitted form to be.</param>
+        /// <param name="pageRange">The range of pages this form spans.</param>
+        /// <param name="fields">A dictionary of the fields recognized from the input document.</param>
+        /// <param name="pages">A list of pages describing the recognized form elements present in the input document.</param>
+        internal RecognizedForm(string formType, FormPageRange pageRange, IReadOnlyDictionary<string, FormField> fields, IReadOnlyList<FormPage> pages)
+        {
+            FormType = formType;
+            PageRange = pageRange;
+            Fields = fields;
+            Pages = pages;
         }
 
         /// <summary>
@@ -62,12 +78,12 @@ namespace Azure.AI.FormRecognizer.Models
         public IReadOnlyDictionary<string, FormField> Fields { get; }
 
         /// <summary>
-        /// A list of pages describing the recognized form content elements present in the input
+        /// A list of pages describing the recognized form elements present in the input
         /// document.
         /// </summary>
         public IReadOnlyList<FormPage> Pages { get; }
 
-        private static IReadOnlyDictionary<string, FormField> ConvertUnsupervisedFields(int pageNumber, IReadOnlyList<KeyValuePair_internal> keyValuePairs, IReadOnlyList<ReadResult_internal> readResults)
+        private static IReadOnlyDictionary<string, FormField> ConvertUnsupervisedFields(int pageNumber, IReadOnlyList<KeyValuePair> keyValuePairs, IReadOnlyList<ReadResult> readResults)
         {
             Dictionary<string, FormField> fieldDictionary = new Dictionary<string, FormField>();
 
@@ -81,7 +97,7 @@ namespace Azure.AI.FormRecognizer.Models
             return fieldDictionary;
         }
 
-        private static IReadOnlyDictionary<string, FormField> ConvertSupervisedFields(IReadOnlyDictionary<string, FieldValue_internal> fields, IReadOnlyList<ReadResult_internal> readResults)
+        private static IReadOnlyDictionary<string, FormField> ConvertSupervisedFields(IReadOnlyDictionary<string, FieldValue_internal> fields, IReadOnlyList<ReadResult> readResults)
         {
             Dictionary<string, FormField> fieldDictionary = new Dictionary<string, FormField>();
 
@@ -95,7 +111,7 @@ namespace Azure.AI.FormRecognizer.Models
             return fieldDictionary;
         }
 
-        private IReadOnlyList<FormPage> ConvertSupervisedPages(IReadOnlyList<PageResult_internal> pageResults, IReadOnlyList<ReadResult_internal> readResults)
+        private IReadOnlyList<FormPage> ConvertSupervisedPages(IReadOnlyList<PageResult> pageResults, IReadOnlyList<ReadResult> readResults)
         {
             List<FormPage> pages = new List<FormPage>();
 
@@ -108,7 +124,7 @@ namespace Azure.AI.FormRecognizer.Models
 
                 if (pageNumber >= PageRange.FirstPageNumber && pageNumber <= PageRange.LastPageNumber)
                 {
-                    pages.Add(new FormPage(pageResults != null ? pageResults[i] : null, readResults, i));
+                    pages.Add(new FormPage(pageResults.Any() ? pageResults[i] : null, readResults, i));
                 }
             }
 

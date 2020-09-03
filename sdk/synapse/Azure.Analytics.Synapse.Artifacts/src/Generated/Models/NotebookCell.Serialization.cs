@@ -27,12 +27,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Attachments != null)
+            if (Optional.IsDefined(Attachments))
             {
                 writer.WritePropertyName("attachments");
                 writer.WriteObjectValue(Attachments);
             }
-            if (Outputs != null)
+            if (Optional.IsCollectionDefined(Outputs))
             {
                 writer.WritePropertyName("outputs");
                 writer.WriteStartArray();
@@ -55,10 +55,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             string cellType = default;
             object metadata = default;
             IList<string> source = default;
-            object attachments = default;
-            IList<NotebookCellOutputItem> outputs = default;
+            Optional<object> attachments = default;
+            Optional<IList<NotebookCellOutputItem>> outputs = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cell_type"))
@@ -76,60 +76,30 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     source = array;
                     continue;
                 }
                 if (property.NameEquals("attachments"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     attachments = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("outputs"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<NotebookCellOutputItem> array = new List<NotebookCellOutputItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(NotebookCellOutputItem.DeserializeNotebookCellOutputItem(item));
-                        }
+                        array.Add(NotebookCellOutputItem.DeserializeNotebookCellOutputItem(item));
                     }
                     outputs = array;
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    additionalPropertiesDictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new NotebookCell(cellType, metadata, source, attachments, outputs, additionalProperties);
+            return new NotebookCell(cellType, metadata, source, attachments.Value, Optional.ToList(outputs), additionalProperties);
         }
     }
 }

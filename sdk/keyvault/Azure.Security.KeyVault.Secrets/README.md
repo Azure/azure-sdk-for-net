@@ -11,7 +11,7 @@ The Azure Key Vault secrets client library allows you to securely store and cont
 Install the Azure Key Vault secrets client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-Install-Package Azure.Security.KeyVault.Secrets
+dotnet install Azure.Security.KeyVault.Secrets
 ```
 
 ### Prerequisites
@@ -32,7 +32,7 @@ Client secret credential authentication is being used in this getting started se
 or other credential providers provided with the Azure SDK, you should install the Azure.Identity package:
 
 ```PowerShell
-Install-Package Azure.Identity
+dotnet install Azure.Identity
 ```
 
 #### Create/Get credentials
@@ -334,6 +334,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [secret_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Secrets/src
 [soft_delete]: https://docs.microsoft.com/azure/key-vault/key-vault-ovw-soft-delete
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
-[contributing]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Microsoft.Azure.KeyVault/CONTRIBUTING.md
+[contributing]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/CONTRIBUTING.md
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fkeyvault%2FAzure.Security.KeyVault.Secrets%2FREADME.png)

@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Level != null)
+            if (Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level");
                 writer.WriteStringValue(Level.Value.ToString());
@@ -33,18 +33,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static DatasetZipDeflateCompression DeserializeDatasetZipDeflateCompression(JsonElement element)
         {
-            DatasetCompressionLevel? level = default;
+            Optional<DatasetCompressionLevel> level = default;
             string type = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("level"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     level = new DatasetCompressionLevel(property.Value.GetString());
                     continue;
                 }
@@ -53,18 +49,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     type = property.Value.GetString();
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    additionalPropertiesDictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DatasetZipDeflateCompression(type, additionalProperties, level);
+            return new DatasetZipDeflateCompression(type, additionalProperties, Optional.ToNullable(level));
         }
     }
 }

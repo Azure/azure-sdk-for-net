@@ -83,7 +83,7 @@ namespace Azure.Storage.Blobs
 
             if (originalRange.Length.HasValue)
             {
-                stream = new WindowStream(stream, originalRange.Length.Value);
+                stream = WindowStream.GetWindow(stream, originalRange.Length.Value);
             }
 
             return stream;

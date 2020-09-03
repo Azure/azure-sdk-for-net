@@ -55,6 +55,7 @@ namespace Azure.Security.KeyVault.Certificates
                 case IdPropertyName:
                     var id = prop.Value.GetString();
                     Id = new Uri(id);
+                    Name = Id.Segments[Id.Segments.Length - 1];
                     break;
 
                 case ProviderPropertyName:

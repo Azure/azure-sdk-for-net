@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Management.Compute.Models
 {
@@ -17,6 +18,7 @@ namespace Azure.Management.Compute.Models
         public VirtualMachineScaleSetOSDisk(DiskCreateOptionTypes createOption)
         {
             CreateOption = createOption;
+            VhdContainers = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetOSDisk. </summary>
@@ -61,7 +63,7 @@ namespace Azure.Management.Compute.Models
         /// <summary> Specifies information about the unmanaged user image to base the scale set on. </summary>
         public VirtualHardDisk Image { get; set; }
         /// <summary> Specifies the container urls that are used to store operating system disks for the scale set. </summary>
-        public IList<string> VhdContainers { get; set; }
+        public IList<string> VhdContainers { get; }
         /// <summary> The managed disk parameters. </summary>
         public VirtualMachineScaleSetManagedDiskParameters ManagedDisk { get; set; }
     }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of EffectiveNetworkSecurityRule. </summary>
         internal EffectiveNetworkSecurityRule()
         {
+            SourcePortRanges = new ChangeTrackingList<string>();
+            DestinationPortRanges = new ChangeTrackingList<string>();
+            SourceAddressPrefixes = new ChangeTrackingList<string>();
+            DestinationAddressPrefixes = new ChangeTrackingList<string>();
+            ExpandedSourceAddressPrefix = new ChangeTrackingList<string>();
+            ExpandedDestinationAddressPrefix = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of EffectiveNetworkSecurityRule. </summary>

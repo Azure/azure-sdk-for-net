@@ -45,7 +45,11 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// 'Everyone'</param>
         /// <param name="canDelegate">The Delegation flag for the role
         /// assignment</param>
-        public RoleAssignment(string id = default(string), string name = default(string), string type = default(string), string scope = default(string), string roleDefinitionId = default(string), string principalId = default(string), string principalType = default(string), bool? canDelegate = default(bool?))
+        /// <param name="description">Description of role assignment</param>
+        /// <param name="condition">The conditions on the role
+        /// assignment</param>
+        /// <param name="conditionVersion">Version of the condition</param>
+        public RoleAssignment(string id = default(string), string name = default(string), string type = default(string), string scope = default(string), string roleDefinitionId = default(string), string principalId = default(string), string principalType = default(string), bool? canDelegate = default(bool?), string description = default(string), string condition = default(string), string conditionVersion = default(string))
         {
             Id = id;
             Name = name;
@@ -55,6 +59,9 @@ namespace Microsoft.Azure.Management.Authorization.Models
             PrincipalId = principalId;
             PrincipalType = principalType;
             CanDelegate = canDelegate;
+            Description = description;
+            Condition = condition;
+            ConditionVersion = conditionVersion;
             CustomInit();
         }
 
@@ -113,6 +120,24 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.canDelegate")]
         public bool? CanDelegate { get; set; }
+
+        /// <summary>
+        /// Gets or sets description of role assignment
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.description")]
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Gets or sets the conditions on the role assignment
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.condition")]
+        public string Condition { get; set; }
+
+        /// <summary>
+        /// Gets or sets version of the condition
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.conditionVersion")]
+        public string ConditionVersion { get; set; }
 
     }
 }

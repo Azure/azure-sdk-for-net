@@ -14,26 +14,18 @@ namespace Azure.Analytics.Synapse.AccessControl.Models
     {
         internal static SynapseRole DeserializeSynapseRole(JsonElement element)
         {
-            string id = default;
-            string name = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
             bool isBuiltIn = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
@@ -43,7 +35,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Models
                     continue;
                 }
             }
-            return new SynapseRole(id, name, isBuiltIn);
+            return new SynapseRole(id.Value, name.Value, isBuiltIn);
         }
     }
 }

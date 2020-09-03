@@ -10,8 +10,6 @@ param (
   $UploadLatest=1
 )
 
-Write-Host "> $PSCommandPath $args"
-
 $Language = $Language.ToLower()
 
 # Regex inspired but simplified from https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string
@@ -352,4 +350,10 @@ if ($Language -eq "c")
     # used to publish multiple docs packages in a single invocation.
     $pkgInfo = Get-Content $DocLocation/package-info.json | ConvertFrom-Json
     Upload-Blobs -DocDir $DocLocation -PkgName 'docs' -DocVersion $pkgInfo.version
+}
+
+if ($Language -eq "cpp")
+{
+    $packageInfo = (Get-Content (Join-Path $DocLocation 'package-info.json') | ConvertFrom-Json)
+    Upload-Blobs -DocDir $DocLocation -PkgName $packageInfo.name -DocVersion $packageInfo.version
 }

@@ -53,6 +53,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(clone.Identifier, Is.EqualTo(options.Identifier), "The identifier should match.");
             Assert.That(clone.TrackLastEnqueuedEventProperties, Is.EqualTo(options.TrackLastEnqueuedEventProperties), "Tracking of last enqueued events should match.");
             Assert.That(clone.DefaultStartingPosition, Is.EqualTo(options.DefaultStartingPosition), "The default starting position should match.");
+            Assert.That(clone.LoadBalancingStrategy, Is.EqualTo(options.LoadBalancingStrategy), "The load balancing strategy should match.");
         }
 
         /// <summary>
@@ -92,6 +93,18 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorOptions.MaximumWaitTime" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void MaximumWaitTimeAllowsNull()
+        {
+            var options = new EventProcessorOptions();
+            Assert.That(() => options.MaximumWaitTime = null, Throws.Nothing);
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="EventProcessorOptions.PrefetchCount" />
         ///   property.
         /// </summary>
@@ -103,6 +116,17 @@ namespace Azure.Messaging.EventHubs.Tests
         public void PrefetchCountIsValidated(int count)
         {
             Assert.That(() => new EventProcessorOptions { PrefetchCount = count }, Throws.InstanceOf<ArgumentOutOfRangeException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorOptions.PrefetchCount" />
+        ///   property.
+        /// </summary>
+        ///
+        [Test]
+        public void PrefetchCountAllowsZero()
+        {
+            Assert.That(() => new EventProcessorOptions { PrefetchCount = 0 }, Throws.Nothing);
         }
 
         /// <summary>

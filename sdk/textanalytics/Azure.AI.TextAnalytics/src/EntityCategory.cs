@@ -9,7 +9,7 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// Gets the entity category inferred by the Text Analytics service's named entity recognition model.
-    /// The list of available categories is described at <see href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
+    /// The list of available categories is described at <see href="https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/named-entity-types">Supported entity categories in Named Entity Recognition v3</see>.
     /// </summary>
     public readonly struct EntityCategory : IEquatable<EntityCategory>
     {

@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Synapse", "src\Microsoft.Azure.Management.Synapse.csproj", "{029A7435-2569-4AA1-B9E6-0438C8D7A0C3}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Synapse.Tests", "tests\Microsoft.Azure.Management.Synapse.Tests.csproj", "{DCD6B301-9F60-4C43-8F71-DD5A5EEB48F8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,10 +17,10 @@ Global
 		{029A7435-2569-4AA1-B9E6-0438C8D7A0C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{029A7435-2569-4AA1-B9E6-0438C8D7A0C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{029A7435-2569-4AA1-B9E6-0438C8D7A0C3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{18309FE3-6E0D-4F4A-A4D7-371E16E76125}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{18309FE3-6E0D-4F4A-A4D7-371E16E76125}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{18309FE3-6E0D-4F4A-A4D7-371E16E76125}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{18309FE3-6E0D-4F4A-A4D7-371E16E76125}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCD6B301-9F60-4C43-8F71-DD5A5EEB48F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCD6B301-9F60-4C43-8F71-DD5A5EEB48F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCD6B301-9F60-4C43-8F71-DD5A5EEB48F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCD6B301-9F60-4C43-8F71-DD5A5EEB48F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

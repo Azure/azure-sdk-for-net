@@ -15,42 +15,27 @@ namespace Azure.Security.KeyVault.Administration.Models
     {
         internal static RoleAssignmentListResult DeserializeRoleAssignmentListResult(JsonElement element)
         {
-            IReadOnlyList<RoleAssignment> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<KeyVaultRoleAssignment>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<RoleAssignment> array = new List<RoleAssignment>();
+                    List<KeyVaultRoleAssignment> array = new List<KeyVaultRoleAssignment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(RoleAssignment.DeserializeRoleAssignment(item));
-                        }
+                        array.Add(KeyVaultRoleAssignment.DeserializeKeyVaultRoleAssignment(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new RoleAssignmentListResult(value, nextLink);
+            return new RoleAssignmentListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

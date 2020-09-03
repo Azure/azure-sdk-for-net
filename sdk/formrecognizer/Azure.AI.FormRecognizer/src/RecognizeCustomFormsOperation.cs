@@ -32,7 +32,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary><c>true</c> if the long-running operation has completed. Otherwise, <c>false</c>.</summary>
         private bool _hasCompleted;
 
-        /// <summary>The id of the model to use for recognizing form values.</summary>
+        /// <summary>The ID of the model to use for recognizing form values.</summary>
         private readonly string _modelId;
 
         /// <summary>An ID representing the operation that can be used along with <see cref="_modelId"/> to poll for the status of the long-running operation.</summary>
@@ -156,7 +156,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (substrs.Length < 3)
             {
-                throw new ArgumentException($"Invalid {operationId}. It should be formatted as: '{{modelId}}/analyzeresults/{{resultId}}'.", operationId);
+                throw new ArgumentException($"Invalid '{nameof(operationId)}'. It should be formatted as: '{{modelId}}/analyzeresults/{{resultId}}'.", nameof(operationId));
             }
 
             _resultId = substrs.Last();
@@ -197,41 +197,52 @@ namespace Azure.AI.FormRecognizer.Models
         {
             if (!_hasCompleted)
             {
-                Response<AnalyzeOperationResult_internal> update = async
-                    ? await _serviceClient.GetAnalyzeFormResultAsync(new Guid(_modelId), new Guid(_resultId), cancellationToken).ConfigureAwait(false)
-                    : _serviceClient.GetAnalyzeFormResult(new Guid(_modelId), new Guid(_resultId), cancellationToken);
+                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(RecognizeCustomFormsOperation)}.{nameof(UpdateStatus)}");
+                scope.Start();
 
-                // TODO: Add reasonable null checks.
-
-                _response = update.GetRawResponse();
-
-                if (update.Value.Status == OperationStatus.Succeeded)
+                try
                 {
-                    // We need to first assign a value and then mark the operation as completed to avoid a race condition with the getter in Value
-                    _value = ConvertToRecognizedForms(update.Value.AnalyzeResult);
-                    _hasCompleted = true;
+                    Response<AnalyzeOperationResult> update = async
+                        ? await _serviceClient.GetAnalyzeFormResultAsync(new Guid(_modelId), new Guid(_resultId), cancellationToken).ConfigureAwait(false)
+                        : _serviceClient.GetAnalyzeFormResult(new Guid(_modelId), new Guid(_resultId), cancellationToken);
+
+                    // TODO: Add reasonable null checks.
+
+                    _response = update.GetRawResponse();
+
+                    if (update.Value.Status == OperationStatus.Succeeded)
+                    {
+                        // We need to first assign a value and then mark the operation as completed to avoid a race condition with the getter in Value
+                        _value = ConvertToRecognizedForms(update.Value.AnalyzeResult);
+                        _hasCompleted = true;
+                    }
+                    else if (update.Value.Status == OperationStatus.Failed)
+                    {
+                        _requestFailedException = await ClientCommon
+                            .CreateExceptionForFailedOperationAsync(async, _diagnostics, _response, update.Value.AnalyzeResult.Errors)
+                            .ConfigureAwait(false);
+                        _hasCompleted = true;
+                        throw _requestFailedException;
+                    }
                 }
-                else if (update.Value.Status == OperationStatus.Failed)
+                catch (Exception e)
                 {
-                    _requestFailedException = await ClientCommon
-                        .CreateExceptionForFailedOperationAsync(async, _diagnostics, _response, update.Value.AnalyzeResult.Errors)
-                        .ConfigureAwait(false);
-                    _hasCompleted = true;
-                    throw _requestFailedException;
+                    scope.Failed(e);
+                    throw;
                 }
             }
 
             return GetRawResponse();
         }
 
-        private static RecognizedFormCollection ConvertToRecognizedForms(AnalyzeResult_internal analyzeResult)
+        private static RecognizedFormCollection ConvertToRecognizedForms(AnalyzeResult analyzeResult)
         {
             return analyzeResult.DocumentResults?.Count == 0 ?
                 ConvertUnsupervisedResult(analyzeResult) :
                 ConvertSupervisedResult(analyzeResult);
         }
 
-        private static RecognizedFormCollection ConvertUnsupervisedResult(AnalyzeResult_internal analyzeResult)
+        private static RecognizedFormCollection ConvertUnsupervisedResult(AnalyzeResult analyzeResult)
         {
             List<RecognizedForm> forms = new List<RecognizedForm>();
             for (int pageIndex = 0; pageIndex < analyzeResult.PageResults.Count; pageIndex++)
@@ -241,7 +252,7 @@ namespace Azure.AI.FormRecognizer.Models
             return new RecognizedFormCollection(forms);
         }
 
-        private static RecognizedFormCollection ConvertSupervisedResult(AnalyzeResult_internal analyzeResult)
+        private static RecognizedFormCollection ConvertSupervisedResult(AnalyzeResult analyzeResult)
         {
             List<RecognizedForm> forms = new List<RecognizedForm>();
             foreach (var documentResult in analyzeResult.DocumentResults)

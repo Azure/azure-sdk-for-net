@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
@@ -17,7 +18,7 @@ namespace Azure.Graph.Rbac.Models
         /// <summary> Initializes a new instance of PasswordCredential. </summary>
         public PasswordCredential()
         {
-            AdditionalProperties = new Dictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of PasswordCredential. </summary>
@@ -34,7 +35,7 @@ namespace Azure.Graph.Rbac.Models
             KeyId = keyId;
             Value = value;
             CustomKeyIdentifier = customKeyIdentifier;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> Start date. </summary>

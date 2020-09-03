@@ -129,9 +129,13 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='assignmentName'>
             /// Name of the blueprint assignment.
             /// </param>
-            public static Assignment Delete(this IAssignmentsOperations operations, string resourceScope, string assignmentName)
+            /// <param name='deleteBehavior'>
+            /// When deleteBehavior=all, the resources that were created by the blueprint
+            /// assignment will be deleted. Possible values include: 'none', 'all'
+            /// </param>
+            public static Assignment Delete(this IAssignmentsOperations operations, string resourceScope, string assignmentName, string deleteBehavior = default(string))
             {
-                return operations.DeleteAsync(resourceScope, assignmentName).GetAwaiter().GetResult();
+                return operations.DeleteAsync(resourceScope, assignmentName, deleteBehavior).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -148,12 +152,16 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='assignmentName'>
             /// Name of the blueprint assignment.
             /// </param>
+            /// <param name='deleteBehavior'>
+            /// When deleteBehavior=all, the resources that were created by the blueprint
+            /// assignment will be deleted. Possible values include: 'none', 'all'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Assignment> DeleteAsync(this IAssignmentsOperations operations, string resourceScope, string assignmentName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Assignment> DeleteAsync(this IAssignmentsOperations operations, string resourceScope, string assignmentName, string deleteBehavior = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceScope, assignmentName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceScope, assignmentName, deleteBehavior, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

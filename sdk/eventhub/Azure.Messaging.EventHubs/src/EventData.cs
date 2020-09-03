@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using Azure.Core;
 using Azure.Messaging.EventHubs.Consumer;
 
 namespace Azure.Messaging.EventHubs
@@ -16,6 +17,9 @@ namespace Azure.Messaging.EventHubs
     ///
     public class EventData
     {
+        /// <summary>The sequence number associated with publishing of the event.</summary>
+        private int? _publishedSequenceNumber = null;
+
         /// <summary>
         ///   The data associated with the event.
         /// </summary>
@@ -83,6 +87,37 @@ namespace Azure.Messaging.EventHubs
         /// </remarks>
         ///
         public IReadOnlyDictionary<string, object> SystemProperties { get; }
+
+        /// <summary>
+        ///   The publishing sequence number assigned to the event at the time it was successfully published.
+        /// </summary>
+        ///
+        /// <value>
+        ///   The sequence number that was assigned during publishing, if the event was successfully
+        ///   published by a sequence-aware producer.  If the producer was not configured to apply
+        ///   sequence numbering or if the event has not yet been successfully published, this member
+        ///   will be <c>null</c>.
+        /// </value>
+        ///
+        /// <remarks>
+        ///   The published sequence number is only populated and relevant when certain features
+        ///   of the producer are enabled.  For example, it is used by idempotent publishing.
+        /// </remarks>
+        ///
+        public int? PublishedSequenceNumber
+        {
+            get => _publishedSequenceNumber;
+
+            internal set
+            {
+                if (value.HasValue)
+                {
+                    Argument.AssertAtLeast(value.Value, 0, nameof(PublishedSequenceNumber));
+                }
+
+                _publishedSequenceNumber = value;
+            }
+        }
 
         /// <summary>
         ///   The sequence number assigned to the event when it was enqueued in the associated Event Hub partition.

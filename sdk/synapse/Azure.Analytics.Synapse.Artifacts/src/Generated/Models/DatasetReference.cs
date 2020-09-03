@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -14,23 +15,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     public partial class DatasetReference
     {
         /// <summary> Initializes a new instance of DatasetReference. </summary>
+        /// <param name="type"> Dataset reference type. </param>
         /// <param name="referenceName"> Reference dataset name. </param>
-        public DatasetReference(string referenceName)
+        /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
+        public DatasetReference(DatasetReferenceType type, string referenceName)
         {
             if (referenceName == null)
             {
                 throw new ArgumentNullException(nameof(referenceName));
             }
 
-            Type = "DatasetReference";
+            Type = type;
             ReferenceName = referenceName;
+            Parameters = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of DatasetReference. </summary>
         /// <param name="type"> Dataset reference type. </param>
         /// <param name="referenceName"> Reference dataset name. </param>
         /// <param name="parameters"> Arguments for dataset. </param>
-        internal DatasetReference(string type, string referenceName, IDictionary<string, object> parameters)
+        internal DatasetReference(DatasetReferenceType type, string referenceName, IDictionary<string, object> parameters)
         {
             Type = type;
             ReferenceName = referenceName;
@@ -38,10 +42,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Dataset reference type. </summary>
-        public string Type { get; set; }
+        public DatasetReferenceType Type { get; set; }
         /// <summary> Reference dataset name. </summary>
         public string ReferenceName { get; set; }
         /// <summary> Arguments for dataset. </summary>
-        public IDictionary<string, object> Parameters { get; set; }
+        public IDictionary<string, object> Parameters { get; }
     }
 }

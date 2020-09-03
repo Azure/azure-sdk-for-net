@@ -101,23 +101,24 @@ namespace Microsoft.Azure.Management.Billing.Models
         public string CreatedByUserEmailAddress { get; private set; }
 
         /// <summary>
-        /// Gets the principal id of the user to whom the role was assigned.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.principalId")]
-        public string PrincipalId { get; private set; }
-
-        /// <summary>
-        /// Gets the principal tenant id of the user to whom the role was
+        /// Gets or sets the principal id of the user to whom the role was
         /// assigned.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.principalTenantId")]
-        public string PrincipalTenantId { get; private set; }
+        [JsonProperty(PropertyName = "properties.principalId")]
+        public string PrincipalId { get; set; }
 
         /// <summary>
-        /// Gets the ID of the role definition.
+        /// Gets or sets the principal tenant id of the user to whom the role
+        /// was assigned.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.principalTenantId")]
+        public string PrincipalTenantId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ID of the role definition.
         /// </summary>
         [JsonProperty(PropertyName = "properties.roleDefinitionId")]
-        public string RoleDefinitionId { get; private set; }
+        public string RoleDefinitionId { get; set; }
 
         /// <summary>
         /// Gets the scope at which the role was assigned.
@@ -126,16 +127,16 @@ namespace Microsoft.Azure.Management.Billing.Models
         public string Scope { get; private set; }
 
         /// <summary>
-        /// Gets the authentication type.
+        /// Gets or sets the authentication type.
         /// </summary>
         [JsonProperty(PropertyName = "properties.userAuthenticationType")]
-        public string UserAuthenticationType { get; private set; }
+        public string UserAuthenticationType { get; set; }
 
         /// <summary>
-        /// Gets the email address of the user.
+        /// Gets or sets the email address of the user.
         /// </summary>
         [JsonProperty(PropertyName = "properties.userEmailAddress")]
-        public string UserEmailAddress { get; private set; }
+        public string UserEmailAddress { get; set; }
 
     }
 }

@@ -1,6 +1,6 @@
 # Azure Storage File Shares client library for .NET
 
-> Server Version: 2019-07-07
+> Server Version: 2019-12-12, 2019-07-07, and 2019-02-02
 
 Azure File Shares offers fully managed file shares in the cloud that are accessible
 via the industry standard Server Message Block (SMB) protocol. Azure file

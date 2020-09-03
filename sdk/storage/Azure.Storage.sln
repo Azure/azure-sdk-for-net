@@ -104,6 +104,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Batch.T
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Batch.Samples.Tests", "Azure.Storage.Blobs.Batch\samples\Azure.Storage.Blobs.Batch.Samples.Tests.csproj", "{73F575E6-FA87-40B0-9D36-6D9FAAC1E1C1}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Internal.Avro", "Azure.Storage.Internal.Avro\src\Azure.Storage.Internal.Avro.csproj", "{83C6A14C-98D1-46EA-BBB6-BE1D783BAEC4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Internal.Avro.Tests", "Azure.Storage.Internal.Avro\tests\Azure.Storage.Internal.Avro.Tests.csproj", "{A7FEC0AC-9A90-4F12-A260-B0B63E57D9DA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.ChangeFeed", "Azure.Storage.Blobs.ChangeFeed\src\Azure.Storage.Blobs.ChangeFeed.csproj", "{5EA89BEF-6367-41DD-A10F-246E0D3FDA55}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.ChangeFeed.Tests", "Azure.Storage.Blobs.ChangeFeed\tests\Azure.Storage.Blobs.ChangeFeed.Tests.csproj", "{0780564C-4096-45B4-8DEF-132EE7CB2CF8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.ChangeFeed.Samples.Tests", "Azure.Storage.Blobs.ChangeFeed\samples\Azure.Storage.Blobs.ChangeFeed.Samples.Tests.csproj", "{5F7C7873-0E11-468C-8045-5163B068FC16}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{23B3D5C8-3160-4BD6-8B25-0D33C98ABE70}"
 EndProject
 Global
@@ -192,6 +202,26 @@ Global
 		{73F575E6-FA87-40B0-9D36-6D9FAAC1E1C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73F575E6-FA87-40B0-9D36-6D9FAAC1E1C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73F575E6-FA87-40B0-9D36-6D9FAAC1E1C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83C6A14C-98D1-46EA-BBB6-BE1D783BAEC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83C6A14C-98D1-46EA-BBB6-BE1D783BAEC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83C6A14C-98D1-46EA-BBB6-BE1D783BAEC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83C6A14C-98D1-46EA-BBB6-BE1D783BAEC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7FEC0AC-9A90-4F12-A260-B0B63E57D9DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7FEC0AC-9A90-4F12-A260-B0B63E57D9DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7FEC0AC-9A90-4F12-A260-B0B63E57D9DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7FEC0AC-9A90-4F12-A260-B0B63E57D9DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EA89BEF-6367-41DD-A10F-246E0D3FDA55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EA89BEF-6367-41DD-A10F-246E0D3FDA55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EA89BEF-6367-41DD-A10F-246E0D3FDA55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EA89BEF-6367-41DD-A10F-246E0D3FDA55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0780564C-4096-45B4-8DEF-132EE7CB2CF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0780564C-4096-45B4-8DEF-132EE7CB2CF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0780564C-4096-45B4-8DEF-132EE7CB2CF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0780564C-4096-45B4-8DEF-132EE7CB2CF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F7C7873-0E11-468C-8045-5163B068FC16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F7C7873-0E11-468C-8045-5163B068FC16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F7C7873-0E11-468C-8045-5163B068FC16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F7C7873-0E11-468C-8045-5163B068FC16}.Release|Any CPU.Build.0 = Release|Any CPU
 		{23B3D5C8-3160-4BD6-8B25-0D33C98ABE70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{23B3D5C8-3160-4BD6-8B25-0D33C98ABE70}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23B3D5C8-3160-4BD6-8B25-0D33C98ABE70}.Release|Any CPU.ActiveCfg = Release|Any CPU

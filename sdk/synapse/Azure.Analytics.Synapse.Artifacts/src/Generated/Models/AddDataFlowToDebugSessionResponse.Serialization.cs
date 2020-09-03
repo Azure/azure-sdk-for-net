@@ -14,20 +14,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static AddDataFlowToDebugSessionResponse DeserializeAddDataFlowToDebugSessionResponse(JsonElement element)
         {
-            string jobVersion = default;
+            Optional<string> jobVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobVersion"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     jobVersion = property.Value.GetString();
                     continue;
                 }
             }
-            return new AddDataFlowToDebugSessionResponse(jobVersion);
+            return new AddDataFlowToDebugSessionResponse(jobVersion.Value);
         }
     }
 }

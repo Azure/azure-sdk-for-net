@@ -347,7 +347,7 @@ namespace Microsoft.Azure.Management.GuestConfiguration
             GuestConfigurationHCRPAssignmentReports = new GuestConfigurationHCRPAssignmentReportsOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-11-20";
+            ApiVersion = "2020-06-25";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -14,6 +15,11 @@ namespace Azure.Core.Tests
         {
             Environment.SetEnvironmentVariable("CORE_RECORDED", "1");
             Environment.SetEnvironmentVariable("CORE_NOTRECORDED", "2");
+
+            Environment.SetEnvironmentVariable("CORE_Base64Secret", "1");
+            Environment.SetEnvironmentVariable("CORE_CustomSecret", "1");
+            Environment.SetEnvironmentVariable("CORE_DefaultSecret", "1");
+            Environment.SetEnvironmentVariable("CORE_ConnectionStringWithSecret", "endpoint=1;key=2");
         }
 
         [Theory]
@@ -49,6 +55,30 @@ namespace Azure.Core.Tests
             Assert.AreEqual("2", MockTestEnvironment.Instance.NotRecordedValue);
         }
 
+        [Test]
+        public void RecordedVariableSanitized()
+        {
+            var tempFile = Path.GetTempFileName();
+            var env = new MockTestEnvironment();
+            var testRecording = new TestRecording(RecordedTestMode.Record, tempFile, new RecordedTestSanitizer(), new RecordMatcher());
+            env.Mode = RecordedTestMode.Record;
+            env.SetRecording(testRecording);
+
+            Assert.AreEqual("1", env.Base64Secret);
+            Assert.AreEqual("1", env.CustomSecret);
+            Assert.AreEqual("1", env.DefaultSecret);
+            Assert.AreEqual("endpoint=1;key=2", env.ConnectionStringWithSecret);
+
+            testRecording.Dispose();
+
+            testRecording = new TestRecording(RecordedTestMode.Playback, tempFile, new RecordedTestSanitizer(), new RecordMatcher());
+
+            Assert.AreEqual("Kg==", testRecording.GetVariable("Base64Secret", ""));
+            Assert.AreEqual("Custom", testRecording.GetVariable("CustomSecret", ""));
+            Assert.AreEqual("Sanitized", testRecording.GetVariable("DefaultSecret", ""));
+            Assert.AreEqual("endpoint=1;key=Sanitized", testRecording.GetVariable("ConnectionStringWithSecret", ""));
+        }
+
         private class RecordedVariableMisuse : RecordedTestBase<MockTestEnvironment>
         {
             // To make NUnit happy
@@ -80,6 +110,11 @@ namespace Azure.Core.Tests
             public static MockTestEnvironment Instance { get; } = new MockTestEnvironment();
             public string RecordedValue => GetRecordedVariable("RECORDED");
             public string NotRecordedValue => GetVariable("NOTRECORDED");
+
+            public string Base64Secret => GetRecordedVariable("Base64Secret", option => option.IsSecret(SanitizedValue.Base64));
+            public string DefaultSecret => GetRecordedVariable("DefaultSecret", option => option.IsSecret(SanitizedValue.Default));
+            public string CustomSecret => GetRecordedVariable("CustomSecret", option => option.IsSecret("Custom"));
+            public string ConnectionStringWithSecret => GetRecordedVariable("ConnectionStringWithSecret", option => option.HasSecretConnectionStringParameter("key"));
 
         }
     }

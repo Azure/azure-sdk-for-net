@@ -6,12 +6,12 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.Marketplace</PackageId>
     <Description>Microsoft Azure Marketplace Library</Description>
-    <Version>1.0.1</Version>
+    <Version>1.1.0</Version>
     <AssemblyName>Microsoft.Azure.Management.Marketplace</AssemblyName>
-    <PackageTags>management;marketplace;</PackageTags>
+    <PackageTags>management;marketplace;privatestore</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        This is a public release of the Azure Marketplace SDK. Included with this release is the ability to create and manage private stores in Marketplace.
+        This is a public release of the Azure Marketplace SDK. Included with this release is the ability to create and manage private  offers in private store  Marketplace under subscription level.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

@@ -16,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of RerunTriggerListResponse. </summary>
         /// <param name="value"> List of rerun triggers. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal RerunTriggerListResponse(IEnumerable<RerunTriggerResource> value)
         {
             if (value == null)
@@ -23,16 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 throw new ArgumentNullException(nameof(value));
             }
 
-            Value = value.ToArray();
-        }
-
-        /// <summary> Initializes a new instance of RerunTriggerListResponse. </summary>
-        /// <param name="value"> List of rerun triggers. </param>
-        /// <param name="nextLink"> The continuation token for getting the next page of results, if any remaining results exist, null otherwise. </param>
-        internal RerunTriggerListResponse(IReadOnlyList<RerunTriggerResource> value, string nextLink)
-        {
-            Value = value ?? new List<RerunTriggerResource>();
-            NextLink = nextLink;
+            Value = value.ToList();
         }
 
         /// <summary> List of rerun triggers. </summary>

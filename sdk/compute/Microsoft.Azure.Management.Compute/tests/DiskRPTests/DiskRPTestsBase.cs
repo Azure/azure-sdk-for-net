@@ -106,6 +106,99 @@ namespace Compute.Tests.DiskRPTests
             }
 
         }
+
+        protected void PremiumDisk_CRUD_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null, string tier = null, string location = null, IList<string> zones = null)
+        {
+            using (MockContext context = MockContext.Start(this.GetType(), methodName))
+            {
+                EnsureClientsInitialized(context);
+                DiskRPLocation = location ?? DiskRPLocation;
+
+                // Data
+                var rgName = TestUtilities.GenerateName(TestPrefix);
+                var diskName = TestUtilities.GenerateName(DiskNamePrefix);
+                Disk disk = GenerateDefaultDisk(diskCreateOption, rgName, diskSizeGB, zones, location);
+                disk.Sku = new DiskSku()
+                {
+                    Name = StorageAccountTypes.PremiumLRS
+                };
+                disk.Tier = tier;
+
+                try
+                {
+                    // **********
+                    // SETUP
+                    // **********
+                    // Create resource group, unless create option is import in which case resource group will be created with vm,
+                    // or copy in which case the resource group will be created with the original disk.
+                    if (diskCreateOption != DiskCreateOption.Import && diskCreateOption != DiskCreateOption.Copy)
+                    {
+                        m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = DiskRPLocation });
+                    }
+
+                    // **********
+                    // TEST
+                    // **********
+                    // Put
+                    Disk diskOut = m_CrpClient.Disks.CreateOrUpdate(rgName, diskName, disk);
+                    Validate(disk, diskOut, DiskRPLocation);
+                    Assert.Equal(tier, diskOut.Tier);
+
+                    // Get
+                    diskOut = m_CrpClient.Disks.Get(rgName, diskName);
+                    Validate(disk, diskOut, DiskRPLocation);
+                    Assert.Equal(tier, diskOut.Tier);
+
+                    // Get disk access
+                    AccessUri accessUri = m_CrpClient.Disks.GrantAccess(rgName, diskName, AccessDataDefault);
+                    Assert.NotNull(accessUri.AccessSAS);
+
+                    // Get
+                    diskOut = m_CrpClient.Disks.Get(rgName, diskName);
+                    Validate(disk, diskOut, DiskRPLocation);
+
+                    // Patch
+                    // TODO: Bug 9865640 - DiskRP doesn't follow patch semantics for zones: skip this for zones
+                    if (zones == null)
+                    {
+                        const string tagKey = "tageKey";
+                        var updatedisk = new DiskUpdate();
+                        updatedisk.Tags = new Dictionary<string, string>() { { tagKey, "tagvalue" } };
+                        diskOut = m_CrpClient.Disks.Update(rgName, diskName, updatedisk);
+                        Validate(disk, diskOut, DiskRPLocation);
+                        Assert.Equal(tier, disk.Tier);
+                    }
+
+                    // Get
+                    diskOut = m_CrpClient.Disks.Get(rgName, diskName);
+                    Validate(disk, diskOut, DiskRPLocation);
+
+                    // End disk access
+                    m_CrpClient.Disks.RevokeAccess(rgName, diskName);
+
+                    // Delete
+                    m_CrpClient.Disks.Delete(rgName, diskName);
+
+                    try
+                    {
+                        // Ensure it was really deleted
+                        m_CrpClient.Disks.Get(rgName, diskName);
+                        Assert.False(true);
+                    }
+                    catch (CloudException ex)
+                    {
+                        Assert.Equal(HttpStatusCode.NotFound, ex.Response.StatusCode);
+                    }
+                }
+                finally
+                {
+                    // Delete resource group
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+
+        }
+
         protected void Snapshot_CRUD_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null, string location = null, bool incremental = false)
         {
             using (MockContext context = MockContext.Start(this.GetType(), methodName))
@@ -331,12 +424,10 @@ namespace Compute.Tests.DiskRPTests
                     NM.Subnet subnet = CreateVNET(rgName, disablePEPolicies: true);
 
                     // Put Private Endpoint associating it with disk access
-                    //TODO: Uncomment below after network dll upgrade
-                    //NM.PrivateEndpoint privateEndpoint = CreatePrivateEndpoint(rgName, privateEndpointName, diskAccessOut.Id, subnet.Id);
+                    NM.PrivateEndpoint privateEndpoint = CreatePrivateEndpoint(rgName, privateEndpointName, diskAccessOut.Id, subnet.Id);
 
                     diskAccessOut = m_CrpClient.DiskAccesses.Get(rgName, diskAccessName);
-                    //TODO: Uncomment below after network dll upgrade
-                    //Validate(diskAccess, diskAccessOut, diskAccessName, privateEndpoint.Id);
+                    Validate(diskAccess, diskAccessOut, diskAccessName, privateEndpoint.Id);
 
                     // Patch DiskAccess
                     const string tagKey = "tagKey";
@@ -348,8 +439,7 @@ namespace Compute.Tests.DiskRPTests
                     PrivateLinkResourceListResult privateLinkResources = m_CrpClient.DiskAccesses.GetPrivateLinkResources(rgName, diskAccessName);
                     Validate(privateLinkResources);
 
-                    //TODO: Uncomment below after network dll upgrade
-                    //m_NrpClient.PrivateEndpoints.DeleteWithHttpMessagesAsync(rgName, privateEndpointName).GetAwaiter().GetResult();
+                    m_NrpClient.PrivateEndpoints.DeleteWithHttpMessagesAsync(rgName, privateEndpointName).GetAwaiter().GetResult();
 
                     // Delete DiskAccess
                     m_CrpClient.DiskAccesses.Delete(rgName, diskAccessName);
@@ -673,6 +763,9 @@ namespace Compute.Tests.DiskRPTests
                     Assert.Equal(desOut.Id.ToLower(), diskOut.Encryption.DiskEncryptionSetId.ToLower());
                     Assert.Equal(EncryptionType.EncryptionAtRestWithCustomerKey, diskOut.Encryption.Type);
 
+                    IPage<string> diskUri = m_CrpClient.DiskEncryptionSets.ListAssociatedResources("longrunningrg-centraluseuap", desName);
+                    List<string>diskUriString = diskUri.ToList().ConvertAll(r => r.ToString().ToLower());
+                    Assert.Contains(diskOut.Id.ToLower().ToString(), diskUriString);
                     m_CrpClient.Disks.Delete(rgName, diskName);
                 }
                 finally
@@ -1043,32 +1136,31 @@ namespace Compute.Tests.DiskRPTests
 
         #region Helpers
 
-        //TODO: Uncomment after network dll upgrade
-        //protected NM.PrivateEndpoint CreatePrivateEndpoint(string rgName, string peName, string diskAccessId, string subnetId)
-        //{
-        //    string plsConnectionName = TestUtilities.GenerateName("pls");
-        //    NM.PrivateEndpoint privateEndpoint = new NM.PrivateEndpoint
-        //    {
-        //        Subnet = new NM.Subnet
-        //        {
-        //            Id = subnetId
-        //        },
-        //        Location = m_location,
-        //        PrivateLinkServiceConnections = new List<NM.PrivateLinkServiceConnection>
-        //        {
-        //            new NM.PrivateLinkServiceConnection
-        //            {
-        //                GroupIds = new List<string> { "disks" },
-        //                Name = plsConnectionName,
-        //                PrivateLinkServiceId = diskAccessId
-        //            }
-        //        }
-        //    };
+        protected NM.PrivateEndpoint CreatePrivateEndpoint(string rgName, string peName, string diskAccessId, string subnetId)
+        {
+            string plsConnectionName = TestUtilities.GenerateName("pls");
+            NM.PrivateEndpoint privateEndpoint = new NM.PrivateEndpoint
+            {
+                Subnet = new NM.Subnet
+                {
+                    Id = subnetId
+                },
+                Location = m_location,
+                PrivateLinkServiceConnections = new List<NM.PrivateLinkServiceConnection>
+                {
+                    new NM.PrivateLinkServiceConnection
+                    {
+                        GroupIds = new List<string> { "disks" },
+                        Name = plsConnectionName,
+                        PrivateLinkServiceId = diskAccessId
+                    }
+                }
+            };
 
-        //    NM.PrivateEndpoint privateEndpointOut = m_NrpClient.PrivateEndpoints.CreateOrUpdateWithHttpMessagesAsync(rgName, peName, privateEndpoint).GetAwaiter().GetResult().Body;
+            NM.PrivateEndpoint privateEndpointOut = m_NrpClient.PrivateEndpoints.CreateOrUpdateWithHttpMessagesAsync(rgName, peName, privateEndpoint).GetAwaiter().GetResult().Body;
 
-        //    return privateEndpointOut;
-        //}
+            return privateEndpointOut;
+        }
 
         #endregion
 

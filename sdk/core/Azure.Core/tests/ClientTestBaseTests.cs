@@ -153,6 +153,17 @@ namespace Azure.Core.Tests
             Assert.AreEqual(IsAsync ? "Async 123 False" : "Sync 123 False", result);
         }
 
+        [Test]
+        public async Task SubClientPropertyCallsAreAutoInstrumented()
+        {
+            TestClient client = InstrumentClient(new TestClient());
+
+            Operations subClient = client.SubProperty;
+            var result = await subClient.MethodAsync(123);
+
+            Assert.AreEqual(IsAsync ? "Async 123 False" : "Sync 123 False", result);
+        }
+
         public class TestClient
         {
             public virtual Task<string> MethodAsync(int i, CancellationToken cancellationToken = default)
@@ -213,6 +224,20 @@ namespace Azure.Core.Tests
             public virtual TestClient GetAnotherTestClient()
             {
                 return new TestClient();
+            }
+            public virtual Operations SubProperty => new Operations();
+        }
+
+        public class Operations
+        {
+            public virtual Task<string> MethodAsync(int i, CancellationToken cancellationToken = default)
+            {
+                return Task.FromResult("Async " + i + " " + cancellationToken.CanBeCanceled);
+            }
+
+            public virtual string Method(int i, CancellationToken cancellationToken = default)
+            {
+                return "Sync " + i + " " + cancellationToken.CanBeCanceled;
             }
         }
 

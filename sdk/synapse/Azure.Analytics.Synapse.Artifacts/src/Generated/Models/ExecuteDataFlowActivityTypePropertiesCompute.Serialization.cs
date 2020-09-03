@@ -15,12 +15,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ComputeType != null)
+            if (Optional.IsDefined(ComputeType))
             {
                 writer.WritePropertyName("computeType");
                 writer.WriteStringValue(ComputeType.Value.ToString());
             }
-            if (CoreCount != null)
+            if (Optional.IsDefined(CoreCount))
             {
                 writer.WritePropertyName("coreCount");
                 writer.WriteNumberValue(CoreCount.Value);
@@ -30,30 +30,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static ExecuteDataFlowActivityTypePropertiesCompute DeserializeExecuteDataFlowActivityTypePropertiesCompute(JsonElement element)
         {
-            DataFlowComputeType? computeType = default;
-            int? coreCount = default;
+            Optional<DataFlowComputeType> computeType = default;
+            Optional<int> coreCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("computeType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     computeType = new DataFlowComputeType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("coreCount"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     coreCount = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new ExecuteDataFlowActivityTypePropertiesCompute(computeType, coreCount);
+            return new ExecuteDataFlowActivityTypePropertiesCompute(Optional.ToNullable(computeType), Optional.ToNullable(coreCount));
         }
     }
 }

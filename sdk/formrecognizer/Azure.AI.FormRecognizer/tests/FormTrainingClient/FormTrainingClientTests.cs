@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Training;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -19,7 +21,8 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Initializes a new instance of the <see cref="FormTrainingClientTests"/> class.
         /// </summary>
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
-        public FormTrainingClientTests(bool isAsync) : base(isAsync)
+        public FormTrainingClientTests(bool isAsync)
+            : base(isAsync)
         {
         }
 
@@ -30,7 +33,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <returns>The instrumented <see cref="FormTrainingClient" />.</returns>
         private FormTrainingClient CreateInstrumentedClient()
         {
-            var fakeEndpoint = new Uri("http://localhost");
+            var fakeEndpoint = new Uri("http://notreal.azure.com/");
             var fakeCredential = new AzureKeyCredential("fakeKey");
             var client = new FormTrainingClient(fakeEndpoint, fakeCredential);
 
@@ -88,6 +91,22 @@ namespace Azure.AI.FormRecognizer.Tests
 
             Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(endpoint, tokenCredential, null));
             Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(endpoint, keyCredential, null));
+        }
+
+        [Test]
+        public async Task FormTrainingClientThrowsWithNonExistingResourceEndpoint()
+        {
+            var client = CreateInstrumentedClient();
+
+            try
+            {
+                await client.GetAccountPropertiesAsync();
+            }
+            catch (AggregateException ex)
+            {
+                var innerExceptions = ex.InnerExceptions.ToList();
+                Assert.IsTrue(innerExceptions.All(ex => ex is RequestFailedException));
+            }
         }
 
         [Test]

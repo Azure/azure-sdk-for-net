@@ -29,7 +29,7 @@ namespace Azure.AI.FormRecognizer.Tests
         public const string InvoiceLeTiff = "Invoice_1.tiff";
 
         /// <summary>A two-page invoice file.</summary>
-        public const string InvoiceMultipage = "multipage_invoice_noblank.pdf";
+        public const string InvoiceMultipage = "multi1.pdf";
 
         /// <summary>A three-page invoice file in which the second page is blank.</summary>
         public const string InvoiceMultipageBlank = "multipage_invoice1.pdf";

@@ -166,9 +166,14 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='hostGroupName'>
             /// The name of the dedicated host group.
             /// </param>
-            public static DedicatedHostGroup Get(this IDedicatedHostGroupsOperations operations, string resourceGroupName, string hostGroupName)
+            /// <param name='expand'>
+            /// The expand expression to apply on the operation. The response shows the
+            /// list of instance view of the dedicated hosts under the dedicated host
+            /// group. Possible values include: 'instanceView'
+            /// </param>
+            public static DedicatedHostGroup Get(this IDedicatedHostGroupsOperations operations, string resourceGroupName, string hostGroupName, InstanceViewTypes? expand = default(InstanceViewTypes?))
             {
-                return operations.GetAsync(resourceGroupName, hostGroupName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, hostGroupName, expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -183,12 +188,17 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='hostGroupName'>
             /// The name of the dedicated host group.
             /// </param>
+            /// <param name='expand'>
+            /// The expand expression to apply on the operation. The response shows the
+            /// list of instance view of the dedicated hosts under the dedicated host
+            /// group. Possible values include: 'instanceView'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DedicatedHostGroup> GetAsync(this IDedicatedHostGroupsOperations operations, string resourceGroupName, string hostGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DedicatedHostGroup> GetAsync(this IDedicatedHostGroupsOperations operations, string resourceGroupName, string hostGroupName, InstanceViewTypes? expand = default(InstanceViewTypes?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, hostGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, hostGroupName, expand, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

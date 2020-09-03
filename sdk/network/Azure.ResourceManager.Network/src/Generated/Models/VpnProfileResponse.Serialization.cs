@@ -14,20 +14,16 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static VpnProfileResponse DeserializeVpnProfileResponse(JsonElement element)
         {
-            string profileUrl = default;
+            Optional<string> profileUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("profileUrl"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     profileUrl = property.Value.GetString();
                     continue;
                 }
             }
-            return new VpnProfileResponse(profileUrl);
+            return new VpnProfileResponse(profileUrl.Value);
         }
     }
 }

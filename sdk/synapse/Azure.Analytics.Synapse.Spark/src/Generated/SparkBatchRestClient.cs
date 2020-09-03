@@ -30,7 +30,7 @@ namespace Azure.Analytics.Synapse.Spark
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
         /// <param name="sparkPoolName"> Name of the spark pool. </param>
         /// <param name="livyApiVersion"> Valid api-version for the request. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="sparkPoolName"/>, or <paramref name="livyApiVersion"/> is null. </exception>
         public SparkBatchRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string sparkPoolName, string livyApiVersion = "2019-11-01-preview")
         {
             if (endpoint == null)
@@ -78,6 +78,7 @@ namespace Azure.Analytics.Synapse.Spark
                 uri.AppendQuery("detailed", detailed.Value, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -100,14 +101,7 @@ namespace Azure.Analytics.Synapse.Spark
                     {
                         SparkBatchJobCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SparkBatchJobCollection.DeserializeSparkBatchJobCollection(document.RootElement);
-                        }
+                        value = SparkBatchJobCollection.DeserializeSparkBatchJobCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -134,14 +128,7 @@ namespace Azure.Analytics.Synapse.Spark
                     {
                         SparkBatchJobCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SparkBatchJobCollection.DeserializeSparkBatchJobCollection(document.RootElement);
-                        }
+                        value = SparkBatchJobCollection.DeserializeSparkBatchJobCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -167,6 +154,7 @@ namespace Azure.Analytics.Synapse.Spark
             }
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(sparkBatchJobOptions);
             request.Content = content;
@@ -177,6 +165,7 @@ namespace Azure.Analytics.Synapse.Spark
         /// <param name="sparkBatchJobOptions"> Livy compatible batch job request payload. </param>
         /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sparkBatchJobOptions"/> is null. </exception>
         public async Task<Response<SparkBatchJob>> CreateSparkBatchJobAsync(SparkBatchJobOptions sparkBatchJobOptions, bool? detailed = null, CancellationToken cancellationToken = default)
         {
             if (sparkBatchJobOptions == null)
@@ -192,14 +181,7 @@ namespace Azure.Analytics.Synapse.Spark
                     {
                         SparkBatchJob value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SparkBatchJob.DeserializeSparkBatchJob(document.RootElement);
-                        }
+                        value = SparkBatchJob.DeserializeSparkBatchJob(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -211,6 +193,7 @@ namespace Azure.Analytics.Synapse.Spark
         /// <param name="sparkBatchJobOptions"> Livy compatible batch job request payload. </param>
         /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sparkBatchJobOptions"/> is null. </exception>
         public Response<SparkBatchJob> CreateSparkBatchJob(SparkBatchJobOptions sparkBatchJobOptions, bool? detailed = null, CancellationToken cancellationToken = default)
         {
             if (sparkBatchJobOptions == null)
@@ -226,14 +209,7 @@ namespace Azure.Analytics.Synapse.Spark
                     {
                         SparkBatchJob value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SparkBatchJob.DeserializeSparkBatchJob(document.RootElement);
-                        }
+                        value = SparkBatchJob.DeserializeSparkBatchJob(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -259,6 +235,7 @@ namespace Azure.Analytics.Synapse.Spark
                 uri.AppendQuery("detailed", detailed.Value, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -276,14 +253,7 @@ namespace Azure.Analytics.Synapse.Spark
                     {
                         SparkBatchJob value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SparkBatchJob.DeserializeSparkBatchJob(document.RootElement);
-                        }
+                        value = SparkBatchJob.DeserializeSparkBatchJob(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -305,14 +275,7 @@ namespace Azure.Analytics.Synapse.Spark
                     {
                         SparkBatchJob value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SparkBatchJob.DeserializeSparkBatchJob(document.RootElement);
-                        }
+                        value = SparkBatchJob.DeserializeSparkBatchJob(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -1,32 +1,10 @@
 trigger: none
 
 extends:
-  template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests-multiple.yml
+  template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
   parameters:
-    jobs:
-      # Azure Cloud
-      - ServiceDirectory: storage
-        BuildInParallel: false
-        TimeoutInMinutes: 300
-        ScenarioName: AzureCloud
-        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
-        EnvVars:
-          AZURE_AUTHORITY_HOST: https://login.microsoftonline.com
-
-      # AzureUSGovernment
-      - ServiceDirectory: storage
-        BuildInParallel: false
-        TimeoutInMinutes: 300
-        ScenarioName: AzureUSGovernment
-        SubscriptionConfiguration: $(sub-config-gov-test-resources)
-        EnvVars:
-          AZURE_AUTHORITY_HOST: https://login.microsoftonline.us
-
-      # AzureChinaCloud
-      - ServiceDirectory: storage
-        BuildInParallel: false
-        TimeoutInMinutes: 300
-        ScenarioName: AzureChinaCloud
-        SubscriptionConfiguration: $(sub-config-cn-test-resources)
-        EnvVars:
-          AZURE_AUTHORITY_HOST: https://login.chinacloudapi.cn
+    ServiceDirectory: storage
+    BuildInParallel: false
+    TimeoutInMinutes: 300
+    Location: canadacentral
+    SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)

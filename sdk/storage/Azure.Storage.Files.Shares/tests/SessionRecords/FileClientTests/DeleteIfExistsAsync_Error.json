@@ -1,44 +1,39 @@
 {
   "Entries": [
     {
-      "RequestUri": "http://seandevtest.file.core.windows.net/test-share-86d9a0cb-759e-eeff-bc4a-78412ab20bd6/test-file-82915b0f-cc0c-c5d0-06c2-36bef45872ae",
+      "RequestUri": "https://amandadev2.file.core.windows.net/?sv=2019-12-12\u0026ss=f\u0026srt=s\u0026se=2020-08-06T23%3A12%3A51Z\u0026sp=r\u0026sig=Sanitized",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-ff2d3aa0ba007a429f66c9c655913865-46dc8d58fcfa6c45-00",
+        "traceparent": "00-79d15d5f9d51704d92b613c34bea079e-ccc12be7f6a02641-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.2.0-dev.20200220.1",
-          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Storage.Files.Shares/12.3.0-dev.20200806.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "ffe7e087-ad68-fe37-d013-80db3e40fa64",
-        "x-ms-date": "Thu, 20 Feb 2020 22:59:16 GMT",
+        "x-ms-client-request-id": "d6fd2ed5-11da-4207-728d-f813164f126a",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-07-07"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
-      "StatusCode": 404,
+      "StatusCode": 400,
       "ResponseHeaders": {
-        "Content-Length": "217",
+        "Content-Length": "351",
         "Content-Type": "application/xml",
-        "Date": "Thu, 20 Feb 2020 22:59:15 GMT",
-        "Server": [
-          "Windows-Azure-File/1.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-client-request-id": "ffe7e087-ad68-fe37-d013-80db3e40fa64",
-        "x-ms-error-code": "ShareNotFound",
-        "x-ms-request-id": "dd6fc976-701a-002d-7741-e889ca000000",
-        "x-ms-version": "2019-07-07"
+        "Date": "Thu, 06 Aug 2020 22:12:52 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "x-ms-client-request-id": "d6fd2ed5-11da-4207-728d-f813164f126a",
+        "x-ms-error-code": "InvalidQueryParameterValue",
+        "x-ms-request-id": "e2019c33-c01a-00e5-213e-6c80ec000000"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EShareNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified share does not exist.\n",
-        "RequestId:dd6fc976-701a-002d-7741-e889ca000000\n",
-        "Time:2020-02-20T22:59:16.4317468Z\u003C/Message\u003E\u003C/Error\u003E"
+        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EInvalidQueryParameterValue\u003C/Code\u003E\u003CMessage\u003EValue for one of the query parameters specified in the request URI is invalid.\n",
+        "RequestId:e2019c33-c01a-00e5-213e-6c80ec000000\n",
+        "Time:2020-08-06T22:12:52.4297682Z\u003C/Message\u003E\u003CQueryParameterName\u003Ecomp\u003C/QueryParameterName\u003E\u003CQueryParameterValue /\u003E\u003CReason /\u003E\u003C/Error\u003E"
       ]
     }
   ],
   "Variables": {
-    "RandomSeed": "544375402",
-    "Storage_TestConfigDefault": "ProductionTenant\nseandevtest\nU2FuaXRpemVk\nhttps://seandevtest.blob.core.windows.net\nhttp://seandevtest.file.core.windows.net\nhttp://seandevtest.queue.core.windows.net\nhttp://seandevtest.table.core.windows.net\n\n\n\n\nhttp://seandevtest-secondary.blob.core.windows.net\nhttp://seandevtest-secondary.file.core.windows.net\nhttp://seandevtest-secondary.queue.core.windows.net\nhttp://seandevtest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seandevtest.blob.core.windows.net/;QueueEndpoint=http://seandevtest.queue.core.windows.net/;FileEndpoint=http://seandevtest.file.core.windows.net/;BlobSecondaryEndpoint=http://seandevtest-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://seandevtest-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://seandevtest-secondary.file.core.windows.net/;AccountName=seandevtest;AccountKey=Sanitized\nseanscope1"
+    "DateTimeOffsetNow": "2020-08-06T15:12:51.8288408-07:00",
+    "RandomSeed": "1532400325",
+    "Storage_TestConfigDefault": "ProductionTenant\namandadev2\nU2FuaXRpemVk\nhttps://amandadev2.blob.core.windows.net\nhttps://amandadev2.file.core.windows.net\nhttps://amandadev2.queue.core.windows.net\nhttps://amandadev2.table.core.windows.net\n\n\n\n\nhttps://amandadev2-secondary.blob.core.windows.net\nhttps://amandadev2-secondary.file.core.windows.net\nhttps://amandadev2-secondary.queue.core.windows.net\nhttps://amandadev2-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://amandadev2.blob.core.windows.net/;QueueEndpoint=https://amandadev2.queue.core.windows.net/;FileEndpoint=https://amandadev2.file.core.windows.net/;BlobSecondaryEndpoint=https://amandadev2-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://amandadev2-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://amandadev2-secondary.file.core.windows.net/;AccountName=amandadev2;AccountKey=Kg==;\n"
   }
 }

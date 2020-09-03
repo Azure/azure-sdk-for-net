@@ -45,18 +45,16 @@ namespace Azure.ResourceManager.Compute.Tests
             string type = "VMAccessAgent",
             string version = "2.0")
         {
-            var vmExtension = new VirtualMachineScaleSetExtension(null, name, null,
-                null, publisher,type, version,
-                true, "{}", "{}", null, null);
-            //{
-            //    Name = name,
-            //    Publisher = publisher,
-            //    Type  = type,
-            //    TypeHandlerVersion = version,
-            //    AutoUpgradeMinorVersion = true,
-            //    Settings = "{}",
-            //    ProtectedSettings = "{}"
-            //};
+            var vmExtension = new VirtualMachineScaleSetExtension()
+            {
+                Name = name,
+                Publisher = publisher,
+                TypePropertiesType = type,
+                TypeHandlerVersion = version,
+                AutoUpgradeMinorVersion = true,
+                Settings = "{}",
+                ProtectedSettings = "{}"
+            };
             return vmExtension;
         }
 
@@ -123,16 +121,73 @@ namespace Azure.ResourceManager.Compute.Tests
             string vmSize = zones == null ? VirtualMachineSizeTypes.StandardA0.ToString() : VirtualMachineSizeTypes.StandardA1V2.ToString();
             var test1 = Recording.GenerateAssetName("vmsstestnetconfig");
             var test2 = Recording.GenerateAssetName("vmsstestnetconfig");
+            var virtualMachineScaleSetIpConfiguration = new VirtualMachineScaleSetIPConfiguration(test2)
+            {
+                Subnet = new Azure.ResourceManager.Compute.Models.ApiEntityReference()
+                {
+                    Id = subnetId
+                }
+            };
+
+            virtualMachineScaleSetIpConfiguration.ApplicationGatewayBackendAddressPools.Clear();
+            if (loadBalancerBackendPoolId != null)
+            {
+                virtualMachineScaleSetIpConfiguration.LoadBalancerBackendAddressPools.Add(new Models.SubResource(loadBalancerBackendPoolId));
+            }
+
+            var virtualMachineScaleSetOsDisk = !createOSDisk ? null : new VirtualMachineScaleSetOSDisk(DiskCreateOptionTypes.FromImage)
+            {
+                Caching = CachingTypes.None,
+                Name = hasManagedDisks ? null : "test",
+                DiskSizeGB = osDiskSizeInGB,
+                ManagedDisk = diskEncryptionSetId == null ? null : new VirtualMachineScaleSetManagedDiskParameters()
+                {
+                    StorageAccountType = StorageAccountTypes.StandardLRS,
+                    DiskEncryptionSet = new DiskEncryptionSetParameters()
+                    {
+                        Id = diskEncryptionSetId
+                    }
+                }
+            };
+
+            if (!hasManagedDisks)
+            {
+                virtualMachineScaleSetOsDisk?.VhdContainers.Add(vhdContainer);
+            }
+
+            var virtualMachineScaleSetStorageProfile = new VirtualMachineScaleSetStorageProfile()
+            {
+                ImageReference = imageRef,
+                OsDisk = virtualMachineScaleSetOsDisk
+            };
+
+            if (hasManagedDisks)
+            {
+                virtualMachineScaleSetStorageProfile.DataDisks.Add(new VirtualMachineScaleSetDataDisk(1, DiskCreateOptionTypes.Empty)
+                {
+                    DiskSizeGB = 128,
+                    ManagedDisk = diskEncryptionSetId == null
+                        ? null
+                        : new VirtualMachineScaleSetManagedDiskParameters()
+                        {
+                            StorageAccountType = StorageAccountTypes.StandardLRS,
+                            DiskEncryptionSet = new DiskEncryptionSetParameters()
+                            {
+                                Id = diskEncryptionSetId
+                            }
+                        }
+                });
+            }
+
             var vmScaleSet = new VirtualMachineScaleSet(m_location)
             {
                 Location = m_location,
-                Tags = new Dictionary<string, string>() { { "RG", "rg" }, { "testTag", "1" } },
+                Tags ={ { "RG", "rg" }, { "testTag", "1" } },
                 Sku = new CM.Sku()
                 {
                     Capacity = 2,
                     Name = machineSizeType == null ? vmSize : machineSizeType
                 },
-                Zones = zones,
                 Overprovision = false,
                 UpgradePolicy = new UpgradePolicy()
                 {
@@ -140,40 +195,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 },
                 VirtualMachineProfile = new VirtualMachineScaleSetVMProfile()
                 {
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
-                    {
-                        ImageReference = imageRef,
-                        OsDisk = !createOSDisk ? null : new VirtualMachineScaleSetOSDisk(DiskCreateOptionTypes.FromImage)
-                        {
-                            Caching = CachingTypes.None,
-                            Name = hasManagedDisks ? null : "test",
-                            VhdContainers = hasManagedDisks ? null : new List<string> { vhdContainer },
-                            DiskSizeGB = osDiskSizeInGB,
-                            ManagedDisk = diskEncryptionSetId == null ? null : new VirtualMachineScaleSetManagedDiskParameters()
-                            {
-                                StorageAccountType = StorageAccountTypes.StandardLRS,
-                                DiskEncryptionSet = new DiskEncryptionSetParameters()
-                                {
-                                    Id = diskEncryptionSetId
-                                }
-                            }
-                        },
-                        DataDisks = !hasManagedDisks ? null : new List<VirtualMachineScaleSetDataDisk>
-                        {
-                            new VirtualMachineScaleSetDataDisk(1, DiskCreateOptionTypes.Empty)
-                            {
-                                DiskSizeGB = 128,
-                                ManagedDisk = diskEncryptionSetId == null ? null: new VirtualMachineScaleSetManagedDiskParameters()
-                                {
-                                    StorageAccountType = StorageAccountTypes.StandardLRS,
-                                    DiskEncryptionSet = new DiskEncryptionSetParameters()
-                                        {
-                                            Id = diskEncryptionSetId
-                                        }
-                                }
-                            }
-                        }
-                    },
+                    StorageProfile = virtualMachineScaleSetStorageProfile,
                     OsProfile = new VirtualMachineScaleSetOSProfile()
                     {
                         ComputerNamePrefix = "test",
@@ -187,25 +209,12 @@ namespace Azure.ResourceManager.Compute.Tests
                         {
                             Id = healthProbeId
                         },
-                        NetworkInterfaceConfigurations = new List<VirtualMachineScaleSetNetworkConfiguration>()
-                        {
+                        NetworkInterfaceConfigurations = {
                             new VirtualMachineScaleSetNetworkConfiguration(test1)
                             {
                                 Primary = true,
-                                IpConfigurations = new List<VirtualMachineScaleSetIPConfiguration>
-                                {
-                                    new VirtualMachineScaleSetIPConfiguration(test2)
-                                    {
-                                        Subnet = new Azure.ResourceManager.Compute.Models.ApiEntityReference()
-                                        {
-                                            Id = subnetId
-                                        },
-                                        LoadBalancerBackendAddressPools = (loadBalancerBackendPoolId != null) ?
-                                            new List<Azure.ResourceManager.Compute.Models.SubResource> {
-                                                new Azure.ResourceManager.Compute.Models.SubResource(loadBalancerBackendPoolId)
-                                            } : null,
-                                        ApplicationGatewayBackendAddressPools = new List<Azure.ResourceManager.Compute.Models.SubResource>(),
-                                    }
+                                IpConfigurations = {
+                                    virtualMachineScaleSetIpConfiguration
                                 }
                             }
                         }
@@ -215,6 +224,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 AutomaticRepairsPolicy = automaticRepairsPolicy
             };
 
+            vmScaleSet.Zones.InitializeFrom(zones);
             if (enableUltraSSD == true)
             {
                 vmScaleSet.AdditionalCapabilities = new AdditionalCapabilities
@@ -624,7 +634,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 Assert.True((vmScaleSetOut.VirtualMachineProfile.NetworkProfile == null) || (vmScaleSetOut.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations.Count == 0));
             }
 
-            if (vmScaleSet.Zones != null)
+            if (vmScaleSet.Zones.Count != 0)
             {
                 Assert.True(vmScaleSet.Zones.SequenceEqual(vmScaleSetOut.Zones), "Zones don't match");
                 if (vmScaleSet.ZoneBalance.HasValue)
@@ -654,7 +664,7 @@ namespace Azure.ResourceManager.Compute.Tests
             }
             else
             {
-                Assert.Null(vmScaleSetOut.Zones);
+                Assert.IsEmpty(vmScaleSetOut.Zones);
                 Assert.Null(vmScaleSetOut.ZoneBalance);
             }
 

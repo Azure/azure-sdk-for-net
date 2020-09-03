@@ -17,12 +17,12 @@ namespace Azure.Management.Storage.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id");
             writer.WriteStringValue(VirtualNetworkResourceId);
-            if (Action != null)
+            if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action");
                 writer.WriteStringValue(Action);
             }
-            if (State != null)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state");
                 writer.WriteStringValue(State.Value.ToSerialString());
@@ -33,8 +33,8 @@ namespace Azure.Management.Storage.Models
         internal static VirtualNetworkRule DeserializeVirtualNetworkRule(JsonElement element)
         {
             string id = default;
-            string action = default;
-            State? state = default;
+            Optional<string> action = default;
+            Optional<State> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -44,24 +44,16 @@ namespace Azure.Management.Storage.Models
                 }
                 if (property.NameEquals("action"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     action = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("state"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     state = property.Value.GetString().ToState();
                     continue;
                 }
             }
-            return new VirtualNetworkRule(id, action, state);
+            return new VirtualNetworkRule(id, action.Value, Optional.ToNullable(state));
         }
     }
 }

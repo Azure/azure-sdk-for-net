@@ -48,7 +48,11 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// <param name="sqlAdministratorLoginPassword">SQL administrator login
         /// password</param>
         /// <param name="managedResourceGroupName">Workspace managed resource
-        /// group</param>
+        /// group. The resource group name uniquely identifies the resource
+        /// group within the user subscriptionId. The resource group name must
+        /// be no longer than 90 characters long, and must be alphanumeric
+        /// characters (Char.IsLetterOrDigit()) and '-', '_', '(', ')' and'.'.
+        /// Note that the name cannot end with '.'</param>
         /// <param name="provisioningState">Resource provisioning state</param>
         /// <param name="sqlAdministratorLogin">Login for workspace SQL active
         /// directory administrator</param>
@@ -94,10 +98,15 @@ namespace Microsoft.Azure.Management.Synapse.Models
         public string SqlAdministratorLoginPassword { get; set; }
 
         /// <summary>
-        /// Gets workspace managed resource group
+        /// Gets or sets workspace managed resource group. The resource group
+        /// name uniquely identifies the resource group within the user
+        /// subscriptionId. The resource group name must be no longer than 90
+        /// characters long, and must be alphanumeric characters
+        /// (Char.IsLetterOrDigit()) and '-', '_', '(', ')' and'.'. Note that
+        /// the name cannot end with '.'
         /// </summary>
         [JsonProperty(PropertyName = "properties.managedResourceGroupName")]
-        public string ManagedResourceGroupName { get; private set; }
+        public string ManagedResourceGroupName { get; set; }
 
         /// <summary>
         /// Gets resource provisioning state

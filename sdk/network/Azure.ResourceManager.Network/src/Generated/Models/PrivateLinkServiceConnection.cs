@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of PrivateLinkServiceConnection. </summary>
         public PrivateLinkServiceConnection()
         {
+            GroupIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of PrivateLinkServiceConnection. </summary>
@@ -50,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The resource id of private link service. </summary>
         public string PrivateLinkServiceId { get; set; }
         /// <summary> The ID(s) of the group(s) obtained from the remote resource that this private endpoint should connect to. </summary>
-        public IList<string> GroupIds { get; set; }
+        public IList<string> GroupIds { get; }
         /// <summary> A message passed to the owner of the remote resource with this connection request. Restricted to 140 chars. </summary>
         public string RequestMessage { get; set; }
         /// <summary> A collection of read-only information about the state of the connection to the remote resource. </summary>

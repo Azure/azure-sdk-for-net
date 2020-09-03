@@ -10,12 +10,16 @@ namespace Azure.AI.FormRecognizer.Models
     /// </summary>
     public class FormPage
     {
-        internal FormPage(PageResult_internal pageResult, IReadOnlyList<ReadResult_internal> readResults, int pageIndex)
+        internal FormPage(PageResult pageResult, IReadOnlyList<ReadResult> readResults, int pageIndex)
         {
-            ReadResult_internal readResult = readResults[pageIndex];
+            ReadResult readResult = readResults[pageIndex];
 
             PageNumber = readResult.Page;
-            TextAngle = readResult.Angle;
+
+            // Workaround because the service can sometimes return angles between 180 and 360 (bug).
+            // Currently tracked by: https://github.com/Azure/azure-sdk-for-net/issues/12319
+            TextAngle = readResult.Angle <= 180.0f ? readResult.Angle : readResult.Angle - 360.0f;
+
             Width = readResult.Width;
             Height = readResult.Height;
             Unit = readResult.Unit;
@@ -25,6 +29,27 @@ namespace Azure.AI.FormRecognizer.Models
             Tables = pageResult?.Tables != null
                 ? ConvertTables(pageResult, readResults, pageIndex)
                 : new List<FormTable>();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FormPage"/> class.
+        /// </summary>
+        /// <param name="pageNumber">The 1-based page number in the input document.</param>
+        /// <param name="width">The width of the image/PDF in pixels/inches, respectively.</param>
+        /// <param name="height">The height of the image/PDF in pixels/inches, respectively.</param>
+        /// <param name="textAngle">The general orientation of the text in clockwise direction, measured in degrees between (-180, 180].</param>
+        /// <param name="unit">The unit used by the width, height and <see cref="FieldBoundingBox"/> properties. For images, the unit is &quot;pixel&quot;. For PDF, the unit is &quot;inch&quot;.</param>
+        /// <param name="lines">A list of recognized lines of text.</param>
+        /// <param name="tables">A list of recognized tables contained in this page.</param>
+        internal FormPage(int pageNumber, float width, float height, float textAngle, LengthUnit unit, IReadOnlyList<FormLine> lines, IReadOnlyList<FormTable> tables)
+        {
+            PageNumber = pageNumber;
+            Width = width;
+            Height = height;
+            TextAngle = textAngle;
+            Unit = unit;
+            Lines = lines;
+            Tables = tables;
         }
 
         /// <summary>
@@ -48,13 +73,13 @@ namespace Azure.AI.FormRecognizer.Models
         public float Height { get; }
 
         /// <summary>
-        /// The unit used by the width, height and <see cref="BoundingBox"/> properties. For images, the unit is
+        /// The unit used by the width, height and <see cref="FieldBoundingBox"/> properties. For images, the unit is
         /// &quot;pixel&quot;. For PDF, the unit is &quot;inch&quot;.
         /// </summary>
         public LengthUnit Unit { get; }
 
         /// <summary>
-        /// When <see cref="RecognizeOptions.IncludeTextContent"/> is set to <c>true</c>, a list of recognized lines of text.
+        /// When 'IncludeFieldElements' is set to <c>true</c>, a list of recognized lines of text.
         /// An empty list otherwise. For calls to recognize content, this list is always populated. The maximum number of
         /// lines returned is 300 per page. The lines are sorted top to bottom, left to right, although in certain cases
         /// proximity is treated with higher priority. As the sorting order depends on the detected text, it may change across
@@ -63,15 +88,15 @@ namespace Azure.AI.FormRecognizer.Models
         public IReadOnlyList<FormLine> Lines { get; }
 
         /// <summary>
-        /// A list of extracted tables contained in a page.
+        /// A list of recognized tables contained in this page.
         /// </summary>
         public IReadOnlyList<FormTable> Tables { get; }
 
-        private static IReadOnlyList<FormLine> ConvertLines(IReadOnlyList<TextLine_internal> textLines, int pageNumber)
+        private static IReadOnlyList<FormLine> ConvertLines(IReadOnlyList<TextLine> textLines, int pageNumber)
         {
             List<FormLine> rawLines = new List<FormLine>();
 
-            foreach (TextLine_internal textLine in textLines)
+            foreach (TextLine textLine in textLines)
             {
                 rawLines.Add(new FormLine(textLine, pageNumber));
             }
@@ -79,7 +104,7 @@ namespace Azure.AI.FormRecognizer.Models
             return rawLines;
         }
 
-        private static IReadOnlyList<FormTable> ConvertTables(PageResult_internal pageResult, IReadOnlyList<ReadResult_internal> readResults, int pageIndex)
+        private static IReadOnlyList<FormTable> ConvertTables(PageResult pageResult, IReadOnlyList<ReadResult> readResults, int pageIndex)
         {
             List<FormTable> tables = new List<FormTable>();
 

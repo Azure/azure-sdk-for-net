@@ -188,7 +188,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             /// </param>
             public static CrrAccessTokenResource GetAccessToken(this IRecoveryPointsOperations operations, string vaultName, string resourceGroupName, string fabricName, string containerName, string protectedItemName, string recoveryPointId)
             {
-                return operations.GetAccessTokenAsync(vaultName, resourceGroupName, fabricName, containerName, protectedItemName, recoveryPointId).GetAwaiter().GetResult();
+              return operations.GetAccessTokenAsync(vaultName, resourceGroupName, fabricName, containerName, protectedItemName, recoveryPointId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -222,10 +222,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             /// </param>
             public static async Task<CrrAccessTokenResource> GetAccessTokenAsync(this IRecoveryPointsOperations operations, string vaultName, string resourceGroupName, string fabricName, string containerName, string protectedItemName, string recoveryPointId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetAccessTokenWithHttpMessagesAsync(vaultName, resourceGroupName, fabricName, containerName, protectedItemName, recoveryPointId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+            using (var _result = await operations.GetAccessTokenWithHttpMessagesAsync(vaultName, resourceGroupName, fabricName, containerName, protectedItemName, recoveryPointId, null, cancellationToken).ConfigureAwait(false))
+            {
+                return _result.Body;
+            }
             }
 
             /// <summary>

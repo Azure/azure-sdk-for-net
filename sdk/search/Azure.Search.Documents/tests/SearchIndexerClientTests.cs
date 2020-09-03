@@ -523,53 +523,5 @@ namespace Azure.Search.Documents.Tests
                 throw;
             }
         }
-
-        /// <summary>
-        /// Waits for an indexer to complete up to the given <paramref name="timeout"/>.
-        /// </summary>
-        /// <param name="client">The <see cref="SearchIndexerClient"/> to use for requests.</param>
-        /// <param name="indexerName">The name of the <see cref="SearchIndexer"/> to check.</param>
-        /// <param name="timeout">The amount of time before being canceled. The default is 1 minute.</param>
-        /// <returns>A <see cref="Task"/> to await.</returns>
-        private async Task WaitForIndexingAsync(
-            SearchIndexerClient client,
-            string indexerName,
-            TimeSpan? timeout = null)
-        {
-            TimeSpan delay = TimeSpan.FromSeconds(10);
-            timeout ??= TimeSpan.FromMinutes(5);
-
-            using CancellationTokenSource cts = new CancellationTokenSource(timeout.Value);
-
-            while (true)
-            {
-                await DelayAsync(delay, cancellationToken: cts.Token);
-
-                SearchIndexerStatus status = await client.GetIndexerStatusAsync(
-                    indexerName,
-                    cancellationToken: cts.Token);
-
-                if (status.Status == IndexerStatus.Running &&
-                    status.LastResult?.Status == IndexerExecutionStatus.Success)
-                {
-                    return;
-                }
-                else if (status.Status == IndexerStatus.Error && status.LastResult is IndexerExecutionResult lastResult)
-                {
-                    StringBuilder sb = new StringBuilder();
-                    sb.AppendLine($"Error: {lastResult.ErrorMessage}");
-
-                    if (lastResult.Errors?.Count > 0)
-                    {
-                        foreach (SearchIndexerError error in lastResult.Errors)
-                        {
-                            sb.AppendLine($" ---> {error.ErrorMessage}");
-                        }
-                    }
-
-                    Assert.Fail(sb.ToString());
-                }
-            }
-        }
     }
 }

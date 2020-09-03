@@ -14,20 +14,16 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static AccessUri DeserializeAccessUri(JsonElement element)
         {
-            string accessSAS = default;
+            Optional<string> accessSAS = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accessSAS"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     accessSAS = property.Value.GetString();
                     continue;
                 }
             }
-            return new AccessUri(accessSAS);
+            return new AccessUri(accessSAS.Value);
         }
     }
 }

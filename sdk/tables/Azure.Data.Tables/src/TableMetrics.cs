@@ -7,6 +7,8 @@ namespace Azure.Data.Tables.Models
     [CodeGenModel("Metrics")]
     public partial class TableMetrics
     {
-
+        /// <summary> Indicates whether metrics should generate summary statistics for called API operations. </summary>
+        [CodeGenMember("IncludeAPIs")]
+        public bool? IncludeApis { get; set; }
     }
 }

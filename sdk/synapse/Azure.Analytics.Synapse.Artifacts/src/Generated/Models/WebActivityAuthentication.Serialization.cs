@@ -17,22 +17,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
-            if (Pfx != null)
+            if (Optional.IsDefined(Pfx))
             {
                 writer.WritePropertyName("pfx");
                 writer.WriteObjectValue(Pfx);
             }
-            if (Username != null)
+            if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username");
                 writer.WriteStringValue(Username);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password");
                 writer.WriteObjectValue(Password);
             }
-            if (Resource != null)
+            if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource");
                 writer.WriteStringValue(Resource);
@@ -43,10 +43,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static WebActivityAuthentication DeserializeWebActivityAuthentication(JsonElement element)
         {
             string type = default;
-            SecretBase pfx = default;
-            string username = default;
-            SecretBase password = default;
-            string resource = default;
+            Optional<SecretBase> pfx = default;
+            Optional<string> username = default;
+            Optional<SecretBase> password = default;
+            Optional<string> resource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -56,42 +56,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("pfx"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     pfx = SecretBase.DeserializeSecretBase(property.Value);
                     continue;
                 }
                 if (property.NameEquals("username"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     username = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("password"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     password = SecretBase.DeserializeSecretBase(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resource"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     resource = property.Value.GetString();
                     continue;
                 }
             }
-            return new WebActivityAuthentication(type, pfx, username, password, resource);
+            return new WebActivityAuthentication(type, pfx.Value, username.Value, password.Value, resource.Value);
         }
     }
 }

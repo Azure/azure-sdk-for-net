@@ -14,8 +14,13 @@ namespace Azure.Data.Tables
         /// The default case is intentionally unhandled as this means that no type annotation for the specified type is required.
         /// This is because the type is naturally serialized in a way that the table service can interpret without hints.
         /// </summary>
-        internal static Dictionary<string, object> ToOdataAnnotatedDictionary<T>(this T entity) where T : TableEntity
+        internal static Dictionary<string, object> ToOdataAnnotatedDictionary<T>(this T entity) where T : class, ITableEntity
         {
+            if (entity is IDictionary<string, object> dictEntity)
+            {
+                return dictEntity.ToOdataAnnotatedDictionary();
+            }
+
             var properties = typeof(T).GetProperties(BindingFlags.Instance | BindingFlags.Public);
             var annotatedDictionary = new Dictionary<string, object>(properties.Length * 2);
 
@@ -45,8 +50,16 @@ namespace Azure.Data.Tables
                     case DateTime _:
                         annotatedDictionary[prop.Name.ToOdataTypeString()] = TableConstants.Odata.EdmDateTime;
                         break;
+                    case Enum enumValue:
+                        // serialize enum as string
+                        annotatedDictionary[prop.Name] = enumValue.ToString();
+                        break;
+
                 }
             }
+
+            // Remove the ETag property, as it does not need to be serialized
+            annotatedDictionary.Remove(TableConstants.PropertyNames.ETag);
 
             return annotatedDictionary;
         }

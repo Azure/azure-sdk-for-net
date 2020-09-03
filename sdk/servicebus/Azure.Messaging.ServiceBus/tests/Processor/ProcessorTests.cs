@@ -146,6 +146,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             Assert.AreEqual(options.MaxAutoLockRenewalDuration, processor.MaxAutoLockRenewalDuration);
             Assert.AreEqual(fullyQualifiedNamespace, processor.FullyQualifiedNamespace);
             Assert.AreEqual(options.MaxReceiveWaitTime, processor.MaxReceiveWaitTime);
+            Assert.IsFalse(processor.IsClosed);
+            Assert.IsFalse(processor.IsProcessing);
         }
 
         [Test]
@@ -189,22 +191,22 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             Assert.IsFalse(msg.IsSettled);
 
             msg.IsSettled = false;
-            await args.AbandonAsync(msg);
+            await args.AbandonMessageAsync(msg);
             Assert.IsTrue(msg.IsSettled);
 
-            await args.CompleteAsync(msg);
-            Assert.IsTrue(msg.IsSettled);
-
-            msg.IsSettled = false;
-            await args.DeadLetterAsync(msg);
+            await args.CompleteMessageAsync(msg);
             Assert.IsTrue(msg.IsSettled);
 
             msg.IsSettled = false;
-            await args.DeadLetterAsync(msg, "reason");
+            await args.DeadLetterMessageAsync(msg);
             Assert.IsTrue(msg.IsSettled);
 
             msg.IsSettled = false;
-            await args.DeferAsync(msg);
+            await args.DeadLetterMessageAsync(msg, "reason");
+            Assert.IsTrue(msg.IsSettled);
+
+            msg.IsSettled = false;
+            await args.DeferMessageAsync(msg);
             Assert.IsTrue(msg.IsSettled);
         }
 
@@ -257,26 +259,26 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             Assert.IsFalse(msg.IsSettled);
 
             msg.IsSettled = false;
-            Assert.That(async () => await args.AbandonAsync(msg),
+            Assert.That(async () => await args.AbandonMessageAsync(msg),
                 Throws.InstanceOf<Exception>());
             Assert.IsFalse(msg.IsSettled);
 
-            Assert.That(async () => await args.CompleteAsync(msg),
-                Throws.InstanceOf<Exception>());
-            Assert.IsFalse(msg.IsSettled);
-
-            msg.IsSettled = false;
-            Assert.That(async () => await args.DeadLetterAsync(msg),
+            Assert.That(async () => await args.CompleteMessageAsync(msg),
                 Throws.InstanceOf<Exception>());
             Assert.IsFalse(msg.IsSettled);
 
             msg.IsSettled = false;
-            Assert.That(async () => await args.DeadLetterAsync(msg, "reason"),
+            Assert.That(async () => await args.DeadLetterMessageAsync(msg),
                 Throws.InstanceOf<Exception>());
             Assert.IsFalse(msg.IsSettled);
 
             msg.IsSettled = false;
-            Assert.That(async () => await args.DeferAsync(msg),
+            Assert.That(async () => await args.DeadLetterMessageAsync(msg, "reason"),
+                Throws.InstanceOf<Exception>());
+            Assert.IsFalse(msg.IsSettled);
+
+            msg.IsSettled = false;
+            Assert.That(async () => await args.DeferMessageAsync(msg),
                 Throws.InstanceOf<Exception>());
             Assert.IsFalse(msg.IsSettled);
         }

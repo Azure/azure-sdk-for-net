@@ -14,20 +14,16 @@ namespace Azure.Analytics.Synapse.AccessControl.Models
     {
         internal static ErrorContract DeserializeErrorContract(JsonElement element)
         {
-            ErrorResponse error = default;
+            Optional<ErrorResponse> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     error = ErrorResponse.DeserializeErrorResponse(property.Value);
                     continue;
                 }
             }
-            return new ErrorContract(error);
+            return new ErrorContract(error.Value);
         }
     }
 }

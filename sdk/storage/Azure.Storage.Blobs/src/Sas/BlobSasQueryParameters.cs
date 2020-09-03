@@ -13,7 +13,9 @@ namespace Azure.Storage.Sas
     /// parameters.  You can construct a new instance using
     /// <see cref="BlobSasBuilder"/>.
     ///
-    /// For more information, <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas"/>.
+    /// For more information,
+    /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-service-sas">
+    /// Create a service SAS</see>.
     /// </summary>
     public sealed class BlobSasQueryParameters : SasQueryParameters
     {

@@ -16,12 +16,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Kernelspec != null)
+            if (Optional.IsDefined(Kernelspec))
             {
                 writer.WritePropertyName("kernelspec");
                 writer.WriteObjectValue(Kernelspec);
             }
-            if (LanguageInfo != null)
+            if (Optional.IsDefined(LanguageInfo))
             {
                 writer.WritePropertyName("language_info");
                 writer.WriteObjectValue(LanguageInfo);
@@ -36,42 +36,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static NotebookMetadata DeserializeNotebookMetadata(JsonElement element)
         {
-            NotebookKernelSpec kernelspec = default;
-            NotebookLanguageInfo languageInfo = default;
+            Optional<NotebookKernelSpec> kernelspec = default;
+            Optional<NotebookLanguageInfo> languageInfo = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kernelspec"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     kernelspec = NotebookKernelSpec.DeserializeNotebookKernelSpec(property.Value);
                     continue;
                 }
                 if (property.NameEquals("language_info"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     languageInfo = NotebookLanguageInfo.DeserializeNotebookLanguageInfo(property.Value);
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    additionalPropertiesDictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new NotebookMetadata(kernelspec, languageInfo, additionalProperties);
+            return new NotebookMetadata(kernelspec.Value, languageInfo.Value, additionalProperties);
         }
     }
 }

@@ -36,11 +36,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <param name="width">Width of the resized image.</param>
         /// <param name="height">Height of the resized image.</param>
         /// <param name="resizedImageUri">The URI to the (resized) prediction
-        /// image.</param>
+        /// image. If VNET feature is enabled this will be a relative path to
+        /// be used with GetArtifact, otherwise this will be an absolute URI to
+        /// the resource.</param>
         /// <param name="thumbnailUri">The URI to the thumbnail of the original
-        /// prediction image.</param>
+        /// prediction image. If VNET feature is enabled this will be a
+        /// relative path to be used with GetArtifact, otherwise this will be
+        /// an absolute URI to the resource.</param>
         /// <param name="originalImageUri">The URI to the original prediction
-        /// image.</param>
+        /// image. If VNET feature is enabled this will be a relative path to
+        /// be used with GetArtifact, otherwise this will be an absolute URI to
+        /// the resource.</param>
         /// <param name="domain">Domain used for the prediction.</param>
         /// <param name="id">Prediction Id.</param>
         /// <param name="project">Project Id.</param>
@@ -84,19 +90,26 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         public int Height { get; private set; }
 
         /// <summary>
-        /// Gets the URI to the (resized) prediction image.
+        /// Gets the URI to the (resized) prediction image. If VNET feature is
+        /// enabled this will be a relative path to be used with GetArtifact,
+        /// otherwise this will be an absolute URI to the resource.
         /// </summary>
         [JsonProperty(PropertyName = "resizedImageUri")]
         public string ResizedImageUri { get; private set; }
 
         /// <summary>
-        /// Gets the URI to the thumbnail of the original prediction image.
+        /// Gets the URI to the thumbnail of the original prediction image. If
+        /// VNET feature is enabled this will be a relative path to be used
+        /// with GetArtifact, otherwise this will be an absolute URI to the
+        /// resource.
         /// </summary>
         [JsonProperty(PropertyName = "thumbnailUri")]
         public string ThumbnailUri { get; private set; }
 
         /// <summary>
-        /// Gets the URI to the original prediction image.
+        /// Gets the URI to the original prediction image. If VNET feature is
+        /// enabled this will be a relative path to be used with GetArtifact,
+        /// otherwise this will be an absolute URI to the resource.
         /// </summary>
         [JsonProperty(PropertyName = "originalImageUri")]
         public string OriginalImageUri { get; private set; }

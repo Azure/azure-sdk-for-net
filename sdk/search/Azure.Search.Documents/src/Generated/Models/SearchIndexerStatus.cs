@@ -18,6 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="status"> Overall indexer status. </param>
         /// <param name="executionHistory"> History of the recent indexer executions, sorted in reverse chronological order. </param>
         /// <param name="limits"> The execution limits for the indexer. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="executionHistory"/> or <paramref name="limits"/> is null. </exception>
         internal SearchIndexerStatus(IndexerStatus status, IEnumerable<IndexerExecutionResult> executionHistory, SearchIndexerLimits limits)
         {
             if (executionHistory == null)
@@ -30,7 +31,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
 
             Status = status;
-            ExecutionHistory = executionHistory.ToArray();
+            ExecutionHistory = executionHistory.ToList();
             Limits = limits;
         }
 
@@ -43,7 +44,7 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             Status = status;
             LastResult = lastResult;
-            ExecutionHistory = executionHistory ?? new List<IndexerExecutionResult>();
+            ExecutionHistory = executionHistory;
             Limits = limits;
         }
 

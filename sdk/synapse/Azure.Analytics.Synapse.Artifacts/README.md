@@ -16,7 +16,7 @@ For the best development experience, developers should use the official Microsof
 Install the Azure Synapse Analytics development client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-dotnet add package Azure.Analytics.Synapse.Artifacts --version 0.1.0-preview.1
+dotnet add package Azure.Analytics.Synapse.Artifacts --version 0.1.0-preview.2
 ```
 
 ### Prerequisites
@@ -70,7 +70,8 @@ Notebook notebook = new Notebook(
     nbformatMinor: 2,
     new List<NotebookCell>()
 );
-NotebookResource createdNotebook = notebookClient.CreateOrUpdateNotebook("MyNotebook", new NotebookResource(notebook));
+var operation = notebookClient.StartCreateOrUpdateNotebook("MyNotebook", new NotebookResource(notebook));
+NotebookResource notebookResource = operation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
 ```
 
 ### Retrieve a notebook
@@ -97,7 +98,7 @@ foreach (NotebookResource notebook in notebooks)
 `DeleteNotebook` deletes a notebook.
 
 ```C# Snippet:DeleteNotebook
-notebookClient.DeleteNotebook("MyNotebook");
+notebookClient.StartDeleteNotebook("MyNotebook");
 ```
 
 ## To build

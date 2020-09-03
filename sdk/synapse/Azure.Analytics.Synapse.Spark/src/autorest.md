@@ -14,3 +14,17 @@ public-clients: true
 input-file:
     - $(repo)/specification/synapse/data-plane/Microsoft.Synapse/preview/2019-11-01-preview/sparkJob.json
 ```
+
+## Swagger workarounds
+
+### Add nullable annotations
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.SparkBatchJob
+  transform: >
+    $.properties.appId["x-nullable"] = true;
+    $.properties.appInfo["x-nullable"] = true;
+    $.properties.log["x-nullable"] = true;
+````

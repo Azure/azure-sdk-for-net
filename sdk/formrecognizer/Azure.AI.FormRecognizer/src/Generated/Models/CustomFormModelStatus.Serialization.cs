@@ -13,7 +13,7 @@ namespace Azure.AI.FormRecognizer.Training
     {
         public static string ToSerialString(this CustomFormModelStatus value) => value switch
         {
-            CustomFormModelStatus.Training => "creating",
+            CustomFormModelStatus.Creating => "creating",
             CustomFormModelStatus.Ready => "ready",
             CustomFormModelStatus.Invalid => "invalid",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CustomFormModelStatus value.")
@@ -21,7 +21,7 @@ namespace Azure.AI.FormRecognizer.Training
 
         public static CustomFormModelStatus ToCustomFormModelStatus(this string value)
         {
-            if (string.Equals(value, "creating", StringComparison.InvariantCultureIgnoreCase)) return CustomFormModelStatus.Training;
+            if (string.Equals(value, "creating", StringComparison.InvariantCultureIgnoreCase)) return CustomFormModelStatus.Creating;
             if (string.Equals(value, "ready", StringComparison.InvariantCultureIgnoreCase)) return CustomFormModelStatus.Ready;
             if (string.Equals(value, "invalid", StringComparison.InvariantCultureIgnoreCase)) return CustomFormModelStatus.Invalid;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CustomFormModelStatus value.");

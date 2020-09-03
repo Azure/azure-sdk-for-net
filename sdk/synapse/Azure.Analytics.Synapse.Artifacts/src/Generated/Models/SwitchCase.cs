@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of SwitchCase. </summary>
         public SwitchCase()
         {
+            Activities = new ChangeTrackingList<Activity>();
         }
 
         /// <summary> Initializes a new instance of SwitchCase. </summary>
@@ -29,6 +31,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Expected value that satisfies the expression result of the &apos;on&apos; property. </summary>
         public string Value { get; set; }
         /// <summary> List of activities to execute for satisfied case condition. </summary>
-        public IList<Activity> Activities { get; set; }
+        public IList<Activity> Activities { get; }
     }
 }

@@ -1,6 +1,20 @@
 # Release History
 
-## 0.1.0-preview.2 (Unreleased)
+## 0.1.0-preview.5 (Unreleased)
+
+### Added
+- `JsonPatchDocument` type to represent JSON Path document.
+
+## 0.1.0-preview.4 (2020-08-18)
+
+### Fixed
+- Bug in TaskExtensions.EnsureCompleted method that causes it to unconditionally throw an exception in the environments with synchronization context
+## 0.1.0-preview.3 (2020-08-06)
+
+### Breaking Changes
+- `ObjectSerializer`: Moved to `Azure.Core`.
+
+## 0.1.0-preview.2 (2020-07-02)
 
 ### Breaking Changes
 - `BinaryData`: Renamed `AsString` to `ToString`.

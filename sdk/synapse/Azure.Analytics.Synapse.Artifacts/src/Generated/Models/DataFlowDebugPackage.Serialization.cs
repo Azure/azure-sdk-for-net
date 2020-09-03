@@ -15,17 +15,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (SessionId != null)
+            if (Optional.IsDefined(SessionId))
             {
                 writer.WritePropertyName("sessionId");
                 writer.WriteStringValue(SessionId);
             }
-            if (DataFlow != null)
+            if (Optional.IsDefined(DataFlow))
             {
                 writer.WritePropertyName("dataFlow");
                 writer.WriteObjectValue(DataFlow);
             }
-            if (Datasets != null)
+            if (Optional.IsCollectionDefined(Datasets))
             {
                 writer.WritePropertyName("datasets");
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (LinkedServices != null)
+            if (Optional.IsCollectionDefined(LinkedServices))
             {
                 writer.WritePropertyName("linkedServices");
                 writer.WriteStartArray();
@@ -45,12 +45,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Staging != null)
+            if (Optional.IsDefined(Staging))
             {
                 writer.WritePropertyName("staging");
                 writer.WriteObjectValue(Staging);
             }
-            if (DebugSettings != null)
+            if (Optional.IsDefined(DebugSettings))
             {
                 writer.WritePropertyName("debugSettings");
                 writer.WriteObjectValue(DebugSettings);

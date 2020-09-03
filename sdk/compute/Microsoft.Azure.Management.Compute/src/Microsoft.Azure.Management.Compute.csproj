@@ -5,13 +5,21 @@
 
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.Compute</PackageId>
-    <Description>Provides developers with libraries for the updated compute platform under Azure Resource manager to deploy virtual machine, virtual machine extensions and availability set management capabilities. Launch, restart, scale, capture and manage VMs, VM Extensions and more. Note: This client library is for Virtual Machines under Azure Resource Manager.</Description>
-    <Version>37.0.0.0</Version>
+    <Description>
+      Provides developers with libraries for the updated compute platform under Azure Resource manager to deploy virtual machine, virtual machine extensions and availability set management capabilities. Launch, restart, scale, capture and manage VMs, VM Extensions and more. Note: This client library is for Virtual Machines under Azure Resource Manager.
+      Development of this library has shifted focus to the Azure Unified SDK. The future development will be focused on "Azure.ResourceManager.Compute" (https://www.nuget.org/packages/Azure.ResourceManager.Compute/). Please see the package changelog for more information.
+    </Description>
+    <Version>39.0.0.0</Version>
     <AssemblyName>Microsoft.Azure.Management.Compute</AssemblyName>
     <PackageTags>management;virtual machine;compute;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        This is a public release of the Azure Compute SDK. Included with this release are the changes for DiskRP API Version 2020-05-01 which includes Managed Disk support for Private Links via DiskAccess resource.
+        This is a public release of the Azure Compute SDK. Included with this release are
+        1. New disk property: Tier
+        2. New disk property for ultra disk: LogicalSectorSize
+        3. Add property diskState to snapshot
+        4. New API: ListDiskEncryptionSetAssociatedResources.
+        5. Remove EncryptionAtRestWithPlatformKey in diskEncryptionSetType
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

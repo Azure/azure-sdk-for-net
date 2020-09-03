@@ -19,6 +19,12 @@ namespace Azure.Messaging.EventHubs
         /// <summary>The maximum amount of time to wait for an event to become available before emitting an <c>null</c> value.</summary>
         private TimeSpan? _maximumWaitTime = null;
 
+        /// <summary>The event catch count to use when reading events.</summary>
+        private int _cacheEventCount = 100;
+
+        /// <summary>The prefetch count to use when reading events.</summary>
+        private int _prefetchCount = 300;
+
         /// <summary>The set of options to use for configuring the connection to the Event Hubs service.</summary>
         private EventHubConnectionOptions _connectionOptions = new EventHubConnectionOptions();
 
@@ -47,6 +53,16 @@ namespace Azure.Messaging.EventHubs
         /// </remarks>
         ///
         public bool TrackLastEnqueuedEventProperties { get; set; } = true;
+
+        /// <summary>
+        ///   The strategy that an event processor will use to make decisions about
+        ///   partition ownership when performing load balancing to share work with
+        ///   other event processors.
+        /// </summary>
+        ///
+        /// <seealso cref="Processor.LoadBalancingStrategy" />
+        ///
+        public LoadBalancingStrategy LoadBalancingStrategy { get; set; } = LoadBalancingStrategy.Balanced;
 
         /// <summary>
         ///   The maximum amount of time to wait for an event to become available for a given partition before emitting
@@ -78,6 +94,81 @@ namespace Azure.Messaging.EventHubs
                 }
 
                 _maximumWaitTime = value;
+            }
+        }
+
+        /// <summary>
+        ///   The maximum number of events that will be read from the Event Hubs service and held in a local memory
+        ///   cache when reading is active and events are being emitted to an enumerator for processing.
+        /// </summary>
+        ///
+        /// <value>
+        ///   The <see cref="CacheEventCount" /> is a control that developers can use to help tune performance for the specific
+        ///   needs of an application, given its expected size of events, throughput needs, and expected scenarios for using
+        ///   Event Hubs.
+        /// </value>
+        ///
+        /// <remarks>
+        ///   The size of this cache has an influence on the efficiency of reading events from the Event Hubs service.  The
+        ///   larger the size of the cache, the more efficiently service operations can be buffered in the background to
+        ///   improve throughput.  This comes at the cost of additional memory use and potentially increases network I/O.
+        ///
+        ///   For scenarios where the size of events is small and many events are flowing through the system, using a larger
+        ///   <see cref="CacheEventCount"/> and <see cref="PrefetchCount" /> may help improve throughput.  For scenarios where
+        ///   the size of events is larger or when processing of events is expected to be a heavier and slower operation, using
+        ///   a smaller size <see cref="CacheEventCount"/> and <see cref="PrefetchCount"/> may help manage resource use without
+        ///   incurring a non-trivial cost to throughput.
+        ///
+        ///   Regardless of the values, it is generally recommended that the <see cref="PrefetchCount" /> be at least 2-3
+        ///   times as large as the <see cref="CacheEventCount" /> to allow for efficient buffering of service operations.
+        /// </remarks>
+        ///
+        public int CacheEventCount
+        {
+            get => _cacheEventCount;
+
+            set
+            {
+                Argument.AssertAtLeast(value, 1, nameof(CacheEventCount));
+                _cacheEventCount = value;
+            }
+        }
+
+        /// <summary>
+        ///   The number of events that will be eagerly requested from the Event Hubs service and staged locally without regard to
+        ///   whether a reader is currently active, intended to help maximize throughput by buffering service operations rather than
+        ///   readers needing to wait for service operations to complete.
+        /// </summary>
+        ///
+        /// <value>
+        ///   The <see cref="PrefetchCount" /> is a control that developers can use to help tune performance for the specific
+        ///   needs of an application, given its expected size of events, throughput needs, and expected scenarios for using
+        ///   Event Hubs.
+        /// </value>
+        ///
+        /// <remarks>
+        ///   The size of the prefetch count has an influence on the efficiency of reading events from the Event Hubs service.  The
+        ///   larger the size of the cache, the more efficiently service operations can be buffered in the background to
+        ///   improve throughput.  This comes at the cost of additional memory use and potentially increases network I/O.
+        ///
+        ///   For scenarios where the size of events is small and many events are flowing through the system, using a larger
+        ///   <see cref="CacheEventCount"/> and <see cref="PrefetchCount" /> may help improve throughput.  For scenarios where
+        ///   the size of events is larger or when processing of events is expected to be a heavier and slower operation, using
+        ///   a smaller size <see cref="CacheEventCount"/> and <see cref="PrefetchCount"/> may help manage resource use without
+        ///   incurring a non-trivial cost to throughput.
+        ///
+        ///   Regardless of the values, it is generally recommended that the <see cref="PrefetchCount" /> be at least 2-3
+        ///   times as large as the <see cref="CacheEventCount" /> to allow for efficient buffering of service operations.
+        /// </remarks>
+        ///
+        public int PrefetchCount
+        {
+            get => _prefetchCount;
+
+            set
+            {
+                Argument.AssertAtLeast(value, 0, nameof(PrefetchCount));
+                _prefetchCount = value;
             }
         }
 
@@ -151,7 +242,10 @@ namespace Azure.Messaging.EventHubs
             {
                 Identifier = Identifier,
                 TrackLastEnqueuedEventProperties = TrackLastEnqueuedEventProperties,
+                LoadBalancingStrategy = LoadBalancingStrategy,
                 _maximumWaitTime = _maximumWaitTime,
+                _cacheEventCount = _cacheEventCount,
+                _prefetchCount = _prefetchCount,
                 _connectionOptions = ConnectionOptions.Clone(),
                 _retryOptions = RetryOptions.Clone()
             };

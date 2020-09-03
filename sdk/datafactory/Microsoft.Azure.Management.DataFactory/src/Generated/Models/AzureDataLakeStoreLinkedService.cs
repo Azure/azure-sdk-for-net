@@ -54,6 +54,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="tenant">The name or ID of the tenant to which the
         /// service principal belongs. Type: string (or Expression with
         /// resultType string).</param>
+        /// <param name="azureCloudType">Indicates the azure cloud type of the
+        /// service principle auth. Allowed values are AzurePublic, AzureChina,
+        /// AzureUsGovernment, AzureGermany. Default value is the data factory
+        /// regions’ cloud type. Type: string (or Expression with resultType
+        /// string).</param>
         /// <param name="accountName">Data Lake Store account name. Type:
         /// string (or Expression with resultType string).</param>
         /// <param name="subscriptionId">Data Lake Store account subscription
@@ -66,13 +71,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public AzureDataLakeStoreLinkedService(object dataLakeStoreUri, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object servicePrincipalId = default(object), SecretBase servicePrincipalKey = default(SecretBase), object tenant = default(object), object accountName = default(object), object subscriptionId = default(object), object resourceGroupName = default(object), object encryptedCredential = default(object))
+        public AzureDataLakeStoreLinkedService(object dataLakeStoreUri, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object servicePrincipalId = default(object), SecretBase servicePrincipalKey = default(SecretBase), object tenant = default(object), object azureCloudType = default(object), object accountName = default(object), object subscriptionId = default(object), object resourceGroupName = default(object), object encryptedCredential = default(object))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             DataLakeStoreUri = dataLakeStoreUri;
             ServicePrincipalId = servicePrincipalId;
             ServicePrincipalKey = servicePrincipalKey;
             Tenant = tenant;
+            AzureCloudType = azureCloudType;
             AccountName = accountName;
             SubscriptionId = subscriptionId;
             ResourceGroupName = resourceGroupName;
@@ -114,6 +120,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.tenant")]
         public object Tenant { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates the azure cloud type of the service
+        /// principle auth. Allowed values are AzurePublic, AzureChina,
+        /// AzureUsGovernment, AzureGermany. Default value is the data factory
+        /// regions’ cloud type. Type: string (or Expression with resultType
+        /// string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.azureCloudType")]
+        public object AzureCloudType { get; set; }
 
         /// <summary>
         /// Gets or sets data Lake Store account name. Type: string (or

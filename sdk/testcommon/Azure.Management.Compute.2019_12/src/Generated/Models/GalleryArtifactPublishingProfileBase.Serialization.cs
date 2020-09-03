@@ -17,7 +17,7 @@ namespace Azure.Management.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (TargetRegions != null)
+            if (Optional.IsCollectionDefined(TargetRegions))
             {
                 writer.WritePropertyName("targetRegions");
                 writer.WriteStartArray();
@@ -27,27 +27,22 @@ namespace Azure.Management.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ReplicaCount != null)
+            if (Optional.IsDefined(ReplicaCount))
             {
                 writer.WritePropertyName("replicaCount");
                 writer.WriteNumberValue(ReplicaCount.Value);
             }
-            if (ExcludeFromLatest != null)
+            if (Optional.IsDefined(ExcludeFromLatest))
             {
                 writer.WritePropertyName("excludeFromLatest");
                 writer.WriteBooleanValue(ExcludeFromLatest.Value);
             }
-            if (PublishedDate != null)
-            {
-                writer.WritePropertyName("publishedDate");
-                writer.WriteStringValue(PublishedDate.Value, "O");
-            }
-            if (EndOfLifeDate != null)
+            if (Optional.IsDefined(EndOfLifeDate))
             {
                 writer.WritePropertyName("endOfLifeDate");
                 writer.WriteStringValue(EndOfLifeDate.Value, "O");
             }
-            if (StorageAccountType != null)
+            if (Optional.IsDefined(StorageAccountType))
             {
                 writer.WritePropertyName("storageAccountType");
                 writer.WriteStringValue(StorageAccountType.Value.ToString());
@@ -57,82 +52,51 @@ namespace Azure.Management.Compute.Models
 
         internal static GalleryArtifactPublishingProfileBase DeserializeGalleryArtifactPublishingProfileBase(JsonElement element)
         {
-            IList<TargetRegion> targetRegions = default;
-            int? replicaCount = default;
-            bool? excludeFromLatest = default;
-            DateTimeOffset? publishedDate = default;
-            DateTimeOffset? endOfLifeDate = default;
-            StorageAccountType? storageAccountType = default;
+            Optional<IList<TargetRegion>> targetRegions = default;
+            Optional<int> replicaCount = default;
+            Optional<bool> excludeFromLatest = default;
+            Optional<DateTimeOffset> publishedDate = default;
+            Optional<DateTimeOffset> endOfLifeDate = default;
+            Optional<StorageAccountType> storageAccountType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetRegions"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<TargetRegion> array = new List<TargetRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(TargetRegion.DeserializeTargetRegion(item));
-                        }
+                        array.Add(TargetRegion.DeserializeTargetRegion(item));
                     }
                     targetRegions = array;
                     continue;
                 }
                 if (property.NameEquals("replicaCount"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     replicaCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("excludeFromLatest"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     excludeFromLatest = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("publishedDate"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     publishedDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("endOfLifeDate"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     endOfLifeDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("storageAccountType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     storageAccountType = new StorageAccountType(property.Value.GetString());
                     continue;
                 }
             }
-            return new GalleryArtifactPublishingProfileBase(targetRegions, replicaCount, excludeFromLatest, publishedDate, endOfLifeDate, storageAccountType);
+            return new GalleryArtifactPublishingProfileBase(Optional.ToList(targetRegions), Optional.ToNullable(replicaCount), Optional.ToNullable(excludeFromLatest), Optional.ToNullable(publishedDate), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(storageAccountType));
         }
     }
 }

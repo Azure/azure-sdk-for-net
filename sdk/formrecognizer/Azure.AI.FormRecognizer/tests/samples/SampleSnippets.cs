@@ -69,7 +69,7 @@ namespace Azure.AI.FormRecognizer.Samples
             #region Snippet:FormRecognizerBadRequest
             try
             {
-                RecognizedReceiptCollection receipts = await client.StartRecognizeReceiptsFromUri(new Uri("http://invalid.uri")).WaitForCompletionAsync();
+                RecognizedFormCollection receipts = await client.StartRecognizeReceiptsFromUri(new Uri("http://invalid.uri")).WaitForCompletionAsync();
             }
             catch (RequestFailedException e)
             {
@@ -114,7 +114,7 @@ namespace Azure.AI.FormRecognizer.Samples
             #region Snippet:FormRecognizerRecognizeReceiptFromFile
             using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
             {
-                RecognizedReceiptCollection receipts = await client.StartRecognizeReceipts(stream).WaitForCompletionAsync();
+                RecognizedFormCollection receipts = await client.StartRecognizeReceipts(stream).WaitForCompletionAsync();
                 /*
                  *
                  */

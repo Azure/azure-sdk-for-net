@@ -17,10 +17,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type");
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("referenceName");
             writer.WriteStringValue(ReferenceName);
-            if (DatasetParameters != null)
+            if (Optional.IsDefined(DatasetParameters))
             {
                 writer.WritePropertyName("datasetParameters");
                 writer.WriteObjectValue(DatasetParameters);
@@ -35,16 +35,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static DataFlowReference DeserializeDataFlowReference(JsonElement element)
         {
-            string type = default;
+            DataFlowReferenceType type = default;
             string referenceName = default;
-            object datasetParameters = default;
+            Optional<object> datasetParameters = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new DataFlowReferenceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("referenceName"))
@@ -54,25 +54,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("datasetParameters"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     datasetParameters = property.Value.GetObject();
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    additionalPropertiesDictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFlowReference(type, referenceName, datasetParameters, additionalProperties);
+            return new DataFlowReference(type, referenceName, datasetParameters.Value, additionalProperties);
         }
     }
 }

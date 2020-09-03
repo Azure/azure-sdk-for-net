@@ -185,12 +185,12 @@ namespace Azure.Identity.Tests
                 return OpenIdConfigurationResponse;
             }
 
-            if (requestUrl.StartsWith("https://login.microsoftonline.com/common/oauth2/v2.0/devicecode"))
+            if (requestUrl.StartsWith("https://login.microsoftonline.com/organizations/oauth2/v2.0/devicecode"))
             {
                 return CreateDeviceCodeResponse(code);
             }
 
-            if (requestUrl.StartsWith("https://login.microsoftonline.com/common/oauth2/v2.0/token"))
+            if (requestUrl.StartsWith("https://login.microsoftonline.com/organizations/oauth2/v2.0/token"))
             {
                 return CreateTokenResponse(code, token);
 

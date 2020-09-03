@@ -9,6 +9,7 @@ namespace Azure.Identity
     {
         internal AuthenticationRecord() { }
         public string Authority { get { throw null; } }
+        public string ClientId { get { throw null; } }
         public string HomeAccountId { get { throw null; } }
         public string TenantId { get { throw null; } }
         public string Username { get { throw null; } }
@@ -31,6 +32,13 @@ namespace Azure.Identity
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public static partial class AzureAuthorityHosts
+    {
+        public static System.Uri AzureChina { get { throw null; } }
+        public static System.Uri AzureGermany { get { throw null; } }
+        public static System.Uri AzureGovernment { get { throw null; } }
+        public static System.Uri AzurePublicCloud { get { throw null; } }
+    }
     public partial class AzureCliCredential : Azure.Core.TokenCredential
     {
         public AzureCliCredential() { }
@@ -47,19 +55,35 @@ namespace Azure.Identity
     {
         protected ClientCertificateCredential() { }
         public ClientCertificateCredential(string tenantId, string clientId, System.Security.Cryptography.X509Certificates.X509Certificate2 clientCertificate) { }
+        public ClientCertificateCredential(string tenantId, string clientId, System.Security.Cryptography.X509Certificates.X509Certificate2 clientCertificate, Azure.Identity.ClientCertificateCredentialOptions options) { }
         public ClientCertificateCredential(string tenantId, string clientId, System.Security.Cryptography.X509Certificates.X509Certificate2 clientCertificate, Azure.Identity.TokenCredentialOptions options) { }
         public ClientCertificateCredential(string tenantId, string clientId, string clientCertificatePath) { }
+        public ClientCertificateCredential(string tenantId, string clientId, string clientCertificatePath, Azure.Identity.ClientCertificateCredentialOptions options) { }
         public ClientCertificateCredential(string tenantId, string clientId, string clientCertificatePath, Azure.Identity.TokenCredentialOptions options) { }
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ClientCertificateCredentialOptions : Azure.Identity.TokenCredentialOptions
+    {
+        public ClientCertificateCredentialOptions() { }
+        public bool AllowUnencryptedCache { get { throw null; } set { } }
+        public bool EnablePersistentCache { get { throw null; } set { } }
+        public bool IncludeX5CCliamHeader { get { throw null; } set { } }
     }
     public partial class ClientSecretCredential : Azure.Core.TokenCredential
     {
         protected ClientSecretCredential() { }
         public ClientSecretCredential(string tenantId, string clientId, string clientSecret) { }
+        public ClientSecretCredential(string tenantId, string clientId, string clientSecret, Azure.Identity.ClientSecretCredentialOptions options) { }
         public ClientSecretCredential(string tenantId, string clientId, string clientSecret, Azure.Identity.TokenCredentialOptions options) { }
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ClientSecretCredentialOptions : Azure.Identity.TokenCredentialOptions
+    {
+        public ClientSecretCredentialOptions() { }
+        public bool AllowUnencryptedCache { get { throw null; } set { } }
+        public bool EnablePersistentCache { get { throw null; } set { } }
     }
     public partial class CredentialUnavailableException : Azure.Identity.AuthenticationFailedException
     {
@@ -106,6 +130,7 @@ namespace Azure.Identity
     public partial class DeviceCodeCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public DeviceCodeCredentialOptions() { }
+        public bool AllowUnencryptedCache { get { throw null; } set { } }
         public Azure.Identity.AuthenticationRecord AuthenticationRecord { get { throw null; } set { } }
         public string ClientId { get { throw null; } set { } }
         public bool DisableAutomaticAuthentication { get { throw null; } set { } }
@@ -132,6 +157,11 @@ namespace Azure.Identity
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public static partial class IdentityModelFactory
+    {
+        public static Azure.Identity.AuthenticationRecord AuthenticationRecord(string username, string authority, string homeAccountId, string tenantId, string clientId) { throw null; }
+        public static Azure.Identity.DeviceCodeInfo DeviceCodeInfo(string userCode, string deviceCode, System.Uri verificationUri, System.DateTimeOffset expiresOn, string message, string clientId, System.Collections.Generic.IReadOnlyCollection<string> scopes) { throw null; }
+    }
     public partial class InteractiveBrowserCredential : Azure.Core.TokenCredential
     {
         public InteractiveBrowserCredential() { }
@@ -148,18 +178,13 @@ namespace Azure.Identity
     public partial class InteractiveBrowserCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public InteractiveBrowserCredentialOptions() { }
+        public bool AllowUnencryptedCache { get { throw null; } set { } }
         public Azure.Identity.AuthenticationRecord AuthenticationRecord { get { throw null; } set { } }
         public string ClientId { get { throw null; } set { } }
         public bool DisableAutomaticAuthentication { get { throw null; } set { } }
         public bool EnablePersistentCache { get { throw null; } set { } }
+        public System.Uri RedirectUri { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
-    }
-    public static partial class KnownAuthorityHosts
-    {
-        public static readonly System.Uri AzureChinaCloud;
-        public static readonly System.Uri AzureCloud;
-        public static readonly System.Uri AzureGermanCloud;
-        public static readonly System.Uri AzureUSGovernment;
     }
     public partial class ManagedIdentityCredential : Azure.Core.TokenCredential
     {
@@ -179,6 +204,8 @@ namespace Azure.Identity
     public partial class SharedTokenCacheCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public SharedTokenCacheCredentialOptions() { }
+        public bool AllowUnencryptedCache { get { throw null; } set { } }
+        public Azure.Identity.AuthenticationRecord AuthenticationRecord { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
         public string Username { get { throw null; } set { } }
     }
@@ -192,12 +219,19 @@ namespace Azure.Identity
         protected UsernamePasswordCredential() { }
         public UsernamePasswordCredential(string username, string password, string tenantId, string clientId) { }
         public UsernamePasswordCredential(string username, string password, string tenantId, string clientId, Azure.Identity.TokenCredentialOptions options) { }
+        public UsernamePasswordCredential(string username, string password, string tenantId, string clientId, Azure.Identity.UsernamePasswordCredentialOptions options) { }
         public virtual Azure.Identity.AuthenticationRecord Authenticate(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Identity.AuthenticationRecord Authenticate(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Identity.AuthenticationRecord> AuthenticateAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Identity.AuthenticationRecord> AuthenticateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class UsernamePasswordCredentialOptions : Azure.Identity.TokenCredentialOptions
+    {
+        public UsernamePasswordCredentialOptions() { }
+        public bool AllowUnencryptedCache { get { throw null; } set { } }
+        public bool EnablePersistentCache { get { throw null; } set { } }
     }
     public partial class VisualStudioCodeCredential : Azure.Core.TokenCredential
     {

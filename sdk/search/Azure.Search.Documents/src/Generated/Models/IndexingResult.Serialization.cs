@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Models
         internal static IndexingResult DeserializeIndexingResult(JsonElement element)
         {
             string key = default;
-            string errorMessage = default;
+            Optional<string> errorMessage = default;
             bool status = default;
             int statusCode = default;
             foreach (var property in element.EnumerateObject())
@@ -27,10 +27,6 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("errorMessage"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     errorMessage = property.Value.GetString();
                     continue;
                 }
@@ -45,7 +41,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new IndexingResult(key, errorMessage, status, statusCode);
+            return new IndexingResult(key, errorMessage.Value, status, statusCode);
         }
     }
 }

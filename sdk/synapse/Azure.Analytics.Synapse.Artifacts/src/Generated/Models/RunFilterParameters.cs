@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -20,21 +21,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             LastUpdatedAfter = lastUpdatedAfter;
             LastUpdatedBefore = lastUpdatedBefore;
-        }
-
-        /// <summary> Initializes a new instance of RunFilterParameters. </summary>
-        /// <param name="continuationToken"> The continuation token for getting the next page of results. Null for first page. </param>
-        /// <param name="lastUpdatedAfter"> The time at or after which the run event was updated in &apos;ISO 8601&apos; format. </param>
-        /// <param name="lastUpdatedBefore"> The time at or before which the run event was updated in &apos;ISO 8601&apos; format. </param>
-        /// <param name="filters"> List of filters. </param>
-        /// <param name="orderBy"> List of OrderBy option. </param>
-        internal RunFilterParameters(string continuationToken, DateTimeOffset lastUpdatedAfter, DateTimeOffset lastUpdatedBefore, IList<RunQueryFilter> filters, IList<RunQueryOrderBy> orderBy)
-        {
-            ContinuationToken = continuationToken;
-            LastUpdatedAfter = lastUpdatedAfter;
-            LastUpdatedBefore = lastUpdatedBefore;
-            Filters = filters;
-            OrderBy = orderBy;
+            Filters = new ChangeTrackingList<RunQueryFilter>();
+            OrderBy = new ChangeTrackingList<RunQueryOrderBy>();
         }
 
         /// <summary> The continuation token for getting the next page of results. Null for first page. </summary>
@@ -44,8 +32,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The time at or before which the run event was updated in &apos;ISO 8601&apos; format. </summary>
         public DateTimeOffset LastUpdatedBefore { get; }
         /// <summary> List of filters. </summary>
-        public IList<RunQueryFilter> Filters { get; set; }
+        public IList<RunQueryFilter> Filters { get; }
         /// <summary> List of OrderBy option. </summary>
-        public IList<RunQueryOrderBy> OrderBy { get; set; }
+        public IList<RunQueryOrderBy> OrderBy { get; }
     }
 }

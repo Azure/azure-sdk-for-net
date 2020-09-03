@@ -28,6 +28,11 @@ namespace Microsoft.Azure.HDInsight.Job.Models
         /// <summary>
         /// Initializes a new instance of the SparkJobLog class.
         /// </summary>
+        /// <param name="id">The livy id of the spark job.</param>
+        /// <param name="fromProperty">Offset from start of log.</param>
+        /// <param name="size">Max number of log lines.</param>
+        /// <param name="total">Total number of log lines.</param>
+        /// <param name="logLines">The log lines.</param>
         public SparkJobLog(int? id = default(int?), int? fromProperty = default(int?), int? size = default(int?), long? total = default(long?), IList<string> logLines = default(IList<string>))
         {
             Id = id;
@@ -44,26 +49,31 @@ namespace Microsoft.Azure.HDInsight.Job.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the livy id of the spark job.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public int? Id { get; set; }
 
         /// <summary>
+        /// Gets or sets offset from start of log.
         /// </summary>
         [JsonProperty(PropertyName = "from")]
         public int? FromProperty { get; set; }
 
         /// <summary>
+        /// Gets or sets max number of log lines.
         /// </summary>
         [JsonProperty(PropertyName = "size")]
         public int? Size { get; set; }
 
         /// <summary>
+        /// Gets or sets total number of log lines.
         /// </summary>
         [JsonProperty(PropertyName = "total")]
         public long? Total { get; set; }
 
         /// <summary>
+        /// Gets or sets the log lines.
         /// </summary>
         [JsonProperty(PropertyName = "log")]
         public IList<string> LogLines { get; set; }

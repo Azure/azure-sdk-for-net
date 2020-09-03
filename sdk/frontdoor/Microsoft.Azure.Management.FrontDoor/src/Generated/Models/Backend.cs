@@ -35,6 +35,12 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// <param name="privateLinkAlias">The Alias of the Private Link
         /// resource. Populating this optional field indicates that this
         /// backend is 'Private'</param>
+        /// <param name="privateLinkResourceId">The Resource Id of the Private
+        /// Link resource. Populating this optional field indicates that this
+        /// backend is 'Private'</param>
+        /// <param name="privateLinkLocation">The location of the Private Link
+        /// resource. Required only if 'privateLinkResourceId' is
+        /// populated</param>
         /// <param name="privateEndpointStatus">The Approval status for the
         /// connection to the Private Link. Possible values include: 'Pending',
         /// 'Approved', 'Rejected', 'Disconnected', 'Timeout'</param>
@@ -56,10 +62,12 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// <param name="backendHostHeader">The value to use as the host header
         /// sent to the backend. If blank or unspecified, this defaults to the
         /// incoming host.</param>
-        public Backend(string address = default(string), string privateLinkAlias = default(string), PrivateEndpointStatus? privateEndpointStatus = default(PrivateEndpointStatus?), string privateLinkApprovalMessage = default(string), int? httpPort = default(int?), int? httpsPort = default(int?), string enabledState = default(string), int? priority = default(int?), int? weight = default(int?), string backendHostHeader = default(string))
+        public Backend(string address = default(string), string privateLinkAlias = default(string), string privateLinkResourceId = default(string), string privateLinkLocation = default(string), string privateEndpointStatus = default(string), string privateLinkApprovalMessage = default(string), int? httpPort = default(int?), int? httpsPort = default(int?), string enabledState = default(string), int? priority = default(int?), int? weight = default(int?), string backendHostHeader = default(string))
         {
             Address = address;
             PrivateLinkAlias = privateLinkAlias;
+            PrivateLinkResourceId = privateLinkResourceId;
+            PrivateLinkLocation = privateLinkLocation;
             PrivateEndpointStatus = privateEndpointStatus;
             PrivateLinkApprovalMessage = privateLinkApprovalMessage;
             HttpPort = httpPort;
@@ -90,12 +98,27 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         public string PrivateLinkAlias { get; set; }
 
         /// <summary>
+        /// Gets or sets the Resource Id of the Private Link resource.
+        /// Populating this optional field indicates that this backend is
+        /// 'Private'
+        /// </summary>
+        [JsonProperty(PropertyName = "privateLinkResourceId")]
+        public string PrivateLinkResourceId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the location of the Private Link resource. Required
+        /// only if 'privateLinkResourceId' is populated
+        /// </summary>
+        [JsonProperty(PropertyName = "privateLinkLocation")]
+        public string PrivateLinkLocation { get; set; }
+
+        /// <summary>
         /// Gets the Approval status for the connection to the Private Link.
         /// Possible values include: 'Pending', 'Approved', 'Rejected',
         /// 'Disconnected', 'Timeout'
         /// </summary>
         [JsonProperty(PropertyName = "privateEndpointStatus")]
-        public PrivateEndpointStatus? PrivateEndpointStatus { get; private set; }
+        public string PrivateEndpointStatus { get; private set; }
 
         /// <summary>
         /// Gets or sets a custom message to be included in the approval

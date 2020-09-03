@@ -2,7 +2,7 @@
     <PropertyGroup>
         <Description>Microsoft Azure Attestation Library</Description>
         <AssemblyName>Microsoft.Azure.Attestation</AssemblyName>
-        <Version>0.10.0-preview</Version>
+        <Version>0.10.0-preview.1</Version>
         <PackageId>Microsoft.Azure.Attestation</PackageId>
         <PackageTags>Attestation;</PackageTags>
         <PackageReleaseNotes>

@@ -19,7 +19,6 @@ namespace Kusto.Tests.ScenarioTests
 {
     public class KustoOperationsTests : TestBase
     {
-        
         [Fact]
         public void OperationsTest()
         {
@@ -29,7 +28,7 @@ namespace Kusto.Tests.ScenarioTests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var testBase = new KustoTestBase(context);
-                var numOfOperations = 48;
+                var numOfOperations = 54;
 
                 try
                 {
@@ -59,35 +58,35 @@ namespace Kusto.Tests.ScenarioTests
         {
             string runningState = "Running";
             string stoppedState = "Stopped";
-
+        
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new KustoTestBase(context);
-
+        
                 //create cluster
                 var createdcluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
                 VerifyCluster(createdcluster, testBase.clusterName, testBase.sku1, trustedExternalTenants: testBase.trustedExternalTenants, state: runningState);
-
+        
                 // get cluster
                 var cluster = testBase.client.Clusters.Get(testBase.rgName, testBase.clusterName);
                 VerifyCluster(cluster, testBase.clusterName, testBase.sku1, trustedExternalTenants: testBase.trustedExternalTenants, state: runningState);
-
+        
                 //update cluster
                 testBase.cluster.Sku = testBase.sku2;
                 var updatedcluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
                 VerifyCluster(updatedcluster, testBase.clusterName, testBase.sku2, trustedExternalTenants: testBase.trustedExternalTenants, state: runningState);
-
+        
                 //suspend cluster
                 testBase.client.Clusters.Stop(testBase.rgName, testBase.clusterName);
                 var stoppedCluster = testBase.client.Clusters.Get(testBase.rgName, testBase.clusterName);
                 VerifyCluster(stoppedCluster, testBase.clusterName, testBase.sku2, trustedExternalTenants: testBase.trustedExternalTenants, state: stoppedState);
-
+        
                 //suspend cluster
                 testBase.client.Clusters.Start(testBase.rgName, testBase.clusterName);
                 var runningCluster = testBase.client.Clusters.Get(testBase.rgName, testBase.clusterName);
                 VerifyCluster(runningCluster, testBase.clusterName, testBase.sku2, trustedExternalTenants: testBase.trustedExternalTenants, state: runningState);
-
-
+        
+        
                 //delete cluster
                 testBase.client.Clusters.Delete(testBase.rgName, testBase.clusterName);
                 Assert.Throws<CloudException>(() =>
@@ -98,31 +97,31 @@ namespace Kusto.Tests.ScenarioTests
                 });
             }
         }
-
+        
         [Fact]
         public void KustoDatabaseTests()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new KustoTestBase(context);
-
+        
                 //create cluster
                 var createdcluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
-
+        
                 //create database
                 var createdDb = testBase.client.Databases.CreateOrUpdate(testBase.rgName, createdcluster.Name, testBase.databaseName, testBase.database) as ReadWriteDatabase;
                 VerifyReadWriteDatabase(createdDb, testBase.databaseName, testBase.softDeletePeriod1, testBase.hotCachePeriod1, createdcluster.Name);
-
+        
                 // get database 
                 var database = testBase.client.Databases.Get(testBase.rgName, createdcluster.Name, testBase.databaseName) as ReadWriteDatabase;
                 VerifyReadWriteDatabase(database, testBase.databaseName, testBase.softDeletePeriod1, testBase.hotCachePeriod1, createdcluster.Name);
-
+        
                 //update database
                 testBase.database.HotCachePeriod = testBase.hotCachePeriod2;
                 testBase.database.SoftDeletePeriod = testBase.softDeletePeriod2;
                 var updatedDb = testBase.client.Databases.CreateOrUpdate(testBase.rgName, createdcluster.Name, testBase.databaseName, testBase.database) as ReadWriteDatabase;
                 VerifyReadWriteDatabase(updatedDb, testBase.databaseName, testBase.softDeletePeriod2, testBase.hotCachePeriod2, createdcluster.Name);
-
+        
                 //delete database
                 testBase.client.Databases.Delete(testBase.rgName, createdcluster.Name, testBase.databaseName);
                 Assert.Throws<CloudException>(() =>
@@ -132,25 +131,25 @@ namespace Kusto.Tests.ScenarioTests
                         clusterName: createdcluster.Name,
                         databaseName: testBase.databaseName);
                 });
-
+        
                 //delete cluster
                 testBase.client.Clusters.Delete(testBase.rgName, testBase.clusterName);
             }
         }
-
+        
         [Fact]
         public void KustoEventHubTests()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new KustoTestBase(context);
-
+        
                 //create cluster
                 var createdCluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
-
+        
                 //create database
                 var createdDb = testBase.client.Databases.CreateOrUpdate(testBase.rgName, createdCluster.Name, testBase.databaseName, testBase.database);
-
+        
                 //create event hub connection
                 var createdEventHubConnection = testBase.client.DataConnections.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.databaseName, testBase.eventHubConnectionName, testBase.eventhubConnection);
                 VerifyEventHub(createdEventHubConnection as EventHubDataConnection,
@@ -160,7 +159,7 @@ namespace Kusto.Tests.ScenarioTests
                     testBase.clusterName,
                     testBase.databaseName,
                     string.Empty);
-
+        
                 // get event hub connection
                 var eventHubConnection = testBase.client.DataConnections.Get(testBase.rgName, testBase.clusterName, testBase.databaseName, testBase.eventHubConnectionName);
                 VerifyEventHub(eventHubConnection as EventHubDataConnection, 
@@ -170,7 +169,7 @@ namespace Kusto.Tests.ScenarioTests
                     testBase.clusterName,
                     testBase.databaseName,
                     string.Empty);
-
+        
                 //update event hub connection
                 testBase.eventhubConnection.DataFormat = testBase.dataFormat;
                 var updatedEventHubConnection = testBase.client.DataConnections.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.databaseName, testBase.eventHubConnectionName, testBase.eventhubConnection);
@@ -181,7 +180,7 @@ namespace Kusto.Tests.ScenarioTests
                     testBase.clusterName,
                     testBase.databaseName,
                     testBase.dataFormat);
-
+        
                 //delete event hub
                 testBase.client.DataConnections.Delete(testBase.rgName, testBase.clusterName, testBase.databaseName, testBase.eventHubConnectionName);
                 Assert.Throws<CloudException>(() =>
@@ -192,28 +191,28 @@ namespace Kusto.Tests.ScenarioTests
                         databaseName: createdDb.Name,
                         dataConnectionName: testBase.eventHubConnectionName);
                 });
-
+        
                 //delete database
                 testBase.client.Databases.Delete(testBase.rgName, testBase.clusterName, testBase.databaseName);
-
+        
                 //delete cluster
                 testBase.client.Clusters.Delete(testBase.rgName, testBase.clusterName);
             }
         }
-
+        
         [Fact]
         public void KustoIotHubTests()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new KustoTestBase(context);
-
+        
                 //create cluster
                 var createdCluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
-
+        
                 //create database
                 var createdDb = testBase.client.Databases.CreateOrUpdate(testBase.rgName, createdCluster.Name, testBase.databaseName, testBase.database);
-
+        
                 //create iot hub connection
                 var createdIotHubConnection = testBase.client.DataConnections.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.databaseName, testBase.iotHubConnectionName, testBase.iotHubDataConnection);
                 VerifyIotHub(createdIotHubConnection as IotHubDataConnection,
@@ -223,7 +222,7 @@ namespace Kusto.Tests.ScenarioTests
                     testBase.clusterName,
                     testBase.databaseName,
                     string.Empty);
-
+        
                 // get Iot hub connection
                 var iotHubConnection = testBase.client.DataConnections.Get(testBase.rgName, testBase.clusterName, testBase.databaseName, testBase.iotHubConnectionName);
                 VerifyIotHub(iotHubConnection as IotHubDataConnection,
@@ -233,11 +232,11 @@ namespace Kusto.Tests.ScenarioTests
                     testBase.clusterName,
                     testBase.databaseName,
                     string.Empty);
-
+        
                 //update Iot hub connection
                 testBase.iotHubDataConnection.DataFormat = testBase.dataFormat;
                 var updatedIotHubConnection = testBase.client.DataConnections.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.databaseName, testBase.iotHubConnectionName, testBase.iotHubDataConnection);
-
+        
                 VerifyIotHub(updatedIotHubConnection as IotHubDataConnection,
                     testBase.iotHubConnectionName,
                     testBase.iotHubResourceId,
@@ -245,7 +244,7 @@ namespace Kusto.Tests.ScenarioTests
                     testBase.clusterName,
                     testBase.databaseName,
                     testBase.dataFormat);
-
+        
                 //delete Iot hub
                 testBase.client.DataConnections.Delete(testBase.rgName, testBase.clusterName, testBase.databaseName, testBase.iotHubConnectionName);
                 Assert.Throws<CloudException>(() =>
@@ -256,22 +255,22 @@ namespace Kusto.Tests.ScenarioTests
                         databaseName: testBase.databaseName,
                         dataConnectionName: testBase.iotHubConnectionName);
                 });
-
+        
                 //delete database
                 testBase.client.Databases.Delete(testBase.rgName, testBase.clusterName, testBase.databaseName);
-
+        
                 //delete cluster
                 testBase.client.Clusters.Delete(testBase.rgName, testBase.clusterName);
             }
         }
-
+        
         [Fact]
         public void KustoEventGridTests()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new KustoTestBase(context);
-
+        
                 //create event grid connection
                 var createdEventGridConnection = testBase.client.DataConnections.CreateOrUpdate(testBase.resourceGroupForTest, testBase.clusterForEventGridTest, testBase.databaseForEventGridTest, testBase.eventGridConnectinoName, testBase.eventGridDataConnection);
                 VerifyEventGrid(createdEventGridConnection as EventGridDataConnection,
@@ -283,7 +282,7 @@ namespace Kusto.Tests.ScenarioTests
                     testBase.dataFormat,
                     testBase.storageAccountForEventGridResourceId,
                     testBase.tableName);
-
+        
                 // get event grid connection
                 var eventGridConnection = testBase.client.DataConnections.Get(testBase.resourceGroupForTest, testBase.clusterForEventGridTest, testBase.databaseForEventGridTest, testBase.eventGridConnectinoName);
                 VerifyEventGrid(eventGridConnection as EventGridDataConnection,
@@ -295,10 +294,10 @@ namespace Kusto.Tests.ScenarioTests
                     testBase.dataFormat,
                     testBase.storageAccountForEventGridResourceId,
                     testBase.tableName);
-
+        
                 //update event grid connection
                 testBase.eventhubConnection.DataFormat = testBase.dataFormat;
-
+        
                 var updatedEventGridConnection = testBase.client.DataConnections.CreateOrUpdate(testBase.resourceGroupForTest, testBase.clusterForEventGridTest, testBase.databaseForEventGridTest, testBase.eventGridConnectinoName, testBase.eventGridDataConnection);
                 VerifyEventGrid(updatedEventGridConnection as EventGridDataConnection,
                     testBase.eventGridConnectinoName,
@@ -309,7 +308,7 @@ namespace Kusto.Tests.ScenarioTests
                     testBase.dataFormat,
                     testBase.storageAccountForEventGridResourceId,
                     testBase.tableName);
-
+        
                 //delete event grid
                 testBase.client.DataConnections.Delete(testBase.resourceGroupForTest, testBase.clusterForEventGridTest, testBase.databaseForEventGridTest, testBase.eventGridConnectinoName);
                 Assert.Throws<CloudException>(() =>
@@ -322,127 +321,127 @@ namespace Kusto.Tests.ScenarioTests
                 });
             }
         }
-
+        
         [Fact]
         public void KustoOptimizedAutoscaleTests()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new KustoTestBase(context);
-
+        
                 // Create cluster with optimized autoscale
                 var enabledOptimizedAutoscale = new OptimizedAutoscale(1, true, 2, 100);
                 testBase.cluster.OptimizedAutoscale = enabledOptimizedAutoscale;
                 var createdCluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
                 ValidateOptimizedAutoscale(createdCluster, enabledOptimizedAutoscale);
-
+        
                 // Update cluster with optimized autoscale
                 enabledOptimizedAutoscale = new OptimizedAutoscale(1, true, 2, 101);
                 testBase.cluster.OptimizedAutoscale = enabledOptimizedAutoscale;
                 var updatedCluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
                 ValidateOptimizedAutoscale(updatedCluster, enabledOptimizedAutoscale);
-
+        
                 var optimizedAutoscaleThatShouldNotBeAllowed = new OptimizedAutoscale(1, true, 0, 100);
                 testBase.cluster.OptimizedAutoscale = optimizedAutoscaleThatShouldNotBeAllowed;
-
+        
                 Assert.Throws<CloudException>(() =>
                 {
                     testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
                 });
-
+        
                 // Delete cluster
                 testBase.client.Clusters.Delete(testBase.rgName, testBase.clusterName);
             }
         }
-
+        
         [Fact]
         public void KustoStreamingIngestTests()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new KustoTestBase(context);
-
+        
                 // Create cluster with streaming ingest true
                 testBase.cluster.EnableStreamingIngest = true;
                 var createdCluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
                 Assert.True(createdCluster.EnableStreamingIngest);
-
+        
                 // Update cluster with streaming ingest false
                 testBase.cluster.EnableStreamingIngest = false;
                 var updatedCluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
                 Assert.False(updatedCluster.EnableStreamingIngest);
-
+        
                 // Delete cluster
                 testBase.client.Clusters.Delete(testBase.rgName, testBase.clusterName);
             }
         }
-
+        
         [Fact]
         public void KustoEnableDiskEncryptionTests()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new KustoTestBase(context);
-
+        
                 // Create cluster with Enable Disk Encryption true
                 testBase.cluster.EnableDiskEncryption = true;
                 var createdCluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
                 Assert.True(createdCluster.EnableDiskEncryption);
-
+        
                 // Update cluster with Enable Disk Encryption false
                 testBase.cluster.EnableDiskEncryption = false;
                 var updatedCluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
                 Assert.False(updatedCluster.EnableDiskEncryption);
-
+        
                 //Delete cluster
                 testBase.client.Clusters.Delete(testBase.rgName, testBase.clusterName);
             }
         }
-
+        
         [Fact]
         public void KustoDatabasePrincipalsTests()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new KustoTestBase(context);
-
+        
                 //create cluster
                 var createdCluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
-
+        
                 //create database
                 var createdDb = testBase.client.Databases.CreateOrUpdate(testBase.rgName, createdCluster.Name, testBase.databaseName, testBase.database);
-
+        
                 //create principals list
                 var databasePrincipalListRequest = new DatabasePrincipalListRequest(testBase.databasePrincipals);
                 var principalsResult = testBase.client.Databases.AddPrincipals(testBase.rgName, testBase.clusterName, testBase.databaseName, databasePrincipalListRequest);
                 VerifyPrincipalsExists(principalsResult.Value, testBase.databasePrincipal);
-
+        
                 // get principals list
                 var principalsList = testBase.client.Databases.ListPrincipals(testBase.rgName, testBase.clusterName, testBase.databaseName);
                 VerifyPrincipalsExists(principalsList, testBase.databasePrincipal);
-
+        
                 //delete principals
                 principalsResult = testBase.client.Databases.RemovePrincipals(testBase.rgName, testBase.clusterName, testBase.databaseName, databasePrincipalListRequest);
                 VerifyPrincipalsDontExist(principalsResult.Value, testBase.databasePrincipal);
-
+        
                 //delete database
                 testBase.client.Databases.Delete(testBase.rgName, testBase.clusterName, testBase.databaseName);
-
+        
                 //delete cluster
                 testBase.client.Clusters.Delete(testBase.rgName, testBase.clusterName);
             }
         }
-
+        
         [Fact]
         public void KustoPrincipalAssignmentsTests()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new KustoTestBase(context);
-
+        
                 //create cluster
                 var createdCluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
-
+        
                 var principalName = "principal1";
                 //create cluster principal assignment
                 var clusterPrincipalAssignment = new ClusterPrincipalAssignment(testBase.clientIdForPrincipal, "AllDatabasesAdmin", "App");
@@ -453,10 +452,10 @@ namespace Kusto.Tests.ScenarioTests
                 {
                     testBase.client.ClusterPrincipalAssignments.Get(testBase.rgName, testBase.clusterName, principalName);
                 });
-
+        
                 //create database
                 var createdDb = testBase.client.Databases.CreateOrUpdate(testBase.rgName, createdCluster.Name, testBase.databaseName, testBase.database);
-
+        
                 //create database principal assignment
                 var databasePrincipalAssignment = new DatabasePrincipalAssignment(testBase.clientIdForPrincipal, "Viewer", "App");
                 testBase.client.DatabasePrincipalAssignments.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.databaseName, principalName, databasePrincipalAssignment);
@@ -466,56 +465,56 @@ namespace Kusto.Tests.ScenarioTests
                 {
                     testBase.client.DatabasePrincipalAssignments.Get(testBase.rgName, testBase.clusterName, testBase.databaseName, principalName);
                 });
-
+        
                 //delete database
                 testBase.client.Databases.Delete(testBase.rgName, testBase.clusterName, testBase.databaseName);
-
+        
                 //delete cluster
                 testBase.client.Clusters.Delete(testBase.rgName, testBase.clusterName);
             }
         }
-
+        
         [Fact]
         public void KustoAttachedDatabaseConfigurationTests()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new KustoTestBase(context);
-
+        
                 //create cluster
                 var createdCluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
-
+        
                 // create a follower cluster
                 var createdFollowerCluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.followerClusterName, testBase.cluster);
-
+        
                 //create database
                 var createdDb = testBase.client.Databases.CreateOrUpdate(testBase.rgName, createdCluster.Name, testBase.databaseName, testBase.database);
-
+        
                 //create attached database configuration
                 var createdAttachedDatabaseConfiguration = testBase.client.AttachedDatabaseConfigurations.CreateOrUpdate(
                     testBase.rgName,
                     testBase.followerClusterName,
                     testBase.attachedDatabaseConfigurationName,
                     testBase.attachedDatabaseConfiguration);
-
+        
                 VerifyAttachedDatabaseConfiguration(createdAttachedDatabaseConfiguration,
                     testBase.attachedDatabaseConfigurationName,
                     testBase.followerClusterName, testBase.databaseName,
                     createdCluster.Id,
                     testBase.defaultPrincipalsModificationKind);
-
+        
                 // get attached database configuration
                 var attachedDatabaseConfiguration = testBase.client.AttachedDatabaseConfigurations.Get(testBase.rgName, createdFollowerCluster.Name, testBase.attachedDatabaseConfigurationName);
-
+        
                 VerifyAttachedDatabaseConfiguration(attachedDatabaseConfiguration,
                     testBase.attachedDatabaseConfigurationName,
                     testBase.followerClusterName, testBase.databaseName,
                     createdCluster.Id,
                     testBase.defaultPrincipalsModificationKind);
-
+        
                 // testing the created read-only following database
                 TestReadonlyFollowingDatabase(testBase);
-
+        
                 // delete the attached database configuration
                 testBase.client.AttachedDatabaseConfigurations.Delete(testBase.rgName, createdFollowerCluster.Name, testBase.attachedDatabaseConfigurationName);
                 Assert.Throws<CloudException>(() =>
@@ -525,83 +524,83 @@ namespace Kusto.Tests.ScenarioTests
                         clusterName: createdFollowerCluster.Name,
                         attachedDatabaseConfigurationName: testBase.attachedDatabaseConfigurationName);
                 });
-
+        
                 // delete cluster
                 testBase.client.Clusters.Delete(testBase.rgName, testBase.clusterName);
-
+        
                 // delete follower cluster
                 testBase.client.Clusters.Delete(testBase.rgName, testBase.followerClusterName);
             }
         }
-
+        
         [Fact]
         public void KustoFollowerDatabaseActionsTests()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new KustoTestBase(context);
-
+        
                 //create cluster
                 var createdCluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
-
+        
                 // create a follower cluster
                 var createdFollowerCluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.followerClusterName, testBase.cluster);
-
+        
                 //create database
                 var createdDb = testBase.client.Databases.CreateOrUpdate(testBase.rgName, createdCluster.Name, testBase.databaseName, testBase.database);
-
+        
                 //create attached database configuration
                 var createdAttachedDatabaseConfiguration = testBase.client.AttachedDatabaseConfigurations.CreateOrUpdate(
                     testBase.rgName,
                     testBase.followerClusterName,
                     testBase.attachedDatabaseConfigurationName,
                     testBase.attachedDatabaseConfiguration);
-
+        
                 var followerDatabasesList = testBase.client.Clusters.ListFollowerDatabases(testBase.rgName, testBase.clusterName);
                 var followerDatabase = followerDatabasesList.FirstOrDefault(f => f.AttachedDatabaseConfigurationName.Equals(testBase.attachedDatabaseConfigurationName, StringComparison.OrdinalIgnoreCase));
                 VerifyFollowerDatabase(followerDatabase, testBase.attachedDatabaseConfigurationName, testBase.databaseName, createdFollowerCluster.Id);
-
+        
                 // detach the follower database
                 testBase.client.Clusters.DetachFollowerDatabases(testBase.rgName, testBase.clusterName, followerDatabase);
                 followerDatabasesList = testBase.client.Clusters.ListFollowerDatabases(testBase.rgName, testBase.clusterName);
                 VerifyFollowerDatabaseDontExist(followerDatabasesList, testBase.attachedDatabaseConfigurationName);
-
+        
                 // delete cluster
                 testBase.client.Clusters.Delete(testBase.rgName, testBase.clusterName);
-
+        
                 // delete follower cluster
                 testBase.client.Clusters.Delete(testBase.rgName, testBase.followerClusterName);
             }
         }
-
+        
         [Fact]
         public void KustoIdentityTests()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new KustoTestBase(context);
-
+        
                 // Create cluster with an identity
                 testBase.cluster.Identity = new Identity(IdentityType.SystemAssigned);
                 var createdCluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
-
+        
                 Assert.Equal(IdentityType.SystemAssigned, createdCluster.Identity.Type);
-
+        
                 // Delete cluster
                 testBase.client.Clusters.Delete(testBase.rgName, testBase.clusterName);
             }
         }
-
+        
         [Fact]
         public void KustoKeyVaultPropertiesTests()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new KustoTestBase(context);
-
+        
                 // Update the cluster with key vault properties
                 var cluster = testBase.client.Clusters.Update(testBase.resourceGroupForTest, testBase.clusterForKeyVaultPropertiesTest, new ClusterUpdate(keyVaultProperties: testBase.keyVaultProperties));
-
+        
                 VerifyKeyVaultProperties(cluster.KeyVaultProperties, 
                     testBase.KeyNameForKeyVaultPropertiesTest, 
                     testBase.KeyVersionForKeyVaultPropertiesTest, 

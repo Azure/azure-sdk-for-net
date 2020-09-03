@@ -26,6 +26,11 @@ namespace Azure.Search.Documents.Tests
         public const string StorageAccountKeyVariableName = "SEARCH_STORAGE_KEY";
 
         /// <summary>
+        /// The name of the variable for <see cref="SearchCognitiveKey"/>.
+        /// </summary>
+        public const string CognitiveKeyVariableName = "SEARCH_COGNITIVE_KEY";
+
+        /// <summary>
         /// Creates a new instance of the <see cref="SearchTestEnvironment"/> class.
         /// </summary>
         public SearchTestEnvironment() : base("search")
@@ -56,5 +61,10 @@ namespace Azure.Search.Documents.Tests
         /// Gets the storage account key for external data sources.
         /// </summary>
         public string SearchStorageKey => GetRecordedVariable(StorageAccountKeyVariableName);
+
+        /// <summary>
+        /// Gets the Cognitive Services key for skillsets.
+        /// </summary>
+        public string SearchCognitiveKey => GetRecordedVariable(CognitiveKeyVariableName);
     }
 }

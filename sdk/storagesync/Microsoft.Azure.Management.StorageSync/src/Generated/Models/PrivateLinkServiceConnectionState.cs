@@ -37,13 +37,13 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// values include: 'Pending', 'Approved', 'Rejected'</param>
         /// <param name="description">The reason for approval/rejection of the
         /// connection.</param>
-        /// <param name="actionRequired">A message indicating if changes on the
-        /// service provider require any updates on the consumer.</param>
-        public PrivateLinkServiceConnectionState(string status = default(string), string description = default(string), string actionRequired = default(string))
+        /// <param name="actionsRequired">A message indicating if changes on
+        /// the service provider require any updates on the consumer.</param>
+        public PrivateLinkServiceConnectionState(string status = default(string), string description = default(string), string actionsRequired = default(string))
         {
             Status = status;
             Description = description;
-            ActionRequired = actionRequired;
+            ActionsRequired = actionsRequired;
             CustomInit();
         }
 
@@ -70,8 +70,8 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// Gets or sets a message indicating if changes on the service
         /// provider require any updates on the consumer.
         /// </summary>
-        [JsonProperty(PropertyName = "actionRequired")]
-        public string ActionRequired { get; set; }
+        [JsonProperty(PropertyName = "actionsRequired")]
+        public string ActionsRequired { get; set; }
 
     }
 }

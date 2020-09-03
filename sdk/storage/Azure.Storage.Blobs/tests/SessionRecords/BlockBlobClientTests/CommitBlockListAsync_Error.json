@@ -1,109 +1,109 @@
 {
   "Entries": [
     {
-      "RequestUri": "http://kasoboltest.blob.core.windows.net/test-container-91d9863d-8fbd-6ce0-672f-62543c50c27c?restype=container",
+      "RequestUri": "https://seanmcccanary.blob.core.windows.net/test-container-52e8f5f9-7ae2-bde4-a420-4f043d304aea?restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-6d693efe50951a4ab9a97d767498e986-acf23f55d683ec4e-00",
+        "traceparent": "00-1936d6401a0460408bb09b9a694ffd57-6293807b78d44145-00",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.4.0-dev.20200329.1",
-          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Storage.Blobs/12.5.0-dev.20200403.1",
+          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-blob-public-access": "container",
-        "x-ms-client-request-id": "76eaf63b-1dfd-79cb-a1bb-8140c0e0e84b",
-        "x-ms-date": "Mon, 30 Mar 2020 05:49:12 GMT",
+        "x-ms-client-request-id": "d4661fbf-f7d8-f10e-02c9-36494e66e354",
+        "x-ms-date": "Sat, 04 Apr 2020 01:42:48 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-07-07"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 30 Mar 2020 05:49:11 GMT",
-        "ETag": "\u00220x8D7D46E12B0A55A\u0022",
-        "Last-Modified": "Mon, 30 Mar 2020 05:49:12 GMT",
+        "Date": "Sat, 04 Apr 2020 01:42:47 GMT",
+        "ETag": "\u00220x8D7D8397AD851DB\u0022",
+        "Last-Modified": "Sat, 04 Apr 2020 01:42:48 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-client-request-id": "76eaf63b-1dfd-79cb-a1bb-8140c0e0e84b",
-        "x-ms-request-id": "35868747-801e-0012-5c56-0660ef000000",
-        "x-ms-version": "2019-07-07"
+        "x-ms-client-request-id": "d4661fbf-f7d8-f10e-02c9-36494e66e354",
+        "x-ms-request-id": "2b195d5b-801e-0055-3c22-0a5d2b000000",
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://kasoboltest.blob.core.windows.net/test-container-91d9863d-8fbd-6ce0-672f-62543c50c27c/test-blob-3a316b4b-6ccf-04d4-144f-e014c29209f7?comp=blocklist",
+      "RequestUri": "https://seanmcccanary.blob.core.windows.net/test-container-52e8f5f9-7ae2-bde4-a420-4f043d304aea/test-blob-7d0276a6-4f2e-ffb5-d932-ccd6f7c3624d?comp=blocklist",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "104",
         "Content-Type": "application/xml",
-        "traceparent": "00-0b26d8cc2b54e24a9fd166aaee01eb10-88692b7254a70f4f-00",
+        "traceparent": "00-c50cf6c32391484d980e42ca52b57217-c7a94957e6a0ea4e-00",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.4.0-dev.20200329.1",
-          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Storage.Blobs/12.5.0-dev.20200403.1",
+          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18362 )"
         ],
-        "x-ms-client-request-id": "30ab3e85-1bbf-cb01-e17e-c3cbc19e4592",
-        "x-ms-date": "Mon, 30 Mar 2020 05:49:12 GMT",
+        "x-ms-client-request-id": "725fb1f8-c460-089c-04f1-2d5719c187f9",
+        "x-ms-date": "Sat, 04 Apr 2020 01:42:48 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-07-07"
+        "x-ms-version": "2019-12-12"
       },
-      "RequestBody": "\u003CBlockList\u003E\u003CLatest\u003EdGVzdC1ibG9jay02Y2NkNzVlYy1jNzI4LTUxOGMtOWRlZS1mNDlkOWU1Y2IxNzA=\u003C/Latest\u003E\u003C/BlockList\u003E",
+      "RequestBody": "\u003CBlockList\u003E\u003CLatest\u003EdGVzdC1ibG9jay05NTRkNGFiNC03Mzk2LWQwODAtMDIzNS0zMmI5OWJkY2Y3M2E=\u003C/Latest\u003E\u003C/BlockList\u003E",
       "StatusCode": 400,
       "ResponseHeaders": {
         "Content-Length": "221",
         "Content-Type": "application/xml",
-        "Date": "Mon, 30 Mar 2020 05:49:11 GMT",
+        "Date": "Sat, 04 Apr 2020 01:42:47 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-client-request-id": "30ab3e85-1bbf-cb01-e17e-c3cbc19e4592",
+        "x-ms-client-request-id": "725fb1f8-c460-089c-04f1-2d5719c187f9",
         "x-ms-error-code": "InvalidBlockList",
-        "x-ms-request-id": "35868750-801e-0012-6356-0660ef000000",
-        "x-ms-version": "2019-07-07"
+        "x-ms-request-id": "2b195d6a-801e-0055-4722-0a5d2b000000",
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EInvalidBlockList\u003C/Code\u003E\u003CMessage\u003EThe specified block list is invalid.\n",
-        "RequestId:35868750-801e-0012-6356-0660ef000000\n",
-        "Time:2020-03-30T05:49:12.1672446Z\u003C/Message\u003E\u003C/Error\u003E"
+        "RequestId:2b195d6a-801e-0055-4722-0a5d2b000000\n",
+        "Time:2020-04-04T01:42:48.2777685Z\u003C/Message\u003E\u003C/Error\u003E"
       ]
     },
     {
-      "RequestUri": "http://kasoboltest.blob.core.windows.net/test-container-91d9863d-8fbd-6ce0-672f-62543c50c27c?restype=container",
+      "RequestUri": "https://seanmcccanary.blob.core.windows.net/test-container-52e8f5f9-7ae2-bde4-a420-4f043d304aea?restype=container",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-46693f056f710c4bb03fb1cfc4ea3fc5-439dfc47e470b942-00",
+        "traceparent": "00-e8a52ecf12515848b974d3cea05fe0b9-5989e03b29032b4f-00",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.4.0-dev.20200329.1",
-          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Storage.Blobs/12.5.0-dev.20200403.1",
+          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18362 )"
         ],
-        "x-ms-client-request-id": "5f172495-80b0-5bb1-bf03-05cabeb2bdd4",
-        "x-ms-date": "Mon, 30 Mar 2020 05:49:12 GMT",
+        "x-ms-client-request-id": "eac14dcf-847d-b9da-99ec-3984d72d58db",
+        "x-ms-date": "Sat, 04 Apr 2020 01:42:48 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-07-07"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 30 Mar 2020 05:49:12 GMT",
+        "Date": "Sat, 04 Apr 2020 01:42:47 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-client-request-id": "5f172495-80b0-5bb1-bf03-05cabeb2bdd4",
-        "x-ms-request-id": "35868754-801e-0012-6756-0660ef000000",
-        "x-ms-version": "2019-07-07"
+        "x-ms-client-request-id": "eac14dcf-847d-b9da-99ec-3984d72d58db",
+        "x-ms-request-id": "2b195d7d-801e-0055-5722-0a5d2b000000",
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
-    "RandomSeed": "199451915",
-    "Storage_TestConfigDefault": "ProductionTenant\nkasoboltest\nU2FuaXRpemVk\nhttp://kasoboltest.blob.core.windows.net\nhttp://kasoboltest.file.core.windows.net\nhttp://kasoboltest.queue.core.windows.net\nhttp://kasoboltest.table.core.windows.net\n\n\n\n\nhttp://kasoboltest-secondary.blob.core.windows.net\nhttp://kasoboltest-secondary.file.core.windows.net\nhttp://kasoboltest-secondary.queue.core.windows.net\nhttp://kasoboltest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://kasoboltest.blob.core.windows.net/;QueueEndpoint=http://kasoboltest.queue.core.windows.net/;FileEndpoint=http://kasoboltest.file.core.windows.net/;BlobSecondaryEndpoint=http://kasoboltest-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://kasoboltest-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://kasoboltest-secondary.file.core.windows.net/;AccountName=kasoboltest;AccountKey=Sanitized\nencryptionScope"
+    "RandomSeed": "451020935",
+    "Storage_TestConfigDefault": "ProductionTenant\nseanmcccanary\nU2FuaXRpemVk\nhttps://seanmcccanary.blob.core.windows.net\nhttps://seanmcccanary.file.core.windows.net\nhttps://seanmcccanary.queue.core.windows.net\nhttps://seanmcccanary.table.core.windows.net\n\n\n\n\nhttps://seanmcccanary-secondary.blob.core.windows.net\nhttps://seanmcccanary-secondary.file.core.windows.net\nhttps://seanmcccanary-secondary.queue.core.windows.net\nhttps://seanmcccanary-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanmcccanary.blob.core.windows.net/;QueueEndpoint=https://seanmcccanary.queue.core.windows.net/;FileEndpoint=https://seanmcccanary.file.core.windows.net/;BlobSecondaryEndpoint=https://seanmcccanary-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanmcccanary-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanmcccanary-secondary.file.core.windows.net/;AccountName=seanmcccanary;AccountKey=Sanitized\nseanscope1"
   }
 }

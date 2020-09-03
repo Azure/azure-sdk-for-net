@@ -177,7 +177,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// </summary>
         private void Initialize()
         {
-            BaseUri = "{Endpoint}/customvision/v3.2/training";
+            BaseUri = "{Endpoint}/customvision/v3.3/training";
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,
@@ -1277,6 +1277,153 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         }
 
         /// <summary>
+        /// Get artifact content from blob storage, based on artifact relative path in
+        /// the blob.
+        /// </summary>
+        /// <param name='projectId'>
+        /// The project id.
+        /// </param>
+        /// <param name='path'>
+        /// The relative path for artifact.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="HttpOperationException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<HttpOperationResponse<Stream>> GetArtifactWithHttpMessagesAsync(System.Guid projectId, string path, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
+            if (path == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "path");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("projectId", projectId);
+                tracingParameters.Add("path", path);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "GetArtifact", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "projects/{projectId}/artifacts";
+            _url = _url.Replace("{Endpoint}", Endpoint);
+            _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
+            List<string> _queryParameters = new List<string>();
+            if (path != null)
+            {
+                _queryParameters.Add(string.Format("path={0}", System.Uri.EscapeDataString(path)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                if (_httpResponse.Content != null) {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                }
+                else {
+                    _responseContent = string.Empty;
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new HttpOperationResponse<Stream>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _result.Body = await _httpResponse.Content.ReadAsStreamAsync().ConfigureAwait(false);
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
         /// Exports a project.
         /// </summary>
         /// <param name='projectId'>
@@ -1426,12 +1573,260 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         }
 
         /// <summary>
+        /// Get images for a given project iteration or workspace.
+        /// </summary>
+        /// <remarks>
+        /// This API supports batching and range selection. By default it will only
+        /// return first 50 images matching images.
+        /// Use the {take} and {skip} parameters to control how many images to return
+        /// in a given batch.
+        /// The filtering is on an and/or relationship. For example, if the provided
+        /// tag ids are for the "Dog" and
+        /// "Cat" tags, then only images tagged with Dog and/or Cat will be returned
+        /// </remarks>
+        /// <param name='projectId'>
+        /// The project id.
+        /// </param>
+        /// <param name='iterationId'>
+        /// The iteration id. Defaults to workspace.
+        /// </param>
+        /// <param name='tagIds'>
+        /// A list of tags ids to filter the images. Defaults to all tagged images when
+        /// null. Limited to 20.
+        /// </param>
+        /// <param name='taggingStatus'>
+        /// The tagging status filter. It can be 'All', 'Tagged', or 'Untagged'.
+        /// Defaults to 'All'. Possible values include: 'All', 'Tagged', 'Untagged'
+        /// </param>
+        /// <param name='filter'>
+        /// An expression to filter the images against image metadata. Only images
+        /// where the expression evaluates to true are included in the response.
+        /// The expression supports eq (Equal), ne (Not equal), and (Logical and), or
+        /// (Logical or) operators.
+        /// Here is an example, metadata=key1 eq 'value1' and key2 ne 'value2'.
+        /// </param>
+        /// <param name='orderBy'>
+        /// The ordering. Defaults to newest. Possible values include: 'Newest',
+        /// 'Oldest'
+        /// </param>
+        /// <param name='take'>
+        /// Maximum number of images to return. Defaults to 50, limited to 256.
+        /// </param>
+        /// <param name='skip'>
+        /// Number of images to skip before beginning the image batch. Defaults to 0.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CustomVisionErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<HttpOperationResponse<IList<Image>>> GetImagesWithHttpMessagesAsync(System.Guid projectId, System.Guid? iterationId = default(System.Guid?), IList<System.Guid> tagIds = default(IList<System.Guid>), string taggingStatus = default(string), string filter = default(string), string orderBy = default(string), int? take = 50, int? skip = 0, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
+            if (tagIds != null)
+            {
+                if (tagIds.Count > 20)
+                {
+                    throw new ValidationException(ValidationRules.MaxItems, "tagIds", 20);
+                }
+                if (tagIds.Count < 0)
+                {
+                    throw new ValidationException(ValidationRules.MinItems, "tagIds", 0);
+                }
+            }
+            if (take > 256)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "take", 256);
+            }
+            if (take < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "take", 0);
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("projectId", projectId);
+                tracingParameters.Add("iterationId", iterationId);
+                tracingParameters.Add("tagIds", tagIds);
+                tracingParameters.Add("taggingStatus", taggingStatus);
+                tracingParameters.Add("filter", filter);
+                tracingParameters.Add("orderBy", orderBy);
+                tracingParameters.Add("take", take);
+                tracingParameters.Add("skip", skip);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "GetImages", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "projects/{projectId}/images";
+            _url = _url.Replace("{Endpoint}", Endpoint);
+            _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
+            List<string> _queryParameters = new List<string>();
+            if (iterationId != null)
+            {
+                _queryParameters.Add(string.Format("iterationId={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(iterationId, SerializationSettings).Trim('"'))));
+            }
+            if (tagIds != null)
+            {
+                _queryParameters.Add(string.Format("tagIds={0}", System.Uri.EscapeDataString(string.Join(",", tagIds))));
+            }
+            if (taggingStatus != null)
+            {
+                _queryParameters.Add(string.Format("taggingStatus={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(taggingStatus, SerializationSettings).Trim('"'))));
+            }
+            if (filter != null)
+            {
+                _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
+            }
+            if (orderBy != null)
+            {
+                _queryParameters.Add(string.Format("orderBy={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(orderBy, SerializationSettings).Trim('"'))));
+            }
+            if (take != null)
+            {
+                _queryParameters.Add(string.Format("take={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(take, SerializationSettings).Trim('"'))));
+            }
+            if (skip != null)
+            {
+                _queryParameters.Add(string.Format("skip={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(skip, SerializationSettings).Trim('"'))));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new HttpOperationResponse<IList<Image>>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<IList<Image>>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
         /// Add the provided images to the set of training images.
         /// </summary>
         /// <remarks>
         /// This API accepts body content as multipart/form-data and
         /// application/octet-stream. When using multipart
-        /// multiple image files can be sent at once, with a maximum of 64 files
+        /// multiple image files can be sent at once, with a maximum of 64 files.
+        /// If all images are successful created, 200(OK) status code will be returned.
+        /// Otherwise, 207 (Multi-Status) status code will be returned and detail
+        /// status for each image will be listed in the response payload.
         /// </remarks>
         /// <param name='projectId'>
         /// The project id.
@@ -1578,7 +1973,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200)
+            if ((int)_statusCode != 200 && (int)_statusCode != 207)
             {
                 var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -1613,6 +2008,24 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _result.Response = _httpResponse;
             // Deserialize Response
             if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<ImageCreateSummary>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 207)
             {
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
@@ -1968,11 +2381,211 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         }
 
         /// <summary>
+        /// Get the number of images.
+        /// </summary>
+        /// <remarks>
+        /// The filtering is on an and/or relationship. For example, if the provided
+        /// tag ids are for the "Dog" and
+        /// "Cat" tags, then only images tagged with Dog and/or Cat will be returned
+        /// </remarks>
+        /// <param name='projectId'>
+        /// The project id.
+        /// </param>
+        /// <param name='iterationId'>
+        /// The iteration id. Defaults to workspace.
+        /// </param>
+        /// <param name='taggingStatus'>
+        /// The tagging status filter. It can be 'All', 'Tagged', or 'Untagged'.
+        /// Defaults to 'All'. Possible values include: 'All', 'Tagged', 'Untagged'
+        /// </param>
+        /// <param name='filter'>
+        /// An expression to filter the images against image metadata. Only images
+        /// where the expression evaluates to true are included in the response.
+        /// The expression supports eq (Equal), ne (Not equal), and (Logical and), or
+        /// (Logical or) operators.
+        /// Here is an example, metadata=key1 eq 'value1' and key2 ne 'value2'.
+        /// </param>
+        /// <param name='tagIds'>
+        /// A list of tags ids to filter the images to count. Defaults to all tags when
+        /// null.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CustomVisionErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<HttpOperationResponse<int?>> GetImageCountWithHttpMessagesAsync(System.Guid projectId, System.Guid? iterationId = default(System.Guid?), string taggingStatus = default(string), string filter = default(string), IList<System.Guid> tagIds = default(IList<System.Guid>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("projectId", projectId);
+                tracingParameters.Add("iterationId", iterationId);
+                tracingParameters.Add("taggingStatus", taggingStatus);
+                tracingParameters.Add("filter", filter);
+                tracingParameters.Add("tagIds", tagIds);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "GetImageCount", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "projects/{projectId}/images/count";
+            _url = _url.Replace("{Endpoint}", Endpoint);
+            _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
+            List<string> _queryParameters = new List<string>();
+            if (iterationId != null)
+            {
+                _queryParameters.Add(string.Format("iterationId={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(iterationId, SerializationSettings).Trim('"'))));
+            }
+            if (taggingStatus != null)
+            {
+                _queryParameters.Add(string.Format("taggingStatus={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(taggingStatus, SerializationSettings).Trim('"'))));
+            }
+            if (filter != null)
+            {
+                _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
+            }
+            if (tagIds != null)
+            {
+                _queryParameters.Add(string.Format("tagIds={0}", System.Uri.EscapeDataString(string.Join(",", tagIds))));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new HttpOperationResponse<int?>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<int?>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
         /// Add the provided batch of images to the set of training images.
         /// </summary>
         /// <remarks>
         /// This API accepts a batch of files, and optionally tags, to create images.
         /// There is a limit of 64 images and 20 tags.
+        /// If all images are successful created, 200(OK) status code will be returned.
+        /// Otherwise, 207 (Multi-Status) status code will be returned and detail
+        /// status for each image will be listed in the response payload.
         /// </remarks>
         /// <param name='projectId'>
         /// The project id.
@@ -2077,7 +2690,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200)
+            if ((int)_statusCode != 200 && (int)_statusCode != 207)
             {
                 var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -2112,6 +2725,24 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _result.Response = _httpResponse;
             // Deserialize Response
             if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<ImageCreateSummary>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 207)
             {
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
@@ -2322,17 +2953,235 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         }
 
         /// <summary>
+        /// Update metadata of images.
+        /// </summary>
+        /// <remarks>
+        /// This API accepts a batch of image Ids, and metadata, to update images.
+        /// There is a limit of 64 images.
+        /// </remarks>
+        /// <param name='projectId'>
+        /// The project id.
+        /// </param>
+        /// <param name='imageIds'>
+        /// The list of image ids to update. Limited to 64.
+        /// </param>
+        /// <param name='metadata'>
+        /// The metadata to be updated to the specified images. Limited to 50 key-value
+        /// pairs per image. The length of key is limited to 256. The length of value
+        /// is limited to 512.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CustomVisionErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<HttpOperationResponse<ImageMetadataUpdateSummary>> UpdateImageMetadataWithHttpMessagesAsync(System.Guid projectId, IList<System.Guid> imageIds, IDictionary<string, string> metadata, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
+            if (imageIds == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "imageIds");
+            }
+            if (imageIds != null)
+            {
+                if (imageIds.Count > 256)
+                {
+                    throw new ValidationException(ValidationRules.MaxItems, "imageIds", 256);
+                }
+                if (imageIds.Count < 0)
+                {
+                    throw new ValidationException(ValidationRules.MinItems, "imageIds", 0);
+                }
+            }
+            if (metadata == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "metadata");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("projectId", projectId);
+                tracingParameters.Add("imageIds", imageIds);
+                tracingParameters.Add("metadata", metadata);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "UpdateImageMetadata", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "projects/{projectId}/images/metadata";
+            _url = _url.Replace("{Endpoint}", Endpoint);
+            _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
+            List<string> _queryParameters = new List<string>();
+            if (imageIds != null)
+            {
+                _queryParameters.Add(string.Format("imageIds={0}", System.Uri.EscapeDataString(string.Join(",", imageIds))));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            if(metadata != null)
+            {
+                _requestContent = SafeJsonConvert.SerializeObject(metadata, SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200 && (int)_statusCode != 207)
+            {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new HttpOperationResponse<ImageMetadataUpdateSummary>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<ImageMetadataUpdateSummary>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 207)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<ImageMetadataUpdateSummary>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
         /// Add the specified predicted images to the set of training images.
         /// </summary>
         /// <remarks>
         /// This API creates a batch of images from predicted images specified. There
         /// is a limit of 64 images and 20 tags.
+        /// If all images are successful created, 200(OK) status code will be returned.
+        /// Otherwise, 207 (Multi-Status) status code will be returned and detail
+        /// status for each image will be listed in the response payload.
         /// </remarks>
         /// <param name='projectId'>
         /// The project id.
         /// </param>
         /// <param name='batch'>
-        /// Image and tag ids. Limited to 64 images and 20 tags per batch.
+        /// Image, tag ids, and metadata. Limited to 64 images and 20 tags per batch.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2430,7 +3279,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200)
+            if ((int)_statusCode != 200 && (int)_statusCode != 207)
             {
                 var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -2481,6 +3330,24 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
+            // Deserialize Response
+            if ((int)_statusCode == 207)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<ImageCreateSummary>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
             if (_shouldTrace)
             {
                 ServiceClientTracing.Exit(_invocationId, _result);
@@ -2495,6 +3362,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// This API accepts a batch of image regions, and optionally tags, to update
         /// existing images with region information.
         /// There is a limit of 64 entries in the batch.
+        /// If all regions are successful created, 200(OK) status code will be
+        /// returned.
+        /// Otherwise, 207 (Multi-Status) status code will be returned and detail
+        /// status for each region will be listed in the response payload.
         /// </remarks>
         /// <param name='projectId'>
         /// The project id.
@@ -2598,7 +3469,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200)
+            if ((int)_statusCode != 200 && (int)_statusCode != 207)
             {
                 var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -2633,6 +3504,24 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _result.Response = _httpResponse;
             // Deserialize Response
             if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<ImageRegionCreateSummary>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 207)
             {
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
@@ -4285,12 +5174,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <remarks>
         /// This API accepts a batch of urls, and optionally tags, to create images.
         /// There is a limit of 64 images and 20 tags.
+        /// If all images are successful created, 200(OK) status code will be returned.
+        /// Otherwise, 207 (Multi-Status) status code will be returned and detail
+        /// status for each image will be listed in the response payload.
         /// </remarks>
         /// <param name='projectId'>
         /// The project id.
         /// </param>
         /// <param name='batch'>
-        /// Image urls and tag ids. Limited to 64 images and 20 tags per batch.
+        /// Image urls, tag ids, and metadata. Limited to 64 images and 20 tags per
+        /// batch.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -4388,7 +5281,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200)
+            if ((int)_statusCode != 200 && (int)_statusCode != 207)
             {
                 var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -4423,6 +5316,24 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _result.Response = _httpResponse;
             // Deserialize Response
             if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<ImageCreateSummary>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 207)
             {
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
@@ -5972,6 +6883,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='predictionId'>
         /// The id of the prediction resource to publish to.
         /// </param>
+        /// <param name='overwrite'>
+        /// Whether to overwrite the published model with the given name (default:
+        /// false).
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -5993,7 +6908,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<bool?>> PublishIterationWithHttpMessagesAsync(System.Guid projectId, System.Guid iterationId, string publishName, string predictionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<bool?>> PublishIterationWithHttpMessagesAsync(System.Guid projectId, System.Guid iterationId, string publishName, string predictionId, bool? overwrite = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
@@ -6018,6 +6933,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
                 tracingParameters.Add("iterationId", iterationId);
                 tracingParameters.Add("publishName", publishName);
                 tracingParameters.Add("predictionId", predictionId);
+                tracingParameters.Add("overwrite", overwrite);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "PublishIteration", tracingParameters);
             }
@@ -6035,6 +6951,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             if (predictionId != null)
             {
                 _queryParameters.Add(string.Format("predictionId={0}", System.Uri.EscapeDataString(predictionId)));
+            }
+            if (overwrite != null)
+            {
+                _queryParameters.Add(string.Format("overwrite={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(overwrite, SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
@@ -7162,7 +8082,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// Optional description for the tag.
         /// </param>
         /// <param name='type'>
-        /// Optional type for the tag. Possible values include: 'Regular', 'Negative'
+        /// Optional type for the tag. Possible values include: 'Regular', 'Negative',
+        /// 'GeneralProduct'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -8196,6 +9117,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='token'>
         /// Token generated from the export project call.
         /// </param>
+        /// <param name='name'>
+        /// Optional, name of the project to use instead of auto-generated name.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -8217,7 +9141,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<Project>> ImportProjectWithHttpMessagesAsync(string token, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<Project>> ImportProjectWithHttpMessagesAsync(string token, string name = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
@@ -8235,6 +9159,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("token", token);
+                tracingParameters.Add("name", name);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ImportProject", tracingParameters);
             }
@@ -8246,6 +9171,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             if (token != null)
             {
                 _queryParameters.Add(string.Format("token={0}", System.Uri.EscapeDataString(token)));
+            }
+            if (name != null)
+            {
+                _queryParameters.Add(string.Format("name={0}", System.Uri.EscapeDataString(name)));
             }
             if (_queryParameters.Count > 0)
             {

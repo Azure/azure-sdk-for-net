@@ -131,7 +131,6 @@ namespace Azure.Search.Documents.Models
         /// <param name="dataSourceCounter"> Total number of data sources. </param>
         /// <param name="storageSizeCounter"> Total size of used storage in bytes. </param>
         /// <param name="synonymMapCounter"> Total number of synonym maps. </param>
-        /// <param name="skillsetCounter"> Total number of skillsets. </param>
         /// <returns> A new SearchServiceCounters instance for mocking. </returns>
         public static SearchServiceCounters SearchServiceCounters(
             SearchResourceCounter documentCounter,
@@ -139,9 +138,8 @@ namespace Azure.Search.Documents.Models
             SearchResourceCounter indexerCounter,
             SearchResourceCounter dataSourceCounter,
             SearchResourceCounter storageSizeCounter,
-            SearchResourceCounter synonymMapCounter,
-            SearchResourceCounter skillsetCounter) =>
-            new SearchServiceCounters(documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter, skillsetCounter);
+            SearchResourceCounter synonymMapCounter) =>
+            new SearchServiceCounters(documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter);
 
         /// <summary> Initializes a new instance of SearchServiceLimits. </summary>
         /// <param name="maxFieldsPerIndex"> The maximum allowed fields per index. </param>

@@ -1,40 +1,35 @@
 {
   "Entries": [
     {
-      "RequestUri": "http://seandevtest.file.core.windows.net/test-share-da882be4-33ba-db8b-f496-7fca5d970ee2/test-file-13e43a21-0cee-b8c9-d5f5-1cb304d4de59",
+      "RequestUri": "https://amandadev2.file.core.windows.net/?sv=2019-12-12\u0026ss=f\u0026srt=s\u0026se=2020-08-06T23%3A12%3A52Z\u0026sp=r\u0026sig=Sanitized",
       "RequestMethod": "HEAD",
       "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-bdcb07e62bea2749967cad81e3f7a7fe-76ab3e86598b7f42-00",
+        "traceparent": "00-78b980d9e201ca438ce93bed022d8006-ac0e6dd4fd53b744-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.2.0-dev.20200220.1",
-          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Storage.Files.Shares/12.3.0-dev.20200806.1",
+          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "7f4a9a92-0ae7-d8b6-62cf-05c517d8d71f",
-        "x-ms-date": "Thu, 20 Feb 2020 22:59:34 GMT",
+        "x-ms-client-request-id": "9797b182-54e0-cfe5-3b63-9dbb2a72c7eb",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-07-07"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
-      "StatusCode": 404,
+      "StatusCode": 400,
       "ResponseHeaders": {
-        "Date": "Thu, 20 Feb 2020 22:59:33 GMT",
-        "Server": [
-          "Windows-Azure-File/1.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
+        "Date": "Thu, 06 Aug 2020 22:12:52 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked",
         "Vary": "Origin",
-        "x-ms-client-request-id": "7f4a9a92-0ae7-d8b6-62cf-05c517d8d71f",
-        "x-ms-error-code": "ShareNotFound",
-        "x-ms-request-id": "4c8772da-401a-0007-5541-e8fc8f000000",
-        "x-ms-version": "2019-07-07"
+        "x-ms-client-request-id": "9797b182-54e0-cfe5-3b63-9dbb2a72c7eb",
+        "x-ms-error-code": "InvalidQueryParameterValue",
+        "x-ms-request-id": "706c449a-901a-0117-0f3e-6c142d000000"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
+    "DateTimeOffsetNow": "2020-08-06T15:12:52.9538622-07:00",
     "RandomSeed": "1221123153",
-    "Storage_TestConfigDefault": "ProductionTenant\nseandevtest\nU2FuaXRpemVk\nhttps://seandevtest.blob.core.windows.net\nhttp://seandevtest.file.core.windows.net\nhttp://seandevtest.queue.core.windows.net\nhttp://seandevtest.table.core.windows.net\n\n\n\n\nhttp://seandevtest-secondary.blob.core.windows.net\nhttp://seandevtest-secondary.file.core.windows.net\nhttp://seandevtest-secondary.queue.core.windows.net\nhttp://seandevtest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seandevtest.blob.core.windows.net/;QueueEndpoint=http://seandevtest.queue.core.windows.net/;FileEndpoint=http://seandevtest.file.core.windows.net/;BlobSecondaryEndpoint=http://seandevtest-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://seandevtest-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://seandevtest-secondary.file.core.windows.net/;AccountName=seandevtest;AccountKey=Sanitized\nseanscope1"
+    "Storage_TestConfigDefault": "ProductionTenant\namandadev2\nU2FuaXRpemVk\nhttps://amandadev2.blob.core.windows.net\nhttps://amandadev2.file.core.windows.net\nhttps://amandadev2.queue.core.windows.net\nhttps://amandadev2.table.core.windows.net\n\n\n\n\nhttps://amandadev2-secondary.blob.core.windows.net\nhttps://amandadev2-secondary.file.core.windows.net\nhttps://amandadev2-secondary.queue.core.windows.net\nhttps://amandadev2-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://amandadev2.blob.core.windows.net/;QueueEndpoint=https://amandadev2.queue.core.windows.net/;FileEndpoint=https://amandadev2.file.core.windows.net/;BlobSecondaryEndpoint=https://amandadev2-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://amandadev2-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://amandadev2-secondary.file.core.windows.net/;AccountName=amandadev2;AccountKey=Kg==;\n"
   }
 }

@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Protocol != null)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol");
                 writer.WriteStringValue(Protocol.Value.ToSerialString());
             }
-            if (CertificateUrl != null)
+            if (Optional.IsDefined(CertificateUrl))
             {
                 writer.WritePropertyName("certificateUrl");
                 writer.WriteStringValue(CertificateUrl);
@@ -30,30 +30,22 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static WinRMListener DeserializeWinRMListener(JsonElement element)
         {
-            ProtocolTypes? protocol = default;
-            string certificateUrl = default;
+            Optional<ProtocolTypes> protocol = default;
+            Optional<string> certificateUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protocol"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     protocol = property.Value.GetString().ToProtocolTypes();
                     continue;
                 }
                 if (property.NameEquals("certificateUrl"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     certificateUrl = property.Value.GetString();
                     continue;
                 }
             }
-            return new WinRMListener(protocol, certificateUrl);
+            return new WinRMListener(Optional.ToNullable(protocol), certificateUrl.Value);
         }
     }
 }

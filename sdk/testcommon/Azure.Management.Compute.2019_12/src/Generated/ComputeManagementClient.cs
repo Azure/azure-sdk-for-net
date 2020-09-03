@@ -37,7 +37,7 @@ namespace Azure.Management.Compute
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="tokenCredential"> The OAuth token for making client requests. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public ComputeManagementClient(Uri endpoint, string subscriptionId, TokenCredential tokenCredential, ComputeManagementClientOptions options = null)
         {
             endpoint ??= new Uri("https://management.azure.com");

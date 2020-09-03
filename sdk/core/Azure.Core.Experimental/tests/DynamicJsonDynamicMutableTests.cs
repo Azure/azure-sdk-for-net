@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core.Spatial;
+using Azure.Core.GeoJson;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -88,9 +88,9 @@ namespace Azure.Core.Tests
         {
             var json = DynamicJson.Parse("{}");
             dynamic dynamicJson = json;
-            dynamicJson.a = DynamicJson.Serialize(new PointGeometry(new GeometryPosition(1, 2)), new JsonSerializerOptions()
+            dynamicJson.a = DynamicJson.Serialize(new GeoPoint(1, 2), new JsonSerializerOptions()
             {
-                Converters = { new GeometryJsonConverter() }
+                Converters = { new GeoJsonConverter() }
             });
 
             Assert.AreEqual("{\"a\":{\"type\":\"Point\",\"coordinates\":[1,2]}}", json.ToString());

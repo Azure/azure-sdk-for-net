@@ -7,11 +7,11 @@ namespace Azure.Messaging.EventGrid.Tests
 {
     public class EventGridLiveTestBase : RecordedTestBase<EventGridTestEnvironment>
     {
-        public EventGridLiveTestBase(bool isAsync) : base(isAsync /*, RecordedTestMode.Record */)
+        public EventGridLiveTestBase(bool isAsync) : base(isAsync/*, RecordedTestMode.Record*/)
         {
-            Sanitizer = new EventGridRecordedTestSanitizer();
-            Sanitizer.SanitizedHeaders.Add(EventGridTestEnvironment.TopicKeyEnvironmentVariableName);
-            Sanitizer.SanitizedHeaders.Add(EventGridTestEnvironment.DomainKeyEnvironmentVariableName);
+            Sanitizer = new RecordedTestSanitizer();
+            Sanitizer.SanitizedHeaders.Add(Constants.SasKeyName);
+            Sanitizer.SanitizedHeaders.Add(Constants.SasTokenName);
         }
     }
 }

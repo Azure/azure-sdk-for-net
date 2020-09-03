@@ -4,7 +4,7 @@ Every minor version release targets the same (GA) REST API version as that of th
 
 Features and improvements in a GA SDK are considered generally available.
 
-## 10.1.0
+## 10.1.0 (2019-10-29)
 
 ### Breaking Changes
 

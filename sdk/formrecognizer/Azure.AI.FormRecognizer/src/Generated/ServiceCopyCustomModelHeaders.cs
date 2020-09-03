@@ -17,6 +17,7 @@ namespace Azure.AI.FormRecognizer
         {
             _response = response;
         }
+        /// <summary> URL containing the resultId used to track the progress and obtain the result of the copy operation. </summary>
         public string OperationLocation => _response.Headers.TryGetValue("Operation-Location", out string value) ? value : null;
     }
 }

@@ -9,6 +9,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+#if EXPERIMENTAL_SERIALIZER
+using Azure.Core.Serialization;
+#endif
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Models;
 
@@ -101,7 +104,7 @@ namespace Azure.Search.Documents
         /// Required.  The API key credential used to authenticate requests
         /// against the search service.  You need to use an admin key to
         /// modify the documents in a Search Index.  See
-        /// <see href="https://docs.microsoft.com/azure/search/search-security-api-keys"/>
+        /// <see href="https://docs.microsoft.com/azure/search/search-security-api-keys">Create and manage api-keys for an Azure Cognitive Search service</see>
         /// for more information about API keys in Azure Cognitive Search.
         /// </param>
         /// <exception cref="ArgumentNullException">
@@ -137,7 +140,7 @@ namespace Azure.Search.Documents
         /// Required.  The API key credential used to authenticate requests
         /// against the search service.  You need to use an admin key to
         /// modify the documents in a Search Index.  See
-        /// <see href="https://docs.microsoft.com/azure/search/search-security-api-keys"/>
+        /// <see href="https://docs.microsoft.com/azure/search/search-security-api-keys">Create and manage api-keys for an Azure Cognitive Search service</see>
         /// for more information about API keys in Azure Cognitive Search.
         /// </param>
         /// <param name="options">
@@ -183,7 +186,7 @@ namespace Azure.Search.Documents
                 Version.ToVersionString());
         }
 
-        #pragma warning disable CS1572 // Not all parameters will be used depending on feature flags
+#pragma warning disable CS1573 // Not all parameters will be used depending on feature flags
         /// <summary>
         /// Initializes a new instance of the SearchClient class from a
         /// <see cref="SearchIndexClient"/>.
@@ -195,10 +198,6 @@ namespace Azure.Search.Documents
         /// </param>
         /// <param name="indexName">
         /// Required.  The name of the Search Index.
-        /// </param>
-        /// <param name="serializer">
-        /// Gets or sets an <see cref="ObjectSerializer"/> that can be used to
-        /// customize the serialization of strongly typed models.
         /// </param>
         /// <param name="pipeline">
         /// The authenticated <see cref="HttpPipeline"/> used for sending
@@ -221,7 +220,7 @@ namespace Azure.Search.Documents
             HttpPipeline pipeline,
             ClientDiagnostics diagnostics,
             SearchClientOptions.ServiceVersion version)
-        #pragma warning restore CS1572
+        #pragma warning restore CS1573
         {
             Debug.Assert(endpoint != null);
             Debug.Assert(string.Equals(endpoint.Scheme, Uri.UriSchemeHttps, StringComparison.OrdinalIgnoreCase));
@@ -229,7 +228,7 @@ namespace Azure.Search.Documents
             Debug.Assert(pipeline != null);
             Debug.Assert(diagnostics != null);
             Debug.Assert(
-                SearchClientOptions.ServiceVersion.V2019_05_06_Preview <= version &&
+                SearchClientOptions.ServiceVersion.V2020_06_30 <= version &&
                 version <= SearchClientOptions.LatestVersion);
 
             Endpoint = endpoint;
@@ -317,7 +316,7 @@ namespace Azure.Search.Documents
         /// look up specific details about that document. You can only get one
         /// document at a time.  Use Search to get multiple documents in a
         /// single request.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Lookup-Document"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/lookup-document">Lookup Document</see>
         /// </summary>
         /// <typeparam name="T">
         /// The .NET type that maps to the index schema. Instances of this type
@@ -327,7 +326,7 @@ namespace Azure.Search.Documents
         /// Required.  An string value that uniquely identifies each document
         /// in the index.  The key is sometimes referred to as a document ID.
         /// See
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Naming-rules"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/naming-rules">Naming rules</see>
         /// for the rules for constructing valid document keys.
         /// </param>
         /// <param name="options">
@@ -370,7 +369,7 @@ namespace Azure.Search.Documents
         /// look up specific details about that document. You can only get one
         /// document at a time.  Use Search to get multiple documents in a
         /// single request.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Lookup-Document"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/lookup-document">Lookup Document</see>
         /// </summary>
         /// <typeparam name="T">
         /// The .NET type that maps to the index schema. Instances of this type
@@ -380,7 +379,7 @@ namespace Azure.Search.Documents
         /// Required.  An string value that uniquely identifies each document
         /// in the index.  The key is sometimes referred to as a document ID.
         /// See
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Naming-rules"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/naming-rules">Naming rules</see>
         /// for the rules for constructing valid document keys.
         /// </param>
         /// <param name="options">
@@ -462,7 +461,7 @@ namespace Azure.Search.Documents
         /// </item>
         /// <item>
         /// <term>Edm.GeographyPoint</term>
-        /// <description> <see cref="Azure.Core.Spatial.PointGeometry"/>
+        /// <description> Azure.Core.Spatial.PointGeometry
         /// </description>
         /// </item>
         /// <item>
@@ -511,7 +510,7 @@ namespace Azure.Search.Documents
         /// </item>
         /// <item>
         /// <term>Collection(Edm.GeographyPoint)</term>
-        /// <description>sequence of <see cref="Azure.Core.Spatial.PointGeometry"/>
+        /// <description>sequence of Azure.Core.Spatial.PointGeometry
         /// (seq&lt;PointGeometry&gt; in F#)</description>
         /// </item>
         /// <item>
@@ -628,7 +627,7 @@ namespace Azure.Search.Documents
         #region Search
         /// <summary>
         /// Searches for documents in the search index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Search-Documents"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/search-documents">Search Documents</see>
         /// </summary>
         /// <typeparam name="T">
         /// The .NET type that maps to the index schema. Instances of this type
@@ -637,7 +636,7 @@ namespace Azure.Search.Documents
         /// <param name="searchText">
         /// A full-text search query expression;  Use "*" or omit this
         /// parameter to match all documents.  See
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Simple-query-syntax-in-Azure-Search"/>
+        /// <see href="https://docs.microsoft.com/azure/search/query-simple-syntax">Simple query syntax in Azure Cognitive Search</see>
         /// for more information about search query syntax.
         /// </param>
         /// <param name="options">
@@ -685,7 +684,7 @@ namespace Azure.Search.Documents
 
         /// <summary>
         /// Searches for documents in the search index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Search-Documents"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/search-documents">Search Documents</see>
         /// </summary>
         /// <typeparam name="T">
         /// The .NET type that maps to the index schema. Instances of this type
@@ -694,7 +693,7 @@ namespace Azure.Search.Documents
         /// <param name="searchText">
         /// A full-text search query expression;  Use "*" or omit this
         /// parameter to match all documents.  See
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Simple-query-syntax-in-Azure-Search"/>
+        /// <see href="https://docs.microsoft.com/azure/search/query-simple-syntax">Simple query syntax in Azure Cognitive Search</see>
         /// for more information about search query syntax.
         /// </param>
         /// <param name="options">
@@ -826,7 +825,7 @@ namespace Azure.Search.Documents
         /// if you enable suggestions on a city field, typing "sea" produces
         /// documents containing "Seattle", "Sea Tac", and "Seaside" (all
         /// actual city names) for that field.
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/searchservice/suggestions"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/suggestions">Suggestions</see>
         /// </summary>
         /// <typeparam name="T">
         /// The .NET type that maps to the index schema. Instances of this type
@@ -883,7 +882,7 @@ namespace Azure.Search.Documents
         /// if you enable suggestions on a city field, typing "sea" produces
         /// documents containing "Seattle", "Sea Tac", and "Seaside" (all
         /// actual city names) for that field.
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/searchservice/suggestions"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/suggestions">Suggestions</see>
         /// </summary>
         /// <typeparam name="T">
         /// The .NET type that maps to the index schema. Instances of this type
@@ -988,7 +987,7 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Suggests query terms based on input text and matching documents in
         /// the search index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Autocomplete"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/autocomplete">Autocomplete</see>
         /// </summary>
         /// <param name="searchText">
         /// The search text on which to base autocomplete results.
@@ -1037,7 +1036,7 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Suggests query terms based on input text and matching documents in
         /// the search index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Autocomplete"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/autocomplete">Autocomplete</see>
         /// </summary>
         /// <param name="searchText">
         /// The search text on which to base autocomplete results.
@@ -1104,7 +1103,7 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Sends a batch of upload, merge, and/or delete actions to the search
         /// index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents">Add, Update or Delete Documents</see>
         /// </summary>
         /// <typeparam name="T">
         /// The .NET type that maps to the index schema. Instances of this type
@@ -1158,7 +1157,7 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Sends a batch of upload, merge, and/or delete actions to the search
         /// index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents">Add, Update or Delete Documents</see>
         /// </summary>
         /// <typeparam name="T">
         /// The .NET type that maps to the index schema. Instances of this type
@@ -1356,15 +1355,26 @@ namespace Azure.Search.Documents
         /// exceptions thrown on partial failure.
         /// </para>
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response<IndexDocumentsResult> UploadDocuments<T>(
             IEnumerable<T> documents,
             IndexDocumentsOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            IndexDocuments<T>(
-                IndexDocumentsBatch.Upload<T>(documents),
-                options,
-                cancellationToken);
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(UploadDocuments)}");
+            scope.Start();
+            try
+            {
+                return IndexDocuments<T>(
+                    IndexDocumentsBatch.Upload<T>(documents),
+                    options,
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         /// <summary>
         /// Upload documents to the index as a batch.
@@ -1404,16 +1414,27 @@ namespace Azure.Search.Documents
         /// exceptions thrown on partial failure.
         /// </para>
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual async Task<Response<IndexDocumentsResult>> UploadDocumentsAsync<T>(
             IEnumerable<T> documents,
             IndexDocumentsOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            await IndexDocumentsAsync<T>(
-                IndexDocumentsBatch.Upload<T>(documents),
-                options,
-                cancellationToken)
-                .ConfigureAwait(false);
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(UploadDocuments)}");
+            scope.Start();
+            try
+            {
+                return await IndexDocumentsAsync<T>(
+                    IndexDocumentsBatch.Upload<T>(documents),
+                    options,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         /// <summary>
         /// Merge documents to the index as a batch.
@@ -1453,15 +1474,26 @@ namespace Azure.Search.Documents
         /// exceptions thrown on partial failure.
         /// </para>
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response<IndexDocumentsResult> MergeDocuments<T>(
             IEnumerable<T> documents,
             IndexDocumentsOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            IndexDocuments<T>(
-                IndexDocumentsBatch.Merge<T>(documents),
-                options,
-                cancellationToken);
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(MergeDocuments)}");
+            scope.Start();
+            try
+            {
+                return IndexDocuments<T>(
+                    IndexDocumentsBatch.Merge<T>(documents),
+                    options,
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         /// <summary>
         /// Merge documents to the index as a batch.
@@ -1501,16 +1533,27 @@ namespace Azure.Search.Documents
         /// exceptions thrown on partial failure.
         /// </para>
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual async Task<Response<IndexDocumentsResult>> MergeDocumentsAsync<T>(
             IEnumerable<T> documents,
             IndexDocumentsOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            await IndexDocumentsAsync<T>(
-                IndexDocumentsBatch.Merge<T>(documents),
-                options,
-                cancellationToken)
-                .ConfigureAwait(false);
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(MergeDocuments)}");
+            scope.Start();
+            try
+            {
+                return await IndexDocumentsAsync<T>(
+                    IndexDocumentsBatch.Merge<T>(documents),
+                    options,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         /// <summary>
         /// Merge or upload documents to the index as a batch.
@@ -1550,15 +1593,26 @@ namespace Azure.Search.Documents
         /// exceptions thrown on partial failure.
         /// </para>
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response<IndexDocumentsResult> MergeOrUploadDocuments<T>(
             IEnumerable<T> documents,
             IndexDocumentsOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            IndexDocuments<T>(
-                IndexDocumentsBatch.MergeOrUpload<T>(documents),
-                options,
-                cancellationToken);
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(MergeOrUploadDocuments)}");
+            scope.Start();
+            try
+            {
+                return IndexDocuments<T>(
+                    IndexDocumentsBatch.MergeOrUpload<T>(documents),
+                    options,
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         /// <summary>
         /// Merge or upload documents to the index as a batch.
@@ -1598,16 +1652,27 @@ namespace Azure.Search.Documents
         /// exceptions thrown on partial failure.
         /// </para>
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual async Task<Response<IndexDocumentsResult>> MergeOrUploadDocumentsAsync<T>(
             IEnumerable<T> documents,
             IndexDocumentsOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            await IndexDocumentsAsync<T>(
-                IndexDocumentsBatch.MergeOrUpload<T>(documents),
-                options,
-                cancellationToken)
-                .ConfigureAwait(false);
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(MergeOrUploadDocuments)}");
+            scope.Start();
+            try
+            {
+                return await IndexDocumentsAsync<T>(
+                    IndexDocumentsBatch.MergeOrUpload<T>(documents),
+                    options,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         /// <summary>
         /// Delete documents from the index as a batch.
@@ -1647,15 +1712,26 @@ namespace Azure.Search.Documents
         /// exceptions thrown on partial failure.
         /// </para>
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response<IndexDocumentsResult> DeleteDocuments<T>(
             IEnumerable<T> documents,
             IndexDocumentsOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            IndexDocuments<T>(
-                IndexDocumentsBatch.Delete<T>(documents),
-                options,
-                cancellationToken);
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(DeleteDocuments)}");
+            scope.Start();
+            try
+            {
+                return IndexDocuments<T>(
+                    IndexDocumentsBatch.Delete<T>(documents),
+                    options,
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         /// <summary>
         /// Delete documents from the index as a batch.
@@ -1695,16 +1771,27 @@ namespace Azure.Search.Documents
         /// exceptions thrown on partial failure.
         /// </para>
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual async Task<Response<IndexDocumentsResult>> DeleteDocumentsAsync<T>(
             IEnumerable<T> documents,
             IndexDocumentsOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            await IndexDocumentsAsync<T>(
-                IndexDocumentsBatch.Delete<T>(documents),
-                options,
-                cancellationToken)
-                .ConfigureAwait(false);
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(DeleteDocuments)}");
+            scope.Start();
+            try
+            {
+                return await IndexDocumentsAsync<T>(
+                    IndexDocumentsBatch.Delete<T>(documents),
+                    options,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         /// <summary>
         /// Delete documents from the index as a batch given only their keys.
@@ -1739,16 +1826,27 @@ namespace Azure.Search.Documents
         /// exceptions thrown on partial failure.
         /// </para>
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response<IndexDocumentsResult> DeleteDocuments(
             string keyName,
             IEnumerable<string> keyValues,
             IndexDocumentsOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            IndexDocuments(
-                IndexDocumentsBatch.Delete(keyName, keyValues),
-                options,
-                cancellationToken);
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(DeleteDocuments)}");
+            scope.Start();
+            try
+            {
+                return IndexDocuments(
+                    IndexDocumentsBatch.Delete(keyName, keyValues),
+                    options,
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         /// <summary>
         /// Delete documents from the index as a batch given only their keys.
@@ -1783,17 +1881,28 @@ namespace Azure.Search.Documents
         /// exceptions thrown on partial failure.
         /// </para>
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual async Task<Response<IndexDocumentsResult>> DeleteDocumentsAsync(
             string keyName,
             IEnumerable<string> keyValues,
             IndexDocumentsOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            await IndexDocumentsAsync(
-                IndexDocumentsBatch.Delete(keyName, keyValues),
-                options,
-                cancellationToken)
-                .ConfigureAwait(false);
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(DeleteDocuments)}");
+            scope.Start();
+            try
+            {
+                return await IndexDocumentsAsync(
+                    IndexDocumentsBatch.Delete(keyName, keyValues),
+                    options,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
         #endregion Index Documents Conveniences
     }
 }

@@ -4,7 +4,6 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using Azure.DigitalTwins.Core.Models;
 using FluentAssertions;
 using NUnit.Framework;
 

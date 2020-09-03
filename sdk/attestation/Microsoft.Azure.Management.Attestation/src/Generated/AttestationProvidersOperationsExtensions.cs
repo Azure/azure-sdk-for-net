@@ -252,5 +252,67 @@ namespace Microsoft.Azure.Management.Attestation
                 }
             }
 
+            /// <summary>
+            /// Get the default provider
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static AttestationProviderListResult ListDefault(this IAttestationProvidersOperations operations)
+            {
+                return operations.ListDefaultAsync().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get the default provider
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AttestationProviderListResult> ListDefaultAsync(this IAttestationProvidersOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListDefaultWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get the default provider by location.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The location of the default provider.
+            /// </param>
+            public static AttestationProvider GetDefaultByLocation(this IAttestationProvidersOperations operations, string location)
+            {
+                return operations.GetDefaultByLocationAsync(location).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get the default provider by location.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The location of the default provider.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AttestationProvider> GetDefaultByLocationAsync(this IAttestationProvidersOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetDefaultByLocationWithHttpMessagesAsync(location, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
     }
 }

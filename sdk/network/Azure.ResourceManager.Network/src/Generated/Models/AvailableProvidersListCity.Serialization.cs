@@ -15,42 +15,27 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static AvailableProvidersListCity DeserializeAvailableProvidersListCity(JsonElement element)
         {
-            string cityName = default;
-            IReadOnlyList<string> providers = default;
+            Optional<string> cityName = default;
+            Optional<IReadOnlyList<string>> providers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cityName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     cityName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("providers"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     providers = array;
                     continue;
                 }
             }
-            return new AvailableProvidersListCity(cityName, providers);
+            return new AvailableProvidersListCity(cityName.Value, Optional.ToList(providers));
         }
     }
 }

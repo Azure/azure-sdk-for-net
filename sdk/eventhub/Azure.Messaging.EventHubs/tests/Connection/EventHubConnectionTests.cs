@@ -136,9 +136,11 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("Endpoint=value.com;SharedAccessKey=[value];EntityPath=[value]")]
         [TestCase("Endpoint=value.com;SharedAccessKeyName=[value];EntityPath=[value]")]
         [TestCase("Endpoint=value.com;SharedAccessKeyName=[value];SharedAccessKey=[value]")]
+        [TestCase("HostName=value.azure-devices.net;SharedAccessKeyName=[value];SharedAccessKey=[value]")]
+        [TestCase("HostName=value.azure-devices.net;SharedAccessKeyName=[value];SharedAccessKey=[value];EntityPath=[value]")]
         public void ConstructorValidatesConnectionString(string connectionString)
         {
-            Assert.That(() => new EventHubConnection(connectionString), Throws.ArgumentException);
+            Assert.That(() => new EventHubConnection(connectionString), Throws.ArgumentException.And.Message.StartsWith(Resources.MissingConnectionInformation));
         }
 
         /// <summary>

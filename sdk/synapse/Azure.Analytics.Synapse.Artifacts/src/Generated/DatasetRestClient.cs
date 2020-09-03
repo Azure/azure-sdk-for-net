@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
         public DatasetRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2019-06-01-preview")
         {
             if (endpoint == null)
@@ -56,6 +56,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath("/datasets", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -71,14 +72,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         DatasetListResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DatasetListResponse.DeserializeDatasetListResponse(document.RootElement);
-                        }
+                        value = DatasetListResponse.DeserializeDatasetListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -98,14 +92,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         DatasetListResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DatasetListResponse.DeserializeDatasetListResponse(document.RootElement);
-                        }
+                        value = DatasetListResponse.DeserializeDatasetListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -129,6 +116,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 request.Headers.Add("If-Match", ifMatch);
             }
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(dataset);
             request.Content = content;
@@ -140,7 +128,8 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="dataset"> Dataset resource definition. </param>
         /// <param name="ifMatch"> ETag of the dataset entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DatasetResource>> CreateOrUpdateDatasetAsync(string datasetName, DatasetResource dataset, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> or <paramref name="dataset"/> is null. </exception>
+        public async Task<Response> CreateOrUpdateDatasetAsync(string datasetName, DatasetResource dataset, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (datasetName == null)
             {
@@ -156,19 +145,8 @@ namespace Azure.Analytics.Synapse.Artifacts
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        DatasetResource value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DatasetResource.DeserializeDatasetResource(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 202:
+                    return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -179,7 +157,8 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="dataset"> Dataset resource definition. </param>
         /// <param name="ifMatch"> ETag of the dataset entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DatasetResource> CreateOrUpdateDataset(string datasetName, DatasetResource dataset, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> or <paramref name="dataset"/> is null. </exception>
+        public Response CreateOrUpdateDataset(string datasetName, DatasetResource dataset, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (datasetName == null)
             {
@@ -195,19 +174,8 @@ namespace Azure.Analytics.Synapse.Artifacts
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        DatasetResource value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DatasetResource.DeserializeDatasetResource(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 202:
+                    return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -228,6 +196,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             {
                 request.Headers.Add("If-None-Match", ifNoneMatch);
             }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -235,6 +204,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="datasetName"> The dataset name. </param>
         /// <param name="ifNoneMatch"> ETag of the dataset entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> is null. </exception>
         public async Task<Response<DatasetResource>> GetDatasetAsync(string datasetName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (datasetName == null)
@@ -250,14 +220,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         DatasetResource value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DatasetResource.DeserializeDatasetResource(document.RootElement);
-                        }
+                        value = DatasetResource.DeserializeDatasetResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
@@ -271,6 +234,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="datasetName"> The dataset name. </param>
         /// <param name="ifNoneMatch"> ETag of the dataset entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> is null. </exception>
         public Response<DatasetResource> GetDataset(string datasetName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (datasetName == null)
@@ -286,14 +250,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         DatasetResource value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DatasetResource.DeserializeDatasetResource(document.RootElement);
-                        }
+                        value = DatasetResource.DeserializeDatasetResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
@@ -314,12 +271,14 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath(datasetName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Deletes a dataset. </summary>
         /// <param name="datasetName"> The dataset name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> is null. </exception>
         public async Task<Response> DeleteDatasetAsync(string datasetName, CancellationToken cancellationToken = default)
         {
             if (datasetName == null)
@@ -332,6 +291,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             switch (message.Response.Status)
             {
                 case 200:
+                case 202:
                 case 204:
                     return message.Response;
                 default:
@@ -342,6 +302,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Deletes a dataset. </summary>
         /// <param name="datasetName"> The dataset name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> is null. </exception>
         public Response DeleteDataset(string datasetName, CancellationToken cancellationToken = default)
         {
             if (datasetName == null)
@@ -354,6 +315,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             switch (message.Response.Status)
             {
                 case 200:
+                case 202:
                 case 204:
                     return message.Response;
                 default:
@@ -370,12 +332,14 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendRaw(endpoint, false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Lists datasets. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<DatasetListResponse>> GetDatasetsByWorkspaceNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -391,14 +355,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         DatasetListResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DatasetListResponse.DeserializeDatasetListResponse(document.RootElement);
-                        }
+                        value = DatasetListResponse.DeserializeDatasetListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -409,6 +366,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Lists datasets. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<DatasetListResponse> GetDatasetsByWorkspaceNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -424,14 +382,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         DatasetListResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DatasetListResponse.DeserializeDatasetListResponse(document.RootElement);
-                        }
+                        value = DatasetListResponse.DeserializeDatasetListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

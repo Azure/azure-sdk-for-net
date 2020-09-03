@@ -22,9 +22,13 @@ namespace Azure.Storage
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct StorageTransferOptions : System.IEquatable<Azure.Storage.StorageTransferOptions>
     {
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public int? InitialTransferLength { get { throw null; } set { } }
+        public long? InitialTransferSize { get { throw null; } set { } }
         public int? MaximumConcurrency { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public int? MaximumTransferLength { get { throw null; } set { } }
+        public long? MaximumTransferSize { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool Equals(Azure.Storage.StorageTransferOptions obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -72,6 +76,9 @@ namespace Azure.Storage.Sas
         Create = 32,
         Update = 64,
         Process = 128,
+        Tag = 256,
+        Filter = 512,
+        DeleteVersion = 1024,
     }
     [System.FlagsAttribute]
     public enum AccountSasResourceTypes
@@ -116,7 +123,7 @@ namespace Azure.Storage.Sas
     }
     public partial class SasQueryParameters
     {
-        public const string DefaultSasVersion = "2019-07-07";
+        public const string DefaultSasVersion = "2019-12-12";
         protected SasQueryParameters() { }
         protected SasQueryParameters(System.Collections.Generic.IDictionary<string, string> values) { }
         protected SasQueryParameters(string version, Azure.Storage.Sas.AccountSasServices? services, Azure.Storage.Sas.AccountSasResourceTypes? resourceTypes, Azure.Storage.Sas.SasProtocol protocol, System.DateTimeOffset startsOn, System.DateTimeOffset expiresOn, Azure.Storage.Sas.SasIPRange ipRange, string identifier, string resource, string permissions, string signature, string cacheControl = null, string contentDisposition = null, string contentEncoding = null, string contentLanguage = null, string contentType = null) { }

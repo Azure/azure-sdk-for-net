@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public PolicySetDefinitionsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="policySetDefinitionName"> The name of the policy set definition to create. </param>
         /// <param name="parameters"> The policy set definition properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<PolicySetDefinition>> CreateOrUpdateAsync(string policySetDefinitionName, PolicySetDefinition parameters, CancellationToken cancellationToken = default)
         {
             if (policySetDefinitionName == null)
@@ -87,14 +88,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinition value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinition.DeserializePolicySetDefinition(document.RootElement);
-                        }
+                        value = PolicySetDefinition.DeserializePolicySetDefinition(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -106,6 +100,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="policySetDefinitionName"> The name of the policy set definition to create. </param>
         /// <param name="parameters"> The policy set definition properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
         public Response<PolicySetDefinition> CreateOrUpdate(string policySetDefinitionName, PolicySetDefinition parameters, CancellationToken cancellationToken = default)
         {
             if (policySetDefinitionName == null)
@@ -126,14 +121,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinition value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinition.DeserializePolicySetDefinition(document.RootElement);
-                        }
+                        value = PolicySetDefinition.DeserializePolicySetDefinition(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -160,6 +148,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation deletes the policy set definition in the given subscription with the given name. </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
             if (policySetDefinitionName == null)
@@ -182,6 +171,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation deletes the policy set definition in the given subscription with the given name. </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
         public Response Delete(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
             if (policySetDefinitionName == null)
@@ -220,6 +210,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation retrieves the policy set definition in the given subscription with the given name. </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
         public async Task<Response<PolicySetDefinition>> GetAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
             if (policySetDefinitionName == null)
@@ -235,14 +226,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinition value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinition.DeserializePolicySetDefinition(document.RootElement);
-                        }
+                        value = PolicySetDefinition.DeserializePolicySetDefinition(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -253,6 +237,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation retrieves the policy set definition in the given subscription with the given name. </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
         public Response<PolicySetDefinition> Get(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
             if (policySetDefinitionName == null)
@@ -268,14 +253,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinition value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinition.DeserializePolicySetDefinition(document.RootElement);
-                        }
+                        value = PolicySetDefinition.DeserializePolicySetDefinition(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -300,6 +278,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation retrieves the built-in policy set definition with the given name. </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
         public async Task<Response<PolicySetDefinition>> GetBuiltInAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
             if (policySetDefinitionName == null)
@@ -315,14 +294,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinition value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinition.DeserializePolicySetDefinition(document.RootElement);
-                        }
+                        value = PolicySetDefinition.DeserializePolicySetDefinition(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -333,6 +305,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation retrieves the built-in policy set definition with the given name. </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
         public Response<PolicySetDefinition> GetBuiltIn(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
             if (policySetDefinitionName == null)
@@ -348,14 +321,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinition value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinition.DeserializePolicySetDefinition(document.RootElement);
-                        }
+                        value = PolicySetDefinition.DeserializePolicySetDefinition(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -390,14 +356,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinitionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
-                        }
+                        value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -417,14 +376,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinitionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
-                        }
+                        value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -457,14 +409,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinitionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
-                        }
+                        value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -484,14 +429,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinitionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
-                        }
+                        value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -524,6 +462,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="managementGroupId"> The ID of the management group. </param>
         /// <param name="parameters"> The policy set definition properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/>, <paramref name="managementGroupId"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response<PolicySetDefinition>> CreateOrUpdateAtManagementGroupAsync(string policySetDefinitionName, string managementGroupId, PolicySetDefinition parameters, CancellationToken cancellationToken = default)
         {
             if (policySetDefinitionName == null)
@@ -548,14 +487,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinition value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinition.DeserializePolicySetDefinition(document.RootElement);
-                        }
+                        value = PolicySetDefinition.DeserializePolicySetDefinition(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -568,6 +500,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="managementGroupId"> The ID of the management group. </param>
         /// <param name="parameters"> The policy set definition properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/>, <paramref name="managementGroupId"/>, or <paramref name="parameters"/> is null. </exception>
         public Response<PolicySetDefinition> CreateOrUpdateAtManagementGroup(string policySetDefinitionName, string managementGroupId, PolicySetDefinition parameters, CancellationToken cancellationToken = default)
         {
             if (policySetDefinitionName == null)
@@ -592,14 +525,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinition value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinition.DeserializePolicySetDefinition(document.RootElement);
-                        }
+                        value = PolicySetDefinition.DeserializePolicySetDefinition(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -627,6 +553,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="policySetDefinitionName"> The name of the policy set definition to delete. </param>
         /// <param name="managementGroupId"> The ID of the management group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> or <paramref name="managementGroupId"/> is null. </exception>
         public async Task<Response> DeleteAtManagementGroupAsync(string policySetDefinitionName, string managementGroupId, CancellationToken cancellationToken = default)
         {
             if (policySetDefinitionName == null)
@@ -654,6 +581,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="policySetDefinitionName"> The name of the policy set definition to delete. </param>
         /// <param name="managementGroupId"> The ID of the management group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> or <paramref name="managementGroupId"/> is null. </exception>
         public Response DeleteAtManagementGroup(string policySetDefinitionName, string managementGroupId, CancellationToken cancellationToken = default)
         {
             if (policySetDefinitionName == null)
@@ -697,6 +625,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
         /// <param name="managementGroupId"> The ID of the management group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> or <paramref name="managementGroupId"/> is null. </exception>
         public async Task<Response<PolicySetDefinition>> GetAtManagementGroupAsync(string policySetDefinitionName, string managementGroupId, CancellationToken cancellationToken = default)
         {
             if (policySetDefinitionName == null)
@@ -716,14 +645,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinition value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinition.DeserializePolicySetDefinition(document.RootElement);
-                        }
+                        value = PolicySetDefinition.DeserializePolicySetDefinition(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -735,6 +657,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
         /// <param name="managementGroupId"> The ID of the management group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> or <paramref name="managementGroupId"/> is null. </exception>
         public Response<PolicySetDefinition> GetAtManagementGroup(string policySetDefinitionName, string managementGroupId, CancellationToken cancellationToken = default)
         {
             if (policySetDefinitionName == null)
@@ -754,14 +677,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinition value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinition.DeserializePolicySetDefinition(document.RootElement);
-                        }
+                        value = PolicySetDefinition.DeserializePolicySetDefinition(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -787,6 +703,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation retrieves a list of all the a policy set definition in the given management group. </summary>
         /// <param name="managementGroupId"> The ID of the management group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> is null. </exception>
         public async Task<Response<PolicySetDefinitionListResult>> ListByManagementGroupAsync(string managementGroupId, CancellationToken cancellationToken = default)
         {
             if (managementGroupId == null)
@@ -802,14 +719,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinitionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
-                        }
+                        value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -820,6 +730,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation retrieves a list of all the a policy set definition in the given management group. </summary>
         /// <param name="managementGroupId"> The ID of the management group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> is null. </exception>
         public Response<PolicySetDefinitionListResult> ListByManagementGroup(string managementGroupId, CancellationToken cancellationToken = default)
         {
             if (managementGroupId == null)
@@ -835,14 +746,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinitionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
-                        }
+                        value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -865,6 +769,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation retrieves a list of all the policy set definitions in the given subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<PolicySetDefinitionListResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -880,14 +785,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinitionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
-                        }
+                        value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -898,6 +796,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation retrieves a list of all the policy set definitions in the given subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<PolicySetDefinitionListResult> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -913,14 +812,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinitionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
-                        }
+                        value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -943,6 +835,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation retrieves a list of all the built-in policy set definitions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<PolicySetDefinitionListResult>> ListBuiltInNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -958,14 +851,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinitionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
-                        }
+                        value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -976,6 +862,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation retrieves a list of all the built-in policy set definitions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<PolicySetDefinitionListResult> ListBuiltInNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -991,14 +878,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinitionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
-                        }
+                        value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1022,6 +902,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="managementGroupId"> The ID of the management group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="managementGroupId"/> is null. </exception>
         public async Task<Response<PolicySetDefinitionListResult>> ListByManagementGroupNextPageAsync(string nextLink, string managementGroupId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1041,14 +922,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinitionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
-                        }
+                        value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1060,6 +934,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="managementGroupId"> The ID of the management group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="managementGroupId"/> is null. </exception>
         public Response<PolicySetDefinitionListResult> ListByManagementGroupNextPage(string nextLink, string managementGroupId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1079,14 +954,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         PolicySetDefinitionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
-                        }
+                        value = PolicySetDefinitionListResult.DeserializePolicySetDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

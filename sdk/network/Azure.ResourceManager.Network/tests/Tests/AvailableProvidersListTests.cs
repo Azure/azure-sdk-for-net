@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             AvailableProvidersListParameters parameters = new AvailableProvidersListParameters
             {
-                AzureLocations = new List<string> { "West US" },
+                AzureLocations = { "West US" },
                 Country = "United States"
             };
             Operation<AvailableProvidersList> providersListOperation =
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             AvailableProvidersListParameters parameters = new AvailableProvidersListParameters
             {
-                AzureLocations = new List<string> { "West US" },
+                AzureLocations = { "West US" },
                 Country = "United States",
                 State = "washington"
             };
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             AvailableProvidersListParameters parameters = new AvailableProvidersListParameters
             {
-                AzureLocations = new List<string> { "West US" },
+                AzureLocations = { "West US" },
                 Country = "United States",
                 State = "washington",
                 City = "seattle"

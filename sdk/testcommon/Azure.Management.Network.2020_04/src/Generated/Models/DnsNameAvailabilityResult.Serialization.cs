@@ -14,20 +14,16 @@ namespace Azure.Management.Network.Models
     {
         internal static DnsNameAvailabilityResult DeserializeDnsNameAvailabilityResult(JsonElement element)
         {
-            bool? available = default;
+            Optional<bool> available = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("available"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     available = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new DnsNameAvailabilityResult(available);
+            return new DnsNameAvailabilityResult(Optional.ToNullable(available));
         }
     }
 }

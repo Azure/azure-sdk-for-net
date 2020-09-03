@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -17,7 +18,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of PipelineRun. </summary>
         internal PipelineRun()
         {
-            AdditionalProperties = new Dictionary<string, object>();
+            Parameters = new ChangeTrackingDictionary<string, string>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of PipelineRun. </summary>
@@ -48,7 +50,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             DurationInMs = durationInMs;
             Status = status;
             Message = message;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> Identifier of a run. </summary>

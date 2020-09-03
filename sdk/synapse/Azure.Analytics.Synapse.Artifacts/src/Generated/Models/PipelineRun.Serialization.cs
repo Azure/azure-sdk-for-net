@@ -16,154 +16,91 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static PipelineRun DeserializePipelineRun(JsonElement element)
         {
-            string runId = default;
-            string runGroupId = default;
-            bool? isLatest = default;
-            string pipelineName = default;
-            IReadOnlyDictionary<string, string> parameters = default;
-            PipelineRunInvokedBy invokedBy = default;
-            DateTimeOffset? lastUpdated = default;
-            DateTimeOffset? runStart = default;
-            DateTimeOffset? runEnd = default;
-            int? durationInMs = default;
-            string status = default;
-            string message = default;
+            Optional<string> runId = default;
+            Optional<string> runGroupId = default;
+            Optional<bool> isLatest = default;
+            Optional<string> pipelineName = default;
+            Optional<IReadOnlyDictionary<string, string>> parameters = default;
+            Optional<PipelineRunInvokedBy> invokedBy = default;
+            Optional<DateTimeOffset> lastUpdated = default;
+            Optional<DateTimeOffset> runStart = default;
+            Optional<DateTimeOffset> runEnd = default;
+            Optional<int> durationInMs = default;
+            Optional<string> status = default;
+            Optional<string> message = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("runId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     runId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("runGroupId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     runGroupId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("isLatest"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     isLatest = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("pipelineName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     pipelineName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("parameters"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     parameters = dictionary;
                     continue;
                 }
                 if (property.NameEquals("invokedBy"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     invokedBy = PipelineRunInvokedBy.DeserializePipelineRunInvokedBy(property.Value);
                     continue;
                 }
                 if (property.NameEquals("lastUpdated"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     lastUpdated = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("runStart"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     runStart = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("runEnd"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     runEnd = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("durationInMs"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     durationInMs = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("status"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     status = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("message"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     message = property.Value.GetString();
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    additionalPropertiesDictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new PipelineRun(runId, runGroupId, isLatest, pipelineName, parameters, invokedBy, lastUpdated, runStart, runEnd, durationInMs, status, message, additionalProperties);
+            return new PipelineRun(runId.Value, runGroupId.Value, Optional.ToNullable(isLatest), pipelineName.Value, Optional.ToDictionary(parameters), invokedBy.Value, Optional.ToNullable(lastUpdated), Optional.ToNullable(runStart), Optional.ToNullable(runEnd), Optional.ToNullable(durationInMs), status.Value, message.Value, additionalProperties);
         }
     }
 }

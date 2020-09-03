@@ -17,17 +17,12 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             writer.WritePropertyName("lun");
             writer.WriteNumberValue(Lun);
-            if (SizeInGB != null)
-            {
-                writer.WritePropertyName("sizeInGB");
-                writer.WriteNumberValue(SizeInGB.Value);
-            }
-            if (HostCaching != null)
+            if (Optional.IsDefined(HostCaching))
             {
                 writer.WritePropertyName("hostCaching");
                 writer.WriteStringValue(HostCaching.Value.ToSerialString());
             }
-            if (Source != null)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source");
                 writer.WriteObjectValue(Source);
@@ -38,9 +33,9 @@ namespace Azure.ResourceManager.Compute.Models
         internal static GalleryDataDiskImage DeserializeGalleryDataDiskImage(JsonElement element)
         {
             int lun = default;
-            int? sizeInGB = default;
-            HostCaching? hostCaching = default;
-            GalleryArtifactVersionSource source = default;
+            Optional<int> sizeInGB = default;
+            Optional<HostCaching> hostCaching = default;
+            Optional<GalleryArtifactVersionSource> source = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lun"))
@@ -50,33 +45,21 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("sizeInGB"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sizeInGB = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("hostCaching"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     hostCaching = property.Value.GetString().ToHostCaching();
                     continue;
                 }
                 if (property.NameEquals("source"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     source = GalleryArtifactVersionSource.DeserializeGalleryArtifactVersionSource(property.Value);
                     continue;
                 }
             }
-            return new GalleryDataDiskImage(sizeInGB, hostCaching, source, lun);
+            return new GalleryDataDiskImage(Optional.ToNullable(sizeInGB), Optional.ToNullable(hostCaching), source.Value, lun);
         }
     }
 }

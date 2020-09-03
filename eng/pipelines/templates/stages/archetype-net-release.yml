@@ -61,6 +61,11 @@ stages:
                 deploy:
                   steps:
                     - checkout: self
+                    - template: /eng/common/pipelines/templates/steps/verify-changelog.yml
+                      parameters:
+                        PackageName: ${{artifact.name}}
+                        ServiceName: ${{parameters.ServiceDirectory}}
+                        ForRelease: true
                     - template: /eng/pipelines/templates/steps/stage-artifacts.yml
                       parameters:
                         SourceFolder: ${{parameters.ArtifactName}}-signed
@@ -149,6 +154,9 @@ stages:
               environment: githubio
               dependsOn: PublishPackage
 
+              variables:
+                CIConfigs: "{'targets':[{'path_to_config':'bundlepackages/azure-dotnet-preview.csv','Mode':'Preview'},{'path_to_config':'bundlepackages/azure-dotnet.csv','mode':'Latest'}]}"
+
               pool:
                 vmImage: windows-2019
 
@@ -166,6 +174,10 @@ stages:
                           Get-ChildItem -Recurse $(Pipeline.Workspace)/${{artifact.safeName}}
                         workingDirectory: $(Pipeline.Workspace)
                         displayName: Output Visible Artifacts
+                      - template: /eng/common/pipelines/templates/steps/get-pr-owners.yml
+                        parameters:
+                          TargetVariable: "OwningGHUser"
+                          ServiceDirectory: ${{parameters.ServiceDirectory}}
                       - template: /eng/common/pipelines/templates/steps/docs-metadata-release.yml
                         parameters:
                           ArtifactLocation: $(Pipeline.Workspace)/${{artifact.safeName}}
@@ -175,10 +187,13 @@ stages:
                           WorkingDirectory: $(System.DefaultWorkingDirectory)
                           TargetDocRepoOwner: ${{parameters.TargetDocRepoOwner}}
                           TargetDocRepoName: ${{parameters.TargetDocRepoName}}
-                          PRBranchName: 'smoke-test-rdme'
-                          ArtifactName: ${{parameters.ArtifactName}}
+                          PRBranchName: onboarding-${{artifact.name}}-$(Build.BuildId)
+                          ArtifactName: ${{artifact.name}}
                           Language: '.net'
                           DocRepoDestinationPath: 'api/overview/azure/' 
+                          GHReviewersVariable: 'OwningGHUser'
+                          CIConfigs: $(CIConfigs)
+                          OnboardingBranch: 'onboarding'
 
           - ${{if ne(artifact.options.skipPublishDocs, 'true')}}:
             - deployment: PublishDocs
@@ -275,9 +290,3 @@ stages:
           command: push
           packagesToPush: '$(Pipeline.Workspace)/packages-signed/**/*.nupkg;!$(Pipeline.Workspace)/packages-signed/**/*.symbols.nupkg'
           publishVstsFeed: $(DevOpsFeedID)
-      - task: MSBuild@1
-        displayName: 'Publish to blobfeed'
-        condition: and(succeeded(), eq('${{ parameters.DevOpsFeedID }}', variables['DevOpsFeedID']))
-        inputs:
-          solution: '$(AzureSDKBuildToolsPath)/tools/blobfeedtool/BlobFeedPublishHelper.proj'
-          msbuildArguments: '/p:AccountKey=$(azuresdkartifacts-access-key) /p:ExpectedFeedUrl=$(BlobFeedUrl) /p:PackagesPath="$(Pipeline.Workspace)/packages-signed"'

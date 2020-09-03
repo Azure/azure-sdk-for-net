@@ -223,7 +223,7 @@ try
 {
     // Read events using the consumer client
 }
-catch (EventHubsException ex) where 
+catch (EventHubsException ex) when 
     (ex.Reason == EventHubsException.FailureReason.ConsumerDisconnected)
 {
     // Take action based on a consumer being disconnected

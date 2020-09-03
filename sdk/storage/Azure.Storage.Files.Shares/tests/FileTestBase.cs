@@ -17,7 +17,8 @@ namespace Azure.Storage.Files.Shares.Tests
 {
     [ClientTestFixture(
         ShareClientOptions.ServiceVersion.V2019_02_02,
-        ShareClientOptions.ServiceVersion.V2019_07_07)]
+        ShareClientOptions.ServiceVersion.V2019_07_07,
+        ShareClientOptions.ServiceVersion.V2019_12_12)]
     public class FileTestBase : StorageTestBase
     {
         protected readonly ShareClientOptions.ServiceVersion _serviceVersion;
@@ -113,6 +114,15 @@ namespace Azure.Storage.Files.Shares.Tests
                         TestConfigPremiumBlob.AccountKey),
                     GetOptions()));
 
+        public ShareServiceClient GetServiceClient_SoftDelete()
+            => InstrumentClient(
+                new ShareServiceClient(
+                    new Uri(TestConfigSoftDelete.FileServiceEndpoint),
+                    new StorageSharedKeyCredential(
+                        TestConfigSoftDelete.AccountName,
+                        TestConfigSoftDelete.AccountKey),
+                    GetOptions()));
+
         public ShareServiceClient GetServiceClient_AccountSas(StorageSharedKeyCredential sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
             => InstrumentClient(
                 new ShareServiceClient(
@@ -189,8 +199,8 @@ namespace Azure.Storage.Files.Shares.Tests
                     AccessPolicy =
                         new ShareAccessPolicy
                         {
-                            StartsOn =  Recording.UtcNow.AddHours(-1),
-                            ExpiresOn =  Recording.UtcNow.AddHours(1),
+                            PolicyStartsOn =  Recording.UtcNow.AddHours(-1),
+                            PolicyExpiresOn =  Recording.UtcNow.AddHours(1),
                             Permissions = "rw"
                         }
                 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of WinRMConfiguration. </summary>
         public WinRMConfiguration()
         {
+            Listeners = new ChangeTrackingList<WinRMListener>();
         }
 
         /// <summary> Initializes a new instance of WinRMConfiguration. </summary>
@@ -25,6 +27,6 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The list of Windows Remote Management listeners. </summary>
-        public IList<WinRMListener> Listeners { get; set; }
+        public IList<WinRMListener> Listeners { get; }
     }
 }

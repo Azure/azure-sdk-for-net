@@ -1,6 +1,6 @@
 # Recognize custom forms
 
-This sample demonstrates how to recognize form fields and other content from your custom forms, using models you trained with your own form types. For more information on how to do the training, see [train a model][train_a_model].
+This sample demonstrates how to recognize form fields and other content from your custom forms, using models you trained with your own form types. For more information on how to do the training, see [train a model][train_a_model]. For a suggested approach to extracting information from custom forms with known fields, see [strongly-typing a recognized form][strongly_typing_a_recognized_form].
 
 To get started you'll need a Cognitive Services resource or a Form Recognizer resource.  See [README][README] for prerequisites and instructions.
 
@@ -19,12 +19,12 @@ var client = new FormRecognizerClient(new Uri(endpoint), credential);
 
 ## Recognize custom forms from a URI
 
-To recognize form fields and other content from your custom forms from a given file at a URI, use the `StartRecognizeCustomFormsFromUri` method. The returned value is a collection of `RecognizedForm` objects -- one for each page in the submitted document.
+To recognize form fields and other content from your custom forms from a given file at a URI, use the `StartRecognizeCustomFormsFromUri` method. The returned value is a collection of `RecognizedForm` objects -- one for each form identified in the submitted document.
 
-```C# Snippet:FormRecognizerSample3RecognizeCustomFormsFromUri
+```C# Snippet:FormRecognizerSampleRecognizeCustomFormsFromUri
 string modelId = "<modelId>";
 
-RecognizedFormCollection forms = await client.StartRecognizeCustomFormsFromUri(modelId, new Uri(formUri)).WaitForCompletionAsync();
+RecognizedFormCollection forms = await client.StartRecognizeCustomFormsFromUriAsync(modelId, formUri).WaitForCompletionAsync();
 foreach (RecognizedForm form in forms)
 {
     Console.WriteLine($"Form of type: {form.FormType}");
@@ -32,12 +32,12 @@ foreach (RecognizedForm form in forms)
     {
         Console.WriteLine($"Field '{field.Name}: ");
 
-        if (field.LabelText != null)
+        if (field.LabelData != null)
         {
-            Console.WriteLine($"    Label: '{field.LabelText.Text}");
+            Console.WriteLine($"    Label: '{field.LabelData.Text}");
         }
 
-        Console.WriteLine($"    Value: '{field.ValueText.Text}");
+        Console.WriteLine($"    Value: '{field.ValueData.Text}");
         Console.WriteLine($"    Confidence: '{field.Confidence}");
     }
 }
@@ -45,7 +45,7 @@ foreach (RecognizedForm form in forms)
 
 ## Recognize custom forms from a file stream
 
-To recognize form fields and other content from your custom forms from a file stream, use the `StartRecognizeCustomForms` method. The returned value is a collection of `RecognizedForm` objects -- one for each page in the submitted document.
+To recognize form fields and other content from your custom forms from a file stream, use the `StartRecognizeCustomForms` method. The returned value is a collection of `RecognizedForm` objects -- one for each form identified in the submitted document.
 
 ```C# Snippet:FormRecognizerRecognizeCustomFormsFromFile
 using (FileStream stream = new FileStream(formFilePath, FileMode.Open))
@@ -65,4 +65,5 @@ To see the full example source files, see:
 * [Recognize custom forms from file](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample2_RecognizeCustomFormsFromFile.cs)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started
-[train_a_model]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample4_TrainModel.md
+[strongly_typing_a_recognized_form]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample4_StronglyTypingARecognizedForm.md
+[train_a_model]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample5_TrainModel.md

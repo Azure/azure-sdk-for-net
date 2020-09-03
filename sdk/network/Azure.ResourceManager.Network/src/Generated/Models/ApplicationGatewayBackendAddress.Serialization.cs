@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Fqdn != null)
+            if (Optional.IsDefined(Fqdn))
             {
                 writer.WritePropertyName("fqdn");
                 writer.WriteStringValue(Fqdn);
             }
-            if (IpAddress != null)
+            if (Optional.IsDefined(IpAddress))
             {
                 writer.WritePropertyName("ipAddress");
                 writer.WriteStringValue(IpAddress);
@@ -30,30 +30,22 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayBackendAddress DeserializeApplicationGatewayBackendAddress(JsonElement element)
         {
-            string fqdn = default;
-            string ipAddress = default;
+            Optional<string> fqdn = default;
+            Optional<string> ipAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fqdn"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     fqdn = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("ipAddress"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     ipAddress = property.Value.GetString();
                     continue;
                 }
             }
-            return new ApplicationGatewayBackendAddress(fqdn, ipAddress);
+            return new ApplicationGatewayBackendAddress(fqdn.Value, ipAddress.Value);
         }
     }
 }

@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027yrehvsfy\u0027)/docs/search.post.autocomplete?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexes(\u0027josgoidr\u0027)/docs/search.post.autocomplete?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
         "Content-Length": "65",
         "Content-Type": "application/json",
-        "traceparent": "00-f11a1b417e9979469ad85ee643fa7c35-9eb0b9fa955a9848-00",
+        "traceparent": "00-83c94247890d3241bf215b3973c14bcb-5b78383017a0f24c-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200507.1",
-          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Search.Documents/11.0.0-dev.20200625.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "836405f774d01ce051263e9c5247117e",
         "x-ms-return-client-request-id": "true"
@@ -24,16 +24,18 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
+        "client-request-id": "836405f7-74d0-1ce0-5126-3e9c5247117e",
         "Content-Length": "222",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Fri, 08 May 2020 06:41:18 GMT",
-        "elapsed-time": "13",
+        "Date": "Fri, 26 Jun 2020 05:55:58 GMT",
+        "elapsed-time": "5",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
         "request-id": "836405f7-74d0-1ce0-5126-3e9c5247117e",
-        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "836405f7-74d0-1ce0-5126-3e9c5247117e"
       },
       "ResponseBody": {
         "value": [
@@ -63,8 +65,8 @@
   ],
   "Variables": {
     "RandomSeed": "351280611",
-    "SearchIndexName": "yrehvsfy",
+    "SearchIndexName": "josgoidr",
     "SEARCH_QUERY_API_KEY": "Sanitized",
-    "SEARCH_SERVICE_NAME": "azs-net-heathsearch2"
+    "SEARCH_SERVICE_NAME": "azs-net-heathsrchtst"
   }
 }

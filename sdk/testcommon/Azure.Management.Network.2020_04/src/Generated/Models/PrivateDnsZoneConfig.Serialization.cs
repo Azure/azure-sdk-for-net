@@ -16,27 +16,17 @@ namespace Azure.Management.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (PrivateDnsZoneId != null)
+            if (Optional.IsDefined(PrivateDnsZoneId))
             {
                 writer.WritePropertyName("privateDnsZoneId");
                 writer.WriteStringValue(PrivateDnsZoneId);
-            }
-            if (RecordSets != null)
-            {
-                writer.WritePropertyName("recordSets");
-                writer.WriteStartArray();
-                foreach (var item in RecordSets)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -44,17 +34,13 @@ namespace Azure.Management.Network.Models
 
         internal static PrivateDnsZoneConfig DeserializePrivateDnsZoneConfig(JsonElement element)
         {
-            string name = default;
-            string privateDnsZoneId = default;
-            IList<RecordSet> recordSets = default;
+            Optional<string> name = default;
+            Optional<string> privateDnsZoneId = default;
+            Optional<IReadOnlyList<RecordSet>> recordSets = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
@@ -64,30 +50,15 @@ namespace Azure.Management.Network.Models
                     {
                         if (property0.NameEquals("privateDnsZoneId"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             privateDnsZoneId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("recordSets"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             List<RecordSet> array = new List<RecordSet>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(RecordSet.DeserializeRecordSet(item));
-                                }
+                                array.Add(RecordSet.DeserializeRecordSet(item));
                             }
                             recordSets = array;
                             continue;
@@ -96,7 +67,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new PrivateDnsZoneConfig(name, privateDnsZoneId, recordSets);
+            return new PrivateDnsZoneConfig(name.Value, privateDnsZoneId.Value, Optional.ToList(recordSets));
         }
     }
 }

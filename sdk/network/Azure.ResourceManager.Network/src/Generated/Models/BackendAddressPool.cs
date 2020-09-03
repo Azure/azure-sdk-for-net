@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of BackendAddressPool. </summary>
         public BackendAddressPool()
         {
+            BackendIPConfigurations = new ChangeTrackingList<NetworkInterfaceIPConfiguration>();
+            LoadBalancerBackendAddresses = new ChangeTrackingList<LoadBalancerBackendAddress>();
+            LoadBalancingRules = new ChangeTrackingList<SubResource>();
+            OutboundRules = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of BackendAddressPool. </summary>
@@ -28,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="outboundRule"> A reference to an outbound rule that uses this backend address pool. </param>
         /// <param name="outboundRules"> An array of references to outbound rules that use this backend address pool. </param>
         /// <param name="provisioningState"> The provisioning state of the backend address pool resource. </param>
-        internal BackendAddressPool(string id, string name, string etag, string type, IList<NetworkInterfaceIPConfiguration> backendIPConfigurations, IList<LoadBalancerBackendAddress> loadBalancerBackendAddresses, IList<SubResource> loadBalancingRules, SubResource outboundRule, IList<SubResource> outboundRules, ProvisioningState? provisioningState) : base(id)
+        internal BackendAddressPool(string id, string name, string etag, string type, IReadOnlyList<NetworkInterfaceIPConfiguration> backendIPConfigurations, IList<LoadBalancerBackendAddress> loadBalancerBackendAddresses, IReadOnlyList<SubResource> loadBalancingRules, SubResource outboundRule, IReadOnlyList<SubResource> outboundRules, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -48,15 +53,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Type of the resource. </summary>
         public string Type { get; }
         /// <summary> An array of references to IP addresses defined in network interfaces. </summary>
-        public IList<NetworkInterfaceIPConfiguration> BackendIPConfigurations { get; }
+        public IReadOnlyList<NetworkInterfaceIPConfiguration> BackendIPConfigurations { get; }
         /// <summary> An array of backend addresses. </summary>
-        public IList<LoadBalancerBackendAddress> LoadBalancerBackendAddresses { get; set; }
+        public IList<LoadBalancerBackendAddress> LoadBalancerBackendAddresses { get; }
         /// <summary> An array of references to load balancing rules that use this backend address pool. </summary>
-        public IList<SubResource> LoadBalancingRules { get; }
+        public IReadOnlyList<SubResource> LoadBalancingRules { get; }
         /// <summary> A reference to an outbound rule that uses this backend address pool. </summary>
         public SubResource OutboundRule { get; }
         /// <summary> An array of references to outbound rules that use this backend address pool. </summary>
-        public IList<SubResource> OutboundRules { get; }
+        public IReadOnlyList<SubResource> OutboundRules { get; }
         /// <summary> The provisioning state of the backend address pool resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

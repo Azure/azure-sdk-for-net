@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of TriggerPipelineReference. </summary>
         public TriggerPipelineReference()
         {
+            Parameters = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of TriggerPipelineReference. </summary>
@@ -29,6 +31,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Pipeline reference. </summary>
         public PipelineReference PipelineReference { get; set; }
         /// <summary> Pipeline parameters. </summary>
-        public IDictionary<string, object> Parameters { get; set; }
+        public IDictionary<string, object> Parameters { get; }
     }
 }

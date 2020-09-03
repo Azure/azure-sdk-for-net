@@ -15,23 +15,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
         }
 
-        /// <summary> Initializes a new instance of CreateDataFlowDebugSessionRequest. </summary>
-        /// <param name="dataFlowName"> The name of the data flow. </param>
-        /// <param name="existingClusterId"> The ID of existing Databricks cluster. </param>
-        /// <param name="clusterTimeout"> Timeout setting for Databricks cluster. </param>
-        /// <param name="newClusterName"> The name of new Databricks cluster. </param>
-        /// <param name="newClusterNodeType"> The type of new Databricks cluster. </param>
-        /// <param name="dataBricksLinkedService"> Data bricks linked service. </param>
-        internal CreateDataFlowDebugSessionRequest(string dataFlowName, string existingClusterId, int? clusterTimeout, string newClusterName, string newClusterNodeType, LinkedServiceResource dataBricksLinkedService)
-        {
-            DataFlowName = dataFlowName;
-            ExistingClusterId = existingClusterId;
-            ClusterTimeout = clusterTimeout;
-            NewClusterName = newClusterName;
-            NewClusterNodeType = newClusterNodeType;
-            DataBricksLinkedService = dataBricksLinkedService;
-        }
-
         /// <summary> The name of the data flow. </summary>
         public string DataFlowName { get; set; }
         /// <summary> The ID of existing Databricks cluster. </summary>

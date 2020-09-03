@@ -9,11 +9,11 @@ namespace Microsoft.Extensions.Azure
 {
     internal class ConfigureClientCredentials<TClient, TOptions> : IConfigureNamedOptions<AzureClientCredentialOptions<TClient>>
     {
-        private readonly ClientRegistration<TClient, TOptions> _registration;
+        private readonly ClientRegistration<TClient> _registration;
         private readonly Func<IServiceProvider, TokenCredential> _credentialFactory;
 
         public ConfigureClientCredentials(
-            ClientRegistration<TClient, TOptions> registration,
+            ClientRegistration<TClient> registration,
             Func<IServiceProvider, TokenCredential> credentialFactory)
         {
             _registration = registration;

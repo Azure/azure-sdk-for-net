@@ -2,27 +2,28 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
     /// Describes a model trained in a Cognitive Services Account and its status.
     /// </summary>
-    public class CustomFormModelInfo
+    [CodeGenModel("ModelInfo")]
+    public partial class CustomFormModelInfo
     {
-        internal CustomFormModelInfo(ModelInfo_internal modelInfo)
-        {
-            ModelId = modelInfo.ModelId.ToString();
-            RequestedOn = modelInfo.CreatedDateTime;
-            CompletedOn = modelInfo.LastUpdatedDateTime;
-            Status = modelInfo.Status;
-        }
-
-        internal CustomFormModelInfo(string modelId, DateTimeOffset requestedOn, DateTimeOffset completedOn, CustomFormModelStatus status)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CustomFormModelInfo"/> class.
+        /// </summary>
+        /// <param name="modelId">The unique identifier of the model.</param>
+        /// <param name="trainingStartedOn">The date and time (UTC) when model training was started.</param>
+        /// <param name="trainingCompletedOn">The date and time (UTC) when model training completed.</param>
+        /// <param name="status">The status of the model.</param>
+        internal CustomFormModelInfo(string modelId, DateTimeOffset trainingStartedOn, DateTimeOffset trainingCompletedOn, CustomFormModelStatus status)
         {
             ModelId = modelId;
-            RequestedOn = requestedOn;
-            CompletedOn = completedOn;
+            TrainingStartedOn = trainingStartedOn;
+            TrainingCompletedOn = trainingCompletedOn;
             Status = status;
         }
 
@@ -37,13 +38,15 @@ namespace Azure.AI.FormRecognizer.Training
         public CustomFormModelStatus Status { get; }
 
         /// <summary>
-        /// The date and time (UTC) when the training model request started.
+        /// The date and time (UTC) when model training was started.
         /// </summary>
-        public DateTimeOffset RequestedOn { get; }
+        [CodeGenMember("CreatedDateTime")]
+        public DateTimeOffset TrainingStartedOn { get; }
 
         /// <summary>
         /// The date and time (UTC) when model training completed.
         /// </summary>
-        public DateTimeOffset CompletedOn { get; }
+        [CodeGenMember("LastUpdatedDateTime")]
+        public DateTimeOffset TrainingCompletedOn { get; }
     }
 }

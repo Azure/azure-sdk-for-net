@@ -16,7 +16,7 @@ Install the Azure Text Analytics client library for .NET with [NuGet][nuget]:
 ```PowerShell
 dotnet add package Azure.AI.TextAnalytics
 ```
-**Note:** This package version targets Azure Text Analytics service API version v3.0.
+**Note:** This package version targets Azure Text Analytics service API version v3.0 and above.
 
 ### Prerequisites
 * An [Azure subscription][azure_sub].
@@ -190,7 +190,8 @@ CategorizedEntityCollection entities = client.RecognizeEntities(document);
 Console.WriteLine($"Recognized {entities.Count} entities:");
 foreach (CategorizedEntity entity in entities)
 {
-    Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
+    Console.WriteLine($"Text: {entity.Text}, Offset (in UTF-16 code units): {entity.Offset}, Length (in UTF-16 code units): {entity.Length}");
+    Console.WriteLine($"Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
 }
 ```
 For samples on using the production recommended option `RecognizeEntitiesBatch` see [here][recognize_entities_sample].
@@ -211,7 +212,8 @@ foreach (LinkedEntity linkedEntity in linkedEntities)
     Console.WriteLine($"Name: {linkedEntity.Name}, Language: {linkedEntity.Language}, Data Source: {linkedEntity.DataSource}, Url: {linkedEntity.Url.ToString()}, Entity Id in Data Source: {linkedEntity.DataSourceEntityId}");
     foreach (LinkedEntityMatch match in linkedEntity.Matches)
     {
-        Console.WriteLine($"    Match Text: {match.Text}, Confidence score: {match.ConfidenceScore}");
+        Console.WriteLine($"    Match Text: {match.Text}, Offset (in UTF-16 code units): {match.Offset}, Length (in UTF-16 code units): {match.Length}");
+        Console.WriteLine($"    Confidence score: {match.ConfidenceScore}");
     }
 }
 ```
@@ -241,7 +243,8 @@ CategorizedEntityCollection entities = await client.RecognizeEntitiesAsync(docum
 Console.WriteLine($"Recognized {entities.Count} entities:");
 foreach (CategorizedEntity entity in entities)
 {
-    Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
+    Console.WriteLine($"Text: {entity.Text}, Offset (in UTF-16 code units): {entity.Offset}, Length (in UTF-16 code units): {entity.Length}");
+    Console.WriteLine($"Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
 }
 ```
 

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of NetworkRuleSet. </summary>
         public NetworkRuleSet()
         {
+            IpRules = new ChangeTrackingList<IPRule>();
+            VirtualNetworkRules = new ChangeTrackingList<VirtualNetworkRule>();
         }
 
         /// <summary> Initializes a new instance of NetworkRuleSet. </summary>
@@ -35,8 +38,8 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> The default action when no rule from ipRules and from virtualNetworkRules match. This is only used after the bypass property has been evaluated. </summary>
         public NetworkRuleAction? DefaultAction { get; set; }
         /// <summary> The list of IP address rules. </summary>
-        public IList<IPRule> IpRules { get; set; }
+        public IList<IPRule> IpRules { get; }
         /// <summary> The list of virtual network rules. </summary>
-        public IList<VirtualNetworkRule> VirtualNetworkRules { get; set; }
+        public IList<VirtualNetworkRule> VirtualNetworkRules { get; }
     }
 }

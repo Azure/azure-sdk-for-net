@@ -1,0 +1,26 @@
+{
+  "version": 0,
+  "begin": "2020-03-25T02:00:00.000Z",
+  "intervalSecs": 3600,
+  "status": "Finalized",
+  "config": {
+    "version": 0,
+    "configVersionEtag": "0x8d7d063fb40542c",
+    "numShards": 1,
+    "recordsFormat": "avro",
+    "formatSchemaVersion": 3,
+    "shardDistFnVersion": 1
+  },
+  "chunkFilePaths": [
+    "$blobchangefeed/log/00/2020/03/25/0200/",
+    "$blobchangefeed/log/01/2020/03/25/0200/",
+    "$blobchangefeed/log/02/2020/03/25/0200/"
+  ],
+  "storageDiagnostics": {
+    "version": 0,
+    "lastModifiedTime": "2020-03-25T02:26:53.186Z",
+    "data": {
+      "aid": "61410c64-2006-0001-004c-02cde706e9dc"
+    }
+  }
+}

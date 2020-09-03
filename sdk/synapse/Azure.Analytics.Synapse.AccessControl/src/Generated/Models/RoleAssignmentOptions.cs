@@ -15,6 +15,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Models
         /// <summary> Initializes a new instance of RoleAssignmentOptions. </summary>
         /// <param name="roleId"> Role ID of the Synapse Built-In Role. </param>
         /// <param name="principalId"> Object ID of the AAD principal or security-group. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleId"/> or <paramref name="principalId"/> is null. </exception>
         public RoleAssignmentOptions(string roleId, string principalId)
         {
             if (roleId == null)

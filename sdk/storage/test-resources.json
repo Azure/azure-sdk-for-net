@@ -5,6 +5,13 @@
         "baseName": {
             "type": "String"
         },
+        "tenantId": {
+            "type": "string",
+            "defaultValue": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+            "metadata": {
+                "description": "The tenant ID to which the application and resources belong."
+            }
+        },
         "testApplicationOid": {
             "type": "string",
             "metadata": {
@@ -13,14 +20,19 @@
         }
     },
     "variables": {
-        "mgmtApiVersion": "2019-04-01",
+        "mgmtApiVersion": "2019-06-01",
+        "keyvaultApiVersion": "2016-10-01",
         "authorizationApiVersion": "2018-09-01-preview",
         "blobDataContributorRoleId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/ba92f5b4-2d11-453d-a403-e96b0029c9fe')]",
         "contributorRoleId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c')]",
+        "blobDataOwnerRoleId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/b7e6dc6d-f1e8-4753-8033-0f276bb0955b')]",
         "primaryAccountName": "[concat(parameters('baseName'), 'prim')]",
         "secondaryAccountName": "[concat(parameters('baseName'), 'sec')]",
         "premiumAccountName": "[concat(parameters('baseName'), 'prem')]",
         "dataLakeAccountName": "[concat(parameters('baseName'), 'dtlk')]",
+        "softDeleteAccountName": "[concat(parameters('baseName'), 'sftdl')]",
+        "keyvaultName": "[concat(parameters('baseName'), 'kvlt')]",
+        "azureKeyVaultUrl": "[format('https://{0}.vault.azure.net', variables('keyvaultName'))]",
         "location": "[resourceGroup().location]",
         "encryption": {
             "services": {
@@ -66,6 +78,18 @@
             }
         },
         {
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "[variables('authorizationApiVersion')]",
+            "name": "[guid(concat('blobDataOwnerRoleId', variables('primaryAccountName')))]",
+            "dependsOn": [
+                "[variables('primaryAccountName')]"
+            ],
+            "properties": {
+                "roleDefinitionId": "[variables('blobDataOwnerRoleId')]",
+                "principalId": "[parameters('testApplicationOid')]"
+            }
+        },
+        {
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "[variables('mgmtApiVersion')]",
             "name": "[variables('primaryAccountName')]",
@@ -81,6 +105,17 @@
                 "encryption": "[variables('encryption')]",
                 "accessTier": "Hot"
             }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/blobServices",
+            "apiVersion": "[variables('mgmtApiVersion')]",
+            "name": "[concat(variables('primaryAccountName'), '/default')]",
+            "properties": {
+                "isVersioningEnabled": true
+            },
+            "dependsOn": [
+                "[variables('primaryAccountName')]"
+            ]
         },
         {
             "type": "Microsoft.Storage/storageAccounts",
@@ -133,6 +168,122 @@
                 "encryption": "[variables('encryption')]",
                 "accessTier": "Hot"
             }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "[variables('mgmtApiVersion')]",
+            "name": "[variables('softDeleteAccountName')]",
+            "location": "[variables('location')]",
+            "sku": {
+                "name": "Standard_RAGRS",
+                "tier": "Standard"
+            },
+            "kind": "StorageV2",
+            "properties": {
+                "networkAcls": "[variables('networkAcls')]",
+                "supportsHttpsTrafficOnly": true,
+                "encryption": "[variables('encryption')]",
+                "accessTier": "Hot"
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/blobServices",
+            "apiVersion": "[variables('mgmtApiVersion')]",
+            "name": "[concat(variables('softDeleteAccountName'), '/default')]",
+            "properties": {
+                "deleteRetentionPolicy": {
+                      "enabled": true,
+                      "days": 1
+                }
+            },
+            "dependsOn": [
+                "[variables('softDeleteAccountName')]"
+            ]
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/fileServices",
+            "apiVersion": "[variables('mgmtApiVersion')]",
+            "name": "[concat(variables('softDeleteAccountName'), '/default')]",
+            "properties": {
+                "shareDeleteRetentionPolicy": {
+                    "enabled": true,
+                    "days": 1
+                }
+            },
+            "dependsOn": [
+                "[variables('softDeleteAccountName')]"
+            ]
+        },
+        {
+            "type": "Microsoft.KeyVault/vaults",
+            "apiVersion": "[variables('keyvaultApiVersion')]",
+            "name": "[variables('keyvaultName')]",
+            "location": "[variables('location')]",
+            "properties": {
+                "sku": {
+                    "family": "A",
+                    "name": "premium"
+                },
+                "tenantId": "[parameters('tenantId')]",
+                "accessPolicies": [
+                    {
+                        "tenantId": "[parameters('tenantId')]",
+                        "objectId": "[parameters('testApplicationOid')]",
+                        "permissions": {
+                            "keys": [
+                                "get",
+                                "list",
+                                "update",
+                                "create",
+                                "import",
+                                "delete",
+                                "recover",
+                                "backup",
+                                "restore",
+                                "decrypt",
+                                "encrypt",
+                                "unwrapKey",
+                                "wrapKey",
+                                "verify",
+                                "sign",
+                                "purge"
+                            ],
+                            "secrets": [
+                                "get",
+                                "list",
+                                "set",
+                                "delete",
+                                "recover",
+                                "backup",
+                                "restore",
+                                "purge"
+                            ],
+                            "certificates": [
+                                "get",
+                                "list",
+                                "update",
+                                "create",
+                                "import",
+                                "delete",
+                                "recover",
+                                "backup",
+                                "restore",
+                                "managecontacts",
+                                "manageissuers",
+                                "getissuers",
+                                "listissuers",
+                                "setissuers",
+                                "deleteissuers",
+                                "purge"
+                            ]
+                        }
+                    }
+                ],
+                "enabledForDeployment": false,
+                "enabledForDiskEncryption": false,
+                "enabledForTemplateDeployment": false,
+                "enableSoftDelete": false
+            }
         }
     ],
   "outputs": {
@@ -176,5 +327,17 @@
       "type": "string",
       "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('dataLakeAccountName')), variables('mgmtApiVersion')).keys[0].value]"
     },
+    "SOFT_DELETE_ACCOUNT_NAME": {
+      "type": "string",
+      "value": "[variables('softDeleteAccountName')]"
+    },
+    "SOFT_DELETE_ACCOUNT_KEY": {
+      "type": "string",
+      "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('softDeleteAccountName')), variables('mgmtApiVersion')).keys[0].value]"
+    },
+    "KEYVAULT_URI":{
+      "type": "string",
+      "value": "[variables('azureKeyVaultUrl')]"
+    }
   }
 }

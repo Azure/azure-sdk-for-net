@@ -38,14 +38,6 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// <param name="eventHubResourceId">The resource ID where the event
         /// grid is configured to send events.</param>
         /// <param name="consumerGroup">The event hub consumer group.</param>
-        /// <param name="tableName">The table where the data should be
-        /// ingested. Optionally the table information can be added to each
-        /// message.</param>
-        /// <param name="dataFormat">The data format of the message. Optionally
-        /// the data format can be added to each message. Possible values
-        /// include: 'MULTIJSON', 'JSON', 'CSV', 'TSV', 'SCSV', 'SOHSV', 'PSV',
-        /// 'TXT', 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE', 'PARQUET',
-        /// 'ORC'</param>
         /// <param name="id">Fully qualified resource Id for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
@@ -53,10 +45,25 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// Microsoft.Compute/virtualMachines or
         /// Microsoft.Storage/storageAccounts.</param>
         /// <param name="location">Resource location.</param>
+        /// <param name="tableName">The table where the data should be
+        /// ingested. Optionally the table information can be added to each
+        /// message.</param>
         /// <param name="mappingRuleName">The mapping rule to be used to ingest
         /// the data. Optionally the mapping information can be added to each
         /// message.</param>
-        public EventGridDataConnection(string storageAccountResourceId, string eventHubResourceId, string consumerGroup, string tableName, string dataFormat, string id = default(string), string name = default(string), string type = default(string), string location = default(string), string mappingRuleName = default(string))
+        /// <param name="dataFormat">The data format of the message. Optionally
+        /// the data format can be added to each message. Possible values
+        /// include: 'MULTIJSON', 'JSON', 'CSV', 'TSV', 'SCSV', 'SOHSV', 'PSV',
+        /// 'TXT', 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE', 'PARQUET', 'ORC',
+        /// 'APACHEAVRO', 'W3CLOGFILE'</param>
+        /// <param name="ignoreFirstRecord">A Boolean value that, if set to
+        /// true, indicates that ingestion should ignore the first record of
+        /// every file</param>
+        /// <param name="blobStorageEventType">The name of blob storage event
+        /// type to process. Possible values include:
+        /// 'Microsoft.Storage.BlobCreated',
+        /// 'Microsoft.Storage.BlobRenamed'</param>
+        public EventGridDataConnection(string storageAccountResourceId, string eventHubResourceId, string consumerGroup, string id = default(string), string name = default(string), string type = default(string), string location = default(string), string tableName = default(string), string mappingRuleName = default(string), string dataFormat = default(string), bool? ignoreFirstRecord = default(bool?), string blobStorageEventType = default(string))
             : base(id, name, type, location)
         {
             StorageAccountResourceId = storageAccountResourceId;
@@ -65,6 +72,8 @@ namespace Microsoft.Azure.Management.Kusto.Models
             TableName = tableName;
             MappingRuleName = mappingRuleName;
             DataFormat = dataFormat;
+            IgnoreFirstRecord = ignoreFirstRecord;
+            BlobStorageEventType = blobStorageEventType;
             CustomInit();
         }
 
@@ -111,10 +120,26 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// Gets or sets the data format of the message. Optionally the data
         /// format can be added to each message. Possible values include:
         /// 'MULTIJSON', 'JSON', 'CSV', 'TSV', 'SCSV', 'SOHSV', 'PSV', 'TXT',
-        /// 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE', 'PARQUET', 'ORC'
+        /// 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE', 'PARQUET', 'ORC',
+        /// 'APACHEAVRO', 'W3CLOGFILE'
         /// </summary>
         [JsonProperty(PropertyName = "properties.dataFormat")]
         public string DataFormat { get; set; }
+
+        /// <summary>
+        /// Gets or sets a Boolean value that, if set to true, indicates that
+        /// ingestion should ignore the first record of every file
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.ignoreFirstRecord")]
+        public bool? IgnoreFirstRecord { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of blob storage event type to process.
+        /// Possible values include: 'Microsoft.Storage.BlobCreated',
+        /// 'Microsoft.Storage.BlobRenamed'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.blobStorageEventType")]
+        public string BlobStorageEventType { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -135,14 +160,6 @@ namespace Microsoft.Azure.Management.Kusto.Models
             if (ConsumerGroup == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ConsumerGroup");
-            }
-            if (TableName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "TableName");
-            }
-            if (DataFormat == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "DataFormat");
             }
         }
     }

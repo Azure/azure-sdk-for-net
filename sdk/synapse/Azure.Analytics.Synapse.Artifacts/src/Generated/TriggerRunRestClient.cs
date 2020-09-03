@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
         public TriggerRunRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2019-06-01-preview")
         {
             if (endpoint == null)
@@ -60,6 +60,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath("/rerun", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -67,6 +68,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="runId"> The pipeline run identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> or <paramref name="runId"/> is null. </exception>
         public async Task<Response> RerunTriggerInstanceAsync(string triggerName, string runId, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
@@ -93,6 +95,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="runId"> The pipeline run identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> or <paramref name="runId"/> is null. </exception>
         public Response RerunTriggerInstance(string triggerName, string runId, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
@@ -115,6 +118,78 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
+        internal HttpMessage CreateCancelTriggerInstanceRequest(string triggerName, string runId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendPath("/triggers/", false);
+            uri.AppendPath(triggerName, true);
+            uri.AppendPath("/triggerRuns/", false);
+            uri.AppendPath(runId, true);
+            uri.AppendPath("/cancel", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Cancel single trigger instance by runId. </summary>
+        /// <param name="triggerName"> The trigger name. </param>
+        /// <param name="runId"> The pipeline run identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> or <paramref name="runId"/> is null. </exception>
+        public async Task<Response> CancelTriggerInstanceAsync(string triggerName, string runId, CancellationToken cancellationToken = default)
+        {
+            if (triggerName == null)
+            {
+                throw new ArgumentNullException(nameof(triggerName));
+            }
+            if (runId == null)
+            {
+                throw new ArgumentNullException(nameof(runId));
+            }
+
+            using var message = CreateCancelTriggerInstanceRequest(triggerName, runId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Cancel single trigger instance by runId. </summary>
+        /// <param name="triggerName"> The trigger name. </param>
+        /// <param name="runId"> The pipeline run identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> or <paramref name="runId"/> is null. </exception>
+        public Response CancelTriggerInstance(string triggerName, string runId, CancellationToken cancellationToken = default)
+        {
+            if (triggerName == null)
+            {
+                throw new ArgumentNullException(nameof(triggerName));
+            }
+            if (runId == null)
+            {
+                throw new ArgumentNullException(nameof(runId));
+            }
+
+            using var message = CreateCancelTriggerInstanceRequest(triggerName, runId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateQueryTriggerRunsByWorkspaceRequest(RunFilterParameters filterParameters)
         {
             var message = _pipeline.CreateMessage();
@@ -126,6 +201,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(filterParameters);
             request.Content = content;
@@ -135,6 +211,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Query trigger runs. </summary>
         /// <param name="filterParameters"> Parameters to filter the pipeline run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="filterParameters"/> is null. </exception>
         public async Task<Response<TriggerRunsQueryResponse>> QueryTriggerRunsByWorkspaceAsync(RunFilterParameters filterParameters, CancellationToken cancellationToken = default)
         {
             if (filterParameters == null)
@@ -150,14 +227,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         TriggerRunsQueryResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TriggerRunsQueryResponse.DeserializeTriggerRunsQueryResponse(document.RootElement);
-                        }
+                        value = TriggerRunsQueryResponse.DeserializeTriggerRunsQueryResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -168,6 +238,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Query trigger runs. </summary>
         /// <param name="filterParameters"> Parameters to filter the pipeline run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="filterParameters"/> is null. </exception>
         public Response<TriggerRunsQueryResponse> QueryTriggerRunsByWorkspace(RunFilterParameters filterParameters, CancellationToken cancellationToken = default)
         {
             if (filterParameters == null)
@@ -183,14 +254,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         TriggerRunsQueryResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TriggerRunsQueryResponse.DeserializeTriggerRunsQueryResponse(document.RootElement);
-                        }
+                        value = TriggerRunsQueryResponse.DeserializeTriggerRunsQueryResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

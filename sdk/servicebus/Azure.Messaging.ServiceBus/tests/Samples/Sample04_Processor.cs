@@ -65,7 +65,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     Console.WriteLine(body);
 
                     // we can evaluate application logic and use that to determine how to settle the message.
-                    await args.CompleteAsync(args.Message);
+                    await args.CompleteMessageAsync(args.Message);
                     tcs.SetResult(true);
                 }
 

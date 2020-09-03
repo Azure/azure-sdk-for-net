@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static ActivityRunsQueryResponse DeserializeActivityRunsQueryResponse(JsonElement element)
         {
             IReadOnlyList<ActivityRun> value = default;
-            string continuationToken = default;
+            Optional<string> continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -24,29 +24,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<ActivityRun> array = new List<ActivityRun>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ActivityRun.DeserializeActivityRun(item));
-                        }
+                        array.Add(ActivityRun.DeserializeActivityRun(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("continuationToken"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     continuationToken = property.Value.GetString();
                     continue;
                 }
             }
-            return new ActivityRunsQueryResponse(value, continuationToken);
+            return new ActivityRunsQueryResponse(value, continuationToken.Value);
         }
     }
 }

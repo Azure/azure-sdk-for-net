@@ -54,27 +54,13 @@ namespace Azure.Management.Network
         P2SVpnConnectionHealth IOperationSource<P2SVpnConnectionHealth>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return P2SVpnConnectionHealth.DeserializeP2SVpnConnectionHealth(document.RootElement);
-            }
+            return P2SVpnConnectionHealth.DeserializeP2SVpnConnectionHealth(document.RootElement);
         }
 
         async ValueTask<P2SVpnConnectionHealth> IOperationSource<P2SVpnConnectionHealth>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return P2SVpnConnectionHealth.DeserializeP2SVpnConnectionHealth(document.RootElement);
-            }
+            return P2SVpnConnectionHealth.DeserializeP2SVpnConnectionHealth(document.RootElement);
         }
     }
 }

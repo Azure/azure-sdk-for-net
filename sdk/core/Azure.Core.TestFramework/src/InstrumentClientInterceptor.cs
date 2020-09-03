@@ -26,7 +26,9 @@ namespace Azure.Core.TestFramework
             }
 
             var type = result.GetType();
-            if (type.Name.EndsWith("Client"))
+            if (type.Name.EndsWith("Client") ||
+                // Generated ARM clients will have a property containing the subclient that ends with Operations.
+                (invocation.Method.Name.StartsWith("get_") && type.Name.EndsWith("Operations")))
             {
                 invocation.ReturnValue = _testBase.InstrumentClient(type, result, Array.Empty<IInterceptor>());
             }

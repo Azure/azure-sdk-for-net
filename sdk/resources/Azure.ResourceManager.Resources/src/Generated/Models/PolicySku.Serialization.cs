@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
-            if (Tier != null)
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier");
                 writer.WriteStringValue(Tier);
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Resources.Models
         internal static PolicySku DeserializePolicySku(JsonElement element)
         {
             string name = default;
-            string tier = default;
+            Optional<string> tier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -38,15 +38,11 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("tier"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     tier = property.Value.GetString();
                     continue;
                 }
             }
-            return new PolicySku(name, tier);
+            return new PolicySku(name, tier.Value);
         }
     }
 }

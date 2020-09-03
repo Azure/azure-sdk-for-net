@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type");
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("value");
             writer.WriteStringValue(Value);
             writer.WriteEndObject();
@@ -24,13 +24,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static Expression DeserializeExpression(JsonElement element)
         {
-            string type = default;
+            ExpressionType type = default;
             string value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ExpressionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("value"))
