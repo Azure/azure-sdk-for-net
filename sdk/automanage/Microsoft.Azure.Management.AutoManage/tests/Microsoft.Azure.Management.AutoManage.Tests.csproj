@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(RepoEngPath)/mgmt/AzSdk.test.reference.props" />
-  <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-  </PropertyGroup>
+   <PropertyGroup>
+	<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
+   </PropertyGroup>
   <PropertyGroup>
     <PackageId>Automanage.Tests</PackageId>
     <Description>Automanage.Tests Class Library</Description>
