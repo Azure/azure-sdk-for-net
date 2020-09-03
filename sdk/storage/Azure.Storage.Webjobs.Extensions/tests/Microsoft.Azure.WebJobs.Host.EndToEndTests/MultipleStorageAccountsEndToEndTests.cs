@@ -51,6 +51,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 return result;
             });
 
+            // TODO (kasobol-msft) this test intermitently shows empty blob - how ??
             string data = await resultBlob.DownloadTextAsync();
             Assert.Equal("blob1", resultBlob.Name);
             Assert.Equal(TestData, data);

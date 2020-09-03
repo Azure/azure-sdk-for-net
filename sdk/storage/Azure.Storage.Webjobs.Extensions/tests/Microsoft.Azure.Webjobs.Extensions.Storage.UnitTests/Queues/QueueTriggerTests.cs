@@ -535,7 +535,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
             // Assert
             Assert.NotNull(result);
-            Assert.Same(expectedContents, result.MessageText);
+            Assert.Equal(expectedContents, result.MessageText);
         }
 
         [Fact]

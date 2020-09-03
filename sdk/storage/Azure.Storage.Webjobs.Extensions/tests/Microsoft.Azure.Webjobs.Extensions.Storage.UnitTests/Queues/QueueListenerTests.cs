@@ -22,6 +22,7 @@ using Xunit;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
 using Azure;
+using Azure.Core.TestFramework;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
 {
@@ -556,8 +557,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
         {
             var cancellationToken = new CancellationToken();
             bool queueExists = false;
-            _mockQueue.Setup(p => p.ExistsAsync(It.IsAny<CancellationToken>())).ReturnsAsync(() => Response.FromValue(queueExists, null));
-            _mockQueue.Setup(p => p.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), cancellationToken)).ReturnsAsync(Response.FromValue(new QueueMessage[0], null));
+            _mockQueue.Setup(p => p.ExistsAsync(It.IsAny<CancellationToken>()))
+                .ReturnsAsync(() => Response.FromValue(queueExists, new MockResponse(queueExists ? 200 : 404)));
+            _mockQueue.Setup(p => p.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), cancellationToken))
+                .ReturnsAsync(Response.FromValue(new QueueMessage[0], new MockResponse(200)));
 
             int numIterations = 5;
             int numFailedExistenceChecks = 2;
