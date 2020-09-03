@@ -10,7 +10,7 @@
       "generate_script_path": "./eng/tools/sdk_generate" // Param: <path_to_generate_input.json> <path_to_generate_output.json>
       "parse_generate_output": false,
    },
-    "build_options": {
+    "package_options": {
       "package_folder_from_generation_output": false,
       "package_folder_search_regex": ".*\.sln", // Skip this field if package_folder_from_generation_output is true
       // Will skip build_script if it's not present
