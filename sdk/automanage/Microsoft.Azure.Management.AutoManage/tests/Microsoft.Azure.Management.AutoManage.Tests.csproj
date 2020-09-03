@@ -8,7 +8,6 @@
     <Description>AutoManage.Tests Class Library</Description>
     <AssemblyName>AutoManage.Tests</AssemblyName>
     <VersionPrefix>1.0.0</VersionPrefix>
-    <PackageTags>AutoManagement;AutoManaged</PackageTags>
     <RootNamespace>Microsoft.Azure.Management.AutoManage.Tests</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
