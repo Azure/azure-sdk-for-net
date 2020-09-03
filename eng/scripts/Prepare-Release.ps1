@@ -75,6 +75,20 @@ function Get-LevenshteinDistance {
     }
 }
 
+function Get-ReleaseDay($baseDate)
+{
+    # Find first friday
+    while ($baseDate.DayOfWeek -ne 5)
+    {
+        $baseDate = $baseDate.AddDays(1)
+    }
+    
+    # Go to Tuesday
+    $baseDate = $baseDate.AddDays(4)
+
+    return $baseDate;
+}
+
 $ErrorPreference = 'Stop'
 $repoRoot = Resolve-Path "$PSScriptRoot/../..";
 
@@ -170,17 +184,23 @@ Write-Host "Detected released type $releaseType" -ForegroundColor Green
 if (!$ReleaseDate)
 {
     $currentDate = Get-Date
-    if ($currentDate.Day -gt 15)
+    $thisMonthReleaseDate = Get-ReleaseDay((Get-Date -Day 1));
+    $nextMonthReleaseDate = Get-ReleaseDay((Get-Date -Day 1).AddMonths(1));
+    
+    if ($thisMonthReleaseDate -ge $currentDate)
     {
-        $ParsedReleaseDate = (Get-Date -Day 1).AddMonths(1)
-        while ($ParsedReleaseDate.DayOfWeek -ne 5)
-        {
-            $ParsedReleaseDate = $ParsedReleaseDate.AddDays(1)
-        }
+        # On track for this month release
+        $ParsedReleaseDate = $thisMonthReleaseDate
     }
-    else
+    elseif ($currentDate.Day -lt 15)
     {
+        # Catching up to this month release
         $ParsedReleaseDate = $currentDate
+    }
+    else 
+    {
+        # Next month release
+        $ParsedReleaseDate = $nextMonthReleaseDate
     }
 }
 else
