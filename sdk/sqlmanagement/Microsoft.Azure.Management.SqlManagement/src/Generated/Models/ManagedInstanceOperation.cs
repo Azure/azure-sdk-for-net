@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// cancelled.</param>
         /// <param name="operationParameters">The operation parameters.</param>
         /// <param name="operationSteps">The operation steps.</param>
-        public ManagedInstanceOperation(string id = default(string), string name = default(string), string type = default(string), string managedInstanceName = default(string), string operation = default(string), string operationFriendlyName = default(string), int? percentComplete = default(int?), System.DateTime? startTime = default(System.DateTime?), string state = default(string), int? errorCode = default(int?), string errorDescription = default(string), int? errorSeverity = default(int?), bool? isUserError = default(bool?), System.DateTime? estimatedCompletionTime = default(System.DateTime?), string description = default(string), bool? isCancellable = default(bool?), ManagedInstanceOperationParametersPair operationParameters = default(ManagedInstanceOperationParametersPair), ManagedInstanceOperationSteps operationSteps = default(ManagedInstanceOperationSteps))
+        public ManagedInstanceOperation(string id = default(string), string name = default(string), string type = default(string), string managedInstanceName = default(string), string operation = default(string), string operationFriendlyName = default(string), int? percentComplete = default(int?), System.DateTime? startTime = default(System.DateTime?), ManagementOperationState? state = default(ManagementOperationState?), int? errorCode = default(int?), string errorDescription = default(string), int? errorSeverity = default(int?), bool? isUserError = default(bool?), System.DateTime? estimatedCompletionTime = default(System.DateTime?), string description = default(string), bool? isCancellable = default(bool?), ManagedInstanceOperationParametersPair operationParameters = default(ManagedInstanceOperationParametersPair), ManagedInstanceOperationSteps operationSteps = default(ManagedInstanceOperationSteps))
             : base(id, name, type)
         {
             ManagedInstanceName = managedInstanceName;
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'Cancelled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.state")]
-        public string State { get; private set; }
+        public ManagementOperationState? State { get; private set; }
 
         /// <summary>
         /// Gets the operation error code.

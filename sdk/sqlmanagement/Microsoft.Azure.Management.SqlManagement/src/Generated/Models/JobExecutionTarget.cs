@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'SqlServer'</param>
         /// <param name="serverName">The server name.</param>
         /// <param name="databaseName">The database name.</param>
-        public JobExecutionTarget(string type = default(string), string serverName = default(string), string databaseName = default(string))
+        public JobExecutionTarget(JobTargetType? type = default(JobTargetType?), string serverName = default(string), string databaseName = default(string))
         {
             Type = type;
             ServerName = serverName;
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'SqlServer'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
+        public JobTargetType? Type { get; private set; }
 
         /// <summary>
         /// Gets the server name.

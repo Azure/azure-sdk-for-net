@@ -86,11 +86,11 @@ namespace Sql.Tests
                     storageContainerInfo.StorageContainerUri, dbName);
 
                 // Export database to bacpac
-                sqlClient.Databases.Export(resourceGroup.Name, server.Name, dbName, new ExportRequest()
+                sqlClient.Databases.Export(resourceGroup.Name, server.Name, dbName, new ExportDatabaseDefinition()
                 {
                     AdministratorLogin = login,
                     AdministratorLoginPassword = password,
-                    AuthenticationType = AuthenticationType.SQL,
+                    AuthenticationType = AuthenticationType.SQL.ToString(),
                     StorageKey = storageContainerInfo.StorageAccountKey,
                     StorageKeyType = StorageKeyType.StorageAccessKey,
                     StorageUri = exportBacpacLink
@@ -100,11 +100,11 @@ namespace Sql.Tests
                 if (preexistingDatabase)
                 {
                     // Import bacpac to existing database
-                    sqlClient.Databases.CreateImportOperation(resourceGroup.Name, server.Name, dbName2, new ImportExtensionRequest()
+                    sqlClient.ImportExport.Import(resourceGroup.Name, server.Name, dbName2, new ImportExistingDatabaseDefinition()
                     {
                         AdministratorLogin = login,
                         AdministratorLoginPassword = password,
-                        AuthenticationType = AuthenticationType.SQL,
+                        AuthenticationType = AuthenticationType.SQL.ToString(),
                         StorageKey = storageContainerInfo.StorageAccountKey,
                         StorageKeyType = StorageKeyType.StorageAccessKey,
                         StorageUri = exportBacpacLink
@@ -112,11 +112,11 @@ namespace Sql.Tests
                 }
                 else
                 {
-                    sqlClient.Databases.Import(resourceGroup.Name, server.Name, new ImportRequest()
+                    sqlClient.Servers.ImportDatabase(resourceGroup.Name, server.Name, new ImportNewDatabaseDefinition()
                     {
                         AdministratorLogin = login,
                         AdministratorLoginPassword = password,
-                        AuthenticationType = AuthenticationType.SQL,
+                        AuthenticationType = AuthenticationType.SQL.ToString(),
                         StorageKey = storageContainerInfo.StorageAccountKey,
                         StorageKeyType = StorageKeyType.StorageAccessKey,
                         StorageUri = exportBacpacLink,

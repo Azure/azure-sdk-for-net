@@ -10,13 +10,96 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for SyncConflictResolutionPolicy.
     /// </summary>
-    public static class SyncConflictResolutionPolicy
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(SyncConflictResolutionPolicyConverter))]
+    public struct SyncConflictResolutionPolicy : System.IEquatable<SyncConflictResolutionPolicy>
     {
-        public const string HubWin = "HubWin";
-        public const string MemberWin = "MemberWin";
+        private SyncConflictResolutionPolicy(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly SyncConflictResolutionPolicy HubWin = "HubWin";
+
+        public static readonly SyncConflictResolutionPolicy MemberWin = "MemberWin";
+
+
+        /// <summary>
+        /// Underlying value of enum SyncConflictResolutionPolicy
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for SyncConflictResolutionPolicy
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type SyncConflictResolutionPolicy
+        /// </summary>
+        public bool Equals(SyncConflictResolutionPolicy e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to SyncConflictResolutionPolicy
+        /// </summary>
+        public static implicit operator SyncConflictResolutionPolicy(string value)
+        {
+            return new SyncConflictResolutionPolicy(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert SyncConflictResolutionPolicy to string
+        /// </summary>
+        public static implicit operator string(SyncConflictResolutionPolicy e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum SyncConflictResolutionPolicy
+        /// </summary>
+        public static bool operator == (SyncConflictResolutionPolicy e1, SyncConflictResolutionPolicy e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum SyncConflictResolutionPolicy
+        /// </summary>
+        public static bool operator != (SyncConflictResolutionPolicy e1, SyncConflictResolutionPolicy e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for SyncConflictResolutionPolicy
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is SyncConflictResolutionPolicy && Equals((SyncConflictResolutionPolicy)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode SyncConflictResolutionPolicy
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

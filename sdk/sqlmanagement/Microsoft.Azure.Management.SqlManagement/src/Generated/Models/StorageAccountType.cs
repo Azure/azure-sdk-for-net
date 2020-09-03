@@ -10,14 +10,98 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for StorageAccountType.
     /// </summary>
-    public static class StorageAccountType
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(StorageAccountTypeConverter))]
+    public struct StorageAccountType : System.IEquatable<StorageAccountType>
     {
-        public const string GRS = "GRS";
-        public const string LRS = "LRS";
-        public const string ZRS = "ZRS";
+        private StorageAccountType(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly StorageAccountType GRS = "GRS";
+
+        public static readonly StorageAccountType LRS = "LRS";
+
+        public static readonly StorageAccountType ZRS = "ZRS";
+
+
+        /// <summary>
+        /// Underlying value of enum StorageAccountType
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for StorageAccountType
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type StorageAccountType
+        /// </summary>
+        public bool Equals(StorageAccountType e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to StorageAccountType
+        /// </summary>
+        public static implicit operator StorageAccountType(string value)
+        {
+            return new StorageAccountType(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert StorageAccountType to string
+        /// </summary>
+        public static implicit operator string(StorageAccountType e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum StorageAccountType
+        /// </summary>
+        public static bool operator == (StorageAccountType e1, StorageAccountType e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum StorageAccountType
+        /// </summary>
+        public static bool operator != (StorageAccountType e1, StorageAccountType e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for StorageAccountType
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is StorageAccountType && Equals((StorageAccountType)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode StorageAccountType
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

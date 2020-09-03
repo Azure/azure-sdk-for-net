@@ -11,50 +11,95 @@
 namespace Microsoft.Azure.Management.Sql.Models
 {
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for StorageKeyType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum StorageKeyType
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(StorageKeyTypeConverter))]
+    public struct StorageKeyType : System.IEquatable<StorageKeyType>
     {
-        [EnumMember(Value = "StorageAccessKey")]
-        StorageAccessKey,
-        [EnumMember(Value = "SharedAccessKey")]
-        SharedAccessKey
-    }
-    internal static class StorageKeyTypeEnumExtension
-    {
-        internal static string ToSerializedValue(this StorageKeyType? value)
+        private StorageKeyType(string underlyingValue)
         {
-            return value == null ? null : ((StorageKeyType)value).ToSerializedValue();
+            UnderlyingValue=underlyingValue;
         }
 
-        internal static string ToSerializedValue(this StorageKeyType value)
+        public static readonly StorageKeyType SharedAccessKey = "SharedAccessKey";
+
+        public static readonly StorageKeyType StorageAccessKey = "StorageAccessKey";
+
+
+        /// <summary>
+        /// Underlying value of enum StorageKeyType
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for StorageKeyType
+        /// </summary>
+        public override string ToString()
         {
-            switch( value )
-            {
-                case StorageKeyType.StorageAccessKey:
-                    return "StorageAccessKey";
-                case StorageKeyType.SharedAccessKey:
-                    return "SharedAccessKey";
-            }
-            return null;
+            return UnderlyingValue.ToString();
         }
 
-        internal static StorageKeyType? ParseStorageKeyType(this string value)
+        /// <summary>
+        /// Compares enums of type StorageKeyType
+        /// </summary>
+        public bool Equals(StorageKeyType e)
         {
-            switch( value )
-            {
-                case "StorageAccessKey":
-                    return StorageKeyType.StorageAccessKey;
-                case "SharedAccessKey":
-                    return StorageKeyType.SharedAccessKey;
-            }
-            return null;
+            return UnderlyingValue.Equals(e.UnderlyingValue);
         }
+
+        /// <summary>
+        /// Implicit operator to convert string to StorageKeyType
+        /// </summary>
+        public static implicit operator StorageKeyType(string value)
+        {
+            return new StorageKeyType(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert StorageKeyType to string
+        /// </summary>
+        public static implicit operator string(StorageKeyType e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum StorageKeyType
+        /// </summary>
+        public static bool operator == (StorageKeyType e1, StorageKeyType e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum StorageKeyType
+        /// </summary>
+        public static bool operator != (StorageKeyType e1, StorageKeyType e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for StorageKeyType
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is StorageKeyType && Equals((StorageKeyType)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode StorageKeyType
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }
