@@ -1,6 +1,6 @@
 # Release History
 
-## 1.5.0 (2020-08-28)
+## 1.5.0 (2020-09-03)
 
 ### Changed
 - `ETag` now supports weak ETags and implements an overload for `ToString` that accepts a format string.
