@@ -4,6 +4,15 @@
 
 ### Added
 - `JsonPatchDocument` type to represent JSON Path document.
+- `BinaryData`: FromString method.
+- `BinaryData`: FromBytes method taking ReadOnlySpan.
+- `BinaryData`: constructor taking ReadOnlyMemory.
+
+### Breaking Changes
+- `BinaryData`: Renamed `Serialize` to `FromObject`.
+- `BinaryData`: Renamed `Deserialize` to `ToObject`.
+- `BinaryData`: Renamed `FromMemory` to `FromBytes`.
+- `JsonPatchDocument` type to represent JSON Path document.
 
 ## 0.1.0-preview.4 (2020-08-18)
 
