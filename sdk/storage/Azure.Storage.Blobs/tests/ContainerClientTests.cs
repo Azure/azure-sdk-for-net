@@ -1005,6 +1005,18 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public void BlobAccessPolicyNullStartsOnExpiresOnTest()
+        {
+            BlobAccessPolicy accessPolicy = new BlobAccessPolicy()
+            {
+                Permissions = "rw"
+            };
+
+            Assert.AreEqual(new DateTimeOffset(), accessPolicy.StartsOn);
+            Assert.AreEqual(new DateTimeOffset(), accessPolicy.ExpiresOn);
+        }
+
+        [Test]
         public async Task SetAccessPolicyAsync_OldProperties()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
