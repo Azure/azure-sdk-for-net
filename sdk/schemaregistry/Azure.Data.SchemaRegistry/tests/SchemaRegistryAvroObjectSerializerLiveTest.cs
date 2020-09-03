@@ -1,7 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Data.SchemaRegistry.Avro;
+using NUnit.Framework;
+using TestSchema;
 
 namespace Azure.Data.SchemaRegistry.Tests
 {
@@ -21,85 +27,22 @@ namespace Azure.Data.SchemaRegistry.Tests
             ));
         }
 
-        //        [Test]
-        //        public async Task CanRegisterSchema()
-        //        {
-        //            var client = CreateClient();
-        //            var schemaName = "test1";
-        //            var groupName = "miyanni_srgroup";
-        //            var schemaType = SerializationType.Avro;
-        //            var schema = @"
-        //{
-        //   ""type"" : ""record"",
-        //    ""namespace"" : ""TestSchema"",
-        //    ""name"" : ""Employee"",
-        //    ""fields"" : [
-        //    { ""name"" : ""Name"" , ""type"" : ""string"" },
-        //    { ""name"" : ""Age"", ""type"" : ""int"" }
-        //    ]
-        //}";
+        [Test]
+        public async Task CanSerializeAndDeserialize()
+        {
+            var client = CreateClient();
+            var groupName = "miyanni_srgroup";
+            var employee = new Employee { Age = 42, Name = "Caketown" };
 
-        //            var schemaProperties = await client.RegisterSchemaAsync(groupName, schemaName, schemaType, schema);
-        //            Assert.IsNotNull(schemaProperties.Value);
-        //            Assert.IsNotNull(schemaProperties.Value.Id);
-        //            Assert.IsTrue(Guid.TryParse(schemaProperties.Value.Id, out Guid _));
-        //            Assert.AreEqual(schema, schemaProperties.Value.Content);
-        //        }
+            var memoryStream = new MemoryStream();
+            var serializer = new SchemaRegistryAvroObjectSerializer(client, groupName, new SchemaRegistryAvroObjectSerializerOptions { AutoRegisterSchemas = true });
+            await serializer.SerializeAsync(memoryStream, employee, typeof(Employee), CancellationToken.None);
 
-
-        //        [Test]
-        //        public async Task CanGetSchemaId()
-        //        {
-        //            var client = CreateClient();
-        //            var schemaName = "test1";
-        //            var groupName = "miyanni_srgroup";
-        //            var schemaType = SerializationType.Avro;
-        //            var schema = @"
-        //{
-        //   ""type"" : ""record"",
-        //    ""namespace"" : ""TestSchema"",
-        //    ""name"" : ""Employee"",
-        //    ""fields"" : [
-        //    { ""name"" : ""Name"" , ""type"" : ""string"" },
-        //    { ""name"" : ""Age"", ""type"" : ""int"" }
-        //    ]
-        //}";
-
-        //            await client.RegisterSchemaAsync(groupName, schemaName, schemaType, schema);
-        //            var schemaProperties = await client.GetSchemaIdAsync(groupName, schemaName, schemaType, schema);
-        //            Assert.IsNotNull(schemaProperties.Value);
-        //            Assert.IsNotNull(schemaProperties.Value.Id);
-        //            Assert.IsTrue(Guid.TryParse(schemaProperties.Value.Id, out Guid _));
-        //            Assert.AreEqual(schema, schemaProperties.Value.Content);
-        //        }
-
-        //        [Test]
-        //        public async Task CanGetSchema()
-        //        {
-        //            var client = CreateClient();
-        //            var schemaName = "test1";
-        //            var groupName = "miyanni_srgroup";
-        //            var schemaType = SerializationType.Avro;
-        //            var schema = @"
-        //{
-        //   ""type"" : ""record"",
-        //    ""namespace"" : ""TestSchema"",
-        //    ""name"" : ""Employee"",
-        //    ""fields"" : [
-        //    { ""name"" : ""Name"" , ""type"" : ""string"" },
-        //    { ""name"" : ""Age"", ""type"" : ""int"" }
-        //    ]
-        //}";
-
-        //            var registerProperties = await client.RegisterSchemaAsync(groupName, schemaName, schemaType, schema);
-        //            Assert.IsNotNull(registerProperties.Value.Id);
-        //            Assert.IsTrue(Guid.TryParse(registerProperties.Value.Id, out Guid _));
-
-        //            var schemaProperties = await client.GetSchemaAsync(registerProperties.Value.Id);
-        //            Assert.IsNotNull(schemaProperties.Value);
-        //            Assert.IsNotNull(schemaProperties.Value.Id);
-        //            Assert.IsTrue(Guid.TryParse(schemaProperties.Value.Id, out Guid _));
-        //            Assert.AreEqual(schema, schemaProperties.Value.Content);
-        //        }
+            var deserializedObject = await serializer.DeserializeAsync(memoryStream, typeof(Employee), CancellationToken.None);
+            var readEmployee = deserializedObject as Employee;
+            Assert.IsNotNull(readEmployee);
+            Assert.AreEqual("Caketown", readEmployee.Name);
+            Assert.AreEqual(42, readEmployee.Age);
+        }
     }
 }
