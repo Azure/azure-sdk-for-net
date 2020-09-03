@@ -240,7 +240,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
             ServiceBusClient client = new ServiceBusClient(fakeConnection);
             Assert.AreEqual("not-real.servicebus.windows.net", client.FullyQualifiedNamespace);
             Assert.IsNotNull(client.Identifier);
-            Assert.IsFalse(client.IsDisposed);
+            Assert.IsFalse(client.IsClosed);
         }
 
         /// <summary>

@@ -16,22 +16,15 @@ namespace Azure.AI.TextAnalytics
     [CodeGenModel("LinkedEntity")]
     public readonly partial struct LinkedEntity
     {
-        /// <summary>
-        /// Gets the URL that identifies the linked entity's entry in the data source.
-        /// </summary>
-        [CodeGenMember("Url")]
-        private string _url { get; }
-
-        internal LinkedEntity(string name, IEnumerable<LinkedEntityMatch> matches, string language, string dataSourceEntityId, string url, string dataSource, string bingId)
+        internal LinkedEntity(string name, IEnumerable<LinkedEntityMatch> matches, string language, string dataSourceEntityId, Uri url, string dataSource, string bingEntitySearchApiId)
         {
             Name = name;
             DataSourceEntityId = dataSourceEntityId;
             Language = language;
             DataSource = dataSource;
-            _url = url;
-            Url = new Uri(url);
+            Url = url;
             Matches = matches;
-            BingId = bingId;
+            BingEntitySearchApiId = bingEntitySearchApiId;
         }
 
         /// <summary>
@@ -58,6 +51,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Gets the URL that identifies the linked entity's entry in the data source.
         /// </summary>
+        [CodeGenMember("Url")]
         public Uri Url { get; }
 
         /// <summary>
@@ -66,7 +60,11 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         public IEnumerable<LinkedEntityMatch> Matches { get; }
 
-        /// <summary> Bing unique identifier of the recognized entity. Use in conjunction with the Bing Entity Search API to fetch additional relevant information. </summary>
-        private string BingId { get; }
+        /// <summary> Bing Entity Search API unique identifier of the recognized entity.
+        /// Use in conjunction with the Bing Entity Search API to fetch additional relevant information.
+        /// This property is only available for v3.1-preview.2 and up.
+        /// </summary>
+        [CodeGenMember("BingId")]
+        public string BingEntitySearchApiId { get; }
     }
 }

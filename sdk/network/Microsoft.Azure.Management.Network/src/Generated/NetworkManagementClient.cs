@@ -329,6 +329,11 @@ namespace Microsoft.Azure.Management.Network
         public virtual IVirtualApplianceSkusOperations VirtualApplianceSkus { get; private set; }
 
         /// <summary>
+        /// Gets the IInboundSecurityRuleOperations.
+        /// </summary>
+        public virtual IInboundSecurityRuleOperations InboundSecurityRule { get; private set; }
+
+        /// <summary>
         /// Gets the INetworkWatchersOperations.
         /// </summary>
         public virtual INetworkWatchersOperations NetworkWatchers { get; private set; }
@@ -884,6 +889,7 @@ namespace Microsoft.Azure.Management.Network
             NetworkVirtualAppliances = new NetworkVirtualAppliancesOperations(this);
             VirtualApplianceSites = new VirtualApplianceSitesOperations(this);
             VirtualApplianceSkus = new VirtualApplianceSkusOperations(this);
+            InboundSecurityRule = new InboundSecurityRuleOperations(this);
             NetworkWatchers = new NetworkWatchersOperations(this);
             PacketCaptures = new PacketCapturesOperations(this);
             ConnectionMonitors = new ConnectionMonitorsOperations(this);

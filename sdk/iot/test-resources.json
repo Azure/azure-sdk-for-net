@@ -133,7 +133,7 @@
             "type": "string",
             "value": "[concat('HostName=', reference(resourceId('Microsoft.Devices/IoTHubs', parameters('baseName')), '2020-03-01').hostName, ';SharedAccessKeyName=iothubowner;SharedAccessKey=', listKeys(resourceId('Microsoft.Devices/IotHubs', parameters('baseName')), '2020-03-01').value[0].primaryKey)]"
         },
-        "STORAGE_SAS_TOKEN":{
+        "storage_sas_token":{
           "type": "string",    
           "value": "[concat('https://',parameters('storageAccountName'),'.blob.core.windows.net/',parameters('blobContainerName'),'?',listServiceSas(variables('storageAccountId'), '2018-07-01', variables('serviceSasProperties')).serviceSasToken)]"
         }

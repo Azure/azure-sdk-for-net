@@ -160,6 +160,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             Assert.AreEqual(options.ReceiveMode, processor.ReceiveMode);
             Assert.AreEqual(options.MaxAutoLockRenewalDuration, processor.MaxAutoLockRenewalDuration);
             Assert.AreEqual(fullyQualifiedNamespace, processor.FullyQualifiedNamespace);
+            Assert.IsFalse(processor.IsClosed);
+            Assert.IsFalse(processor.IsProcessing);
         }
 
         [Test]
