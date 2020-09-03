@@ -2,7 +2,7 @@
 param(
     [Parameter(Mandatory=$true)]
     [string]$package,
-    $ReleaseDate
+    [string]$ReleaseDate
 )
 
 function Get-LevenshteinDistance {
@@ -172,24 +172,24 @@ if (!$ReleaseDate)
     $currentDate = Get-Date
     if ($currentDate.Day -gt 15)
     {
-        $ReleaseDate = (Get-Date -Day 1).AddMonths(1)
-        while ($ReleaseDate.DayOfWeek -ne 5)
+        $ParsedReleaseDate = (Get-Date -Day 1).AddMonths(1)
+        while ($ParsedReleaseDate.DayOfWeek -ne 5)
         {
-            $ReleaseDate = $ReleaseDate.AddDays(1)
+            $ParsedReleaseDate = $ParsedReleaseDate.AddDays(1)
         }
     }
     else
     {
-        $ReleaseDate = $currentDate
+        $ParsedReleaseDate = $currentDate
     }
 }
 else
 {
-    $ReleaseDate = [datetime]::ParseExact($ReleaseDate, 'yyyy-MM-dd', [Globalization.CultureInfo]::InvariantCulture)
+    $ParsedReleaseDate = [datetime]::ParseExact($ReleaseDate, 'yyyy-MM-dd', [Globalization.CultureInfo]::InvariantCulture)
 }
 
-$releaseDateString = $ReleaseDate.ToString("yyyy-MM-dd")
-$month = $ReleaseDate.ToString("MMMM")
+$releaseDateString = $ParsedReleaseDate.ToString("yyyy-MM-dd")
+$month = $ParsedReleaseDate.ToString("MMMM")
 
 Write-Host
 Write-Host "Assuming release is in $month with release date $releaseDateString" -ForegroundColor Green
@@ -197,7 +197,7 @@ Write-Host "Assuming release is in $month with release date $releaseDateString" 
 Write-Host
 Write-Host "Updating versions" -ForegroundColor Green
 
-& "$repoRoot\eng\scripts\Update-PkgVersion.ps1" -ServiceDirectory $serviceDirectory -PackageName $package -NewVersionString $newVersion  -ReleaseDate $releaseDateString
+& "$repoRoot\eng\scripts\Update-PkgVersion.ps1" -ServiceDirectory $serviceDirectory -PackageName $package -NewVersionString $newVersion -ReleaseDate $releaseDateString
 
 $commonParameter = @("--organization", "https://dev.azure.com/azure-sdk", "-o", "json", "--only-show-errors")
 
