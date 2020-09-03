@@ -14,13 +14,16 @@ description: Samples for the Azure.Data.Tables client library
 Description of Azure Tables. Covers following functions: 
 * Create and delete a table
   * Includes error handling
-* Create and delete entities
 * Query tables
+* Create and delete entities
 * Query entities
+* Authenticating the client
 
 You can find samples for each of this main functions below.
-To get started you'll need an Azure Tables endpoint and credentials. See Azure Tables Client Library [Readme][README] for more information and instructions.
+To get started you'll need an Azure Tables endpoint and credentials. See Azure Tables Client Library [Readme](../readme.md) for more information and instructions.
 
-- [Create/delete tables](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/samples/Sample1CreateDeleteTables.md)
-
-[README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/readme.md
+- [Create/delete tables](Sample1CreateDeleteTables.md)
+- [Query tables](Sample3QueryTables.md)
+- [Create/delete table entities](Sample2CreateDeleteEntities.md)
+- [Query table entities](Sample4QueryEntities.md)
+- [Auth](Sample0Auth.md): Authenticate with connection strings, shared keys, and shared access signatures0.

@@ -81,6 +81,12 @@ if (!(Get-Command az)) {
   throw 'You must have the Azure CLI installed: https://aka.ms/azure-cli'
 }
 
+az extension show -n azure-devops > $null
+
+if (!$?){
+  throw 'You must have the azure-devops extension run `az extension add --name azure-devops`'
+}
+
 . ${repoRoot}\eng\common\scripts\SemVer.ps1
 . ${repoRoot}\eng\common\scripts\ChangeLog-Operations.ps1
 
@@ -89,10 +95,17 @@ $serviceDirectory = $packageDirectory.Parent.Name
 
 Write-Host "Source directory $serviceDirectory"
 
-$existing = Invoke-WebRequest "https://api.nuget.org/v3-flatcontainer/$($package.ToLower())/index.json" | ConvertFrom-Json;
+try
+{
+    $existing = Invoke-WebRequest "https://api.nuget.org/v3-flatcontainer/$($package.ToLower())/index.json" | ConvertFrom-Json;
+}
+catch
+{
+    $existing = @()
+}
 
 $libraryType = "Preview";
-$latestVersion = "unknown";
+$latestVersion = $null;
 foreach ($existingVersion in $existing.versions)
 {
     $parsedVersion = [AzureEngSemanticVersion]::new($existingVersion)
@@ -106,8 +119,16 @@ foreach ($existingVersion in $existing.versions)
 
 $currentProjectVersion = ([xml](Get-Content "$packageDirectory/src/*.csproj")).Project.PropertyGroup.Version
 
-Write-Host
-Write-Host "Latest released version $latestVersion, library type $libraryType" -ForegroundColor Green
+if ($latestVersion)
+{
+    Write-Host
+    Write-Host "Latest released version $latestVersion, library type $libraryType" -ForegroundColor Green
+}
+else
+{
+    Write-Host
+    Write-Host "No released version, library type $libraryType" -ForegroundColor Green
+}
 
 $newVersion = Read-Host -Prompt "Input the new version or press Enter to use use current project version '$currentProjectVersion'"
 
@@ -116,23 +137,30 @@ if (!$newVersion)
     $newVersion = $currentProjectVersion;
 }
 
-$releaseType = "None";
-$parsedNewVersion = [AzureEngSemanticVersion]::new($newVersion)
-if ($parsedNewVersion.Major -ne $parsedVersion.Major)
+if ($latestVersion)
 {
-    $releaseType = "Major"
+    $releaseType = "None";
+    $parsedNewVersion = [AzureEngSemanticVersion]::new($newVersion)
+    if ($parsedNewVersion.Major -ne $parsedVersion.Major)
+    {
+        $releaseType = "Major"
+    }
+    elseif ($parsedNewVersion.Minor -ne $parsedVersion.Minor)
+    {
+        $releaseType = "Minor"
+    }
+    elseif ($parsedNewVersion.Patch -ne $parsedVersion.Patch)
+    {
+        $releaseType = "Bugfix"
+    }
+    elseif ($parsedNewVersion.IsPrerelease)
+    {
+        $releaseType = "Bugfix"
+    }
 }
-elseif ($parsedNewVersion.Minor -ne $parsedVersion.Minor)
+else
 {
-    $releaseType = "Minor"
-}
-elseif ($parsedNewVersion.Patch -ne $parsedVersion.Patch)
-{
-    $releaseType = "Bugfix"
-}
-elseif ($parsedNewVersion.IsPrerelease)
-{
-    $releaseType = "Bugfix"
+    $releaseType = "Major";
 }
 
 Write-Host
@@ -163,19 +191,27 @@ foreach ($item in $workItems)
     $id = $item.fields."System.ID";
     $title = $item.fields."System.Title";
     $path = $item.fields."System.IterationPath";
-    Write-Host "$id - $path - $title" 
+    Write-Host "$id - $path - $title"
 }
 
 # Sort using fuzzy match
 $workItems = $workItems | Sort-Object -property @{Expression = { Get-LevenshteinDistance $_.fields."System.Title" $package -NormalizeOutput }}
 $mostProbable = $workItems | Select-Object -Last 1
 
-$issueId = Read-Host -Prompt "Input the work item ID or press Enter to use '$($mostProbable.fields."System.ID") - $($mostProbable.fields."System.Title")'"
+$issueId = Read-Host -Prompt "Input the work item ID or press Enter to use '$($mostProbable.fields."System.ID") - $($mostProbable.fields."System.Title")' (fuzzy matched based on title)"
 
 if (!$issueId)
 {
     $issueId = $mostProbable.fields."System.ID"
 }
+
+$changeLogEntry = Get-ChangeLogEntry -ChangeLogLocation "$packageDirectory/CHANGELOG.md" -VersionString $newVersion
+
+$githubAnchor = $changeLogEntry.ReleaseTitle.Replace("## ", "").Replace(".", "").Replace("(", "").Replace(")", "").Replace(" ", "-")
+
+$notes = "> dotnet add package $package --version $newVersion`n`n";
+$notes += "### $package [Changelog](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/$serviceDirectory/$package/CHANGELOG.md#$githubAnchor)`n"
+$changeLogEntry.ReleaseContent | %{ $notes += "$_`n" }
 
 $fields = @{
     "Permalink usetag"="https://github.com/Azure/azure-sdk-for-net/sdk/$serviceDirectory/$package/README.md"
@@ -183,6 +219,7 @@ $fields = @{
     "Library Type"=$libraryType
     "Release Type"=$releaseType
     "Version Number"=$newVersion
+    "Notes"="<pre>"+$notes.Replace("`n", "<br>")+"</pre>"
 }
 
 Write-Host
@@ -204,12 +241,6 @@ if ($decision -eq 0)
     }
 }
 
-$changeLogEntry = Get-ChangeLogEntry -ChangeLogLocation "$packageDirectory/CHANGELOG.md" -VersionString $newVersion
-
-$githubAnchor = $changeLogEntry.ReleaseTitle.Replace("## ", "").Replace(".", "").Replace("(", "").Replace(")", "").Replace(" ", "-")
 Write-Host
 Write-Host "Snippet for the centralized CHANGELOG:" -ForegroundColor Green
-Write-Host "dotnet add package $package --version $newVersion"
-Write-Host "### $package [Changelog](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/$serviceDirectory/$package/CHANGELOG.md#$githubAnchor)"
-$changeLogEntry.ReleaseContent | Write-Host 
-
+Write-Host $notes

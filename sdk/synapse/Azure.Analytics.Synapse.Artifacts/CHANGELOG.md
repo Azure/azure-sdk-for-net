@@ -1,5 +1,9 @@
 # Release History
 
+## 1.0.0-preview.4 (2020-09-01)
+- Added test cases.
+- This release contains bug fixes to improve quality.
+
 ## 1.0.0-preview.3 (2020-08-18)
 
 ### Fixed

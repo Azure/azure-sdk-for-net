@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>This is the Microsoft Azure Synapse Analytics Artifacts client library</Description>
     <AssemblyTitle>Azure.Analytics.Synapse.Artifacts</AssemblyTitle>
-    <Version>1.0.0-preview.3</Version>
+    <Version>1.0.0-preview.4</Version>
     <PackageTags>Microsoft Azure Synapse Artifacts;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 
@@ -13,7 +13,6 @@
       <!-- Missing XML comment for publicly visible type or member  -->
       CS1591;
     </NoWarn>
-    <TemporaryUsePreviousGeneratorVersion>true</TemporaryUsePreviousGeneratorVersion>
   </PropertyGroup>
 
   <Import Project="..\..\Azure.Analytics.Synapse.Shared\src\Azure.Analytics.Synapse.Shared.projitems" Label="Shared" />

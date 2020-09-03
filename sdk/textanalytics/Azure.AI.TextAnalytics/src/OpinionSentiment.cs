@@ -15,12 +15,14 @@ namespace Azure.AI.TextAnalytics
     {
         private const double _neutralValue = 0d;
 
-        internal OpinionSentiment(TextSentiment sentiment, double positiveScore, double negativeScore, string text, bool isNegated)
+        internal OpinionSentiment(TextSentiment sentiment, double positiveScore, double negativeScore, string text, bool isNegated, int offset, int length)
         {
             Sentiment = sentiment;
             ConfidenceScores = new SentimentConfidenceScores(positiveScore, _neutralValue, negativeScore);
             Text = text;
             IsNegated = isNegated;
+            Offset = offset;
+            Length = length;
         }
 
         internal OpinionSentiment(SentenceOpinion opinion)
@@ -31,6 +33,8 @@ namespace Azure.AI.TextAnalytics
             ConfidenceScores = new SentimentConfidenceScores(opinion.ConfidenceScores.Positive, _neutralValue, opinion.ConfidenceScores.Negative);
             Sentiment = (TextSentiment)Enum.Parse(typeof(TextSentiment), opinion.Sentiment, ignoreCase: true);
             IsNegated = opinion.IsNegated;
+            Offset = opinion.Offset;
+            Length = opinion.Length;
         }
 
         /// <summary>
@@ -57,5 +61,15 @@ namespace Azure.AI.TextAnalytics
         /// "The food is not good", the opinion "good" is negated.
         /// </summary>
         public bool IsNegated { get; }
+
+        /// <summary>
+        /// Gets the starting position (in UTF-16 code units) for the opinion text.
+        /// </summary>
+        public int Offset { get; }
+
+        /// <summary>
+        /// Gets the length (in UTF-16 code units) of the opinion text.
+        /// </summary>
+        public int Length { get; }
     }
 }

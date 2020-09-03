@@ -38,7 +38,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 Assert.AreEqual(message.Body.ToString(), receivedMessage.Body.ToString());
 
                 await client.DisposeAsync();
-                Assert.IsTrue(client.IsDisposed);
+                Assert.IsTrue(client.IsClosed);
                 if (!useSessions)
                 {
                     Assert.Throws<ObjectDisposedException>(() => client.CreateReceiver(scope.QueueName));
