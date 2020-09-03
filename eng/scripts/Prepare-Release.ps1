@@ -1,7 +1,8 @@
 [CmdletBinding()]
 param(
     [Parameter(Mandatory=$true)]
-    $package
+    [string]$package,
+    $ReleaseDate
 )
 
 function Get-LevenshteinDistance {
@@ -166,19 +167,37 @@ else
 Write-Host
 Write-Host "Detected released type $releaseType" -ForegroundColor Green
 
+if (!$ReleaseDate)
+{
+    $currentDate = Get-Date
+    if ($currentDate.Day -gt 15)
+    {
+        $ReleaseDate = (Get-Date -Day 1).AddMonths(1)
+        while ($ReleaseDate.DayOfWeek -ne 5)
+        {
+            $ReleaseDate = $ReleaseDate.AddDays(1)
+        }
+    }
+    else
+    {
+        $ReleaseDate = $currentDate
+    }
+}
+else
+{
+    $ReleaseDate = [datetime]::ParseExact($ReleaseDate, 'yyyy-MM-dd', [Globalization.CultureInfo]::InvariantCulture)
+}
+
+$releaseDateString = $ReleaseDate.ToString("yyyy-MM-dd")
+$month = $ReleaseDate.ToString("MMMM")
+
+Write-Host
+Write-Host "Assuming release is in $month with release date $releaseDateString" -ForegroundColor Green
+
 Write-Host
 Write-Host "Updating versions" -ForegroundColor Green
 
-& "$repoRoot\eng\scripts\Update-PkgVersion.ps1" -ServiceDirectory $serviceDirectory -PackageName $package -NewVersionString $newVersion
-
-$date = Get-Date
-$month = $date.ToString("MMMM")
-if ($date.Day -gt 15)
-{
-    $month = $date.AddMonths(1).ToString("MMMM")
-}
-Write-Host
-Write-Host "Assuming release is in $month" -ForegroundColor Green
+& "$repoRoot\eng\scripts\Update-PkgVersion.ps1" -ServiceDirectory $serviceDirectory -PackageName $package -NewVersionString $newVersion  -ReleaseDate $releaseDateString
 
 $commonParameter = @("--organization", "https://dev.azure.com/azure-sdk", "-o", "json", "--only-show-errors")
 
@@ -219,6 +238,7 @@ $fields = @{
     "Library Type"=$libraryType
     "Release Type"=$releaseType
     "Version Number"=$newVersion
+    "Planned Release Date"=$releaseDateString
     "Notes"="<pre>"+$notes.Replace("`n", "<br>")+"</pre>"
 }
 
