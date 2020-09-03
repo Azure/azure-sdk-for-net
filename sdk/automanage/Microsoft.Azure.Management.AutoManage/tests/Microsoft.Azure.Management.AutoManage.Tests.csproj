@@ -1,13 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(RepoEngPath)/mgmt/AzSdk.test.reference.props" />
-   <PropertyGroup>
-	<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
-   </PropertyGroup>
   <PropertyGroup>
-    <PackageId>Automanage.Tests</PackageId>
-    <Description>Automanage.Tests Class Library</Description>
-    <AssemblyName>Automanage.Tests</AssemblyName>
+    <TargetFramework>$(SdkTargetFx)</TargetFramework>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PackageId>AutoManage.Tests</PackageId>
+    <Description>AutoManage.Tests Class Library</Description>
+    <AssemblyName>AutoManage.Tests</AssemblyName>
     <VersionPrefix>1.0.0</VersionPrefix>
+    <PackageTags>AutoManagement;AutoManaged</PackageTags>
     <RootNamespace>Microsoft.Azure.Management.AutoManage.Tests</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
