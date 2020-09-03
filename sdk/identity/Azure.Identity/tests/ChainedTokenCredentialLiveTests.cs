@@ -32,13 +32,12 @@ namespace Azure.Identity.Tests
         [RunOnlyOnPlatforms(Windows = true)] // VisualStudioCredential works only on Windows
         public async Task ChainedTokenCredential_UseVisualStudioCredential()
         {
-            var pipeline = CredentialPipeline.GetInstance(null);
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudio();
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForVisualStudio();
             var processService = new TestProcessService(new TestProcess { Output = processOutput });
 
-            var miCredential = new ManagedIdentityCredential(EnvironmentVariables.ClientId, pipeline);
-            var vsCredential = new VisualStudioCredential(default, pipeline, fileSystem, processService);
+            var miCredential = new ManagedIdentityCredential(EnvironmentVariables.ClientId);
+            var vsCredential = new VisualStudioCredential(default, default, fileSystem, processService);
             var credential = InstrumentClient(new ChainedTokenCredential(miCredential, vsCredential));
 
             AccessToken token;
@@ -53,23 +52,23 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(token.Token, expectedToken);
             Assert.AreEqual(token.ExpiresOn, expectedExpiresOn);
 
-            Assert.AreEqual(2, scopes.Count);
-            Assert.AreEqual($"{nameof(ChainedTokenCredential)}.{nameof(ChainedTokenCredential.GetToken)}", scopes[0].Name);
-            Assert.AreEqual($"{nameof(VisualStudioCredential)}.{nameof(VisualStudioCredential.GetToken)}", scopes[1].Name);
+            Assert.AreEqual(1, scopes.Count);
+            Assert.AreEqual($"{nameof(VisualStudioCredential)}.{nameof(VisualStudioCredential.GetToken)}", scopes[0].Name);
         }
 
         [Test]
         [RunOnlyOnPlatforms(Windows = true, OSX = true, ContainerNames = new[] { "ubuntu_netcore2_keyring" })]
         public async Task ChainedTokenCredential_UseVisualStudioCodeCredential()
         {
-            var pipeline = CredentialPipeline.GetInstance(null);
             var cloudName = Guid.NewGuid().ToString();
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudioCode(TestEnvironment, cloudName);
             var processService = new TestProcessService(new TestProcess { Error = "Error" });
 
-            var miCredential = new ManagedIdentityCredential(EnvironmentVariables.ClientId, pipeline);
-            var vsCredential = new VisualStudioCredential(default, pipeline, fileSystem, processService);
-            var vscCredential = new VisualStudioCodeCredential(new VisualStudioCodeCredentialOptions { TenantId = TestEnvironment.TestTenantId }, pipeline, default, fileSystem, default);
+            var vscOptions = Recording.InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = TestEnvironment.TestTenantId });
+
+            var miCredential = new ManagedIdentityCredential(EnvironmentVariables.ClientId);
+            var vsCredential = new VisualStudioCredential(default, default, fileSystem, processService);
+            var vscCredential = new VisualStudioCodeCredential(vscOptions, default, default, fileSystem, default);
 
             var credential = InstrumentClient(new ChainedTokenCredential(miCredential, vsCredential, vscCredential));
 
@@ -85,23 +84,23 @@ namespace Azure.Identity.Tests
 
             Assert.IsNotNull(token.Token);
 
-            Assert.AreEqual(2, scopes.Count);
-            Assert.AreEqual($"{nameof(ChainedTokenCredential)}.{nameof(ChainedTokenCredential.GetToken)}", scopes[0].Name);
-            Assert.AreEqual($"{nameof(VisualStudioCodeCredential)}.{nameof(VisualStudioCodeCredential.GetToken)}", scopes[1].Name);
+            Assert.AreEqual(1, scopes.Count);
+            Assert.AreEqual($"{nameof(VisualStudioCodeCredential)}.{nameof(VisualStudioCodeCredential.GetToken)}", scopes[0].Name);
         }
 
         [Test]
         [RunOnlyOnPlatforms(Windows = true, OSX = true, ContainerNames = new[] { "ubuntu_netcore2_keyring" })]
         public async Task ChainedTokenCredential_UseVisualStudioCodeCredential_ParallelCalls()
         {
-            var pipeline = CredentialPipeline.GetInstance(null);
             var cloudName = Guid.NewGuid().ToString();
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudioCode(TestEnvironment, cloudName);
             var processService = new TestProcessService { CreateHandler = psi => new TestProcess { Error = "Error" }};
 
-            var miCredential = new ManagedIdentityCredential(EnvironmentVariables.ClientId, pipeline);
-            var vsCredential = new VisualStudioCredential(default, pipeline, fileSystem, processService);
-            var vscCredential = new VisualStudioCodeCredential(new VisualStudioCodeCredentialOptions { TenantId = TestEnvironment.TestTenantId }, pipeline, default, fileSystem, default);
+            var vscOptions = Recording.InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = TestEnvironment.TestTenantId });
+
+            var miCredential = new ManagedIdentityCredential(EnvironmentVariables.ClientId);
+            var vsCredential = new VisualStudioCredential(default, default, fileSystem, processService);
+            var vscCredential = new VisualStudioCodeCredential(vscOptions, default, default, fileSystem, default);
             var credential = InstrumentClient(new ChainedTokenCredential(miCredential, vsCredential, vscCredential));
 
             var tasks = new List<Task<AccessToken>>();
@@ -124,16 +123,15 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task ChainedTokenCredential_UseAzureCliCredential()
         {
-            var pipeline = CredentialPipeline.GetInstance(null);
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureCli();
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "Azure", null);
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudioCode(TestEnvironment);
             var processService = new TestProcessService(new TestProcess { Output = processOutput });
 
-            var miCredential = new ManagedIdentityCredential(EnvironmentVariables.ClientId, pipeline);
-            var vsCredential = new VisualStudioCredential(default, pipeline, fileSystem, processService);
-            var vscCredential = new VisualStudioCodeCredential(new VisualStudioCodeCredentialOptions { TenantId = TestEnvironment.TestTenantId }, pipeline, default, fileSystem, vscAdapter);
-            var azureCliCredential = new AzureCliCredential(pipeline, processService);
+            var miCredential = new ManagedIdentityCredential(EnvironmentVariables.ClientId);
+            var vsCredential = new VisualStudioCredential(default, default, fileSystem, processService);
+            var vscCredential = new VisualStudioCodeCredential(new VisualStudioCodeCredentialOptions { TenantId = TestEnvironment.TestTenantId }, default, default, fileSystem, vscAdapter);
+            var azureCliCredential = new AzureCliCredential(CredentialPipeline.GetInstance(null), processService);
 
             var credential = InstrumentClient(new ChainedTokenCredential(miCredential, vsCredential, vscCredential, azureCliCredential));
 
@@ -149,24 +147,22 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(token.Token, expectedToken);
             Assert.AreEqual(token.ExpiresOn, expectedExpiresOn);
 
-            Assert.AreEqual(2, scopes.Count);
-            Assert.AreEqual($"{nameof(ChainedTokenCredential)}.{nameof(ChainedTokenCredential.GetToken)}", scopes[0].Name);
-            Assert.AreEqual($"{nameof(AzureCliCredential)}.{nameof(AzureCliCredential.GetToken)}", scopes[1].Name);
+            Assert.AreEqual(1, scopes.Count);
+            Assert.AreEqual($"{nameof(AzureCliCredential)}.{nameof(AzureCliCredential.GetToken)}", scopes[0].Name);
         }
 
         [Test]
         public async Task ChainedTokenCredential_UseAzureCliCredential_ParallelCalls()
         {
-            var pipeline = CredentialPipeline.GetInstance(null);
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureCli();
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "Azure", null);
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudioCode(TestEnvironment);
-            var processService = new TestProcessService(new TestProcess { Output = processOutput });
+            var processService = new TestProcessService { CreateHandler = psi => new TestProcess { Output = processOutput }};
 
-            var miCredential = new ManagedIdentityCredential(EnvironmentVariables.ClientId, pipeline);
-            var vsCredential = new VisualStudioCredential(default, pipeline, fileSystem, processService);
-            var vscCredential = new VisualStudioCodeCredential(new VisualStudioCodeCredentialOptions { TenantId = TestEnvironment.TestTenantId }, pipeline, default, fileSystem, vscAdapter);
-            var azureCliCredential = new AzureCliCredential(pipeline, processService);
+            var miCredential = new ManagedIdentityCredential(EnvironmentVariables.ClientId);
+            var vsCredential = new VisualStudioCredential(default, default, fileSystem, processService);
+            var vscCredential = new VisualStudioCodeCredential(new VisualStudioCodeCredentialOptions { TenantId = TestEnvironment.TestTenantId }, default, default, fileSystem, vscAdapter);
+            var azureCliCredential = new AzureCliCredential(CredentialPipeline.GetInstance(null), processService);
 
             var credential = InstrumentClient(new ChainedTokenCredential(miCredential, vsCredential, vscCredential, azureCliCredential));
 
@@ -190,13 +186,12 @@ namespace Azure.Identity.Tests
         {
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "Azure", "{}");
 
-            var pipeline = CredentialPipeline.GetInstance(null);
             var fileSystem = new TestFileSystemService();
             var processService = new TestProcessService(new TestProcess { Error = "'az' is not recognized" });
 
-            var vsCredential = new VisualStudioCredential(default, pipeline, fileSystem, processService);
-            var vscCredential = new VisualStudioCodeCredential(new VisualStudioCodeCredentialOptions { TenantId = TestEnvironment.TestTenantId }, pipeline, default, fileSystem, vscAdapter);
-            var azureCliCredential = new AzureCliCredential(pipeline, processService);
+            var vsCredential = new VisualStudioCredential(default, default, fileSystem, processService);
+            var vscCredential = new VisualStudioCodeCredential(new VisualStudioCodeCredentialOptions { TenantId = TestEnvironment.TestTenantId }, default, default, fileSystem, vscAdapter);
+            var azureCliCredential = new AzureCliCredential(CredentialPipeline.GetInstance(null), processService);
 
             var credential = InstrumentClient(new ChainedTokenCredential(vsCredential, vscCredential, azureCliCredential));
 
@@ -207,25 +202,23 @@ namespace Azure.Identity.Tests
                 scopes = diagnosticListener.Scopes;
             }
 
-            Assert.AreEqual(4, scopes.Count);
-            Assert.AreEqual($"{nameof(ChainedTokenCredential)}.{nameof(ChainedTokenCredential.GetToken)}", scopes[0].Name);
-            Assert.AreEqual($"{nameof(VisualStudioCredential)}.{nameof(VisualStudioCredential.GetToken)}", scopes[1].Name);
-            Assert.AreEqual($"{nameof(VisualStudioCodeCredential)}.{nameof(VisualStudioCodeCredential.GetToken)}", scopes[2].Name);
-            Assert.AreEqual($"{nameof(AzureCliCredential)}.{nameof(AzureCliCredential.GetToken)}", scopes[3].Name);
+            Assert.AreEqual(3, scopes.Count);
+            Assert.AreEqual($"{nameof(VisualStudioCredential)}.{nameof(VisualStudioCredential.GetToken)}", scopes[0].Name);
+            Assert.AreEqual($"{nameof(VisualStudioCodeCredential)}.{nameof(VisualStudioCodeCredential.GetToken)}", scopes[1].Name);
+            Assert.AreEqual($"{nameof(AzureCliCredential)}.{nameof(AzureCliCredential.GetToken)}", scopes[2].Name);
         }
 
         [Test]
         public void ChainedTokenCredential_AllCredentialsHaveFailed_AuthenticationFailedException()
         {
-            var pipeline = CredentialPipeline.GetInstance(null);
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "Azure", null);
             var fileSystem = new TestFileSystemService();
             var processService = new TestProcessService(new TestProcess {Error = "Error"});
 
-            var miCredential = new ManagedIdentityCredential(EnvironmentVariables.ClientId, pipeline);
-            var vsCredential = new VisualStudioCredential(default, pipeline, fileSystem, processService);
-            var vscCredential = new VisualStudioCodeCredential(new VisualStudioCodeCredentialOptions { TenantId = TestEnvironment.TestTenantId }, pipeline, default, fileSystem, vscAdapter);
-            var azureCliCredential = new AzureCliCredential(pipeline, processService);
+            var miCredential = new ManagedIdentityCredential(EnvironmentVariables.ClientId);
+            var vsCredential = new VisualStudioCredential(default, default, fileSystem, processService);
+            var vscCredential = new VisualStudioCodeCredential(new VisualStudioCodeCredentialOptions { TenantId = TestEnvironment.TestTenantId }, default, default, fileSystem, vscAdapter);
+            var azureCliCredential = new AzureCliCredential(CredentialPipeline.GetInstance(null), processService);
 
             var credential = InstrumentClient(new ChainedTokenCredential(miCredential, vsCredential, vscCredential, azureCliCredential));
 
@@ -236,12 +229,11 @@ namespace Azure.Identity.Tests
                 scopes = diagnosticListener.Scopes;
             }
 
-            Assert.AreEqual(5, scopes.Count);
-            Assert.AreEqual($"{nameof(ChainedTokenCredential)}.{nameof(ChainedTokenCredential.GetToken)}", scopes[0].Name);
-            Assert.AreEqual($"{nameof(ManagedIdentityCredential)}.{nameof(ManagedIdentityCredential.GetToken)}", scopes[1].Name);
-            Assert.AreEqual($"{nameof(VisualStudioCredential)}.{nameof(VisualStudioCredential.GetToken)}", scopes[2].Name);
-            Assert.AreEqual($"{nameof(VisualStudioCodeCredential)}.{nameof(VisualStudioCodeCredential.GetToken)}", scopes[3].Name);
-            Assert.AreEqual($"{nameof(AzureCliCredential)}.{nameof(AzureCliCredential.GetToken)}", scopes[4].Name);
+            Assert.AreEqual(4, scopes.Count);
+            Assert.AreEqual($"{nameof(ManagedIdentityCredential)}.{nameof(ManagedIdentityCredential.GetToken)}", scopes[0].Name);
+            Assert.AreEqual($"{nameof(VisualStudioCredential)}.{nameof(VisualStudioCredential.GetToken)}", scopes[1].Name);
+            Assert.AreEqual($"{nameof(VisualStudioCodeCredential)}.{nameof(VisualStudioCodeCredential.GetToken)}", scopes[2].Name);
+            Assert.AreEqual($"{nameof(AzureCliCredential)}.{nameof(AzureCliCredential.GetToken)}", scopes[3].Name);
         }
     }
 }
