@@ -13,7 +13,7 @@ param (
   [String]$ChangeLogPath,
   [String]$Unreleased = $True,
   [String]$ReplaceVersion = $False,
-  $ReleaseDate
+  [String]$ReleaseDate
 )
 
 
