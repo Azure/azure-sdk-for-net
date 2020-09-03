@@ -241,6 +241,9 @@ To learn more about other logging mechanisms see [here][logging].
 
 Get started with our [Table samples][table_client_samples]:
 
+## Known Issues
+
+A list of currently known issues relating to Cosmos DB table endpoints can be found [here](https://aka.ms/tablesknownissues).
 
 ## Contributing
 
