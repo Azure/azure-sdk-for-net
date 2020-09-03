@@ -3110,7 +3110,7 @@ namespace Azure.Storage.Files.DataLake
             StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default)
         {
-            using (FileStream stream = new FileStream(path, FileMode.Open))
+            using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
                 return StagedUploadInternal(
                     stream,
@@ -3226,7 +3226,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeFileUploadOptions options,
             CancellationToken cancellationToken = default)
         {
-            using (FileStream stream = new FileStream(path, FileMode.Open))
+            using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
                 return await StagedUploadInternal(
                     stream,
