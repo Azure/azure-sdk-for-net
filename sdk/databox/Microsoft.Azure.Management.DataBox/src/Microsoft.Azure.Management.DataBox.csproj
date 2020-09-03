@@ -7,20 +7,20 @@
 		<PackageId>Microsoft.Azure.Management.DataBox</PackageId>
 		<Description>Microsoft Azure Management DataBox library</Description>
 		<AssemblyName>Microsoft.Azure.Management.DataBox</AssemblyName>
-		<Version>1.1.0</Version>
+		<Version>1.2.0</Version>
 		<PackageTags>AzureDataBox;DataBox;</PackageTags>
     <PackageReleaseNotes>
 
       <![CDATA[
                 Changes:
                 
-                1) Creation, Updation, Deletion of Scheduled order along with getting order status 
+                1) Adding support of transfer type ExportFromAzure by Azure DataBox Service. 
                 
-                2) Validating Job creation inputs and its supportability by Azure Data Box service
+                2) Adding support of Customer Managed Key by Azure DataBox Service.
                 
-                3) Fetching region configuration details supported by Azure Data Box service
+                3) Fetching region configuration details supported by Azure Data Box service at resource group level.
                 
-                4) Deprecating validate address API
+                4) Deprecating availableSkus API at subscription level.
 
             ]]>
 

@@ -31,8 +31,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// <summary>
         /// Initializes a new instance of the Preferences class.
         /// </summary>
-        /// <param name="preferredDataCenterRegion">Preferred Data Center
-        /// Region.</param>
+        /// <param name="preferredDataCenterRegion">Preferred data center
+        /// region.</param>
         /// <param name="transportPreferences">Preferences related to the
         /// shipment logistics of the sku.</param>
         public Preferences(IList<string> preferredDataCenterRegion = default(IList<string>), TransportPreferences transportPreferences = default(TransportPreferences))
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets preferred Data Center Region.
+        /// Gets or sets preferred data center region.
         /// </summary>
         [JsonProperty(PropertyName = "preferredDataCenterRegion")]
         public IList<string> PreferredDataCenterRegion { get; set; }

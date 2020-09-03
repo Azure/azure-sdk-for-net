@@ -1,13 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>This is the Microsoft Azure Cognitive Services Anomaly Detector client library</Description>
     <AssemblyTitle>Microsoft Azure.AI.AnomalyDetector client library</AssemblyTitle>
     <Version>3.0.0-preview.2</Version>
     <PackageTags>Microsoft Azure Anomaly Detector</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <GenerateAPIListing>false</GenerateAPIListing>
-    <!-- Disable warning for avoiding single word type names -->
-    <NoWarn>$(NoWarn);AZC0012</NoWarn>
+    <GenerateAPIListing>true</GenerateAPIListing>
   </PropertyGroup>
 
   <ItemGroup>

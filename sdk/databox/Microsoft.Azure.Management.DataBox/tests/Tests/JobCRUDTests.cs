@@ -6,6 +6,7 @@ using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -25,14 +26,14 @@ namespace DataBox.Tests.Tests
             ContactDetails contactDetails = GetDefaultContactDetails();
             ShippingAddress shippingAddress = GetDefaultShippingAddress();
             Sku sku = GetDefaultSku();
+            var destinationAccountsList = GetDestinationAccountsList();
             JobDetails jobDetails = new DataBoxJobDetails
             {
                 ContactDetails = contactDetails,
-                ShippingAddress = shippingAddress,
-                DestinationAccountDetails = GetDestinationAccountsList(),
-                
+                ShippingAddress = shippingAddress
             };
-
+            jobDetails.DataImportDetails = new List<DataImportDetails>();
+            jobDetails.DataImportDetails.Add(new DataImportDetails(destinationAccountsList.FirstOrDefault()));
             var jobResource = new JobResource
             {
                 Sku = sku,
@@ -104,13 +105,15 @@ namespace DataBox.Tests.Tests
             ContactDetails contactDetails = GetDefaultContactDetails();
             ShippingAddress shippingAddress = GetDefaultShippingAddress();
             Sku sku = GetDefaultSku();
+            var destinationAccountsList = GetDestinationAccountsList();
             JobDetails jobDetails = new DataBoxJobDetails
             {
                 ContactDetails = contactDetails,
                 ShippingAddress = shippingAddress,
-                DestinationAccountDetails = GetDestinationAccountsList(),
 
             };
+            jobDetails.DataImportDetails = new List<DataImportDetails>();
+            jobDetails.DataImportDetails.Add(new DataImportDetails(destinationAccountsList.FirstOrDefault()));
 
             var jobResource = new JobResource
             {
@@ -180,7 +183,238 @@ namespace DataBox.Tests.Tests
             this.Client.Jobs.Delete(resourceGroupName, jobName);
         }
 
-        
+        [Fact]
+        public void TestExportJobCRUDOperations()
+        {
+            var resourceGroupName = TestUtilities.GenerateName("SdkRg");
+            var jobName = TestUtilities.GenerateName("SdkJob");
+            ContactDetails contactDetails = GetDefaultContactDetails();
+            ShippingAddress shippingAddress = GetDefaultShippingAddress();
+            Sku sku = GetDefaultSku();
+            var sourceAccountsList = GetSourceAccountsList();
+
+            JobDetails jobDetails = new DataBoxJobDetails
+            {
+                ContactDetails = contactDetails,
+                ShippingAddress = shippingAddress
+            };
+
+            jobDetails.DataExportDetails = new List<DataExportDetails>();
+            TransferConfiguration transferCofiguration = new TransferConfiguration
+            {
+                TransferConfigurationType = TransferConfigurationType.TransferAll,
+                TransferAllDetails = new TransferConfigurationTransferAllDetails
+                {
+                    Include = new TransferAllDetails
+                    {
+                        DataAccountType = DataAccountType.StorageAccount,
+                        TransferAllBlobs = true,
+                        TransferAllFiles = true
+                    }
+                }
+            };
+
+            jobDetails.DataExportDetails.Add(new DataExportDetails(transferCofiguration, sourceAccountsList.FirstOrDefault()));
+            var jobResource = new JobResource
+            {
+                Sku = sku,
+                Location = TestConstants.DefaultResourceLocation,
+                Details = jobDetails,
+                TransferType = TransferType.ExportFromAzure
+            };
+
+            this.RMClient.ResourceGroups.CreateOrUpdate(
+                resourceGroupName,
+                new ResourceGroup
+                {
+                    Location = TestConstants.DefaultResourceLocation
+                });
+
+            var job = this.Client.Jobs.Create(resourceGroupName, jobName, jobResource);
+            ValidateJobWithoutDetails(jobName, sku, job);
+            Assert.Equal(StageName.DeviceOrdered, job.Status);
+
+            var getJob = this.Client.Jobs.Get(resourceGroupName, jobName, TestConstants.Details);
+            ValidateJobWithoutDetails(jobName, sku, getJob);
+            ValidateJobDetails(contactDetails, shippingAddress, getJob, JobDeliveryType.NonScheduled);
+            Assert.Equal(StageName.DeviceOrdered, job.Status);
+
+            contactDetails.ContactName = "Update Job";
+            getJob.Details.ContactDetails = contactDetails;
+
+            var Details = new UpdateJobDetails
+            {
+                ContactDetails = getJob.Details.ContactDetails,
+                ShippingAddress = getJob.Details.ShippingAddress
+            };
+
+            var updateParams = new JobResourceUpdateParameter
+            {
+                Details = Details
+            };
+            var updateJob = this.Client.Jobs.Update(resourceGroupName, jobName, updateParams);
+            ValidateJobWithoutDetails(jobName, sku, updateJob);
+            Assert.Equal(StageName.DeviceOrdered, updateJob.Status);
+
+            getJob = this.Client.Jobs.Get(resourceGroupName, jobName, TestConstants.Details);
+            ValidateJobWithoutDetails(jobName, sku, getJob);
+            ValidateJobDetails(contactDetails, shippingAddress, getJob, JobDeliveryType.NonScheduled);
+            Assert.Equal(StageName.DeviceOrdered, getJob.Status);
+
+            var jobList = this.Client.Jobs.List();
+            Assert.NotNull(jobList);
+
+            jobList = this.Client.Jobs.ListByResourceGroup(resourceGroupName);
+            Assert.NotNull(jobList);
+
+            this.Client.Jobs.Cancel(resourceGroupName, jobName, "CancelTest");
+            getJob = this.Client.Jobs.Get(resourceGroupName, jobName, TestConstants.Details);
+            Assert.Equal(StageName.Cancelled, getJob.Status);
+
+            while (!string.IsNullOrWhiteSpace(getJob.Details.ContactDetails.ContactName))
+            {
+                Wait(TimeSpan.FromMinutes(5));
+                getJob = this.Client.Jobs.Get(resourceGroupName, jobName, TestConstants.Details);
+            }
+            this.Client.Jobs.Delete(resourceGroupName, jobName);
+        }
+
+        [Fact]
+        public void DevicePasswordTest()
+        {
+            var resourceGroupName = TestUtilities.GenerateName("SdkRg");
+            var jobName = TestUtilities.GenerateName("SdkJob");
+            //var jobName = "SdkJob5929";
+            ContactDetails contactDetails = GetDefaultContactDetails();
+            ShippingAddress shippingAddress = GetDefaultShippingAddress();
+            Sku sku = GetDefaultSku();
+            var destinationAccountsList = new List<StorageAccountDetails>
+            {
+                new StorageAccountDetails
+                {
+                    StorageAccountId = "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/databoxbvt1/providers/Microsoft.Storage/storageAccounts/databoxbvttestaccount2"
+                }
+            };
+
+            destinationAccountsList[0].SharePassword = "Abcd223@22344Abcd223@22344";
+            JobDetails jobDetails = new DataBoxJobDetails
+            {
+                ContactDetails = contactDetails,
+                ShippingAddress = shippingAddress,
+                DevicePassword = "Abcd223@22344"
+            };
+            jobDetails.DataImportDetails = new List<DataImportDetails>();
+            jobDetails.DataImportDetails.Add(new DataImportDetails(destinationAccountsList.FirstOrDefault()));
+
+            var jobResource = new JobResource
+            {
+                Sku = sku,
+                Location = TestConstants.DefaultResourceLocation,
+                Details = jobDetails,
+            };
+
+            this.RMClient.ResourceGroups.CreateOrUpdate(
+                resourceGroupName,
+                new ResourceGroup
+                {
+                    Location = TestConstants.DefaultResourceLocation
+                });
+
+            var job = this.Client.Jobs.Create(resourceGroupName, jobName, jobResource);
+
+            var getJob = this.Client.Jobs.Get(resourceGroupName, jobName, TestConstants.Details);
+            ValidateJobWithoutDetails(jobName, sku, job);
+            ValidateJobDetails(contactDetails, shippingAddress, getJob, JobDeliveryType.NonScheduled);
+
+            Assert.Equal(StageName.DeviceOrdered, job.Status);
+        }
+
+        [Fact]
+        public void CmkEnablementTest()
+        {
+            var resourceGroupName = TestUtilities.GenerateName("SdkRg");
+            var jobName = TestUtilities.GenerateName("SdkJob");
+            //var jobName = "SdkJob5929";
+            ContactDetails contactDetails = GetDefaultContactDetails();
+            ShippingAddress shippingAddress = GetDefaultShippingAddress();
+            Sku sku = GetDefaultSku();
+            var destinationAccountsList = new List<StorageAccountDetails>
+            {
+                new StorageAccountDetails
+                {
+                    StorageAccountId = "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/databoxbvt1/providers/Microsoft.Storage/storageAccounts/databoxbvttestaccount2"
+                }
+            };
+            JobDetails jobDetails = new DataBoxJobDetails
+            {
+                ContactDetails = contactDetails,
+                ShippingAddress = shippingAddress
+            };
+            jobDetails.DataImportDetails = new List<DataImportDetails>();
+            jobDetails.DataImportDetails.Add(new DataImportDetails(destinationAccountsList.FirstOrDefault()));
+
+            var jobResource = new JobResource
+            {
+                Sku = sku,
+                Location = TestConstants.DefaultResourceLocation,
+                Details = jobDetails,
+            };
+
+            this.RMClient.ResourceGroups.CreateOrUpdate(
+                resourceGroupName,
+                new ResourceGroup
+                {
+                    Location = TestConstants.DefaultResourceLocation
+                });
+
+            var job = this.Client.Jobs.Create(resourceGroupName, jobName, jobResource);
+            ValidateJobWithoutDetails(jobName, sku, job);
+            Assert.Equal(StageName.DeviceOrdered, job.Status);
+
+            // Set Msi details.
+            string tenantId = "72f988bf-86f1-41af-91ab-2d7cd011db47";
+            string identityType = "SystemAssigned";
+            var identity = new ResourceIdentity(identityType, Guid.NewGuid().ToString(), tenantId);
+            var updateParams = new JobResourceUpdateParameter
+            {
+                Identity = identity
+            };
+
+            var updateJob = this.Client.Jobs.Update(resourceGroupName, jobName, updateParams);
+            ValidateJobWithoutDetails(jobName, sku, updateJob);
+
+            var getJob = this.Client.Jobs.Get(resourceGroupName, jobName, TestConstants.Details);
+            ValidateJobWithoutDetails(jobName, sku, job);
+            ValidateJobDetails(contactDetails, shippingAddress, getJob, JobDeliveryType.NonScheduled);
+
+            Assert.Equal(StageName.DeviceOrdered, updateJob.Status);
+            Assert.Equal(identityType, updateJob.Identity.Type);
+
+            var keyEncryptionKey = new KeyEncryptionKey(KekType.CustomerManaged)
+            {
+                KekUrl = @"https://sdkkeyvault.vault.azure.net/keys/SSDKEY/",
+                KekVaultResourceID =
+                    "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/akvenkat/providers/Microsoft.KeyVault/vaults/SDKKeyVault"
+            };
+
+            var details = new UpdateJobDetails
+            {
+                KeyEncryptionKey = keyEncryptionKey
+            };
+
+            updateParams = new JobResourceUpdateParameter
+            {
+                Details = details
+            };
+
+            updateJob = this.Client.Jobs.Update(resourceGroupName, jobName, updateParams);
+            ValidateJobWithoutDetails(jobName, sku, updateJob);
+            getJob = this.Client.Jobs.Get(resourceGroupName, jobName, TestConstants.Details);
+            ValidateJobDetails(contactDetails, shippingAddress, getJob, JobDeliveryType.NonScheduled);
+
+            Assert.Equal(StageName.DeviceOrdered, updateJob.Status);
+            Assert.Equal(KekType.CustomerManaged, getJob.Details.KeyEncryptionKey.KekType);
+        }
     }
 }
 

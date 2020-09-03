@@ -239,17 +239,17 @@ namespace Azure.Security.KeyVault.Administration
         /// </summary>
         /// <param name="roleScope"> The scope of the role assignment to create. </param>
         /// <param name="properties"> Properties for the role assignment. </param>
-        /// <param name="name">The Name used to create the role assignment.</param>
+        /// <param name="name">Optional name used to create the role assignment. A new <see cref="Guid"/> will be generated if not specified.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="roleScope"/> or <paramref name="properties"/> is null.</exception>
-        public virtual Response<KeyVaultRoleAssignment> CreateRoleAssignment(KeyVaultRoleScope roleScope, KeyVaultRoleAssignmentProperties properties, Guid name = default, CancellationToken cancellationToken = default)
+        public virtual Response<KeyVaultRoleAssignment> CreateRoleAssignment(KeyVaultRoleScope roleScope, KeyVaultRoleAssignmentProperties properties, Guid? name = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(CreateRoleAssignment)}");
             scope.Start();
             try
             {
-                var _name = name == default ? Guid.NewGuid().ToString() : name.ToString();
+                var _name = (name ?? Guid.NewGuid()).ToString();
                 return _assignmentsRestClient.Create(VaultUri.AbsoluteUri, roleScope.ToString(), _name, new RoleAssignmentCreateParameters(properties), cancellationToken);
             }
             catch (Exception ex)
@@ -264,17 +264,17 @@ namespace Azure.Security.KeyVault.Administration
         /// </summary>
         /// <param name="roleScope"> The scope of the role assignment to create. </param>
         /// <param name="properties"> Properties for the role assignment. </param>
-        /// <param name="name">The name used to create the role assignment.</param>
+        /// <param name="name">Optional name used to create the role assignment. A new <see cref="Guid"/> will be generated if not specified.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="roleScope"/> or <paramref name="properties"/> is null.</exception>
-        public virtual async Task<Response<KeyVaultRoleAssignment>> CreateRoleAssignmentAsync(KeyVaultRoleScope roleScope, KeyVaultRoleAssignmentProperties properties, Guid name = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KeyVaultRoleAssignment>> CreateRoleAssignmentAsync(KeyVaultRoleScope roleScope, KeyVaultRoleAssignmentProperties properties, Guid? name = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(CreateRoleAssignment)}");
             scope.Start();
             try
             {
-                var _name = name == default ? Guid.NewGuid().ToString() : name.ToString();
+                var _name = (name ?? Guid.NewGuid()).ToString();
                 return await _assignmentsRestClient.CreateAsync(VaultUri.AbsoluteUri, roleScope.ToString(), _name, new RoleAssignmentCreateParameters(properties), cancellationToken)
                 .ConfigureAwait(false);
             }

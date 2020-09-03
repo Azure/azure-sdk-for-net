@@ -44,7 +44,7 @@ namespace Sql.Tests
                 Assert.NotNull(db1);
 
                 // Create a database with all parameters specified
-                // 
+                //
                 dbName = SqlManagementTestUtilities.GenerateName();
                 var db2Input = new Database()
                 {
@@ -54,7 +54,8 @@ namespace Sql.Tests
                     MaxSizeBytes = 2 * 1024L * 1024L * 1024L,
                     Tags = tags,
                     CreateMode = "Default",
-                    SampleName = SampleName.AdventureWorksLT
+                    SampleName = SampleName.AdventureWorksLT,
+                    StorageAccountType = "LRS",
                 };
                 var db2 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, db2Input);
                 Assert.NotNull(db2);
@@ -112,12 +113,23 @@ namespace Sql.Tests
                 Assert.NotNull(db7);
                 SqlManagementTestUtilities.ValidateDatabase(db7Input, db7, dbName);
 
+                dbName = SqlManagementTestUtilities.GenerateName();
+                var db8Input = new Database()
+                {
+                    Location = server.Location,
+                    StorageAccountType = "LRS",
+                };
+                var db8 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, db8Input);
+                Assert.NotNull(db8);
+                SqlManagementTestUtilities.ValidateDatabase(db8Input, db8, dbName);
+
                 sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db1.Name);
                 sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db2.Name);
                 sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db4.Name);
                 sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db5.Name);
                 sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db6.Name);
                 sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db7.Name);
+                sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db8.Name);
             }
         }
 
@@ -363,7 +375,7 @@ namespace Sql.Tests
                 }
             }
         }
-        
+
         [Fact]
         public void TestRemoveDatabaseFromPool()
         {
@@ -379,7 +391,7 @@ namespace Sql.Tests
                     };
 
                 // Create an elastic pool
-                // 
+                //
                 string epName = SqlManagementTestUtilities.GenerateName();
                 var epInput = new ElasticPool()
                 {
