@@ -2,6 +2,7 @@
 
 ## 12.7.0-preview.1 (Unreleased)
 - Fixed bug where Stream returned from AppendBlobClient.OpenWrite(), BlockBlobClient.OpenWrite() and PageBlobClient.OpenWrite() did not flush while disposing preventing compatibility with using keyword.
+- Fixed bug where Listing Blobs with BlobTraits.Metadata would return BlobItems with null metadata instead of an empty dictionary if no metadata was present.
 
 ## 12.6.0 (2020-08-31)
 - Fixed bug where BlobClient.Upload(), BlockBlobClient.Upload(), AppendBlobClient.AppendBlock(), and PageBlobClient.UploadPages() would deadlock if the content stream's position was not 0.
