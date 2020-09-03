@@ -339,6 +339,23 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task CreateAsync_4TB()
+        {
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            ShareDirectoryClient directory = test.Directory;
+
+            // Arrange
+            ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+
+            // Act
+            Response<ShareFileInfo> response = await file.CreateAsync(4 * Constants.TB);
+
+            // Assert
+            AssertValidStorageFileInfo(response);
+        }
+
+        [Test]
         public async Task CreateAsync_Error()
         {
             await using DisposingShare test = await GetTestShareAsync();
@@ -2105,6 +2122,29 @@ namespace Azure.Storage.Files.Shares.Test
             using var actualStream = new MemoryStream(actualData);
             await response.Value.Content.CopyToAsync(actualStream);
             TestHelper.AssertSequenceEqual(expectedData, actualData);
+        }
+
+
+        [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task UploadRangeAsync_4TB()
+        {
+            long fileSize = 4 * Constants.TB;
+            var data = GetRandomBuffer(Constants.KB);
+
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareFileClient file = InstrumentClient(test.Share.GetRootDirectoryClient().GetFileClient(GetNewFileName()));
+            await file.CreateAsync(fileSize);
+
+            using (var stream = new MemoryStream(data))
+            {
+                Response<ShareFileUploadInfo> response = await file.UploadRangeAsync(
+                    writeType: ShareFileRangeWriteType.Update,
+                    range: new HttpRange(fileSize - Constants.KB, Constants.KB),
+                    content: stream);
+
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            }
         }
 
         [Test]
