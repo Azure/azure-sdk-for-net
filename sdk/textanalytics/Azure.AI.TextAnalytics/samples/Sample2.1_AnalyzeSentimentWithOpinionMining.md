@@ -84,10 +84,8 @@ private Dictionary<string, int> GetComplaints(AnalyzeSentimentResultCollection r
 
 
 To see the full example source files, see:
-* [Synchronous Analyze Sentiment with Opinion Mining](https://github.com/maririos/azure-sdk-for-net/blob/cd74dde9546ea675f9289e1b4e6fd804bda2a3bc/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample2.1_AnalyzeSentimentWithOpinionMining.cs)
-* [Asynchronous Analyze Sentiment with Opinion Mining](https://github.com/maririos/azure-sdk-for-net/blob/cd74dde9546ea675f9289e1b4e6fd804bda2a3bc/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample2.1_AnalyzeSentimentWithOpinionMiningAsync.cs)
-<!--* [Synchronous Analyze Sentiment with Opinion Mining](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics//tests/samples/Sample2.1_AnalyzeSentimentWithOpinionMining.cs)
-* [Asynchronous Analyze Sentiment with Opinion Mining](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics//tests/samples/Sample2.1_AnalyzeSentimentWithOpinionMiningAsync.cs)-->
+* [Synchronous Analyze Sentiment with Opinion Mining](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics//tests/samples/Sample2.1_AnalyzeSentimentWithOpinionMining.cs)
+* [Asynchronous Analyze Sentiment with Opinion Mining](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics//tests/samples/Sample2.1_AnalyzeSentimentWithOpinionMiningAsync.cs)
 
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/README.md
