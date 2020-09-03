@@ -27,7 +27,7 @@ namespace AutoManage.Tests.ScenarioTests
 
         [Fact]
         [Trait("Category", "Scenario")]
-        public async Task ConfigurationProfilesListAssignmentsGetsExpectedProfile()
+        public void ConfigurationProfilesListAssignmentsGetsExpectedProfile()
         {
             var thisType = this.GetType();
             using (MockContext context = MockContext.Start(thisType))
@@ -41,7 +41,7 @@ namespace AutoManage.Tests.ScenarioTests
 
         [Fact]
         //[Trait("Category", "Scenario")]
-        public async Task ConfigurationProfilesAssignmentsCreatesProfile()
+        public void ConfigurationProfilesAssignmentsCreatesProfile()
         {
             var thisType = this.GetType();
             using (MockContext context = MockContext.Start(thisType))

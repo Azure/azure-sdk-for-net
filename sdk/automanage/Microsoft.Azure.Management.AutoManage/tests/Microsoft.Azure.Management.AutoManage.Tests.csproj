@@ -1,9 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(RepoEngPath)/mgmt/AzSdk.test.reference.props" />
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
-  </PropertyGroup>
-  <PropertyGroup>
     <PackageId>AutoManage.Tests</PackageId>
     <Description>AutoManage.Tests Class Library</Description>
     <AssemblyName>AutoManage.Tests</AssemblyName>

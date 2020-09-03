@@ -1,6 +1,6 @@
 ﻿# Microsoft.Azure.Management.Automanage release notes
 
-## Changes in 0.6.0-preview
+## Changes in 0.1.0-preview
 ### Features
 Provides Microsoft Azure Automanage management operations including the ability to create, update and get Automanaged profile assignments, compliance statuses, automation accounts, and other related artifacts.
 
