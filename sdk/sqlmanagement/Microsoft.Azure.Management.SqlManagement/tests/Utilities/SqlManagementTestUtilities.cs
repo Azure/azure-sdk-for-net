@@ -223,7 +223,7 @@ namespace Sql.Tests
                 Assert.Equal(expected.ReadReplicaCount, actual.ReadReplicaCount);
             }
 
-            if (!string.IsNullorEmpty(expected.StorageAccountType))
+            if (!string.IsNullOrEmpty(expected.StorageAccountType))
             {
                 Assert.Equal(expected.StorageAccountType, actual.StorageAccountType);
             }
