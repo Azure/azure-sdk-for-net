@@ -15,7 +15,7 @@ pr:
     - sdk/attestation/Microsoft.Azure.Management.Attestation
     - sdk/authorization/Microsoft.Azure.Management.Authorization
     - sdk/automation/Microsoft.Azure.Management.Automation
-     - sdk/automanage/Microsoft.Azure.Management.AutoManage
+    - sdk/automanage/Microsoft.Azure.Management.AutoManage
     - sdk/avs/Microsoft.Azure.Management.Avs
     - sdk/azurestack/Microsoft.AzureStack.Management.AzureBridge.Admin
     - sdk/azurestack/Microsoft.AzureStack.Management.Backup.Admin
@@ -143,7 +143,6 @@ pr:
     - eng/pipelines/templates/jobs/archetype-sdk-mgmt.yml
 
 variables:
-  DotNetCoreSDKVersion: '2.2.202'
   skipComponentGovernanceDetection: true
   msBuildLogDir: msbuildlogs
   loggingArgs: '/clp:ShowtimeStamp /flp:LogFile=$(msBuildLogDir)/msbuild.normal.log;Verbosity=normal /flp1:Summary;Verbosity=minimal;LogFile=$(msBuildLogDir)/msbuild.sum.log /flp2:warningsonly;logfile=$(msBuildLogDir)/msbuild.wrn.log /flp3:errorsonly;logfile=$(msBuildLogDir)/msbuild.err.log'

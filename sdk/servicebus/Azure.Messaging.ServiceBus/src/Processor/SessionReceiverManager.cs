@@ -163,8 +163,14 @@ namespace Azure.Messaging.ServiceBus
         }
 
         public override async Task CloseReceiverIfNeeded(
-            CancellationToken processorCancellationToken)
+            CancellationToken processorCancellationToken,
+            bool forceClose = false)
         {
+            if (forceClose)
+            {
+                await CloseReceiver(processorCancellationToken).ConfigureAwait(false);
+                return;
+            }
             bool releaseSemaphore = false;
             try
             {
@@ -177,7 +183,7 @@ namespace Azure.Messaging.ServiceBus
                     return;
                 }
                 _threadCount--;
-                if (_threadCount == 0)
+                if (_threadCount == 0 && !processorCancellationToken.IsCancellationRequested)
                 {
                     if (!_keepOpenOnReceiveTimeout ||
                         !AutoRenewLock ||
@@ -198,7 +204,7 @@ namespace Azure.Messaging.ServiceBus
 
         private async Task CloseReceiver(CancellationToken cancellationToken)
         {
-            if (_receiver == null || _receiver.IsDisposed)
+            if (_receiver == null || _receiver.IsClosed)
             {
                 return;
             }
@@ -329,7 +335,7 @@ namespace Azure.Messaging.ServiceBus
                     TimeSpan delay = CalculateRenewDelay(_receiver.SessionLockedUntil);
 
                     await Task.Delay(delay, sessionLockRenewalCancellationToken).ConfigureAwait(false);
-                    if (_receiver.IsDisposed)
+                    if (_receiver.IsClosed)
                     {
                         break;
                     }

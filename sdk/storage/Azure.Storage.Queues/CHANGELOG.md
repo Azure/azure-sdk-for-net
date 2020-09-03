@@ -1,6 +1,9 @@
 # Release History
 
 ## 12.5.0-preview.1 (Unreleased)
+
+
+## 12.4.2 (2020-08-31)
 - Fixed a bug where QueueClient.UpdateMessage and QueueClient.UpdateMessageAsync were erasing message content if only visiblityTimeout was provided.
 
 ## 12.4.1 (2020-08-18)

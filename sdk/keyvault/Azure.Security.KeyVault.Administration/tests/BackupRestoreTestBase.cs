@@ -15,6 +15,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         public KeyVaultBackupClient Client { get; set; }
         internal string SasToken { get; set; }
         internal string BlobContainerName = "backup";
+        internal string PreviouslyBackedUpKeyName = "rsa-1";
 
         public BackupRestoreTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
@@ -35,6 +36,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
                     new Uri(TestEnvironment.KeyVaultUrl),
                     TestEnvironment.Credential,
                     recording.InstrumentClientOptions(new KeyVaultBackupClientOptions())));
+
         }
 
 
