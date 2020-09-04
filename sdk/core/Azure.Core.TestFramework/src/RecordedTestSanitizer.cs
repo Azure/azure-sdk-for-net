@@ -66,7 +66,7 @@ namespace Azure.Core.TestFramework
 
         public virtual void SanitizeBody(RecordEntryMessage message)
         {
-            if (message.Body?.Length > 0)
+            if (message.Body != null)
             {
                 message.TryGetContentType(out string contentType);
 
@@ -93,7 +93,10 @@ namespace Azure.Core.TestFramework
 
             SanitizeHeaders(entry.Response.Headers);
 
-            SanitizeBody(entry.Response);
+            if (entry.RequestMethod != RequestMethod.Head)
+            {
+                SanitizeBody(entry.Response);
+            }
         }
 
         public virtual void Sanitize(RecordSession session)
