@@ -12,9 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Core.Experimental" />
     <PackageReference Include="Microsoft.Azure.Amqp" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
-    <PackageReference Include="Azure.Core.Experimental" />
   </ItemGroup>
 
   <!-- Import Azure.Core shared source -->
