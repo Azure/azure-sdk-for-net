@@ -10,7 +10,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Data.SchemaRegistry
 {
     /// <summary>
-    /// The Schema Registry client.
+    /// The Schema Registry client provides operations to interact with the Schema Registry service.
     /// </summary>
     public class SchemaRegistryClient
     {
@@ -80,6 +80,8 @@ namespace Azure.Data.SchemaRegistry
 
         /// <summary>
         /// Registers a schema with the SchemaRegistry service.
+        /// If the schema did not previously exist in the Schema Registry instance, it is added to the instance and assigned a schema ID.
+        /// If the schema did previous exist in the Schema Registry instance, a new version of the schema is added to the instance and assigned a new schema ID.
         /// </summary>
         /// <param name="groupName">The name of the SchemaRegistry group.</param>
         /// <param name="schemaName">The name of the schema.</param>
