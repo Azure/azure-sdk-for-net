@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace OpenTelemetry.Exporter.AzureMonitor.Models
 {
-    public partial class ErrorDetails
+    public partial class TelemetryErrorDetails
     {
-        internal static ErrorDetails DeserializeErrorDetails(JsonElement element)
+        internal static TelemetryErrorDetails DeserializeTelemetryErrorDetails(JsonElement element)
         {
             Optional<int> index = default;
             Optional<int> statusCode = default;
@@ -35,7 +35,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
                     continue;
                 }
             }
-            return new ErrorDetails(Optional.ToNullable(index), Optional.ToNullable(statusCode), message.Value);
+            return new TelemetryErrorDetails(Optional.ToNullable(index), Optional.ToNullable(statusCode), message.Value);
         }
     }
 }

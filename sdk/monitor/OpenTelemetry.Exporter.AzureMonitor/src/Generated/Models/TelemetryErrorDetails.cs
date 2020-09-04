@@ -8,18 +8,18 @@
 namespace OpenTelemetry.Exporter.AzureMonitor.Models
 {
     /// <summary> The error details. </summary>
-    public partial class ErrorDetails
+    public partial class TelemetryErrorDetails
     {
-        /// <summary> Initializes a new instance of ErrorDetails. </summary>
-        internal ErrorDetails()
+        /// <summary> Initializes a new instance of TelemetryErrorDetails. </summary>
+        internal TelemetryErrorDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of ErrorDetails. </summary>
+        /// <summary> Initializes a new instance of TelemetryErrorDetails. </summary>
         /// <param name="index"> The index in the original payload of the item. </param>
         /// <param name="statusCode"> The item specific [HTTP Response status code](#Response Status Codes). </param>
         /// <param name="message"> The error message. </param>
-        internal ErrorDetails(int? index, int? statusCode, string message)
+        internal TelemetryErrorDetails(int? index, int? statusCode, string message)
         {
             Index = index;
             StatusCode = statusCode;

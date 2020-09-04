@@ -53,13 +53,13 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                 return 0;
             }
 
-            List<TelemetryEnvelope> telemetryItems = new List<TelemetryEnvelope>();
-            TelemetryEnvelope telemetryItem;
+            List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
+            TelemetryItem telemetryItem;
 
             foreach (var activity in batchActivity)
             {
                 telemetryItem = GeneratePartAEnvelope(activity);
-                telemetryItem.IKey = this.instrumentationKey;
+                telemetryItem.InstrumentationKey = this.instrumentationKey;
                 telemetryItem.Data = GenerateTelemetryData(activity);
                 telemetryItems.Add(telemetryItem);
             }
@@ -79,10 +79,10 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             return response.Value.ItemsAccepted.GetValueOrDefault();
         }
 
-        private static TelemetryEnvelope GeneratePartAEnvelope(Activity activity)
+        private static TelemetryItem GeneratePartAEnvelope(Activity activity)
         {
             // TODO: Get TelemetryEnvelope name changed in swagger
-            TelemetryEnvelope envelope = new TelemetryEnvelope(PartA_Name_Mapping[activity.GetTelemetryType()], activity.StartTimeUtc);
+            TelemetryItem envelope = new TelemetryItem(PartA_Name_Mapping[activity.GetTelemetryType()], activity.StartTimeUtc);
             // TODO: Validate if Azure SDK has common function to generate role instance
             envelope.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = "testRoleInstance";
 
@@ -123,7 +123,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             }
             else if (telemetryType == TelemetryType.Dependency)
             {
-                var dependency = new RemoteDependencyData(2, activity.DisplayName, activity.Duration)
+                var dependency = new RemoteDependencyData(2, activity.DisplayName, activity.Duration.ToString("c", CultureInfo.InvariantCulture))
                 {
                     Id = activity.Context.SpanId.ToHexString(),
                     Success = activity.GetStatus().IsOk

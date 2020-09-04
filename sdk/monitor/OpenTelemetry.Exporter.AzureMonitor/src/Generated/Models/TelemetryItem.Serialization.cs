@@ -10,15 +10,15 @@ using Azure.Core;
 
 namespace OpenTelemetry.Exporter.AzureMonitor.Models
 {
-    public partial class TelemetryEnvelope : IUtf8JsonSerializable
+    public partial class TelemetryItem : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Ver))
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("ver");
-                writer.WriteNumberValue(Ver.Value);
+                writer.WriteNumberValue(Version.Value);
             }
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
@@ -29,15 +29,15 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
                 writer.WritePropertyName("sampleRate");
                 writer.WriteNumberValue(SampleRate.Value);
             }
-            if (Optional.IsDefined(Seq))
+            if (Optional.IsDefined(Sequence))
             {
                 writer.WritePropertyName("seq");
-                writer.WriteStringValue(Seq);
+                writer.WriteStringValue(Sequence);
             }
-            if (Optional.IsDefined(IKey))
+            if (Optional.IsDefined(InstrumentationKey))
             {
                 writer.WritePropertyName("iKey");
-                writer.WriteStringValue(IKey);
+                writer.WriteStringValue(InstrumentationKey);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
