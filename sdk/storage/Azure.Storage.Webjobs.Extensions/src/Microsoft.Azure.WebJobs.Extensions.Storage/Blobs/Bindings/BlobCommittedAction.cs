@@ -30,5 +30,13 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
 
             return Task.FromResult(0);
         }
+
+        public void Execute()
+        {
+            if (_blobWrittenWatcher != null)
+            {
+                _blobWrittenWatcher.Notify(_container, _blob);
+            }
+        }
     }
 }

@@ -6,7 +6,6 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-// TODO (kasobol-msft) investigate replacement of this
 namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
 {
     internal class DelegatingCloudBlobStream : Stream
@@ -142,35 +141,5 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
         {
             _inner.WriteByte(value);
         }
-
-        /* public override Task CommitAsync()
-        {
-            return _inner.CommitAsync();
-        }
-
-        public override void Commit()
-        {
-            _inner.Commit();
-        }
-
-        public override ICancellableAsyncResult BeginCommit(AsyncCallback callback, object state)
-        {
-            return _inner.BeginCommit(callback, state);
-        }
-
-        public override void EndCommit(IAsyncResult asyncResult)
-        {
-            _inner.EndCommit(asyncResult);
-        }
-
-        public override ICancellableAsyncResult BeginFlush(AsyncCallback callback, object state)
-        {
-            return _inner.BeginFlush(callback, state);
-        }
-
-        public override void EndFlush(IAsyncResult asyncResult)
-        {
-            _inner.EndFlush(asyncResult);
-        }*/
     }
 }

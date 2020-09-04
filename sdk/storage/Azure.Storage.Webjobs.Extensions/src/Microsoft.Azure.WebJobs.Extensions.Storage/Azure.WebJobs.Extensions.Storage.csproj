@@ -82,7 +82,7 @@
     <Compile Include="..\Microsoft.Azure.WebJobs.Protocols\ReadBlobParameterLog.cs" Link="Shared\ReadBlobParameterLog.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Protocols\WriteBlobParameterLog.cs" Link="Shared\WriteBlobParameterLog.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Shared.Storage\StorageExceptionExtensions.cs" Link="StorageExceptionExtensions.cs" />
-  </ItemGroup>  
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Storage.Queues" VersionOverride="12.5.0-alpha.20200903.4" />
