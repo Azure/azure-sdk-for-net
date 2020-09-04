@@ -66,7 +66,7 @@ namespace Azure.Core.TestFramework
 
         public virtual void SanitizeBody(RecordEntryMessage message)
         {
-            if (message.Body != null)
+            if (message.Body?.Length > 0)
             {
                 message.TryGetContentType(out string contentType);
 
