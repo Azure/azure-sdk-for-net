@@ -11,7 +11,7 @@ extends:
         EnvVars:
           AZURE_AUTHORITY_HOST: https://login.microsoftonline.com
           STORAGE_ENDPOINT_SUFFIX: core.windows.net
-          TABLES_COSMOS_ENDPOINT_SUFFIX: cosmos.azure.com
+          COSMOS_TABLES_ENDPOINT_SUFFIX: cosmos.azure.com
 
       # AzureUSGovernment
       - ServiceDirectory: tables
@@ -20,7 +20,7 @@ extends:
         EnvVars:
           AZURE_AUTHORITY_HOST: https://login.microsoftonline.us
           STORAGE_ENDPOINT_SUFFIX: core.usgovcloudapi.net
-          TABLES_COSMOS_ENDPOINT_SUFFIX: cosmos.azure.us
+          COSMOS_TABLES_ENDPOINT_SUFFIX: cosmos.azure.us
 
       # # AzureChinaCloud
       # - ServiceDirectory: tables
@@ -29,4 +29,4 @@ extends:
       #   EnvVars:
       #     AZURE_AUTHORITY_HOST: https://login.chinacloudapi.cn
       #     STORAGE_ENDPOINT_SUFFIX: core.chinacloudapi.cn
-      #     TABLES_COSMOS_ENDPOINT_SUFFIX: cosmos.azure.cn
+      #     COSMOS_TABLES_ENDPOINT_SUFFIX: cosmos.azure.cn
