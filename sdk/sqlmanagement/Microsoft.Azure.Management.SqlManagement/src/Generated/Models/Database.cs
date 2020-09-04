@@ -184,7 +184,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="resumedDate">The date when database was resumed by
         /// user action or database login (ISO8601 format). Null if the
         /// database is paused.</param>
-        public Database(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), string managedBy = default(string), CreateMode? createMode = default(CreateMode?), string collation = default(string), long? maxSizeBytes = default(long?), SampleName? sampleName = default(SampleName?), string elasticPoolId = default(string), string sourceDatabaseId = default(string), DatabaseStatus? status = default(DatabaseStatus?), System.Guid? databaseId = default(System.Guid?), System.DateTime? creationDate = default(System.DateTime?), string currentServiceObjectiveName = default(string), string requestedServiceObjectiveName = default(string), string defaultSecondaryLocation = default(string), string failoverGroupId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), System.DateTime? sourceDatabaseDeletionDate = default(System.DateTime?), string recoveryServicesRecoveryPointId = default(string), string longTermRetentionBackupResourceId = default(string), string recoverableDatabaseId = default(string), string restorableDroppedDatabaseId = default(string), CatalogCollationType? catalogCollation = default(CatalogCollationType?), bool? zoneRedundant = default(bool?), DatabaseLicenseType? licenseType = default(DatabaseLicenseType?), long? maxLogSizeBytes = default(long?), System.DateTime? earliestRestoreDate = default(System.DateTime?), DatabaseReadScale? readScale = default(DatabaseReadScale?), int? readReplicaCount = default(int?), Sku currentSku = default(Sku), int? autoPauseDelay = default(int?), StorageAccountType? storageAccountType = default(StorageAccountType?), double? minCapacity = default(double?), System.DateTime? pausedDate = default(System.DateTime?), System.DateTime? resumedDate = default(System.DateTime?))
+        public Database(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), string managedBy = default(string), string createMode = default(string), string collation = default(string), long? maxSizeBytes = default(long?), string sampleName = default(string), string elasticPoolId = default(string), string sourceDatabaseId = default(string), string status = default(string), System.Guid? databaseId = default(System.Guid?), System.DateTime? creationDate = default(System.DateTime?), string currentServiceObjectiveName = default(string), string requestedServiceObjectiveName = default(string), string defaultSecondaryLocation = default(string), string failoverGroupId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), System.DateTime? sourceDatabaseDeletionDate = default(System.DateTime?), string recoveryServicesRecoveryPointId = default(string), string longTermRetentionBackupResourceId = default(string), string recoverableDatabaseId = default(string), string restorableDroppedDatabaseId = default(string), string catalogCollation = default(string), bool? zoneRedundant = default(bool?), string licenseType = default(string), long? maxLogSizeBytes = default(long?), System.DateTime? earliestRestoreDate = default(System.DateTime?), string readScale = default(string), int? readReplicaCount = default(int?), Sku currentSku = default(Sku), int? autoPauseDelay = default(int?), string storageAccountType = default(string), double? minCapacity = default(double?), System.DateTime? pausedDate = default(System.DateTime?), System.DateTime? resumedDate = default(System.DateTime?))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -307,7 +307,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'OnlineSecondary'
         /// </summary>
         [JsonProperty(PropertyName = "properties.createMode")]
-        public CreateMode? CreateMode { get; set; }
+        public string CreateMode { get; set; }
 
         /// <summary>
         /// Gets or sets the collation of the database.
@@ -327,7 +327,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'WideWorldImportersStd', 'WideWorldImportersFull'
         /// </summary>
         [JsonProperty(PropertyName = "properties.sampleName")]
-        public SampleName? SampleName { get; set; }
+        public string SampleName { get; set; }
 
         /// <summary>
         /// Gets or sets the resource identifier of the elastic pool containing
@@ -353,7 +353,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'OnlineChangingDwPerformanceTiers', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
-        public DatabaseStatus? Status { get; private set; }
+        public string Status { get; private set; }
 
         /// <summary>
         /// Gets the ID of the database.
@@ -438,7 +438,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// include: 'DATABASE_DEFAULT', 'SQL_Latin1_General_CP1_CI_AS'
         /// </summary>
         [JsonProperty(PropertyName = "properties.catalogCollation")]
-        public CatalogCollationType? CatalogCollation { get; set; }
+        public string CatalogCollation { get; set; }
 
         /// <summary>
         /// Gets or sets whether or not this database is zone redundant, which
@@ -455,7 +455,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// values include: 'LicenseIncluded', 'BasePrice'
         /// </summary>
         [JsonProperty(PropertyName = "properties.licenseType")]
-        public DatabaseLicenseType? LicenseType { get; set; }
+        public string LicenseType { get; set; }
 
         /// <summary>
         /// Gets the max log size for this database.
@@ -477,7 +477,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// the same region. Possible values include: 'Enabled', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.readScale")]
-        public DatabaseReadScale? ReadScale { get; set; }
+        public string ReadScale { get; set; }
 
         /// <summary>
         /// Gets or sets the number of readonly secondary replicas associated
@@ -505,7 +505,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// (GeoRedundantStorage). Possible values include: 'GRS', 'LRS', 'ZRS'
         /// </summary>
         [JsonProperty(PropertyName = "properties.storageAccountType")]
-        public StorageAccountType? StorageAccountType { get; set; }
+        public string StorageAccountType { get; set; }
 
         /// <summary>
         /// Gets or sets minimal capacity that database will always have
