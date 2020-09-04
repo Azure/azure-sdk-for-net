@@ -8,7 +8,7 @@ extends:
       OSVmImage: "ubuntu-18.04"
       TestTargetFramework: netcoreapp2.1
       Container:
-        image: 'azsdkengsys.azurecr.io/dotnet/ubuntu_netcore2_keyring:523069'
+        image: 'azsdkengsys.azurecr.io/dotnet/ubuntu_netcore_keyring:523386'
         endpoint: 'azsdkengsys'
         options: -ti --cap-add=IPC_LOCK
       PreSteps:
