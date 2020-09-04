@@ -23,8 +23,8 @@ namespace Azure.Storage.Files.Shares.Models
             get
             {
                 return PolicyStartsOn == default ?
-                    StartsOn :
-                    (DateTimeOffset)PolicyStartsOn;
+                    new DateTimeOffset() :
+                    PolicyStartsOn.Value;
             }
             set
             {
@@ -42,8 +42,8 @@ namespace Azure.Storage.Files.Shares.Models
             get
             {
                 return PolicyExpiresOn == default ?
-                    ExpiresOn :
-                    (DateTimeOffset)PolicyExpiresOn;
+                    new DateTimeOffset() :
+                    PolicyExpiresOn.Value;
             }
             set
             {
