@@ -4,16 +4,14 @@ param (
   $AzCopy,
   $DocLocation,
   $SASKey,
-  $Language,
   $BlobName,
   $ExitOnError=1,
   $UploadLatest=1,
   $PublicArtifactLocation = "",
   $RepoReplaceRegex = "(https://github.com/.*/(?:blob|tree)/)master"
 )
-. (Join-Path $PSScriptRoot artifact-metadata-parsing.ps1)
 
-$Language = $Language.ToLower()
+. (Join-Path $PSScriptRoot common.ps1)
 
 # Regex inspired but simplified from https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string
 $SEMVER_REGEX = "^(?<major>0|[1-9]\d*)\.(?<minor>0|[1-9]\d*)\.(?<patch>0|[1-9]\d*)(?:-?(?<prelabel>[a-zA-Z-]*)(?:\.?(?<prenumber>0|[1-9]\d*))?)?$"
@@ -120,7 +118,7 @@ function Get-Existing-Versions
         [Parameter(Mandatory=$true)] [String]$PkgName
     )
     $versionUri = "$($BlobName)/`$web/$($Language)/$($PkgName)/versioning/versions"
-    Write-Host "Heading to $versionUri to retrieve known versions"
+    LogDebug "Heading to $versionUri to retrieve known versions"
 
     try {
         return ((Invoke-RestMethod -Uri $versionUri -MaximumRetryCount 3 -RetryIntervalSec 5) -Split "\n" | % {$_.Trim()} | ? { return $_ })
@@ -128,12 +126,12 @@ function Get-Existing-Versions
     catch {
         # Handle 404. If it's 404, this is the first time we've published this package.
         if ($_.Exception.Response.StatusCode.value__ -eq 404){
-            Write-Host "Version file does not exist. This is the first time we have published this package."
+            LogDebug "Version file does not exist. This is the first time we have published this package."
         }
         else {
             # If it's not a 404. exit. We don't know what's gone wrong.
-            Write-Host "Exception getting version file. Aborting"
-            Write-Host $_
+            LogError "Exception getting version file. Aborting"
+            LogError $_
             exit(1)
         }
     }
@@ -148,18 +146,18 @@ function Update-Existing-Versions
     )
     $existingVersions = @(Get-Existing-Versions -PkgName $PkgName)
 
-    Write-Host "Before I update anything, I am seeing $existingVersions"
+    LogDebug "Before I update anything, I am seeing $existingVersions"
 
     if (!$existingVersions)
     {
         $existingVersions = @()
         $existingVersions += $PkgVersion
-        Write-Host "No existing versions. Adding $PkgVersion."
+        LogDebug "No existing versions. Adding $PkgVersion."
     }
     else
     {
         $existingVersions += $pkgVersion
-        Write-Host "Already Existing Versions. Adding $PkgVersion."
+        LogDebug "Already Existing Versions. Adding $PkgVersion."
     }
 
     $existingVersions = $existingVersions | Select-Object -Unique
@@ -167,9 +165,9 @@ function Update-Existing-Versions
     # newest first
     $sortedVersionObj = (Sort-Versions -VersionArray $existingVersions)
 
-    Write-Host $sortedVersionObj
-    Write-Host $sortedVersionObj.LatestGAPackage
-    Write-Host $sortedVersionObj.LatestPreviewPackage
+    LogDebug $sortedVersionObj
+    LogDebug $sortedVersionObj.LatestGAPackage
+    LogDebug $sortedVersionObj.LatestPreviewPackage
 
     # write to file. to get the correct performance with "actually empty" files, we gotta do the newline
     # join ourselves. This way we have absolute control over the trailing whitespace.
@@ -194,12 +192,12 @@ function Upload-Blobs
     #eg : $BlobName = "https://azuresdkdocs.blob.core.windows.net"
     $DocDest = "$($BlobName)/`$web/$($Language)"
 
-    Write-Host "DocDest $($DocDest)"
-    Write-Host "PkgName $($PkgName)"
-    Write-Host "DocVersion $($DocVersion)"
-    Write-Host "DocDir $($DocDir)"
-    Write-Host "Final Dest $($DocDest)/$($PkgName)/$($DocVersion)"
-    Write-Host "Release Tag $($ReleaseTag)"
+    LogDebug "DocDest $($DocDest)"
+    LogDebug "PkgName $($PkgName)"
+    LogDebug "DocVersion $($DocVersion)"
+    LogDebug "DocDir $($DocDir)"
+    LogDebug "Final Dest $($DocDest)/$($PkgName)/$($DocVersion)"
+    LogDebug "Release Tag $($ReleaseTag)"
 
     # Use the step to replace master link to release tag link 
     if ($ReleaseTag) {
@@ -213,13 +211,13 @@ function Upload-Blobs
         }
     } 
     else {
-        Write-Warning "Not able to do the master link replacement, since no release tag found for the release. Please manually check."
+        LogWarning "Not able to do the master link replacement, since no release tag found for the release. Please manually check."
     } 
    
-    Write-Host "Uploading $($PkgName)/$($DocVersion) to $($DocDest)..."
+    LogDebug "Uploading $($PkgName)/$($DocVersion) to $($DocDest)..."
     & $($AzCopy) cp "$($DocDir)/**" "$($DocDest)/$($PkgName)/$($DocVersion)$($SASKey)" --recursive=true --cache-control "max-age=300, must-revalidate"
 
-    Write-Host "Handling versioning files under $($DocDest)/$($PkgName)/versioning/"
+    LogDebug "Handling versioning files under $($DocDest)/$($PkgName)/versioning/"
     $versionsObj = (Update-Existing-Versions -PkgName $PkgName -PkgVersion $DocVersion -DocDest $DocDest)
 
     # we can safely assume we have AT LEAST one version here. Reason being we just completed Update-Existing-Versions
@@ -227,9 +225,18 @@ function Upload-Blobs
 
     if ($UploadLatest -and ($latestVersion -eq $DocVersion))
     {
-        Write-Host "Uploading $($PkgName) to latest folder in $($DocDest)..."
+        LogDebug "Uploading $($PkgName) to latest folder in $($DocDest)..."
         & $($AzCopy) cp "$($DocDir)/**" "$($DocDest)/$($PkgName)/latest$($SASKey)" --recursive=true --cache-control "max-age=300, must-revalidate"
     }
 }
 
-&$PublishGithubIODocsFn
+
+if ((Get-ChildItem -Path Function: | ? { $_.Name -eq $PublishGithubIODocsFn }).Count -gt 0)
+{
+    &$PublishGithubIODocsFn -DocLocation $DocLocation -PublicArtifactLocation $PublicArtifactLocation
+}
+else
+{
+    LogWarning "The function '$PublishGithubIODocsFn' was not found."
+}
+
