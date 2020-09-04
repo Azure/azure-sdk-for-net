@@ -412,13 +412,13 @@ namespace Azure.Core.Tests
         [Test]
         [TestCase(true)]
         [TestCase(false)]
-        public void ContentLengthUpdatedCorrectlyOnEmptyBody(bool headRequest)
+        public void ContentLengthUpdatedCorrectlyOnEmptyBody(bool isHeadRequest)
         {
             var sanitizer = new RecordedTestSanitizer();
             var entry = new RecordEntry()
             {
                 RequestUri = "http://localhost/",
-                RequestMethod = headRequest ? RequestMethod.Head : RequestMethod.Get,
+                RequestMethod = isHeadRequest ? RequestMethod.Head : RequestMethod.Get,
                 Response =
                 {
                     Headers =
@@ -432,7 +432,7 @@ namespace Azure.Core.Tests
             };
             sanitizer.Sanitize(entry);
 
-            if (headRequest)
+            if (isHeadRequest)
             {
                 Assert.AreEqual(new[] { "41" }, entry.Response.Headers["Content-Length"]);
             }
