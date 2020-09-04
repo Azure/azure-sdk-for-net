@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/resourceGroups/csharp-sdk-test/providers/Microsoft.HybridCompute/machines/thinkpad?api-version=2019-12-12",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Jlc291cmNlR3JvdXBzL2NzaGFycC1zZGstdGVzdC9wcm92aWRlcnMvTWljcm9zb2Z0Lkh5YnJpZENvbXB1dGUvbWFjaGluZXMvdGhpbmtwYWQ/YXBpLXZlcnNpb249MjAxOS0xMi0xMg==",
+      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/resourceGroups/csharp-sdk-test/providers/Microsoft.HybridCompute/machines/thinkpad?api-version=2020-07-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Jlc291cmNlR3JvdXBzL2NzaGFycC1zZGstdGVzdC9wcm92aWRlcnMvTWljcm9zb2Z0Lkh5YnJpZENvbXB1dGUvbWFjaGluZXMvdGhpbmtwYWQ/YXBpLXZlcnNpb249MjAyMC0wNy0zMC1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f003f854-ad92-41a8-9cca-460ad925baba"
+          "dc4168f2-5725-4c0d-a8ed-05f4f542cc5d"
         ],
         "Accept-Language": [
           "en-US"
@@ -16,7 +16,7 @@
           "FxVersion/4.6.29130.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview"
+          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview.2"
         ]
       },
       "ResponseHeaders": {
@@ -33,25 +33,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "0bcdc09b-a994-4cdd-8113-6c5fe8d38cab"
+          "d5d8fc4f-e7ba-4b7d-9006-eafeb7a7771e"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-correlation-request-id": [
-          "1c4397a4-04c6-48c7-93ef-7d1d0ddbb3dd"
+          "7141d17d-a507-4804-902f-89c9eedb9518"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200902T102101Z:1c4397a4-04c6-48c7-93ef-7d1d0ddbb3dd"
+          "WESTUS:20200903T232950Z:7141d17d-a507-4804-902f-89c9eedb9518"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 02 Sep 2020 10:21:00 GMT"
+          "Thu, 03 Sep 2020 23:29:50 GMT"
         ],
         "Content-Length": [
-          "1154"
+          "1273"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -60,17 +60,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/resourceGroups/csharp-sdk-test/providers/Microsoft.HybridCompute/machines/thinkpad\",\r\n  \"name\": \"thinkpad\",\r\n  \"location\": \"eastus\",\r\n  \"tags\": {},\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\",\r\n    \"principalId\": \"85ae3c40-063b-46a3-a9da-ff6a294a35a3\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n  },\r\n  \"type\": \"Microsoft.HybridCompute/machines\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"agentVersion\": \"0.11.20231.010\",\r\n    \"status\": \"Connected\",\r\n    \"lastStatusChange\": \"2020-09-02T10:09:56.3082985Z\",\r\n    \"errorDetails\": [],\r\n    \"displayName\": \"tyler-ThinkPad-X1-Carbon\",\r\n    \"machineFqdn\": \"tyler-ThinkPad-X1-Carbon\",\r\n    \"osName\": \"linux\",\r\n    \"osVersion\": \"5.4.0-42-generic\",\r\n    \"osProfile\": {\r\n      \"computerName\": \"tyler-ThinkPad-X1-Carbon\"\r\n    },\r\n    \"vmId\": \"0461000b-2a15-484b-a4b9-3e2ba8bb4f33\",\r\n    \"clientPublicKey\": \"MIIBCgKCAQEA6rjKlRPn+dd6KCcUs8AGJiZ/a2Q1tjRDQ21CBt5NiA2a+9WbUu60iGy+pRNHJK4XmTUTBWTK4mo27p+Yg0C9fqZwceLMwkZZmL1QZvktqWTA/8KpQrkahnCvkzF5rsNlwSJL4FCtsSVqGoNMo5jaUh1vJaxVaCU8IdX4mJ1Hz1yzkKcl12w/S19kjtZu1LYTPbOoxnowuHzHqCJipzF7j9pgzE4JjSgh7hz/P8ANvDo8VVPY7kX+8ekfNFbPmmSdtdMUjA/0YWjSx5mc+qjA7TrMIK2XTFzw/q/yfdxPjKsGRedwziH2AM/0ITcp3AQs/C1mxTGGy3UapR/ubIm4dwIDAQAB\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/resourceGroups/csharp-sdk-test/providers/Microsoft.HybridCompute/machines/thinkpad\",\r\n  \"name\": \"thinkpad\",\r\n  \"location\": \"eastus\",\r\n  \"tags\": {},\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\",\r\n    \"principalId\": \"82345a98-889c-4dac-9e66-433d50157ac4\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n  },\r\n  \"type\": \"Microsoft.HybridCompute/machines\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"agentVersion\": \"0.11.20231.010\",\r\n    \"status\": \"Connected\",\r\n    \"lastStatusChange\": \"2020-09-03T23:06:32.6367107Z\",\r\n    \"errorDetails\": [],\r\n    \"displayName\": \"tyler-ThinkPad-X1-Carbon\",\r\n    \"machineFqdn\": \"tyler-ThinkPad-X1-Carbon\",\r\n    \"osName\": \"linux\",\r\n    \"osVersion\": \"5.4.0-42-generic\",\r\n    \"osProfile\": {\r\n      \"computerName\": \"tyler-ThinkPad-X1-Carbon\"\r\n    },\r\n    \"vmId\": \"0de46979-ee34-48b0-a8f9-d8777543e3ca\",\r\n    \"vmUUID\": \"unknown\",\r\n    \"clientPublicKey\": \"MIIBCgKCAQEAt0RblNqduKOICwbj59hirIA3JkxB8qlSAgEo4jBEjCj1pcL4zM/NZcu9zhh7yUtrg2fkH4qKPiW2SlVx68eY7JJWswUey9dcT2pkiGQttlW04KM+k2vg3JNsoJY5Sntp1V11IAaXDbjU81Ox1PfjFw172QE1Ncjhhcp5+4RXRLugIu4wo12zpmVVhesqNIBeiJ2sezomyMDRGRzOUP8XYAotosqtwRtlYQ+VwxYyRAZceVuQA3o+VfV50EHwbdoE6PiPzY1eJxHDzZy8bEZwqwN6FsHOixcPnUwPQawTURwPGr6mVrepUMevPUzGZk+rGpr3nA20fVt+vvksJNCTyQIDAQAB\",\r\n    \"osSku\": \"Ubuntu 20.04.1 LTS\",\r\n    \"domainName\": \"n/a\",\r\n    \"adFqdn\": \"n/a\",\r\n    \"dnsFqdn\": \"tyler-ThinkPad-X1-Carbon\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/resourceGroups/csharp-sdk-test/providers/Microsoft.HybridCompute/machines/thinkpad/extensions/custom?api-version=2019-12-12",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Jlc291cmNlR3JvdXBzL2NzaGFycC1zZGstdGVzdC9wcm92aWRlcnMvTWljcm9zb2Z0Lkh5YnJpZENvbXB1dGUvbWFjaGluZXMvdGhpbmtwYWQvZXh0ZW5zaW9ucy9jdXN0b20/YXBpLXZlcnNpb249MjAxOS0xMi0xMg==",
+      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/resourceGroups/csharp-sdk-test/providers/Microsoft.HybridCompute/machines/thinkpad/extensions/custom?api-version=2020-07-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Jlc291cmNlR3JvdXBzL2NzaGFycC1zZGstdGVzdC9wcm92aWRlcnMvTWljcm9zb2Z0Lkh5YnJpZENvbXB1dGUvbWFjaGluZXMvdGhpbmtwYWQvZXh0ZW5zaW9ucy9jdXN0b20/YXBpLXZlcnNpb249MjAyMC0wNy0zMC1wcmV2aWV3",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"publisher\": \"Microsoft.Azure.Extensions\",\r\n    \"type\": \"CustomScript\",\r\n    \"typeHandlerVersion\": \"2.1\",\r\n    \"settings\": {\r\n      \"commandToExecute\": \"echo 'hi'\"\r\n    }\r\n  },\r\n  \"location\": \"eastus\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f9e4e2b4-99fd-419c-96cb-0b899bc8637d"
+          "2a34eb06-611f-4034-9436-84379351a1c6"
         ],
         "Accept-Language": [
           "en-US"
@@ -79,7 +79,7 @@
           "FxVersion/4.6.29130.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview"
+          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview.2"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -96,16 +96,16 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationresults/efbbac23-9252-46c0-b224-4ff159aa905d?api-version=2019-12-12"
+          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationresults/eac08856-ba47-4989-a008-4bde7efa8de7?api-version=2020-07-30-preview"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "b432ac15-86cc-4155-a027-81aedfeff467"
+          "09867f37-387f-4dc8-b894-bf1b0ed18b3a"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/efbbac23-9252-46c0-b224-4ff159aa905d?api-version=2019-12-12"
+          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/eac08856-ba47-4989-a008-4bde7efa8de7?api-version=2020-07-30-preview"
         ],
         "Server": [
           "Kestrel"
@@ -114,16 +114,16 @@
           "319"
         ],
         "x-ms-correlation-request-id": [
-          "be6b9b95-485e-451e-8ed7-3dd4801c0799"
+          "3ea7cf24-3ead-44a1-b13c-ce8899180f09"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200902T102105Z:be6b9b95-485e-451e-8ed7-3dd4801c0799"
+          "WESTUS:20200903T232956Z:3ea7cf24-3ead-44a1-b13c-ce8899180f09"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 02 Sep 2020 10:21:04 GMT"
+          "Thu, 03 Sep 2020 23:29:56 GMT"
         ],
         "Content-Type": [
           "application/json"
@@ -139,8 +139,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/efbbac23-9252-46c0-b224-4ff159aa905d?api-version=2019-12-12",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnN0YXR1cy9lZmJiYWMyMy05MjUyLTQ2YzAtYjIyNC00ZmYxNTlhYTkwNWQ/YXBpLXZlcnNpb249MjAxOS0xMi0xMg==",
+      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/eac08856-ba47-4989-a008-4bde7efa8de7?api-version=2020-07-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnN0YXR1cy9lYWMwODg1Ni1iYTQ3LTQ5ODktYTAwOC00YmRlN2VmYThkZTc/YXBpLXZlcnNpb249MjAyMC0wNy0zMC1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -148,7 +148,7 @@
           "FxVersion/4.6.29130.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview"
+          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview.2"
         ]
       },
       "ResponseHeaders": {
@@ -159,7 +159,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationresults/efbbac23-9252-46c0-b224-4ff159aa905d?api-version=2019-12-12"
+          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationresults/eac08856-ba47-4989-a008-4bde7efa8de7?api-version=2020-07-30-preview"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11998"
@@ -168,25 +168,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "f6509415-3f53-4055-a568-c122ee08b961"
+          "2d8bcf61-dea3-4407-b81b-b30939b6ce25"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/efbbac23-9252-46c0-b224-4ff159aa905d?api-version=2019-12-12"
+          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/eac08856-ba47-4989-a008-4bde7efa8de7?api-version=2020-07-30-preview"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-correlation-request-id": [
-          "05de3704-b017-4c6f-8f4e-73fa1a0fb960"
+          "aa9b58a0-01f7-4c88-83e1-cbe877906f8a"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200902T102137Z:05de3704-b017-4c6f-8f4e-73fa1a0fb960"
+          "WESTUS:20200903T233027Z:aa9b58a0-01f7-4c88-83e1-cbe877906f8a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 02 Sep 2020 10:21:37 GMT"
+          "Thu, 03 Sep 2020 23:30:27 GMT"
         ],
         "Content-Length": [
           "112"
@@ -198,12 +198,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"efbbac23-9252-46c0-b224-4ff159aa905d\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-09-02T10:21:04.4078992Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"eac08856-ba47-4989-a008-4bde7efa8de7\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-09-03T23:29:54.6086905Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/efbbac23-9252-46c0-b224-4ff159aa905d?api-version=2019-12-12",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnN0YXR1cy9lZmJiYWMyMy05MjUyLTQ2YzAtYjIyNC00ZmYxNTlhYTkwNWQ/YXBpLXZlcnNpb249MjAxOS0xMi0xMg==",
+      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/eac08856-ba47-4989-a008-4bde7efa8de7?api-version=2020-07-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnN0YXR1cy9lYWMwODg1Ni1iYTQ3LTQ5ODktYTAwOC00YmRlN2VmYThkZTc/YXBpLXZlcnNpb249MjAyMC0wNy0zMC1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -211,7 +211,7 @@
           "FxVersion/4.6.29130.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview"
+          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview.2"
         ]
       },
       "ResponseHeaders": {
@@ -222,7 +222,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationresults/efbbac23-9252-46c0-b224-4ff159aa905d?api-version=2019-12-12"
+          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationresults/eac08856-ba47-4989-a008-4bde7efa8de7?api-version=2020-07-30-preview"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11997"
@@ -231,25 +231,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "2d499417-ff22-4faa-bdc6-a5df9677c575"
+          "1e8bdc9b-a1fb-416f-9a89-e6b6c7f08823"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/efbbac23-9252-46c0-b224-4ff159aa905d?api-version=2019-12-12"
+          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/eac08856-ba47-4989-a008-4bde7efa8de7?api-version=2020-07-30-preview"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-correlation-request-id": [
-          "871c1bd5-aff0-4572-b235-787a59fe6ef1"
+          "0ea80c73-cca5-4fb0-9c8e-feeea96a7fd5"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200902T102208Z:871c1bd5-aff0-4572-b235-787a59fe6ef1"
+          "WESTUS:20200903T233059Z:0ea80c73-cca5-4fb0-9c8e-feeea96a7fd5"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 02 Sep 2020 10:22:08 GMT"
+          "Thu, 03 Sep 2020 23:30:58 GMT"
         ],
         "Content-Length": [
           "112"
@@ -261,12 +261,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"efbbac23-9252-46c0-b224-4ff159aa905d\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-09-02T10:21:04.4078992Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"eac08856-ba47-4989-a008-4bde7efa8de7\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-09-03T23:29:54.6086905Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/efbbac23-9252-46c0-b224-4ff159aa905d?api-version=2019-12-12",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnN0YXR1cy9lZmJiYWMyMy05MjUyLTQ2YzAtYjIyNC00ZmYxNTlhYTkwNWQ/YXBpLXZlcnNpb249MjAxOS0xMi0xMg==",
+      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/eac08856-ba47-4989-a008-4bde7efa8de7?api-version=2020-07-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnN0YXR1cy9lYWMwODg1Ni1iYTQ3LTQ5ODktYTAwOC00YmRlN2VmYThkZTc/YXBpLXZlcnNpb249MjAyMC0wNy0zMC1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -274,7 +274,7 @@
           "FxVersion/4.6.29130.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview"
+          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview.2"
         ]
       },
       "ResponseHeaders": {
@@ -285,7 +285,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationresults/efbbac23-9252-46c0-b224-4ff159aa905d?api-version=2019-12-12"
+          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationresults/eac08856-ba47-4989-a008-4bde7efa8de7?api-version=2020-07-30-preview"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11996"
@@ -294,25 +294,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "5554fc70-6878-4c71-a7ba-821b00d73247"
+          "1815c307-277e-47f6-8513-31dc274523dc"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/efbbac23-9252-46c0-b224-4ff159aa905d?api-version=2019-12-12"
+          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/eac08856-ba47-4989-a008-4bde7efa8de7?api-version=2020-07-30-preview"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-correlation-request-id": [
-          "09f00d17-3a1b-4b3d-a033-4d7ab148d366"
+          "4d157eb4-f0bb-476c-b148-c3fe76d29c7d"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200902T102239Z:09f00d17-3a1b-4b3d-a033-4d7ab148d366"
+          "WESTUS:20200903T233131Z:4d157eb4-f0bb-476c-b148-c3fe76d29c7d"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 02 Sep 2020 10:22:38 GMT"
+          "Thu, 03 Sep 2020 23:31:30 GMT"
         ],
         "Content-Length": [
           "112"
@@ -324,12 +324,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"efbbac23-9252-46c0-b224-4ff159aa905d\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-09-02T10:21:04.4078992Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"eac08856-ba47-4989-a008-4bde7efa8de7\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-09-03T23:29:54.6086905Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/efbbac23-9252-46c0-b224-4ff159aa905d?api-version=2019-12-12",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnN0YXR1cy9lZmJiYWMyMy05MjUyLTQ2YzAtYjIyNC00ZmYxNTlhYTkwNWQ/YXBpLXZlcnNpb249MjAxOS0xMi0xMg==",
+      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/eac08856-ba47-4989-a008-4bde7efa8de7?api-version=2020-07-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnN0YXR1cy9lYWMwODg1Ni1iYTQ3LTQ5ODktYTAwOC00YmRlN2VmYThkZTc/YXBpLXZlcnNpb249MjAyMC0wNy0zMC1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -337,7 +337,7 @@
           "FxVersion/4.6.29130.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview"
+          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview.2"
         ]
       },
       "ResponseHeaders": {
@@ -348,7 +348,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationresults/efbbac23-9252-46c0-b224-4ff159aa905d?api-version=2019-12-12"
+          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationresults/eac08856-ba47-4989-a008-4bde7efa8de7?api-version=2020-07-30-preview"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11995"
@@ -357,25 +357,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "77274aa5-eec7-4bb7-aceb-0a223bd43f7b"
+          "e916658e-b14c-48f6-8d05-3203646b0136"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/efbbac23-9252-46c0-b224-4ff159aa905d?api-version=2019-12-12"
+          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/eac08856-ba47-4989-a008-4bde7efa8de7?api-version=2020-07-30-preview"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-correlation-request-id": [
-          "6a29ffa2-b162-4506-87f3-d2e36a8d5a29"
+          "46b9f43c-73af-4af0-b4ca-14ef3dadbad7"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200902T102310Z:6a29ffa2-b162-4506-87f3-d2e36a8d5a29"
+          "WESTUS:20200903T233202Z:46b9f43c-73af-4af0-b4ca-14ef3dadbad7"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 02 Sep 2020 10:23:09 GMT"
+          "Thu, 03 Sep 2020 23:32:02 GMT"
         ],
         "Content-Length": [
           "112"
@@ -387,12 +387,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"efbbac23-9252-46c0-b224-4ff159aa905d\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-09-02T10:21:04.4078992Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"eac08856-ba47-4989-a008-4bde7efa8de7\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-09-03T23:29:54.6086905Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/efbbac23-9252-46c0-b224-4ff159aa905d?api-version=2019-12-12",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnN0YXR1cy9lZmJiYWMyMy05MjUyLTQ2YzAtYjIyNC00ZmYxNTlhYTkwNWQ/YXBpLXZlcnNpb249MjAxOS0xMi0xMg==",
+      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/eac08856-ba47-4989-a008-4bde7efa8de7?api-version=2020-07-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnN0YXR1cy9lYWMwODg1Ni1iYTQ3LTQ5ODktYTAwOC00YmRlN2VmYThkZTc/YXBpLXZlcnNpb249MjAyMC0wNy0zMC1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -400,7 +400,7 @@
           "FxVersion/4.6.29130.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview"
+          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview.2"
         ]
       },
       "ResponseHeaders": {
@@ -411,7 +411,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationresults/efbbac23-9252-46c0-b224-4ff159aa905d?api-version=2019-12-12"
+          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationresults/eac08856-ba47-4989-a008-4bde7efa8de7?api-version=2020-07-30-preview"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11994"
@@ -420,25 +420,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "9e7137f3-6bc0-4068-9636-99482cdcdaef"
+          "e2d49c3a-1f1a-4ae0-afe2-72a0d7fb2e7f"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/efbbac23-9252-46c0-b224-4ff159aa905d?api-version=2019-12-12"
+          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/eac08856-ba47-4989-a008-4bde7efa8de7?api-version=2020-07-30-preview"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-correlation-request-id": [
-          "97a9df4f-574a-42cf-9fcc-82d1da3636e1"
+          "a6b5fba2-1096-4156-8811-b294bf9a73be"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200902T102341Z:97a9df4f-574a-42cf-9fcc-82d1da3636e1"
+          "WESTUS:20200903T233234Z:a6b5fba2-1096-4156-8811-b294bf9a73be"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 02 Sep 2020 10:23:40 GMT"
+          "Thu, 03 Sep 2020 23:32:34 GMT"
         ],
         "Content-Length": [
           "112"
@@ -450,12 +450,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"efbbac23-9252-46c0-b224-4ff159aa905d\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-09-02T10:21:04.4078992Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"eac08856-ba47-4989-a008-4bde7efa8de7\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-09-03T23:29:54.6086905Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/efbbac23-9252-46c0-b224-4ff159aa905d?api-version=2019-12-12",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnN0YXR1cy9lZmJiYWMyMy05MjUyLTQ2YzAtYjIyNC00ZmYxNTlhYTkwNWQ/YXBpLXZlcnNpb249MjAxOS0xMi0xMg==",
+      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/eac08856-ba47-4989-a008-4bde7efa8de7?api-version=2020-07-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnN0YXR1cy9lYWMwODg1Ni1iYTQ3LTQ5ODktYTAwOC00YmRlN2VmYThkZTc/YXBpLXZlcnNpb249MjAyMC0wNy0zMC1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -463,7 +463,7 @@
           "FxVersion/4.6.29130.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview"
+          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview.2"
         ]
       },
       "ResponseHeaders": {
@@ -474,7 +474,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationresults/efbbac23-9252-46c0-b224-4ff159aa905d?api-version=2019-12-12"
+          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationresults/eac08856-ba47-4989-a008-4bde7efa8de7?api-version=2020-07-30-preview"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11993"
@@ -483,25 +483,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "71e96d9c-ec21-4df0-af6f-3d1aed52bb00"
+          "01c28f9f-f82c-4fe5-9b1d-c3610a060cea"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/efbbac23-9252-46c0-b224-4ff159aa905d?api-version=2019-12-12"
+          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/eac08856-ba47-4989-a008-4bde7efa8de7?api-version=2020-07-30-preview"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-correlation-request-id": [
-          "138846fd-628d-459a-8cfe-36b96968497e"
+          "5983064b-4f67-4c7f-9254-44504b29f01e"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200902T102412Z:138846fd-628d-459a-8cfe-36b96968497e"
+          "WESTUS:20200903T233305Z:5983064b-4f67-4c7f-9254-44504b29f01e"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 02 Sep 2020 10:24:12 GMT"
+          "Thu, 03 Sep 2020 23:33:05 GMT"
         ],
         "Content-Length": [
           "112"
@@ -513,12 +513,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"efbbac23-9252-46c0-b224-4ff159aa905d\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-09-02T10:21:04.4078992Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"eac08856-ba47-4989-a008-4bde7efa8de7\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-09-03T23:29:54.6086905Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/efbbac23-9252-46c0-b224-4ff159aa905d?api-version=2019-12-12",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnN0YXR1cy9lZmJiYWMyMy05MjUyLTQ2YzAtYjIyNC00ZmYxNTlhYTkwNWQ/YXBpLXZlcnNpb249MjAxOS0xMi0xMg==",
+      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/eac08856-ba47-4989-a008-4bde7efa8de7?api-version=2020-07-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnN0YXR1cy9lYWMwODg1Ni1iYTQ3LTQ5ODktYTAwOC00YmRlN2VmYThkZTc/YXBpLXZlcnNpb249MjAyMC0wNy0zMC1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -526,7 +526,7 @@
           "FxVersion/4.6.29130.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview"
+          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview.2"
         ]
       },
       "ResponseHeaders": {
@@ -537,7 +537,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationresults/efbbac23-9252-46c0-b224-4ff159aa905d?api-version=2019-12-12"
+          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationresults/eac08856-ba47-4989-a008-4bde7efa8de7?api-version=2020-07-30-preview"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11992"
@@ -546,25 +546,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "34c0bf17-8818-4f91-8d1e-e70439dd7d7c"
+          "6735ad05-c5a6-412b-be46-529f0cfed89d"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/efbbac23-9252-46c0-b224-4ff159aa905d?api-version=2019-12-12"
+          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/eac08856-ba47-4989-a008-4bde7efa8de7?api-version=2020-07-30-preview"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-correlation-request-id": [
-          "7482a6d0-3a0e-4d30-8733-0593d285ecd0"
+          "dc83c9d4-6d9f-4fec-bc99-e03bcce820eb"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200902T102444Z:7482a6d0-3a0e-4d30-8733-0593d285ecd0"
+          "WESTUS:20200903T233336Z:dc83c9d4-6d9f-4fec-bc99-e03bcce820eb"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 02 Sep 2020 10:24:44 GMT"
+          "Thu, 03 Sep 2020 23:33:36 GMT"
         ],
         "Content-Length": [
           "112"
@@ -576,12 +576,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"efbbac23-9252-46c0-b224-4ff159aa905d\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-09-02T10:21:04.4078992Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"eac08856-ba47-4989-a008-4bde7efa8de7\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-09-03T23:29:54.6086905Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/efbbac23-9252-46c0-b224-4ff159aa905d?api-version=2019-12-12",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnN0YXR1cy9lZmJiYWMyMy05MjUyLTQ2YzAtYjIyNC00ZmYxNTlhYTkwNWQ/YXBpLXZlcnNpb249MjAxOS0xMi0xMg==",
+      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/eac08856-ba47-4989-a008-4bde7efa8de7?api-version=2020-07-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnN0YXR1cy9lYWMwODg1Ni1iYTQ3LTQ5ODktYTAwOC00YmRlN2VmYThkZTc/YXBpLXZlcnNpb249MjAyMC0wNy0zMC1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -589,7 +589,7 @@
           "FxVersion/4.6.29130.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview"
+          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview.2"
         ]
       },
       "ResponseHeaders": {
@@ -600,7 +600,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationresults/efbbac23-9252-46c0-b224-4ff159aa905d?api-version=2019-12-12"
+          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationresults/eac08856-ba47-4989-a008-4bde7efa8de7?api-version=2020-07-30-preview"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11991"
@@ -609,25 +609,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "c31b2d83-705a-422a-a058-7f2941f9137c"
+          "b118f382-423f-4912-ab2a-a313925cf20b"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/efbbac23-9252-46c0-b224-4ff159aa905d?api-version=2019-12-12"
+          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/eac08856-ba47-4989-a008-4bde7efa8de7?api-version=2020-07-30-preview"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-correlation-request-id": [
-          "932290b4-fd76-44cf-91af-ea208ad8a6e6"
+          "cd919b1b-4152-47e5-aa80-2aff8c91fc35"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200902T102516Z:932290b4-fd76-44cf-91af-ea208ad8a6e6"
+          "WESTUS:20200903T233407Z:cd919b1b-4152-47e5-aa80-2aff8c91fc35"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 02 Sep 2020 10:25:16 GMT"
+          "Thu, 03 Sep 2020 23:34:06 GMT"
         ],
         "Content-Length": [
           "112"
@@ -639,12 +639,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"efbbac23-9252-46c0-b224-4ff159aa905d\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-09-02T10:21:04.4078992Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"eac08856-ba47-4989-a008-4bde7efa8de7\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-09-03T23:29:54.6086905Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/efbbac23-9252-46c0-b224-4ff159aa905d?api-version=2019-12-12",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnN0YXR1cy9lZmJiYWMyMy05MjUyLTQ2YzAtYjIyNC00ZmYxNTlhYTkwNWQ/YXBpLXZlcnNpb249MjAxOS0xMi0xMg==",
+      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/eac08856-ba47-4989-a008-4bde7efa8de7?api-version=2020-07-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnN0YXR1cy9lYWMwODg1Ni1iYTQ3LTQ5ODktYTAwOC00YmRlN2VmYThkZTc/YXBpLXZlcnNpb249MjAyMC0wNy0zMC1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -652,7 +652,7 @@
           "FxVersion/4.6.29130.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview"
+          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview.2"
         ]
       },
       "ResponseHeaders": {
@@ -669,22 +669,22 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "1b747d1d-978b-44b9-b6d2-87d937589e2d"
+          "1cc5c346-45f7-41f1-a72a-561f6aa38540"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-correlation-request-id": [
-          "57df68f6-7c4b-46d9-b287-f90b8b43aa5c"
+          "c1a221aa-07e7-4cac-b862-8a4ffbb30afd"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200902T102547Z:57df68f6-7c4b-46d9-b287-f90b8b43aa5c"
+          "WESTUS:20200903T233438Z:c1a221aa-07e7-4cac-b862-8a4ffbb30afd"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 02 Sep 2020 10:25:46 GMT"
+          "Thu, 03 Sep 2020 23:34:37 GMT"
         ],
         "Content-Length": [
           "778"
@@ -696,12 +696,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"efbbac23-9252-46c0-b224-4ff159aa905d\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2020-09-02T10:21:04.4078992Z\",\r\n  \"properties\": {\r\n    \"id\": \"/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/resourceGroups//providers/Microsoft.HybridCompute/machines//extensions/custom\",\r\n    \"name\": \"custom\",\r\n    \"location\": \"eastus\",\r\n    \"type\": \"Microsoft.HybridCompute/machines/extensions\",\r\n    \"properties\": {\r\n      \"publisher\": \"Microsoft.Azure.Extensions\",\r\n      \"type\": \"CustomScript\",\r\n      \"typeHandlerVersion\": \"2.1.3\",\r\n      \"autoUpgradeMinorVersion\": false,\r\n      \"settings\": {\r\n        \"commandToExecute\": \"echo 'hi'\"\r\n      },\r\n      \"provisioningState\": \"Succeeded\",\r\n      \"instanceView\": {\r\n        \"name\": \"custom\",\r\n        \"type\": \"CustomScript\",\r\n        \"typeHandlerVersion\": \"2.1.3\",\r\n        \"status\": {\r\n          \"code\": \"success\",\r\n          \"level\": \"Information\",\r\n          \"message\": \"formattedMessage: Enable succeeded: \\n[stdout]\\nhi\\n\\n[stderr]\\n\"\r\n        }\r\n      }\r\n    }\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"eac08856-ba47-4989-a008-4bde7efa8de7\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2020-09-03T23:29:54.6086905Z\",\r\n  \"properties\": {\r\n    \"id\": \"/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/resourceGroups//providers/Microsoft.HybridCompute/machines//extensions/custom\",\r\n    \"name\": \"custom\",\r\n    \"location\": \"eastus\",\r\n    \"type\": \"Microsoft.HybridCompute/machines/extensions\",\r\n    \"properties\": {\r\n      \"publisher\": \"Microsoft.Azure.Extensions\",\r\n      \"type\": \"CustomScript\",\r\n      \"typeHandlerVersion\": \"2.1.3\",\r\n      \"autoUpgradeMinorVersion\": false,\r\n      \"settings\": {\r\n        \"commandToExecute\": \"echo 'hi'\"\r\n      },\r\n      \"provisioningState\": \"Succeeded\",\r\n      \"instanceView\": {\r\n        \"name\": \"custom\",\r\n        \"type\": \"CustomScript\",\r\n        \"typeHandlerVersion\": \"2.1.3\",\r\n        \"status\": {\r\n          \"code\": \"success\",\r\n          \"level\": \"Information\",\r\n          \"message\": \"formattedMessage: Enable succeeded: \\n[stdout]\\nhi\\n\\n[stderr]\\n\"\r\n        }\r\n      }\r\n    }\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/resourceGroups/csharp-sdk-test/providers/Microsoft.HybridCompute/machines/thinkpad/extensions/custom?api-version=2019-12-12",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Jlc291cmNlR3JvdXBzL2NzaGFycC1zZGstdGVzdC9wcm92aWRlcnMvTWljcm9zb2Z0Lkh5YnJpZENvbXB1dGUvbWFjaGluZXMvdGhpbmtwYWQvZXh0ZW5zaW9ucy9jdXN0b20/YXBpLXZlcnNpb249MjAxOS0xMi0xMg==",
+      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/resourceGroups/csharp-sdk-test/providers/Microsoft.HybridCompute/machines/thinkpad/extensions/custom?api-version=2020-07-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Jlc291cmNlR3JvdXBzL2NzaGFycC1zZGstdGVzdC9wcm92aWRlcnMvTWljcm9zb2Z0Lkh5YnJpZENvbXB1dGUvbWFjaGluZXMvdGhpbmtwYWQvZXh0ZW5zaW9ucy9jdXN0b20/YXBpLXZlcnNpb249MjAyMC0wNy0zMC1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -709,7 +709,7 @@
           "FxVersion/4.6.29130.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview"
+          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview.2"
         ]
       },
       "ResponseHeaders": {
@@ -726,22 +726,22 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "c913b6e8-f719-4cfa-97fe-4efcf0ecf47b"
+          "61e27897-3b0a-4cac-a7a9-eaab8b707684"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-correlation-request-id": [
-          "5ef577d9-9154-43f0-b76a-bd03740e7c4b"
+          "2370ea83-5944-4b95-9ad9-f99b56314f03"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200902T102548Z:5ef577d9-9154-43f0-b76a-bd03740e7c4b"
+          "WESTUS:20200903T233442Z:2370ea83-5944-4b95-9ad9-f99b56314f03"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 02 Sep 2020 10:25:48 GMT"
+          "Thu, 03 Sep 2020 23:34:41 GMT"
         ],
         "Content-Length": [
           "676"
@@ -757,13 +757,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/resourceGroups/csharp-sdk-test/providers/Microsoft.HybridCompute/machines/thinkpad/extensions/custom?api-version=2019-12-12",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Jlc291cmNlR3JvdXBzL2NzaGFycC1zZGstdGVzdC9wcm92aWRlcnMvTWljcm9zb2Z0Lkh5YnJpZENvbXB1dGUvbWFjaGluZXMvdGhpbmtwYWQvZXh0ZW5zaW9ucy9jdXN0b20/YXBpLXZlcnNpb249MjAxOS0xMi0xMg==",
+      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/resourceGroups/csharp-sdk-test/providers/Microsoft.HybridCompute/machines/thinkpad/extensions/custom?api-version=2020-07-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Jlc291cmNlR3JvdXBzL2NzaGFycC1zZGstdGVzdC9wcm92aWRlcnMvTWljcm9zb2Z0Lkh5YnJpZENvbXB1dGUvbWFjaGluZXMvdGhpbmtwYWQvZXh0ZW5zaW9ucy9jdXN0b20/YXBpLXZlcnNpb249MjAyMC0wNy0zMC1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "c557031a-2320-4424-808c-fa3946bbf4d5"
+          "7c328c07-0569-41f2-9922-cd3390aff9f7"
         ],
         "Accept-Language": [
           "en-US"
@@ -772,7 +772,7 @@
           "FxVersion/4.6.29130.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview"
+          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview.2"
         ]
       },
       "ResponseHeaders": {
@@ -789,22 +789,22 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "3f9cee8c-ad22-47f2-98e4-a1ddd0a86ecd"
+          "b36f6377-7c3a-4a28-9649-02aa17ea4b98"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-correlation-request-id": [
-          "c1a5c3ab-cce6-4224-8acb-2b2ae2720b01"
+          "a2425335-327a-4c8c-89f1-2f83e4749795"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200902T102550Z:c1a5c3ab-cce6-4224-8acb-2b2ae2720b01"
+          "WESTUS:20200903T233444Z:a2425335-327a-4c8c-89f1-2f83e4749795"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 02 Sep 2020 10:25:49 GMT"
+          "Thu, 03 Sep 2020 23:34:43 GMT"
         ],
         "Content-Length": [
           "676"
@@ -820,13 +820,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/resourceGroups/csharp-sdk-test/providers/Microsoft.HybridCompute/machines/thinkpad/extensions?api-version=2019-12-12",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Jlc291cmNlR3JvdXBzL2NzaGFycC1zZGstdGVzdC9wcm92aWRlcnMvTWljcm9zb2Z0Lkh5YnJpZENvbXB1dGUvbWFjaGluZXMvdGhpbmtwYWQvZXh0ZW5zaW9ucz9hcGktdmVyc2lvbj0yMDE5LTEyLTEy",
+      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/resourceGroups/csharp-sdk-test/providers/Microsoft.HybridCompute/machines/thinkpad/extensions?api-version=2020-07-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Jlc291cmNlR3JvdXBzL2NzaGFycC1zZGstdGVzdC9wcm92aWRlcnMvTWljcm9zb2Z0Lkh5YnJpZENvbXB1dGUvbWFjaGluZXMvdGhpbmtwYWQvZXh0ZW5zaW9ucz9hcGktdmVyc2lvbj0yMDIwLTA3LTMwLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "82ce378a-1613-404d-a0ea-8f1fbd072eab"
+          "eb97baa9-4645-46bf-8463-26fa03a1574a"
         ],
         "Accept-Language": [
           "en-US"
@@ -835,7 +835,7 @@
           "FxVersion/4.6.29130.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview"
+          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview.2"
         ]
       },
       "ResponseHeaders": {
@@ -852,22 +852,22 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "1551ecf4-6cee-42fb-a576-36e749bb92b6"
+          "3fcd5726-a71c-4f3f-b067-09828865d13e"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-correlation-request-id": [
-          "a37fbba3-cd80-403f-84f8-ba7f6f843e97"
+          "9ac01f5f-e1a7-4c59-b62b-92e4ac191f63"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200902T102552Z:a37fbba3-cd80-403f-84f8-ba7f6f843e97"
+          "WESTUS:20200903T233446Z:9ac01f5f-e1a7-4c59-b62b-92e4ac191f63"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 02 Sep 2020 10:25:51 GMT"
+          "Thu, 03 Sep 2020 23:34:45 GMT"
         ],
         "Content-Length": [
           "688"
@@ -883,13 +883,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/resourceGroups/csharp-sdk-test/providers/Microsoft.HybridCompute/machines/thinkpad/extensions/custom?api-version=2019-12-12",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Jlc291cmNlR3JvdXBzL2NzaGFycC1zZGstdGVzdC9wcm92aWRlcnMvTWljcm9zb2Z0Lkh5YnJpZENvbXB1dGUvbWFjaGluZXMvdGhpbmtwYWQvZXh0ZW5zaW9ucy9jdXN0b20/YXBpLXZlcnNpb249MjAxOS0xMi0xMg==",
+      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/resourceGroups/csharp-sdk-test/providers/Microsoft.HybridCompute/machines/thinkpad/extensions/custom?api-version=2020-07-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Jlc291cmNlR3JvdXBzL2NzaGFycC1zZGstdGVzdC9wcm92aWRlcnMvTWljcm9zb2Z0Lkh5YnJpZENvbXB1dGUvbWFjaGluZXMvdGhpbmtwYWQvZXh0ZW5zaW9ucy9jdXN0b20/YXBpLXZlcnNpb249MjAyMC0wNy0zMC1wcmV2aWV3",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "df971701-3e1a-4fb5-8bcc-bd92287d4ba5"
+          "aef9ed9e-969b-4d4b-9a4a-80c2bf26c7b7"
         ],
         "Accept-Language": [
           "en-US"
@@ -898,7 +898,7 @@
           "FxVersion/4.6.29130.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview"
+          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview.2"
         ]
       },
       "ResponseHeaders": {
@@ -909,16 +909,16 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationresults/61d7930f-a4bb-4827-af4c-cd65bf7550b4?api-version=2019-12-12"
+          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationresults/132e5c8e-9199-42cb-a1a8-53a33db5d8f3?api-version=2020-07-30-preview"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "44664be5-7d25-4f9c-901f-78abd5f3aac8"
+          "a2e3ebe1-b310-415d-aab8-0d95e05308cf"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/61d7930f-a4bb-4827-af4c-cd65bf7550b4?api-version=2019-12-12"
+          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/132e5c8e-9199-42cb-a1a8-53a33db5d8f3?api-version=2020-07-30-preview"
         ],
         "Server": [
           "Kestrel"
@@ -927,16 +927,16 @@
           "14999"
         ],
         "x-ms-correlation-request-id": [
-          "f94e0806-a873-46a5-bdfc-09790dc56e32"
+          "964530c5-9bb1-494a-9e1b-eeb3171cea90"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200902T102555Z:f94e0806-a873-46a5-bdfc-09790dc56e32"
+          "WESTUS:20200903T233450Z:964530c5-9bb1-494a-9e1b-eeb3171cea90"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 02 Sep 2020 10:25:55 GMT"
+          "Thu, 03 Sep 2020 23:34:49 GMT"
         ],
         "Content-Type": [
           "application/json"
@@ -952,8 +952,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/61d7930f-a4bb-4827-af4c-cd65bf7550b4?api-version=2019-12-12",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnN0YXR1cy82MWQ3OTMwZi1hNGJiLTQ4MjctYWY0Yy1jZDY1YmY3NTUwYjQ/YXBpLXZlcnNpb249MjAxOS0xMi0xMg==",
+      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/132e5c8e-9199-42cb-a1a8-53a33db5d8f3?api-version=2020-07-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnN0YXR1cy8xMzJlNWM4ZS05MTk5LTQyY2ItYTFhOC01M2EzM2RiNWQ4ZjM/YXBpLXZlcnNpb249MjAyMC0wNy0zMC1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -961,7 +961,7 @@
           "FxVersion/4.6.29130.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview"
+          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview.2"
         ]
       },
       "ResponseHeaders": {
@@ -972,7 +972,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationresults/61d7930f-a4bb-4827-af4c-cd65bf7550b4?api-version=2019-12-12"
+          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationresults/132e5c8e-9199-42cb-a1a8-53a33db5d8f3?api-version=2020-07-30-preview"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11986"
@@ -981,25 +981,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "d5a82ae8-59c7-4249-980c-509cbfe9175c"
+          "33626943-b791-464d-9113-cc927e410f98"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/61d7930f-a4bb-4827-af4c-cd65bf7550b4?api-version=2019-12-12"
+          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/132e5c8e-9199-42cb-a1a8-53a33db5d8f3?api-version=2020-07-30-preview"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-correlation-request-id": [
-          "1abfe1db-bfd0-42fb-8b95-a983a8aab7d0"
+          "67460e2f-dd5b-4a92-8351-b881fa50cab6"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200902T102626Z:1abfe1db-bfd0-42fb-8b95-a983a8aab7d0"
+          "WESTUS:20200903T233521Z:67460e2f-dd5b-4a92-8351-b881fa50cab6"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 02 Sep 2020 10:26:25 GMT"
+          "Thu, 03 Sep 2020 23:35:21 GMT"
         ],
         "Content-Length": [
           "112"
@@ -1011,12 +1011,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"61d7930f-a4bb-4827-af4c-cd65bf7550b4\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-09-02T10:25:53.4140629Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"132e5c8e-9199-42cb-a1a8-53a33db5d8f3\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-09-03T23:34:48.6154377Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/61d7930f-a4bb-4827-af4c-cd65bf7550b4?api-version=2019-12-12",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnN0YXR1cy82MWQ3OTMwZi1hNGJiLTQ4MjctYWY0Yy1jZDY1YmY3NTUwYjQ/YXBpLXZlcnNpb249MjAxOS0xMi0xMg==",
+      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/132e5c8e-9199-42cb-a1a8-53a33db5d8f3?api-version=2020-07-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnN0YXR1cy8xMzJlNWM4ZS05MTk5LTQyY2ItYTFhOC01M2EzM2RiNWQ4ZjM/YXBpLXZlcnNpb249MjAyMC0wNy0zMC1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1024,7 +1024,7 @@
           "FxVersion/4.6.29130.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview"
+          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview.2"
         ]
       },
       "ResponseHeaders": {
@@ -1035,34 +1035,34 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationresults/61d7930f-a4bb-4827-af4c-cd65bf7550b4?api-version=2019-12-12"
+          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationresults/132e5c8e-9199-42cb-a1a8-53a33db5d8f3?api-version=2020-07-30-preview"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11985"
         ],
+        "x-ms-correlation-request-id": [
+          "2276a939-f0a7-4245-a3eb-f1c4d63fe975"
+        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "a397323b-8365-4b6b-93aa-5cadf36b1eb0"
+          "05fff296-5326-4f16-9567-013598bb4421"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/61d7930f-a4bb-4827-af4c-cd65bf7550b4?api-version=2019-12-12"
+          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/132e5c8e-9199-42cb-a1a8-53a33db5d8f3?api-version=2020-07-30-preview"
         ],
         "Server": [
           "Kestrel"
         ],
-        "x-ms-correlation-request-id": [
-          "ef193592-9ad1-492d-9c60-195fe1d23da5"
-        ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200902T102657Z:ef193592-9ad1-492d-9c60-195fe1d23da5"
+          "WESTUS:20200903T233552Z:2276a939-f0a7-4245-a3eb-f1c4d63fe975"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 02 Sep 2020 10:26:56 GMT"
+          "Thu, 03 Sep 2020 23:35:52 GMT"
         ],
         "Content-Length": [
           "112"
@@ -1074,12 +1074,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"61d7930f-a4bb-4827-af4c-cd65bf7550b4\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-09-02T10:25:53.4140629Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"132e5c8e-9199-42cb-a1a8-53a33db5d8f3\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-09-03T23:34:48.6154377Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/61d7930f-a4bb-4827-af4c-cd65bf7550b4?api-version=2019-12-12",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnN0YXR1cy82MWQ3OTMwZi1hNGJiLTQ4MjctYWY0Yy1jZDY1YmY3NTUwYjQ/YXBpLXZlcnNpb249MjAxOS0xMi0xMg==",
+      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/132e5c8e-9199-42cb-a1a8-53a33db5d8f3?api-version=2020-07-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnN0YXR1cy8xMzJlNWM4ZS05MTk5LTQyY2ItYTFhOC01M2EzM2RiNWQ4ZjM/YXBpLXZlcnNpb249MjAyMC0wNy0zMC1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1087,7 +1087,7 @@
           "FxVersion/4.6.29130.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview"
+          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview.2"
         ]
       },
       "ResponseHeaders": {
@@ -1098,34 +1098,34 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationresults/61d7930f-a4bb-4827-af4c-cd65bf7550b4?api-version=2019-12-12"
+          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationresults/132e5c8e-9199-42cb-a1a8-53a33db5d8f3?api-version=2020-07-30-preview"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11984"
         ],
-        "x-ms-correlation-request-id": [
-          "10bafe39-72b7-4a12-8bc5-cb784f780a7f"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "ff317ea0-1a74-47ac-9720-b189b57e28ce"
+          "6bd3afdc-86cc-4831-b3a5-afc2bf088b50"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/61d7930f-a4bb-4827-af4c-cd65bf7550b4?api-version=2019-12-12"
+          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/132e5c8e-9199-42cb-a1a8-53a33db5d8f3?api-version=2020-07-30-preview"
         ],
         "Server": [
           "Kestrel"
         ],
+        "x-ms-correlation-request-id": [
+          "8c110672-54b6-488b-927c-603d9356558e"
+        ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200902T102728Z:10bafe39-72b7-4a12-8bc5-cb784f780a7f"
+          "WESTUS:20200903T233623Z:8c110672-54b6-488b-927c-603d9356558e"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 02 Sep 2020 10:27:27 GMT"
+          "Thu, 03 Sep 2020 23:36:22 GMT"
         ],
         "Content-Length": [
           "112"
@@ -1137,12 +1137,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"61d7930f-a4bb-4827-af4c-cd65bf7550b4\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-09-02T10:25:53.4140629Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"132e5c8e-9199-42cb-a1a8-53a33db5d8f3\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-09-03T23:34:48.6154377Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/61d7930f-a4bb-4827-af4c-cd65bf7550b4?api-version=2019-12-12",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnN0YXR1cy82MWQ3OTMwZi1hNGJiLTQ4MjctYWY0Yy1jZDY1YmY3NTUwYjQ/YXBpLXZlcnNpb249MjAxOS0xMi0xMg==",
+      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/132e5c8e-9199-42cb-a1a8-53a33db5d8f3?api-version=2020-07-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnN0YXR1cy8xMzJlNWM4ZS05MTk5LTQyY2ItYTFhOC01M2EzM2RiNWQ4ZjM/YXBpLXZlcnNpb249MjAyMC0wNy0zMC1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1150,7 +1150,7 @@
           "FxVersion/4.6.29130.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview"
+          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview.2"
         ]
       },
       "ResponseHeaders": {
@@ -1161,7 +1161,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationresults/61d7930f-a4bb-4827-af4c-cd65bf7550b4?api-version=2019-12-12"
+          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationresults/132e5c8e-9199-42cb-a1a8-53a33db5d8f3?api-version=2020-07-30-preview"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11983"
@@ -1170,25 +1170,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "c20cfbc2-c683-4521-bcdf-dcdca8950b98"
+          "d51c885f-9927-4b12-834e-b9249bc4e22b"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/61d7930f-a4bb-4827-af4c-cd65bf7550b4?api-version=2019-12-12"
+          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/132e5c8e-9199-42cb-a1a8-53a33db5d8f3?api-version=2020-07-30-preview"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-correlation-request-id": [
-          "ba6dde6a-9978-44dd-8ffd-40325bf0e02c"
+          "92dbd95e-d410-4dcb-a1d6-3f3831aa6f81"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200902T102759Z:ba6dde6a-9978-44dd-8ffd-40325bf0e02c"
+          "WESTUS:20200903T233654Z:92dbd95e-d410-4dcb-a1d6-3f3831aa6f81"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 02 Sep 2020 10:27:58 GMT"
+          "Thu, 03 Sep 2020 23:36:53 GMT"
         ],
         "Content-Length": [
           "112"
@@ -1200,12 +1200,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"61d7930f-a4bb-4827-af4c-cd65bf7550b4\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-09-02T10:25:53.4140629Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"132e5c8e-9199-42cb-a1a8-53a33db5d8f3\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-09-03T23:34:48.6154377Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/61d7930f-a4bb-4827-af4c-cd65bf7550b4?api-version=2019-12-12",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnN0YXR1cy82MWQ3OTMwZi1hNGJiLTQ4MjctYWY0Yy1jZDY1YmY3NTUwYjQ/YXBpLXZlcnNpb249MjAxOS0xMi0xMg==",
+      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/132e5c8e-9199-42cb-a1a8-53a33db5d8f3?api-version=2020-07-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnN0YXR1cy8xMzJlNWM4ZS05MTk5LTQyY2ItYTFhOC01M2EzM2RiNWQ4ZjM/YXBpLXZlcnNpb249MjAyMC0wNy0zMC1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1213,7 +1213,7 @@
           "FxVersion/4.6.29130.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview"
+          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview.2"
         ]
       },
       "ResponseHeaders": {
@@ -1224,7 +1224,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationresults/61d7930f-a4bb-4827-af4c-cd65bf7550b4?api-version=2019-12-12"
+          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationresults/132e5c8e-9199-42cb-a1a8-53a33db5d8f3?api-version=2020-07-30-preview"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11982"
@@ -1233,25 +1233,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "d37364e8-090d-4e6c-9e49-1554910aaf06"
+          "8ed8cad2-cdd4-4b91-a0c0-b5e6f778d5d1"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/61d7930f-a4bb-4827-af4c-cd65bf7550b4?api-version=2019-12-12"
+          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/132e5c8e-9199-42cb-a1a8-53a33db5d8f3?api-version=2020-07-30-preview"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-correlation-request-id": [
-          "c5666cfb-b805-44f9-af53-a6aa748cee06"
+          "19381d81-c8f5-4238-ac06-01e96a1cab3b"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200902T102830Z:c5666cfb-b805-44f9-af53-a6aa748cee06"
+          "WESTUS:20200903T233726Z:19381d81-c8f5-4238-ac06-01e96a1cab3b"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 02 Sep 2020 10:28:29 GMT"
+          "Thu, 03 Sep 2020 23:37:26 GMT"
         ],
         "Content-Length": [
           "112"
@@ -1263,12 +1263,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"61d7930f-a4bb-4827-af4c-cd65bf7550b4\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-09-02T10:25:53.4140629Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"132e5c8e-9199-42cb-a1a8-53a33db5d8f3\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-09-03T23:34:48.6154377Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/61d7930f-a4bb-4827-af4c-cd65bf7550b4?api-version=2019-12-12",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnN0YXR1cy82MWQ3OTMwZi1hNGJiLTQ4MjctYWY0Yy1jZDY1YmY3NTUwYjQ/YXBpLXZlcnNpb249MjAxOS0xMi0xMg==",
+      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/132e5c8e-9199-42cb-a1a8-53a33db5d8f3?api-version=2020-07-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnN0YXR1cy8xMzJlNWM4ZS05MTk5LTQyY2ItYTFhOC01M2EzM2RiNWQ4ZjM/YXBpLXZlcnNpb249MjAyMC0wNy0zMC1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1276,7 +1276,7 @@
           "FxVersion/4.6.29130.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview"
+          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview.2"
         ]
       },
       "ResponseHeaders": {
@@ -1287,7 +1287,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationresults/61d7930f-a4bb-4827-af4c-cd65bf7550b4?api-version=2019-12-12"
+          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationresults/132e5c8e-9199-42cb-a1a8-53a33db5d8f3?api-version=2020-07-30-preview"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11981"
@@ -1296,25 +1296,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "5c0d472e-2d1a-4b16-876d-3cc4741fbec9"
+          "32483a4c-3bd6-4f93-a731-c4b3f0b55dd8"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/61d7930f-a4bb-4827-af4c-cd65bf7550b4?api-version=2019-12-12"
+          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/132e5c8e-9199-42cb-a1a8-53a33db5d8f3?api-version=2020-07-30-preview"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-correlation-request-id": [
-          "63e68520-19a1-48f5-b4cc-8e784746631e"
+          "4e6a5290-9911-4a8a-9dfe-3bacf1ac1f2a"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200902T102901Z:63e68520-19a1-48f5-b4cc-8e784746631e"
+          "WESTUS:20200903T233758Z:4e6a5290-9911-4a8a-9dfe-3bacf1ac1f2a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 02 Sep 2020 10:29:00 GMT"
+          "Thu, 03 Sep 2020 23:37:58 GMT"
         ],
         "Content-Length": [
           "112"
@@ -1326,12 +1326,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"61d7930f-a4bb-4827-af4c-cd65bf7550b4\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-09-02T10:25:53.4140629Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"132e5c8e-9199-42cb-a1a8-53a33db5d8f3\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-09-03T23:34:48.6154377Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/61d7930f-a4bb-4827-af4c-cd65bf7550b4?api-version=2019-12-12",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnN0YXR1cy82MWQ3OTMwZi1hNGJiLTQ4MjctYWY0Yy1jZDY1YmY3NTUwYjQ/YXBpLXZlcnNpb249MjAxOS0xMi0xMg==",
+      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/132e5c8e-9199-42cb-a1a8-53a33db5d8f3?api-version=2020-07-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnN0YXR1cy8xMzJlNWM4ZS05MTk5LTQyY2ItYTFhOC01M2EzM2RiNWQ4ZjM/YXBpLXZlcnNpb249MjAyMC0wNy0zMC1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1339,7 +1339,7 @@
           "FxVersion/4.6.29130.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview"
+          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview.2"
         ]
       },
       "ResponseHeaders": {
@@ -1350,7 +1350,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationresults/61d7930f-a4bb-4827-af4c-cd65bf7550b4?api-version=2019-12-12"
+          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationresults/132e5c8e-9199-42cb-a1a8-53a33db5d8f3?api-version=2020-07-30-preview"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11980"
@@ -1359,25 +1359,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "3f7743d0-f5d3-4a1f-a2e0-2fe38bfe657f"
+          "a39b7dcb-14b4-41bd-a920-a09f09dbd14b"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/61d7930f-a4bb-4827-af4c-cd65bf7550b4?api-version=2019-12-12"
+          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/132e5c8e-9199-42cb-a1a8-53a33db5d8f3?api-version=2020-07-30-preview"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-correlation-request-id": [
-          "8d9086e8-70df-496c-8753-11ddaf31b3fe"
+          "9f3f821e-30bc-4df7-bf36-bda101714d35"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200902T102933Z:8d9086e8-70df-496c-8753-11ddaf31b3fe"
+          "WESTUS:20200903T233829Z:9f3f821e-30bc-4df7-bf36-bda101714d35"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 02 Sep 2020 10:29:32 GMT"
+          "Thu, 03 Sep 2020 23:38:29 GMT"
         ],
         "Content-Length": [
           "112"
@@ -1389,12 +1389,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"61d7930f-a4bb-4827-af4c-cd65bf7550b4\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-09-02T10:25:53.4140629Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"132e5c8e-9199-42cb-a1a8-53a33db5d8f3\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-09-03T23:34:48.6154377Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/61d7930f-a4bb-4827-af4c-cd65bf7550b4?api-version=2019-12-12",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnN0YXR1cy82MWQ3OTMwZi1hNGJiLTQ4MjctYWY0Yy1jZDY1YmY3NTUwYjQ/YXBpLXZlcnNpb249MjAxOS0xMi0xMg==",
+      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/132e5c8e-9199-42cb-a1a8-53a33db5d8f3?api-version=2020-07-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnN0YXR1cy8xMzJlNWM4ZS05MTk5LTQyY2ItYTFhOC01M2EzM2RiNWQ4ZjM/YXBpLXZlcnNpb249MjAyMC0wNy0zMC1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1402,7 +1402,7 @@
           "FxVersion/4.6.29130.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview"
+          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview.2"
         ]
       },
       "ResponseHeaders": {
@@ -1413,7 +1413,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationresults/61d7930f-a4bb-4827-af4c-cd65bf7550b4?api-version=2019-12-12"
+          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationresults/132e5c8e-9199-42cb-a1a8-53a33db5d8f3?api-version=2020-07-30-preview"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11979"
@@ -1422,25 +1422,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "bbd4f453-e5df-41a0-9124-4a423c1debba"
+          "6238a965-85cc-467a-84bd-894556d9e161"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/61d7930f-a4bb-4827-af4c-cd65bf7550b4?api-version=2019-12-12"
+          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/132e5c8e-9199-42cb-a1a8-53a33db5d8f3?api-version=2020-07-30-preview"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-correlation-request-id": [
-          "3dfffa2b-843e-46ee-a7cf-22f3ca7d5d87"
+          "486c9588-e2d6-4d90-8319-55faac57e82e"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200902T103005Z:3dfffa2b-843e-46ee-a7cf-22f3ca7d5d87"
+          "WESTUS:20200903T233901Z:486c9588-e2d6-4d90-8319-55faac57e82e"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 02 Sep 2020 10:30:04 GMT"
+          "Thu, 03 Sep 2020 23:39:01 GMT"
         ],
         "Content-Length": [
           "112"
@@ -1452,12 +1452,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"61d7930f-a4bb-4827-af4c-cd65bf7550b4\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-09-02T10:25:53.4140629Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"132e5c8e-9199-42cb-a1a8-53a33db5d8f3\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-09-03T23:34:48.6154377Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/61d7930f-a4bb-4827-af4c-cd65bf7550b4?api-version=2019-12-12",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnN0YXR1cy82MWQ3OTMwZi1hNGJiLTQ4MjctYWY0Yy1jZDY1YmY3NTUwYjQ/YXBpLXZlcnNpb249MjAxOS0xMi0xMg==",
+      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/132e5c8e-9199-42cb-a1a8-53a33db5d8f3?api-version=2020-07-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnN0YXR1cy8xMzJlNWM4ZS05MTk5LTQyY2ItYTFhOC01M2EzM2RiNWQ4ZjM/YXBpLXZlcnNpb249MjAyMC0wNy0zMC1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1465,7 +1465,7 @@
           "FxVersion/4.6.29130.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview"
+          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview.2"
         ]
       },
       "ResponseHeaders": {
@@ -1474,9 +1474,6 @@
         ],
         "Pragma": [
           "no-cache"
-        ],
-        "Location": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationresults/61d7930f-a4bb-4827-af4c-cd65bf7550b4?api-version=2019-12-12"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11978"
@@ -1485,208 +1482,22 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "b10c00bc-002c-47df-9330-997f653f6013"
-        ],
-        "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/61d7930f-a4bb-4827-af4c-cd65bf7550b4?api-version=2019-12-12"
+          "a6c65c4d-eed0-499b-92b5-aff7f7f26c54"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-correlation-request-id": [
-          "783d2691-183d-4b33-84a0-9bad590a164e"
+          "0612a04b-1273-4b02-928e-ae9cd7bd86e0"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200902T103036Z:783d2691-183d-4b33-84a0-9bad590a164e"
+          "WESTUS:20200903T233933Z:0612a04b-1273-4b02-928e-ae9cd7bd86e0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 02 Sep 2020 10:30:35 GMT"
-        ],
-        "Content-Length": [
-          "112"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"name\": \"61d7930f-a4bb-4827-af4c-cd65bf7550b4\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-09-02T10:25:53.4140629Z\"\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/61d7930f-a4bb-4827-af4c-cd65bf7550b4?api-version=2019-12-12",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnN0YXR1cy82MWQ3OTMwZi1hNGJiLTQ4MjctYWY0Yy1jZDY1YmY3NTUwYjQ/YXBpLXZlcnNpb249MjAxOS0xMi0xMg==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.29130.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationresults/61d7930f-a4bb-4827-af4c-cd65bf7550b4?api-version=2019-12-12"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11977"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-request-id": [
-          "977a1b91-8ffa-41d9-a10a-8ec73bd8836e"
-        ],
-        "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/61d7930f-a4bb-4827-af4c-cd65bf7550b4?api-version=2019-12-12"
-        ],
-        "Server": [
-          "Kestrel"
-        ],
-        "x-ms-correlation-request-id": [
-          "f9c45001-b481-4f75-8e8f-375bd7bbeef2"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20200902T103107Z:f9c45001-b481-4f75-8e8f-375bd7bbeef2"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Wed, 02 Sep 2020 10:31:06 GMT"
-        ],
-        "Content-Length": [
-          "112"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"name\": \"61d7930f-a4bb-4827-af4c-cd65bf7550b4\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-09-02T10:25:53.4140629Z\"\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/61d7930f-a4bb-4827-af4c-cd65bf7550b4?api-version=2019-12-12",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnN0YXR1cy82MWQ3OTMwZi1hNGJiLTQ4MjctYWY0Yy1jZDY1YmY3NTUwYjQ/YXBpLXZlcnNpb249MjAxOS0xMi0xMg==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.29130.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationresults/61d7930f-a4bb-4827-af4c-cd65bf7550b4?api-version=2019-12-12"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11976"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-request-id": [
-          "e1c30ce0-3bcb-4c80-a2ed-fe73b59b0f3d"
-        ],
-        "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/61d7930f-a4bb-4827-af4c-cd65bf7550b4?api-version=2019-12-12"
-        ],
-        "Server": [
-          "Kestrel"
-        ],
-        "x-ms-correlation-request-id": [
-          "df640549-dfb0-4a4b-9ac7-dd600f63a009"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20200902T103139Z:df640549-dfb0-4a4b-9ac7-dd600f63a009"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Wed, 02 Sep 2020 10:31:38 GMT"
-        ],
-        "Content-Length": [
-          "112"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"name\": \"61d7930f-a4bb-4827-af4c-cd65bf7550b4\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-09-02T10:25:53.4140629Z\"\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationstatus/61d7930f-a4bb-4827-af4c-cd65bf7550b4?api-version=2019-12-12",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnN0YXR1cy82MWQ3OTMwZi1hNGJiLTQ4MjctYWY0Yy1jZDY1YmY3NTUwYjQ/YXBpLXZlcnNpb249MjAxOS0xMi0xMg==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.29130.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11975"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-request-id": [
-          "b22e045a-2670-427f-b796-f30ec3ceec59"
-        ],
-        "Server": [
-          "Kestrel"
-        ],
-        "x-ms-correlation-request-id": [
-          "7461b71e-2a3d-4d03-a024-36d76517021b"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20200902T103210Z:7461b71e-2a3d-4d03-a024-36d76517021b"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Wed, 02 Sep 2020 10:32:09 GMT"
+          "Thu, 03 Sep 2020 23:39:33 GMT"
         ],
         "Content-Length": [
           "111"
@@ -1698,12 +1509,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"61d7930f-a4bb-4827-af4c-cd65bf7550b4\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2020-09-02T10:25:53.4140629Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"132e5c8e-9199-42cb-a1a8-53a33db5d8f3\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2020-09-03T23:34:48.6154377Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationresults/61d7930f-a4bb-4827-af4c-cd65bf7550b4?api-version=2019-12-12",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnJlc3VsdHMvNjFkNzkzMGYtYTRiYi00ODI3LWFmNGMtY2Q2NWJmNzU1MGI0P2FwaS12ZXJzaW9uPTIwMTktMTItMTI=",
+      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/providers/Microsoft.HybridCompute/locations/eastus/operationresults/132e5c8e-9199-42cb-a1a8-53a33db5d8f3?api-version=2020-07-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnJlc3VsdHMvMTMyZTVjOGUtOTE5OS00MmNiLWExYTgtNTNhMzNkYjVkOGYzP2FwaS12ZXJzaW9uPTIwMjAtMDctMzAtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1711,7 +1522,7 @@
           "FxVersion/4.6.29130.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview"
+          "Microsoft.Azure.Management.HybridCompute.HybridComputeManagementClient/0.1.0.preview.2"
         ]
       },
       "ResponseHeaders": {
@@ -1725,25 +1536,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "1499a4dc-b2e5-4695-9078-9698fbb8a620"
+          "9bc1a271-29fe-40c2-9a19-8db253836278"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11974"
+          "11977"
         ],
         "x-ms-correlation-request-id": [
-          "eca9ce7e-53e8-4975-9122-0b598a736780"
+          "df83e7ed-0aee-47b9-911f-a30122b7579d"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200902T103212Z:eca9ce7e-53e8-4975-9122-0b598a736780"
+          "WESTUS:20200903T233935Z:df83e7ed-0aee-47b9-911f-a30122b7579d"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 02 Sep 2020 10:32:11 GMT"
+          "Thu, 03 Sep 2020 23:39:35 GMT"
         ],
         "Content-Type": [
           "application/json"
