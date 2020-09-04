@@ -41,10 +41,11 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         }
 
         private static readonly byte[] EmptyRecordFormatIndicator = { 0, 0, 0, 0 };
+        private static readonly Encoding Utf8Encoding = new UTF8Encoding();
+
         private const int RecordFormatIndicatorLength = 4;
         private const int SchemaIdLength = 32;
         private const int PayloadStartPosition = RecordFormatIndicatorLength + SchemaIdLength;
-
         private readonly Dictionary<string, Schema> _cachedSchemas = new Dictionary<string, Schema>();
 
         private enum SupportedType
@@ -113,7 +114,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
 
             var binaryEncoder = new BinaryEncoder(stream);
             stream.Write(EmptyRecordFormatIndicator, 0, RecordFormatIndicatorLength);
-            stream.Write(Encoding.UTF8.GetBytes(schemaId), 0, SchemaIdLength);
+            stream.Write(Utf8Encoding.GetBytes(schemaId), 0, SchemaIdLength);
             writer.Write(value, binaryEncoder);
             binaryEncoder.Flush();
         }
@@ -131,7 +132,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
 
             var binaryEncoder = new BinaryEncoder(stream);
             await stream.WriteAsync(EmptyRecordFormatIndicator, 0, RecordFormatIndicatorLength, cancellationToken).ConfigureAwait(false);
-            await stream.WriteAsync(Encoding.UTF8.GetBytes(schemaId), 0, SchemaIdLength, cancellationToken).ConfigureAwait(false);
+            await stream.WriteAsync(Utf8Encoding.GetBytes(schemaId), 0, SchemaIdLength, cancellationToken).ConfigureAwait(false);
             writer.Write(value, binaryEncoder);
             binaryEncoder.Flush();
         }
@@ -202,7 +203,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             var message = CopyToReadOnlyMemory(stream);
             ValidateRecordFormatIdentifier(message);
             var schemaIdBytes = message.Slice(RecordFormatIndicatorLength, SchemaIdLength).ToArray();
-            var schemaId = Encoding.UTF8.GetString(schemaIdBytes);
+            var schemaId = Utf8Encoding.GetString(schemaIdBytes);
             var schema = GetSchemaById(schemaId, cancellationToken);
             using var valueStream = new MemoryStream(message.Slice(PayloadStartPosition, message.Length - PayloadStartPosition).ToArray());
 
@@ -221,7 +222,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             var message = CopyToReadOnlyMemory(stream);
             ValidateRecordFormatIdentifier(message);
             var schemaIdBytes = message.Slice(RecordFormatIndicatorLength, SchemaIdLength).ToArray();
-            var schemaId = Encoding.UTF8.GetString(schemaIdBytes);
+            var schemaId = Utf8Encoding.GetString(schemaIdBytes);
             var schema = await GetSchemaByIdAsync(schemaId, cancellationToken).ConfigureAwait(false);
             using var valueStream = new MemoryStream(message.Slice(PayloadStartPosition, message.Length - PayloadStartPosition).ToArray());
 
