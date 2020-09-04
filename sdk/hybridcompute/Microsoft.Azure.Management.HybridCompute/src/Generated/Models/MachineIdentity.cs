@@ -25,13 +25,11 @@ namespace Microsoft.Azure.Management.HybridCompute.Models
         /// <summary>
         /// Initializes a new instance of the MachineIdentity class.
         /// </summary>
-        /// <param name="principalId">The principal ID of resource
-        /// identity.</param>
-        /// <param name="tenantId">The tenant ID of resource.</param>
-        /// <param name="type">The identity type. Possible values include:
-        /// 'SystemAssigned'</param>
-        public MachineIdentity(string principalId = default(string), string tenantId = default(string), ResourceIdentityType? type = default(ResourceIdentityType?))
-            : base(principalId, tenantId, type)
+        /// <param name="type">The identity type.</param>
+        /// <param name="principalId">The identity's principal id.</param>
+        /// <param name="tenantId">The identity's tenant id.</param>
+        public MachineIdentity(string type = default(string), string principalId = default(string), string tenantId = default(string))
+            : base(type, principalId, tenantId)
         {
             CustomInit();
         }

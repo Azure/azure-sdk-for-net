@@ -66,8 +66,17 @@ namespace Microsoft.Azure.Management.HybridCompute.Models
         /// machine.</param>
         /// <param name="osVersion">The version of Operating System running on
         /// the hybrid machine.</param>
+        /// <param name="vmUuid">Specifies the Arc Machine's unique SMBIOS
+        /// ID</param>
         /// <param name="extensions">Machine Extensions information</param>
-        public Machine(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), LocationData locationData = default(LocationData), MachinePropertiesOsProfile osProfile = default(MachinePropertiesOsProfile), string provisioningState = default(string), string status = default(string), System.DateTime? lastStatusChange = default(System.DateTime?), IList<ErrorDetail> errorDetails = default(IList<ErrorDetail>), string agentVersion = default(string), string vmId = default(string), string displayName = default(string), string machineFqdn = default(string), string clientPublicKey = default(string), string osName = default(string), string osVersion = default(string), IList<MachineExtensionInstanceView> extensions = default(IList<MachineExtensionInstanceView>), MachineIdentity identity = default(MachineIdentity))
+        /// <param name="osSku">Specifies the Operating System product
+        /// SKU.</param>
+        /// <param name="domainName">Specifies the Windows domain name.</param>
+        /// <param name="adFqdn">Specifies the AD fully qualified display
+        /// name.</param>
+        /// <param name="dnsFqdn">Specifies the DNS fully qualified display
+        /// name.</param>
+        public Machine(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), LocationData locationData = default(LocationData), MachinePropertiesOsProfile osProfile = default(MachinePropertiesOsProfile), string provisioningState = default(string), string status = default(string), System.DateTime? lastStatusChange = default(System.DateTime?), IList<ErrorDetail> errorDetails = default(IList<ErrorDetail>), string agentVersion = default(string), string vmId = default(string), string displayName = default(string), string machineFqdn = default(string), string clientPublicKey = default(string), string osName = default(string), string osVersion = default(string), string vmUuid = default(string), IList<MachineExtensionInstanceView> extensions = default(IList<MachineExtensionInstanceView>), string osSku = default(string), string domainName = default(string), string adFqdn = default(string), string dnsFqdn = default(string), MachineIdentity identity = default(MachineIdentity))
             : base(location, id, name, type, tags)
         {
             LocationData = locationData;
@@ -83,7 +92,12 @@ namespace Microsoft.Azure.Management.HybridCompute.Models
             ClientPublicKey = clientPublicKey;
             OsName = osName;
             OsVersion = osVersion;
+            VmUuid = vmUuid;
             Extensions = extensions;
+            OsSku = osSku;
+            DomainName = domainName;
+            AdFqdn = adFqdn;
+            DnsFqdn = dnsFqdn;
             Identity = identity;
             CustomInit();
         }
@@ -174,10 +188,40 @@ namespace Microsoft.Azure.Management.HybridCompute.Models
         public string OsVersion { get; private set; }
 
         /// <summary>
+        /// Gets specifies the Arc Machine's unique SMBIOS ID
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.vmUuid")]
+        public string VmUuid { get; private set; }
+
+        /// <summary>
         /// Gets or sets machine Extensions information
         /// </summary>
         [JsonProperty(PropertyName = "properties.extensions")]
         public IList<MachineExtensionInstanceView> Extensions { get; set; }
+
+        /// <summary>
+        /// Gets specifies the Operating System product SKU.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.osSku")]
+        public string OsSku { get; private set; }
+
+        /// <summary>
+        /// Gets specifies the Windows domain name.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.domainName")]
+        public string DomainName { get; private set; }
+
+        /// <summary>
+        /// Gets specifies the AD fully qualified display name.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.adFqdn")]
+        public string AdFqdn { get; private set; }
+
+        /// <summary>
+        /// Gets specifies the DNS fully qualified display name.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dnsFqdn")]
+        public string DnsFqdn { get; private set; }
 
         /// <summary>
         /// </summary>

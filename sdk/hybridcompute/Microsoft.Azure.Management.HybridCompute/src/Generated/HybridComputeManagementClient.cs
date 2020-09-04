@@ -47,14 +47,16 @@ namespace Microsoft.Azure.Management.HybridCompute
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// The API version to use for this operation.
-        /// </summary>
-        public string ApiVersion { get; private set; }
-
-        /// <summary>
-        /// The ID of the target subscription.
+        /// Subscription credentials which uniquely identify Microsoft Azure
+        /// subscription. The subscription ID forms part of the URI for every service
+        /// call.
         /// </summary>
         public string SubscriptionId { get; set; }
+
+        /// <summary>
+        /// Client Api Version.
+        /// </summary>
+        public string ApiVersion { get; private set; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -334,7 +336,7 @@ namespace Microsoft.Azure.Management.HybridCompute
             MachineExtensions = new MachineExtensionsOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-12-12";
+            ApiVersion = "2020-07-30-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

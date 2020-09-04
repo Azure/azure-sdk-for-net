@@ -41,14 +41,16 @@ namespace Microsoft.Azure.Management.HybridCompute
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// The API version to use for this operation.
-        /// </summary>
-        string ApiVersion { get; }
-
-        /// <summary>
-        /// The ID of the target subscription.
+        /// Subscription credentials which uniquely identify Microsoft Azure
+        /// subscription. The subscription ID forms part of the URI for every
+        /// service call.
         /// </summary>
         string SubscriptionId { get; set; }
+
+        /// <summary>
+        /// Client Api Version.
+        /// </summary>
+        string ApiVersion { get; }
 
         /// <summary>
         /// The preferred language for the response.

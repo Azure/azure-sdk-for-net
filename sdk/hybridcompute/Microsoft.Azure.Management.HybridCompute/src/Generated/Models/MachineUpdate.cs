@@ -35,17 +35,15 @@ namespace Microsoft.Azure.Management.HybridCompute.Models
         /// Initializes a new instance of the MachineUpdate class.
         /// </summary>
         /// <param name="tags">Resource tags</param>
-        /// <param name="principalId">The principal ID of resource
-        /// identity.</param>
-        /// <param name="tenantId">The tenant ID of resource.</param>
-        /// <param name="type">The identity type. Possible values include:
-        /// 'SystemAssigned'</param>
-        public MachineUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), string principalId = default(string), string tenantId = default(string), ResourceIdentityType? type = default(ResourceIdentityType?), LocationData locationData = default(LocationData))
+        /// <param name="type">The identity type.</param>
+        /// <param name="principalId">The identity's principal id.</param>
+        /// <param name="tenantId">The identity's tenant id.</param>
+        public MachineUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), string type = default(string), string principalId = default(string), string tenantId = default(string), LocationData locationData = default(LocationData))
             : base(tags)
         {
+            Type = type;
             PrincipalId = principalId;
             TenantId = tenantId;
-            Type = type;
             LocationData = locationData;
             CustomInit();
         }
@@ -56,23 +54,22 @@ namespace Microsoft.Azure.Management.HybridCompute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the principal ID of resource identity.
+        /// Gets or sets the identity type.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity.type")]
+        public string Type { get; set; }
+
+        /// <summary>
+        /// Gets the identity's principal id.
         /// </summary>
         [JsonProperty(PropertyName = "identity.principalId")]
         public string PrincipalId { get; private set; }
 
         /// <summary>
-        /// Gets the tenant ID of resource.
+        /// Gets the identity's tenant id.
         /// </summary>
         [JsonProperty(PropertyName = "identity.tenantId")]
         public string TenantId { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the identity type. Possible values include:
-        /// 'SystemAssigned'
-        /// </summary>
-        [JsonProperty(PropertyName = "identity.type")]
-        public ResourceIdentityType? Type { get; set; }
 
         /// <summary>
         /// </summary>
