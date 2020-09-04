@@ -14,7 +14,7 @@ Install-Package Azure.Data.SchemaRegistry
 
 ### Prerequisites
 
-* An [Azure subscription][azure_sub].
+* An [Azure subscription][azure_sub]
 * An [Event Hubs namespace][event_hubs_namespace]
 
 If you need to [create an Event Hubs namespace][create_event_hubs_namespace], you can use the Azure Portal or [Azure PowerShell][azure_powershell].
@@ -39,7 +39,7 @@ The simpliest way is to use the [Azure portal][azure_portal] and navigate to you
 
 #### Create SchemaRegistryClient
 
-Once you have the Azure resource credentials and the Event Hubs namespace hostname, you can create the [SchemaRegistryClient][schema_registry_client]:
+Once you have the Azure resource credentials and the Event Hubs namespace hostname, you can create the [SchemaRegistryClient][schema_registry_client]. You'll also need the [Azure.Identity][azure_identity] package to create the credential.
 
 ```C# Snippet:CreateSchemaRegistryClient
 string connectionString = "<connection_string>";
@@ -62,63 +62,46 @@ These components play different roles. Some are used as input into the operation
 
 ## Examples
 
-* [Register a schema](#create-the-thing)
-* [Retrieve a schema ID](#get-the-thing)
-* [Retrieve a schema](#list-the-things)
+The following shows examples of what is available through the SchemaRegistryClient. There are both sync and async methods available for these client operations.
 
+* [Register a schema](#register-a-schema)
+* [Retrieve a schema ID](#retrieve-a-schema-id)
+* [Retrieve a schema](#retrieve-a-schema)
 
+### Register a schema
 
+Register a schema to be stored in the Azure Schema Registry.
 
-Include code snippets and short descriptions for each task you listed in the [Introduction](#introduction) (the bulleted list). Briefly explain each operation, but include enough clarity to explain complex or otherwise tricky operations.
-
-If possible, use the same example snippets that your in-code documentation uses. For example, use the snippets in your `examples.py` that Sphinx ingests via its [literalinclude](https://www.sphinx-doc.org/en/1.5/markup/code.html?highlight=code%20examples#includes) directive. The `examples.py` file containing the snippets should reside alongside your package's code, and should be tested in an automated fashion.
-
-Each example in the *Examples* section starts with an H3 that describes the example. At the top of this section, just under the *Examples* H2, add a bulleted list linking to each example H3. Each example should deep-link to the types and/or members used in the example.
-
-* [Create the thing](#create-the-thing)
-* [Get the thing](#get-the-thing)
-* [List the things](#list-the-things)
-
-### Create the thing
-
-Use the [create_thing](not-valid-link) method to create a Thing reference; this method does not make a network call. To persist the Thing in the service, call [Thing.save](not-valid-link).
-
-```Python
-thing = client.create_thing(id, name)
-thing.save()
+```C# Snippet:RegisterSchema
+string connectionString = "<connection_string>";
+var client = new ConfigurationClient(connectionString);
 ```
 
-### Get the thing
+### Retrieve a schema ID
 
-The [get_thing](not-valid-link) method retrieves a Thing from the service. The `id` parameter is the unique ID of the Thing, not its "name" property.
+Retrieve a previously registered schema ID from the Azure Schema Registry.
 
-```C# Snippet:GetSecret
-var client = new MiniSecretClient(new Uri(endpoint), new DefaultAzureCredential());
-
-SecretBundle secret = client.GetSecret("TestSecret");
-
-Console.WriteLine(secret.Value);
-```Python
-things = client.list_things()
+```C# Snippet:RetrieveSchemaId
+string connectionString = "<connection_string>";
+var client = new ConfigurationClient(connectionString);
 ```
 
-## Troubleshooting
+### Retrieve a schema
 
-Describe common errors and exceptions, how to "unpack" them if necessary, and include guidance for graceful handling and recovery.
+Retrieve a previously registered schema's content from the Azure Schema Registry.
 
-Provide information to help developers avoid throttling or other service-enforced errors they might encounter. For example, provide guidance and examples for using retry or connection policies in the API.
-
-If the package or a related package supports it, include tips for logging or enabling instrumentation to help them debug their code.
-
-## Next steps
-
-* Provide a link to additional code examples, ideally to those sitting alongside the README in the package's `/samples` directory.
-* If appropriate, point users to other packages that might be useful.
-* If you think there's a good chance that developers might stumble across your package in error (because they're searching for specific functionality and mistakenly think the package provides that functionality), point them to the packages they might be looking for.
+```C# Snippet:RetrieveSchema
+string connectionString = "<connection_string>";
+var client = new ConfigurationClient(connectionString);
+```
 
 ## Contributing
 
-This is a template, but your SDK readme should include details on how to contribute code to the repo/package.
+This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit [cla.microsoft.com][cla].
+
+When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
+
+This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][code_of_conduct_faq] or contact [opencode@microsoft.com][email_opencode] with any additional questions or comments.
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftemplate%2FAzure.Template%2FREADME.png)
 
@@ -131,3 +114,8 @@ This is a template, but your SDK readme should include details on how to contrib
 [schema_registry_client]: src/SchemaRegistryClient.cs
 [azure_portal]: https://ms.portal.azure.com/
 [schema_properties]: src/SchemaProperties.cs
+[azure_identity]: https://www.nuget.org/packages/Azure.Identity
+[cla]: https://cla.microsoft.com
+[code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
+[code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
+[email_opencode]: mailto:opencode@microsoft.com
