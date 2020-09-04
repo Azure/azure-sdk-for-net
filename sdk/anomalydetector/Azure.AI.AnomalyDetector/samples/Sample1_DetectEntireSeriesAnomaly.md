@@ -19,61 +19,50 @@ var credential = new AzureKeyCredential(apiKey);
 AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, credential);
 ```
 
-## Load time series and create Request
+## Load time series and create DetectRequest
 
-You could download our [sample data][SampleData], read in the time series data and add it to a `Request` object.
+You could download our [sample data][SampleData], read in the time series data and add it to a `DetectRequest` object.
 
-Call `File.ReadAllLines` with the file path and create a list of `Point` objects, and strip any new line characters. Extract the values and separate the timestamp from its numerical value, and add them to a new `Point` object.
+Call `File.ReadAllLines` with the file path and create a list of `TimeSeriesPoint` objects, and strip any new line characters. Extract the values and separate the timestamp from its numerical value, and add them to a new `TimeSeriesPoint` object.
 
-Make a `Request` object with the series of points, and `Granularity.Daily` for the Granularity (or periodicity) of the data points.
+Make a `DetectRequest` object with the series of points, and `TimeGranularity.Daily` for the granularity (or periodicity) of the data points.
 
 ```C# Snippet:ReadSeriesData
 string datapath = "<dataPath>";
 
-List<Point> list = File.ReadAllLines(datapath, Encoding.UTF8)
+List<TimeSeriesPoint> list = File.ReadAllLines(datapath, Encoding.UTF8)
     .Where(e => e.Trim().Length != 0)
     .Select(e => e.Split(','))
     .Where(e => e.Length == 2)
-    .Select(e => new Point(DateTime.Parse(e[0]), float.Parse(e[1]))).ToList();
+    .Select(e => new TimeSeriesPoint(DateTime.Parse(e[0]), float.Parse(e[1]))).ToList();
 
-Request request = new Request(list, Granularity.Daily);
+DetectRequest request = new DetectRequest(list, TimeGranularity.Daily);
 ```
 
-## Detect anomalies
-Call the client's `EntireDetectAsync` method with the `Request` object and await the response as an `EntireDetectResponse` object. Iterate through the response's `IsAnomaly` values and print any that are true. These values correspond to the index of anomalous data points, if any were found.
+## Detect anomalies of the entire series
+Call the client's `DetectEntireSeriesAsync` method with the `DetectRequest` object and await the response as an `EntireDetectResponse` object. Iterate through the response's `IsAnomaly` values and print any that are true. These values correspond to the index of anomalous data points, if any were found.
 
 ```C# Snippet:DetectEntireSeriesAnomaly
 Console.WriteLine("Detecting anomalies in the entire time series.");
-try
-{
-    EntireDetectResponse result = await client.EntireDetectAsync(request).ConfigureAwait(false);
 
-    if (result.IsAnomaly.Contains(true))
+EntireDetectResponse result = await client.DetectEntireSeriesAsync(request).ConfigureAwait(false);
+
+if (result.IsAnomaly.Contains(true))
+{
+    Console.WriteLine("An anomaly was detected at index:");
+    for (int i = 0; i < request.Series.Count; ++i)
     {
-        Console.WriteLine("An anomaly was detected at index:");
-        for (int i = 0; i < request.Series.Count; ++i)
+        if (result.IsAnomaly[i])
         {
-            if (result.IsAnomaly[i])
-            {
-                Console.Write(i);
-                Console.Write(" ");
-            }
+            Console.Write(i);
+            Console.Write(" ");
         }
-        Console.WriteLine();
     }
-    else
-    {
-        Console.WriteLine(" No anomalies detected in the series.");
-    }
+    Console.WriteLine();
 }
-catch (RequestFailedException ex)
+else
 {
-    Console.WriteLine("Error code: " + ex.ErrorCode);
-    Console.WriteLine("Error message: " + ex.Message);
-}
-catch (Exception ex)
-{
-    Console.WriteLine(ex.Message);
+    Console.WriteLine(" No anomalies detected in the series.");
 }
 ```
 To see the full example source files, see:

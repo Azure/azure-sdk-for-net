@@ -19,52 +19,41 @@ var credential = new AzureKeyCredential(apiKey);
 AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, credential);
 ```
 
-## Load time series and create Request
+## Load time series and create DetectRequest
 
-You could download our [sample data][SampleData], read in the time series data and add it to a `Request` object.
+You could download our [sample data][SampleData], read in the time series data and add it to a `DetectRequest` object.
 
-Call `File.ReadAllLines` with the file path and create a list of `Point` objects, and strip any new line characters. Extract the values and separate the timestamp from its numerical value, and add them to a new `Point` object.
+Call `File.ReadAllLines` with the file path and create a list of `TimeSeriesPoint` objects, and strip any new line characters. Extract the values and separate the timestamp from its numerical value, and add them to a new `TimeSeriesPoint` object.
 
-Make a `Request` object with the series of points, and `Granularity.Daily` for the Granularity (or periodicity) of the data points.
+Make a `DetectRequest` object with the series of points, and `TimeGranularity.Daily` for the granularity (or periodicity) of the data points.
 
 ```C# Snippet:ReadSeriesData
 string datapath = "<dataPath>";
 
-List<Point> list = File.ReadAllLines(datapath, Encoding.UTF8)
+List<TimeSeriesPoint> list = File.ReadAllLines(datapath, Encoding.UTF8)
     .Where(e => e.Trim().Length != 0)
     .Select(e => e.Split(','))
     .Where(e => e.Length == 2)
-    .Select(e => new Point(DateTime.Parse(e[0]), float.Parse(e[1]))).ToList();
+    .Select(e => new TimeSeriesPoint(DateTime.Parse(e[0]), float.Parse(e[1]))).ToList();
 
-Request request = new Request(list, Granularity.Daily);
+DetectRequest request = new DetectRequest(list, TimeGranularity.Daily);
 ```
 
 ## Detect anomaly status of the latest data point
-Call the client's `LastDetectAsync` method with the `Request` object and await the response as a `LastDetectResponse` object. Check the response's `IsAnomaly` attribute to determine if the latest data point sent was an anomaly or not.
+Call the client's `DetectLastPointAsync` method with the `DetectRequest` object and await the response as a `LastDetectResponse` object. Check the response's `IsAnomaly` attribute to determine if the latest data point sent was an anomaly or not.
 
 ```C# Snippet:DetectLastPointAnomaly
 Console.WriteLine("Detecting the anomaly status of the latest point in the series.");
-try
-{
-    LastDetectResponse result = await client.LastDetectAsync(request).ConfigureAwait(false);
 
-    if (result.IsAnomaly)
-    {
-        Console.WriteLine("The latest point was detected as an anomaly.");
-    }
-    else
-    {
-        Console.WriteLine("The latest point was not detected as an anomaly.");
-    }
-}
-catch (RequestFailedException ex)
+LastDetectResponse result = await client.DetectLastPointAsync(request).ConfigureAwait(false);
+
+if (result.IsAnomaly)
 {
-    Console.WriteLine("Error code: " + ex.ErrorCode);
-    Console.WriteLine("Error message: " + ex.Message);
+    Console.WriteLine("The latest point was detected as an anomaly.");
 }
-catch (Exception ex)
+else
 {
-    Console.WriteLine(ex.Message);
+    Console.WriteLine("The latest point was not detected as an anomaly.");
 }
 ```
 To see the full example source files, see:

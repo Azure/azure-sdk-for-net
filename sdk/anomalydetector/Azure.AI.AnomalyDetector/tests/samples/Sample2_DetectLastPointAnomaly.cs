@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.AnomalyDetector.Tests.Samples
 {
-    public partial class AnomalyDetectorSamples : RecordedTestBase<AnomalyDetectorTestEnvironment>
+    public partial class AnomalyDetectorSamples : SamplesBase<AnomalyDetectorTestEnvironment>
     {
         [Test]
         public async Task DetectLastPointAnomaly()
@@ -32,38 +32,27 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
             //read data
             string datapath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "samples", "data", "request-data.csv");
 
-            List<Point> list = File.ReadAllLines(datapath, Encoding.UTF8)
+            List<TimeSeriesPoint> list = File.ReadAllLines(datapath, Encoding.UTF8)
                 .Where(e => e.Trim().Length != 0)
                 .Select(e => e.Split(','))
                 .Where(e => e.Length == 2)
-                .Select(e => new Point(DateTime.Parse(e[0]), float.Parse(e[1]))).ToList();
+                .Select(e => new TimeSeriesPoint(DateTime.Parse(e[0]), float.Parse(e[1]))).ToList();
 
             //create request
-            Request request = new Request(list, Granularity.Daily);
+            DetectRequest request = new DetectRequest(list, TimeGranularity.Daily);
 
             //detect
             Console.WriteLine("Detecting the anomaly status of the latest point in the series.");
-            try
-            {
-                LastDetectResponse result = await client.LastDetectAsync(request).ConfigureAwait(false);
 
-                if (result.IsAnomaly)
-                {
-                    Console.WriteLine("The latest point was detected as an anomaly.");
-                }
-                else
-                {
-                    Console.WriteLine("The latest point was not detected as an anomaly.");
-                }
-            }
-            catch (RequestFailedException ex)
+            LastDetectResponse result = await client.DetectLastPointAsync(request).ConfigureAwait(false);
+
+            if (result.IsAnomaly)
             {
-                Console.WriteLine("Error code: " + ex.ErrorCode);
-                Console.WriteLine("Error message: " + ex.Message);
+                Console.WriteLine("The latest point was detected as an anomaly.");
             }
-            catch (Exception ex)
+            else
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine("The latest point was not detected as an anomaly.");
             }
         }
     }

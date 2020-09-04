@@ -14,13 +14,8 @@ using NUnit.Framework;
 
 namespace Azure.AI.AnomalyDetector.Tests.Samples
 {
-    public partial class AnomalyDetectorSamples : RecordedTestBase<AnomalyDetectorTestEnvironment>
+    public partial class AnomalyDetectorSamples : SamplesBase<AnomalyDetectorTestEnvironment>
     {
-        public AnomalyDetectorSamples(bool isAsync) : base(isAsync)
-        {
-            Sanitizer = new AnomalyDetectorRecordedTestSanitizer();
-        }
-
         [Test]
         public async Task DetectEntireSeriesAnomaly()
         {
@@ -37,47 +32,36 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
             //read data
             string datapath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "samples", "data", "request-data.csv");
 
-            List<Point> list = File.ReadAllLines(datapath, Encoding.UTF8)
+            List<TimeSeriesPoint> list = File.ReadAllLines(datapath, Encoding.UTF8)
                 .Where(e => e.Trim().Length != 0)
                 .Select(e => e.Split(','))
                 .Where(e => e.Length == 2)
-                .Select(e => new Point(DateTime.Parse(e[0]), float.Parse(e[1]))).ToList();
+                .Select(e => new TimeSeriesPoint(DateTime.Parse(e[0]), float.Parse(e[1]))).ToList();
 
             //create request
-            Request request = new Request(list, Granularity.Daily);
+            DetectRequest request = new DetectRequest(list, TimeGranularity.Daily);
 
             //detect
             Console.WriteLine("Detecting anomalies in the entire time series.");
-            try
-            {
-                EntireDetectResponse result = await client.EntireDetectAsync(request).ConfigureAwait(false);
 
-                if (result.IsAnomaly.Contains(true))
+            EntireDetectResponse result = await client.DetectEntireSeriesAsync(request).ConfigureAwait(false);
+
+            if (result.IsAnomaly.Contains(true))
+            {
+                Console.WriteLine("An anomaly was detected at index:");
+                for (int i = 0; i < request.Series.Count; ++i)
                 {
-                    Console.WriteLine("An anomaly was detected at index:");
-                    for (int i = 0; i < request.Series.Count; ++i)
+                    if (result.IsAnomaly[i])
                     {
-                        if (result.IsAnomaly[i])
-                        {
-                            Console.Write(i);
-                            Console.Write(" ");
-                        }
+                        Console.Write(i);
+                        Console.Write(" ");
                     }
-                    Console.WriteLine();
                 }
-                else
-                {
-                    Console.WriteLine(" No anomalies detected in the series.");
-                }
+                Console.WriteLine();
             }
-            catch (RequestFailedException ex)
+            else
             {
-                Console.WriteLine("Error code: " + ex.ErrorCode);
-                Console.WriteLine("Error message: " + ex.Message);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine(" No anomalies detected in the series.");
             }
         }
     }
