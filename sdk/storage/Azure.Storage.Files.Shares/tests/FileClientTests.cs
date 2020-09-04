@@ -1929,7 +1929,7 @@ namespace Azure.Storage.Files.Shares.Test
 
             ShareFileGetRangeListDiffOptions options = new ShareFileGetRangeListDiffOptions
             {
-                //Snapshot = snapshotResponse1.Value.Snapshot,
+                Snapshot = snapshotResponse1.Value.Snapshot,
                 PreviousSnapshot = snapshotResponse0.Value.Snapshot
             };
 
