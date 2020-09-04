@@ -13,11 +13,11 @@ RUN apt-get update \
         dbus-x11 \
         gnome-keyring
 
-# Install PowerShell && .Net SDK 2.1
+# Install PowerShell && .net core runtime 2.1
 RUN wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb \
     && dpkg -i packages-microsoft-prod.deb \
     && apt-get update \
     && apt-get install -y powershell \
     && pwsh --version \
-    && apt-get install -y dotnet-sdk-2.1 \
-    && dotnet --list-sdks
+    && apt-get install -y dotnet-runtime-2.1 \
+    && dotnet --list-runtimes
