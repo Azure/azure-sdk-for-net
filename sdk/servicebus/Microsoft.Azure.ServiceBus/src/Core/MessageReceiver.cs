@@ -941,6 +941,8 @@ namespace Microsoft.Azure.ServiceBus.Core
 
             lock (this.messageReceivePumpSyncLock)
             {
+                this.runningTaskCancellationTokenSource.Cancel();
+                this.runningTaskCancellationTokenSource.Dispose();
                 this.receivePump = null;
             }
             MessagingEventSource.Log.UnregisterMessageHandlerStop(this.ClientId);
@@ -1330,7 +1332,6 @@ namespace Microsoft.Azure.ServiceBus.Core
 
                 this.receivePumpCancellationTokenSource = new CancellationTokenSource();
 
-                // Running task cancellation token source can be reused if previously UnregisterMessageHandlerAsync was called
                 if (this.runningTaskCancellationTokenSource == null)
                 {
                     this.runningTaskCancellationTokenSource = new CancellationTokenSource();
@@ -1352,8 +1353,8 @@ namespace Microsoft.Azure.ServiceBus.Core
                     {
                         this.receivePumpCancellationTokenSource.Cancel();
                         this.receivePumpCancellationTokenSource.Dispose();
-                        //this.runningTaskCancellationTokenSource.Cancel();
-                        //this.runningTaskCancellationTokenSource.Dispose();
+                        this.runningTaskCancellationTokenSource.Cancel();
+                        this.runningTaskCancellationTokenSource.Dispose();
                         this.receivePump = null;
                     }
                 }
