@@ -10,12 +10,94 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for JobStepActionType.
     /// </summary>
-    public static class JobStepActionType
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(JobStepActionTypeConverter))]
+    public struct JobStepActionType : System.IEquatable<JobStepActionType>
     {
-        public const string TSql = "TSql";
+        private JobStepActionType(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly JobStepActionType TSql = "TSql";
+
+
+        /// <summary>
+        /// Underlying value of enum JobStepActionType
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for JobStepActionType
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type JobStepActionType
+        /// </summary>
+        public bool Equals(JobStepActionType e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to JobStepActionType
+        /// </summary>
+        public static implicit operator JobStepActionType(string value)
+        {
+            return new JobStepActionType(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert JobStepActionType to string
+        /// </summary>
+        public static implicit operator string(JobStepActionType e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum JobStepActionType
+        /// </summary>
+        public static bool operator == (JobStepActionType e1, JobStepActionType e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum JobStepActionType
+        /// </summary>
+        public static bool operator != (JobStepActionType e1, JobStepActionType e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for JobStepActionType
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is JobStepActionType && Equals((JobStepActionType)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode JobStepActionType
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// key.</param>
         /// <param name="uri">The URI of the server key.</param>
         /// <param name="thumbprint">Thumbprint of the server key.</param>
-        public ManagedInstanceEncryptionProtector(string serverKeyType, string id = default(string), string name = default(string), string type = default(string), string kind = default(string), string serverKeyName = default(string), string uri = default(string), string thumbprint = default(string))
+        public ManagedInstanceEncryptionProtector(ServerKeyType serverKeyType, string id = default(string), string name = default(string), string type = default(string), string kind = default(string), string serverKeyName = default(string), string uri = default(string), string thumbprint = default(string))
             : base(id, name, type)
         {
             Kind = kind;
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'AzureKeyVault'
         /// </summary>
         [JsonProperty(PropertyName = "properties.serverKeyType")]
-        public string ServerKeyType { get; set; }
+        public ServerKeyType ServerKeyType { get; set; }
 
         /// <summary>
         /// Gets the URI of the server key.
@@ -103,10 +103,6 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (ServerKeyType == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ServerKeyType");
-            }
         }
     }
 }

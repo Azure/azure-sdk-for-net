@@ -10,15 +10,106 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for PrivateLinkServiceConnectionStateStatus.
     /// </summary>
-    public static class PrivateLinkServiceConnectionStateStatus
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(PrivateLinkServiceConnectionStateStatusConverter))]
+    public struct PrivateLinkServiceConnectionStateStatus : System.IEquatable<PrivateLinkServiceConnectionStateStatus>
     {
-        public const string Approved = "Approved";
-        public const string Pending = "Pending";
-        public const string Rejected = "Rejected";
-        public const string Disconnected = "Disconnected";
+        private PrivateLinkServiceConnectionStateStatus(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly PrivateLinkServiceConnectionStateStatus Approved = "Approved";
+
+        public static readonly PrivateLinkServiceConnectionStateStatus Pending = "Pending";
+
+        public static readonly PrivateLinkServiceConnectionStateStatus Rejected = "Rejected";
+
+        public static readonly PrivateLinkServiceConnectionStateStatus Disconnected = "Disconnected";
+
+
+        /// <summary>
+        /// Underlying value of enum PrivateLinkServiceConnectionStateStatus
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for
+        /// PrivateLinkServiceConnectionStateStatus
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type PrivateLinkServiceConnectionStateStatus
+        /// </summary>
+        public bool Equals(PrivateLinkServiceConnectionStateStatus e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to
+        /// PrivateLinkServiceConnectionStateStatus
+        /// </summary>
+        public static implicit operator PrivateLinkServiceConnectionStateStatus(string value)
+        {
+            return new PrivateLinkServiceConnectionStateStatus(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert
+        /// PrivateLinkServiceConnectionStateStatus to string
+        /// </summary>
+        public static implicit operator string(PrivateLinkServiceConnectionStateStatus e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum
+        /// PrivateLinkServiceConnectionStateStatus
+        /// </summary>
+        public static bool operator == (PrivateLinkServiceConnectionStateStatus e1, PrivateLinkServiceConnectionStateStatus e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum
+        /// PrivateLinkServiceConnectionStateStatus
+        /// </summary>
+        public static bool operator != (PrivateLinkServiceConnectionStateStatus e1, PrivateLinkServiceConnectionStateStatus e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for
+        /// PrivateLinkServiceConnectionStateStatus
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is PrivateLinkServiceConnectionStateStatus && Equals((PrivateLinkServiceConnectionStateStatus)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode PrivateLinkServiceConnectionStateStatus
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

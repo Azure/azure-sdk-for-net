@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="type">Resource type.</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="sku">The name and tier of the SKU.</param>
-        public InstancePool(string location, string subnetId, int vCores, string licenseType, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku))
+        public InstancePool(string location, string subnetId, int vCores, InstancePoolLicenseType licenseType, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'LicenseIncluded', 'BasePrice'
         /// </summary>
         [JsonProperty(PropertyName = "properties.licenseType")]
-        public string LicenseType { get; set; }
+        public InstancePoolLicenseType LicenseType { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -103,10 +103,6 @@ namespace Microsoft.Azure.Management.Sql.Models
             if (SubnetId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "SubnetId");
-            }
-            if (LicenseType == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "LicenseType");
             }
             if (Sku != null)
             {

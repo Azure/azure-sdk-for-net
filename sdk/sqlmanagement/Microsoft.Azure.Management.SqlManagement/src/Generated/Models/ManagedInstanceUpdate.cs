@@ -107,7 +107,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// (GeoRedundantStorage). Possible values include: 'GRS', 'LRS',
         /// 'ZRS'</param>
         /// <param name="tags">Resource tags.</param>
-        public ManagedInstanceUpdate(Sku sku = default(Sku), string provisioningState = default(string), string managedInstanceCreateMode = default(string), string fullyQualifiedDomainName = default(string), string administratorLogin = default(string), string administratorLoginPassword = default(string), string subnetId = default(string), string state = default(string), string licenseType = default(string), int? vCores = default(int?), int? storageSizeInGB = default(int?), string collation = default(string), string dnsZone = default(string), string dnsZonePartner = default(string), bool? publicDataEndpointEnabled = default(bool?), string sourceManagedInstanceId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), string proxyOverride = default(string), string timezoneId = default(string), string instancePoolId = default(string), string maintenanceConfigurationId = default(string), string minimalTlsVersion = default(string), string storageAccountType = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ManagedInstanceUpdate(Sku sku = default(Sku), string provisioningState = default(string), ManagedServerCreateMode? managedInstanceCreateMode = default(ManagedServerCreateMode?), string fullyQualifiedDomainName = default(string), string administratorLogin = default(string), string administratorLoginPassword = default(string), string subnetId = default(string), string state = default(string), ManagedInstanceLicenseType? licenseType = default(ManagedInstanceLicenseType?), int? vCores = default(int?), int? storageSizeInGB = default(int?), string collation = default(string), string dnsZone = default(string), string dnsZonePartner = default(string), bool? publicDataEndpointEnabled = default(bool?), string sourceManagedInstanceId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), ManagedInstanceProxyOverride? proxyOverride = default(ManagedInstanceProxyOverride?), string timezoneId = default(string), string instancePoolId = default(string), string maintenanceConfigurationId = default(string), string minimalTlsVersion = default(string), StorageAccountType? storageAccountType = default(StorageAccountType?), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Sku = sku;
             ProvisioningState = provisioningState;
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'Default', 'PointInTimeRestore'
         /// </summary>
         [JsonProperty(PropertyName = "properties.managedInstanceCreateMode")]
-        public string ManagedInstanceCreateMode { get; set; }
+        public ManagedServerCreateMode? ManagedInstanceCreateMode { get; set; }
 
         /// <summary>
         /// Gets the fully qualified domain name of the managed instance.
@@ -207,7 +207,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// licenses). Possible values include: 'LicenseIncluded', 'BasePrice'
         /// </summary>
         [JsonProperty(PropertyName = "properties.licenseType")]
-        public string LicenseType { get; set; }
+        public ManagedInstanceLicenseType? LicenseType { get; set; }
 
         /// <summary>
         /// Gets or sets the number of vCores. Allowed values: 8, 16, 24, 32,
@@ -267,7 +267,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Possible values include: 'Proxy', 'Redirect', 'Default'
         /// </summary>
         [JsonProperty(PropertyName = "properties.proxyOverride")]
-        public string ProxyOverride { get; set; }
+        public ManagedInstanceProxyOverride? ProxyOverride { get; set; }
 
         /// <summary>
         /// Gets or sets id of the timezone. Allowed values are timezones
@@ -314,7 +314,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// values include: 'GRS', 'LRS', 'ZRS'
         /// </summary>
         [JsonProperty(PropertyName = "properties.storageAccountType")]
-        public string StorageAccountType { get; set; }
+        public StorageAccountType? StorageAccountType { get; set; }
 
         /// <summary>
         /// Gets or sets resource tags.

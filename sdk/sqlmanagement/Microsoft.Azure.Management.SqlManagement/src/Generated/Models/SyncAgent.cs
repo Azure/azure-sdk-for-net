@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="expiryTime">Expiration time of the sync agent
         /// version.</param>
         /// <param name="version">Version of the sync agent.</param>
-        public SyncAgent(string id = default(string), string name = default(string), string type = default(string), string syncAgentName = default(string), string syncDatabaseId = default(string), System.DateTime? lastAliveTime = default(System.DateTime?), string state = default(string), bool? isUpToDate = default(bool?), System.DateTime? expiryTime = default(System.DateTime?), string version = default(string))
+        public SyncAgent(string id = default(string), string name = default(string), string type = default(string), string syncAgentName = default(string), string syncDatabaseId = default(string), System.DateTime? lastAliveTime = default(System.DateTime?), SyncAgentState? state = default(SyncAgentState?), bool? isUpToDate = default(bool?), System.DateTime? expiryTime = default(System.DateTime?), string version = default(string))
             : base(id, name, type)
         {
             SyncAgentName = syncAgentName;
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'Offline', 'NeverConnected'
         /// </summary>
         [JsonProperty(PropertyName = "properties.state")]
-        public string State { get; private set; }
+        public SyncAgentState? State { get; private set; }
 
         /// <summary>
         /// Gets if the sync agent version is up to date.

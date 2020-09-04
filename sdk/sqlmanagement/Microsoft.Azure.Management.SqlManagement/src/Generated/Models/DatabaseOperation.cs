@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="description">The operation description.</param>
         /// <param name="isCancellable">Whether the operation can be
         /// cancelled.</param>
-        public DatabaseOperation(string id = default(string), string name = default(string), string type = default(string), string databaseName = default(string), string operation = default(string), string operationFriendlyName = default(string), int? percentComplete = default(int?), string serverName = default(string), System.DateTime? startTime = default(System.DateTime?), string state = default(string), int? errorCode = default(int?), string errorDescription = default(string), int? errorSeverity = default(int?), bool? isUserError = default(bool?), System.DateTime? estimatedCompletionTime = default(System.DateTime?), string description = default(string), bool? isCancellable = default(bool?))
+        public DatabaseOperation(string id = default(string), string name = default(string), string type = default(string), string databaseName = default(string), string operation = default(string), string operationFriendlyName = default(string), int? percentComplete = default(int?), string serverName = default(string), System.DateTime? startTime = default(System.DateTime?), ManagementOperationState? state = default(ManagementOperationState?), int? errorCode = default(int?), string errorDescription = default(string), int? errorSeverity = default(int?), bool? isUserError = default(bool?), System.DateTime? estimatedCompletionTime = default(System.DateTime?), string description = default(string), bool? isCancellable = default(bool?))
             : base(id, name, type)
         {
             DatabaseName = databaseName;
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'Cancelled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.state")]
-        public string State { get; private set; }
+        public ManagementOperationState? State { get; private set; }
 
         /// <summary>
         /// Gets the operation error code.
