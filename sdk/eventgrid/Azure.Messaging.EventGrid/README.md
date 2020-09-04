@@ -225,8 +225,7 @@ foreach (EventGridEvent egEvent in egEvents)
 `SendEvents()` returns a HTTP response code from the service. A `RequestFailedException` is thrown as a service response for any unsuccessful requests. The exception contains information about what response code was returned from the service.
 
 ### Deserializing Event Data
-- An `InvalidCastException` will be thrown during `GetData<T>()` if the event data cannot be cast to the specified type.
-
+- If the event data is not valid JSON, a `JsonException` will be thrown during `Parse`.
 - An `InvalidOperationException` will be thrown during `GetData<T>()` if a custom serializer is passed into `GetData<T>()` with non-serialized event data (for example, if the event was created by the user and not created by parsing from JSON).
 
 ### Setting up console logging
