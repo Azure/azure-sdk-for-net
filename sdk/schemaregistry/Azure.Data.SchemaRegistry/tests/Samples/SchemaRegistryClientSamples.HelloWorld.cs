@@ -2,25 +2,23 @@
 // Licensed under the MIT License.
 
 using Azure.Core.TestFramework;
-using Azure.Identity;
-using NUnit.Framework;
 
 namespace Azure.Data.SchemaRegistry.Tests.Samples
 {
     public class SchemaRegistryClientSamples : SamplesBase<SchemaRegistryClientTestEnvironment>
     {
-        [Test]
-        public void GettingASecret()
-        {
-            var endpoint = TestEnvironment.SchemaRegistryUri;
+        //[Test]
+        //public void GettingASecret()
+        //{
+        //    var endpoint = TestEnvironment.SchemaRegistryUri;
 
-            #region Snippet:GetSecret
-            var client = new SchemaRegistryClient(endpoint, new DefaultAzureCredential());
+        //    #region Snippet:GetSecret
+        //    var client = new SchemaRegistryClient(endpoint, new DefaultAzureCredential());
 
-            //SecretBundle secret = client.GetSecret("TestSecret");
+        //    //SecretBundle secret = client.GetSecret("TestSecret");
 
-            //Console.WriteLine(secret.Value);
-            #endregion
-        }
+        //    //Console.WriteLine(secret.Value);
+        //    #endregion
+        //}
     }
 }

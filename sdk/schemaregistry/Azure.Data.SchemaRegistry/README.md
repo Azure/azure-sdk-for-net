@@ -27,20 +27,44 @@ New-AzEventHubNamespace -ResourceGroupName myResourceGroup -NamespaceName namesp
 
 ### Authenticate the client
 
-If your library requires authentication for use, such as for Azure services, include instructions and example code needed for initializing and authenticating.
+In order to interact with the Azure Schema Registry service, you'll need to create an instance of the [Schema Registry Client][schema_registry_client] class. To create this client, you'll need Azure resource credentials and the Event Hubs namespace hostname.
 
-For example, include details on obtaining an account key and endpoint URI, setting environment variables for each, and initializing the client object.
+#### Get credentials
+
+To acquire authenicated credentials and start interacting with Azure resources, please see the [quickstart guide here][quickstart_guide].
+
+#### Get Event Hubs namespace hostname
+
+The simpliest way is to use the [Azure portal][azure_portal] and navigate to your Event Hubs namespace. From the Overview tab, you'll see `Host name`. Copy the value from this field.
+
+#### Create SchemaRegistryClient
+
+Once you have the Azure resource credentials and the Event Hubs namespace hostname, you can create the [SchemaRegistryClient][schema_registry_client]:
+
+```C# Snippet:CreateSchemaRegistryClient
+string connectionString = "<connection_string>";
+var client = new ConfigurationClient(connectionString);
+```
 
 ## Key concepts
 
-The *Key concepts* section should describe the functionality of the main classes. Point out the most important and useful classes in the package (with links to their reference pages) and explain how those classes work together. Feel free to use bulleted lists, tables, code blocks, or even diagrams for clarity.
+### Schemas
+
+A schema has 6 components:
+- Group Name
+- Schema Name
+- Schema ID
+- Serialization Type
+- Schema Content
+- Schema Version
+
+These components play different roles. Some are used as input into the operations and some are outputs. Currently, [SchemaProperties][schema_properties] only exposes those properties that are potential outputs that are used in SchemaRegistry operations. Those exposed properties are `Content` and `Id`.
 
 ## Examples
 
-
-* [Register a schema][azconfig_setting_concepts]
-* [Retrieve a schema ID][azconfig_asof_snapshot]
-* [Retrieve a schema][azconfig_asof_snapshot]
+* [Register a schema](#create-the-thing)
+* [Retrieve a schema ID](#get-the-thing)
+* [Retrieve a schema](#list-the-things)
 
 
 
@@ -103,3 +127,7 @@ This is a template, but your SDK readme should include details on how to contrib
 [event_hubs_namespace]: https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-about
 [azure_powershell]: https://docs.microsoft.com/en-us/powershell/azure/
 [create_event_hubs_namespace]: https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-quickstart-powershell#create-an-event-hubs-namespace
+[quickstart_guide]: https://github.com/Azure/azure-sdk-for-net/blob/master/doc/mgmt_preview_quickstart.md
+[schema_registry_client]: src/SchemaRegistryClient.cs
+[azure_portal]: https://ms.portal.azure.com/
+[schema_properties]: src/SchemaProperties.cs

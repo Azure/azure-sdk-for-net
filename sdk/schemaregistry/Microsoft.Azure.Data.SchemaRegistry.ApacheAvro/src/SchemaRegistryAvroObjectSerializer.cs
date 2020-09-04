@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         }
 
         private static readonly byte[] EmptyRecordFormatIndicator = { 0, 0, 0, 0 };
-        private static readonly Encoding Utf8Encoding = new UTF8Encoding();
+        private static readonly Encoding Utf8Encoding = new UTF8Encoding(false);
 
         private const int RecordFormatIndicatorLength = 4;
         private const int SchemaIdLength = 32;
