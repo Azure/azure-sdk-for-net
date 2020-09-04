@@ -6,6 +6,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Threading;
     using System.Threading.Tasks;
     using Xunit;
 
@@ -188,11 +189,110 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     await testSessionHandler.VerifyRun();
 
                     testSessionHandler.ClearData();
+                }
+                finally
+                {
+                    await queueClient.CloseAsync();
+                }
+            });
 
-                    // Unregister handler to verify that receives should not happen
-                    await testSessionHandler.UnregisterSessionHandler();
+            await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
+            {
+                TestUtility.Log($"Queue: {queueName}, MaxConcurrentCalls: {maxConcurrentCalls}, Receive Mode: {mode.ToString()}, AutoComplete: {autoComplete}");
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, mode);
+                try
+                {
+                    var sessionHandlerOptions =
+                        new SessionHandlerOptions(ExceptionReceivedHandler)
+                        {
+                            MaxConcurrentSessions = maxConcurrentCalls,
+                            MessageWaitTimeout = TimeSpan.FromSeconds(5),
+                            AutoComplete = autoComplete
+                        };
+
+                    var testSessionHandler = new TestSessionHandler(
+                        queueClient.ReceiveMode,
+                        sessionHandlerOptions,
+                        queueClient.InnerSender,
+                        queueClient.SessionPumpHost);
+
+                    // Send messages to Session first
                     await testSessionHandler.SendSessionMessages();
-                    await testSessionHandler.VerifySessionHandlerNotInvokedAndNoMessageReceived();
+
+                    // Register handler
+                    var count = 0;
+                    testSessionHandler.RegisterSessionHandler(
+                       async (session, message, token) =>
+                       {
+                           await Task.Delay(TimeSpan.FromSeconds(8));
+                           TestUtility.Log($"Received Session: {session.SessionId} message: SequenceNumber: {message.SystemProperties.SequenceNumber}");
+
+                           if (queueClient.ReceiveMode == ReceiveMode.PeekLock && !sessionHandlerOptions.AutoComplete)
+                           {
+                               await session.CompleteAsync(message.SystemProperties.LockToken);
+                           }
+                           Interlocked.Increment(ref count);
+                       },
+                       sessionHandlerOptions);
+
+                    await Task.Delay(TimeSpan.FromSeconds(2));
+                    // UnregisterSessionHandler should wait up to the provided timeout to finish the message handling tasks
+                    await testSessionHandler.UnregisterSessionHandler(TimeSpan.FromSeconds(10));
+                    Assert.True(count == maxConcurrentCalls);
+
+                    testSessionHandler.ClearData();
+                }
+                finally
+                {
+                    await queueClient.CloseAsync();
+                }
+            });
+
+            await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
+            {
+                TestUtility.Log($"Queue: {queueName}, MaxConcurrentCalls: {maxConcurrentCalls}, Receive Mode: {mode.ToString()}, AutoComplete: {autoComplete}");
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, mode);
+                try
+                {
+                    var sessionHandlerOptions =
+                        new SessionHandlerOptions(ExceptionReceivedHandler)
+                        {
+                            MaxConcurrentSessions = maxConcurrentCalls,
+                            MessageWaitTimeout = TimeSpan.FromSeconds(5),
+                            AutoComplete = autoComplete
+                        };
+
+                    var testSessionHandler = new TestSessionHandler(
+                        queueClient.ReceiveMode,
+                        sessionHandlerOptions,
+                        queueClient.InnerSender,
+                        queueClient.SessionPumpHost);
+
+                    // Send messages to Session first
+                    await testSessionHandler.SendSessionMessages();
+
+                    // Register handler
+                    var count = 0;
+                    testSessionHandler.RegisterSessionHandler(
+                       async (session, message, token) =>
+                       {
+                           await Task.Delay(TimeSpan.FromSeconds(8));
+                           TestUtility.Log($"Received Session: {session.SessionId} message: SequenceNumber: {message.SystemProperties.SequenceNumber}");
+
+                           if (queueClient.ReceiveMode == ReceiveMode.PeekLock && !sessionHandlerOptions.AutoComplete)
+                           {
+                               await session.CompleteAsync(message.SystemProperties.LockToken);
+                           }
+                           Interlocked.Increment(ref count);
+                       },
+                       sessionHandlerOptions);
+
+                    await Task.Delay(TimeSpan.FromSeconds(2));
+                    // UnregisterSessionHandler should wait up to the provided timeout to finish the message handling tasks
+                    await testSessionHandler.UnregisterSessionHandler(TimeSpan.FromSeconds(2));
+                    Assert.True(count == 0);
+
+                    testSessionHandler.ClearData();
                 }
                 finally
                 {

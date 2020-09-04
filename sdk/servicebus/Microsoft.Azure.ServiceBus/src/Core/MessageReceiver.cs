@@ -907,10 +907,16 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// Unregister message handler from the receiver if there is an active message handler registered. This operation waits for the completion
         /// of inflight receive and message handling operations to finish and unregisters future receives on the message handler which previously 
         /// registered. 
+        /// <param name="inflightMessageHandlerTasksWaitTimeout"> is the waitTimeout for inflight message handling tasks.  
         /// </summary>
-        public async Task UnregisterMessageHandlerAsync()
+        public async Task UnregisterMessageHandlerAsync(TimeSpan inflightMessageHandlerTasksWaitTimeout)
         {
             this.ThrowIfClosed();
+
+            if (inflightMessageHandlerTasksWaitTimeout <= TimeSpan.Zero)
+            {
+                throw Fx.Exception.ArgumentOutOfRange(nameof(inflightMessageHandlerTasksWaitTimeout), inflightMessageHandlerTasksWaitTimeout, Resources.TimeoutMustBePositiveNonZero.FormatForUser(nameof(inflightMessageHandlerTasksWaitTimeout), inflightMessageHandlerTasksWaitTimeout));
+            }
 
             MessagingEventSource.Log.UnregisterMessageHandlerStart(this.ClientId);
             lock (this.messageReceivePumpSyncLock)
@@ -925,7 +931,9 @@ namespace Microsoft.Azure.ServiceBus.Core
                 this.receivePumpCancellationTokenSource.Dispose();
             }
 
+            Stopwatch stopWatch = Stopwatch.StartNew();
             while (this.receivePump != null
+                && stopWatch.Elapsed < inflightMessageHandlerTasksWaitTimeout
                 && this.receivePump.maxConcurrentCallsSemaphoreSlim.CurrentCount < this.receivePump.registerHandlerOptions.MaxConcurrentCalls)
             {
                 await Task.Delay(10).ConfigureAwait(false);

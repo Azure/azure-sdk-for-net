@@ -3,7 +3,9 @@
 
 namespace Microsoft.Azure.ServiceBus
 {
+    using Microsoft.Azure.ServiceBus.Primitives;
     using System;
+    using System.Diagnostics;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -95,8 +97,13 @@ namespace Microsoft.Azure.ServiceBus
             MessagingEventSource.Log.RegisterOnSessionHandlerStop(this.ClientId);
         }
 
-        public async Task UnregisterSessionHandlerAsync()
+        public async Task UnregisterSessionHandlerAsync(TimeSpan inflightSessionHandlerTasksWaitTimeout)
         {
+            if (inflightSessionHandlerTasksWaitTimeout <= TimeSpan.Zero)
+            {
+                throw Fx.Exception.ArgumentOutOfRange(nameof(inflightSessionHandlerTasksWaitTimeout), inflightSessionHandlerTasksWaitTimeout, Resources.TimeoutMustBePositiveNonZero.FormatForUser(nameof(inflightSessionHandlerTasksWaitTimeout), inflightSessionHandlerTasksWaitTimeout));
+            }
+
             MessagingEventSource.Log.UnregisterSessionHandlerStart(this.ClientId);
             lock (this.syncLock)
             {
@@ -110,7 +117,9 @@ namespace Microsoft.Azure.ServiceBus
                 this.sessionPumpCancellationTokenSource.Dispose();
             }
 
+            Stopwatch stopWatch = Stopwatch.StartNew();
             while (this.sessionReceivePump != null
+                && stopWatch.Elapsed < inflightSessionHandlerTasksWaitTimeout
                 && (this.sessionReceivePump.maxConcurrentSessionsSemaphoreSlim.CurrentCount < 
                     this.sessionReceivePump.sessionHandlerOptions.MaxConcurrentSessions
                 || this.sessionReceivePump.maxPendingAcceptSessionsSemaphoreSlim.CurrentCount <           

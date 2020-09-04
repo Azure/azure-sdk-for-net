@@ -450,11 +450,12 @@ namespace Microsoft.Azure.ServiceBus
         /// Unregister message handler from the receiver if there is an active message handler registered. This operation waits for the completion
         /// of inflight receive and message handling operations to finish and unregisters future receives on the message handler which previously 
         /// registered. 
+        /// <param name="inflightMessageHandlerTasksWaitTimeout"> is the waitTimeout for inflight message handling tasks.  
         /// </summary>
-        public async Task UnregisterMessageHandlerAsync()
+        public async Task UnregisterMessageHandlerAsync(TimeSpan inflightMessageHandlerTasksWaitTimeout)
         {
             this.ThrowIfClosed();
-            await this.InnerReceiver.UnregisterMessageHandlerAsync().ConfigureAwait(false);
+            await this.InnerReceiver.UnregisterMessageHandlerAsync(inflightMessageHandlerTasksWaitTimeout).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -491,11 +492,12 @@ namespace Microsoft.Azure.ServiceBus
         /// Unregister session handler from the receiver if there is an active session handler registered. This operation waits for the completion
         /// of inflight receive and session handling operations to finish and unregisters future receives on the session handler which previously 
         /// registered. 
+        /// <param name="inflightSessionHandlerTasksWaitTimeout"> is the waitTimeout for inflight session handling tasks.  
         /// </summary>
-        public async Task UnregisterSessionHandlerAsync()
+        public async Task UnregisterSessionHandlerAsync(TimeSpan inflightSessionHandlerTasksWaitTimeout)
         {
             this.ThrowIfClosed();
-            await this.SessionPumpHost.UnregisterSessionHandlerAsync().ConfigureAwait(false);
+            await this.SessionPumpHost.UnregisterSessionHandlerAsync(inflightSessionHandlerTasksWaitTimeout).ConfigureAwait(false);
         }
 
         /// <summary>
