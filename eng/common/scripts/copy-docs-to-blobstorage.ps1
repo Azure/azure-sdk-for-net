@@ -11,7 +11,8 @@ param (
   $PublicArtifactLocation = "",
   $RepoReplaceRegex = "(https://github.com/.*/(?:blob|tree)/)master"
 )
-. (Join-Path $PSScriptRoot artifact-metadata-parsing.ps1)
+
+. (Join-Path $PSScriptRoot common.ps1)
 
 $Language = $Language.ToLower()
 
@@ -232,4 +233,4 @@ function Upload-Blobs
     }
 }
 
-&$PublishGithubIODocsFn
+&$PublishGithubIODocsFn -DocLocation $DocLocation -PublicArtifactLocation $PublicArtifactLocation
