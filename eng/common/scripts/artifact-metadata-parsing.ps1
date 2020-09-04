@@ -69,6 +69,7 @@ function ParseMavenPackage($pkg, $workingDirectory) {
     PackageId      = $pkgId
     GroupId        = $groupId
     PackageVersion = $pkgVersion
+    ReleaseTag     = "$($pkgId)_$($pkgVersion)"
     Deployable     = $forceCreate -or !(IsMavenPackageVersionPublished -pkgId $pkgId -pkgVersion $pkgVersion -groupId $groupId.Replace(".", "/"))
     ReleaseNotes   = $releaseNotes
     ReadmeContent  = $readmeContent
@@ -150,6 +151,7 @@ function ParseNPMPackage($pkg, $workingDirectory) {
   $resultObj = New-Object PSObject -Property @{
     PackageId      = $pkgId
     PackageVersion = $pkgVersion
+    ReleaseTag     = "$($pkgId)_$($pkgVersion)"
     Deployable     = $forceCreate -or !(IsNPMPackageVersionPublished -pkgId $pkgId -pkgVersion $pkgVersion)
     ReleaseNotes   = $releaseNotes
     ReadmeContent  = $readmeContent
@@ -208,6 +210,7 @@ function ParseNugetPackage($pkg, $workingDirectory) {
   return New-Object PSObject -Property @{
     PackageId      = $pkgId
     PackageVersion = $pkgVersion
+    ReleaseTag     = "$($pkgId)_$($pkgVersion)"
     Deployable     = $forceCreate -or !(IsNugetPackageVersionPublished -pkgId $pkgId -pkgVersion $pkgVersion)
     ReleaseNotes   = $releaseNotes
     ReadmeContent  = $readmeContent
@@ -272,6 +275,7 @@ function ParsePyPIPackage($pkg, $workingDirectory) {
   return New-Object PSObject -Property @{
     PackageId      = $pkgId
     PackageVersion = $pkgVersion
+    ReleaseTag     = "$($pkgId)_$($pkgVersion)"
     Deployable     = $forceCreate -or !(IsPythonPackageVersionPublished -pkgId $pkgId -pkgVersion $pkgVersion)
     ReleaseNotes   = $releaseNotes
     ReadmeContent  = $readmeContent
@@ -300,6 +304,7 @@ function ParseCArtifact($pkg, $workingDirectory) {
   return New-Object PSObject -Property @{
     PackageId      = ''
     PackageVersion = $pkgVersion
+    ReleaseTag     = $pkgVersion
     # Artifact info is always considered deployable for C becasue it is not
     # deployed anywhere. Dealing with duplicate tags happens downstream in
     # CheckArtifactShaAgainstTagsList
@@ -331,6 +336,7 @@ function ParseCppArtifact($pkg, $workingDirectory) {
   return New-Object PSObject -Property @{
     PackageId      = $pkgName
     PackageVersion = $pkgVersion
+    ReleaseTag     = "$($pkgId)_$($pkgVersion)"
     # Artifact info is always considered deployable for now becasue it is not
     # deployed anywhere. Dealing with duplicate tags happens downstream in
     # CheckArtifactShaAgainstTagsList
@@ -387,39 +393,65 @@ function GetExistingTags($apiUrl) {
   }
 }
 
-# Walk across all build artifacts, check them against the appropriate repository, return a list of tags/releases
-function VerifyPackages($pkgRepository, $artifactLocation, $workingDirectory, $apiUrl, $releaseSha,  $continueOnError = $false) {
-  $pkgList = [array]@()
-  $ParsePkgInfoFn = ""
+# Retrieve release tag for artiface package. If multiple packages, then output the first one.
+function RetrieveReleaseTag($pkgRepository, $artifactLocation, $continueOnError = $true) {
+  if (!$artifactLocation) {
+    return ""
+  }
+  try {
+    $pkgs, $parsePkgInfoFn = RetrievePackages -pkgRepository $pkgRepository -artifactLocation $artifactLocation
+    if (!$pkgs -or !$pkgs[0]) {
+      Write-Host "No packages retrieved from artifact location."
+      return ""
+    }
+    if ($pkgs.Count -gt 1) {
+      Write-Host "There are more than 1 packages retieved from artifact location."
+      foreach ($pkg in $pkgs) {
+        Write-Host "The package name is $($pkg.BaseName)"
+      }
+      return ""
+    }
+    $parsedPackage = &$parsePkgInfoFn -pkg $pkgs[0] -workingDirectory $artifactLocation
+    return $parsedPackage.ReleaseTag
+  }
+  catch {
+    if ($continueOnError) {
+      return ""
+    }
+    Write-Error "No release tag retrieved from $artifactLocation"
+  }
+}
+function RetrievePackages($pkgRepository, $artifactLocation) {
+  $parsePkgInfoFn = ""
   $packagePattern = ""
-
+  $pkgRepository = $pkgRepository.Trim()
   switch ($pkgRepository) {
     "Maven" {
-      $ParsePkgInfoFn = "ParseMavenPackage"
+      $parsePkgInfoFn = "ParseMavenPackage"
       $packagePattern = "*.pom"
       break
     }
     "Nuget" {
-      $ParsePkgInfoFn = "ParseNugetPackage"
+      $parsePkgInfoFn = "ParseNugetPackage"
       $packagePattern = "*.nupkg"
       break
     }
     "NPM" {
-      $ParsePkgInfoFn = "ParseNPMPackage"
+      $parsePkgInfoFn = "ParseNPMPackage"
       $packagePattern = "*.tgz"
       break
     }
     "PyPI" {
-      $ParsePkgInfoFn = "ParsePyPIPackage"
+      $parsePkgInfoFn = "ParsePyPIPackage"
       $packagePattern = "*.zip"
       break
     }
     "C" {
-      $ParsePkgInfoFn = "ParseCArtifact"
+      $parsePkgInfoFn = "ParseCArtifact"
       $packagePattern = "*.json"
     }
     "CPP" {
-      $ParsePkgInfoFn = "ParseCppArtifact"
+      $parsePkgInfoFn = "ParseCppArtifact"
       $packagePattern = "*.json"
     }
     default {
@@ -427,12 +459,18 @@ function VerifyPackages($pkgRepository, $artifactLocation, $workingDirectory, $a
       exit(1)
     }
   }
+  $pkgs = Get-ChildItem -Path $artifactLocation -Include $packagePattern -Recurse -File
+  return $pkgs, $parsePkgInfoFn
+}
 
-  $pkgs = (Get-ChildItem -Path $artifactLocation -Include $packagePattern -Recurse -File)
+# Walk across all build artifacts, check them against the appropriate repository, return a list of tags/releases
+function VerifyPackages($pkgRepository, $artifactLocation, $workingDirectory, $apiUrl, $releaseSha,  $continueOnError = $false) {
+  $pkgList = [array]@()
+  $pkgs, $parsePkgInfoFn = RetrievePackages -pkgRepository $pkgRepository -artifactLocation $artifactLocation
 
   foreach ($pkg in $pkgs) {
     try {
-      $parsedPackage = &$ParsePkgInfoFn -pkg $pkg -workingDirectory $workingDirectory
+      $parsedPackage = &$parsePkgInfoFn -pkg $pkg -workingDirectory $workingDirectory
 
       if ($parsedPackage -eq $null) {
         continue
@@ -444,17 +482,11 @@ function VerifyPackages($pkgRepository, $artifactLocation, $workingDirectory, $a
         exit(1)
       }
 
-      $tag = if ($parsedPackage.packageId) {
-        "$($parsedPackage.packageId)_$($parsedPackage.PackageVersion)"
-      } else {
-        $parsedPackage.PackageVersion
-      }
-
       $pkgList += New-Object PSObject -Property @{
         PackageId      = $parsedPackage.PackageId
         PackageVersion = $parsedPackage.PackageVersion
         GroupId        = $parsedPackage.GroupId
-        Tag            = $tag
+        Tag            = $parsedPackage.ReleaseTag
         ReleaseNotes   = $parsedPackage.ReleaseNotes
         ReadmeContent  = $parsedPackage.ReadmeContent
         IsPrerelease   = [AzureEngSemanticVersion]::ParseVersionString($parsedPackage.PackageVersion).IsPrerelease
