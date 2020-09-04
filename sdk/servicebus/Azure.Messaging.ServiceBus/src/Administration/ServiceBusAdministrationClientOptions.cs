@@ -25,7 +25,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         }
 
         /// <summary>
-        /// The versions of Service Bus Management supported by this client
+        /// The versions of Service Bus Administration supported by this client
         /// library.
         /// </summary>
         public enum ServiceVersion

@@ -54,7 +54,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         protected ServiceBusAdministrationClient() { }
 
         /// <summary>
-        /// Initializes a new <see cref="ServiceBusAdministrationClient"/> which can be used to perform management operations on ServiceBus entities.
+        /// Initializes a new <see cref="ServiceBusAdministrationClient"/> which can be used to perform administration operations on ServiceBus entities.
         /// </summary>
         ///
         /// <param name="connectionString">Namespace connection string.</param>
@@ -64,7 +64,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         }
 
         /// <summary>
-        /// Initializes a new <see cref="ServiceBusAdministrationClient"/> which can be used to perform management operations on ServiceBus entities.
+        /// Initializes a new <see cref="ServiceBusAdministrationClient"/> which can be used to perform administration operations on ServiceBus entities.
         /// </summary>
         ///
         /// <param name="connectionString">Namespace connection string.</param>
@@ -110,7 +110,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         }
 
         /// <summary>
-        /// Initializes a new <see cref="ServiceBusAdministrationClient"/> which can be used to perform management operations on ServiceBus entities.
+        /// Initializes a new <see cref="ServiceBusAdministrationClient"/> which can be used to perform administration operations on ServiceBus entities.
         /// </summary>
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
@@ -123,7 +123,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         }
 
         /// <summary>
-        /// Initializes a new <see cref="ServiceBusAdministrationClient"/> which can be used to perform management operations on ServiceBus entities.
+        /// Initializes a new <see cref="ServiceBusAdministrationClient"/> which can be used to perform administration operations on ServiceBus entities.
         /// </summary>
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
