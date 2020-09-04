@@ -366,38 +366,38 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="TextAnalytics.RecognizePiiEntitiesResult"/> for mocking purposes.
+        /// Initializes a new instance of <see cref="TextAnalytics.RecognizePiiResult"/> for mocking purposes.
         /// </summary>
         /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
         /// <param name="statistics">Sets the <see cref="TextAnalyticsResult.Statistics"/> property.</param>
         /// <param name="entities">Sets the collection of <see cref="TextAnalytics.PiiEntityCollection"/>.</param>
-        /// <returns>A new instance of <see cref="TextAnalytics.RecognizePiiEntitiesResult"/> for mocking purposes.</returns>
-        public static RecognizePiiEntitiesResult RecognizePiiEntitiesResult(string id, TextDocumentStatistics statistics, PiiEntityCollection entities)
+        /// <returns>A new instance of <see cref="TextAnalytics.RecognizePiiResult"/> for mocking purposes.</returns>
+        public static RecognizePiiResult RecognizePiiResult(string id, TextDocumentStatistics statistics, PiiEntityCollection entities)
         {
-            return new RecognizePiiEntitiesResult(id, statistics, entities);
+            return new RecognizePiiResult(id, statistics, entities);
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="TextAnalytics.RecognizePiiEntitiesResult"/> for mocking purposes.
+        /// Initializes a new instance of <see cref="TextAnalytics.RecognizePiiResult"/> for mocking purposes.
         /// </summary>
         /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
         /// <param name="error">Sets the <see cref="TextAnalyticsResult.Error"/> property.</param>
-        /// <returns>A new instance of <see cref="TextAnalytics.RecognizePiiEntitiesResult"/> for mocking purposes.</returns>
-        public static RecognizePiiEntitiesResult RecognizePiiEntitiesResult(string id, TextAnalyticsError error)
+        /// <returns>A new instance of <see cref="TextAnalytics.RecognizePiiResult"/> for mocking purposes.</returns>
+        public static RecognizePiiResult RecognizePiiResult(string id, TextAnalyticsError error)
         {
-            return new RecognizePiiEntitiesResult(id, error);
+            return new RecognizePiiResult(id, error);
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="TextAnalytics.RecognizePiiEntitiesResultCollection"/> for mocking purposes.
+        /// Initializes a new instance of <see cref="TextAnalytics.RecognizePiiResultCollection"/> for mocking purposes.
         /// </summary>
-        /// <param name="list">Sets the collection of <see cref="TextAnalytics.RecognizePiiEntitiesResult"/>.</param>
-        /// <param name="statistics">Sets the <see cref="RecognizePiiEntitiesResultCollection.Statistics"/> property.</param>
-        /// <param name="modelVersion">Sets the <see cref="RecognizePiiEntitiesResultCollection.ModelVersion"/> property.</param>
-        /// <returns>A new instance of <see cref="TextAnalytics.RecognizePiiEntitiesResultCollection"/> for mocking purposes.</returns>
-        public static RecognizePiiEntitiesResultCollection RecognizePiiEntitiesResultCollection(IEnumerable<RecognizePiiEntitiesResult> list, TextDocumentBatchStatistics statistics, string modelVersion)
+        /// <param name="list">Sets the collection of <see cref="TextAnalytics.RecognizePiiResult"/>.</param>
+        /// <param name="statistics">Sets the <see cref="RecognizePiiResultCollection.Statistics"/> property.</param>
+        /// <param name="modelVersion">Sets the <see cref="RecognizePiiResultCollection.ModelVersion"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.RecognizePiiResultCollection"/> for mocking purposes.</returns>
+        public static RecognizePiiResultCollection RecognizePiiResultCollection(IEnumerable<RecognizePiiResult> list, TextDocumentBatchStatistics statistics, string modelVersion)
         {
-            return new RecognizePiiEntitiesResultCollection(list.ToList(), statistics, modelVersion);
+            return new RecognizePiiResultCollection(list.ToList(), statistics, modelVersion);
         }
 
         #endregion Recognize PII Entities

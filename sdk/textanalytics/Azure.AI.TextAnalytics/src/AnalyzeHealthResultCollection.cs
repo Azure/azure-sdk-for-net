@@ -3,23 +3,29 @@
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Azure.AI.TextAnalytics.Models;
 
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// Collection of <see cref="RecognizePiiEntitiesResult"/> objects corresponding
+    /// Collection of <see cref="DetectLanguageResult"/> objects corresponding
     /// to a batch of documents, and information about the batch operation.
     /// </summary>
-    public class RecognizePiiEntitiesResultCollection : ReadOnlyCollection<RecognizePiiEntitiesResult>
+    public class AnalyzeHealthResultCollection : ReadOnlyCollection<HealthcareResult>
     {
-        internal RecognizePiiEntitiesResultCollection(IList<RecognizePiiEntitiesResult> list, TextDocumentBatchStatistics statistics, string modelVersion) : base(list)
+        /// <summary>
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="statistics"></param>
+        /// <param name="modelVersion"></param>
+        internal AnalyzeHealthResultCollection(IList<HealthcareResult> list, TextDocumentBatchStatistics statistics, string modelVersion) : base(list)
         {
             Statistics = statistics;
             ModelVersion = modelVersion;
         }
 
         /// <summary>
-        /// Gets statistics about the documents and how it was processed
+        /// Gets statistics about the documents batch and how it was processed
         /// by the service.  This property will have a value when IncludeStatistics
         /// is set to true in the client call.
         /// </summary>

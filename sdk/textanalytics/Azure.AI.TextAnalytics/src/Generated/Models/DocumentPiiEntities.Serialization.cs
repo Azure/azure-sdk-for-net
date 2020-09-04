@@ -12,15 +12,14 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class PiiDocumentEntities
+    internal partial class DocumentPiiEntities
     {
-        internal static PiiDocumentEntities DeserializePiiDocumentEntities(JsonElement element)
+        internal static DocumentPiiEntities DeserializeDocumentPiiEntities(JsonElement element)
         {
             string id = default;
-            IReadOnlyList<Entity> entities = default;
+            IReadOnlyList<PiiEntity> entities = default;
             IReadOnlyList<TextAnalyticsWarningInternal> warnings = default;
             Optional<TextDocumentStatistics> statistics = default;
-            Optional<string> redactedText = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -30,10 +29,10 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("entities"))
                 {
-                    List<Entity> array = new List<Entity>();
+                    List<PiiEntity> array = new List<PiiEntity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Entity.DeserializeEntity(item));
+                        array.Add(PiiEntity.DeserializePiiEntity(item));
                     }
                     entities = array;
                     continue;
@@ -53,13 +52,8 @@ namespace Azure.AI.TextAnalytics.Models
                     statistics = TextDocumentStatistics.DeserializeTextDocumentStatistics(property.Value);
                     continue;
                 }
-                if (property.NameEquals("redactedText"))
-                {
-                    redactedText = property.Value.GetString();
-                    continue;
-                }
             }
-            return new PiiDocumentEntities(id, entities, warnings, Optional.ToNullable(statistics), redactedText.Value);
+            return new DocumentPiiEntities(id, entities, warnings, Optional.ToNullable(statistics));
         }
     }
 }
