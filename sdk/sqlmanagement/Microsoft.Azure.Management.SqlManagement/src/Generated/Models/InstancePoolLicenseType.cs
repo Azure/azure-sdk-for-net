@@ -10,96 +10,13 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for InstancePoolLicenseType.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(InstancePoolLicenseTypeConverter))]
-    public struct InstancePoolLicenseType : System.IEquatable<InstancePoolLicenseType>
+    public static class InstancePoolLicenseType
     {
-        private InstancePoolLicenseType(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly InstancePoolLicenseType LicenseIncluded = "LicenseIncluded";
-
-        public static readonly InstancePoolLicenseType BasePrice = "BasePrice";
-
-
-        /// <summary>
-        /// Underlying value of enum InstancePoolLicenseType
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for InstancePoolLicenseType
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type InstancePoolLicenseType
-        /// </summary>
-        public bool Equals(InstancePoolLicenseType e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to InstancePoolLicenseType
-        /// </summary>
-        public static implicit operator InstancePoolLicenseType(string value)
-        {
-            return new InstancePoolLicenseType(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert InstancePoolLicenseType to string
-        /// </summary>
-        public static implicit operator string(InstancePoolLicenseType e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum InstancePoolLicenseType
-        /// </summary>
-        public static bool operator == (InstancePoolLicenseType e1, InstancePoolLicenseType e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum InstancePoolLicenseType
-        /// </summary>
-        public static bool operator != (InstancePoolLicenseType e1, InstancePoolLicenseType e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for InstancePoolLicenseType
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is InstancePoolLicenseType && Equals((InstancePoolLicenseType)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode InstancePoolLicenseType
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string LicenseIncluded = "LicenseIncluded";
+        public const string BasePrice = "BasePrice";
     }
 }

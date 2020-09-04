@@ -10,96 +10,13 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for OperationOrigin.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(OperationOriginConverter))]
-    public struct OperationOrigin : System.IEquatable<OperationOrigin>
+    public static class OperationOrigin
     {
-        private OperationOrigin(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly OperationOrigin User = "user";
-
-        public static readonly OperationOrigin System = "system";
-
-
-        /// <summary>
-        /// Underlying value of enum OperationOrigin
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for OperationOrigin
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type OperationOrigin
-        /// </summary>
-        public bool Equals(OperationOrigin e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to OperationOrigin
-        /// </summary>
-        public static implicit operator OperationOrigin(string value)
-        {
-            return new OperationOrigin(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert OperationOrigin to string
-        /// </summary>
-        public static implicit operator string(OperationOrigin e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum OperationOrigin
-        /// </summary>
-        public static bool operator == (OperationOrigin e1, OperationOrigin e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum OperationOrigin
-        /// </summary>
-        public static bool operator != (OperationOrigin e1, OperationOrigin e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for OperationOrigin
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is OperationOrigin && Equals((OperationOrigin)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode OperationOrigin
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string User = "user";
+        public const string System = "system";
     }
 }

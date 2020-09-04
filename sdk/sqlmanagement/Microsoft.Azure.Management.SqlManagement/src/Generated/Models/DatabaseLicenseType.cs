@@ -10,96 +10,13 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for DatabaseLicenseType.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(DatabaseLicenseTypeConverter))]
-    public struct DatabaseLicenseType : System.IEquatable<DatabaseLicenseType>
+    public static class DatabaseLicenseType
     {
-        private DatabaseLicenseType(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly DatabaseLicenseType LicenseIncluded = "LicenseIncluded";
-
-        public static readonly DatabaseLicenseType BasePrice = "BasePrice";
-
-
-        /// <summary>
-        /// Underlying value of enum DatabaseLicenseType
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for DatabaseLicenseType
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type DatabaseLicenseType
-        /// </summary>
-        public bool Equals(DatabaseLicenseType e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to DatabaseLicenseType
-        /// </summary>
-        public static implicit operator DatabaseLicenseType(string value)
-        {
-            return new DatabaseLicenseType(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert DatabaseLicenseType to string
-        /// </summary>
-        public static implicit operator string(DatabaseLicenseType e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum DatabaseLicenseType
-        /// </summary>
-        public static bool operator == (DatabaseLicenseType e1, DatabaseLicenseType e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum DatabaseLicenseType
-        /// </summary>
-        public static bool operator != (DatabaseLicenseType e1, DatabaseLicenseType e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for DatabaseLicenseType
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is DatabaseLicenseType && Equals((DatabaseLicenseType)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode DatabaseLicenseType
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string LicenseIncluded = "LicenseIncluded";
+        public const string BasePrice = "BasePrice";
     }
 }

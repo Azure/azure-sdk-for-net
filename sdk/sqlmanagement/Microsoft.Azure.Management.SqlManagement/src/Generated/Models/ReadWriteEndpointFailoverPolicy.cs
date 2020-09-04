@@ -10,98 +10,13 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for ReadWriteEndpointFailoverPolicy.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(ReadWriteEndpointFailoverPolicyConverter))]
-    public struct ReadWriteEndpointFailoverPolicy : System.IEquatable<ReadWriteEndpointFailoverPolicy>
+    public static class ReadWriteEndpointFailoverPolicy
     {
-        private ReadWriteEndpointFailoverPolicy(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly ReadWriteEndpointFailoverPolicy Manual = "Manual";
-
-        public static readonly ReadWriteEndpointFailoverPolicy Automatic = "Automatic";
-
-
-        /// <summary>
-        /// Underlying value of enum ReadWriteEndpointFailoverPolicy
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for ReadWriteEndpointFailoverPolicy
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type ReadWriteEndpointFailoverPolicy
-        /// </summary>
-        public bool Equals(ReadWriteEndpointFailoverPolicy e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to
-        /// ReadWriteEndpointFailoverPolicy
-        /// </summary>
-        public static implicit operator ReadWriteEndpointFailoverPolicy(string value)
-        {
-            return new ReadWriteEndpointFailoverPolicy(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert ReadWriteEndpointFailoverPolicy to
-        /// string
-        /// </summary>
-        public static implicit operator string(ReadWriteEndpointFailoverPolicy e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum ReadWriteEndpointFailoverPolicy
-        /// </summary>
-        public static bool operator == (ReadWriteEndpointFailoverPolicy e1, ReadWriteEndpointFailoverPolicy e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum ReadWriteEndpointFailoverPolicy
-        /// </summary>
-        public static bool operator != (ReadWriteEndpointFailoverPolicy e1, ReadWriteEndpointFailoverPolicy e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for ReadWriteEndpointFailoverPolicy
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is ReadWriteEndpointFailoverPolicy && Equals((ReadWriteEndpointFailoverPolicy)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode ReadWriteEndpointFailoverPolicy
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string Manual = "Manual";
+        public const string Automatic = "Automatic";
     }
 }

@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="state">The state of the job agent. Possible values
         /// include: 'Creating', 'Ready', 'Updating', 'Deleting',
         /// 'Disabled'</param>
-        public JobAgent(string location, string databaseId, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), JobAgentState? state = default(JobAgentState?))
+        public JobAgent(string location, string databaseId, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string state = default(string))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'Creating', 'Ready', 'Updating', 'Deleting', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.state")]
-        public JobAgentState? State { get; private set; }
+        public string State { get; private set; }
 
         /// <summary>
         /// Validate the object.

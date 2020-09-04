@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="replicationRole">Replication role of the partner
         /// managed instances. Possible values include: 'Primary',
         /// 'Secondary'</param>
-        public PartnerRegionInfo(string location = default(string), InstanceFailoverGroupReplicationRole? replicationRole = default(InstanceFailoverGroupReplicationRole?))
+        public PartnerRegionInfo(string location = default(string), string replicationRole = default(string))
         {
             Location = location;
             ReplicationRole = replicationRole;
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// values include: 'Primary', 'Secondary'
         /// </summary>
         [JsonProperty(PropertyName = "replicationRole")]
-        public InstanceFailoverGroupReplicationRole? ReplicationRole { get; private set; }
+        public string ReplicationRole { get; private set; }
 
     }
 }

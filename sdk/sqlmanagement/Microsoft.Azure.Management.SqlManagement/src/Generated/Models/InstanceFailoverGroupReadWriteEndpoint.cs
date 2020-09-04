@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -39,7 +40,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// before failover with data loss is attempted for the read-write
         /// endpoint. If failoverPolicy is Automatic then
         /// failoverWithDataLossGracePeriodMinutes is required.</param>
-        public InstanceFailoverGroupReadWriteEndpoint(ReadWriteEndpointFailoverPolicy failoverPolicy, int? failoverWithDataLossGracePeriodMinutes = default(int?))
+        public InstanceFailoverGroupReadWriteEndpoint(string failoverPolicy, int? failoverWithDataLossGracePeriodMinutes = default(int?))
         {
             FailoverPolicy = failoverPolicy;
             FailoverWithDataLossGracePeriodMinutes = failoverWithDataLossGracePeriodMinutes;
@@ -58,7 +59,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// include: 'Manual', 'Automatic'
         /// </summary>
         [JsonProperty(PropertyName = "failoverPolicy")]
-        public ReadWriteEndpointFailoverPolicy FailoverPolicy { get; set; }
+        public string FailoverPolicy { get; set; }
 
         /// <summary>
         /// Gets or sets grace period before failover with data loss is
@@ -71,11 +72,15 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
+            if (FailoverPolicy == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "FailoverPolicy");
+            }
         }
     }
 }

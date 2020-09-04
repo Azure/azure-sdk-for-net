@@ -10,96 +10,13 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for DatabaseReadScale.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(DatabaseReadScaleConverter))]
-    public struct DatabaseReadScale : System.IEquatable<DatabaseReadScale>
+    public static class DatabaseReadScale
     {
-        private DatabaseReadScale(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly DatabaseReadScale Enabled = "Enabled";
-
-        public static readonly DatabaseReadScale Disabled = "Disabled";
-
-
-        /// <summary>
-        /// Underlying value of enum DatabaseReadScale
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for DatabaseReadScale
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type DatabaseReadScale
-        /// </summary>
-        public bool Equals(DatabaseReadScale e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to DatabaseReadScale
-        /// </summary>
-        public static implicit operator DatabaseReadScale(string value)
-        {
-            return new DatabaseReadScale(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert DatabaseReadScale to string
-        /// </summary>
-        public static implicit operator string(DatabaseReadScale e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum DatabaseReadScale
-        /// </summary>
-        public static bool operator == (DatabaseReadScale e1, DatabaseReadScale e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum DatabaseReadScale
-        /// </summary>
-        public static bool operator != (DatabaseReadScale e1, DatabaseReadScale e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for DatabaseReadScale
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is DatabaseReadScale && Equals((DatabaseReadScale)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode DatabaseReadScale
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string Enabled = "Enabled";
+        public const string Disabled = "Disabled";
     }
 }

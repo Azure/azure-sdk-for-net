@@ -10,103 +10,12 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for PrivateLinkServiceConnectionStateActionsRequire.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(PrivateLinkServiceConnectionStateActionsRequireConverter))]
-    public struct PrivateLinkServiceConnectionStateActionsRequire : System.IEquatable<PrivateLinkServiceConnectionStateActionsRequire>
+    public static class PrivateLinkServiceConnectionStateActionsRequire
     {
-        private PrivateLinkServiceConnectionStateActionsRequire(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly PrivateLinkServiceConnectionStateActionsRequire None = "None";
-
-
-        /// <summary>
-        /// Underlying value of enum
-        /// PrivateLinkServiceConnectionStateActionsRequire
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for
-        /// PrivateLinkServiceConnectionStateActionsRequire
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type
-        /// PrivateLinkServiceConnectionStateActionsRequire
-        /// </summary>
-        public bool Equals(PrivateLinkServiceConnectionStateActionsRequire e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to
-        /// PrivateLinkServiceConnectionStateActionsRequire
-        /// </summary>
-        public static implicit operator PrivateLinkServiceConnectionStateActionsRequire(string value)
-        {
-            return new PrivateLinkServiceConnectionStateActionsRequire(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert
-        /// PrivateLinkServiceConnectionStateActionsRequire to string
-        /// </summary>
-        public static implicit operator string(PrivateLinkServiceConnectionStateActionsRequire e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum
-        /// PrivateLinkServiceConnectionStateActionsRequire
-        /// </summary>
-        public static bool operator == (PrivateLinkServiceConnectionStateActionsRequire e1, PrivateLinkServiceConnectionStateActionsRequire e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum
-        /// PrivateLinkServiceConnectionStateActionsRequire
-        /// </summary>
-        public static bool operator != (PrivateLinkServiceConnectionStateActionsRequire e1, PrivateLinkServiceConnectionStateActionsRequire e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for
-        /// PrivateLinkServiceConnectionStateActionsRequire
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is PrivateLinkServiceConnectionStateActionsRequire && Equals((PrivateLinkServiceConnectionStateActionsRequire)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode
-        /// PrivateLinkServiceConnectionStateActionsRequire
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string None = "None";
     }
 }

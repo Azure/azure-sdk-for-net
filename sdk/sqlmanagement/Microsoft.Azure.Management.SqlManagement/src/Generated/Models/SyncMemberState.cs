@@ -10,128 +10,29 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for SyncMemberState.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(SyncMemberStateConverter))]
-    public struct SyncMemberState : System.IEquatable<SyncMemberState>
+    public static class SyncMemberState
     {
-        private SyncMemberState(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly SyncMemberState SyncInProgress = "SyncInProgress";
-
-        public static readonly SyncMemberState SyncSucceeded = "SyncSucceeded";
-
-        public static readonly SyncMemberState SyncFailed = "SyncFailed";
-
-        public static readonly SyncMemberState DisabledTombstoneCleanup = "DisabledTombstoneCleanup";
-
-        public static readonly SyncMemberState DisabledBackupRestore = "DisabledBackupRestore";
-
-        public static readonly SyncMemberState SyncSucceededWithWarnings = "SyncSucceededWithWarnings";
-
-        public static readonly SyncMemberState SyncCancelling = "SyncCancelling";
-
-        public static readonly SyncMemberState SyncCancelled = "SyncCancelled";
-
-        public static readonly SyncMemberState UnProvisioned = "UnProvisioned";
-
-        public static readonly SyncMemberState Provisioning = "Provisioning";
-
-        public static readonly SyncMemberState Provisioned = "Provisioned";
-
-        public static readonly SyncMemberState ProvisionFailed = "ProvisionFailed";
-
-        public static readonly SyncMemberState DeProvisioning = "DeProvisioning";
-
-        public static readonly SyncMemberState DeProvisioned = "DeProvisioned";
-
-        public static readonly SyncMemberState DeProvisionFailed = "DeProvisionFailed";
-
-        public static readonly SyncMemberState Reprovisioning = "Reprovisioning";
-
-        public static readonly SyncMemberState ReprovisionFailed = "ReprovisionFailed";
-
-        public static readonly SyncMemberState UnReprovisioned = "UnReprovisioned";
-
-
-        /// <summary>
-        /// Underlying value of enum SyncMemberState
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for SyncMemberState
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type SyncMemberState
-        /// </summary>
-        public bool Equals(SyncMemberState e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to SyncMemberState
-        /// </summary>
-        public static implicit operator SyncMemberState(string value)
-        {
-            return new SyncMemberState(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert SyncMemberState to string
-        /// </summary>
-        public static implicit operator string(SyncMemberState e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum SyncMemberState
-        /// </summary>
-        public static bool operator == (SyncMemberState e1, SyncMemberState e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum SyncMemberState
-        /// </summary>
-        public static bool operator != (SyncMemberState e1, SyncMemberState e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for SyncMemberState
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is SyncMemberState && Equals((SyncMemberState)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode SyncMemberState
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string SyncInProgress = "SyncInProgress";
+        public const string SyncSucceeded = "SyncSucceeded";
+        public const string SyncFailed = "SyncFailed";
+        public const string DisabledTombstoneCleanup = "DisabledTombstoneCleanup";
+        public const string DisabledBackupRestore = "DisabledBackupRestore";
+        public const string SyncSucceededWithWarnings = "SyncSucceededWithWarnings";
+        public const string SyncCancelling = "SyncCancelling";
+        public const string SyncCancelled = "SyncCancelled";
+        public const string UnProvisioned = "UnProvisioned";
+        public const string Provisioning = "Provisioning";
+        public const string Provisioned = "Provisioned";
+        public const string ProvisionFailed = "ProvisionFailed";
+        public const string DeProvisioning = "DeProvisioning";
+        public const string DeProvisioned = "DeProvisioned";
+        public const string DeProvisionFailed = "DeProvisionFailed";
+        public const string Reprovisioning = "Reprovisioning";
+        public const string ReprovisionFailed = "ReprovisionFailed";
+        public const string UnReprovisioned = "UnReprovisioned";
     }
 }

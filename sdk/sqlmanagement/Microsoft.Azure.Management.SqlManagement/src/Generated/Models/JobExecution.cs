@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="lastMessage">The last status or error message.</param>
         /// <param name="target">The target that this execution is executed
         /// on.</param>
-        public JobExecution(string id = default(string), string name = default(string), string type = default(string), int? jobVersion = default(int?), string stepName = default(string), int? stepId = default(int?), System.Guid? jobExecutionId = default(System.Guid?), JobExecutionLifecycle? lifecycle = default(JobExecutionLifecycle?), ProvisioningState? provisioningState = default(ProvisioningState?), System.DateTime? createTime = default(System.DateTime?), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), int? currentAttempts = default(int?), System.DateTime? currentAttemptStartTime = default(System.DateTime?), string lastMessage = default(string), JobExecutionTarget target = default(JobExecutionTarget))
+        public JobExecution(string id = default(string), string name = default(string), string type = default(string), int? jobVersion = default(int?), string stepName = default(string), int? stepId = default(int?), System.Guid? jobExecutionId = default(System.Guid?), string lifecycle = default(string), string provisioningState = default(string), System.DateTime? createTime = default(System.DateTime?), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), int? currentAttempts = default(int?), System.DateTime? currentAttemptStartTime = default(System.DateTime?), string lastMessage = default(string), JobExecutionTarget target = default(JobExecutionTarget))
             : base(id, name, type)
         {
             JobVersion = jobVersion;
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'TimedOut', 'Canceled', 'Skipped'
         /// </summary>
         [JsonProperty(PropertyName = "properties.lifecycle")]
-        public JobExecutionLifecycle? Lifecycle { get; private set; }
+        public string Lifecycle { get; private set; }
 
         /// <summary>
         /// Gets the ARM provisioning state of the job execution. Possible
@@ -124,7 +124,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'Canceled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public ProvisioningState? ProvisioningState { get; private set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets the time that the job execution was created.

@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// group instance.</param>
         /// <param name="databases">List of databases in the failover
         /// group.</param>
-        public FailoverGroup(FailoverGroupReadWriteEndpoint readWriteEndpoint, IList<PartnerInfo> partnerServers, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), FailoverGroupReadOnlyEndpoint readOnlyEndpoint = default(FailoverGroupReadOnlyEndpoint), FailoverGroupReplicationRole? replicationRole = default(FailoverGroupReplicationRole?), string replicationState = default(string), IList<string> databases = default(IList<string>))
+        public FailoverGroup(FailoverGroupReadWriteEndpoint readWriteEndpoint, IList<PartnerInfo> partnerServers, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), FailoverGroupReadOnlyEndpoint readOnlyEndpoint = default(FailoverGroupReadOnlyEndpoint), string replicationRole = default(string), string replicationState = default(string), IList<string> databases = default(IList<string>))
             : base(id, name, type)
         {
             Location = location;
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Possible values include: 'Primary', 'Secondary'
         /// </summary>
         [JsonProperty(PropertyName = "properties.replicationRole")]
-        public FailoverGroupReplicationRole? ReplicationRole { get; private set; }
+        public string ReplicationRole { get; private set; }
 
         /// <summary>
         /// Gets replication state of the failover group instance.

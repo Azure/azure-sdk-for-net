@@ -10,94 +10,12 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for JobStepOutputType.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(JobStepOutputTypeConverter))]
-    public struct JobStepOutputType : System.IEquatable<JobStepOutputType>
+    public static class JobStepOutputType
     {
-        private JobStepOutputType(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly JobStepOutputType SqlDatabase = "SqlDatabase";
-
-
-        /// <summary>
-        /// Underlying value of enum JobStepOutputType
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for JobStepOutputType
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type JobStepOutputType
-        /// </summary>
-        public bool Equals(JobStepOutputType e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to JobStepOutputType
-        /// </summary>
-        public static implicit operator JobStepOutputType(string value)
-        {
-            return new JobStepOutputType(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert JobStepOutputType to string
-        /// </summary>
-        public static implicit operator string(JobStepOutputType e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum JobStepOutputType
-        /// </summary>
-        public static bool operator == (JobStepOutputType e1, JobStepOutputType e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum JobStepOutputType
-        /// </summary>
-        public static bool operator != (JobStepOutputType e1, JobStepOutputType e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for JobStepOutputType
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is JobStepOutputType && Equals((JobStepOutputType)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode JobStepOutputType
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string SqlDatabase = "SqlDatabase";
     }
 }

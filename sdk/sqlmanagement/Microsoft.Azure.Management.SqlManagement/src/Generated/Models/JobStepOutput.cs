@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="resourceGroupName">The output destination resource
         /// group.</param>
         /// <param name="schemaName">The output destination schema.</param>
-        public JobStepOutput(string serverName, string databaseName, string tableName, string credential, JobStepOutputType? type = default(JobStepOutputType?), System.Guid? subscriptionId = default(System.Guid?), string resourceGroupName = default(string), string schemaName = default(string))
+        public JobStepOutput(string serverName, string databaseName, string tableName, string credential, string type = default(string), System.Guid? subscriptionId = default(System.Guid?), string resourceGroupName = default(string), string schemaName = default(string))
         {
             Type = type;
             SubscriptionId = subscriptionId;
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'SqlDatabase'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public JobStepOutputType? Type { get; set; }
+        public string Type { get; set; }
 
         /// <summary>
         /// Gets or sets the output destination subscription id.

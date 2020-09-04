@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="tracingId">TracingId of the sync group log.</param>
         /// <param name="operationStatus">OperationStatus of the sync group
         /// log.</param>
-        public SyncGroupLogProperties(System.DateTime? timestamp = default(System.DateTime?), SyncGroupLogType? type = default(SyncGroupLogType?), string source = default(string), string details = default(string), System.Guid? tracingId = default(System.Guid?), string operationStatus = default(string))
+        public SyncGroupLogProperties(System.DateTime? timestamp = default(System.DateTime?), string type = default(string), string source = default(string), string details = default(string), System.Guid? tracingId = default(System.Guid?), string operationStatus = default(string))
         {
             Timestamp = timestamp;
             Type = type;
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'Error', 'Warning', 'Success'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public SyncGroupLogType? Type { get; private set; }
+        public string Type { get; private set; }
 
         /// <summary>
         /// Gets source of the sync group log.

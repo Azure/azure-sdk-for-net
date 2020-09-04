@@ -10,104 +10,17 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for ManagementOperationState.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(ManagementOperationStateConverter))]
-    public struct ManagementOperationState : System.IEquatable<ManagementOperationState>
+    public static class ManagementOperationState
     {
-        private ManagementOperationState(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly ManagementOperationState Pending = "Pending";
-
-        public static readonly ManagementOperationState InProgress = "InProgress";
-
-        public static readonly ManagementOperationState Succeeded = "Succeeded";
-
-        public static readonly ManagementOperationState Failed = "Failed";
-
-        public static readonly ManagementOperationState CancelInProgress = "CancelInProgress";
-
-        public static readonly ManagementOperationState Cancelled = "Cancelled";
-
-
-        /// <summary>
-        /// Underlying value of enum ManagementOperationState
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for ManagementOperationState
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type ManagementOperationState
-        /// </summary>
-        public bool Equals(ManagementOperationState e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to ManagementOperationState
-        /// </summary>
-        public static implicit operator ManagementOperationState(string value)
-        {
-            return new ManagementOperationState(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert ManagementOperationState to string
-        /// </summary>
-        public static implicit operator string(ManagementOperationState e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum ManagementOperationState
-        /// </summary>
-        public static bool operator == (ManagementOperationState e1, ManagementOperationState e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum ManagementOperationState
-        /// </summary>
-        public static bool operator != (ManagementOperationState e1, ManagementOperationState e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for ManagementOperationState
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is ManagementOperationState && Equals((ManagementOperationState)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode ManagementOperationState
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string Pending = "Pending";
+        public const string InProgress = "InProgress";
+        public const string Succeeded = "Succeeded";
+        public const string Failed = "Failed";
+        public const string CancelInProgress = "CancelInProgress";
+        public const string Cancelled = "Cancelled";
     }
 }

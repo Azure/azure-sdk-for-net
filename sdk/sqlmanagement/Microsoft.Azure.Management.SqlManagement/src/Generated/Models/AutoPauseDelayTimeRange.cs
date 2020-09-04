@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Possible values include: 'Minutes'</param>
         /// <param name="doNotPauseValue">Value that is used to not pause
         /// (infinite delay before pause)</param>
-        public AutoPauseDelayTimeRange(int? minValue = default(int?), int? maxValue = default(int?), int? stepSize = default(int?), int? defaultProperty = default(int?), PauseDelayTimeUnit? unit = default(PauseDelayTimeUnit?), int? doNotPauseValue = default(int?))
+        public AutoPauseDelayTimeRange(int? minValue = default(int?), int? maxValue = default(int?), int? stepSize = default(int?), int? defaultProperty = default(int?), string unit = default(string), int? doNotPauseValue = default(int?))
         {
             MinValue = minValue;
             MaxValue = maxValue;
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// include: 'Minutes'
         /// </summary>
         [JsonProperty(PropertyName = "unit")]
-        public PauseDelayTimeUnit? Unit { get; private set; }
+        public string Unit { get; private set; }
 
         /// <summary>
         /// Gets value that is used to not pause (infinite delay before pause)
