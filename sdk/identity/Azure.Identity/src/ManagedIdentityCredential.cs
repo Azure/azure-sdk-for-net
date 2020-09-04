@@ -71,7 +71,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains an <see cref="AccessToken"/> from the Managed Identity service if available. This method is called by Azure SDK clients. It isn'tquest intended for use in application code.
+        /// Obtains an <see cref="AccessToken"/> from the Managed Identity service if available. This method is called by Azure SDK clients. It isn't intended for use in application code.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
