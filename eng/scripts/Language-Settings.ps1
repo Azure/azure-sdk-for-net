@@ -106,7 +106,8 @@ function Publish-dotnet-GithubIODocs ()
       Write-Host "DocDir $($Item)"
       Write-Host "PkgName $($PkgName)"
       Write-Host "DocVersion $($DocVersion)"
-      Upload-Blobs -DocDir "$($Item)" -PkgName $PkgName -DocVersion $DocVersion
+      $releaseTag = RetrieveReleaseTag "Nuget" $PublicArtifactLocation 
+      Upload-Blobs -DocDir "$($Item)" -PkgName $PkgName -DocVersion $DocVersion -ReleaseTag $releaseTag
     }
     else
     {
