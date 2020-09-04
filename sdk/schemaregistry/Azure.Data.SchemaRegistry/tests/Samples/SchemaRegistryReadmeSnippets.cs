@@ -7,9 +7,7 @@ using NUnit.Framework;
 
 namespace Azure.Data.SchemaRegistry.Tests.Samples
 {
-#pragma warning disable SA1649 // File name should match first type name
     public class SchemaRegistryReadmeSnippets : SamplesBase<SchemaRegistryClientTestEnvironment>
-#pragma warning restore SA1649 // File name should match first type name
     {
         [Ignore("Only verifying that the sample builds")]
         [Test]
@@ -54,11 +52,11 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
 
         [Ignore("Only verifying that the sample builds")]
         [Test]
-        public void GetSchemaId()
+        public void RetrieveSchemaId()
         {
             var client = new SchemaRegistryClient(TestEnvironment.SchemaRegistryUri, TestEnvironment.Credential);
 
-            #region Snippet:GetSchemaId
+            #region Snippet:RetrieveSchemaId
             string schemaName = "<schema_name>";
             string groupName = "<schema_group_name>";
             SerializationType schemaType = SerializationType.Avro;
@@ -81,11 +79,11 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
 
         [Ignore("Only verifying that the sample builds")]
         [Test]
-        public void GetSchema()
+        public void RetrieveSchema()
         {
             var client = new SchemaRegistryClient(TestEnvironment.SchemaRegistryUri, TestEnvironment.Credential);
 
-            #region Snippet:GetSchema
+            #region Snippet:RetrieveSchema
             string schemaId = "<schema_id>";
 
             Response<SchemaProperties> schemaProperties = client.GetSchema(schemaId);
