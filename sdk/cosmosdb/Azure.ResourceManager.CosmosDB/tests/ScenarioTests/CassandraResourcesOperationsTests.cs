@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccountCreateUpdateParameters databaseAccountCreateUpdateParameters = new DatabaseAccountCreateUpdateParameters(locations);
             databaseAccountCreateUpdateParameters.Location = "West US";
             databaseAccountCreateUpdateParameters.Capabilities.Add(new Capability("EnableCassandra"));
-            databaseAccountCreateUpdateParameters.ConsistencyPolicy = new (DefaultConsistencyLevel.Eventual);
+            databaseAccountCreateUpdateParameters.ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.Eventual);
 
             await WaitForCompletionAsync(await cosmosDBClient.DatabaseAccounts.StartCreateOrUpdateAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters));
 
