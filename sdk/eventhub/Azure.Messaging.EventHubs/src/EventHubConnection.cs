@@ -159,15 +159,22 @@ namespace Azure.Messaging.EventHubs
                 eventHubName = connectionStringProperties.EventHubName;
             }
 
-            var sharedAccessSignature = new SharedAccessSignature
-            (
-                 BuildAudienceResource(connectionOptions.TransportType, fullyQualifiedNamespace, eventHubName),
-                 connectionStringProperties.SharedAccessKeyName,
-                 connectionStringProperties.SharedAccessKey
-            );
+            SharedAccessSignature sharedAccessSignature;
+
+            if (string.IsNullOrEmpty(connectionStringProperties.SharedAccessSignature))
+            {
+                sharedAccessSignature = new SharedAccessSignature(
+                     BuildConnectionAudience(connectionOptions.TransportType, fullyQualifiedNamespace, eventHubName),
+                     connectionStringProperties.SharedAccessKeyName,
+                     connectionStringProperties.SharedAccessKey);
+            }
+            else
+            {
+                sharedAccessSignature = new SharedAccessSignature(connectionStringProperties.SharedAccessSignature);
+            }
 
             var sharedCredentials = new SharedAccessSignatureCredential(sharedAccessSignature);
-            var tokenCredentials = new EventHubTokenCredential(sharedCredentials, BuildAudienceResource(connectionOptions.TransportType, fullyQualifiedNamespace, eventHubName));
+            var tokenCredentials = new EventHubTokenCredential(sharedCredentials, BuildConnectionAudience(connectionOptions.TransportType, fullyQualifiedNamespace, eventHubName));
 
             FullyQualifiedNamespace = fullyQualifiedNamespace;
             EventHubName = eventHubName;
@@ -205,11 +212,11 @@ namespace Azure.Messaging.EventHubs
                     break;
 
                 case EventHubSharedKeyCredential sharedKeyCredential:
-                    credential = sharedKeyCredential.AsSharedAccessSignatureCredential(BuildAudienceResource(connectionOptions.TransportType, fullyQualifiedNamespace, eventHubName));
+                    credential = sharedKeyCredential.AsSharedAccessSignatureCredential(BuildConnectionAudience(connectionOptions.TransportType, fullyQualifiedNamespace, eventHubName));
                     break;
             }
 
-            var tokenCredential = new EventHubTokenCredential(credential, BuildAudienceResource(connectionOptions.TransportType, fullyQualifiedNamespace, eventHubName));
+            var tokenCredential = new EventHubTokenCredential(credential, BuildConnectionAudience(connectionOptions.TransportType, fullyQualifiedNamespace, eventHubName));
 
             FullyQualifiedNamespace = fullyQualifiedNamespace;
             EventHubName = eventHubName;
@@ -439,7 +446,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Builds the audience for use in the signature.
+        ///   Builds the audience of the connection for use in the signature.
         /// </summary>
         ///
         /// <param name="transportType">The type of protocol and transport that will be used for communicating with the Event Hubs service.</param>
@@ -448,9 +455,9 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>The value to use as the audience of the signature.</returns>
         ///
-        private static string BuildAudienceResource(EventHubsTransportType transportType,
-                                                    string fullyQualifiedNamespace,
-                                                    string eventHubName)
+        internal static string BuildConnectionAudience(EventHubsTransportType transportType,
+                                                       string fullyQualifiedNamespace,
+                                                       string eventHubName)
         {
             var builder = new UriBuilder(fullyQualifiedNamespace)
             {
