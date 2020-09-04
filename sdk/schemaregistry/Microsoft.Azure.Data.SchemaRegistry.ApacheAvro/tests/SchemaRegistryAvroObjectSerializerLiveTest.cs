@@ -39,6 +39,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var serializer = new SchemaRegistryAvroObjectSerializer(client, groupName, new SchemaRegistryAvroObjectSerializerOptions { AutoRegisterSchemas = true });
             await serializer.SerializeAsync(memoryStream, employee, typeof(Employee), CancellationToken.None);
 
+            memoryStream.Position = 0;
             var deserializedObject = await serializer.DeserializeAsync(memoryStream, typeof(Employee), CancellationToken.None);
             var readEmployee = deserializedObject as Employee;
             Assert.IsNotNull(readEmployee);
@@ -59,6 +60,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var serializer = new SchemaRegistryAvroObjectSerializer(client, groupName, new SchemaRegistryAvroObjectSerializerOptions { AutoRegisterSchemas = true });
             await serializer.SerializeAsync(memoryStream, record, typeof(GenericRecord), CancellationToken.None);
 
+            memoryStream.Position = 0;
             var deserializedObject = await serializer.DeserializeAsync(memoryStream, typeof(GenericRecord), CancellationToken.None);
             var readRecord = deserializedObject as GenericRecord;
             Assert.IsNotNull(readRecord);

@@ -175,7 +175,6 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         private static ReadOnlyMemory<byte> CopyToReadOnlyMemory(Stream stream)
         {
             using var tempMemoryStream = new MemoryStream();
-            stream.Position = 0;
             stream.CopyTo(tempMemoryStream);
             return new ReadOnlyMemory<byte>(tempMemoryStream.ToArray());
         }
