@@ -2,14 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Queues.Models;
+using Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests;
 using Microsoft.Azure.WebJobs.Host.Blobs;
 using Microsoft.Azure.WebJobs.Host.Blobs.Listeners;
 using Microsoft.Azure.WebJobs.Host.Executors;
@@ -22,7 +24,7 @@ using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 {
-    public class BlobQueueTriggerExecutorTests
+    public class BlobQueueTriggerExecutorTests : IClassFixture<AzuriteFixture>
     {
         private const string TestBlobName = "TestBlobName";
         private const string TestContainerName = "container";
@@ -30,25 +32,21 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 
         private readonly TestLoggerProvider _loggerProvider = new TestLoggerProvider();
         private readonly ILogger<BlobListener> _logger;
-        private readonly Mock<BlobServiceClient> blobServiceClientMock = new Mock<BlobServiceClient>(
-            new Uri("https://fakeaccount.blob.core.windows.net"), null);
-        private readonly Mock<BlobContainerClient> blobContainerMock = new Mock<BlobContainerClient>(new Uri("https://fakeaccount.blob.core.windows.net/fakecontainer"), null);
+        private readonly BlobServiceClient blobServiceClient;
+        private readonly BlobContainerClient blobContainer;
 
-        public BlobQueueTriggerExecutorTests()
+        private readonly AzuriteFixture azuriteFixture;
+
+        public BlobQueueTriggerExecutorTests(AzuriteFixture azuriteFixture)
         {
             var loggerFactory = new LoggerFactory();
             loggerFactory.AddProvider(_loggerProvider);
             _logger = loggerFactory.CreateLogger<BlobListener>();
 
-            blobServiceClientMock.Setup(x => x.GetBlobContainerClient(TestContainerName)).Returns(blobContainerMock.Object);
-            blobContainerMock.Setup(x => x.Uri).Returns(new Uri("https://fakeaccount.blob.core.windows.net/fakecontainer"));
-            blobContainerMock.Setup(x => x.GetBlobClient(It.IsAny<string>())).Returns(() =>
-            {
-                Mock<BlobClient> blobClientMock = new Mock<BlobClient>();
-                blobClientMock.Setup(x => x.GetPropertiesAsync(It.IsAny<BlobRequestConditions>(), It.IsAny<CancellationToken>()))
-                    .ThrowsAsync(new RequestFailedException(404, string.Empty));
-                return blobClientMock.Object;
-            });
+            this.azuriteFixture = azuriteFixture;
+            blobServiceClient = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString).CreateBlobServiceClient();
+            blobContainer = blobServiceClient.GetBlobContainerClient(TestContainerName);
+            blobContainer.CreateIfNotExists();
         }
 
         [Fact]
@@ -129,7 +127,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 
             BlobQueueRegistration registration = new BlobQueueRegistration
             {
-                BlobClient = blobServiceClientMock.Object,
+                BlobClient = blobServiceClient,
                 Executor = CreateDummyTriggeredFunctionExecutor()
             };
             product.Register(functionId, registration);
@@ -157,7 +155,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
         {
             // Arrange
             string functionId = "FunctionId";
-            SetEtag(TestContainerName, TestBlobName, "NewETag");
+            string eTag = TouchBlob(TestContainerName, TestBlobName);
             Mock<IBlobWrittenWatcher> mock = new Mock<IBlobWrittenWatcher>(MockBehavior.Strict);
             mock.Setup(w => w.Notify(It.IsAny<BlobContainerClient>(), It.IsAny<BlobBaseClient>()))
                 .Verifiable();
@@ -167,7 +165,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 
             BlobQueueRegistration registration = new BlobQueueRegistration
             {
-                BlobClient = blobServiceClientMock.Object,
+                BlobClient = blobServiceClient,
                 Executor = CreateDummyTriggeredFunctionExecutor()
             };
             product.Register(functionId, registration);
@@ -188,11 +186,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
         {
             // Arrange
             string functionId = "FunctionId";
-            string matchingETag = "ETag";
             Guid expectedParentId = Guid.NewGuid();
-            var message = CreateMessage(functionId, matchingETag);
 
-            SetEtag(TestContainerName, TestBlobName, matchingETag);
+            string matchingETag = TouchBlob(TestContainerName, TestBlobName);
+            var message = CreateMessage(functionId, matchingETag);
 
             IBlobCausalityReader causalityReader = CreateStubCausalityReader(expectedParentId);
 
@@ -215,7 +212,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 
             BlobQueueRegistration registration = new BlobQueueRegistration
             {
-                BlobClient = blobServiceClientMock.Object,
+                BlobClient = blobServiceClient,
                 Executor = innerExecutor
             };
             product.Register(functionId, registration);
@@ -233,9 +230,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
         {
             // Arrange
             string functionId = "FunctionId";
-            string matchingETag = "ETag";
-
-            SetEtag(TestContainerName, TestBlobName, matchingETag);
+            string matchingETag = TouchBlob(TestContainerName, TestBlobName);
 
             IBlobCausalityReader causalityReader = CreateStubCausalityReader();
 
@@ -251,7 +246,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             ITriggeredFunctionExecutor innerExecutor = mock.Object;
             BlobQueueRegistration registration = new BlobQueueRegistration
             {
-                BlobClient = blobServiceClientMock.Object,
+                BlobClient = blobServiceClient,
                 Executor = innerExecutor
             };
             product.Register(functionId, registration);
@@ -270,9 +265,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
         {
             // Arrange
             string functionId = "FunctionId";
-            string matchingETag = "ETag";
-
-            SetEtag(TestContainerName, TestBlobName, matchingETag);
+            string matchingETag = TouchBlob(TestContainerName, TestBlobName);
 
             IBlobCausalityReader causalityReader = CreateStubCausalityReader();
 
@@ -288,7 +281,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             ITriggeredFunctionExecutor innerExecutor = mock.Object;
             BlobQueueRegistration registration = new BlobQueueRegistration
             {
-                BlobClient = blobServiceClientMock.Object,
+                BlobClient = blobServiceClient,
                 Executor = innerExecutor
             };
             product.Register(functionId, registration);
@@ -399,19 +392,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
         }
 
         // Set the etag on the specified blob
-        private void SetEtag(string containerName, string blobName, string etag)
+        private string TouchBlob(string containerName, string blobName)
         {
-            Mock<BlobClient> mockBlob = new Mock<BlobClient>(MockBehavior.Strict);
-            BlobProperties blobProperties = BlobsModelFactory.BlobProperties(eTag: new ETag(etag), blobType: BlobType.Block);
-            mockBlob.Setup(b => b.GetPropertiesAsync(null, It.IsAny<CancellationToken>())).ReturnsAsync(Response.FromValue(blobProperties, null));
-            mockBlob.SetupGet(b => b.Name).Returns(blobName);
-
-            Mock<BlockBlobClient> blockBlobMock = new Mock<BlockBlobClient>(MockBehavior.Strict);
-            blockBlobMock.SetupGet(b => b.Name).Returns(blobName);
-
-            blobContainerMock.Setup(x => x.GetBlobClient(It.IsAny<string>())).Returns(mockBlob.Object);
-            // blobContainerMock.Setup(x => x.GetBlockBlobClient(It.IsAny<string>())).Returns(blockBlobMock.Object);
-            // blobContainerMock.Setup(x => x.GetBlobReferenceFromServerAsync(blobName)).ReturnsAsync(mockBlob.Object); TODO (kasobol-msft) find replacement
+            string content = Guid.NewGuid().ToString();
+            var blobClient = blobContainer.GetBlobClient(blobName);
+            BlobContentInfo blobContentInfo = blobClient.Upload(new MemoryStream(Encoding.UTF8.GetBytes(content)), overwrite: true);
+            return blobContentInfo.ETag.ToString();
         }
     }
 }
