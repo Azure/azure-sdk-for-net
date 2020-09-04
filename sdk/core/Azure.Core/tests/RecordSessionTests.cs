@@ -410,9 +410,18 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public void ContentLengthUpdatedCorrectlyOnEmptyBody(bool isHeadRequest)
+        public void ContentLengthNotChangedOnHeadRequestWithEmptyBody()
+        {
+            ContentLengthUpdatedCorrectlyOnEmptyBody(isHeadRequest: true);
+        }
+
+        [Test]
+        public void ContentLengthResetToZeroOnGetRequestWithEmptyBody()
+        {
+            ContentLengthUpdatedCorrectlyOnEmptyBody(isHeadRequest: false);
+        }
+
+        private void ContentLengthUpdatedCorrectlyOnEmptyBody(bool isHeadRequest)
         {
             var sanitizer = new RecordedTestSanitizer();
             var entry = new RecordEntry()
