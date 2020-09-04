@@ -27,10 +27,10 @@ namespace Microsoft.Extensions.Azure
             IServiceProvider serviceProvider,
             EventSourceLogForwarder logForwarder)
         {
+            _serviceProvider = serviceProvider;
             _globalOptions = globalOptions.CurrentValue;
             _configurationRoot = _globalOptions.ConfigurationRootResolver?.Invoke(_serviceProvider);
 
-            _serviceProvider = serviceProvider;
             _logForwarder = logForwarder;
             _clientRegistrations = new Dictionary<string, FallbackClientRegistration<TClient>>();
 
