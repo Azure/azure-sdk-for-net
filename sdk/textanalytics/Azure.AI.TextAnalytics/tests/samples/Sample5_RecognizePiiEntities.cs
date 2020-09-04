@@ -27,10 +27,17 @@ namespace Azure.AI.TextAnalytics.Samples
             PiiEntityCollection entities = client.RecognizePiiEntities(document).Value;
 
             Console.WriteLine($"Redacted Text: {entities.RedactedText}");
-            Console.WriteLine($"Recognized {entities.Count} PII entit{(entities.Count > 1 ? "ies" : "y")}:");
-            foreach (PiiEntity entity in entities)
+            if (entities.Count > 0)
             {
-                Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
+                Console.WriteLine($"Recognized {entities.Count} PII entit{(entities.Count > 1 ? "ies" : "y")}:");
+                foreach (PiiEntity entity in entities)
+                {
+                    Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("No entities were found.");
             }
             #endregion
         }

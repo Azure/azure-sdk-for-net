@@ -6,13 +6,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 
 using OpenTelemetry.Exporter.AzureMonitor.ConnectionString;
 using OpenTelemetry.Exporter.AzureMonitor.Models;
-using OpenTelemetry.Trace;
 
 namespace OpenTelemetry.Exporter.AzureMonitor
 {
@@ -101,23 +101,27 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
         private MonitorBase GenerateTelemetryData(Activity activity)
         {
-            MonitorBase telemetry = new MonitorBase();
-
             var telemetryType = activity.GetTelemetryType();
-            telemetry.BaseType = Telemetry_Base_Type_Mapping[telemetryType];
-            string url = GetHttpUrl(activity.Tags);
+            var tags = activity.Tags.ToAzureMonitorTags(out var activityType);
+            MonitorBase telemetry = new MonitorBase
+            {
+                BaseType = Telemetry_Base_Type_Mapping[telemetryType]
+            };
 
             if (telemetryType == TelemetryType.Request)
             {
-                var request = new RequestData(2, activity.Context.SpanId.ToHexString(), activity.Duration.ToString("c", CultureInfo.InvariantCulture), activity.GetStatus().IsOk, activity.GetStatusCode())
+                var url = activity.Kind == ActivityKind.Server ? UrlHelper.GetUrl(tags) : GetMessagingUrl(tags);
+                var statusCode = GetHttpStatusCode(tags);
+                var success = GetSuccessFromHttpStatusCode(statusCode);
+                var request = new RequestData(2, activity.Context.SpanId.ToHexString(), activity.Duration.ToString("c", CultureInfo.InvariantCulture), success, statusCode)
                 {
                     Name = activity.DisplayName,
                     Url = url,
                     // TODO: Handle request.source.
                 };
 
-                // TODO: Handle activity.TagObjects
-                ExtractPropertiesFromTags(request.Properties, activity.Tags);
+                // TODO: Handle activity.TagObjects, extract well-known tags
+                // ExtractPropertiesFromTags(request.Properties, activity.Tags);
 
                 telemetry.BaseData = request;
             }
@@ -125,18 +129,19 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             {
                 var dependency = new RemoteDependencyData(2, activity.DisplayName, activity.Duration)
                 {
-                    Id = activity.Context.SpanId.ToHexString(),
-                    Success = activity.GetStatus().IsOk
+                    Id = activity.Context.SpanId.ToHexString()
                 };
 
                 // TODO: Handle activity.TagObjects
-                ExtractPropertiesFromTags(dependency.Properties, activity.Tags);
+                // ExtractPropertiesFromTags(dependency.Properties, activity.Tags);
 
-                if (url != null)
+                if (activityType == PartBType.Http)
                 {
-                    dependency.Data = url;
+                    dependency.Data = UrlHelper.GetUrl(tags);
                     dependency.Type = "HTTP"; // TODO: Parse for storage / SB.
-                    dependency.ResultCode = activity.GetStatusCode();
+                    var statusCode = GetHttpStatusCode(tags);
+                    dependency.ResultCode = statusCode;
+                    dependency.Success = GetSuccessFromHttpStatusCode(statusCode);
                 }
 
                 // TODO: Handle dependency.target.
@@ -146,30 +151,27 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             return telemetry;
         }
 
-        private static string GetHttpUrl(IEnumerable<KeyValuePair<string, string>> tags)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static string GetHttpStatusCode(Dictionary<string, string> tags)
         {
-            var httpTags = tags.Where(item => item.Key.StartsWith("http.", StringComparison.InvariantCulture))
-                               .ToDictionary(item => item.Key, item => item.Value);
-
-
-            httpTags.TryGetValue(SemanticConventions.AttributeHttpUrl, out var url);
-            if (url != null)
+            if (tags.TryGetValue(SemanticConventions.AttributeHttpStatusCode, out var status))
             {
-                return url;
+                return status;
             }
 
-            httpTags.TryGetValue(SemanticConventions.AttributeHttpHost, out var httpHost);
+            return "0";
+        }
 
-            if (httpHost != null)
-            {
-                httpTags.TryGetValue(SemanticConventions.AttributeHttpScheme, out var httpScheme);
-                httpTags.TryGetValue(SemanticConventions.AttributeHttpTarget, out var httpTarget);
-                url = httpScheme + httpHost  + httpTarget;
-                return url;
-            }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static bool GetSuccessFromHttpStatusCode(string statusCode)
+        {
+            return statusCode == "200" || statusCode == "Ok";
+        }
 
-            // TODO: Follow spec - https://github.com/open-telemetry/opentelemetry-specification/blob/master/specification/trace/semantic_conventions/http.md#http-client
-
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static string GetMessagingUrl(Dictionary<string, string> tags)
+        {
+            tags.TryGetValue(SemanticConventions.AttributeMessagingUrl, out var url);
             return url;
         }
 

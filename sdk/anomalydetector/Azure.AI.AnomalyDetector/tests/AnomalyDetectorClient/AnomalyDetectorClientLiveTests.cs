@@ -35,12 +35,12 @@ namespace Azure.AI.AnomalyDetector.Tests
             request.Sensitivity = 95;
             var result = await client.DetectEntireSeriesAsync(request);
 
-            Assert.AreEqual(TestData.ExpectedEntireResult.ExpectedValues, result.Value.ExpectedValues);
-            Assert.AreEqual(TestData.ExpectedEntireResult.UpperMargins, result.Value.UpperMargins);
-            Assert.AreEqual(TestData.ExpectedEntireResult.LowerMargins, result.Value.LowerMargins);
-            Assert.AreEqual(TestData.ExpectedEntireResult.IsAnomaly, result.Value.IsAnomaly);
-            Assert.AreEqual(TestData.ExpectedEntireResult.IsPositiveAnomaly, result.Value.IsPositiveAnomaly);
-            Assert.AreEqual(TestData.ExpectedEntireResult.IsNegativeAnomaly, result.Value.IsNegativeAnomaly);
+            Assert.AreEqual(TestData.ExpectedEntireDetectResult.ExpectedValues, result.Value.ExpectedValues);
+            Assert.AreEqual(TestData.ExpectedEntireDetectResult.UpperMargins, result.Value.UpperMargins);
+            Assert.AreEqual(TestData.ExpectedEntireDetectResult.LowerMargins, result.Value.LowerMargins);
+            Assert.AreEqual(TestData.ExpectedEntireDetectResult.IsAnomaly, result.Value.IsAnomaly);
+            Assert.AreEqual(TestData.ExpectedEntireDetectResult.IsPositiveAnomaly, result.Value.IsPositiveAnomaly);
+            Assert.AreEqual(TestData.ExpectedEntireDetectResult.IsNegativeAnomaly, result.Value.IsNegativeAnomaly);
         }
 
         [Test]
