@@ -12,13 +12,13 @@ Handling events will be different based on which schema the event was delivered 
 Once events are delivered to the event handler, parse the JSON payload into list of events.
 
 Using `EventGridEvent`:
-```csharp Snippet:EgEventParseJson
+```C# Snippet:EGEventParseJson
 // Parse the JSON payload into a list of events using EventGridEvent.Parse
 EventGridEvent[] egEvents = EventGridEvent.Parse(jsonPayloadSampleOne);
 ```
 
 Using `CloudEvent`:
-```csharp Snippet:CloudEventParseJson
+```C# Snippet:CloudEventParseJson
 // Parse the JSON payload into a list of events using CloudEvent.Parse
 CloudEvent[] cloudEvents = CloudEvent.Parse(jsonPayloadSampleTwo);
 ```
@@ -28,7 +28,7 @@ From here, one can access the event data by deserializing to a specific type usi
 ### Using `GetData<T>()`
 Below is an example calling `GetData<T>()` for CloudEvents. In order to deserialize to the correct type, the `EventType` property (`Type` for CloudEvents) helps distinguish between different events. Custom event data should be deserialized using the generic method `GetData<T>()`. There is also an overload for `GetData<T>()` that accepts a custom `ObjectSerializer` to deserialize the event data.
 
-```csharp Snippet:DeserializePayloadUsingGenericGetData
+```C# Snippet:DeserializePayloadUsingGenericGetData
 foreach (CloudEvent cloudEvent in cloudEvents)
 {
     switch (cloudEvent.Type)
@@ -43,9 +43,10 @@ foreach (CloudEvent cloudEvent in cloudEvents)
             TestPayload testPayload = await cloudEvent.GetDataAsync<TestPayload>(myCustomSerializer);
             Console.WriteLine(testPayload.Name);
             break;
-        case "Microsoft.EventGrid.SubscriptionValidationEvent":
-            SubscriptionValidationEventData subscriptionValidated = cloudEvent.GetData<SubscriptionValidationEventData>();
-            Console.WriteLine(subscriptionValidated.ValidationCode);
+        case "Microsoft.Storage.BlobDeleted":
+            // Example for deserializing system events using GetData<T>
+            StorageBlobDeletedEventData blobDeleted = cloudEvent.GetData<StorageBlobDeletedEventData>();
+            Console.WriteLine(blobDeleted.BlobType);
             break;
     }
 }
@@ -54,7 +55,7 @@ foreach (CloudEvent cloudEvent in cloudEvents)
 ### Using `GetData()`
 If expecting mostly system events, it may be cleaner to switch on object `GetData()` and use pattern matching to deserialize events. In the case where there are unrecognized event types, one can use the returned `BinaryData` to deserialize the custom event data.
 
-```csharp Snippet:DeserializePayloadUsingNonGenericGetData
+```C# Snippet:DeserializePayloadUsingNonGenericGetData
 foreach (EventGridEvent egEvent in egEvents)
 {
     // If the event is a system event, GetData() should return the correct system event type
