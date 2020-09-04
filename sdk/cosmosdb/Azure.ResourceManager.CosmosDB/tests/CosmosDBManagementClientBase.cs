@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         // Vars for Cassandra tests - using an existing DB account, since Account provisioning takes 10-15 minutes
         public string location = "West US";
         public string resourceGroupName;
-        public string databaseAccountName = "db" + new Random().Next(10000);
+        public string databaseAccountName = "db12345";
         public string keyspaceName = "keyspaceName2510";
         public string keyspaceName2 = "keyspaceName22510";
         public string tableName = "tableName2510";
