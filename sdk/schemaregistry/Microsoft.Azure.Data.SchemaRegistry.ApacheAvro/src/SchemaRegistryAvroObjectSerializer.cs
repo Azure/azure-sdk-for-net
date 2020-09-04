@@ -41,6 +41,9 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         }
 
         private static readonly byte[] EmptyRecordFormatIndicator = { 0, 0, 0, 0 };
+        private const int RecordFormatIndicatorLength = 4;
+        private const int SchemaIdLength = 32;
+        private const int PayloadStartPosition = RecordFormatIndicatorLength + SchemaIdLength;
 
         private readonly Dictionary<string, Schema> _cachedSchemas = new Dictionary<string, Schema>();
 
@@ -109,8 +112,8 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             var schemaId = GetSchemaId(schema, cancellationToken);
 
             var binaryEncoder = new BinaryEncoder(stream);
-            stream.Write(EmptyRecordFormatIndicator, 0, 4);
-            stream.Write(Encoding.UTF8.GetBytes(schemaId), 0, 32);
+            stream.Write(EmptyRecordFormatIndicator, 0, RecordFormatIndicatorLength);
+            stream.Write(Encoding.UTF8.GetBytes(schemaId), 0, SchemaIdLength);
             writer.Write(value, binaryEncoder);
             binaryEncoder.Flush();
         }
@@ -127,8 +130,8 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             var schemaId = await GetSchemaIdAsync(schema, cancellationToken).ConfigureAwait(false);
 
             var binaryEncoder = new BinaryEncoder(stream);
-            await stream.WriteAsync(EmptyRecordFormatIndicator, 0, 4, cancellationToken).ConfigureAwait(false);
-            await stream.WriteAsync(Encoding.UTF8.GetBytes(schemaId), 0, 32, cancellationToken).ConfigureAwait(false);
+            await stream.WriteAsync(EmptyRecordFormatIndicator, 0, RecordFormatIndicatorLength, cancellationToken).ConfigureAwait(false);
+            await stream.WriteAsync(Encoding.UTF8.GetBytes(schemaId), 0, SchemaIdLength, cancellationToken).ConfigureAwait(false);
             writer.Write(value, binaryEncoder);
             binaryEncoder.Flush();
         }
@@ -181,7 +184,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
 
         private static void ValidateRecordFormatIdentifier(ReadOnlyMemory<byte> message)
         {
-            var recordFormatIdentifier = message.Slice(0, 4).ToArray();
+            var recordFormatIdentifier = message.Slice(0, RecordFormatIndicatorLength).ToArray();
             if (!recordFormatIdentifier.SequenceEqual(EmptyRecordFormatIndicator))
             {
                 throw new InvalidDataContractException(
@@ -198,10 +201,10 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             var supportedType = GetSupportedTypeOrThrow(returnType);
             var message = CopyToReadOnlyMemory(stream);
             ValidateRecordFormatIdentifier(message);
-            var schemaIdBytes = message.Slice(4, 32).ToArray();
+            var schemaIdBytes = message.Slice(RecordFormatIndicatorLength, SchemaIdLength).ToArray();
             var schemaId = Encoding.UTF8.GetString(schemaIdBytes);
             var schema = GetSchemaById(schemaId, cancellationToken);
-            using var valueStream = new MemoryStream(message.Slice(36, message.Length - 36).ToArray());
+            using var valueStream = new MemoryStream(message.Slice(PayloadStartPosition, message.Length - PayloadStartPosition).ToArray());
 
             var binaryDecoder = new BinaryDecoder(valueStream);
             var reader = GetReader(schema, supportedType);
@@ -217,10 +220,10 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             var supportedType = GetSupportedTypeOrThrow(returnType);
             var message = CopyToReadOnlyMemory(stream);
             ValidateRecordFormatIdentifier(message);
-            var schemaIdBytes = message.Slice(4, 32).ToArray();
+            var schemaIdBytes = message.Slice(RecordFormatIndicatorLength, SchemaIdLength).ToArray();
             var schemaId = Encoding.UTF8.GetString(schemaIdBytes);
             var schema = await GetSchemaByIdAsync(schemaId, cancellationToken).ConfigureAwait(false);
-            using var valueStream = new MemoryStream(message.Slice(36, message.Length - 36).ToArray());
+            using var valueStream = new MemoryStream(message.Slice(PayloadStartPosition, message.Length - PayloadStartPosition).ToArray());
 
             var binaryDecoder = new BinaryDecoder(valueStream);
             var reader = GetReader(schema, supportedType);
