@@ -43,7 +43,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 var pageable = _fixture.OutputContainer2.GetBlobsAsync(prefix: "blob1");
                 var enumerator = pageable.GetAsyncEnumerator();
-                var result = await enumerator.MoveNextAsync();
+                var result = await enumerator.MoveNextAsync() && enumerator.Current.Properties.ContentLength > 0;
                 if (result)
                 {
                     resultBlob = _fixture.OutputContainer2.GetBlockBlobClient(enumerator.Current.Name);
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 var pageable = _fixture.OutputContainer1.GetBlobsAsync();
                 var enumerator = pageable.GetAsyncEnumerator();
-                var result = await enumerator.MoveNextAsync();
+                var result = await enumerator.MoveNextAsync() && enumerator.Current.Properties.ContentLength > 0;
                 if (result)
                 {
                     resultBlob = _fixture.OutputContainer1.GetBlockBlobClient(enumerator.Current.Name);
