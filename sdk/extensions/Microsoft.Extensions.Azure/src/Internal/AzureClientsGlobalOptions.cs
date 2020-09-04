@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.Identity;
 using Microsoft.Extensions.Configuration;
 
