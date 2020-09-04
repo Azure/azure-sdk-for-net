@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             _options = options;
         }
 
-        private static readonly byte[] s_emptyRecordFormatIndicator = { 0, 0, 0, 0 };
+        private static readonly byte[] EmptyRecordFormatIndicator = { 0, 0, 0, 0 };
 
         private readonly Dictionary<string, Schema> _cachedSchemas = new Dictionary<string, Schema>();
 
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             var schemaId = GetSchemaId(schema, cancellationToken);
 
             var binaryEncoder = new BinaryEncoder(stream);
-            stream.Write(s_emptyRecordFormatIndicator, 0, 4);
+            stream.Write(EmptyRecordFormatIndicator, 0, 4);
             stream.Write(Encoding.UTF8.GetBytes(schemaId), 0, 32);
             writer.Write(value, binaryEncoder);
             binaryEncoder.Flush();
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             var schemaId = await GetSchemaIdAsync(schema, cancellationToken).ConfigureAwait(false);
 
             var binaryEncoder = new BinaryEncoder(stream);
-            await stream.WriteAsync(s_emptyRecordFormatIndicator, 0, 4, cancellationToken).ConfigureAwait(false);
+            await stream.WriteAsync(EmptyRecordFormatIndicator, 0, 4, cancellationToken).ConfigureAwait(false);
             await stream.WriteAsync(Encoding.UTF8.GetBytes(schemaId), 0, 32, cancellationToken).ConfigureAwait(false);
             writer.Write(value, binaryEncoder);
             binaryEncoder.Flush();
@@ -184,7 +184,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         private static void ValidateRecordFormatIdentifier(ReadOnlyMemory<byte> message)
         {
             var recordFormatIdentifier = message.Slice(0, 4).ToArray();
-            if (!recordFormatIdentifier.SequenceEqual(s_emptyRecordFormatIndicator))
+            if (!recordFormatIdentifier.SequenceEqual(EmptyRecordFormatIndicator))
             {
                 throw new InvalidDataContractException(
                     $"The record format identifier ({recordFormatIdentifier[0]:X} {recordFormatIdentifier[1]:X} {recordFormatIdentifier[2]:X} {recordFormatIdentifier[3]:X}) for the message is invalid.");

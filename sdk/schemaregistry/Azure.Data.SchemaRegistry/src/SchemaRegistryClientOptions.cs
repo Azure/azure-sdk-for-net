@@ -34,7 +34,7 @@ namespace Azure.Data.SchemaRegistry
             /// Version 2017-04 of the Schema Registry service.
             /// </summary>
 #pragma warning disable CA1707 // Remove the underscores from member name
-            V2017_04
+            V2017_04 = 1
 #pragma warning restore
         }
     }

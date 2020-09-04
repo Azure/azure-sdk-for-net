@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Data.SchemaRegistry.Models
+namespace Azure.Data.SchemaRegistry
 {
     /// <summary> The SerializationType. </summary>
     public readonly partial struct SerializationType : IEquatable<SerializationType>
