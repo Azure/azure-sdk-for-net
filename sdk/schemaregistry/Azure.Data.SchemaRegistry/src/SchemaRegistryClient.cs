@@ -16,6 +16,7 @@ namespace Azure.Data.SchemaRegistry
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         internal SchemaRestClient RestClient { get; }
+        private const string CredentialScope = "https://eventhubs.azure.net/.default";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SchemaRegistryClient"/>.
@@ -29,7 +30,7 @@ namespace Azure.Data.SchemaRegistry
         /// </summary>
         public SchemaRegistryClient(string endpoint, TokenCredential credential, SchemaRegistryClientOptions options) : this(
             new ClientDiagnostics(options),
-            HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, "https://eventhubs.azure.net/.default")),
+            HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, CredentialScope)),
             endpoint,
             options.Version)
         {
