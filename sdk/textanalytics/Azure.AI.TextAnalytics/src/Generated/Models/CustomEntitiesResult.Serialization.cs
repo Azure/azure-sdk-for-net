@@ -12,22 +12,21 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class PiiEntitiesResult
+    internal partial class CustomEntitiesResult
     {
-        internal static PiiEntitiesResult DeserializePiiEntitiesResult(JsonElement element)
+        internal static CustomEntitiesResult DeserializeCustomEntitiesResult(JsonElement element)
         {
-            IReadOnlyList<PiiDocumentEntities> documents = default;
+            IReadOnlyList<CustomEntitiesDocument> documents = default;
             IReadOnlyList<DocumentError> errors = default;
             Optional<TextDocumentBatchStatistics> statistics = default;
-            string modelVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("documents"))
                 {
-                    List<PiiDocumentEntities> array = new List<PiiDocumentEntities>();
+                    List<CustomEntitiesDocument> array = new List<CustomEntitiesDocument>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PiiDocumentEntities.DeserializePiiDocumentEntities(item));
+                        array.Add(CustomEntitiesDocument.DeserializeCustomEntitiesDocument(item));
                     }
                     documents = array;
                     continue;
@@ -47,13 +46,8 @@ namespace Azure.AI.TextAnalytics.Models
                     statistics = TextDocumentBatchStatistics.DeserializeTextDocumentBatchStatistics(property.Value);
                     continue;
                 }
-                if (property.NameEquals("modelVersion"))
-                {
-                    modelVersion = property.Value.GetString();
-                    continue;
-                }
             }
-            return new PiiEntitiesResult(documents, errors, statistics.Value, modelVersion);
+            return new CustomEntitiesResult(documents, errors, statistics.Value);
         }
     }
 }

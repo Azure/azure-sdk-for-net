@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.AI.TextAnalytics.Models;
@@ -162,30 +163,33 @@ namespace Azure.AI.TextAnalytics
         internal static List<PiiEntity> ConvertToPiiEntityList(List<Entity> entities)
             => entities.Select((entity) => new PiiEntity(entity)).ToList();
 
-        internal static PiiEntityCollection ConvertToPiiEntityCollection(PiiDocumentEntities documentEntities)
+        internal static PiiEntityCollection ConvertToPiiEntityCollection(DocumentPiiEntities documentEntities)
         {
             return new PiiEntityCollection(ConvertToPiiEntityList(documentEntities.Entities.ToList()), documentEntities.RedactedText, ConvertToWarnings(documentEntities.Warnings));
         }
 
-        internal static RecognizePiiEntitiesResultCollection ConvertToRecognizePiiEntitiesResultCollection(PiiEntitiesResult results, IDictionary<string, int> idToIndexMap)
+        internal static IList<PiiEntity> ConvertToPiiEntityList(List<Models.PiiEntity> entities)
+            => entities.Select((entity) => new PiiEntity(entity)).ToList();
+
+        internal static RecognizePiiResultCollection ConvertToRecognizePiiResultCollection(PiiResult results, IDictionary<string, int> idToIndexMap)
         {
-            var recognizeEntities = new List<RecognizePiiEntitiesResult>();
+            var recognizeEntities = new List<RecognizePiiResult>();
 
             //Read errors
             foreach (DocumentError error in results.Errors)
             {
-                recognizeEntities.Add(new RecognizePiiEntitiesResult(error.Id, ConvertToError(error.Error)));
+                recognizeEntities.Add(new RecognizePiiResult(error.Id, ConvertToError(error.Error)));
             }
 
             //Read document entities
-            foreach (PiiDocumentEntities docEntities in results.Documents)
+            foreach (DocumentPiiEntities docEntities in results.Documents)
             {
-                recognizeEntities.Add(new RecognizePiiEntitiesResult(docEntities.Id, docEntities.Statistics ?? default, ConvertToPiiEntityCollection(docEntities)));
+                recognizeEntities.Add(new RecognizePiiResult(docEntities.Id, docEntities.Statistics ?? default, ConvertToPiiEntityCollection(docEntities)));
             }
 
             recognizeEntities = SortHeterogeneousCollection(recognizeEntities, idToIndexMap);
 
-            return new RecognizePiiEntitiesResultCollection(recognizeEntities, results.Statistics, results.ModelVersion);
+            return new RecognizePiiResultCollection(recognizeEntities, results.Statistics, results.ModelVersion);
         }
 
         #endregion

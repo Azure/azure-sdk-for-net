@@ -11,17 +11,17 @@ namespace Azure.AI.TextAnalytics
     /// objects containing Personally Identifiable Information that were
     /// found in that document.
     /// </summary>
-    public class RecognizePiiEntitiesResult : TextAnalyticsResult
+    public class RecognizePiiResult : TextAnalyticsResult
     {
         private readonly PiiEntityCollection _entities;
 
-        internal RecognizePiiEntitiesResult(string id, TextDocumentStatistics statistics, PiiEntityCollection entities)
+        internal RecognizePiiResult(string id, TextDocumentStatistics statistics, PiiEntityCollection entities)
             : base(id, statistics)
         {
             _entities = entities;
         }
 
-        internal RecognizePiiEntitiesResult(string id, TextAnalyticsError error) : base(id, error) { }
+        internal RecognizePiiResult(string id, TextAnalyticsError error) : base(id, error) { }
 
         /// <summary>
         /// Gets the collection of PII entities containing Personally
