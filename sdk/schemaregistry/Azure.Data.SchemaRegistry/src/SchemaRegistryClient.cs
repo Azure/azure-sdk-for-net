@@ -35,16 +35,16 @@ namespace Azure.Data.SchemaRegistry
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SchemaRegistryClient"/> for mocking. </summary>
+        /// <summary>Initializes a new instance of <see cref="SchemaRegistryClient"/> for mocking.</summary>
         protected SchemaRegistryClient()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SchemaRegistryClient"/>. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> The endpoint URI. For example, myschemaregistry.servicebus.windows.net. </param>
-        /// <param name="apiVersion"> The API version of the service. </param>
+        /// <summary>Initializes a new instance of <see cref="SchemaRegistryClient"/>.</summary>
+        /// <param name="clientDiagnostics">The handler for diagnostic messaging in the client.</param>
+        /// <param name="pipeline">The HTTP pipeline for sending and receiving REST requests and responses.</param>
+        /// <param name="endpoint">The endpoint URI. For example, myschemaregistry.servicebus.windows.net.</param>
+        /// <param name="apiVersion">The API version of the service.</param>
         internal SchemaRegistryClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion)
         {
             RestClient = new SchemaRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
@@ -52,8 +52,14 @@ namespace Azure.Data.SchemaRegistry
         }
 
         /// <summary>
-        /// TODO. (Create OR Get). (Register/Create).
+        /// Registers a schema with the SchemaRegistry service.
         /// </summary>
+        /// <param name="groupName">The name of the SchemaRegistry group.</param>
+        /// <param name="schemaName">The name of the schema.</param>
+        /// <param name="serializationType">The serialization format of the schema.</param>
+        /// <param name="schemaContent">The string representation of the schema's content.</param>
+        /// <param name="cancellationToken">The cancellation token for the operation.</param>
+        /// <returns>The properties of the schema.</returns>
         public virtual async Task<Response<SchemaProperties>> RegisterSchemaAsync(string groupName, string schemaName, SerializationType serializationType, string schemaContent, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("SchemaRegistryClient.RegisterSchema");
@@ -72,8 +78,14 @@ namespace Azure.Data.SchemaRegistry
         }
 
         /// <summary>
-        /// TODO. (Create OR Get). (Register/Create).
+        /// Registers a schema with the SchemaRegistry service.
         /// </summary>
+        /// <param name="groupName">The name of the SchemaRegistry group.</param>
+        /// <param name="schemaName">The name of the schema.</param>
+        /// <param name="serializationType">The serialization format of the schema.</param>
+        /// <param name="schemaContent">The string representation of the schema's content.</param>
+        /// <param name="cancellationToken">The cancellation token for the operation.</param>
+        /// <returns>The properties of the schema.</returns>
         public virtual Response<SchemaProperties> RegisterSchema(string groupName, string schemaName, SerializationType serializationType, string schemaContent, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("SchemaRegistryClient.RegisterSchema");
@@ -92,8 +104,14 @@ namespace Azure.Data.SchemaRegistry
         }
 
         /// <summary>
-        /// TODO. (Opposite of TryGet) (Find/Query/Get).
+        /// Gets the schema ID associated with the schema from the SchemaRegistry service.
         /// </summary>
+        /// <param name="groupName">The name of the SchemaRegistry group.</param>
+        /// <param name="schemaName">The name of the schema.</param>
+        /// <param name="serializationType">The serialization format of the schema.</param>
+        /// <param name="schemaContent">The string representation of the schema's content.</param>
+        /// <param name="cancellationToken">The cancellation token for the operation.</param>
+        /// <returns>The properties of the schema, including the schema ID provided by the service.</returns>
         public virtual async Task<Response<SchemaProperties>> GetSchemaIdAsync(string groupName, string schemaName, SerializationType serializationType, string schemaContent, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("SchemaRegistryClient.GetSchema");
@@ -112,8 +130,14 @@ namespace Azure.Data.SchemaRegistry
         }
 
         /// <summary>
-        /// TODO. (Opposite of TryGet) (Find/Query/Get).
+        /// Gets the schema ID associated with the schema from the SchemaRegistry service.
         /// </summary>
+        /// <param name="groupName">The name of the SchemaRegistry group.</param>
+        /// <param name="schemaName">The name of the schema.</param>
+        /// <param name="serializationType">The serialization format of the schema.</param>
+        /// <param name="schemaContent">The string representation of the schema's content.</param>
+        /// <param name="cancellationToken">The cancellation token for the operation.</param>
+        /// <returns>The properties of the schema, including the schema ID provided by the service.</returns>
         public virtual Response<SchemaProperties> GetSchemaId(string groupName, string schemaName, SerializationType serializationType, string schemaContent, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("SchemaRegistryClient.GetSchema");
@@ -132,8 +156,11 @@ namespace Azure.Data.SchemaRegistry
         }
 
         /// <summary>
-        /// TODO. (Opposite of TryGet) (Find/Query/Get).
+        /// Gets the schema content associated with the schema ID from the SchemaRegistry service.
         /// </summary>
+        /// <param name="schemaId">The schema ID of the the schema from the SchemaRegistry.</param>
+        /// <param name="cancellationToken">The cancellation token for the operation.</param>
+        /// <returns>The properties of the schema, including the schema content provided by the service.</returns>
         public virtual async Task<Response<SchemaProperties>> GetSchemaAsync(string schemaId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("SchemaRegistryClient.GetSchema");
@@ -152,8 +179,11 @@ namespace Azure.Data.SchemaRegistry
         }
 
         /// <summary>
-        /// TODO. (Opposite of TryGet) (Find/Query/Get).
+        /// Gets the schema content associated with the schema ID from the SchemaRegistry service.
         /// </summary>
+        /// <param name="schemaId">The schema ID of the the schema from the SchemaRegistry.</param>
+        /// <param name="cancellationToken">The cancellation token for the operation.</param>
+        /// <returns>The properties of the schema, including the schema content provided by the service.</returns>
         public virtual Response<SchemaProperties> GetSchema(string schemaId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("SchemaRegistryClient.GetSchema");

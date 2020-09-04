@@ -4,7 +4,6 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Data.SchemaRegistry.Models;
 using NUnit.Framework;
 
 namespace Azure.Data.SchemaRegistry.Tests
@@ -16,14 +15,12 @@ namespace Azure.Data.SchemaRegistry.Tests
             TestDiagnostics = false;
         }
 
-        private SchemaRegistryClient CreateClient()
-        {
-            return InstrumentClient(new SchemaRegistryClient(
+        private SchemaRegistryClient CreateClient() =>
+            InstrumentClient(new SchemaRegistryClient(
                 TestEnvironment.SchemaRegistryUri,
                 TestEnvironment.Credential,
                 Recording.InstrumentClientOptions(new SchemaRegistryClientOptions())
             ));
-        }
 
         [Test]
         public async Task CanRegisterSchema()

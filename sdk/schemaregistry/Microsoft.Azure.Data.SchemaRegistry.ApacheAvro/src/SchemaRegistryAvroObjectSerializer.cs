@@ -8,7 +8,6 @@ using Avro.Specific;
 using Azure.Core;
 using Azure.Core.Serialization;
 using Azure.Data.SchemaRegistry;
-using Azure.Data.SchemaRegistry.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,7 +22,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
 #pragma warning restore AZC0001 // Use one of the following pre-approved namespace groups (https://azure.github.io/azure-sdk/registered_namespaces.html): Azure.AI, Azure.Analytics, Azure.Data, Azure.DigitalTwins, Azure.Iot, Azure.Learn, Azure.Media, Azure.Management, Azure.Messaging, Azure.Search, Azure.Security, Azure.Storage, Azure.Template, Azure.Identity, Microsoft.Extensions.Azure
 {
     /// <summary>
-    /// A <see cref="SchemaRegistryAvroObjectSerializer"/> implementation that uses <see cref="SchemaRegistryClient"/> for SpecificRecord serialization/deserialization.
+    /// A <see cref="SchemaRegistryAvroObjectSerializer"/> implementation that uses <see cref="SchemaRegistryClient"/> for Avro serialization/deserialization.
     /// </summary>
     public class SchemaRegistryAvroObjectSerializer : ObjectSerializer
     {
@@ -191,22 +190,6 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             }
         }
 
-        private Schema GetSchema(ReadOnlyMemory<byte> message, CancellationToken cancellationToken)
-        {
-            var schemaIdBytes = message.Slice(4, 32).ToArray();
-            var schemaId = Encoding.UTF8.GetString(schemaIdBytes);
-            var schemaContent = _client.GetSchema(schemaId, cancellationToken).Value.Content;
-            return Schema.Parse(schemaContent);
-        }
-
-        private async Task<Schema> GetSchemaAsync(ReadOnlyMemory<byte> message, CancellationToken cancellationToken)
-        {
-            var schemaIdBytes = message.Slice(4, 32).ToArray();
-            var schemaId = Encoding.UTF8.GetString(schemaIdBytes);
-            var schemaContent = (await _client.GetSchemaAsync(schemaId, cancellationToken).ConfigureAwait(false)).Value.Content;
-            return Schema.Parse(schemaContent);
-        }
-
         /// <inheritdoc />
         public override object Deserialize(Stream stream, Type returnType, CancellationToken cancellationToken)
         {
@@ -216,7 +199,9 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             var supportedType = GetSupportedTypeOrThrow(returnType);
             var message = CopyToReadOnlyMemory(stream);
             ValidateRecordFormatIdentifier(message);
-            var schema = GetSchema(message, cancellationToken);
+            var schemaIdBytes = message.Slice(4, 32).ToArray();
+            var schemaId = Encoding.UTF8.GetString(schemaIdBytes);
+            var schema = GetSchemaById(schemaId, cancellationToken);
             using var valueStream = new MemoryStream(message.Slice(36, message.Length - 36).ToArray());
 
             var binaryDecoder = new BinaryDecoder(valueStream);
@@ -233,7 +218,9 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             var supportedType = GetSupportedTypeOrThrow(returnType);
             var message = CopyToReadOnlyMemory(stream);
             ValidateRecordFormatIdentifier(message);
-            var schema = await GetSchemaAsync(message, cancellationToken).ConfigureAwait(false);
+            var schemaIdBytes = message.Slice(4, 32).ToArray();
+            var schemaId = Encoding.UTF8.GetString(schemaIdBytes);
+            var schema = await GetSchemaByIdAsync(schemaId, cancellationToken).ConfigureAwait(false);
             using var valueStream = new MemoryStream(message.Slice(36, message.Length - 36).ToArray());
 
             var binaryDecoder = new BinaryDecoder(valueStream);

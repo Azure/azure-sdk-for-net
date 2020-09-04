@@ -1,9 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Avro;
+using Avro.Generic;
 using Azure.Core.TestFramework;
 using Azure.Data.SchemaRegistry;
 using NUnit.Framework;
+using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,14 +21,12 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             TestDiagnostics = false;
         }
 
-        private SchemaRegistryClient CreateClient()
-        {
-            return InstrumentClient(new SchemaRegistryClient(
+        private SchemaRegistryClient CreateClient() =>
+            InstrumentClient(new SchemaRegistryClient(
                 TestEnvironment.SchemaRegistryUri,
                 TestEnvironment.Credential,
                 Recording.InstrumentClientOptions(new SchemaRegistryClientOptions())
             ));
-        }
 
         [Test]
         public async Task CanSerializeAndDeserialize()
@@ -43,6 +44,51 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             Assert.IsNotNull(readEmployee);
             Assert.AreEqual("Caketown", readEmployee.Name);
             Assert.AreEqual(42, readEmployee.Age);
+        }
+
+        [Test]
+        public async Task CanSerializeAndDeserializeGenericRecord()
+        {
+            var client = CreateClient();
+            var groupName = "miyanni_srgroup";
+            var record = new GenericRecord((RecordSchema)Employee._SCHEMA);
+            record.Add("Name", "Caketown");
+            record.Add("Age", 42);
+
+            var memoryStream = new MemoryStream();
+            var serializer = new SchemaRegistryAvroObjectSerializer(client, groupName, new SchemaRegistryAvroObjectSerializerOptions { AutoRegisterSchemas = true });
+            await serializer.SerializeAsync(memoryStream, record, typeof(GenericRecord), CancellationToken.None);
+
+            var deserializedObject = await serializer.DeserializeAsync(memoryStream, typeof(GenericRecord), CancellationToken.None);
+            var readRecord = deserializedObject as GenericRecord;
+            Assert.IsNotNull(readRecord);
+            Assert.AreEqual("Caketown", readRecord.GetValue(0));
+            Assert.AreEqual(42, readRecord.GetValue(1));
+        }
+
+        [Test]
+        public async Task CannotSerializeUnsupportedType()
+        {
+            var client = CreateClient();
+            var groupName = "miyanni_srgroup";
+            var timeZoneInfo = TimeZoneInfo.Utc;
+
+            var memoryStream = new MemoryStream();
+            var serializer = new SchemaRegistryAvroObjectSerializer(client, groupName, new SchemaRegistryAvroObjectSerializerOptions { AutoRegisterSchemas = true });
+            Assert.ThrowsAsync<ArgumentException>(async () => await serializer.SerializeAsync(memoryStream, timeZoneInfo, typeof(TimeZoneInfo), CancellationToken.None));
+            await Task.CompletedTask;
+        }
+
+        [Test]
+        public async Task CannotDeserializeUnsupportedType()
+        {
+            var client = CreateClient();
+            var groupName = "miyanni_srgroup";
+
+            var memoryStream = new MemoryStream();
+            var serializer = new SchemaRegistryAvroObjectSerializer(client, groupName, new SchemaRegistryAvroObjectSerializerOptions { AutoRegisterSchemas = true });
+            Assert.ThrowsAsync<ArgumentException>(async () => await serializer.DeserializeAsync(memoryStream, typeof(TimeZoneInfo), CancellationToken.None));
+            await Task.CompletedTask;
         }
     }
 }
