@@ -3,7 +3,6 @@
 
 namespace Microsoft.Azure.ServiceBus.Core
 {
-    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 

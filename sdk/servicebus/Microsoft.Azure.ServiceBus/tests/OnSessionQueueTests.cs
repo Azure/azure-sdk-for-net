@@ -196,6 +196,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
             });
 
+            // test UnregisterSessionHandler can wait for message handling upto the timeout user defined. 
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
                 TestUtility.Log($"Queue: {queueName}, MaxConcurrentCalls: {maxConcurrentCalls}, Receive Mode: {mode.ToString()}, AutoComplete: {autoComplete}");
@@ -248,6 +249,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
             });
 
+            // test UnregisterSessionHandler can close down in time when message handling takes longer than wait timeout user defined. 
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
                 TestUtility.Log($"Queue: {queueName}, MaxConcurrentCalls: {maxConcurrentCalls}, Receive Mode: {mode.ToString()}, AutoComplete: {autoComplete}");
