@@ -4,16 +4,14 @@ param (
   $AzCopy,
   $DocLocation,
   $SASKey,
-  $Language,
   $BlobName,
   $ExitOnError=1,
   $UploadLatest=1,
   $PublicArtifactLocation = "",
   $RepoReplaceRegex = "(https://github.com/.*/(?:blob|tree)/)master"
 )
-. (Join-Path $PSScriptRoot artifact-metadata-parsing.ps1)
 
-$Language = $Language.ToLower()
+. (Join-Path $PSScriptRoot common.ps1)
 
 # Regex inspired but simplified from https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string
 $SEMVER_REGEX = "^(?<major>0|[1-9]\d*)\.(?<minor>0|[1-9]\d*)\.(?<patch>0|[1-9]\d*)(?:-?(?<prelabel>[a-zA-Z-]*)(?:\.?(?<prenumber>0|[1-9]\d*))?)?$"
@@ -232,4 +230,4 @@ function Upload-Blobs
     }
 }
 
-&$PublishGithubIODocsFn
+&$PublishGithubIODocsFn -DocLocation $DocLocation -PublicArtifactLocation $PublicArtifactLocation
