@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Search
     {
         /// <summary>
         /// Initiates the creation or update of a shared private link resource
-        /// managed by the Search service in the given resource group.
+        /// managed by the search service in the given resource group.
         /// <see href="https://aka.ms/search-manage" />
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Search
         Task<AzureOperationResponse<SharedPrivateLinkResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string searchServiceName, string sharedPrivateLinkResourceName, SharedPrivateLinkResource sharedPrivateLinkResource, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the details of the shared private link resource managed by the
-        /// Search service in the given resource group.
+        /// search service in the given resource group.
         /// <see href="https://aka.ms/search-manage" />
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.Search
         Task<AzureOperationResponse<SharedPrivateLinkResource>> GetWithHttpMessagesAsync(string resourceGroupName, string searchServiceName, string sharedPrivateLinkResourceName, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Initiates the deletion of the shared private link resource from the
-        /// Search service.
+        /// search service.
         /// <see href="https://aka.ms/search-manage" />
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -170,7 +170,7 @@ namespace Microsoft.Azure.Management.Search
         Task<AzureOperationResponse<IPage<SharedPrivateLinkResource>>> ListByServiceWithHttpMessagesAsync(string resourceGroupName, string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Initiates the creation or update of a shared private link resource
-        /// managed by the Search service in the given resource group.
+        /// managed by the search service in the given resource group.
         /// <see href="https://aka.ms/search-manage" />
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -211,7 +211,7 @@ namespace Microsoft.Azure.Management.Search
         Task<AzureOperationResponse<SharedPrivateLinkResource>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string searchServiceName, string sharedPrivateLinkResourceName, SharedPrivateLinkResource sharedPrivateLinkResource, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Initiates the deletion of the shared private link resource from the
-        /// Search service.
+        /// search service.
         /// <see href="https://aka.ms/search-manage" />
         /// </summary>
         /// <param name='resourceGroupName'>

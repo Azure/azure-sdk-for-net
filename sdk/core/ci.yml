@@ -39,7 +39,5 @@ extends:
       safeName: AzureCore
     - name: Azure.Core.Experimental
       safeName: AzureCoreExperimental
-    - name: Microsoft.Extensions.Azure
-      safeName: MicrosoftExtensionsAzure
     - name: Microsoft.Azure.Core.NewtonsoftJson
       safeName: MicrosoftAzureCoreNewtonsoftJson

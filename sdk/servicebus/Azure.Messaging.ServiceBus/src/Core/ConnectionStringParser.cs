@@ -33,6 +33,9 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <summary>The token that identifies the value of a shared access key.</summary>
         private const string SharedAccessKeyValueToken = "SharedAccessKey";
 
+        /// <summary>The token that identifies the value of a shared access signature.</summary>
+        private const string SharedAccessSignatureToken = "SharedAccessSignature";
+
         /// <summary>
         ///   Parses the specified Service Bus connection string into its component properties.
         /// </summary>
@@ -61,7 +64,8 @@ namespace Azure.Messaging.ServiceBus.Core
                 EndpointToken: default(UriBuilder),
                 EntityNameToken: default(string),
                 SharedAccessKeyNameToken: default(string),
-                SharedAccessKeyValueToken: default(string)
+                SharedAccessKeyValueToken: default(string),
+                SharedAccessSignatureToken: default(string)
             );
 
             while (currentPosition != -1)
@@ -131,6 +135,10 @@ namespace Azure.Messaging.ServiceBus.Core
                     {
                         parsedValues.SharedAccessKeyValueToken = value;
                     }
+                    else if (string.Compare(SharedAccessSignatureToken, token, StringComparison.OrdinalIgnoreCase) == 0)
+                    {
+                        parsedValues.SharedAccessSignatureToken = value;
+                    }
                 }
                 else if ((slice.Length != 1) || (slice[0] != TokenValuePairDelimiter))
                 {
@@ -149,7 +157,8 @@ namespace Azure.Messaging.ServiceBus.Core
                 parsedValues.EndpointToken?.Uri,
                 parsedValues.EntityNameToken,
                 parsedValues.SharedAccessKeyNameToken,
-                parsedValues.SharedAccessKeyValueToken
+                parsedValues.SharedAccessKeyValueToken,
+                parsedValues.SharedAccessSignatureToken
             );
         }
     }

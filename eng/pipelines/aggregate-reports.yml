@@ -1,3 +1,12 @@
+resources:
+  pipelines:
+  - pipeline: net-core
+    project: internal
+    source: net - core
+    branch: master
+    tags: 
+    - scheduled
+
 trigger: none
 
 pr:
@@ -18,29 +27,20 @@ jobs:
       vmImage: 'windows-2019'
 
     steps:
-      - task: UseDotNet@2
-        displayName: 'Use .NET Core sdk $(DotNetCoreSDKVersion)'
-        inputs:
-          version: '$(DotNetCoreSDKVersion)'
+      - download: net-core
+        artifact: packages
+        patterns: '*'
 
       - template: /eng/common/pipelines/templates/steps/verify-links.yml
         parameters:
           Directory: ""
 
-      - pwsh: mkdir '$(System.ArtifactsDirectory)/BuildArtifacts'
+      - pwsh: |
+          mkdir "$(System.ArtifactsDirectory)/BuildArtifacts"
+          ls "$(PIPELINE.WORKSPACE)/net-core/packages"
+          Copy-Item -Path "$(PIPELINE.WORKSPACE)/net-core/packages/*" -Destination "$(System.ArtifactsDirectory)/BuildArtifacts"
         displayName: Create Artifact Directory
 
-      - task: DownloadPipelineArtifact@2
-        displayName: 'Download Pipeline Artifact'
-        inputs:
-          buildType: specific
-          project: $(TargetPipelineProjectId)
-          definition: $(TargetPipelineDefinition)
-          buildVersionToDownload: latestFromBranch
-          branchName: $(TargetPipelineBranch)
-          tags: scheduled
-          artifactName: packages
-          targetPath: '$(System.ArtifactsDirectory)/BuildArtifacts'
 
       - pwsh: |
           mkdir '$(System.ArtifactsDirectory)/Packages'
