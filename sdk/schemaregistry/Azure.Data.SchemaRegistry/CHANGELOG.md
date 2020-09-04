@@ -1,4 +1,7 @@
 # Release History
 
 ## 1.0.0-beta.1 (2020-09-08)
-- Started changelog to capture release notes.
+- Added SchemaRegistryClient with 3 operations:
+  - RegisterSchema
+  - GetSchemaId
+  - GetSchema

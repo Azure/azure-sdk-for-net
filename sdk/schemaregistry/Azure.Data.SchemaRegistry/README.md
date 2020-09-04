@@ -1,38 +1,29 @@
-# README.md template
+# Azure Schema Registry client library for .NET
 
-Use the guidelines in each section of this template to ensure consistency and readability of your README. The README resides in your package's GitHub repository at the root of its directory within the repo. It's also used as the package distribution page (NuGet, PyPi, npm, etc.) and as a Quickstart on docs.microsoft.com. See [README-EXAMPLE.md](README-EXAMPLE.md) for an example following this template.
-
-**Title**: The H1 of your README should be in the format: `# [Product Name] client library for [Language]`
-
-* All headings, including the H1, should use **sentence-style capitalization**. Refer to the [Microsoft Style Guide][style-guide-msft] and [Microsoft Cloud Style Guide][style-guide-cloud] for more information.
-* Example: `# Azure Batch client library for Python`
-
-# Azure Template client library for .NET
-
-**Introduction**: The introduction appears directly under the title (H1) of your README.
-
-* **DO NOT** use an "Introduction" or "Overview" heading (H2) for this section.
-* First sentence: **Describe the service** briefly. You can usually use the first line of the service's docs landing page for this (Example: [Cosmos DB docs landing page](https://docs.microsoft.com/azure/cosmos-db/)).
-* Next, add a **bulleted list** of the **most common tasks** supported by the package or library, prefaced with "Use the client library for [Product Name] to:". Then, provide code snippets for these tasks in the [Examples](#examples) section later in the document. Keep the task list short but include those tasks most developers need to perform with your package.
-* Include this single line of links targeting your product's content at the bottom of the introduction, making any adjustments as necessary (for example, NuGet instead of PyPi):
-
-  [Source code](https://github.com/Azure/azure-sdk-for-python/tree/master/azure-batch) | [Package (PyPi)](https://pypi.org/project/azure-batch/) | [API reference documentation](https://docs.microsoft.com/python/api/overview/azure/batch?view=azure-python) | [Product documentation](https://docs.microsoft.com/azure/batch/)
-
-> TIP: Your README should be as **brief** as possible but **no more brief** than necessary to get a developer new to Azure, the service, or the package up and running quickly. Keep it brief, but include everything a developer needs to make their first API call successfully.
+The Azure Schema Registry service allows developers to provide and retrieve data schemas from a centralized repository for use in messaging systems.
 
 ## Getting started
 
-This section should include everything a developer needs to do to install and create their first client connection *very quickly*.
-
 ### Install the package
 
-First, provide instruction for obtaining and installing the package or library. This section might include only a single line of code, like `pip install package-name`, but should enable a developer to successfully install the package from NuGet, pip, npm, Maven, or even cloning a GitHub repository.
+Install the Azure Schema Registry client library for .NET with [NuGet][nuget]:
+
+```PowerShell
+Install-Package Azure.Data.SchemaRegistry
+```
 
 ### Prerequisites
 
-Include a section after the install command that details any requirements that must be satisfied before a developer can [authenticate](#authenticate-the-client) and test all of the snippets in the [Examples](#examples) section. For example, for Cosmos DB:
+* An [Azure subscription][azure_sub].
+* An [Event Hubs namespace][event_hubs_namespace]
 
-> You must have an [Azure subscription](https://azure.microsoft.com/free/), [Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/account-overview) (SQL API), and [Python 3.6+](https://www.python.org/downloads/) to use this package.
+If you need to [create an Event Hubs namespace][create_event_hubs_namespace], you can use the Azure Portal or [Azure PowerShell][azure_powershell].
+
+You can use Azure PowerShell to create the Event Hubs namespace with the following command:
+
+```PowerShell
+New-AzEventHubNamespace -ResourceGroupName myResourceGroup -NamespaceName namespace_name -Location eastus
+```
 
 ### Authenticate the client
 
@@ -45,6 +36,14 @@ For example, include details on obtaining an account key and endpoint URI, setti
 The *Key concepts* section should describe the functionality of the main classes. Point out the most important and useful classes in the package (with links to their reference pages) and explain how those classes work together. Feel free to use bulleted lists, tables, code blocks, or even diagrams for clarity.
 
 ## Examples
+
+
+* [Register a schema][azconfig_setting_concepts]
+* [Retrieve a schema ID][azconfig_asof_snapshot]
+* [Retrieve a schema][azconfig_asof_snapshot]
+
+
+
 
 Include code snippets and short descriptions for each task you listed in the [Introduction](#introduction) (the bulleted list). Briefly explain each operation, but include enough clarity to explain complex or otherwise tricky operations.
 
@@ -97,8 +96,10 @@ If the package or a related package supports it, include tips for logging or ena
 
 This is a template, but your SDK readme should include details on how to contribute code to the repo/package.
 
-<!-- LINKS -->
-[style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
-[style-guide-cloud]: https://worldready.cloudapp.net/Styleguide/Read?id=2696&topicid=25357
-
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftemplate%2FAzure.Template%2FREADME.png)
+
+<!-- LINKS -->
+[nuget]: https://www.nuget.org/
+[event_hubs_namespace]: https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-about
+[azure_powershell]: https://docs.microsoft.com/en-us/powershell/azure/
+[create_event_hubs_namespace]: https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-quickstart-powershell#create-an-event-hubs-namespace
