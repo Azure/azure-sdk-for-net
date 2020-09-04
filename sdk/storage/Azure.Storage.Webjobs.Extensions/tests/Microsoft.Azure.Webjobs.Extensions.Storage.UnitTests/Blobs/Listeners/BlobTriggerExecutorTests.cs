@@ -16,6 +16,7 @@ using Moq;
 using Xunit;
 using Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests;
 using Azure.Storage.Blobs.Specialized;
+using System.IO;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 {
@@ -471,7 +472,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             var account = CreateAccount();
             var client = account.CreateBlobServiceClient();
             var container = client.GetBlobContainerClient(containerName);
-            return container.GetBlockBlobClient(blobName);
+            container.CreateIfNotExists();
+            var blobClient = container.GetBlockBlobClient(blobName);
+            blobClient.Upload(new MemoryStream());
+            return blobClient;
         }
 
         private static IBlobPathSource CreateBlobPath(BlobBaseClient blob)
@@ -538,8 +542,9 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 
         private Mock<IBlobReceiptManager> CreateReceiptManagerReferenceMock()
         {
-            var receiptBlob = CreateAccount().CreateBlobServiceClient()
-                .GetBlobContainerClient("receipts").GetBlockBlobClient("item");
+            var blobServiceClient = CreateAccount().CreateBlobServiceClient();
+            var blobContainerClient = blobServiceClient.GetBlobContainerClient("receipts");
+            var receiptBlob = blobContainerClient.GetBlockBlobClient("item");
             Mock<IBlobReceiptManager> mock = new Mock<IBlobReceiptManager>(MockBehavior.Strict);
             mock.Setup(m => m.CreateReference(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(),
                 It.IsAny<string>(), It.IsAny<string>()))
