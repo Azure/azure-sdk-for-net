@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
-using Azure.Messaging.ServiceBus.Management;
+using Azure.Messaging.ServiceBus.Administration;
 
 namespace Azure.Messaging.ServiceBus
 {
