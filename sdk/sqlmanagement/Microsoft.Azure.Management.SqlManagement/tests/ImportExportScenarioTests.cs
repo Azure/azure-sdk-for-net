@@ -90,7 +90,7 @@ namespace Sql.Tests
                 {
                     AdministratorLogin = login,
                     AdministratorLoginPassword = password,
-                    AuthenticationType = AuthenticationType.SQL.ToString(),
+                    AuthenticationType = "SQL",
                     StorageKey = storageContainerInfo.StorageAccountKey,
                     StorageKeyType = StorageKeyType.StorageAccessKey.ToString(),
                     StorageUri = exportBacpacLink
@@ -104,7 +104,7 @@ namespace Sql.Tests
                     {
                         AdministratorLogin = login,
                         AdministratorLoginPassword = password,
-                        AuthenticationType = AuthenticationType.SQL.ToString(),
+                        AuthenticationType = "SQL",
                         StorageKey = storageContainerInfo.StorageAccountKey,
                         StorageKeyType = StorageKeyType.StorageAccessKey.ToString(),
                         StorageUri = exportBacpacLink
@@ -116,7 +116,7 @@ namespace Sql.Tests
                     {
                         AdministratorLogin = login,
                         AdministratorLoginPassword = password,
-                        AuthenticationType = AuthenticationType.SQL.ToString(),
+                        AuthenticationType = "SQL",
                         StorageKey = storageContainerInfo.StorageAccountKey,
                         StorageKeyType = StorageKeyType.StorageAccessKey.ToString(),
                         StorageUri = exportBacpacLink,

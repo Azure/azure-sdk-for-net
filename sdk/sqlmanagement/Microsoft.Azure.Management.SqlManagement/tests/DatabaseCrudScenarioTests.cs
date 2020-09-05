@@ -106,7 +106,7 @@ namespace Sql.Tests
                 var db7Input = new Database()
                 {
                     Location = server.Location,
-                    Sku = new Microsoft.Azure.Management.Sql.Models.Sku("HS_Gen5_4", DatabaseEdition.Hyperscale),
+                    Sku = new Microsoft.Azure.Management.Sql.Models.Sku("HS_Gen5_4", "Hyperscale"),
                     ReadReplicaCount = 4,
                 };
                 var db7 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, db7Input);
@@ -252,7 +252,7 @@ namespace Sql.Tests
             // Upgrade Edition + SLO Name
             //
             dynamic updateEditionAndSloInput = createModelFunc();
-            updateEditionAndSloInput.Sku = new Microsoft.Azure.Management.Sql.Models.Sku(ServiceObjectiveName.S0, DatabaseEdition.Standard);
+            updateEditionAndSloInput.Sku = new Microsoft.Azure.Management.Sql.Models.Sku(ServiceObjectiveName.S0, "Standard");
             var db2 = updateFunc(resourceGroup.Name, server.Name, dbName, updateEditionAndSloInput);
             SqlManagementTestUtilities.ValidateDatabase(updateEditionAndSloInput, db2, dbName);
 
