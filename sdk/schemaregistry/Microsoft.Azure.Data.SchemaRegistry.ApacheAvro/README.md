@@ -144,3 +144,4 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [apache_avro_library]: https://www.nuget.org/packages/Apache.Avro/
 [generic_record]: https://avro.apache.org/docs/current/api/csharp/html/classAvro_1_1Generic_1_1GenericRecord.html
 [specific_record]: https://avro.apache.org/docs/current/api/csharp/html/interfaceAvro_1_1Specific_1_1ISpecificRecord.html
+[azure_sub]: https://azure.microsoft.com/free/
