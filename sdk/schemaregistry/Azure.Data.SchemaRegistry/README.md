@@ -56,12 +56,12 @@ var client = new SchemaRegistryClient(endpoint, credentials);
 ### Schemas
 
 A schema has 6 components:
-- Group Name
-- Schema Name
-- Schema ID
-- Serialization Type
-- Schema Content
-- Schema Version
+- Group Name: The name of the group of schemas in the Schema Registry instance.
+- Schema Name: The name of the schema.
+- Schema ID: The ID assigned by the Schema Registry instance for the schema.
+- Serialization Type: The format used for serialization of the schema. For example, Avro.
+- Schema Content: The string representation of the schema.
+- Schema Version: The version assigned to the schema in the Schema Registry instance.
 
 These components play different roles. Some are used as input into the operations and some are outputs. Currently, [SchemaProperties][schema_properties] only exposes those properties that are potential outputs that are used in SchemaRegistry operations. Those exposed properties are `Content` and `Id`.
 
