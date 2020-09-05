@@ -36,15 +36,15 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             SerializationType schemaType = SerializationType.Avro;
             // Example schema's content
             string schemaContent = @"
-{
-   ""type"" : ""record"",
-    ""namespace"" : ""TestSchema"",
-    ""name"" : ""Employee"",
-    ""fields"" : [
-    { ""name"" : ""Name"" , ""type"" : ""string"" },
-    { ""name"" : ""Age"", ""type"" : ""int"" }
-    ]
-}";
+            {
+               ""type"" : ""record"",
+                ""namespace"" : ""TestSchema"",
+                ""name"" : ""Employee"",
+                ""fields"" : [
+                { ""name"" : ""Name"" , ""type"" : ""string"" },
+                { ""name"" : ""Age"", ""type"" : ""int"" }
+                ]
+            }";
 
             Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, schemaName, schemaType, schemaContent);
             #endregion
@@ -62,15 +62,15 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             SerializationType schemaType = SerializationType.Avro;
             // Example schema's content
             string schemaContent = @"
-{
-   ""type"" : ""record"",
-    ""namespace"" : ""TestSchema"",
-    ""name"" : ""Employee"",
-    ""fields"" : [
-    { ""name"" : ""Name"" , ""type"" : ""string"" },
-    { ""name"" : ""Age"", ""type"" : ""int"" }
-    ]
-}";
+            {
+               ""type"" : ""record"",
+                ""namespace"" : ""TestSchema"",
+                ""name"" : ""Employee"",
+                ""fields"" : [
+                { ""name"" : ""Name"" , ""type"" : ""string"" },
+                { ""name"" : ""Age"", ""type"" : ""int"" }
+                ]
+            }";
 
             Response<SchemaProperties> schemaProperties = client.GetSchemaId(groupName, schemaName, schemaType, schemaContent);
             string schemaId = schemaProperties.Value.Id;

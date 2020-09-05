@@ -78,11 +78,11 @@ The following shows examples of what is available through the SchemaRegistryClie
 Register a schema to be stored in the Azure Schema Registry.
 
 ```C# Snippet:RegisterSchema
-            string schemaName = "<schema_name>";
-            string groupName = "<schema_group_name>";
-            SerializationType schemaType = SerializationType.Avro;
-            // Example schema's content
-            string schemaContent = @"
+string schemaName = "<schema_name>";
+string groupName = "<schema_group_name>";
+SerializationType schemaType = SerializationType.Avro;
+// Example schema's content
+string schemaContent = @"
 {
    ""type"" : ""record"",
     ""namespace"" : ""TestSchema"",
@@ -93,7 +93,7 @@ Register a schema to be stored in the Azure Schema Registry.
     ]
 }";
 
-            Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, schemaName, schemaType, schemaContent);
+Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, schemaName, schemaType, schemaContent);
 ```
 
 ### Retrieve a schema ID
@@ -101,11 +101,11 @@ Register a schema to be stored in the Azure Schema Registry.
 Retrieve a previously registered schema ID from the Azure Schema Registry.
 
 ```C# Snippet:RetrieveSchemaId
-            string schemaName = "<schema_name>";
-            string groupName = "<schema_group_name>";
-            SerializationType schemaType = SerializationType.Avro;
-            // Example schema's content
-            string schemaContent = @"
+string schemaName = "<schema_name>";
+string groupName = "<schema_group_name>";
+SerializationType schemaType = SerializationType.Avro;
+// Example schema's content
+string schemaContent = @"
 {
    ""type"" : ""record"",
     ""namespace"" : ""TestSchema"",
@@ -116,8 +116,8 @@ Retrieve a previously registered schema ID from the Azure Schema Registry.
     ]
 }";
 
-            Response<SchemaProperties> schemaProperties = client.GetSchemaId(groupName, schemaName, schemaType, schemaContent);
-            string schemaId = schemaProperties.Value.Id;
+Response<SchemaProperties> schemaProperties = client.GetSchemaId(groupName, schemaName, schemaType, schemaContent);
+string schemaId = schemaProperties.Value.Id;
 ```
 
 ### Retrieve a schema
