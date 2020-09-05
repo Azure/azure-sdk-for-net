@@ -1,0 +1,7 @@
+{
+  "Entries": [],
+  "Variables": {
+    "RandomSeed": "977456895",
+    "SCHEMAREGISTRY_URL": "sr-playground.servicebus.windows.net"
+  }
+}
