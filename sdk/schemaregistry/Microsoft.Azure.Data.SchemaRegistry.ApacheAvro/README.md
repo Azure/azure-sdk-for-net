@@ -8,8 +8,8 @@ This library provides an Apache Avro serialization and deserialization API using
 
 Install the Azure Schema Registry Apache Avro library for .NET with [NuGet][nuget]:
 
-```PowerShell
-Install-Package Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
+```bash
+dotnet add package Microsoft.Azure.Data.SchemaRegistry.ApacheAvro --version 1.0.0-beta.1
 ```
 
 ### Prerequisites

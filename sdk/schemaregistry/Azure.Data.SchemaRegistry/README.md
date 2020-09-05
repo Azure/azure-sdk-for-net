@@ -8,8 +8,8 @@ The Azure Schema Registry service allows developers to provide and retrieve data
 
 Install the Azure Schema Registry client library for .NET with [NuGet][nuget]:
 
-```PowerShell
-Install-Package Azure.Data.SchemaRegistry
+```bash
+dotnet add package Azure.Data.SchemaRegistry --version 1.0.0-beta.1
 ```
 
 ### Prerequisites
