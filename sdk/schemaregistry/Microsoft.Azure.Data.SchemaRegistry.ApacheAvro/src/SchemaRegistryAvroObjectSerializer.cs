@@ -17,9 +17,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-#pragma warning disable AZC0001 // Use one of the following pre-approved namespace groups (https://azure.github.io/azure-sdk/registered_namespaces.html): Azure.AI, Azure.Analytics, Azure.Data, Azure.DigitalTwins, Azure.Iot, Azure.Learn, Azure.Media, Azure.Management, Azure.Messaging, Azure.Search, Azure.Security, Azure.Storage, Azure.Template, Azure.Identity, Microsoft.Extensions.Azure
 namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
-#pragma warning restore AZC0001 // Use one of the following pre-approved namespace groups (https://azure.github.io/azure-sdk/registered_namespaces.html): Azure.AI, Azure.Analytics, Azure.Data, Azure.DigitalTwins, Azure.Iot, Azure.Learn, Azure.Media, Azure.Management, Azure.Messaging, Azure.Search, Azure.Security, Azure.Storage, Azure.Template, Azure.Identity, Microsoft.Extensions.Azure
 {
     /// <summary>
     /// A <see cref="SchemaRegistryAvroObjectSerializer"/> implementation that uses <see cref="SchemaRegistryClient"/> for Avro serialization/deserialization.
