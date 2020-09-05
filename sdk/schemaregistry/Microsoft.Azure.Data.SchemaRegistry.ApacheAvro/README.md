@@ -1,4 +1,4 @@
-# Azure Schema Registry Apache Avro library for .NET
+# Azure Schema Registry Apache Avro client library for .NET
 
 This library provides an Apache Avro serialization and deserialization API using the Azure Schema Registry service.
 
