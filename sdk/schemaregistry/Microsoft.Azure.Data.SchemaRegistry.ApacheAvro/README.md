@@ -96,7 +96,7 @@ Register a schema to be stored in the Azure Schema Registry.
 var employee = new Employee { Age = 42, Name = "John Doe" };
 string groupName = "<schema_group_name>";
 
-var memoryStream = new MemoryStream();
+using var memoryStream = new MemoryStream();
 var serializer = new SchemaRegistryAvroObjectSerializer(client, groupName, new SchemaRegistryAvroObjectSerializerOptions { AutoRegisterSchemas = true });
 serializer.Serialize(memoryStream, employee, typeof(Employee), CancellationToken.None);
 ```

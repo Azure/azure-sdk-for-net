@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests.Samples
             var employee = new Employee { Age = 42, Name = "John Doe" };
             string groupName = "<schema_group_name>";
 
-            var memoryStream = new MemoryStream();
+            using var memoryStream = new MemoryStream();
             var serializer = new SchemaRegistryAvroObjectSerializer(client, groupName, new SchemaRegistryAvroObjectSerializerOptions { AutoRegisterSchemas = true });
             serializer.Serialize(memoryStream, employee, typeof(Employee), CancellationToken.None);
             #endregion
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests.Samples
         public void Deserialize()
         {
             var client = new SchemaRegistryClient(TestEnvironment.SchemaRegistryUri, TestEnvironment.Credential);
-            var memoryStream = new MemoryStream();
+            using var memoryStream = new MemoryStream();
 
             #region Snippet:Deserialize
             string groupName = "<schema_group_name>";

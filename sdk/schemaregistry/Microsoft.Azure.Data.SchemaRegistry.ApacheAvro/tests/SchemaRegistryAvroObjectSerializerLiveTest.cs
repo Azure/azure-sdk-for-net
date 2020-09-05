@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var groupName = "miyanni_srgroup";
             var employee = new Employee { Age = 42, Name = "Caketown" };
 
-            var memoryStream = new MemoryStream();
+            using var memoryStream = new MemoryStream();
             var serializer = new SchemaRegistryAvroObjectSerializer(client, groupName, new SchemaRegistryAvroObjectSerializerOptions { AutoRegisterSchemas = true });
             await serializer.SerializeAsync(memoryStream, employee, typeof(Employee), CancellationToken.None);
 
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             record.Add("Name", "Caketown");
             record.Add("Age", 42);
 
-            var memoryStream = new MemoryStream();
+            using var memoryStream = new MemoryStream();
             var serializer = new SchemaRegistryAvroObjectSerializer(client, groupName, new SchemaRegistryAvroObjectSerializerOptions { AutoRegisterSchemas = true });
             await serializer.SerializeAsync(memoryStream, record, typeof(GenericRecord), CancellationToken.None);
 
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var groupName = "miyanni_srgroup";
             var timeZoneInfo = TimeZoneInfo.Utc;
 
-            var memoryStream = new MemoryStream();
+            using var memoryStream = new MemoryStream();
             var serializer = new SchemaRegistryAvroObjectSerializer(client, groupName, new SchemaRegistryAvroObjectSerializerOptions { AutoRegisterSchemas = true });
             Assert.ThrowsAsync<ArgumentException>(async () => await serializer.SerializeAsync(memoryStream, timeZoneInfo, typeof(TimeZoneInfo), CancellationToken.None));
             await Task.CompletedTask;
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var client = CreateClient();
             var groupName = "miyanni_srgroup";
 
-            var memoryStream = new MemoryStream();
+            using var memoryStream = new MemoryStream();
             var serializer = new SchemaRegistryAvroObjectSerializer(client, groupName, new SchemaRegistryAvroObjectSerializerOptions { AutoRegisterSchemas = true });
             Assert.ThrowsAsync<ArgumentException>(async () => await serializer.DeserializeAsync(memoryStream, typeof(TimeZoneInfo), CancellationToken.None));
             await Task.CompletedTask;
