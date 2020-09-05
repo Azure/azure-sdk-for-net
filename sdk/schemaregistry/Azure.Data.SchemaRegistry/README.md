@@ -131,6 +131,14 @@ Response<SchemaProperties> schemaProperties = client.GetSchema(schemaId);
 string schemaContent = schemaProperties.Value.Content;
 ```
 
+## Troubleshooting
+
+Information on troubleshooting steps will be added as problems are discovered.
+
+## Next steps
+
+Additional information will be available as documents related to Azure Schema Registry are published.
+
 ## Contributing
 
 This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit [cla.microsoft.com][cla].
