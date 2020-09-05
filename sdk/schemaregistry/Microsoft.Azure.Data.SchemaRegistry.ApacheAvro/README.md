@@ -1,4 +1,4 @@
-# Azure Schema Registry Apache Avro library for .NET
+# Azure Schema Registry Apache Avro client library for .NET
 
 This library provides an Apache Avro serialization and deserialization API using the Azure Schema Registry service.
 
@@ -113,6 +113,14 @@ memoryStream.Position = 0;
 Employee employee = (Employee)serializer.Deserialize(memoryStream, typeof(Employee), CancellationToken.None);
 ```
 
+## Troubleshooting
+
+Information on troubleshooting steps will be added as problems are discovered.
+
+## Next steps
+
+Additional information will be available as documents related to Azure Schema Registry are published.
+
 ## Contributing
 
 This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit [cla.microsoft.com][cla].
@@ -129,7 +137,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [azure_powershell]: https://docs.microsoft.com/en-us/powershell/azure/
 [create_event_hubs_namespace]: https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-quickstart-powershell#create-an-event-hubs-namespace
 [quickstart_guide]: https://github.com/Azure/azure-sdk-for-net/blob/master/doc/mgmt_preview_quickstart.md
-[schema_registry_client]: src/SchemaRegistryClient.cs
+[schema_registry_client]: ../Azure.Data.SchemaRegistry/src/SchemaRegistryClient.cs
 [azure_portal]: https://ms.portal.azure.com/
 [schema_properties]: src/SchemaProperties.cs
 [azure_identity]: https://www.nuget.org/packages/Azure.Identity
