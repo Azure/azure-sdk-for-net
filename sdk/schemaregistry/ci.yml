@@ -29,3 +29,5 @@ extends:
     Artifacts:
     - name: Azure.Data.SchemaRegistry
       safeName: AzureDataSchemaRegistry
+    - name: Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
+      safeName: MicrosoftAzureDataSchemaRegistryApacheAvro
