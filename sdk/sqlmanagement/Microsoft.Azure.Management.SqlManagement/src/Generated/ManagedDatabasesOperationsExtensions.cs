@@ -28,7 +28,8 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='managedInstanceName'>
             /// The name of the managed instance.
@@ -45,7 +46,8 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='managedInstanceName'>
             /// The name of the managed instance.
@@ -68,7 +70,8 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='managedInstanceName'>
             /// The name of the managed instance.
@@ -88,7 +91,8 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='managedInstanceName'>
             /// The name of the managed instance.
@@ -114,7 +118,8 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='managedInstanceName'>
             /// The name of the managed instance.
@@ -137,7 +142,8 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='managedInstanceName'>
             /// The name of the managed instance.
@@ -166,7 +172,8 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='managedInstanceName'>
             /// The name of the managed instance.
@@ -186,7 +193,8 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='managedInstanceName'>
             /// The name of the managed instance.
@@ -209,7 +217,8 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='managedInstanceName'>
             /// The name of the managed instance.
@@ -232,7 +241,8 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='managedInstanceName'>
             /// The name of the managed instance.
@@ -255,53 +265,14 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Gets a list of inaccessible managed databases in a managed instance
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='managedInstanceName'>
-            /// The name of the managed instance.
-            /// </param>
-            public static IPage<ManagedDatabase> ListInaccessibleByInstance(this IManagedDatabasesOperations operations, string resourceGroupName, string managedInstanceName)
-            {
-                return operations.ListInaccessibleByInstanceAsync(resourceGroupName, managedInstanceName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a list of inaccessible managed databases in a managed instance
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='managedInstanceName'>
-            /// The name of the managed instance.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<ManagedDatabase>> ListInaccessibleByInstanceAsync(this IManagedDatabasesOperations operations, string resourceGroupName, string managedInstanceName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListInaccessibleByInstanceWithHttpMessagesAsync(resourceGroupName, managedInstanceName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Completes the restore operation on a managed database.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='managedInstanceName'>
             /// The name of the managed instance.
@@ -324,7 +295,8 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='managedInstanceName'>
             /// The name of the managed instance.
@@ -350,7 +322,8 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='managedInstanceName'>
             /// The name of the managed instance.
@@ -373,7 +346,8 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='managedInstanceName'>
             /// The name of the managed instance.
@@ -402,7 +376,8 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='managedInstanceName'>
             /// The name of the managed instance.
@@ -422,7 +397,8 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='managedInstanceName'>
             /// The name of the managed instance.
@@ -445,7 +421,8 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='managedInstanceName'>
             /// The name of the managed instance.
@@ -468,7 +445,8 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='managedInstanceName'>
             /// The name of the managed instance.
@@ -497,7 +475,8 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='managedInstanceName'>
             /// The name of the managed instance.
@@ -520,7 +499,8 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='managedInstanceName'>
             /// The name of the managed instance.
@@ -568,40 +548,6 @@ namespace Microsoft.Azure.Management.Sql
             public static async Task<IPage<ManagedDatabase>> ListByInstanceNextAsync(this IManagedDatabasesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByInstanceNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Gets a list of inaccessible managed databases in a managed instance
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ManagedDatabase> ListInaccessibleByInstanceNext(this IManagedDatabasesOperations operations, string nextPageLink)
-            {
-                return operations.ListInaccessibleByInstanceNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a list of inaccessible managed databases in a managed instance
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<ManagedDatabase>> ListInaccessibleByInstanceNextAsync(this IManagedDatabasesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListInaccessibleByInstanceNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

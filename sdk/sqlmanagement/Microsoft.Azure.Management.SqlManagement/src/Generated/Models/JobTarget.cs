@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -43,7 +44,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="refreshCredential">The resource ID of the credential
         /// that is used during job execution to connect to the target and
         /// determine the list of databases inside the target.</param>
-        public JobTarget(JobTargetType type, JobTargetGroupMembershipType? membershipType = default(JobTargetGroupMembershipType?), string serverName = default(string), string databaseName = default(string), string elasticPoolName = default(string), string shardMapName = default(string), string refreshCredential = default(string))
+        public JobTarget(string type, JobTargetGroupMembershipType? membershipType = default(JobTargetGroupMembershipType?), string serverName = default(string), string databaseName = default(string), string elasticPoolName = default(string), string shardMapName = default(string), string refreshCredential = default(string))
         {
             MembershipType = membershipType;
             Type = type;
@@ -73,7 +74,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'SqlServer'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public JobTargetType Type { get; set; }
+        public string Type { get; set; }
 
         /// <summary>
         /// Gets or sets the target server name.
@@ -110,11 +111,15 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
+            if (Type == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Type");
+            }
         }
     }
 }

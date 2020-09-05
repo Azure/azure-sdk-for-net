@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="provisioningState">State of the private endpoint
         /// connection. Possible values include: 'Approving', 'Ready',
         /// 'Dropping', 'Failed', 'Rejecting'</param>
-        public PrivateEndpointConnectionProperties(PrivateEndpointProperty privateEndpoint = default(PrivateEndpointProperty), PrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState = default(PrivateLinkServiceConnectionStateProperty), PrivateEndpointProvisioningState? provisioningState = default(PrivateEndpointProvisioningState?))
+        public PrivateEndpointConnectionProperties(PrivateEndpointProperty privateEndpoint = default(PrivateEndpointProperty), PrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState = default(PrivateLinkServiceConnectionStateProperty), string provisioningState = default(string))
         {
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// include: 'Approving', 'Ready', 'Dropping', 'Failed', 'Rejecting'
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
-        public PrivateEndpointProvisioningState? ProvisioningState { get; private set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Validate the object.

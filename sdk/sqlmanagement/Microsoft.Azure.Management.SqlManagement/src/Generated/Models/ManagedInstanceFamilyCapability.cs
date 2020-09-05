@@ -39,16 +39,20 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// types.</param>
         /// <param name="supportedVcoresValues">List of supported virtual cores
         /// values.</param>
+        /// <param name="includedMaxSize">Included size.</param>
+        /// <param name="supportedStorageSizes">Storage size ranges.</param>
         /// <param name="status">The status of the capability. Possible values
         /// include: 'Visible', 'Available', 'Default', 'Disabled'</param>
         /// <param name="reason">The reason for the capability not being
         /// available.</param>
-        public ManagedInstanceFamilyCapability(string name = default(string), string sku = default(string), IList<LicenseTypeCapability> supportedLicenseTypes = default(IList<LicenseTypeCapability>), IList<ManagedInstanceVcoresCapability> supportedVcoresValues = default(IList<ManagedInstanceVcoresCapability>), CapabilityStatus? status = default(CapabilityStatus?), string reason = default(string))
+        public ManagedInstanceFamilyCapability(string name = default(string), string sku = default(string), IList<LicenseTypeCapability> supportedLicenseTypes = default(IList<LicenseTypeCapability>), IList<ManagedInstanceVcoresCapability> supportedVcoresValues = default(IList<ManagedInstanceVcoresCapability>), MaxSizeCapability includedMaxSize = default(MaxSizeCapability), IList<MaxSizeRangeCapability> supportedStorageSizes = default(IList<MaxSizeRangeCapability>), CapabilityStatus? status = default(CapabilityStatus?), string reason = default(string))
         {
             Name = name;
             Sku = sku;
             SupportedLicenseTypes = supportedLicenseTypes;
             SupportedVcoresValues = supportedVcoresValues;
+            IncludedMaxSize = includedMaxSize;
+            SupportedStorageSizes = supportedStorageSizes;
             Status = status;
             Reason = reason;
             CustomInit();
@@ -82,6 +86,18 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "supportedVcoresValues")]
         public IList<ManagedInstanceVcoresCapability> SupportedVcoresValues { get; private set; }
+
+        /// <summary>
+        /// Gets included size.
+        /// </summary>
+        [JsonProperty(PropertyName = "includedMaxSize")]
+        public MaxSizeCapability IncludedMaxSize { get; private set; }
+
+        /// <summary>
+        /// Gets storage size ranges.
+        /// </summary>
+        [JsonProperty(PropertyName = "supportedStorageSizes")]
+        public IList<MaxSizeRangeCapability> SupportedStorageSizes { get; private set; }
 
         /// <summary>
         /// Gets the status of the capability. Possible values include:

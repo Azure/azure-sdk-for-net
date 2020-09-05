@@ -33,8 +33,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='include'>
         /// If specified, restricts the response to only include the selected
         /// item. Possible values include: 'supportedEditions',
-        /// 'supportedElasticPoolEditions', 'supportedManagedInstanceVersions',
-        /// 'supportedInstancePoolEditions', 'supportedManagedInstanceEditions'
+        /// 'supportedElasticPoolEditions', 'supportedManagedInstanceVersions'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -51,6 +50,6 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<LocationCapabilities>> ListByLocationWithHttpMessagesAsync(string locationName, CapabilityGroup? include = default(CapabilityGroup?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<LocationCapabilities>> ListByLocationWithHttpMessagesAsync(string locationName, string include = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -10,94 +10,12 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for JobStepActionSource.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(JobStepActionSourceConverter))]
-    public struct JobStepActionSource : System.IEquatable<JobStepActionSource>
+    public static class JobStepActionSource
     {
-        private JobStepActionSource(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly JobStepActionSource Inline = "Inline";
-
-
-        /// <summary>
-        /// Underlying value of enum JobStepActionSource
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for JobStepActionSource
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type JobStepActionSource
-        /// </summary>
-        public bool Equals(JobStepActionSource e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to JobStepActionSource
-        /// </summary>
-        public static implicit operator JobStepActionSource(string value)
-        {
-            return new JobStepActionSource(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert JobStepActionSource to string
-        /// </summary>
-        public static implicit operator string(JobStepActionSource e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum JobStepActionSource
-        /// </summary>
-        public static bool operator == (JobStepActionSource e1, JobStepActionSource e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum JobStepActionSource
-        /// </summary>
-        public static bool operator != (JobStepActionSource e1, JobStepActionSource e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for JobStepActionSource
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is JobStepActionSource && Equals((JobStepActionSource)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode JobStepActionSource
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string Inline = "Inline";
     }
 }

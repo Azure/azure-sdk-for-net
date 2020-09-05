@@ -10,102 +10,16 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for JobTargetType.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(JobTargetTypeConverter))]
-    public struct JobTargetType : System.IEquatable<JobTargetType>
+    public static class JobTargetType
     {
-        private JobTargetType(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly JobTargetType TargetGroup = "TargetGroup";
-
-        public static readonly JobTargetType SqlDatabase = "SqlDatabase";
-
-        public static readonly JobTargetType SqlElasticPool = "SqlElasticPool";
-
-        public static readonly JobTargetType SqlShardMap = "SqlShardMap";
-
-        public static readonly JobTargetType SqlServer = "SqlServer";
-
-
-        /// <summary>
-        /// Underlying value of enum JobTargetType
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for JobTargetType
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type JobTargetType
-        /// </summary>
-        public bool Equals(JobTargetType e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to JobTargetType
-        /// </summary>
-        public static implicit operator JobTargetType(string value)
-        {
-            return new JobTargetType(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert JobTargetType to string
-        /// </summary>
-        public static implicit operator string(JobTargetType e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum JobTargetType
-        /// </summary>
-        public static bool operator == (JobTargetType e1, JobTargetType e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum JobTargetType
-        /// </summary>
-        public static bool operator != (JobTargetType e1, JobTargetType e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for JobTargetType
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is JobTargetType && Equals((JobTargetType)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode JobTargetType
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string TargetGroup = "TargetGroup";
+        public const string SqlDatabase = "SqlDatabase";
+        public const string SqlElasticPool = "SqlElasticPool";
+        public const string SqlShardMap = "SqlShardMap";
+        public const string SqlServer = "SqlServer";
     }
 }

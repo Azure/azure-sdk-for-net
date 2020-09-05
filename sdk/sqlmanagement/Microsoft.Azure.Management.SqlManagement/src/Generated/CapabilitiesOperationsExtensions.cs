@@ -33,10 +33,9 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='include'>
             /// If specified, restricts the response to only include the selected item.
             /// Possible values include: 'supportedEditions',
-            /// 'supportedElasticPoolEditions', 'supportedManagedInstanceVersions',
-            /// 'supportedInstancePoolEditions', 'supportedManagedInstanceEditions'
+            /// 'supportedElasticPoolEditions', 'supportedManagedInstanceVersions'
             /// </param>
-            public static LocationCapabilities ListByLocation(this ICapabilitiesOperations operations, string locationName, CapabilityGroup? include = default(CapabilityGroup?))
+            public static LocationCapabilities ListByLocation(this ICapabilitiesOperations operations, string locationName, string include = default(string))
             {
                 return operations.ListByLocationAsync(locationName, include).GetAwaiter().GetResult();
             }
@@ -53,13 +52,12 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='include'>
             /// If specified, restricts the response to only include the selected item.
             /// Possible values include: 'supportedEditions',
-            /// 'supportedElasticPoolEditions', 'supportedManagedInstanceVersions',
-            /// 'supportedInstancePoolEditions', 'supportedManagedInstanceEditions'
+            /// 'supportedElasticPoolEditions', 'supportedManagedInstanceVersions'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<LocationCapabilities> ListByLocationAsync(this ICapabilitiesOperations operations, string locationName, CapabilityGroup? include = default(CapabilityGroup?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LocationCapabilities> ListByLocationAsync(this ICapabilitiesOperations operations, string locationName, string include = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByLocationWithHttpMessagesAsync(locationName, include, null, cancellationToken).ConfigureAwait(false))
                 {

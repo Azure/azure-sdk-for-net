@@ -164,7 +164,7 @@ namespace Microsoft.Azure.Management.Sql
             /// Whether to query against just live databases, just deleted databases, or
             /// all databases. Possible values include: 'All', 'Live', 'Deleted'
             /// </param>
-            public static IPage<LongTermRetentionBackup> ListByResourceGroupDatabase(this ILongTermRetentionBackupsOperations operations, string resourceGroupName, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase = default(bool?), LongTermRetentionDatabaseState? databaseState = default(LongTermRetentionDatabaseState?))
+            public static IPage<LongTermRetentionBackup> ListByResourceGroupDatabase(this ILongTermRetentionBackupsOperations operations, string resourceGroupName, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase = default(bool?), string databaseState = default(string))
             {
                 return operations.ListByResourceGroupDatabaseAsync(resourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, onlyLatestPerDatabase, databaseState).GetAwaiter().GetResult();
             }
@@ -198,7 +198,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<LongTermRetentionBackup>> ListByResourceGroupDatabaseAsync(this ILongTermRetentionBackupsOperations operations, string resourceGroupName, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase = default(bool?), LongTermRetentionDatabaseState? databaseState = default(LongTermRetentionDatabaseState?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<LongTermRetentionBackup>> ListByResourceGroupDatabaseAsync(this ILongTermRetentionBackupsOperations operations, string resourceGroupName, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase = default(bool?), string databaseState = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByResourceGroupDatabaseWithHttpMessagesAsync(resourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, onlyLatestPerDatabase, databaseState, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -226,7 +226,7 @@ namespace Microsoft.Azure.Management.Sql
             /// Whether to query against just live databases, just deleted databases, or
             /// all databases. Possible values include: 'All', 'Live', 'Deleted'
             /// </param>
-            public static IPage<LongTermRetentionBackup> ListByResourceGroupLocation(this ILongTermRetentionBackupsOperations operations, string resourceGroupName, string locationName, bool? onlyLatestPerDatabase = default(bool?), LongTermRetentionDatabaseState? databaseState = default(LongTermRetentionDatabaseState?))
+            public static IPage<LongTermRetentionBackup> ListByResourceGroupLocation(this ILongTermRetentionBackupsOperations operations, string resourceGroupName, string locationName, bool? onlyLatestPerDatabase = default(bool?), string databaseState = default(string))
             {
                 return operations.ListByResourceGroupLocationAsync(resourceGroupName, locationName, onlyLatestPerDatabase, databaseState).GetAwaiter().GetResult();
             }
@@ -254,7 +254,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<LongTermRetentionBackup>> ListByResourceGroupLocationAsync(this ILongTermRetentionBackupsOperations operations, string resourceGroupName, string locationName, bool? onlyLatestPerDatabase = default(bool?), LongTermRetentionDatabaseState? databaseState = default(LongTermRetentionDatabaseState?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<LongTermRetentionBackup>> ListByResourceGroupLocationAsync(this ILongTermRetentionBackupsOperations operations, string resourceGroupName, string locationName, bool? onlyLatestPerDatabase = default(bool?), string databaseState = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByResourceGroupLocationWithHttpMessagesAsync(resourceGroupName, locationName, onlyLatestPerDatabase, databaseState, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -285,7 +285,7 @@ namespace Microsoft.Azure.Management.Sql
             /// Whether to query against just live databases, just deleted databases, or
             /// all databases. Possible values include: 'All', 'Live', 'Deleted'
             /// </param>
-            public static IPage<LongTermRetentionBackup> ListByResourceGroupServer(this ILongTermRetentionBackupsOperations operations, string resourceGroupName, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = default(bool?), LongTermRetentionDatabaseState? databaseState = default(LongTermRetentionDatabaseState?))
+            public static IPage<LongTermRetentionBackup> ListByResourceGroupServer(this ILongTermRetentionBackupsOperations operations, string resourceGroupName, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = default(bool?), string databaseState = default(string))
             {
                 return operations.ListByResourceGroupServerAsync(resourceGroupName, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState).GetAwaiter().GetResult();
             }
@@ -316,7 +316,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<LongTermRetentionBackup>> ListByResourceGroupServerAsync(this ILongTermRetentionBackupsOperations operations, string resourceGroupName, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = default(bool?), LongTermRetentionDatabaseState? databaseState = default(LongTermRetentionDatabaseState?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<LongTermRetentionBackup>> ListByResourceGroupServerAsync(this ILongTermRetentionBackupsOperations operations, string resourceGroupName, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = default(bool?), string databaseState = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByResourceGroupServerWithHttpMessagesAsync(resourceGroupName, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -447,7 +447,7 @@ namespace Microsoft.Azure.Management.Sql
             /// Whether to query against just live databases, just deleted databases, or
             /// all databases. Possible values include: 'All', 'Live', 'Deleted'
             /// </param>
-            public static IPage<LongTermRetentionBackup> ListByDatabase(this ILongTermRetentionBackupsOperations operations, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase = default(bool?), LongTermRetentionDatabaseState? databaseState = default(LongTermRetentionDatabaseState?))
+            public static IPage<LongTermRetentionBackup> ListByDatabase(this ILongTermRetentionBackupsOperations operations, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase = default(bool?), string databaseState = default(string))
             {
                 return operations.ListByDatabaseAsync(locationName, longTermRetentionServerName, longTermRetentionDatabaseName, onlyLatestPerDatabase, databaseState).GetAwaiter().GetResult();
             }
@@ -477,7 +477,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<LongTermRetentionBackup>> ListByDatabaseAsync(this ILongTermRetentionBackupsOperations operations, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase = default(bool?), LongTermRetentionDatabaseState? databaseState = default(LongTermRetentionDatabaseState?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<LongTermRetentionBackup>> ListByDatabaseAsync(this ILongTermRetentionBackupsOperations operations, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase = default(bool?), string databaseState = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByDatabaseWithHttpMessagesAsync(locationName, longTermRetentionServerName, longTermRetentionDatabaseName, onlyLatestPerDatabase, databaseState, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -501,7 +501,7 @@ namespace Microsoft.Azure.Management.Sql
             /// Whether to query against just live databases, just deleted databases, or
             /// all databases. Possible values include: 'All', 'Live', 'Deleted'
             /// </param>
-            public static IPage<LongTermRetentionBackup> ListByLocation(this ILongTermRetentionBackupsOperations operations, string locationName, bool? onlyLatestPerDatabase = default(bool?), LongTermRetentionDatabaseState? databaseState = default(LongTermRetentionDatabaseState?))
+            public static IPage<LongTermRetentionBackup> ListByLocation(this ILongTermRetentionBackupsOperations operations, string locationName, bool? onlyLatestPerDatabase = default(bool?), string databaseState = default(string))
             {
                 return operations.ListByLocationAsync(locationName, onlyLatestPerDatabase, databaseState).GetAwaiter().GetResult();
             }
@@ -525,7 +525,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<LongTermRetentionBackup>> ListByLocationAsync(this ILongTermRetentionBackupsOperations operations, string locationName, bool? onlyLatestPerDatabase = default(bool?), LongTermRetentionDatabaseState? databaseState = default(LongTermRetentionDatabaseState?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<LongTermRetentionBackup>> ListByLocationAsync(this ILongTermRetentionBackupsOperations operations, string locationName, bool? onlyLatestPerDatabase = default(bool?), string databaseState = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByLocationWithHttpMessagesAsync(locationName, onlyLatestPerDatabase, databaseState, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -552,7 +552,7 @@ namespace Microsoft.Azure.Management.Sql
             /// Whether to query against just live databases, just deleted databases, or
             /// all databases. Possible values include: 'All', 'Live', 'Deleted'
             /// </param>
-            public static IPage<LongTermRetentionBackup> ListByServer(this ILongTermRetentionBackupsOperations operations, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = default(bool?), LongTermRetentionDatabaseState? databaseState = default(LongTermRetentionDatabaseState?))
+            public static IPage<LongTermRetentionBackup> ListByServer(this ILongTermRetentionBackupsOperations operations, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = default(bool?), string databaseState = default(string))
             {
                 return operations.ListByServerAsync(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState).GetAwaiter().GetResult();
             }
@@ -579,7 +579,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<LongTermRetentionBackup>> ListByServerAsync(this ILongTermRetentionBackupsOperations operations, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = default(bool?), LongTermRetentionDatabaseState? databaseState = default(LongTermRetentionDatabaseState?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<LongTermRetentionBackup>> ListByServerAsync(this ILongTermRetentionBackupsOperations operations, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = default(bool?), string databaseState = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByServerWithHttpMessagesAsync(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, null, cancellationToken).ConfigureAwait(false))
                 {

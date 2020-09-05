@@ -297,54 +297,6 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Imports a bacpac into a new database.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='parameters'>
-            /// The database import request parameters.
-            /// </param>
-            public static ImportExportOperationResult ImportDatabase(this IServersOperations operations, string resourceGroupName, string serverName, ImportNewDatabaseDefinition parameters)
-            {
-                return operations.ImportDatabaseAsync(resourceGroupName, serverName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Imports a bacpac into a new database.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='parameters'>
-            /// The database import request parameters.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ImportExportOperationResult> ImportDatabaseAsync(this IServersOperations operations, string resourceGroupName, string serverName, ImportNewDatabaseDefinition parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ImportDatabaseWithHttpMessagesAsync(resourceGroupName, serverName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Creates or updates a server.
             /// </summary>
             /// <param name='operations'>
@@ -474,54 +426,6 @@ namespace Microsoft.Azure.Management.Sql
             public static async Task<Server> BeginUpdateAsync(this IServersOperations operations, string resourceGroupName, string serverName, ServerUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, serverName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Imports a bacpac into a new database.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='parameters'>
-            /// The database import request parameters.
-            /// </param>
-            public static ImportExportOperationResult BeginImportDatabase(this IServersOperations operations, string resourceGroupName, string serverName, ImportNewDatabaseDefinition parameters)
-            {
-                return operations.BeginImportDatabaseAsync(resourceGroupName, serverName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Imports a bacpac into a new database.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='parameters'>
-            /// The database import request parameters.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ImportExportOperationResult> BeginImportDatabaseAsync(this IServersOperations operations, string resourceGroupName, string serverName, ImportNewDatabaseDefinition parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.BeginImportDatabaseWithHttpMessagesAsync(resourceGroupName, serverName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

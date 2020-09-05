@@ -10,96 +10,13 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for PerformanceLevelUnit.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(PerformanceLevelUnitConverter))]
-    public struct PerformanceLevelUnit : System.IEquatable<PerformanceLevelUnit>
+    public static class PerformanceLevelUnit
     {
-        private PerformanceLevelUnit(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly PerformanceLevelUnit DTU = "DTU";
-
-        public static readonly PerformanceLevelUnit VCores = "VCores";
-
-
-        /// <summary>
-        /// Underlying value of enum PerformanceLevelUnit
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for PerformanceLevelUnit
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type PerformanceLevelUnit
-        /// </summary>
-        public bool Equals(PerformanceLevelUnit e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to PerformanceLevelUnit
-        /// </summary>
-        public static implicit operator PerformanceLevelUnit(string value)
-        {
-            return new PerformanceLevelUnit(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert PerformanceLevelUnit to string
-        /// </summary>
-        public static implicit operator string(PerformanceLevelUnit e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum PerformanceLevelUnit
-        /// </summary>
-        public static bool operator == (PerformanceLevelUnit e1, PerformanceLevelUnit e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum PerformanceLevelUnit
-        /// </summary>
-        public static bool operator != (PerformanceLevelUnit e1, PerformanceLevelUnit e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for PerformanceLevelUnit
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is PerformanceLevelUnit && Equals((PerformanceLevelUnit)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode PerformanceLevelUnit
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string DTU = "DTU";
+        public const string VCores = "VCores";
     }
 }

@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="unit">The units that the limit is expressed in.
         /// Possible values include: 'Megabytes', 'Gigabytes', 'Terabytes',
         /// 'Petabytes'</param>
-        public MaxSizeCapability(int? limit = default(int?), MaxSizeUnit? unit = default(MaxSizeUnit?))
+        public MaxSizeCapability(int? limit = default(int?), string unit = default(string))
         {
             Limit = limit;
             Unit = unit;
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// include: 'Megabytes', 'Gigabytes', 'Terabytes', 'Petabytes'
         /// </summary>
         [JsonProperty(PropertyName = "unit")]
-        public MaxSizeUnit? Unit { get; private set; }
+        public string Unit { get; private set; }
 
     }
 }

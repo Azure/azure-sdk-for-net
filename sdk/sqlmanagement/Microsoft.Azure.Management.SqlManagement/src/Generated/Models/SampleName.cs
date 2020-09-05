@@ -10,98 +10,14 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for SampleName.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(SampleNameConverter))]
-    public struct SampleName : System.IEquatable<SampleName>
+    public static class SampleName
     {
-        private SampleName(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly SampleName AdventureWorksLT = "AdventureWorksLT";
-
-        public static readonly SampleName WideWorldImportersStd = "WideWorldImportersStd";
-
-        public static readonly SampleName WideWorldImportersFull = "WideWorldImportersFull";
-
-
-        /// <summary>
-        /// Underlying value of enum SampleName
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for SampleName
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type SampleName
-        /// </summary>
-        public bool Equals(SampleName e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to SampleName
-        /// </summary>
-        public static implicit operator SampleName(string value)
-        {
-            return new SampleName(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert SampleName to string
-        /// </summary>
-        public static implicit operator string(SampleName e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum SampleName
-        /// </summary>
-        public static bool operator == (SampleName e1, SampleName e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum SampleName
-        /// </summary>
-        public static bool operator != (SampleName e1, SampleName e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for SampleName
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is SampleName && Equals((SampleName)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode SampleName
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string AdventureWorksLT = "AdventureWorksLT";
+        public const string WideWorldImportersStd = "WideWorldImportersStd";
+        public const string WideWorldImportersFull = "WideWorldImportersFull";
     }
 }
