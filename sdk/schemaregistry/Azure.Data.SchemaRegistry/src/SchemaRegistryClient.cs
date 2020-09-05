@@ -52,6 +52,10 @@ namespace Azure.Data.SchemaRegistry
             _clientDiagnostics = clientDiagnostics;
         }
 
+        private const string RegisterSchemaScopeName = "SchemaRegistryClient.RegisterSchema";
+        private const string GetSchemaIdScopeName = "SchemaRegistryClient.GetSchemaId";
+        private const string GetSchemaScopeName = "SchemaRegistryClient.GetSchema";
+
         /// <summary>
         /// Registers a schema with the SchemaRegistry service.
         /// </summary>
@@ -63,7 +67,7 @@ namespace Azure.Data.SchemaRegistry
         /// <returns>The properties of the schema.</returns>
         public virtual async Task<Response<SchemaProperties>> RegisterSchemaAsync(string groupName, string schemaName, SerializationType serializationType, string schemaContent, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("SchemaRegistryClient.RegisterSchema");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope(RegisterSchemaScopeName);
             scope.Start();
             try
             {
@@ -91,7 +95,7 @@ namespace Azure.Data.SchemaRegistry
         /// <returns>The properties of the schema.</returns>
         public virtual Response<SchemaProperties> RegisterSchema(string groupName, string schemaName, SerializationType serializationType, string schemaContent, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("SchemaRegistryClient.RegisterSchema");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope(RegisterSchemaScopeName);
             scope.Start();
             try
             {
@@ -117,7 +121,7 @@ namespace Azure.Data.SchemaRegistry
         /// <returns>The properties of the schema, including the schema ID provided by the service.</returns>
         public virtual async Task<Response<SchemaProperties>> GetSchemaIdAsync(string groupName, string schemaName, SerializationType serializationType, string schemaContent, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("SchemaRegistryClient.GetSchema");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope(GetSchemaIdScopeName);
             scope.Start();
             try
             {
@@ -143,7 +147,7 @@ namespace Azure.Data.SchemaRegistry
         /// <returns>The properties of the schema, including the schema ID provided by the service.</returns>
         public virtual Response<SchemaProperties> GetSchemaId(string groupName, string schemaName, SerializationType serializationType, string schemaContent, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("SchemaRegistryClient.GetSchema");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope(GetSchemaIdScopeName);
             scope.Start();
             try
             {
@@ -166,7 +170,7 @@ namespace Azure.Data.SchemaRegistry
         /// <returns>The properties of the schema, including the schema content provided by the service.</returns>
         public virtual async Task<Response<SchemaProperties>> GetSchemaAsync(string schemaId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("SchemaRegistryClient.GetSchema");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope(GetSchemaScopeName);
             scope.Start();
             try
             {
@@ -189,7 +193,7 @@ namespace Azure.Data.SchemaRegistry
         /// <returns>The properties of the schema, including the schema content provided by the service.</returns>
         public virtual Response<SchemaProperties> GetSchema(string schemaId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("SchemaRegistryClient.GetSchema");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope(GetSchemaScopeName);
             scope.Start();
             try
             {
