@@ -26,7 +26,6 @@ namespace Azure.Core.Shared
                 }
                 catch (FormatException)
                 {
-                    EventSourceEventFormattingEventSource.Singleton.EventMessageFailedFormatting(eventData.EventSource.Name, eventData.EventName, eventData.Message);
                 }
             }
 
@@ -70,22 +69,6 @@ namespace Azure.Core.Shared
             }
 
             return o;
-        }
-
-        [EventSource(Name = EventSourceName)]
-        private class EventSourceEventFormattingEventSource : EventSource
-        {
-            private const string EventSourceName = "Event-Source-Event-Formatting";
-
-            private EventSourceEventFormattingEventSource() : base(EventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue) {}
-
-            public static EventSourceEventFormattingEventSource Singleton { get; } = new EventSourceEventFormattingEventSource();
-
-            [Event(1, Level = EventLevel.Warning)]
-            public void EventMessageFailedFormatting(string eventSourceName, string eventName, string message)
-            {
-                WriteEvent(1,eventSourceName,eventName,message);
-            }
         }
     }
 }
