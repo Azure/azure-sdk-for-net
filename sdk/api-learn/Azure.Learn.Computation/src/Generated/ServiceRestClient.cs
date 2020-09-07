@@ -51,7 +51,6 @@ namespace Azure.Learn.Computation
             {
                 request.Headers.Add("x-ms-client-request-id", xMsClientRequestId);
             }
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

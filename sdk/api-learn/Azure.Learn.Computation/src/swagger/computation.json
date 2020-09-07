@@ -1,7 +1,7 @@
 ﻿{
     "swagger": "2.0",
     "info": {
-        "title": "Example service",
+        "title": "Example Computation service for Azure SDK API Design training unit",
         "version": "1.1"
     },
     "consumes": [ "application/json" ],
@@ -283,6 +283,11 @@
                         "cancelled"
                     ],
                     "description": "The current status of the operation"
+                },
+                "value": {
+                    "readOnly": true,
+                    "type": "number",
+                    "description": "The computed value"
                 }
             }
         }

@@ -21,11 +21,13 @@ namespace Azure.Learn.Computation.Models
         /// <param name="createdDateTime"> Date and time (UTC) when the operation was submitted. </param>
         /// <param name="percentComplete"> The completion state of the operation. </param>
         /// <param name="status"> The current status of the operation. </param>
-        internal Operation(DateTimeOffset? createdDateTime, float? percentComplete, OperationStatus? status)
+        /// <param name="value"> The computed value. </param>
+        internal Operation(DateTimeOffset? createdDateTime, float? percentComplete, OperationStatus? status, float? value)
         {
             CreatedDateTime = createdDateTime;
             PercentComplete = percentComplete;
             Status = status;
+            Value = value;
         }
 
         /// <summary> Date and time (UTC) when the operation was submitted. </summary>
@@ -34,5 +36,7 @@ namespace Azure.Learn.Computation.Models
         public float? PercentComplete { get; }
         /// <summary> The current status of the operation. </summary>
         public OperationStatus? Status { get; }
+        /// <summary> The computed value. </summary>
+        public float? Value { get; }
     }
 }

@@ -18,6 +18,7 @@ namespace Azure.Learn.Computation.Models
             Optional<DateTimeOffset> createdDateTime = default;
             Optional<float> percentComplete = default;
             Optional<OperationStatus> status = default;
+            Optional<float> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createdDateTime"))
@@ -35,8 +36,13 @@ namespace Azure.Learn.Computation.Models
                     status = new OperationStatus(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("value"))
+                {
+                    value = property.Value.GetSingle();
+                    continue;
+                }
             }
-            return new Operation(Optional.ToNullable(createdDateTime), Optional.ToNullable(percentComplete), Optional.ToNullable(status));
+            return new Operation(Optional.ToNullable(createdDateTime), Optional.ToNullable(percentComplete), Optional.ToNullable(status), Optional.ToNullable(value));
         }
     }
 }

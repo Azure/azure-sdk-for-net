@@ -59,7 +59,6 @@ namespace Azure.Learn.Computation
             {
                 request.Headers.Add("x-ms-client-request-id", xMsClientRequestId);
             }
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -120,7 +119,6 @@ namespace Azure.Learn.Computation
                 request.Headers.Add("if-match", ifMatch);
             }
             request.Headers.Add("Content-Type", "application/json");
-            request.Headers.Add("Accept", "application/json");
             if (computeNode != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -188,7 +186,6 @@ namespace Azure.Learn.Computation
             {
                 request.Headers.Add("x-ms-client-request-id", xMsClientRequestId);
             }
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -243,7 +240,6 @@ namespace Azure.Learn.Computation
             {
                 request.Headers.Add("x-ms-client-request-id", xMsClientRequestId);
             }
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
