@@ -97,6 +97,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Europe Standard Time".</param>
         /// <param name="instancePoolId">The Id of the instance pool this
         /// managed server belongs to.</param>
+        /// <param name="maintenanceConfigurationId">Specifies maintenance
+        /// configuration id to apply to this managed instance.</param>
         /// <param name="minimalTlsVersion">Minimal TLS version. Allowed
         /// values: 'None', '1.0', '1.1', '1.2'</param>
         /// <param name="storageAccountType">The storage account type used to
@@ -127,6 +129,7 @@ namespace Microsoft.Azure.Management.Sql.Models
             ProxyOverride = proxyOverride;
             TimezoneId = timezoneId;
             InstancePoolId = instancePoolId;
+            MaintenanceConfigurationId = maintenanceConfigurationId;
             MinimalTlsVersion = minimalTlsVersion;
             StorageAccountType = storageAccountType;
             Tags = tags;
@@ -289,6 +292,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.instancePoolId")]
         public string InstancePoolId { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies maintenance configuration id to apply to
+        /// this managed instance.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.maintenanceConfigurationId")]
+        public string MaintenanceConfigurationId { get; set; }
 
         /// <summary>
         /// Gets or sets minimal TLS version. Allowed values: 'None', '1.0',

@@ -169,7 +169,7 @@ namespace Sql.Tests
                 // Make sure the elastic pool is not updated due to cancel operation
                 var epGetResponse = sqlClient.ElasticPools.Get(resourceGroup.Name, server.Name, epName);
                 Assert.Equal(125, epGetResponse.Dtu);
-                Assert.Equal(DatabaseEdition.Premium, epGetResponse.Edition);
+                Assert.Equal("Premium", epGetResponse.Edition);
             }
         }
 

@@ -7,12 +7,13 @@
 		<PackageId>Microsoft.Azure.Management.Sql</PackageId>
 		<Description>Azure SQL Management SDK library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Sql</AssemblyName>
-		<Version>1.44.1-preview</Version>
+		<Version>1.44.2-preview</Version>
 		<PackageTags>Microsoft Azure SQL Management;SQL;SQL Management;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
 New features:
-- Azure SQL Managed Instance Azure Active Directory Only authentication support.
+- Azure SQL Databases support for backup storage redundancy
+- Azure SQL Import Export support for network isolation.
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

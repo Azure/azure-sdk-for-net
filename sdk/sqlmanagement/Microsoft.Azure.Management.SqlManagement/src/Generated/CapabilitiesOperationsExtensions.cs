@@ -33,7 +33,8 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='include'>
             /// If specified, restricts the response to only include the selected item.
             /// Possible values include: 'supportedEditions',
-            /// 'supportedElasticPoolEditions', 'supportedManagedInstanceVersions'
+            /// 'supportedElasticPoolEditions', 'supportedManagedInstanceVersions',
+            /// 'supportedInstancePoolEditions', 'supportedManagedInstanceEditions'
             /// </param>
             public static LocationCapabilities ListByLocation(this ICapabilitiesOperations operations, string locationName, string include = default(string))
             {
@@ -52,7 +53,8 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='include'>
             /// If specified, restricts the response to only include the selected item.
             /// Possible values include: 'supportedEditions',
-            /// 'supportedElasticPoolEditions', 'supportedManagedInstanceVersions'
+            /// 'supportedElasticPoolEditions', 'supportedManagedInstanceVersions',
+            /// 'supportedInstancePoolEditions', 'supportedManagedInstanceEditions'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

@@ -44,7 +44,7 @@ namespace Sql.Tests
                 Assert.NotNull(db1);
 
                 // Create a database with all parameters specified
-                // 
+                //
                 dbName = SqlManagementTestUtilities.GenerateName();
                 var db2Input = new Database()
                 {
@@ -54,7 +54,8 @@ namespace Sql.Tests
                     MaxSizeBytes = 2 * 1024L * 1024L * 1024L,
                     Tags = tags,
                     CreateMode = "Default",
-                    SampleName = SampleName.AdventureWorksLT
+                    SampleName = SampleName.AdventureWorksLT,
+                    StorageAccountType = "GRS",
                 };
                 var db2 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, db2Input);
                 Assert.NotNull(db2);
@@ -105,12 +106,22 @@ namespace Sql.Tests
                 var db7Input = new Database()
                 {
                     Location = server.Location,
-                    Sku = new Microsoft.Azure.Management.Sql.Models.Sku("HS_Gen5_4", DatabaseEdition.Hyperscale),
+                    Sku = new Microsoft.Azure.Management.Sql.Models.Sku("HS_Gen5_4", "Hyperscale"),
                     ReadReplicaCount = 4,
                 };
                 var db7 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, db7Input);
                 Assert.NotNull(db7);
                 SqlManagementTestUtilities.ValidateDatabase(db7Input, db7, dbName);
+
+                dbName = SqlManagementTestUtilities.GenerateName();
+                var db8Input = new Database()
+                {
+                    Location = server.Location,
+                    StorageAccountType = "GRS",
+                };
+                var db8 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, db8Input);
+                Assert.NotNull(db8);
+                SqlManagementTestUtilities.ValidateDatabase(db8Input, db8, dbName);
 
                 sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db1.Name);
                 sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db2.Name);
@@ -118,6 +129,7 @@ namespace Sql.Tests
                 sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db5.Name);
                 sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db6.Name);
                 sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db7.Name);
+                sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db8.Name);
             }
         }
 
@@ -240,7 +252,7 @@ namespace Sql.Tests
             // Upgrade Edition + SLO Name
             //
             dynamic updateEditionAndSloInput = createModelFunc();
-            updateEditionAndSloInput.Sku = new Microsoft.Azure.Management.Sql.Models.Sku(ServiceObjectiveName.S0, DatabaseEdition.Standard);
+            updateEditionAndSloInput.Sku = new Microsoft.Azure.Management.Sql.Models.Sku(ServiceObjectiveName.S0, "Standard");
             var db2 = updateFunc(resourceGroup.Name, server.Name, dbName, updateEditionAndSloInput);
             SqlManagementTestUtilities.ValidateDatabase(updateEditionAndSloInput, db2, dbName);
 
@@ -363,7 +375,7 @@ namespace Sql.Tests
                 }
             }
         }
-        
+
         [Fact]
         public void TestRemoveDatabaseFromPool()
         {
@@ -379,7 +391,7 @@ namespace Sql.Tests
                     };
 
                 // Create an elastic pool
-                // 
+                //
                 string epName = SqlManagementTestUtilities.GenerateName();
                 var epInput = new ElasticPool()
                 {

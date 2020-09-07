@@ -15,34 +15,33 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Export database parameters.
+    /// Contains the information necessary to perform export database
+    /// operation.
     /// </summary>
-    public partial class ExportRequest
+    public partial class ExportDatabaseDefinition
     {
         /// <summary>
-        /// Initializes a new instance of the ExportRequest class.
+        /// Initializes a new instance of the ExportDatabaseDefinition class.
         /// </summary>
-        public ExportRequest()
+        public ExportDatabaseDefinition()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ExportRequest class.
+        /// Initializes a new instance of the ExportDatabaseDefinition class.
         /// </summary>
-        /// <param name="storageKeyType">The type of the storage key to use.
-        /// Possible values include: 'StorageAccessKey',
-        /// 'SharedAccessKey'</param>
-        /// <param name="storageKey">The storage key to use.  If storage key
-        /// type is SharedAccessKey, it must be preceded with a "?."</param>
-        /// <param name="storageUri">The storage uri to use.</param>
-        /// <param name="administratorLogin">The name of the SQL
-        /// administrator.</param>
-        /// <param name="administratorLoginPassword">The password of the SQL
-        /// administrator.</param>
-        /// <param name="authenticationType">The authentication type. Possible
-        /// values include: 'SQL', 'ADPassword'</param>
-        public ExportRequest(StorageKeyType storageKeyType, string storageKey, string storageUri, string administratorLogin, string administratorLoginPassword, AuthenticationType? authenticationType = default(AuthenticationType?))
+        /// <param name="storageKeyType">Storage key type. Possible values
+        /// include: 'SharedAccessKey', 'StorageAccessKey'</param>
+        /// <param name="storageKey">Storage key.</param>
+        /// <param name="storageUri">Storage Uri.</param>
+        /// <param name="administratorLogin">Administrator login name.</param>
+        /// <param name="administratorLoginPassword">Administrator login
+        /// password.</param>
+        /// <param name="authenticationType">Authentication type.</param>
+        /// <param name="networkIsolation">Optional resource information to
+        /// enable network isolation for request.</param>
+        public ExportDatabaseDefinition(string storageKeyType, string storageKey, string storageUri, string administratorLogin, string administratorLoginPassword, string authenticationType = default(string), NetworkIsolationSettings networkIsolation = default(NetworkIsolationSettings))
         {
             StorageKeyType = storageKeyType;
             StorageKey = storageKey;
@@ -50,6 +49,7 @@ namespace Microsoft.Azure.Management.Sql.Models
             AdministratorLogin = administratorLogin;
             AdministratorLoginPassword = administratorLoginPassword;
             AuthenticationType = authenticationType;
+            NetworkIsolation = networkIsolation;
             CustomInit();
         }
 
@@ -59,43 +59,48 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the type of the storage key to use. Possible values
-        /// include: 'StorageAccessKey', 'SharedAccessKey'
+        /// Gets or sets storage key type. Possible values include:
+        /// 'SharedAccessKey', 'StorageAccessKey'
         /// </summary>
         [JsonProperty(PropertyName = "storageKeyType")]
-        public StorageKeyType StorageKeyType { get; set; }
+        public string StorageKeyType { get; set; }
 
         /// <summary>
-        /// Gets or sets the storage key to use.  If storage key type is
-        /// SharedAccessKey, it must be preceded with a "?."
+        /// Gets or sets storage key.
         /// </summary>
         [JsonProperty(PropertyName = "storageKey")]
         public string StorageKey { get; set; }
 
         /// <summary>
-        /// Gets or sets the storage uri to use.
+        /// Gets or sets storage Uri.
         /// </summary>
         [JsonProperty(PropertyName = "storageUri")]
         public string StorageUri { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the SQL administrator.
+        /// Gets or sets administrator login name.
         /// </summary>
         [JsonProperty(PropertyName = "administratorLogin")]
         public string AdministratorLogin { get; set; }
 
         /// <summary>
-        /// Gets or sets the password of the SQL administrator.
+        /// Gets or sets administrator login password.
         /// </summary>
         [JsonProperty(PropertyName = "administratorLoginPassword")]
         public string AdministratorLoginPassword { get; set; }
 
         /// <summary>
-        /// Gets or sets the authentication type. Possible values include:
-        /// 'SQL', 'ADPassword'
+        /// Gets or sets authentication type.
         /// </summary>
         [JsonProperty(PropertyName = "authenticationType")]
-        public AuthenticationType? AuthenticationType { get; set; }
+        public string AuthenticationType { get; set; }
+
+        /// <summary>
+        /// Gets or sets optional resource information to enable network
+        /// isolation for request.
+        /// </summary>
+        [JsonProperty(PropertyName = "networkIsolation")]
+        public NetworkIsolationSettings NetworkIsolation { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -105,6 +110,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (StorageKeyType == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "StorageKeyType");
+            }
             if (StorageKey == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "StorageKey");

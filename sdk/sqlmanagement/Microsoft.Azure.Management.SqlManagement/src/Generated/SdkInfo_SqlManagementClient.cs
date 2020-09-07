@@ -20,8 +20,8 @@ namespace Microsoft.Azure.Management.Sql
               return new Tuple<string, string, string>[]
               {
                 new Tuple<string, string, string>("Sql", "BackupLongTermRetentionPolicies", "2017-03-01-preview"),
-                new Tuple<string, string, string>("Sql", "BackupShortTermRetentionPolicies", "2017-10-01-preview"),
-                new Tuple<string, string, string>("Sql", "Capabilities", "2017-10-01-preview"),
+                new Tuple<string, string, string>("Sql", "BackupShortTermRetentionPolicies", "2020-02-02-preview"),
+                new Tuple<string, string, string>("Sql", "Capabilities", "2018-06-01-preview"),
                 new Tuple<string, string, string>("Sql", "DataMaskingPolicies", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "DataMaskingRules", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "DatabaseAutomaticTuning", "2015-05-01-preview"),
@@ -33,8 +33,8 @@ namespace Microsoft.Azure.Management.Sql
                 new Tuple<string, string, string>("Sql", "DatabaseVulnerabilityAssessmentScans", "2017-10-01-preview"),
                 new Tuple<string, string, string>("Sql", "DatabaseVulnerabilityAssessments", "2017-03-01-preview"),
                 new Tuple<string, string, string>("Sql", "Databases", "2014-04-01"),
-                new Tuple<string, string, string>("Sql", "Databases", "2017-10-01-preview"),
-                new Tuple<string, string, string>("Sql", "Databases", "2018-06-01-preview"),
+                new Tuple<string, string, string>("Sql", "Databases", "2019-06-01-preview"),
+                new Tuple<string, string, string>("Sql", "Databases", "2020-02-02-preview"),
                 new Tuple<string, string, string>("Sql", "ElasticPoolActivities", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "ElasticPoolDatabaseActivities", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "ElasticPoolOperations", "2017-10-01-preview"),
@@ -47,6 +47,7 @@ namespace Microsoft.Azure.Management.Sql
                 new Tuple<string, string, string>("Sql", "FailoverGroups", "2015-05-01-preview"),
                 new Tuple<string, string, string>("Sql", "FirewallRules", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "GeoBackupPolicies", "2014-04-01"),
+                new Tuple<string, string, string>("Sql", "ImportExport", "2020-02-02-preview"),
                 new Tuple<string, string, string>("Sql", "InstanceFailoverGroups", "2017-10-01-preview"),
                 new Tuple<string, string, string>("Sql", "InstancePools", "2018-06-01-preview"),
                 new Tuple<string, string, string>("Sql", "JobAgents", "2017-03-01-preview"),
@@ -61,7 +62,7 @@ namespace Microsoft.Azure.Management.Sql
                 new Tuple<string, string, string>("Sql", "LongTermRetentionBackups", "2017-03-01-preview"),
                 new Tuple<string, string, string>("Sql", "LongTermRetentionManagedInstanceBackups", "2018-06-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedBackupShortTermRetentionPolicies", "2017-03-01-preview"),
-                new Tuple<string, string, string>("Sql", "ManagedDatabaseRestoreDetails", "2019-06-01-preview"),
+                new Tuple<string, string, string>("Sql", "ManagedDatabaseRestoreDetails", "2020-02-02-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedDatabaseSecurityAlertPolicies", "2017-03-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedDatabaseSensitivityLabels", "2018-06-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedDatabaseVulnerabilityAssessmentRuleBaselines", "2017-10-01-preview"),
@@ -69,10 +70,11 @@ namespace Microsoft.Azure.Management.Sql
                 new Tuple<string, string, string>("Sql", "ManagedDatabaseVulnerabilityAssessments", "2017-10-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedDatabases", "2020-02-02-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedInstanceAdministrators", "2017-03-01-preview"),
+                new Tuple<string, string, string>("Sql", "ManagedInstanceAzureADOnlyAuthentications", "2020-02-02-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedInstanceEncryptionProtectors", "2017-10-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedInstanceKeys", "2017-10-01-preview"),
-                new Tuple<string, string, string>("Sql", "ManagedInstanceOperations", "2019-06-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedInstanceLongTermRetentionPolicies", "2018-06-01-preview"),
+                new Tuple<string, string, string>("Sql", "ManagedInstanceOperations", "2019-06-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedInstanceTdeCertificates", "2017-10-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedInstanceVulnerabilityAssessments", "2018-06-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedInstances", "2019-06-01-preview"),
@@ -91,7 +93,8 @@ namespace Microsoft.Azure.Management.Sql
                 new Tuple<string, string, string>("Sql", "RestorePoints", "2017-03-01-preview"),
                 new Tuple<string, string, string>("Sql", "SensitivityLabels", "2017-03-01-preview"),
                 new Tuple<string, string, string>("Sql", "ServerAutomaticTuning", "2017-03-01-preview"),
-                new Tuple<string, string, string>("Sql", "ServerAzureADAdministrators", "2014-04-01"),
+                new Tuple<string, string, string>("Sql", "ServerAzureADAdministrators", "2019-06-01-preview"),
+                new Tuple<string, string, string>("Sql", "ServerAzureADOnlyAuthentications", "2020-02-02-preview"),
                 new Tuple<string, string, string>("Sql", "ServerBlobAuditingPolicies", "2017-03-01-preview"),
                 new Tuple<string, string, string>("Sql", "ServerCommunicationLinks", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "ServerConnectionPolicies", "2014-04-01"),
@@ -101,32 +104,23 @@ namespace Microsoft.Azure.Management.Sql
                 new Tuple<string, string, string>("Sql", "ServerUsages", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "ServerVulnerabilityAssessments", "2018-06-01-preview"),
                 new Tuple<string, string, string>("Sql", "Servers", "2019-06-01-preview"),
-                new Tuple<string, string, string>("Sql", "Servers", "2015-05-01-preview"),
+                new Tuple<string, string, string>("Sql", "Servers", "2020-02-02-preview"),
                 new Tuple<string, string, string>("Sql", "ServiceObjectives", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "ServiceTierAdvisors", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "SubscriptionUsages", "2015-05-01-preview"),
                 new Tuple<string, string, string>("Sql", "SyncAgents", "2015-05-01-preview"),
-                new Tuple<string, string, string>("Sql", "SyncGroups", "2015-05-01-preview"),
-                new Tuple<string, string, string>("Sql", "SyncMembers", "2015-05-01-preview"),
+                new Tuple<string, string, string>("Sql", "SyncGroups", "2019-06-01-preview"),
+                new Tuple<string, string, string>("Sql", "SyncMembers", "2019-06-01-preview"),
                 new Tuple<string, string, string>("Sql", "TdeCertificates", "2017-10-01-preview"),
                 new Tuple<string, string, string>("Sql", "TransparentDataEncryptionActivities", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "TransparentDataEncryptions", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "Usages", "2018-06-01-preview"),
                 new Tuple<string, string, string>("Sql", "VirtualClusters", "2015-05-01-preview"),
                 new Tuple<string, string, string>("Sql", "VirtualNetworkRules", "2015-05-01-preview"),
+                new Tuple<string, string, string>("Sql", "WorkloadClassifiers", "2019-06-01-preview"),
+                new Tuple<string, string, string>("Sql", "WorkloadGroups", "2019-06-01-preview"),
               }.AsEnumerable();
           }
       }
-        // BEGIN: Code Generation Metadata Section
-        public static readonly String AutoRestVersion = "v2";
-        public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-        public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/sql/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=.";
-        public static readonly String GithubForkName = "Azure";
-        public static readonly String GithubBranchName = "master";
-        public static readonly String GithubCommidId = "615259b6d33d3029de2d6e403ffe0c12776da1d4";
-        public static readonly String CodeGenerationErrors = "";
-        public static readonly String GithubRepoName = "azure-rest-api-specs";
-        // END: Code Generation Metadata Section
-    }
+  }
 }
-

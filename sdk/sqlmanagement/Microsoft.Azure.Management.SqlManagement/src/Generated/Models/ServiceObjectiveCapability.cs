@@ -40,11 +40,18 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="supportedLicenseTypes">List of supported license
         /// types.</param>
         /// <param name="includedMaxSize">The included (free) max size.</param>
+        /// <param name="zoneRedundant">Whether or not zone redundancy is
+        /// supported for the service objective.</param>
+        /// <param name="supportedAutoPauseDelay">Supported time range for auto
+        /// pause delay</param>
+        /// <param name="supportedMinCapacities">List of supported min
+        /// capacities</param>
+        /// <param name="computeModel">The compute model</param>
         /// <param name="status">The status of the capability. Possible values
         /// include: 'Visible', 'Available', 'Default', 'Disabled'</param>
         /// <param name="reason">The reason for the capability not being
         /// available.</param>
-        public ServiceObjectiveCapability(System.Guid? id = default(System.Guid?), string name = default(string), IList<MaxSizeRangeCapability> supportedMaxSizes = default(IList<MaxSizeRangeCapability>), PerformanceLevelCapability performanceLevel = default(PerformanceLevelCapability), Sku sku = default(Sku), IList<LicenseTypeCapability> supportedLicenseTypes = default(IList<LicenseTypeCapability>), MaxSizeCapability includedMaxSize = default(MaxSizeCapability), CapabilityStatus? status = default(CapabilityStatus?), string reason = default(string))
+        public ServiceObjectiveCapability(System.Guid? id = default(System.Guid?), string name = default(string), IList<MaxSizeRangeCapability> supportedMaxSizes = default(IList<MaxSizeRangeCapability>), PerformanceLevelCapability performanceLevel = default(PerformanceLevelCapability), Sku sku = default(Sku), IList<LicenseTypeCapability> supportedLicenseTypes = default(IList<LicenseTypeCapability>), MaxSizeCapability includedMaxSize = default(MaxSizeCapability), bool? zoneRedundant = default(bool?), AutoPauseDelayTimeRange supportedAutoPauseDelay = default(AutoPauseDelayTimeRange), IList<MinCapacityCapability> supportedMinCapacities = default(IList<MinCapacityCapability>), string computeModel = default(string), CapabilityStatus? status = default(CapabilityStatus?), string reason = default(string))
         {
             Id = id;
             Name = name;
@@ -53,6 +60,10 @@ namespace Microsoft.Azure.Management.Sql.Models
             Sku = sku;
             SupportedLicenseTypes = supportedLicenseTypes;
             IncludedMaxSize = includedMaxSize;
+            ZoneRedundant = zoneRedundant;
+            SupportedAutoPauseDelay = supportedAutoPauseDelay;
+            SupportedMinCapacities = supportedMinCapacities;
+            ComputeModel = computeModel;
             Status = status;
             Reason = reason;
             CustomInit();
@@ -104,6 +115,31 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "includedMaxSize")]
         public MaxSizeCapability IncludedMaxSize { get; private set; }
+
+        /// <summary>
+        /// Gets whether or not zone redundancy is supported for the service
+        /// objective.
+        /// </summary>
+        [JsonProperty(PropertyName = "zoneRedundant")]
+        public bool? ZoneRedundant { get; private set; }
+
+        /// <summary>
+        /// Gets supported time range for auto pause delay
+        /// </summary>
+        [JsonProperty(PropertyName = "supportedAutoPauseDelay")]
+        public AutoPauseDelayTimeRange SupportedAutoPauseDelay { get; private set; }
+
+        /// <summary>
+        /// Gets list of supported min capacities
+        /// </summary>
+        [JsonProperty(PropertyName = "supportedMinCapacities")]
+        public IList<MinCapacityCapability> SupportedMinCapacities { get; private set; }
+
+        /// <summary>
+        /// Gets the compute model
+        /// </summary>
+        [JsonProperty(PropertyName = "computeModel")]
+        public string ComputeModel { get; private set; }
 
         /// <summary>
         /// Gets the status of the capability. Possible values include:
