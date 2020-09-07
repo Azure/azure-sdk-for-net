@@ -1,0 +1,290 @@
+﻿{
+    "swagger": "2.0",
+    "info": {
+        "title": "Example service",
+        "version": "1.1"
+    },
+    "consumes": [ "application/json" ],
+    "produces": [ "application/json" ],
+    "paths": {
+        "/ComputeNodes": {
+            "parameters": [
+                {
+                    "$ref": "#/parameters/ClientRequestId"
+                }
+            ],
+            "get": {
+                "operationId": "ComputeNodeAdministration_List",
+                "tags": [ "Administration" ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully listed (one page of) ComputeNodes",
+                        "schema": {
+                            "$ref": "#/definitions/PageOfComputeNodes"
+                        }
+                    },
+                    "default": {
+                        "description": "Failed to get ComputeNodes",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                },
+                "x-ms-pageable": {
+                    "nextLinkName": "nextLink",
+                    "itemName": "value"
+                }
+            }
+        },
+        "/ComputeNodes/{nodeName}": {
+            "parameters": [
+                {
+                    "$ref": "#/parameters/ClientRequestId"
+                },
+                {
+                    "$ref": "#/parameters/NodeName"
+                }
+            ],
+            "put": {
+                "operationId": "ComputeNodeAdministration_Create",
+                "tags": [ "Administration" ],
+                "parameters": [
+                    {
+                        "name": "computeNode",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/ComputeNode"
+                        }
+                    },
+                    {
+                        "name": "if-match",
+                        "in": "header",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Successfully created a new ComputeNode",
+                        "schema": {
+                            "$ref": "#/definitions/ComputeNode"
+                        }
+                    },
+                    "200": {
+                        "description": "Successfully replace an existing ComputeNode",
+                        "schema": {
+                            "$ref": "#/definitions/ComputeNode"
+                        }
+                    },
+                    "default": {
+                        "description": "Something went wrong",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "get": {
+                "operationId": "ComputeNodeAdministration_Get",
+                "tags": [ "Administration" ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully got the computeNode",
+                        "schema": {
+                            "$ref": "#/definitions/ComputeNode"
+                        }
+                    }
+                }
+            }
+        },
+        "/ComputeNodes/{nodeName}/computePi": {
+            "parameters": [
+                {
+                    "$ref": "#/parameters/ClientRequestId"
+                },
+                {
+                    "$ref": "#/parameters/NodeName"
+                }
+            ],
+            "post": {
+                "operationId": "Computation_ComputePi",
+                "tags": [ "Computation" ],
+                "parameters": [
+                    {
+                        "name": "precision",
+                        "in": "query",
+                        "type": "integer",
+                        "default": 17,
+                        "minimum": 0
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Started long running process",
+                        "headers": {
+                            "Operation-Location": {
+                                "description": "This will point to an operation (/operations/{operationId}) that can be used to monitor the progress",
+                                "type": "string",
+                                "format": "uri"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/operations/{operationId}": {
+            "parameters": [
+                {
+                    "name": "operationId",
+                    "type": "string",
+                    "in": "path",
+                    "required": true
+                },
+                {
+                    "$ref": "#/parameters/ClientRequestId"
+                }
+            ],
+            "get": {
+                "tags": [ "Computation" ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully got the operation status",
+                        "headers": {
+                            "Location": {
+                                "type": "string",
+                                "format": "uri"
+                            }
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/Operation"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "parameters": {
+        "NodeName": {
+            "name": "nodeName",
+            "in": "path",
+            "type": "string",
+            "required": true
+        },
+        "ClientRequestId": {
+            "in": "header",
+            "type": "string",
+            "required": false,
+            "name": "x-ms-client-request-id",
+            "description": "Optional client-provided request id"
+        }
+    },
+    "definitions": {
+        "Error": {
+            "type": "object"
+        },
+        "PageOfComputeNodes": {
+            "type": "object",
+            "required": [
+                "value"
+            ],
+            "properties": {
+                "value": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ComputeNode"
+                    },
+                    "description": "The compute nodes in this page"
+                },
+                "nextLink": {
+                    "type": "string",
+                    "description": "The opaque URL to retrieve the next page"
+                }
+            }
+        },
+        "ComputeNode": {
+            "type": "object",
+            "required": [
+                "kind"
+            ],
+            "discriminator": "kind",
+            "properties": {
+                "eTag": {
+                    "readOnly": true,
+                    "type": "string",
+                    "description": "An HTTP ETag"
+                },
+                "name": {
+                    "readOnly": true,
+                    "type": "string",
+                    "description": "The name of the compute node"
+                },
+                "kind": {
+                    "type": "string"
+                }
+            }
+        },
+        "LinuxComputeNode": {
+            "type": "object",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/ComputeNode"
+                }
+            ],
+            "required": [
+                "sshPublicKey"
+            ],
+            "properties": {
+                "sshPublicKey": {
+                    "type": "string",
+                    "description": "The compute node's public key"
+                }
+            }
+        },
+        "WindowsComputeNode": {
+            "type": "object",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/ComputeNode"
+                }
+            ],
+            "required": [
+                "userName"
+            ],
+            "properties": {
+                "userName": {
+                    "type": "string",
+                    "description": "The Windows user name"
+                }
+            }
+        },
+        "Operation": {
+            "type": "object",
+            "properties": {
+                "createdDateTime": {
+                    "readOnly": true,
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Date and time (UTC) when the operation was submitted"
+                },
+                "percentComplete": {
+                    "readOnly": true,
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 100,
+                    "description": "The completion state of the operation"
+                },
+                "status": {
+                    "type": "string",
+                    "readOnly": true,
+                    "enum": [
+                        "notstarted",
+                        "running",
+                        "succeeded",
+                        "failed",
+                        "cancelled"
+                    ],
+                    "description": "The current status of the operation"
+                }
+            }
+        }
+    }
+}
