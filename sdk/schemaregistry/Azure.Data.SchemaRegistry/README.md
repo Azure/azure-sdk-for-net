@@ -1,6 +1,6 @@
 # Azure Schema Registry client library for .NET
 
-The Azure Schema Registry service allows developers to provide and retrieve data schemas from a centralized repository for use in messaging systems.
+Azure Schema Registry is a schema repository service hosted by Azure Event Hubs, providing schema storage, versioning, and management. The registry is leveraged by serializers to reduce payload size while describing payload structure with schema identifiers rather than full schemas.
 
 ## Getting started
 
@@ -133,11 +133,11 @@ string schemaContent = schemaProperties.Value.Content;
 
 ## Troubleshooting
 
-Information on troubleshooting steps will be added as problems are discovered.
+Information on troubleshooting steps will be provided as potential issues are discovered.
 
 ## Next steps
 
-Additional information will be available as documents related to Azure Schema Registry are published.
+See [Azure Schema Registry][azure_schema_registry] for additional information.
 
 ## Contributing
 
@@ -164,3 +164,4 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [email_opencode]: mailto:opencode@microsoft.com
 [azure_sub]: https://azure.microsoft.com/free/
+[azure_schema_registry]: https://aka.ms/schemaregistry
