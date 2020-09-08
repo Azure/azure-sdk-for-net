@@ -24,6 +24,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests
             var expectedReferences = new string[]
             {
                 "Azure.Core",
+                "Azure.Core.Experimental",
                 "Azure.Storage.Queues",
                 "Azure.Storage.Blobs",
                 "Microsoft.Azure.WebJobs",
@@ -37,6 +38,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests
                 "netstandard",
                 "Newtonsoft.Json",
                 "System.ComponentModel.Annotations",
+                "System.Memory",
                 "System.Threading.Tasks.Extensions"
             }.OrderBy(n => n);
 

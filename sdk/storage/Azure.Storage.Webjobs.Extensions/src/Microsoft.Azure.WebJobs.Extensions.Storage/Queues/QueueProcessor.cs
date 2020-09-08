@@ -138,16 +138,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         {
             if (_poisonQueue != null)
             {
-                // These values may change if the message is inserted into another queue. We'll store them here and make sure
-                // the message always has the original values before we pass it to a customer-facing method.
-                string id = message.MessageId;
-                string popReceipt = message.PopReceipt;
-
                 await CopyMessageToPoisonQueueAsync(message, _poisonQueue, cancellationToken).ConfigureAwait(false);
-
-                // TEMP: Re-evaluate these property updates when we update Storage SDK: https://github.com/Azure/azure-webjobs-sdk/issues/1144
-                // message.UpdateChangedProperties(id, popReceipt); TODO (kasobol-msft) this shouldn't be needed.
-
                 await DeleteMessageAsync(message, cancellationToken).ConfigureAwait(false);
             }
         }

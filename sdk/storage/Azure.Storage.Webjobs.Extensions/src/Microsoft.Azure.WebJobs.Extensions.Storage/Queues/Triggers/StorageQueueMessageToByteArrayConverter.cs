@@ -16,8 +16,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
                 throw new ArgumentNullException(nameof(input));
             }
 
-            // TODO (kasobol-msft) revisit this when base64/BinaryData is in the SDK
-            return Encoding.UTF8.GetBytes(input.MessageText);
+            return input.Body.Bytes.ToArray();
         }
     }
 }

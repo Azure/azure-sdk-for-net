@@ -1531,7 +1531,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
 
         private static Stream CreateInnerStream()
         {
-            return new FakeCloudBlobStream(new MemoryStream());
+            return new MemoryStream();
         }
 
         private static Mock<Stream> CreateMockInnerStream()

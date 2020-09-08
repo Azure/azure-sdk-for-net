@@ -15,6 +15,7 @@ using Newtonsoft.Json.Linq;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
 using System.Text;
+using Azure.Core;
 
 namespace Microsoft.Azure.WebJobs.Host.Queues.Config
 {
@@ -186,8 +187,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Config
 
             private static QueueMessage ConvertByteArrayToCloudQueueMessage(byte[] arg, QueueAttribute attrResolved)
             {
-                // TODO (kasobol-msft) revisit this when base64/BinaryData is in the SDK
-                return QueuesModelFactory.QueueMessage(null, null, Encoding.UTF8.GetString(arg), 0);
+                return QueuesModelFactory.QueueMessage(null, null, new BinaryData(arg), 0);
             }
 
             private static QueueMessage ConvertStringToCloudQueueMessage(string arg, QueueAttribute attrResolved)
