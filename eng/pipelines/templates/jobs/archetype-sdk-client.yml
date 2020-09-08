@@ -82,8 +82,7 @@ jobs:
         condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
       - task: NodeTool@0
         inputs:
-          # AutoRest doesn't work with versions 12.x
-          versionSpec: '10.15.0'
+          versionSpec: '13.7.0'
         displayName: 'Install NodeJS'
       - task: PowerShell@2
         displayName: "Verify generated code"
