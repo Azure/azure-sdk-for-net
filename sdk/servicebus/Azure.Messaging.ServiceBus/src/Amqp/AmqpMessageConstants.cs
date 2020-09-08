@@ -23,5 +23,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
         internal const string TimeSpanName = AmqpConstants.Vendor + ":timespan";
         internal const string UriName = AmqpConstants.Vendor + ":uri";
         internal const string DateTimeOffsetName = AmqpConstants.Vendor + ":datetime-offset";
+        /// <summary>
+        /// User property key representing deadletter reason, when a message is received from a deadletter subqueue of an entity.
+        /// </summary>
+        internal const string DeadLetterReasonHeader = "DeadLetterReason";
+
+        /// <summary>
+        /// User property key representing detailed error description, when a message is received from a deadletter subqueue of an entity.
+        /// </summary>
+        internal const string DeadLetterErrorDescriptionHeader = "DeadLetterErrorDescription";
     }
 }
