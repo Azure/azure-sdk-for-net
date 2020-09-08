@@ -82,7 +82,7 @@ jobs:
         condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
       - task: NodeTool@0
         inputs:
-          versionSpec: '13.7.0'
+          versionSpec: '13.13.0'
         displayName: 'Install NodeJS'
       - task: PowerShell@2
         displayName: "Verify generated code"
