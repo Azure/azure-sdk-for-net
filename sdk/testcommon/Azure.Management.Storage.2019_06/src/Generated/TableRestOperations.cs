@@ -67,7 +67,6 @@ namespace Azure.Management.Storage
             uri.AppendPath(tableName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -162,7 +161,6 @@ namespace Azure.Management.Storage
             uri.AppendPath(tableName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -257,7 +255,6 @@ namespace Azure.Management.Storage
             uri.AppendPath(tableName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -352,7 +349,6 @@ namespace Azure.Management.Storage
             uri.AppendPath(tableName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -436,7 +432,6 @@ namespace Azure.Management.Storage
             uri.AppendPath("/tableServices/default/tables", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -513,7 +508,6 @@ namespace Azure.Management.Storage
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
