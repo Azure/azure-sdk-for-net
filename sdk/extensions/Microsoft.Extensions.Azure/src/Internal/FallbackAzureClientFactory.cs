@@ -7,25 +7,30 @@ using System.Linq;
 using System.Reflection;
 using Azure.Core;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
 namespace Microsoft.Extensions.Azure
 {
     internal class FallbackAzureClientFactory<TClient>: IAzureClientFactory<TClient>
     {
-        private readonly IOptionsMonitor<AzureClientsGlobalOptions> _globalOptions;
+        private readonly AzureClientsGlobalOptions _globalOptions;
         private readonly IServiceProvider _serviceProvider;
         private readonly EventSourceLogForwarder _logForwarder;
         private readonly Dictionary<string, FallbackClientRegistration<TClient>> _clientRegistrations;
         private readonly Type _clientOptionType;
+        private readonly IConfiguration _configurationRoot;
+        private readonly IClientOptionsFactory _optionsFactory;
 
         public FallbackAzureClientFactory(
             IOptionsMonitor<AzureClientsGlobalOptions> globalOptions,
             IServiceProvider serviceProvider,
             EventSourceLogForwarder logForwarder)
         {
-            _globalOptions = globalOptions;
             _serviceProvider = serviceProvider;
+            _globalOptions = globalOptions.CurrentValue;
+            _configurationRoot = _globalOptions.ConfigurationRootResolver?.Invoke(_serviceProvider);
+
             _logForwarder = logForwarder;
             _clientRegistrations = new Dictionary<string, FallbackClientRegistration<TClient>>();
 
@@ -43,23 +48,29 @@ namespace Microsoft.Extensions.Azure
             {
                 throw new InvalidOperationException("Unable to detect the client option type");
             }
+
+            _optionsFactory = (IClientOptionsFactory)ActivatorUtilities.CreateInstance(serviceProvider, typeof(ClientOptionsFactory<,>).MakeGenericType(typeof(TClient), _clientOptionType));
         }
 
         public TClient CreateClient(string name)
         {
-            _logForwarder.Start();
+            if (_configurationRoot == null)
+            {
+                throw new InvalidOperationException($"Unable to find client registration with type '{typeof(TClient).Name}' and name '{name}'.");
+            }
 
-            var globalOptions = _globalOptions.CurrentValue;
+            _logForwarder.Start();
 
             FallbackClientRegistration<TClient> registration;
             lock (_clientRegistrations)
             {
                 if (!_clientRegistrations.TryGetValue(name, out registration))
                 {
-                    var section = globalOptions.ConfigurationRootResolver?.Invoke(_serviceProvider).GetSection(name);
+                    var section = _configurationRoot.GetSection(name);
+
                     if (!section.Exists())
                     {
-                        throw new InvalidOperationException($"Unable to find a configuration section with the name {name} to configure the client with or the configuration root wasn't set.");
+                        throw new InvalidOperationException($"Unable to find a configuration section with the name {name} to configure the client with.");
                     }
 
                     registration = new FallbackClientRegistration<TClient>(
@@ -71,24 +82,12 @@ namespace Microsoft.Extensions.Azure
                 }
             }
 
-
-            return registration.GetClient(
-                GetClientOptions(globalOptions, registration.Configuration),
-                ClientFactory.CreateCredential(registration.Configuration) ?? globalOptions.CredentialFactory(_serviceProvider));
+            var currentOptions = _optionsFactory.CreateOptions(name);
+            registration.Configuration.Bind(currentOptions);
+            return registration.GetClient(currentOptions,
+                ClientFactory.CreateCredential(registration.Configuration) ?? _globalOptions.CredentialFactory(_serviceProvider));
         }
 
-        private object GetClientOptions(AzureClientsGlobalOptions globalOptions, IConfiguration section)
-        {
-            var clientOptions = (ClientOptions) ClientFactory.CreateClientOptions(null, _clientOptionType);
-            foreach (var globalConfigureOptions in globalOptions.ConfigureOptionDelegates)
-            {
-                globalConfigureOptions(clientOptions, _serviceProvider);
-            }
-
-            section.Bind(clientOptions);
-
-            return clientOptions;
-        }
 
         private class FallbackClientRegistration<T>: ClientRegistration<T>
         {

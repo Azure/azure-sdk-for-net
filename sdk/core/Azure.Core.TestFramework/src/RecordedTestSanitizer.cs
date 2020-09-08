@@ -93,7 +93,10 @@ namespace Azure.Core.TestFramework
 
             SanitizeHeaders(entry.Response.Headers);
 
-            SanitizeBody(entry.Response);
+            if (entry.RequestMethod != RequestMethod.Head)
+            {
+                SanitizeBody(entry.Response);
+            }
         }
 
         public virtual void Sanitize(RecordSession session)

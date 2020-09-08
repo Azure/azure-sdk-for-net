@@ -2831,7 +2831,6 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/13510
         public async Task OpenReadAsync()
         {
             int size = Constants.KB;
@@ -2854,7 +2853,6 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/13510
         public async Task OpenReadAsync_BufferSize()
         {
             int size = Constants.KB;
@@ -2938,7 +2936,6 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/13510
         public async Task OpenReadAsync_Lease()
         {
             int size = Constants.KB;
@@ -2996,7 +2993,6 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/13510
         public async Task OpenReadAsync_StrangeOffsetsTest()
         {
             // Arrange
@@ -3073,7 +3069,6 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/13510
         public async Task OpenReadAsync_CopyReadStreamToAnotherStream()
         {
             // Arrange

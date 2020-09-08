@@ -4,23 +4,33 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Azure.Core;
 using Microsoft.Extensions.Options;
 
 namespace Microsoft.Extensions.Azure
 {
     // Slightly adjusted copy of https://github.com/aspnet/Extensions/blob/master/src/Options/Options/src/OptionsFactory.cs
-    internal class ClientOptionsFactory<TClient, TOptions> where TOptions : class
+    internal class ClientOptionsFactory<TClient, TOptions>: IClientOptionsFactory where TOptions : class
     {
         private readonly IEnumerable<IConfigureOptions<TOptions>> _setups;
         private readonly IEnumerable<IPostConfigureOptions<TOptions>> _postConfigures;
 
         private readonly IEnumerable<ClientRegistration<TClient>> _clientRegistrations;
+        private readonly IOptions<AzureClientsGlobalOptions> _defaultOptions;
+        private readonly IServiceProvider _serviceProvider;
 
-        public ClientOptionsFactory(IEnumerable<IConfigureOptions<TOptions>> setups, IEnumerable<IPostConfigureOptions<TOptions>> postConfigures, IEnumerable<ClientRegistration<TClient>> clientRegistrations)
+        public ClientOptionsFactory(
+            IEnumerable<IConfigureOptions<TOptions>> setups,
+            IEnumerable<IPostConfigureOptions<TOptions>> postConfigures,
+            IEnumerable<ClientRegistration<TClient>> clientRegistrations,
+            IOptions<AzureClientsGlobalOptions> defaultOptions,
+            IServiceProvider serviceProvider)
         {
             _setups = setups;
             _postConfigures = postConfigures;
             _clientRegistrations = clientRegistrations;
+            _defaultOptions = defaultOptions;
+            _serviceProvider = serviceProvider;
         }
 
         private TOptions CreateOptions(string name)
@@ -35,7 +45,17 @@ namespace Microsoft.Extensions.Azure
                 }
             }
 
-            return (TOptions)ClientFactory.CreateClientOptions(version, typeof(TOptions));
+            var options = (TOptions)ClientFactory.CreateClientOptions(version, typeof(TOptions));
+
+            if (options is ClientOptions clientOptions)
+            {
+                foreach (var globalConfigureOption in _defaultOptions.Value.ConfigureOptionDelegates)
+                {
+                    globalConfigureOption(clientOptions, _serviceProvider);
+                }
+            }
+
+            return options;
         }
 
         /// <summary>
@@ -61,6 +81,11 @@ namespace Microsoft.Extensions.Azure
             }
 
             return options;
+        }
+
+        object IClientOptionsFactory.CreateOptions(string name)
+        {
+            return Create(name);
         }
     }
 }

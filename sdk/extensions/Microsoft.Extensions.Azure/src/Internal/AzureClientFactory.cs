@@ -12,15 +12,18 @@ namespace Microsoft.Extensions.Azure
         private readonly Dictionary<string, ClientRegistration<TClient>> _clientRegistrations;
 
         private readonly IServiceProvider _serviceProvider;
+        private readonly IOptionsMonitor<AzureClientsGlobalOptions> _globalOptions;
 
         private readonly IOptionsMonitor<AzureClientCredentialOptions<TClient>> _clientsOptions;
 
         private readonly IOptionsMonitor<TOptions> _monitor;
 
         private readonly EventSourceLogForwarder _logForwarder;
+        private FallbackAzureClientFactory<TClient> _fallbackFactory;
 
         public AzureClientFactory(
             IServiceProvider serviceProvider,
+            IOptionsMonitor<AzureClientsGlobalOptions> globalOptions,
             IOptionsMonitor<AzureClientCredentialOptions<TClient>> clientsOptions,
             IEnumerable<ClientRegistration<TClient>> clientRegistrations,
             IOptionsMonitor<TOptions> monitor,
@@ -33,6 +36,7 @@ namespace Microsoft.Extensions.Azure
             }
 
             _serviceProvider = serviceProvider;
+            _globalOptions = globalOptions;
             _clientsOptions = clientsOptions;
             _monitor = monitor;
             _logForwarder = logForwarder;
@@ -41,9 +45,12 @@ namespace Microsoft.Extensions.Azure
         public TClient CreateClient(string name)
         {
             _logForwarder.Start();
+
             if (!_clientRegistrations.TryGetValue(name, out ClientRegistration<TClient> registration))
             {
-                throw new InvalidOperationException($"Unable to find client registration with type '{typeof(TClient).Name}' and name '{name}'.");
+                _fallbackFactory ??= new FallbackAzureClientFactory<TClient>(_globalOptions, _serviceProvider, _logForwarder);
+
+                return _fallbackFactory.CreateClient(name);
             }
 
             return registration.GetClient(_monitor.Get(name), _clientsOptions.Get(name).CredentialFactory(_serviceProvider));
