@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>This client library enables working with the Microsoft Azure Table service</Description>
     <AssemblyTitle>Microsoft Azure.Data.Tables client library</AssemblyTitle>
-    <Version>3.0.0-beta.1</Version>
+    <Version>3.0.0-beta.2</Version>
     <DefineConstants>TableSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Tables;Microsoft;Azure;Tables;Table;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
