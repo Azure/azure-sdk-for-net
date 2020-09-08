@@ -46,15 +46,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             Assert.Equal(6, _numBlobsRead);
         }
 
-        /*
-        [Fact]
-        public async Task BindToCloudBlobDirectory()
-        {
-            await _fixture.JobHost.CallAsync(typeof(BlobBindingEndToEndTests).GetMethod("CloudBlobDirectoryBinding"));
-
-            Assert.Equal(3, _numBlobsRead);
-        } */ // TODO (kasobol-msft) do we support directories?
-
         [Fact]
         public async Task BindToCloudBlobContainer_WithModelBinding()
         {
@@ -359,26 +350,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             _numBlobsRead = i;
         }
 
-        /* [NoAutomaticTrigger]
-        public static async Task CloudBlobDirectoryBinding(
-            [Blob(HierarchicalBlobContainerName + "/sub")] CloudBlobDirectory directory)
-        {
-            var directoryItems = await directory.ListBlobsSegmentedAsync(null);
-
-            var blobs = directoryItems.Results.OfType<CloudBlockBlob>();
-            foreach (CloudBlockBlob blob in blobs)
-            {
-                string content = blob.DownloadTextAsync().Result;
-                Assert.Equal(TestData, content);
-            }
-            _numBlobsRead += blobs.Count();
-
-            CloudBlobDirectory subDirectory = directoryItems.Results.OfType<CloudBlobDirectory>().Single();
-            CloudBlockBlob subBlob = (await subDirectory.ListBlobsSegmentedAsync(null)).Results.Cast<CloudBlockBlob>().Single();
-            Assert.Equal(TestData, await subBlob.DownloadTextAsync());
-            _numBlobsRead += 1;
-        } */ // TODO (kasobol-msft) check this
-
         [NoAutomaticTrigger]
         public static void CloudBlobContainerBinding_WithModelBinding(
             [QueueTrigger("testqueue")] TestPoco poco,
@@ -461,10 +432,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         {
             foreach (var blob in blobs)
             {
-                /* byte[] bytes = new byte[512];
-                int byteCount = await blob.DownloadToByteArrayAsync(bytes, 0);
-                string content = Encoding.UTF8.GetString(bytes, 0, byteCount);
-                TODO (kasobol-msft) wtf ? */
                 string content = await blob.DownloadTextAsync();
                 Assert.StartsWith(TestData, content);
             }
