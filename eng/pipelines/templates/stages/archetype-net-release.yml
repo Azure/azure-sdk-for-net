@@ -23,21 +23,14 @@ stages:
                   artifact: ${{parameters.ArtifactName}}
                   timeoutInMinutes: 5
 
-                - pwsh: |
-                    New-Item -Type Directory -Name staging -Path $(Pipeline.Workspace) -Force
-                    Copy-Item $(Pipeline.Workspace)/${{parameters.ArtifactName}}/* $(Pipeline.Workspace)/staging -recurse
-                    Remove-Item -Path $(Pipeline.Workspace)/staging -Include *.docs.zip -recurse
-                    Get-ChildItem $(Pipeline.Workspace)/staging -recurse
-                  displayName: Copying ${{parameters.ArtifactName}} to staging directory
-
                 - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
 
                 - template: pipelines/steps/net-signing.yml@azure-sdk-build-tools
                   parameters:
-                    PackagesPath: $(Pipeline.Workspace)/staging
+                    PackagesPath:  $(Pipeline.Workspace)/${{parameters.ArtifactName}}
                     BuildToolsPath: $(AzureSDKBuildToolsPath)
 
-                - publish: $(Pipeline.Workspace)/staging
+                - publish: $(Pipeline.Workspace)/${{parameters.ArtifactName}}
                   artifact: ${{parameters.ArtifactName}}-signed
                   displayName: 'Store signed packages in ${{parameters.ArtifactName}}-signed artifact'
 
