@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests.Samples
         [Test]
         public void CreateSchemaRegistryClient()
         {
-            #region Snippet:CreateSchemaRegistryClient
+            #region Snippet:CreateSchemaRegistryClient2
             string endpoint = "<event_hubs_namespace_hostname>";
             var credentials = new ClientSecretCredential(
                 "<tenant_id>",
