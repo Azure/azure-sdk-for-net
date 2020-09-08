@@ -8,11 +8,6 @@
     "produces": [ "application/json" ],
     "paths": {
         "/ComputeNodes": {
-            "parameters": [
-                {
-                    "$ref": "#/parameters/ClientRequestId"
-                }
-            ],
             "get": {
                 "operationId": "ComputeNodeAdministration_List",
                 "tags": [ "Administration" ],
@@ -38,9 +33,6 @@
         },
         "/ComputeNodes/{nodeName}": {
             "parameters": [
-                {
-                    "$ref": "#/parameters/ClientRequestId"
-                },
                 {
                     "$ref": "#/parameters/NodeName"
                 }
@@ -99,9 +91,6 @@
         "/ComputeNodes/{nodeName}/computePi": {
             "parameters": [
                 {
-                    "$ref": "#/parameters/ClientRequestId"
-                },
-                {
                     "$ref": "#/parameters/NodeName"
                 }
             ],
@@ -138,9 +127,6 @@
                     "type": "string",
                     "in": "path",
                     "required": true
-                },
-                {
-                    "$ref": "#/parameters/ClientRequestId"
                 }
             ],
             "get": {
@@ -168,13 +154,6 @@
             "in": "path",
             "type": "string",
             "required": true
-        },
-        "ClientRequestId": {
-            "in": "header",
-            "type": "string",
-            "required": false,
-            "name": "x-ms-client-request-id",
-            "description": "Optional client-provided request id"
         }
     },
     "definitions": {
@@ -203,7 +182,8 @@
         "ComputeNode": {
             "type": "object",
             "required": [
-                "kind"
+                "kind",
+                "name"
             ],
             "discriminator": "kind",
             "properties": {

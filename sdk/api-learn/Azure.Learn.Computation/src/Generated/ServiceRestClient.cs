@@ -18,7 +18,6 @@ namespace Azure.Learn.Computation
     internal partial class ServiceRestClient
     {
         private Uri endpoint;
-        private string xMsClientRequestId;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
@@ -26,13 +25,11 @@ namespace Azure.Learn.Computation
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <param name="xMsClientRequestId"> Optional client-provided request id. </param>
-        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string xMsClientRequestId = null)
+        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null)
         {
             endpoint ??= new Uri("");
 
             this.endpoint = endpoint;
-            this.xMsClientRequestId = xMsClientRequestId;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -47,10 +44,6 @@ namespace Azure.Learn.Computation
             uri.AppendPath("/operations/", false);
             uri.AppendPath(operationId, true);
             request.Uri = uri;
-            if (xMsClientRequestId != null)
-            {
-                request.Headers.Add("x-ms-client-request-id", xMsClientRequestId);
-            }
             return message;
         }
 

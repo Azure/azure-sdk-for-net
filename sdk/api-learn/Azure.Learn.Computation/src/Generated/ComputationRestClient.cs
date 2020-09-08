@@ -17,7 +17,6 @@ namespace Azure.Learn.Computation
     {
         private string nodeName;
         private Uri endpoint;
-        private string xMsClientRequestId;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
@@ -26,9 +25,8 @@ namespace Azure.Learn.Computation
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="nodeName"> The String to use. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <param name="xMsClientRequestId"> Optional client-provided request id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nodeName"/> is null. </exception>
-        public ComputationRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string nodeName, Uri endpoint = null, string xMsClientRequestId = null)
+        public ComputationRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string nodeName, Uri endpoint = null)
         {
             if (nodeName == null)
             {
@@ -38,7 +36,6 @@ namespace Azure.Learn.Computation
 
             this.nodeName = nodeName;
             this.endpoint = endpoint;
-            this.xMsClientRequestId = xMsClientRequestId;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -58,10 +55,6 @@ namespace Azure.Learn.Computation
                 uri.AppendQuery("precision", precision.Value, true);
             }
             request.Uri = uri;
-            if (xMsClientRequestId != null)
-            {
-                request.Headers.Add("x-ms-client-request-id", xMsClientRequestId);
-            }
             return message;
         }
 

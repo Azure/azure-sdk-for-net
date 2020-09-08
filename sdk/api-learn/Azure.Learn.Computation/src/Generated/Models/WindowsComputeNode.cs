@@ -13,10 +13,15 @@ namespace Azure.Learn.Computation.Models
     public partial class WindowsComputeNode : ComputeNode
     {
         /// <summary> Initializes a new instance of WindowsComputeNode. </summary>
+        /// <param name="name"> The name of the compute node. </param>
         /// <param name="userName"> The Windows user name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
-        public WindowsComputeNode(string userName)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="userName"/> is null. </exception>
+        public WindowsComputeNode(string name, string userName) : base(name)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
             if (userName == null)
             {
                 throw new ArgumentNullException(nameof(userName));

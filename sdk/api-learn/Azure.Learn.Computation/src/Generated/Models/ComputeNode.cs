@@ -5,14 +5,24 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Learn.Computation.Models
 {
     /// <summary> The ComputeNode. </summary>
     public partial class ComputeNode
     {
         /// <summary> Initializes a new instance of ComputeNode. </summary>
-        public ComputeNode()
+        /// <param name="name"> The name of the compute node. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public ComputeNode(string name)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            Name = name;
         }
 
         /// <summary> Initializes a new instance of ComputeNode. </summary>

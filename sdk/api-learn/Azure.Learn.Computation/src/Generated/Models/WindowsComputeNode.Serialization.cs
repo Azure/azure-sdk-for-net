@@ -26,7 +26,7 @@ namespace Azure.Learn.Computation.Models
         {
             string userName = default;
             Optional<string> eTag = default;
-            Optional<string> name = default;
+            string name = default;
             string kind = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -51,7 +51,7 @@ namespace Azure.Learn.Computation.Models
                     continue;
                 }
             }
-            return new WindowsComputeNode(eTag.Value, name.Value, kind, userName);
+            return new WindowsComputeNode(eTag.Value, name, kind, userName);
         }
     }
 }

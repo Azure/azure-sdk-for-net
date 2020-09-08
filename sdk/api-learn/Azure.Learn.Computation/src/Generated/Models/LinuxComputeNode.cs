@@ -13,10 +13,15 @@ namespace Azure.Learn.Computation.Models
     public partial class LinuxComputeNode : ComputeNode
     {
         /// <summary> Initializes a new instance of LinuxComputeNode. </summary>
+        /// <param name="name"> The name of the compute node. </param>
         /// <param name="sshPublicKey"> The compute node&apos;s public key. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sshPublicKey"/> is null. </exception>
-        public LinuxComputeNode(string sshPublicKey)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="sshPublicKey"/> is null. </exception>
+        public LinuxComputeNode(string name, string sshPublicKey) : base(name)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
             if (sshPublicKey == null)
             {
                 throw new ArgumentNullException(nameof(sshPublicKey));
