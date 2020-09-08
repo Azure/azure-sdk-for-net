@@ -94,6 +94,24 @@ namespace Azure.AI.FormRecognizer.Models
         public string AsString() { throw null; }
         public System.TimeSpan AsTime() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FieldValueSelectionMark : System.IEquatable<Azure.AI.FormRecognizer.Models.FieldValueSelectionMark>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FieldValueSelectionMark(string value) { throw null; }
+        public static Azure.AI.FormRecognizer.Models.FieldValueSelectionMark Selected { get { throw null; } }
+        public static Azure.AI.FormRecognizer.Models.FieldValueSelectionMark Unselected { get { throw null; } }
+        public bool Equals(Azure.AI.FormRecognizer.Models.FieldValueSelectionMark other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.FormRecognizer.Models.FieldValueSelectionMark left, Azure.AI.FormRecognizer.Models.FieldValueSelectionMark right) { throw null; }
+        public static implicit operator Azure.AI.FormRecognizer.Models.FieldValueSelectionMark (string value) { throw null; }
+        public static bool operator !=(Azure.AI.FormRecognizer.Models.FieldValueSelectionMark left, Azure.AI.FormRecognizer.Models.FieldValueSelectionMark right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public enum FieldValueType
     {
         String = 0,
@@ -104,6 +122,7 @@ namespace Azure.AI.FormRecognizer.Models
         Int64 = 5,
         List = 6,
         Dictionary = 7,
+        SelectionMark = 8,
     }
     public abstract partial class FormElement
     {
@@ -274,6 +293,30 @@ namespace Azure.AI.FormRecognizer.Models
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.AI.FormRecognizer.Models.RecognizedFormCollection>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.AI.FormRecognizer.Models.RecognizedFormCollection>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SelectionMark : Azure.AI.FormRecognizer.Models.FormElement
+    {
+        internal SelectionMark() { }
+        public float Confidence { get { throw null; } }
+        public Azure.AI.FormRecognizer.Models.SelectionMarkState State { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SelectionMarkState : System.IEquatable<Azure.AI.FormRecognizer.Models.SelectionMarkState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SelectionMarkState(string value) { throw null; }
+        public static Azure.AI.FormRecognizer.Models.SelectionMarkState Selected { get { throw null; } }
+        public static Azure.AI.FormRecognizer.Models.SelectionMarkState Unselected { get { throw null; } }
+        public bool Equals(Azure.AI.FormRecognizer.Models.SelectionMarkState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.FormRecognizer.Models.SelectionMarkState left, Azure.AI.FormRecognizer.Models.SelectionMarkState right) { throw null; }
+        public static implicit operator Azure.AI.FormRecognizer.Models.SelectionMarkState (string value) { throw null; }
+        public static bool operator !=(Azure.AI.FormRecognizer.Models.SelectionMarkState left, Azure.AI.FormRecognizer.Models.SelectionMarkState right) { throw null; }
+        public override string ToString() { throw null; }
     }
 }
 namespace Azure.AI.FormRecognizer.Training
