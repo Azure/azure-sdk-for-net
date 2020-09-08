@@ -24,6 +24,17 @@ jobs:
         displayName: 'Use Python 3.6'
         inputs:
           versionSpec: '3.6'
+      - template: /eng/common/pipelines/templates/steps/verify-path-length.yml
+        parameters:
+          SourceDirectory: $(Build.SourcesDirectory)
+      - template: /eng/common/pipelines/templates/steps/verify-links.yml
+        parameters:
+          Directory: sdk/${{ parameters.ServiceDirectory }}
+      - script: |
+          pip install setuptools wheel
+          pip install doc-warden==$(DocWardenVersion)
+          ward scan -d $(Build.SourcesDirectory) -c $(Build.SourcesDirectory)/eng/.docsettings.yml
+        displayName: "Verify Readmes"
       - template: /eng/common/pipelines/templates/steps/replace-relative-links.yml
         parameters:
           TargetFolder: '.'
@@ -38,17 +49,6 @@ jobs:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
           DOTNET_MULTILEVEL_LOOKUP: 0
-      - template: /eng/common/pipelines/templates/steps/verify-links.yml
-        parameters:
-          Directory: sdk/${{ parameters.ServiceDirectory }}
-      - script: |
-          pip install setuptools wheel
-          pip install doc-warden==$(DocWardenVersion)
-          ward scan -d $(Build.SourcesDirectory) -c $(Build.SourcesDirectory)/eng/.docsettings.yml
-        displayName: "Verify Readmes"
-      - template: /eng/common/pipelines/templates/steps/verify-path-length.yml
-        parameters:
-          SourceDirectory: $(Build.SourcesDirectory)
       - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
         displayName: "Component Detection"
         # ComponentGovernance is currently unable to run on pull requests of public projects.  Running on
