@@ -22,7 +22,7 @@ namespace Azure.AI.FormRecognizer.Models
             LengthUnit unit = default;
             Optional<Language> language = default;
             Optional<IReadOnlyList<TextLine>> lines = default;
-            Optional<IReadOnlyList<SelectionMark>> selectionMarks = default;
+            Optional<IReadOnlyList<SelectionMark_internal>> selectionMarks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("page"))
@@ -67,10 +67,10 @@ namespace Azure.AI.FormRecognizer.Models
                 }
                 if (property.NameEquals("selectionMarks"))
                 {
-                    List<SelectionMark> array = new List<SelectionMark>();
+                    List<SelectionMark_internal> array = new List<SelectionMark_internal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SelectionMark.DeserializeSelectionMark(item));
+                        array.Add(SelectionMark_internal.DeserializeSelectionMark_internal(item));
                     }
                     selectionMarks = array;
                     continue;

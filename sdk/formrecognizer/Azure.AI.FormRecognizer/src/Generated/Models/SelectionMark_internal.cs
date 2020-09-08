@@ -12,14 +12,14 @@ using System.Linq;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Information about the extracted selection mark. </summary>
-    internal partial class SelectionMark
+    internal partial class SelectionMark_internal
     {
-        /// <summary> Initializes a new instance of SelectionMark. </summary>
+        /// <summary> Initializes a new instance of SelectionMark_internal. </summary>
         /// <param name="boundingBox"> Bounding box of the selection mark. </param>
         /// <param name="confidence"> Confidence value. </param>
         /// <param name="state"> State of the selection mark. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="boundingBox"/> is null. </exception>
-        internal SelectionMark(IEnumerable<float> boundingBox, float confidence, SelectionMarkState state)
+        internal SelectionMark_internal(IEnumerable<float> boundingBox, float confidence, SelectionMarkState state)
         {
             if (boundingBox == null)
             {
@@ -31,11 +31,11 @@ namespace Azure.AI.FormRecognizer.Models
             State = state;
         }
 
-        /// <summary> Initializes a new instance of SelectionMark. </summary>
+        /// <summary> Initializes a new instance of SelectionMark_internal. </summary>
         /// <param name="boundingBox"> Bounding box of the selection mark. </param>
         /// <param name="confidence"> Confidence value. </param>
         /// <param name="state"> State of the selection mark. </param>
-        internal SelectionMark(IReadOnlyList<float> boundingBox, float confidence, SelectionMarkState state)
+        internal SelectionMark_internal(IReadOnlyList<float> boundingBox, float confidence, SelectionMarkState state)
         {
             BoundingBox = boundingBox;
             Confidence = confidence;

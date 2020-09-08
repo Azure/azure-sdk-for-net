@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.FormRecognizer.Models
+namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary> Optional model attributes. </summary>
     internal partial class Attributes

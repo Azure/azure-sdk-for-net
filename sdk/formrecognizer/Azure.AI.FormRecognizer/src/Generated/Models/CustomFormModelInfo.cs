@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.AI.FormRecognizer.Models;
 
 namespace Azure.AI.FormRecognizer.Training
 {
@@ -48,9 +47,5 @@ namespace Azure.AI.FormRecognizer.Training
             ModelName = modelName;
             Attributes = attributes;
         }
-        /// <summary> Optional user defined model name (max length: 1024). </summary>
-        public string ModelName { get; }
-        /// <summary> Optional model attributes. </summary>
-        private Attributes Attributes { get; }
     }
 }

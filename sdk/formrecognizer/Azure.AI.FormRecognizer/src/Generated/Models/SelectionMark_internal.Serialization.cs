@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class SelectionMark
+    internal partial class SelectionMark_internal
     {
-        internal static SelectionMark DeserializeSelectionMark(JsonElement element)
+        internal static SelectionMark_internal DeserializeSelectionMark_internal(JsonElement element)
         {
             IReadOnlyList<float> boundingBox = default;
             float confidence = default;
@@ -41,7 +41,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new SelectionMark(boundingBox, confidence, state);
+            return new SelectionMark_internal(boundingBox, confidence, state);
         }
     }
 }

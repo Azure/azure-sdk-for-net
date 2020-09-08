@@ -27,7 +27,7 @@ namespace Azure.AI.FormRecognizer.Models
             Height = height;
             Unit = unit;
             Lines = new ChangeTrackingList<TextLine>();
-            SelectionMarks = new ChangeTrackingList<SelectionMark>();
+            SelectionMarks = new ChangeTrackingList<SelectionMark_internal>();
         }
 
         /// <summary> Initializes a new instance of ReadResult. </summary>
@@ -39,7 +39,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="language"> The detected language on the page overall. </param>
         /// <param name="lines"> When includeTextDetails is set to true, a list of recognized text lines. The maximum number of lines returned is 300 per page. The lines are sorted top to bottom, left to right, although in certain cases proximity is treated with higher priority. As the sorting order depends on the detected text, it may change across images and OCR version updates. Thus, business logic should be built upon the actual line location instead of order. </param>
         /// <param name="selectionMarks"> List of selection marks extracted from the page. </param>
-        internal ReadResult(int page, float angle, float width, float height, LengthUnit unit, Language? language, IReadOnlyList<TextLine> lines, IReadOnlyList<SelectionMark> selectionMarks)
+        internal ReadResult(int page, float angle, float width, float height, LengthUnit unit, Language? language, IReadOnlyList<TextLine> lines, IReadOnlyList<SelectionMark_internal> selectionMarks)
         {
             Page = page;
             Angle = angle;
@@ -66,6 +66,6 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary> When includeTextDetails is set to true, a list of recognized text lines. The maximum number of lines returned is 300 per page. The lines are sorted top to bottom, left to right, although in certain cases proximity is treated with higher priority. As the sorting order depends on the detected text, it may change across images and OCR version updates. Thus, business logic should be built upon the actual line location instead of order. </summary>
         public IReadOnlyList<TextLine> Lines { get; }
         /// <summary> List of selection marks extracted from the page. </summary>
-        public IReadOnlyList<SelectionMark> SelectionMarks { get; }
+        public IReadOnlyList<SelectionMark_internal> SelectionMarks { get; }
     }
 }

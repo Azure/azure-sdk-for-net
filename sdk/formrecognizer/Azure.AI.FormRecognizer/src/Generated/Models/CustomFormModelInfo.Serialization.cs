@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.AI.FormRecognizer.Models;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Training
@@ -51,7 +50,7 @@ namespace Azure.AI.FormRecognizer.Training
                 }
                 if (property.NameEquals("attributes"))
                 {
-                    attributes = Attributes.DeserializeAttributes(property.Value);
+                    attributes = Training.Attributes.DeserializeAttributes(property.Value);
                     continue;
                 }
             }
