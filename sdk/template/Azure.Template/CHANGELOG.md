@@ -1,5 +1,26 @@
 # Release History
 
+## 1.0.3-beta.8 (Unreleased)
+
+
+## 1.0.3-beta.7 (2020-09-04)
+- Test release tag replacement
+
+## 1.0.3-beta.6 (2020-09-03)
+- Test new alpha beta versioning
+
+## 1.0.3-beta.5 (2020-09-03)
+- Test new alpha beta versioning
+
+## 1.0.3-beta.4 (2020-09-01)
+- Test new alpha beta versioning
+
+## 1.0.3-beta.3 (2020-08-31)
+- Test new alpha beta versioning
+
+## 1.0.3-beta.2 (2020-08-30)
+- Test new alpha beta versioning
+
 ## 1.0.3-beta.7 (2020-09-04)
 - Test release tag replacement
 
