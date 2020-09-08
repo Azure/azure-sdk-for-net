@@ -73,6 +73,7 @@ namespace Azure.Identity.Tests
                 ExcludeEnvironmentCredential = true,
                 ExcludeInteractiveBrowserCredential = true,
                 ExcludeSharedTokenCacheCredential = true,
+                ExcludeManagedIdentityCredential = true,
                 VisualStudioCodeTenantId = TestEnvironment.TestTenantId
             });
 
@@ -109,6 +110,7 @@ namespace Azure.Identity.Tests
                 ExcludeEnvironmentCredential = true,
                 ExcludeInteractiveBrowserCredential = true,
                 ExcludeSharedTokenCacheCredential = true,
+                ExcludeManagedIdentityCredential = true,
                 VisualStudioCodeTenantId = TestEnvironment.TestTenantId
             });
 
