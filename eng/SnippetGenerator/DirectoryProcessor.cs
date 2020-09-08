@@ -21,11 +21,11 @@ namespace SnippetGenerator
         private readonly Lazy<List<Snippet>> _snippets;
         private static readonly Regex _markdownOnlyRegex = new Regex(
             @"(?<indent>\s*)//@@\s*(?<line>.*)",
-            RegexOptions.Compiled | RegexOptions.Singleline);
+            RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.CultureInvariant);
         private const string _codeOnlyPattern = "/*@@*/";
         private static readonly Regex _regionRegex = new Regex(
             @"^(?<indent>\s*)(#region|#endregion)\s*(?<line>.*)",
-            RegexOptions.Compiled | RegexOptions.Singleline);
+            RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.CultureInvariant);
 
         private UTF8Encoding _utf8EncodingWithoutBOM;
 
