@@ -41,7 +41,7 @@ The simpliest way is to use the [Azure portal][azure_portal] and navigate to you
 
 Once you have the Azure resource credentials and the Event Hubs namespace hostname, you can create the [SchemaRegistryClient][schema_registry_client]. You'll also need the [Azure.Identity][azure_identity] package to create the credential.
 
-```C# Snippet:CreateSchemaRegistryClient
+```C# Snippet:SchemaRegistryCreateSchemaRegistryClient
 string endpoint = "<event_hubs_namespace_hostname>";
 var credentials = new ClientSecretCredential(
     "<tenant_id>",
@@ -77,7 +77,7 @@ The following shows examples of what is available through the SchemaRegistryClie
 
 Register a schema to be stored in the Azure Schema Registry.
 
-```C# Snippet:RegisterSchema
+```C# Snippet:SchemaRegistryRegisterSchema
 string schemaName = "<schema_name>";
 string groupName = "<schema_group_name>";
 SerializationType schemaType = SerializationType.Avro;
@@ -100,7 +100,7 @@ Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, s
 
 Retrieve a previously registered schema ID from the Azure Schema Registry.
 
-```C# Snippet:RetrieveSchemaId
+```C# Snippet:SchemaRegistryRetrieveSchemaId
 string schemaName = "<schema_name>";
 string groupName = "<schema_group_name>";
 SerializationType schemaType = SerializationType.Avro;
@@ -124,7 +124,7 @@ string schemaId = schemaProperties.Value.Id;
 
 Retrieve a previously registered schema's content from the Azure Schema Registry.
 
-```C# Snippet:RetrieveSchema
+```C# Snippet:SchemaRegistryRetrieveSchema
 string schemaId = "<schema_id>";
 
 Response<SchemaProperties> schemaProperties = client.GetSchema(schemaId);

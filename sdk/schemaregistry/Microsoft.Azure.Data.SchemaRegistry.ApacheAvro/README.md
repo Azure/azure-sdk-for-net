@@ -41,7 +41,7 @@ The simpliest way is to use the [Azure portal][azure_portal] and navigate to you
 
 Once you have the Azure resource credentials and the Event Hubs namespace hostname, you can create the [SchemaRegistryClient][schema_registry_client]. You'll also need the [Azure.Identity][azure_identity] package to create the credential.
 
-```C# Snippet:CreateSchemaRegistryClient
+```C# Snippet:SchemaRegistryAvroCreateSchemaRegistryClient
 string endpoint = "<event_hubs_namespace_hostname>";
 var credentials = new ClientSecretCredential(
     "<tenant_id>",
@@ -92,7 +92,7 @@ Details on generating a class using the Apache Avro library can be found in the 
 
 Register a schema to be stored in the Azure Schema Registry.
 
-```C# Snippet:Serialize
+```C# Snippet:SchemaRegistryAvroSerialize
 var employee = new Employee { Age = 42, Name = "John Doe" };
 string groupName = "<schema_group_name>";
 
@@ -105,7 +105,7 @@ serializer.Serialize(memoryStream, employee, typeof(Employee), CancellationToken
 
 Retrieve a previously registered schema ID from the Azure Schema Registry.
 
-```C# Snippet:Deserialize
+```C# Snippet:SchemaRegistryAvroDeserialize
 string groupName = "<schema_group_name>";
 
 var serializer = new SchemaRegistryAvroObjectSerializer(client, groupName, new SchemaRegistryAvroObjectSerializerOptions { AutoRegisterSchemas = true });
