@@ -5,6 +5,7 @@
 ### Added
 
 - Added `KeyVaultCertificateIdentifier` to parse certificate URIs.
+- Added link to sample on `KeyVaultCertificate.Cer` to the private key.
 
 ## 4.1.0 (2020-08-11)
 
