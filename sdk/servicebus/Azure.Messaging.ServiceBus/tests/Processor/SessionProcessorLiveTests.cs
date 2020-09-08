@@ -1486,7 +1486,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         [TestCase(10, 10, 1)]
         [TestCase(10, 5, 2)]
         [TestCase(10, 20, 5)]
-        [Timeout(60 * 1000 * 15)]
         public async Task MaxCallsPerSessionRespected(int numSessions, int maxConcurrentSessions, int maxCallsPerSession)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(

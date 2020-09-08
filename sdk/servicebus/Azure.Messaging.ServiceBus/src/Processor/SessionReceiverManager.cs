@@ -36,6 +36,8 @@ namespace Azure.Messaging.ServiceBus
         private CancellationTokenSource _sessionLockRenewalCancellationSource;
         private Task _sessionLockRenewalTask;
         private CancellationTokenSource _sessionCancellationSource = new CancellationTokenSource();
+        private bool _receiveTimeout;
+
         protected override ServiceBusReceiver Receiver => _receiver;
 
         private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
@@ -80,10 +82,16 @@ namespace Azure.Messaging.ServiceBus
             {
                 await WaitSemaphore(cancellationToken).ConfigureAwait(false);
                 releaseSemaphore = true;
-                if (_threadCount >= _maxCallsPerSession)
+
+                // If a receive call timed out for this session, avoid adding more threads
+                // if we don't intend to leave the receiver open on receive timeouts. This
+                // will help ensure other sessions get a chance to be processed.
+                if (_threadCount >= _maxCallsPerSession ||
+                    (_receiveTimeout && !_keepOpenOnReceiveTimeout))
                 {
                     return false;
                 }
+
                 if (_receiver == null)
                 {
                     await CreateAndInitializeSessionReceiver(cancellationToken).ConfigureAwait(false);
@@ -185,7 +193,7 @@ namespace Azure.Messaging.ServiceBus
                 _threadCount--;
                 if (_threadCount == 0 && !processorCancellationToken.IsCancellationRequested)
                 {
-                    if (!_keepOpenOnReceiveTimeout ||
+                    if ((_receiveTimeout && !_keepOpenOnReceiveTimeout) ||
                         !AutoRenewLock ||
                         _sessionLockRenewalCancellationSource.IsCancellationRequested)
                     {
@@ -234,6 +242,7 @@ namespace Azure.Messaging.ServiceBus
                 // Always at least attempt to dispose. If this fails, it won't be retried.
                 await _receiver.DisposeAsync().ConfigureAwait(false);
                 _receiver = null;
+                _receiveTimeout = false;
             }
         }
 
@@ -269,6 +278,7 @@ namespace Azure.Messaging.ServiceBus
                     {
                         // Break out of the loop to allow a new session to
                         // be processed.
+                        _receiveTimeout = true;
                         break;
                     }
                     await ProcessOneMessageWithinScopeAsync(
