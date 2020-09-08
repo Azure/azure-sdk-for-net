@@ -49,6 +49,10 @@ az cosmosdb create --name MyCosmosDBDatabaseAccount --resource-group MyResourceG
 az cosmosdb table create --name MyTableName --resource-group MyResourceGroup --account-name MyCosmosDBDatabaseAccount
 ```
 
+### Authenticate the Client
+
+Learn more about options for authentication _(including Connection Strings, Shared Key, and Shared Key Signatures)_ [in our samples.](samples/Sample0Auth.md)
+
 ## Key concepts
 
 - `TableServiceClient` - Client that provides methods to interact at the Table Service level such as creating, listing, and deleting tables
@@ -63,9 +67,6 @@ Common uses of the Table service include:
 - Quickly querying data using a clustered index
 - Accessing data using the OData protocol and LINQ filter expressions
 
-### Authenticate the Client
-
-Learn more about options for authentication _(including Connection Strings, Shared Key, and Shared Key Signatures)_ [in our samples.](samples/Sample0Auth.md)
 
 ## Examples
 - [Create the Table service client](#create-the-table-service-client)
