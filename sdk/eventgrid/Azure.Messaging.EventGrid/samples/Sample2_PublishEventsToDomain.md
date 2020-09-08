@@ -11,7 +11,7 @@ See the this [step-by-step tutorial](https://docs.microsoft.com/en-us/azure/even
 ## Create and Authenticate `EventGridPublisherClient`
 
 If you have not created an `EventGridPublisherClient`, refer to the sample [Publish Events To Topic](Sample1_PublishEventsToTopic.md) for more information on creating and authenticating the client. An example is shown below:
-```csharp Snippet:CreateDomainClient
+```C# Snippet:CreateDomainClient
 // Create the publisher client using an AzureKeyCredential
 // Domain should be configured to accept events of the Event Grid schema
 EventGridPublisherClient client = new EventGridPublisherClient(
@@ -22,7 +22,7 @@ EventGridPublisherClient client = new EventGridPublisherClient(
 ## Publish Events to Azure Event Grid
 To publish events to any topic in an Event Domain, push the events to the domain's endpoint the same way you would for a custom topic. The only difference is that you must specify the topic you'd like the event to be delivered to. Invoke `SendEvents` or `SendEventsAsync` to publish events to the service.
 
-```csharp Snippet:SendEventsToDomain
+```C# Snippet:SendEventsToDomain
 // Add EventGridEvents to a list to publish to the domain
 // Don't forget to specify the topic you want the event to be delivered to!
 List<EventGridEvent> eventsList = new List<EventGridEvent>

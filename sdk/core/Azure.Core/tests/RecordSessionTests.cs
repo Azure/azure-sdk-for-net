@@ -409,6 +409,48 @@ namespace Azure.Core.Tests
             Assert.Throws<TestRecordingMismatchException>(() => playbackTransport.Process(message));
         }
 
+        [Test]
+        public void ContentLengthNotChangedOnHeadRequestWithEmptyBody()
+        {
+            ContentLengthUpdatedCorrectlyOnEmptyBody(isHeadRequest: true);
+        }
+
+        [Test]
+        public void ContentLengthResetToZeroOnGetRequestWithEmptyBody()
+        {
+            ContentLengthUpdatedCorrectlyOnEmptyBody(isHeadRequest: false);
+        }
+
+        private void ContentLengthUpdatedCorrectlyOnEmptyBody(bool isHeadRequest)
+        {
+            var sanitizer = new RecordedTestSanitizer();
+            var entry = new RecordEntry()
+            {
+                RequestUri = "http://localhost/",
+                RequestMethod = isHeadRequest ? RequestMethod.Head : RequestMethod.Get,
+                Response =
+                {
+                    Headers =
+                    {
+                        {"Content-Length", new[] {"41"}},
+                        {"Some-Header", new[] {"Random value"}},
+                        {"Some-Other-Header", new[] {"V"}}
+                    },
+                    Body = new byte[0]
+                }
+            };
+            sanitizer.Sanitize(entry);
+
+            if (isHeadRequest)
+            {
+                Assert.AreEqual(new[] { "41" }, entry.Response.Headers["Content-Length"]);
+            }
+            else
+            {
+                Assert.AreEqual(new[] { "0" }, entry.Response.Headers["Content-Length"]);
+            }
+        }
+
         private class TestSanitizer : RecordedTestSanitizer
         {
             public override string SanitizeVariable(string variableName, string environmentVariableValue)
