@@ -77,7 +77,7 @@
 /**/Azure.ResourceManager*/                     @allenjzhang @m-nash @markcowl @YalinLi0312 @bquantump @nisha-bhatia
 
 # Reviewers to double check any API changes
-/sdk/**/api/                                    @KrzysztofCwalina @pakrym @tg-msft
+/sdk/**/api/                                    @KrzysztofCwalina @tg-msft
 
 # Update AutoRest C#
 /eng/CodeGeneration.targets                     @pakrym @ShivangiReja
