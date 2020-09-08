@@ -82,14 +82,16 @@ namespace Azure.Messaging.ServiceBus
             {
                 await WaitSemaphore(cancellationToken).ConfigureAwait(false);
                 releaseSemaphore = true;
+
+                // If a receive call timed out for this session, avoid adding more threads
+                // if we don't intend to leave the receiver open on receive timeouts. This
+                // will help ensure other sessions get a chance to be processed.
                 if (_threadCount >= _maxCallsPerSession ||
-                    // If a receive call timed out for this session, avoid adding more threads
-                    // if we don't intend to leave the receiver open on receive timeouts. This
-                    // will help ensure other sessions get a chance to be processed.
                     (_receiveTimeout && !_keepOpenOnReceiveTimeout))
                 {
                     return false;
                 }
+
                 if (_receiver == null)
                 {
                     await CreateAndInitializeSessionReceiver(cancellationToken).ConfigureAwait(false);
