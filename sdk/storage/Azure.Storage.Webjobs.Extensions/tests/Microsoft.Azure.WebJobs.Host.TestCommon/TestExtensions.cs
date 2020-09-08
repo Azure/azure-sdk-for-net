@@ -14,26 +14,6 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
     // $$$ // TODO (kasobol-msft) get rid of this
     public static class TestExtensions
     {
-        public static T SetInternalProperty<T>(this T instance, string name, object value)
-        {
-            var t = instance.GetType();
-
-            var prop = t.GetProperty(name,
-              BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-
-            // Reflection has a quirk.  While a property is inherited, the setter may not be.
-            // Need to request the property on the type it was declared.
-            while (!prop.CanWrite)
-            {
-                t = t.BaseType;
-                prop = t.GetProperty(name,
-                    BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-            }
-
-            prop.SetValue(instance, value);
-            return instance;
-        }
-
         public static async Task UploadTextAsync(this BlockBlobClient blockBlobClient, string text, CancellationToken cancellationToken = default)
         {
             using Stream stream = new MemoryStream(Encoding.UTF8.GetBytes(text));

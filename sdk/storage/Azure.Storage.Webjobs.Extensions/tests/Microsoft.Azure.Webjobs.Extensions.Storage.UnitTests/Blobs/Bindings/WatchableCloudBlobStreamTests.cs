@@ -207,41 +207,6 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         }
 
         [Fact]
-        public void CommitAsync_DelegatesToInnerStreamCommitAsync()
-        {
-            // Arrange
-            Mock<Stream> innerStreamMock = CreateMockInnerStream();
-            /* innerStreamMock
-                .Setup(m => m.CommitAsync())
-                .Verifiable(); */ // TODO (kasobol-msft)
-            Stream innerStream = innerStreamMock.Object;
-            Stream product = CreateProductUnderTest(innerStream);
-
-            // Act
-            // product.CommitAsync(); TODO (kasobol-msft) what's equivalent ?
-
-            // Assert
-            innerStreamMock.Verify();
-        }
-
-        [Fact]
-        public void BeginCommit_WhenInnerStreamThrows_PropogatesException()
-        {
-            // Arrange
-            Exception expectedException = new Exception();
-            Mock<Stream> innerStreamMock = CreateMockInnerStream();
-            /* innerStreamMock
-                .Setup(m => m.CommitAsync())
-                .Throws(expectedException); */ // TODO (kasobol-msft)
-            Stream innerStream = innerStreamMock.Object;
-            Stream product = CreateProductUnderTest(innerStream);
-
-            // Act & Assert
-            /* Exception exception = await Assert.ThrowsAsync<Exception>(() => product.CommitAsync());
-            Assert.Same(expectedException, exception); */ // TODO (kasobol-msft) what's equivalent ?
-        }
-
-        [Fact]
         public void BeginRead_DelegatesToInnerStreamBeginRead()
         {
             // Arrange
@@ -818,9 +783,6 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         {
             // Arrange
             Mock<Stream> innerStreamMock = CreateMockInnerStream();
-            /* innerStreamMock
-                .Setup(s => s.CommitAsync())
-                .Returns(Task.CompletedTask); */ // TODO (kasobol-msft)
             innerStreamMock
                 .Setup(s => s.Close())
                 .Verifiable();
@@ -829,24 +791,6 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
 
             // Act
             product.Close();
-
-            // Assert
-            innerStreamMock.Verify();
-        }
-
-        [Fact]
-        public void Commit_DelegatesToInnerStreamCommit()
-        {
-            // Arrange
-            Mock<Stream> innerStreamMock = CreateMockInnerStream();
-            /* innerStreamMock
-                .Setup(s => s.CommitAsync())
-                .Verifiable(); */ // TODO (kasobol-msft)
-            Stream innerStream = innerStreamMock.Object;
-            Stream product = CreateProductUnderTest(innerStream);
-
-            // Act
-            // product.CommitAsync(); TODO (kasobol-msft) replacement ?
 
             // Assert
             innerStreamMock.Verify();
@@ -1360,174 +1304,6 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
 
             // Assert
             committedActionMock.Verify();
-        }
-
-        [Fact]
-        public void Commit_IfCommitedActionIsNull_DoesNotThrow()
-        {
-            // Arrange
-            IBlobCommitedAction committedAction = null;
-            Mock<Stream> innerStreamMock = CreateMockInnerStream();
-            // innerStreamMock.Setup(s => s.CommitAsync()); // TODO (kasobol-msft)
-            Stream innerStream = innerStreamMock.Object;
-            Stream product = CreateProductUnderTest(innerStream, committedAction);
-
-            // Act & Assert
-            // product.CommitAsync(); // TODO (kasobol-msft) replacement?
-        }
-
-        [Fact]
-        public void CommitAsync_DelegatesToInnerStreamBeginEndCommit()
-        {
-            // Arrange
-            Mock<Stream> innerStreamMock = CreateMockInnerStream();
-            /* innerStreamMock
-                .Setup(m => m.CommitAsync())
-                .Returns(Task.CompletedTask)
-                .Verifiable(); */ // TODO (kasobol-msft)
-            Stream innerStream = innerStreamMock.Object;
-            WatchableCloudBlobStream product = CreateProductUnderTest(innerStream);
-
-            CancellationToken cancellationToken = CancellationToken.None;
-            // Task task = product.CommitAsync(cancellationToken); // TODO (kasobol-msft) replacement?
-
-            // Assert
-            innerStreamMock.Verify();
-            // task.GetAwaiter().GetResult(); // TODO (kasobol-msft) replacement?
-        }
-
-        [Fact]
-        public void CommitAsync_WhenInnerStreamBeginCommitThrows_PropogatesException()
-        {
-            // Arrange
-            Exception expectedException = new Exception();
-            Mock<Stream> innerStreamMock = CreateMockInnerStream();
-            /* innerStreamMock
-                .Setup(m => m.CommitAsync())
-                .Throws(expectedException); */ // TODO (kasobol-msft)
-            Stream innerStream = innerStreamMock.Object;
-            WatchableCloudBlobStream product = CreateProductUnderTest(innerStream);
-
-            CancellationToken cancellationToken = CancellationToken.None;
-
-            // Act & Assert
-            /* Exception exception = await Assert.ThrowsAsync<Exception>(() => product.CommitAsync(cancellationToken));
-            Assert.Same(expectedException, exception); */ // TODO (kasobol-msft) replacement?
-        }
-
-        [Fact]
-        public void CommitAsync_WhenInnerStreamBeginCommitHasNotYetCompleted_ReturnsIncompleteTask()
-        {
-            // Arrange
-            Mock<Stream> innerStreamMock = CreateMockInnerStream();
-            var tcs = new TaskCompletionSource<object>();
-            // innerStreamMock.Setup(s => s.CommitAsync()).Returns(tcs.Task); TODO (kasobol-msft)
-            Stream innerStream = innerStreamMock.Object;
-            WatchableCloudBlobStream product = CreateProductUnderTest(innerStream);
-
-            CancellationToken cancellationToken = CancellationToken.None;
-
-            // Act
-            /* Task task = product.CommitAsync(cancellationToken);
-
-            // Assert
-            Assert.NotNull(task);
-            Assert.False(task.IsCompleted); */ // TODO (kasobol-msft) replacement?
-        }
-
-        [Fact]
-        public void CommitAsync_WhenInnerStreamBeginCommitCompletedSynchronously_ReturnsRanToCompletionTask()
-        {
-            // Arrange
-            Mock<Stream> innerStreamMock = CreateMockInnerStream();
-            // innerStreamMock.Setup(s => s.CommitAsync()).Returns(Task.CompletedTask); TODO (kasobol-msft)
-
-            Stream innerStream = innerStreamMock.Object;
-            WatchableCloudBlobStream product = CreateProductUnderTest(innerStream);
-
-            CancellationToken cancellationToken = CancellationToken.None;
-
-            // Act
-            /* Task task = product.CommitAsync(cancellationToken);
-
-            // Assert
-            Assert.NotNull(task);
-            Assert.Equal(TaskStatus.RanToCompletion, task.Status); */ // TODO (kasobol-msft) replacement?
-        }
-
-
-        [Fact]
-        public void CommitAsync_WhenInnerStreamBeginCommitCompletedAsynchronously_ReturnsRanToCompletionTask()
-        {
-            // Arrange
-            Mock<Stream> innerStreamMock = CreateMockInnerStream();
-            // innerStreamMock.Setup(s => s.CommitAsync()).Returns(Task.CompletedTask); // TODO (kasobol-msft)
-            Stream innerStream = innerStreamMock.Object;
-            WatchableCloudBlobStream product = CreateProductUnderTest(innerStream);
-
-            CancellationToken cancellationToken = CancellationToken.None;
-
-            /* Task task = product.CommitAsync(cancellationToken);
-
-            // Assert
-            Assert.NotNull(task);
-            Assert.Equal(TaskStatus.RanToCompletion, task.Status); */ // TODO (kasobol-msft) replacement?
-        }
-
-        [Fact]
-        public void CommitAsync_WhenInnerStreamEndReadThrowsOperationCanceledException_ReturnsCanceledTask()
-        {
-            // Arrange
-            Mock<Stream> innerStreamMock = CreateMockInnerStream();
-            /* innerStreamMock.Setup(s => s.CommitAsync())
-                .Throws(new OperationCanceledException()); */
-            Stream innerStream = innerStreamMock.Object;
-            WatchableCloudBlobStream product = CreateProductUnderTest(innerStream);
-
-            CancellationToken cancellationToken = CancellationToken.None;
-
-            // Act
-            /* Task task = product.CommitAsync(cancellationToken);
-
-            // Assert
-            Assert.NotNull(task);
-            Assert.Equal(TaskStatus.Canceled, task.Status); */ // TODO (kasobol-msft) replacement?
-        }
-
-        [Fact]
-        public void CommitAsync_WhenInnerStreamEndReadThrowsNonOperationCanceledException_ReturnsFaultedTask()
-        {
-            // Arrange
-            Exception expectedException = new Exception();
-            Mock<Stream> innerStreamMock = CreateMockInnerStream();
-            /* innerStreamMock.Setup(m => m.CommitAsync())
-                .Returns(Task.FromException(expectedException)); */ // TODO (kasobol-msft)
-            Stream innerStream = innerStreamMock.Object;
-            WatchableCloudBlobStream product = CreateProductUnderTest(innerStream);
-
-            CancellationToken cancellationToken = CancellationToken.None;
-
-            // Act
-            /* Task task = product.CommitAsync(cancellationToken);
-
-            // Assert
-            Assert.NotNull(task);
-            Assert.Equal(TaskStatus.Faulted, task.Status);
-            Assert.Same(expectedException, task.Exception.InnerException); */ // TODO (kasobol-msft) replacement?
-        }
-
-        [Fact]
-        public void CommitAsync_IfCommitedActionIsNull_DoesNotThrow()
-        {
-            // Arrange
-            IBlobCommitedAction committedAction = null;
-            Mock<Stream> innerStreamMock = CreateMockInnerStream();
-            /* innerStreamMock.Setup(s => s.CommitAsync()).Returns(Task.CompletedTask); */ // TODO (kasobol-msft)
-            Stream innerStream = innerStreamMock.Object;
-            WatchableCloudBlobStream product = CreateProductUnderTest(innerStream, committedAction);
-
-            // Act & Assert
-            // product.CommitAsync(CancellationToken.None).GetAwaiter().GetResult(); // TODO (kasobol-msft) replacement?
         }
 
         [Fact]
