@@ -75,7 +75,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs
             path = null;
             if (Uri.TryCreate(blobUrl, UriKind.Absolute, out uri))
             {
-                var blob = new BlobClient(uri); // TODO (kasobol-msft) does this work ?
+                var blob = new BlobClient(uri);
                 path = new BlobPath(blob.BlobContainerName, blob.Name); // use storage sdk to parse url
                 return true;
             }

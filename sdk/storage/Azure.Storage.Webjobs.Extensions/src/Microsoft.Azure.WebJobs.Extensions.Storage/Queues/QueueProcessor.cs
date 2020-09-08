@@ -183,8 +183,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
             try
             {
                 // We couldn't process the message. Let someone else try.
-                // TODO (kasobol-msft) fix after https://github.com/Azure/azure-sdk-for-net/issues/14243 is resolved.
-                await _queue.UpdateMessageAsync(message.MessageId, message.PopReceipt, message.MessageText, visibilityTimeout: visibilityTimeout, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await _queue.UpdateMessageAsync(message.MessageId, message.PopReceipt, visibilityTimeout: visibilityTimeout, cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             catch (RequestFailedException exception)
             {
