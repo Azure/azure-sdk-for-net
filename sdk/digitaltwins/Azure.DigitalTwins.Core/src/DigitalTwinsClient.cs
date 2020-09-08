@@ -450,7 +450,7 @@ namespace Azure.DigitalTwins.Core
         /// <returns>The pageable list <see cref="AsyncPageable{T}"/> of application/json relationships belonging to the specified digital twin and the http response.</returns>
         /// <remarks>
         /// <para>
-        /// String relationships that are returned as part of the pageable list can always be deserialized into an instnace of <see cref="Serialization.BasicRelationship"/>.
+        /// String relationships that are returned as part of the pageable list can always be deserialized into an instance of <see cref="Serialization.BasicRelationship"/>.
         /// You may also deserialize the relationship into custom type that extend the <see cref="Serialization.BasicRelationship"/>.
         /// </para>
         /// <para>
@@ -1100,9 +1100,9 @@ namespace Azure.DigitalTwins.Core
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>
         /// <para>
-        /// When a model is decomissioned, new digital twins will no longer be able to be defined by this model.
+        /// When a model is decommissioned, new digital twins will no longer be able to be defined by this model.
         /// However, existing digital twins may continue to use this model.
-        /// Once a model is decomissioned, it may not be recommissioned.
+        /// Once a model is decommissioned, it may not be recommissioned.
         /// </para>
         /// <para>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
@@ -1123,7 +1123,7 @@ namespace Azure.DigitalTwins.Core
         /// }
         /// catch (RequestFailedException ex)
         /// {
-        ///     FatalError($&quot;Failed to decommision model &apos;{sampleModelId}&apos; due to:\n{ex}&quot;);
+        ///     FatalError($&quot;Failed to decommission model &apos;{sampleModelId}&apos; due to:\n{ex}&quot;);
         /// }
         /// </code>
         /// </example>
@@ -1140,9 +1140,9 @@ namespace Azure.DigitalTwins.Core
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>
         /// <para>
-        /// When a model is decomissioned, new digital twins will no longer be able to be defined by this model.
+        /// When a model is decommissioned, new digital twins will no longer be able to be defined by this model.
         /// However, existing digital twins may continue to use this model.
-        /// Once a model is decomissioned, it may not be recommissioned.
+        /// Once a model is decommissioned, it may not be recommissioned.
         /// </para>
         /// <para>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
@@ -1339,7 +1339,7 @@ namespace Azure.DigitalTwins.Core
                 {
                     var querySpecification = new QuerySpecification
                     {
-                        Query = query
+                        Query = query,
                     };
                     Response<QueryResult> response = await _queryClient.QueryTwinsAsync(querySpecification, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Items, response.Value.ContinuationToken, response.GetRawResponse());
