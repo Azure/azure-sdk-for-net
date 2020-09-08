@@ -36,8 +36,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TestCase]
         public async Task ListOperationsTest()
         {
-            var cosmosDBClient = GetCosmosDBManagementClient();
-            var operations = cosmosDBClient.Operations.ListAsync();
+            var operations = CosmosDBManagementClient.Operations.ListAsync();
             Assert.NotNull(operations);
             Assert.IsNotEmpty(await operations.ToEnumerableAsync());
         }
