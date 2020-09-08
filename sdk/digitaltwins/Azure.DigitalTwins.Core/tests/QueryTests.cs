@@ -86,7 +86,7 @@ namespace Azure.DigitalTwins.Core.Tests
             string roomTwinId = await GetUniqueTwinIdAsync(client, TestAssetDefaults.RoomTwinIdPrefix).ConfigureAwait(false);
 
             int numberOfTwinsToCreate = 250;
-            IEnumerable<string> newTwinIds = getMultipleTwinIds(roomTwinId, numberOfTwinsToCreate);
+            IEnumerable<string> newTwinIds = GetMultipleTwinIds(roomTwinId, numberOfTwinsToCreate);
 
             try
             {
@@ -163,7 +163,7 @@ namespace Azure.DigitalTwins.Core.Tests
             }
         }
 
-        private IEnumerable<string> getMultipleTwinIds(string baseName, int count)
+        private IEnumerable<string> GetMultipleTwinIds(string baseName, int count)
         {
             var listOfTwinIds = new List<string>();
             for (int i = 0; i < count; i++)
