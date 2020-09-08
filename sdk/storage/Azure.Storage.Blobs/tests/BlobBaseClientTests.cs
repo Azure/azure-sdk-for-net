@@ -924,7 +924,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/13510
         public async Task OpenReadAsync()
         {
             int size = Constants.KB;
@@ -947,7 +946,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/13510
         public async Task OpenReadAsync_BufferSize()
         {
             int size = Constants.KB;
@@ -1030,7 +1028,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/13510
         public async Task OpenReadAsync_AccessConditions()
         {
             // Arrange
@@ -1107,7 +1104,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/13510
         public async Task OpenReadAsync_StrangeOffsetsTest()
         {
             // Arrange
@@ -1150,7 +1146,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/13510
         public async Task OpenReadAsync_Modified()
         {
             int size = Constants.KB;
@@ -1191,7 +1186,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/13510
         public async Task OpenReadAsync_ModifiedAllowBlobModifications()
         {
             int size = Constants.KB;
@@ -1275,7 +1269,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/13510
         public async Task OpenReadAsync_CopyReadStreamToAnotherStream()
         {
             // Arrange

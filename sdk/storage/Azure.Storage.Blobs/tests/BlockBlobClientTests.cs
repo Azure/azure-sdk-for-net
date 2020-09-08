@@ -2425,7 +2425,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/13510")]
         public async Task OpenWriteAsync_ModifiedDuringWrite()
         {
             // Arrange
@@ -2438,7 +2437,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             Stream openWriteStream = await blob.OpenWriteAsync(overwrite: true);
 
-            string blockId = GenerateBlockId();
+            string blockId = ToBase64(GetNewBlockName());
             await blob.StageBlockAsync(blockId, stream);
             stream.Position = 0;
             await blob.CommitBlockListAsync(new List<string> { blockId });
@@ -2543,13 +2542,6 @@ namespace Azure.Storage.Blobs.Test
                         options),
                     e => Assert.AreEqual(BlobErrorCode.ConditionNotMet.ToString(), e.ErrorCode));
             }
-        }
-
-        private static string GenerateBlockId()
-        {
-            Guid guid = Guid.NewGuid();
-            byte[] bytes = Encoding.UTF8.GetBytes(guid.ToString());
-            return Convert.ToBase64String(bytes);
         }
 
         private RequestConditions BuildRequestConditions(AccessConditionParameters parameters)
