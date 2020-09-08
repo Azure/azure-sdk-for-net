@@ -51,6 +51,6 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary> Optional user defined model name (max length: 1024). </summary>
         public string ModelName { get; }
         /// <summary> Optional model attributes. </summary>
-        public Attributes Attributes { get; }
+        private Attributes Attributes { get; }
     }
 }
