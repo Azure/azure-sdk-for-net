@@ -182,6 +182,10 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         internal const int SendLinkClosedEvent = 100;
         internal const int ManagementLinkClosedEvent = 101;
 
+        internal const int ProcessorMessageHandlerStartEvent = 102;
+        internal const int ProcessorMessageHandlerCompleteEvent = 103;
+        internal const int ProcessorMessageHandlerExceptionEvent = 104;
+
         #endregion
         // add new event numbers here incrementing from previous
 
@@ -743,6 +747,33 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             }
         }
 
+        [Event(ProcessorMessageHandlerStartEvent, Level = EventLevel.Informational, Message = "{0}: User message handler start: Message: SequenceNumber: {1}")]
+        public void ProcessorMessageHandlerStart(string identifier, long sequenceNumber)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(ProcessorMessageHandlerStartEvent, identifier, sequenceNumber);
+            }
+        }
+
+        [Event(ProcessorMessageHandlerCompleteEvent, Level = EventLevel.Informational, Message = "{0}: User message handler complete: Message: SequenceNumber: {1}")]
+        public void ProcessorMessageHandlerComplete(string identifier, long sequenceNumber)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(ProcessorMessageHandlerCompleteEvent, identifier, sequenceNumber);
+            }
+        }
+
+        [Event(ProcessorMessageHandlerExceptionEvent, Level = EventLevel.Error, Message = "{0}: User message handler complete: Message: SequenceNumber: {1}, Exception: {2}")]
+        public void ProcessorMessageHandlerException(string identifier, long sequenceNumber, string exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(ProcessorMessageHandlerExceptionEvent, identifier, sequenceNumber, exception);
+            }
+        }
+
         #endregion region
 
         #region Rule management
@@ -992,12 +1023,12 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             }
         }
 
-        [Event(CreateReceiveLinkCompleteEvent, Level = EventLevel.Informational, Message = "Receive link created for Identifier: {0}.")]
-        public virtual void CreateReceiveLinkComplete(string identifier)
+        [Event(CreateReceiveLinkCompleteEvent, Level = EventLevel.Informational, Message = "Receive link created for Identifier: {0}. Session Id: {1}")]
+        public virtual void CreateReceiveLinkComplete(string identifier, string sessionId)
         {
             if (IsEnabled())
             {
-                WriteEvent(CreateReceiveLinkCompleteEvent, identifier);
+                WriteEvent(CreateReceiveLinkCompleteEvent, identifier, sessionId);
             }
         }
 
