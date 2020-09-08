@@ -13,7 +13,11 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Messaging.EventHubs" VersionOverride="5.2.0-preview.3" /> <!--Version override exists to bind to the preview; this will be removed when v5.2.0 is released for GA -->
-    <PackageReference Include="Azure.Storage.Blobs" />
+
+    <!-- Version override is specific to the v5.2.0 release from the branch; this will be removed and the package properties updated when merged to master -->
+    <PackageReference Include="Azure.Storage.Blobs" VersionOverride="12.6.0"/>
+    <!-- END v5.2.0 SPECIFIC OVERRIDES -->
+
     <PackageReference Include="Microsoft.Azure.Amqp" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" />
     <PackageReference Include="System.Reflection.TypeExtensions" />
@@ -54,5 +58,29 @@
   </ItemGroup>
 
   <!-- Import the Azure.Core reference -->
-  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
+  <!-- <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" /> -->
+
+  <!-- 
+    THIS SECTION IS SPECIFIC TO THE v5.2.0 RELEASE 
+
+    These are normally set via the above reference to Azure.Core.props, but have been included here
+    to allow a specific override to the Azure.Core version for Event Hubs only; when merged back to 
+    master, this section should be removed and the above import restored.
+  -->
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" VersionOverride="1.5.0" />
+  </ItemGroup>
+
+  <!-- Nullability -->
+  <PropertyGroup>
+    <!-- Visual Studio 2019 version 16.1 shipped a version of .NET Core that used older 'NullableContextOptions' -->
+    <Nullable Condition="'$(Nullable)'==''">$(NullableContextOptions)</Nullable>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Nullable)'=='enable' Or '$(UseAzureCoreNullableAttributes)'=='true'">
+    <DefineConstants>$(DefineConstants);AZURE_NULLABLE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(Nullable)'=='enable' Or '$(UseAzureCoreNullableAttributes)'=='true'">
+    <Compile Include="$(AzureCoreSharedSources)NullableAttributes.cs" />
+  </ItemGroup>
+  <!-- END v5.2.0 SPECIFIC OVERRIDES -->
 </Project>
