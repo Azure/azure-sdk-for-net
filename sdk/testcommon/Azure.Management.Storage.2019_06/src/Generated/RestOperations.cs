@@ -53,7 +53,6 @@ namespace Azure.Management.Storage
             uri.AppendPath("/providers/Microsoft.Storage/operations", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

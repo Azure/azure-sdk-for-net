@@ -23,6 +23,7 @@ pr:
   paths:
     include:
     - sdk/core/
+    - sdk/testcommon/
     - eng/
     - samples/
     exclude:
