@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Azure Event Hubs is a highly scalable publish-subscribe service that can ingest millions of events per second and stream them to multiple consumers.  This library extends its Event Processor with durable storage for checkpoint information using Azure Blob storage.  For more information about Event Hubs, see https://azure.microsoft.com/en-us/services/event-hubs/</Description>
-    <Version>5.2.0-preview.4</Version>
+    <Version>5.2.0</Version>
     <ApiCompatVersion>5.1.0</ApiCompatVersion>
     <PackageTags>Azure;Event Hubs;EventHubs;.NET;Event Processor;EventProcessor;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
@@ -12,9 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Messaging.EventHubs" VersionOverride="5.2.0-preview.3" /> <!--Version override exists to bind to the preview; this will be removed when v5.2.0 is released for GA -->
-
-    <!-- Version override is specific to the v5.2.0 release from the branch; this will be removed and the package properties updated when merged to master -->
+    <!-- Version overrides are specific to the v5.2.0 release from the branch; this will be removed and the package properties updated when merged to master -->
+    <PackageReference Include="Azure.Messaging.EventHubs" VersionOverride="5.2.0" /> 
     <PackageReference Include="Azure.Storage.Blobs" VersionOverride="12.6.0"/>
     <!-- END v5.2.0 SPECIFIC OVERRIDES -->
 
