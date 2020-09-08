@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
@@ -42,7 +43,7 @@ namespace Azure.Identity.Tests
 
             var credential = new ClientCertificateCredential(tenantId, clientId, certPath, options);
 
-            var tokenRequestContext = new TokenRequestContext(new[] { AzureAuthorityHosts.GetDefaultScope(AzureAuthorityHosts.AzurePublicCloud) });
+            var tokenRequestContext = new TokenRequestContext(new[] { AzureAuthorityHosts.GetDefaultScope(new Uri($"{TestEnvironment.AuthorityHostUrl}/")) });
 
             // ensure we can initially acquire a  token
             AccessToken token = await credential.GetTokenAsync(tokenRequestContext);
