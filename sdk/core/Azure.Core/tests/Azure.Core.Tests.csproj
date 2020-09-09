@@ -34,6 +34,7 @@
     <Compile Include="..\src\Shared\RetriableStream.cs" />
     <Compile Include="..\src\Shared\RequestRequestContent.cs" />
     <Compile Include="..\src\Shared\ValueStopwatch.cs" />
+    <Compile Include="..\src\Shared\AutoRest\Utf8JsonRequestContent.cs" />
   </ItemGroup>
 
 </Project>
