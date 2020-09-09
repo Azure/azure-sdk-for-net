@@ -19,6 +19,7 @@ jobs:
           }
           $versioningProperties = "/p:OfficialBuildId=$(OfficialBuildId) /p:SkipDevBuildNumber=$skipDevBuildNumber";
           echo "##vso[task.setvariable variable=VersioningProperties]$versioningProperties"
+        displayName: "Setup .NET specific versioning properties"
       - task: NodeTool@0
         inputs:
           versionSpec: '13.13.0'
@@ -34,7 +35,6 @@ jobs:
           arguments: -ServiceDirectory ${{parameters.ServiceToBuild}}
           pwsh: true
           failOnStderr:  false
-        displayName: "Setup .NET specific versioning properties"
       - task: UsePythonVersion@0
         displayName: 'Use Python 3.6'
         inputs:
