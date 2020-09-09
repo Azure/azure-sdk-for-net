@@ -548,10 +548,13 @@ namespace Azure.Storage.Files.Shares.Models
         public Azure.Storage.Files.Shares.Models.ShareFileDownloadDetails Details { get { throw null; } }
         public void Dispose() { }
     }
-    public partial class ShareFileGetRangeListDiffOptions : Azure.Storage.Files.Shares.Models.ShareFileGetRangeListOptions
+    public partial class ShareFileGetRangeListDiffOptions
     {
         public ShareFileGetRangeListDiffOptions() { }
+        public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions Conditions { get { throw null; } set { } }
         public string PreviousSnapshot { get { throw null; } set { } }
+        public Azure.HttpRange? Range { get { throw null; } set { } }
+        public string Snapshot { get { throw null; } set { } }
     }
     public partial class ShareFileGetRangeListOptions
     {
