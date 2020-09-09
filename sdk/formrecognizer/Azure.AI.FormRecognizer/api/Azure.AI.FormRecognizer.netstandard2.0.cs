@@ -91,6 +91,7 @@ namespace Azure.AI.FormRecognizer.Models
         public long AsInt64() { throw null; }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.FormField> AsList() { throw null; }
         public string AsPhoneNumber() { throw null; }
+        public Azure.AI.FormRecognizer.Models.FieldValueSelectionMark AsSelectionMark() { throw null; }
         public string AsString() { throw null; }
         public System.TimeSpan AsTime() { throw null; }
     }
@@ -161,6 +162,7 @@ namespace Azure.AI.FormRecognizer.Models
         public float Height { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.FormLine> Lines { get { throw null; } }
         public int PageNumber { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.SelectionMark> SelectionMarks { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.FormTable> Tables { get { throw null; } }
         public float TextAngle { get { throw null; } }
         public Azure.AI.FormRecognizer.Models.LengthUnit Unit { get { throw null; } }
