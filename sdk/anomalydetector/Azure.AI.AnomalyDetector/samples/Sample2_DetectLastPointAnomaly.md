@@ -19,9 +19,6 @@ var credential = new AzureKeyCredential(apiKey);
 
 //create client
 AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, credential);
-
-//read data
-string datapath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "samples", "data", "request-data.csv");
 ```
 
 ## Load time series and create DetectRequest
@@ -33,6 +30,9 @@ Call `File.ReadAllLines` with the file path and create a list of `TimeSeriesPoin
 Make a `DetectRequest` object with the series of points, and `TimeGranularity.Daily` for the granularity (or periodicity) of the data points.
 
 ```C# Snippet:ReadSeriesData
+//read data
+string datapath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "samples", "data", "request-data.csv");
+
 List<TimeSeriesPoint> list = File.ReadAllLines(datapath, Encoding.UTF8)
     .Where(e => e.Trim().Length != 0)
     .Select(e => e.Split(','))
