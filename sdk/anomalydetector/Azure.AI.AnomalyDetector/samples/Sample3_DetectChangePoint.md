@@ -27,7 +27,7 @@ Call `File.ReadAllLines` with the file path and create a list of `TimeSeriesPoin
 
 Make a `ChangePointDetectRequest` object with the series of points, and `TimeGranularity.Daily` for the granularity (or periodicity) of the data points.
 
-```C# Snippet:ReadSeriesData
+```C# Snippet:ReadSeriesDataForChangePoint
 string datapath = "<dataPath>";
 
 List<TimeSeriesPoint> list = File.ReadAllLines(datapath, Encoding.UTF8)

@@ -19,6 +19,8 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
         [Test]
         public async Task DetectEntireSeriesAnomaly()
         {
+            #region Snippet:CreateAnomalyDetectorClient
+
             //read endpoint and apiKey
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
@@ -32,6 +34,10 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
             //read data
             string datapath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "samples", "data", "request-data.csv");
 
+            #endregion
+
+            #region Snippet:ReadSeriesData
+
             List<TimeSeriesPoint> list = File.ReadAllLines(datapath, Encoding.UTF8)
                 .Where(e => e.Trim().Length != 0)
                 .Select(e => e.Split(','))
@@ -40,6 +46,10 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
 
             //create request
             DetectRequest request = new DetectRequest(list, TimeGranularity.Daily);
+
+            #endregion
+
+            #region Snippet:DetectEntireSeriesAnomaly
 
             //detect
             Console.WriteLine("Detecting anomalies in the entire time series.");
@@ -63,6 +73,8 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
             {
                 Console.WriteLine(" No anomalies detected in the series.");
             }
+
+            #endregion
         }
     }
 }

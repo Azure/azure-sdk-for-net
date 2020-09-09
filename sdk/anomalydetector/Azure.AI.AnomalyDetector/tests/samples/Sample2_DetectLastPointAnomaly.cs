@@ -41,6 +41,8 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
             //create request
             DetectRequest request = new DetectRequest(list, TimeGranularity.Daily);
 
+            #region Snippet:DetectLastPointAnomaly
+
             //detect
             Console.WriteLine("Detecting the anomaly status of the latest point in the series.");
 
@@ -54,6 +56,8 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
             {
                 Console.WriteLine("The latest point was not detected as an anomaly.");
             }
+
+            #endregion
         }
     }
 }
