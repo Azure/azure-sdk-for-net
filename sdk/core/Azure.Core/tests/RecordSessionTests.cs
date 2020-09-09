@@ -41,8 +41,8 @@ namespace Azure.Core.Tests
             RecordEntry recordEntry = new RecordEntry();
             recordEntry.Request.Headers.Add("Content-Type", new[] { contentType });
             recordEntry.Request.Headers.Add("Other-Header", new[] { "multi", "value" });
-            recordEntry.RequestUri = "url";
             recordEntry.Request.Body = bodyBytes;
+            recordEntry.RequestUri = "url";
             recordEntry.RequestMethod = RequestMethod.Delete;
 
             recordEntry.Response.Headers.Add("Content-Type", new[] { contentType });
