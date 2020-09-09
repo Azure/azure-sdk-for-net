@@ -1,7 +1,9 @@
 # Release History
+## 1.0.3-beta.9 (2020-09-09)
+- Enable the master link replacement feature, attemp 2
 
 ## 1.0.3-beta.8 (2020-09-09)
-- Enable the master link replacement feature
+- Enable the master link replacement feature, attemp 1
 
 ## 1.0.3-beta.7 (2020-09-04)
 - Test release tag replacement
