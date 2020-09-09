@@ -753,6 +753,18 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        public void ShareAccessPolicyNullStartsOnExpiresOnTest()
+        {
+            ShareAccessPolicy accessPolicy = new ShareAccessPolicy()
+            {
+                Permissions = "rw"
+            };
+
+            Assert.AreEqual(new DateTimeOffset(), accessPolicy.StartsOn);
+            Assert.AreEqual(new DateTimeOffset(), accessPolicy.ExpiresOn);
+        }
+
+        [Test]
         public async Task GetStatisticsAsync()
         {
             // Arrange
