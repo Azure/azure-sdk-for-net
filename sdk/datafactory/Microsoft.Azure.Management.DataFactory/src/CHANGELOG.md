@@ -4,6 +4,7 @@
 ###  Feature Additions
 - Added logLevel/enableReliableLogging to LogStorageSettings
 - Support Tar GZip compression type in Data Factory
+- Added maxRowPerFile/fileNamePrefix to tabular format settings
 
 ## Version 4.11.0
 ###  Feature Additions
