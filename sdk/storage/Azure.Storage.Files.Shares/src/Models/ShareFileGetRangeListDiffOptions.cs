@@ -4,9 +4,9 @@
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary>
-    /// Optional parameters for Get Range List.
+    /// Optional parameters for Get Range List Diff.
     /// </summary>
-    public class ShareFileGetRangeListOptions
+    public class ShareFileGetRangeListDiffOptions
     {
         /// <summary>
         /// Optional. Specifies the range of bytes over which to list ranges, inclusively.
@@ -27,5 +27,14 @@ namespace Azure.Storage.Files.Shares.Models
         /// on getting the range.
         /// </summary>
         public ShareFileRequestConditions Conditions { get; set; }
+
+        /// <summary>
+        /// Specifies that the response will contain only ranges that were
+        /// changed between target file and previous snapshot.  Changed ranges
+        /// include both updated and cleared ranges. The target file may be a
+        /// snapshot, as long as the snapshot specified by
+        /// previousSnapshot is the older of the two.
+        /// </summary>
+        public string PreviousSnapshot { get; set; }
     }
 }
