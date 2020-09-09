@@ -107,7 +107,7 @@ namespace Azure.Identity.Tests
             var options = Recording.InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = tenantId });
             VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(options, default, default, fileSystem, vscAdapter));
 
-            Assert.CatchAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[] {"https://vault.azure.net/.default"}), CancellationToken.None));
+            Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[] {"https://vault.azure.net/.default"}), CancellationToken.None));
         }
 
         [Test]
