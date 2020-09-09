@@ -4,7 +4,6 @@ jobs:
       - template: ../variables/globals.yml
     pool:
       vmImage: windows-2019
-    timeoutInMinutes: 100
     steps:
       - pwsh: |
           echo "##vso[build.addbuildtag]Scheduled"
@@ -83,6 +82,27 @@ jobs:
           Artifacts: ${{parameters.Artifacts}}
           DocGenerationDir: "$(Build.SourcesDirectory)/doc/ApiDocGeneration"
           LibType: 'client'
+  - job: VerifyGenerated
+    variables:
+      - template: ../variables/globals.yml
+    pool:
+      vmImage: ubuntu-18.04
+    steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '13.13.0'
+        displayName: 'Install NodeJS'
+      - task: PowerShell@2
+        displayName: "Verify generated code"
+        env:
+          DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+          DOTNET_CLI_TELEMETRY_OPTOUT: 1
+          DOTNET_MULTILEVEL_LOOKUP: 0
+        inputs:
+          filePath: "eng/scripts/CodeChecks.ps1"
+          arguments: -ServiceDirectory ${{parameters.ServiceToBuild}}
+          pwsh: true
+          failOnStderr:  false
   - job: "Test"
     condition: ne(variables['Skip.Test'], true)
     variables:
