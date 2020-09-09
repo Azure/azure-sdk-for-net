@@ -19,6 +19,8 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
         [Test]
         public async Task DetectChangePoint()
         {
+            #region Snippet:CreateAnomalyDetectorClient
+
             //read endpoint and apiKey
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
@@ -28,6 +30,8 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
 
             //create client
             AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, credential);
+
+            #endregion
 
             #region Snippet:ReadSeriesDataForChangePoint
 
