@@ -2143,7 +2143,10 @@ namespace Azure.Storage.Blobs.Specialized
                     bufferSize: options?.BufferSize ?? Constants.DefaultBufferSize,
                     position: position,
                     conditions: conditions,
-                    progressHandler: options?.ProgressHandler);
+                    progressHandler: options?.ProgressHandler,
+                    blobHttpHeaders: options?.HttpHeaders,
+                    metadata: options?.Metadata,
+                    tags: options?.Tags);
             }
             catch (Exception ex)
             {

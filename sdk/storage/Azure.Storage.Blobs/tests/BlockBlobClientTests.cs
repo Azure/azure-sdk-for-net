@@ -2300,6 +2300,96 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task OpenWriteAsync_NewBlob_WithTags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            await blob.UploadAsync(new MemoryStream(Array.Empty<byte>()));
+
+            Dictionary<string, string> tags = new Dictionary<string, string>() { { "testkey", "testvalue" } };
+
+            BlockBlobOpenWriteOptions options = new BlockBlobOpenWriteOptions
+            {
+                BufferSize = Constants.KB,
+                Tags = tags,
+            };
+
+            Stream stream = await blob.OpenWriteAsync(
+                overwrite: true,
+                options);
+
+            // Act
+            await stream.FlushAsync();
+
+            // Assert
+            GetBlobTagResult tagsResult = await blob.GetTagsAsync();
+            CollectionAssert.AreEqual(tags, tagsResult.Tags);
+        }
+
+        [Test]
+        public async Task OpenWriteAsync_NewBlob_WithMetadata()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            await blob.UploadAsync(new MemoryStream(Array.Empty<byte>()));
+
+            Dictionary<string, string> metadata = new Dictionary<string, string>() { { "testkey", "testvalue" } };
+
+            BlockBlobOpenWriteOptions options = new BlockBlobOpenWriteOptions
+            {
+                BufferSize = Constants.KB,
+                Metadata = metadata,
+            };
+
+            Stream stream = await blob.OpenWriteAsync(
+                overwrite: true,
+                options);
+
+            // Act
+            await stream.FlushAsync();
+
+            // Assert
+            BlobProperties properties = await blob.GetPropertiesAsync();
+            CollectionAssert.AreEqual(metadata, properties.Metadata);
+        }
+
+        [Test]
+        public async Task OpenWriteAsync_NewBlob_WithHeaders()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            await blob.UploadAsync(new MemoryStream(Array.Empty<byte>()));
+
+            BlobHttpHeaders headers = new BlobHttpHeaders()
+            {
+                ContentType = "application/json",
+                ContentLanguage = "en",
+            };
+
+            BlockBlobOpenWriteOptions options = new BlockBlobOpenWriteOptions
+            {
+                BufferSize = Constants.KB,
+                HttpHeaders = headers,
+            };
+
+            Stream stream = await blob.OpenWriteAsync(
+                overwrite: true,
+                options);
+
+            // Act
+            await stream.FlushAsync();
+
+            // Assert
+            BlobProperties properties = await blob.GetPropertiesAsync();
+            Assert.AreEqual(headers.ContentType, properties.ContentType);
+            Assert.AreEqual(headers.ContentLanguage, properties.ContentLanguage);
+        }
+
+        [Test]
         public async Task OpenWriteAsync_NewBlob_WithUsing()
         {
             // Arrange
