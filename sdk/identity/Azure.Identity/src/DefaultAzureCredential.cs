@@ -159,11 +159,6 @@ namespace Azure.Identity
                 {
                     exceptions.Add(e);
                 }
-                catch (AuthenticationFailedException e)
-                {
-                    exceptions.Add(e);
-                    break;
-                }
             }
 
             // Build the credential unavailable message, this code is only reachable if all credentials throw AuthenticationFailedException
