@@ -53,7 +53,6 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
             }
         }
 
-        // TODO (kasobol-msft) would blobclient suffice?
         private static async Task<BlobBaseClient> GetExistingOrNewBlockBlobReferenceAsync(BlobContainerClient container,
             string blobName, CancellationToken cancellationToken)
         {
