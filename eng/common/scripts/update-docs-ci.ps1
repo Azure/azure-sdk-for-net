@@ -27,7 +27,10 @@ param (
   $CIRepository,
 
   [Parameter(Mandatory = $true)]
-  $Configs
+  $Configs,
+
+  [Parameter(Mandatory = $false)]
+  $ExcludePkgs = "" # Used to exclude packages, support multiple packages separated by comma. e.g. "azure-storage-blob, azure-storage-file-share"
 )
 
 # import artifact parsing and semver handling
@@ -241,9 +244,10 @@ $pkgs = VerifyPackages -pkgRepository $Repository `
   -apiUrl $apiUrl `
   -continueOnError $True 
 
+$ExcludePkgList = $ExcludePkgs -split "," | ForEach-Object {$_.Trim()}
 foreach ($config in $targets) {
   if ($config.mode -eq "Preview") { $includePreview = $true } else { $includePreview = $false }
-  $pkgsFiltered = $pkgs | ? { $_.IsPrerelease -eq $includePreview}
+  $pkgsFiltered = $pkgs | ? {!$ExcludePkgList.Contains($_.PackageId) } | ? { $_.IsPrerelease -eq $includePreview}
 
   if ($pkgs) {
     Write-Host "Given the visible artifacts, CI updates against $($config.path_to_config) will be processed for the following packages."
