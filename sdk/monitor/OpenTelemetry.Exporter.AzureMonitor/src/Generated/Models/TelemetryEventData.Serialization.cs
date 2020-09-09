@@ -10,52 +10,15 @@ using Azure.Core;
 
 namespace OpenTelemetry.Exporter.AzureMonitor.Models
 {
-    public partial class PageViewPerfData : IUtf8JsonSerializable
+    public partial class TelemetryEventData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("ver");
             writer.WriteNumberValue(Version);
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Url))
-            {
-                writer.WritePropertyName("url");
-                writer.WriteStringValue(Url);
-            }
-            if (Optional.IsDefined(Duration))
-            {
-                writer.WritePropertyName("duration");
-                writer.WriteStringValue(Duration);
-            }
-            if (Optional.IsDefined(PerfTotal))
-            {
-                writer.WritePropertyName("perfTotal");
-                writer.WriteStringValue(PerfTotal);
-            }
-            if (Optional.IsDefined(NetworkConnect))
-            {
-                writer.WritePropertyName("networkConnect");
-                writer.WriteStringValue(NetworkConnect);
-            }
-            if (Optional.IsDefined(SentRequest))
-            {
-                writer.WritePropertyName("sentRequest");
-                writer.WriteStringValue(SentRequest);
-            }
-            if (Optional.IsDefined(ReceivedResponse))
-            {
-                writer.WritePropertyName("receivedResponse");
-                writer.WriteStringValue(ReceivedResponse);
-            }
-            if (Optional.IsDefined(DomProcessing))
-            {
-                writer.WritePropertyName("domProcessing");
-                writer.WriteStringValue(DomProcessing);
-            }
             if (Optional.IsCollectionDefined(Properties))
             {
                 writer.WritePropertyName("properties");
