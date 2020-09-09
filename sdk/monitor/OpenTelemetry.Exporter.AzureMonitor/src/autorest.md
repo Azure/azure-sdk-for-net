@@ -4,6 +4,5 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    -  https://raw.githubusercontent.com/srnagar/swagger/d93c35263ce8b28fefdafd702adbb1a0e2347156/application-insights.json
-namespace: OpenTelemetry.Exporter.AzureMonitor
+    -  https://github.com/srnagar/swagger/blob/05b8ab86a14164a364ac18869fa2b2e689324403/application-insights.json
 ```

@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 {
     internal partial class ServiceRestClient
     {
-        internal HttpMessage CreateTrackRequest(IEnumerable<TelemetryEnvelope> body)
+        internal HttpMessage CreateTrackRequest(IEnumerable<TelemetryItem> body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -20,6 +20,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             uri.AppendPath("/track", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             using var content = new NDJsonWriter();
             foreach (var item in body)
             {

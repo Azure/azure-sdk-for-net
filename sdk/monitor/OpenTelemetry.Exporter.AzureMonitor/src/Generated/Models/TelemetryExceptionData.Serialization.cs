@@ -10,51 +10,39 @@ using Azure.Core;
 
 namespace OpenTelemetry.Exporter.AzureMonitor.Models
 {
-    public partial class PageViewPerfData : IUtf8JsonSerializable
+    public partial class TelemetryExceptionData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("ver");
             writer.WriteNumberValue(Version);
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
-            writer.WritePropertyName("name");
-            writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Url))
+            if (Optional.IsCollectionDefined(Exceptions))
             {
-                writer.WritePropertyName("url");
-                writer.WriteStringValue(Url);
+                writer.WritePropertyName("exceptions");
+                writer.WriteStartArray();
+                foreach (var item in Exceptions)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Duration))
+            if (Optional.IsDefined(SeverityLevel))
             {
-                writer.WritePropertyName("duration");
-                writer.WriteStringValue(Duration);
+                if (SeverityLevel != null)
+                {
+                    writer.WritePropertyName("severityLevel");
+                    writer.WriteStringValue(SeverityLevel.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("severityLevel");
+                }
             }
-            if (Optional.IsDefined(PerfTotal))
+            if (Optional.IsDefined(ProblemId))
             {
-                writer.WritePropertyName("perfTotal");
-                writer.WriteStringValue(PerfTotal);
-            }
-            if (Optional.IsDefined(NetworkConnect))
-            {
-                writer.WritePropertyName("networkConnect");
-                writer.WriteStringValue(NetworkConnect);
-            }
-            if (Optional.IsDefined(SentRequest))
-            {
-                writer.WritePropertyName("sentRequest");
-                writer.WriteStringValue(SentRequest);
-            }
-            if (Optional.IsDefined(ReceivedResponse))
-            {
-                writer.WritePropertyName("receivedResponse");
-                writer.WriteStringValue(ReceivedResponse);
-            }
-            if (Optional.IsDefined(DomProcessing))
-            {
-                writer.WritePropertyName("domProcessing");
-                writer.WriteStringValue(DomProcessing);
+                writer.WritePropertyName("problemId");
+                writer.WriteStringValue(ProblemId);
             }
             if (Optional.IsCollectionDefined(Properties))
             {

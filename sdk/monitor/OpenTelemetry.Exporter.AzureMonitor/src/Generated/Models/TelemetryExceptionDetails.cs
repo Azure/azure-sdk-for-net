@@ -12,12 +12,12 @@ using Azure.Core;
 namespace OpenTelemetry.Exporter.AzureMonitor.Models
 {
     /// <summary> Exception details of the exception in a chain. </summary>
-    public partial class ExceptionDetails
+    public partial class TelemetryExceptionDetails
     {
-        /// <summary> Initializes a new instance of ExceptionDetails. </summary>
+        /// <summary> Initializes a new instance of TelemetryExceptionDetails. </summary>
         /// <param name="message"> Exception message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
-        public ExceptionDetails(string message)
+        public TelemetryExceptionDetails(string message)
         {
             if (message == null)
             {
@@ -28,25 +28,6 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
             ParsedStack = new ChangeTrackingList<StackFrame>();
         }
 
-        /// <summary> Initializes a new instance of ExceptionDetails. </summary>
-        /// <param name="id"> In case exception is nested (outer exception contains inner one), the id and outerId properties are used to represent the nesting. </param>
-        /// <param name="outerId"> The value of outerId is a reference to an element in ExceptionDetails that represents the outer exception. </param>
-        /// <param name="typeName"> Exception type name. </param>
-        /// <param name="message"> Exception message. </param>
-        /// <param name="hasFullStack"> Indicates if full exception stack is provided in the exception. The stack may be trimmed, such as in the case of a StackOverflow exception. </param>
-        /// <param name="stack"> Text describing the stack. Either stack or parsedStack should have a value. </param>
-        /// <param name="parsedStack"> List of stack frames. Either stack or parsedStack should have a value. </param>
-        internal ExceptionDetails(int? id, int? outerId, string typeName, string message, bool? hasFullStack, string stack, IList<StackFrame> parsedStack)
-        {
-            Id = id;
-            OuterId = outerId;
-            TypeName = typeName;
-            Message = message;
-            HasFullStack = hasFullStack;
-            Stack = stack;
-            ParsedStack = parsedStack;
-        }
-
         /// <summary> In case exception is nested (outer exception contains inner one), the id and outerId properties are used to represent the nesting. </summary>
         public int? Id { get; set; }
         /// <summary> The value of outerId is a reference to an element in ExceptionDetails that represents the outer exception. </summary>
@@ -54,7 +35,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
         /// <summary> Exception type name. </summary>
         public string TypeName { get; set; }
         /// <summary> Exception message. </summary>
-        public string Message { get; set; }
+        public string Message { get; }
         /// <summary> Indicates if full exception stack is provided in the exception. The stack may be trimmed, such as in the case of a StackOverflow exception. </summary>
         public bool? HasFullStack { get; set; }
         /// <summary> Text describing the stack. Either stack or parsedStack should have a value. </summary>

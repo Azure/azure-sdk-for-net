@@ -15,47 +15,31 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
     public partial class MessageData : MonitorDomain
     {
         /// <summary> Initializes a new instance of MessageData. </summary>
-        /// <param name="ver"> Schema version. </param>
+        /// <param name="version"> Schema version. </param>
         /// <param name="message"> Trace message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
-        public MessageData(int ver, string message)
+        public MessageData(int version, string message)
         {
             if (message == null)
             {
                 throw new ArgumentNullException(nameof(message));
             }
 
-            Ver = ver;
+            Version = version;
             Message = message;
             Properties = new ChangeTrackingDictionary<string, string>();
             Measurements = new ChangeTrackingDictionary<string, double>();
         }
 
-        /// <summary> Initializes a new instance of MessageData. </summary>
-        /// <param name="test"> Ignored value. </param>
-        /// <param name="ver"> Schema version. </param>
-        /// <param name="message"> Trace message. </param>
-        /// <param name="severityLevel"> Trace severity level. </param>
-        /// <param name="properties"> Collection of custom properties. TODO: max key length validate. </param>
-        /// <param name="measurements"> Collection of custom measurements. TODO: max key length validate. </param>
-        internal MessageData(string test, int ver, string message, SeverityLevel? severityLevel, IDictionary<string, string> properties, IDictionary<string, double> measurements) : base(test)
-        {
-            Ver = ver;
-            Message = message;
-            SeverityLevel = severityLevel;
-            Properties = properties;
-            Measurements = measurements;
-        }
-
         /// <summary> Schema version. </summary>
-        public int Ver { get; set; }
+        public int Version { get; }
         /// <summary> Trace message. </summary>
-        public string Message { get; set; }
+        public string Message { get; }
         /// <summary> Trace severity level. </summary>
         public SeverityLevel? SeverityLevel { get; set; }
-        /// <summary> Collection of custom properties. TODO: max key length validate. </summary>
+        /// <summary> Collection of custom properties. </summary>
         public IDictionary<string, string> Properties { get; }
-        /// <summary> Collection of custom measurements. TODO: max key length validate. </summary>
+        /// <summary> Collection of custom measurements. </summary>
         public IDictionary<string, double> Measurements { get; }
     }
 }

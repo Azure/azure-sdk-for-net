@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -17,7 +16,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("ver");
-            writer.WriteNumberValue(Ver);
+            writer.WriteNumberValue(Version);
             writer.WritePropertyName("message");
             writer.WriteStringValue(Message);
             if (Optional.IsDefined(SeverityLevel))
@@ -53,60 +52,6 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
                 writer.WriteStringValue(Test);
             }
             writer.WriteEndObject();
-        }
-
-        internal static MessageData DeserializeMessageData(JsonElement element)
-        {
-            int ver = default;
-            string message = default;
-            Optional<SeverityLevel> severityLevel = default;
-            Optional<IDictionary<string, string>> properties = default;
-            Optional<IDictionary<string, double>> measurements = default;
-            Optional<string> test = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("ver"))
-                {
-                    ver = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("message"))
-                {
-                    message = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("severityLevel"))
-                {
-                    severityLevel = new SeverityLevel(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("properties"))
-                {
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    properties = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("measurements"))
-                {
-                    Dictionary<string, double> dictionary = new Dictionary<string, double>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetDouble());
-                    }
-                    measurements = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("test"))
-                {
-                    test = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new MessageData(test.Value, ver, message, Optional.ToNullable(severityLevel), Optional.ToDictionary(properties), Optional.ToDictionary(measurements));
         }
     }
 }

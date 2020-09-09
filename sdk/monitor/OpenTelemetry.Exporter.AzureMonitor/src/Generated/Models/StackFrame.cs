@@ -27,22 +27,9 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
             Method = method;
         }
 
-        /// <summary> Initializes a new instance of StackFrame. </summary>
-        /// <param name="level"> . </param>
-        /// <param name="method"> Method name. </param>
-        /// <param name="assembly"> Name of the assembly (dll, jar, etc.) containing this function. </param>
-        /// <param name="fileName"> File name or URL of the method implementation. </param>
-        /// <param name="line"> Line number of the code implementation. </param>
-        internal StackFrame(int level, string method, string assembly, string fileName, int? line)
-        {
-            Level = level;
-            Method = method;
-            Assembly = assembly;
-            FileName = fileName;
-            Line = line;
-        }
+        public int Level { get; }
         /// <summary> Method name. </summary>
-        public string Method { get; set; }
+        public string Method { get; }
         /// <summary> Name of the assembly (dll, jar, etc.) containing this function. </summary>
         public string Assembly { get; set; }
         /// <summary> File name or URL of the method implementation. </summary>

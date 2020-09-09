@@ -44,7 +44,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         /// <param name="body"> Time series points and period if needed. Advanced model parameters can also be set in the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<Response<TrackResponse>> TrackAsync(IEnumerable<TelemetryEnvelope> body, CancellationToken cancellationToken = default)
+        public async Task<Response<TrackResponse>> TrackAsync(IEnumerable<TelemetryItem> body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -77,7 +77,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         /// <param name="body"> Time series points and period if needed. Advanced model parameters can also be set in the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public Response<TrackResponse> Track(IEnumerable<TelemetryEnvelope> body, CancellationToken cancellationToken = default)
+        public Response<TrackResponse> Track(IEnumerable<TelemetryItem> body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {

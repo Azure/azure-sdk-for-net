@@ -16,38 +16,26 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
     public partial class MetricsData : MonitorDomain
     {
         /// <summary> Initializes a new instance of MetricsData. </summary>
-        /// <param name="ver"> Schema version. </param>
+        /// <param name="version"> Schema version. </param>
         /// <param name="metrics"> List of metrics. Only one metric in the list is currently supported by Application Insights storage. If multiple data points were sent only the first one will be used. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> is null. </exception>
-        public MetricsData(int ver, IEnumerable<DataPoint> metrics)
+        public MetricsData(int version, IEnumerable<MetricDataPoint> metrics)
         {
             if (metrics == null)
             {
                 throw new ArgumentNullException(nameof(metrics));
             }
 
-            Ver = ver;
+            Version = version;
             Metrics = metrics.ToList();
             Properties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MetricsData. </summary>
-        /// <param name="test"> Ignored value. </param>
-        /// <param name="ver"> Schema version. </param>
-        /// <param name="metrics"> List of metrics. Only one metric in the list is currently supported by Application Insights storage. If multiple data points were sent only the first one will be used. </param>
-        /// <param name="properties"> Collection of custom properties. TODO: max key length validate. </param>
-        internal MetricsData(string test, int ver, IList<DataPoint> metrics, IDictionary<string, string> properties) : base(test)
-        {
-            Ver = ver;
-            Metrics = metrics;
-            Properties = properties;
-        }
-
         /// <summary> Schema version. </summary>
-        public int Ver { get; set; }
+        public int Version { get; }
         /// <summary> List of metrics. Only one metric in the list is currently supported by Application Insights storage. If multiple data points were sent only the first one will be used. </summary>
-        public IList<DataPoint> Metrics { get; }
-        /// <summary> Collection of custom properties. TODO: max key length validate. </summary>
+        public IList<MetricDataPoint> Metrics { get; }
+        /// <summary> Collection of custom properties. </summary>
         public IDictionary<string, string> Properties { get; }
     }
 }

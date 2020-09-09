@@ -15,58 +15,34 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
     public partial class RemoteDependencyData : MonitorDomain
     {
         /// <summary> Initializes a new instance of RemoteDependencyData. </summary>
-        /// <param name="ver"> Schema version. </param>
+        /// <param name="version"> Schema version. </param>
         /// <param name="name"> Name of the command initiated with this dependency call. Low cardinality value. Examples are stored procedure name and URL path template. </param>
         /// <param name="duration"> Request duration in format: DD.HH:MM:SS.MMMMMM. Must be less than 1000 days. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public RemoteDependencyData(int ver, string name, TimeSpan duration)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="duration"/> is null. </exception>
+        public RemoteDependencyData(int version, string name, string duration)
         {
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
             }
+            if (duration == null)
+            {
+                throw new ArgumentNullException(nameof(duration));
+            }
 
-            Ver = ver;
+            Version = version;
             Name = name;
             Duration = duration;
             Properties = new ChangeTrackingDictionary<string, string>();
             Measurements = new ChangeTrackingDictionary<string, double>();
         }
 
-        /// <summary> Initializes a new instance of RemoteDependencyData. </summary>
-        /// <param name="test"> Ignored value. </param>
-        /// <param name="ver"> Schema version. </param>
-        /// <param name="id"> Identifier of a dependency call instance. Used for correlation with the request telemetry item corresponding to this dependency call. </param>
-        /// <param name="name"> Name of the command initiated with this dependency call. Low cardinality value. Examples are stored procedure name and URL path template. </param>
-        /// <param name="resultCode"> Result code of a dependency call. Examples are SQL error code and HTTP status code. </param>
-        /// <param name="data"> Command initiated by this dependency call. Examples are SQL statement and HTTP URL&apos;s with all query parameters. </param>
-        /// <param name="type"> Dependency type name. Very low cardinality value for logical grouping of dependencies and interpretation of other fields like commandName and resultCode. Examples are SQL, Azure table, and HTTP. </param>
-        /// <param name="target"> Target site of a dependency call. Examples are server name, host address. </param>
-        /// <param name="duration"> Request duration in format: DD.HH:MM:SS.MMMMMM. Must be less than 1000 days. </param>
-        /// <param name="success"> Indication of successfull or unsuccessfull call. </param>
-        /// <param name="properties"> Collection of custom properties. TODO: max key length validate. </param>
-        /// <param name="measurements"> Collection of custom measurements. TODO: max key length validate. </param>
-        internal RemoteDependencyData(string test, int ver, string id, string name, string resultCode, string data, string type, string target, TimeSpan duration, bool? success, IDictionary<string, string> properties, IDictionary<string, double> measurements) : base(test)
-        {
-            Ver = ver;
-            Id = id;
-            Name = name;
-            ResultCode = resultCode;
-            Data = data;
-            Type = type;
-            Target = target;
-            Duration = duration;
-            Success = success;
-            Properties = properties;
-            Measurements = measurements;
-        }
-
         /// <summary> Schema version. </summary>
-        public int Ver { get; set; }
+        public int Version { get; }
         /// <summary> Identifier of a dependency call instance. Used for correlation with the request telemetry item corresponding to this dependency call. </summary>
         public string Id { get; set; }
         /// <summary> Name of the command initiated with this dependency call. Low cardinality value. Examples are stored procedure name and URL path template. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
         /// <summary> Result code of a dependency call. Examples are SQL error code and HTTP status code. </summary>
         public string ResultCode { get; set; }
         /// <summary> Command initiated by this dependency call. Examples are SQL statement and HTTP URL&apos;s with all query parameters. </summary>
@@ -76,12 +52,12 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
         /// <summary> Target site of a dependency call. Examples are server name, host address. </summary>
         public string Target { get; set; }
         /// <summary> Request duration in format: DD.HH:MM:SS.MMMMMM. Must be less than 1000 days. </summary>
-        public TimeSpan Duration { get; set; }
+        public string Duration { get; }
         /// <summary> Indication of successfull or unsuccessfull call. </summary>
         public bool? Success { get; set; }
-        /// <summary> Collection of custom properties. TODO: max key length validate. </summary>
+        /// <summary> Collection of custom properties. </summary>
         public IDictionary<string, string> Properties { get; }
-        /// <summary> Collection of custom measurements. TODO: max key length validate. </summary>
+        /// <summary> Collection of custom measurements. </summary>
         public IDictionary<string, double> Measurements { get; }
     }
 }
