@@ -28,9 +28,9 @@ namespace Azure.Identity
         public string ClientId { get; set; } = Constants.DeveloperSignOnClientId;
 
         /// <summary>
-        /// If set to true the credential will store tokens in a cache persisted to the machine, protected to the current user, which can be shared by other credentials and processes.
+        /// Specifies the <see cref="TokenCache"/> to be used by the credential.
         /// </summary>
-        public bool EnablePersistentCache { get; set; }
+        public TokenCache TokenCache { get; set; }
 
         /// <summary>
         /// If set to true the credential will fall back to storing tokens in an unencrypted file if no OS level user encryption is available.
