@@ -23,6 +23,7 @@ namespace Azure.Core.Tests
         [TestCase("{\"json\" :\"value\"}", "application/json")]
         [TestCase("[\"json\", \"value\"]", "application/json")]
         [TestCase("[{\"json\":\"value\"}, {\"json\":\"value\"}]", "application/json")]
+        [TestCase("\"\"", "application/json")]
         [TestCase("invalid json", "application/json")]
         [TestCase("{ \"json\": \"value\" }", "unknown")]
         [TestCase("multi\rline", "application/xml")]
