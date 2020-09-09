@@ -2121,9 +2121,9 @@ namespace Azure.Storage.Blobs.Specialized
                 // Create Block Blob
                 Response<BlobContentInfo> response = await UploadInternal(
                     content: new MemoryStream(Array.Empty<byte>()),
-                    blobHttpHeaders: default,
-                    metadata: default,
-                    tags: default,
+                    blobHttpHeaders: options?.HttpHeaders,
+                    metadata: options?.Metadata,
+                    tags: options?.Tags,
                     conditions: options?.OpenConditions,
                     accessTier: default,
                     progressHandler: default,
