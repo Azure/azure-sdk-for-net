@@ -18,11 +18,11 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Triggers
             _client = client;
         }
 
-        public Task<BlobBaseClient> ConvertAsync(string input, CancellationToken cancellationToken)
+        public async Task<BlobBaseClient> ConvertAsync(string input, CancellationToken cancellationToken)
         {
             BlobPath path = BlobPath.ParseAndValidate(input);
             var container = _client.GetBlobContainerClient(path.ContainerName);
-            return container.GetBlobReferenceFromServerAsync(path.BlobName, cancellationToken);
+            return (await container.GetBlobReferenceFromServerAsync(path.BlobName, cancellationToken).ConfigureAwait(false)).Item1;
         }
     }
 }

@@ -271,7 +271,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
             var container = client.GetBlobContainerClient(path.ContainerName);
             var blob = await container.GetBlobReferenceFromServerAsync(path.BlobName).ConfigureAwait(false);
 
-            return blob;
+            return blob.Item1;
         }
 
         private async Task<Stream> CreateStreamAsync(

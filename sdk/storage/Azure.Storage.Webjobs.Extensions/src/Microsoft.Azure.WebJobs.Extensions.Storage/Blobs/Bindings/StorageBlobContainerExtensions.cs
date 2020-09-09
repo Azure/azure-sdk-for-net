@@ -37,17 +37,17 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
             }
         }
 
-        public static async Task<BlobBaseClient> GetBlobReferenceFromServerAsync(this BlobContainerClient container, string blobName, CancellationToken cancellationToken = default)
+        public static async Task<(BlobBaseClient, BlobProperties)> GetBlobReferenceFromServerAsync(this BlobContainerClient container, string blobName, CancellationToken cancellationToken = default)
         {
             BlobProperties blobProperties = await container.GetBlobClient(blobName).GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
             switch (blobProperties.BlobType)
             {
                 case BlobType.Append:
-                    return container.GetAppendBlobClient(blobName);
+                    return (container.GetAppendBlobClient(blobName), blobProperties);
                 case BlobType.Block:
-                    return container.GetBlockBlobClient(blobName);
+                    return (container.GetBlockBlobClient(blobName), blobProperties);
                 case BlobType.Page:
-                    return container.GetPageBlobClient(blobName);
+                    return (container.GetPageBlobClient(blobName), blobProperties);
                 default:
                     throw new InvalidOperationException();
             }
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
         {
             try
             {
-                return await container.GetBlobReferenceFromServerAsync(blobName, cancellationToken).ConfigureAwait(false);
+                return (await container.GetBlobReferenceFromServerAsync(blobName, cancellationToken).ConfigureAwait(false)).Item1;
             }
             catch (RequestFailedException exception)
             {

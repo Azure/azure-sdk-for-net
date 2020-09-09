@@ -22,6 +22,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
         internal const int DefaultScanHoursWindow = 2;
 
         private const string LogType = "LogType";
+        private const string LogContainer = "$logs";
 
         private readonly BlobServiceClient _blobClient;
         private readonly HashSet<string> _scannedBlobNames = new HashSet<string>();
@@ -97,7 +98,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
         //  $logs/YYYY/MM/DD/HH00
         private static string GetSearchPrefix(string service, DateTime startTime, DateTime endTime)
         {
-            StringBuilder prefix = new StringBuilder("$logs/");
+            StringBuilder prefix = new StringBuilder();
 
             prefix.AppendFormat(CultureInfo.InvariantCulture, "{0}/", service);
 
@@ -168,30 +169,22 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             string prefix, CancellationToken cancellationToken)
         {
             // List the blobs using the prefix
-            // TODO (kasobol-msft) fix naming
-            (BlobContainerClient, IEnumerable<BlobItem>) blobs = await blobClient.ListBlobsAsync(prefix, cancellationToken: cancellationToken).ConfigureAwait(false);
-
-            if (blobs == default)
-            {
-                return;
-            }
+            BlobContainerClient container = blobClient.GetBlobContainerClient(LogContainer);
+            var blobs = container.GetBlobsAsync(traits: BlobTraits.Metadata, prefix: prefix, cancellationToken: cancellationToken).ConfigureAwait(false);
 
             // iterate through each blob and figure the start and end times in the metadata
             // Type cast to IStorageBlob is safe due to useFlatBlobListing: true above.
-            foreach (var item in blobs.Item2)
+            await foreach (var item in blobs.ConfigureAwait(false))
             {
-                BlobBaseClient log = blobs.Item1.GetBlobClient(item.Name);
-                // TODO (kasobol-msft) optimize metadata fetching ?
-                BlobProperties blobProperties = await log.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (log != null && blobProperties.Metadata.ContainsKey(LogType))
+                if (item.Metadata.ContainsKey(LogType))
                 {
                     // we will exclude the file if the file does not have log entries in the interested time range.
-                    string logType = blobProperties.Metadata[LogType];
+                    string logType = item.Metadata[LogType];
                     bool hasWrites = logType.Contains("write");
 
                     if (hasWrites)
                     {
-                        selectedLogs.Add(log);
+                        selectedLogs.Add(container.GetBlobClient(item.Name));
                     }
                 }
             }

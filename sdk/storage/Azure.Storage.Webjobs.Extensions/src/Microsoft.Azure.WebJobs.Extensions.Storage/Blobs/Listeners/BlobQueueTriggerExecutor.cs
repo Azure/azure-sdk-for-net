@@ -82,10 +82,11 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             string blobName = message.BlobName;
 
             BlobBaseClient blob;
+            BlobProperties blobProperties;
 
             try
             {
-                blob = await container.GetBlobReferenceFromServerAsync(blobName, cancellationToken).ConfigureAwait(false);
+                (blob, blobProperties) = await container.GetBlobReferenceFromServerAsync(blobName, cancellationToken).ConfigureAwait(false);
             }
             catch (RequestFailedException exception) when (exception.IsNotFound() || exception.IsOk())
             {
@@ -95,9 +96,6 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             }
 
             // Ensure the blob still exists with the same ETag.
-            // TODO (kasobol-msft) check this statefulness, check if we can use ETag without toString conversion
-            //string possibleETag = blob.Properties.ETag; // set since we fetched from server
-            BlobProperties blobProperties = await blob.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
             string possibleETag = blobProperties.ETag.ToString();
 
             // If the blob still exists but the ETag is different, delete the message but do a fast path notification.
