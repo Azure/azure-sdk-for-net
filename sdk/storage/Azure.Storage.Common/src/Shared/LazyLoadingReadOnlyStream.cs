@@ -322,17 +322,17 @@ namespace Azure.Storage
 
         public override long Seek(long offset, SeekOrigin origin)
         {
-            if (offset == 0)
+            long newPosition = CalculateNewPosition(offset, origin);
+
+            if (newPosition == _position)
             {
                 return _position;
             }
 
-            long newPosition = CalculateNewPosition(offset, origin);
-
             // newPosition < 0
             if (newPosition < 0)
             {
-                throw new ArgumentException($"New ${offset} cannot be less than 0.  Value was ${newPosition}");
+                throw new ArgumentException($"New {nameof(offset)} cannot be less than 0.  Value was {newPosition}");
             }
 
             // newPosition > _length
@@ -346,7 +346,8 @@ namespace Azure.Storage
                 }
                 else
                 {
-                    throw new ArgumentException($"{nameof(newPosition)} exceeds known blob or file length.  This condition is now allowed with allowBlobModifications == false.");
+                    throw new ArgumentException(
+                        $"{nameof(newPosition)} exceeds known blob or file length.  This condition is not allowed with allowBlobModifications == false.");
                 }
             }
 
@@ -355,7 +356,7 @@ namespace Azure.Storage
             if (newPosition < _position && newPosition > beginningOfBuffer)
             {
 
-                _bufferPosition = (int)(_position - newPosition);
+                _bufferPosition = (int)(newPosition - beginningOfBuffer);
                 _position = newPosition;
                 return newPosition;
             }
@@ -364,7 +365,7 @@ namespace Azure.Storage
             long endOfBuffer = _position + (_bufferLength - _bufferPosition);
             if (newPosition > _position && newPosition < endOfBuffer)
             {
-                _bufferPosition += (int)(newPosition - _position);
+                _bufferPosition = (int)(newPosition - beginningOfBuffer);
                 _position = newPosition;
                 return newPosition;
             }
@@ -375,18 +376,18 @@ namespace Azure.Storage
             return newPosition;
         }
 
-        private long CalculateNewPosition(long offset, SeekOrigin origin)
+        internal long CalculateNewPosition(long offset, SeekOrigin origin)
         {
             switch (origin)
             {
                 case SeekOrigin.Begin:
                     return offset;
                 case SeekOrigin.Current:
-                    return _position += offset;
+                    return _position + offset;
                 case SeekOrigin.End:
                     if (_allowBlobModifications)
                     {
-                        throw new ArgumentException($"Cannot ${nameof(Seek)} with ${nameof(SeekOrigin.End)} on a growing blob or file.");
+                        throw new ArgumentException($"Cannot {nameof(Seek)} with {nameof(SeekOrigin)}.{nameof(SeekOrigin.End)} on a growing blob or file.");
                     }
                     else
                     {
