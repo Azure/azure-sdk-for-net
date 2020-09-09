@@ -62,10 +62,10 @@ namespace Azure.Storage.Sas
         private string _signature;
 
         // saoid
-        private string _authorizedAadObjectId;
+        private string _preauthorizedAgentObjectId;
 
         /// suoid
-        private string _unauthorizedAadObjectId;
+        private string _agentObjectId;
 
         /// scid
         private string _correlationId;
@@ -190,22 +190,22 @@ namespace Azure.Storage.Sas
         /// ensure that the owner of the user delegation key has the required permissions
         /// before granting access but no additional permission check for the user specified
         /// in this value will be performed. This cannot be used in conjuction with
-        /// <see cref="UnauthorizedAadObjectId"/>.
+        /// <see cref="AgentObjectId"/>.
         /// Only valid in an HNS enabled account. If this value is set in an non-HNS enabled
         /// account, an authorization failure will be thrown.
         /// </summary>
-        public string AuthorizedAadObjectId => _authorizedAadObjectId ?? string.Empty;
+        public string PreauthorizedAgentObjectId => _preauthorizedAgentObjectId ?? string.Empty;
 
         /// <summary>
         /// Gets the Unauthorized AAD Object Id associated with the shared access signature.
         /// The AAD Object Id of a user that is assumed to be unauthorized by the owner of the
         /// User Delegation Key. The Azure Storage Service will perform an additional POSIX ACL
         /// check to determine if the user is authorized to perform the requested operation.
-        /// This cannot be used in conjuction with <see cref="AuthorizedAadObjectId"/>.
+        /// This cannot be used in conjuction with <see cref="PreauthorizedAgentObjectId"/>.
         /// Only valid in an HNS enabled account. If this value is set in an non-HNS enabled
         /// account, an authorization failure will be thrown.
         /// </summary>
-        public string UnauthorizedAadObjectId => _unauthorizedAadObjectId ?? string.Empty;
+        public string AgentObjectId => _agentObjectId ?? string.Empty;
 
         /// <summary>
         /// Gets the Correlation Id associated with the shared access signature. This is used to
@@ -305,11 +305,11 @@ namespace Azure.Storage.Sas
                     case Constants.Sas.Parameters.ContentTypeUpper:
                         _contentType = kv.Value;
                         break;
-                    case Constants.Sas.Parameters.AuthorizedAadObjectIdUpper:
-                        _authorizedAadObjectId = kv.Value;
+                    case Constants.Sas.Parameters.PreauthorizedAgentObjectIdUpper:
+                        _preauthorizedAgentObjectId = kv.Value;
                         break;
-                    case Constants.Sas.Parameters.UnauthorizedAadObjectIdUpper:
-                        _unauthorizedAadObjectId = kv.Value;
+                    case Constants.Sas.Parameters.AgentObjectIdUpper:
+                        _agentObjectId = kv.Value;
                         break;
                     case Constants.Sas.Parameters.CorrelationIdUpper:
                         _correlationId = kv.Value;
@@ -369,8 +369,8 @@ namespace Azure.Storage.Sas
             _contentEncoding = contentEncoding;
             _contentLanguage = contentLanguage;
             _contentType = contentType;
-            _authorizedAadObjectId = default;
-            _unauthorizedAadObjectId = default;
+            _preauthorizedAgentObjectId = default;
+            _agentObjectId = default;
             _correlationId = default;
             _directoryDepth = default;
         }
@@ -416,8 +416,8 @@ namespace Azure.Storage.Sas
             _contentEncoding = contentEncoding;
             _contentLanguage = contentLanguage;
             _contentType = contentType;
-            _authorizedAadObjectId = authorizedAadObjectId;
-            _unauthorizedAadObjectId = unauthorizedAadObjectId;
+            _preauthorizedAgentObjectId = authorizedAadObjectId;
+            _agentObjectId = unauthorizedAadObjectId;
             _correlationId = correlationId;
             _directoryDepth = directoryDepth;
         }

@@ -60,12 +60,12 @@ namespace Azure.Storage.Sas
         /// <summary>
         /// Indicates that Ownership is permitted.
         /// </summary>
-        ModifyOwnership = 256,
+        ManageOwnership = 256,
 
         /// <summary>
         /// Indicates that Permissions is permitted.
         /// </summary>
-        ModifyPermissions = 512,
+        ManageAccessControl = 512,
 
         /// <summary>
         /// Indicates that all permissions are set.
@@ -122,13 +122,13 @@ namespace Azure.Storage.Files.DataLake
             {
                 sb.Append(Constants.Sas.Permissions.Execute);
             }
-            if ((permissions & DataLakeSasPermissions.ModifyOwnership) == DataLakeSasPermissions.ModifyOwnership)
+            if ((permissions & DataLakeSasPermissions.ManageOwnership) == DataLakeSasPermissions.ManageOwnership)
             {
-                sb.Append(Constants.Sas.Permissions.ModifyOwnership);
+                sb.Append(Constants.Sas.Permissions.ManageOwnership);
             }
-            if ((permissions & DataLakeSasPermissions.ModifyPermissions) == DataLakeSasPermissions.ModifyPermissions)
+            if ((permissions & DataLakeSasPermissions.ManageAccessControl) == DataLakeSasPermissions.ManageAccessControl)
             {
-                sb.Append(Constants.Sas.Permissions.ModifyPermission);
+                sb.Append(Constants.Sas.Permissions.ManageAccessControl);
             }
             return sb.ToString();
         }

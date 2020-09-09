@@ -325,7 +325,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
-        public async Task DataLakeSasBuilder_AuthorizedId()
+        public async Task DataLakeSasBuilder_PreauthorizedAgentObjectId()
         {
             // Arrange
             DataLakeServiceClient oauthService = GetServiceClient_OAuth();
@@ -346,9 +346,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(1),
-                FileSystemName = test.FileSystem.Name
+                FileSystemName = test.FileSystem.Name,
+                PreauthorizedAgentObjectId = Recording.Random.NewGuid().ToString()
             };
-            dataLakeSasBuilder.SetObjectId(Recording.Random.NewGuid().ToString(), false);
 
             dataLakeSasBuilder.SetPermissions(DataLakeSasPermissions.All);
 
@@ -368,7 +368,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
-        public async Task DataLakeSasBuilder_UnauthorizedId()
+        public async Task DataLakeSasBuilder_AgentObjectId()
         {
             // Arrange
             DataLakeServiceClient oauthService = GetServiceClient_OAuth();
@@ -401,9 +401,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(1),
-                FileSystemName = test.FileSystem.Name
+                FileSystemName = test.FileSystem.Name,
+                AgentObjectId = unknownGuid
             };
-            dataLakeSasBuilder.SetObjectId(unknownGuid, true);
             dataLakeSasBuilder.SetPermissions(DataLakeSasPermissions.All);
 
             DataLakeUriBuilder dataLakeUriBuilder = new DataLakeUriBuilder(test.FileSystem.Uri)
@@ -419,7 +419,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
-        public async Task DataLakeSasBuilder_UnauthorizedId_Error()
+        public async Task DataLakeSasBuilder_AgentObjectId_Error()
         {
             // Arrange
             DataLakeServiceClient oauthService = GetServiceClient_OAuth();
@@ -440,9 +440,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(1),
-                FileSystemName = test.FileSystem.Name
+                FileSystemName = test.FileSystem.Name,
+                AgentObjectId = Recording.Random.NewGuid().ToString()
             };
-            dataLakeSasBuilder.SetObjectId(Recording.Random.NewGuid().ToString(), true);
 
             dataLakeSasBuilder.SetPermissions(DataLakeSasPermissions.All);
 
@@ -457,6 +457,41 @@ namespace Azure.Storage.Files.DataLake.Tests
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 sasFileSystemClient.ExistsAsync(),
                 e => Assert.IsNotNull(e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task DataLakeSasBuilder_BothObjectId_Error()
+        {
+            // Arrange
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            string fileSystemName = GetNewFileSystemName();
+            string directoryName = GetNewDirectoryName();
+
+            await using DisposingFileSystem test = await GetNewFileSystem(service: oauthService, fileSystemName: fileSystemName);
+
+            // Arrange
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
+            DataLakeFileClient file = await directory.CreateFileAsync(GetNewFileName());
+
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            DataLakeSasBuilder dataLakeSasBuilder = new DataLakeSasBuilder
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(1),
+                FileSystemName = test.FileSystem.Name,
+                PreauthorizedAgentObjectId = Recording.Random.NewGuid().ToString(),
+                AgentObjectId = Recording.Random.NewGuid().ToString()
+            };
+
+            dataLakeSasBuilder.SetPermissions(DataLakeSasPermissions.All);
+
+            TestHelper.AssertExpectedException<InvalidOperationException>(
+                () => dataLakeSasBuilder.ToSasQueryParameters(userDelegationKey, test.FileSystem.AccountName),
+                new InvalidOperationException("SAS cannot have the AgentObjectId parameter when the PreauthorizedAgentObjectId parameter is present"));
         }
 
         [Test]

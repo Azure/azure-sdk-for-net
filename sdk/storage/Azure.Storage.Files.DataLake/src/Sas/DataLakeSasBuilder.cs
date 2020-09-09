@@ -158,21 +158,24 @@ namespace Azure.Storage.Sas
         /// User Delegation Key to perform the action granted by the SAS.
         /// The Azure Storage service will ensure that the owner of the
         /// user delegation key has the required permissions before granting access.
-        /// If <see cref="_performPosixCheck"/> is enabled, the Azure Storage Service
-        /// will perform an additional POSIX ACL check to determine if the user is
-        /// authorized to perform the requested operation. If not enabled no additional
-        /// permission check for the user specified in this value will be performed.
-        /// This cannot be used in conjuction with. This is only used with generating
-        /// User Delegation SAS.
+        /// No additional permission check for the user specified in this value will be performed.
+        /// This cannot be used in conjuction with <see cref="AgentObjectId"/>.
+        /// This is only used with generating User Delegation SAS.
         /// </summary>
-        private string _agentObjectId { get; set; }
+        public string PreauthorizedAgentObjectId { get; set; }
 
         /// <summary>
-        /// Optional. If enabled, the Azure Storage Service
-        /// will perform an additional POSIX ACL check to determine if the user,
-        /// <see cref="_agentObjectId"/> is authorized to perform the requested operation.
+        /// Optional. Beginning in version 2020-02-10, this value will be used for
+        /// the AAD Object ID of a user authorized by the owner of the
+        /// User Delegation Key to perform the action granted by the SAS.
+        /// The Azure Storage service will ensure that the owner of the
+        /// user delegation key has the required permissions before granting access.
+        /// the Azure Storage Service will perform an additional POSIX ACL check to
+        /// determine if the user is authorized to perform the requested operation.
+        /// This cannot be used in conjuction with <see cref="PreauthorizedAgentObjectId"/>.
+        /// This is only used with generating User Delegation SAS.
         /// </summary>
-        private bool _performPosixCheck { get; set; }
+        public string AgentObjectId { get; set; }
 
         /// <summary>
         /// Optional. Beginning in version 2020-02-10, this value will be used for
@@ -256,36 +259,6 @@ namespace Azure.Storage.Sas
             Permissions = rawPermissions;
         }
 
-        /// <summary>
-        /// Optional. Beginning in version 2020-02-10, this value will be used for
-        /// the AAD Object ID of a user authorized by the owner of the
-        /// User Delegation Key to perform the action granted by the SAS.
-        /// The Azure Storage service will ensure that the owner of the
-        /// user delegation key has the required permissions before granting access.
-        /// If the performPosicCheck is enabled, the Azure Storage Service
-        /// will perform an additional POSIX ACL check to determine if the user is
-        /// authorized to perform the requested operation. If not enabled no additional
-        /// permission check for the user specified in this value will be performed.
-        /// This cannot be used in conjuction with. This is only used with generating
-        /// User Delegation SAS.
-        /// </summary>
-        /// <param name="objectId">
-        /// This value will be used for the AAD Object of a user authorized by the
-        /// owner of the UserDelegationKey to perform the action granted by the SAS.
-        /// </param>
-        /// <param name="performPosixCheck">
-        /// This will enable the Azure Storage Service to perform an additional
-        /// POSIX ACL check to determine if the user is authorized to perform the
-        /// requested operation.
-        /// </param>
-        public void SetObjectId(
-            string objectId,
-            bool performPosixCheck)
-        {
-            _agentObjectId = objectId;
-            _performPosixCheck = performPosixCheck;
-        }
-
         private static readonly List<char> s_validPermissionsInOrder = new List<char>
         {
             Constants.Sas.Permissions.Read,
@@ -296,8 +269,8 @@ namespace Azure.Storage.Sas
             Constants.Sas.Permissions.List,
             Constants.Sas.Permissions.Move,
             Constants.Sas.Permissions.Execute,
-            Constants.Sas.Permissions.ModifyOwnership,
-            Constants.Sas.Permissions.ModifyPermission,
+            Constants.Sas.Permissions.ManageOwnership,
+            Constants.Sas.Permissions.ManageAccessControl,
         };
 
         /// <summary>
@@ -397,8 +370,8 @@ namespace Azure.Storage.Sas
                 signedExpiry,
                 userDelegationKey.SignedService,
                 userDelegationKey.SignedVersion,
-                _performPosixCheck ? null : _agentObjectId,
-                _performPosixCheck ? _agentObjectId : null,
+                PreauthorizedAgentObjectId,
+                AgentObjectId,
                 CorrelationId,
                 IPRange.ToString(),
                 SasExtensions.ToProtocolString(Protocol),
@@ -436,8 +409,8 @@ namespace Azure.Storage.Sas
                 contentEncoding: ContentEncoding,
                 contentLanguage: ContentLanguage,
                 contentType: ContentType,
-                authorizedAadObjectId: _performPosixCheck ? null : _agentObjectId,
-                unauthorizedAadObjectId: _performPosixCheck ? _agentObjectId : null,
+                authorizedAadObjectId: PreauthorizedAgentObjectId,
+                unauthorizedAadObjectId: AgentObjectId,
                 correlationId: CorrelationId,
                 directoryDepth: DirectoryDepth);
             return p;
@@ -514,6 +487,11 @@ namespace Azure.Storage.Sas
             if (string.IsNullOrEmpty(Version))
             {
                 Version = SasQueryParameters.DefaultSasVersion;
+            }
+
+            if (!string.IsNullOrEmpty(PreauthorizedAgentObjectId) && !string.IsNullOrEmpty(AgentObjectId))
+            {
+                throw Errors.SasDataNotAllowed(nameof(PreauthorizedAgentObjectId), nameof(AgentObjectId));
             }
         }
 

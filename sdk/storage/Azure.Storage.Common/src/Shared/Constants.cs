@@ -423,8 +423,8 @@ namespace Azure.Storage
                 public const char FilterByTags = 'f';
                 public const char Move = 'm';
                 public const char Execute = 'e';
-                public const char ModifyOwnership = 'o';
-                public const char ModifyPermission = 'p';
+                public const char ManageOwnership = 'o';
+                public const char ManageAccessControl = 'p';
             }
 
             internal static class Parameters
@@ -473,10 +473,10 @@ namespace Azure.Storage
                 public const string ContentLanguageUpper = "RSCL";
                 public const string ContentType = "rsct";
                 public const string ContentTypeUpper = "RSCT";
-                public const string AuthorizedAadObjectId = "saoid";
-                public const string AuthorizedAadObjectIdUpper = "SAOID";
-                public const string UnauthorizedAadObjectId = "suoid";
-                public const string UnauthorizedAadObjectIdUpper = "SUOID";
+                public const string PreauthorizedAgentObjectId = "saoid";
+                public const string PreauthorizedAgentObjectIdUpper = "SAOID";
+                public const string AgentObjectId = "suoid";
+                public const string AgentObjectIdUpper = "SUOID";
                 public const string CorrelationId = "scid";
                 public const string CorrelationIdUpper = "SCID";
                 public const string DirectoryDepth = "sdd";
