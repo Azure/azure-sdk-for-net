@@ -31,12 +31,12 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
             //create client
             AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, credential);
 
-            //read data
-            string datapath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "samples", "data", "request-data.csv");
-
             #endregion
 
             #region Snippet:ReadSeriesData
+
+            //read data
+            string datapath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "samples", "data", "request-data.csv");
 
             List<TimeSeriesPoint> list = File.ReadAllLines(datapath, Encoding.UTF8)
                 .Where(e => e.Trim().Length != 0)
