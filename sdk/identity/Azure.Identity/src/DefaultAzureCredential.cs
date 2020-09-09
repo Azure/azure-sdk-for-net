@@ -155,9 +155,14 @@ namespace Azure.Identity
 
                     return (token, sources[i]);
                 }
+                catch (CredentialUnavailableException e)
+                {
+                    exceptions.Add(e);
+                }
                 catch (AuthenticationFailedException e)
                 {
                     exceptions.Add(e);
+                    break;
                 }
             }
 
