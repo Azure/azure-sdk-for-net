@@ -81,22 +81,21 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
         private static TelemetryItem GeneratePartAEnvelope(Activity activity)
         {
-            // TODO: Get TelemetryEnvelope name changed in swagger
-            TelemetryItem envelope = new TelemetryItem(PartA_Name_Mapping[activity.GetTelemetryType()], activity.StartTimeUtc);
+            TelemetryItem telemetryItem = new TelemetryItem(PartA_Name_Mapping[activity.GetTelemetryType()], activity.StartTimeUtc);
             // TODO: Validate if Azure SDK has common function to generate role instance
-            envelope.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = "testRoleInstance";
+            telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = "testRoleInstance";
 
-            envelope.Tags[ContextTagKeys.AiOperationId.ToString()] = activity.TraceId.ToHexString();
+            telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()] = activity.TraceId.ToHexString();
             if (activity.Parent != null)
             {
-                envelope.Tags[ContextTagKeys.AiOperationParentId.ToString()] = activity.Parent.SpanId.ToHexString();
+                telemetryItem.Tags[ContextTagKeys.AiOperationParentId.ToString()] = activity.Parent.SpanId.ToHexString();
             }
 
             // TODO: "ai.location.ip"
             // TODO: Handle exception
-            envelope.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.SdkVersion;
+            telemetryItem.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.SdkVersion;
 
-            return envelope;
+            return telemetryItem;
         }
 
         private MonitorBase GenerateTelemetryData(Activity activity)
