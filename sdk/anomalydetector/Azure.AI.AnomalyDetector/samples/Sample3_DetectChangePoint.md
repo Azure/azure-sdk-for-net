@@ -1,4 +1,4 @@
-﻿# Detect Change Point
+# Detect Change Point
 This sample shows how to detect the change point in time series.
 
 To get started, make sure you have satisfied all the prerequisites and got all the resources required by [README][README].
@@ -10,13 +10,18 @@ To create a new `AnomalyDetectorClient` you need the endpoint and credentials fr
 You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
 
 ```C# Snippet:CreateAnomalyDetectorClient
-string endpoint = "<endpoint>";
-string apiKey = "<apiKey>";
+//read endpoint and apiKey
+string endpoint = TestEnvironment.Endpoint;
+string apiKey = TestEnvironment.ApiKey;
 
 var endpointUri = new Uri(endpoint);
 var credential = new AzureKeyCredential(apiKey);
 
+//create client
 AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, credential);
+
+//read data
+string datapath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "samples", "data", "request-data.csv");
 ```
 
 ## Load time series and create ChangePointDetectRequest
@@ -28,7 +33,8 @@ Call `File.ReadAllLines` with the file path and create a list of `TimeSeriesPoin
 Make a `ChangePointDetectRequest` object with the series of points, and `TimeGranularity.Daily` for the granularity (or periodicity) of the data points.
 
 ```C# Snippet:ReadSeriesDataForChangePoint
-string datapath = "<dataPath>";
+//read data
+string datapath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "samples", "data", "request-data.csv");
 
 List<TimeSeriesPoint> list = File.ReadAllLines(datapath, Encoding.UTF8)
     .Where(e => e.Trim().Length != 0)
@@ -44,6 +50,7 @@ ChangePointDetectRequest request = new ChangePointDetectRequest(list, TimeGranul
 Call the client's `DetectChangePointAsync` method with the `ChangePointDetectRequest` object and await the response as a `ChangePointDetectResponse` object. Iterate through the response's `IsChangePoint` values and print any that are true. These values correspond to the index of change points, if any were found.
 
 ```C# Snippet:DetectChangePoint
+//detect
 Console.WriteLine("Detecting the change point in the series.");
 
 ChangePointDetectResponse result = await client.DetectChangePointAsync(request).ConfigureAwait(false);

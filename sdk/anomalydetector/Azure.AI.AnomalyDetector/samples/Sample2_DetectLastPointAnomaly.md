@@ -10,13 +10,18 @@ To create a new `AnomalyDetectorClient` you need the endpoint and credentials fr
 You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
 
 ```C# Snippet:CreateAnomalyDetectorClient
-string endpoint = "<endpoint>";
-string apiKey = "<apiKey>";
+//read endpoint and apiKey
+string endpoint = TestEnvironment.Endpoint;
+string apiKey = TestEnvironment.ApiKey;
 
 var endpointUri = new Uri(endpoint);
 var credential = new AzureKeyCredential(apiKey);
 
+//create client
 AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, credential);
+
+//read data
+string datapath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "samples", "data", "request-data.csv");
 ```
 
 ## Load time series and create DetectRequest
@@ -28,14 +33,13 @@ Call `File.ReadAllLines` with the file path and create a list of `TimeSeriesPoin
 Make a `DetectRequest` object with the series of points, and `TimeGranularity.Daily` for the granularity (or periodicity) of the data points.
 
 ```C# Snippet:ReadSeriesData
-string datapath = "<dataPath>";
-
 List<TimeSeriesPoint> list = File.ReadAllLines(datapath, Encoding.UTF8)
     .Where(e => e.Trim().Length != 0)
     .Select(e => e.Split(','))
     .Where(e => e.Length == 2)
     .Select(e => new TimeSeriesPoint(DateTime.Parse(e[0]), float.Parse(e[1]))).ToList();
 
+//create request
 DetectRequest request = new DetectRequest(list, TimeGranularity.Daily);
 ```
 
@@ -43,6 +47,7 @@ DetectRequest request = new DetectRequest(list, TimeGranularity.Daily);
 Call the client's `DetectLastPointAsync` method with the `DetectRequest` object and await the response as a `LastDetectResponse` object. Check the response's `IsAnomaly` attribute to determine if the latest data point sent was an anomaly or not.
 
 ```C# Snippet:DetectLastPointAnomaly
+//detect
 Console.WriteLine("Detecting the anomaly status of the latest point in the series.");
 
 LastDetectResponse result = await client.DetectLastPointAsync(request).ConfigureAwait(false);
