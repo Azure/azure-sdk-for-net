@@ -491,7 +491,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             TestHelper.AssertExpectedException<InvalidOperationException>(
                 () => dataLakeSasBuilder.ToSasQueryParameters(userDelegationKey, test.FileSystem.AccountName),
-                new InvalidOperationException("SAS cannot have the AgentObjectId parameter when the PreauthorizedAgentObjectId parameter is present"));
+                new InvalidOperationException("SAS cannot have the following parameters specified in conjunction: PreauthorizedAgentObjectId, AgentObjectId"));
         }
 
         [Test]

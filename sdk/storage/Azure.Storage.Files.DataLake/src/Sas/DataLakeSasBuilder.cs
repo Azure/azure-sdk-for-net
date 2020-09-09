@@ -491,7 +491,7 @@ namespace Azure.Storage.Sas
 
             if (!string.IsNullOrEmpty(PreauthorizedAgentObjectId) && !string.IsNullOrEmpty(AgentObjectId))
             {
-                throw Errors.SasDataNotAllowed(nameof(PreauthorizedAgentObjectId), nameof(AgentObjectId));
+                throw Errors.SasDataInConjunction(nameof(PreauthorizedAgentObjectId), nameof(AgentObjectId));
             }
         }
 
