@@ -441,6 +441,7 @@ namespace Azure.Storage.Blobs.Models
         public static Azure.Storage.Blobs.Models.BlobErrorCode BlobAlreadyExists { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode BlobArchived { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode BlobBeingRehydrated { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode BlobImmutableDueToPolicy { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode BlobNotArchived { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode BlobNotFound { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode BlobOverwritten { get { throw null; } }
