@@ -1,6 +1,6 @@
 # Azure Schema Registry Apache Avro client library for .NET
 
-This library provides an Apache Avro serialization and deserialization API using the Azure Schema Registry service.
+Azure Schema Registry is a schema repository service hosted by Azure Event Hubs, providing schema storage, versioning, and management. This package provides an Avro serializer capable of serializing and deserializing payloads containing Schema Registry schema identifiers and Avro-encoded data.
 
 ## Getting started
 
@@ -41,7 +41,7 @@ The simpliest way is to use the [Azure portal][azure_portal] and navigate to you
 
 Once you have the Azure resource credentials and the Event Hubs namespace hostname, you can create the [SchemaRegistryClient][schema_registry_client]. You'll also need the [Azure.Identity][azure_identity] package to create the credential.
 
-```C# Snippet:CreateSchemaRegistryClient
+```C# Snippet:CreateSchemaRegistryClient2
 string endpoint = "<event_hubs_namespace_hostname>";
 var credentials = new ClientSecretCredential(
     "<tenant_id>",
@@ -115,11 +115,11 @@ Employee employee = (Employee)serializer.Deserialize(memoryStream, typeof(Employ
 
 ## Troubleshooting
 
-Information on troubleshooting steps will be added as problems are discovered.
+Information on troubleshooting steps will be provided as potential issues are discovered.
 
 ## Next steps
 
-Additional information will be available as documents related to Azure Schema Registry are published.
+See [Azure Schema Registry][azure_schema_registry] for additional information.
 
 ## Contributing
 
@@ -153,3 +153,4 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [generic_record]: https://avro.apache.org/docs/current/api/csharp/html/classAvro_1_1Generic_1_1GenericRecord.html
 [specific_record]: https://avro.apache.org/docs/current/api/csharp/html/interfaceAvro_1_1Specific_1_1ISpecificRecord.html
 [azure_sub]: https://azure.microsoft.com/free/
+[azure_schema_registry]: https://aka.ms/schemaregistry

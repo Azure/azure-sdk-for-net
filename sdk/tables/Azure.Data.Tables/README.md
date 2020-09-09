@@ -49,6 +49,10 @@ az cosmosdb create --name MyCosmosDBDatabaseAccount --resource-group MyResourceG
 az cosmosdb table create --name MyTableName --resource-group MyResourceGroup --account-name MyCosmosDBDatabaseAccount
 ```
 
+### Authenticate the Client
+
+Learn more about options for authentication _(including Connection Strings, Shared Key, and Shared Key Signatures)_ [in our samples.](samples/Sample0Auth.md)
+
 ## Key concepts
 
 - `TableServiceClient` - Client that provides methods to interact at the Table Service level such as creating, listing, and deleting tables
@@ -63,19 +67,16 @@ Common uses of the Table service include:
 - Quickly querying data using a clustered index
 - Accessing data using the OData protocol and LINQ filter expressions
 
-### Authenticate the Client
-
-Learn more about options for authentication _(including Connection Strings, Shared Key, and Shared Key Signatures)_ [in our samples.](samples/Sample0Auth.md)
 
 ## Examples
-- [Create the Table service client](#Create-the-Table-service-client)
-    - [Create an Azure table](#Create-an-Azure-table)
-    - [Get an Azure table](#Get-an-Azure-table)
-    - [Delete an Azure table](#Delete-an-Azure-table)
-- [Create the Table client](#Create-the-Table-client)
-    - [Add table entities](#Add-table-entities)
-    - [Query table entities ](#Query-table-entities)
-    - [Delete table entities](#Delete-table-entities)
+- [Create the Table service client](#create-the-table-service-client)
+    - [Create an Azure table](#create-an-azure-table)
+    - [Get an Azure table](#get-an-azure-table)
+    - [Delete an Azure table](#delete-an-azure-table)
+- [Create the Table client](#create-the-table-client)
+    - [Add table entities](#add-table-entities)
+    - [Query table entities ](#query-table-entities)
+    - [Delete table entities](#delete-table-entities)
 
 ### Create the Table service client
 
@@ -257,15 +258,14 @@ For more information see the [Code of Conduct FAQ][coc_faq] or contact
 [opencode@microsoft.com][coc_contact] with any additional questions or comments.
 
 <!-- LINKS -->
-[tables_rest]: https://docs.microsoft.com/en-us/rest/api/storageservices/table-service-rest-api
+[tables_rest]: https://docs.microsoft.com/rest/api/storageservices/table-service-rest-api
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/
 [table_client_nuget_package]: https://www.nuget.org/packages?q=Azure.Data.Tables
 [table_client_samples]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/samples
 [table_client_src]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/src
-[api_reference]: https://docs.microsoft.com/en-us/azure/cosmos-db/table-introduction
+[api_reference]: https://docs.microsoft.com/azure/cosmos-db/table-introduction
 [logging]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md
-[contrib]: ./CONTRIBUTING.md
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
