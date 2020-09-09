@@ -19,17 +19,21 @@ namespace Microsoft.Azure.Management.PostgreSQL
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("DBforPostgreSQL", "CheckNameAvailability", "2017-12-01"),
-                new Tuple<string, string, string>("DBforPostgreSQL", "Configurations", "2017-12-01"),
-                new Tuple<string, string, string>("DBforPostgreSQL", "Databases", "2017-12-01"),
-                new Tuple<string, string, string>("DBforPostgreSQL", "FirewallRules", "2017-12-01"),
-                new Tuple<string, string, string>("DBforPostgreSQL", "LocationBasedPerformanceTier", "2017-12-01"),
-                new Tuple<string, string, string>("DBforPostgreSQL", "LogFiles", "2017-12-01"),
-                new Tuple<string, string, string>("DBforPostgreSQL", "Operations", "2017-12-01"),
-                new Tuple<string, string, string>("DBforPostgreSQL", "Replicas", "2017-12-01"),
+                new Tuple<string, string, string>("DBForPostgreSQL", "CheckNameAvailability", "2017-12-01"),
+                new Tuple<string, string, string>("DBForPostgreSQL", "Configurations", "2017-12-01"),
+                new Tuple<string, string, string>("DBForPostgreSQL", "Databases", "2017-12-01"),
+                new Tuple<string, string, string>("DBForPostgreSQL", "FirewallRules", "2017-12-01"),
+                new Tuple<string, string, string>("DBForPostgreSQL", "LocationBasedPerformanceTier", "2017-12-01"),
+                new Tuple<string, string, string>("DBForPostgreSQL", "LogFiles", "2017-12-01"),
+                new Tuple<string, string, string>("DBForPostgreSQL", "Operations", "2017-12-01"),
+                new Tuple<string, string, string>("DBForPostgreSQL", "Replicas", "2017-12-01"),
+                new Tuple<string, string, string>("DBForPostgreSQL", "ServerAdministrators", "2017-12-01"),
+                new Tuple<string, string, string>("DBForPostgreSQL", "Servers", "2017-12-01"),
+                new Tuple<string, string, string>("DBForPostgreSQL", "VirtualNetworkRules", "2017-12-01"),
+                new Tuple<string, string, string>("DBforPostgreSQL", "PrivateEndpointConnections", "2018-06-01"),
+                new Tuple<string, string, string>("DBforPostgreSQL", "PrivateLinkResources", "2018-06-01"),
+                new Tuple<string, string, string>("DBforPostgreSQL", "ServerKeys", "2020-01-01"),
                 new Tuple<string, string, string>("DBforPostgreSQL", "ServerSecurityAlertPolicies", "2017-12-01"),
-                new Tuple<string, string, string>("DBforPostgreSQL", "Servers", "2017-12-01"),
-                new Tuple<string, string, string>("DBforPostgreSQL", "VirtualNetworkRules", "2017-12-01"),
               }.AsEnumerable();
           }
       }
