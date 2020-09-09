@@ -51,8 +51,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             // prepare a database account
             List<Location> locationList = new List<Location>();
             locationList.Add(new Location(id: null, locationName: "WEST US", documentEndpoint: null, provisioningState: null, failoverPriority: null, isZoneRedundant: null));
-            IEnumerable<Location> locations = locationList;
-            var databaseAccountsCreateOrUpdateParameters = new DatabaseAccountCreateUpdateParameters(locations);
+            var databaseAccountsCreateOrUpdateParameters = new DatabaseAccountCreateUpdateParameters(locationList);
             databaseAccountsCreateOrUpdateParameters.Kind = DatabaseAccountKind.GlobalDocumentDB;
             databaseAccountsCreateOrUpdateParameters.Location = "WEST US";
             databaseAccountsCreateOrUpdateParameters.Capabilities.Add(new Capability("EnableTable"));
