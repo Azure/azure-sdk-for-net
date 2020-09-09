@@ -214,7 +214,8 @@ stages:
                         parameters:
                           SourceFolder: ${{parameters.ArtifactName}}-signed
                           TargetFolder: ${{artifact.safeName}}/packages
-                          FileFilter: ${{artifact.name}}.[0-9]*.[0-9]*.[0-9]*
+                          FileFilter: "${{artifact.name}}.[0-9]*.[0-9]*.[0-9]*"
+                          Exclude: "*.symbols.nupkg"
                       - template: /eng/pipelines/templates/steps/stage-artifacts.yml
                         parameters:
                           SourceFolder: Docs.${{artifact.name}}
@@ -230,6 +231,7 @@ stages:
                           BlobSASKey: '$(azure-sdk-docs-prod-sas)'
                           BlobName: '$(azure-sdk-docs-prod-blob-name)'
                           TargetLanguage: 'dotnet'
+                          ArtifactLocation: '$(Pipeline.Workspace)/${{artifact.safeName}}/packages'
                           # we override the regular script path because we have cloned the build tools repo as a separate artifact.
                           ScriptPath: 'eng/common/scripts/copy-docs-to-blobstorage.ps1'
 

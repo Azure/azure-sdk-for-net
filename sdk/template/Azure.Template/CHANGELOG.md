@@ -1,7 +1,7 @@
 # Release History
 
 ## 1.0.3-beta.8 (Unreleased)
-
+- Enable the master link replacement feature
 
 ## 1.0.3-beta.7 (2020-09-04)
 - Test release tag replacement
