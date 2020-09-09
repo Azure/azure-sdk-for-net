@@ -30,7 +30,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
 
             //create client
             AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, credential);
-            
+
             #endregion
 
             #region Snippet:ReadSeriesData
