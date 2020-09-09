@@ -4,6 +4,7 @@ jobs:
       - template: ../variables/globals.yml
     pool:
       vmImage: windows-2019
+    timeoutInMinutes: 100
     steps:
       - pwsh: |
           echo "##vso[build.addbuildtag]Scheduled"
