@@ -26,7 +26,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 
             BlobContainerClient container = client.GetBlobContainerClient(containerName);
 
-            var blobsPageable = container.GetBlobsAsync(cancellationToken: cancellationToken);
+            var blobsPageable = container.GetBlobsAsync(prefix: listingPrefix, cancellationToken: cancellationToken);
 
             List<BlobItem> allResults = new List<BlobItem>();
             await foreach (BlobItem blobItem in blobsPageable.ConfigureAwait(false))

@@ -23,7 +23,6 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
     [Extension("AzureStorageBlobs", "Blobs")]
     internal class BlobsExtensionConfigProvider : IExtensionConfigProvider,
         IConverter<BlobAttribute, BlobContainerClient>,
-        // IConverter<BlobAttribute, CloudBlobDirectory>, // TODO (kasobol-msft) check this
         IConverter<BlobAttribute, BlobsExtensionConfigProvider.MultiBlobContext>
     {
         private readonly BlobTriggerAttributeBindingProvider _triggerBinder;
@@ -55,8 +54,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
         {
             var rule = context.AddBindingRule<BlobAttribute>();
 
-            // Bind to multiple blobs (either via a container; a blob directory, an IEnumerable<T>)
-            //rule.BindToInput<CloudBlobDirectory>(this); // TODO (kasobol-msft) check this
+            // Bind to multiple blobs (either via a container; an IEnumerable<T>)
             rule.BindToInput<BlobContainerClient>(this);
 
             rule.BindToInput<MultiBlobContext>(this); // Intermediate private context to capture state
@@ -128,23 +126,6 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
             return GetContainer(blobAttribute);
         }
 
-        // Write-only rule.
-        // TODO (kasobol-msft) how do we support this in next version, if we do ?
-        /*CloudBlobDirectory IConverter<BlobAttribute, CloudBlobDirectory>.Convert(
-            BlobAttribute blobAttribute)
-        {
-            var client = GetClient(blobAttribute);
-
-            BlobPath boundPath = BlobPath.ParseAndValidate(blobAttribute.BlobPath, isContainerBinding: false);
-
-            var container = client.GetContainerReference(boundPath.ContainerName);
-
-            CloudBlobDirectory directory = container.GetDirectoryReference(
-                boundPath.BlobName);
-
-            return directory;
-        }*/
-
         #endregion
 
         #region CloudBlob rules
@@ -208,13 +189,10 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
             {
                 // Query the blob container using the blob prefix (if specified)
                 // Note that we're explicitly using useFlatBlobListing=true to collapse
-                // sub directories. If users want to bind to a sub directory, they can
-                // bind to CloudBlobDirectory.
+                // sub directories.
                 string prefix = context.Prefix;
                 var container = context.Container;
                 IAsyncEnumerable<BlobItem> blobItems = container.GetBlobsAsync(prefix: prefix, cancellationToken: cancellationToken);
-                // TODO (kasobol-msft) check "true" below
-                //IEnumerable<IListBlobItem> blobItems = await container.ListBlobsAsync(prefix, true, cancellationToken).ConfigureAwait(false);
 
                 // create an IEnumerable<T> of the correct type, performing any required conversions on the blobs
                 var list = await ConvertBlobs(blobItems, container).ConfigureAwait(false);
@@ -227,8 +205,6 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
 
                 await foreach (var blobItem in blobItems.ConfigureAwait(false))
                 {
-                    // TODO (kasobol-msft) wtf? should we resolve by type ?
-                    //var src = (ICloudBlob)blobItem;
                     BlobBaseClient src = null;
                     switch (blobItem.Properties.BlobType)
                     {

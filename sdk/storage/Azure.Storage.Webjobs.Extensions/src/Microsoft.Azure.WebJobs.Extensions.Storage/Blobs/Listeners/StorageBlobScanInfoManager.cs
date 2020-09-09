@@ -18,7 +18,6 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
     {
         private readonly JsonSerializer _serializer;
         private readonly string _hostId;
-        //private CloudBlobDirectory _blobScanInfoDirectory; // TODO (kasobol-msft) check this
         private readonly string _blobScanInfoDirectoryPath;
         private readonly BlobContainerClient _blobContainerClient;
 
