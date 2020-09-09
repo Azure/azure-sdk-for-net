@@ -32,7 +32,7 @@
     <PackageReference Update="coverlet.msbuild" Version="2.9.0" />
     <PackageReference Update="FluentAssertions" Version="5.10.3" />
     <PackageReference Update="FsCheck.Xunit" Version="2.14.0" />
-    <PackageReference Update="Microsoft.Azure.Amqp" Version="2.4.5" />
+    <PackageReference Update="Microsoft.Azure.Amqp" Version="2.4.6" />
     <PackageReference Update="Microsoft.Azure.Batch" Version="11.0.0" />
     <PackageReference Update="Microsoft.Azure.Devices.Client" Version="1.23.2" />
     <PackageReference Update="Microsoft.Azure.Devices" Version="1.19.0" />
