@@ -24,17 +24,6 @@ jobs:
         displayName: 'Use Python 3.6'
         inputs:
           versionSpec: '3.6'
-      - template: /eng/common/pipelines/templates/steps/verify-path-length.yml
-        parameters:
-          SourceDirectory: $(Build.SourcesDirectory)
-      - template: /eng/common/pipelines/templates/steps/verify-links.yml
-        parameters:
-          Directory: sdk/${{ parameters.ServiceDirectory }}
-      - script: |
-          pip install setuptools wheel
-          pip install doc-warden==$(DocWardenVersion)
-          ward scan -d $(Build.SourcesDirectory) -c $(Build.SourcesDirectory)/eng/.docsettings.yml
-        displayName: "Verify Readmes"
       - template: /eng/common/pipelines/templates/steps/replace-relative-links.yml
         parameters:
           TargetFolder: '.'
@@ -49,13 +38,6 @@ jobs:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
           DOTNET_MULTILEVEL_LOOKUP: 0
-      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
-        displayName: "Component Detection"
-        # ComponentGovernance is currently unable to run on pull requests of public projects.  Running on
-        # scheduled builds should be good enough.
-        inputs:
-          ignoreDirectories: "sdk/storage/Azure.Storage.Common/swagger/Generator"
-        condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
       - task: PublishPipelineArtifact@1
         condition: succeeded()
         inputs:
@@ -67,6 +49,37 @@ jobs:
           Artifacts: ${{parameters.Artifacts}}
           DocGenerationDir: "$(Build.SourcesDirectory)/doc/ApiDocGeneration"
           LibType: 'client'
+  - job: "Analyze"
+    condition: ne(variables['Skip.Analyze'], true)
+    variables:
+      - template: ../variables/globals.yml
+    dependsOn:
+      - Build
+    pool:
+      vmImage: "windows-2019"
+    steps:
+      - task: UsePythonVersion@0
+        displayName: "Use Python 3.6"
+        inputs:
+          versionSpec: "3.6"
+      - template: /eng/common/pipelines/templates/steps/verify-links.yml
+        parameters:
+          Directory: sdk/${{ parameters.ServiceDirectory }}
+      - script: |
+          pip install setuptools wheel
+          pip install doc-warden==$(DocWardenVersion)
+          ward scan -d $(Build.SourcesDirectory) -c $(Build.SourcesDirectory)/eng/.docsettings.yml
+        displayName: "Verify Readmes"
+      - template: /eng/common/pipelines/templates/steps/verify-path-length.yml
+        parameters:
+          SourceDirectory: $(Build.SourcesDirectory)
+      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
+        displayName: "Component Detection"
+        # ComponentGovernance is currently unable to run on pull requests of public projects.  Running on
+        # scheduled builds should be good enough.
+        inputs:
+          ignoreDirectories: "sdk/storage/Azure.Storage.Common/swagger/Generator"
+        condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
   - job: VerifyGenerated
     variables:
       - template: ../variables/globals.yml
