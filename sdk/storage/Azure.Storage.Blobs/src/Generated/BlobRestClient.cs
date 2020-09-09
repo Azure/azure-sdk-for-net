@@ -17322,6 +17322,11 @@ namespace Azure.Storage.Blobs.Models
         public static Azure.Storage.Blobs.Models.BlobErrorCode BlobAlreadyExists { get; } = new BlobErrorCode(@"BlobAlreadyExists");
 
         /// <summary>
+        /// BlobImmutableDueToPolicy
+        /// </summary>
+        public static Azure.Storage.Blobs.Models.BlobErrorCode BlobImmutableDueToPolicy { get; } = new BlobErrorCode(@"BlobImmutableDueToPolicy");
+
+        /// <summary>
         /// BlobNotFound
         /// </summary>
         public static Azure.Storage.Blobs.Models.BlobErrorCode BlobNotFound { get; } = new BlobErrorCode(@"BlobNotFound");
