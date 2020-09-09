@@ -4,6 +4,7 @@
 - Fixed bug where Stream returned from AppendBlobClient.OpenWrite(), BlockBlobClient.OpenWrite() and PageBlobClient.OpenWrite() did not flush while disposing preventing compatibility with using keyword.
 - Fixed bug where Listing Blobs with BlobTraits.Metadata would return BlobItems with null metadata instead of an empty dictionary if no metadata was present.
 - Fixed bug where BlobAccessPolicy.StartsOn and .ExpiresOn would cause the process to crash.
+- Added seekability to BlobBaseClient.OpenRead().
 
 ## 12.6.0 (2020-08-31)
 - Fixed bug where BlobClient.Upload(), BlockBlobClient.Upload(), AppendBlobClient.AppendBlock(), and PageBlobClient.UploadPages() would deadlock if the content stream's position was not 0.
