@@ -51,7 +51,12 @@ namespace Azure.Storage
         /// <summary>
         /// If we are allowing the blob to be modifed while we read it.
         /// </summary>
-        private bool _allowBlobModifications;
+        private readonly bool _allowBlobModifications;
+
+        /// <summary>
+        /// Indicated the user has called Seek() since the last Read() call, and the new position is outside _buffer.
+        /// </summary>
+        private bool _seeked;
 
         /// <summary>
         /// Request conditions to send on the download requests.
@@ -93,6 +98,7 @@ namespace Azure.Storage
             _requestConditions = requestConditions;
             _length = initialLenght;
             _allowBlobModifications = !(_requestConditions == null && _createRequestConditionsFunc != null);
+            _seeked = false;
         }
 
         public override int Read(byte[] buffer, int offset, int count)
@@ -136,13 +142,14 @@ namespace Azure.Storage
 
             }
 
-            if (_bufferPosition == 0 || _bufferPosition == _bufferLength)
+            if (_bufferPosition == 0 || _bufferPosition == _bufferLength || _seeked)
             {
                 int lastDownloadedBytes = await DownloadInternal(async, cancellationToken).ConfigureAwait(false);
                 if (lastDownloadedBytes == 0)
                 {
                     return 0;
                 }
+                _seeked = false;
             }
 
             int remainingBytesInBuffer = _bufferLength - _bufferPosition;
@@ -301,7 +308,7 @@ namespace Azure.Storage
 
         public override bool CanRead => true;
 
-        public override bool CanSeek => false;
+        public override bool CanSeek => true;
 
         public override bool CanWrite => false;
 
@@ -315,7 +322,79 @@ namespace Azure.Storage
 
         public override long Seek(long offset, SeekOrigin origin)
         {
-            throw new NotSupportedException();
+            if (offset == 0)
+            {
+                return _position;
+            }
+
+            long newPosition = CalculateNewPosition(offset, origin);
+
+            // newPosition < 0
+            if (newPosition < 0)
+            {
+                throw new ArgumentException($"New ${offset} cannot be less than 0.  Value was ${newPosition}");
+            }
+
+            // newPosition > _length
+            if (newPosition > _length)
+            {
+                if (_allowBlobModifications)
+                {
+                    _position = newPosition;
+                    _seeked = true;
+                    return newPosition;
+                }
+                else
+                {
+                    throw new ArgumentException($"{nameof(newPosition)} exceeds known blob or file length.  This condition is now allowed with allowBlobModifications == false.");
+                }
+            }
+
+            // newPosition is less than _position, but within _buffer.
+            long beginningOfBuffer = _position - _bufferPosition;
+            if (newPosition < _position && newPosition > beginningOfBuffer)
+            {
+
+                _bufferPosition = (int)(_position - newPosition);
+                _position = newPosition;
+                return newPosition;
+            }
+
+            // newPosition is greater than _position, but within _buffer.
+            long endOfBuffer = _position + (_bufferLength - _bufferPosition);
+            if (newPosition > _position && newPosition < endOfBuffer)
+            {
+                _bufferPosition += (int)(newPosition - _position);
+                _position = newPosition;
+                return newPosition;
+            }
+
+            // newPosition is outside of _buffer, we will need to re-download.
+            _seeked = true;
+            _position = newPosition;
+            return newPosition;
+        }
+
+        private long CalculateNewPosition(long offset, SeekOrigin origin)
+        {
+            switch (origin)
+            {
+                case SeekOrigin.Begin:
+                    return offset;
+                case SeekOrigin.Current:
+                    return _position += offset;
+                case SeekOrigin.End:
+                    if (_allowBlobModifications)
+                    {
+                        throw new ArgumentException($"Cannot ${nameof(Seek)} with ${nameof(SeekOrigin.End)} on a growing blob or file.");
+                    }
+                    else
+                    {
+                        return _length += offset;
+                    }
+                default:
+                    throw new ArgumentException($"Unknown ${nameof(SeekOrigin)} value");
+            }
         }
 
         public override void SetLength(long value)
