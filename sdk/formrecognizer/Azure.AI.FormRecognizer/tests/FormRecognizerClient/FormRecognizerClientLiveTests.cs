@@ -764,6 +764,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [TestCase(true, false)]
         [TestCase(false, true)]
         [TestCase(false, false)]
+        [Ignore("Need to investigate")]
         public async Task StartRecognizeCustomFormsWithLabels(bool useStream, bool includeFieldElements)
         {
             var client = CreateFormRecognizerClient();
@@ -980,6 +981,8 @@ namespace Azure.AI.FormRecognizer.Tests
         [TestCase(true, false)]
         [TestCase(false, true)]
         [TestCase(false, false)]
+        [Ignore("Need to investigate")]
+
         public async Task StartRecognizeCustomFormsWithoutLabels(bool useStream, bool includeFieldElements)
         {
             var client = CreateFormRecognizerClient();
