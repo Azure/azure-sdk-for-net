@@ -29,6 +29,9 @@ namespace Azure.AI.FormRecognizer.Models
             Tables = pageResult?.Tables != null
                 ? ConvertTables(pageResult, readResults, pageIndex)
                 : new List<FormTable>();
+            SelectionMarks = readResult.SelectionMarks != null
+                ? ConvertSelectionMarks(readResult.SelectionMarks, readResult.Page)
+                : new List<SelectionMark>();
         }
 
         /// <summary>
@@ -92,6 +95,11 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         public IReadOnlyList<FormTable> Tables { get; }
 
+        /// <summary>
+        /// A list of recognized selection marks contained in this page.
+        /// </summary>
+        public IReadOnlyList<SelectionMark> SelectionMarks { get; }
+
         private static IReadOnlyList<FormLine> ConvertLines(IReadOnlyList<TextLine> textLines, int pageNumber)
         {
             List<FormLine> rawLines = new List<FormLine>();
@@ -114,6 +122,18 @@ namespace Azure.AI.FormRecognizer.Models
             }
 
             return tables;
+        }
+
+        private static IReadOnlyList<SelectionMark> ConvertSelectionMarks(IReadOnlyList<SelectionMark_internal> selectionMarksInternal, int pageNumber)
+        {
+            List<SelectionMark> selectionMarks = new List<SelectionMark>();
+
+            foreach (var selectionMark in selectionMarksInternal)
+            {
+                selectionMarks.Add(new SelectionMark(selectionMark, pageNumber));
+            }
+
+            return selectionMarks;
         }
     }
 }
