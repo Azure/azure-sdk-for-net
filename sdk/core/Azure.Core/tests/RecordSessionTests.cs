@@ -23,7 +23,7 @@ namespace Azure.Core.Tests
         [TestCase("{\"json\" :\"value\"}", "application/json")]
         [TestCase("[\"json\", \"value\"]", "application/json")]
         [TestCase("[{\"json\":\"value\"}, {\"json\":\"value\"}]", "application/json")]
-        [TestCase("{\\u0002json\\u0002:{\\u0002json\\u0002:\\u0002value\\u0002}", "application/json")]
+        [TestCase("\"\"", "application/json")]
         [TestCase("invalid json", "application/json")]
         [TestCase("{ \"json\": \"value\" }", "unknown")]
         [TestCase("multi\rline", "application/xml")]
@@ -38,17 +38,11 @@ namespace Azure.Core.Tests
             session.Variables["a"] = "value a";
             session.Variables["b"] = "value b";
 
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteStringValue(body);
-            var request = new MockRequest()
-            {
-                Content = content
-            };
-
-            RecordEntry recordEntry = RecordTransport.CreateEntry(request, new MockResponse(202));
+            RecordEntry recordEntry = new RecordEntry();
             recordEntry.Request.Headers.Add("Content-Type", new[] { contentType });
             recordEntry.Request.Headers.Add("Other-Header", new[] { "multi", "value" });
             recordEntry.RequestUri = "url";
+            recordEntry.Request.Body = bodyBytes;
             recordEntry.RequestMethod = RequestMethod.Delete;
 
             recordEntry.Response.Headers.Add("Content-Type", new[] { contentType });
@@ -87,7 +81,7 @@ namespace Azure.Core.Tests
             CollectionAssert.AreEqual(new[] { contentType }, deserializedRecord.Response.Headers["content-type"]);
             CollectionAssert.AreEqual(new[] { "multi", "value" }, deserializedRecord.Response.Headers["other-response-header"]);
 
-            CollectionAssert.AreEqual(recordEntry.Request.Body, deserializedRecord.Request.Body);
+            CollectionAssert.AreEqual(bodyBytes, deserializedRecord.Request.Body);
             CollectionAssert.AreEqual(bodyBytes, deserializedRecord.Response.Body);
         }
 
