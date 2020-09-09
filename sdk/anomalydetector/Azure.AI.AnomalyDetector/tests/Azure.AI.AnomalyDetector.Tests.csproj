@@ -12,7 +12,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="samples\data\*" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.AI.AnomalyDetector.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="samples\data\" />
   </ItemGroup>
 </Project>
