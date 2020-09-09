@@ -1,5 +1,9 @@
 # Release History
 
+## 1.0.2 (Unreleased)
+
+- Provide AddConfigurationClient with support for TokenCredential
+
 ## 1.0.1 (2020-07-07)
 
 - Update the tag list for the AzConfig package

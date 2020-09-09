@@ -32,9 +32,27 @@ namespace Azure.Identity
         {
         }
 
-        internal static AuthenticationFailedException CreateAggregateException(string message, IList<Exception> innerExceptions)
+        internal static AuthenticationFailedException CreateAggregateException(string message, IList<Exception> exceptions)
         {
-            return new AuthenticationFailedException(message, new AggregateException("Multiple exceptions were encountered while attempting to authenticate.", innerExceptions.ToArray()));
+            // Build the credential unavailable message, this code is only reachable if all credentials throw AuthenticationFailedException
+            StringBuilder errorMsg = new StringBuilder(message);
+
+            bool allCredentialUnavailableException = true;
+            foreach (var exception in exceptions)
+            {
+                allCredentialUnavailableException &= exception is CredentialUnavailableException;
+                errorMsg.Append(Environment.NewLine).Append("- ").Append(exception.Message);
+            }
+
+            var innerException = exceptions.Count == 1
+                ? exceptions[0]
+                : new AggregateException("Multiple exceptions were encountered while attempting to authenticate.", exceptions);
+
+            // If all credentials have thrown CredentialUnavailableException, throw CredentialUnavailableException,
+            // otherwise throw AuthenticationFailedException
+            return allCredentialUnavailableException
+                ? new CredentialUnavailableException(errorMsg.ToString(), innerException)
+                : new AuthenticationFailedException(errorMsg.ToString(), innerException);
         }
     }
 }

@@ -6,11 +6,11 @@
 	<PropertyGroup>
 		<Description>Microsoft Azure Monitor Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Monitor</AssemblyName>
-		<Version>0.25.1-preview</Version>
+		<Version>0.25.2-preview</Version>
 		<PackageId>Microsoft.Azure.Management.Monitor</PackageId>
 		<PackageTags>Management.Monitor;Management.Monitoring;metrics;alerts;autoscale;activityLogs;events;operations;logs;privatelinkscope</PackageTags>
 		<PackageReleaseNotes>
-	  - Fixing API **2018-03-01/metricAlert_API**. Fix WebtestLocationAvailabilityCriteria criteria type.
+	  - Adding API **2018-03-01/metricAlert_API**. Support SkipMetricValidation property.
     </PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

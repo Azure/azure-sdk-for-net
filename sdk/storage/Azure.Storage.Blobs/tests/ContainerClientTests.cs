@@ -1005,6 +1005,18 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public void BlobAccessPolicyNullStartsOnExpiresOnTest()
+        {
+            BlobAccessPolicy accessPolicy = new BlobAccessPolicy()
+            {
+                Permissions = "rw"
+            };
+
+            Assert.AreEqual(new DateTimeOffset(), accessPolicy.StartsOn);
+            Assert.AreEqual(new DateTimeOffset(), accessPolicy.ExpiresOn);
+        }
+
+        [Test]
         public async Task SetAccessPolicyAsync_OldProperties()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1779,7 +1791,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(2, page.Values.Count);
-            Assert.IsTrue(page.Values.All(b => b.Metadata == null));
+            Assert.IsTrue(page.Values.All(b => b.Metadata.Count == 0));
         }
 
         [Test]
@@ -2105,6 +2117,23 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             AssertDictionaryEquality(metadata, item.Blob.Metadata);
+        }
+
+        [Test]
+        public async Task ListBlobsHierarchySegmentAsync_Metadata_NoMetadata()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            await blob.CreateAsync();
+
+            // Act
+            BlobHierarchyItem item = await test.Container.GetBlobsByHierarchyAsync(traits: BlobTraits.Metadata).FirstAsync();
+
+            // Assert
+            Assert.IsNotNull(item.Blob.Metadata);
+            Assert.AreEqual(0, item.Blob.Metadata.Count);
         }
 
         [Test]

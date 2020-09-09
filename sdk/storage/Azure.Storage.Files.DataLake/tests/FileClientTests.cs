@@ -2861,7 +2861,9 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task UploadAsync_MinFile()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task UploadAsync_MinFile(bool readOnlyFile)
         {
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -2878,12 +2880,18 @@ namespace Azure.Storage.Files.DataLake.Tests
                 {
                     File.WriteAllBytes(path, data);
 
+                    if (readOnlyFile)
+                    {
+                        File.SetAttributes(path, FileAttributes.ReadOnly);
+                    }
+
                     await file.UploadAsync(path);
                 }
                 finally
                 {
                     if (File.Exists(path))
                     {
+                        File.SetAttributes(path, FileAttributes.Normal);
                         File.Delete(path);
                     }
                 }
@@ -3570,7 +3578,6 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/13510
         public async Task OpenReadAsync_BufferSize()
         {
             // Arrange
@@ -3651,7 +3658,6 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/13510
         public async Task OpenReadAsync_AccessConditions()
         {
             // Arrange
@@ -3731,7 +3737,6 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/13510
         public async Task OpenReadAsync_StrangeOffsetsTest()
         {
             // Arrange
@@ -3776,7 +3781,6 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/13510
         public async Task OpenReadAsync_Modified()
         {
             // Arrange
@@ -3811,7 +3815,6 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/13510
         public async Task OpenReadAsync_ModifiedAllowBlobModifications()
         {
             // Arrange
@@ -3889,7 +3892,6 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/13510
         public async Task OpenReadAsync_CopyReadStreamToAnotherStream()
         {
             // Arrange
@@ -4020,7 +4022,6 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/13510")]
         public async Task OpenWriteAsync_AppendExistingFile()
         {
             // Arrange
