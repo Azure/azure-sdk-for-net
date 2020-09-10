@@ -116,7 +116,8 @@ for (var i = 0; i < inputMessageArray.Length; i++)
 {
     if (!messageBatch.TryAddMessage(inputMessageArray[i]))
     {
-      if (messageBatch.Count == 0) {
+      if (messageBatch.Count == 0) 
+      {
         Console.WriteLine($"Failed to fit message number in a batch {i}");
         break;
       }
