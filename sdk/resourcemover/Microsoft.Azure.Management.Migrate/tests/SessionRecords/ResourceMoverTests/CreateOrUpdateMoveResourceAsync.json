@@ -1,0 +1,185 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/e80eb9fa-c996-4435-aa32-5af6f3d3077c/resourceGroups/moveCollectionRg/providers/Microsoft.Migrate/moveCollections/ResourceMover-eastus-westus2/moveResources/2784cefb-8202-42ee-ba82-bbbb499885c5?api-version=2019-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTgwZWI5ZmEtYzk5Ni00NDM1LWFhMzItNWFmNmYzZDMwNzdjL3Jlc291cmNlR3JvdXBzL21vdmVDb2xsZWN0aW9uUmcvcHJvdmlkZXJzL01pY3Jvc29mdC5NaWdyYXRlL21vdmVDb2xsZWN0aW9ucy9SZXNvdXJjZU1vdmVyLWVhc3R1cy13ZXN0dXMyL21vdmVSZXNvdXJjZXMvMjc4NGNlZmItODIwMi00MmVlLWJhODItYmJiYjQ5OTg4NWM1P2FwaS12ZXJzaW9uPTIwMTktMTAtMDEtcHJldmlldw==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"sourceId\": \"/subscriptions/e80eb9fa-c996-4435-aa32-5af6f3d3077c/resourceGroups/NETSdkEastUS/providers/Microsoft.Compute/virtualMachines/vm1\",\r\n    \"resourceSettings\": {\r\n      \"resourceType\": \"Microsoft.Compute/virtualMachines\",\r\n      \"targetAvailabilityZone\": \"1\",\r\n      \"targetResourceName\": \"targetVm1\"\r\n    },\r\n    \"dependsOnOverrides\": [\r\n      {\r\n        \"id\": \"/subscriptions/e80eb9fa-c996-4435-aa32-5af6f3d3077c/resourceGroups/NETSdkEastUS/providers/Microsoft.Compute/availabilitySets/AvailabilitySet1\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "2a159569-f4b7-4363-9aa0-2f64c03dc017"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Migrate.ResourceMover.ResourceMoverServiceAPIClient/1.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "563"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 09 Sep 2020 16:38:47 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-request-id": [
+          "8a386dc1-edcb-4a6c-980b-fa29cdd70c09"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/e80eb9fa-c996-4435-aa32-5af6f3d3077c/resourceGroups/moveCollectionRg/providers/Microsoft.Migrate/MoveCollections/ResourceMover-eastus-westus2/operations/66f8273c-6431-4afb-b4cf-48fe707842ad?api-version=2019-10-01-preview"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-correlation-request-id": [
+          "001e7b3f-c38b-4d8d-a01f-4c804e6729b8"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTINDIA:20200909T163848Z:001e7b3f-c38b-4d8d-a01f-4c804e6729b8"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/e80eb9fa-c996-4435-aa32-5af6f3d3077c/resourceGroups/moveCollectionRg/providers/Microsoft.Migrate/MoveCollections/ResourceMover-eastus-westus2/operations/66f8273c-6431-4afb-b4cf-48fe707842ad?api-version=2019-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTgwZWI5ZmEtYzk5Ni00NDM1LWFhMzItNWFmNmYzZDMwNzdjL3Jlc291cmNlR3JvdXBzL21vdmVDb2xsZWN0aW9uUmcvcHJvdmlkZXJzL01pY3Jvc29mdC5NaWdyYXRlL01vdmVDb2xsZWN0aW9ucy9SZXNvdXJjZU1vdmVyLWVhc3R1cy13ZXN0dXMyL29wZXJhdGlvbnMvNjZmODI3M2MtNjQzMS00YWZiLWI0Y2YtNDhmZTcwNzg0MmFkP2FwaS12ZXJzaW9uPTIwMTktMTAtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Migrate.ResourceMover.ResourceMoverServiceAPIClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 09 Sep 2020 16:39:02 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "235e2c48-d4ea-432a-88f7-b09c5bfd69d8"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-correlation-request-id": [
+          "4931f86b-74f8-4c6d-879b-9028652b939f"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTINDIA:20200909T163903Z:4931f86b-74f8-4c6d-879b-9028652b939f"
+        ],
+        "Content-Length": [
+          "375"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e80eb9fa-c996-4435-aa32-5af6f3d3077c/resourceGroups/moveCollectionRg/providers/Microsoft.Migrate/MoveCollections/ResourceMover-eastus-westus2/operations/66f8273c-6431-4afb-b4cf-48fe707842ad\",\r\n  \"name\": \"66f8273c-6431-4afb-b4cf-48fe707842ad\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"9/9/2020 4:38:47 PM\",\r\n  \"endTime\": \"9/9/2020 4:38:53 PM\",\r\n  \"error\": null,\r\n  \"properties\": {}\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e80eb9fa-c996-4435-aa32-5af6f3d3077c/resourceGroups/moveCollectionRg/providers/Microsoft.Migrate/moveCollections/ResourceMover-eastus-westus2/moveResources/2784cefb-8202-42ee-ba82-bbbb499885c5?api-version=2019-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTgwZWI5ZmEtYzk5Ni00NDM1LWFhMzItNWFmNmYzZDMwNzdjL3Jlc291cmNlR3JvdXBzL21vdmVDb2xsZWN0aW9uUmcvcHJvdmlkZXJzL01pY3Jvc29mdC5NaWdyYXRlL21vdmVDb2xsZWN0aW9ucy9SZXNvdXJjZU1vdmVyLWVhc3R1cy13ZXN0dXMyL21vdmVSZXNvdXJjZXMvMjc4NGNlZmItODIwMi00MmVlLWJhODItYmJiYjQ5OTg4NWM1P2FwaS12ZXJzaW9uPTIwMTktMTAtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
+          "Microsoft.Azure.Management.Migrate.ResourceMover.ResourceMoverServiceAPIClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 09 Sep 2020 16:39:03 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "75c87dd4-f7f1-4667-8d77-8b23b326be63"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "x-ms-correlation-request-id": [
+          "252d2a41-aacf-4e66-84bf-bdc8375d9c17"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTINDIA:20200909T163903Z:252d2a41-aacf-4e66-84bf-bdc8375d9c17"
+        ],
+        "Content-Length": [
+          "1624"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"2784cefb-8202-42ee-ba82-bbbb499885c5\",\r\n  \"id\": \"/subscriptions/e80eb9fa-c996-4435-aa32-5af6f3d3077c/resourceGroups/moveCollectionRg/providers/Microsoft.Migrate/MoveCollections/ResourceMover-eastus-westus2/MoveResources/2784cefb-8202-42ee-ba82-bbbb499885c5\",\r\n  \"type\": null,\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"isResolveRequired\": \"False\",\r\n    \"sourceId\": \"/subscriptions/e80eb9fa-c996-4435-aa32-5af6f3d3077c/resourceGroups/NETSdkEastUS/providers/Microsoft.Compute/virtualMachines/vm1\",\r\n    \"targetId\": null,\r\n    \"existingTargetId\": null,\r\n    \"resourceSettings\": {\r\n      \"resourceType\": \"Microsoft.Compute/virtualMachines\",\r\n      \"targetAvailabilityZone\": \"1\",\r\n      \"targetAvailabilitySetId\": null,\r\n      \"targetVmSize\": null,\r\n      \"targetResourceName\": \"targetVm1\"\r\n    },\r\n    \"moveStatus\": {\r\n      \"moveState\": \"PreparePending\",\r\n      \"jobStatus\": null,\r\n      \"errors\": {\r\n        \"properties\": {\r\n          \"code\": \"DependencyComputationPending\",\r\n          \"message\": \"The dependency computation is not completed for resource - /subscriptions/e80eb9fa-c996-4435-aa32-5af6f3d3077c/resourceGroups/NETSdkEastUS/providers/Microsoft.Compute/virtualMachines/vm1'.\\n    Possible Causes: Dependency computation is pending for resource.\\n    Recommended Action: Validate dependencies to compute the dependencies.\\n    \",\r\n          \"details\": []\r\n        }\r\n      }\r\n    },\r\n    \"dependsOn\": [],\r\n    \"dependsOnOverrides\": [\r\n      {\r\n        \"id\": \"/subscriptions/e80eb9fa-c996-4435-aa32-5af6f3d3077c/resourceGroups/NETSdkEastUS/providers/Microsoft.Compute/availabilitySets/AvailabilitySet1\",\r\n        \"targetId\": null\r\n      }\r\n    ],\r\n    \"errors\": null,\r\n    \"sourceResourceSettings\": {\r\n      \"resourceType\": \"Microsoft.Compute/virtualMachines\",\r\n      \"targetAvailabilityZone\": \"na\",\r\n      \"targetAvailabilitySetId\": null,\r\n      \"targetVmSize\": \"Standard_D2s_v3\",\r\n      \"targetResourceName\": \"vm1\"\r\n    }\r\n  }\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "e80eb9fa-c996-4435-aa32-5af6f3d3077c"
+  }
+}
