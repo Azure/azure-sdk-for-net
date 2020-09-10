@@ -1,4 +1,11 @@
 # Release History
+## 5.0.0
+### Breaking Changes
+- Enable a way to Unregister Message Handler and Session Handler [PR 14021](https://github.com/Azure/azure-sdk-for-net/pull/14021)
+
+### Improvements
+- Documentation: Add sendAsync warning for partition entities when batching is enabled [PR 14021](https://github.com/Azure/azure-sdk-for-net/pull/11028)
+
 ## 4.1.4 (2020-08-05)
 - Setting sessionId to be same as partition key and adding validation
 
