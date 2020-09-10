@@ -25,14 +25,14 @@ namespace Azure.Messaging.EventGrid
             JsonDocument requestDocument = JsonDocument.Parse(binaryData.ToBytes());
             EventGridEventInternal egEventInternal = EventGridEventInternal.DeserializeEventGridEventInternal(requestDocument.RootElement);
 
-            EventGridEvent egEvent = new EventGridEvent()
+            EventGridEvent egEvent = new EventGridEvent(
+                    egEventInternal.Data,
+                    egEventInternal.Subject,
+                    egEventInternal.EventType,
+                    egEventInternal.DataVersion)
             {
-                Subject = egEventInternal.Subject,
-                EventType = egEventInternal.EventType,
-                DataVersion = egEventInternal.DataVersion,
                 Id = egEventInternal.Id,
-                EventTime = egEventInternal.EventTime,
-                SerializedData = egEventInternal.Data
+                EventTime = egEventInternal.EventTime
             };
 
             return egEvent;
