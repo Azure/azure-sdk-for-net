@@ -829,17 +829,22 @@ namespace Azure.Storage.Sas
     public partial class DataLakeSasBuilder
     {
         public DataLakeSasBuilder() { }
+        public string AgentObjectId { get { throw null; } set { } }
         public string CacheControl { get { throw null; } set { } }
         public string ContentDisposition { get { throw null; } set { } }
         public string ContentEncoding { get { throw null; } set { } }
         public string ContentLanguage { get { throw null; } set { } }
         public string ContentType { get { throw null; } set { } }
+        public string CorrelationId { get { throw null; } set { } }
+        public uint? DirectoryDepth { get { throw null; } set { } }
         public System.DateTimeOffset ExpiresOn { get { throw null; } set { } }
         public string FileSystemName { get { throw null; } set { } }
         public string Identifier { get { throw null; } set { } }
         public Azure.Storage.Sas.SasIPRange IPRange { get { throw null; } set { } }
+        public bool? IsDirectory { get { throw null; } set { } }
         public string Path { get { throw null; } set { } }
         public string Permissions { get { throw null; } }
+        public string PreauthorizedAgentObjectId { get { throw null; } set { } }
         public Azure.Storage.Sas.SasProtocol Protocol { get { throw null; } set { } }
         public string Resource { get { throw null; } set { } }
         public System.DateTimeOffset StartsOn { get { throw null; } set { } }
@@ -867,6 +872,11 @@ namespace Azure.Storage.Sas
         Create = 4,
         Write = 8,
         Delete = 16,
+        List = 32,
+        Move = 64,
+        Execute = 128,
+        ManageOwnership = 256,
+        ManageAccessControl = 512,
     }
     public sealed partial class DataLakeSasQueryParameters : Azure.Storage.Sas.SasQueryParameters
     {
