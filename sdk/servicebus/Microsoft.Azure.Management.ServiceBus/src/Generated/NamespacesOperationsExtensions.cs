@@ -22,34 +22,181 @@ namespace Microsoft.Azure.Management.ServiceBus
     public static partial class NamespacesOperationsExtensions
     {
             /// <summary>
-            /// Check the give namespace name availability.
+            /// Gets a list of IP Filter rules for a Namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='parameters'>
-            /// Parameters to check availability of the given namespace name
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
-            public static CheckNameAvailabilityResult CheckNameAvailabilityMethod(this INamespacesOperations operations, CheckNameAvailability parameters)
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            public static IPage<IpFilterRule> ListIpFilterRules(this INamespacesOperations operations, string resourceGroupName, string namespaceName)
             {
-                return operations.CheckNameAvailabilityMethodAsync(parameters).GetAwaiter().GetResult();
+                return operations.ListIpFilterRulesAsync(resourceGroupName, namespaceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Check the give namespace name availability.
+            /// Gets a list of IP Filter rules for a Namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='parameters'>
-            /// Parameters to check availability of the given namespace name
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CheckNameAvailabilityResult> CheckNameAvailabilityMethodAsync(this INamespacesOperations operations, CheckNameAvailability parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<IpFilterRule>> ListIpFilterRulesAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CheckNameAvailabilityMethodWithHttpMessagesAsync(parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListIpFilterRulesWithHttpMessagesAsync(resourceGroupName, namespaceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Creates or updates an IpFilterRule for a Namespace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='ipFilterRuleName'>
+            /// The IP Filter Rule name.
+            /// </param>
+            /// <param name='parameters'>
+            /// The Namespace IpFilterRule.
+            /// </param>
+            public static IpFilterRule CreateOrUpdateIpFilterRule(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string ipFilterRuleName, IpFilterRule parameters)
+            {
+                return operations.CreateOrUpdateIpFilterRuleAsync(resourceGroupName, namespaceName, ipFilterRuleName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates or updates an IpFilterRule for a Namespace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='ipFilterRuleName'>
+            /// The IP Filter Rule name.
+            /// </param>
+            /// <param name='parameters'>
+            /// The Namespace IpFilterRule.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IpFilterRule> CreateOrUpdateIpFilterRuleAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string ipFilterRuleName, IpFilterRule parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateOrUpdateIpFilterRuleWithHttpMessagesAsync(resourceGroupName, namespaceName, ipFilterRuleName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes an IpFilterRule for a Namespace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='ipFilterRuleName'>
+            /// The IP Filter Rule name.
+            /// </param>
+            public static void DeleteIpFilterRule(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string ipFilterRuleName)
+            {
+                operations.DeleteIpFilterRuleAsync(resourceGroupName, namespaceName, ipFilterRuleName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes an IpFilterRule for a Namespace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='ipFilterRuleName'>
+            /// The IP Filter Rule name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteIpFilterRuleAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string ipFilterRuleName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteIpFilterRuleWithHttpMessagesAsync(resourceGroupName, namespaceName, ipFilterRuleName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Gets an IpFilterRule for a Namespace by rule name.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='ipFilterRuleName'>
+            /// The IP Filter Rule name.
+            /// </param>
+            public static IpFilterRule GetIpFilterRule(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string ipFilterRuleName)
+            {
+                return operations.GetIpFilterRuleAsync(resourceGroupName, namespaceName, ipFilterRuleName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets an IpFilterRule for a Namespace by rule name.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='ipFilterRuleName'>
+            /// The IP Filter Rule name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IpFilterRule> GetIpFilterRuleAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string ipFilterRuleName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetIpFilterRuleWithHttpMessagesAsync(resourceGroupName, namespaceName, ipFilterRuleName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -299,6 +446,273 @@ namespace Microsoft.Azure.Management.ServiceBus
             public static async Task<SBNamespace> UpdateAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, SBNamespaceUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, namespaceName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets NetworkRuleSet for a Namespace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='parameters'>
+            /// The Namespace NetworkRuleSet.
+            /// </param>
+            public static NetworkRuleSet CreateOrUpdateNetworkRuleSet(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NetworkRuleSet parameters)
+            {
+                return operations.CreateOrUpdateNetworkRuleSetAsync(resourceGroupName, namespaceName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets NetworkRuleSet for a Namespace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='parameters'>
+            /// The Namespace NetworkRuleSet.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<NetworkRuleSet> CreateOrUpdateNetworkRuleSetAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NetworkRuleSet parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateOrUpdateNetworkRuleSetWithHttpMessagesAsync(resourceGroupName, namespaceName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets NetworkRuleSet for a Namespace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            public static NetworkRuleSet GetNetworkRuleSet(this INamespacesOperations operations, string resourceGroupName, string namespaceName)
+            {
+                return operations.GetNetworkRuleSetAsync(resourceGroupName, namespaceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets NetworkRuleSet for a Namespace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<NetworkRuleSet> GetNetworkRuleSetAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetNetworkRuleSetWithHttpMessagesAsync(resourceGroupName, namespaceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a list of VirtualNetwork rules for a Namespace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            public static IPage<VirtualNetworkRule> ListVirtualNetworkRules(this INamespacesOperations operations, string resourceGroupName, string namespaceName)
+            {
+                return operations.ListVirtualNetworkRulesAsync(resourceGroupName, namespaceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a list of VirtualNetwork rules for a Namespace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<VirtualNetworkRule>> ListVirtualNetworkRulesAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListVirtualNetworkRulesWithHttpMessagesAsync(resourceGroupName, namespaceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Creates or updates an VirtualNetworkRule for a Namespace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='virtualNetworkRuleName'>
+            /// The Virtual Network Rule name.
+            /// </param>
+            /// <param name='parameters'>
+            /// The Namespace VirtualNetworkRule.
+            /// </param>
+            public static VirtualNetworkRule CreateOrUpdateVirtualNetworkRule(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string virtualNetworkRuleName, VirtualNetworkRule parameters)
+            {
+                return operations.CreateOrUpdateVirtualNetworkRuleAsync(resourceGroupName, namespaceName, virtualNetworkRuleName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates or updates an VirtualNetworkRule for a Namespace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='virtualNetworkRuleName'>
+            /// The Virtual Network Rule name.
+            /// </param>
+            /// <param name='parameters'>
+            /// The Namespace VirtualNetworkRule.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<VirtualNetworkRule> CreateOrUpdateVirtualNetworkRuleAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string virtualNetworkRuleName, VirtualNetworkRule parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateOrUpdateVirtualNetworkRuleWithHttpMessagesAsync(resourceGroupName, namespaceName, virtualNetworkRuleName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes an VirtualNetworkRule for a Namespace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='virtualNetworkRuleName'>
+            /// The Virtual Network Rule name.
+            /// </param>
+            public static void DeleteVirtualNetworkRule(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string virtualNetworkRuleName)
+            {
+                operations.DeleteVirtualNetworkRuleAsync(resourceGroupName, namespaceName, virtualNetworkRuleName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes an VirtualNetworkRule for a Namespace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='virtualNetworkRuleName'>
+            /// The Virtual Network Rule name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteVirtualNetworkRuleAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string virtualNetworkRuleName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteVirtualNetworkRuleWithHttpMessagesAsync(resourceGroupName, namespaceName, virtualNetworkRuleName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Gets an VirtualNetworkRule for a Namespace by rule name.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='virtualNetworkRuleName'>
+            /// The Virtual Network Rule name.
+            /// </param>
+            public static VirtualNetworkRule GetVirtualNetworkRule(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string virtualNetworkRuleName)
+            {
+                return operations.GetVirtualNetworkRuleAsync(resourceGroupName, namespaceName, virtualNetworkRuleName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets an VirtualNetworkRule for a Namespace by rule name.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='virtualNetworkRuleName'>
+            /// The Virtual Network Rule name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<VirtualNetworkRule> GetVirtualNetworkRuleAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string virtualNetworkRuleName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetVirtualNetworkRuleWithHttpMessagesAsync(resourceGroupName, namespaceName, virtualNetworkRuleName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -596,6 +1010,40 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
+            /// Check the give namespace name availability.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to check availability of the given namespace name
+            /// </param>
+            public static CheckNameAvailabilityResult CheckNameAvailabilityMethod(this INamespacesOperations operations, CheckNameAvailability parameters)
+            {
+                return operations.CheckNameAvailabilityMethodAsync(parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Check the give namespace name availability.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to check availability of the given namespace name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CheckNameAvailabilityResult> CheckNameAvailabilityMethodAsync(this INamespacesOperations operations, CheckNameAvailability parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CheckNameAvailabilityMethodWithHttpMessagesAsync(parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// This operation Migrate the given namespace to provided name type
             /// </summary>
             /// <param name='operations'>
@@ -636,92 +1084,6 @@ namespace Microsoft.Azure.Management.ServiceBus
             public static async Task MigrateAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, SBNamespaceMigrate parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.MigrateWithHttpMessagesAsync(resourceGroupName, namespaceName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Create or update NetworkRuleSet for a Namespace.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='parameters'>
-            /// The Namespace IpFilterRule.
-            /// </param>
-            public static NetworkRuleSet CreateOrUpdateNetworkRuleSet(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NetworkRuleSet parameters)
-            {
-                return operations.CreateOrUpdateNetworkRuleSetAsync(resourceGroupName, namespaceName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Create or update NetworkRuleSet for a Namespace.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='parameters'>
-            /// The Namespace IpFilterRule.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<NetworkRuleSet> CreateOrUpdateNetworkRuleSetAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NetworkRuleSet parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.CreateOrUpdateNetworkRuleSetWithHttpMessagesAsync(resourceGroupName, namespaceName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Gets NetworkRuleSet for a Namespace.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            public static NetworkRuleSet GetNetworkRuleSet(this INamespacesOperations operations, string resourceGroupName, string namespaceName)
-            {
-                return operations.GetNetworkRuleSetAsync(resourceGroupName, namespaceName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets NetworkRuleSet for a Namespace.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<NetworkRuleSet> GetNetworkRuleSetAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetNetworkRuleSetWithHttpMessagesAsync(resourceGroupName, namespaceName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
             }
 
             /// <summary>
@@ -816,6 +1178,40 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
+            /// Gets a list of IP Filter rules for a Namespace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<IpFilterRule> ListIpFilterRulesNext(this INamespacesOperations operations, string nextPageLink)
+            {
+                return operations.ListIpFilterRulesNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a list of IP Filter rules for a Namespace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<IpFilterRule>> ListIpFilterRulesNextAsync(this INamespacesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListIpFilterRulesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets all the available namespaces within the subscription, irrespective of
             /// the resource groups.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639412.aspx" />
@@ -884,6 +1280,40 @@ namespace Microsoft.Azure.Management.ServiceBus
             public static async Task<IPage<SBNamespace>> ListByResourceGroupNextAsync(this INamespacesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a list of VirtualNetwork rules for a Namespace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<VirtualNetworkRule> ListVirtualNetworkRulesNext(this INamespacesOperations operations, string nextPageLink)
+            {
+                return operations.ListVirtualNetworkRulesNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a list of VirtualNetwork rules for a Namespace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<VirtualNetworkRule>> ListVirtualNetworkRulesNextAsync(this INamespacesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListVirtualNetworkRulesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
