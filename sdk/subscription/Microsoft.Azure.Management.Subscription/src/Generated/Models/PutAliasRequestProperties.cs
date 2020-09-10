@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.Subscription.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -39,7 +38,7 @@ namespace Microsoft.Azure.Management.Subscription.Models
         /// fieldLed, partnerLed or LegacyEA</param>
         /// <param name="subscriptionId">This parameter can be used to create
         /// alias for existing subscription Id</param>
-        public PutAliasRequestProperties(string displayName, string workload, string billingScope, string subscriptionId = default(string))
+        public PutAliasRequestProperties(string displayName = default(string), string workload = default(string), string billingScope = default(string), string subscriptionId = default(string))
         {
             DisplayName = displayName;
             Workload = workload;
@@ -81,26 +80,5 @@ namespace Microsoft.Azure.Management.Subscription.Models
         [JsonProperty(PropertyName = "subscriptionId")]
         public string SubscriptionId { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (DisplayName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "DisplayName");
-            }
-            if (Workload == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Workload");
-            }
-            if (BillingScope == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "BillingScope");
-            }
-        }
     }
 }

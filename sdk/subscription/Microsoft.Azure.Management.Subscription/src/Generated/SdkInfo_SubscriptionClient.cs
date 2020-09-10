@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Subscription
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/subscription/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\github2\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "1d90950c9db002ca44a56873c5a2ea3c96f533f8";
+      public static readonly String GithubCommidId = "af2f59b4c3a1308d79652fdbc2a84d7785c79230";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
