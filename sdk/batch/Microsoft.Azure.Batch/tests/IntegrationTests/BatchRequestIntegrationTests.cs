@@ -111,7 +111,7 @@
                             req.CancellationToken = tokenSource.Token;
                         }));
 
-                        await TestUtilities.AssertThrowsAsync<OperationCanceledException>(async () =>
+                        await TestUtilities.AssertThrowsAsync<System.Threading.Tasks.TaskCanceledException>(async () =>
                             await client.JobOperations.GetJobAsync("Foo", additionalBehaviors: customBehaviors).ConfigureAwait(false)).ConfigureAwait(false);
                     }
                 }
