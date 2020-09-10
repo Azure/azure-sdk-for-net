@@ -9,9 +9,9 @@
 ### Breaking Changes
 - Renamed `ServiceBusManagementClient` to `ServiceBusAdministrationClient`.
 - Renamed `ServiceBusManagementClientOptions` to `ServiceBusAdministrationClientOptions`.
-- Rename `IsDisposed` to `IsClosed` on `ServiceBusSender`, `ServiceBusReceiver`, and `ServiceBusSessionReceiver`.
-- Make `ServiceBusProcessor` and `ServiceBusSessionProcessor` implement `IAsyncDisposable`
-- Remove public constructors for `QueueProperties` and `RuleProperties`.
+- Renamed `IsDisposed` to `IsClosed` on `ServiceBusSender`, `ServiceBusReceiver`, and `ServiceBusSessionReceiver`.
+- Made `ServiceBusProcessor` and `ServiceBusSessionProcessor` implement `IAsyncDisposable`
+- Removed public constructors for `QueueProperties` and `RuleProperties`.
 - Added `version` parameter to `ServiceBusAdministrationClientOptions` constructor.
 - Removed `CreateDeadLetterReceiver` methods in favor of new `SubQueue` property on `ServiceBusReceiverOptions`.
 - Made `EntityNameFormatter` internal.
