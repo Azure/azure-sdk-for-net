@@ -12,10 +12,7 @@ namespace Azure.Management.Dns.Tests
     [TestFixture]
     public class ScenarioTestsZones : DnsManagementClientBase
     {
-        private string location;
-        private string resourceGroup;
         private string defaultZoneName;
-        private bool setupRun = false;
 
         public ScenarioTestsZones()
             : base(true)
@@ -25,27 +22,6 @@ namespace Azure.Management.Dns.Tests
             defaultZoneName = "azure.ameredmond.dns";
         }
 
-        [SetUp]
-        public async Task ClearChallengeCacheforRecord()
-        {
-            if ((Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback) && !setupRun)
-            {
-                InitializeClients();
-                this.resourceGroup = Recording.GenerateAssetName("Default-Dns-Zones-");
-                await Helper.TryRegisterResourceGroupAsync(ResourceGroupsOperations, this.location, this.resourceGroup);
-
-            }
-            else if (setupRun)
-            {
-                initNewRecord();
-            }
-        }
-
-        [OneTimeTearDown]
-        public async Task CleanupResourceGroup()
-        {
-            await CleanupResourceGroupsAsync();
-        }
 
         [TestCase]
         public async Task DnsCreateZoneDeleteAndUpdate()

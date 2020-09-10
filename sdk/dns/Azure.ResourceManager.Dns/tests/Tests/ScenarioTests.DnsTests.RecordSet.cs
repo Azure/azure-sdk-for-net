@@ -13,8 +13,6 @@ namespace Azure.Management.Dns.Tests
     [TestFixture]
     public class ScenarioTestsRecordSets : DnsManagementClientBase
     {
-        private string location;
-        private string resourceGroup;
         private string zoneNameForList;
         private ChangeTrackingList<AaaaRecord> dummyAaaaRecords;
         private ChangeTrackingList<ARecord> dummyARecords;
@@ -25,14 +23,11 @@ namespace Azure.Management.Dns.Tests
         private ChangeTrackingList<TxtRecord> dummyTxtRecords;
         private ChangeTrackingList<CaaRecord> dummyCaaRecords;
         private Dictionary<string, string> metadata;
-        private bool setupRun = false;
 
 
         public ScenarioTestsRecordSets()
             : base(true)
         {
-            resourceGroup = null;
-            location = "West US";
             zoneNameForList = "azure.ameredmond.dns";
             dummyAaaaRecords = new ChangeTrackingList<AaaaRecord>();
             dummyARecords = new ChangeTrackingList<ARecord>();
@@ -48,30 +43,16 @@ namespace Azure.Management.Dns.Tests
             };
         }
 
-        [SetUp]
-        public async Task ClearChallengeCacheforRecord()
+        [OneTimeSetUp]
+        public async Task OneTimeSetup()
         {
-            if ((Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback) && !setupRun)
+            TestContext.Progress.WriteLine("Top onetime setup getting calleds");
+            if ((Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback))
             {
-                InitializeClients();
-                this.resourceGroup = Recording.GenerateAssetName("Default-Dns-");
-                await Helper.TryRegisterResourceGroupAsync(ResourceGroupsOperations, this.location, this.resourceGroup);
                 var aZone = new Zone("Global");
                 aZone.ZoneType = ZoneType.Public;
                 await ZonesOperations.CreateOrUpdateAsync(this.resourceGroup, this.zoneNameForList, aZone);
-                setupRun = true;
-
             }
-            else if (setupRun)
-            {
-                initNewRecord();
-            }
-        }
-
-        [OneTimeTearDown]
-        public async Task CleanupResourceGroup()
-        {
-            await CleanupResourceGroupsAsync();
         }
 
         [TestCase]

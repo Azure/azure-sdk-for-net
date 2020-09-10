@@ -1,16 +1,29 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
+
+using Azure.Core;
+using Azure.Core.TestFramework;
+#if RESOURCES_RP
+using Azure.ResourceManager.Resources;
+#else
+using Azure.Management.Resources;
+#endif
+using System;
 
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace Azure.Core.TestFramework
+
+namespace Azure.ResourceManager.TestFramework
 {
     [Category("Recorded")]
-    public abstract class RecordedTestBase : ClientTestBase
+    public abstract class MgmtRecordTestBase<TEnvironment> : ClientTestBase where TEnvironment : TestEnvironment, new()
     {
         protected RecordedTestSanitizer Sanitizer { get; set; }
 
@@ -19,6 +32,10 @@ namespace Azure.Core.TestFramework
         public TestRecording Recording { get; private set; }
 
         public RecordedTestMode Mode { get; set; }
+
+        public TEnvironment TestEnvironment { get; }
+
+        private ResourceGroupCleanupPolicy CleanupPolicy { get; set; }
 
         // copied the Windows version https://github.com/dotnet/runtime/blob/master/src/libraries/System.Private.CoreLib/src/System/IO/Path.Windows.cs
         // as it is the most restrictive of all platforms
@@ -42,15 +59,18 @@ namespace Azure.Core.TestFramework
         public bool SaveDebugRecordingsOnFailure { get; set; } = false;
 #endif
 
-        protected RecordedTestBase(bool isAsync) : this(isAsync, RecordedTestUtilities.GetModeFromEnvironment())
+        protected MgmtRecordTestBase(bool isAsync) : this(isAsync, RecordedTestUtilities.GetModeFromEnvironment())
         {
         }
 
-        protected RecordedTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync)
+        protected MgmtRecordTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync)
         {
             Sanitizer = new RecordedTestSanitizer();
             Matcher = new RecordMatcher();
             Mode = mode;
+            TestEnvironment = new TEnvironment();
+            TestEnvironment.Mode = Mode;
+            CleanupPolicy = new ResourceGroupCleanupPolicy();
         }
 
         private string GetSessionFilePath()
@@ -81,12 +101,16 @@ namespace Azure.Core.TestFramework
         /// This will run once before any tests.
         /// </summary>
         [OneTimeSetUp]
-        public void StartLoggingEvents()
+        public virtual void RunOneTimeSetup()
         {
+             TestContext.Progress.WriteLine("lowest setup one time getting called");
             if (Mode == RecordedTestMode.Live || Debugger.IsAttached)
             {
                 Logger = new TestLogger();
             }
+            Recording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher);
+            TestEnvironment.SetRecording(Recording);
+            TestContext.Progress.WriteLine("lowest one time setup is done");
         }
 
         /// <summary>
@@ -94,8 +118,11 @@ namespace Azure.Core.TestFramework
         /// This will run once after all tests have finished.
         /// </summary>
         [OneTimeTearDown]
-        public void StopLoggingEvents()
+        public async Task RunOneTimeTearDown()
         {
+            TestContext.Progress.WriteLine("lowest teardown time getting called");
+            StopTestRecording();
+            await CleanupResourceGroupsAsync();
             Logger?.Dispose();
             Logger = null;
         }
@@ -104,23 +131,69 @@ namespace Azure.Core.TestFramework
         public virtual void StartTestRecording()
         {
             // Only create test recordings for the latest version of the service
+            StopTestRecording();
             TestContext.TestAdapter test = TestContext.CurrentContext.Test;
             if (Mode != RecordedTestMode.Live &&
                 test.Properties.ContainsKey("SkipRecordings"))
             {
-                throw new IgnoreException((string) test.Properties.Get("SkipRecordings"));
+                throw new IgnoreException((string)test.Properties.Get("SkipRecordings"));
             }
             Recording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher);
+            TestEnvironment.Mode = Mode;
+            TestEnvironment.SetRecording(Recording);
+            TestContext.Progress.WriteLine("Ran lowest level setup");
         }
 
         [TearDown]
         public virtual void StopTestRecording()
-        {
+        {;
             bool save = TestContext.CurrentContext.Result.FailCount == 0;
 #if DEBUG
             save |= SaveDebugRecordingsOnFailure;
 #endif
             Recording?.Dispose(save);
         }
+
+        protected ResourcesManagementClient GetResourceManagementClient()
+        {
+            var options = Recording.InstrumentClientOptions(new ResourcesManagementClientOptions());
+            options.AddPolicy(CleanupPolicy, HttpPipelinePosition.PerCall);
+
+            return CreateClient<ResourcesManagementClient>(
+                TestEnvironment.SubscriptionId,
+                TestEnvironment.Credential,
+                options);
+        }
+
+        protected ValueTask<Response<T>> WaitForCompletionAsync<T>(Operation<T> operation)
+        {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return operation.WaitForCompletionAsync(TimeSpan.FromSeconds(0), default);
+            }
+            else
+            {
+                return operation.WaitForCompletionAsync();
+            }
+        }
+
+        protected async Task CleanupResourceGroupsAsync()
+        {
+            TestContext.Progress.WriteLine("\n______________________________________________________________________________________________________\nDeleting rgs\n");
+            if (CleanupPolicy != null && Mode != RecordedTestMode.Playback)
+            {
+                var resourceGroupsClient = new ResourcesManagementClient(
+                    TestEnvironment.SubscriptionId,
+                    TestEnvironment.Credential,
+                    new ResourcesManagementClientOptions()).ResourceGroups;
+                foreach (var resourceGroup in CleanupPolicy.ResourceGroupsCreated)
+                {
+                    TestContext.Progress.WriteLine("deleting rg " + resourceGroup);
+                    await resourceGroupsClient.StartDeleteAsync(resourceGroup);
+                }
+                CleanupPolicy.ResourceGroupsCreated.Clear();
+            }
+        }
+
     }
 }
