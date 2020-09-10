@@ -329,9 +329,9 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
                 // Only cancel completion or update of the message if a non-graceful shutdown is requested via _shutdownCancellationTokenSource.
                 await _queueProcessor.CompleteProcessingMessageAsync(message, result, _shutdownCancellationTokenSource.Token).ConfigureAwait(false);
             }
-            catch (RequestFailedException ex) when (ex.IsTaskCanceled()) // TODO (kasobol-msft) check this exception is this needed ?
+            catch (TaskCanceledException)
             {
-                // TaskCanceledExceptions may be wrapped in StorageException.
+                // Don't fail the top-level task when an inner task cancels.
             }
             catch (OperationCanceledException)
             {

@@ -315,21 +315,5 @@ namespace Microsoft.Azure.WebJobs
 
             return exception.ErrorCode == "LeaseLost";
         }
-
-        // TODO (kasobol-msft) is this needed??
-        /// <summary>
-        /// Determines whether the exception is due to a task cancellation.
-        /// </summary>
-        /// <param name="exception">The storage exception.</param>
-        /// <returns><see langword="true"/> if the inner exception is a <see cref="TaskCanceledException"/>. Otherwise, <see langword="false"/>.</returns>
-        public static bool IsTaskCanceled(this RequestFailedException exception)
-        {
-            if (exception == null)
-            {
-                throw new ArgumentNullException(nameof(exception));
-            }
-
-            return exception.InnerException is TaskCanceledException;
-        }
     }
 }
