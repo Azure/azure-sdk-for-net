@@ -79,6 +79,16 @@ namespace Microsoft.Azure.Management.EventHub
         public virtual INamespacesOperations Namespaces { get; private set; }
 
         /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
+
+        /// <summary>
         /// Gets the IConfigurationOperations.
         /// </summary>
         public virtual IConfigurationOperations Configuration { get; private set; }
@@ -351,6 +361,8 @@ namespace Microsoft.Azure.Management.EventHub
         {
             Clusters = new ClustersOperations(this);
             Namespaces = new NamespacesOperations(this);
+            PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
+            PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             Configuration = new ConfigurationOperations(this);
             DisasterRecoveryConfigs = new DisasterRecoveryConfigsOperations(this);
             EventHubs = new EventHubsOperations(this);
