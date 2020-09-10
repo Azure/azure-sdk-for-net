@@ -29,11 +29,9 @@ namespace Azure.Messaging.EventGrid
                     egEventInternal.Data,
                     egEventInternal.Subject,
                     egEventInternal.EventType,
-                    egEventInternal.DataVersion)
-            {
-                Id = egEventInternal.Id,
-                EventTime = egEventInternal.EventTime
-            };
+                    egEventInternal.DataVersion,
+                    egEventInternal.EventTime,
+                    egEventInternal.Id);
 
             return egEvent;
         }

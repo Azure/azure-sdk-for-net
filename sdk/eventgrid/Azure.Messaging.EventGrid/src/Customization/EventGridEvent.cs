@@ -26,7 +26,6 @@ namespace Azure.Messaging.EventGrid
         public EventGridEvent(object data, string subject, string eventType, string dataVersion)
         {
             Argument.AssertNotNull(subject, nameof(subject));
-            Argument.AssertNotNull(data, nameof(data));
             Argument.AssertNotNull(eventType, nameof(eventType));
             Argument.AssertNotNull(dataVersion, nameof(dataVersion));
 
@@ -36,20 +35,19 @@ namespace Azure.Messaging.EventGrid
             DataVersion = dataVersion;
         }
 
-        internal EventGridEvent(JsonElement serializedData, string subject, string eventType, string dataVersion)
+        internal EventGridEvent(JsonElement serializedData, string subject, string eventType, string dataVersion, DateTimeOffset eventTime, string id)
         {
             Argument.AssertNotNull(subject, nameof(subject));
             Argument.AssertNotNull(eventType, nameof(eventType));
             Argument.AssertNotNull(dataVersion, nameof(dataVersion));
-            if (serializedData.ValueKind == JsonValueKind.Null)
-            {
-                throw new ArgumentNullException(nameof(serializedData));
-            }
+            Argument.AssertNotNull(id, nameof(id));
 
             Subject = subject;
             SerializedData = serializedData;
             EventType = eventType;
             DataVersion = dataVersion;
+            EventTime = eventTime;
+            Id = id;
         }
 
         /// <summary> An unique identifier for the event. </summary>
@@ -116,11 +114,9 @@ namespace Azure.Messaging.EventGrid
                     egEventInternal.Data,
                     egEventInternal.Subject,
                     egEventInternal.EventType,
-                    egEventInternal.DataVersion)
-                {
-                    Id = egEventInternal.Id,
-                    EventTime = egEventInternal.EventTime
-                };
+                    egEventInternal.DataVersion,
+                    egEventInternal.EventTime,
+                    egEventInternal.Id);
 
                 egEvents.Add(egEvent);
             }
