@@ -122,7 +122,7 @@ for (var i = 0; i < inputMessageArray.Length; i++)
       }
 
       // Decrement counter so that message number i can get another chance in a new batch
-      i = i - 1;
+      i--;
 
       // send the message batch and create a new batch
       await sender.SendMessagesAsync(messageBatch);
