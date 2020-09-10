@@ -46,7 +46,6 @@ namespace Azure.Management.Dns.Tests
         [OneTimeSetUp]
         public async Task OneTimeSetup()
         {
-            TestContext.Progress.WriteLine("Top onetime setup getting calleds");
             if ((Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback))
             {
                 var aZone = new Zone("Global");

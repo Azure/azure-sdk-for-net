@@ -34,11 +34,8 @@ namespace Azure.ResourceManager.Dns.Tests
         public async Task BaseOneTimeSetup()
         {
             location = "West US";
-            TestContext.Progress.WriteLine("BaseOneTimeSetup is being called");
             InitializeClients();
-            TestContext.Progress.WriteLine("passed init");
             this.resourceGroup = Recording.GenerateAssetName("Default-Dns-");
-            TestContext.Progress.WriteLine("passed gen");
             await Helper.TryRegisterResourceGroupAsync(ResourceGroupsOperations, this.location, this.resourceGroup);
         }
 

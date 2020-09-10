@@ -103,14 +103,12 @@ namespace Azure.ResourceManager.TestFramework
         [OneTimeSetUp]
         public virtual void RunOneTimeSetup()
         {
-             TestContext.Progress.WriteLine("lowest setup one time getting called");
             if (Mode == RecordedTestMode.Live || Debugger.IsAttached)
             {
                 Logger = new TestLogger();
             }
             Recording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher);
             TestEnvironment.SetRecording(Recording);
-            TestContext.Progress.WriteLine("lowest one time setup is done");
         }
 
         /// <summary>
@@ -120,7 +118,6 @@ namespace Azure.ResourceManager.TestFramework
         [OneTimeTearDown]
         public async Task RunOneTimeTearDown()
         {
-            TestContext.Progress.WriteLine("lowest teardown time getting called");
             StopTestRecording();
             await CleanupResourceGroupsAsync();
             Logger?.Dispose();
@@ -141,7 +138,6 @@ namespace Azure.ResourceManager.TestFramework
             Recording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher);
             TestEnvironment.Mode = Mode;
             TestEnvironment.SetRecording(Recording);
-            TestContext.Progress.WriteLine("Ran lowest level setup");
         }
 
         [TearDown]
@@ -179,7 +175,6 @@ namespace Azure.ResourceManager.TestFramework
 
         protected async Task CleanupResourceGroupsAsync()
         {
-            TestContext.Progress.WriteLine("\n______________________________________________________________________________________________________\nDeleting rgs\n");
             if (CleanupPolicy != null && Mode != RecordedTestMode.Playback)
             {
                 var resourceGroupsClient = new ResourcesManagementClient(
@@ -188,7 +183,6 @@ namespace Azure.ResourceManager.TestFramework
                     new ResourcesManagementClientOptions()).ResourceGroups;
                 foreach (var resourceGroup in CleanupPolicy.ResourceGroupsCreated)
                 {
-                    TestContext.Progress.WriteLine("deleting rg " + resourceGroup);
                     await resourceGroupsClient.StartDeleteAsync(resourceGroup);
                 }
                 CleanupPolicy.ResourceGroupsCreated.Clear();
