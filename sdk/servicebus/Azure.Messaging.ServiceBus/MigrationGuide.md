@@ -54,8 +54,7 @@ By making this connection sharing be implicit to a `ServiceBusClient` instance, 
 
 ### Client constructors
 
-While we continue to support connection strings when constructing a client, the main difference is when using Azure Active Directory.
-We now use the new [Azure.Identity](https://www.nuget.org/packages/Azure.Identity) library to share a single authentication solution between clients of different Azure services.
+While we continue to support connection strings when constructing a client, the main difference is when using Azure Active Directory. We now use the new [Azure.Identity](https://www.nuget.org/packages/Azure.Identity) library to share a single authentication solution between clients of different Azure services.
 
 ```cs
 // Create a ServiceBusClient that will authenticate through Active Directory
@@ -70,8 +69,8 @@ ServiceBusClient client = new ServiceBusClient(connectionString);
 ### Sending messages
 
 Previously, in `Microsoft.Azure.ServiceBus`, you could send messages either by using a `QueueClient` (or `TopicClient` if you are targetting a topic) or the `MessageSender`.
-While the `QueueClient` supported the simple send operation, the `MessageSender` supported that and advanced scenarios like scheduling to send messages
-at a later time and cancelling such scheduled messages.
+
+While the `QueueClient` supported the simple send operation, the `MessageSender` supported that and advanced scenarios like scheduling to send messages at a later time and cancelling such scheduled messages.
 
 ```cs
 // create a message to send
@@ -86,8 +85,7 @@ MessageSender sender = new MessageSender(connectionString, queueName);
 await sender.SendAsync(message);
 ```
 
-Now in `Azure.Messaging.ServiceBus`, we combine all the send related features under a common class `ServiceBusSender` that you can create from the top level client using the `CreateSender()` method. This method takes the queue or topic you want to target.
-This way, we give you a one stop shop for all your send related needs. 
+Now in `Azure.Messaging.ServiceBus`, we combine all the send related features under a common class `ServiceBusSender` that you can create from the top level client using the `CreateSender()` method. This method takes the queue or topic you want to target. This way, we give you a one stop shop for all your send related needs. 
 
 We continue to support sending bytes in the message. Though, if you are working with strings, you can now create a message directly without having to convert it to bytes first.
 
@@ -106,8 +104,8 @@ await sender.SendMessageAsync(message);
 ```
 
 The feature to send a list of messages in a single call was implemented by batching all the messages into a single AMQP message and sending that to the service.
-While we continue to support this feature, it always had the potential to fail unexpectedly when the resulting batched AMQP message exceeded the size limit of the sender.
-To help with this, we now provide a safe way to batch multiple messages to be sent at once using the new `ServiceBusMessageBatch` class.
+
+While we continue to support this feature, it always had the potential to fail unexpectedly when the resulting batched AMQP message exceeded the size limit of the sender. To help with this, we now provide a safe way to batch multiple messages to be sent at once using the new `ServiceBusMessageBatch` class.
 
 ```cs
 ServiceBusMessageBatch messageBatch = await sender.CreateMessageBatchAsync();
