@@ -23,12 +23,11 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
         /// storage account that the blob triggered function is listening
         /// to).
         /// </summary>
-        // TODO (kasobol-msft) rename this.
-        public BlobServiceClient BlobClient { get; set; }
+        public BlobServiceClient BlobServiceClient { get; set; }
 
         /// <summary>
         /// The storage client to use for the poison queue.
         /// </summary>
-        public QueueServiceClient QueueClient { get; set; }
+        public QueueServiceClient QueueServiceClient { get; set; }
     }
 }

@@ -127,7 +127,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 
             BlobQueueRegistration registration = new BlobQueueRegistration
             {
-                BlobClient = blobServiceClient,
+                BlobServiceClient = blobServiceClient,
                 Executor = CreateDummyTriggeredFunctionExecutor()
             };
             product.Register(functionId, registration);
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 
             BlobQueueRegistration registration = new BlobQueueRegistration
             {
-                BlobClient = blobServiceClient,
+                BlobServiceClient = blobServiceClient,
                 Executor = CreateDummyTriggeredFunctionExecutor()
             };
             product.Register(functionId, registration);
@@ -212,7 +212,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 
             BlobQueueRegistration registration = new BlobQueueRegistration
             {
-                BlobClient = blobServiceClient,
+                BlobServiceClient = blobServiceClient,
                 Executor = innerExecutor
             };
             product.Register(functionId, registration);
@@ -246,7 +246,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             ITriggeredFunctionExecutor innerExecutor = mock.Object;
             BlobQueueRegistration registration = new BlobQueueRegistration
             {
-                BlobClient = blobServiceClient,
+                BlobServiceClient = blobServiceClient,
                 Executor = innerExecutor
             };
             product.Register(functionId, registration);
@@ -281,7 +281,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             ITriggeredFunctionExecutor innerExecutor = mock.Object;
             BlobQueueRegistration registration = new BlobQueueRegistration
             {
-                BlobClient = blobServiceClient,
+                BlobServiceClient = blobServiceClient,
                 Executor = innerExecutor
             };
             product.Register(functionId, registration);

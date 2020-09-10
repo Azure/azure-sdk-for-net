@@ -164,8 +164,8 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             BlobQueueRegistration registration = new BlobQueueRegistration
             {
                 Executor = _executor,
-                BlobClient = blobClient,
-                QueueClient = queueClient
+                BlobServiceClient = blobClient,
+                QueueServiceClient = queueClient
             };
 
             sharedBlobQueueListener.Register(_functionDescriptor.Id, registration);

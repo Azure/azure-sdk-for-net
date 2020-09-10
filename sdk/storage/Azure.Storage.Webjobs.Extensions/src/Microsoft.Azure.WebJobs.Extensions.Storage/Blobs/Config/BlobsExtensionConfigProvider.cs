@@ -89,7 +89,6 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
                 // TODO (kasobol-msft) check if reference base blob client / blob client / or resolve reference using metadata ?
                 BindToInput<BlobBaseClient>((attr, cts) => CreateBlobReference<BlobBaseClient>(attr, cts));
 
-            // TODO (kasobol-msft) check if this is open write ?
             // CloudBlobStream's derived functionality is only relevant to writing. check derived functionality
 #pragma warning disable CS0618 // Type or member is obsolete
             rule.When("Access", FileAccess.Write).

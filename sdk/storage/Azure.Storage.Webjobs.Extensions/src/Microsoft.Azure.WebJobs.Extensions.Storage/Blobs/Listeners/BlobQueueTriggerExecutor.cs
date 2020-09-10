@@ -78,7 +78,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                 return successResult;
             }
 
-            var container = registration.BlobClient.GetBlobContainerClient(message.ContainerName);
+            var container = registration.BlobServiceClient.GetBlobContainerClient(message.ContainerName);
             string blobName = message.BlobName;
 
             BlobBaseClient blob;

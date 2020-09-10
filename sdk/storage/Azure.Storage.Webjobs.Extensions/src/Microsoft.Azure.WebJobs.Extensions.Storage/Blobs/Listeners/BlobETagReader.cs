@@ -27,7 +27,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             try
             {
                 BlobProperties blobProperties = await blob.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                return blobProperties.ETag.ToString(); // TODO (kasobol-msft) should we return ETag ?
+                return blobProperties.ETag.ToString();
             }
             catch (RequestFailedException exception)
             {
