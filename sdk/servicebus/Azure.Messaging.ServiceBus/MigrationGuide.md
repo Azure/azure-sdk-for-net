@@ -179,7 +179,7 @@ await receiver.CompleteAsync(receivedMessage);
 
 Now in `Azure.Messaging.ServiceBus`, we introduce a dedicated class `ServiceBusProcessor` which takes your message and error handlers to provide you with the same simple way to get started with processing your messages as message handlers in the previous packages, with auto-complete and auto-lock renewal features. This class also provides a graceful shutdown via the `StopProcessingAsync` method which will ensure that no more messages will be received, but at the same time you can continue the processing and settling the messages already in flight.
 
-The concept of a "receiver" remains for users who need to have a more fine grained control over the receiving and settling messages. The difference is that this is now created from the top-level `ServiceBusClient` via the `CreateReceiver()` method that would take the queue or subscription you want to target.
+The concept of a receiver remains for users who need to have a more fine grained control over the receiving and settling messages. The difference is that this is now created from the top-level `ServiceBusClient` via the `CreateReceiver()` method that would take the queue or subscription you want to target.
 
 ```cs
 // create the ServiceBusClient
@@ -223,7 +223,7 @@ While the first option is similar to what you would do in a non-session scenario
 
 Now in `Azure.Messaging.ServiceBus`, we simplfify this by giving session variants of the same methods and classes that are available when working with queues/subscriptions that do not have sessions enabled.
 
-The below code snippet shows you the session variation of the "processor".
+The below code snippet shows you the session variation of the `ServiceBusProcessor`.
 
 ```cs
 // create a processor to receive events from the next available session
@@ -244,7 +244,7 @@ var options = new ServiceBusSessionProcessorOptions
 ServiceBusProcessor processor = client.CreateSessionProcessor(queueName);
 ```
 
-The below code snippet shows you the session variation of the "receiver". Please note that creating a session receiver is an async operation because the library will need to get a lock on the session by connecting to the service first.
+The below code snippet shows you the session variation of the receiver. Please note that creating a session receiver is an async operation because the library will need to get a lock on the session by connecting to the service first.
 
 ```cs
 // create a receiver to receive events from the next available session
