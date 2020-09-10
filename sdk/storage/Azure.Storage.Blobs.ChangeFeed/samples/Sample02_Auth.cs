@@ -3,14 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.Storage.Blobs.ChangeFeed;
-using Azure.Storage.Blobs.Models;
 using Azure.Storage.Sas;
 using NUnit.Framework;
 
@@ -32,7 +26,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Samples
         /// account at runtime using Shared Key authorization.
         /// </summary>
         [Test]
-        public void ConnectionStringSync()
+        public void ConnectionStringAuth()
         {
             // Get a connection string to our Azure Storage account.  You can
             // obtain your connection string from the Azure Portal (click
@@ -54,7 +48,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Samples
             foreach (BlobChangeFeedEvent changeFeedEvent in service.GetChanges())
             {
                 changeFeedEvents.Add(changeFeedEvent);
-
             }
         }
 
@@ -113,7 +106,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Samples
         [Test]
         public void SharedAccessSignatureAuth()
         {
-            // Create a service level SAS that only allows reading from service
+            // Create a blob level SAS that allows reading change events from blob
             // level APIs
             AccountSasBuilder sas = new AccountSasBuilder
             {
@@ -126,7 +119,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Samples
                 // Access expires in 1 hour!
                 ExpiresOn = DateTimeOffset.UtcNow.AddHours(1)
             };
-            // Allow read access
+            // Allow all access
             sas.SetPermissions(AccountSasPermissions.All);
 
             // Create a SharedKeyCredential that we can use to sign the SAS token
@@ -146,7 +139,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Samples
             {
                 changeFeedEvents.Add(changeFeedEvent);
             }
-
         }
 
         /// <summary>
@@ -184,7 +176,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Samples
             foreach (BlobChangeFeedEvent changeFeedEvent in service.GetChanges())
             {
                 changeFeedEvents.Add(changeFeedEvent);
-
             }
         }
     }
