@@ -3,8 +3,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 using Microsoft.Identity.Client;
 using Microsoft.Identity.Client.Extensions.Msal;
 
@@ -16,27 +20,148 @@ namespace Azure.Identity
     public class TokenCache : IDisposable
     {
         private SemaphoreSlim _lock = new SemaphoreSlim(1,1);
-        private byte[] _serialized;
+        private byte[] _data;
         private DateTimeOffset _lastUpdated;
-        private Dictionary<object, DateTimeOffset> _cacheAccessMap;
+        private ConditionalWeakTable<object, CacheTimestamp> _cacheAccessMap;
         private bool _disposedValue;
 
-        private static Lazy<TokenCache> s_SharedCache = new Lazy<TokenCache>(() => new SharedTokenCache(true), LazyThreadSafetyMode.ExecutionAndPublication);
+        private static Lazy<TokenCache> s_SharedCache = new Lazy<TokenCache>(() => new PersistentTokenCache(true), LazyThreadSafetyMode.ExecutionAndPublication);
+
+        private class CacheTimestamp
+        {
+            private DateTimeOffset _timestamp;
+
+            public CacheTimestamp()
+            {
+                Update();
+            }
+
+            public void Update()
+            {
+                _timestamp = DateTimeOffset.UtcNow;
+            }
+
+            public DateTimeOffset Value { get { return _timestamp; } }
+        }
 
         /// <summary>
         /// Instantiates a new <see cref="TokenCache"/>.
         /// </summary>
         public TokenCache()
+            : this(Array.Empty<byte>())
         {
-            _serialized = Array.Empty<byte>();
+        }
+
+        internal TokenCache(byte[] data)
+        {
+            _data = data;
             _lastUpdated = DateTimeOffset.UtcNow;
-            _cacheAccessMap = new Dictionary<object, DateTimeOffset>();
+            _cacheAccessMap = new ConditionalWeakTable<object, CacheTimestamp>();
         }
 
         /// <summary>
         /// The shared token cache.
         /// </summary>
         public static TokenCache SharedCache => s_SharedCache.Value;
+
+
+        /// <summary>
+        /// Serializes the <see cref="TokenCache"/> to the specified <see cref="Stream"/>.
+        /// </summary>
+        /// <param name="stream">The <see cref="Stream"/> which the serialized <see cref="TokenCache"/> will be written to.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public void Serialize(Stream stream, CancellationToken cancellationToken = default)
+        {
+            if (stream is null)
+                throw new ArgumentNullException(nameof(stream));
+
+            SerializeAsync(stream, false, cancellationToken).EnsureCompleted();
+        }
+
+        /// <summary>
+        /// Serializes the <see cref="TokenCache"/> to the specified <see cref="Stream"/>.
+        /// </summary>
+        /// <param name="stream">The <see cref="Stream"/> to which the serialized <see cref="TokenCache"/> will be written.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public async Task SerializeAsync(Stream stream, CancellationToken cancellationToken = default)
+        {
+            if (stream is null)
+                throw new ArgumentNullException(nameof(stream));
+
+            await SerializeAsync(stream, true, cancellationToken).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Deserializes the <see cref="TokenCache"/> from the specified <see cref="Stream"/>.
+        /// </summary>
+        /// <param name="stream">The <see cref="Stream"/> from which the serialized <see cref="TokenCache"/> will be read.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public static TokenCache Deserialize(Stream stream, CancellationToken cancellationToken = default)
+        {
+            if (stream is null)
+                throw new ArgumentNullException(nameof(stream));
+
+            return DeserializeAsync(stream, false, cancellationToken).EnsureCompleted();
+        }
+
+        /// <summary>
+        /// Deserializes the <see cref="TokenCache"/> from the specified <see cref="Stream"/>.
+        /// </summary>
+        /// <param name="stream">The <see cref="Stream"/> from which the serialized <see cref="TokenCache"/> will be read.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public static async Task<TokenCache> DeserializeAsync(Stream stream, CancellationToken cancellationToken = default)
+        {
+            if (stream is null)
+                throw new ArgumentNullException(nameof(stream));
+
+            return await DeserializeAsync(stream, true, cancellationToken).ConfigureAwait(false);
+        }
+
+        private async Task SerializeAsync(Stream stream, bool async, CancellationToken cancellationToken)
+        {
+            if (async)
+            {
+                await stream.WriteAsync(_data, 0, _data.Length).ConfigureAwait(false);
+            }
+            else
+            {
+                stream.Write(_data, 0, _data.Length);
+            }
+        }
+
+        private static async Task<TokenCache> DeserializeAsync(Stream stream, bool async, CancellationToken cancellationToken)
+        {
+            var data = new byte[stream.Length - stream.Position];
+
+            if (async)
+            {
+                await stream.ReadAsync(data, 0, data.Length).ConfigureAwait(false);
+            }
+            else
+            {
+                stream.Read(data, 0, data.Length);
+            }
+
+            return new TokenCache(data);
+        }
+
+        private static AccountId BuildAccountIdFromString(string homeAccountId)
+        {
+            //For the Microsoft identity platform (formerly named Azure AD v2.0), the identifier is the concatenation of
+            // Microsoft.Identity.Client.AccountId.ObjectId and Microsoft.Identity.Client.AccountId.TenantId separated by a dot.
+            var homeAccountSegments = homeAccountId.Split('.');
+            AccountId accountId;
+            if (homeAccountSegments.Length == 2)
+            {
+                accountId = new AccountId(homeAccountId, homeAccountSegments[0], homeAccountSegments[1]);
+            }
+            else
+            {
+                accountId = new AccountId(homeAccountId);
+            }
+            return accountId;
+        }
 
         internal virtual async Task RegisterCache(bool async, ITokenCache tokenCache, CancellationToken cancellationToken)
         {
@@ -51,13 +176,13 @@ namespace Azure.Identity
 
             try
             {
-                if (!_cacheAccessMap.ContainsKey(tokenCache))
+                if (!_cacheAccessMap.TryGetValue(tokenCache, out _))
                 {
                     tokenCache.SetBeforeAccessAsync(OnBeforeCacheAccessAsync);
 
                     tokenCache.SetAfterAccessAsync(OnAfterCacheAccessAsync);
 
-                    _cacheAccessMap.Add(tokenCache, DateTimeOffset.MinValue);
+                    _cacheAccessMap.Add(tokenCache, new CacheTimestamp());
                 }
             }
             finally
@@ -68,13 +193,18 @@ namespace Azure.Identity
 
         private async Task OnBeforeCacheAccessAsync(TokenCacheNotificationArgs args)
         {
+            if (_disposedValue)
+            {
+                throw new ObjectDisposedException(nameof(TokenCache));
+            }
+
             await _lock.WaitAsync().ConfigureAwait(false);
 
             try
             {
-                args.TokenCache.DeserializeMsalV3(_serialized, true);
+                args.TokenCache.DeserializeMsalV3(_data, true);
 
-                _cacheAccessMap[args.TokenCache] = DateTimeOffset.UtcNow;
+                _cacheAccessMap.GetOrCreateValue(args.TokenCache).Update();
             }
             finally
             {
@@ -85,20 +215,27 @@ namespace Azure.Identity
 
         private async Task OnAfterCacheAccessAsync(TokenCacheNotificationArgs args)
         {
+            if (_disposedValue)
+            {
+                throw new ObjectDisposedException(nameof(TokenCache));
+            }
+
             if (args.HasStateChanged)
             {
                 await _lock.WaitAsync().ConfigureAwait(false);
 
                 try
                 {
-                    if (!_cacheAccessMap.TryGetValue(args.TokenCache, out DateTimeOffset lastRead) || lastRead < _lastUpdated)
+                    if (!_cacheAccessMap.TryGetValue(args.TokenCache, out CacheTimestamp lastRead) || lastRead.Value < _lastUpdated)
                     {
-                        _serialized = await MergeCacheData(_serialized, args.TokenCache.SerializeMsalV3()).ConfigureAwait(false);
+                        _data = await MergeCacheData(_data, args.TokenCache.SerializeMsalV3()).ConfigureAwait(false);
                     }
                     else
                     {
-                        _serialized = args.TokenCache.SerializeMsalV3();
+                        _data = args.TokenCache.SerializeMsalV3();
                     }
+
+                    _lastUpdated = DateTime.UtcNow;
                 }
                 finally
                 {
@@ -129,7 +266,7 @@ namespace Azure.Identity
         /// <summary>
         /// Disposes of the <see cref="TokenCache"/>.
         /// </summary>
-        /// <param name="disposing">Flag to indicate whether managed resources should be disposed of.</param>
+        /// <param name="disposing">Indicates whether managed resources should be disposed.</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!_disposedValue)
@@ -139,9 +276,21 @@ namespace Azure.Identity
                     _lock.Dispose();
                 }
 
+                var registeredCacheEntries = ((object)_cacheAccessMap) as IEnumerable<KeyValuePair<object, CacheTimestamp>>;
+
+                if (registeredCacheEntries != null)
+                {
+                    foreach (ITokenCache registeredCache in registeredCacheEntries.Select(kvp => kvp.Key))
+                    {
+                        registeredCache.SetBeforeAccessAsync(null);
+
+                        registeredCache.SetAfterAccessAsync(null);
+                    }
+                }
+
                 _cacheAccessMap = null;
 
-                _serialized = null;
+                _data = null;
 
                 _disposedValue = true;
             }
@@ -155,85 +304,6 @@ namespace Azure.Identity
             // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
-        }
-
-        private class SharedTokenCache : TokenCache
-        {
-            // we are creating the MsalCacheHelper with a random guid based clientId to work around issue https://github.com/AzureAD/microsoft-authentication-extensions-for-dotnet/issues/98
-            // This does not impact the functionality of the cacheHelper as the ClientId is only used to iterate accounts in the cache not for authentication purposes.
-            private static readonly string s_msalCacheClientId = Guid.NewGuid().ToString();
-
-            private AsyncLockWithValue<MsalCacheHelper> _cacheHelperLock = new AsyncLockWithValue<MsalCacheHelper>();
-            private bool _allowUnencryptedStorage;
-
-            public SharedTokenCache(bool allowUnencryptedStorage)
-            {
-                _allowUnencryptedStorage = allowUnencryptedStorage;
-            }
-
-            internal override async Task RegisterCache(bool async, ITokenCache tokenCache, CancellationToken cancellationToken)
-            {
-                MsalCacheHelper cacheHelper = await GetCacheHelperAsync(async, cancellationToken).ConfigureAwait(false);
-
-                cacheHelper.RegisterCache(tokenCache);
-
-                await base.RegisterCache(async, tokenCache, cancellationToken).ConfigureAwait(false);
-            }
-
-            private async Task<MsalCacheHelper> GetCacheHelperAsync(bool async, CancellationToken cancellationToken)
-            {
-                using var asyncLock = await _cacheHelperLock.GetLockOrValueAsync(async, cancellationToken).ConfigureAwait(false);
-
-                if (asyncLock.HasValue)
-                {
-                    return asyncLock.Value;
-                }
-
-                MsalCacheHelper cacheHelper;
-
-                StorageCreationProperties storageProperties = new StorageCreationPropertiesBuilder(Constants.DefaultMsalTokenCacheName, Constants.DefaultMsalTokenCacheDirectory, s_msalCacheClientId)
-                    .WithMacKeyChain(Constants.DefaultMsalTokenCacheKeychainService, Constants.DefaultMsalTokenCacheKeychainAccount)
-                    .WithLinuxKeyring(Constants.DefaultMsalTokenCacheKeyringSchema, Constants.DefaultMsalTokenCacheKeyringCollection, Constants.DefaultMsalTokenCacheKeyringLabel, Constants.DefaultMsaltokenCacheKeyringAttribute1, Constants.DefaultMsaltokenCacheKeyringAttribute2)
-                    .Build();
-
-                try
-                {
-                    cacheHelper = await CreateCacheHelper(async, storageProperties).ConfigureAwait(false);
-
-                    cacheHelper.VerifyPersistence();
-                }
-                catch (MsalCachePersistenceException)
-                {
-                    if (_allowUnencryptedStorage)
-                    {
-                        storageProperties = new StorageCreationPropertiesBuilder(Constants.DefaultMsalTokenCacheName, Constants.DefaultMsalTokenCacheDirectory, s_msalCacheClientId)
-                            .WithMacKeyChain(Constants.DefaultMsalTokenCacheKeychainService, Constants.DefaultMsalTokenCacheKeychainAccount)
-                            .WithLinuxUnprotectedFile()
-                            .Build();
-
-                        cacheHelper = await CreateCacheHelper(async, storageProperties).ConfigureAwait(false);
-
-                        cacheHelper.VerifyPersistence();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-
-                asyncLock.SetValue(cacheHelper);
-
-                return cacheHelper;
-            }
-
-            private static async Task<MsalCacheHelper> CreateCacheHelper(bool async, StorageCreationProperties storageProperties)
-            {
-                return async
-                    ? await MsalCacheHelper.CreateAsync(storageProperties).ConfigureAwait(false)
-#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
-                : MsalCacheHelper.CreateAsync(storageProperties).GetAwaiter().GetResult();
-#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
-            }
         }
     }
 }
