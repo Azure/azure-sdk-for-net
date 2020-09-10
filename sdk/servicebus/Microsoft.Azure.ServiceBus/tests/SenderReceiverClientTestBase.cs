@@ -253,11 +253,11 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 async (message, token) =>
                 {
                     TestUtility.Log($"Received message: SequenceNumber: {message.SystemProperties.SequenceNumber}");
-                    Interlocked.Increment(ref count);
                     if (messageReceiver.ReceiveMode == ReceiveMode.PeekLock && !autoComplete)
                     {
                         await messageReceiver.CompleteAsync(message.SystemProperties.LockToken);
                     }
+                    Interlocked.Increment(ref count);
                 },
                 new MessageHandlerOptions(ExceptionReceivedHandler) { MaxConcurrentCalls = maxConcurrentCalls, AutoComplete = autoComplete });
 
@@ -273,6 +273,62 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 await Task.Delay(TimeSpan.FromSeconds(5));
             }
             Assert.True(count == messageCount);
+        }
+
+        internal async Task OnMessageAsyncUnregisterHandlerLongTimeoutTestCase(
+            IMessageSender messageSender,
+            IMessageReceiver messageReceiver,
+            int maxConcurrentCalls,
+            bool autoComplete,
+            int messageCount)
+        {
+            var count = 0;
+            await TestUtility.SendMessagesAsync(messageSender, messageCount);
+            messageReceiver.RegisterMessageHandler(
+                async (message, token) =>
+                {
+                    TestUtility.Log($"Received message: SequenceNumber: {message.SystemProperties.SequenceNumber}");
+                    await Task.Delay(TimeSpan.FromSeconds(8));
+                    if (messageReceiver.ReceiveMode == ReceiveMode.PeekLock && !autoComplete)
+                    {
+                        await messageReceiver.CompleteAsync(message.SystemProperties.LockToken);
+                    }
+                    Interlocked.Increment(ref count);
+
+                },
+                new MessageHandlerOptions(ExceptionReceivedHandler) { MaxConcurrentCalls = maxConcurrentCalls, AutoComplete = autoComplete });
+
+            await Task.Delay(TimeSpan.FromSeconds(2));
+            // UnregisterMessageHandlerAsync should wait up to the provided timeout to finish the message handling tasks
+            await messageReceiver.UnregisterMessageHandlerAsync(TimeSpan.FromSeconds(20)); 
+            Assert.True(count == maxConcurrentCalls);
+        }
+
+        internal async Task OnMessageAsyncUnregisterHandlerShortTimeoutTestCase(
+            IMessageSender messageSender,
+            IMessageReceiver messageReceiver,
+            int maxConcurrentCalls,
+            bool autoComplete,
+            int messageCount)
+        {
+            var count = 0;
+            await TestUtility.SendMessagesAsync(messageSender, messageCount);
+            messageReceiver.RegisterMessageHandler(
+                async (message, token) =>
+                {
+                    TestUtility.Log($"Received message: SequenceNumber: {message.SystemProperties.SequenceNumber}");
+                    await Task.Delay(TimeSpan.FromSeconds(8));
+                    if (messageReceiver.ReceiveMode == ReceiveMode.PeekLock && !autoComplete)
+                    {
+                        await messageReceiver.CompleteAsync(message.SystemProperties.LockToken);
+                    }
+                    Interlocked.Increment(ref count);
+                },
+                new MessageHandlerOptions(ExceptionReceivedHandler) { MaxConcurrentCalls = maxConcurrentCalls, AutoComplete = autoComplete });
+
+            await Task.Delay(TimeSpan.FromSeconds(2));
+            await messageReceiver.UnregisterMessageHandlerAsync(TimeSpan.FromSeconds(2)); 
+            Assert.True(count == 0);
         }
 
         internal async Task OnMessageRegistrationWithoutPendingMessagesTestCase(

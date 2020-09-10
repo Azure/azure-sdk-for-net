@@ -62,6 +62,56 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     await topicClient.CloseAsync();
                 }
             });
+
+            await ServiceBusScope.UsingTopicAsync(partitioned, sessionEnabled, async (topicName, subscriptionName) =>
+            {
+                var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
+                var subscriptionClient = new SubscriptionClient(
+                    TestUtility.NamespaceConnectionString,
+                    topicName,
+                    subscriptionName,
+                    mode);
+
+                try
+                {
+                    await this.OnMessageAsyncUnregisterHandlerLongTimeoutTestCase(
+                        topicClient.InnerSender,
+                        subscriptionClient.InnerSubscriptionClient.InnerReceiver,
+                        maxConcurrentCalls,
+                        autoComplete,
+                        messageCount);
+                }
+                finally
+                {
+                    await subscriptionClient.CloseAsync();
+                    await topicClient.CloseAsync();
+                }
+            });
+
+            await ServiceBusScope.UsingTopicAsync(partitioned, sessionEnabled, async (topicName, subscriptionName) =>
+            {
+                var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
+                var subscriptionClient = new SubscriptionClient(
+                    TestUtility.NamespaceConnectionString,
+                    topicName,
+                    subscriptionName,
+                    mode);
+
+                try
+                {
+                    await this.OnMessageAsyncUnregisterHandlerShortTimeoutTestCase(
+                        topicClient.InnerSender,
+                        subscriptionClient.InnerSubscriptionClient.InnerReceiver,
+                        maxConcurrentCalls,
+                        autoComplete,
+                        messageCount);
+                }
+                finally
+                {
+                    await subscriptionClient.CloseAsync();
+                    await topicClient.CloseAsync();
+                }
+            });
         }
     }
 }
