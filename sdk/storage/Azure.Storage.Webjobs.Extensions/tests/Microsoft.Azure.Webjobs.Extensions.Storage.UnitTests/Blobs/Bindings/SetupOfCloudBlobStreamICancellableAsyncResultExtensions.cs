@@ -7,7 +7,6 @@ using Moq.Language.Flow;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
 {
-    // TODO (kasobol-msft) used??
     internal static class SetupOfCloudBlobStreamICancellableAsyncResultExtensions
     {
         public static IReturnsResult<Stream> ReturnsCompletedSynchronously(
@@ -21,23 +20,6 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             return setup.Returns<byte[], int, int, AsyncCallback, object>((a1, a2, a3, callback, state) =>
             {
                 IAsyncResult result = new CompletedCancellableAsyncResult(state);
-                InvokeCallback(callback, result);
-                return result;
-            });
-        }
-
-        public static IReturnsResult<Stream> ReturnsCompletedSynchronously(
-            this ISetup<Stream, IAsyncResult> setup, CompletedCancellationSpy spy)
-        {
-            if (setup == null)
-            {
-                throw new ArgumentNullException(nameof(setup));
-            }
-
-            return setup.Returns<AsyncCallback, object>((callback, state) =>
-            {
-                CompletedCancellableAsyncResult result = new CompletedCancellableAsyncResult(state);
-                spy.SetAsyncResult(result);
                 InvokeCallback(callback, result);
                 return result;
             });

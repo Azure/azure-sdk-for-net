@@ -78,7 +78,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             var blob = container.GetBlockBlobClient(BlobName);
             await blob.UploadTextAsync(string.Empty);
             await blob.SetMetadataAsync(new Dictionary<string, string> { { "m1", "v1" } });
-            // blob.Metadata["m1"] = "v1"; TODO (kasobol-msft) fix this
 
             await host.GetJobHost().CallAsync(typeof(BindToCloudBlob2Program).GetMethod(nameof(BindToCloudBlob2Program.Run)), new { blob });
 

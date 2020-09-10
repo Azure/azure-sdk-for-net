@@ -8,7 +8,6 @@ using Moq.Language.Flow;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
 {
-    // TODO (kasobol-msft) used ??
     internal static class MockOfCloudBlobStreamExtensions
     {
         public static ISetup<Stream, IAsyncResult> SetupBeginRead(this Mock<Stream> mock)
