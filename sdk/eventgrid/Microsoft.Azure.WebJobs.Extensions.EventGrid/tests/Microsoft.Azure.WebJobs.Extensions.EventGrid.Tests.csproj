@@ -20,15 +20,6 @@
   
   <ItemGroup>
     <Compile Include="..\..\..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\tests\shared\*.cs" LinkBase="shared" />
-    <Compile Remove="Common\**" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <EmbeddedResource Remove="Common\**" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <None Remove="Common\**" />
   </ItemGroup>
 
 </Project>
