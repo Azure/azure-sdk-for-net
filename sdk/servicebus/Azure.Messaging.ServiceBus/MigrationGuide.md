@@ -128,7 +128,9 @@ for (var i = 0; i < inputMessageArray.Length; i++)
       await sender.SendMessagesAsync(messageBatch);
       messageBatch.Dispose();
       messageBatch = await sender.CreateMessageBatchAsync();
-    } else if (i == inputMessageArray.Length) {
+    } 
+    else if (i == inputMessageArray.Length) 
+    {
       // send the final batch
       await sender.SendMessagesAsync(messageBatch);
       messageBatch.Dispose();
