@@ -13,6 +13,7 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Microsoft.Azure.WebJobs.Extensions.Storage;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Timers;
@@ -108,7 +109,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                     break;
                 }
 
-                notifications.Add(NotifyRegistrationsAsync(failedNotification.Container, failedNotification.Blob, failedNotifications, failedNotification.PollId, cancellationToken));
+                notifications.Add(NotifyRegistrationsAsync(failedNotification.Blob, failedNotifications, failedNotification.PollId, cancellationToken));
             }
 
             await Task.WhenAll(notifications).ConfigureAwait(false);
@@ -147,7 +148,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             foreach (var newBlob in newBlobs)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await NotifyRegistrationsAsync(container, newBlob, failedNotifications, clientRequestId, cancellationToken).ConfigureAwait(false);
+                await NotifyRegistrationsAsync(new BlobHierarchy<BlobBaseClient>(container, newBlob), failedNotifications, clientRequestId, cancellationToken).ConfigureAwait(false);
             }
 
             // if the 'LatestModified' has changed, update it in the manager
@@ -160,7 +161,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                 if (failedNotifications.Any())
                 {
                     // TODO (kasobol-msft) this call to getPRoperties is suboptimal figure out how to propagate data from listing here.
-                    latestScan = failedNotifications.Select(p => p.Blob).Min(n => n.GetProperties().Value.LastModified.UtcDateTime);
+                    latestScan = failedNotifications.Select(p => p.Blob).Min(n => n.BlobClient.GetProperties().Value.LastModified.UtcDateTime);
                 }
 
                 // Store our timestamp slightly earlier than the last timestamp. This is a failsafe for any blobs that created
@@ -171,10 +172,10 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             }
         }
 
-        public void Notify(BlobContainerClient container, BlobBaseClient blobWritten)
+        public void Notify(BlobHierarchy<BlobBaseClient> blobWritten)
         {
             ThrowIfDisposed();
-            _blobsFoundFromScanOrNotification.Enqueue(new BlobNotification(container, blobWritten, null));
+            _blobsFoundFromScanOrNotification.Enqueue(new BlobNotification(blobWritten, null));
         }
 
         public void Dispose()
@@ -291,10 +292,10 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             return newBlobs;
         }
 
-        private async Task NotifyRegistrationsAsync(BlobContainerClient container, BlobBaseClient blob, ICollection<BlobNotification> failedNotifications, string clientRequestId, CancellationToken cancellationToken)
+        private async Task NotifyRegistrationsAsync(BlobHierarchy<BlobBaseClient> blob, ICollection<BlobNotification> failedNotifications, string clientRequestId, CancellationToken cancellationToken)
         {
             // Blob written notifications are host-wide, so filter out things that aren't in the container list.
-            if (!_scanInfo.TryGetValue(container, out ContainerScanInfo containerScanInfo))
+            if (!_scanInfo.TryGetValue(blob.BlobContainerClient, out ContainerScanInfo containerScanInfo))
             {
                 return;
             }
@@ -314,7 +315,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                 if (!result.Succeeded)
                 {
                     // If notification failed, try again on the next iteration.
-                    failedNotifications.Add(new BlobNotification(container, blob, clientRequestId));
+                    failedNotifications.Add(new BlobNotification(blob, clientRequestId));
                 }
             }
         }

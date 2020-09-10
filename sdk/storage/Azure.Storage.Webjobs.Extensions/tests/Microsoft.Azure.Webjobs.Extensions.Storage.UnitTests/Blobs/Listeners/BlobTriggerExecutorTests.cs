@@ -17,6 +17,7 @@ using Xunit;
 using Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests;
 using Azure.Storage.Blobs.Specialized;
 using System.IO;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 {
@@ -56,7 +57,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             var blob = otherContainer.GetBlockBlobClient("nonmatch");
             var context = new BlobTriggerExecutorContext
             {
-                Blob = blob,
+                Blob = new BlobHierarchy<BlobBaseClient>(otherContainer, blob),
                 TriggerSource = BlobTriggerSource.ContainerScan
             };
 
@@ -100,7 +101,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             Assert.Equal("BlobHasNoETag", logMessage.EventId.Name);
             Assert.Equal(LogLevel.Debug, logMessage.Level);
             Assert.Equal(5, logMessage.State.Count());
-            Assert.Equal(context.Blob.Name, logMessage.GetStateValue<string>("blobName"));
+            Assert.Equal(context.Blob.BlobClient.Name, logMessage.GetStateValue<string>("blobName"));
             Assert.Equal("FunctionIdLogName", logMessage.GetStateValue<string>("functionName"));
             Assert.Equal(context.PollId, logMessage.GetStateValue<string>("pollId"));
             Assert.Equal(context.TriggerSource, logMessage.GetStateValue<BlobTriggerSource>("triggerSource"));
@@ -130,7 +131,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             Assert.Equal(LogLevel.Debug, logMessage.Level);
             Assert.Equal(6, logMessage.State.Count());
             Assert.Equal("FunctionIdLogName", logMessage.GetStateValue<string>("functionName"));
-            Assert.Equal(context.Blob.Name, logMessage.GetStateValue<string>("blobName"));
+            Assert.Equal(context.Blob.BlobClient.Name, logMessage.GetStateValue<string>("blobName"));
             Assert.Equal("ETag", logMessage.GetStateValue<string>("eTag"));
             Assert.Equal(context.PollId, logMessage.GetStateValue<string>("pollId"));
             Assert.Equal(context.TriggerSource, logMessage.GetStateValue<BlobTriggerSource>("triggerSource"));
@@ -420,7 +421,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
                 .Verify(
                     w => w.EnqueueAsync(It.Is<BlobTriggerMessage>(m =>
                         m != null && m.FunctionId == expectedFunctionId /*&& m.BlobType == StorageBlobType.BlockBlob $$$ */ &&
-                        m.BlobName == context.Blob.Name && m.ContainerName == context.Blob.BlobContainerName && m.ETag == expectedETag),
+                        m.BlobName == context.Blob.BlobClient.Name && m.ContainerName == context.Blob.BlobClient.BlobContainerName && m.ETag == expectedETag),
                         It.IsAny<CancellationToken>()),
                     Times.Once());
             managerMock.Verify();
@@ -432,7 +433,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             Assert.Equal(LogLevel.Debug, logMessage.Level);
             Assert.Equal(7, logMessage.State.Count());
             Assert.Equal("FunctionIdLogName", logMessage.GetStateValue<string>("functionName"));
-            Assert.Equal(context.Blob.Name, logMessage.GetStateValue<string>("blobName"));
+            Assert.Equal(context.Blob.BlobClient.Name, logMessage.GetStateValue<string>("blobName"));
             Assert.Equal("testQueueName", logMessage.GetStateValue<string>("queueName"));
             Assert.Equal("testMessageId", logMessage.GetStateValue<string>("messageId"));
             Assert.Equal(context.PollId, logMessage.GetStateValue<string>("pollId"));
@@ -467,7 +468,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             };
         }
 
-        private BlockBlobClient CreateBlobReference(string containerName, string blobName)
+        private BlobHierarchy<BlobBaseClient> CreateBlobReference(string containerName, string blobName)
         {
             var account = CreateAccount();
             var client = account.CreateBlobServiceClient();
@@ -475,12 +476,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             container.CreateIfNotExists();
             var blobClient = container.GetBlockBlobClient(blobName);
             blobClient.Upload(new MemoryStream());
-            return blobClient;
+            return new BlobHierarchy<BlobBaseClient>(container, blobClient);
         }
 
-        private static IBlobPathSource CreateBlobPath(BlobBaseClient blob)
+        private static IBlobPathSource CreateBlobPath(BlobHierarchy<BlobBaseClient> blob)
         {
-            return new FixedBlobPathSource(blob.ToBlobPath());
+            return new FixedBlobPathSource(blob.BlobClient.ToBlobPath());
         }
 
         private IBlobReceiptManager CreateCompletedReceiptManager()

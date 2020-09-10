@@ -101,7 +101,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             // If the blob still exists but the ETag is different, delete the message but do a fast path notification.
             if (!string.Equals(message.ETag, possibleETag, StringComparison.Ordinal))
             {
-                _blobWrittenWatcher.Notify(container, blob);
+                _blobWrittenWatcher.Notify(new Extensions.Storage.Blobs.BlobHierarchy<BlobBaseClient>(container, blob));
                 return successResult;
             }
 

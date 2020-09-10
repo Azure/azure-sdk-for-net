@@ -22,7 +22,6 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
         public string FunctionId { get; set; }
 
         // $$$ Ignored this?
-        // TODO (kasobol-msft) should we use SDK's model here ??
         [JsonConverter(typeof(StringEnumConverter))]
         public BlobType BlobType { get; set; }
 

@@ -74,7 +74,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
 
             public Task<FunctionResult> ExecuteAsync(BlobTriggerExecutorContext value, CancellationToken cancellationToken)
             {
-                bool succeeded = ExecuteLambda.Invoke(value.Blob);
+                bool succeeded = ExecuteLambda.Invoke(value.Blob.BlobClient);
                 FunctionResult result = new FunctionResult(succeeded);
                 return Task.FromResult(result);
             }

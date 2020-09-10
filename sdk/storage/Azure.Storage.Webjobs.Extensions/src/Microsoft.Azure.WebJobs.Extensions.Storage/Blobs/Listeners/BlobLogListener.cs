@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs;
 using Microsoft.Azure.WebJobs.Host.Timers;
 using Microsoft.Extensions.Logging;
 
@@ -52,10 +53,10 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             return new BlobLogListener(blobClient, exceptionHandler, logger);
         }
 
-        public async Task<IEnumerable<(BlobContainerClient, BlobBaseClient)>> GetRecentBlobWritesAsync(CancellationToken cancellationToken,
+        public async Task<IEnumerable<BlobHierarchy<BlobBaseClient>>> GetRecentBlobWritesAsync(CancellationToken cancellationToken,
             int hoursWindow = DefaultScanHoursWindow)
         {
-            List<(BlobContainerClient, BlobBaseClient)> blobs = new List<(BlobContainerClient, BlobBaseClient)>();
+            List<BlobHierarchy<BlobBaseClient>> blobs = new List<BlobHierarchy<BlobBaseClient>>();
 
             var time = DateTime.UtcNow; // will scan back 2 hours, which is enough to deal with clock sqew
             foreach (var blob in await ListRecentLogFilesAsync(_blobClient, time, hoursWindow, cancellationToken).ConfigureAwait(false))
@@ -78,7 +79,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                 foreach (BlobPath path in filteredBlobs)
                 {
                     var container = _blobClient.GetBlobContainerClient(path.ContainerName);
-                    blobs.Add((container, container.GetBlockBlobClient(path.BlobName)));
+                    blobs.Add(new BlobHierarchy<BlobBaseClient>(container, container.GetBlockBlobClient(path.BlobName)));
                 }
             }
 

@@ -23,9 +23,6 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
         private readonly BlobContainerClient _blobContainerClient;
 
         public BlobReceiptManager(BlobServiceClient client)
-            // TODO (kasobol-msft) revisit this
-            //: this(client.GetContainerReference(HostContainerNames.Hosts)
-            //    .GetDirectoryReference(HostDirectoryNames.BlobReceipts))
         {
             this._blobContainerClient = client.GetBlobContainerClient(HostContainerNames.Hosts);
         }
@@ -52,7 +49,6 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 
         public async Task<bool> TryCreateAsync(BlockBlobClient blob, CancellationToken cancellationToken)
         {
-            // TODO (kasobol-msft) check this
             Dictionary<string, string> metadata = new Dictionary<string, string>();
             BlobReceipt.Incomplete.ToMetadata(metadata);
             BlobRequestConditions accessCondition = new BlobRequestConditions { IfNoneMatch = new ETag("*") };
@@ -152,7 +148,6 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
         public async Task MarkCompletedAsync(BlockBlobClient blob, string leaseId,
             CancellationToken cancellationToken)
         {
-            // TODO (kasobol-msft) check this
             var metadata = (await blob.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Metadata;
             BlobReceipt.Complete.ToMetadata(metadata);
 

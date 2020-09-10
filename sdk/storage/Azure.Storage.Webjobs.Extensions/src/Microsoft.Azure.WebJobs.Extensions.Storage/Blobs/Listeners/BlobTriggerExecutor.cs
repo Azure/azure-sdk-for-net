@@ -42,7 +42,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 
         public async Task<FunctionResult> ExecuteAsync(BlobTriggerExecutorContext context, CancellationToken cancellationToken)
         {
-            BlobBaseClient value = context.Blob;
+            BlobBaseClient value = context.Blob.BlobClient;
             BlobTriggerSource triggerSource = context.TriggerSource;
             string pollId = context.PollId;
 

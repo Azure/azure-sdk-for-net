@@ -18,8 +18,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage
             {
                 dir = dir + "/";
             }
-            // TODO (kasobol-msft) check this
-            //var prefix = dir.Prefix; // already ends in /
             var blob = container.GetBlockBlobClient(dir + blobName);
             return blob;
         }

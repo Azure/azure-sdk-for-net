@@ -3,20 +3,18 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
 {
     internal class BlobCommittedAction : IBlobCommitedAction
     {
-        private readonly BlobContainerClient _container;
-        private readonly BlobBaseClient _blob;
+        private readonly BlobHierarchy<BlobBaseClient> _blob;
         private readonly IBlobWrittenWatcher _blobWrittenWatcher;
 
-        public BlobCommittedAction(BlobContainerClient container, BlobBaseClient blob, IBlobWrittenWatcher blobWrittenWatcher)
+        public BlobCommittedAction(BlobHierarchy<BlobBaseClient> blob, IBlobWrittenWatcher blobWrittenWatcher)
         {
-            _container = container;
             _blob = blob;
             _blobWrittenWatcher = blobWrittenWatcher;
         }
@@ -25,7 +23,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
         {
             if (_blobWrittenWatcher != null)
             {
-                _blobWrittenWatcher.Notify(_container, _blob);
+                _blobWrittenWatcher.Notify(_blob);
             }
 
             return Task.FromResult(0);
@@ -35,7 +33,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
         {
             if (_blobWrittenWatcher != null)
             {
-                _blobWrittenWatcher.Notify(_container, _blob);
+                _blobWrittenWatcher.Notify(_blob);
             }
         }
     }

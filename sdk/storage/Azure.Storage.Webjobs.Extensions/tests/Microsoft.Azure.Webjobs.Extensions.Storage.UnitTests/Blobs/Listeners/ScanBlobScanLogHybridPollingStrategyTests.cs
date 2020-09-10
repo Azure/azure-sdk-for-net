@@ -502,13 +502,13 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
                 bool succeeded = true;
 
                 // Only invoke if it's a new blob.
-                if (!_blobReceipts.Contains(value.Blob.Name))
+                if (!_blobReceipts.Contains(value.Blob.BlobClient.Name))
                 {
-                    succeeded = ExecuteLambda.Invoke(value.Blob);
+                    succeeded = ExecuteLambda.Invoke(value.Blob.BlobClient);
 
                     if (succeeded)
                     {
-                        _blobReceipts.Add(value.Blob.Name);
+                        _blobReceipts.Add(value.Blob.BlobClient.Name);
                     }
                 }
 
