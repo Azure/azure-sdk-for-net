@@ -40,13 +40,16 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// Service Runtime</param>
         /// <param name="appNetworkResourceGroup">Name of the resource group
         /// containing network resources of Azure Spring Cloud Apps</param>
-        public NetworkProfile(string serviceRuntimeSubnetId = default(string), string appSubnetId = default(string), string serviceCidr = default(string), string serviceRuntimeNetworkResourceGroup = default(string), string appNetworkResourceGroup = default(string))
+        /// <param name="outboundIPs">Desired outbound IP resources for Azure
+        /// Spring Cloud instance.</param>
+        public NetworkProfile(string serviceRuntimeSubnetId = default(string), string appSubnetId = default(string), string serviceCidr = default(string), string serviceRuntimeNetworkResourceGroup = default(string), string appNetworkResourceGroup = default(string), NetworkProfileOutboundIPs outboundIPs = default(NetworkProfileOutboundIPs))
         {
             ServiceRuntimeSubnetId = serviceRuntimeSubnetId;
             AppSubnetId = appSubnetId;
             ServiceCidr = serviceCidr;
             ServiceRuntimeNetworkResourceGroup = serviceRuntimeNetworkResourceGroup;
             AppNetworkResourceGroup = appNetworkResourceGroup;
+            OutboundIPs = outboundIPs;
             CustomInit();
         }
 
@@ -88,6 +91,12 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// </summary>
         [JsonProperty(PropertyName = "appNetworkResourceGroup")]
         public string AppNetworkResourceGroup { get; set; }
+
+        /// <summary>
+        /// Gets desired outbound IP resources for Azure Spring Cloud instance.
+        /// </summary>
+        [JsonProperty(PropertyName = "outboundIPs")]
+        public NetworkProfileOutboundIPs OutboundIPs { get; private set; }
 
     }
 }
