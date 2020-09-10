@@ -44,7 +44,7 @@ In the interest of simplifying the API surface we've made a single top level cli
 By having a single entry point, the `ServiceBusClient` helps with the discoverability of the API as you can explore all available features through methods from a single client, as opposed to searching through documentation or exploring namespace for the types that you can instantiate. Whether sending or receiving, using sessions or not, you will start your applications by constructing the same client.
  
 #### Consistency
-Having similarly named and structured methods to create senders, receivers and receivers for individual sessions on the same client provides consistency and predictability on the various features of the library. We have attempted to have the session/non-session usage be as seamless as possible. This allows you to make less changes to your code when you want to move from sessions to non-sessions or the other way around.
+We now have methods with similar names, signature and location to create senders and receivers. This provides consistency and predictability on the various features of the library. We have attempted to have the session/non-session usage be as seamless as possible. This allows you to make less changes to your code when you want to move from sessions to non-sessions or the other way around.
  
 #### Connection Pooling
 By using a single top-level client, we can implicitly share a single AMQP connection for all operations that an application performs. In the previous library `Microsoft.Azure.ServiceBus`, connection sharing was implicit when using the `SessionClient`, but when using other clients, senders or receivers, you would need to explicitly pass in a `ServiceBusConnection` object in order to share a connection. 
