@@ -107,23 +107,33 @@ The feature to send a list of messages in a single call was implemented by batch
 
 While we continue to support this feature, it always had the potential to fail unexpectedly when the resulting batched AMQP message exceeded the size limit of the sender. To help with this, we now provide a safe way to batch multiple messages to be sent at once using the new `ServiceBusMessageBatch` class.
 
+In the below code snippet, `inputMessageArray` is an array of messages which we will loop over to safely batch and then send.
+
 ```cs
 ServiceBusMessageBatch messageBatch = await sender.CreateMessageBatchAsync();
 
-for (var i = 0; i < 10; i++)
+for (var i = 0; i < inputMessageArray.Length; i++)
 {
-    // create a message
-    ServiceBusMessage message = new ServiceBusMessage($"Hello world! - {i}");
-
-    // Add message the batch
-    if (!messageBatch.TryAddMessage(message))
+    if (!messageBatch.TryAddMessage(inputMessageArray[i]))
     {
-      Console.WriteLine($"Failed to add message number {i}");
-      break;
+      if (messageBatch.Count == 0) {
+        Console.WriteLine($"Failed to fit message number in a batch {i}");
+        break;
+      }
+
+      // Decrement counter so that message number i can get another chance in a new batch
+      i = i - 1;
+
+      // send the message batch and create a new batch
+      await sender.SendMessagesAsync(messageBatch);
+      messageBatch.Dispose();
+      messageBatch = await sender.CreateMessageBatchAsync();
+    } else if (i == inputMessageArray.Length) {
+      // send the final batch
+      await sender.SendMessagesAsync(messageBatch);
+      messageBatch.Dispose();
     }
 }
-// send the message batch
-await sender.SendMessagesAsync(messageBatch);
 ```
 
 ### Receiving messages
