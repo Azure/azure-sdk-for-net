@@ -227,21 +227,21 @@ The below code snippet shows you the session variation of the `ServiceBusProcess
 
 ```cs
 // create a processor to receive events from the next available session
-ServiceBusProcessor processor = client.CreateSessionProcessor(queueName);
+ServiceBusSessionProcessor processor = client.CreateSessionProcessor(queueName);
 
 // create a processor to receive events from the given set of sessions
 var options = new ServiceBusSessionProcessorOptions
 {
     SessionIds = ["my-session", "your-session"],
 };
-ServiceBusProcessor processor = client.CreateSessionProcessor(queueName, options);
+ServiceBusSessionProcessor processor = client.CreateSessionProcessor(queueName, options);
 
 // create a processor to receive events from the 3 next available sessions
 var options = new ServiceBusSessionProcessorOptions
 {
     MaxConcurrentSessions = 3
 };
-ServiceBusProcessor processor = client.CreateSessionProcessor(queueName);
+ServiceBusSessionProcessor processor = client.CreateSessionProcessor(queueName);
 ```
 
 The below code snippet shows you the session variation of the receiver. Please note that creating a session receiver is an async operation because the library will need to get a lock on the session by connecting to the service first.
