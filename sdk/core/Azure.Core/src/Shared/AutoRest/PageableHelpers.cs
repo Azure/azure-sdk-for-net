@@ -43,7 +43,13 @@ namespace Azure.Core
 
             public override async IAsyncEnumerable<Page<T>> AsPages(string? continuationToken = default, int? pageSizeHint = default)
             {
-                AsyncPageFunc<T>? pageFunc = _firstPageFunc;
+                AsyncPageFunc<T>? pageFunc = string.IsNullOrEmpty(continuationToken) ? _firstPageFunc : _nextPageFunc;
+
+                if (pageFunc == null)
+                {
+                    yield break;
+                }
+
                 int? pageSize = pageSizeHint ?? _defaultPageSize;
                 do
                 {
@@ -70,7 +76,13 @@ namespace Azure.Core
 
             public override IEnumerable<Page<T>> AsPages(string? continuationToken = default, int? pageSizeHint = default)
             {
-                PageFunc<T>? pageFunc = _firstPageFunc;
+                PageFunc<T>? pageFunc = string.IsNullOrEmpty(continuationToken) ? _firstPageFunc : _nextPageFunc;
+
+                if (pageFunc == null)
+                {
+                    yield break;
+                }
+
                 int? pageSize = pageSizeHint ?? _defaultPageSize;
                 do
                 {
