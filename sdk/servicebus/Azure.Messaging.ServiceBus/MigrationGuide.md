@@ -219,7 +219,7 @@ Previously, in `Microsoft.Azure.ServiceBus`, you had the below options to receiv
 - Register message and error handlers using the `QueueClient.RegisterSessionHandler()` method to receive messages from an available set of sessions 
 - Use the `SessionClient.AcceptMessageSessionAsync()` method to get an instance of the `MessageSession` class that will be tied to a given sessionId or to the next available session if no sessionId is provided.
 
-While the first option is similar to what you would do in a non session scenario, the second that allows you finer grained control is very different from any other pattern used in the library.
+While the first option is similar to what you would do in a non-session scenario, the second that allows you finer-grained control is very different from any other pattern used in the library.
 
 Now in `Azure.Messaging.ServiceBus`, we simplfify this by giving session variants of the same methods and classes that are available when working with queues/subscriptions that do not have sessions enabled.
 
