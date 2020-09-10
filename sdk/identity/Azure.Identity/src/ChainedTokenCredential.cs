@@ -92,7 +92,7 @@ namespace Azure.Identity
                     {
                         exceptions.Add(e);
                     }
-                    catch (Exception e)
+                    catch (Exception e) when (!cancellationToken.IsCancellationRequested)
                     {
                         throw new AuthenticationFailedException(AuthenticationFailedErrorMessage + e.Message, e);
                     }
