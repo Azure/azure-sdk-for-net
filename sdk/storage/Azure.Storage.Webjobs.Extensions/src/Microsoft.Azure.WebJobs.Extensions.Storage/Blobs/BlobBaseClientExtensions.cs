@@ -10,11 +10,10 @@ using Azure.Storage.Blobs.Specialized;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs
 {
-    // TODO (kasobol-msft) rename this
-    internal static class CloudBlobExtensions
+    internal static class BlobBaseClientExtensions
     {
         public static async Task<BlobProperties> FetchPropertiesOrNullIfNotExistAsync(this BlobBaseClient blob,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken = default)
         {
             if (blob == null)
             {
