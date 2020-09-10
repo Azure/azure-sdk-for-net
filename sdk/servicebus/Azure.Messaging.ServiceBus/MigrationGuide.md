@@ -177,7 +177,7 @@ Console.WriteLine($"Received message with Body:{Encoding.UTF8.GetString(received
 await receiver.CompleteAsync(receivedMessage);
 ```
 
-Now in `Azure.Messaging.ServiceBus`, we introduce the concept of a "processor" which takes your message and error handlers to provide you a simple way to get started with processing your messages. This provides a graceful shutdown via the `StopProcessingAsync` method which will ensure that no more messages will be received, but at the same time you can continue the prcoessing and settling the messages already in flight.
+Now in `Azure.Messaging.ServiceBus`, we introduce a dedicated class `ServiceBusProcessor` which takes your message and error handlers to provide you with the same simple way to get started with processing your messages as message handlers in the previous packages, with auto-complete and auto-lock renewal features. This class also provides a graceful shutdown via the `StopProcessingAsync` method which will ensure that no more messages will be received, but at the same time you can continue the processing and settling the messages already in flight.
 
 The concept of a "receiver" remains for users who need to have a more fine grained control over the receiving and settling messages. The difference is that this is now created from the top-level `ServiceBusClient` via the `CreateReceiver()` method that would take the queue or subscription you want to target.
 
