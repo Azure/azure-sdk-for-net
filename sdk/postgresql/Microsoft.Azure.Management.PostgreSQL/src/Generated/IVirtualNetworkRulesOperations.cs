@@ -27,9 +27,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// Gets a virtual network rule.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the resource. You can
-        /// obtain this value from the Azure Resource Manager API or the
-        /// portal.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serverName'>
         /// The name of the server.
@@ -57,9 +55,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// Creates or updates an existing virtual network rule.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the resource. You can
-        /// obtain this value from the Azure Resource Manager API or the
-        /// portal.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serverName'>
         /// The name of the server.
@@ -90,9 +86,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// Deletes the virtual network rule with the given name.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the resource. You can
-        /// obtain this value from the Azure Resource Manager API or the
-        /// portal.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serverName'>
         /// The name of the server.
@@ -117,9 +111,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// Gets a list of virtual network rules in a server.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the resource. You can
-        /// obtain this value from the Azure Resource Manager API or the
-        /// portal.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serverName'>
         /// The name of the server.
@@ -144,9 +136,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// Creates or updates an existing virtual network rule.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the resource. You can
-        /// obtain this value from the Azure Resource Manager API or the
-        /// portal.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serverName'>
         /// The name of the server.
@@ -177,9 +167,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// Deletes the virtual network rule with the given name.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the resource. You can
-        /// obtain this value from the Azure Resource Manager API or the
-        /// portal.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serverName'>
         /// The name of the server.

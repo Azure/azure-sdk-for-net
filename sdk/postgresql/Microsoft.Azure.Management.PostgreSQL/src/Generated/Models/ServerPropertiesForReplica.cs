@@ -34,13 +34,23 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         /// <param name="sourceServerId">The master server id to create replica
         /// from.</param>
         /// <param name="version">Server version. Possible values include:
-        /// '9.5', '9.6', '10', '10.0', '10.2'</param>
+        /// '9.5', '9.6', '10', '10.0', '10.2', '11'</param>
         /// <param name="sslEnforcement">Enable ssl enforcement or not when
         /// connect to server. Possible values include: 'Enabled',
         /// 'Disabled'</param>
+        /// <param name="minimalTlsVersion">Enforce a minimal Tls version for
+        /// the server. Possible values include: 'TLS1_0', 'TLS1_1', 'TLS1_2',
+        /// 'TLSEnforcementDisabled'</param>
+        /// <param name="infrastructureEncryption">Status showing whether the
+        /// server enabled infrastructure encryption. Possible values include:
+        /// 'Enabled', 'Disabled'</param>
+        /// <param name="publicNetworkAccess">Whether or not public network
+        /// access is allowed for this server. Value is optional but if passed
+        /// in, must be 'Enabled' or 'Disabled'. Possible values include:
+        /// 'Enabled', 'Disabled'</param>
         /// <param name="storageProfile">Storage profile of a server.</param>
-        public ServerPropertiesForReplica(string sourceServerId, string version = default(string), SslEnforcementEnum? sslEnforcement = default(SslEnforcementEnum?), StorageProfile storageProfile = default(StorageProfile))
-            : base(version, sslEnforcement, storageProfile)
+        public ServerPropertiesForReplica(string sourceServerId, string version = default(string), SslEnforcementEnum? sslEnforcement = default(SslEnforcementEnum?), string minimalTlsVersion = default(string), string infrastructureEncryption = default(string), string publicNetworkAccess = default(string), StorageProfile storageProfile = default(StorageProfile))
+            : base(version, sslEnforcement, minimalTlsVersion, infrastructureEncryption, publicNetworkAccess, storageProfile)
         {
             SourceServerId = sourceServerId;
             CustomInit();

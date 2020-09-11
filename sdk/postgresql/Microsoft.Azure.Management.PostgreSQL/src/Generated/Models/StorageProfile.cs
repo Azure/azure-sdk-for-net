@@ -35,11 +35,14 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         /// server backup. Possible values include: 'Enabled',
         /// 'Disabled'</param>
         /// <param name="storageMB">Max storage allowed for a server.</param>
-        public StorageProfile(int? backupRetentionDays = default(int?), string geoRedundantBackup = default(string), int? storageMB = default(int?))
+        /// <param name="storageAutogrow">Enable Storage Auto Grow. Possible
+        /// values include: 'Enabled', 'Disabled'</param>
+        public StorageProfile(int? backupRetentionDays = default(int?), string geoRedundantBackup = default(string), int? storageMB = default(int?), string storageAutogrow = default(string))
         {
             BackupRetentionDays = backupRetentionDays;
             GeoRedundantBackup = geoRedundantBackup;
             StorageMB = storageMB;
+            StorageAutogrow = storageAutogrow;
             CustomInit();
         }
 
@@ -66,6 +69,13 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         /// </summary>
         [JsonProperty(PropertyName = "storageMB")]
         public int? StorageMB { get; set; }
+
+        /// <summary>
+        /// Gets or sets enable Storage Auto Grow. Possible values include:
+        /// 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "storageAutogrow")]
+        public string StorageAutogrow { get; set; }
 
     }
 }
