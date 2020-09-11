@@ -54,17 +54,15 @@ namespace Azure.Messaging.EventGrid
             }
 
             CloudEvent cloudEvent = new CloudEvent(
-                cloudEventInternal.Source,
-                cloudEventInternal.Type)
-            {
-                Id = cloudEventInternal.Id,
-                Time = cloudEventInternal.Time,
-                DataBase64 = cloudEventInternal.DataBase64,
-                DataSchema = cloudEventInternal.Dataschema,
-                DataContentType = cloudEventInternal.Datacontenttype,
-                Subject = cloudEventInternal.Subject,
-                SerializedData = cloudEventInternal.Data
-            };
+                    cloudEventInternal.Id,
+                    cloudEventInternal.Source,
+                    cloudEventInternal.Type,
+                    cloudEventInternal.Time,
+                    cloudEventInternal.Dataschema,
+                    cloudEventInternal.Datacontenttype,
+                    cloudEventInternal.Subject,
+                    cloudEventInternal.Data,
+                    cloudEventInternal.DataBase64);
 
             if (cloudEventInternal.AdditionalProperties != null)
             {
