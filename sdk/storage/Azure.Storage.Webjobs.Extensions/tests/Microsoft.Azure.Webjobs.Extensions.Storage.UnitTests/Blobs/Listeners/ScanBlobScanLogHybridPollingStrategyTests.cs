@@ -268,12 +268,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
         [Fact]
         public async Task RegisterAsync_InitializesWithScanInfoManager()
         {
-            if (Environment.Version.Major == 4)
-            {
-                // TODO (kasobol-msft) : figure out why this doesn't work on .NET Framework
-                return;
-            }
-            string containerName = Guid.NewGuid().ToString();
             var container = blobContainerMock.Object;
             TestBlobScanInfoManager scanInfoManager = new TestBlobScanInfoManager();
             IBlobListenerStrategy product = new ScanBlobScanLogHybridPollingStrategy(scanInfoManager, _exceptionHandler, NullLogger<BlobListener>.Instance);
@@ -285,7 +279,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
                 CreateBlobAndUploadToContainer(blobContainerMock, blobItems);
             }
 
-            await scanInfoManager.UpdateLatestScanAsync(AccountName, containerName, DateTime.UtcNow);
+            // delay slightly so we guarantee a later timestamp
+            await Task.Delay(10);
+
+            await scanInfoManager.UpdateLatestScanAsync(AccountName, ContainerName, DateTime.UtcNow);
             await product.RegisterAsync(blobClientMock.Object, container, executor, CancellationToken.None);
 
             // delay slightly so we guarantee a later timestamp
