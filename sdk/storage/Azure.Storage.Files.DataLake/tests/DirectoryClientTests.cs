@@ -701,6 +701,53 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        [TestCase("!'();[]@&%=+$,#äÄöÖüÜß;")]
+        [TestCase("%21%27%28%29%3B%5B%5D%40%26%25%3D%2B%24%2C%23äÄöÖüÜß%3B")]
+        [TestCase(" my cool directory ")]
+        [TestCase("directory")]
+        public async Task RenameAsync_DestinationSpecialCharacters(string destDirectoryName)
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeDirectoryClient sourceDirectory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            Uri expectedDestDirectoryUri = new Uri($"https://{test.FileSystem.AccountName}.dfs.core.windows.net/{test.FileSystem.Name}/{Uri.EscapeDataString(destDirectoryName)}");
+
+            // Act
+            DataLakeDirectoryClient destDirectory = await sourceDirectory.RenameAsync(destinationPath: destDirectoryName);
+
+            // Assert
+            Response<PathProperties> response = await destDirectory.GetPropertiesAsync();
+            Assert.AreEqual(destDirectoryName, destDirectory.Name);
+            Assert.AreEqual(destDirectoryName, destDirectory.Path);
+            Assert.AreEqual(expectedDestDirectoryUri, destDirectory.Uri);
+        }
+
+        [Test]
+        [TestCase("!'();[]@&%=+$,#äÄöÖüÜß;")]
+        [TestCase("%21%27%28%29%3B%5B%5D%40%26%25%3D%2B%24%2C%23äÄöÖüÜß%3B")]
+        [TestCase(" my cool directory ")]
+        [TestCase("directory")]
+        public async Task RenameAsync_SourceSpecialCharacters(string sourceDirectoryName)
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            string destDirectoryName = GetNewDirectoryName();
+            DataLakeDirectoryClient sourceDirectory = await test.FileSystem.CreateDirectoryAsync(sourceDirectoryName);
+            Uri expectedDestDirectoryUri = new Uri($"https://{test.FileSystem.AccountName}.dfs.core.windows.net/{test.FileSystem.Name}/{destDirectoryName}");
+
+            // Act
+            DataLakeDirectoryClient destDirectory = await sourceDirectory.RenameAsync(destinationPath: destDirectoryName);
+
+            // Assert
+            Response<PathProperties> response = await destDirectory.GetPropertiesAsync();
+            Assert.AreEqual(destDirectoryName, destDirectory.Name);
+            Assert.AreEqual(destDirectoryName, destDirectory.Path);
+            Assert.AreEqual(expectedDestDirectoryUri, destDirectory.Uri);
+        }
+
+        [Test]
         public async Task GetAccessControlAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
