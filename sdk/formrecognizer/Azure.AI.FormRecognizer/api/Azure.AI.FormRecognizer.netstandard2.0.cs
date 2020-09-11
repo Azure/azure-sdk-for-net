@@ -104,6 +104,7 @@ namespace Azure.AI.FormRecognizer.Models
         Int64 = 5,
         List = 6,
         Dictionary = 7,
+        SelectionMark = 8,
     }
     public abstract partial class FormElement
     {
