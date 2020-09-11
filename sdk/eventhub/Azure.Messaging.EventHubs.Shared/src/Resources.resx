@@ -172,7 +172,7 @@
     <value>The requested transport type, '{0}' is not supported.</value>
   </data>
   <data name="CannotSendWithPartitionIdAndPartitionKey" xml:space="preserve">
-    <value>A producer created for a specific partition cannot send events using a partition key. This producer is associated with partition '{0}'.</value>
+    <value>An event cannot be published using both a partition key and a partition identifier.  This operation specified partition key `{0}` and partition id `{1}`.</value>
   </data>
   <data name="UnsupportedCredential" xml:space="preserve">
     <value>The credential is not a known and supported credential type. Please use a JWT credential or shared key credential.</value>
@@ -289,6 +289,12 @@
     <value>One or more exceptions occured during event processing.  Please see the inner exceptions for more detail.</value>
   </data>
   <data name="OnlyOneSharedAccessAuthorizationMayBeSpecified" xml:space="preserve">
-    <value>The authorization for a connection string may specifiy a shared key or precomputed shared access signature, but not both.  Please verify that your connection string does not have the `SharedAccessSignature` token if you are passing the `SharedKeyName` and `SharedKey`.</value>
+    <value>The authorization for a connection string may specify a shared key or pre-computed shared access signature, but not both.  Please verify that your connection string does not have the `SharedAccessSignature` token if you are passing the `SharedKeyName` and `SharedKey`.</value>
+  </data>
+  <data name="CannotPublishToGateway" xml:space="preserve">
+    <value>The producer was configured to use features that require publishing to a specific partition.  Publishing with automatic routing or using a partition key is not supported by this producer.</value>
+  </data>
+  <data name="IdempotentAlreadyPublished" xml:space="preserve">
+    <value>These events have already been successfully published.  When idempotent publishing is enabled, events that were acknowledged by the Event Hubs service may not be published again.</value>
   </data>
 </root>

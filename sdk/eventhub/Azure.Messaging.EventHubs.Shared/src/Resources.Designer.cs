@@ -78,7 +78,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to A producer created for a specific partition cannot send events using a partition key. This producer is associated with partition &apos;{0}&apos;..
+        ///   Looks up a localized string similar to An event cannot be published using both a partition key and a partition identifier.  This operation specified partition key `{0}` and partition id `{1}`..
         /// </summary>
         internal static string CannotSendWithPartitionIdAndPartitionKey
         {
@@ -701,6 +701,28 @@ namespace Azure.Messaging.EventHubs
             get
             {
                 return ResourceManager.GetString("OnlyOneSharedAccessAuthorizationMayBeSpecified", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The producer was configured to use features that require publishing to a specific partition.  Publishing with automatic routing or using a partition key is not supported by this producer..
+        /// </summary>
+        internal static string CannotPublishToGateway
+        {
+            get
+            {
+                return ResourceManager.GetString("CannotPublishToGateway", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to These events have already been successfully published.  When idempotent publishing is enabled, events that were acknowledged by the Event Hubs service may not be published again..
+        /// </summary>
+        internal static string IdempotentAlreadyPublished
+        {
+            get
+            {
+                return ResourceManager.GetString("IdempotentAlreadyPublished", resourceCulture);
             }
         }
     }

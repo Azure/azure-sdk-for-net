@@ -100,44 +100,6 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies property accessors for the <see cref="EventDataBatch" />
-        ///   class.
-        /// </summary>
-        ///
-        [Test]
-        [TestCase(-1)]
-        [TestCase(-10)]
-        [TestCase(-100)]
-        public void StartingPublishedSequenceNumberValidatesOnSet(int value)
-        {
-            var mockBatch = new MockTransportBatch();
-            var batch = new EventDataBatch(mockBatch, "ns", "eh", new SendEventOptions());
-
-            Assert.That(() => batch.StartingPublishedSequenceNumber = value, Throws.InstanceOf<ArgumentException>(), "Negative values should not be allowed.");
-        }
-
-        // <summary>
-        ///   Verifies property accessors for the <see cref="EventDataBatch" />
-        ///   class.
-        /// </summary>
-        ///
-        [Test]
-        [TestCase(null)]
-        [TestCase(0)]
-        [TestCase(1)]
-        [TestCase(10)]
-        [TestCase(100)]
-        [TestCase(32768)]
-        public void StartingPublishedSequenceNumberValidatesAllowsValidValues(int? value)
-        {
-            var mockBatch = new MockTransportBatch();
-            var batch = new EventDataBatch(mockBatch, "ns", "eh", new SendEventOptions());
-
-            batch.StartingPublishedSequenceNumber = value;
-            Assert.That(batch.StartingPublishedSequenceNumber, Is.EqualTo(value), "The value should have been accepted.");
-        }
-
-        /// <summary>
         ///   Verifies property accessors for the <see cref="EventDataBatch.TryAdd" />
         ///   method.
         /// </summary>
