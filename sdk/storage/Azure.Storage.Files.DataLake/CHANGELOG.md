@@ -4,6 +4,7 @@
 - Fixed bug where Stream returned from DataLakeFileClient.OpenWrite() did not flush while disposing preventing compatibility with using keyword.
 - Fixed bug where DataLakeFileClient.Upload() could not upload read-only files.
 - Fixed bug where DataLakeBlobAccessPolicy.StartsOn and .ExpiresOn would cause the process to crash.
+- Added Close and RetainUncommitedData to DataLakeFileUploadOptions.
 
 ## 12.4.0 (2020-08-31)
 - Fixed bug where DataLakeFileClient.Upload() would deadlock if the content stream's position was not 0.

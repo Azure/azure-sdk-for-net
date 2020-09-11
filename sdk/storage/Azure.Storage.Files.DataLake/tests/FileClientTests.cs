@@ -2825,6 +2825,31 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public async Task UploadAsync_CloseAndRetainData()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = test.FileSystem.GetFileClient(GetNewFileName());
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+
+            DataLakeFileUploadOptions options = new DataLakeFileUploadOptions
+            {
+                Close = true,
+                RetainUncommittedData = true
+            };
+
+            // Act
+            using Stream stream = new MemoryStream(data);
+            await file.UploadAsync(stream, options: options);
+
+            // Assert
+            using var actual = new MemoryStream();
+            await file.ReadToAsync(actual);
+            TestHelper.AssertSequenceEqual(data, actual.ToArray());
+        }
+
+        [Test]
         [Ignore("Live tests will run out of memory")]
         public async Task UploadAsync_FileLarge()
         {
