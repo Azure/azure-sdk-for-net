@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection.Metadata;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,6 +16,8 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using Moq;
+using Moq.Protected;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
@@ -2510,6 +2511,33 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(blobName, pageBlobClientFromContainer.Name);
             Assert.AreEqual(expectedUri, pageBlobClientFromConnectionString.Uri);
             Assert.AreEqual(blobName, pageBlobClientFromConnectionString.Name);
+        }
+
+        [Test]
+        public void CanMockBlobClientsRetrieval()
+        {
+            // Arrange
+            string blobName = "test";
+            Mock<BlobContainerClient> containerClientMock = new Mock<BlobContainerClient>();
+            Mock<BlockBlobClient> blockBlobClientMock = new Mock<BlockBlobClient>();
+            Mock<AppendBlobClient> appendBlobClientMock = new Mock<AppendBlobClient>();
+            Mock<PageBlobClient> pageBlobClientMock = new Mock<PageBlobClient>();
+            containerClientMock.Protected().Setup<BlockBlobClient>("GetBlockBlobClientInternal", blobName).Returns(blockBlobClientMock.Object);
+            containerClientMock.Protected().Setup<AppendBlobClient>("GetAppendBlobClientInternal", blobName).Returns(appendBlobClientMock.Object);
+            containerClientMock.Protected().Setup<PageBlobClient>("GetPageBlobClientInternal", blobName).Returns(pageBlobClientMock.Object);
+
+            // Act
+            var blockBlobClient = containerClientMock.Object.GetBlockBlobClient(blobName);
+            var appendBlobClient = containerClientMock.Object.GetAppendBlobClient(blobName);
+            var pageBlobClient = containerClientMock.Object.GetPageBlobClient(blobName);
+
+            // Assert
+            Assert.IsNotNull(blockBlobClient);
+            Assert.AreSame(blockBlobClientMock.Object, blockBlobClient);
+            Assert.IsNotNull(appendBlobClient);
+            Assert.AreSame(appendBlobClientMock.Object, appendBlobClient);
+            Assert.IsNotNull(pageBlobClient);
+            Assert.AreSame(pageBlobClientMock.Object, pageBlobClient);
         }
 
         #region Secondary Storage
