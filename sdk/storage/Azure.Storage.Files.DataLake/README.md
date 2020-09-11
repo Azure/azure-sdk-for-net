@@ -204,7 +204,7 @@ PathProperties directoryPathProperties = directoryClient.GetProperties();
 
 All File DataLake service operations will throw a
 [RequestFailedException][RequestFailedException] on failure with
-helpful [`ErrorCode`][error_codes].  Many of these errors are recoverable.
+helpful [`ErrorCode`s][error_codes].  Many of these errors are recoverable.
 
 ## Next steps
 
