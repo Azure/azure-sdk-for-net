@@ -1,10 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(RepoEngPath)/mgmt/AzSdk.test.reference.props" />
   <PropertyGroup>
-    <PackageId>PostgreSQL.Tests</PackageId>
+    <PackageId>MySQL.Tests</PackageId>
     <Version>1.0.0</Version>
-    <AssemblyName>PostgreSQL.Tests</AssemblyName>
-    <Description>PostgreSQL.Tests Class Library</Description>
+    <AssemblyName>MySQL.Tests</AssemblyName>
+    <Description>MySQL.Tests Class Library</Description>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Microsoft.Azure.Management.PostgreSQL.csproj" />
+    <ProjectReference Include="..\src\Microsoft.Azure.Management.MySQL.csproj" />
   </ItemGroup>
 
   <ItemGroup>

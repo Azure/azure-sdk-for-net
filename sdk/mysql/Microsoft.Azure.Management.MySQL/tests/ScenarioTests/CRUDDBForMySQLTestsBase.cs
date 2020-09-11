@@ -1,39 +1,42 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-using PostgreSQL.Tests.Helpers;
+
+using MySQL.Tests.Helpers;
+using Microsoft.Azure.Management.MySQL;
+using Microsoft.Azure.Management.MySQL.Models;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using Microsoft.Azure.Management.PostgreSQL.FlexibleServers;
-using FlexibleServersModels = Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models;
 
-namespace PostgreSQL.Tests.ScenarioTests
+namespace MySQL.Tests.ScenarioTests
 {
-    public class CRUDDBForPostgreSQLFlexibleServerTestBase
+    public class CRUDMySQLTestsBase : TestBase
     {
         protected static string ResourceGroupName;
         protected static string ServerName;
-
-        public CRUDDBForPostgreSQLFlexibleServerTestBase()
+        protected static string DmsProjectName;
+        protected static string DmsTaskName;
+        
+        public CRUDMySQLTestsBase()
         {
-            ResourceGroupName = "pgsdkrg";
-            ServerName = "pgsdkflexserver";
+            ResourceGroupName = "mysqlsdkrg";
+            ServerName = "mysqlsdkserver";
         }
 
-        protected FlexibleServersModels.Server CreatePostgreSQLFlexibleServersInstance(MockContext context,
-            PostgreSQLManagementClient client,
+        protected Server CreateMySQLInstance(MockContext context,
+            MySQLManagementClient client,
             ResourceGroup resourceGroup,
             string serverName)
         {
             return client.Servers.Create(
                 resourceGroup.Name,
                 serverName,
-                new FlexibleServersModels.Server(location: resourceGroup.Location,
-                            sku: new FlexibleServersModels.Sku("Standard_D4s_v3", "GeneralPurpose"),
-                            administratorLogin: "testUser",
-                            administratorLoginPassword: "testPassword1!",
-                            version: "12",
-                            storageProfile: new FlexibleServersModels.StorageProfile(storageMB: 524288)));
+                new ServerForCreate(
+                    properties: new ServerPropertiesForDefaultCreate(
+                        administratorLogin: "testUser",
+                        administratorLoginPassword: "testPassword1!"),
+                    location: resourceGroup.Location,
+                    sku: new Microsoft.Azure.Management.MySQL.Models.Sku(name: "B_Gen5_1")));
         }
 
         protected ResourceGroup CreateResourceGroup(MockContext context,
@@ -69,3 +72,4 @@ namespace PostgreSQL.Tests.ScenarioTests
         }
     }
 }
+
