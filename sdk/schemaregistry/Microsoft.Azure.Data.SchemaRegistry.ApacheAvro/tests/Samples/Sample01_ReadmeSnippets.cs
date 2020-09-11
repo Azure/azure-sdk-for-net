@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests.Samples
         [Test]
         public void CreateSchemaRegistryClient()
         {
-            #region Snippet:CreateSchemaRegistryClient2
+            #region Snippet:SchemaRegistryAvroCreateSchemaRegistryClient
             string endpoint = "<event_hubs_namespace_hostname>";
             var credentials = new ClientSecretCredential(
                 "<tenant_id>",
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests.Samples
         {
             var client = new SchemaRegistryClient(TestEnvironment.SchemaRegistryUri, TestEnvironment.Credential);
 
-            #region Snippet:Serialize
+            #region Snippet:SchemaRegistryAvroSerialize
             var employee = new Employee { Age = 42, Name = "John Doe" };
             string groupName = "<schema_group_name>";
 
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests.Samples
             var client = new SchemaRegistryClient(TestEnvironment.SchemaRegistryUri, TestEnvironment.Credential);
             using var memoryStream = new MemoryStream();
 
-            #region Snippet:Deserialize
+            #region Snippet:SchemaRegistryAvroDeserialize
             string groupName = "<schema_group_name>";
 
             var serializer = new SchemaRegistryAvroObjectSerializer(client, groupName, new SchemaRegistryAvroObjectSerializerOptions { AutoRegisterSchemas = true });
