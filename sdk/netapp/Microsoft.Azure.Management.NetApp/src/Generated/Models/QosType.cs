@@ -12,21 +12,17 @@ namespace Microsoft.Azure.Management.NetApp.Models
 {
 
     /// <summary>
-    /// Defines values for PatchServiceLevel.
+    /// Defines values for QosType.
     /// </summary>
-    public static class PatchServiceLevel
+    public static class QosType
     {
         /// <summary>
-        /// Standard service level
+        /// qos type Auto
         /// </summary>
-        public const string Standard = "Standard";
+        public const string Auto = "Auto";
         /// <summary>
-        /// Premium service level
+        /// qos type Manual
         /// </summary>
-        public const string Premium = "Premium";
-        /// <summary>
-        /// Ultra service level
-        /// </summary>
-        public const string Ultra = "Ultra";
+        public const string Manual = "Manual";
     }
 }

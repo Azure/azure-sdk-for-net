@@ -12,12 +12,11 @@ namespace Microsoft.Azure.Management.NetApp.Models
 {
 
     /// <summary>
-    /// Defines values for ReplicationSchedule.
+    /// Defines values for SecurityStyle.
     /// </summary>
-    public static class ReplicationSchedule
+    public static class SecurityStyle
     {
-        public const string _10minutely = "_10minutely";
-        public const string Hourly = "hourly";
-        public const string Daily = "daily";
+        public const string Ntfs = "ntfs";
+        public const string Unix = "unix";
     }
 }

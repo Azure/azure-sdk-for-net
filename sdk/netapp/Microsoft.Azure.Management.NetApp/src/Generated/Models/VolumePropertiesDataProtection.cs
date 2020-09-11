@@ -35,10 +35,12 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// Initializes a new instance of the VolumePropertiesDataProtection
         /// class.
         /// </summary>
+        /// <param name="backup">Backup</param>
         /// <param name="replication">Replication</param>
         /// <param name="snapshot">Snapshot</param>
-        public VolumePropertiesDataProtection(ReplicationObject replication = default(ReplicationObject), VolumeSnapshotProperties snapshot = default(VolumeSnapshotProperties))
+        public VolumePropertiesDataProtection(VolumeBackupProperties backup = default(VolumeBackupProperties), ReplicationObject replication = default(ReplicationObject), VolumeSnapshotProperties snapshot = default(VolumeSnapshotProperties))
         {
+            Backup = backup;
             Replication = replication;
             Snapshot = snapshot;
             CustomInit();
@@ -48,6 +50,15 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets backup
+        /// </summary>
+        /// <remarks>
+        /// Backup Properties
+        /// </remarks>
+        [JsonProperty(PropertyName = "backup")]
+        public VolumeBackupProperties Backup { get; set; }
 
         /// <summary>
         /// Gets or sets replication

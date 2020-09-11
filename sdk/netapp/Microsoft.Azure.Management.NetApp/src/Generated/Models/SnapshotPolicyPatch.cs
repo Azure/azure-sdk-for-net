@@ -11,7 +11,6 @@
 namespace Microsoft.Azure.Management.NetApp.Models
 {
     using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
@@ -19,38 +18,45 @@ namespace Microsoft.Azure.Management.NetApp.Models
     using System.Linq;
 
     /// <summary>
-    /// Capacity pool patch resource
+    /// Snapshot policy Details for create and update
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class CapacityPoolPatch : IResource
+    public partial class SnapshotPolicyPatch
     {
         /// <summary>
-        /// Initializes a new instance of the CapacityPoolPatch class.
+        /// Initializes a new instance of the SnapshotPolicyPatch class.
         /// </summary>
-        public CapacityPoolPatch()
+        public SnapshotPolicyPatch()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the CapacityPoolPatch class.
+        /// Initializes a new instance of the SnapshotPolicyPatch class.
         /// </summary>
         /// <param name="location">Resource location</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
-        /// <param name="size">size</param>
-        /// <param name="qosType">qosType</param>
-        public CapacityPoolPatch(string location = default(string), string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), long? size = default(long?), string qosType = default(string))
+        /// <param name="hourlySchedule">hourlySchedule</param>
+        /// <param name="dailySchedule">dailySchedule</param>
+        /// <param name="weeklySchedule">weeklySchedule</param>
+        /// <param name="monthlySchedule">monthlySchedule</param>
+        /// <param name="enabled">The property to decide policy is enabled or
+        /// not</param>
+        public SnapshotPolicyPatch(string location = default(string), string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), object hourlySchedule = default(object), object dailySchedule = default(object), object weeklySchedule = default(object), object monthlySchedule = default(object), bool? enabled = default(bool?))
         {
             Location = location;
             Id = id;
             Name = name;
             Type = type;
             Tags = tags;
-            Size = size;
-            QosType = qosType;
+            HourlySchedule = hourlySchedule;
+            DailySchedule = dailySchedule;
+            WeeklySchedule = weeklySchedule;
+            MonthlySchedule = monthlySchedule;
+            Enabled = enabled;
             CustomInit();
         }
 
@@ -90,40 +96,46 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
-        /// Gets or sets size
+        /// Gets or sets hourlySchedule
         /// </summary>
         /// <remarks>
-        /// Provisioned size of the pool (in bytes). Allowed values are in 4TiB
-        /// chunks (value must be multiply of 4398046511104).
+        /// Schedule for hourly snapshots
         /// </remarks>
-        [JsonProperty(PropertyName = "properties.size")]
-        public long? Size { get; set; }
+        [JsonProperty(PropertyName = "properties.hourlySchedule")]
+        public object HourlySchedule { get; set; }
 
         /// <summary>
-        /// Gets or sets qosType
+        /// Gets or sets dailySchedule
         /// </summary>
         /// <remarks>
-        /// The qos type of the pool. Possible values include: 'Auto', 'Manual'
+        /// Schedule for daily snapshots
         /// </remarks>
-        [JsonProperty(PropertyName = "properties.qosType")]
-        public string QosType { get; set; }
+        [JsonProperty(PropertyName = "properties.dailySchedule")]
+        public object DailySchedule { get; set; }
 
         /// <summary>
-        /// Validate the object.
+        /// Gets or sets weeklySchedule
         /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Size > 549755813888000)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "Size", 549755813888000);
-            }
-            if (Size < 4398046511104)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "Size", 4398046511104);
-            }
-        }
+        /// <remarks>
+        /// Schedule for weekly snapshots
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.weeklySchedule")]
+        public object WeeklySchedule { get; set; }
+
+        /// <summary>
+        /// Gets or sets monthlySchedule
+        /// </summary>
+        /// <remarks>
+        /// Schedule for monthly snapshots
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.monthlySchedule")]
+        public object MonthlySchedule { get; set; }
+
+        /// <summary>
+        /// Gets or sets the property to decide policy is enabled or not
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enabled")]
+        public bool? Enabled { get; set; }
+
     }
 }
