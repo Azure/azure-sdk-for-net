@@ -166,7 +166,7 @@ namespace Azure.Core
                 return;
             }
 
-            AppendPath(nextLink, escape);
+            AppendRaw(nextLink, escape);
         }
     }
 }
