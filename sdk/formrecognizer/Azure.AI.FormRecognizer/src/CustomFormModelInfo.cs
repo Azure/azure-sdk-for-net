@@ -48,5 +48,10 @@ namespace Azure.AI.FormRecognizer.Training
         /// </summary>
         [CodeGenMember("LastUpdatedDateTime")]
         public DateTimeOffset TrainingCompletedOn { get; }
+
+        /// <summary> Optional user defined model name (max length: 1024). </summary>
+        private string ModelName { get; }
+        /// <summary> Optional model attributes. </summary>
+        private Attributes Attributes { get; }
     }
 }

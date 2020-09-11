@@ -55,6 +55,11 @@ namespace Azure.AI.FormRecognizer.Models
         /// Used for <see cref="Dictionary{TKey, TValue}"/> type.
         /// </summary>
         [CodeGenMember("Object")]
-        Dictionary
+        Dictionary,
+
+        /// <summary>
+        /// Used for <see cref="FieldValueSelectionMark"/> type.
+        /// </summary>
+        SelectionMark
     }
 }
