@@ -19,7 +19,6 @@ namespace SnippetGenerator
         public void OnExecuteAsync()
         {
             var baseDirectory = new DirectoryInfo(BasePath).Name;
-            var baseDirParent = Directory.GetParent(BasePath).Name;
             if (baseDirectory.Equals("sdk"))
             {
                 Parallel.ForEach(Directory.GetDirectories(BasePath), sdkDir => new DirectoryProcessor(sdkDir).Process());
