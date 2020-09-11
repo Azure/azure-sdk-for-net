@@ -26,6 +26,7 @@ namespace Azure.Messaging.EventGrid
         public EventGridEvent(object data, string subject, string eventType, string dataVersion)
         {
             Argument.AssertNotNull(subject, nameof(subject));
+            Argument.AssertNotNull(data, nameof(data));
             Argument.AssertNotNull(eventType, nameof(eventType));
             Argument.AssertNotNull(dataVersion, nameof(dataVersion));
 
