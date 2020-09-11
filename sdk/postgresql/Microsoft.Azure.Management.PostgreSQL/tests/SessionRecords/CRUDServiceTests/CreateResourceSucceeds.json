@@ -66,7 +66,7 @@
     },
     {
       "RequestUri": "/subscriptions/97181df2-909d-420b-ab93-1bff15acb6b7/resourceGroups/pgsdkrg/providers/Microsoft.DBforPostgreSQL/servers/pgsdkserver?api-version=2017-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTcxODFkZjItOTA5ZC00MjBiLWFiOTMtMWJmZjE1YWNiNmI3L3Jlc291cmNlR3JvdXBzL3Bnc2RrcmcvcHJvdmlkZXJzL01pY3Jvc29mdC5EQmZvclBvc3RncmVTUUwvc2VydmVycy9wZ3Nka3NlcnZlcj9hcGktdmVyc2lvbj0yMDE3LTEyLTAx",
+      "EncodedRequestUri":"L3N1YnNjcmlwdGlvbnMvOTcxODFkZjItOTA5ZC00MjBiLWFiOTMtMWJmZjE1YWNiNmI3L3Jlc291cmNlR3JvdXBzL3Bnc2RrcmcvcHJvdmlkZXJzL01pY3Jvc29mdC5EQkZvclBvc3RncmVTUUwvc2VydmVycy9wZ3Nka3NlcnZlcj9hcGktdmVyc2lvbj0yMDE3LTEyLTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"B_Gen5_1\"\r\n  },\r\n  \"properties\": {\r\n    \"createMode\": \"Default\",\r\n    \"administratorLogin\": \"testUser\",\r\n    \"administratorLoginPassword\": \"testPassword1!\"\r\n  },\r\n  \"location\": \"koreasouth\"\r\n}",
       "RequestHeaders": {
@@ -264,7 +264,7 @@
     },
     {
       "RequestUri": "/subscriptions/97181df2-909d-420b-ab93-1bff15acb6b7/resourceGroups/pgsdkrg/providers/Microsoft.DBforPostgreSQL/servers/pgsdkserver?api-version=2017-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTcxODFkZjItOTA5ZC00MjBiLWFiOTMtMWJmZjE1YWNiNmI3L3Jlc291cmNlR3JvdXBzL3Bnc2RrcmcvcHJvdmlkZXJzL01pY3Jvc29mdC5EQmZvclBvc3RncmVTUUwvc2VydmVycy9wZ3Nka3NlcnZlcj9hcGktdmVyc2lvbj0yMDE3LTEyLTAx",
+      "EncodedRequestUri":"L3N1YnNjcmlwdGlvbnMvOTcxODFkZjItOTA5ZC00MjBiLWFiOTMtMWJmZjE1YWNiNmI3L3Jlc291cmNlR3JvdXBzL3Bnc2RrcmcvcHJvdmlkZXJzL01pY3Jvc29mdC5EQkZvclBvc3RncmVTUUwvc2VydmVycy9wZ3Nka3NlcnZlcj9hcGktdmVyc2lvbj0yMDE3LTEyLTAx", 
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
