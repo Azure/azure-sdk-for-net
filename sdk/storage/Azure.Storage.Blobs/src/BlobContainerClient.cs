@@ -415,7 +415,7 @@ namespace Azure.Storage.Blobs
         /// </summary>
         /// <param name="blobName">The name of the block blob.</param>
         /// <returns>A new <see cref="BlockBlobClient"/> instance.</returns>
-        protected internal virtual BlockBlobClient GetBlockBlobClientInternal(string blobName)
+        protected internal virtual BlockBlobClient GetBlockBlobClientCore(string blobName)
         {
             if (ClientSideEncryption != default)
             {
@@ -446,7 +446,7 @@ namespace Azure.Storage.Blobs
         /// </summary>
         /// <param name="blobName">The name of the append blob.</param>
         /// <returns>A new <see cref="AppendBlobClient"/> instance.</returns>
-        protected internal virtual AppendBlobClient GetAppendBlobClientInternal(string blobName)
+        protected internal virtual AppendBlobClient GetAppendBlobClientCore(string blobName)
         {
             if (ClientSideEncryption != default)
             {
@@ -477,7 +477,7 @@ namespace Azure.Storage.Blobs
         /// </summary>
         /// <param name="blobName">The name of the page blob.</param>
         /// <returns>A new <see cref="PageBlobClient"/> instance.</returns>
-        protected internal virtual PageBlobClient GetPageBlobClientInternal(string blobName)
+        protected internal virtual PageBlobClient GetPageBlobClientCore(string blobName)
         {
             if (ClientSideEncryption != default)
             {
@@ -497,6 +497,16 @@ namespace Azure.Storage.Blobs
                 CustomerProvidedKey,
                 EncryptionScope);
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobLeaseClient"/> class.
+        /// </summary>
+        /// <param name="leaseId">
+        /// An optional lease ID.  If no lease ID is provided, a random lease
+        /// ID will be created.
+        /// </param>
+        protected internal virtual BlobLeaseClient GetBlobLeaseClientCore(string leaseId) =>
+            new BlobLeaseClient(this, leaseId);
 
         /// <summary>
         /// Sets the various name fields if they are currently null.

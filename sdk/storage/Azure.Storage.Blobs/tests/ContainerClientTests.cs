@@ -2518,18 +2518,22 @@ namespace Azure.Storage.Blobs.Test
         {
             // Arrange
             string blobName = "test";
+            string leaseId = "leaseId";
             Mock<BlobContainerClient> containerClientMock = new Mock<BlobContainerClient>();
             Mock<BlockBlobClient> blockBlobClientMock = new Mock<BlockBlobClient>();
             Mock<AppendBlobClient> appendBlobClientMock = new Mock<AppendBlobClient>();
             Mock<PageBlobClient> pageBlobClientMock = new Mock<PageBlobClient>();
-            containerClientMock.Protected().Setup<BlockBlobClient>("GetBlockBlobClientInternal", blobName).Returns(blockBlobClientMock.Object);
-            containerClientMock.Protected().Setup<AppendBlobClient>("GetAppendBlobClientInternal", blobName).Returns(appendBlobClientMock.Object);
-            containerClientMock.Protected().Setup<PageBlobClient>("GetPageBlobClientInternal", blobName).Returns(pageBlobClientMock.Object);
+            Mock<BlobLeaseClient> blobLeaseClientMock = new Mock<BlobLeaseClient>();
+            containerClientMock.Protected().Setup<BlockBlobClient>("GetBlockBlobClientCore", blobName).Returns(blockBlobClientMock.Object);
+            containerClientMock.Protected().Setup<AppendBlobClient>("GetAppendBlobClientCore", blobName).Returns(appendBlobClientMock.Object);
+            containerClientMock.Protected().Setup<PageBlobClient>("GetPageBlobClientCore", blobName).Returns(pageBlobClientMock.Object);
+            containerClientMock.Protected().Setup<BlobLeaseClient>("GetBlobLeaseClientCore", leaseId).Returns(blobLeaseClientMock.Object);
 
             // Act
             var blockBlobClient = containerClientMock.Object.GetBlockBlobClient(blobName);
             var appendBlobClient = containerClientMock.Object.GetAppendBlobClient(blobName);
             var pageBlobClient = containerClientMock.Object.GetPageBlobClient(blobName);
+            var blobLeaseClient = containerClientMock.Object.GetBlobLeaseClient(leaseId);
 
             // Assert
             Assert.IsNotNull(blockBlobClient);
@@ -2538,6 +2542,8 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreSame(appendBlobClientMock.Object, appendBlobClient);
             Assert.IsNotNull(pageBlobClient);
             Assert.AreSame(pageBlobClientMock.Object, pageBlobClient);
+            Assert.IsNotNull(blobLeaseClient);
+            Assert.AreSame(blobLeaseClientMock.Object, blobLeaseClient);
         }
 
         #region Secondary Storage

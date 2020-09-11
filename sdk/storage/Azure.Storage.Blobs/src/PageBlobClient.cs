@@ -3114,7 +3114,7 @@ namespace Azure.Storage.Blobs.Specialized
             this BlobContainerClient client,
             string blobName)
         {
-            return client.GetPageBlobClientInternal(blobName);
+            return client.GetPageBlobClientCore(blobName);
         }
     }
 }

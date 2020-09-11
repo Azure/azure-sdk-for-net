@@ -1589,7 +1589,7 @@ namespace Azure.Storage.Blobs.Specialized
             this BlobContainerClient client,
             string blobName)
         {
-            return client.GetAppendBlobClientInternal(blobName);
+            return client.GetAppendBlobClientCore(blobName);
         }
     }
 }

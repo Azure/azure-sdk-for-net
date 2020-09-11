@@ -2232,7 +2232,7 @@ namespace Azure.Storage.Blobs.Specialized
             this BlobContainerClient client,
             string blobName)
         {
-            return client.GetBlockBlobClientInternal(blobName);
+            return client.GetBlockBlobClientCore(blobName);
         }
     }
 }
