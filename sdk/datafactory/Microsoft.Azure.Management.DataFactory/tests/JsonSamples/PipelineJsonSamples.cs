@@ -1808,163 +1808,163 @@ namespace DataFactory.Tests.JsonSamples
 ";
 
 
-        [JsonSample]
-        public const string WebActivityNoAuth = @"
-{
-    name: ""MyWebPipeline"",
-    properties: {
-        activities: [
-            {
-                name: ""MyAnonymousWebActivity"",
-                type: ""WebActivity"",
-                typeProperties: {
-                    method: ""get"",
-                    url: ""http://www.bing.com""
-                }
-            }
-        ]
-    }
-}
-";
+//        [JsonSample]
+//        public const string WebActivityNoAuth = @"
+//{
+//    name: ""MyWebPipeline"",
+//    properties: {
+//        activities: [
+//            {
+//                name: ""MyAnonymousWebActivity"",
+//                type: ""WebActivity"",
+//                typeProperties: {
+//                    method: ""get"",
+//                    url: ""http://www.bing.com""
+//                }
+//            }
+//        ]
+//    }
+//}
+//";
 
-        [JsonSample]
-        public const string WebActivityCertAuth = @"
-{
-    name: ""MyWebPipeline"",
-    properties: {
-        activities: [
-            {
-                name: ""MyAnonymousWebActivity"",
-                type: ""WebActivity"",
-                typeProperties: {
-                    method: ""get"",
-                    url: ""http://www.test.com"",
-                    headers: { 
-                        ""Content-Type"": ""application/json"",
-                        ""activityName"": ""activityName""
-                    },
-                    authentication : {
-                        type: ""ClientCertificate"",
-                        pfx: {
-                            type: ""SecureString"",
-                            value: ""testcertpfx""
-                        },
-                        password: {
-                            type: ""SecureString"",
-                            value: ""testpwd""
-                        }
-                    }
-                }
-            }
-        ]
-    }
-}
-";
+//        [JsonSample]
+//        public const string WebActivityCertAuth = @"
+//{
+//    name: ""MyWebPipeline"",
+//    properties: {
+//        activities: [
+//            {
+//                name: ""MyAnonymousWebActivity"",
+//                type: ""WebActivity"",
+//                typeProperties: {
+//                    method: ""get"",
+//                    url: ""http://www.test.com"",
+//                    headers: { 
+//                        ""Content-Type"": ""application/json"",
+//                        ""activityName"": ""activityName""
+//                    },
+//                    authentication : {
+//                        type: ""ClientCertificate"",
+//                        pfx: {
+//                            type: ""SecureString"",
+//                            value: ""testcertpfx""
+//                        },
+//                        password: {
+//                            type: ""SecureString"",
+//                            value: ""testpwd""
+//                        }
+//                    }
+//                }
+//            }
+//        ]
+//    }
+//}
+//";
 
-        [JsonSample]
-        public const string WebActivityBasicAuth = @"
-{
-    name: ""MyWebPipeline"",
-    properties: {
-        activities: [
-            {
-                name: ""MyAnonymousWebActivity"",
-                type: ""WebActivity"",
-                typeProperties: {
-                    method: ""get"",
-                    url: ""http://www.bing.com"",
-                    headers: { 
-                        ""Content-Type"": ""application/json"",
-                        ""activityName"": ""activityName""
-                    },
-                    authentication : {
-                        type: ""Basic"",
-                        username: ""user"",
-                        password: {
-                            type: ""SecureString"",
-                            value: ""testpwd""
-                        }
-                    }
-                }
-            }
-        ]
-    }
-}
-";
+//        [JsonSample]
+//        public const string WebActivityBasicAuth = @"
+//{
+//    name: ""MyWebPipeline"",
+//    properties: {
+//        activities: [
+//            {
+//                name: ""MyAnonymousWebActivity"",
+//                type: ""WebActivity"",
+//                typeProperties: {
+//                    method: ""get"",
+//                    url: ""http://www.bing.com"",
+//                    headers: { 
+//                        ""Content-Type"": ""application/json"",
+//                        ""activityName"": ""activityName""
+//                    },
+//                    authentication : {
+//                        type: ""Basic"",
+//                        username: ""user"",
+//                        password: {
+//                            type: ""SecureString"",
+//                            value: ""testpwd""
+//                        }
+//                    }
+//                }
+//            }
+//        ]
+//    }
+//}
+//";
 
-        [JsonSample]
-        public const string WebActivityAKVBasicAuth = @"
-{
-    name: ""MyWebPipeline"",
-    properties: {
-        activities: [
-            {
-                name: ""MyAnonymousWebActivity"",
-                type: ""WebActivity"",
-                typeProperties: {
-                    method: ""get"",
-                    url: ""http://www.bing.com"",
-                    linkedServices: [],
-                    datasets: [],
-                    authentication: {
-                        type: ""Basic"",
-                        username: ""testuser"",
-                        password: {
-                            type: ""AzureKeyVaultSecret"",
-                            store: {
-                                referenceName: ""AKVCredens"",
-                                type: ""LinkedServiceReference""
-                              },
-                            secretName: ""pfxpwd""
-                      }
-                   }
-                }
-            }
-        ]
-    }
-}
-";
+//        [JsonSample]
+//        public const string WebActivityAKVBasicAuth = @"
+//{
+//    name: ""MyWebPipeline"",
+//    properties: {
+//        activities: [
+//            {
+//                name: ""MyAnonymousWebActivity"",
+//                type: ""WebActivity"",
+//                typeProperties: {
+//                    method: ""get"",
+//                    url: ""http://www.bing.com"",
+//                    linkedServices: [],
+//                    datasets: [],
+//                    authentication: {
+//                        type: ""Basic"",
+//                        username: ""testuser"",
+//                        password: {
+//                            type: ""AzureKeyVaultSecret"",
+//                            store: {
+//                                referenceName: ""AKVCredens"",
+//                                type: ""LinkedServiceReference""
+//                              },
+//                            secretName: ""pfxpwd""
+//                      }
+//                   }
+//                }
+//            }
+//        ]
+//    }
+//}
+//";
 
-        [JsonSample]
-        public const string WebActivityAKVCertAuth = @"
-{
-    name: ""MyWebPipeline"",
-    properties: {
-        activities: [
-            {
-                name: ""MyAnonymousWebActivity"",
-                type: ""WebActivity"",
-                typeProperties: {
-                    method: ""POST"",
-                    url: ""https://testwebactivitynnara.azurewebsites.net/api/readpayload"",
-                    headers: { 
-                        ""Content-Type"": ""application/json"",
-                    },
-                    authentication : {
-                        type: ""ClientCertificate"",
-                        pfx: {
-                            type: ""AzureKeyVaultSecret"",
-                            store: {
-                                referenceName: ""AKVCredens"",
-                                type: ""LinkedServiceReference""
-                            },
-                            secretName: ""FrontEndCert""
-                        },
-                        password: {
-                            type: ""AzureKeyVaultSecret"",
-                            store: {
-                                referenceName: ""AKVCredens"",
-                                type: ""LinkedServiceReference""
-                            },
-                            secretName: ""FrontEndCertPwd""
-                        }
-                    }
-                }
-            }
-        ]
-    }
-}
-";
+//        [JsonSample]
+//        public const string WebActivityAKVCertAuth = @"
+//{
+//    name: ""MyWebPipeline"",
+//    properties: {
+//        activities: [
+//            {
+//                name: ""MyAnonymousWebActivity"",
+//                type: ""WebActivity"",
+//                typeProperties: {
+//                    method: ""POST"",
+//                    url: ""https://testwebactivitynnara.azurewebsites.net/api/readpayload"",
+//                    headers: { 
+//                        ""Content-Type"": ""application/json"",
+//                    },
+//                    authentication : {
+//                        type: ""ClientCertificate"",
+//                        pfx: {
+//                            type: ""AzureKeyVaultSecret"",
+//                            store: {
+//                                referenceName: ""AKVCredens"",
+//                                type: ""LinkedServiceReference""
+//                            },
+//                            secretName: ""FrontEndCert""
+//                        },
+//                        password: {
+//                            type: ""AzureKeyVaultSecret"",
+//                            store: {
+//                                referenceName: ""AKVCredens"",
+//                                type: ""LinkedServiceReference""
+//                            },
+//                            secretName: ""FrontEndCertPwd""
+//                        }
+//                    }
+//                }
+//            }
+//        ]
+//    }
+//}
+//";
 
         [JsonSample(version: "Custom")]
         public const string CustomActivity = @"
@@ -2017,83 +2017,83 @@ namespace DataFactory.Tests.JsonSamples
 }
 ";
 
-        [JsonSample]
-        public const string WebActivityWithDatasets = @"
-{
-  ""name"": ""MyWebPipeline"",
-  ""properties"": {
-    ""activities"": [
-      {
-        ""name"": ""MyAnonymousWebActivity"",
-        ""type"": ""WebActivity"",
-        ""typeProperties"": 
-            {
-                ""method"": ""get"",
-                ""url"": ""http://www.bing.com"",
-                ""headers"": 
-                    { 
-                        ""Content-Type"": ""application/json"",
-                        ""activityName"": ""activityName""
-                    },
-                ""datasets"":[                
-                    {
-                        ""referenceName"": ""MyDataset"", 
-                        ""type"": ""DatasetReference""
-                    }
-                ],
-                ""linkedServices"":[         
-                    {
-                        ""referenceName"": ""MyStagingBlob"", 
-                        ""type"": ""LinkedServiceReference"" 
-                    }
-                ]
-            }
-      }
-    ]
-  }
-}
-";
+//        [JsonSample]
+//        public const string WebActivityWithDatasets = @"
+//{
+//  ""name"": ""MyWebPipeline"",
+//  ""properties"": {
+//    ""activities"": [
+//      {
+//        ""name"": ""MyAnonymousWebActivity"",
+//        ""type"": ""WebActivity"",
+//        ""typeProperties"": 
+//            {
+//                ""method"": ""get"",
+//                ""url"": ""http://www.bing.com"",
+//                ""headers"": 
+//                    { 
+//                        ""Content-Type"": ""application/json"",
+//                        ""activityName"": ""activityName""
+//                    },
+//                ""datasets"":[                
+//                    {
+//                        ""referenceName"": ""MyDataset"", 
+//                        ""type"": ""DatasetReference""
+//                    }
+//                ],
+//                ""linkedServices"":[         
+//                    {
+//                        ""referenceName"": ""MyStagingBlob"", 
+//                        ""type"": ""LinkedServiceReference"" 
+//                    }
+//                ]
+//            }
+//      }
+//    ]
+//  }
+//}
+//";
 
-        [JsonSample]
-        public const string WebActivityWithIR = @"
-{
-  ""name"": ""MyWebPipelineWithIR"",
-  ""properties"": {
-    ""activities"": [
-      {
-        ""name"": ""MyWebActivityIR"",
-        ""type"": ""WebActivity"",
-        ""typeProperties"": 
-            {	
-                ""method"": ""get"",
-                ""url"": ""http://www.bing.com"",
-                ""headers"": 
-                    { 
-                        ""Content-Type"": ""application/json"",
-                        ""activityName"": ""activityName""
-                    },
-                ""datasets"":[                
-                    {
-                        ""referenceName"": ""MyDataset"", 
-                        ""type"": ""DatasetReference""
-                    }
-                ],
-                ""linkedServices"":[         
-                    {
-                        ""referenceName"": ""MyStagingBlob"", 
-                        ""type"": ""LinkedServiceReference"" 
-                    }
-                ],
-                ""connectVia"": {
-                    referenceName : ""TestIR"",
-                    type : ""IntegrationRuntimeReference""
-                }
-            }
-      }
-    ]
-  }
-}
-";
+//        [JsonSample]
+//        public const string WebActivityWithIR = @"
+//{
+//  ""name"": ""MyWebPipelineWithIR"",
+//  ""properties"": {
+//    ""activities"": [
+//      {
+//        ""name"": ""MyWebActivityIR"",
+//        ""type"": ""WebActivity"",
+//        ""typeProperties"": 
+//            {	
+//                ""method"": ""get"",
+//                ""url"": ""http://www.bing.com"",
+//                ""headers"": 
+//                    { 
+//                        ""Content-Type"": ""application/json"",
+//                        ""activityName"": ""activityName""
+//                    },
+//                ""datasets"":[                
+//                    {
+//                        ""referenceName"": ""MyDataset"", 
+//                        ""type"": ""DatasetReference""
+//                    }
+//                ],
+//                ""linkedServices"":[         
+//                    {
+//                        ""referenceName"": ""MyStagingBlob"", 
+//                        ""type"": ""LinkedServiceReference"" 
+//                    }
+//                ],
+//                ""connectVia"": {
+//                    referenceName : ""TestIR"",
+//                    type : ""IntegrationRuntimeReference""
+//                }
+//            }
+//      }
+//    ]
+//  }
+//}
+//";
 
         [JsonSample]
         public const string IfPipeline = @"
@@ -3764,37 +3764,37 @@ namespace DataFactory.Tests.JsonSamples
     }
 }";
 
-        [JsonSample(version: "AzureFunctionActivity")]
-        public const string AzureFunction = @"
-{
-    name: ""MyPipelineName"",
-    properties: {
-        activities: [
-            {
-                ""name"": ""Azure Function1"",
-                ""type"": ""AzureFunctionActivity"",
-                ""policy"": {
-                    ""timeout"": ""7.00:00:00"",
-                    ""retry"": 0,
-                    ""retryIntervalInSeconds"": 30,
-                    ""secureOutput"": false,
-                    ""secureInput"": false
-                },
-                ""typeProperties"": {
-                    ""functionName"": ""GenericWebhookCSharp1"",
-                    ""method"": ""POST"",
-                    ""headers"": {
-                        ""Content-Type"": ""application/json"",
-                    },
-                    ""body"": {
-                        ""first"": ""Azure"",
-                        ""last"": ""Function""
-                    }
-                }
-            }
-        ]
-    }
-}";
+//        [JsonSample(version: "AzureFunctionActivity")]
+//        public const string AzureFunction = @"
+//{
+//    name: ""MyPipelineName"",
+//    properties: {
+//        activities: [
+//            {
+//                ""name"": ""Azure Function1"",
+//                ""type"": ""AzureFunctionActivity"",
+//                ""policy"": {
+//                    ""timeout"": ""7.00:00:00"",
+//                    ""retry"": 0,
+//                    ""retryIntervalInSeconds"": 30,
+//                    ""secureOutput"": false,
+//                    ""secureInput"": false
+//                },
+//                ""typeProperties"": {
+//                    ""functionName"": ""GenericWebhookCSharp1"",
+//                    ""method"": ""POST"",
+//                    ""headers"": {
+//                        ""Content-Type"": ""application/json"",
+//                    },
+//                    ""body"": {
+//                        ""first"": ""Azure"",
+//                        ""last"": ""Function""
+//                    }
+//                }
+//            }
+//        ]
+//    }
+//}";
 
         [JsonSample(version: "Copy")]
         public const string CopySapOpenHubToAdls = @"
