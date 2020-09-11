@@ -24,18 +24,16 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
         private readonly FunctionDescriptor _functionDescriptor;
         private readonly IBlobPathSource _input;
         private readonly IBlobTriggerQueueWriter _queueWriter;
-        private readonly IBlobETagReader _eTagReader;
         private readonly IBlobReceiptManager _receiptManager;
         private readonly ILogger<BlobListener> _logger;
 
-        public BlobTriggerExecutor(string hostId, FunctionDescriptor functionDescriptor, IBlobPathSource input, IBlobETagReader eTagReader,
+        public BlobTriggerExecutor(string hostId, FunctionDescriptor functionDescriptor, IBlobPathSource input,
             IBlobReceiptManager receiptManager, IBlobTriggerQueueWriter queueWriter, ILogger<BlobListener> logger)
         {
             _hostId = hostId;
             _functionDescriptor = functionDescriptor;
             _input = input;
             _queueWriter = queueWriter;
-            _eTagReader = eTagReader;
             _receiptManager = receiptManager;
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
@@ -59,7 +57,12 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             }
 
             // Next, check to see if the blob currently exists (and, if so, what the current ETag is).
-            string possibleETag = await _eTagReader.GetETagAsync(value, cancellationToken).ConfigureAwait(false);
+            BlobProperties blobProperties = await value.FetchPropertiesOrNullIfNotExistAsync(cancellationToken).ConfigureAwait(false);
+            string possibleETag = null;
+            if (blobProperties != null)
+            {
+                possibleETag = blobProperties.ETag.ToString();
+            }
 
             if (possibleETag == null)
             {
@@ -120,8 +123,6 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                 // complete the receipt and release the lease.
 
                 // Enqueue a message: function ID + blob path + ETag
-                // TODO (kasobol-msft) should we pull properties when we resolve blob reference?
-                BlobProperties blobProperties = await value.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                 BlobTriggerMessage message = new BlobTriggerMessage
                 {
                     FunctionId = _functionDescriptor.Id,

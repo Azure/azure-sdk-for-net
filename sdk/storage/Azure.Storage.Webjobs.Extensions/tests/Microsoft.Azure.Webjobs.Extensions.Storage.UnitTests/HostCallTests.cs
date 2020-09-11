@@ -1055,12 +1055,12 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
         private class MissingQueueProgram
         {
-            public static void FuncWithOutCloudQueueMessage([Queue(OutputQueueName)] out QueueMessage message) // TODO (kasobol-msft) Do we support this binding?
+            public static void FuncWithOutCloudQueueMessage([Queue(OutputQueueName)] out QueueMessage message)
             {
                 message = QueuesModelFactory.QueueMessage(null, null, TestQueueMessage, 0);
             }
 
-            public static void FuncWithOutCloudQueueMessageNull([Queue(OutputQueueName)] out QueueMessage message) // TODO (kasobol-msft) Do we support this binding?
+            public static void FuncWithOutCloudQueueMessageNull([Queue(OutputQueueName)] out QueueMessage message)
             {
                 message = null;
             }

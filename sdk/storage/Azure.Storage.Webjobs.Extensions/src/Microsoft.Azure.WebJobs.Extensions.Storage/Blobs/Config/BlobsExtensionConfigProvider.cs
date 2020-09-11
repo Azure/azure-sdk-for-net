@@ -152,7 +152,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
         {
             private static readonly Type[] _types = new Type[]
             {
-                // TODO (kasobol-msft) should this contain BlobClient ?
+                // TODO (kasobol-msft) figure out how to introduce BlobClient binding
                 typeof(BlobBaseClient),
                 typeof(BlockBlobClient),
                 typeof(PageBlobClient),
