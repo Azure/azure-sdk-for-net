@@ -69,12 +69,7 @@ namespace Azure.Identity
                 }
 
                 var cloudInstance = GetAzureCloudInstance(environmentName);
-                var storedCredentials = _vscAdapter.GetCredentials(CredentialsSection, environmentName);
-
-                if (!IsRefreshTokenString(storedCredentials))
-                {
-                    throw new CredentialUnavailableException("Need to re-authenticate user in VSCode Azure Account.");
-                }
+                string storedCredentials = GetStoredCredentials(environmentName);
 
                 var result = await _client.AcquireTokenByRefreshToken(requestContext.Scopes, storedCredentials, cloudInstance, tenant, async, cancellationToken).ConfigureAwait(false);
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
@@ -86,6 +81,24 @@ namespace Azure.Identity
             catch (Exception e)
             {
                 throw scope.FailWrapAndThrow(e);
+            }
+        }
+
+        private string GetStoredCredentials(string environmentName)
+        {
+            try
+            {
+                var storedCredentials = _vscAdapter.GetCredentials(CredentialsSection, environmentName);
+                if (!IsRefreshTokenString(storedCredentials))
+                {
+                    throw new CredentialUnavailableException("Need to re-authenticate user in VSCode Azure Account.");
+                }
+
+                return storedCredentials;
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw new CredentialUnavailableException("Stored credentials not found. Need to authenticate user in VSCode Azure Account.", ex);
             }
         }
 
