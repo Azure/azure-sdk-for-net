@@ -44,7 +44,7 @@ namespace Azure.Identity.Tests
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForVisualStudio();
             var testProcess = new TestProcess { Output = processOutput };
 
-            var factory = new TestDefaultAzureCredentialFactory(options, fileSystem, new TestProcessService(testProcess), default);
+            var factory = new TestDefaultAzureCredentialFactory(options, fileSystem, new TestProcessService(testProcess), default) { ManagedIdentitySourceFactory = () => default };
             var credential = InstrumentClient(new DefaultAzureCredential(factory, options));
 
             AccessToken token;
@@ -80,7 +80,7 @@ namespace Azure.Identity.Tests
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudioCode(TestEnvironment, cloudName);
             var process = new TestProcess { Error = "Error" };
 
-            var factory = new TestDefaultAzureCredentialFactory(options, fileSystem, new TestProcessService(process), default);
+            var factory = new TestDefaultAzureCredentialFactory(options, fileSystem, new TestProcessService(process), default) { ManagedIdentitySourceFactory = () => default };
             var credential = InstrumentClient(new DefaultAzureCredential(factory, options));
 
             AccessToken token;
@@ -116,7 +116,7 @@ namespace Azure.Identity.Tests
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudioCode(TestEnvironment, cloudName);
             var processService = new TestProcessService { CreateHandler = psi => new TestProcess { Error = "Error" }};
 
-            var factory = new TestDefaultAzureCredentialFactory(options, fileSystem, processService, default);
+            var factory = new TestDefaultAzureCredentialFactory(options, fileSystem, processService, default) { ManagedIdentitySourceFactory = () => default };
             var credential = InstrumentClient(new DefaultAzureCredential(factory, options));
 
             var tasks = new List<Task<AccessToken>>();
@@ -152,7 +152,7 @@ namespace Azure.Identity.Tests
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "Azure", null);
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudioCode(TestEnvironment);
 
-            var factory = new TestDefaultAzureCredentialFactory(options, fileSystem, new TestProcessService(testProcess), vscAdapter);
+            var factory = new TestDefaultAzureCredentialFactory(options, fileSystem, new TestProcessService(testProcess), vscAdapter) { ManagedIdentitySourceFactory = () => default };
             var credential = InstrumentClient(new DefaultAzureCredential(factory, options));
 
             AccessToken token;
@@ -188,7 +188,7 @@ namespace Azure.Identity.Tests
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "Azure", null);
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudioCode(TestEnvironment);
 
-            var factory = new TestDefaultAzureCredentialFactory(options, fileSystem, processService, vscAdapter);
+            var factory = new TestDefaultAzureCredentialFactory(options, fileSystem, processService, vscAdapter) { ManagedIdentitySourceFactory = () => default };
             var credential = InstrumentClient(new DefaultAzureCredential(factory, options));
 
             var tasks = new List<Task<AccessToken>>();
@@ -218,7 +218,7 @@ namespace Azure.Identity.Tests
             });
 
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "Azure", "{}");
-            var factory = new TestDefaultAzureCredentialFactory(options, new TestFileSystemService(), new TestProcessService(new TestProcess { Error = "'az' is not recognized" }), vscAdapter);
+            var factory = new TestDefaultAzureCredentialFactory(options, new TestFileSystemService(), new TestProcessService(new TestProcess { Error = "'az' is not recognized" }), vscAdapter) { ManagedIdentitySourceFactory = () => default };
             var credential = InstrumentClient(new DefaultAzureCredential(factory, options));
 
             List<ClientDiagnosticListener.ProducedDiagnosticScope> scopes;
@@ -237,11 +237,8 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        [NonParallelizable]
         public void DefaultAzureCredential_AllCredentialsHaveFailed_FirstAuthenticationFailedException()
         {
-            using var endpoint = new TestEnvVar("MSI_ENDPOINT", "abc");
-
             var options = Recording.InstrumentClientOptions(new DefaultAzureCredentialOptions
             {
                 ExcludeEnvironmentCredential = true,
@@ -250,7 +247,7 @@ namespace Azure.Identity.Tests
             });
 
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "Azure", null);
-            var factory = new TestDefaultAzureCredentialFactory(options, new TestFileSystemService(), new TestProcessService(new TestProcess { Error = "Error" }), vscAdapter);
+            var factory = new TestDefaultAzureCredentialFactory(options, new TestFileSystemService(), new TestProcessService(new TestProcess { Error = "Error" }), vscAdapter) { ManagedIdentitySourceFactory = () => throw new InvalidOperationException() };
             var credential = InstrumentClient(new DefaultAzureCredential(factory, options));
 
             List<ClientDiagnosticListener.ProducedDiagnosticScope> scopes;
@@ -277,7 +274,7 @@ namespace Azure.Identity.Tests
             });
 
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "Azure", null);
-            var factory = new TestDefaultAzureCredentialFactory(options, new TestFileSystemService(), new TestProcessService(new TestProcess { Error = "Error" }), vscAdapter);
+            var factory = new TestDefaultAzureCredentialFactory(options, new TestFileSystemService(), new TestProcessService(new TestProcess { Error = "Error" }), vscAdapter) { ManagedIdentitySourceFactory = () => default };
             var credential = InstrumentClient(new DefaultAzureCredential(factory, options));
 
             List<ClientDiagnosticListener.ProducedDiagnosticScope> scopes;
