@@ -137,7 +137,6 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        [RunOnlyOnPlatforms(Windows = true, OSX = true)]
         public async Task DefaultAzureCredential_UseAzureCliCredential()
         {
             var options = Recording.InstrumentClientOptions(new DefaultAzureCredentialOptions
@@ -174,7 +173,6 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        [RunOnlyOnPlatforms(Windows = true, OSX = true)]
         public async Task DefaultAzureCredential_UseAzureCliCredential_ParallelCalls()
         {
             var options = Recording.InstrumentClientOptions(new DefaultAzureCredentialOptions
@@ -269,7 +267,6 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        [RunOnlyOnPlatforms(Windows = true, OSX = true)]
         public void DefaultAzureCredential_AllCredentialsHaveFailed_LastAuthenticationFailedException()
         {
             var options = Recording.InstrumentClientOptions(new DefaultAzureCredentialOptions
