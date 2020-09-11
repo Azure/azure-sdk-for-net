@@ -188,8 +188,11 @@ namespace Azure.Core.TestFramework
 
                     // We use array as a wrapper for string based serialization
                     // so if the root is an array we can't write it directly
-                    // fallback to generic string writing
-                    if (document.RootElement.ValueKind != JsonValueKind.Array)
+                    // fallback to generic string writing. Also, if the root is a string
+                    // we don't want to write it directly, as this would make matching
+                    // not work in libraries that allow passing JSON as a string.
+                    if (document.RootElement.ValueKind != JsonValueKind.Array &&
+                        document.RootElement.ValueKind != JsonValueKind.String)
                     {
                         // Make sure we can replay JSON is exactly the same as the source
                         // for the case where service response was pre-formatted

@@ -12,4 +12,6 @@ description: Samples for the Azure.Security.KeyVault.Administration client libra
 # Azure.Security.KeyVault.Administration Samples
 
 - Creating, getting, and deleting role assignments [synchronously](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample1_RbacHelloWorldSync.md) or [asynchronously](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample1_RbacHelloWorldAsync.md)
-- [Assigning roles for specific scopes](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample2_RbacScopeAssignment.md) 
+- [Assigning roles for specific scopes](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample2_RbacScopeAssignment.md)
+- Performing a full key backup and restore [synchronously](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample1_BackupHelloWorldSync.md) and [asynchronously](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample1_BackupHelloWorldAsync.md)
+- [Performing selective key restore]

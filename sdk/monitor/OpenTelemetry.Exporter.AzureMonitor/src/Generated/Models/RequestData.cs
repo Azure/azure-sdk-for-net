@@ -15,13 +15,13 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
     public partial class RequestData : MonitorDomain
     {
         /// <summary> Initializes a new instance of RequestData. </summary>
-        /// <param name="ver"> Schema version. </param>
+        /// <param name="version"> Schema version. </param>
         /// <param name="id"> Identifier of a request call instance. Used for correlation between request and other telemetry items. </param>
         /// <param name="duration"> Request duration in format: DD.HH:MM:SS.MMMMMM. Must be less than 1000 days. </param>
         /// <param name="success"> Indication of successfull or unsuccessfull call. </param>
         /// <param name="responseCode"> Result of a request execution. HTTP status code for HTTP requests. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="duration"/>, or <paramref name="responseCode"/> is null. </exception>
-        public RequestData(int ver, string id, string duration, bool success, string responseCode)
+        public RequestData(int version, string id, string duration, bool success, string responseCode)
         {
             if (id == null)
             {
@@ -36,7 +36,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
                 throw new ArgumentNullException(nameof(responseCode));
             }
 
-            Ver = ver;
+            Version = version;
             Id = id;
             Duration = duration;
             Success = success;
@@ -45,49 +45,25 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
             Measurements = new ChangeTrackingDictionary<string, double>();
         }
 
-        /// <summary> Initializes a new instance of RequestData. </summary>
-        /// <param name="test"> Ignored value. </param>
-        /// <param name="ver"> Schema version. </param>
-        /// <param name="id"> Identifier of a request call instance. Used for correlation between request and other telemetry items. </param>
-        /// <param name="name"> Name of the request. Represents code path taken to process request. Low cardinality value to allow better grouping of requests. For HTTP requests it represents the HTTP method and URL path template like &apos;GET /values/{id}&apos;. </param>
-        /// <param name="duration"> Request duration in format: DD.HH:MM:SS.MMMMMM. Must be less than 1000 days. </param>
-        /// <param name="success"> Indication of successfull or unsuccessfull call. </param>
-        /// <param name="responseCode"> Result of a request execution. HTTP status code for HTTP requests. </param>
-        /// <param name="source"> Source of the request. Examples are the instrumentation key of the caller or the ip address of the caller. </param>
-        /// <param name="url"> Request URL with all query string parameters. </param>
-        /// <param name="properties"> Collection of custom properties. TODO: max key length validate. </param>
-        /// <param name="measurements"> Collection of custom measurements. TODO: max key length validate. </param>
-        internal RequestData(string test, int ver, string id, string name, string duration, bool success, string responseCode, string source, string url, IDictionary<string, string> properties, IDictionary<string, double> measurements) : base(test)
-        {
-            Ver = ver;
-            Id = id;
-            Name = name;
-            Duration = duration;
-            Success = success;
-            ResponseCode = responseCode;
-            Source = source;
-            Url = url;
-            Properties = properties;
-            Measurements = measurements;
-        }
-
         /// <summary> Schema version. </summary>
-        public int Ver { get; set; }
+        public int Version { get; }
         /// <summary> Identifier of a request call instance. Used for correlation between request and other telemetry items. </summary>
-        public string Id { get; set; }
+        public string Id { get; }
         /// <summary> Name of the request. Represents code path taken to process request. Low cardinality value to allow better grouping of requests. For HTTP requests it represents the HTTP method and URL path template like &apos;GET /values/{id}&apos;. </summary>
         public string Name { get; set; }
+        /// <summary> Request duration in format: DD.HH:MM:SS.MMMMMM. Must be less than 1000 days. </summary>
+        public string Duration { get; }
         /// <summary> Indication of successfull or unsuccessfull call. </summary>
-        public bool Success { get; set; }
+        public bool Success { get; }
         /// <summary> Result of a request execution. HTTP status code for HTTP requests. </summary>
-        public string ResponseCode { get; set; }
+        public string ResponseCode { get; }
         /// <summary> Source of the request. Examples are the instrumentation key of the caller or the ip address of the caller. </summary>
         public string Source { get; set; }
         /// <summary> Request URL with all query string parameters. </summary>
         public string Url { get; set; }
-        /// <summary> Collection of custom properties. TODO: max key length validate. </summary>
+        /// <summary> Collection of custom properties. </summary>
         public IDictionary<string, string> Properties { get; }
-        /// <summary> Collection of custom measurements. TODO: max key length validate. </summary>
+        /// <summary> Collection of custom measurements. </summary>
         public IDictionary<string, double> Measurements { get; }
     }
 }

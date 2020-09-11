@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -17,7 +16,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("ver");
-            writer.WriteNumberValue(Ver);
+            writer.WriteNumberValue(Version);
             writer.WritePropertyName("metrics");
             writer.WriteStartArray();
             foreach (var item in Metrics)
@@ -42,48 +41,6 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
                 writer.WriteStringValue(Test);
             }
             writer.WriteEndObject();
-        }
-
-        internal static MetricsData DeserializeMetricsData(JsonElement element)
-        {
-            int ver = default;
-            IList<DataPoint> metrics = default;
-            Optional<IDictionary<string, string>> properties = default;
-            Optional<string> test = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("ver"))
-                {
-                    ver = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("metrics"))
-                {
-                    List<DataPoint> array = new List<DataPoint>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(DataPoint.DeserializeDataPoint(item));
-                    }
-                    metrics = array;
-                    continue;
-                }
-                if (property.NameEquals("properties"))
-                {
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    properties = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("test"))
-                {
-                    test = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new MetricsData(test.Value, ver, metrics, Optional.ToDictionary(properties));
         }
     }
 }

@@ -26,6 +26,10 @@ namespace Azure.AI.TextAnalytics
         private readonly string DefaultCognitiveScope = "https://cognitiveservices.azure.com/.default";
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
 
+        // Specifies the method used to interpret string offsets. Default to <see cref="StringIndexType.Utf16CodeUnit"/>.
+        private readonly StringIndexType _stringCodeUnit = StringIndexType.Utf16CodeUnit;
+
+
         /// <summary>
         /// Protected constructor to allow mocking.
         /// </summary>
@@ -424,7 +428,10 @@ namespace Azure.AI.TextAnalytics
             {
                 var documents = new List<MultiLanguageInput>() { ConvertToMultiLanguageInput(document, language) };
 
-                Response<EntitiesResult> result = await _serviceRestClient.EntitiesRecognitionGeneralAsync(new MultiLanguageBatchInput(documents), cancellationToken: cancellationToken).ConfigureAwait(false);
+                Response<EntitiesResult> result = await _serviceRestClient.EntitiesRecognitionGeneralAsync(
+                    new MultiLanguageBatchInput(documents),
+                    stringIndexType: _stringCodeUnit,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
                 Response response = result.GetRawResponse();
 
                 if (result.Value.Errors.Count > 0)
@@ -479,7 +486,10 @@ namespace Azure.AI.TextAnalytics
             {
                 var documents = new List<MultiLanguageInput>() { ConvertToMultiLanguageInput(document, language) };
 
-                Response<EntitiesResult> result = _serviceRestClient.EntitiesRecognitionGeneral(new MultiLanguageBatchInput(documents), cancellationToken: cancellationToken);
+                Response<EntitiesResult> result = _serviceRestClient.EntitiesRecognitionGeneral(
+                    new MultiLanguageBatchInput(documents),
+                    stringIndexType: _stringCodeUnit,
+                    cancellationToken: cancellationToken);
                 Response response = result.GetRawResponse();
 
                 if (result.Value.Errors.Count > 0)
@@ -639,7 +649,12 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                Response<EntitiesResult> result = await _serviceRestClient.EntitiesRecognitionGeneralAsync(batchInput, options.ModelVersion, options.IncludeStatistics, null, cancellationToken).ConfigureAwait(false);
+                Response<EntitiesResult> result = await _serviceRestClient.EntitiesRecognitionGeneralAsync(
+                    batchInput,
+                    options.ModelVersion,
+                    options.IncludeStatistics,
+                    _stringCodeUnit,
+                    cancellationToken).ConfigureAwait(false);
                 var response = result.GetRawResponse();
 
                 IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
@@ -660,11 +675,338 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                Response<EntitiesResult> result = _serviceRestClient.EntitiesRecognitionGeneral(batchInput, options.ModelVersion, options.IncludeStatistics, null, cancellationToken);
+                Response<EntitiesResult> result = _serviceRestClient.EntitiesRecognitionGeneral(
+                    batchInput,
+                    options.ModelVersion,
+                    options.IncludeStatistics,
+                    _stringCodeUnit,
+                    cancellationToken);
                 var response = result.GetRawResponse();
 
                 IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
                 RecognizeEntitiesResultCollection results = Transforms.ConvertToRecognizeEntitiesResultCollection(result.Value, map);
+                return Response.FromValue(results, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        #endregion
+
+        #region Recognize PII Entities
+
+        /// <summary>
+        /// Runs a predictive model to identify a collection of entities containing
+        /// Personally Identifiable Information found in the passed-in document,
+        /// and categorize those entities into types such as US social security
+        /// number, drivers license number, or credit card number.
+        /// For more information on available categories, see
+        /// <a href="https://aka.ms/tanerpii"/>.
+        /// For a list of languages supported by this operation, see
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
+        /// </summary>
+        /// <param name="document">The document to analyze.</param>
+        /// <param name="language">The language that the document is written in.
+        /// If unspecified, this value will be set to the default language in
+        /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
+        /// service.  If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="options">The additional configurable <see cref="RecognizePiiEntitiesOptions"/> that may be passed when
+        /// recognizing PII entities. Options include entity domain filters, model version, and more.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// in the document, as well as a score indicating the confidence
+        /// that the entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public virtual async Task<Response<PiiEntityCollection>> RecognizePiiEntitiesAsync(string document, string language = default, RecognizePiiEntitiesOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
+            options ??= new RecognizePiiEntitiesOptions();
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizePiiEntities)}");
+            scope.AddAttribute("document", document);
+            scope.Start();
+
+            try
+            {
+                var documents = new List<MultiLanguageInput>() { ConvertToMultiLanguageInput(document, language) };
+
+                Response<PiiEntitiesResult> result = await _serviceRestClient.EntitiesRecognitionPiiAsync(
+                    new MultiLanguageBatchInput(documents),
+                    options.ModelVersion,
+                    options.IncludeStatistics,
+                    options.DomainFilter.GetString(),
+                    _stringCodeUnit,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+                Response response = result.GetRawResponse();
+
+                if (result.Value.Errors.Count > 0)
+                {
+                    // only one document, so we can ignore the id and grab the first error message.
+                    var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error)).ConfigureAwait(false);
+                }
+
+                return Response.FromValue(Transforms.ConvertToPiiEntityCollection(result.Value.Documents[0]), response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a collection of entities containing
+        /// Personally Identifiable Information found in the passed-in document,
+        /// and categorize those entities into types such as US social security
+        /// number, drivers license number, or credit card number.
+        /// For more information on available categories, see
+        /// <a href="https://aka.ms/tanerpii"/>.
+        /// For a list of languages supported by this operation, see
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
+        /// </summary>
+        /// <param name="document">The document to analyze.</param>
+        /// <param name="language">The language that the document is written in.
+        /// If unspecified, this value will be set to the default language in
+        /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
+        /// service.  If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="options">The additional configurable <see cref="RecognizePiiEntitiesOptions"/> that may be passed when
+        /// recognizing PII entities. Options include entity domain filters, model version, and more.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// in the document, as well as a score indicating the confidence
+        /// that the entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public virtual Response<PiiEntityCollection> RecognizePiiEntities(string document, string language = default, RecognizePiiEntitiesOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
+            options ??= new RecognizePiiEntitiesOptions();
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizePiiEntities)}");
+            scope.AddAttribute("document", document);
+            scope.Start();
+
+            try
+            {
+                var documents = new List<MultiLanguageInput>() { ConvertToMultiLanguageInput(document, language) };
+
+                Response<PiiEntitiesResult> result = _serviceRestClient.EntitiesRecognitionPii(
+                    new MultiLanguageBatchInput(documents),
+                    options.ModelVersion,
+                    options.IncludeStatistics,
+                    options.DomainFilter.GetString(),
+                    _stringCodeUnit,
+                    cancellationToken: cancellationToken);
+                Response response = result.GetRawResponse();
+
+                if (result.Value.Errors.Count > 0)
+                {
+                    // only one document, so we can ignore the id and grab the first error message.
+                    var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
+                    throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error));
+                }
+
+                return Response.FromValue(Transforms.ConvertToPiiEntityCollection(result.Value.Documents[0]), response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a collection of entities containing
+        /// Personally Identifiable Information found in the passed-in document,
+        /// and categorize those entities into types such as US social security
+        /// number, drivers license number, or credit card number.
+        /// For more information on available categories, see
+        /// <a href="https://aka.ms/tanerpii"/>.
+        /// For a list of languages supported by this operation, see
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
+        /// </summary>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="language">The language that the document is written in.
+        /// If unspecified, this value will be set to the default language in
+        /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
+        /// service.  If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="options">The additional configurable <see cref="RecognizePiiEntitiesOptions"/> that may be passed when
+        /// recognizing PII entities. Options include entity domain filters, model version, and more.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public virtual async Task<Response<RecognizePiiEntitiesResultCollection>> RecognizePiiEntitiesBatchAsync(IEnumerable<string> documents, string language = default, RecognizePiiEntitiesOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            options ??= new RecognizePiiEntitiesOptions();
+            MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
+
+            return await RecognizePiiEntitiesBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a collection of entities containing
+        /// Personally Identifiable Information found in the passed-in document,
+        /// and categorize those entities into types such as US social security
+        /// number, drivers license number, or credit card number.
+        /// For more information on available categories, see
+        /// <a href="https://aka.ms/tanerpii"/>.
+        /// For a list of languages supported by this operation, see
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
+        /// </summary>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="language">The language that the document is written in.
+        /// If unspecified, this value will be set to the default language in
+        /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
+        /// service.  If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="options">The additional configurable <see cref="RecognizePiiEntitiesOptions"/> that may be passed when
+        /// recognizing PII entities. Options include entity domain filters, model version, and more.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public virtual Response<RecognizePiiEntitiesResultCollection> RecognizePiiEntitiesBatch(IEnumerable<string> documents, string language = default, RecognizePiiEntitiesOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            options ??= new RecognizePiiEntitiesOptions();
+            MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
+
+            return RecognizePiiEntitiesBatch(documentInputs, options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a collection of entities containing
+        /// Personally Identifiable Information found in the passed-in document,
+        /// and categorize those entities into types such as US social security
+        /// number, drivers license number, or credit card number.
+        /// For more information on available categories, see
+        /// <a href="https://aka.ms/tanerpii"/>.
+        /// For a list of languages supported by this operation, see
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
+        /// </summary>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="options">The additional configurable <see cref="RecognizePiiEntitiesOptions"/> that may be passed when
+        /// recognizing PII entities. Options include entity domain filters, model version, and more.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public virtual async Task<Response<RecognizePiiEntitiesResultCollection>> RecognizePiiEntitiesBatchAsync(IEnumerable<TextDocumentInput> documents, RecognizePiiEntitiesOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            options ??= new RecognizePiiEntitiesOptions();
+            MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
+
+            return await RecognizePiiEntitiesBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a collection of entities containing
+        /// Personally Identifiable Information found in the passed-in document,
+        /// and categorize those entities into types such as US social security
+        /// number, drivers license number, or credit card number.
+        /// For more information on available categories, see
+        /// <a href="https://aka.ms/tanerpii"/>.
+        /// For a list of languages supported by this operation, see
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
+        /// </summary>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="options">The additional configurable <see cref="RecognizePiiEntitiesOptions"/> that may be passed when
+        /// recognizing PII entities. Options include entity domain filters, model version, and more.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public virtual Response<RecognizePiiEntitiesResultCollection> RecognizePiiEntitiesBatch(IEnumerable<TextDocumentInput> documents, RecognizePiiEntitiesOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            options ??= new RecognizePiiEntitiesOptions();
+            MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
+
+            return RecognizePiiEntitiesBatch(documentInputs, options, cancellationToken);
+        }
+
+        private async Task<Response<RecognizePiiEntitiesResultCollection>> RecognizePiiEntitiesBatchAsync(MultiLanguageBatchInput batchInput, RecognizePiiEntitiesOptions options, CancellationToken cancellationToken)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizePiiEntitiesBatch)}");
+            scope.Start();
+
+            try
+            {
+                Response<PiiEntitiesResult> result = await _serviceRestClient.EntitiesRecognitionPiiAsync(
+                    batchInput,
+                    options.ModelVersion,
+                    options.IncludeStatistics,
+                    options.DomainFilter.GetString(),
+                    _stringCodeUnit,
+                    cancellationToken).ConfigureAwait(false);
+                var response = result.GetRawResponse();
+
+                IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
+                RecognizePiiEntitiesResultCollection results = Transforms.ConvertToRecognizePiiEntitiesResultCollection(result.Value, map);
+                return Response.FromValue(results, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private Response<RecognizePiiEntitiesResultCollection> RecognizePiiEntitiesBatch(MultiLanguageBatchInput batchInput, RecognizePiiEntitiesOptions options, CancellationToken cancellationToken)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizePiiEntitiesBatch)}");
+            scope.Start();
+
+            try
+            {
+                Response<PiiEntitiesResult> result = _serviceRestClient.EntitiesRecognitionPii(
+                    batchInput,
+                    options.ModelVersion,
+                    options.IncludeStatistics,
+                    options.DomainFilter.GetString(),
+                    _stringCodeUnit,
+                    cancellationToken);
+                var response = result.GetRawResponse();
+
+                IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
+                RecognizePiiEntitiesResultCollection results = Transforms.ConvertToRecognizePiiEntitiesResultCollection(result.Value, map);
                 return Response.FromValue(results, response);
             }
             catch (Exception e)
@@ -768,12 +1110,13 @@ namespace Azure.AI.TextAnalytics
             try
             {
                 var documents = new List<MultiLanguageInput>() { ConvertToMultiLanguageInput(document, language) };
+                bool opinionMining = options.AdditionalSentimentAnalyses.HasFlag(AdditionalSentimentAnalyses.OpinionMining);
                 Response<SentimentResponse> result = await _serviceRestClient.SentimentAsync(
                     new MultiLanguageBatchInput(documents),
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    options.IncludeOpinionMining,
-                    null,
+                    opinionMining,
+                    _stringCodeUnit,
                     cancellationToken).ConfigureAwait(false);
                 Response response = result.GetRawResponse();
 
@@ -828,12 +1171,13 @@ namespace Azure.AI.TextAnalytics
             try
             {
                 var documents = new List<MultiLanguageInput>() { ConvertToMultiLanguageInput(document, language) };
+                bool opinionMining = options.AdditionalSentimentAnalyses.HasFlag(AdditionalSentimentAnalyses.OpinionMining);
                 Response<SentimentResponse> result = _serviceRestClient.Sentiment(
                     new MultiLanguageBatchInput(documents),
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    options.IncludeOpinionMining,
-                    null,
+                    opinionMining,
+                    _stringCodeUnit,
                     cancellationToken);
                 Response response = result.GetRawResponse();
 
@@ -1106,7 +1450,14 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                Response<SentimentResponse> result = await _serviceRestClient.SentimentAsync(batchInput, options.ModelVersion, options.IncludeStatistics, options.IncludeOpinionMining, null, cancellationToken).ConfigureAwait(false);
+                bool opinionMining = options.AdditionalSentimentAnalyses.HasFlag(AdditionalSentimentAnalyses.OpinionMining);
+                Response<SentimentResponse> result = await _serviceRestClient.SentimentAsync(
+                    batchInput,
+                    options.ModelVersion,
+                    options.IncludeStatistics,
+                    opinionMining,
+                    _stringCodeUnit,
+                    cancellationToken).ConfigureAwait(false);
                 var response = result.GetRawResponse();
 
                 IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
@@ -1127,7 +1478,14 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                Response<SentimentResponse> result = _serviceRestClient.Sentiment(batchInput, options.ModelVersion, options.IncludeStatistics, options.IncludeOpinionMining, null, cancellationToken);
+                bool opinionMining = options.AdditionalSentimentAnalyses.HasFlag(AdditionalSentimentAnalyses.OpinionMining);
+                Response<SentimentResponse> result = _serviceRestClient.Sentiment(
+                    batchInput,
+                    options.ModelVersion,
+                    options.IncludeStatistics,
+                    opinionMining,
+                    _stringCodeUnit,
+                    cancellationToken);
                 var response = result.GetRawResponse();
 
                 IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
@@ -1461,7 +1819,10 @@ namespace Azure.AI.TextAnalytics
             {
                 var documents = new List<MultiLanguageInput>() { ConvertToMultiLanguageInput(document, language) };
 
-                Response<EntityLinkingResult> result = await _serviceRestClient.EntitiesLinkingAsync(new MultiLanguageBatchInput(documents), cancellationToken: cancellationToken).ConfigureAwait(false);
+                Response<EntityLinkingResult> result = await _serviceRestClient.EntitiesLinkingAsync(
+                    new MultiLanguageBatchInput(documents),
+                    stringIndexType: _stringCodeUnit,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
                 Response response = result.GetRawResponse();
 
                 if (result.Value.Errors.Count > 0)
@@ -1514,7 +1875,10 @@ namespace Azure.AI.TextAnalytics
             {
                 var documents = new List<MultiLanguageInput>() { ConvertToMultiLanguageInput(document, language) };
 
-                Response<EntityLinkingResult> result = _serviceRestClient.EntitiesLinking(new MultiLanguageBatchInput(documents), cancellationToken: cancellationToken);
+                Response<EntityLinkingResult> result = _serviceRestClient.EntitiesLinking(
+                    new MultiLanguageBatchInput(documents),
+                    stringIndexType: _stringCodeUnit,
+                    cancellationToken: cancellationToken);
                 Response response = result.GetRawResponse();
 
                 if (result.Value.Errors.Count > 0)
@@ -1666,7 +2030,12 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                Response<EntityLinkingResult> result = await _serviceRestClient.EntitiesLinkingAsync(batchInput, options.ModelVersion, options.IncludeStatistics, null, cancellationToken).ConfigureAwait(false);
+                Response<EntityLinkingResult> result = await _serviceRestClient.EntitiesLinkingAsync(
+                    batchInput,
+                    options.ModelVersion,
+                    options.IncludeStatistics,
+                    _stringCodeUnit,
+                    cancellationToken).ConfigureAwait(false);
                 var response = result.GetRawResponse();
 
                 IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);
@@ -1687,7 +2056,11 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                Response<EntityLinkingResult> result = _serviceRestClient.EntitiesLinking(batchInput, options.ModelVersion, options.IncludeStatistics, null, cancellationToken);
+                Response<EntityLinkingResult> result = _serviceRestClient.EntitiesLinking(batchInput,
+                    options.ModelVersion,
+                    options.IncludeStatistics,
+                    _stringCodeUnit,
+                    cancellationToken);
                 var response = result.GetRawResponse();
 
                 IDictionary<string, int> map = CreateIdToIndexMap(batchInput.Documents);

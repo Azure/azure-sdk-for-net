@@ -2,8 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-
-using NUnit.Framework;
+using Xunit;
 
 namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
 {
@@ -12,78 +11,78 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
     /// </summary>
     public class ConnectionStringTests
     {
-        [Test]
+        [Fact]
         public void TestParse()
         {
             var test = Azure.Core.ConnectionString.Parse("key1=value1;key2=value2;key3=value3");
 
-            Assert.AreEqual("value1", test.GetRequired("key1"));
-            Assert.AreEqual("value2", test.GetRequired("key2"));
-            Assert.AreEqual("value3", test.GetRequired("key3"));
+            Assert.Equal("value1", test.GetRequired("key1"));
+            Assert.Equal("value2", test.GetRequired("key2"));
+            Assert.Equal("value3", test.GetRequired("key3"));
         }
 
-        [Test]
+        [Fact]
         public void TestParse_WithTrailingSemicolon()
         {
             var test = Azure.Core.ConnectionString.Parse("key1=value1;key2=value2;key3=value3;");
 
-            Assert.AreEqual("value1", test.GetRequired("key1"));
-            Assert.AreEqual("value2", test.GetRequired("key2"));
-            Assert.AreEqual("value3", test.GetRequired("key3"));
+            Assert.Equal("value1", test.GetRequired("key1"));
+            Assert.Equal("value2", test.GetRequired("key2"));
+            Assert.Equal("value3", test.GetRequired("key3"));
         }
 
-        [Test]
+        [Fact]
         public void TestParse_WithExtraSpaces()
         {
             var test = Azure.Core.ConnectionString.Parse(" key1 =  value1   ; key2 = value2 ; key3    =value3   ");
 
-            Assert.AreEqual("value1", test.GetRequired("key1"));
-            Assert.AreEqual("value2", test.GetRequired("key2"));
-            Assert.AreEqual("value3", test.GetRequired("key3"));
+            Assert.Equal("value1", test.GetRequired("key1"));
+            Assert.Equal("value2", test.GetRequired("key2"));
+            Assert.Equal("value3", test.GetRequired("key3"));
         }
 
         /// <summary>
         /// Users can input unexpected casing in their connection strings.
         /// Verify that we can fetch any value from the dictionary regardless of the casing.
         /// </summary>
-        [Test]
+        [Fact]
         public void TestParse_IsCaseInsensitive()
         {
             var test = Azure.Core.ConnectionString.Parse("UPPERCASE=value1;lowercase=value2;MixedCase=value3");
 
-            Assert.AreEqual("value1", test.GetRequired("UPPERCASE"));
-            Assert.AreEqual("value1", test.GetRequired("uppercase"));
-            Assert.AreEqual("value2", test.GetRequired("LOWERCASE"));
-            Assert.AreEqual("value2", test.GetRequired("lowercase"));
-            Assert.AreEqual("value3", test.GetRequired("MIXEDCASE"));
-            Assert.AreEqual("value3", test.GetRequired("mixedcase"));
+            Assert.Equal("value1", test.GetRequired("UPPERCASE"));
+            Assert.Equal("value1", test.GetRequired("uppercase"));
+            Assert.Equal("value2", test.GetRequired("LOWERCASE"));
+            Assert.Equal("value2", test.GetRequired("lowercase"));
+            Assert.Equal("value3", test.GetRequired("MIXEDCASE"));
+            Assert.Equal("value3", test.GetRequired("mixedcase"));
         }
 
-        [Test]
+        [Fact]
         public void TestParse_WithNull()
         {
             Assert.Throws<NullReferenceException>(() => Azure.Core.ConnectionString.Parse(null));
         }
 
-        [Test]
+        [Fact]
         public void TestParse_WithEmptyString()
         {
             Assert.Throws<InvalidOperationException>(() => Azure.Core.ConnectionString.Parse(string.Empty));
         }
 
-        [Test]
+        [Fact]
         public void TestParse_WithDuplaceKeys()
         {
             Assert.Throws<InvalidOperationException>(() => Azure.Core.ConnectionString.Parse("key1=value1;key1=value2"));
         }
 
-        [Test]
+        [Fact]
         public void TestParse_WithDuplaceKeysWithSpaces()
         {
             Assert.Throws<InvalidOperationException>(() => Azure.Core.ConnectionString.Parse("key1=value1;key1  =value2"));
         }
 
-        [Test]
+        [Fact]
         public void TestParse_WithInvalidDelimiters()
         {
             Assert.Throws<InvalidOperationException>(() => Azure.Core.ConnectionString.Parse("key1;key2=value2"));

@@ -5,8 +5,11 @@
 ### New Features
 - It defaults to the latest supported API version, which currently is `3.1-preview.2`.
 - `ErrorCode` value returned from the service is now surfaced in `RequestFailedException`.
+- Added the `RecognizePiiEntities` endpoint which returns entities containing Personally Identifiable Information. This feature is available in the Text Analytics service v3.1-preview.1 and above.
 - Support added for Opinion Mining. This feature is available in the Text Analytics service v3.1-preview.1 and above.
+- Added `Offset` and `Length` properties for `CategorizedEntity`, `SentenceSentiment`, and `LinkedEntityMatch`. The default encoding is UTF-16 code units. For additional information see https://aka.ms/text-analytics-offsets
 - `TextAnalyticsError` and `TextAnalyticsWarning` now are marked as immutable.
+- Added property `BingEntitySearchApiId` to the `LinkedEntity` class. This property is only available for v3.1-preview.2 and up, and it is to be used in conjunction with the Bing Entity Search API to fetch additional relevant information about the returned entity.
 
 ## 5.0.0 (2020-07-27)
 - Re-release of version `1.0.1` with updated version `5.0.0`.

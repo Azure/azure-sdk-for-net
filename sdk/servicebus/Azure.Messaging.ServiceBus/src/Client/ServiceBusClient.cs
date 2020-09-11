@@ -32,13 +32,13 @@ namespace Azure.Messaging.ServiceBus
         public string FullyQualifiedNamespace => Connection.FullyQualifiedNamespace;
 
         /// <summary>
-        ///   Indicates whether or not this <see cref="ServiceBusClient"/> has been disposed.
+        ///   Indicates whether or not this <see cref="ServiceBusClient"/> has been closed.
         /// </summary>
         ///
         /// <value>
-        ///   <c>true</c> if the client is disposed; otherwise, <c>false</c>.
+        ///   <c>true</c> if the client is closed; otherwise, <c>false</c>.
         /// </value>
-        public bool IsDisposed { get; private set; } = false;
+        public bool IsClosed { get; private set; } = false;
 
         /// <summary>
         /// The transport type used for this <see cref="ServiceBusClient"/>.
@@ -53,7 +53,6 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///   The instance of <see cref="ServiceBusEventSource" /> which can be mocked for testing.
         /// </summary>
-        ///
         internal ServiceBusEventSource Logger { get; set; } = ServiceBusEventSource.Log;
 
         /// <summary>
@@ -70,20 +69,20 @@ namespace Azure.Messaging.ServiceBus
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "This signature must match the IAsyncDisposable interface.")]
         public virtual async ValueTask DisposeAsync()
         {
-            Logger.ClientDisposeStart(typeof(ServiceBusClient), Identifier);
-            IsDisposed = true;
+            Logger.ClientCloseStart(typeof(ServiceBusClient), Identifier);
+            IsClosed = true;
             try
             {
                 await Connection.CloseAsync(CancellationToken.None).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
-                Logger.ClientDisposeException(typeof(ServiceBusClient), Identifier, ex);
+                Logger.ClientCloseException(typeof(ServiceBusClient), Identifier, ex);
                 throw;
             }
             finally
             {
-                Logger.ClientDisposeComplete(typeof(ServiceBusClient), Identifier);
+                Logger.ClientCloseComplete(typeof(ServiceBusClient), Identifier);
             }
         }
 

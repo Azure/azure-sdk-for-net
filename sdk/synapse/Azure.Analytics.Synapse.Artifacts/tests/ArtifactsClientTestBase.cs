@@ -16,6 +16,14 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
 
         public NotebookClient NotebookClient { get; set; }
 
+        public TriggerClient TriggerClient { get; set; }
+
+        public LinkedServiceClient LinkedServiceClient { get; set; }
+
+        public DatasetClient DatasetClient { get; set; }
+
+        public DataFlowClient DataFlowClient { get; set; }
+
         protected ArtifactsClientTestBase(bool isAsync) : base(isAsync)
         {
 #if DEBUG
@@ -29,6 +37,10 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
 
             PipelineClient = CreatePipelineClient();
             NotebookClient = CreateNotebookClient();
+            TriggerClient = CreateTriggerClient();
+            LinkedServiceClient = CreateLinkedServiceClient();
+            DatasetClient = CreateDatasetClient();
+            DataFlowClient = CreateDataFlowClient();
         }
 
         public override void StopTestRecording()
@@ -62,6 +74,42 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
         {
             recording ??= Recording;
             return InstrumentClient(new NotebookClient(
+                new Uri(TestEnvironment.WorkspaceUrl),
+                TestEnvironment.Credential,
+                recording.InstrumentClientOptions(new ArtifactsClientOptions())));
+        }
+
+        internal TriggerClient CreateTriggerClient(TestRecording recording = null)
+        {
+            recording ??= Recording;
+            return InstrumentClient(new TriggerClient(
+                new Uri(TestEnvironment.WorkspaceUrl),
+                TestEnvironment.Credential,
+                recording.InstrumentClientOptions(new ArtifactsClientOptions())));
+        }
+
+        internal LinkedServiceClient CreateLinkedServiceClient(TestRecording recording = null)
+        {
+            recording ??= Recording;
+            return InstrumentClient(new LinkedServiceClient(
+                new Uri(TestEnvironment.WorkspaceUrl),
+                TestEnvironment.Credential,
+                recording.InstrumentClientOptions(new ArtifactsClientOptions())));
+        }
+
+        internal DatasetClient CreateDatasetClient(TestRecording recording = null)
+        {
+            recording ??= Recording;
+            return InstrumentClient(new DatasetClient(
+                new Uri(TestEnvironment.WorkspaceUrl),
+                TestEnvironment.Credential,
+                recording.InstrumentClientOptions(new ArtifactsClientOptions())));
+        }
+
+        internal DataFlowClient CreateDataFlowClient(TestRecording recording = null)
+        {
+            recording ??= Recording;
+            return InstrumentClient(new DataFlowClient(
                 new Uri(TestEnvironment.WorkspaceUrl),
                 TestEnvironment.Credential,
                 recording.InstrumentClientOptions(new ArtifactsClientOptions())));

@@ -1,0 +1,62 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-Dns-4332/providers/Microsoft.Network/dnsZones/azure.ameredmond.dns/SRV/srv_record?api-version=2018-05-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "193",
+        "Content-Type": "application/json",
+        "traceparent": "00-ae9a751e2ab7d242b20fea479341284b-c935e3c28ff88043-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Dns/1.0.0-dev.20200901.1",
+          "(.NET Core 4.6.29130.01; Linux 4.19.104-microsoft-standard #1 SMP Wed Feb 19 06:37:35 UTC 2020)"
+        ],
+        "x-ms-client-request-id": "fdba6f0e1444095ff2c2df74e3b763f2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "metadata": {
+            "tag1": "value1"
+          },
+          "TTL": 60,
+          "SRVRecords": [
+            {
+              "priority": 0,
+              "weight": 2,
+              "port": 44,
+              "target": "bt2.scsfsm.com"
+            },
+            {
+              "priority": 1,
+              "weight": 1,
+              "port": 45,
+              "target": "bt1.scsfsm.com"
+            }
+          ]
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "private",
+        "Content-Length": "569",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 01 Sep 2020 23:47:52 GMT",
+        "ETag": "04c40366-ce6f-4d49-8bfb-c79a519d1405",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "bebffad8-4109-4e2f-9bde-680803f0c518",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "11999",
+        "x-ms-request-id": "fdba6f0e-1444-095f-f2c2-df74e3b763f2",
+        "x-ms-routing-request-id": "WESTUS2:20200901T234753Z:bebffad8-4109-4e2f-9bde-680803f0c518",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": "{\u0022id\u0022:\u0022\\/subscriptions\\/db1ab6f0-4769-4b27-930e-01e2ef9c123c\\/resourceGroups\\/Default-Dns-4332\\/providers\\/Microsoft.Network\\/dnszones\\/azure.ameredmond.dns\\/SRV\\/srv_record\u0022,\u0022name\u0022:\u0022srv_record\u0022,\u0022type\u0022:\u0022Microsoft.Network\\/dnszones\\/SRV\u0022,\u0022etag\u0022:\u002204c40366-ce6f-4d49-8bfb-c79a519d1405\u0022,\u0022properties\u0022:{\u0022metadata\u0022:{\u0022tag1\u0022:\u0022value1\u0022},\u0022fqdn\u0022:\u0022srv_record.azure.ameredmond.dns.\u0022,\u0022TTL\u0022:60,\u0022SRVRecords\u0022:[{\u0022port\u0022:44,\u0022priority\u0022:0,\u0022target\u0022:\u0022bt2.scsfsm.com\u0022,\u0022weight\u0022:2},{\u0022port\u0022:45,\u0022priority\u0022:1,\u0022target\u0022:\u0022bt1.scsfsm.com\u0022,\u0022weight\u0022:1}],\u0022targetResource\u0022:{},\u0022provisioningState\u0022:\u0022Succeeded\u0022}}"
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "803038318"
+  }
+}

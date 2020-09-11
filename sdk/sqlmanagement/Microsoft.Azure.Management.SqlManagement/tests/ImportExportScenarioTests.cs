@@ -24,16 +24,28 @@ namespace Sql.Tests
         [Fact]
         public void TestImportExistingDatabase()
         {
-            TestImportExport(true, "TestImportExistingDatabase");
+            TestImportExport(true, "TestImportExistingDatabase", false);
         }
 
         [Fact]
         public void TestImportNewDatabase()
         {
-            TestImportExport(false, "TestImportNewDatabase");
+            TestImportExport(false, "TestImportNewDatabase", false);
         }
 
-        public void TestImportExport(bool preexistingDatabase, string testName)
+        [Fact]
+        public void TestImportExistingDatabase_NetworkIsolation()
+        {
+            TestImportExport(true, "TestImportExistingDatabase_NetworkIsolation", true);
+        }
+
+        [Fact]
+        public void TestImportNewDatabase_NetworkIsolation()
+        {
+            TestImportExport(false, "TestImportNewDatabase_NetworkIsolation", true);
+        }
+
+        public void TestImportExport(bool preexistingDatabase, string testName, bool useNetworkIsolation)
         {
             using (SqlManagementTestContext context = new SqlManagementTestContext(this, testName))
             {
@@ -41,14 +53,16 @@ namespace Sql.Tests
                 Server server = context.CreateServer(resourceGroup);
                 SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
 
+                string storageAccountName = SqlManagementTestUtilities.GenerateName(prefix: "sqlcrudtest");
+
                 // Begin creating storage account and container
-                Task<StorageContainerInfo> storageContainerTask = CreateStorageContainer(context, resourceGroup);
+                Task<StorageContainerInfo> storageContainerTask = CreateStorageContainer(context, resourceGroup, storageAccountName);
 
                 string login = SqlManagementTestUtilities.DefaultLogin;
                 string password = SqlManagementTestUtilities.DefaultPassword;
                 string dbName = SqlManagementTestUtilities.GenerateName();
                 string dbName2 = SqlManagementTestUtilities.GenerateName();
-                string storageAccountName = SqlManagementTestUtilities.GenerateName("sqlcrudstorage");
+
                 Dictionary<string, string> tags = new Dictionary<string, string>()
                     {
                         { "tagKey1", "TagValue1" }
@@ -85,46 +99,82 @@ namespace Sql.Tests
                     "{0}/{1}.bacpac",
                     storageContainerInfo.StorageContainerUri, dbName);
 
-                // Export database to bacpac
-                sqlClient.Databases.Export(resourceGroup.Name, server.Name, dbName, new ExportRequest()
+                string sqlServerResourceId = $"/subscriptions/{sqlClient.SubscriptionId}/resourceGroups/{resourceGroup.Name}/providers/Microsoft.Sql/servers/{server.Name}";
+                string storageAccountResourceId = $"/subscriptions/{sqlClient.SubscriptionId}/resourcegroups/{resourceGroup.Name}/providers/Microsoft.Storage/storageAccounts/{storageAccountName}";
+
+                var exportDatabaseDefinition = new ExportDatabaseDefinition()
                 {
                     AdministratorLogin = login,
                     AdministratorLoginPassword = password,
-                    AuthenticationType = AuthenticationType.SQL,
+                    AuthenticationType = "SQL",
                     StorageKey = storageContainerInfo.StorageAccountKey,
-                    StorageKeyType = StorageKeyType.StorageAccessKey,
+                    StorageKeyType = StorageKeyType.StorageAccessKey.ToString(),
                     StorageUri = exportBacpacLink
-                });
+                };
+
+                if (useNetworkIsolation)
+                {
+                    exportDatabaseDefinition.NetworkIsolation = new NetworkIsolationSettings()
+                    {
+                        SqlServerResourceId = sqlServerResourceId,
+                        StorageAccountResourceId = storageAccountResourceId
+                    };
+                }
+
+                // Export database to bacpac
+                sqlClient.Databases.Export(resourceGroup.Name, server.Name, dbName, exportDatabaseDefinition);
 
                 // Import bacpac to new/existing database
                 if (preexistingDatabase)
                 {
-                    // Import bacpac to existing database
-                    sqlClient.Databases.CreateImportOperation(resourceGroup.Name, server.Name, dbName2, new ImportExtensionRequest()
+                    var importDatabaseDefinition = new ImportExistingDatabaseDefinition()
                     {
                         AdministratorLogin = login,
                         AdministratorLoginPassword = password,
-                        AuthenticationType = AuthenticationType.SQL,
+                        AuthenticationType = "SQL",
                         StorageKey = storageContainerInfo.StorageAccountKey,
-                        StorageKeyType = StorageKeyType.StorageAccessKey,
+                        StorageKeyType = StorageKeyType.StorageAccessKey.ToString(),
                         StorageUri = exportBacpacLink
-                    });
+                    };
+
+                    if (useNetworkIsolation)
+                    {
+                        importDatabaseDefinition.NetworkIsolation = new NetworkIsolationSettings()
+                        {
+                            SqlServerResourceId = sqlServerResourceId,
+                            StorageAccountResourceId = storageAccountResourceId
+                        };
+                    }
+
+                    // Import bacpac to existing database
+                    sqlClient.ImportExport.Import(resourceGroup.Name, server.Name, dbName2, importDatabaseDefinition);
                 }
                 else
                 {
-                    sqlClient.Databases.Import(resourceGroup.Name, server.Name, new ImportRequest()
+                    var importDatabaseDefinition = new ImportNewDatabaseDefinition()
                     {
                         AdministratorLogin = login,
                         AdministratorLoginPassword = password,
-                        AuthenticationType = AuthenticationType.SQL,
+                        AuthenticationType = "SQL",
                         StorageKey = storageContainerInfo.StorageAccountKey,
-                        StorageKeyType = StorageKeyType.StorageAccessKey,
+                        StorageKeyType = StorageKeyType.StorageAccessKey.ToString(),
                         StorageUri = exportBacpacLink,
                         DatabaseName = dbName2,
                         Edition = SqlTestConstants.DefaultDatabaseEdition,
                         ServiceObjectiveName = ServiceObjectiveName.Basic,
                         MaxSizeBytes = (2 * 1024L * 1024L * 1024L).ToString(),
-                    });
+                    };
+
+                    if (useNetworkIsolation)
+                    {
+                        importDatabaseDefinition.NetworkIsolation = new NetworkIsolationSettings()
+                        {
+                            SqlServerResourceId = sqlServerResourceId,
+                            StorageAccountResourceId = storageAccountResourceId
+                        };
+                    }
+
+                    sqlClient.Servers.ImportDatabase(resourceGroup.Name, server.Name, importDatabaseDefinition);
                 }
             }
         }
@@ -135,12 +185,12 @@ namespace Sql.Tests
             public Uri StorageContainerUri;
         }
 
-        private async Task<StorageContainerInfo> CreateStorageContainer(SqlManagementTestContext context, ResourceGroup resourceGroup)
+        private async Task<StorageContainerInfo> CreateStorageContainer(SqlManagementTestContext context, ResourceGroup resourceGroup, string storageAccountName)
         {
             StorageManagementClient storageClient = context.GetClient<StorageManagementClient>();
             StorageAccount storageAccount = await storageClient.StorageAccounts.CreateAsync(
                 resourceGroup.Name,
-                accountName: SqlManagementTestUtilities.GenerateName(prefix: "sqlcrudtest"), // '-' is not allowed
+                accountName: storageAccountName, // '-' is not allowed
                 parameters: new StorageAccountCreateParameters(
                     new Microsoft.Azure.Management.Storage.Models.Sku(SkuName.StandardLRS, SkuTier.Standard),
                     Kind.BlobStorage,

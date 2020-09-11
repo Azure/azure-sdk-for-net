@@ -267,7 +267,6 @@ namespace Azure.Iot.Hub.Service.Models
         public string Etag { get { throw null; } set { } }
         public string GenerationId { get { throw null; } set { } }
         public System.DateTimeOffset? LastActivityTime { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> ParentScopes { get { throw null; } }
         public Azure.Iot.Hub.Service.Models.DeviceStatus? Status { get { throw null; } set { } }
         public string StatusReason { get { throw null; } set { } }
         public System.DateTimeOffset? StatusUpdatedTime { get { throw null; } set { } }
@@ -564,7 +563,6 @@ namespace Azure.Iot.Hub.Service.Models
         public string Id { get { throw null; } set { } }
         public Azure.Iot.Hub.Service.Models.ExportImportDeviceImportMode? ImportMode { get { throw null; } set { } }
         public string ModuleId { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> ParentScopes { get { throw null; } }
         public Azure.Iot.Hub.Service.Models.PropertyContainer Properties { get { throw null; } set { } }
         public Azure.Iot.Hub.Service.Models.ExportImportDeviceStatus? Status { get { throw null; } set { } }
         public string StatusReason { get { throw null; } set { } }
@@ -989,7 +987,6 @@ namespace Azure.Iot.Hub.Service.Models
         public string Etag { get { throw null; } set { } }
         public System.DateTimeOffset? LastActivityTime { get { throw null; } set { } }
         public string ModuleId { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> ParentScopes { get { throw null; } }
         public Azure.Iot.Hub.Service.Models.TwinProperties Properties { get { throw null; } set { } }
         public Azure.Iot.Hub.Service.Models.TwinStatus? Status { get { throw null; } set { } }
         public string StatusReason { get { throw null; } set { } }
