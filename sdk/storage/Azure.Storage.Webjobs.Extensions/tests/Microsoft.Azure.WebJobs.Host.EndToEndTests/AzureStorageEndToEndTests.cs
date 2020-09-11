@@ -134,7 +134,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         /// </summary>
         public static void BadMessage_CloudQueueMessage(
             [QueueTrigger(BadMessageQueue1)] QueueMessage badMessageIn,
-            [Queue(BadMessageQueue2)] out string badMessageOut, // TODO (kasobol-msft) check that QueueMessage is only in binding
+            [Queue(BadMessageQueue2)] out string badMessageOut,
 #pragma warning disable CS0618 // Type or member is obsolete
             TraceWriter log)
 #pragma warning restore CS0618 // Type or member is obsolete
@@ -275,7 +275,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                         // The message is in the second queue
                         var queue2 = _queueServiceClient.GetQueueClient(_resolver.ResolveInString(BadMessageQueue2));
 
-                        RequestFailedException ex = await Assert.ThrowsAsync<RequestFailedException>( // TODO (kasobol-msft) check this exception.
+                        RequestFailedException ex = await Assert.ThrowsAsync<RequestFailedException>(
                             () => queue2.DeleteMessageAsync(_lastMessageId, _lastMessagePopReceipt));
                         Assert.Equal("MessageNotFound", ex.ErrorCode);
                     }

@@ -14,6 +14,8 @@ using Xunit;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
 using System.Linq;
+using Moq;
+using Azure;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
@@ -134,7 +136,17 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 // configure a non-zero visibility timeout
                 VisibilityTimeout = TimeSpan.FromMinutes(5)
             };
-            QueueProcessorFactoryContext context = new QueueProcessorFactoryContext(_queue, null, queuesOptions, _poisonQueue);
+            Mock<QueueClient> queueClientMock = new Mock<QueueClient>();
+            TimeSpan updatedVisibilityTimeout = TimeSpan.Zero;
+
+            queueClientMock.Setup(x => x.UpdateMessageAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+                .Callback((string messageId, string popReceipt, string messageText, TimeSpan visibilityTimeout, CancellationToken cancellationToken) =>
+                {
+                    updatedVisibilityTimeout = visibilityTimeout;
+                })
+                .ReturnsAsync(Response.FromValue(QueuesModelFactory.UpdateReceipt("x", DateTimeOffset.UtcNow.AddMinutes(5)), null));
+
+            QueueProcessorFactoryContext context = new QueueProcessorFactoryContext(queueClientMock.Object, null, queuesOptions, _poisonQueue);
             QueueProcessor localProcessor = new QueueProcessor(context);
 
             string messageContent = Guid.NewGuid().ToString();
@@ -144,9 +156,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             QueueMessage message = (await _queue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
             await localProcessor.CompleteProcessingMessageAsync(message, functionResult, CancellationToken.None);
 
-            //var delta = message.NextVisibleOn - DateTime.UtcNow;
-            //Assert.True(delta.Value.TotalMinutes > 4);
-            // TODO (kasobol-msft) This doesn't seem to do what this test is trying to assert. check this later.
+            Assert.Equal(queuesOptions.VisibilityTimeout, updatedVisibilityTimeout);
         }
 
         [Fact]

@@ -87,7 +87,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
 #pragma warning disable CS0618 // Type or member is obsolete
             rule.SetPostResolveHook(ToBlobDescr).
 #pragma warning restore CS0618 // Type or member is obsolete
-                // TODO (kasobol-msft) check if reference base blob client / blob client / or resolve reference using metadata ?
+                // TODO (kasobol-msft) figure out how to add binding to BlobClient.
                 BindToInput<BlobBaseClient>((attr, cts) => CreateBlobReference<BlobBaseClient>(attr, cts));
 
             // CloudBlobStream's derived functionality is only relevant to writing. check derived functionality

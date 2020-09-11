@@ -53,7 +53,6 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             object convertedPropertyValue = parseMethod.Invoke(null, new object[] { userPropertyValue });
             userProperty.SetValue(expectedObject, convertedPropertyValue);
             string messageContent = JsonConvert.SerializeObject(expectedObject);
-            // CloudQueueMessage message = new CloudQueueMessage(messageContent); // TODO (kasobol-msft) check this.
 
             // Act
             ITriggerData data = _binding.BindAsync(messageContent, null).GetAwaiter().GetResult();

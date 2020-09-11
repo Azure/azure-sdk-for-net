@@ -136,7 +136,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             await TestBindToByteArray(expectedContent);
         }
 
-        private async Task TestBindToByteArray(byte[] expectedContent) // TODO (kasobol-msft) do we support this??
+        private async Task TestBindToByteArray(byte[] expectedContent) // TODO (kasobol-msft) Revisit base64 encoding story
         {
             // Arrange
             var account = CreateFakeStorageAccount();
@@ -288,7 +288,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             // Arrange
             const string expectedQueueTrigger = "abc";
-            byte[] content = Encoding.UTF8.GetBytes(expectedQueueTrigger); // TODO (kasobol-msft) do we need this?
+            byte[] content = Encoding.UTF8.GetBytes(expectedQueueTrigger); // TODO (kasobol-msft) Revisit base64 encoding story
             var account = CreateFakeStorageAccount();
             var queue = await CreateQueue(account, QueueName);
             await queue.SendMessageAsync(expectedQueueTrigger);
