@@ -31,10 +31,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         private int sampleThroughput;
 
-        private Dictionary<string, string> additionalProperties = new Dictionary<string, string>
-        {
-            {"foo","bar" }
-        };
         private Dictionary<string, string> tags = new Dictionary<string, string>
         {
             {"key3","value3"},
@@ -44,7 +40,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
 
         }
-        private void GenerateRandomVariables()
+        private void GenerateSampleValues()
         {
             location = CosmosDBTestUtilities.Location;
             resourceGroupName = Recording.GenerateAssetName(CosmosDBTestUtilities.ResourceGroupPrefix);
@@ -61,7 +57,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [SetUp]
         public async Task ClearAndInitialize()
         {
-            GenerateRandomVariables();
+            GenerateSampleValues();
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
                 InitializeClients();
@@ -82,23 +78,22 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task SqlCRUDTests()
         {
             CosmosDBManagementClient cosmosDBManagementClient = GetCosmosDBManagementClient();
-            Response isDatabaseNameExists = await cosmosDBManagementClient.DatabaseAccounts.CheckNameExistsAsync(databaseAccountName);
             DatabaseAccountGetResults databaseAccount = null;
-            //Create Cosmos DB management client if the Cosmos DB not exists.
-            if (isDatabaseNameExists.Status != 200)
-            {
-                var locations = new List<Location>()
+
+            var locations = new List<Location>()
                 {
                   {new Location(id:default(string),locationName: location, documentEndpoint:default(string), provisioningState: default(string), failoverPriority: default(int?), isZoneRedundant: default(bool?)) }
                 };
-                DatabaseAccountCreateUpdateParameters databaseAccountCreateUpdateParameters = new DatabaseAccountCreateUpdateParameters(locations)
-                {
-                    Location = location,
-                    Kind = DatabaseAccountKind.GlobalDocumentDB,
-                };
-                databaseAccount = await WaitForCompletionAsync(await cosmosDBManagementClient.DatabaseAccounts.StartCreateOrUpdateAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters));
-                Assert.AreEqual(databaseAccount.Name, databaseAccountName);
-            }
+            DatabaseAccountCreateUpdateParameters databaseAccountCreateUpdateParameters = new DatabaseAccountCreateUpdateParameters(locations)
+            {
+                Location = location,
+                Kind = DatabaseAccountKind.GlobalDocumentDB,
+            };
+            databaseAccount = await WaitForCompletionAsync(await cosmosDBManagementClient.DatabaseAccounts.StartCreateOrUpdateAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters));
+            Assert.AreEqual(databaseAccount.Name, databaseAccountName);
+
+            Response isDatabaseNameExists = await cosmosDBManagementClient.DatabaseAccounts.CheckNameExistsAsync(databaseAccountName);
+            Assert.AreEqual(200, isDatabaseNameExists.Status);
 
             //Create sql database
             SqlDatabaseCreateUpdateParameters sqlDatabaseCreateUpdateParameters = new SqlDatabaseCreateUpdateParameters(new SqlDatabaseResource(databaseName), new CreateUpdateOptions());
@@ -174,6 +169,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             );
             SqlContainerGetResults sqlContainerGetResults = await WaitForCompletionAsync(await cosmosDBManagementClient.SqlResources.StartCreateUpdateSqlContainerAsync(resourceGroupName, databaseAccountName, databaseName, containerName, sqlContainerCreateUpdateParameters));
             Assert.NotNull(sqlContainerGetResults);
+            VerifySqlContainerCreation(sqlContainerGetResults, sqlContainerCreateUpdateParameters);
 
             IAsyncEnumerable<SqlContainerGetResults> sqlContainers = cosmosDBManagementClient.SqlResources.ListSqlContainersAsync(resourceGroupName, databaseAccountName, databaseName);
             Assert.NotNull(sqlContainers);
@@ -271,7 +267,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             Assert.AreEqual(sqlContainerGetResults.Resource.Id, sqlContainerCreateUpdateParameters.Resource.Id);
             Assert.AreEqual(sqlContainerGetResults.Resource.IndexingPolicy.IndexingMode, sqlContainerCreateUpdateParameters.Resource.IndexingPolicy.IndexingMode);
-            //Assert.AreEqual(sqlContainerGetResults.Resource.IndexingPolicy.ExcludedPaths, sqlContainerCreateUpdateParameters.Resource.IndexingPolicy.ExcludedPaths);
             Assert.AreEqual(sqlContainerGetResults.Resource.PartitionKey.Kind, sqlContainerCreateUpdateParameters.Resource.PartitionKey.Kind);
             Assert.AreEqual(sqlContainerGetResults.Resource.PartitionKey.Paths, sqlContainerCreateUpdateParameters.Resource.PartitionKey.Paths);
             Assert.AreEqual(sqlContainerGetResults.Resource.DefaultTtl, sqlContainerCreateUpdateParameters.Resource.DefaultTtl);
