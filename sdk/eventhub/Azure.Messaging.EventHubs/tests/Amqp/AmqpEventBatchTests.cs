@@ -8,9 +8,9 @@ using System.Reflection;
 using Azure.Messaging.EventHubs.Amqp;
 using Azure.Messaging.EventHubs.Producer;
 using Microsoft.Azure.Amqp;
-using Microsoft.Azure.Amqp.Framing;
 using Moq;
 using NUnit.Framework;
+using FramingData = Microsoft.Azure.Amqp.Framing.Data;
 
 namespace Azure.Messaging.EventHubs.Tests
 {
@@ -278,7 +278,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < eventMessages.Length; ++index)
             {
-                eventMessages[index] = AmqpMessage.Create(new Data { Value = new ArraySegment<byte>(new byte[] { 0x66 }) });
+                eventMessages[index] = AmqpMessage.Create(new FramingData { Value = new ArraySegment<byte>(new byte[] { 0x66 }) });
             }
 
             // Add the messages to the batch; all should be accepted.
@@ -391,7 +391,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < eventMessages.Length; ++index)
             {
-                eventMessages[index] = AmqpMessage.Create(new Data { Value = new ArraySegment<byte>(new byte[] { 0x66 }) });
+                eventMessages[index] = AmqpMessage.Create(new FramingData { Value = new ArraySegment<byte>(new byte[] { 0x66 }) });
             }
 
             // Add the messages to the batch; all should be accepted.
@@ -437,7 +437,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < eventMessages.Length; ++index)
             {
-                eventMessages[index] = AmqpMessage.Create(new Data { Value = new ArraySegment<byte>(new byte[] { 0x66 }) });
+                eventMessages[index] = AmqpMessage.Create(new FramingData { Value = new ArraySegment<byte>(new byte[] { 0x66 }) });
             }
 
             // Add the messages to the batch; all should be accepted.
@@ -503,7 +503,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < eventMessages.Length; ++index)
             {
-                eventMessages[index] = AmqpMessage.Create(new Data { Value = new ArraySegment<byte>(new byte[] { 0x66 }) });
+                eventMessages[index] = AmqpMessage.Create(new FramingData { Value = new ArraySegment<byte>(new byte[] { 0x66 }) });
             }
 
             // Add the messages to the batch; all should be accepted.

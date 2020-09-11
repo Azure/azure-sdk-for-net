@@ -29,8 +29,8 @@ namespace Azure.Messaging.EventHubs.Samples
     ///      dotnet Azure.Messaging.EventHubs.Samples.dll `
     ///          --FullyQualifiedNamespace "{yournamespace}.servicebus.windows.net" `
     ///          --EventHub "<< YOUR_EVENT_HUB_NAME >>" `
-    ///          --TenantId " << YOUR_TENANT_ID >> " `
-    ///          --ClientId "<< YOUR_CLIENT_ID >>" `
+    ///          --Tenant "<< YOUR_TENANT_ID >>" `
+    ///          --Client "<< YOUR_CLIENT_ID >>" `
     ///          --Secret "<< YOUR_SECRET_ID >>"
     ///
     /// </summary>

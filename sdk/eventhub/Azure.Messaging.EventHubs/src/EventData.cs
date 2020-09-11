@@ -17,6 +17,11 @@ namespace Azure.Messaging.EventHubs
     public class EventData
     {
         /// <summary>
+        /// The data associated with the event, in binary form.
+        /// </summary>
+        public BinaryData BodyAsBinary { get; }
+
+        /// <summary>
         ///   The data associated with the event.
         /// </summary>
         ///
@@ -28,7 +33,10 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <seealso cref="EventData.Properties" />
         ///
-        public ReadOnlyMemory<byte> Body { get; }
+        public ReadOnlyMemory<byte> Body
+        {
+            get => BodyAsBinary.ToBytes();
+        }
 
         /// <summary>
         ///   The data associated with the event, in stream form.
@@ -215,9 +223,19 @@ namespace Azure.Messaging.EventHubs
         ///   Initializes a new instance of the <see cref="EventData"/> class.
         /// </summary>
         ///
+        /// <param name="eventBody">The raw data as binary to use as the body of the event.</param>
+        ///
+        public EventData(BinaryData eventBody) : this(eventBody, lastPartitionSequenceNumber: null)
+        {
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="EventData"/> class.
+        /// </summary>
+        ///
         /// <param name="eventBody">The raw data to use as the body of the event.</param>
         ///
-        public EventData(ReadOnlyMemory<byte> eventBody) : this(eventBody, lastPartitionSequenceNumber: null)
+        public EventData(ReadOnlyMemory<byte> eventBody) : this(new BinaryData(eventBody), lastPartitionSequenceNumber: null)
         {
         }
 
@@ -240,6 +258,41 @@ namespace Azure.Messaging.EventHubs
         /// <param name="pendingPublishSequenceNumber">The publishing sequence number assigned to the event as part of a publishing operation.</param>
         ///
         internal EventData(ReadOnlyMemory<byte> eventBody,
+            IDictionary<string, object> properties = null,
+            IReadOnlyDictionary<string, object> systemProperties = null,
+            long sequenceNumber = long.MinValue,
+            long offset = long.MinValue,
+            DateTimeOffset enqueuedTime = default,
+            string partitionKey = null,
+            long? lastPartitionSequenceNumber = null,
+            long? lastPartitionOffset = null,
+            DateTimeOffset? lastPartitionEnqueuedTime = null,
+            DateTimeOffset? lastPartitionPropertiesRetrievalTime = null,
+            int? publishedSequenceNumber = null,
+            int? pendingPublishSequenceNumber = null) : this(new BinaryData(eventBody), properties, systemProperties, sequenceNumber, offset, enqueuedTime, partitionKey,
+                lastPartitionSequenceNumber, lastPartitionOffset, lastPartitionEnqueuedTime, lastPartitionPropertiesRetrievalTime, publishedSequenceNumber, pendingPublishSequenceNumber)
+        {
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="EventData"/> class.
+        /// </summary>
+        ///
+        /// <param name="eventBody">The raw data as binary to use as the body of the event.</param>
+        /// <param name="properties">The set of free-form event properties to send with the event.</param>
+        /// <param name="systemProperties">The set of system properties received from the Event Hubs service.</param>
+        /// <param name="sequenceNumber">The sequence number assigned to the event when it was enqueued in the associated Event Hub partition.</param>
+        /// <param name="offset">The offset of the event when it was received from the associated Event Hub partition.</param>
+        /// <param name="enqueuedTime">The date and time, in UTC, of when the event was enqueued in the Event Hub partition.</param>
+        /// <param name="partitionKey">The partition hashing key applied to the batch that the associated <see cref="EventData"/>, was sent with.</param>
+        /// <param name="lastPartitionSequenceNumber">The sequence number that was last enqueued into the Event Hub partition.</param>
+        /// <param name="lastPartitionOffset">The offset that was last enqueued into the Event Hub partition.</param>
+        /// <param name="lastPartitionEnqueuedTime">The date and time, in UTC, of the event that was last enqueued into the Event Hub partition.</param>
+        /// <param name="lastPartitionPropertiesRetrievalTime">The date and time, in UTC, that the last event information for the Event Hub partition was retrieved from the service.</param>
+        /// <param name="publishedSequenceNumber">The publishing sequence number assigned to the event at the time it was successfully published.</param>
+        /// <param name="pendingPublishSequenceNumber">The publishing sequence number assigned to the event as part of a publishing operation.</param>
+        ///
+        internal EventData(BinaryData eventBody,
                            IDictionary<string, object> properties = null,
                            IReadOnlyDictionary<string, object> systemProperties = null,
                            long sequenceNumber = long.MinValue,
@@ -253,7 +306,7 @@ namespace Azure.Messaging.EventHubs
                            int? publishedSequenceNumber = null,
                            int? pendingPublishSequenceNumber = null)
         {
-            Body = eventBody;
+            BodyAsBinary = eventBody;
             Properties = properties ?? new Dictionary<string, object>();
             SystemProperties = systemProperties ?? new Dictionary<string, object>();
             SequenceNumber = sequenceNumber;
@@ -338,7 +391,7 @@ namespace Azure.Messaging.EventHubs
         internal EventData Clone() =>
             new EventData
             (
-                Body,
+                BodyAsBinary,
                 new Dictionary<string, object>(Properties),
                 SystemProperties,
                 SequenceNumber,
