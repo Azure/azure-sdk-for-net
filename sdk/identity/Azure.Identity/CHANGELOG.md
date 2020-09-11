@@ -3,17 +3,21 @@
 
 ### New Features
 - Restoring Application Authentication APIs from 1.2.0-preview.6
-- Added respect of `CancellationToken` to the `MsalPublicClient` and `MsalConfidentialClient` ([#13201](https://github.com/Azure/azure-sdk-for-net/issues/13201))
-- Moved to the latest App Services MSI API version ([#13687](https://github.com/Azure/azure-sdk-for-net/issues/13687))
+- Added support for App Service Managed Identity API version `2019-08-01` ([#13687](https://github.com/Azure/azure-sdk-for-net/issues/13687))
 - Added `IncludeX5CClaimHeader` to `ClientCertificateCredentialOptions` to enable subject name / issuer authentication with the `ClientCertificateCredential`.
 - Added `RedirectUri` to `InteractiveBrowserCredentialOptions` to enable authentication with user specified application with a custom redirect url.
 - Added `IdentityModelFactory` to enable constructing models from the Azure.Identity library for mocking.
 - Unify exception handling between `DefaultAzureCredential` and `ChainedTokenCredential` ([#14408](https://github.com/Azure/azure-sdk-for-net/issues/14408))
 
 ### Fixes and improvements
+- Updated `MsalPublicClient` and `MsalConfidentialClient` to respect `CancellationToken` during initialization ([#13201](https://github.com/Azure/azure-sdk-for-net/issues/13201))
 - Fixed `VisualStudioCodeCredential` crashes on macOS (Issue [#14362](https://github.com/Azure/azure-sdk-for-net/issues/14362))
 - Fixed issue with non GUID Client Ids (Issue [#14585](https://github.com/Azure/azure-sdk-for-net/issues/14585))
 - Update `VisualStudioCredential` and `VisualStudioCodeCredential` to throw `CredentialUnavailableException` for ADFS tenant (Issue [#14639](https://github.com/Azure/azure-sdk-for-net/issues/14639))
+
+## 1.2.3 (2020-09-11)
+
+### Fixes and improvements
 - Fixed issue with `DefaultAzureCredential` incorrectly catching `AuthenticationFailedException` (Issue [#14974](https://github.com/Azure/azure-sdk-for-net/issues/14974))
 - Fixed issue with `DefaultAzureCredential` throwing exceptions during concurrent calls (Issue [#15013](https://github.com/Azure/azure-sdk-for-net/issues/15013))
 
