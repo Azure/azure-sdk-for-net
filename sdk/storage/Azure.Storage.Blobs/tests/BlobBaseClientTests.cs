@@ -20,6 +20,8 @@ using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using Moq;
+using Moq.Protected;
 using NUnit.Framework;
 using TestConstants = Azure.Storage.Test.TestConstants;
 
@@ -5554,6 +5556,23 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(blobName, blobUriBuilder.BlobName);
             Assert.AreEqual(versionId, blobUriBuilder.VersionId);
             Assert.AreEqual(versionUri, blobUriBuilder.ToUri());
+        }
+
+        [Test]
+        public void CanMockBlobLeaseClientRetrieval()
+        {
+            // Arrange
+            string leaseId = "leaseId";
+            Mock<BlobBaseClient> blobBaseClientMock = new Mock<BlobBaseClient>();
+            Mock<BlobLeaseClient> blobLeaseClientMock = new Mock<BlobLeaseClient>();
+            blobBaseClientMock.Protected().Setup<BlobLeaseClient>("GetBlobLeaseClientCore", leaseId).Returns(blobLeaseClientMock.Object);
+
+            // Act
+            var blobLeaseClient = blobBaseClientMock.Object.GetBlobLeaseClient(leaseId);
+
+            // Assert
+            Assert.IsNotNull(blobLeaseClient);
+            Assert.AreSame(blobLeaseClientMock.Object, blobLeaseClient);
         }
 
         private async Task<BlobBaseClient> GetNewBlobClient(BlobContainerClient container, string blobName = default)

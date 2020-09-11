@@ -450,6 +450,16 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="BlobLeaseClient"/> class.
+        /// </summary>
+        /// <param name="leaseId">
+        /// An optional lease ID.  If no lease ID is provided, a random lease
+        /// ID will be created.
+        /// </param>
+        protected internal virtual BlobLeaseClient GetBlobLeaseClientCore(string leaseId) =>
+            new BlobLeaseClient(this, leaseId);
+
+        /// <summary>
         /// Sets the various name fields if they are currently null.
         /// </summary>
         private void SetNameFieldsIfNull()

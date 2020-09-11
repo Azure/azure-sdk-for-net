@@ -3114,23 +3114,7 @@ namespace Azure.Storage.Blobs.Specialized
             this BlobContainerClient client,
             string blobName)
         {
-            if (client.ClientSideEncryption != default)
-            {
-                throw Errors.ClientSideEncryption.TypeNotSupported(typeof(PageBlobClient));
-            }
-
-            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(client.Uri)
-            {
-                BlobName = blobName
-            };
-
-            return new PageBlobClient(
-                blobUriBuilder.ToUri(),
-                client.Pipeline,
-                client.Version,
-                client.ClientDiagnostics,
-                client.CustomerProvidedKey,
-                client.EncryptionScope);
+            return client.GetPageBlobClientCore(blobName);
         }
     }
 }
