@@ -91,8 +91,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <param name="azureActiveDirectory">Azure active directory.</param>
         /// <param name="fabricSettings">The list of custom fabric settings to
         /// configure the cluster.</param>
-        /// <param name="useTestExtension">Use service fabric test vm
-        /// extension, by default it's false.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// managed cluster resource. Possible values include: 'None',
         /// 'Creating', 'Created', 'Updating', 'Succeeded', 'Failed',
@@ -115,10 +113,8 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// . Possible values include: 'Automatic', 'Manual'</param>
         /// <param name="clusterUpgradeDescription">Describes the policy used
         /// when upgrading the cluster.</param>
-        /// <param name="reverseProxyEndpointPort">The endpoint used by reverse
-        /// proxy.</param>
         /// <param name="sku">The sku of the managed cluster</param>
-        public ManagedCluster(string location, string dnsName, string adminUserName, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), string fqdn = default(string), string clusterId = default(string), string clusterState = default(string), string clusterCertificateThumbprint = default(string), int? clientConnectionPort = default(int?), int? httpGatewayConnectionPort = default(int?), string adminPassword = default(string), IList<LoadBalancingRule> loadBalancingRules = default(IList<LoadBalancingRule>), IList<ClientCertificate> clients = default(IList<ClientCertificate>), AzureActiveDirectory azureActiveDirectory = default(AzureActiveDirectory), IList<SettingsSectionDescription> fabricSettings = default(IList<SettingsSectionDescription>), bool? useTestExtension = default(bool?), string provisioningState = default(string), string clusterCodeVersion = default(string), string clusterUpgradeMode = default(string), ClusterUpgradePolicy clusterUpgradeDescription = default(ClusterUpgradePolicy), int? reverseProxyEndpointPort = default(int?), Sku sku = default(Sku))
+        public ManagedCluster(string location, string dnsName, string adminUserName, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), string fqdn = default(string), string clusterId = default(string), string clusterState = default(string), string clusterCertificateThumbprint = default(string), int? clientConnectionPort = default(int?), int? httpGatewayConnectionPort = default(int?), string adminPassword = default(string), IList<LoadBalancingRule> loadBalancingRules = default(IList<LoadBalancingRule>), IList<ClientCertificate> clients = default(IList<ClientCertificate>), AzureActiveDirectory azureActiveDirectory = default(AzureActiveDirectory), IList<SettingsSectionDescription> fabricSettings = default(IList<SettingsSectionDescription>), string provisioningState = default(string), string clusterCodeVersion = default(string), string clusterUpgradeMode = default(string), ClusterUpgradePolicy clusterUpgradeDescription = default(ClusterUpgradePolicy), Sku sku = default(Sku))
             : base(location, id, name, type, tags, etag)
         {
             DnsName = dnsName;
@@ -134,12 +130,10 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
             Clients = clients;
             AzureActiveDirectory = azureActiveDirectory;
             FabricSettings = fabricSettings;
-            UseTestExtension = useTestExtension;
             ProvisioningState = provisioningState;
             ClusterCodeVersion = clusterCodeVersion;
             ClusterUpgradeMode = clusterUpgradeMode;
             ClusterUpgradeDescription = clusterUpgradeDescription;
-            ReverseProxyEndpointPort = reverseProxyEndpointPort;
             Sku = sku;
             CustomInit();
         }
@@ -262,13 +256,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         public IList<SettingsSectionDescription> FabricSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets use service fabric test vm extension, by default it's
-        /// false.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.useTestExtension")]
-        public bool? UseTestExtension { get; set; }
-
-        /// <summary>
         /// Gets the provisioning state of the managed cluster resource.
         /// Possible values include: 'None', 'Creating', 'Created', 'Updating',
         /// 'Succeeded', 'Failed', 'Canceled', 'Deleting', 'Deleted', 'Other'
@@ -307,12 +294,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.clusterUpgradeDescription")]
         public ClusterUpgradePolicy ClusterUpgradeDescription { get; set; }
-
-        /// <summary>
-        /// Gets or sets the endpoint used by reverse proxy.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.reverseProxyEndpointPort")]
-        public int? ReverseProxyEndpointPort { get; set; }
 
         /// <summary>
         /// Gets or sets the sku of the managed cluster
