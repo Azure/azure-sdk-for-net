@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.3 (2020-09-10)
+## 1.2.3 (2020-09-11)
 
 ### Fixes and improvements
 - Fixed issue with `DefaultAzureCredential` incorrectly catching `AuthenticationFailedException` (Issue [#14974](https://github.com/Azure/azure-sdk-for-net/issues/14974))
