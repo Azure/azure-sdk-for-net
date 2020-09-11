@@ -124,6 +124,8 @@
 
   <!-- Track 2 specific versions -->
   <ItemGroup Condition="'$(IsClientLibrary)' == 'true'">
+    <!-- CodeGenerator -->
+    <PackageReference Update="AutoRest.CSharp.V3" Version="1.0.0" />
 
     <!-- BCL packages -->
     <PackageReference Update="System.Memory" Version="4.5.3" />

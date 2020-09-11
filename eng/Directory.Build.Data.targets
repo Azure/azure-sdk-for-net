@@ -52,6 +52,8 @@
 
   <!-- Add Client SDK Analyzers -->
   <ItemGroup>
+    <PackageReference Condition="'$(IsClientLibrary)' == 'true'" Include="AutoRest.CSharp.V3" PrivateAssets="All" />
+
     <PackageReference Condition="'$(GenerateAPIListing)' == 'true'" Include="Microsoft.DotNet.GenAPI" PrivateAssets="All" />
 
     <PackageReference Condition="'$(EnableClientSdkAnalyzers)' == 'true'" Include="Azure.ClientSdk.Analyzers" PrivateAssets="All" />
