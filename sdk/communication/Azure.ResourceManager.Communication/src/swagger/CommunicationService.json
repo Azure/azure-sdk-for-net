@@ -1,0 +1,1034 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Azure Communication Services Management API",
+    "version": "2020-08-20-preview",
+    "description": "REST API for Azure Communication Services"
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "host": "management.azure.com",
+  "schemes": [ "https" ],
+  "securityDefinitions": {
+    "azure_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize",
+      "flow": "implicit",
+      "description": "Azure Active Directory OAuth2 Flow",
+      "scopes": {
+        "user_impersonation": "impersonate your user account"
+      }
+    }
+  },
+  "paths": {
+    "/providers/Microsoft.Communication/operations": {
+      "get": {
+        "description": "Lists all of the available REST API operations of the Microsoft.Communication provider.",
+        "operationId": "Operations_List",
+        "summary": "List Operations",
+        "tags": [ "Operations" ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. The response describes the list of operations.",
+            "schema": {
+              "$ref": "#/definitions/OperationList"
+            }
+          },
+          "default": {
+            "description": "Error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "produces": [ "application/json" ],
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/linkNotificationHub": {
+      "post": {
+        "description": "Links an Azure Notification Hub to this communication service.",
+        "operationId": "CommunicationService_LinkNotificationHub",
+        "summary": "Link Notification Hub",
+        "tags": [ "CommunicationService" ],
+        "parameters": [
+          {
+            "name": "linkNotificationHubParameters",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/LinkNotificationHubParameters"
+            },
+            "description": "Parameters supplied to the operation."
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ResourceGroupParameter"
+          },
+          {
+            "$ref": "#/parameters/CommunicationServiceName"
+          }
+        ],
+        "consumes": [ "application/json" ],
+        "responses": {
+          "200": {
+            "description": "Success. The notification hub has been linked.",
+            "schema": {
+              "$ref": "#/definitions/LinkedNotificationHub"
+            }
+          },
+          "default": {
+            "description": "Error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "produces": [ "application/json" ],
+        "x-ms-examples": {
+          "Link notification hub": {
+            "$ref": "./examples/linkNotificationHub.json"
+          }
+        }
+      }
+    },
+    "/providers/Microsoft.Communication/locations/{location}/operationStatuses/{operationId}": {
+      "get": {
+        "description": "Gets the current status of an async operation.",
+        "operationId": "OperationStatuses_Get",
+        "summary": "Get Operation Status",
+        "tags": [ "OperationStatus" ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/LocationParameter"
+          },
+          {
+            "$ref": "#/parameters/OperationIdParameter"
+          }
+        ],
+        "consumes": [ "application/json" ],
+        "responses": {
+          "200": {
+            "description": "The requested operation status",
+            "schema": {
+              "$ref": "#/definitions/OperationStatus"
+            }
+          },
+          "default": {
+            "description": "Error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "produces": [ "application/json" ],
+        "x-ms-examples": {
+          "Get OperationStatus": {
+            "$ref": "./examples/getOperationStatus.json"
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Communication/communicationServices": {
+      "get": {
+        "description": "Handles requests to list all resources in a subscription.",
+        "operationId": "CommunicationService_ListBySubscription",
+        "summary": "List By Subscription",
+        "tags": [ "CommunicationService" ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. The response describes the list of CommunicationServices in the subscription.",
+            "schema": {
+              "$ref": "#/definitions/CommunicationServiceResourceList"
+            }
+          },
+          "default": {
+            "description": "Error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "produces": [ "application/json" ],
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
+        },
+        "x-ms-examples": {
+          "List by subscription": {
+            "$ref": "./examples/listBySubscription.json"
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices": {
+      "get": {
+        "description": "Handles requests to list all resources in a resource group.",
+        "operationId": "CommunicationService_ListByResourceGroup",
+        "summary": "List By Resource Group",
+        "tags": [ "CommunicationService" ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ResourceGroupParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. The response describes the list of CommunicationServices in a resourceGroup.",
+            "schema": {
+              "$ref": "#/definitions/CommunicationServiceResourceList"
+            }
+          },
+          "default": {
+            "description": "Error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
+        },
+        "produces": [ "application/json" ],
+        "x-ms-examples": {
+          "List by resource group": {
+            "$ref": "./examples/listByResourceGroup.json"
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}": {
+      "patch": {
+        "description": "Operation to update an existing CommunicationService.",
+        "operationId": "CommunicationService_Update",
+        "summary": "Update",
+        "tags": [ "CommunicationService" ],
+        "parameters": [
+          {
+            "name": "parameters",
+            "in": "body",
+            "description": "Parameters for the update operation",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/TaggedResource"
+            }
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ResourceGroupParameter"
+          },
+          {
+            "$ref": "#/parameters/CommunicationServiceName"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The update request was successful",
+            "schema": {
+              "$ref": "#/definitions/CommunicationServiceResource"
+            }
+          },
+          "default": {
+            "description": "Error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "produces": [ "application/json" ],
+        "x-ms-examples": {
+          "Update resource": {
+            "$ref": "./examples/update.json"
+          }
+        }
+      },
+      "get": {
+        "description": "Get the CommunicationService and its properties.",
+        "operationId": "CommunicationService_Get",
+        "summary": "Get",
+        "tags": [ "CommunicationService" ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ResourceGroupParameter"
+          },
+          {
+            "$ref": "#/parameters/CommunicationServiceName"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. The response describe the corresponding CommunicationService service.",
+            "schema": {
+              "$ref": "#/definitions/CommunicationServiceResource"
+            }
+          },
+          "default": {
+            "description": "Error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "produces": [ "application/json" ],
+        "x-ms-examples": {
+          "Get resource": {
+            "$ref": "./examples/get.json"
+          }
+        }
+      },
+      "put": {
+        "description": "Create a new CommunicationService or update an existing CommunicationService.",
+        "operationId": "CommunicationService_CreateOrUpdate",
+        "summary": "Create Or Update",
+        "tags": [ "CommunicationService" ],
+        "parameters": [
+          {
+            "name": "parameters",
+            "in": "body",
+            "description": "Parameters for the create or update operation",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/CommunicationServiceResource"
+            }
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ResourceGroupParameter"
+          },
+          {
+            "$ref": "#/parameters/CommunicationServiceName"
+          }
+        ],
+        "consumes": [ "application/json" ],
+        "responses": {
+          "200": {
+            "description": "The create or update request was completed successfully",
+            "schema": {
+              "$ref": "#/definitions/CommunicationServiceResource"
+            }
+          },
+          "201": {
+            "description": "The create or update request was accepted",
+            "headers": {
+              "Azure-AsyncOperation": {
+                "description": "URL to query for status of the operation.",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/CommunicationServiceResource"
+            }
+          },
+          "default": {
+            "description": "Error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "produces": [ "application/json" ],
+        "x-ms-long-running-operation": true,
+        "x-ms-examples": {
+          "Create or update resource": {
+            "$ref": "./examples/createOrUpdate.json"
+          }
+        }
+      },
+      "delete": {
+        "description": "Operation to delete a CommunicationService.",
+        "operationId": "CommunicationService_Delete",
+        "summary": "Delete",
+        "tags": [ "CommunicationService" ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ResourceGroupParameter"
+          },
+          {
+            "$ref": "#/parameters/CommunicationServiceName"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The delete operation was successful."
+          },
+          "202": {
+            "description": "The delete operation is being performed in the background.",
+            "headers": {
+              "location": {
+                "description": "URL to query for status of the operation.",
+                "type": "string"
+              }
+            }
+          },
+          "204": {
+            "description": "The resource did not exist."
+          },
+          "default": {
+            "description": "Error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-long-running-operation": true,
+        "x-ms-examples": {
+          "Delete resource": {
+            "$ref": "./examples/delete.json"
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/listKeys": {
+      "post": {
+        "description": "Get the access keys of the CommunicationService resource.",
+        "operationId": "CommunicationService_ListKeys",
+        "summary": "List Keys",
+        "tags": [ "CommunicationService" ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ResourceGroupParameter"
+          },
+          {
+            "$ref": "#/parameters/CommunicationServiceName"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. The response describes CommunicationService access keys.",
+            "schema": {
+              "$ref": "#/definitions/CommunicationServiceKeys"
+            }
+          },
+          "default": {
+            "description": "Error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "produces": [ "application/json" ],
+        "x-ms-examples": {
+          "List keys": {
+            "$ref": "./examples/listKeys.json"
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/regenerateKey": {
+      "post": {
+        "description": "Regenerate CommunicationService access key. PrimaryKey and SecondaryKey cannot be regenerated at the same time.",
+        "operationId": "CommunicationService_RegenerateKey",
+        "summary": "Regenerate Key",
+        "tags": [ "CommunicationService" ],
+        "parameters": [
+          {
+            "name": "parameters",
+            "in": "body",
+            "description": "Parameter that describes the Regenerate Key Operation.",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/RegenerateKeyParameters"
+            }
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ResourceGroupParameter"
+          },
+          {
+            "$ref": "#/parameters/CommunicationServiceName"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Created. The response contains the new key.",
+            "schema": {
+              "$ref": "#/definitions/CommunicationServiceKeys"
+            }
+          },
+          "201": {
+            "description": "Created and an async operation is executing in background to make the new key take effect. The response contains new keys and an Azure-AsyncOperation header to query the async operation result.",
+            "schema": {
+              "$ref": "#/definitions/CommunicationServiceKeys"
+            }
+          },
+          "default": {
+            "description": "Error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "consumes": [ "application/json" ],
+        "produces": [ "application/json" ],
+        "x-ms-examples": {
+          "Regenerate key": {
+            "$ref": "./examples/regenerateKey.json"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ErrorResponse": {
+      "description": "Error response indicating why the requested operation could not be performed.",
+      "type": "object",
+      "properties": {
+        "error": {
+          "description": "The error",
+          "properties": {
+            "code": {
+              "description": "Error code.",
+              "type": "string"
+            },
+            "message": {
+              "description": "Error message indicating why the operation failed.",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "OperationList": {
+      "description": "Result of the request to list REST API operations. It contains a list of operations.",
+      "type": "object",
+      "properties": {
+        "value": {
+          "description": "List of operations supported by the resource provider.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Operation"
+          }
+        },
+        "nextLink": {
+          "description": "The URL the client should use to fetch the next page (per server side paging).\r\nIt's null for now, added for future use.",
+          "type": "string"
+        }
+      }
+    },
+    "Operation": {
+      "description": "REST API operation supported by CommunicationService resource provider.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Name of the operation with format: {provider}/{resource}/{operation}",
+          "type": "string"
+        },
+        "display": {
+          "$ref": "#/definitions/OperationDisplay",
+          "description": "The object that describes the operation."
+        },
+        "origin": {
+          "description": "Optional. The intended executor of the operation; governs the display of the operation in the RBAC UX and the audit logs UX.",
+          "type": "string"
+        },
+        "properties": {
+          "$ref": "#/definitions/OperationProperties",
+          "description": "Extra properties for the operation.",
+          "x-ms-client-flatten": false
+        }
+      }
+    },
+    "OperationDisplay": {
+      "description": "The object that describes a operation.",
+      "type": "object",
+      "properties": {
+        "provider": {
+          "description": "Friendly name of the resource provider",
+          "type": "string"
+        },
+        "resource": {
+          "description": "Resource type on which the operation is performed.",
+          "type": "string"
+        },
+        "operation": {
+          "description": "The localized friendly name for the operation.",
+          "type": "string"
+        },
+        "description": {
+          "description": "The localized friendly description for the operation",
+          "type": "string"
+        }
+      }
+    },
+    "OperationProperties": {
+      "description": "Extra Operation properties.",
+      "type": "object",
+      "properties": {
+        "serviceSpecification": {
+          "$ref": "#/definitions/ServiceSpecification",
+          "description": "The service specifications."
+        }
+      }
+    },
+    "ServiceSpecification": {
+      "description": "An object that describes a specification.",
+      "type": "object",
+      "properties": {
+        "metricSpecifications": {
+          "description": "Specifications of the Metrics for Azure Monitoring.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MetricSpecification"
+          }
+        }
+      }
+    },
+    "MetricSpecification": {
+      "description": "Specifications of the Metrics for Azure Monitoring.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Name of the metric.",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "Localized friendly display name of the metric.",
+          "type": "string"
+        },
+        "displayDescription": {
+          "description": "Localized friendly description of the metric.",
+          "type": "string"
+        },
+        "unit": {
+          "description": "The unit that makes sense for the metric.",
+          "type": "string"
+        },
+        "aggregationType": {
+          "description": "The method for aggregating the metric.",
+          "type": "string",
+          "enum": [
+            "Average",
+            "Minimum",
+            "Maximum",
+            "Total",
+            "Count"
+          ],
+          "x-ms-enum": {
+            "name": "AggregationType",
+            "modelAsString": true
+          }
+        },
+        "fillGapWithZero": {
+          "description": "Optional. If set to true, then zero will be returned for time duration where no metric is emitted/published. \r\nEx. a metric that returns the number of times a particular error code was emitted. The error code may not appear \r\noften, instead of the RP publishing 0, Shoebox can auto fill in 0s for time periods where nothing was emitted.",
+          "type": "string"
+        },
+        "category": {
+          "description": "The name of the metric category that the metric belongs to. A metric can only belong to a single category.",
+          "type": "string"
+        },
+        "dimensions": {
+          "description": "The dimensions of the metrics.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Dimension"
+          }
+        }
+      }
+    },
+    "Dimension": {
+      "description": "Specifications of the Dimension of metrics.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "The public facing name of the dimension.",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "Localized friendly display name of the dimension.",
+          "type": "string"
+        },
+        "internalName": {
+          "description": "Name of the dimension as it appears in MDM.",
+          "type": "string"
+        },
+        "toBeExportedForShoebox": {
+          "description": "A Boolean flag indicating whether this dimension should be included for the shoebox export scenario.",
+          "type": "boolean"
+        }
+      }
+    },
+    "LinkNotificationHubParameters": {
+      "description": "Description of an Azure Notification Hub to link to the communication service",
+      "required": [
+        "resourceId",
+        "connectionString"
+      ],
+      "type": "object",
+      "properties": {
+        "resourceId": {
+          "description": "The resource ID of the notification hub",
+          "type": "string"
+        },
+        "connectionString": {
+          "description": "Connection string for the notification hub",
+          "type": "string"
+        }
+      }
+    },
+    "LinkedNotificationHub": {
+      "description": "A notification hub that has been linked to the communication service",
+      "type": "object",
+      "properties": {
+        "resourceId": {
+          "description": "The resource ID of the notification hub",
+          "type": "string"
+        }
+      }
+    },
+    "OperationStatus": {
+      "description": "The current status of an async operation",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Fully qualified ID for the operationstatus.",
+          "type": "string",
+          "readOnly": true
+        },
+        "status": {
+          "description": "Provisioning state of the resource.",
+          "enum": [
+            "Succeeded",
+            "Failed",
+            "Canceled",
+            "Creating",
+            "Deleting",
+            "Moving"
+          ],
+          "type": "string",
+          "readOnly": true,
+          "x-ms-enum": {
+            "name": "Status",
+            "modelAsString": true
+          }
+        },
+        "startTime": {
+          "description": "The start time of the operation",
+          "type": "string",
+          "readOnly": true,
+          "format": "date-time"
+        },
+        "endTime": {
+          "description": "The end time of the operation",
+          "type": "string",
+          "readOnly": true,
+          "format": "date-time"
+        },
+        "percentComplete": {
+          "description": "Percent of the operation that is complete",
+          "type": "number",
+          "readOnly": true,
+          "minimum": 0,
+          "maximum": 100
+        },
+        "error": {
+          "description": "Operation Error message",
+          "$ref": "#/definitions/ErrorResponse",
+          "x-ms-client-flatten": true
+        }
+      }
+    },
+    "CommunicationServiceResourceList": {
+      "description": "Object that includes an array of CommunicationServices and a possible link for next set.",
+      "type": "object",
+      "properties": {
+        "value": {
+          "description": "List of CommunicationService",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CommunicationServiceResource"
+          }
+        },
+        "nextLink": {
+          "description": "The URL the client should use to fetch the next page (per server side paging).\r\nIt's null for now, added for future use.",
+          "type": "string"
+        }
+      }
+    },
+    "CommunicationServiceResource": {
+      "description": "A class representing a CommunicationService resource.",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Resource"
+        },
+        {
+          "$ref": "#/definitions/LocationResource"
+        },
+        {
+          "$ref": "#/definitions/TaggedResource"
+        }
+      ],
+      "properties": {
+        "properties": {
+          "$ref": "#/definitions/CommunicationServiceProperties",
+          "description": "The properties of the service.",
+          "x-ms-client-flatten": true
+        }
+      }
+    },
+    "Resource": {
+      "description": "The core properties of ARM resources.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Fully qualified resource ID for the resource.",
+          "type": "string",
+          "readOnly": true
+        },
+        "name": {
+          "description": "The name of the resource.",
+          "type": "string",
+          "readOnly": true
+        },
+        "type": {
+          "description": "The type of the service - e.g. \"Microsoft.Communication/CommunicationServices\"",
+          "type": "string",
+          "readOnly": true
+        }
+      },
+      "x-ms-azure-resource": true
+    },
+    "LocationResource": {
+      "description": "An ARM resource with its own location (not a global or an inherited location).",
+      "type": "object",
+      "properties": {
+        "location": {
+          "description": "The Azure location where the CommunicationService is running.",
+          "type": "string",
+          "x-ms-mutability": ["create", "read"]
+        }
+      }
+    },
+    "TaggedResource": {
+      "description": "An ARM resource with that can accept tags",
+      "type": "object",
+      "properties": {
+        "tags": {
+          "description": "Tags of the service which is a list of key value pairs that describe the resource.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "x-ms-mutability": [
+            "read",
+            "create",
+            "update"
+          ]
+        }
+      }
+    },
+    "CommunicationServiceProperties": {
+      "description": "A class that describes the properties of the CommunicationService.",
+      "required": [
+        "dataLocation"
+      ],
+      "type": "object",
+      "properties": {
+        "provisioningState": {
+          "description": "Provisioning state of the resource.",
+          "enum": [
+            "Unknown",
+            "Succeeded",
+            "Failed",
+            "Canceled",
+            "Running",
+            "Creating",
+            "Updating",
+            "Deleting",
+            "Moving"
+          ],
+          "type": "string",
+          "readOnly": true,
+          "x-ms-enum": {
+            "name": "ProvisioningState",
+            "modelAsString": true
+          }
+        },
+        "hostName": {
+          "description": "FQDN of the CommunicationService instance.",
+          "type": "string",
+          "readOnly": true
+        },
+        "dataLocation": {
+          "description": "The location where the communication service stores its data at rest.",
+          "type": "string",
+          "x-ms-mutability": [
+            "create",
+            "read"
+          ]
+        },
+        "notificationHubId": {
+          "description": "Resource ID of an Azure Notification Hub linked to this resource.",
+          "type": "string",
+          "readOnly": true
+        },
+        "version": {
+          "description": "Version of the CommunicationService resource. Probably you need the same or higher version of client SDKs.",
+          "type": "string",
+          "readOnly": true
+        },
+        "immutableResourceId": {
+          "description": "The immutable resource Id of the communication service.",
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "CommunicationServiceKeys": {
+      "description": "A class representing the access keys of a CommunicationService.",
+      "type": "object",
+      "properties": {
+        "primaryKey": {
+          "description": "The primary access key.",
+          "type": "string"
+        },
+        "secondaryKey": {
+          "description": "The secondary access key.",
+          "type": "string"
+        },
+        "primaryConnectionString": {
+          "description": "CommunicationService connection string constructed via the primaryKey",
+          "type": "string"
+        },
+        "secondaryConnectionString": {
+          "description": "CommunicationService connection string constructed via the secondaryKey",
+          "type": "string"
+        }
+      }
+    },
+    "RegenerateKeyParameters": {
+      "description": "Parameters describes the request to regenerate access keys",
+      "type": "object",
+      "properties": {
+        "keyType": {
+          "description": "The keyType to regenerate. Must be either 'primary' or 'secondary'(case-insensitive).",
+          "enum": [
+            "Primary",
+            "Secondary"
+          ],
+          "type": "string",
+          "x-ms-enum": {
+            "name": "KeyType",
+            "modelAsString": false
+          }
+        }
+      }
+    }
+  },
+  "parameters": {
+    "ApiVersionParameter": {
+      "name": "api-version",
+      "in": "query",
+      "description": "Client Api Version.",
+      "required": true,
+      "type": "string",
+      "enum": [
+        "2020-08-20-preview"
+      ]
+    },
+    "SubscriptionIdParameter": {
+      "name": "subscriptionId",
+      "in": "path",
+      "description": "Gets subscription ID which uniquely identifies the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+      "required": true,
+      "type": "string"
+    },
+    "ResourceGroupParameter": {
+      "name": "resourceGroupName",
+      "in": "path",
+      "description": "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+      "required": true,
+      "type": "string",
+      "x-ms-parameter-location": "method"
+    },
+    "CommunicationServiceName": {
+      "name": "communicationServiceName",
+      "in": "path",
+      "description": "The name of the CommunicationService resource.",
+      "required": true,
+      "type": "string",
+      "x-ms-parameter-location": "method"
+    },
+    "LocationParameter": {
+      "name": "location",
+      "in": "path",
+      "description": "The Azure region",
+      "required": true,
+      "type": "string",
+      "x-ms-parameter-location": "method"
+    },
+    "OperationIdParameter": {
+      "name": "operationId",
+      "in": "path",
+      "description": "The ID of an ongoing async operation",
+      "required": true,
+      "type": "string",
+      "x-ms-parameter-location": "method"
+    }
+  }
+}
+
