@@ -15,6 +15,7 @@ Familiarity with the `Microsoft.Azure.KeyVault` library is assumed. For those ne
   - [Getting secrets](#getting-secrets)
   - [Listing secrets](#listing-secrets)
   - [Deleting secrets](#deleting-secrets)
+  - [Managing shared access signatures](#managing-shared-access-signatures)
 - [Additional samples](#additional-samples)
 
 ## Migration benefits
@@ -26,8 +27,6 @@ There were several areas of consistent feedback expressed across the Azure clien
 To try and improve the development experience across Azure services, including Key Vault, a set of uniform [design guidelines](https://azure.github.io/azure-sdk/general_introduction.html) was created for all languages to drive a consistent experience with established API patterns for all services. A set of [.NET-specific guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html) was also introduced to ensure that .NET clients have a natural and idiomatic feel that mirrors that of the .NET base class libraries. Further details are available in the guidelines for those interested.
 
 The new Key Vault secrets library `Azure.Security.KeyVault.Secrets` provides the ability to share in some of the cross-service improvements made to the Azure development experience, such as using the new `Azure.Identity` library to share a single authentication between clients and a unified diagnostics pipeline offering a common view of the activities across each of the client libraries.
-
-While we believe that there is significant benefit to adopting the new Key Vault secrets library `Azure.Security.KeyVault.Secrets`, it is important to be aware that the previous version `Microsoft.Azure.KeyVault` has not been officially deprecated. It will continue to be supported with security and critical bug fixes. However, it is not under active development and will eventually be deprecated.
 
 ## General changes
 
@@ -44,8 +43,6 @@ In the interest of simplifying the API we've split `KeyVaultClient` into separat
 - `Azure.Security.KeyVault.Certificates` contains `CertificateClient` for certificate management operations.
 - `Azure.Security.KeyVault.Keys` contains `KeyClient` for key management operations and `CryptographyClient` for cryptographic operations.
 - `Azure.Security.KeyVault.Secrets` contains `SecretClient` for secret management operations.
-
-Because [Role-Based Access Control (RBAC)](https://docs.microsoft.com/azure/role-based-access-control/overview) is recommended, we did not implement APIs for Key Vault-managed storage accounts. See [our sample](https://docs.microsoft.com/samples/azure/azure-sdk-for-net/share-link/) for source you can copy into your project if you require managing [Shared Access Signature (SAS)](https://docs.microsoft.com/azure/storage/common/storage-sas-overview) tokens in your application and cannot use RBAC.
 
 These clients also share a single connection pool by default despite being separated, resolving an issue with the old `KeyVaultClient` that created a new connection pool with each new instance and could exhaust socket connections.
 
@@ -244,6 +241,10 @@ if (deleteOperation.Value.RecoveryId != null)
 ```
 
 Synchronous methods are also available on `SecretClient`, though we recommend you use asynchronous methods throughout your projects when possible for better performing applications.
+
+### Managing shared access signatures
+
+Because [Role-Based Access Control (RBAC)](https://docs.microsoft.com/azure/role-based-access-control/overview) is now recommended for storage account access control, the APIs for Key Vault-managed storage accounts are no longer available in version 4 of Key Vault client libraries. If you cannot use RBAC and must use [Shared Access Signatures (SAS)](https://docs.microsoft.com/azure/storage/common/storage-sas-overview), see [our sample](https://docs.microsoft.com/samples/azure/azure-sdk-for-net/share-link/) for source you can use in your own projects built on the same `Azure.Core` pipeline as the version 4 client libraries described above.
 
 ## Additional samples
 
