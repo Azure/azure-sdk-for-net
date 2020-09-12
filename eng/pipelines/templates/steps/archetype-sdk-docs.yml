@@ -15,9 +15,18 @@ steps:
     displayName: Download and Extract Required Software
 
   - ${{ each artifact in parameters.Artifacts }}:
-    - pwsh: |
-        $(Build.SourcesDirectory)/doc/ApiDocGeneration/Generate-Api-Docs.ps1 -ArtifactName '${{artifact.name}}' -ServiceDirectory '${{parameters.ServiceDirectory}}' `
-        -ArtifactsDirectoryName '${{artifact.directoryName}}' `
-        -LibType '${{parameters.LibType}}' -RepoRoot $(Build.SourcesDirectory) -BinDirectory $(Build.BinariesDirectory) -DocGenDir ${{parameters.DocGenerationDir}} `
-        -ArtifactStagingDirectory '$(Build.ArtifactStagingDirectory)' -verbose
+    - task: PowerShell@2
       displayName: Build DocFx Documenttion Site for ${{artifact.name}}
+      inputs:
+        pwsh: true
+        filePath: $(Build.SourcesDirectory)/doc/ApiDocGeneration/Generate-Api-Docs.ps1
+        arguments: >
+          -ArtifactName '${{artifact.name}}'
+          -ServiceDirectory '${{parameters.ServiceDirectory}}'
+          -ArtifactsDirectoryName '${{artifact.directoryName}}'
+          -LibType '${{parameters.LibType}}'
+          -RepoRoot $(Build.SourcesDirectory)
+          -BinDirectory $(Build.BinariesDirectory)
+          -DocGenDir ${{parameters.DocGenerationDir}}
+          -ArtifactStagingDirectory '$(Build.ArtifactStagingDirectory)'
+          -verbose
