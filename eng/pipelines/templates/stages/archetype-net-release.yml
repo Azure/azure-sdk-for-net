@@ -115,7 +115,11 @@ stages:
                         displayName: 'Upload Symbols for ${{artifact.name}}'
                         inputs:
                           solution: '$(AzureSDKBuildToolsPath)/tools/symboltool/SymbolUploader.proj'
-                          msbuildArguments: '/p:PackagesPath=$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}} /p:MSPublicSymbolsPAT=$(azuresdk-microsoftpublicsymbols-devops-pat) /p:MSSymbolsPAT=$(azuresdk-microsoft-devops-pat) /p:AzureSDKSymbolsPAT=$(azuresdk-azure-sdk-devops-pat)'
+                          msbuildArguments: >-
+                            /p:PackagesPath=$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}
+                            /p:MSPublicSymbolsPAT=$(azuresdk-microsoftpublicsymbols-devops-pat)
+                            /p:MSSymbolsPAT=$(azuresdk-microsoft-devops-pat)
+                            /p:AzureSDKSymbolsPAT=$(azuresdk-azure-sdk-devops-pat)
 
           - ${{if ne(artifact.skipPublishDocMs, 'true')}}:
             - deployment: PublicDocsMS
@@ -177,7 +181,7 @@ stages:
                           BlobSASKey: '$(azure-sdk-docs-prod-sas)'
                           BlobName: '$(azure-sdk-docs-prod-blob-name)'
                           TargetLanguage: 'dotnet'
-                          ArtifactLocation: '$(Pipeline.Workspace)/${{artifact.safeName}}/packages'
+                          ArtifactLocation: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}/${{artifact.name}}'
                           # we override the regular script path because we have cloned the build tools repo as a separate artifact.
                           ScriptPath: 'eng/common/scripts/copy-docs-to-blobstorage.ps1'
 

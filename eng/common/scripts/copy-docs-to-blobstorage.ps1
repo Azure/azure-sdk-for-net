@@ -278,7 +278,10 @@ if ($Language -eq "dotnet")
     Write-Host "DocDir $($BinDirectory)/docstoupload"
     Write-Host "PkgName $($pkgName)"
     Write-Host "DocVersion $($version)"
-    Upload-Blobs -DocDir "$($BinDirectory)/docstoupload" -PkgName $pkgName -DocVersion $version
+    New-Item -ItemType directory -Path "$BinDirectory/publicartifactscopy"
+    Copy-Item -Path "$PublicArtifactLocation/*.nupkg" -Destination "$BinDirectory/publicartifactscopy" -Exclude '*.symbols.nupkg'
+    $releaseTag = RetrieveReleaseTag "Nuget" "$BinDirectory/publicartifactscopy" 
+    Upload-Blobs -DocDir "$($BinDirectory)/docstoupload" -PkgName $pkgName -DocVersion $version -ReleaseTag $releaseTag
 }
 
 if ($Language -eq "python")
