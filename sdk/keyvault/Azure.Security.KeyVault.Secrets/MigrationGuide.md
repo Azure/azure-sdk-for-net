@@ -2,7 +2,7 @@
 
 This guide is intended to assist in the migration to version 4 of the Key Vault client library [`Azure.Security.KeyVault.Secrets`](https://www.nuget.org/packages/Azure.Security.KeyVault.Secrets) from version 3 of [`Microsoft.Azure.KeyVault`](https://www.nuget.org/packages/Microsoft.Azure.KeyVault). It will focus on side-by-side comparisons for similar operations between the two packages.
 
-Familiarity with the `Microsoft.Azure.KeyVault` library is assumed. For those new to the Key Vault client library for .NET, please refer to the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Secrets/README.md) and [Key Vault secrets samples](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Secrets/samples) for the `Azure.Security.KeyVault.Secrets` library rather than this guide.
+Familiarity with the `Microsoft.Azure.KeyVault` library is assumed. For those new to the Key Vault client library for .NET, please refer to the [`Azure.Security.KeyVault.Secrets` README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Secrets/README.md) and [`Azure.Security.KeyVault.Secrets` samples](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Secrets/samples) for the `Azure.Security.KeyVault.Secrets` library rather than this guide.
 
 ## Table of contents
 
@@ -40,9 +40,9 @@ In the case of Key Vault, the modern client libraries have packages and namespac
 
 In the interest of simplifying the API we've split `KeyVaultClient` into separate packages and clients:
 
-- `Azure.Security.KeyVault.Certificates` contains `CertificateClient` for certificate management operations.
-- `Azure.Security.KeyVault.Keys` contains `KeyClient` for key management operations and `CryptographyClient` for cryptographic operations.
-- `Azure.Security.KeyVault.Secrets` contains `SecretClient` for secret management operations.
+- `Azure.Security.KeyVault.Certificates` contains `CertificateClient` for working with certificates.
+- `Azure.Security.KeyVault.Keys` contains `KeyClient` for working with keys and `CryptographyClient` for performing cryptographic operations.
+- `Azure.Security.KeyVault.Secrets` contains `SecretClient` for working with secrets.
 
 These clients also share a single connection pool by default despite being separated, resolving an issue with the old `KeyVaultClient` that created a new connection pool with each new instance and could exhaust socket connections.
 
@@ -68,11 +68,11 @@ SecretClient client = new SecretClient(
     new DefaultAzureCredential());
 ```
 
-[`DefaultAzureCredential`](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md) is optimized for both production and development environments without having to change your source code.
+[`DefaultAzureCredential`](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md#defaultazurecredential) is optimized for both production and development environments without having to change your source code.
 
 #### Sharing an HttpClient
 
-By default, all client libraries built on `Azure.Core` that communicate over HTTP share a single `HttpClient`. In `Microsoft.Azure.KeyVault` with `KeyVaultClient`, a new `HttpClient` was created with each instance but could be shared to prevent connection starvation:
+In `Microsoft.Azure.KeyVault` with `KeyVaultClient`, a new `HttpClient` was created with each instance but could be shared to prevent connection starvation:
 
 ```C# Snippet:Microsoft_Azure_KeyVault_Snippets_MigrationGuide_CreateWithOptions
 using (HttpClient httpClient = new HttpClient())
@@ -84,7 +84,7 @@ using (HttpClient httpClient = new HttpClient())
 }
 ```
 
-In `Azure.Security.KeyVault.Secrets`, if you want to share an `HttpClient` with Azure client libraries and other clients you use or implement in your projects, you can pass it via `SecretClientOptions`:
+In `Azure.Security.KeyVault.Secrets` by default, all client libraries built on `Azure.Core` that communicate over HTTP share a single `HttpClient`. If you want to share an your own `HttpClient` instance with Azure client libraries and other clients you use or implement in your projects, you can pass it via `SecretClientOptions`:
 
 ```C# Snippet:Azure_Security_KeyVault_Secrets_Snippets_MigrationGuide_CreateWithOptions
 using (HttpClient httpClient = new HttpClient())
@@ -220,7 +220,7 @@ if (deletedSecret.RecoveryId != null)
 }
 ```
 
-Now in `Azure.Security.KeyVault.Secrets`, you delete a secret in the Key Vault you specified when constructing the `SecretClient`:
+Now in `Azure.Security.KeyVault.Secrets`, you delete a secret in the Key Vault you specified when constructing the `SecretClient` and succinctly await or poll status on an operation to complete:
 
 ```C# Snippet:Azure_Security_KeyVault_Secrets_Snippets_MigrationGuide_DeleteSecret
 // Delete the secret.
