@@ -1,4 +1,7 @@
 # Release History
+## 1.0.3-beta.12 (2020-09-11)
+- Package Artifacts directory restructure, attempt 2
+
 ## 1.0.3-beta.11 (2020-09-10)
 - Package Artifacts directory restructure
 
