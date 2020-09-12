@@ -336,7 +336,7 @@ namespace Microsoft.Azure.Management.HybridCompute
             MachineExtensions = new MachineExtensionsOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-07-30-preview";
+            ApiVersion = "2020-08-02";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

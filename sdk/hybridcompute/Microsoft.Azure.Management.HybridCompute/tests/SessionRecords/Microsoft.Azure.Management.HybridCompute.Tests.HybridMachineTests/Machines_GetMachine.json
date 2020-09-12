@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/resourceGroups/AzcmagentTest/providers/Microsoft.HybridCompute/machines/0.10.20225.002?api-version=2020-07-30-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Jlc291cmNlR3JvdXBzL0F6Y21hZ2VudFRlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5IeWJyaWRDb21wdXRlL21hY2hpbmVzLzAuMTAuMjAyMjUuMDAyP2FwaS12ZXJzaW9uPTIwMjAtMDctMzAtcHJldmlldw==",
+      "RequestUri": "/subscriptions/e6fe6705-4c9c-4b54-81d2-e455780e20b8/resourceGroups/AzcmagentTest/providers/Microsoft.HybridCompute/machines/0.10.20225.002?api-version=2020-08-02",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTZmZTY3MDUtNGM5Yy00YjU0LTgxZDItZTQ1NTc4MGUyMGI4L3Jlc291cmNlR3JvdXBzL0F6Y21hZ2VudFRlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5IeWJyaWRDb21wdXRlL21hY2hpbmVzLzAuMTAuMjAyMjUuMDAyP2FwaS12ZXJzaW9uPTIwMjAtMDgtMDI=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "558446db-6be9-4cfa-a8b1-cce02fe3247a"
+          "c86ea76f-f758-4a27-bb10-ab217b00051b"
         ],
         "Accept-Language": [
           "en-US"
@@ -33,22 +33,22 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "93a6654a-9b87-4375-b3e8-d38116b4632f"
+          "bb548f4a-deec-43b4-be4c-d6391de3a853"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-correlation-request-id": [
-          "34300574-b041-4c2c-a796-90dc3f057d0d"
+          "36ef2755-55a2-4439-ab68-1417d75b5433"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200904T055143Z:34300574-b041-4c2c-a796-90dc3f057d0d"
+          "EASTUS2EUAP:20200912T163254Z:36ef2755-55a2-4439-ab68-1417d75b5433"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 04 Sep 2020 05:51:43 GMT"
+          "Sat, 12 Sep 2020 16:32:53 GMT"
         ],
         "Content-Length": [
           "894"

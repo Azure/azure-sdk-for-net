@@ -180,10 +180,10 @@ namespace Microsoft.Azure.Management.HybridCompute.Models
         public string VmUuid { get; private set; }
 
         /// <summary>
-        /// Gets or sets machine Extensions information
+        /// Gets machine Extensions information
         /// </summary>
         [JsonProperty(PropertyName = "extensions")]
-        public IList<MachineExtensionInstanceView> Extensions { get; set; }
+        public IList<MachineExtensionInstanceView> Extensions { get; private set; }
 
         /// <summary>
         /// Gets specifies the Operating System product SKU.

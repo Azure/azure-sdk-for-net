@@ -11,7 +11,7 @@
     <PackageTags>management;hybridcompute;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        Updating with the apiVersion 2020-07-30-preview azure-rest-api-specs.
+        Updating with the apiVersion 2020-08-02 of azure-rest-api-specs.
         Supports the ability to manage extensions.
       ]]>
     </PackageReleaseNotes>
