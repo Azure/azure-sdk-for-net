@@ -20,6 +20,9 @@ namespace Microsoft.Azure.Services.AppAuthentication
         private readonly HttpClient _httpClient;
         private NonInteractiveAzureServiceTokenProviderBase _tokenProvider;
 
+        // In case of User assigned MSI, this needs to be provided
+        private string _managedIdentityClientId;
+
         private const string KeyVaultRestApiVersion = "2016-10-01";
 
         // Error messages
@@ -35,7 +38,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
         internal Principal PrincipalUsed { get; private set; }
 
-        internal KeyVaultClient(int msiRetryTimeoutInSeconds = 0, HttpClient httpClient = null, NonInteractiveAzureServiceTokenProviderBase tokenProvider = null)
+        internal KeyVaultClient(int msiRetryTimeoutInSeconds = 0, string managedIdentityClientId = null, HttpClient httpClient = null, NonInteractiveAzureServiceTokenProviderBase tokenProvider = null)
         {
             _msiRetryTimeoutInSeconds = msiRetryTimeoutInSeconds;
 #if NETSTANDARD1_4 || net452 || net461
@@ -44,9 +47,10 @@ namespace Microsoft.Azure.Services.AppAuthentication
             _httpClient = httpClient ?? new HttpClient(new HttpClientHandler() { CheckCertificateRevocationList = true });
 #endif
             _tokenProvider = tokenProvider;
+            _managedIdentityClientId = managedIdentityClientId;
         }
 
-        internal KeyVaultClient(HttpClient httpClient, NonInteractiveAzureServiceTokenProviderBase tokenProvider = null) : this(0, httpClient, tokenProvider)
+        internal KeyVaultClient(HttpClient httpClient, NonInteractiveAzureServiceTokenProviderBase tokenProvider = null, string managedIdentityClientId = null) : this(0, managedIdentityClientId, httpClient, tokenProvider)
         {
         }
 
@@ -186,7 +190,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 string azureAdInstance = UriHelper.GetAzureAdInstanceByAuthority(authority);
                 tokenProviders = new List<NonInteractiveAzureServiceTokenProviderBase>
                 {
-                    new MsiAccessTokenProvider(_msiRetryTimeoutInSeconds),
+                    new MsiAccessTokenProvider(_msiRetryTimeoutInSeconds, _managedIdentityClientId),
                     new VisualStudioAccessTokenProvider(new ProcessManager()),
                     new AzureCliAccessTokenProvider(new ProcessManager()),
 #if FullNetFx
