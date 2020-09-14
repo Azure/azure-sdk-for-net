@@ -56,7 +56,7 @@ jobs:
     dependsOn:
       - Build
     pool:
-      vmImage: "windows-2019"
+      vmImage: ubuntu-18.04
     steps:
       - task: UsePythonVersion@0
         displayName: "Use Python 3.6"
@@ -73,19 +73,6 @@ jobs:
       - template: /eng/common/pipelines/templates/steps/verify-path-length.yml
         parameters:
           SourceDirectory: $(Build.SourcesDirectory)
-      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
-        displayName: "Component Detection"
-        # ComponentGovernance is currently unable to run on pull requests of public projects.  Running on
-        # scheduled builds should be good enough.
-        inputs:
-          ignoreDirectories: "sdk/storage/Azure.Storage.Common/swagger/Generator"
-        condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
-  - job: VerifyGenerated
-    variables:
-      - template: ../variables/globals.yml
-    pool:
-      vmImage: ubuntu-18.04
-    steps:
       - task: NodeTool@0
         inputs:
           versionSpec: '13.13.0'
@@ -101,6 +88,13 @@ jobs:
           arguments: -ServiceDirectory ${{parameters.ServiceToBuild}}
           pwsh: true
           failOnStderr:  false
+      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
+        displayName: "Component Detection"
+        # ComponentGovernance is currently unable to run on pull requests of public projects.  Running on
+        # scheduled builds should be good enough.
+        inputs:
+          ignoreDirectories: "sdk/storage/Azure.Storage.Common/swagger/Generator"
+        condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
   - job: "Test"
     condition: ne(variables['Skip.Test'], true)
     variables:
