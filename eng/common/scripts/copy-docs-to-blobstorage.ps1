@@ -271,18 +271,18 @@ if ($Language -eq "dotnet")
     $DocsStagingDir = "$WorkingDirectory/docstaging"
     $TempDir = "$WorkingDirectory/temp"
 
-    New-Item -ItemType directory -Path "$DocsStagingDir"
-    New-Item -ItemType directory -Path "$TempPackageDir"
+    New-Item -ItemType directory -Path $DocsStagingDir
+    New-Item -ItemType directory -Path $TempDir
 
-    Expand-Archive -LiteralPath $PublishedDocs[0].FullName -DestinationPath "$DocsStagingDir"
-    $pkgProperties = VerifyPackages -pkgRepository "Nuget" -artifactLocation $DocLocation -workingDirectory "$TempDir" `
+    Expand-Archive -LiteralPath $PublishedDocs[0].FullName -DestinationPath $DocsStagingDir
+    $pkgProperties = VerifyPackages -pkgRepository "Nuget" -artifactLocation $DocLocation -workingDirectory $TempDir `
         -apiUrl "https://api.github.com/repos/Azure/azure-sdk-for-net" -releasSha $ReleaseSha -continueOnError $True
 
     Write-Host "Start Upload for $($pkgProperties.Tag)"
     Write-Host "DocDir $($DocsStagingDir)"
     Write-Host "PkgName $($pkgProperties.PackageId)"
     Write-Host "DocVersion $($pkgProperties.PackageVersion)"
-    Upload-Blobs -DocDir "$($TempPackageDir)" -PkgName $pkgProperties.PackageId -DocVersion $pkgProperties.PackageVersion -ReleaseTag $pkgProperties.Tag
+    Upload-Blobs -DocDir "$($DocsStagingDir)" -PkgName $pkgProperties.PackageId -DocVersion $pkgProperties.PackageVersion -ReleaseTag $pkgProperties.Tag
 }
 
 if ($Language -eq "python")
