@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
 using Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests;
+using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Xunit;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
@@ -26,7 +27,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             this.azuriteFixture = azuriteFixture;
         }
 
-        [Fact]
+        [AzuriteFact]
         public async Task BlobTriggerToQueueTriggerToBlob_WritesFinalBlob()
         {
             // Arrange

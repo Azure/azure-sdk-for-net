@@ -34,7 +34,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             _fixture = fixture;
         }
 
-        [Fact]
+        [LiveFact]
         public async Task BlobToBlob_DifferentAccounts_PrimaryToSecondary_Succeeds()
         {
             BlockBlobClient resultBlob = null;
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             Assert.Equal(TestData, data);
         }
 
-        [Fact]
+        [LiveFact]
         public async Task BlobToBlob_DifferentAccounts_SecondaryToPrimary_Succeeds()
         {
             BlockBlobClient resultBlob = null;
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             Assert.Equal(TestData, data);
         }
 
-        [Fact]
+        [LiveFact]
         public async Task QueueToQueue_DifferentAccounts_PrimaryToSecondary_Succeeds()
         {
             QueueMessage resultMessage = null;
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             Assert.Equal(TestData, data);
         }
 
-        [Fact]
+        [LiveFact]
         public async Task QueueToQueue_DifferentAccounts_SecondaryToPrimary_Succeeds()
         {
             QueueMessage resultMessage = null;

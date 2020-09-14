@@ -194,7 +194,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
-        [Fact]
+        [LiveFact]
         public async Task BlobGetsProcessedOnlyOnce_SingleHost()
         {
             var blob = _testContainer.GetBlockBlobClient(TestBlobName);
@@ -240,7 +240,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             Assert.Equal(1, prog._timesProcessed);
         } // host
 
-        [Fact]
+        [LiveFact]
         public async Task BlobChainTest()
         {
             // write the initial trigger blob to start the chain
@@ -261,7 +261,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
-        [Fact]
+        [LiveFact]
         public async Task BlobGetsProcessedOnlyOnce_MultipleHosts()
         {
             await _testContainer

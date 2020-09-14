@@ -161,7 +161,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
 #pragma warning restore xUnit1013 // Public method should be marked as test
 
-        [Fact]
+        [LiveFact]
         public async Task AzureStorageEndToEndFast()
         {
             await EndToEndTest(uploadBlobBeforeHostStart: true);

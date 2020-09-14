@@ -10,6 +10,7 @@ using Microsoft.Azure.WebJobs.Host.Listeners;
 using Xunit;
 using Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests;
 using Azure.Storage.Blobs.Specialized;
+using Microsoft.Azure.WebJobs.Host.TestCommon;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
 {
@@ -22,7 +23,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             this.azuriteFixture = azuriteFixture;
         }
 
-        [Fact]
+        [AzuriteFact]
         public async Task TestBlobListener()
         {
             const string containerName = "container";

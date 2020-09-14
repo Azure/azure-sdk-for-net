@@ -11,6 +11,7 @@ using Xunit;
 using Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
+using Microsoft.Azure.WebJobs.Host.TestCommon;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
 {
@@ -23,7 +24,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             this.azuriteFixture = azuriteFixture;
         }
 
-        [Fact]
+        [AzuriteFact]
         public async Task LoadLatestScan_NoContainer_ReturnsNull()
         {
             string hostId = Guid.NewGuid().ToString();
@@ -41,7 +42,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             Assert.Null(result);
         }
 
-        [Fact]
+        [AzuriteFact]
         public async Task LoadLatestScan_NoBlob_ReturnsNull()
         {
             string hostId = Guid.NewGuid().ToString();
@@ -60,7 +61,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             Assert.Null(result);
         }
 
-        [Fact]
+        [AzuriteFact]
         public async Task LoadLatestScan_Returns_Timestamp()
         {
             string hostId = "host-" + Guid.NewGuid().ToString();
@@ -82,7 +83,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             Assert.Equal(now, result);
         }
 
-        [Fact]
+        [AzuriteFact]
         public async Task UpdateLatestScan_Inserts()
         {
             string hostId = Guid.NewGuid().ToString();
@@ -107,7 +108,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             Assert.Equal(now, await manager.LoadLatestScanAsync(storageAccountName, containerName));
         }
 
-        [Fact]
+        [AzuriteFact]
         public async Task UpdateLatestScan_Updates()
         {
             string hostId = Guid.NewGuid().ToString();

@@ -21,7 +21,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             this.azuriteFixture = azuriteFixture;
         }
 
-        [Fact]
+        [AzuriteFact]
         public async Task Queue_IfNameIsInvalid_ThrowsDuringIndexing()
         {
             IHost host = new HostBuilder()

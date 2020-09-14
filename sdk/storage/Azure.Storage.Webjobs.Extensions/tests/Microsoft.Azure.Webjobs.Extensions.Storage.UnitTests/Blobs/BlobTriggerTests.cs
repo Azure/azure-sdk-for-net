@@ -26,7 +26,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             this.azuriteFixture = azuriteFixture;
         }
 
-        [Fact]
+        [AzuriteFact]
         public async Task BlobTrigger_IfBoundToCloudBlob_Binds()
         {
             // Arrange
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
 
-        [Fact]
+        [AzuriteFact]
         public async Task BlobTrigger_Binding_Metadata()
         {
             var app = new BindToCloudBlob2Program();

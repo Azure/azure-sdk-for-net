@@ -22,7 +22,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             this.azuriteFixture = azuriteFixture;
         }
 
-        [Fact]
+        [AzuriteFact]
         public async Task Trigger_CanBeInstanceMethod()
         {
             // Arrange
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
 
-        [Fact]
+        [AzuriteFact]
         public async Task Trigger_CanBeAsyncInstanceMethod()
         {
             // Arrange
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         }
 
         // $$$ this test should apply to any trigger and be in the Unit tests.
-        [Fact]
+        [AzuriteFact]
         public async Task Trigger_IfClassIsDisposable_Disposes()
         {
             // Arrange
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         }
 
         // $$$ Not really a queue test
-        [Fact]
+        [AzuriteFact]
         public async Task Trigger_IfClassConstructorHasDependencies_CanUseCustomJobActivator()
         {
             // Arrange

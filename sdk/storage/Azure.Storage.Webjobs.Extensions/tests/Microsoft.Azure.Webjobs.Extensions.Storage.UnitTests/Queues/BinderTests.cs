@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
 using Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests;
+using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Xunit;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
@@ -20,7 +21,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             this.azuriteFixture = azuriteFixture;
         }
 
-        [Fact]
+        [AzuriteFact]
         public async Task Trigger_ViaIBinder_CannotBind()
         {
             // Arrange
