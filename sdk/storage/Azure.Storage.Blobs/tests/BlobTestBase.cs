@@ -37,7 +37,7 @@ namespace Azure.Storage.Test.Shared
             new Uri(TestConfigSecondary.BlobServiceSecondaryEndpoint).Host;
 
         public BlobTestBase(bool async, BlobClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode = null)
-            : base(async, mode)
+            : base(async, RecordedTestMode.Playback)
         {
             _serviceVersion = serviceVersion;
         }
@@ -442,7 +442,7 @@ namespace Azure.Storage.Test.Shared
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
                 IPRange = new SasIPRange(IPAddress.None, IPAddress.None),
-                Version = sasVersion ?? ToSasVersion(_serviceVersion)
+                Version = sasVersion ?? ToSasVersion(BlobClientOptions.ServiceVersion.V2020_02_10)
             };
 
         public BlobSasQueryParameters GetNewBlobServiceIdentitySasCredentialsBlob(string containerName, string blobName, UserDelegationKey userDelegationKey, string accountName)
