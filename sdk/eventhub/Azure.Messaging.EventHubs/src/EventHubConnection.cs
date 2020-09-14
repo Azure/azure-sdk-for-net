@@ -12,6 +12,7 @@ using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
+using Azure.Messaging.EventHubs.Producer;
 
 namespace Azure.Messaging.EventHubs
 {
@@ -354,15 +355,19 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the partition to which the transport producer should be bound; if <c>null</c>, the producer is unbound.</param>
+        /// <param name="requestedFeatures">The flags specifying the set of special transport features that should be opted-into.</param>
+        /// <param name="partitionOptions">The set of options, if any, that should be considered when initializing the producer.</param>
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
         ///
         /// <returns>A <see cref="TransportProducer"/> configured in the requested manner.</returns>
         ///
         internal virtual TransportProducer CreateTransportProducer(string partitionId,
+                                                                   TransportProducerFeatures requestedFeatures,
+                                                                   PartitionPublishingOptions partitionOptions,
                                                                    EventHubsRetryPolicy retryPolicy)
         {
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
-            return InnerClient.CreateProducer(partitionId, retryPolicy);
+            return InnerClient.CreateProducer(partitionId, requestedFeatures, partitionOptions, retryPolicy);
         }
 
         /// <summary>

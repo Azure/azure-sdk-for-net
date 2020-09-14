@@ -21,20 +21,20 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   The identifier of the producer group for which this producer is publishing to the associated partition.
         /// </summary>
         ///
-        public long? ProducerGroupId  { get; set; }
+        public long? ProducerGroupId  { get; }
 
         /// <summary>
-        ///   The owner level of this producer for publishing to the associated partition.
+        ///   The owner level of the producer publishing to the associated partition.
         /// </summary>
         ///
-        public short? OwnerLevel { get; set; }
+        public short? OwnerLevel { get; }
 
         /// <summary>
         ///   The sequence number assigned to the event that was most recently published to the associated partition
         ///   successfully.
         /// </summary>
         ///
-        public int? LastPublishedSequenceNumber   { get; set; }
+        public int? LastPublishedSequenceNumber { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventHubProperties"/> class.

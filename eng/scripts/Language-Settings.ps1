@@ -88,7 +88,7 @@ function Get-dotnet-PackageInfoFromPackageFile ($pkg, $workingDirectory)
 }
 
 # Stage and Upload Docs to blob Storage
-function Publish-dotnet-GithubIODocs ()
+function Publish-dotnet-GithubIODocs ($DocLocation, $PublicArtifactLocation)
 {
   $PublishedPkgs = Get-ChildItem "$($DocLocation)/packages" | Where-Object -FilterScript {$_.Name.EndsWith(".nupkg") -and -not $_.Name.EndsWith(".symbols.nupkg")}
   $PublishedDocs = Get-ChildItem "$($DocLocation)" | Where-Object -FilterScript {$_.Name.StartsWith("Docs.")}

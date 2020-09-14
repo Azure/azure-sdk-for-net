@@ -1,6 +1,6 @@
 # Azure Schema Registry Apache Avro client library for .NET
 
-This library provides an Apache Avro serialization and deserialization API using the Azure Schema Registry service.
+Azure Schema Registry is a schema repository service hosted by Azure Event Hubs, providing schema storage, versioning, and management. This package provides an Avro serializer capable of serializing and deserializing payloads containing Schema Registry schema identifiers and Avro-encoded data.
 
 ## Getting started
 
@@ -41,7 +41,7 @@ The simpliest way is to use the [Azure portal][azure_portal] and navigate to you
 
 Once you have the Azure resource credentials and the Event Hubs namespace hostname, you can create the [SchemaRegistryClient][schema_registry_client]. You'll also need the [Azure.Identity][azure_identity] package to create the credential.
 
-```C# Snippet:CreateSchemaRegistryClient2
+```C# Snippet:SchemaRegistryAvroCreateSchemaRegistryClient
 string endpoint = "<event_hubs_namespace_hostname>";
 var credentials = new ClientSecretCredential(
     "<tenant_id>",
@@ -85,14 +85,14 @@ The following shows examples of what is available through the SchemaRegistryAvro
 
 Details on generating a class using the Apache Avro library can be found in the [Avro C# Documentation][avro_csharp_documentation].
 
-* [Serialize](#register-a-schema)
-* [Deserialize](#retrieve-a-schema-id)
+* [Serialize](#serialize)
+* [Deserialize](#deserialize)
 
 ### Serialize
 
 Register a schema to be stored in the Azure Schema Registry.
 
-```C# Snippet:Serialize
+```C# Snippet:SchemaRegistryAvroSerialize
 var employee = new Employee { Age = 42, Name = "John Doe" };
 string groupName = "<schema_group_name>";
 
@@ -105,7 +105,7 @@ serializer.Serialize(memoryStream, employee, typeof(Employee), CancellationToken
 
 Retrieve a previously registered schema ID from the Azure Schema Registry.
 
-```C# Snippet:Deserialize
+```C# Snippet:SchemaRegistryAvroDeserialize
 string groupName = "<schema_group_name>";
 
 var serializer = new SchemaRegistryAvroObjectSerializer(client, groupName, new SchemaRegistryAvroObjectSerializerOptions { AutoRegisterSchemas = true });
@@ -115,11 +115,11 @@ Employee employee = (Employee)serializer.Deserialize(memoryStream, typeof(Employ
 
 ## Troubleshooting
 
-Information on troubleshooting steps will be added as problems are discovered.
+Information on troubleshooting steps will be provided as potential issues are discovered.
 
 ## Next steps
 
-Additional information will be available as documents related to Azure Schema Registry are published.
+See [Azure Schema Registry][azure_schema_registry] for additional information.
 
 ## Contributing
 
@@ -133,9 +133,9 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 <!-- LINKS -->
 [nuget]: https://www.nuget.org/
-[event_hubs_namespace]: https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-about
-[azure_powershell]: https://docs.microsoft.com/en-us/powershell/azure/
-[create_event_hubs_namespace]: https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-quickstart-powershell#create-an-event-hubs-namespace
+[event_hubs_namespace]: https://docs.microsoft.com/azure/event-hubs/event-hubs-about
+[azure_powershell]: https://docs.microsoft.com/powershell/azure/
+[create_event_hubs_namespace]: https://docs.microsoft.com/azure/event-hubs/event-hubs-quickstart-powershell#create-an-event-hubs-namespace
 [quickstart_guide]: https://github.com/Azure/azure-sdk-for-net/blob/master/doc/mgmt_preview_quickstart.md
 [schema_registry_client]: ../Azure.Data.SchemaRegistry/src/SchemaRegistryClient.cs
 [azure_portal]: https://ms.portal.azure.com/
@@ -153,3 +153,4 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [generic_record]: https://avro.apache.org/docs/current/api/csharp/html/classAvro_1_1Generic_1_1GenericRecord.html
 [specific_record]: https://avro.apache.org/docs/current/api/csharp/html/interfaceAvro_1_1Specific_1_1ISpecificRecord.html
 [azure_sub]: https://azure.microsoft.com/free/
+[azure_schema_registry]: https://aka.ms/schemaregistry

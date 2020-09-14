@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,7 +16,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("ver");
-            writer.WriteNumberValue(Ver);
+            writer.WriteNumberValue(Version);
             writer.WritePropertyName("id");
             writer.WriteStringValue(Id);
             writer.WritePropertyName("name");
@@ -31,32 +29,32 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
             if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration");
-                writer.WriteStringValue(Duration.Value, "P");
+                writer.WriteStringValue(Duration);
             }
             if (Optional.IsDefined(PerfTotal))
             {
                 writer.WritePropertyName("perfTotal");
-                writer.WriteStringValue(PerfTotal.Value, "P");
+                writer.WriteStringValue(PerfTotal);
             }
             if (Optional.IsDefined(NetworkConnect))
             {
                 writer.WritePropertyName("networkConnect");
-                writer.WriteStringValue(NetworkConnect.Value, "P");
+                writer.WriteStringValue(NetworkConnect);
             }
             if (Optional.IsDefined(SentRequest))
             {
                 writer.WritePropertyName("sentRequest");
-                writer.WriteStringValue(SentRequest.Value, "P");
+                writer.WriteStringValue(SentRequest);
             }
             if (Optional.IsDefined(ReceivedResponse))
             {
                 writer.WritePropertyName("receivedResponse");
-                writer.WriteStringValue(ReceivedResponse.Value, "P");
+                writer.WriteStringValue(ReceivedResponse);
             }
             if (Optional.IsDefined(DomProcessing))
             {
                 writer.WritePropertyName("domProcessing");
-                writer.WriteStringValue(DomProcessing.Value, "P");
+                writer.WriteStringValue(DomProcessing);
             }
             if (Optional.IsCollectionDefined(Properties))
             {
@@ -86,102 +84,6 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
                 writer.WriteStringValue(Test);
             }
             writer.WriteEndObject();
-        }
-
-        internal static PageViewPerfData DeserializePageViewPerfData(JsonElement element)
-        {
-            int ver = default;
-            string id = default;
-            string name = default;
-            Optional<string> url = default;
-            Optional<TimeSpan> duration = default;
-            Optional<TimeSpan> perfTotal = default;
-            Optional<TimeSpan> networkConnect = default;
-            Optional<TimeSpan> sentRequest = default;
-            Optional<TimeSpan> receivedResponse = default;
-            Optional<TimeSpan> domProcessing = default;
-            Optional<IDictionary<string, string>> properties = default;
-            Optional<IDictionary<string, double>> measurements = default;
-            Optional<string> test = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("ver"))
-                {
-                    ver = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("url"))
-                {
-                    url = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("duration"))
-                {
-                    duration = property.Value.GetTimeSpan("P");
-                    continue;
-                }
-                if (property.NameEquals("perfTotal"))
-                {
-                    perfTotal = property.Value.GetTimeSpan("P");
-                    continue;
-                }
-                if (property.NameEquals("networkConnect"))
-                {
-                    networkConnect = property.Value.GetTimeSpan("P");
-                    continue;
-                }
-                if (property.NameEquals("sentRequest"))
-                {
-                    sentRequest = property.Value.GetTimeSpan("P");
-                    continue;
-                }
-                if (property.NameEquals("receivedResponse"))
-                {
-                    receivedResponse = property.Value.GetTimeSpan("P");
-                    continue;
-                }
-                if (property.NameEquals("domProcessing"))
-                {
-                    domProcessing = property.Value.GetTimeSpan("P");
-                    continue;
-                }
-                if (property.NameEquals("properties"))
-                {
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    properties = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("measurements"))
-                {
-                    Dictionary<string, double> dictionary = new Dictionary<string, double>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetDouble());
-                    }
-                    measurements = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("test"))
-                {
-                    test = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new PageViewPerfData(test.Value, ver, id, name, url.Value, Optional.ToNullable(duration), Optional.ToNullable(perfTotal), Optional.ToNullable(networkConnect), Optional.ToNullable(sentRequest), Optional.ToNullable(receivedResponse), Optional.ToNullable(domProcessing), Optional.ToDictionary(properties), Optional.ToDictionary(measurements));
         }
     }
 }

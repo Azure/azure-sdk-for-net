@@ -60,7 +60,6 @@ namespace Azure.Management.Network
             uri.AppendPath(subnetName, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -153,7 +152,6 @@ namespace Azure.Management.Network
                 uri.AppendQuery("$expand", expand, true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -251,7 +249,6 @@ namespace Azure.Management.Network
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(subnetParameters);
             request.Content = content;
@@ -353,7 +350,6 @@ namespace Azure.Management.Network
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(prepareNetworkPoliciesRequestParameters);
             request.Content = content;
@@ -455,7 +451,6 @@ namespace Azure.Management.Network
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(unprepareNetworkPoliciesRequestParameters);
             request.Content = content;
@@ -554,7 +549,6 @@ namespace Azure.Management.Network
             uri.AppendPath("/subnets", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -631,7 +625,6 @@ namespace Azure.Management.Network
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

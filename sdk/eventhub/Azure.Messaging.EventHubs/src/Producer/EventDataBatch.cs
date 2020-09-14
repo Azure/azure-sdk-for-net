@@ -61,16 +61,7 @@ namespace Azure.Messaging.EventHubs.Producer
         public int? StartingPublishedSequenceNumber
         {
             get => InnerBatch.StartingPublishedSequenceNumber;
-
-            internal set
-            {
-                if (value.HasValue)
-                {
-                    Argument.AssertAtLeast(value.Value, 0, nameof(StartingPublishedSequenceNumber));
-                }
-
-                InnerBatch.StartingPublishedSequenceNumber = value;
-            }
+            internal set => InnerBatch.StartingPublishedSequenceNumber = value;
         }
 
         /// <summary>
