@@ -96,7 +96,6 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(batch.MaximumSizeInBytes, Is.EqualTo(mockBatch.MaximumSizeInBytes), "The maximum size should have been delegated.");
             Assert.That(batch.SizeInBytes, Is.EqualTo(mockBatch.SizeInBytes), "The size should have been delegated.");
             Assert.That(batch.Count, Is.EqualTo(mockBatch.Count), "The count should have been delegated.");
-            Assert.That(batch.StartingPublishedSequenceNumber, Is.EqualTo(mockBatch.StartingPublishedSequenceNumber), "The starting published sequence number should have been delegated.");
         }
 
         /// <summary>
@@ -276,7 +275,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             public override long SizeInBytes { get; } = 100;
 
-            public override int? StartingPublishedSequenceNumber { get; set; } = 300;
+            public override bool ReserveSpaceForSequenceNumber { get; } = true;
 
             public override int Count { get; } = 400;
 

@@ -323,7 +323,7 @@ namespace Azure.Messaging.EventHubs
         ///   Transitions the pending publishing sequence number to the published sequence number.
         /// </summary>
         ///
-        internal void CommitPublishingSequenceNumber()
+        internal void CommitPublishingState()
         {
             PublishedSequenceNumber = PendingPublishSequenceNumber;
             PendingPublishSequenceNumber = default;

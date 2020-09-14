@@ -18,6 +18,7 @@ namespace Azure.Messaging.EventHubs.Tests
     ///   The suite of tests for the <see cref="AmqpEventBatch" />
     ///   class.
     /// </summary>
+    ///
     [TestFixture]
     public class AmqpEventBatchTests
     {
@@ -28,7 +29,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorValidatesTheMessageConverter()
         {
-            Assert.That(() => new AmqpEventBatch(null, new CreateBatchOptions { MaximumSizeInBytes = 31 }), Throws.ArgumentNullException);
+            Assert.That(() => new AmqpEventBatch(null, new CreateBatchOptions { MaximumSizeInBytes = 31 }, default), Throws.ArgumentNullException);
         }
 
         /// <summary>
@@ -43,7 +44,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 CreateBatchFromEventsHandler = (_e, _p) => Mock.Of<AmqpMessage>()
             };
 
-            Assert.That(() => new AmqpEventBatch(mockConverter, null), Throws.ArgumentNullException);
+            Assert.That(() => new AmqpEventBatch(mockConverter, null, default), Throws.ArgumentNullException);
         }
 
         /// <summary>
@@ -58,7 +59,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 CreateBatchFromEventsHandler = (_e, _p) => Mock.Of<AmqpMessage>()
             };
 
-            Assert.That(() => new AmqpEventBatch(mockConverter, new CreateBatchOptions { MaximumSizeInBytes = null }), Throws.ArgumentNullException);
+            Assert.That(() => new AmqpEventBatch(mockConverter, new CreateBatchOptions { MaximumSizeInBytes = null }, default), Throws.ArgumentNullException);
         }
 
         /// <summary>
@@ -76,7 +77,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 CreateBatchFromEventsHandler = (_e, _p) => Mock.Of<AmqpMessage>()
             };
 
-            var batch = new AmqpEventBatch(mockConverter, options);
+            var batch = new AmqpEventBatch(mockConverter, options, default);
             Assert.That(batch.MaximumSizeInBytes, Is.EqualTo(maximumSize));
         }
 
@@ -98,7 +99,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(message => message.SerializedMessageSize)
                 .Returns(batchEnvelopeSize);
 
-            var batch = new AmqpEventBatch(mockConverter, new CreateBatchOptions { MaximumSizeInBytes = 27 });
+            var batch = new AmqpEventBatch(mockConverter, new CreateBatchOptions { MaximumSizeInBytes = 27 }, default);
             Assert.That(batch.SizeInBytes, Is.EqualTo(batchEnvelopeSize));
         }
 
@@ -115,7 +116,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 CreateBatchFromEventsHandler = (_e, _p) => Mock.Of<AmqpMessage>()
             };
 
-            var batch = new AmqpEventBatch(mockConverter, new CreateBatchOptions { MaximumSizeInBytes = 25 });
+            var batch = new AmqpEventBatch(mockConverter, new CreateBatchOptions { MaximumSizeInBytes = 25 }, default);
             Assert.That(() => batch.TryAdd(null), Throws.ArgumentNullException);
         }
 
@@ -132,10 +133,96 @@ namespace Azure.Messaging.EventHubs.Tests
                 CreateBatchFromEventsHandler = (_e, _p) => Mock.Of<AmqpMessage>()
             };
 
-            var batch = new AmqpEventBatch(mockConverter, new CreateBatchOptions { MaximumSizeInBytes = 25 });
+            var batch = new AmqpEventBatch(mockConverter, new CreateBatchOptions { MaximumSizeInBytes = 25 }, default);
             batch.Dispose();
 
             Assert.That(() => batch.TryAdd(new EventData(new byte[0])), Throws.InstanceOf<ObjectDisposedException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpEventBatch.TryAdd" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void TryAddHonorsTheMeasureSequenceNumber(bool measureSequenceNumber)
+        {
+            var maximumSize = 50;
+            var batchEnvelopeSize = 0;
+            var capturedSequence = default(int?);
+            var options = new CreateBatchOptions { MaximumSizeInBytes = maximumSize };
+            var mockEnvelope = new Mock<AmqpMessage>();
+            var mockEvent = new Mock<AmqpMessage>();
+
+            var mockConverter = new InjectableMockConverter
+            {
+                CreateBatchFromEventsHandler = (_e, _p) => mockEnvelope.Object,
+
+                CreateMessageFromEventHandler = (_e, _p) =>
+                {
+                    capturedSequence = _e.PendingPublishSequenceNumber;
+                    return mockEvent.Object;
+                }
+            };
+
+            mockEnvelope
+                .Setup(message => message.SerializedMessageSize)
+                .Returns(batchEnvelopeSize);
+
+            mockEvent
+                .Setup(message => message.SerializedMessageSize)
+                .Returns(maximumSize);
+
+            var batch = new AmqpEventBatch(mockConverter, options, measureSequenceNumber);
+            batch.TryAdd(EventGenerator.CreateEvents(1).Single());
+
+            var expectationConstraint = (measureSequenceNumber)
+                ? Is.Not.Null
+                : Is.Null;
+
+            Assert.That(capturedSequence, expectationConstraint);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpEventBatch.TryAdd" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void TryAddRemovesTheMeasureSequenceNumber()
+        {
+            var maximumSize = 50;
+            var batchEnvelopeSize = 0;
+            var capturedEvent = default(EventData);
+            var options = new CreateBatchOptions { MaximumSizeInBytes = maximumSize };
+            var mockEnvelope = new Mock<AmqpMessage>();
+            var mockEvent = new Mock<AmqpMessage>();
+
+            var mockConverter = new InjectableMockConverter
+            {
+                CreateBatchFromEventsHandler = (_e, _p) => mockEnvelope.Object,
+
+                CreateMessageFromEventHandler = (_e, _p) =>
+                {
+                    capturedEvent = _e;
+                    return mockEvent.Object;
+                }
+            };
+
+            mockEnvelope
+                .Setup(message => message.SerializedMessageSize)
+                .Returns(batchEnvelopeSize);
+
+            mockEvent
+                .Setup(message => message.SerializedMessageSize)
+                .Returns(maximumSize);
+
+            var batch = new AmqpEventBatch(mockConverter, options, true);
+            batch.TryAdd(EventGenerator.CreateEvents(1).Single());
+
+            Assert.That(capturedEvent.PublishedSequenceNumber, Is.Null);
         }
 
         /// <summary>
@@ -165,7 +252,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(message => message.SerializedMessageSize)
                 .Returns(maximumSize);
 
-            var batch = new AmqpEventBatch(mockConverter, options);
+            var batch = new AmqpEventBatch(mockConverter, options, default);
 
             Assert.That(batch.TryAdd(new EventData(new byte[0])), Is.False, "An event of the maximum size is too large due to the reserved overhead.");
         }
@@ -197,7 +284,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(message => message.SerializedMessageSize)
                 .Returns(eventMessageSize);
 
-            var batch = new AmqpEventBatch(mockConverter, options);
+            var batch = new AmqpEventBatch(mockConverter, options, default);
 
             Assert.That(batch.TryAdd(new EventData(new byte[0])), Is.True);
         }
@@ -239,7 +326,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 eventMessages[index] = message.Object;
             }
 
-            var batch = new AmqpEventBatch(mockConverter, options);
+            var batch = new AmqpEventBatch(mockConverter, options, default);
 
             for (var index = 0; index < eventMessages.Length; ++index)
             {
@@ -283,7 +370,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Add the messages to the batch; all should be accepted.
 
-            var batch = new AmqpEventBatch(mockConverter, options);
+            var batch = new AmqpEventBatch(mockConverter, options, default);
 
             for (var index = 0; index < eventMessages.Length; ++index)
             {
@@ -312,7 +399,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(message => message.SerializedMessageSize)
                 .Returns(0);
 
-            var batch = new AmqpEventBatch(mockConverter, options);
+            var batch = new AmqpEventBatch(mockConverter, options, default);
             Assert.That(() => batch.AsEnumerable<AmqpMessage>(), Throws.InstanceOf<FormatException>());
         }
 
@@ -347,7 +434,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 eventMessages[index] = message.Object;
             }
 
-            var batch = new AmqpEventBatch(mockConverter, options);
+            var batch = new AmqpEventBatch(mockConverter, options, default);
 
             for (var index = 0; index < eventMessages.Length; ++index)
             {
@@ -396,7 +483,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Add the messages to the batch; all should be accepted.
 
-            var batch = new AmqpEventBatch(mockConverter, options);
+            var batch = new AmqpEventBatch(mockConverter, options, default);
 
             for (var index = 0; index < eventMessages.Length; ++index)
             {
@@ -442,7 +529,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Add the messages to the batch; all should be accepted.
 
-            var batch = new AmqpEventBatch(mockConverter, options);
+            var batch = new AmqpEventBatch(mockConverter, options, default);
 
             for (var index = 0; index < eventMessages.Length; ++index)
             {
@@ -473,7 +560,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(message => message.SerializedMessageSize)
                 .Returns(9959);
 
-            var batch = new AmqpEventBatch(mockConverter, new CreateBatchOptions { MaximumSizeInBytes = 99 });
+            var batch = new AmqpEventBatch(mockConverter, new CreateBatchOptions { MaximumSizeInBytes = 99 }, default);
             batch.Clear();
 
             Assert.That(batch.SizeInBytes, Is.EqualTo(GetReservedSize(batch)));
@@ -508,7 +595,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Add the messages to the batch; all should be accepted.
 
-            var batch = new AmqpEventBatch(mockConverter, options);
+            var batch = new AmqpEventBatch(mockConverter, options, default);
 
             for (var index = 0; index < eventMessages.Length; ++index)
             {
@@ -539,7 +626,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(message => message.SerializedMessageSize)
                 .Returns(9959);
 
-            var batch = new AmqpEventBatch(mockConverter, new CreateBatchOptions { MaximumSizeInBytes = 99 });
+            var batch = new AmqpEventBatch(mockConverter, new CreateBatchOptions { MaximumSizeInBytes = 99 }, default);
             batch.Dispose();
 
             Assert.That(batch.SizeInBytes, Is.EqualTo(GetReservedSize(batch)));

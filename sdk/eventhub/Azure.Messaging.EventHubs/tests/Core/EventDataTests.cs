@@ -55,7 +55,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventData.CommitPublishingSequenceNumber "/>
+        ///   Verifies functionality of the <see cref="EventData.CommitPublishingState "/>
         ///   property.
         /// </summary>
         ///
@@ -71,7 +71,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(eventData.PendingPublishSequenceNumber, Is.EqualTo(expectedSequence), "The pending sequence number should have been set.");
 
-            eventData.CommitPublishingSequenceNumber();
+            eventData.CommitPublishingState();
 
             Assert.That(eventData.PublishedSequenceNumber, Is.EqualTo(expectedSequence), "The published sequence number should have been set.");
             Assert.That(eventData.PendingPublishSequenceNumber, Is.EqualTo(default(int?)), "The pending sequence number should have been cleared.");
