@@ -17,7 +17,6 @@ namespace Microsoft.Azure.WebJobs
     public class StorageAccountProvider
     {
         private readonly IConfiguration _configuration;
-        private readonly IDelegatingHandlerProvider _delegatingHandlerProvider;
 
         /// <summary>
         /// TODO.
@@ -26,17 +25,6 @@ namespace Microsoft.Azure.WebJobs
         public StorageAccountProvider(IConfiguration configuration)
         {
             _configuration = configuration;
-        }
-
-        /// <summary>
-        /// TODO.
-        /// </summary>
-        /// <param name="configuration"></param>
-        /// <param name="delegatingHandlerProvider"></param>
-        public StorageAccountProvider(IConfiguration configuration, IDelegatingHandlerProvider delegatingHandlerProvider)
-            : this(configuration)
-        {
-            _delegatingHandlerProvider = delegatingHandlerProvider;
         }
 
         /// <summary>
@@ -71,7 +59,7 @@ namespace Microsoft.Azure.WebJobs
                 throw new InvalidOperationException($"Storage account connection string '{IConfigurationExtensions.GetPrefixedConnectionStringName(name)}' does not exist. Make sure that it is a defined App Setting.");
             }
 
-            return StorageAccount.New(connectionString, _delegatingHandlerProvider);
+            return StorageAccount.NewFromConnectionString(connectionString);
         }
 
         /// <summary>
