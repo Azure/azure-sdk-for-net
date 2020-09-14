@@ -1,4 +1,4 @@
-# Azure Monitor Exporter client library for .NET
+# WebJobs EventGrid client library for .NET
 
 TODO
 

@@ -414,8 +414,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
                 {
                     strings[i] = $@"
                     {{
+                        ""id"" : ""{i}"",
                         ""data"" : ""{i}"",
-                        ""eventType"" : ""custom""
+                        ""eventType"" : ""custom"",
+                        ""subject"" : ""custom"",
+                        ""dataVersion"" : ""1""
                     }}";
                 }
             }
@@ -427,9 +430,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
                 for (int i = 0; i < 5; i++)
                 {
                     jobjects[i] = new JObject(
+                        new JProperty("id", i.ToString()),
                         new JProperty("data", i.ToString()),
-                        new JProperty("eventType", "custom")
-                        );
+                        new JProperty("eventType", "custom"),
+                        new JProperty("subject", "custom"),
+                        new JProperty("dataVersion", "1")
+                    );
                 }
             }
         }
