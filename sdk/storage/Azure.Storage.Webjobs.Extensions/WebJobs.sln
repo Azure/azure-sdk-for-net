@@ -29,6 +29,10 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Azure.WebJobs.Protocols", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{381280A1-D5E6-4A69-8255-9FC532E4A588}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs", "..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj", "{3AAC39AF-A6CF-459B-8948-4C2C347C0FA4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Queues", "..\Azure.Storage.Queues\src\Azure.Storage.Queues.csproj", "{E3D3BB3C-3A88-435C-91A1-63E90B86F3B3}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		src\Microsoft.Azure.WebJobs.Shared.Storage\Microsoft.Azure.WebJobs.Shared.Storage.projitems*{6bed7f8a-a199-4d9d-85d1-6856ee3292c6}*SharedItemsImports = 13
@@ -64,6 +68,14 @@ Global
 		{381280A1-D5E6-4A69-8255-9FC532E4A588}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{381280A1-D5E6-4A69-8255-9FC532E4A588}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{381280A1-D5E6-4A69-8255-9FC532E4A588}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AAC39AF-A6CF-459B-8948-4C2C347C0FA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AAC39AF-A6CF-459B-8948-4C2C347C0FA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AAC39AF-A6CF-459B-8948-4C2C347C0FA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AAC39AF-A6CF-459B-8948-4C2C347C0FA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3D3BB3C-3A88-435C-91A1-63E90B86F3B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3D3BB3C-3A88-435C-91A1-63E90B86F3B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3D3BB3C-3A88-435C-91A1-63E90B86F3B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3D3BB3C-3A88-435C-91A1-63E90B86F3B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
