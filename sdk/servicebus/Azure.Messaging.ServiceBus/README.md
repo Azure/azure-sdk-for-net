@@ -219,7 +219,10 @@ ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync()
 await receiver.DeadLetterMessageAsync(receivedMessage);
 
 // receive the dead lettered message with receiver scoped to the dead letter queue.
-ServiceBusReceiver dlqReceiver = client.CreateDeadLetterReceiver(queueName);
+ServiceBusReceiver dlqReceiver = client.CreateReceiver(queueName, new ServiceBusReceiverOptions
+{
+    SubQueue = SubQueue.DeadLetter
+});
 ServiceBusReceivedMessage dlqMessage = await dlqReceiver.ReceiveMessageAsync();
 ```
 

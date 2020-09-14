@@ -82,5 +82,76 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             Assert.That(() => new EventHubProducerClientOptions { RetryOptions = null }, Throws.ArgumentNullException);
         }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubProducerClientOptions.CreateFeatureFlags" />
+        ///   property.
+        /// </summary>
+        ///
+        [Test]
+        public void CreateFeatureFlagsDetectsWhenNoFeaturesWereRequested()
+        {
+            var options = new EventHubProducerClientOptions { EnableIdempotentPartitions = false };
+            Assert.That(options.CreateFeatureFlags(), Is.EqualTo(TransportProducerFeatures.None));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubProducerClientOptions.CreateFeatureFlags" />
+        ///   property.
+        /// </summary>
+        ///
+        [Test]
+        public void CreateFeatureFlagsDetectsIdempotentPublishing()
+        {
+            var options = new EventHubProducerClientOptions { EnableIdempotentPartitions = true };
+            Assert.That(options.CreateFeatureFlags(), Is.EqualTo(TransportProducerFeatures.IdempotentPublishing));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubProducerClientOptions.GetPublishingOptionsOrDefaultForPartition" />
+        ///   property.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(null)]
+        [TestCase("")]
+        public void GetPublishingOptionsOrDefaultForPartitionDefaultsWhenNoPartitionIsSpecified(string partitionId)
+        {
+            var options = new EventHubProducerClientOptions();
+            options.PartitionOptions.Add("1", new PartitionPublishingOptions{ ProducerGroupId = 1 });
+
+            Assert.That(options.GetPublishingOptionsOrDefaultForPartition(partitionId), Is.EqualTo(default(PartitionPublishingOptions)));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubProducerClientOptions.GetPublishingOptionsOrDefaultForPartition" />
+        ///   property.
+        /// </summary>
+        ///
+        [Test]
+        public void GetPublishingOptionsOrDefaultForPartitionDefaultsWhenNoPartitionIsFound()
+        {
+            var options = new EventHubProducerClientOptions();
+            options.PartitionOptions.Add("1", new PartitionPublishingOptions{ ProducerGroupId = 1 });
+
+            Assert.That(options.GetPublishingOptionsOrDefaultForPartition("0"), Is.EqualTo(default(PartitionPublishingOptions)));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubProducerClientOptions.GetPublishingOptionsOrDefaultForPartition" />
+        ///   property.
+        /// </summary>
+        ///
+        [Test]
+        public void GetPublishingOptionsOrDefaultForPartitionReturnsTheOptionsWhenThePartitionIsFound()
+        {
+            var partitionId = "12";
+            var expectedPartitionOptions = new PartitionPublishingOptions{ ProducerGroupId = 1 };
+
+            var options = new EventHubProducerClientOptions();
+            options.PartitionOptions.Add(partitionId, expectedPartitionOptions);
+
+            Assert.That(options.GetPublishingOptionsOrDefaultForPartition(partitionId), Is.SameAs(expectedPartitionOptions));
+        }
     }
 }

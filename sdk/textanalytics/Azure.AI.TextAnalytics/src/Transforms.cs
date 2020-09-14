@@ -124,6 +124,102 @@ namespace Azure.AI.TextAnalytics
 
         #endregion
 
+        #region Recognize Entities
+
+        internal static List<CategorizedEntity> ConvertToCategorizedEntityList(List<Entity> entities)
+            => entities.Select((entity) => new CategorizedEntity(entity)).ToList();
+
+        internal static CategorizedEntityCollection ConvertToCategorizedEntityCollection(DocumentEntities documentEntities)
+        {
+            return new CategorizedEntityCollection(ConvertToCategorizedEntityList(documentEntities.Entities.ToList()), ConvertToWarnings(documentEntities.Warnings));
+        }
+
+        internal static RecognizeEntitiesResultCollection ConvertToRecognizeEntitiesResultCollection(EntitiesResult results, IDictionary<string, int> idToIndexMap)
+        {
+            var recognizeEntities = new List<RecognizeEntitiesResult>();
+
+            //Read errors
+            foreach (DocumentError error in results.Errors)
+            {
+                recognizeEntities.Add(new RecognizeEntitiesResult(error.Id, ConvertToError(error.Error)));
+            }
+
+            //Read document entities
+            foreach (DocumentEntities docEntities in results.Documents)
+            {
+                recognizeEntities.Add(new RecognizeEntitiesResult(docEntities.Id, docEntities.Statistics ?? default, ConvertToCategorizedEntityCollection(docEntities)));
+            }
+
+            recognizeEntities = SortHeterogeneousCollection(recognizeEntities, idToIndexMap);
+
+            return new RecognizeEntitiesResultCollection(recognizeEntities, results.Statistics, results.ModelVersion);
+        }
+
+        #endregion
+
+        #region Recognize PII Entities
+
+        internal static List<PiiEntity> ConvertToPiiEntityList(List<Entity> entities)
+            => entities.Select((entity) => new PiiEntity(entity)).ToList();
+
+        internal static PiiEntityCollection ConvertToPiiEntityCollection(PiiDocumentEntities documentEntities)
+        {
+            return new PiiEntityCollection(ConvertToPiiEntityList(documentEntities.Entities.ToList()), documentEntities.RedactedText, ConvertToWarnings(documentEntities.Warnings));
+        }
+
+        internal static RecognizePiiEntitiesResultCollection ConvertToRecognizePiiEntitiesResultCollection(PiiEntitiesResult results, IDictionary<string, int> idToIndexMap)
+        {
+            var recognizeEntities = new List<RecognizePiiEntitiesResult>();
+
+            //Read errors
+            foreach (DocumentError error in results.Errors)
+            {
+                recognizeEntities.Add(new RecognizePiiEntitiesResult(error.Id, ConvertToError(error.Error)));
+            }
+
+            //Read document entities
+            foreach (PiiDocumentEntities docEntities in results.Documents)
+            {
+                recognizeEntities.Add(new RecognizePiiEntitiesResult(docEntities.Id, docEntities.Statistics ?? default, ConvertToPiiEntityCollection(docEntities)));
+            }
+
+            recognizeEntities = SortHeterogeneousCollection(recognizeEntities, idToIndexMap);
+
+            return new RecognizePiiEntitiesResultCollection(recognizeEntities, results.Statistics, results.ModelVersion);
+        }
+
+        #endregion
+
+        #region Recognize Linked Entities
+
+        internal static LinkedEntityCollection ConvertToLinkedEntityCollection(DocumentLinkedEntities documentEntities)
+        {
+            return new LinkedEntityCollection(documentEntities.Entities.ToList(), ConvertToWarnings(documentEntities.Warnings));
+        }
+
+        internal static RecognizeLinkedEntitiesResultCollection ConvertToRecognizeLinkedEntitiesResultCollection(EntityLinkingResult results, IDictionary<string, int> idToIndexMap)
+        {
+            var recognizeEntities = new List<RecognizeLinkedEntitiesResult>();
+
+            //Read errors
+            foreach (DocumentError error in results.Errors)
+            {
+                recognizeEntities.Add(new RecognizeLinkedEntitiesResult(error.Id, ConvertToError(error.Error)));
+            }
+
+            //Read document linked entities
+            foreach (DocumentLinkedEntities docEntities in results.Documents)
+            {
+                recognizeEntities.Add(new RecognizeLinkedEntitiesResult(docEntities.Id, docEntities.Statistics ?? default, ConvertToLinkedEntityCollection(docEntities)));
+            }
+
+            recognizeEntities = SortHeterogeneousCollection(recognizeEntities, idToIndexMap);
+
+            return new RecognizeLinkedEntitiesResultCollection(recognizeEntities, results.Statistics, results.ModelVersion);
+        }
+
+        #endregion
+
         private static List<T> SortHeterogeneousCollection<T>(List<T> collection, IDictionary<string, int> idToIndexMap) where T : TextAnalyticsResult
         {
             return collection.OrderBy(result => idToIndexMap[result.Id]).ToList();

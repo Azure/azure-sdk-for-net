@@ -33,7 +33,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <summary>
         /// Initializes a new instance of the <see cref="CryptographyClient"/> class.
         /// </summary>
-        /// <param name="keyId">The <see cref="KeyProperties.Id"/> of the <see cref="KeyVaultKey"/> which will be used for cryptographic operations.</param>
+        /// <param name="keyId">
+        /// The <see cref="KeyProperties.Id"/> of the <see cref="KeyVaultKey"/> which will be used for cryptographic operations.
+        /// If you have a key <see cref="Uri"/>, use <see cref="KeyVaultKeyIdentifier"/> to parse the <see cref="KeyVaultKeyIdentifier.VaultUri"/> and other information.
+        /// </param>
         /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, like DefaultAzureCredential.</param>
         /// <exception cref="ArgumentNullException"><paramref name="keyId"/> or <paramref name="credential"/> is null.</exception>
         public CryptographyClient(Uri keyId, TokenCredential credential)
@@ -44,7 +47,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <summary>
         /// Initializes a new instance of the <see cref="CryptographyClient"/> class.
         /// </summary>
-        /// <param name="keyId">The <see cref="KeyProperties.Id"/> of the <see cref="KeyVaultKey"/> which will be used for cryptographic operations.</param>
+        /// <param name="keyId">
+        /// The <see cref="KeyProperties.Id"/> of the <see cref="KeyVaultKey"/> which will be used for cryptographic operations.
+        /// If you have a key <see cref="Uri"/>, use <see cref="KeyVaultKeyIdentifier"/> to parse the <see cref="KeyVaultKeyIdentifier.VaultUri"/> and other information.
+        /// </param>
         /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, like DefaultAzureCredential.</param>
         /// <param name="options"><see cref="CryptographyClientOptions"/> that allow to configure the management of the request sent to Key Vault.</param>
         /// <exception cref="ArgumentNullException"><paramref name="keyId"/> or <paramref name="credential"/> is null.</exception>
@@ -143,6 +149,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// along with all other information needed to decrypt it. This information should be stored with the encrypted data.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
+        /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<EncryptResult> EncryptAsync(EncryptionAlgorithm algorithm, byte[] plaintext, CancellationToken cancellationToken = default)
@@ -197,6 +205,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// along with all other information needed to decrypt it. This information should be stored with the encrypted data.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
+        /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual EncryptResult Encrypt(EncryptionAlgorithm algorithm, byte[] plaintext, CancellationToken cancellationToken = default)
@@ -250,6 +260,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// along with information regarding the algorithm and key used to decrypt it.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
+        /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<DecryptResult> DecryptAsync(EncryptionAlgorithm algorithm, byte[] ciphertext, CancellationToken cancellationToken = default)
@@ -304,6 +316,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// along with information regarding the algorithm and key used to decrypt it.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
+        /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual DecryptResult Decrypt(EncryptionAlgorithm algorithm, byte[] ciphertext, CancellationToken cancellationToken = default)
@@ -357,6 +371,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// along with all other information needed to unwrap it. This information should be stored with the wrapped key.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
+        /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<WrapResult> WrapKeyAsync(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken = default)
@@ -411,6 +427,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// along with all other information needed to unwrap it. This information should be stored with the wrapped key.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
+        /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual WrapResult WrapKey(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken = default)
@@ -464,6 +482,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// along with information regarding the algorithm and key used to unwrap it.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
+        /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<UnwrapResult> UnwrapKeyAsync(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken = default)
@@ -518,6 +538,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// along with information regarding the algorithm and key used to unwrap it.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
+        /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual UnwrapResult UnwrapKey(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken = default)
@@ -571,6 +593,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// along with all other information needed to verify it. This information should be stored with the signature.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
+        /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<SignResult> SignAsync(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken = default)
@@ -625,6 +649,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// along with all other information needed to verify it. This information should be stored with the signature.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
+        /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual SignResult Sign(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken = default)
@@ -678,6 +704,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// The result of the verify operation. If the signature is valid the <see cref="VerifyResult.IsValid"/> property of the returned <see cref="VerifyResult"/> will be set to true.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
+        /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<VerifyResult> VerifyAsync(SignatureAlgorithm algorithm, byte[] digest, byte[] signature, CancellationToken cancellationToken = default)
@@ -732,6 +760,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// The result of the verify operation. If the signature is valid the <see cref="VerifyResult.IsValid"/> property of the returned <see cref="VerifyResult"/> will be set to true.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
+        /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual VerifyResult Verify(SignatureAlgorithm algorithm, byte[] digest, byte[] signature, CancellationToken cancellationToken = default)
@@ -785,6 +815,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// along with all other information needed to verify it. This information should be stored with the signature.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
+        /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<SignResult> SignDataAsync(SignatureAlgorithm algorithm, byte[] data, CancellationToken cancellationToken = default)
@@ -843,6 +875,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// along with all other information needed to verify it. This information should be stored with the signature.
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
+        /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual SignResult SignData(SignatureAlgorithm algorithm, byte[] data, CancellationToken cancellationToken = default)
@@ -902,6 +936,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
+        /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<SignResult> SignDataAsync(SignatureAlgorithm algorithm, Stream data, CancellationToken cancellationToken = default)
@@ -961,6 +997,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
+        /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual SignResult SignData(SignatureAlgorithm algorithm, Stream data, CancellationToken cancellationToken = default)
@@ -1019,6 +1057,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
+        /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<VerifyResult> VerifyDataAsync(SignatureAlgorithm algorithm, byte[] data, byte[] signature, CancellationToken cancellationToken = default)
@@ -1078,6 +1118,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
+        /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual VerifyResult VerifyData(SignatureAlgorithm algorithm, byte[] data, byte[] signature, CancellationToken cancellationToken = default)
@@ -1136,6 +1178,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
+        /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<VerifyResult> VerifyDataAsync(SignatureAlgorithm algorithm, Stream data, byte[] signature, CancellationToken cancellationToken = default)
@@ -1195,6 +1239,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </returns>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
+        /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
         /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual VerifyResult VerifyData(SignatureAlgorithm algorithm, Stream data, byte[] signature, CancellationToken cancellationToken = default)
@@ -1275,13 +1321,13 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             return result.Key;
         }
 
-        private static byte[] CreateDigest(SignatureAlgorithm algorithm, byte[] data)
+        internal static byte[] CreateDigest(SignatureAlgorithm algorithm, byte[] data)
         {
             using HashAlgorithm hashAlgo = algorithm.GetHashAlgorithm();
             return hashAlgo.ComputeHash(data);
         }
 
-        private static byte[] CreateDigest(SignatureAlgorithm algorithm, Stream data)
+        internal static byte[] CreateDigest(SignatureAlgorithm algorithm, Stream data)
         {
             using HashAlgorithm hashAlgo = algorithm.GetHashAlgorithm();
             return hashAlgo.ComputeHash(data);

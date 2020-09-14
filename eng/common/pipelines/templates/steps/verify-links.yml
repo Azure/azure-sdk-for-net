@@ -14,5 +14,6 @@ steps:
       -rootUrl "file://$(Build.SourcesDirectory)/${{ parameters.Directory }}" 
       -recursive: $false 
       -ignoreLinksFile ${{ parameters.IgnoreLinksFile }}
-      -branchReplaceRegex "($env:SYSTEM_PULLREQUEST_SOURCEREPOSITORYURI.*/blob/)master(/.*)"
+      -branchReplaceRegex "^($env:SYSTEM_PULLREQUEST_SOURCEREPOSITORYURI.*/(?:blob|tree)/)master(/.*)$"
       -branchReplacementName $env:SYSTEM_PULLREQUEST_SOURCECOMMITID
+      -devOpsLogging: $true

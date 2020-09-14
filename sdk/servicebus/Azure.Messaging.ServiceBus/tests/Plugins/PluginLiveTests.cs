@@ -30,8 +30,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
                 await sender.SendMessageAsync(sendMessage);
 
                 var receivedMessage = await receiver.ReceiveMessageAsync();
-                var firstSendPluginUserProperty = (bool)receivedMessage.Properties["FirstSendPlugin"];
-                var secondSendPluginUserProperty = (bool)receivedMessage.Properties["SecondSendPlugin"];
+                var firstSendPluginUserProperty = (bool)receivedMessage.ApplicationProperties["FirstSendPlugin"];
+                var secondSendPluginUserProperty = (bool)receivedMessage.ApplicationProperties["SecondSendPlugin"];
 
                 Assert.True(firstSendPluginUserProperty);
                 Assert.True(secondSendPluginUserProperty);
@@ -252,7 +252,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
         {
             public override ValueTask BeforeMessageSendAsync(ServiceBusMessage message)
             {
-                message.Properties.Add("FirstSendPlugin", true);
+                message.ApplicationProperties.Add("FirstSendPlugin", true);
                 return default;
             }
         }
@@ -264,8 +264,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
             public override ValueTask BeforeMessageSendAsync(ServiceBusMessage message)
             {
                 // Ensure that the first plugin actually ran first
-                Assert.True((bool)message.Properties["FirstSendPlugin"]);
-                message.Properties.Add("SecondSendPlugin", true);
+                Assert.True((bool)message.ApplicationProperties["FirstSendPlugin"]);
+                message.ApplicationProperties.Add("SecondSendPlugin", true);
                 return default;
             }
         }

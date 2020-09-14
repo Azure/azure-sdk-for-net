@@ -102,6 +102,25 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        public async Task IncludeX5CCliamHeader()
+        {
+            var tenantId = TestEnvironment.ServicePrincipalTenantId;
+            var clientId = TestEnvironment.ServicePrincipalClientId;
+            var certPath = TestEnvironment.ServicePrincipalSniCertificatePath;
+
+            var options = Recording.InstrumentClientOptions(new ClientCertificateCredentialOptions { IncludeX5CCliamHeader = true });
+
+            var credential = new ClientCertificateCredential(tenantId, clientId, certPath, options);
+
+            var tokenRequestContext = new TokenRequestContext(new[] { AzureAuthorityHosts.GetDefaultScope(AzureAuthorityHosts.AzurePublicCloud) });
+
+            // ensure we can initially acquire a  token
+            AccessToken token = await credential.GetTokenAsync(tokenRequestContext);
+
+            Assert.IsNotNull(token.Token);
+        }
+
+        [Test]
         public void IncorrectCertificate()
         {
             var tenantId = TestEnvironment.ServicePrincipalTenantId;

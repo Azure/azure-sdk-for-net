@@ -30,6 +30,8 @@ SecretClientOptions options = new SecretClientOptions()
 };
 ```
 
+**NOTE:** The content is logged at the `Verbose` level so you might need to change the listener settings for content logs to appear.
+
 ### Changing log level
 
 The `CreateConsoleLogger` method has an optional parameter that specifies a minimum log level to display messages for.
@@ -68,7 +70,7 @@ SecretClientOptions options = new SecretClientOptions()
 
 ### ASP.NET Core applications
 
-If your are using Azure SDK libraries in ASP.NET Core application consider using the `Microsoft.Extensions.Azure` package that provides integration with `Microsoft.Extensions.Logging` library. See [Microsoft.Extensions.Azure readme](../../Microsoft.Extensions.Azure/README.md) for more details.
+If your are using Azure SDK libraries in ASP.NET Core application consider using the `Microsoft.Extensions.Azure` package that provides integration with `Microsoft.Extensions.Logging` library. See [Microsoft.Extensions.Azure readme](../../../extensions/Microsoft.Extensions.Azure/README.md) for more details.
 
 
 ### Custom logging callback

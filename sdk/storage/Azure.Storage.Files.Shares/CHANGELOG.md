@@ -1,9 +1,16 @@
 # Release History
 
-## 12.4.0-preview.1 (Unreleased)
+## 12.5.0-preview.1 (Unreleased)
+- Fixed bug where Stream returned from ShareFileClient.OpenWrite() did not flush while disposing preventing compatibility with using keyword.
+- Fixed bug where ShareAccessPolicy.StartsOn and .ExpiresOn would cause the process to crash.
+
+## 12.4.0 (2020-08-31)
+- Fixed bug where ShareFileClient.Upload() and .UploadRange() would deadlock if the content stream's position was not zero.
+- Fixed bug in ShareFileClient.OpenRead() causing us to do more download called than necessary.
+- Fixed bug where ShareClient.Delete() could not delete Share Snapshots unless the includeSnapshots parameter was set to false.
 
 ## 12.3.1 (2020-08-18)
-- Bug in TaskExtensions.EnsureCompleted method that causes it to unconditionally throw an exception in the environments with synchronization context
+- Fixed bug in TaskExtensions.EnsureCompleted method that causes it to unconditionally throw an exception in the environments with synchronization context
 
 ## 12.3.0 (2020-08-13)
 - Includes all features from 12.3.0-preview.1 through 12.3.0-preview.2.

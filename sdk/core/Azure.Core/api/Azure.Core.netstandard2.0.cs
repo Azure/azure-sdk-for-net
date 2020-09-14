@@ -218,15 +218,18 @@ namespace Azure.Core
         {
             public static string Accept { get { throw null; } }
             public static string Authorization { get { throw null; } }
+            public static string ContentDisposition { get { throw null; } }
             public static string ContentLength { get { throw null; } }
             public static string ContentType { get { throw null; } }
             public static string Date { get { throw null; } }
             public static string ETag { get { throw null; } }
+            public static string Host { get { throw null; } }
             public static string IfMatch { get { throw null; } }
             public static string IfModifiedSince { get { throw null; } }
             public static string IfNoneMatch { get { throw null; } }
             public static string IfUnmodifiedSince { get { throw null; } }
             public static string Range { get { throw null; } }
+            public static string Referer { get { throw null; } }
             public static string UserAgent { get { throw null; } }
             public static string XMsDate { get { throw null; } }
             public static string XMsRange { get { throw null; } }

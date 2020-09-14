@@ -41,6 +41,13 @@ namespace Azure.Messaging.EventHubs.Core
         public string SharedAccessKey { get; }
 
         /// <summary>
+        ///   The value of the fully-formed shared access signature, either for the Event Hubs
+        ///   namespace or the Event Hub.
+        /// </summary>
+        ///
+        public string SharedAccessSignature { get; }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="ConnectionStringProperties"/> structure.
         /// </summary>
         ///
@@ -48,16 +55,19 @@ namespace Azure.Messaging.EventHubs.Core
         /// <param name="eventHubName">The name of the specific Event Hub under the namespace.</param>
         /// <param name="sharedAccessKeyName">The name of the shared access key, to use authorization.</param>
         /// <param name="sharedAccessKey">The shared access key to use for authorization.</param>
+        /// <param name="sharedAccessSignature">The precomputed shared access signature to use for authorization.</param>
         ///
         public ConnectionStringProperties(Uri endpoint,
                                           string eventHubName,
                                           string sharedAccessKeyName,
-                                          string sharedAccessKey)
+                                          string sharedAccessKey,
+                                          string sharedAccessSignature)
         {
             Endpoint = endpoint;
             EventHubName = eventHubName;
             SharedAccessKeyName = sharedAccessKeyName;
             SharedAccessKey = sharedAccessKey;
+            SharedAccessSignature = sharedAccessSignature;
         }
 
         /// <summary>
@@ -84,12 +94,23 @@ namespace Azure.Messaging.EventHubs.Core
                 throw new ArgumentException(Resources.OnlyOneEventHubNameMayBeSpecified, connectionStringArgumentName);
             }
 
+            // The connection string may contain a precomputed shared access signature OR a shared key name and value,
+            // but not both.
+
+            if ((!string.IsNullOrEmpty(SharedAccessSignature))
+                && ((!string.IsNullOrEmpty(SharedAccessKeyName)) || (!string.IsNullOrEmpty(SharedAccessKey))))
+            {
+                throw new ArgumentException(Resources.OnlyOneSharedAccessAuthorizationMayBeSpecified, connectionStringArgumentName);
+            }
+
             // Ensure that each of the needed components are present for connecting.
 
-            if ((string.IsNullOrEmpty(explicitEventHubName)) && (string.IsNullOrEmpty(EventHubName))
-                || (string.IsNullOrEmpty(Endpoint?.Host))
-                || (string.IsNullOrEmpty(SharedAccessKeyName))
-                || (string.IsNullOrEmpty(SharedAccessKey)))
+            var hasSharedKey = ((!string.IsNullOrEmpty(SharedAccessKeyName)) && (!string.IsNullOrEmpty(SharedAccessKey)));
+            var hasSharedSignature = (!string.IsNullOrEmpty(SharedAccessSignature));
+
+            if (string.IsNullOrEmpty(Endpoint?.Host)
+                || ((string.IsNullOrEmpty(explicitEventHubName)) && (string.IsNullOrEmpty(EventHubName)))
+                || ((!hasSharedKey) && (!hasSharedSignature)))
             {
                 throw new ArgumentException(Resources.MissingConnectionInformation, connectionStringArgumentName);
             }

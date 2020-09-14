@@ -10,11 +10,13 @@ namespace Azure.Data.Tables
     public partial class TableClient
     {
         protected TableClient() { }
-        public TableClient(string tableName, System.Uri endpoint, Azure.Data.Tables.TableClientOptions options = null) { }
-        public TableClient(string tableName, System.Uri endpoint, Azure.Data.Tables.TableSharedKeyCredential credential) { }
-        public TableClient(string tableName, System.Uri endpoint, Azure.Data.Tables.TableSharedKeyCredential credential, Azure.Data.Tables.TableClientOptions options = null) { }
-        public virtual System.Threading.Tasks.Task<Azure.Response<T>> AddEntityAsync<T>(T entity, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : class, Azure.Data.Tables.ITableEntity, new() { throw null; }
-        public virtual Azure.Response<T> AddEntity<T>(T entity, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : class, Azure.Data.Tables.ITableEntity, new() { throw null; }
+        public TableClient(string connectionString, string tableName) { }
+        public TableClient(string connectionString, string tableName, Azure.Data.Tables.TableClientOptions options = null) { }
+        public TableClient(System.Uri endpoint, string tableName, Azure.Data.Tables.TableClientOptions options = null) { }
+        public TableClient(System.Uri endpoint, string tableName, Azure.Data.Tables.TableSharedKeyCredential credential) { }
+        public TableClient(System.Uri endpoint, string tableName, Azure.Data.Tables.TableSharedKeyCredential credential, Azure.Data.Tables.TableClientOptions options = null) { }
+        public virtual System.Threading.Tasks.Task<Azure.Response> AddEntityAsync<T>(T entity, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : class, Azure.Data.Tables.ITableEntity, new() { throw null; }
+        public virtual Azure.Response AddEntity<T>(T entity, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : class, Azure.Data.Tables.ITableEntity, new() { throw null; }
         public virtual Azure.Response<Azure.Data.Tables.Models.TableItem> Create(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.Tables.Models.TableItem>> CreateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Data.Tables.Models.TableItem> CreateIfNotExists(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -86,6 +88,8 @@ namespace Azure.Data.Tables
     public partial class TableServiceClient
     {
         protected TableServiceClient() { }
+        public TableServiceClient(string connectionString) { }
+        public TableServiceClient(string connectionString, Azure.Data.Tables.TableClientOptions options = null) { }
         public TableServiceClient(System.Uri endpoint) { }
         public TableServiceClient(System.Uri endpoint, Azure.Data.Tables.TableClientOptions options = null) { }
         public TableServiceClient(System.Uri endpoint, Azure.Data.Tables.TableSharedKeyCredential credential) { }

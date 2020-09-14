@@ -9,13 +9,14 @@
 
   <ItemGroup>
     <PackageReference Include="System.Text.Json" />
-    <PackageReference Include="OpenTelemetry" Version="0.4.0-beta.2" IsImplicitlyDefined="true" />
+    <PackageReference Include="OpenTelemetry" Version="0.5.0-beta.2" IsImplicitlyDefined="true" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />

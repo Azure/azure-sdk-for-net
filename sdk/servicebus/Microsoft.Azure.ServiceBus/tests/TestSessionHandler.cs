@@ -37,9 +37,19 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             this.sessionMessageMap = new ConcurrentDictionary<string, int>();
         }
 
+        public void RegisterSessionHandler(Func<IMessageSession, Message, CancellationToken, Task> handler, SessionHandlerOptions handlerOptions)
+        {
+            this.sessionPumpHost.OnSessionHandler(handler, handlerOptions);
+        }
+
         public void RegisterSessionHandler(SessionHandlerOptions handlerOptions)
         {
             this.sessionPumpHost.OnSessionHandler(this.OnSessionHandler, this.sessionHandlerOptions);
+        }
+
+        public async Task UnregisterSessionHandler(TimeSpan inflightSessionHandlerTasksWaitTimeout)
+        {
+            await this.sessionPumpHost.UnregisterSessionHandlerAsync(inflightSessionHandlerTasksWaitTimeout).ConfigureAwait(false);
         }
 
         public async Task SendSessionMessages()
