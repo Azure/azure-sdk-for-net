@@ -24,7 +24,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 
         private readonly IDictionary<BlobContainerClient, ICollection<ITriggerExecutor<BlobTriggerExecutorContext>>> _registrations;
         private readonly IDictionary<BlobContainerClient, DateTime> _lastModifiedTimestamps;
-        private readonly ConcurrentQueue<BlobHierarchy<BlobBaseClient>> _blobWrittenNotifications;
+        private readonly ConcurrentQueue<BlobWithContainer<BlobBaseClient>> _blobWrittenNotifications;
 
         public ScanContainersStrategy()
         {
@@ -32,10 +32,10 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                 new CloudBlobContainerComparer());
             _lastModifiedTimestamps = new Dictionary<BlobContainerClient, DateTime>(
                 new CloudBlobContainerComparer());
-            _blobWrittenNotifications = new ConcurrentQueue<BlobHierarchy<BlobBaseClient>>();
+            _blobWrittenNotifications = new ConcurrentQueue<BlobWithContainer<BlobBaseClient>>();
         }
 
-        public void Notify(BlobHierarchy<BlobBaseClient> blobWritten)
+        public void Notify(BlobWithContainer<BlobBaseClient> blobWritten)
         {
             _blobWrittenNotifications.Enqueue(blobWritten);
         }
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 
         public async Task<TaskSeriesCommandResult> ExecuteAsync(CancellationToken cancellationToken)
         {
-            List<BlobHierarchy<BlobBaseClient>> failedNotifications = new List<BlobHierarchy<BlobBaseClient>>();
+            List<BlobWithContainer<BlobBaseClient>> failedNotifications = new List<BlobWithContainer<BlobBaseClient>>();
 
             // Drain the background queue of blob written notifications.
             while (true)
@@ -96,12 +96,12 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                 foreach (BlobBaseClient newBlob in newBlobs)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
-                    await NotifyRegistrationsAsync(new BlobHierarchy<BlobBaseClient>(container, newBlob), failedNotifications, cancellationToken).ConfigureAwait(false);
+                    await NotifyRegistrationsAsync(new BlobWithContainer<BlobBaseClient>(container, newBlob), failedNotifications, cancellationToken).ConfigureAwait(false);
                 }
             }
 
             // Re-add any failed notifications for the next iteration.
-            foreach (BlobHierarchy<BlobBaseClient> failedNotification in failedNotifications)
+            foreach (BlobWithContainer<BlobBaseClient> failedNotification in failedNotifications)
             {
                 _blobWrittenNotifications.Enqueue(failedNotification);
             }
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
         {
         }
 
-        private async Task NotifyRegistrationsAsync(BlobHierarchy<BlobBaseClient> blob, ICollection<BlobHierarchy<BlobBaseClient>> failedNotifications,
+        private async Task NotifyRegistrationsAsync(BlobWithContainer<BlobBaseClient> blob, ICollection<BlobWithContainer<BlobBaseClient>> failedNotifications,
             CancellationToken cancellationToken)
         {
             // Blob written notifications are host-wide, so filter out things that aren't in the container list.

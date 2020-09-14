@@ -6,9 +6,9 @@ using Azure.Storage.Blobs.Specialized;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 {
-    internal class BlobHierarchy<T> where T: BlobBaseClient
+    internal class BlobWithContainer<T> where T: BlobBaseClient
     {
-        public BlobHierarchy(BlobContainerClient blobContainerClient, T blobClient)
+        public BlobWithContainer(BlobContainerClient blobContainerClient, T blobClient)
         {
             BlobContainerClient = blobContainerClient;
             BlobClient = blobClient;

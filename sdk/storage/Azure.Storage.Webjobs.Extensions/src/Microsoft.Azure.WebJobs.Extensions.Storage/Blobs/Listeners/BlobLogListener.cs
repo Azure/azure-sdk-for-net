@@ -53,10 +53,10 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             return new BlobLogListener(blobClient, exceptionHandler, logger);
         }
 
-        public async Task<IEnumerable<BlobHierarchy<BlobBaseClient>>> GetRecentBlobWritesAsync(CancellationToken cancellationToken,
+        public async Task<IEnumerable<BlobWithContainer<BlobBaseClient>>> GetRecentBlobWritesAsync(CancellationToken cancellationToken,
             int hoursWindow = DefaultScanHoursWindow)
         {
-            List<BlobHierarchy<BlobBaseClient>> blobs = new List<BlobHierarchy<BlobBaseClient>>();
+            List<BlobWithContainer<BlobBaseClient>> blobs = new List<BlobWithContainer<BlobBaseClient>>();
 
             var time = DateTime.UtcNow; // will scan back 2 hours, which is enough to deal with clock sqew
             foreach (var blob in await ListRecentLogFilesAsync(_blobClient, time, hoursWindow, cancellationToken).ConfigureAwait(false))
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                 foreach (BlobPath path in filteredBlobs)
                 {
                     var container = _blobClient.GetBlobContainerClient(path.ContainerName);
-                    blobs.Add(new BlobHierarchy<BlobBaseClient>(container, container.GetBlockBlobClient(path.BlobName)));
+                    blobs.Add(new BlobWithContainer<BlobBaseClient>(container, container.GetBlockBlobClient(path.BlobName)));
                 }
             }
 

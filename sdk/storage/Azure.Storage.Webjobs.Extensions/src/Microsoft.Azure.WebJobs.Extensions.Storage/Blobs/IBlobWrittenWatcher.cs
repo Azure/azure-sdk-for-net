@@ -8,6 +8,6 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs
 {
     internal interface IBlobWrittenWatcher
     {
-        void Notify(BlobHierarchy<BlobBaseClient> blobWritten);
+        void Notify(BlobWithContainer<BlobBaseClient> blobWritten);
     }
 }

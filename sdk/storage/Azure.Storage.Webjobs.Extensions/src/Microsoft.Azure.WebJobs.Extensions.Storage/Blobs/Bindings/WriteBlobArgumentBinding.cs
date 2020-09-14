@@ -14,7 +14,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
 {
     internal static class WriteBlobArgumentBinding
     {
-        public static async Task<WatchableCloudBlobStream> BindStreamAsync(BlobHierarchy<BlobBaseClient> blob,
+        public static async Task<WatchableCloudBlobStream> BindStreamAsync(BlobWithContainer<BlobBaseClient> blob,
             ValueBindingContext context, IBlobWrittenWatcher blobWrittenWatcher)
         {
             var blockBlob = blob.BlobClient as BlockBlobClient;

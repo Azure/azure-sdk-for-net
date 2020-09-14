@@ -315,7 +315,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
             return container;
         }
 
-        private async Task<BlobHierarchy<BlobBaseClient>> GetBlobAsync(
+        private async Task<BlobWithContainer<BlobBaseClient>> GetBlobAsync(
                 BlobAttribute blobAttribute,
                 CancellationToken cancellationToken,
                 Type requestedType = null)
@@ -335,7 +335,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
             var blob = await container.GetBlobReferenceForArgumentTypeAsync(
                 boundPath.BlobName, requestedType, cancellationToken).ConfigureAwait(false);
 
-            return new BlobHierarchy<BlobBaseClient>(container, blob);
+            return new BlobWithContainer<BlobBaseClient>(container, blob);
         }
         private ParameterDescriptor ToBlobDescr(BlobAttribute attr, ParameterInfo parameter, INameResolver nameResolver)
         {

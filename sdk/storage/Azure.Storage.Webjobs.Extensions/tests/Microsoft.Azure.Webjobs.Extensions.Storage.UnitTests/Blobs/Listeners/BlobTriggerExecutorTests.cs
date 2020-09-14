@@ -57,7 +57,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             var blob = otherContainer.GetBlockBlobClient("nonmatch");
             var context = new BlobTriggerExecutorContext
             {
-                Blob = new BlobHierarchy<BlobBaseClient>(otherContainer, blob),
+                Blob = new BlobWithContainer<BlobBaseClient>(otherContainer, blob),
                 TriggerSource = BlobTriggerSource.ContainerScan
             };
 
@@ -458,7 +458,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             };
         }
 
-        private BlobHierarchy<BlobBaseClient> CreateBlobReference(string containerName, string blobName, bool createBlob = true)
+        private BlobWithContainer<BlobBaseClient> CreateBlobReference(string containerName, string blobName, bool createBlob = true)
         {
             var account = CreateAccount();
             var client = account.CreateBlobServiceClient();
@@ -469,10 +469,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             {
                 blobClient.Upload(new MemoryStream());
             }
-            return new BlobHierarchy<BlobBaseClient>(container, blobClient);
+            return new BlobWithContainer<BlobBaseClient>(container, blobClient);
         }
 
-        private static IBlobPathSource CreateBlobPath(BlobHierarchy<BlobBaseClient> blob)
+        private static IBlobPathSource CreateBlobPath(BlobWithContainer<BlobBaseClient> blob)
         {
             return new FixedBlobPathSource(blob.BlobClient.ToBlobPath());
         }

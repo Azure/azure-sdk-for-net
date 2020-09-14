@@ -82,7 +82,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             }
         }
 
-        public void Notify(BlobHierarchy<BlobBaseClient> blobWritten)
+        public void Notify(BlobWithContainer<BlobBaseClient> blobWritten)
         {
             ThrowIfDisposed();
             _blobsFoundFromScanOrNotification.Enqueue(new BlobNotification(blobWritten, null));
@@ -113,7 +113,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                 // assign a unique id for tracking
                 string pollId = Guid.NewGuid().ToString();
 
-                IEnumerable<BlobHierarchy<BlobBaseClient>> recentWrites = await logListener.GetRecentBlobWritesAsync(cancellationToken).ConfigureAwait(false);
+                IEnumerable<BlobWithContainer<BlobBaseClient>> recentWrites = await logListener.GetRecentBlobWritesAsync(cancellationToken).ConfigureAwait(false);
 
                 // Filter and group these by container for easier logging.
                 var recentWritesGroupedByContainer = recentWrites
@@ -122,11 +122,11 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 
                 foreach (var containerGroup in recentWritesGroupedByContainer)
                 {
-                    BlobHierarchy<BlobBaseClient>[] blobs = containerGroup.ToArray();
+                    BlobWithContainer<BlobBaseClient>[] blobs = containerGroup.ToArray();
 
                     Logger.ScanBlobLogs(_logger, containerGroup.Key, pollId, blobs.Length);
 
-                    foreach (BlobHierarchy<BlobBaseClient> blob in blobs)
+                    foreach (BlobWithContainer<BlobBaseClient> blob in blobs)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         await NotifyRegistrationsAsync(blob, pollId, cancellationToken).ConfigureAwait(false);
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             }
         }
 
-        private async Task NotifyRegistrationsAsync(BlobHierarchy<BlobBaseClient> blob, string pollId, CancellationToken cancellationToken)
+        private async Task NotifyRegistrationsAsync(BlobWithContainer<BlobBaseClient> blob, string pollId, CancellationToken cancellationToken)
         {
             // Log listening is client-wide and blob written notifications are host-wide, so filter out things that
             // aren't in the container list.
@@ -239,7 +239,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                     }
 
                     _blobsFoundFromScanOrNotification
-                        .Enqueue(new BlobNotification(new BlobHierarchy<BlobBaseClient>(container, container.GetBlobClient(item.Name)), pollId));
+                        .Enqueue(new BlobNotification(new BlobWithContainer<BlobBaseClient>(container, container.GetBlobClient(item.Name)), pollId));
                 }
             }
         }

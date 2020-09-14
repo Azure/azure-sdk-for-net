@@ -8,7 +8,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 {
     internal class BlobTriggerExecutorContext
     {
-        public BlobHierarchy<BlobBaseClient> Blob { get; set; }
+        public BlobWithContainer<BlobBaseClient> Blob { get; set; }
 
         /// <summary>
         /// The Id of the parent polling operation. This can be the ClientRequestId used to poll the container or

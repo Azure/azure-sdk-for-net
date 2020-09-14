@@ -10,10 +10,10 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
 {
     internal class BlobCommittedAction : IBlobCommitedAction
     {
-        private readonly BlobHierarchy<BlobBaseClient> _blob;
+        private readonly BlobWithContainer<BlobBaseClient> _blob;
         private readonly IBlobWrittenWatcher _blobWrittenWatcher;
 
-        public BlobCommittedAction(BlobHierarchy<BlobBaseClient> blob, IBlobWrittenWatcher blobWrittenWatcher)
+        public BlobCommittedAction(BlobWithContainer<BlobBaseClient> blob, IBlobWrittenWatcher blobWrittenWatcher)
         {
             _blob = blob;
             _blobWrittenWatcher = blobWrittenWatcher;

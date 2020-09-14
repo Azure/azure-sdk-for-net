@@ -8,13 +8,13 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 {
     internal class BlobNotification
     {
-        public BlobNotification(BlobHierarchy<BlobBaseClient> blob, string originalClientRequestId)
+        public BlobNotification(BlobWithContainer<BlobBaseClient> blob, string originalClientRequestId)
         {
             Blob = blob;
             PollId = originalClientRequestId;
         }
 
-        public BlobHierarchy<BlobBaseClient> Blob { get; private set; }
+        public BlobWithContainer<BlobBaseClient> Blob { get; private set; }
 
         /// <summary>
         /// The PollId when this blob was found. This can be null if the notification

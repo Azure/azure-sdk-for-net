@@ -158,7 +158,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             string functionId = "FunctionId";
             string eTag = TouchBlob(TestContainerName, TestBlobName);
             Mock<IBlobWrittenWatcher> mock = new Mock<IBlobWrittenWatcher>(MockBehavior.Strict);
-            mock.Setup(w => w.Notify(It.IsAny<BlobHierarchy<BlobBaseClient>>()))
+            mock.Setup(w => w.Notify(It.IsAny<BlobWithContainer<BlobBaseClient>>()))
                 .Verifiable();
             IBlobWrittenWatcher blobWrittenWatcher = mock.Object;
 

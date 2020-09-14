@@ -147,7 +147,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             foreach (var newBlob in newBlobs)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await NotifyRegistrationsAsync(new BlobHierarchy<BlobBaseClient>(container, newBlob), failedNotifications, clientRequestId, cancellationToken).ConfigureAwait(false);
+                await NotifyRegistrationsAsync(new BlobWithContainer<BlobBaseClient>(container, newBlob), failedNotifications, clientRequestId, cancellationToken).ConfigureAwait(false);
             }
 
             // if the 'LatestModified' has changed, update it in the manager
@@ -171,7 +171,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             }
         }
 
-        public void Notify(BlobHierarchy<BlobBaseClient> blobWritten)
+        public void Notify(BlobWithContainer<BlobBaseClient> blobWritten)
         {
             ThrowIfDisposed();
             _blobsFoundFromScanOrNotification.Enqueue(new BlobNotification(blobWritten, null));
@@ -290,7 +290,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             return newBlobs;
         }
 
-        private async Task NotifyRegistrationsAsync(BlobHierarchy<BlobBaseClient> blob, ICollection<BlobNotification> failedNotifications, string clientRequestId, CancellationToken cancellationToken)
+        private async Task NotifyRegistrationsAsync(BlobWithContainer<BlobBaseClient> blob, ICollection<BlobNotification> failedNotifications, string clientRequestId, CancellationToken cancellationToken)
         {
             // Blob written notifications are host-wide, so filter out things that aren't in the container list.
             if (!_scanInfo.TryGetValue(blob.BlobContainerClient, out ContainerScanInfo containerScanInfo))
