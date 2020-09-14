@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -277,9 +278,9 @@ namespace Azure.Messaging.EventHubs.Amqp
             // default to the maximum size allowed by the link.
 
             options.MaximumSizeInBytes ??= MaximumMessageSize;
-
             Argument.AssertInRange(options.MaximumSizeInBytes.Value, EventHubProducerClient.MinimumBatchSizeLimit, MaximumMessageSize.Value, nameof(options.MaximumSizeInBytes));
-            return new AmqpEventBatch(MessageConverter, options);
+
+            return new AmqpEventBatch(MessageConverter, options, IsSequenceMeasurementRequired(ActiveFeatures));
         }
 
         /// <summary>
@@ -573,6 +574,18 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             return link;
         }
+
+        /// <summary>
+        ///   Determines if measuring a sequence number is required to accurately calculate
+        ///   the size of an event.
+        /// </summary>
+        ///
+        /// <param name="activeFeatures">The set of features which are active for the producer.</param>
+        ///
+        /// <returns><c>true</c> if a sequence number should be measured; otherwise, <c>false</c>.</returns>
+        ///
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static bool IsSequenceMeasurementRequired(TransportProducerFeatures activeFeatures) => ((activeFeatures & TransportProducerFeatures.IdempotentPublishing) != 0);
 
         /// <summary>
         ///   Uses the minimum value of the two specified <see cref="TimeSpan" /> instances.
