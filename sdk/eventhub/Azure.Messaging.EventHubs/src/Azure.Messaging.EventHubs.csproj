@@ -13,7 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.Amqp" />
+    <!-- Version overrides are specific to the v5.3.0-beta.1 release from the branch; this will be removed and the package properties updated when merged to master -->
+    <PackageReference Include="Microsoft.Azure.Amqp" VersionOverride="2.4.6"/>
+    <!-- END v5.3.0-beta.1 SPECIFIC OVERRIDES -->
+
     <PackageReference Include="System.Diagnostics.DiagnosticSource" />
     <PackageReference Include="System.Reflection.TypeExtensions" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
@@ -58,7 +61,7 @@
   <!-- Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" /> -->
 
   <!-- 
-    THIS SECTION IS SPECIFIC TO THE v5.2.0 RELEASE 
+    THIS SECTION IS SPECIFIC TO THE v5.3.0-beta.1 RELEASE
 
     These are normally set via the above reference to Azure.Core.props, but have been included here
     to allow a specific override to the Azure.Core version for Event Hubs only; when merged back to 
@@ -79,5 +82,5 @@
   <ItemGroup Condition="'$(Nullable)'=='enable' Or '$(UseAzureCoreNullableAttributes)'=='true'">
     <Compile Include="$(AzureCoreSharedSources)NullableAttributes.cs" />
   </ItemGroup>
-  <!-- END v5.2.0 SPECIFIC OVERRIDES -->
+  <!-- END v5.3.0-beta.1 SPECIFIC OVERRIDES -->
 </Project>

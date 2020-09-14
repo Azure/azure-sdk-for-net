@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Azure Event Hubs is a highly scalable publish-subscribe service that can ingest millions of events per second and stream them to multiple consumers.  This library extends its Event Processor with durable storage for checkpoint information using Azure Blob storage.  For more information about Event Hubs, see https://azure.microsoft.com/en-us/services/event-hubs/</Description>
-    <Version>5.2.0</Version>
-    <ApiCompatVersion>5.1.0</ApiCompatVersion>
+    <Version>5.3.0-beta.1</Version>
+    <ApiCompatVersion>5.2.0</ApiCompatVersion>
     <PackageTags>Azure;Event Hubs;EventHubs;.NET;Event Processor;EventProcessor;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
@@ -10,13 +10,16 @@
   <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>
-
+  
   <ItemGroup>
-    <!-- Version overrides are specific to the v5.2.0 release from the branch; this will be removed and the package properties updated when merged to master -->
-    <PackageReference Include="Azure.Messaging.EventHubs" VersionOverride="5.2.0" /> 
-    <PackageReference Include="Azure.Storage.Blobs" VersionOverride="12.6.0"/>
-    <!-- END v5.2.0 SPECIFIC OVERRIDES -->
+    <!-- Version overrides are specific to the v5.3.0-beta.1 release from the branch; this will be removed and the package properties updated when merged to master -->
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.EventHubs\src\Azure.Messaging.EventHubs.csproj" /><!-- Needed until core v5.3.0-beta.1 package is published -->
+    <!--PackageReference Include="Azure.Messaging.EventHubs" VersionOverride="5.2.0" /-->
 
+    <PackageReference Include="Azure.Storage.Blobs" VersionOverride="12.6.0"/>
+    <PackageReference Include="Microsoft.Azure.Amqp" VersionOverride="2.4.6"/>
+    <!-- END v5.3.0-beta.1 SPECIFIC OVERRIDES -->
+      
     <PackageReference Include="Microsoft.Azure.Amqp" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" />
     <PackageReference Include="System.Reflection.TypeExtensions" />
@@ -60,7 +63,7 @@
   <!-- <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" /> -->
 
   <!-- 
-    THIS SECTION IS SPECIFIC TO THE v5.2.0 RELEASE 
+    THIS SECTION IS SPECIFIC TO THE v5.3.0-beta.1 RELEASE
 
     These are normally set via the above reference to Azure.Core.props, but have been included here
     to allow a specific override to the Azure.Core version for Event Hubs only; when merged back to 
@@ -81,5 +84,5 @@
   <ItemGroup Condition="'$(Nullable)'=='enable' Or '$(UseAzureCoreNullableAttributes)'=='true'">
     <Compile Include="$(AzureCoreSharedSources)NullableAttributes.cs" />
   </ItemGroup>
-  <!-- END v5.2.0 SPECIFIC OVERRIDES -->
+  <!-- END v5.3.0-beta.1 SPECIFIC OVERRIDES -->
 </Project>

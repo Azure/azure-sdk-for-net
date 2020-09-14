@@ -12,6 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- Version overrides are specific to the v5.3.0-beta.1 release from the branch; this will be removed and the package properties updated when merged to master -->
+    <PackageReference Include="Microsoft.Azure.Amqp" VersionOverride="2.4.6"/>
+    <!-- END v5.3.0-beta.1 SPECIFIC OVERRIDES -->
+
     <PackageReference Include="Azure.Identity" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="System.Net.WebSockets.Client" />
@@ -22,7 +26,6 @@
     <PackageReference Include="Polly" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
-    <PackageReference Include="Microsoft.Azure.Amqp" />
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" />
     <PackageReference Include="Microsoft.Azure.Management.EventHub" />
     <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" />
