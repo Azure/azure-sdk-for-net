@@ -53,8 +53,6 @@ jobs:
     condition: ne(variables['Skip.Analyze'], true)
     variables:
       - template: ../variables/globals.yml
-    dependsOn:
-      - Build
     pool:
       vmImage: ubuntu-18.04
     steps:
