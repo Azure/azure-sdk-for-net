@@ -7,9 +7,9 @@ using Xunit;
 namespace Microsoft.Azure.WebJobs.Host.TestCommon
 {
     // TODO (kasobol-msft) find better way.
-    public class LiveFactAttribute : FactAttribute
+    public class LiveTheoryAttribute : TheoryAttribute
     {
-        public LiveFactAttribute()
+        public LiveTheoryAttribute()
         {
             string connectionString = Environment.GetEnvironmentVariable("AzureWebJobsStorage");
             if (string.IsNullOrWhiteSpace(connectionString))

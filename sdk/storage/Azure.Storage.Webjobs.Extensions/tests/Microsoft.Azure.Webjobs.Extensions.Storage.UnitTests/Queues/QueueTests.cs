@@ -398,7 +398,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 "Object element types are not supported.");
         }
 
-        [Theory]
+        [AzuriteTheory]
         [InlineData(typeof(int), "System.Int32")]
         [InlineData(typeof(DateTime), "System.DateTime")]
         [InlineData(typeof(IEnumerable<string>), "System.Collections.Generic.IEnumerable`1[System.String]")] // Should use ICollector<string> instead

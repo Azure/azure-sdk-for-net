@@ -213,7 +213,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             Assert.Equal(1, _numBlobsRead);
         }
 
-        [Theory]
+        [LiveTheory]
         [InlineData("StringBinding_Block")]
         [InlineData("StringBinding_Page")]
         [InlineData("StringBinding_Append")]
@@ -224,7 +224,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             Assert.Equal(1, _numBlobsRead);
         }
 
-        [Theory]
+        [LiveTheory]
         [InlineData("StreamBindingReadable_Block")]
         [InlineData("StreamBindingReadable_Page")]
         [InlineData("StreamBindingReadable_Append")]
@@ -250,7 +250,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             await blob.UploadTextAsync(TestData);
         }
 
-        [Theory]
+        [LiveTheory]
         [InlineData("OutStringBinding_Page")]
         [InlineData("OutStringBinding_Append")]
         public async Task BindToOutString_Fails(string functionName)
@@ -278,7 +278,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             await blob.UploadTextAsync(TestData);
         }
 
-        [Theory]
+        [LiveTheory]
         [InlineData("TextWriterBinding_Page")]
         [InlineData("TextWriterBinding_Append")]
         public async Task BindToTextWriter_Fails(string functionName)

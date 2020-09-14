@@ -7,9 +7,9 @@ using Xunit;
 namespace Microsoft.Azure.WebJobs.Host.TestCommon
 {
     // TODO (kasobol-msft) find better way.
-    public class AzuriteFactAttribute : FactAttribute
+    public class AzuriteTheoryAttribute : TheoryAttribute
     {
-        public AzuriteFactAttribute()
+        public AzuriteTheoryAttribute()
         {
             string azuriteLocation = Environment.GetEnvironmentVariable("AzureWebJobsStorageAzuriteLocation");
             if (string.IsNullOrWhiteSpace(azuriteLocation))

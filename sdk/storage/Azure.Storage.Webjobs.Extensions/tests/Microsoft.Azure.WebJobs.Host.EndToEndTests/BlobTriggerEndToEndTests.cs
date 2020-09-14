@@ -164,7 +164,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
-        [Theory]
+        [LiveTheory]
         [InlineData("AzureWebJobsSecondaryStorage")]
         [InlineData("AzureWebJobsStorage")]
         public async Task PoisonMessage_CreatedInCorrectStorageAccount(string storageAccountSetting)

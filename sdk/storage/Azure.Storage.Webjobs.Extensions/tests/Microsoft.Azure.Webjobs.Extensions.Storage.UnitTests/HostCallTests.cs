@@ -45,7 +45,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             this.azuriteFixture = azuriteFixture;
         }
 
-        [Theory]
+        [AzuriteTheory]
         [InlineData("FuncWithString")]
         [InlineData("FuncWithTextReader")]
         [InlineData("FuncWithStreamRead")]
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.False(await blob.ExistsAsync());
         }
 
-        [Theory]
+        [AzuriteTheory]
         [InlineData("FuncWithOutString")]
         [InlineData("FuncWithStreamWriteNoop")]
         [InlineData("FuncWithTextWriter")]
@@ -594,7 +594,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
 
-        [Theory]
+        [AzuriteTheory]
         [InlineData("FuncWithOutCloudQueueMessage", TestQueueMessage)]
         [InlineData("FuncWithOutByteArray", TestQueueMessage)]
         [InlineData("FuncWithOutString", TestQueueMessage)]
@@ -643,7 +643,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             AssertMessageSent(new StructMessage { Value = TestQueueMessage }, queue);
         }
 
-        [Theory]
+        [AzuriteTheory]
         [InlineData("FuncWithOutCloudQueueMessageNull")]
         [InlineData("FuncWithOutByteArrayNull")]
         [InlineData("FuncWithOutStringNull")]

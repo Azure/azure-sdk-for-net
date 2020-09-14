@@ -92,7 +92,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             Assert.Equal(TestData, resultMessage.MessageText);
         }
 
-        [Theory]
+        [LiveTheory]
         [InlineData("QueueToBlob_DifferentAccounts_PrimaryToSecondary_NameResolver")]
         [InlineData("QueueToBlob_DifferentAccounts_PrimaryToSecondary_FullSettingName")]
         public async Task QueueToBlob_DifferentAccounts_PrimaryToSecondary_NameResolver_Succeeds(string methodName)
