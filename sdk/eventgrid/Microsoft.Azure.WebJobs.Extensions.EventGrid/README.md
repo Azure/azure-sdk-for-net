@@ -1,4 +1,4 @@
-# WebJobs EventGrid client library for .NET
+# Azure WebJobs EventGrid client library for .NET
 
 TODO
 
