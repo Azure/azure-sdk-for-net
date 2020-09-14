@@ -30,10 +30,6 @@ jobs:
           RootFolder: '.'
           BuildSHA: $(Build.SourceVersion)
           RepoId: 'Azure/azure-sdk-for-net'
-      - task: UseDotNet@2
-        displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
-        inputs:
-          version: "$(DotNetCoreSDKVersion)"
       - script: >-
           dotnet pack eng/service.proj -o $(Build.ArtifactStagingDirectory) -warnaserror /p:ServiceDirectory=${{parameters.ServiceToBuild}}
           /p:PublicSign=false $(VersioningProperties) /p:Configuration=$(BuildConfiguration) /p:CommitSHA=$(Build.SourceVersion)
@@ -74,22 +70,6 @@ jobs:
           pip install doc-warden==$(DocWardenVersion)
           ward scan -d $(Build.SourcesDirectory) -c $(Build.SourcesDirectory)/eng/.docsettings.yml
         displayName: "Verify Readmes"
-      - task: UseDotNet@2
-        displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
-        inputs:
-          version: "$(DotNetCoreSDKVersion)"
-      - task: UseDotNet@2
-        displayName: "Use .NET Core runtime $(DotNetCoreRuntimeVersion)"
-        inputs:
-          packageType: runtime
-          version: "$(DotNetCoreRuntimeVersion)"
-      - task: DownloadPipelineArtifact@2
-        displayName: "Download Build Artifacts"
-        condition: succeededOrFailed()
-        inputs:
-          artifact: packages
-          path: $(Pipeline.Workspace)/packages
-          patterns: "*.nupkg"
       - template: /eng/common/pipelines/templates/steps/verify-path-length.yml
         parameters:
           SourceDirectory: $(Build.SourcesDirectory)
@@ -149,19 +129,11 @@ jobs:
       vmImage: "$(OSVmImage)"
     steps:
       - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
-      - task: DotNetCoreInstaller@2
-        displayName: "Use .NET Core runtime $(DotNetCoreRuntimeVersion)"
-        inputs:
-          packageType: runtime
-          version: "$(DotNetCoreRuntimeVersion)"
-      - task: DotNetCoreInstaller@2
-        displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
-        inputs:
-          packageType: sdk
-          version: "$(DotNetCoreSDKVersion)"
       - script: >-
-          dotnet test eng/service.proj --filter TestCategory!=Live --framework $(TestTargetFramework) --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
-          /p:ServiceDirectory=${{parameters.ServiceToBuild}} /p:IncludeSrc=false /p:IncludeSamples=false /p:Configuration=$(BuildConfiguration) $(ConvertToProjectReferenceOption) /p:CollectCoverage=$(CollectCoverage)
+          dotnet test eng/service.proj --filter TestCategory!=Live --framework $(TestTargetFramework)
+          --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
+          /p:ServiceDirectory=${{parameters.ServiceToBuild}} /p:IncludeSrc=false /p:IncludeSamples=false
+          /p:Configuration=$(BuildConfiguration) $(ConvertToProjectReferenceOption) /p:CollectCoverage=$(CollectCoverage)
         displayName: "Build & Test ($(TestTargetFramework))"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1

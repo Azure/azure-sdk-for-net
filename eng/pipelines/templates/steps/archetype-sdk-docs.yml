@@ -1,8 +1,4 @@
 steps:
-  - task: UseDotNet@2
-    displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
-    inputs:
-      version: $(DotNetCoreSDKVersion)
   - pwsh: |
       # Download and Extract or restore Packages required for Doc Generation
       Write-Host "Download and Extract mdoc to Build.BinariesDirectory/mdoc"

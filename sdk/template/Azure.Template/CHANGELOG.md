@@ -1,4 +1,54 @@
 # Release History
+# 1.0.3-beta.11 (Unreleased)
+
+
+## 1.0.3-beta.10 (2020-09-09)
+- Enable the master link replacement feature, attempt 3
+
+## 1.0.3-beta.9 (2020-09-09)
+- Enable the master link replacement feature, attempt 2
+
+## 1.0.3-beta.8 (2020-09-09)
+- Enable the master link replacement feature, attempt 1
+
+## 1.0.3-beta.7 (2020-09-04)
+- Test release tag replacement
+
+## 1.0.3-beta.6 (2020-09-03)
+- Test new alpha beta versioning
+
+## 1.0.3-beta.5 (2020-09-03)
+- Test new alpha beta versioning
+
+## 1.0.3-beta.4 (2020-09-01)
+- Test new alpha beta versioning
+
+## 1.0.3-beta.3 (2020-08-31)
+- Test new alpha beta versioning
+
+## 1.0.3-beta.2 (2020-08-30)
+- Test new alpha beta versioning
+
+## 1.0.3-beta.7 (2020-09-04)
+- Test release tag replacement
+
+## 1.0.3-beta.6 (2020-09-03)
+- Test new alpha beta versioning
+
+## 1.0.3-beta.5 (2020-09-03)
+- Test new alpha beta versioning
+
+## 1.0.3-beta.4 (2020-09-01)
+- Test new alpha beta versioning
+
+## 1.0.3-beta.3 (2020-08-31)
+- Test new alpha beta versioning
+
+## 1.0.3-beta.2 (2020-08-30)
+- Test new alpha beta versioning
+
+## 1.0.3-beta.1 (2020-08-27)
+- Test new alpha beta versioning
 
 ## 1.0.2-preview.15 (2020-06-29)
 - Test release pipeline

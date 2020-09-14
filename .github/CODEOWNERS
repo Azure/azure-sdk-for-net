@@ -31,7 +31,7 @@
 /sdk/cognitiveservices/vision.face/             @TFR258 
 
 # PRLabel: %DigitalTwins
-/sdk/digitaltwins/                              @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @prmathur-microsoft @bikamani @barustum
+/sdk/digitaltwins/                              @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @bikamani @barustum
 
 # PRLabel: %Event Grid
 /sdk/eventgrid/                                 @Kishp01 @ahamad-MS
@@ -58,7 +58,7 @@
 
 # PRLabel: %Storage
 /sdk/storage/                                   @tg-msft
-/sdk/storage/Azure.Storage.*/                   @amishra-dev @seanmcc-msft @amnguye @kasobol-msft
+/sdk/storage/Azure.Storage.*/                   @amishra-dev @seanmcc-msft @amnguye @kasobol-msft @tg-msft
 
 # PRLabel: %Tables
 /sdk/tables/                                    @christothes
@@ -73,11 +73,11 @@
 /common/SmokeTests/                             @AlexGhiondea @schaabs @heaths @tg-msft @jsquire
 
 # Management Plane
-/**/*Management*/                               @allenjzhang  @m-nash @markcowl
-/**/Azure.ResourceManager*/                     @allenjzhang  @m-nash @markcowl
+/**/*Management*/                               @allenjzhang @m-nash @markcowl @YalinLi0312 @bquantump @nisha-bhatia
+/**/Azure.ResourceManager*/                     @allenjzhang @m-nash @markcowl @YalinLi0312 @bquantump @nisha-bhatia
 
 # Reviewers to double check any API changes
-/sdk/**/api/                                    @KrzysztofCwalina @pakrym @tg-msft
+/sdk/**/api/                                    @KrzysztofCwalina @tg-msft
 
 # Update AutoRest C#
 /eng/CodeGeneration.targets                     @pakrym @ShivangiReja

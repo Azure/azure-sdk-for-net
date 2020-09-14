@@ -184,7 +184,6 @@ namespace Azure.Core.Tests
 
             Guid batchGuid = Guid.NewGuid();
             var content = new MultipartContent(Mixed, $"batch_{batchGuid}");
-            content.ApplyToRequest(request);
 
             Guid changesetGuid = Guid.NewGuid();
             var changeset = new MultipartContent(Mixed, $"changeset_{changesetGuid}");
@@ -228,7 +227,7 @@ namespace Azure.Core.Tests
             patchReq.Content = RequestContent.Create(Encoding.UTF8.GetBytes(patchBody));
             changeset.Add(new RequestRequestContent(patchReq), new Dictionary<string, string> { { HttpHeader.Names.ContentType, "application/http" }, { cteHeaderName, Binary } });
 
-            request.Content = content;
+            content.ApplyToRequest(request);
             var memStream = new MemoryStream();
             await content.WriteToAsync(memStream, default);
             memStream.Position = 0;
@@ -249,7 +248,6 @@ namespace Azure.Core.Tests
                 $"{HttpHeader.Names.ContentType}: {ApplicationJsonOdata}\r\n" +
                 $"{HttpHeader.Names.Accept}: {ApplicationJson}\r\n" +
                 $"{DataServiceVersion}: {Three0}\r\n" +
-                $"{HttpHeader.Names.ContentLength}: 75\r\n" +
                 $"\r\n" +
                 $"{post1Body}\r\n" +
                 $"--changeset_{changesetGuid}\r\n" +
@@ -261,7 +259,6 @@ namespace Azure.Core.Tests
                 $"{HttpHeader.Names.ContentType}: {ApplicationJsonOdata}\r\n" +
                 $"{HttpHeader.Names.Accept}: {ApplicationJson}\r\n" +
                 $"{DataServiceVersion}: {Three0}\r\n" +
-                $"{HttpHeader.Names.ContentLength}: 75\r\n" +
                 $"\r\n" +
                 $"{post2Body}\r\n" +
                 $"--changeset_{changesetGuid}\r\n" +
@@ -273,7 +270,6 @@ namespace Azure.Core.Tests
                 $"{HttpHeader.Names.ContentType}: {ApplicationJsonOdata}\r\n" +
                 $"{HttpHeader.Names.Accept}: {ApplicationJson}\r\n" +
                 $"{DataServiceVersion}: {Three0}\r\n" +
-                $"{HttpHeader.Names.ContentLength}: 82\r\n" +
                 $"\r\n" +
                 $"{patchBody}\r\n" +
                 $"--changeset_{changesetGuid}--\r\n" +

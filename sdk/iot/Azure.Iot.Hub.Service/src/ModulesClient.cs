@@ -21,6 +21,7 @@ namespace Azure.Iot.Hub.Service
         private readonly DevicesRestClient _devicesRestClient;
         private readonly ModulesRestClient _modulesRestClient;
         private readonly QueryClient _queryClient;
+        private readonly BulkRegistryRestClient _bulkRegistryClient;
 
         /// <summary>
         /// Initializes a new instance of ModulesClient.
@@ -34,16 +35,19 @@ namespace Azure.Iot.Hub.Service
         /// <param name="devicesRestClient"> The REST client to perform bulk operations on the module. </param>
         /// <param name="modulesRestClient"> The REST client to perform module and module twin operations. </param>
         /// <param name="queryClient"> The convenience layer query client to perform query operations for the device. </param>
+        /// <param name="bulkRegistryClient"> The convenience layer client to perform bulk operations on modules. </param>
         /// </summary>
-        internal ModulesClient(DevicesRestClient devicesRestClient, ModulesRestClient modulesRestClient, QueryClient queryClient)
+        internal ModulesClient(DevicesRestClient devicesRestClient, ModulesRestClient modulesRestClient, QueryClient queryClient, BulkRegistryRestClient bulkRegistryClient)
         {
             Argument.AssertNotNull(devicesRestClient, nameof(devicesRestClient));
             Argument.AssertNotNull(modulesRestClient, nameof(modulesRestClient));
             Argument.AssertNotNull(queryClient, nameof(queryClient));
+            Argument.AssertNotNull(bulkRegistryClient, nameof(bulkRegistryClient));
 
             _devicesRestClient = devicesRestClient;
             _modulesRestClient = modulesRestClient;
             _queryClient = queryClient;
+            _bulkRegistryClient = bulkRegistryClient;
         }
 
         /// <summary>
@@ -189,7 +193,7 @@ namespace Azure.Iot.Hub.Service
                     ImportMode = ExportImportDeviceImportMode.Create
                 }.WithTags(x.Value.Tags).WithPropertiesFrom(x.Value.Properties));
 
-            return _devicesRestClient.BulkRegistryOperationsAsync(registryOperations, cancellationToken);
+            return _bulkRegistryClient.UpdateRegistryAsync(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -213,7 +217,7 @@ namespace Azure.Iot.Hub.Service
                     ImportMode = ExportImportDeviceImportMode.Create
                 }.WithTags(x.Value.Tags).WithPropertiesFrom(x.Value.Properties));
 
-            return _devicesRestClient.BulkRegistryOperations(registryOperations, cancellationToken);
+            return _bulkRegistryClient.UpdateRegistry(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -235,7 +239,7 @@ namespace Azure.Iot.Hub.Service
                     ImportMode = ExportImportDeviceImportMode.Create
                 });
 
-            return _devicesRestClient.BulkRegistryOperationsAsync(registryOperations, cancellationToken);
+            return _bulkRegistryClient.UpdateRegistryAsync(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -257,7 +261,7 @@ namespace Azure.Iot.Hub.Service
                     ImportMode = ExportImportDeviceImportMode.Create
                 });
 
-            return _devicesRestClient.BulkRegistryOperations(registryOperations, cancellationToken);
+            return _bulkRegistryClient.UpdateRegistry(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -281,7 +285,7 @@ namespace Azure.Iot.Hub.Service
                     ImportMode = precondition == BulkIfMatchPrecondition.Unconditional ? ExportImportDeviceImportMode.Update : ExportImportDeviceImportMode.UpdateIfMatchETag
                 });
 
-            return _devicesRestClient.BulkRegistryOperationsAsync(registryOperations, cancellationToken);
+            return _bulkRegistryClient.UpdateRegistryAsync(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -305,7 +309,7 @@ namespace Azure.Iot.Hub.Service
                     ImportMode = precondition == BulkIfMatchPrecondition.Unconditional ? ExportImportDeviceImportMode.Update : ExportImportDeviceImportMode.UpdateIfMatchETag
                 });
 
-            return _devicesRestClient.BulkRegistryOperations(registryOperations, cancellationToken);
+            return _bulkRegistryClient.UpdateRegistry(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -331,7 +335,7 @@ namespace Azure.Iot.Hub.Service
                         : ExportImportDeviceImportMode.DeleteIfMatchETag
                 });
 
-            return _devicesRestClient.BulkRegistryOperationsAsync(registryOperations, cancellationToken);
+            return _bulkRegistryClient.UpdateRegistryAsync(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -357,7 +361,7 @@ namespace Azure.Iot.Hub.Service
                         : ExportImportDeviceImportMode.DeleteIfMatchETag
                 });
 
-            return _devicesRestClient.BulkRegistryOperations(registryOperations, cancellationToken);
+            return _bulkRegistryClient.UpdateRegistry(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -464,7 +468,7 @@ namespace Azure.Iot.Hub.Service
                     ImportMode = precondition == BulkIfMatchPrecondition.Unconditional ? ExportImportDeviceImportMode.UpdateTwin : ExportImportDeviceImportMode.UpdateTwinIfMatchETag
                 }.WithTags(x.Tags).WithPropertiesFrom(x.Properties));
 
-            return _devicesRestClient.BulkRegistryOperationsAsync(registryOperations, cancellationToken);
+            return _bulkRegistryClient.UpdateRegistryAsync(registryOperations, cancellationToken);
         }
 
         /// <summary>
@@ -490,7 +494,7 @@ namespace Azure.Iot.Hub.Service
                         : ExportImportDeviceImportMode.UpdateTwinIfMatchETag
                 }.WithTags(x.Tags).WithPropertiesFrom(x.Properties));
 
-            return _devicesRestClient.BulkRegistryOperations(registryOperations, cancellationToken);
+            return _bulkRegistryClient.UpdateRegistry(registryOperations, cancellationToken);
         }
 
         /// <summary>

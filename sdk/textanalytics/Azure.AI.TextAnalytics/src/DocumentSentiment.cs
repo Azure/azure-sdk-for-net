@@ -58,7 +58,7 @@ namespace Azure.AI.TextAnalytics
             var sentences = new List<SentenceSentiment>();
             foreach (var sentence in internalSentences)
             {
-                sentences.Add(new SentenceSentiment(sentence));
+                sentences.Add(new SentenceSentiment(sentence, internalSentences));
             }
             return sentences;
         }

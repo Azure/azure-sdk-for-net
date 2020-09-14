@@ -221,7 +221,7 @@ namespace NetApp.Tests.ResourceTests
             {
                 var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 
-                // create the pool
+                // create the pool  
                 var pool = ResourceUtils.CreatePool(netAppMgmtClient);
                 Assert.Equal("Premium", pool.ServiceLevel);
                 Assert.Null(pool.Tags);

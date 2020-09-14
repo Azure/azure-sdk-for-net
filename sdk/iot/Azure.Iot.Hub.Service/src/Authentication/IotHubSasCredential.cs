@@ -5,7 +5,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.Iot.Hub.Service.Authentication
 {
@@ -144,11 +143,23 @@ namespace Azure.Iot.Hub.Service.Authentication
             }
         }
 
+        /// <summary>
+        /// Gets an Azure.Core.AccessToken for the specified set of scopes.
+        /// </summary>
+        /// <param name="requestContext">The Azure.Core.TokenRequestContext with authentication information.</param>
+        /// <param name="cancellationToken">The System.Threading.CancellationToken to use.</param>
+        /// <returns> A valid Azure token <see cref="AccessToken"/>.</returns>
         public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
             return new ValueTask<AccessToken>(GetSasTokenAsync(cancellationToken));
         }
 
+        /// <summary>
+        /// Gets an Azure.Core.AccessToken for the specified set of scopes.
+        /// </summary>
+        /// <param name="requestContext">The Azure.Core.TokenRequestContext with authentication information.</param>
+        /// <param name="cancellationToken">The System.Threading.CancellationToken to use.</param>
+        /// <returns> A valid Azure token <see cref="AccessToken"/>.</returns>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
             return GetSasTokenAsync(cancellationToken);

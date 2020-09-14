@@ -1,7 +1,8 @@
 # Release History
 
-## 3.1.0-preview.1 (Unreleased)
-
+## 3.1.0-beta.1 (Unreleased)
+- It defaults to the latest supported API version, which currently is `2.1-preview.1`.
+Note that new functionality hasn't been implemented in the client library.
 
 ## 3.0.0 (2020-08-20)
 

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -17,7 +16,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("ver");
-            writer.WriteNumberValue(Ver);
+            writer.WriteNumberValue(Version);
             writer.WritePropertyName("id");
             writer.WriteStringValue(Id);
             if (Optional.IsDefined(Name))
@@ -69,90 +68,6 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
                 writer.WriteStringValue(Test);
             }
             writer.WriteEndObject();
-        }
-
-        internal static RequestData DeserializeRequestData(JsonElement element)
-        {
-            int ver = default;
-            string id = default;
-            Optional<string> name = default;
-            string duration = default;
-            bool success = default;
-            string responseCode = default;
-            Optional<string> source = default;
-            Optional<string> url = default;
-            Optional<IDictionary<string, string>> properties = default;
-            Optional<IDictionary<string, double>> measurements = default;
-            Optional<string> test = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("ver"))
-                {
-                    ver = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("duration"))
-                {
-                    duration = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("success"))
-                {
-                    success = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("responseCode"))
-                {
-                    responseCode = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("source"))
-                {
-                    source = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("url"))
-                {
-                    url = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("properties"))
-                {
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    properties = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("measurements"))
-                {
-                    Dictionary<string, double> dictionary = new Dictionary<string, double>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetDouble());
-                    }
-                    measurements = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("test"))
-                {
-                    test = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new RequestData(test.Value, ver, id, name.Value, duration, success, responseCode, source.Value, url.Value, Optional.ToDictionary(properties), Optional.ToDictionary(measurements));
         }
     }
 }

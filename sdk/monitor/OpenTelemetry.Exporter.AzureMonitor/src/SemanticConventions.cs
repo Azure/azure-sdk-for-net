@@ -114,6 +114,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
         public const string AttributeFaasTrigger = "faas.trigger";
         public const string AttributeFaasExecution = "faas.execution";
+        public const string AttributeFaasColdStart = "faas.coldstart";
         public const string AttributeFaasDocumentCollection = "faas.document.collection";
         public const string AttributeFaasDocumentOperation = "faas.document.operation";
         public const string AttributeFaasDocumentTime = "faas.document.time";

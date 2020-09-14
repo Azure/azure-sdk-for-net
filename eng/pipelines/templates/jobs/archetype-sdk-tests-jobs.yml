@@ -55,18 +55,6 @@ jobs:
 
         - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
 
-        - task: UseDotNet@2
-          displayName: "Use .NET Core runtime $(DotNetCoreRuntimeVersion)"
-          inputs:
-            packageType: runtime
-            version: "$(DotNetCoreRuntimeVersion)"
-
-        - task: UseDotNet@2
-          displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
-          inputs:
-            packageType: sdk
-            version: "$(DotNetCoreSDKVersion)"
-
         - template: /eng/common/TestResources/deploy-test-resources.yml
           parameters:
             Location: ${{ parameters.Location }}
