@@ -50,9 +50,9 @@
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" PrivateAssets="all" IsImplicitlyDefined="true" />
   </ItemGroup>
 
-  <!-- Add Client SDK Analyzers -->
+  <!-- Add Client SDK Tools -->
   <ItemGroup>
-    <PackageReference Condition="'$(IsClientLibrary)' == 'true' AND '$(TemporaryUsePreviousGeneratorVersion)' != 'true'" Include="AutoRest.CSharp.V3" PrivateAssets="All" />
+    <PackageReference Condition="'$(IsClientLibrary)' == 'true'" Include="AutoRest.CSharp.V3" PrivateAssets="All" />
 
     <PackageReference Condition="'$(GenerateAPIListing)' == 'true'" Include="Microsoft.DotNet.GenAPI" PrivateAssets="All" />
 
