@@ -152,4 +152,12 @@
     <!-- Disable doc comments for test projects -->
     <DocumentationFile></DocumentationFile>
   </PropertyGroup>
+
+  <!-- Code generation settings -->
+  <PropertyGroup>
+    <!-- Don't use code generator bundled Azure.Core shared source for code generation -->
+    <AzureCoreSharedCodeDirectory>$(AzureCoreSharedSources)</AzureCoreSharedCodeDirectory>
+    <!-- Don't use code generator bundled Azure.Core shared source when building, projects in this repo include individual sources when needed  -->
+    <IncludeAzureCoreSharedCode>false</IncludeAzureCoreSharedCode>
+  </PropertyGroup>
 </Project>

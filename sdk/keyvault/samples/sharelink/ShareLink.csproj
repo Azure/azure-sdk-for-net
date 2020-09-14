@@ -22,6 +22,12 @@
     <PackageReference Include="System.CommandLine" VersionOverride="2.0.0-beta1.20371.2" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
+  
+  <ItemGroup Condition="'$(IsSample)' == 'true'">
+    <PackageReference Include="AutoRest.CSharp.V3" PrivateAssets="All" />
+  </ItemGroup>
+
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\..\eng\Packages.Data.props" Condition="'$(IsSample)' == 'true'" />
 
   <ItemGroup Condition="'$(IsClientLibrary)' != 'true'">
     <!-- Define package versions when not generating source (uses central package versions) -->
@@ -39,19 +45,7 @@
 
   <ItemGroup Condition="'$(IsSample)' == 'true'">
     <!-- Link files needed by the source generator -->
-    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(IsClientLibrary)' != 'true' and '$(IsSample)' == 'true'">
-    <!-- Include required sources when not generating source -->
-    <Compile Include="$(AzureCoreSharedSources)AutoRest/**/*.cs" Link="Shared\AutoRest\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
 
   <Target Name="CopySource">

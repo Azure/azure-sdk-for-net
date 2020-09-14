@@ -50,8 +50,10 @@
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" PrivateAssets="all" IsImplicitlyDefined="true" />
   </ItemGroup>
 
-  <!-- Add Client SDK Analyzers -->
+  <!-- Add Client SDK Tools -->
   <ItemGroup>
+    <PackageReference Condition="'$(IsClientLibrary)' == 'true'" Include="AutoRest.CSharp.V3" PrivateAssets="All" />
+
     <PackageReference Condition="'$(GenerateAPIListing)' == 'true'" Include="Microsoft.DotNet.GenAPI" PrivateAssets="All" />
 
     <PackageReference Condition="'$(EnableClientSdkAnalyzers)' == 'true'" Include="Azure.ClientSdk.Analyzers" PrivateAssets="All" />
@@ -103,7 +105,7 @@
 
   <Import Project="ApiListing.targets" />
 
-  <Import Project="CodeGeneration.targets" />
+  <Import Project="CodeGeneration.targets" Condition="'$(TemporaryUsePreviousGeneratorVersion)' == 'true'" />
 
   <Import Project="TestFramework.targets" Condition="'$(IsTestProject)' == 'true'"/>
 
