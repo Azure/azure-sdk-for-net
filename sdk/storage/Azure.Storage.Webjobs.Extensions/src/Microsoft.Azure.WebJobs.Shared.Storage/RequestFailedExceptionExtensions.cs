@@ -2,15 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Storage.Queues.Models;
 
 namespace Microsoft.Azure.WebJobs
 {
-    // TODO (kasobol-msft) Rename this ?
     /// <summary>Provides extension methods for the <see cref="RequestFailedException"/> class.</summary>
-    internal static class StorageExceptionExtensions
+    internal static class RequestFailedExceptionExtensions
     {
         public static bool IsServerSideError(this RequestFailedException exception)
         {

@@ -180,7 +180,6 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 
                     if (lastModifiedTimestamp > previousTimestamp)
                     {
-                        // TODO (kasobol-msft) check type here
                         newBlobs.Add(container.GetBlobClient(currentBlob.Name));
                     }
                 }

@@ -223,7 +223,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
             // Assert
             Assert.NotNull(result);
-            // Assert.Equal(BlobType.BlockBlob, result.BlobType); TODO (kasobol-msft) how to assert that ?
+            Assert.IsType<BlockBlobClient>(result);
         }
 
         [Fact]
@@ -249,7 +249,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
             // Assert
             Assert.NotNull(result);
-            // Assert.Equal(BlobType.PageBlob, result.BlobType); TODO (kasobol-msft) how to assert that?
+            Assert.IsType<PageBlobClient>(result);
         }
 
         [Fact]

@@ -164,7 +164,6 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Triggers
             }
 
             BlobBaseClient blobClient = conversionResult.Result;
-            // TODO (kasobol-msft) can this be optimized ?
             BlobProperties blobProperties = await blobClient.FetchPropertiesOrNullIfNotExistAsync(cancellationToken: context.CancellationToken).ConfigureAwait(false);
             IReadOnlyDictionary<string, object> bindingData = CreateBindingData(blobClient, blobProperties);
 

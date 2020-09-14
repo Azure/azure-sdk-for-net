@@ -271,7 +271,6 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                 // the previous timestamp to catch any blobs that came in slightly after our previous poll.
                 if (lastModifiedTimestamp >= containerScanInfo.LastSweepCycleLatestModified)
                 {
-                    // TODO (kasobol-msft) check if it's right type
                     newBlobs.Add(container.GetBlobClient(currentBlob.Name));
                 }
             }
