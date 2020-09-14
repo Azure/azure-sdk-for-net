@@ -10,6 +10,7 @@ using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core.Pipeline;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
 using Microsoft.Azure.WebJobs.Host.Executors;
@@ -177,52 +178,56 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
             }
 
             QueueMessage[] batch = null;
+            string clientRequestId = Guid.NewGuid().ToString();
             Stopwatch sw = null;
-            try
+            using (HttpPipeline.CreateClientRequestIdScope(clientRequestId))
             {
-                if (!_queueExists.HasValue || !_queueExists.Value)
+                try
                 {
-                    // Before querying the queue, determine if it exists. This
-                    // avoids generating unecessary exceptions (which pollute AppInsights logs)
-                    // Once we establish the queue exists, we won't do the existence
-                    // check anymore (steady state).
-                    // However the queue can always be deleted from underneath us, in which case
-                    // we need to recheck. That is handled below.
-                    _queueExists = await _queue.ExistsAsync().ConfigureAwait(false);
+                    if (!_queueExists.HasValue || !_queueExists.Value)
+                    {
+                        // Before querying the queue, determine if it exists. This
+                        // avoids generating unecessary exceptions (which pollute AppInsights logs)
+                        // Once we establish the queue exists, we won't do the existence
+                        // check anymore (steady state).
+                        // However the queue can always be deleted from underneath us, in which case
+                        // we need to recheck. That is handled below.
+                        _queueExists = await _queue.ExistsAsync().ConfigureAwait(false);
+                    }
+
+                    if (_queueExists.Value)
+                    {
+                        sw = Stopwatch.StartNew();
+
+                        Response<QueueMessage[]> response = await _queue.ReceiveMessagesAsync(_queueProcessor.BatchSize, _visibilityTimeout, cancellationToken).ConfigureAwait(false);
+                        batch = response.Value;
+
+                        int count = batch?.Count() ?? -1;
+                        Logger.GetMessages(_logger, _functionDescriptor.LogName, _queue.Name, response.GetRawResponse().ClientRequestId, count, sw.ElapsedMilliseconds);
+                    }
                 }
-
-                if (_queueExists.Value)
+                catch (RequestFailedException exception)
                 {
-                    sw = Stopwatch.StartNew();
+                    // if we get ANY errors querying the queue reset our existence check
+                    // doing this on all errors rather than trying to special case not
+                    // found, because correctness is the most important thing here
+                    _queueExists = null;
 
-                    Response<QueueMessage[]> response = await _queue.ReceiveMessagesAsync(_queueProcessor.BatchSize, _visibilityTimeout, cancellationToken).ConfigureAwait(false);
-                    batch = response.Value;
+                    if (exception.IsNotFoundQueueNotFound() ||
+                        exception.IsConflictQueueBeingDeletedOrDisabled() ||
+                        exception.IsServerSideError())
+                    {
+                        long pollLatency = sw?.ElapsedMilliseconds ?? -1;
+                        Logger.HandlingStorageException(_logger, _functionDescriptor.LogName, _queue.Name, clientRequestId, pollLatency, exception);
 
-                    int count = batch?.Count() ?? -1;
-                    Logger.GetMessages(_logger, _functionDescriptor.LogName, _queue.Name, response.GetRawResponse().ClientRequestId, count, sw.ElapsedMilliseconds);
-                }
-            }
-            catch (RequestFailedException exception)
-            {
-                // if we get ANY errors querying the queue reset our existence check
-                // doing this on all errors rather than trying to special case not
-                // found, because correctness is the most important thing here
-                _queueExists = null;
-
-                if (exception.IsNotFoundQueueNotFound() ||
-                    exception.IsConflictQueueBeingDeletedOrDisabled() ||
-                    exception.IsServerSideError())
-                {
-                    long pollLatency = sw?.ElapsedMilliseconds ?? -1;
-                    Logger.HandlingStorageException(_logger, _functionDescriptor.LogName, _queue.Name, "TODO (kasobol-msft) here was clientid", pollLatency, exception);
-
-                    // Back off when no message is available, or when
-                    // transient errors occur
-                    return CreateBackoffResult();
-                }
-                else
-                {
-                    throw;
+                        // Back off when no message is available, or when
+                        // transient errors occur
+                        return CreateBackoffResult();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
             }
 
