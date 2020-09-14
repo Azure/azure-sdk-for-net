@@ -33,11 +33,6 @@ namespace Azure.Identity
         public TokenCache TokenCache { get; set; }
 
         /// <summary>
-        /// If set to true the credential will fall back to storing tokens in an unencrypted file if no OS level user encryption is available.
-        /// </summary>
-        public bool AllowUnencryptedCache { get; set; }
-
-        /// <summary>
         /// Uri where the STS will call back the application with the security token. This parameter is not required if the caller is not using a custom <see cref="ClientId"/>. In
         /// the case that the caller is using their own <see cref="ClientId"/> the value must match the redirect url specified when creating the application registration.
         /// </summary>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,14 +18,16 @@ namespace Azure.Identity
         // This does not impact the functionality of the cacheHelper as the ClientId is only used to iterate accounts in the cache not for authentication purposes.
         private static readonly string s_msalCacheClientId = Guid.NewGuid().ToString();
 
-        private AsyncLockWithValue<MsalCacheHelper> _cacheHelperLock = new AsyncLockWithValue<MsalCacheHelper>();
+        private static AsyncLockWithValue<MsalCacheHelper> cacheHelperLock = new AsyncLockWithValue<MsalCacheHelper>();
+        private static AsyncLockWithValue<MsalCacheHelper> s_ProtectedCacheHelperLock = new AsyncLockWithValue<MsalCacheHelper>();
+        private static AsyncLockWithValue<MsalCacheHelper> s_FallbackCacheHelperLock = new AsyncLockWithValue<MsalCacheHelper>();
         private bool _allowUnencryptedStorage;
 
         /// <summary>
         /// Creation.
         /// </summary>
         /// <param name="allowUnencryptedStorage"></param>
-        public PersistentTokenCache(bool allowUnencryptedStorage)
+        public PersistentTokenCache(bool allowUnencryptedStorage = true)
         {
             _allowUnencryptedStorage = allowUnencryptedStorage;
         }
@@ -40,7 +43,7 @@ namespace Azure.Identity
 
         private async Task<MsalCacheHelper> GetCacheHelperAsync(bool async, CancellationToken cancellationToken)
         {
-            using var asyncLock = await _cacheHelperLock.GetLockOrValueAsync(async, cancellationToken).ConfigureAwait(false);
+            using var asyncLock = await cacheHelperLock.GetLockOrValueAsync(async, cancellationToken).ConfigureAwait(false);
 
             if (asyncLock.HasValue)
             {
@@ -49,14 +52,9 @@ namespace Azure.Identity
 
             MsalCacheHelper cacheHelper;
 
-            StorageCreationProperties storageProperties = new StorageCreationPropertiesBuilder(Constants.DefaultMsalTokenCacheName, Constants.DefaultMsalTokenCacheDirectory, s_msalCacheClientId)
-                .WithMacKeyChain(Constants.DefaultMsalTokenCacheKeychainService, Constants.DefaultMsalTokenCacheKeychainAccount)
-                .WithLinuxKeyring(Constants.DefaultMsalTokenCacheKeyringSchema, Constants.DefaultMsalTokenCacheKeyringCollection, Constants.DefaultMsalTokenCacheKeyringLabel, Constants.DefaultMsaltokenCacheKeyringAttribute1, Constants.DefaultMsaltokenCacheKeyringAttribute2)
-                .Build();
-
             try
             {
-                cacheHelper = await CreateCacheHelper(async, storageProperties).ConfigureAwait(false);
+                cacheHelper = await GetProtectedCacheHelperAsync(async, cancellationToken).ConfigureAwait(false);
 
                 cacheHelper.VerifyPersistence();
             }
@@ -64,12 +62,7 @@ namespace Azure.Identity
             {
                 if (_allowUnencryptedStorage)
                 {
-                    storageProperties = new StorageCreationPropertiesBuilder(Constants.DefaultMsalTokenCacheName, Constants.DefaultMsalTokenCacheDirectory, s_msalCacheClientId)
-                        .WithMacKeyChain(Constants.DefaultMsalTokenCacheKeychainService, Constants.DefaultMsalTokenCacheKeychainAccount)
-                        .WithLinuxUnprotectedFile()
-                        .Build();
-
-                    cacheHelper = await CreateCacheHelper(async, storageProperties).ConfigureAwait(false);
+                    cacheHelper = await GetFallbackCacheHelperAsync(async, cancellationToken).ConfigureAwait(false);
 
                     cacheHelper.VerifyPersistence();
                 }
@@ -84,10 +77,46 @@ namespace Azure.Identity
             return cacheHelper;
         }
 
-        protected override void Dispose(bool disposing)
+        private static async Task<MsalCacheHelper> GetProtectedCacheHelperAsync(bool async, CancellationToken cancellationToken)
         {
-            MsalCacheHelper helper;
-            base.Dispose(disposing);
+            using var asyncLock = await s_ProtectedCacheHelperLock.GetLockOrValueAsync(async, cancellationToken).ConfigureAwait(false);
+
+            if (asyncLock.HasValue)
+            {
+                return asyncLock.Value;
+            }
+
+            StorageCreationProperties storageProperties = new StorageCreationPropertiesBuilder(Constants.DefaultMsalTokenCacheName, Constants.DefaultMsalTokenCacheDirectory, s_msalCacheClientId)
+                .WithMacKeyChain(Constants.DefaultMsalTokenCacheKeychainService, Constants.DefaultMsalTokenCacheKeychainAccount)
+                .WithLinuxKeyring(Constants.DefaultMsalTokenCacheKeyringSchema, Constants.DefaultMsalTokenCacheKeyringCollection, Constants.DefaultMsalTokenCacheKeyringLabel, Constants.DefaultMsaltokenCacheKeyringAttribute1, Constants.DefaultMsaltokenCacheKeyringAttribute2)
+                .Build();
+
+            MsalCacheHelper cacheHelper = await CreateCacheHelper(async, storageProperties).ConfigureAwait(false);
+
+            asyncLock.SetValue(cacheHelper);
+
+            return cacheHelper;
+        }
+
+        private static async Task<MsalCacheHelper> GetFallbackCacheHelperAsync(bool async, CancellationToken cancellationToken)
+        {
+            using var asyncLock = await s_FallbackCacheHelperLock.GetLockOrValueAsync(async, cancellationToken).ConfigureAwait(false);
+
+            if (asyncLock.HasValue)
+            {
+                return asyncLock.Value;
+            }
+
+            StorageCreationProperties storageProperties = new StorageCreationPropertiesBuilder(Constants.DefaultMsalTokenCacheName, Constants.DefaultMsalTokenCacheDirectory, s_msalCacheClientId)
+                .WithMacKeyChain(Constants.DefaultMsalTokenCacheKeychainService, Constants.DefaultMsalTokenCacheKeychainAccount)
+                .WithLinuxUnprotectedFile()
+                .Build();
+
+            MsalCacheHelper cacheHelper = await CreateCacheHelper(async, storageProperties).ConfigureAwait(false);
+
+            asyncLock.SetValue(cacheHelper);
+
+            return cacheHelper;
         }
 
         private static async Task<MsalCacheHelper> CreateCacheHelper(bool async, StorageCreationProperties storageProperties)

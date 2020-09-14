@@ -25,8 +25,6 @@ namespace Azure.Identity
         private ConditionalWeakTable<object, CacheTimestamp> _cacheAccessMap;
         private bool _disposedValue;
 
-        private static Lazy<TokenCache> s_SharedCache = new Lazy<TokenCache>(() => new PersistentTokenCache(true), LazyThreadSafetyMode.ExecutionAndPublication);
-
         private class CacheTimestamp
         {
             private DateTimeOffset _timestamp;
@@ -60,10 +58,9 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// The shared token cache.
+        /// An event notifying the subscriber that the underlying <see cref="TokenCache"/> has been updated. This event can be handled to persist the updated cache data.
         /// </summary>
-        public static TokenCache SharedCache => s_SharedCache.Value;
-
+        public event Func<TokenCacheUpdatedArgs, Task> Updated;
 
         /// <summary>
         /// Serializes the <see cref="TokenCache"/> to the specified <see cref="Stream"/>.
@@ -146,23 +143,6 @@ namespace Azure.Identity
             return new TokenCache(data);
         }
 
-        private static AccountId BuildAccountIdFromString(string homeAccountId)
-        {
-            //For the Microsoft identity platform (formerly named Azure AD v2.0), the identifier is the concatenation of
-            // Microsoft.Identity.Client.AccountId.ObjectId and Microsoft.Identity.Client.AccountId.TenantId separated by a dot.
-            var homeAccountSegments = homeAccountId.Split('.');
-            AccountId accountId;
-            if (homeAccountSegments.Length == 2)
-            {
-                accountId = new AccountId(homeAccountId, homeAccountSegments[0], homeAccountSegments[1]);
-            }
-            else
-            {
-                accountId = new AccountId(homeAccountId);
-            }
-            return accountId;
-        }
-
         internal virtual async Task RegisterCache(bool async, ITokenCache tokenCache, CancellationToken cancellationToken)
         {
             if (async)
@@ -222,25 +202,37 @@ namespace Azure.Identity
 
             if (args.HasStateChanged)
             {
-                await _lock.WaitAsync().ConfigureAwait(false);
+                await UpdateCacheDataAsync(args.TokenCache).ConfigureAwait(false);
+            }
+        }
 
-                try
-                {
-                    if (!_cacheAccessMap.TryGetValue(args.TokenCache, out CacheTimestamp lastRead) || lastRead.Value < _lastUpdated)
-                    {
-                        _data = await MergeCacheData(_data, args.TokenCache.SerializeMsalV3()).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        _data = args.TokenCache.SerializeMsalV3();
-                    }
+        private async Task UpdateCacheDataAsync(ITokenCacheSerializer tokenCache)
+        {
+            await _lock.WaitAsync().ConfigureAwait(false);
 
-                    _lastUpdated = DateTime.UtcNow;
-                }
-                finally
+            try
+            {
+                if (!_cacheAccessMap.TryGetValue(tokenCache, out CacheTimestamp lastRead) || lastRead.Value < _lastUpdated)
                 {
-                    _lock.Release();
+                    _data = await MergeCacheData(_data, tokenCache.SerializeMsalV3()).ConfigureAwait(false);
                 }
+                else
+                {
+                    _data = tokenCache.SerializeMsalV3();
+                }
+
+                _cacheAccessMap.GetOrCreateValue(tokenCache).Update();
+
+                _lastUpdated = DateTime.UtcNow;
+            }
+            finally
+            {
+                _lock.Release();
+            }
+
+            if (Updated != null)
+            {
+                await Updated.Invoke(new TokenCacheUpdatedArgs(this)).ConfigureAwait(false);
             }
         }
 
@@ -274,18 +266,6 @@ namespace Azure.Identity
                 if (disposing)
                 {
                     _lock.Dispose();
-                }
-
-                var registeredCacheEntries = ((object)_cacheAccessMap) as IEnumerable<KeyValuePair<object, CacheTimestamp>>;
-
-                if (registeredCacheEntries != null)
-                {
-                    foreach (ITokenCache registeredCache in registeredCacheEntries.Select(kvp => kvp.Key))
-                    {
-                        registeredCache.SetBeforeAccessAsync(null);
-
-                        registeredCache.SetAfterAccessAsync(null);
-                    }
                 }
 
                 _cacheAccessMap = null;
