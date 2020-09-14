@@ -81,7 +81,6 @@
     <Compile Include="..\Microsoft.Azure.WebJobs.Protocols\QueueTriggerParameterDescriptor.cs" Link="Shared\QueueTriggerParameterDescriptor.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Protocols\ReadBlobParameterLog.cs" Link="Shared\ReadBlobParameterLog.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Protocols\WriteBlobParameterLog.cs" Link="Shared\WriteBlobParameterLog.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Shared.Storage\RequestFailedExceptionExtensions.cs" Link="RequestFailedExceptionExtensions.cs" />
   </ItemGroup>
 
   <ItemGroup>
