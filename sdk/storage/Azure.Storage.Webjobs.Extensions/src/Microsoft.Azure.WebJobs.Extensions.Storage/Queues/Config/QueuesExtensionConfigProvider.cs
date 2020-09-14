@@ -187,7 +187,8 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Config
 
             private static QueueMessage ConvertByteArrayToCloudQueueMessage(byte[] arg, QueueAttribute attrResolved)
             {
-                return QueuesModelFactory.QueueMessage(null, null, new BinaryData(arg), 0);
+                // TODO (kasobol-msft) revisit this base64/BinaryData
+                return QueuesModelFactory.QueueMessage(null, null, Encoding.UTF8.GetString(arg), 0);
             }
 
             private static QueueMessage ConvertStringToCloudQueueMessage(string arg, QueueAttribute attrResolved)

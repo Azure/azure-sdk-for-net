@@ -85,9 +85,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Storage.Queues" VersionOverride="12.5.0-alpha.20200909.2" />
-    <PackageReference Include="Azure.Storage.Blobs" VersionOverride="12.7.0-alpha.20200909.2" />
-    <PackageReference Include="Azure.Core" VersionOverride="1.5.0" />
+    <PackageReference Include="Azure.Storage.Queues" VersionOverride="12.5.0-alpha.20200914.1" />
+    <PackageReference Include="Azure.Storage.Blobs" VersionOverride="12.7.0-alpha.20200914.1" />
     <PackageReference Include="Microsoft.Azure.WebJobs" />
   </ItemGroup>
 </Project>
