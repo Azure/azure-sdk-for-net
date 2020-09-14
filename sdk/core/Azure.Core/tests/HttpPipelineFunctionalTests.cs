@@ -404,7 +404,6 @@ namespace Azure.Core.Tests
             request.Uri.Reset(testServer.Address);
 
             var content = new MultipartFormDataContent("test_boundary");
-            content.ApplyToRequest(request);
             content.Add(RequestContent.Create(Encoding.UTF8.GetBytes("John")), "FirstName", "file_name.txt", new Dictionary<string, string>
             {
                 { "Content-Type", "text/plain; charset=utf-8" }
@@ -414,7 +413,7 @@ namespace Azure.Core.Tests
                 { "Content-Type", "text/plain; charset=utf-8" }
             });
 
-            request.Content = content;
+            content.ApplyToRequest(request);
 
             using Response response = await ExecuteRequest(request, httpPipeline);
             Assert.AreEqual(response.Status, 200);

@@ -64,6 +64,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
                             }
 
                             activity?.SetTag("http.url", context.Request.Url.AbsolutePath);
+                            activity?.SetTag("http.host", context.Request.Url.Host);
 
                             string requestContent;
                             using (var childSpan = source.StartActivity("ReadStream", ActivityKind.Consumer))
