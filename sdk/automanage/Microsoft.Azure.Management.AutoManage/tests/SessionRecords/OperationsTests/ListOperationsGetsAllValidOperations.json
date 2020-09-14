@@ -16,7 +16,7 @@
           "FxVersion/4.6.28207.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.AutoManage.AutomanageClient/0.6.0"
+          "Microsoft.Azure.Management.Automanage.AutomanageClient/0.6.0"
         ]
       },
       "ResponseHeaders": {

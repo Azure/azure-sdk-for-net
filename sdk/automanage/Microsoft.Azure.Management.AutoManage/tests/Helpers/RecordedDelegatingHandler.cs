@@ -8,9 +8,9 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using Microsoft.Azure.Management.AutoManage.Models;
+using Microsoft.Azure.Management.Automanage.Models;
 
-namespace AutoManage.Tests.Helpers
+namespace Automanage.Tests.Helpers
 {
     public class RecordedDelegatingHandler : DelegatingHandler
     {

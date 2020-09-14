@@ -3,17 +3,17 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Azure.Management.AutoManage;
-using Microsoft.Azure.Management.AutoManage.Models;
+using Microsoft.Azure.Management.Automanage;
+using Microsoft.Azure.Management.Automanage.Models;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Test.HttpRecorder;
 using System.IO;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.ResourceManager.Models;
-using AutoManage.Tests.Helpers;
+using Automanage.Tests.Helpers;
 
-namespace AutoManage.Tests.ScenarioTests
+namespace Automanage.Tests.ScenarioTests
 {
     public class TestBase
     {

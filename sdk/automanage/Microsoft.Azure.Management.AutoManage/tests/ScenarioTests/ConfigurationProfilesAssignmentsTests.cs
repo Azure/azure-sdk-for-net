@@ -1,14 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
-namespace AutoManage.Tests.ScenarioTests
+namespace Automanage.Tests.ScenarioTests
 {
     using System.Net;
     using System.Threading;
     using System.Threading.Tasks;
-    using AutoManage.Tests.Helpers;
-    using Microsoft.Azure.Management.AutoManage;
-    using Microsoft.Azure.Management.AutoManage.Models;
+    using Automanage.Tests.Helpers;
+    using Microsoft.Azure.Management.Automanage;
+    using Microsoft.Azure.Management.Automanage.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;    
     using Xunit;
     using Xunit.Abstractions;

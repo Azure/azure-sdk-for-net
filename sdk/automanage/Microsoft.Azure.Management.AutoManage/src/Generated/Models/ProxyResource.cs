@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.AutoManage.Models
+namespace Microsoft.Azure.Management.Automanage.Models
 {
     using System.Linq;
 
