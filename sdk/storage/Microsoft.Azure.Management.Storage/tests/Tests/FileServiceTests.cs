@@ -51,8 +51,7 @@ namespace Storage.Tests
                 {
                     Location = "eastus2euap",
                     Kind = Kind.StorageV2,
-                    Sku = new Sku { Name = SkuName.StandardLRS },
-                    LargeFileSharesState = LargeFileSharesState.Enabled
+                    Sku = new Sku { Name = SkuName.StandardLRS }
                 };
                 var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
 
@@ -122,14 +121,19 @@ namespace Storage.Tests
 
                 // Create storage account
                 string accountName = TestUtilities.GenerateName("sto");
-                var parameters = new StorageAccountCreateParameters
+                var createParameters = new StorageAccountCreateParameters
                 {
                     Location = "eastus2euap",
                     Kind = Kind.StorageV2,
                     Sku = new Sku { Name = SkuName.StandardLRS },
+                    //LargeFileSharesState = LargeFileSharesState.Enabled
+                };
+                var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, createParameters);
+                var updateParameters = new StorageAccountUpdateParameters
+                {
                     LargeFileSharesState = LargeFileSharesState.Enabled
                 };
-                var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
+                account = storageMgmtClient.StorageAccounts.Update(rgName, accountName, updateParameters);
 
                 // implement case
                 try
@@ -165,6 +169,58 @@ namespace Storage.Tests
         }
 
         // Get/Set File Service Properties
+        [Fact]
+        public void FileServiceTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgName = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = new StorageAccountCreateParameters
+                {
+                    Sku = new Sku { Name = SkuName.PremiumLRS },
+                    Kind = Kind.FileStorage,
+                    Location = "centraluseuap"
+                };
+                var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
+
+                // implement case
+                try
+                {
+                    // Get after account create
+                    FileServiceProperties properties1 = storageMgmtClient.FileServices.GetServiceProperties(rgName, accountName);
+                    Assert.Equal(0, properties1.Cors.CorsRulesProperty.Count);
+
+                    //Set and validated
+                    FileServiceProperties properties2 = new FileServiceProperties();
+                    properties2.ProtocolSettings = new ProtocolSettings();
+                    properties2.ProtocolSettings.Smb = new SmbSetting();
+                    properties2.ProtocolSettings.Smb.Multichannel = new Multichannel(true);
+                    FileServiceProperties properties3 = storageMgmtClient.FileServices.SetServiceProperties(rgName, accountName, properties2);
+                    Assert.True(properties3.ProtocolSettings.Smb.Multichannel.Enabled);
+
+                    // Get and validate
+                    FileServiceProperties properties4 = storageMgmtClient.FileServices.GetServiceProperties(rgName, accountName);
+                    Assert.True(properties3.ProtocolSettings.Smb.Multichannel.Enabled);
+                }
+                finally
+                {
+                    // clean up
+                    storageMgmtClient.StorageAccounts.Delete(rgName, accountName);
+                    resourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
+
+        // Get/Set File Service Cors Properties
         [Fact]
         public void FileServiceCorsTest()
         {
@@ -217,7 +273,7 @@ namespace Storage.Tests
                         MaxAgeInSeconds = 2000
                     });
 
-                    FileServiceProperties properties3 = storageMgmtClient.FileServices.SetServiceProperties(rgName, accountName, cors);
+                    FileServiceProperties properties3 = storageMgmtClient.FileServices.SetServiceProperties(rgName, accountName, new FileServiceProperties(cors: cors));
 
                     //Validate CORS Rules
                     Assert.Equal(cors.CorsRulesProperty.Count, properties3.Cors.CorsRulesProperty.Count);
@@ -291,7 +347,7 @@ namespace Storage.Tests
                     properties.ShareDeleteRetentionPolicy = new DeleteRetentionPolicy();
                     properties.ShareDeleteRetentionPolicy.Enabled = true;
                     properties.ShareDeleteRetentionPolicy.Days = 5;
-                    properties = storageMgmtClient.FileServices.SetServiceProperties(rgName, accountName, shareDeleteRetentionPolicy: properties.ShareDeleteRetentionPolicy);
+                    properties = storageMgmtClient.FileServices.SetServiceProperties(rgName, accountName, new FileServiceProperties(shareDeleteRetentionPolicy: properties.ShareDeleteRetentionPolicy));
                     Assert.True(properties.ShareDeleteRetentionPolicy.Enabled);
                     Assert.Equal(5, properties.ShareDeleteRetentionPolicy.Days);
 

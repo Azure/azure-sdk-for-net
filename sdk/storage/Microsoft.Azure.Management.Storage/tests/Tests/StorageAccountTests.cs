@@ -1498,8 +1498,13 @@ namespace Storage.Tests
 
                 // Create storage account with Vnet
                 string accountName = TestUtilities.GenerateName("sto");
-
-                var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
+                
+                var parameters = new StorageAccountCreateParameters
+                {
+                    Location = StorageManagementTestUtilities.DefaultLocation,
+                    Kind = Kind.StorageV2,
+                    Sku = new Sku { Name = SkuName.StandardLRS }
+                };
                 parameters.NetworkRuleSet = new NetworkRuleSet { Bypass = @"Logging,AzureServices", DefaultAction = DefaultAction.Deny, IpRules = new List<IPRule> { new IPRule { IPAddressOrRange = "23.45.67.90" } } };
                 storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
 
@@ -1525,6 +1530,11 @@ namespace Storage.Tests
                             new IPRule { IPAddressOrRange = "23.45.67.91", Action = Microsoft.Azure.Management.Storage.Models.Action.Allow },
                             new IPRule { IPAddressOrRange = "23.45.67.92" }
                         },
+                        ResourceAccessRules = new List<ResourceAccessRule>
+                        {
+                            new ResourceAccessRule("72f988bf-86f1-41af-91ab-2d7cd011db47","/subscriptions/subID/resourceGroups/RGName/providers/Microsoft.Storage/storageAccounts/testaccount1"),
+                            new ResourceAccessRule("72f988bf-86f1-41af-91ab-2d7cd011db47","/subscriptions/subID/resourceGroups/RGName/providers/Microsoft.Storage/storageAccounts/testaccount2"),
+                        },
                         DefaultAction = DefaultAction.Deny
                     }
                 };
@@ -1541,6 +1551,12 @@ namespace Storage.Tests
                 Assert.Equal(Microsoft.Azure.Management.Storage.Models.Action.Allow, account.NetworkRuleSet.IpRules[0].Action);
                 Assert.Equal("23.45.67.92", account.NetworkRuleSet.IpRules[1].IPAddressOrRange);
                 Assert.Equal(Microsoft.Azure.Management.Storage.Models.Action.Allow, account.NetworkRuleSet.IpRules[1].Action);
+                Assert.NotNull(account.NetworkRuleSet.ResourceAccessRules);
+                Assert.NotEmpty(account.NetworkRuleSet.ResourceAccessRules);
+                Assert.Equal("72f988bf-86f1-41af-91ab-2d7cd011db47", account.NetworkRuleSet.ResourceAccessRules[0].TenantId);
+                Assert.Equal("/subscriptions/subID/resourceGroups/RGName/providers/Microsoft.Storage/storageAccounts/testaccount1", account.NetworkRuleSet.ResourceAccessRules[0].ResourceId);
+                Assert.Equal("72f988bf-86f1-41af-91ab-2d7cd011db47", account.NetworkRuleSet.ResourceAccessRules[1].TenantId);
+                Assert.Equal("/subscriptions/subID/resourceGroups/RGName/providers/Microsoft.Storage/storageAccounts/testaccount2", account.NetworkRuleSet.ResourceAccessRules[1].ResourceId);
 
                 // Delete vnet.
                 updateParameters = new StorageAccountUpdateParameters
@@ -1669,6 +1685,13 @@ namespace Storage.Tests
                 storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
                 List<ManagementPolicyRule> rules = new List<ManagementPolicyRule>();
 
+                //Enable LAT
+                BlobServiceProperties properties = storageMgmtClient.BlobServices.GetServiceProperties(rgname, accountName);
+                properties.LastAccessTimeTrackingPolicy = new LastAccessTimeTrackingPolicy(true);
+                properties.LastAccessTimeTrackingPolicy.Enable = true;
+                storageMgmtClient.BlobServices.SetServiceProperties(rgname, accountName, properties);
+
+                // create ManagementPolicy to set
                 List<TagFilter> tagFileter = new List<TagFilter>();
                 tagFileter.Add(new TagFilter("tag1", "==", "value1"));
                 tagFileter.Add(new TagFilter("tag2", "==", "value2"));
@@ -1680,7 +1703,7 @@ namespace Storage.Tests
                     {
                         Actions = new ManagementPolicyAction()
                         {
-                            BaseBlob = new ManagementPolicyBaseBlob(new DateAfterModification(1000), new DateAfterModification(90), new DateAfterModification(300))
+                            BaseBlob = new ManagementPolicyBaseBlob(new DateAfterModification(null, 1000), new DateAfterModification(90), new DateAfterModification(300), true)
                         },
                         Filters = new ManagementPolicyFilter(new List<string>() { "blockBlob" },
                             new List<string>() { "olcmtestcontainer", "testblob" },
@@ -1769,6 +1792,7 @@ namespace Storage.Tests
                             CompareDateAfterModification(rule1.Definition.Actions.BaseBlob.TierToCool, rule2.Definition.Actions.BaseBlob.TierToCool);
                             CompareDateAfterModification(rule1.Definition.Actions.BaseBlob.TierToArchive, rule2.Definition.Actions.BaseBlob.TierToArchive);
                             CompareDateAfterModification(rule1.Definition.Actions.BaseBlob.Delete, rule2.Definition.Actions.BaseBlob.Delete);
+                            Assert.Equal(rule1.Definition.Actions.BaseBlob.EnableAutoTierToHotFromCool, rule2.Definition.Actions.BaseBlob.EnableAutoTierToHotFromCool);
                         }
 
                         if (rule1.Definition.Actions.Snapshot != null || rule2.Definition.Actions.Snapshot != null)
@@ -1789,6 +1813,7 @@ namespace Storage.Tests
                 return;
             }
             Assert.Equal(date1.DaysAfterModificationGreaterThan, date2.DaysAfterModificationGreaterThan);
+            Assert.Equal(date1.DaysAfterLastAccessTimeGreaterThan, date2.DaysAfterLastAccessTimeGreaterThan);
         }
 
         private static void CompareDateAfterCreation(DateAfterCreation date1, DateAfterCreation date2)
@@ -2003,7 +2028,7 @@ namespace Storage.Tests
                 {
                     Sku = new Sku { Name = SkuName.StandardRAGRS },
                     Kind = Kind.StorageV2,
-                    Location = "eastus2(stage)"
+                    Location = StorageManagementTestUtilities.DefaultLocation
                 };
                 StorageAccount account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
                 Assert.Equal(SkuName.StandardRAGRS, account.Sku.Name);
@@ -2035,7 +2060,7 @@ namespace Storage.Tests
                 string accountName = TestUtilities.GenerateName("sto");
                 var parameters = new StorageAccountCreateParameters
                 {
-                    Location = "westeurope",
+                    Location = StorageManagementTestUtilities.DefaultLocation,
                     Kind = Kind.StorageV2,
                     Sku = new Sku { Name = SkuName.StandardLRS },
                     LargeFileSharesState = LargeFileSharesState.Enabled
@@ -2068,7 +2093,7 @@ namespace Storage.Tests
                 string accountName = TestUtilities.GenerateName("sto");
                 var parameters = new StorageAccountCreateParameters
                 {
-                    Location = "westeurope",
+                    Location = StorageManagementTestUtilities.DefaultLocation,
                     Kind = Kind.StorageV2,
                     Sku = new Sku { Name = SkuName.StandardLRS }
                 };
@@ -2140,7 +2165,7 @@ namespace Storage.Tests
                 string accountName = TestUtilities.GenerateName("sto");
                 var parameters = new StorageAccountCreateParameters
                 {
-                    Location = "westus",
+                    Location = StorageManagementTestUtilities.DefaultLocation,
                     Kind = Kind.StorageV2,
                     Sku = new Sku { Name = SkuName.StandardLRS }
                 };
@@ -2291,6 +2316,65 @@ namespace Storage.Tests
                 // Verify account settings
                 Assert.True(account.AllowBlobPublicAccess);
                 Assert.Equal(MinimumTlsVersion.TLS12, account.MinimumTlsVersion);
+            }
+        }
+
+        [Fact]
+        public void StorageDeletedAccountsTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // List deleted account
+                IPage<DeletedAccount> deletedAccounts = storageMgmtClient.DeletedAccounts.List();
+                Assert.True((deletedAccounts.Count() > 0));
+            }
+        }
+
+
+        [Fact]
+        public void StorageAccountCreateWithExtendedLocation()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+                storageMgmtClient.BaseUri = new Uri("https://eastus2euap.management.azure.com/");
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account with StorageV2
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = new StorageAccountCreateParameters
+                {
+                    Sku = new Sku { Name = SkuName.PremiumLRS },
+                    Kind = Kind.StorageV2,
+                    Location = StorageManagementTestUtilities.DefaultLocation,
+                    ExtendedLocation = new ExtendedLocation
+                    {
+                        Type = ExtendedLocationTypes.EdgeZone,
+                        Name = "microsoftrrdclab1"
+                    }
+                };
+                var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, false);
+                Assert.NotNull(account.PrimaryEndpoints.Web);
+                Assert.Equal(Kind.StorageV2, account.Kind);
+                Assert.Equal(ExtendedLocationTypes.EdgeZone, account.ExtendedLocation.Type);
+                Assert.Equal("microsoftrrdclab1", account.ExtendedLocation.Name);
+                account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
+                Assert.Equal(ExtendedLocationTypes.EdgeZone, account.ExtendedLocation.Type);
+                Assert.Equal("microsoftrrdclab1", account.ExtendedLocation.Name);
             }
         }
     }

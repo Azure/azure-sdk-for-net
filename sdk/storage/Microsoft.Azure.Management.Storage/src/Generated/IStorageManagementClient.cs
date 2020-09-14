@@ -85,6 +85,11 @@ namespace Microsoft.Azure.Management.Storage
         IStorageAccountsOperations StorageAccounts { get; }
 
         /// <summary>
+        /// Gets the IDeletedAccountsOperations.
+        /// </summary>
+        IDeletedAccountsOperations DeletedAccounts { get; }
+
+        /// <summary>
         /// Gets the IUsagesOperations.
         /// </summary>
         IUsagesOperations Usages { get; }
