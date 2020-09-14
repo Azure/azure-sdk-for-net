@@ -6,11 +6,12 @@ param (
   $SASKey,
   $Language,
   $BlobName,
-  $BinDirectory,
   $ExitOnError=1,
   $UploadLatest=1,
   $PublicArtifactLocation = "",
-  $RepoReplaceRegex = "(https://github.com/.*/(?:blob|tree)/)master"
+  $RepoReplaceRegex = "(https://github.com/.*/(?:blob|tree)/)master",
+  $WorkingDirectory,
+  $ReleaseSha
 )
 . (Join-Path $PSScriptRoot artifact-metadata-parsing.ps1)
 
@@ -266,22 +267,22 @@ if ($Language -eq "dotnet")
         Write-Host "$($DocLocation) contains more published artifacts than expected."
         exit 1
     }
-    $pkgZip = $PublishedPkgs[0]
-    $docZip = $PublishedDocs[0]
-    $pkgName = Split-Path -Path $DocLocation -Leaf
-    $version = $pkgZip.BaseName.Replace("${pkgName}.","")
 
-    New-Item -ItemType directory -Path "$BinDirectory/docstoupload"
-    Expand-Archive -LiteralPath $docZip.FullName -DestinationPath "$BinDirectory/docstoupload"
+    $DocsStagingDir = "$WorkingDirectory/docstaging"
+    $TempDir = "$WorkingDirectory/temp"
 
-    Write-Host "Start Upload for $($PkgName)/$($version)"
-    Write-Host "DocDir $($BinDirectory)/docstoupload"
-    Write-Host "PkgName $($pkgName)"
-    Write-Host "DocVersion $($version)"
-    New-Item -ItemType directory -Path "$BinDirectory/publicartifactscopy"
-    Copy-Item -Path "$PublicArtifactLocation/*.nupkg" -Destination "$BinDirectory/publicartifactscopy" -Exclude '*.symbols.nupkg'
-    $releaseTag = RetrieveReleaseTag "Nuget" "$BinDirectory/publicartifactscopy" 
-    Upload-Blobs -DocDir "$($BinDirectory)/docstoupload" -PkgName $pkgName -DocVersion $version -ReleaseTag $releaseTag
+    New-Item -ItemType directory -Path "$DocsStagingDir"
+    New-Item -ItemType directory -Path "$TempPackageDir"
+
+    Expand-Archive -LiteralPath $PublishedDocs[0].FullName -DestinationPath "$DocsStagingDir"
+    $pkgProperties = VerifyPackages -pkgRepository "Nuget" -artifactLocation $DocLocation -workingDirectory "$TempDir" `
+        -apiUrl "https://api.github.com/repos/Azure/azure-sdk-for-net" -releasSha $ReleaseSha -continueOnError $True
+
+    Write-Host "Start Upload for $($pkgProperties.Tag)"
+    Write-Host "DocDir $($DocsStagingDir)"
+    Write-Host "PkgName $($pkgProperties.PackageId)"
+    Write-Host "DocVersion $($pkgProperties.PackageVersion)"
+    Upload-Blobs -DocDir "$($TempPackageDir)" -PkgName $pkgProperties.PackageId -DocVersion $pkgProperties.PackageVersion -ReleaseTag $pkgProperties.Tag
 }
 
 if ($Language -eq "python")

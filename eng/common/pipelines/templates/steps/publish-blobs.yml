@@ -25,7 +25,8 @@ steps:
       -BlobName "${{ parameters.BlobName }}"
       -PublicArtifactLocation "${{ parameters.ArtifactLocation }}"
       -RepoReplaceRegex "(https://github.com/${{ parameters.RepoId }}/(?:blob|tree)/)master"
-      -BinDirectory "$(Build.BinariesDirectory)"
+      -WorkingDirectory "$(System.DefaultWorkingDirectory)"
+      -ReleaseSha: "$(Build.SourceVersion)"
     pwsh: true
     workingDirectory: $(Pipeline.Workspace)
   displayName: Copy Docs to Blob
