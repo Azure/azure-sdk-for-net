@@ -133,14 +133,31 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         [Test]
         [TestCase("SharedAccessKeyName=[value];SharedAccessKey=[value];EntityPath=[value]")]
+        [TestCase("SharedAccessSignature=[value];EntityPath=[value]")]
+        [TestCase("SharedAccessSignature=[value]")]
         [TestCase("Endpoint=value.com;SharedAccessKey=[value];EntityPath=[value]")]
         [TestCase("Endpoint=value.com;SharedAccessKeyName=[value];EntityPath=[value]")]
         [TestCase("Endpoint=value.com;SharedAccessKeyName=[value];SharedAccessKey=[value]")]
         [TestCase("HostName=value.azure-devices.net;SharedAccessKeyName=[value];SharedAccessKey=[value]")]
         [TestCase("HostName=value.azure-devices.net;SharedAccessKeyName=[value];SharedAccessKey=[value];EntityPath=[value]")]
-        public void ConstructorValidatesConnectionString(string connectionString)
+        public void ConstructorValidatesConnectionStringForMissingInformation(string connectionString)
         {
             Assert.That(() => new EventHubConnection(connectionString), Throws.ArgumentException.And.Message.StartsWith(Resources.MissingConnectionInformation));
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="EventHubConnection" />
+        ///    constructor.
+        /// </summary>
+        ///
+        [Test]
+
+        [TestCase("Endpoint=value.azure-devices.net;SharedAccessKeyName=[value];SharedAccessSignature=[sas];EntityPath=[value]")]
+        [TestCase("Endpoint=value.azure-devices.net;SharedAccessKey=[value];SharedAccessSignature=[sas];EntityPath=[value]")]
+        [TestCase("Endpoint=value.azure-devices.net;SharedAccessKeyName=[value];SharedAccessKey=[value];SharedAccessSignature=[sas];EntityPath=[value]")]
+        public void ConstructorValidatesConnectionStringForDuplicateAuthorization(string connectionString)
+        {
+            Assert.That(() => new EventHubConnection(connectionString), Throws.ArgumentException.And.Message.StartsWith(Resources.OnlyOneSharedAccessAuthorizationMayBeSpecified));
         }
 
         /// <summary>
@@ -305,6 +322,21 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var client = new EventHubConnection("Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real]", "fake", new EventHubConnectionOptions());
             Assert.That(GetTransportClient(client), Is.Not.Null);
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="EventHubConnection" />
+        ///    constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void ContructorWithConnectionStringUsingSharedAccessSignatureCreatesTheCorrectTransportCredential()
+        {
+            var sasToken = new SharedAccessSignature("hub", "root", "abc1234").Value;
+            var client = new InjectableTransportClientMock(Mock.Of<TransportClient>(), $"Endpoint=sb://not-real.servicebus.windows.net/;EntityPath=fake;SharedAccessSignature={ sasToken }");
+
+            Assert.That(client.TransportClientCredential, Is.Not.Null, "The transport client should have been given a credential.");
+            Assert.That(client.TransportClientCredential.GetToken(default, default).Token, Is.EqualTo(sasToken), "The transport client credential should use the provided SAS token.");
         }
 
         /// <summary>
@@ -603,13 +635,13 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void BuildResourceNormalizesTheResource()
+        public void BuildConnectionAudienceNormalizesTheResource()
         {
             var fullyQualifiedNamespace = "my.eventhub.com";
             var path = "someHub/";
             var transportClient = new ObservableTransportClientMock();
             var client = new InjectableTransportClientMock(transportClient, "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake");
-            var resource = BuildResource(client, EventHubsTransportType.AmqpWebSockets, fullyQualifiedNamespace, path);
+            var resource = EventHubConnection.BuildConnectionAudience(EventHubsTransportType.AmqpWebSockets, fullyQualifiedNamespace, path);
 
             Assert.That(resource, Is.Not.Null.Or.Empty, "The resource should have been populated.");
             Assert.That(resource, Is.EqualTo(resource.ToLowerInvariant()), "The resource should have been normalized to lower case.");
@@ -626,14 +658,14 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void BuildResourceConstructsFromNamespaceAndPath()
+        public void BuildConnectionAudienceConstructsFromNamespaceAndPath()
         {
             var fullyQualifiedNamespace = "my.eventhub.com";
             var path = "someHub";
             var transportClient = new ObservableTransportClientMock();
             var client = new InjectableTransportClientMock(transportClient, "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake");
             var expectedPath = $"/{ path.ToLowerInvariant() }";
-            var resource = BuildResource(client, EventHubsTransportType.AmqpTcp, fullyQualifiedNamespace, path);
+            var resource = EventHubConnection.BuildConnectionAudience(EventHubsTransportType.AmqpTcp, fullyQualifiedNamespace, path);
 
             Assert.That(resource, Is.Not.Null.Or.Empty, "The resource should have been populated.");
 
@@ -642,23 +674,6 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(uri.Host, Is.EqualTo(fullyQualifiedNamespace), "The resource should match the host.");
             Assert.That(uri.AbsolutePath, Is.EqualTo(expectedPath), "The resource path should match the Event Hub path.");
         }
-
-        /// <summary>
-        ///   Provides a test shim for retrieving the credential that a client was
-        ///   created with.
-        /// </summary>
-        ///
-        /// <param name="client">The client to retrieve the credential for.</param>
-        ///
-        /// <returns>The credential with which the client was created.</returns>
-        ///
-        private string BuildResource(EventHubConnection client,
-                                     EventHubsTransportType transportType,
-                                     string fullyQualifiedNamespace,
-                                     string eventHubName) =>
-             typeof(EventHubConnection)
-                 .GetMethod("BuildAudienceResource", BindingFlags.Static | BindingFlags.NonPublic)
-                 .Invoke(client, new object[] { transportType, fullyQualifiedNamespace, eventHubName }) as string;
 
         /// <summary>
         ///   Provides a test shim for retrieving the transport client contained by an
@@ -743,6 +758,7 @@ namespace Azure.Messaging.EventHubs.Tests
         private class InjectableTransportClientMock : EventHubConnection
         {
             public TransportClient TransportClient;
+            public EventHubTokenCredential TransportClientCredential;
 
             public InjectableTransportClientMock(TransportClient transportClient,
                                                  string connectionString,
@@ -766,7 +782,11 @@ namespace Azure.Messaging.EventHubs.Tests
             internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace,
                                                                    string eventHubName,
                                                                    EventHubTokenCredential credential,
-                                                                   EventHubConnectionOptions options) => TransportClient;
+                                                                   EventHubConnectionOptions options)
+            {
+                TransportClientCredential = credential;
+                return TransportClient;
+            }
 
             private void SetTransportClient(TransportClient transportClient) =>
                 typeof(EventHubConnection)

@@ -2861,7 +2861,9 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task UploadAsync_MinFile()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task UploadAsync_MinFile(bool readOnlyFile)
         {
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -2878,12 +2880,18 @@ namespace Azure.Storage.Files.DataLake.Tests
                 {
                     File.WriteAllBytes(path, data);
 
+                    if (readOnlyFile)
+                    {
+                        File.SetAttributes(path, FileAttributes.ReadOnly);
+                    }
+
                     await file.UploadAsync(path);
                 }
                 finally
                 {
                     if (File.Exists(path))
                     {
+                        File.SetAttributes(path, FileAttributes.Normal);
                         File.Delete(path);
                     }
                 }
@@ -3642,12 +3650,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeFileClient file = test.FileSystem.GetFileClient(GetNewFileName());
-            Stream outputStream = await file.OpenReadAsync();
-            byte[] bytes = new byte[Constants.KB];
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                outputStream.ReadAsync(bytes, 0, Constants.KB),
+                file.OpenReadAsync(),
                 e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
         }
 
@@ -3722,13 +3728,10 @@ namespace Azure.Storage.Files.DataLake.Tests
                 };
 
                 // Act
-                Stream outputStream = await file.OpenReadAsync(options).ConfigureAwait(false);
-                byte[] outputBytes = new byte[size];
-
                 await TestHelper.CatchAsync<Exception>(
                     async () =>
                     {
-                        var _ = await outputStream.ReadAsync(outputBytes, 0, size);
+                        var _ = await file.OpenReadAsync(options).ConfigureAwait(false);
                     });
             }
         }
@@ -3912,8 +3915,12 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task OpenReadAsync_InvalidParameterTests()
         {
             // Arrange
-            DataLakeFileClient file = new DataLakeFileClient(new Uri("https://www.doesntmatter.com"));
-            Stream stream = await file.OpenReadAsync();
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            long size = 4 * Constants.MB;
+            byte[] exectedData = GetRandomBuffer(size);
+            DataLakeFileClient fileClient = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            await fileClient.UploadAsync(new MemoryStream(exectedData));
+            Stream stream = await fileClient.OpenReadAsync();
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentNullException>(
@@ -4015,7 +4022,6 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/13510")]
         public async Task OpenWriteAsync_AppendExistingFile()
         {
             // Arrange

@@ -147,7 +147,7 @@ namespace Sql.Tests
             // Location is being returned two different ways across different APIs.
             Assert.Equal(location.ToLower().Replace(" ", ""), actual.Location.ToLower().Replace(" ", ""));
         }
-        
+
         public static void ValidateManagedInstanceOperation(ManagedInstanceOperation actual, string operationName, string operationFriendlyName, int percentComplete, string state, bool isCancellable)
         {
             Assert.NotNull(actual);
@@ -221,6 +221,11 @@ namespace Sql.Tests
             if (expected.ReadReplicaCount != null)
             {
                 Assert.Equal(expected.ReadReplicaCount, actual.ReadReplicaCount);
+            }
+
+            if (!string.IsNullOrEmpty(expected.StorageAccountType))
+            {
+                Assert.Equal(expected.StorageAccountType, actual.StorageAccountType);
             }
         }
 
