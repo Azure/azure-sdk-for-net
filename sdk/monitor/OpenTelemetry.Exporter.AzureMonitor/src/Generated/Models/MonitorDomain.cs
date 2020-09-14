@@ -15,13 +15,6 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
         {
         }
 
-        /// <summary> Initializes a new instance of MonitorDomain. </summary>
-        /// <param name="test"> Ignored value. </param>
-        internal MonitorDomain(string test)
-        {
-            Test = test;
-        }
-
         /// <summary> Ignored value. </summary>
         public string Test { get; set; }
     }

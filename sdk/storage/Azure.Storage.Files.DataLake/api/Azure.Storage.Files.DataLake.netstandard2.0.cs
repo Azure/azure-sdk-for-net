@@ -318,11 +318,13 @@ namespace Azure.Storage.Files.DataLake.Models
     public partial class DataLakeFileUploadOptions
     {
         public DataLakeFileUploadOptions() { }
+        public bool? Close { get { throw null; } set { } }
         public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
         public Azure.Storage.Files.DataLake.Models.PathHttpHeaders HttpHeaders { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
         public string Permissions { get { throw null; } set { } }
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
+        public bool? RetainUncommittedData { get { throw null; } set { } }
         public Azure.Storage.StorageTransferOptions TransferOptions { get { throw null; } set { } }
         public string Umask { get { throw null; } set { } }
     }

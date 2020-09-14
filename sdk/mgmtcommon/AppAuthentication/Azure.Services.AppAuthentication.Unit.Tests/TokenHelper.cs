@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
     public class TokenHelper
     {
         /// <summary>
-        /// The hardcoded user token has expiry replaced by [exp], so we can replace it with some value to test functionality. 
+        /// The hardcoded user token has expiry replaced by [exp], so we can replace it with some value to test functionality.
         /// </summary>
         /// <param name="accessToken"></param>
         /// <param name="secondsFromCurrent"></param>
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
         internal static string GetUserToken()
         {
-            // Gets a user token that will expire in 10 seconds from now. 
+            // Gets a user token that will expire in 10 seconds from now.
             return GetUserToken(10);
         }
 
@@ -61,6 +61,16 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             }
 
             return tokenResult;
+        }
+
+        /// <summary>
+        /// Sample IMDS /instance response
+        /// </summary>
+        /// <returns></returns>
+        internal static string GetInstanceMetadataResponse()
+        {
+            return
+                "{\"compute\":{\"location\":\"westus\",\"name\":\"TestBedVm\",\"resourceGroupName\":\"testbed\",\"subscriptionId\":\"bdd789f3-d9d1-4bea-ac14-30a39ed66d33\"}}";
         }
 
         /// <summary>
@@ -128,7 +138,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         }
 
         /// <summary>
-        ///  The response has claims as expected from Client Credentials flow response. 
+        ///  The response has claims as expected from Client Credentials flow response.
         /// </summary>
         /// <returns></returns>
         internal static string GetAppToken()
@@ -139,7 +149,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         }
 
         /// <summary>
-        ///  Invalid AppToken. 
+        ///  Invalid AppToken.
         /// </summary>
         /// <returns></returns>
         internal static string GetInvalidAppToken()

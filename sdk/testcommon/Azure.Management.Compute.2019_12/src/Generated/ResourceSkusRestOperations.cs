@@ -59,7 +59,6 @@ namespace Azure.Management.Compute
                 uri.AppendQuery("$filter", filter, true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -114,7 +113,6 @@ namespace Azure.Management.Compute
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
