@@ -47,7 +47,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.0", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
             uri.AppendPath("/custom/models", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
@@ -111,7 +111,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.0", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
             uri.AppendPath("/custom/models/", false);
             uri.AppendPath(modelId, true);
             if (includeKeys != null)
@@ -174,7 +174,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.0", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
             uri.AppendPath("/custom/models/", false);
             uri.AppendPath(modelId, true);
             request.Uri = uri;
@@ -221,7 +221,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.0", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
             uri.AppendPath("/custom/models/", false);
             uri.AppendPath(modelId, true);
             uri.AppendPath("/analyze", false);
@@ -295,7 +295,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.0", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
             uri.AppendPath("/custom/models/", false);
             uri.AppendPath(modelId, true);
             uri.AppendPath("/analyze", false);
@@ -360,7 +360,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.0", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
             uri.AppendPath("/custom/models/", false);
             uri.AppendPath(modelId, true);
             uri.AppendPath("/analyzeResults/", false);
@@ -421,7 +421,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.0", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
             uri.AppendPath("/custom/models/", false);
             uri.AppendPath(modelId, true);
             uri.AppendPath("/copy", false);
@@ -489,7 +489,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.0", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
             uri.AppendPath("/custom/models/", false);
             uri.AppendPath(modelId, true);
             uri.AppendPath("/copyResults/", false);
@@ -550,7 +550,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.0", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
             uri.AppendPath("/custom/models/copyAuthorization", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -599,18 +599,98 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateAnalyzeReceiptAsyncRequest(FormContentType contentType, Stream fileStream, bool? includeTextDetails)
+        internal HttpMessage CreateComposeCustomModelsAsyncRequest(ComposeRequest composeRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.0", false);
-            uri.AppendPath("/prebuilt/receipt/analyze", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
+            uri.AppendPath("/custom/models/compose", false);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json, text/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(composeRequest);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary>
+        /// Compose request would include list of models ids.
+        /// 
+        /// It would validate what all models either trained with labels model or composed model.
+        /// 
+        /// It would validate limit of models put together.
+        /// </summary>
+        /// <param name="composeRequest"> Compose models. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="composeRequest"/> is null. </exception>
+        public async Task<ResponseWithHeaders<ServiceComposeCustomModelsAsyncHeaders>> ComposeCustomModelsAsyncAsync(ComposeRequest composeRequest, CancellationToken cancellationToken = default)
+        {
+            if (composeRequest == null)
+            {
+                throw new ArgumentNullException(nameof(composeRequest));
+            }
+
+            using var message = CreateComposeCustomModelsAsyncRequest(composeRequest);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new ServiceComposeCustomModelsAsyncHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 201:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary>
+        /// Compose request would include list of models ids.
+        /// 
+        /// It would validate what all models either trained with labels model or composed model.
+        /// 
+        /// It would validate limit of models put together.
+        /// </summary>
+        /// <param name="composeRequest"> Compose models. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="composeRequest"/> is null. </exception>
+        public ResponseWithHeaders<ServiceComposeCustomModelsAsyncHeaders> ComposeCustomModelsAsync(ComposeRequest composeRequest, CancellationToken cancellationToken = default)
+        {
+            if (composeRequest == null)
+            {
+                throw new ArgumentNullException(nameof(composeRequest));
+            }
+
+            using var message = CreateComposeCustomModelsAsyncRequest(composeRequest);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new ServiceComposeCustomModelsAsyncHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 201:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateAnalyzeBusinessCardAsyncRequest(FormContentType contentType, Stream fileStream, bool? includeTextDetails, string locale)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
+            uri.AppendPath("/prebuilt/businessCard/analyze", false);
             if (includeTextDetails != null)
             {
                 uri.AppendQuery("includeTextDetails", includeTextDetails.Value, true);
+            }
+            if (locale != null)
+            {
+                uri.AppendQuery("locale", locale, true);
             }
             request.Uri = uri;
             request.Headers.Add("Content-Type", contentType.ToSerialString());
@@ -619,22 +699,23 @@ namespace Azure.AI.FormRecognizer
             return message;
         }
 
-        /// <summary> Extract field text and semantic values from a given receipt document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
+        /// <summary> Extract field text and semantic values from a given business card document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </summary>
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
+        /// <param name="locale"> Locale of the business card. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileStream"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders>> AnalyzeReceiptAsyncAsync(FormContentType contentType, Stream fileStream, bool? includeTextDetails = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ServiceAnalyzeBusinessCardAsyncHeaders>> AnalyzeBusinessCardAsyncAsync(FormContentType contentType, Stream fileStream, bool? includeTextDetails = null, string locale = null, CancellationToken cancellationToken = default)
         {
             if (fileStream == null)
             {
                 throw new ArgumentNullException(nameof(fileStream));
             }
 
-            using var message = CreateAnalyzeReceiptAsyncRequest(contentType, fileStream, includeTextDetails);
+            using var message = CreateAnalyzeBusinessCardAsyncRequest(contentType, fileStream, includeTextDetails, locale);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ServiceAnalyzeReceiptAsyncHeaders(message.Response);
+            var headers = new ServiceAnalyzeBusinessCardAsyncHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
@@ -644,22 +725,23 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        /// <summary> Extract field text and semantic values from a given receipt document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
+        /// <summary> Extract field text and semantic values from a given business card document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </summary>
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
+        /// <param name="locale"> Locale of the business card. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileStream"/> is null. </exception>
-        public ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders> AnalyzeReceiptAsync(FormContentType contentType, Stream fileStream, bool? includeTextDetails = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ServiceAnalyzeBusinessCardAsyncHeaders> AnalyzeBusinessCardAsync(FormContentType contentType, Stream fileStream, bool? includeTextDetails = null, string locale = null, CancellationToken cancellationToken = default)
         {
             if (fileStream == null)
             {
                 throw new ArgumentNullException(nameof(fileStream));
             }
 
-            using var message = CreateAnalyzeReceiptAsyncRequest(contentType, fileStream, includeTextDetails);
+            using var message = CreateAnalyzeBusinessCardAsyncRequest(contentType, fileStream, includeTextDetails, locale);
             _pipeline.Send(message, cancellationToken);
-            var headers = new ServiceAnalyzeReceiptAsyncHeaders(message.Response);
+            var headers = new ServiceAnalyzeBusinessCardAsyncHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
@@ -669,18 +751,22 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateAnalyzeReceiptAsyncRequest(bool? includeTextDetails, SourcePath fileStream)
+        internal HttpMessage CreateAnalyzeBusinessCardAsyncRequest(bool? includeTextDetails, string locale, SourcePath fileStream)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.0", false);
-            uri.AppendPath("/prebuilt/receipt/analyze", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
+            uri.AppendPath("/prebuilt/businessCard/analyze", false);
             if (includeTextDetails != null)
             {
                 uri.AppendQuery("includeTextDetails", includeTextDetails.Value, true);
+            }
+            if (locale != null)
+            {
+                uri.AppendQuery("locale", locale, true);
             }
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
@@ -694,13 +780,140 @@ namespace Azure.AI.FormRecognizer
             return message;
         }
 
-        /// <summary> Extract field text and semantic values from a given receipt document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
+        /// <summary> Extract field text and semantic values from a given business card document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </summary>
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
+        /// <param name="locale"> Locale of the business card. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders>> AnalyzeReceiptAsyncAsync(bool? includeTextDetails = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ServiceAnalyzeBusinessCardAsyncHeaders>> AnalyzeBusinessCardAsyncAsync(bool? includeTextDetails = null, string locale = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateAnalyzeReceiptAsyncRequest(includeTextDetails, fileStream);
+            using var message = CreateAnalyzeBusinessCardAsyncRequest(includeTextDetails, locale, fileStream);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new ServiceAnalyzeBusinessCardAsyncHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Extract field text and semantic values from a given business card document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </summary>
+        /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
+        /// <param name="locale"> Locale of the business card. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
+        /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public ResponseWithHeaders<ServiceAnalyzeBusinessCardAsyncHeaders> AnalyzeBusinessCardAsync(bool? includeTextDetails = null, string locale = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateAnalyzeBusinessCardAsyncRequest(includeTextDetails, locale, fileStream);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new ServiceAnalyzeBusinessCardAsyncHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetAnalyzeBusinessCardResultRequest(Guid resultId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
+            uri.AppendPath("/prebuilt/businessCard/analyzeResults/", false);
+            uri.AppendPath(resultId, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Track the progress and obtain the result of the analyze business card operation. </summary>
+        /// <param name="resultId"> Analyze operation result identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<AnalyzeOperationResult>> GetAnalyzeBusinessCardResultAsync(Guid resultId, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetAnalyzeBusinessCardResultRequest(resultId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        AnalyzeOperationResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Track the progress and obtain the result of the analyze business card operation. </summary>
+        /// <param name="resultId"> Analyze operation result identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<AnalyzeOperationResult> GetAnalyzeBusinessCardResult(Guid resultId, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetAnalyzeBusinessCardResultRequest(resultId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        AnalyzeOperationResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateAnalyzeReceiptAsyncRequest(FormContentType contentType, Stream fileStream, bool? includeTextDetails, string locale)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
+            uri.AppendPath("/prebuilt/receipt/analyze", false);
+            if (includeTextDetails != null)
+            {
+                uri.AppendQuery("includeTextDetails", includeTextDetails.Value, true);
+            }
+            if (locale != null)
+            {
+                uri.AppendQuery("locale", locale, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", contentType.ToSerialString());
+            request.Headers.Add("Accept", "application/json");
+            request.Content = RequestContent.Create(fileStream);
+            return message;
+        }
+
+        /// <summary> Extract field text and semantic values from a given receipt document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </summary>
+        /// <param name="contentType"> Upload file type. </param>
+        /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
+        /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
+        /// <param name="locale"> Locale of the receipt. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileStream"/> is null. </exception>
+        public async Task<ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders>> AnalyzeReceiptAsyncAsync(FormContentType contentType, Stream fileStream, bool? includeTextDetails = null, string locale = null, CancellationToken cancellationToken = default)
+        {
+            if (fileStream == null)
+            {
+                throw new ArgumentNullException(nameof(fileStream));
+            }
+
+            using var message = CreateAnalyzeReceiptAsyncRequest(contentType, fileStream, includeTextDetails, locale);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ServiceAnalyzeReceiptAsyncHeaders(message.Response);
             switch (message.Response.Status)
@@ -712,13 +925,88 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        /// <summary> Extract field text and semantic values from a given receipt document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
+        /// <summary> Extract field text and semantic values from a given receipt document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </summary>
+        /// <param name="contentType"> Upload file type. </param>
+        /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
+        /// <param name="locale"> Locale of the receipt. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileStream"/> is null. </exception>
+        public ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders> AnalyzeReceiptAsync(FormContentType contentType, Stream fileStream, bool? includeTextDetails = null, string locale = null, CancellationToken cancellationToken = default)
+        {
+            if (fileStream == null)
+            {
+                throw new ArgumentNullException(nameof(fileStream));
+            }
+
+            using var message = CreateAnalyzeReceiptAsyncRequest(contentType, fileStream, includeTextDetails, locale);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new ServiceAnalyzeReceiptAsyncHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateAnalyzeReceiptAsyncRequest(bool? includeTextDetails, string locale, SourcePath fileStream)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
+            uri.AppendPath("/prebuilt/receipt/analyze", false);
+            if (includeTextDetails != null)
+            {
+                uri.AppendQuery("includeTextDetails", includeTextDetails.Value, true);
+            }
+            if (locale != null)
+            {
+                uri.AppendQuery("locale", locale, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
+            if (fileStream != null)
+            {
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(fileStream);
+                request.Content = content;
+            }
+            return message;
+        }
+
+        /// <summary> Extract field text and semantic values from a given receipt document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </summary>
+        /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
+        /// <param name="locale"> Locale of the receipt. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders> AnalyzeReceiptAsync(bool? includeTextDetails = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders>> AnalyzeReceiptAsyncAsync(bool? includeTextDetails = null, string locale = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateAnalyzeReceiptAsyncRequest(includeTextDetails, fileStream);
+            using var message = CreateAnalyzeReceiptAsyncRequest(includeTextDetails, locale, fileStream);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new ServiceAnalyzeReceiptAsyncHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Extract field text and semantic values from a given receipt document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </summary>
+        /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
+        /// <param name="locale"> Locale of the receipt. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
+        /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders> AnalyzeReceiptAsync(bool? includeTextDetails = null, string locale = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateAnalyzeReceiptAsyncRequest(includeTextDetails, locale, fileStream);
             _pipeline.Send(message, cancellationToken);
             var headers = new ServiceAnalyzeReceiptAsyncHeaders(message.Response);
             switch (message.Response.Status)
@@ -737,7 +1025,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.0", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
             uri.AppendPath("/prebuilt/receipt/analyzeResults/", false);
             uri.AppendPath(resultId, true);
             request.Uri = uri;
@@ -794,7 +1082,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.0", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
             uri.AppendPath("/layout/analyze", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", contentType.ToSerialString());
@@ -858,7 +1146,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.0", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
             uri.AppendPath("/layout/analyze", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
@@ -913,7 +1201,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.0", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
             uri.AppendPath("/layout/analyzeResults/", false);
             uri.AppendPath(resultId, true);
             request.Uri = uri;
@@ -970,7 +1258,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.0", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
             uri.AppendPath("/custom/models", false);
             uri.AppendQuery("op", "full", true);
             request.Uri = uri;
@@ -1025,7 +1313,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.0", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
             uri.AppendPath("/custom/models", false);
             uri.AppendQuery("op", "summary", true);
             request.Uri = uri;
@@ -1080,7 +1368,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.0", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

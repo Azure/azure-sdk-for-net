@@ -129,6 +129,16 @@ namespace Azure.Messaging.EventGrid.Tests
                 Assert.AreEqual("512d38b6-c7b8-40c8-89fe-f46f9e9622b6", eventData1.ItemSku);
             }
         }
+
+        [Test]
+        public void EGEventParseThrowsIfMissingRequiredProperties()
+        {
+            // missing Id and DataVersion
+            string requestContent = "[{  \"subject\": \"\",  \"data\": {    \"itemSku\": \"512d38b6-c7b8-40c8-89fe-f46f9e9622b6\",    \"itemUri\": \"https://rp-eastus2.eventgrid.azure.net:553/eventsubscriptions/estest/validate?id=B2E34264-7D71-453A-B5FB-B62D0FDC85EE&t=2018-04-26T20:30:54.4538837Z&apiVersion=2018-05-01-preview&token=1BNqCxBBSSE9OnNSfZM4%2b5H9zDegKMY6uJ%2fO2DFRkwQ%3d\"  },  \"eventType\": \"Contoso.Items.ItemReceived\",  \"eventTime\": \"2018-01-25T22:12:19.4556811Z\",  \"metadataVersion\": \"1\"}]";
+
+            Assert.That(() => EventGridEvent.Parse(requestContent),
+                Throws.InstanceOf<ArgumentNullException>());
+        }
         #endregion
 
         #region Custom event tests
@@ -1478,6 +1488,16 @@ namespace Azure.Messaging.EventGrid.Tests
                 ContosoItemReceivedEventData eventData2 = binaryEventData.ToObject<ContosoItemReceivedEventData>();
                 Assert.AreEqual("512d38b6-c7b8-40c8-89fe-f46f9e9622b6", eventData1.ItemSku);
             }
+        }
+
+        [Test]
+        public void CloudEventParseThrowsIfMissingRequiredProperties()
+        {
+            // missing Id and Source
+            string requestContent = "[{ \"subject\": \"\",  \"data\": {    \"itemSku\": \"512d38b6-c7b8-40c8-89fe-f46f9e9622b6\",    \"itemUri\": \"https://rp-eastus2.eventgrid.azure.net:553/eventsubscriptions/estest/validate?id=B2E34264-7D71-453A-B5FB-B62D0FDC85EE&t=2018-04-26T20:30:54.4538837Z&apiVersion=2018-05-01-preview&token=1BNqCxBBSSE9OnNSfZM4%2b5H9zDegKMY6uJ%2fO2DFRkwQ%3d\"  },  \"type\": \"Contoso.Items.ItemReceived\"}]";
+
+            Assert.That(() => CloudEvent.Parse(requestContent),
+                Throws.InstanceOf<ArgumentNullException>());
         }
         #endregion
 

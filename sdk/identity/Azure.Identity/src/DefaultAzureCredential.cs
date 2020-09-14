@@ -143,7 +143,7 @@ namespace Azure.Identity
 
         private static async ValueTask<(AccessToken, TokenCredential)> GetTokenFromSourcesAsync(TokenCredential[] sources, TokenRequestContext requestContext, bool async, CancellationToken cancellationToken)
         {
-            List<Exception> exceptions = new List<Exception>();
+            List<CredentialUnavailableException> exceptions = new List<CredentialUnavailableException>();
 
             for (var i = 0; i < sources.Length && sources[i] != null; i++)
             {
@@ -155,18 +155,13 @@ namespace Azure.Identity
 
                     return (token, sources[i]);
                 }
-                catch (AuthenticationFailedException e)
+                catch (CredentialUnavailableException e)
                 {
                     exceptions.Add(e);
-                }
-                catch (Exception e) when (!(e is OperationCanceledException))
-                {
-                    exceptions.Add(e);
-                    throw AuthenticationFailedException.CreateAggregateException(UnhandledExceptionMessage + e.Message, exceptions);
                 }
             }
 
-            throw AuthenticationFailedException.CreateAggregateException(DefaultExceptionMessage, exceptions);
+            throw CredentialUnavailableException.CreateAggregateException(DefaultExceptionMessage, exceptions);
         }
 
         private static TokenCredential[] GetDefaultAzureCredentialChain(DefaultAzureCredentialFactory factory, DefaultAzureCredentialOptions options)
