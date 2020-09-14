@@ -31,3 +31,5 @@ extends:
       safeName: AzureMessagingEventGrid
     - name: Microsoft.Azure.EventGrid
       safeName: MicrosoftAzureEventGrid
+    - name: Microsoft.Azure.WebJobs.Extensions.EventGrid
+      safeName: MicrosoftAzureWebJobsExtensionsEventGrid
