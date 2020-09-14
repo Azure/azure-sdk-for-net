@@ -159,7 +159,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                 // we continue to find these if the host needs to restart.
                 if (failedNotifications.Any())
                 {
-                    // TODO (kasobol-msft) this call to getPRoperties is suboptimal figure out how to propagate data from listing here.
+                    // TODO (kasobol-msft) this call to GetProperties is suboptimal figure out how to propagate data from listing here.
                     latestScan = failedNotifications.Select(p => p.Blob).Min(n => n.BlobClient.GetProperties().Value.LastModified.UtcDateTime);
                 }
 
