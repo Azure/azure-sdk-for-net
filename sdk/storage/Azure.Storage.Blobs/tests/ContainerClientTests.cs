@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection.Metadata;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,6 +16,8 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using Moq;
+using Moq.Protected;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
@@ -1005,6 +1006,18 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public void BlobAccessPolicyNullStartsOnExpiresOnTest()
+        {
+            BlobAccessPolicy accessPolicy = new BlobAccessPolicy()
+            {
+                Permissions = "rw"
+            };
+
+            Assert.AreEqual(new DateTimeOffset(), accessPolicy.StartsOn);
+            Assert.AreEqual(new DateTimeOffset(), accessPolicy.ExpiresOn);
+        }
+
+        [Test]
         public async Task SetAccessPolicyAsync_OldProperties()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1779,7 +1792,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(2, page.Values.Count);
-            Assert.IsTrue(page.Values.All(b => b.Metadata == null));
+            Assert.IsTrue(page.Values.All(b => b.Metadata.Count == 0));
         }
 
         [Test]
@@ -2105,6 +2118,23 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             AssertDictionaryEquality(metadata, item.Blob.Metadata);
+        }
+
+        [Test]
+        public async Task ListBlobsHierarchySegmentAsync_Metadata_NoMetadata()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            await blob.CreateAsync();
+
+            // Act
+            BlobHierarchyItem item = await test.Container.GetBlobsByHierarchyAsync(traits: BlobTraits.Metadata).FirstAsync();
+
+            // Assert
+            Assert.IsNotNull(item.Blob.Metadata);
+            Assert.AreEqual(0, item.Blob.Metadata.Count);
         }
 
         [Test]
@@ -2481,6 +2511,39 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(blobName, pageBlobClientFromContainer.Name);
             Assert.AreEqual(expectedUri, pageBlobClientFromConnectionString.Uri);
             Assert.AreEqual(blobName, pageBlobClientFromConnectionString.Name);
+        }
+
+        [Test]
+        public void CanMockBlobClientsRetrieval()
+        {
+            // Arrange
+            string blobName = "test";
+            string leaseId = "leaseId";
+            Mock<BlobContainerClient> containerClientMock = new Mock<BlobContainerClient>();
+            Mock<BlockBlobClient> blockBlobClientMock = new Mock<BlockBlobClient>();
+            Mock<AppendBlobClient> appendBlobClientMock = new Mock<AppendBlobClient>();
+            Mock<PageBlobClient> pageBlobClientMock = new Mock<PageBlobClient>();
+            Mock<BlobLeaseClient> blobLeaseClientMock = new Mock<BlobLeaseClient>();
+            containerClientMock.Protected().Setup<BlockBlobClient>("GetBlockBlobClientCore", blobName).Returns(blockBlobClientMock.Object);
+            containerClientMock.Protected().Setup<AppendBlobClient>("GetAppendBlobClientCore", blobName).Returns(appendBlobClientMock.Object);
+            containerClientMock.Protected().Setup<PageBlobClient>("GetPageBlobClientCore", blobName).Returns(pageBlobClientMock.Object);
+            containerClientMock.Protected().Setup<BlobLeaseClient>("GetBlobLeaseClientCore", leaseId).Returns(blobLeaseClientMock.Object);
+
+            // Act
+            var blockBlobClient = containerClientMock.Object.GetBlockBlobClient(blobName);
+            var appendBlobClient = containerClientMock.Object.GetAppendBlobClient(blobName);
+            var pageBlobClient = containerClientMock.Object.GetPageBlobClient(blobName);
+            var blobLeaseClient = containerClientMock.Object.GetBlobLeaseClient(leaseId);
+
+            // Assert
+            Assert.IsNotNull(blockBlobClient);
+            Assert.AreSame(blockBlobClientMock.Object, blockBlobClient);
+            Assert.IsNotNull(appendBlobClient);
+            Assert.AreSame(appendBlobClientMock.Object, appendBlobClient);
+            Assert.IsNotNull(pageBlobClient);
+            Assert.AreSame(pageBlobClientMock.Object, pageBlobClient);
+            Assert.IsNotNull(blobLeaseClient);
+            Assert.AreSame(blobLeaseClientMock.Object, blobLeaseClient);
         }
 
         #region Secondary Storage

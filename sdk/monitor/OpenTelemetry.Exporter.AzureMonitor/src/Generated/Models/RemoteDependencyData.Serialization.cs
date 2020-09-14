@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,7 +16,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("ver");
-            writer.WriteNumberValue(Ver);
+            writer.WriteNumberValue(Version);
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
@@ -47,7 +45,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
                 writer.WriteStringValue(Target);
             }
             writer.WritePropertyName("duration");
-            writer.WriteStringValue(Duration, "P");
+            writer.WriteStringValue(Duration);
             if (Optional.IsDefined(Success))
             {
                 writer.WritePropertyName("success");
@@ -81,96 +79,6 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
                 writer.WriteStringValue(Test);
             }
             writer.WriteEndObject();
-        }
-
-        internal static RemoteDependencyData DeserializeRemoteDependencyData(JsonElement element)
-        {
-            int ver = default;
-            Optional<string> id = default;
-            string name = default;
-            Optional<string> resultCode = default;
-            Optional<string> data = default;
-            Optional<string> type = default;
-            Optional<string> target = default;
-            TimeSpan duration = default;
-            Optional<bool> success = default;
-            Optional<IDictionary<string, string>> properties = default;
-            Optional<IDictionary<string, double>> measurements = default;
-            Optional<string> test = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("ver"))
-                {
-                    ver = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resultCode"))
-                {
-                    resultCode = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("data"))
-                {
-                    data = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("target"))
-                {
-                    target = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("duration"))
-                {
-                    duration = property.Value.GetTimeSpan("P");
-                    continue;
-                }
-                if (property.NameEquals("success"))
-                {
-                    success = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("properties"))
-                {
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    properties = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("measurements"))
-                {
-                    Dictionary<string, double> dictionary = new Dictionary<string, double>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetDouble());
-                    }
-                    measurements = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("test"))
-                {
-                    test = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new RemoteDependencyData(test.Value, ver, id.Value, name, resultCode.Value, data.Value, type.Value, target.Value, duration, Optional.ToNullable(success), Optional.ToDictionary(properties), Optional.ToDictionary(measurements));
         }
     }
 }

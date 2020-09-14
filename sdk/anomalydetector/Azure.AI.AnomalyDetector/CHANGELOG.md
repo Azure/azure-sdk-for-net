@@ -1,6 +1,6 @@
 # Release History
 
-## 3.0.0-preview.2 (2020-09-02)
+## 3.0.0-preview.2 (2020-09-03)
 
 ### Breaking Changes
 - Renamed `AnomalyDetectorClient.EntireDetectAsync` and `AnomalyDetectorClient.EntireDetect` to `AnomalyDetectorClient.DetectEntireSeriesAsync` and `AnomalyDetectorClient.DetectEntireSeries`.

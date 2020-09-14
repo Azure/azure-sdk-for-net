@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 using System.Text;
-using NUnit.Framework;
+using Xunit;
 
 namespace OpenTelemetry.Exporter.AzureMonitor.Tests
 {
     public class NDJsonWriterTests
     {
-        [Test]
+        [Fact]
         public void CanWriteMultilineJson()
         {
             var writer = new NDJsonWriter();
@@ -20,7 +20,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Tests
             writer.JsonWriter.WriteNumber("anotherProperty", 2);
             writer.JsonWriter.WriteEndObject();
 
-            Assert.AreEqual("{\"property\":\"value\"}\n{\"anotherProperty\":2}", Encoding.UTF8.GetString(writer.ToBytes().Span.ToArray()));
+            Assert.Equal("{\"property\":\"value\"}\n{\"anotherProperty\":2}", Encoding.UTF8.GetString(writer.ToBytes().Span.ToArray()));
         }
     }
 }

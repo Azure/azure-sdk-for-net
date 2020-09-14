@@ -17,7 +17,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
         {
             Optional<int> itemsReceived = default;
             Optional<int> itemsAccepted = default;
-            Optional<IReadOnlyList<ErrorDetails>> errors = default;
+            Optional<IReadOnlyList<TelemetryErrorDetails>> errors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("itemsReceived"))
@@ -32,10 +32,10 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
                 }
                 if (property.NameEquals("errors"))
                 {
-                    List<ErrorDetails> array = new List<ErrorDetails>();
+                    List<TelemetryErrorDetails> array = new List<TelemetryErrorDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ErrorDetails.DeserializeErrorDetails(item));
+                        array.Add(TelemetryErrorDetails.DeserializeTelemetryErrorDetails(item));
                     }
                     errors = array;
                     continue;
