@@ -90,7 +90,7 @@ key = client.GetKey("key-name");
 Once you've created a `KeyVaultKey` in the Azure Key Vault, you can also create the [CryptographyClient][crypto_client_class]:
 
 ```C# Snippet:CreateCryptographyClient
-// Create a new certificate client using the default credential from Azure.Identity using environment variables previously set,
+// Create a new cryptography client using the default credential from Azure.Identity using environment variables previously set,
 // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
 var cryptoClient = new CryptographyClient(keyId: key.Id, credential: new DefaultAzureCredential());
 ```

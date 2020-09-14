@@ -183,8 +183,8 @@ while (!operation.HasCompleted)
     operation.UpdateStatus();
 }
 
-DeletedCertificate secret = operation.Value;
-client.PurgeDeletedCertificate(secret.Name);
+DeletedCertificate certificate = operation.Value;
+client.PurgeDeletedCertificate(certificate.Name);
 ```
 
 ### Create a certificate asynchronously
@@ -222,8 +222,8 @@ DeleteCertificateOperation operation = await client.StartDeleteCertificateAsync(
 // You only need to wait for completion if you want to purge or recover the certificate.
 await operation.WaitForCompletionAsync();
 
-DeletedCertificate secret = operation.Value;
-await client.PurgeDeletedCertificateAsync(secret.Name);
+DeletedCertificate certificate = operation.Value;
+await client.PurgeDeletedCertificateAsync(certificate.Name);
 ```
 
 ## Troubleshooting

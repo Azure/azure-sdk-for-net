@@ -54,7 +54,7 @@ Across all new Azure client libraries, clients consistently take an endpoint or 
 
 Previously in `Microsoft.Azure.KeyVault`, you could create a `KeyVaultClient` along with the `AzureServiceTokenProvider` from the package `Microsoft.Azure.Services.AppAuthentication`:
 
-```C# Snippet:Microsoft_Azure_KeyVault_Snippets_MigrationGuide_Create
+```C# Snippet:Microsoft_Azure_KeyVault_Secrets_Snippets_MigrationGuide_Create
 AzureServiceTokenProvider provider = new AzureServiceTokenProvider();
 KeyVaultClient client = new KeyVaultClient(
     new KeyVaultClient.AuthenticationCallback(provider.KeyVaultTokenCallback));
@@ -74,7 +74,7 @@ SecretClient client = new SecretClient(
 
 In `Microsoft.Azure.KeyVault` with `KeyVaultClient`, a new `HttpClient` was created with each instance but could be shared to prevent connection starvation:
 
-```C# Snippet:Microsoft_Azure_KeyVault_Snippets_MigrationGuide_CreateWithOptions
+```C# Snippet:Microsoft_Azure_KeyVault_Secrets_Snippets_MigrationGuide_CreateWithOptions
 using (HttpClient httpClient = new HttpClient())
 {
     AzureServiceTokenProvider provider = new AzureServiceTokenProvider();
@@ -107,7 +107,7 @@ using (HttpClient httpClient = new HttpClient())
 
 Previously in `Microsoft.Azure.KeyVault`, you could set a secret value using the `KeyVaultClient` and a specific Key Vault endpoint:
 
-```C# Snippet:Microsoft_Azure_KeyVault_Snippets_MigrationGuide_SetSecret
+```C# Snippet:Microsoft_Azure_KeyVault_Secrets_Snippets_MigrationGuide_SetSecret
 SecretBundle secret = await client.SetSecretAsync("https://myvault.vault.azure.net", "secret-name", "secret-value");
 ```
 
@@ -125,7 +125,7 @@ Synchronous methods are also available on `SecretClient`, though we recommend yo
 
 Previously in `Microsoft.Azure.KeyVault`, you could get a secret value using the `KeyVaultClient` and a specific Key Vault endpoint:
 
-```C# Snippet:Microsoft_Azure_KeyVault_Snippets_MigrationGuide_GetSecret
+```C# Snippet:Microsoft_Azure_KeyVault_Secrets_Snippets_MigrationGuide_GetSecret
 // Get the latest secret value.
 SecretBundle secret = await client.GetSecretAsync("https://myvault.vault.azure.net", "secret-name", null);
 
@@ -149,7 +149,7 @@ Synchronous methods are also available on `SecretClient`, though we recommend yo
 
 Previously in `Microsoft.Azure.KeyVault`, you could list secrets' properties using the `KeyVaultClient` and a specific Key Vault endpoint:
 
-```C# Snippet:Microsoft_Azure_KeyVault_Snippets_MigrationGuide_ListSecrets
+```C# Snippet:Microsoft_Azure_KeyVault_Secrets_Snippets_MigrationGuide_ListSecrets
 IPage<SecretItem> page = await client.GetSecretsAsync("https://myvault.vault.azure.net");
 foreach (SecretItem item in page)
 {
@@ -188,7 +188,7 @@ foreach (SecretProperties item in client.GetPropertiesOfSecrets())
 
 Previously in `Microsoft.Azure.KeyVault`, you could delete a secret using the `KeyVaultClient` and a specific Key Vault endpoint:
 
-```C# Snippet:Microsoft_Azure_KeyVault_Snippets_MigrationGuide_DeleteSecret
+```C# Snippet:Microsoft_Azure_KeyVault_Secrets_Snippets_MigrationGuide_DeleteSecret
 // Delete the secret.
 DeletedSecretBundle deletedSecret = await client.DeleteSecretAsync("https://myvault.vault.azure.net", "secret-name");
 
