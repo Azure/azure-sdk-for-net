@@ -682,6 +682,59 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        [TestCase("!'();[]@&%=+$,#äÄöÖüÜß;")]
+        [TestCase("%21%27%28%29%3B%5B%5D%40%26%25%3D%2B%24%2C%23äÄöÖüÜß%3B")]
+        [TestCase(" my cool file ")]
+        [TestCase("file")]
+        public async Task RenameAsync_DestinationSpecialCharacters(string destFileName)
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            string directoryName = GetNewDirectoryName();
+            DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetDirectoryClient(directoryName));
+            await directory.CreateAsync();
+            DataLakeFileClient sourceFile = await test.FileSystem.CreateFileAsync(GetNewFileName());
+            Uri expectedDestFileUri = new Uri($"https://{test.FileSystem.AccountName}.dfs.core.windows.net/{test.FileSystem.Name}/{directoryName}/{Uri.EscapeDataString(destFileName)}");
+            string destFilePath = $"{directoryName}/{destFileName}";
+
+            // Act
+            DataLakeFileClient destFile = await sourceFile.RenameAsync(destinationPath: destFilePath);
+
+            // Assert
+            Response<PathProperties> response = await destFile.GetPropertiesAsync();
+            Assert.AreEqual(destFileName, destFile.Name);
+            Assert.AreEqual(destFilePath, destFile.Path);
+            Assert.AreEqual(expectedDestFileUri, destFile.Uri);
+        }
+
+        [Test]
+        [TestCase("!'();[]@&%=+$,#äÄöÖüÜß;")]
+        [TestCase("%21%27%28%29%3B%5B%5D%40%26%25%3D%2B%24%2C%23äÄöÖüÜß%3B")]
+        [TestCase(" my cool file ")]
+        [TestCase("file")]
+        public async Task RenameAsync_SourceSpecialCharacters(string sourceFileName)
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            string directoryName = GetNewDirectoryName();
+            DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetDirectoryClient(directoryName));
+            await directory.CreateAsync();
+            DataLakeFileClient sourceFile = await test.FileSystem.CreateFileAsync(sourceFileName);
+            string destFileName = GetNewFileName();
+            Uri expectedDestFileUri = new Uri($"https://{test.FileSystem.AccountName}.dfs.core.windows.net/{test.FileSystem.Name}/{directoryName}/{destFileName}");
+            string destFilePath = $"{directoryName}/{destFileName}";
+
+            // Act
+            DataLakeFileClient destFile = await sourceFile.RenameAsync(destinationPath: destFilePath);
+
+            // Assert
+            Response<PathProperties> response = await destFile.GetPropertiesAsync();
+            Assert.AreEqual(destFileName, destFile.Name);
+            Assert.AreEqual(destFilePath, destFile.Path);
+            Assert.AreEqual(expectedDestFileUri, destFile.Uri);
+        }
+
+        [Test]
         public async Task GetAccessControlAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -2877,6 +2930,31 @@ namespace Azure.Storage.Files.DataLake.Tests
             var actual = new MemoryStream();
             await downloadResponse.Value.Content.CopyToAsync(actual);
             TestHelper.AssertSequenceEqual(expectedData, actual.ToArray());
+        }
+
+        [Test]
+        public async Task UploadAsync_CloseAndRetainData()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = test.FileSystem.GetFileClient(GetNewFileName());
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+
+            DataLakeFileUploadOptions options = new DataLakeFileUploadOptions
+            {
+                Close = true,
+                RetainUncommittedData = true
+            };
+
+            // Act
+            using Stream stream = new MemoryStream(data);
+            await file.UploadAsync(stream, options: options);
+
+            // Assert
+            using var actual = new MemoryStream();
+            await file.ReadToAsync(actual);
+            TestHelper.AssertSequenceEqual(data, actual.ToArray());
         }
 
         [Test]
