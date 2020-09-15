@@ -809,6 +809,84 @@ namespace Azure.Storage.Queues.Test
         }
 
         [Test]
+        public async Task ReceiveMessageAsync()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            var messageText = GetNewString();
+            await test.Queue.SendMessageAsync(messageText);
+
+            // Act
+            Response<Models.QueueMessage> response = await test.Queue.ReceiveMessageAsync(
+                visibilityTimeout: new TimeSpan(1, 0, 0));
+
+            // Assert
+            Assert.AreEqual(messageText, response.Value.MessageText);
+        }
+
+        [Test]
+        public async Task ReceiveMessageAsync_Min()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            var messageText = GetNewString();
+            await test.Queue.SendMessageAsync(messageText);
+
+            // Act
+            Response<Models.QueueMessage> response = await test.Queue.ReceiveMessageAsync();
+
+            // Assert
+            Assert.AreEqual(messageText, response.Value.MessageText);
+        }
+
+        [Test]
+        public async Task ReceiveMessageAsync_EmptyQueue()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            var messageText = GetNewString();
+
+            // Act
+            Response<Models.QueueMessage> response = await test.Queue.ReceiveMessageAsync();
+
+            // Assert
+            Assert.IsNull(response.Value);
+        }
+
+        [Test]
+        public async Task ReceiveMessageAsync_EmptyQueue_With_ResponseCast()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            var messageText = GetNewString();
+
+            // Act
+            Models.QueueMessage message = await test.Queue.ReceiveMessageAsync();
+
+            // Assert
+            Assert.IsNull(message);
+        }
+
+        // Note that this test intentionally does not call queue.CreateAsync()
+        [Test]
+        public async Task ReceiveMessageAsync_Error()
+        {
+            // Arrange
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                queue.ReceiveMessagesAsync(),
+                actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
+        }
+
+        [Test]
         public async Task PeekMessagesAsync()
         {
             // Arrange
