@@ -262,6 +262,27 @@ namespace Azure.Data.Tables.Tests
             }
         }
 
+        protected async Task<TResult> RetryUntilExpectedResponse<TResult>(Func<Task<TResult>> action, Func<TResult, bool> equalityAction, int initialDelay)
+        {
+            int retryCount = 0;
+            int delay = initialDelay;
+            while (true)
+            {
+                var actual = await action().ConfigureAwait(false);
+
+                if (++retryCount > 3 || equalityAction(actual))
+                {
+                    return actual;
+                }
+                // Disable retry throttling in Playback mode.
+                if (Mode != RecordedTestMode.Playback)
+                {
+                    await Task.Delay(delay);
+                    delay *= 2;
+                }
+            }
+        }
+
         protected async Task CreateTestEntities<T>(List<T> entitiesToCreate) where T : class, ITableEntity, new()
         {
             foreach (var entity in entitiesToCreate)

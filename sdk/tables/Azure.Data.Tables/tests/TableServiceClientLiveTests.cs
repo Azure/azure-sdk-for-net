@@ -245,17 +245,13 @@ namespace Azure.Data.Tables.Tests
 
             await service.SetPropertiesAsync(responseToChange).ConfigureAwait(false);
 
-            // Wait 20 sec if on Live mode to ensure properties are updated in the service
-            // Minimum time: Sync - 20 sec; Async - 12 sec
-
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(20000);
-            }
-
             // Get configured properties
+            // A delay is required to ensure properties are updated in the service
 
-            TableServiceProperties changedResponse = await service.GetPropertiesAsync().ConfigureAwait(false);
+            TableServiceProperties changedResponse = await RetryUntilExpectedResponse(
+                async () => await service.GetPropertiesAsync().ConfigureAwait(false),
+                result => result.Value.Logging.Read == responseToChange.Logging.Read,
+                15000).ConfigureAwait(false);
 
             // Test each property
 
