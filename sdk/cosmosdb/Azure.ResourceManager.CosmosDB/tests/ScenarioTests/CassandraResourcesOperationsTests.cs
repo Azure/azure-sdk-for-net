@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
     public class CassandraResourcesOperationsTests : CosmosDBManagementClientBase
     {
         protected string resourceGroupName;
-        protected string databaseAccountName = "db12345";
+        protected string databaseAccountName = "amecassandratest" + DateTime.Now.ToString("MMddyyyyHHmmss") + "4hzd";
         protected string keyspaceName = "keyspaceName2510";
         protected string keyspaceName2 = "keyspaceName22510";
         protected string tableName = "tableName2510";
