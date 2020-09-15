@@ -543,9 +543,35 @@ namespace Azure.Data.Tables.Tests
             // Create an entity.
 
             await client.AddEntityAsync(entityToCreate).ConfigureAwait(false);
-            TableEntity createdEntity = await client.GetEntityAsync<TableEntity>(entityToCreate.PartitionKey, entityToCreate.RowKey).ConfigureAwait(false);
+            TableEntity entity = await client.GetEntityAsync<TableEntity>(entityToCreate.PartitionKey, entityToCreate.RowKey).ConfigureAwait(false);
 
-            Assert.That(createdEntity.Keys.Count(k => k.EndsWith(TableConstants.Odata.OdataTypeString)), Is.Zero, "The entity should not containt any odata data annotation properties");
+            Assert.That(entity.Keys.Count(k => k.EndsWith(TableConstants.Odata.OdataTypeString)), Is.Zero, "The entity should not containt any odata data annotation properties");
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [RecordedTest]
+        public async Task CreateEntityAllowsSelect()
+        {
+            TableEntity entityToCreate = CreateTableEntities(PartitionKeyValue, 1).First();
+
+            // Create an entity.
+
+            await client.AddEntityAsync(entityToCreate).ConfigureAwait(false);
+            TableEntity entity = await client.GetEntityAsync<TableEntity>(entityToCreate.PartitionKey, entityToCreate.RowKey, new[] { nameof(entityToCreate.PartitionKey) }).ConfigureAwait(false);
+
+            Assert.That(entity.PartitionKey, Is.EqualTo(entityToCreate.PartitionKey), "The entity property should be equal");
+            Assert.That(entity.RowKey, Is.Null, "The entity property should be null");
+            Assert.That(entity.Timestamp, Is.Null, "The entity property should be null");
+            Assert.That(entity.TryGetValue(StringTypePropertyName, out _), Is.False, "The entity property should not exist");
+            Assert.That(entity.TryGetValue(DateTypePropertyName, out _), Is.False, "The entity property should not exist");
+            Assert.That(entity.TryGetValue(GuidTypePropertyName, out _), Is.False, "The entity property should not exist");
+            Assert.That(entity.TryGetValue(BinaryTypePropertyName, out _), Is.False, "The entity property should not exist");
+            Assert.That(entity.TryGetValue(Int64TypePropertyName, out _), Is.False, "The entity property should not exist");
+            Assert.That(entity.TryGetValue(DoubleTypePropertyName, out _), Is.False, "The entity property should not exist");
+            Assert.That(entity.TryGetValue(DoubleDecimalTypePropertyName, out _), Is.False, "The entity property should not exist");
+            Assert.That(entity.TryGetValue(IntTypePropertyName, out _), Is.False, "The entity property should not exist");
         }
 
         /// <summary>

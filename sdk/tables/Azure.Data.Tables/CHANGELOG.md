@@ -2,6 +2,9 @@
 
 ## 3.0.0-beta.2 (Unreleased)
 
+### Changed
+
+- `TableClient`'s `GetEntity` method now exposes the `select` query option to allow for more efficient existence checks for a table entity
 
 ## 3.0.0-beta.1 (2020-09-08)
 
