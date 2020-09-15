@@ -1,5 +1,7 @@
 # Release History
 
+## 5.3.0-beta.2 (Unreleased)
+
 ## 5.3.0-beta.1 (2020-09-15)
 
 ### Changes
