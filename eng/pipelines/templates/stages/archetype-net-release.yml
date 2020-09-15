@@ -78,7 +78,7 @@ stages:
                         ReleaseSha: $(Build.SourceVersion)
                         RepoId: Azure/azure-sdk-for-net
 
-          - ${{if ne(artifact.options.skipPublishPackage, 'true')}}:
+          - ${{if ne(artifact.skipPublishPackage, 'true')}}:
             - deployment: PublishPackage
               displayName: Publish package to Nuget.org and DevOps Feed
               condition: and(succeeded(), ne(variables['Skip.PublishPackage'], 'true'))
@@ -116,7 +116,7 @@ stages:
                           packagesToPush: '$(Pipeline.Workspace)/staging/**/*.nupkg;!$(Pipeline.Workspace)/staging/**/*.symbols.nupkg'
                           publishVstsFeed: ${{ parameters.DevOpsFeedID }}
 
-          - ${{if ne(artifact.options.skipSymbolsUpload, 'true')}}:
+          - ${{if ne(artifact.skipSymbolsUpload, 'true')}}:
             - deployment: UploadSymbols
               displayName: Upload Symbols to Symbols Server
               condition: and(succeeded(), ne(variables['Skip.SymbolsUpload'], 'true'))
@@ -147,7 +147,7 @@ stages:
                           solution: '$(AzureSDKBuildToolsPath)/tools/symboltool/SymbolUploader.proj'
                           msbuildArguments: '/p:PackagesPath=$(Pipeline.Workspace)/staging /p:MSPublicSymbolsPAT=$(azuresdk-microsoftpublicsymbols-devops-pat) /p:MSSymbolsPAT=$(azuresdk-microsoft-devops-pat) /p:AzureSDKSymbolsPAT=$(azuresdk-azure-sdk-devops-pat)'
 
-          - ${{if ne(artifact.options.skipPublishDocs, 'true')}}:
+          - ${{if ne(artifact.skipPublishDocMs, 'true')}}:
             - deployment: PublicDocsMS
               displayName: Publish to Docs.MS
               condition: and(succeeded(), ne(variables['Skip.PublishDocs'], 'true'))
@@ -195,7 +195,7 @@ stages:
                           CIConfigs: $(CIConfigs)
                           OnboardingBranch: 'onboarding'
 
-          - ${{if ne(artifact.options.skipPublishDocs, 'true')}}:
+          - ${{if ne(artifact.skipPublishDocGithubIo, 'true')}}:
             - deployment: PublishDocs
               displayName: Publish Docs to GitHub pages
               condition: and(succeeded(), ne(variables['Skip.PublishDocs'], 'true'))
@@ -235,7 +235,7 @@ stages:
                           # we override the regular script path because we have cloned the build tools repo as a separate artifact.
                           ScriptPath: 'eng/common/scripts/copy-docs-to-blobstorage.ps1'
 
-          - ${{if ne(artifact.options.skipUpdatePackageVersion, 'true')}}:
+          - ${{if ne(artifact.skipUpdatePackageVersion, 'true')}}:
             - deployment: UpdatePackageVersion
               displayName: "Update Package Version"
               condition: and(succeeded(), ne(variables['Skip.UpdatePackageVersion'], 'true'))
