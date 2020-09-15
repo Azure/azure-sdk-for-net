@@ -181,6 +181,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsPhoneNumber());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsList());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsFormSelectionMarkState());
         }
 
         [Test]
@@ -200,6 +201,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsPhoneNumber());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsList());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsFormSelectionMarkState());
         }
 
         [Test]
@@ -219,6 +221,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsPhoneNumber());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsList());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsFormSelectionMarkState());
         }
 
         [Test]
@@ -238,6 +241,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsPhoneNumber());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsList());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsFormSelectionMarkState());
         }
 
         [Test]
@@ -257,6 +261,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsPhoneNumber());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsList());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsFormSelectionMarkState());
         }
 
         [Test]
@@ -276,6 +281,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsTime());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsList());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsFormSelectionMarkState());
         }
 
         [Test]
@@ -298,6 +304,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsTime());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsPhoneNumber());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsFormSelectionMarkState());
         }
 
         [Test]
@@ -320,6 +327,26 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsTime());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsPhoneNumber());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsList());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsFormSelectionMarkState());
+        }
+
+        [Test]
+        public void FormRecognizerModelFactoryCanInstantiateFieldValueWithSelectionMarkValueType()
+        {
+            var value = FormSelectionMarkState.Selected;
+            var fieldValue = FormRecognizerModelFactory.FieldValueWithSelectionMarkValueType(value);
+
+            Assert.AreEqual(FieldValueType.SelectionMark, fieldValue.ValueType);
+            Assert.AreEqual(value, fieldValue.AsFormSelectionMarkState());
+
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsString());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsInt64());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsFloat());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsDate());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsTime());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsList());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsPhoneNumber());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
         }
 
         [Test]
@@ -364,6 +391,7 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             var formLine = new FormLine(default, default, default, default);
             var formTable = new FormTable(default, default, default, default);
+            var formSelectionMark = new FormSelectionMark(default, default, default, default, default);
 
             var pageNumber = 503;
             var width = 9.1094f;
@@ -372,8 +400,9 @@ namespace Azure.AI.FormRecognizer.Tests
             var unit = LengthUnit.Inch;
             var lines = new List<FormLine>() { formLine };
             var tables = new List<FormTable>() { formTable };
+            var selectionMarks = new List<FormSelectionMark>() { formSelectionMark };
 
-            var formPage = FormRecognizerModelFactory.FormPage(pageNumber, width, height, textAngle, unit, lines, tables);
+            var formPage = FormRecognizerModelFactory.FormPage(pageNumber, width, height, textAngle, unit, lines, tables, selectionMarks);
 
             Assert.AreEqual(pageNumber, formPage.PageNumber);
             Assert.AreEqual(width, formPage.Width);
@@ -384,12 +413,14 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(lines, formPage.Lines);
             Assert.AreNotSame(tables, formPage.Tables);
             Assert.AreEqual(tables, formPage.Tables);
+            Assert.AreNotSame(selectionMarks, formPage.SelectionMarks);
+            Assert.AreEqual(selectionMarks, formPage.SelectionMarks);
         }
 
         [Test]
         public void FormRecognizerModelFactoryCanInstantiateFormPageCollection()
         {
-            var formPage = new FormPage(default, default, default, default, default, default, default);
+            var formPage = new FormPage(default, default, default, default, default, default, default, default);
 
             var list = new List<FormPage>() { formPage };
 
@@ -495,7 +526,7 @@ namespace Azure.AI.FormRecognizer.Tests
         public void FormRecognizerModelFactoryCanInstantiateRecognizedForm()
         {
             var formField = new FormField(default, default, default, default, default);
-            var formPage = new FormPage(default, default, default, default, default, default, default);
+            var formPage = new FormPage(default, default, default, default, default, default, default, default);
 
             var formType = "Turing";
             var modelId = "10001112-2233-3444-5556-667778889991";
@@ -527,6 +558,24 @@ namespace Azure.AI.FormRecognizer.Tests
 
             Assert.AreNotSame(list, recognizedFormCollection);
             Assert.AreEqual(list, recognizedFormCollection);
+        }
+
+        [Test]
+        public void FormRecognizerModelFactoryCanInstantiateFormSelectionMark()
+        {
+            var boundingBox = new FieldBoundingBox(ListOfPoints);
+            var pageNumber = 113;
+            var text = "selected";
+            var confidence = 0.1602f;
+            var state = FormSelectionMarkState.Selected;
+
+            var formSelectionMark = FormRecognizerModelFactory.FormSelectionMark(boundingBox, pageNumber, text, confidence, state);
+
+            Assert.AreEqual(boundingBox, formSelectionMark.BoundingBox);
+            Assert.AreEqual(pageNumber, formSelectionMark.PageNumber);
+            Assert.AreEqual(text, formSelectionMark.Text);
+            Assert.AreEqual(confidence, formSelectionMark.Confidence);
+            Assert.AreEqual(state, formSelectionMark.State);
         }
 
         [Test]
