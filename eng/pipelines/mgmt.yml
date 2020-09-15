@@ -101,6 +101,7 @@ pr:
     - sdk/mgmtcommon/TestFramework
     - sdk/mixedreality/Microsoft.Azure.Management.MixedReality
     - sdk/monitor/Microsoft.Azure.Management.Monitor
+    - sdk/mysql/Microsoft.Azure.Management.MySQL
     - sdk/netapp/Microsoft.Azure.Management.NetApp
     - sdk/network/Microsoft.Azure.Management.Network
     - sdk/notificationhubs/Microsoft.Azure.Management.NotificationHubs
