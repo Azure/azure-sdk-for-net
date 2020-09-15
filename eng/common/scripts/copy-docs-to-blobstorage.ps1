@@ -10,8 +10,7 @@ param (
   $UploadLatest=1,
   $PublicArtifactLocation = "",
   $RepoReplaceRegex = "(https://github.com/.*/(?:blob|tree)/)master",
-  $WorkingDirectory,
-  $ReleaseSha
+  $WorkingDirectory
 )
 . (Join-Path $PSScriptRoot artifact-metadata-parsing.ps1)
 
