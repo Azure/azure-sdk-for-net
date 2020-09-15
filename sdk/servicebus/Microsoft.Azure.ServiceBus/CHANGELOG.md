@@ -1,4 +1,7 @@
 # Release History
+## 4.2.0
+### Improvements
+- Enable a way to Unregister Message Handler and Session Handler [PR 14021](https://github.com/Azure/azure-sdk-for-net/pull/14021)
 
 ## 4.1.3 (2020-04-17)
 - Add `GetQueuesRuntimeInfoAsync`, `GetTopicsRuntimeInfoAsync` and `GetSubscriptionsRuntimeInfoAsync` to `ManagementClient` to allow retrieval of batched entity runtime information. [PR 10261](https://github.com/Azure/azure-sdk-for-net/pull/10261)
