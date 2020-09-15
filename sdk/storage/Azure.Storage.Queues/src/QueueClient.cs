@@ -1920,35 +1920,15 @@ namespace Azure.Storage.Queues
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(QueueClient)))
-            {
-                Pipeline.LogMethodEnter(
-                    nameof(QueueClient),
-                    message:
-                    $"Uri: {MessagesUri}\n" +
-                    $"{nameof(visibilityTimeout)}: {visibilityTimeout}");
-                try
-                {
-                    var response = await ReceiveMessagesInternal(
-                        1,
-                        visibilityTimeout,
-                        async,
-                        $"{nameof(QueueClient)}.{nameof(ReceiveMessage)}",
-                        cancellationToken).ConfigureAwait(false);
-                    var queueMessage = response.Value.FirstOrDefault();
-                    var rawResponse = response.GetRawResponse();
-                    return Response.FromValue(queueMessage, rawResponse);
-                }
-                catch (Exception ex)
-                {
-                    Pipeline.LogException(ex);
-                    throw;
-                }
-                finally
-                {
-                    Pipeline.LogMethodExit(nameof(QueueClient));
-                }
-            }
+            var response = await ReceiveMessagesInternal(
+                1,
+                visibilityTimeout,
+                async,
+                $"{nameof(QueueClient)}.{nameof(ReceiveMessage)}",
+                cancellationToken).ConfigureAwait(false);
+            var queueMessage = response.Value.FirstOrDefault();
+            var rawResponse = response.GetRawResponse();
+            return Response.FromValue(queueMessage, rawResponse);
         }
         #endregion ReceiveMessage
 
