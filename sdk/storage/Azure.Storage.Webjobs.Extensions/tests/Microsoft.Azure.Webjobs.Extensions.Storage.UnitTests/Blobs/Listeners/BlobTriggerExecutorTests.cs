@@ -433,8 +433,6 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
 
         private StorageAccount CreateAccount()
         {
-            //StorageClientFactory clientFactory = new StorageClientFactory();
-            //return new StorageAccount(CloudStorageAccount.DevelopmentStorageAccount, clientFactory);
             return StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
         }
 
@@ -443,16 +441,6 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             return new BlobTriggerExecutorContext
             {
                 Blob = CreateBlobReference("container", "blob", createBlob),
-                PollId = TestClientRequestId,
-                TriggerSource = BlobTriggerSource.ContainerScan
-            };
-        }
-
-        private BlobTriggerExecutorContext CreateExecutorContext(string containerName, string blobName, bool createBlob = true)
-        {
-            return new BlobTriggerExecutorContext
-            {
-                Blob = CreateBlobReference(containerName, blobName, createBlob),
                 PollId = TestClientRequestId,
                 TriggerSource = BlobTriggerSource.ContainerScan
             };

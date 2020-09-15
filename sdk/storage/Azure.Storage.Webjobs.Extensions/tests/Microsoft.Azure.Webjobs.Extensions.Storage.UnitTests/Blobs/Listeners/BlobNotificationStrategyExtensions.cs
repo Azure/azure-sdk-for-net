@@ -33,16 +33,5 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
 
             strategy.RegisterAsync(blobServiceClient, container, triggerExecutor, CancellationToken.None).GetAwaiter().GetResult();
         }
-
-        public static void Start(this IBlobListenerStrategy strategy, BlobContainerClient container,
-            ITriggerExecutor<BlobBaseClient> triggerExecutor)
-        {
-            if (strategy == null)
-            {
-                throw new ArgumentNullException("strategy");
-            }
-
-            strategy.Start();
-        }
     }
 }

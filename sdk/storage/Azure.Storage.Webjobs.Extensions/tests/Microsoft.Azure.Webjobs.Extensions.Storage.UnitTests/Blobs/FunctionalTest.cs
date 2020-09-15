@@ -84,11 +84,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 signalOnFirst: true);
         }
 
-        internal static object CreateConfigurationForCallFailure(StorageAccount account, Type type, TaskCompletionSource<object> backgroundTaskSource)
-        {
-            throw new NotImplementedException();
-        }
-
         internal static async Task<Exception> RunTriggerFailureAsync<TResult>(StorageAccount account, Type programType, Action<TaskCompletionSource<TResult>> setTaskSource)
         {
             try

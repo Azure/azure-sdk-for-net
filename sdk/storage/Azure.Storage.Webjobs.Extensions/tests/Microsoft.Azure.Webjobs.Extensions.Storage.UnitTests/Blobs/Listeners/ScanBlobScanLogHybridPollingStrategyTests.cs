@@ -434,12 +434,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             RunExecuterWithExpectedBlobsInternal(blobNameMap, product, executor, expectedCount);
         }
 
-
-        private void RunExecuterWithExpectedBlobs(IDictionary<string, int> blobNameMap, IBlobListenerStrategy product, LambdaBlobTriggerExecutor executor)
-        {
-            RunExecuterWithExpectedBlobsInternal(blobNameMap, product, executor, blobNameMap.Count);
-        }
-
         private void RunExecuteWithMultiPollingInterval(List<string> expectedBlobNames, IBlobListenerStrategy product, LambdaBlobTriggerExecutor executor, int expectedCount)
         {
             // a map so we can track retries in the event of failures

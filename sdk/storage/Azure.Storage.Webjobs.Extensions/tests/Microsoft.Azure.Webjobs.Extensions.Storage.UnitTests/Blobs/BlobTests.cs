@@ -101,12 +101,6 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             await FunctionalTest.RunTriggerAsync(account, programType);
         }
 
-        private static async Task<TResult> RunTrigger<TResult>(StorageAccount account, Type programType,
-            Action<TaskCompletionSource<TResult>> setTaskSource)
-        {
-            return await FunctionalTest.RunTriggerAsync<TResult>(account, programType, setTaskSource);
-        }
-
         private class BindToCloudBlockBlobProgram
         {
             public BlockBlobClient Result { get; set; }

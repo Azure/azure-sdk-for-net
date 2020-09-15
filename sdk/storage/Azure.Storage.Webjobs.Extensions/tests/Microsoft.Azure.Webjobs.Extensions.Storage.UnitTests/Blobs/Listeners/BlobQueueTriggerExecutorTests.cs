@@ -306,11 +306,6 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             return new Mock<IBlobCausalityReader>(MockBehavior.Strict).Object;
         }
 
-        private static ITriggeredFunctionExecutor CreateDummyInnerExecutor()
-        {
-            return new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict).Object;
-        }
-
         private static ITriggeredFunctionExecutor CreateDummyTriggeredFunctionExecutor()
         {
             return new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict).Object;
@@ -373,22 +368,6 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             Mock<IBlobCausalityReader> mock = new Mock<IBlobCausalityReader>(MockBehavior.Strict);
             mock.Setup(r => r.GetWriterAsync(It.IsAny<BlobBaseClient>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(parentId));
-            return mock.Object;
-        }
-
-        private static IFunctionInstance CreateStubFunctionInstance(Guid? parentId)
-        {
-            Mock<IFunctionInstance> mock = new Mock<IFunctionInstance>(MockBehavior.Strict);
-            mock.Setup(i => i.ParentId)
-                .Returns(parentId);
-            return mock.Object;
-        }
-
-        private static IFunctionExecutor CreateStubInnerExecutor(IDelayedException result)
-        {
-            Mock<IFunctionExecutor> mock = new Mock<IFunctionExecutor>(MockBehavior.Strict);
-            mock.Setup(e => e.TryExecuteAsync(It.IsAny<IFunctionInstance>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(result));
             return mock.Object;
         }
 

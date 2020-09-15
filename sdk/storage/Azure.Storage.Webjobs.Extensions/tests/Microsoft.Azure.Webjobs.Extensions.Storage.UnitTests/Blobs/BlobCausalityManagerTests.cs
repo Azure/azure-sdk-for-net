@@ -109,12 +109,6 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs
             Assert.Equal(expectedWriter, owner);
         }
 
-        private static void AssertWriterIsNull(IDictionary<string, string> metadata)
-        {
-            Guid? writer = GetWriter(metadata);
-            Assert.Null(writer);
-        }
-
         private static Mock<BlobBaseClient> SetupBlobMock(bool? isFetchSuccess = null, Dictionary<string, string> metadata = null)
         {
             if (metadata == null)

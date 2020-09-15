@@ -38,13 +38,5 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
             using StreamReader streamReader = new StreamReader(stream);
             return await streamReader.ReadToEndAsync().ConfigureAwait(false);
         }
-
-        public static string DownloadText(this BlobBaseClient blobClient, CancellationToken cancellationToken = default)
-        {
-            using BlobDownloadInfo blobDownloadInfo = blobClient.Download(cancellationToken);
-            using Stream stream = blobDownloadInfo.Content;
-            using StreamReader streamReader = new StreamReader(stream);
-            return streamReader.ReadToEnd();
-        }
     }
 }

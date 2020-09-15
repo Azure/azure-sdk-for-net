@@ -22,14 +22,6 @@ namespace Microsoft.Azure.WebJobs
             return provider.GetHost();
         }
 
-        public static async Task<QueueClient> CreateQueueAsync(this StorageAccount account, string queueName)
-        {
-            var client = account.CreateQueueServiceClient();
-            var queue = client.GetQueueClient(queueName);
-            await queue.CreateIfNotExistsAsync();
-            return queue;
-        }
-
         public static IWebJobsBuilder UseStorage(this IWebJobsBuilder builder, StorageAccount account)
         {
             builder.AddAzureStorage();

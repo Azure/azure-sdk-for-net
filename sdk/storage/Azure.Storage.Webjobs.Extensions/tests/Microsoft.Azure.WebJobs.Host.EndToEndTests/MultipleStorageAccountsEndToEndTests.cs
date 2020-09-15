@@ -317,11 +317,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
-        public class TestTableEntity
-        {
-            public string Text { get; set; }
-        }
-
         public class Message
         {
             public string Name { get; set; }

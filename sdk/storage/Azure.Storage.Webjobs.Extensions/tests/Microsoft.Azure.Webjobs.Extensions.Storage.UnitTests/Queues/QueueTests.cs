@@ -404,7 +404,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         [InlineData(typeof(IEnumerable<string>), "System.Collections.Generic.IEnumerable`1[System.String]")] // Should use ICollector<string> instead
         public void Fails_Cant_Bind_To_Types(Type typeParam, string typeName)
         {
-            var m = this.GetType().GetMethod("Fails_Cant_Bind_To_Types_Worker", BindingFlags.Instance | BindingFlags.NonPublic);
+            var m = this.GetType().GetMethod(nameof(Fails_Cant_Bind_To_Types_Worker), BindingFlags.Instance | BindingFlags.NonPublic);
             var m2 = m.MakeGenericMethod(typeParam);
             try
             {

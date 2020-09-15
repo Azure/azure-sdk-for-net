@@ -120,11 +120,5 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             return await FunctionalTest.RunTriggerAsync<TResult>(account, programType, setTaskSource);
         }
-
-        private static async Task<TResult> RunTriggerAsync<TResult>(StorageAccount account, Type programType,
-            Action<TaskCompletionSource<TResult>> setTaskSource, IEnumerable<string> ignoreFailureFunctions)
-        {
-            return await FunctionalTest.RunTriggerAsync<TResult>(account, programType, setTaskSource, ignoreFailureFunctions);
-        }
     }
 }
