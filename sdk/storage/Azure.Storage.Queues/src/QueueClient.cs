@@ -1845,68 +1845,6 @@ namespace Azure.Storage.Queues
         #endregion ReceiveMessages
 
         #region ReceiveMessage
-        /// <summary>
-        /// Receives one message from the front of the queue.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-messages">
-        /// Get Messages</see>.
-        /// </summary>
-        /// <returns>
-        /// <see cref="Response{T}"/> where T is a <see cref="QueueMessage"/>
-        /// </returns>
-        public virtual Response<QueueMessage> ReceiveMessage() => ReceiveMessage(null); // Pass anything else so we don't recurse on this overload
-
-        /// <summary>
-        /// Retrieves one message from the front of the queue.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-messages">
-        /// Get Messages</see>.
-        /// </summary>
-        /// <returns>
-        /// <see cref="Response{T}"/> where T is a <see cref="QueueMessage"/>
-        /// </returns>
-        public virtual async Task<Response<QueueMessage>> ReceiveMessageAsync() =>
-            await ReceiveMessageAsync(null)  // Pass anything else so we don't recurse on this overload
-            .ConfigureAwait(false);
-
-        /// <summary>
-        /// Receives one message from the front of the queue.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-messages">
-        /// Get Messages</see>.
-        /// </summary>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/>
-        /// </param>
-        /// <returns>
-        /// <see cref="Response{T}"/> where T is a <see cref="QueueMessage"/>
-        /// </returns>
-        public virtual Response<QueueMessage> ReceiveMessage(CancellationToken cancellationToken = default) =>
-            ReceiveMessage(
-                cancellationToken: cancellationToken,
-                visibilityTimeout: null); // Pass anything else so we don't recurse on this overload
-
-        /// <summary>
-        /// Retrieves message from the front of the queue.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-messages">
-        /// Get Messages</see>.
-        /// </summary>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/>
-        /// </param>
-        /// <returns>
-        /// <see cref="Response{T}"/> where T is a <see cref="QueueMessage"/>
-        /// </returns>
-        public virtual async Task<Response<QueueMessage>> ReceiveMessageAsync(CancellationToken cancellationToken = default) =>
-            await ReceiveMessageAsync(
-                cancellationToken: cancellationToken,
-                visibilityTimeout: null) // Pass anything else so we don't recurse on this overload
-            .ConfigureAwait(false);
 
         /// <summary>
         /// Receives one message from the front of the queue.
@@ -2014,6 +1952,74 @@ namespace Azure.Storage.Queues
         }
         #endregion ReceiveMessage
 
+        #region PeekMessage
+        /// <summary>
+        /// Retrieves one message from the front of the queue but does not alter the visibility of the message.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/peek-messages">
+        /// Peek Messages</see>.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/>
+        /// </param>
+        /// <returns>
+        /// <see cref="Response{T}"/> where T is a <see cref="PeekedMessage"/>
+        /// </returns>
+        public virtual Response<PeekedMessage> PeekMessage(
+            CancellationToken cancellationToken = default) =>
+            PeekMessageInternal(
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Retrieves one message from the front of the queue but does not alter the visibility of the message.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/peek-messages">
+        /// Peek Messages</see>.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/>
+        /// </param>
+        /// <returns>
+        /// <see cref="Response{T}"/> where T is a <see cref="PeekedMessage"/>
+        /// </returns>
+        public virtual async Task<Response<PeekedMessage>> PeekMessageAsync(
+            CancellationToken cancellationToken = default) =>
+            await PeekMessageInternal(
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Retrieves one message from the front of the queue but does not alter the visibility of the message.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/peek-messages">
+        /// Peek Messages</see>.
+        /// </summary>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/>
+        /// </param>
+        /// <returns>
+        /// <see cref="Response{T}"/> where T is a <see cref="PeekedMessage"/>
+        /// </returns>
+        private async Task<Response<PeekedMessage>> PeekMessageInternal(
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            var response = await PeekMessagesInternal(1, async, $"{nameof(QueueClient)}.{nameof(PeekMessage)}", cancellationToken).ConfigureAwait(false);
+            var message = response.Value.FirstOrDefault();
+            var rawResonse = response.GetRawResponse();
+            return Response.FromValue(message, rawResonse);
+        }
+        #endregion PeekMessage
+
         #region PeekMessages
         /// <summary>
         /// Retrieves one or more messages from the front of the queue but does not alter the visibility of the message.
@@ -2038,6 +2044,7 @@ namespace Azure.Storage.Queues
             PeekMessagesInternal(
                 maxMessages,
                 false, // async
+                $"{nameof(QueueClient)}.{nameof(PeekMessages)}",
                 cancellationToken)
                 .EnsureCompleted();
 
@@ -2064,6 +2071,7 @@ namespace Azure.Storage.Queues
             await PeekMessagesInternal(
                 maxMessages,
                 true, // async
+                $"{nameof(QueueClient)}.{nameof(PeekMessages)}",
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -2081,6 +2089,9 @@ namespace Azure.Storage.Queues
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
+        /// <param name="operationName">
+        /// Operation name for diagnostic logging.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/>
         /// </param>
@@ -2090,6 +2101,7 @@ namespace Azure.Storage.Queues
         private async Task<Response<PeekedMessage[]>> PeekMessagesInternal(
             int? maxMessages,
             bool async,
+            string operationName,
             CancellationToken cancellationToken)
         {
             using (Pipeline.BeginLoggingScope(nameof(QueueClient)))
@@ -2108,7 +2120,7 @@ namespace Azure.Storage.Queues
                         version: Version.ToVersionString(),
                         numberOfMessages: maxMessages,
                         async: async,
-                        operationName: $"{nameof(QueueClient)}.{nameof(PeekMessages)}",
+                        operationName: operationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 

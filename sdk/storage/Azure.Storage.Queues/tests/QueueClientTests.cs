@@ -5,13 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using Azure.Storage.Test;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues.Tests;
 using NUnit.Framework;
 using Azure.Core;
 using Azure.Storage.Sas;
+using Azure.Core.TestFramework;
 
 namespace Azure.Storage.Queues.Test
 {
@@ -933,6 +933,63 @@ namespace Azure.Storage.Queues.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 queue.PeekMessagesAsync(),
                 actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
+        }
+
+        [Test]
+        public async Task PeekMessageAsync()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            var messageText = GetNewString();
+            await test.Queue.SendMessageAsync(messageText);
+
+            // Act
+            Response<Models.PeekedMessage> response = await test.Queue.PeekMessageAsync();
+
+            // Assert
+            Assert.AreEqual(messageText, response.Value.MessageText);
+        }
+
+        // Note that this test intentionally does not call queue.CreateAsync()
+        [Test]
+        public async Task PeekMessageAsync_Error()
+        {
+            // Arrange
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                queue.PeekMessageAsync(),
+                actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
+        }
+
+        [Test]
+        public async Task PeekMessageAsync_EmptyQueue()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            // Act
+            Response<Models.PeekedMessage> response = await test.Queue.PeekMessageAsync();
+
+            // Assert
+            Assert.IsNull(response.Value);
+        }
+
+        [Test]
+        public async Task PeekMessageAsync_EmptyQueue_WithResponseCast()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            // Act
+            Models.PeekedMessage message = await test.Queue.PeekMessageAsync();
+
+            // Assert
+            Assert.IsNull(message);
         }
 
         [Test]
