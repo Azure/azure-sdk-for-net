@@ -10,6 +10,8 @@ trigger:
     include:
     - sdk/appconfiguration/
 
+
+
 pr:
   branches:
     include:
