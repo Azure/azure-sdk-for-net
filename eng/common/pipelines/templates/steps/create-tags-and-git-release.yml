@@ -2,7 +2,7 @@ parameters:
   ArtifactLocation: 'not-specified'
   PackageRepository: 'not-specified'
   ReleaseSha: 'not-specified'
-  RepoId: 'not-specified'
+  RepoId: $(Build.Repository.Name)
   WorkingDirectory: ''
   ScriptDirectory: eng/common/scripts
 
