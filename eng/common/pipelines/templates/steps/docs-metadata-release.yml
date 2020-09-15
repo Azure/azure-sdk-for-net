@@ -10,6 +10,7 @@ parameters:
   TargetDocRepoOwner: ''
   PRBranchName: 'smoke-test-rdme'
   SourceBranchName: 'smoke-test'
+  PRLabels: 'auto-merge'
   ArtifactName: ''
   Language: ''
   DocRepoDestinationPath: '' #usually docs-ref-services/
@@ -81,6 +82,7 @@ steps:
     ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}
     GHReviewersVariable: ${{ parameters.GHReviewersVariable }}
     GHTeamReviewersVariable: ${{ parameters.GHTeamReviewersVariable }} 
+    PRLabels: ${{ parameters.PRLabels }}
 
 - ${{if ne( parameters['OnboardingBranch'], '')}}:
   - pwsh: |

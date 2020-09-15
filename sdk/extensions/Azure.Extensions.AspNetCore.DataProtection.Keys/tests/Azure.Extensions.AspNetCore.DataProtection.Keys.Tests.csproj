@@ -12,6 +12,8 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
     <PackageReference Include="Moq" />
+
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection.AzureKeyVault" VersionOverride="3.1.7" />
   </ItemGroup>
 
   <ItemGroup>

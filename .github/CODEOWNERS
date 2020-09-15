@@ -20,7 +20,7 @@
 /sdk/compute/                                   @bilaakpan-ms @sandido @dkulkarni-ms @haagha @madewithsmiles @MS-syh2qs @grizzlytheodore
 
 # Service teams
-# PRLabel: %AzConfig
+# PRLabel: %App Configuration
 /sdk/appconfiguration/                          @annelo-msft @AlexanderSher
 
 # PRLabel: %Batch
@@ -73,11 +73,11 @@
 /common/SmokeTests/                             @AlexGhiondea @schaabs @heaths @tg-msft @jsquire
 
 # Management Plane
-/**/*Management*/                               @allenjzhang  @m-nash @markcowl
-/**/Azure.ResourceManager*/                     @allenjzhang  @m-nash @markcowl
+/**/*Management*/                               @allenjzhang @m-nash @markcowl @YalinLi0312 @bquantump @nisha-bhatia
+/**/Azure.ResourceManager*/                     @allenjzhang @m-nash @markcowl @YalinLi0312 @bquantump @nisha-bhatia
 
 # Reviewers to double check any API changes
-/sdk/**/api/                                    @KrzysztofCwalina @pakrym @tg-msft
+/sdk/**/api/                                    @KrzysztofCwalina @tg-msft
 
 # Update AutoRest C#
 /eng/CodeGeneration.targets                     @pakrym @ShivangiReja

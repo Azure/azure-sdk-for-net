@@ -24,7 +24,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             {
                 await using var client = GetClient();
 
-                var processor = client.CreateSessionProcessor(scope.QueueName);
+                await using var processor = client.CreateSessionProcessor(scope.QueueName);
 
                 Func<ProcessSessionMessageEventArgs, Task> eventHandler = eventArgs => Task.CompletedTask;
                 Func<ProcessErrorEventArgs, Task> errorHandler = eventArgs => Task.CompletedTask;
@@ -65,7 +65,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             {
                 await using var client = GetClient();
 
-                var processor = client.CreateSessionProcessor(scope.QueueName);
+                await using var processor = client.CreateSessionProcessor(scope.QueueName);
 
                 Func<ProcessSessionMessageEventArgs, Task> eventHandler = eventArgs => Task.CompletedTask;
                 Func<ProcessErrorEventArgs, Task> errorHandler = eventArgs => Task.CompletedTask;
@@ -120,7 +120,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     MaxConcurrentSessions = numThreads,
                     AutoComplete = autoComplete
                 };
-                var processor = client.CreateSessionProcessor(scope.QueueName, options);
+                await using var processor = client.CreateSessionProcessor(scope.QueueName, options);
                 int messageCt = 0;
                 int sessionOpenEventCt = 0;
                 int sessionCloseEventCt = 0;
@@ -216,7 +216,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     MaxAutoLockRenewalDuration = lockDuration,
                     AutoComplete = false
                 };
-                var processor = client.CreateSessionProcessor(scope.QueueName, options);
+                await using var processor = client.CreateSessionProcessor(scope.QueueName, options);
                 bool receivedDelayMsg = false;
                 List<string> receivedMessages = new List<string>();
                 TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -276,7 +276,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     MaxConcurrentSessions = numThreads,
                     AutoComplete = true
                 };
-                var processor = client.CreateSessionProcessor(scope.QueueName, options);
+                await using var processor = client.CreateSessionProcessor(scope.QueueName, options);
                 int messageCt = 0;
 
                 TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
@@ -362,7 +362,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     AutoComplete = autoComplete
                 };
 
-                ServiceBusSessionProcessor processor = GetNoRetryClient().CreateSessionProcessor(scope.QueueName, options);
+                await using ServiceBusSessionProcessor processor = GetNoRetryClient().CreateSessionProcessor(scope.QueueName, options);
 
                 processor.ProcessMessageAsync += ProcessMessage;
                 processor.ProcessErrorAsync += ExceptionHandler;
@@ -423,7 +423,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var exceptionReceivedHandlerCalled = false;
                 var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
 
-                var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
+                await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
                 {
                     MaxConcurrentSessions = 1
                 });
@@ -465,7 +465,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             {
                 var exceptionReceivedHandlerCalled = false;
                 var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                var processor = client.CreateSessionProcessor(scope.TopicName, scope.SubscriptionNames.First(), new ServiceBusSessionProcessorOptions
+                await using var processor = client.CreateSessionProcessor(scope.TopicName, scope.SubscriptionNames.First(), new ServiceBusSessionProcessorOptions
                 {
                     MaxConcurrentSessions = 1
                 });
@@ -535,7 +535,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     SessionIds = new string[] { sessionId }
                 };
 
-                var processor = client.CreateSessionProcessor(
+                await using var processor = client.CreateSessionProcessor(
                     scope.QueueName,
                     options);
 
@@ -605,7 +605,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     AutoComplete = false,
                     MaxConcurrentCallsPerSession = maxCallsPerSession
                 };
-                var processor = client.CreateSessionProcessor(scope.QueueName, options);
+                await using var processor = client.CreateSessionProcessor(scope.QueueName, options);
                 int messageCt = 0;
 
                 TaskCompletionSource<bool>[] completionSources = Enumerable
@@ -682,7 +682,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     AutoComplete = false,
                     MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(autoLockRenewalDuration)
                 };
-                var processor = client.CreateSessionProcessor(scope.QueueName, options);
+                await using var processor = client.CreateSessionProcessor(scope.QueueName, options);
                 int messageCt = 0;
 
                 TaskCompletionSource<bool>[] completionSources = Enumerable
@@ -759,7 +759,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await using var client = GetClient();
                 var sender = client.CreateSender(scope.QueueName);
                 await sender.SendMessageAsync(GetMessage("sessionId"));
-                var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
+                await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
                 {
                     AutoComplete = true
                 });
@@ -799,7 +799,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await using var client = GetClient();
                 var sender = client.CreateSender(scope.QueueName);
                 await sender.SendMessageAsync(GetMessage("sessionId"));
-                var processor = client.CreateSessionProcessor(scope.QueueName);
+                await using var processor = client.CreateSessionProcessor(scope.QueueName);
                 var tcs = new TaskCompletionSource<bool>();
 
                 async Task ProcessMessage(ProcessSessionMessageEventArgs args)
@@ -920,7 +920,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     SessionIds = sessionIds.ToArray()
                 };
 
-                var processor = client.CreateSessionProcessor(
+                await using var processor = client.CreateSessionProcessor(
                     scope.QueueName,
                     options);
 
@@ -1018,7 +1018,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     SessionIds = sessionIds.ToArray()
                 };
 
-                var processor = client.CreateSessionProcessor(
+                await using var processor = client.CreateSessionProcessor(
                     scope.QueueName,
                     options);
 
@@ -1161,7 +1161,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     SessionIds = new string[] { sessionId }
                 };
 
-                var processor = client.CreateSessionProcessor(
+                await using var processor = client.CreateSessionProcessor(
                     scope.QueueName,
                     options);
 
@@ -1268,7 +1268,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     SessionIds = new string[] { sessionId }
                 };
 
-                var processor = client.CreateSessionProcessor(
+                await using var processor = client.CreateSessionProcessor(
                     scope.QueueName,
                     options);
 
@@ -1441,7 +1441,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     SessionIds = new string[] { sessionId }
                 };
 
-                var processor = client.CreateSessionProcessor(
+                await using var processor = client.CreateSessionProcessor(
                     scope.QueueName,
                     options);
 
@@ -1486,7 +1486,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         [TestCase(10, 10, 1)]
         [TestCase(10, 5, 2)]
         [TestCase(10, 20, 5)]
-        [Timeout(60 * 1000 * 15)]
         public async Task MaxCallsPerSessionRespected(int numSessions, int maxConcurrentSessions, int maxCallsPerSession)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(
@@ -1513,7 +1512,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     MaxConcurrentCallsPerSession = maxCallsPerSession
                 };
 
-                var processor = client.CreateSessionProcessor(
+                await using var processor = client.CreateSessionProcessor(
                     scope.QueueName,
                     options);
                 ConcurrentDictionary<string, int> sessionDict = new ConcurrentDictionary<string, int>();
@@ -1582,7 +1581,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await using var client = GetClient();
                 var sender = client.CreateSender(scope.QueueName);
                 await sender.SendMessageAsync(GetMessage("sessionId"));
-                var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
+                await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
                 {
                     AutoComplete = false,
                     MaxConcurrentSessions = 1

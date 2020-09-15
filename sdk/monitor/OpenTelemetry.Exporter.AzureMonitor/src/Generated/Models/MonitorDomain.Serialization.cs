@@ -22,19 +22,5 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
             }
             writer.WriteEndObject();
         }
-
-        internal static MonitorDomain DeserializeMonitorDomain(JsonElement element)
-        {
-            Optional<string> test = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("test"))
-                {
-                    test = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new MonitorDomain(test.Value);
-        }
     }
 }

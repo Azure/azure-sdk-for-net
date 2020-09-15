@@ -276,7 +276,7 @@ namespace Azure.Messaging.EventGrid.Tests
                 CloudEvent cloudEvent = new CloudEvent(
                     "record",
                     "Microsoft.MockPublisher.TestEvent",
-                    "{\"property1\": \"abc\",  \"property2\": \"123\"}")
+                    JsonDocument.Parse("{\"property1\": \"abc\",  \"property2\": 123}").RootElement)
                 {
                     Id = Recording.Random.NewGuid().ToString(),
                     Subject = $"Subject-{i}",
