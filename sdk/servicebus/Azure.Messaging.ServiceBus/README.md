@@ -12,7 +12,7 @@ Use the client library for Azure Service Bus to:
 
 - Implement complex workflows: message sessions support scenarios that require message ordering or message deferral.
 
-[Source code](.) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Messaging.ServiceBus/) | [API reference documentation](https://azure.github.io/azure-sdk-for-net/servicebus.html) | [Product documentation](https://docs.microsoft.com/en-us/azure/service-bus/)
+[Source code](.) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Messaging.ServiceBus/) | [API reference documentation](https://azure.github.io/azure-sdk-for-net/servicebus.html) | [Product documentation](https://docs.microsoft.com/en-us/azure/service-bus/) | [Migration guide](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/MigrationGuide.md)
 
 ## Getting started
 

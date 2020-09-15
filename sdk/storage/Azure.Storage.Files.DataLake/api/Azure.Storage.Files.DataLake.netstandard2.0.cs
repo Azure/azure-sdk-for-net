@@ -369,6 +369,7 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         public DataLakeFileOpenWriteOptions() { }
         public long? BufferSize { get { throw null; } set { } }
+        public bool? Close { get { throw null; } set { } }
         public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions OpenConditions { get { throw null; } set { } }
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
     }
@@ -390,7 +391,6 @@ namespace Azure.Storage.Files.DataLake.Models
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
         public string Permissions { get { throw null; } set { } }
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
-        public bool? RetainUncommittedData { get { throw null; } set { } }
         public Azure.Storage.StorageTransferOptions TransferOptions { get { throw null; } set { } }
         public string Umask { get { throw null; } set { } }
     }
