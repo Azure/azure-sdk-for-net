@@ -91,22 +91,22 @@ namespace Azure.ResourceManager.TestFramework
 
         protected abstract void InitializeClients();
 
-        protected virtual Task OnOneTimeSetup()
+        protected virtual Task OnOneTimeSetupAsync()
         {
             return Task.FromResult<object>(null);
         }
 
-        protected virtual Task OnSetup()
+        protected virtual Task OnSetupAsync()
         {
             return Task.FromResult<object>(null);
         }
 
-        protected virtual Task OnOneTimeTearDown()
+        protected virtual Task OnOneTimeTearDownAsync()
         {
             return Task.FromResult<object>(null);
         }
 
-        protected virtual Task OnTearDown()
+        protected virtual Task OnTearDownAsync()
         {
             return Task.FromResult<object>(null);
         }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.TestFramework
             Recording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher);
             TestEnvironment.SetRecording(Recording);
             InitializeClients();
-            OnOneTimeSetup();
+            OnOneTimeSetupAsync();
         }
 
         [OneTimeTearDown]
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.TestFramework
             await CleanupResourceGroupsAsync();
             Logger?.Dispose();
             Logger = null;
-            await OnOneTimeTearDown();
+            await OnOneTimeTearDownAsync();
         }
 
         [SetUp]
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.TestFramework
             TestEnvironment.Mode = Mode;
             TestEnvironment.SetRecording(Recording);
             InitializeClients();
-            OnSetup();
+            OnSetupAsync();
         }
 
         [TearDown]
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.TestFramework
             save |= SaveDebugRecordingsOnFailure;
 #endif
             Recording?.Dispose(save);
-            OnTearDown();
+            OnTearDownAsync();
         }
 
         protected ResourcesManagementClient GetResourceManagementClient()
