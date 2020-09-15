@@ -11,7 +11,10 @@
     <PackageTags>MySQL;Azure Database for MySQL;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        This is a release of the Azure Database for MySQL SDK.
+        This is the initial release of the Azure Database for MySQL SDK. This includes libraries to manage
+        1. Create and manage Azure Database for MySQL Servers
+        2. Create and manage Azure Database for MySQL Flexible Servers (Preview)
+        For complete information on the available methods and samples please refer to the documentation
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
