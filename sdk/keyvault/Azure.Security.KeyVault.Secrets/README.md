@@ -3,7 +3,7 @@ Azure Key Vault is a cloud service that provides a secure storage of secrets, su
 
 The Azure Key Vault secrets client library allows you to securely store and control the access to tokens, passwords, API keys, and other secrets. This library offers operations to create, retrieve, update, delete, purge, backup, restore, and list the secrets and its versions.
 
-[Source code][secret_client_src] | [Package (NuGet)][secret_client_nuget_package] | [API reference documentation][API_reference] | [Product documentation][keyvault_docs] | [Samples][secret_client_samples]
+[Source code][secret_client_src] | [Package (NuGet)][secret_client_nuget_package] | [API reference documentation][API_reference] | [Product documentation][keyvault_docs] | [Samples][secret_client_samples] | [Migration guide][migration_guide]
 
 ## Getting started
 
@@ -333,8 +333,9 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [secret_client_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Secrets/samples
 [secret_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Secrets/src
 [soft_delete]: https://docs.microsoft.com/azure/key-vault/key-vault-ovw-soft-delete
-[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md#defaultazurecredential
 [contributing]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/CONTRIBUTING.md
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
+[migration_guide]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Secrets/MigrationGuide.md
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fkeyvault%2FAzure.Security.KeyVault.Secrets%2FREADME.png)
