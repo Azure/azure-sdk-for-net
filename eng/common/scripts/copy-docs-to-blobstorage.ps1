@@ -10,8 +10,7 @@ param (
   $UploadLatest=1,
   $PublicArtifactLocation = "",
   $RepoReplaceRegex = "(https://github.com/.*/(?:blob|tree)/)master",
-  $WorkingDirectory,
-  $ReleaseSha
+  $WorkingDirectory
 )
 . (Join-Path $PSScriptRoot artifact-metadata-parsing.ps1)
 
@@ -264,7 +263,9 @@ if ($Language -eq "dotnet")
 
     if (($PublishedPkgs.Count -gt 1) -or ($PublishedDoc.Count -gt 1))
     {
-        Write-Host "$($DocLocation) contains more published artifacts than expected."
+        Write-Host "$($DocLocation) should contain only one (1) published package and docs"
+        Write-Host "No of Packages $($PublishedPkgs.Count)"
+        Write-Host "No of Docs $($PublishedDoc.Count)"
         exit 1
     }
 
