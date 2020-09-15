@@ -268,18 +268,18 @@ namespace Azure.Data.Tables.Tests
             int delay = initialDelay;
             while (true)
             {
-                    var actual = await action().ConfigureAwait(false);
+                var actual = await action().ConfigureAwait(false);
 
-                    if (++retryCount > 3 || equalityAction(actual))
-                    {
-                        return actual;
-                    }
-                    // Disable retry throttling in Playback mode.
-                    if (Mode != RecordedTestMode.Playback)
-                    {
-                        await Task.Delay(delay);
-                        delay *= 2;
-                    }
+                if (++retryCount > 3 || equalityAction(actual))
+                {
+                    return actual;
+                }
+                // Disable retry throttling in Playback mode.
+                if (Mode != RecordedTestMode.Playback)
+                {
+                    await Task.Delay(delay);
+                    delay *= 2;
+                }
             }
         }
 
