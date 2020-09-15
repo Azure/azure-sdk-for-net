@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Azure Event Hubs is a highly scalable publish-subscribe service that can ingest millions of events per second and stream them to multiple consumers.  This client library allows for both publishing and consuming events using Azure Event Hubs. For more information about Event Hubs, see https://azure.microsoft.com/en-us/services/event-hubs/</Description>
-    <Version>5.3.0-beta.1</Version>
+    <Version>5.3.0-beta.2</Version>
     <ApiCompatVersion>5.2.0</ApiCompatVersion>
     <PackageTags>Azure;Event Hubs;EventHubs;.NET;AMQP;IoT;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
@@ -60,11 +60,11 @@
   <!-- Import the Azure.Core reference -->
   <!-- Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" /> -->
 
-  <!-- 
+  <!--
     THIS SECTION IS SPECIFIC TO THE v5.3.0-beta.1 RELEASE
 
     These are normally set via the above reference to Azure.Core.props, but have been included here
-    to allow a specific override to the Azure.Core version for Event Hubs only; when merged back to 
+    to allow a specific override to the Azure.Core version for Event Hubs only; when merged back to
     master, this section should be removed and the above import restored.
   -->
   <ItemGroup>
