@@ -1,5 +1,5 @@
 ﻿Installing AutoRest version: v2
-AutoRest installed successfully.
+AutoRest installed successfully
 Commencing code generation
 Generating CSharp code
 Executing AutoRest command
