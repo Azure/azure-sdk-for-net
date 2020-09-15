@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.HybridCompute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Machine>> GetWithHttpMessagesAsync(string resourceGroupName, string name, InstanceViewTypes? expand = default(InstanceViewTypes?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Machine>> GetWithHttpMessagesAsync(string resourceGroupName, string name, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all the hybrid machines in the specified resource group. Use
         /// the nextLink property in the response to get the next page of
