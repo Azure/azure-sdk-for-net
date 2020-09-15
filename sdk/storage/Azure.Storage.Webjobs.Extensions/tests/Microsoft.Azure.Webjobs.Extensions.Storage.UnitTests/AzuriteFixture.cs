@@ -31,37 +31,39 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests
 
         public AzuriteFixture()
         {
-            for (int i = 0; i < AccountPoolSize; i++)
-            {
-                var account = new AzuriteAccount()
-                {
-                    Name = Guid.NewGuid().ToString(),
-                    Key = System.Convert.ToBase64String(Encoding.UTF8.GetBytes(Guid.NewGuid().ToString())),
-            };
-                accounts.Enqueue(account);
-                accountsList.Add($"{account.Name}:{account.Key}");
-            }
-
-            tempDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
-            Directory.CreateDirectory(tempDirectory);
-            Console.WriteLine(tempDirectory);
             var azuriteLocation = Environment.GetEnvironmentVariable(AzuriteLocationKey);
-            process = new Process();
-            process.StartInfo.FileName = "node.exe";
-            process.StartInfo.Arguments = $"{azuriteLocation} -l {tempDirectory}";
-            process.StartInfo.EnvironmentVariables.Add("AZURITE_ACCOUNTS", $"{string.Join(";", accountsList)}");
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.RedirectStandardInput = true;
-            process.OutputDataReceived += delegate (object sender, DataReceivedEventArgs e)
+            if (!string.IsNullOrWhiteSpace(azuriteLocation))
             {
-                using (var sw = File.AppendText("C:\\tmp\\azurite.log.txt"))
+                for (int i = 0; i < AccountPoolSize; i++)
                 {
-                    sw.WriteLine(e.Data);
+                    var account = new AzuriteAccount()
+                    {
+                        Name = Guid.NewGuid().ToString(),
+                        Key = System.Convert.ToBase64String(Encoding.UTF8.GetBytes(Guid.NewGuid().ToString())),
+                    };
+                    accounts.Enqueue(account);
+                    accountsList.Add($"{account.Name}:{account.Key}");
                 }
-            };
-            process.Start();
-            process.BeginOutputReadLine();
+
+                tempDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+                Directory.CreateDirectory(tempDirectory);
+                process = new Process();
+                process.StartInfo.FileName = "node.exe";
+                process.StartInfo.Arguments = $"{azuriteLocation} -l {tempDirectory}";
+                process.StartInfo.EnvironmentVariables.Add("AZURITE_ACCOUNTS", $"{string.Join(";", accountsList)}");
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.RedirectStandardInput = true;
+                process.OutputDataReceived += delegate (object sender, DataReceivedEventArgs e)
+                {
+                    /* using (var sw = File.AppendText("C:\\tmp\\azurite.log.txt"))
+                    {
+                        sw.WriteLine(e.Data);
+                    }*/
+                };
+                process.Start();
+                process.BeginOutputReadLine();
+            }
         }
 
         public AzuriteAccount GetAccount()
@@ -71,12 +73,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests
 
         public void Dispose()
         {
-            if (!process.HasExited)
+            if (process != null)
             {
-                process.Kill();
-                process.WaitForExit();
+                if (!process.HasExited)
+                {
+                    process.Kill();
+                    process.WaitForExit();
+                }
+                Directory.Delete(tempDirectory, true);
             }
-            Directory.Delete(tempDirectory, true);
         }
     }
 

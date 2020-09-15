@@ -39,7 +39,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             _processor = new QueueProcessor(context);
         }
 
-        [Fact]
+        [LiveFact]
         public void Constructor_DefaultsValues()
         {
             var options = new QueuesOptions
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(options.MaxPollingInterval, localProcessor.MaxPollingInterval);
         }
 
-        [Fact]
+        [LiveFact]
         public async Task CompleteProcessingMessageAsync_Success_DeletesMessage()
         {
             await _queue.SendMessageAsync("Test Message");
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Null(message);
         }
 
-        [Fact]
+        [LiveFact]
         public async Task CompleteProcessingMessageAsync_FailureWithoutPoisonQueue_DoesNotDeleteMessage()
         {
             await _queue.SendMessageAsync("Test Message");
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(id, message.MessageId);
         }
 
-        [Fact]
+        [LiveFact]
         public async Task CompleteProcessingMessageAsync_MaxDequeueCountExceeded_MovesMessageToPoisonQueue()
         {
             QueueProcessorFactoryContext context = new QueueProcessorFactoryContext(_queue, null, _queuesOptions, _poisonQueue);
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.True(poisonMessageHandlerCalled);
         }
 
-        [Fact]
+        [LiveFact]
         public async Task CompleteProcessingMessageAsync_Failure_AppliesVisibilityTimeout()
         {
             var queuesOptions = new QueuesOptions
@@ -159,7 +159,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(queuesOptions.VisibilityTimeout, updatedVisibilityTimeout);
         }
 
-        [Fact]
+        [LiveFact]
         public async Task BeginProcessingMessageAsync_MaxDequeueCountExceeded_MovesMessageToPoisonQueue()
         {
             QueueProcessorFactoryContext context = new QueueProcessorFactoryContext(_queue, null, _queuesOptions, _poisonQueue);

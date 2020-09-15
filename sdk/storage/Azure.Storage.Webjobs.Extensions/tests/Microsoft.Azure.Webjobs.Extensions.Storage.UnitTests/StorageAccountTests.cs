@@ -17,7 +17,7 @@ namespace Microsoft.Azure.WebJobs.Storage.IntegrationTests
     [Trait("SecretsRequired", "true")]
     public class StorageAccountTests
     {
-        [Fact]
+        [LiveFact]
         public async Task CloudQueueCreate_IfNotExist_CreatesQueue()
         {
             // Arrange
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.WebJobs.Storage.IntegrationTests
             }
         }
 
-        [Fact]
+        [LiveFact]
         public async Task CloudQueueAddMessage_AddsMessage()
         {
             // Arrange
