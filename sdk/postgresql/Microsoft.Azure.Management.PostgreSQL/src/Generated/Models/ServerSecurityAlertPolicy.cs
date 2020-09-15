@@ -37,9 +37,12 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         /// <param name="state">Specifies the state of the policy, whether it
         /// is enabled or disabled. Possible values include: 'Enabled',
         /// 'Disabled'</param>
-        /// <param name="id">Resource ID</param>
-        /// <param name="name">Resource name.</param>
-        /// <param name="type">Resource type.</param>
+        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. Ex-
+        /// Microsoft.Compute/virtualMachines or
+        /// Microsoft.Storage/storageAccounts.</param>
         /// <param name="disabledAlerts">Specifies an array of alerts that are
         /// disabled. Allowed values are: Sql_Injection,
         /// Sql_Injection_Vulnerability, Access_Anomaly</param>

@@ -44,14 +44,9 @@ namespace Microsoft.Azure.Management.PostgreSQL
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// The subscription ID that identifies an Azure subscription.
+        /// The ID of the target subscription.
         /// </summary>
         string SubscriptionId { get; set; }
-
-        /// <summary>
-        /// The API version to use for the request.
-        /// </summary>
-        string ApiVersion { get; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -108,6 +103,11 @@ namespace Microsoft.Azure.Management.PostgreSQL
         ILogFilesOperations LogFiles { get; }
 
         /// <summary>
+        /// Gets the IServerAdministratorsOperations.
+        /// </summary>
+        IServerAdministratorsOperations ServerAdministrators { get; }
+
+        /// <summary>
         /// Gets the ILocationBasedPerformanceTierOperations.
         /// </summary>
         ILocationBasedPerformanceTierOperations LocationBasedPerformanceTier { get; }
@@ -118,14 +118,29 @@ namespace Microsoft.Azure.Management.PostgreSQL
         ICheckNameAvailabilityOperations CheckNameAvailability { get; }
 
         /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        IOperations Operations { get; }
+
+        /// <summary>
         /// Gets the IServerSecurityAlertPoliciesOperations.
         /// </summary>
         IServerSecurityAlertPoliciesOperations ServerSecurityAlertPolicies { get; }
 
         /// <summary>
-        /// Gets the IOperations.
+        /// Gets the IPrivateEndpointConnectionsOperations.
         /// </summary>
-        IOperations Operations { get; }
+        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        IPrivateLinkResourcesOperations PrivateLinkResources { get; }
+
+        /// <summary>
+        /// Gets the IServerKeysOperations.
+        /// </summary>
+        IServerKeysOperations ServerKeys { get; }
 
     }
 }

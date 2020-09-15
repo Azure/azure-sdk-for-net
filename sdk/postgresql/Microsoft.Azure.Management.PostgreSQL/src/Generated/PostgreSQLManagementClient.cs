@@ -50,14 +50,9 @@ namespace Microsoft.Azure.Management.PostgreSQL
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// The subscription ID that identifies an Azure subscription.
+        /// The ID of the target subscription.
         /// </summary>
         public string SubscriptionId { get; set; }
-
-        /// <summary>
-        /// The API version to use for the request.
-        /// </summary>
-        public string ApiVersion { get; private set; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -113,6 +108,11 @@ namespace Microsoft.Azure.Management.PostgreSQL
         public virtual ILogFilesOperations LogFiles { get; private set; }
 
         /// <summary>
+        /// Gets the IServerAdministratorsOperations.
+        /// </summary>
+        public virtual IServerAdministratorsOperations ServerAdministrators { get; private set; }
+
+        /// <summary>
         /// Gets the ILocationBasedPerformanceTierOperations.
         /// </summary>
         public virtual ILocationBasedPerformanceTierOperations LocationBasedPerformanceTier { get; private set; }
@@ -123,14 +123,29 @@ namespace Microsoft.Azure.Management.PostgreSQL
         public virtual ICheckNameAvailabilityOperations CheckNameAvailability { get; private set; }
 
         /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
         /// Gets the IServerSecurityAlertPoliciesOperations.
         /// </summary>
         public virtual IServerSecurityAlertPoliciesOperations ServerSecurityAlertPolicies { get; private set; }
 
         /// <summary>
-        /// Gets the IOperations.
+        /// Gets the IPrivateEndpointConnectionsOperations.
         /// </summary>
-        public virtual IOperations Operations { get; private set; }
+        public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
+
+        /// <summary>
+        /// Gets the IServerKeysOperations.
+        /// </summary>
+        public virtual IServerKeysOperations ServerKeys { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the PostgreSQLManagementClient class.
@@ -380,12 +395,15 @@ namespace Microsoft.Azure.Management.PostgreSQL
             Databases = new DatabasesOperations(this);
             Configurations = new ConfigurationsOperations(this);
             LogFiles = new LogFilesOperations(this);
+            ServerAdministrators = new ServerAdministratorsOperations(this);
             LocationBasedPerformanceTier = new LocationBasedPerformanceTierOperations(this);
             CheckNameAvailability = new CheckNameAvailabilityOperations(this);
-            ServerSecurityAlertPolicies = new ServerSecurityAlertPoliciesOperations(this);
             Operations = new Operations(this);
+            ServerSecurityAlertPolicies = new ServerSecurityAlertPoliciesOperations(this);
+            PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
+            PrivateLinkResources = new PrivateLinkResourcesOperations(this);
+            ServerKeys = new ServerKeysOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2017-12-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

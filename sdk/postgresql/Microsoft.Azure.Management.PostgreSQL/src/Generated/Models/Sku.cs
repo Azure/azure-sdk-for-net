@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         /// <param name="size">The size code, to be interpreted by resource as
         /// appropriate.</param>
         /// <param name="family">The family of hardware.</param>
-        public Sku(string name = default(string), string tier = default(string), int? capacity = default(int?), string size = default(string), string family = default(string))
+        public Sku(string name, string tier = default(string), int? capacity = default(int?), string size = default(string), string family = default(string))
         {
             Name = name;
             Tier = tier;
@@ -97,6 +97,10 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (Name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
             if (Capacity < 0)
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "Capacity", 0);
