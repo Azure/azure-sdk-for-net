@@ -175,7 +175,6 @@ namespace Azure.Identity
     public partial class InteractiveBrowserCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public InteractiveBrowserCredentialOptions() { }
-        public bool AllowUnencryptedCache { get { throw null; } set { } }
         public Azure.Identity.AuthenticationRecord AuthenticationRecord { get { throw null; } set { } }
         public string ClientId { get { throw null; } set { } }
         public bool DisableAutomaticAuthentication { get { throw null; } set { } }
@@ -189,6 +188,17 @@ namespace Azure.Identity
         public ManagedIdentityCredential(string clientId = null, Azure.Identity.TokenCredentialOptions options = null) { }
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class PersistentTokenCache : Azure.Identity.TokenCache
+    {
+        public PersistentTokenCache(Azure.Identity.PersistentTokenCacheOptions options) { }
+        public PersistentTokenCache(bool allowUnencryptedStorage = true) { }
+    }
+    public partial class PersistentTokenCacheOptions
+    {
+        public PersistentTokenCacheOptions() { }
+        public bool AllowUnencryptedStorage { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
     }
     public partial class SharedTokenCacheCredential : Azure.Core.TokenCredential
     {
@@ -209,9 +219,18 @@ namespace Azure.Identity
     public partial class TokenCache : System.IDisposable
     {
         public TokenCache() { }
-        public static Azure.Identity.TokenCache SharedCache { get { throw null; } }
+        public event System.Func<Azure.Identity.TokenCacheUpdatedArgs, System.Threading.Tasks.Task> Updated { add { } remove { } }
+        public static Azure.Identity.TokenCache Deserialize(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Identity.TokenCache> DeserializeAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
+        public void Serialize(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public System.Threading.Tasks.Task SerializeAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class TokenCacheUpdatedArgs
+    {
+        internal TokenCacheUpdatedArgs() { }
+        public Azure.Identity.TokenCache Cache { get { throw null; } }
     }
     public partial class TokenCredentialOptions : Azure.Core.ClientOptions
     {
