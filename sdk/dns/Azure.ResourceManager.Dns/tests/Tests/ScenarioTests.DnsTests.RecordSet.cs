@@ -43,9 +43,9 @@ namespace Azure.Management.Dns.Tests
             };
         }
 
-        [OneTimeSetUp]
-        public async Task OneTimeSetup()
+        protected override async Task OnOneTimeSetup()
         {
+            await base.OnOneTimeSetup();
             if ((Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback))
             {
                 var aZone = new Zone("Global");

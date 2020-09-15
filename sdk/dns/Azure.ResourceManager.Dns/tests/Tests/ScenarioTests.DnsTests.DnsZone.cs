@@ -102,14 +102,15 @@ namespace Azure.Management.Dns.Tests
             Assert.IsTrue(zoneOneFound && zoneTwoFound);
             await ResourceGroupsOperations.StartDeleteAsync(this.resourceGroup + "-Two");
             await ZonesOperations.StartDeleteAsync(resourceGroup, zoneNameOne);
+            await ZonesOperations.StartDeleteAsync(resourceGroup, zoneNameTwo);
         }
 
         [TestCase]
         public async Task DnsListZonesWithTopParameter()
         {
-            string zoneNameOne = "dns.zoneonename.io";
-            string zoneNameTwo = "dns.zonetwoname.io";
-            string zoneNameThree = "dns.zonethreename.io";
+            string zoneNameOne = "dns.zoneonenametop.io";
+            string zoneNameTwo = "dns.zonetwonametop.io";
+            string zoneNameThree = "dns.zonethreenametop.io";
             var aZone = new Zone("Global");
             await ZonesOperations.CreateOrUpdateAsync(resourceGroup, zoneNameOne, aZone);
             aZone = new Zone("Global");

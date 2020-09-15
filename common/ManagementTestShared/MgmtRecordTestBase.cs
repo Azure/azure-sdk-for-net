@@ -89,17 +89,30 @@ namespace Azure.ResourceManager.TestFramework
                 fileName);
         }
 
-        /// <summary>
-        /// Add a static TestEventListener which will redirect SDK logging
-        /// to Console.Out for easy debugging.
-        /// </summary>
+        protected abstract void InitializeClients();
 
-        /// <summary>
-        /// Start logging events to the console if debugging or in Live mode.
-        /// This will run once before any tests.
-        /// </summary>
+        protected virtual Task OnOneTimeSetup()
+        {
+            return Task.FromResult<object>(null);
+        }
+
+        protected virtual Task OnSetup()
+        {
+            return Task.FromResult<object>(null);
+        }
+
+        protected virtual Task OnOneTimeTearDown()
+        {
+            return Task.FromResult<object>(null);
+        }
+
+        protected virtual Task OnTearDown()
+        {
+            return Task.FromResult<object>(null);
+        }
+
         [OneTimeSetUp]
-        public virtual void RunOneTimeSetup()
+        public void RunOneTimeSetup()
         {
             if (Mode == RecordedTestMode.Live || Debugger.IsAttached)
             {
@@ -107,12 +120,10 @@ namespace Azure.ResourceManager.TestFramework
             }
             Recording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher);
             TestEnvironment.SetRecording(Recording);
+            InitializeClients();
+            OnOneTimeSetup();
         }
 
-        /// <summary>
-        /// Stop logging events and do necessary cleanup.
-        /// This will run once after all tests have finished.
-        /// </summary>
         [OneTimeTearDown]
         public async Task RunOneTimeTearDown()
         {
@@ -120,12 +131,12 @@ namespace Azure.ResourceManager.TestFramework
             await CleanupResourceGroupsAsync();
             Logger?.Dispose();
             Logger = null;
+            await OnOneTimeTearDown();
         }
 
         [SetUp]
-        public virtual void StartTestRecording()
+        public void StartTestRecording()
         {
-            // Only create test recordings for the latest version of the service
             StopTestRecording();
             TestContext.TestAdapter test = TestContext.CurrentContext.Test;
             if (Mode != RecordedTestMode.Live &&
@@ -136,16 +147,19 @@ namespace Azure.ResourceManager.TestFramework
             Recording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher);
             TestEnvironment.Mode = Mode;
             TestEnvironment.SetRecording(Recording);
+            InitializeClients();
+            OnSetup();
         }
 
         [TearDown]
-        public virtual void StopTestRecording()
-        {;
+        public void StopTestRecording()
+        {
             bool save = TestContext.CurrentContext.Result.FailCount == 0;
 #if DEBUG
             save |= SaveDebugRecordingsOnFailure;
 #endif
             Recording?.Dispose(save);
+            OnTearDown();
         }
 
         protected ResourcesManagementClient GetResourceManagementClient()

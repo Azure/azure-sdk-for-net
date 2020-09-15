@@ -29,9 +29,7 @@ namespace Azure.ResourceManager.Dns.Tests
         {
 
         }
-
-        [OneTimeSetUp]
-        public async Task BaseOneTimeSetup()
+        protected override async Task OnOneTimeSetup()
         {
             location = "West US";
             InitializeClients();
@@ -39,18 +37,19 @@ namespace Azure.ResourceManager.Dns.Tests
             await Helper.TryRegisterResourceGroupAsync(ResourceGroupsOperations, this.location, this.resourceGroup);
         }
 
-        [SetUp]
-        protected void InitializeClients()
+        protected override void InitializeClients()
         {
             SubscriptionId = TestEnvironment.SubscriptionId;
             ResourcesManagementClient = this.GetResourceManagementClient();
             ResourcesOperations = ResourcesManagementClient.Resources;
             ResourceProvidersOperations = ResourcesManagementClient.Providers;
             ResourceGroupsOperations = ResourcesManagementClient.ResourceGroups;
+
             DnsManagementClient = this.GetDnsManagementClient();
             RecordSetsOperations = DnsManagementClient.RecordSets;
             ZonesOperations = DnsManagementClient.Zones;
         }
+
 
         internal DnsManagementClient GetDnsManagementClient()
         {
