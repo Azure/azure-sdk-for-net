@@ -119,7 +119,7 @@ namespace Azure.Identity
         {
             if (async)
             {
-                await stream.WriteAsync(_data, 0, _data.Length).ConfigureAwait(false);
+                await stream.WriteAsync(_data, 0, _data.Length, cancellationToken).ConfigureAwait(false);
             }
             else
             {
@@ -133,7 +133,7 @@ namespace Azure.Identity
 
             if (async)
             {
-                await stream.ReadAsync(data, 0, data.Length).ConfigureAwait(false);
+                await stream.ReadAsync(data, 0, data.Length, cancellationToken).ConfigureAwait(false);
             }
             else
             {
