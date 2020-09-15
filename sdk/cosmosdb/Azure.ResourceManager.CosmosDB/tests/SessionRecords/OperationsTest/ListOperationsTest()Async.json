@@ -1,19 +1,19 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/Default-CosmosDB-5382?api-version=2017-05-10",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/Default-CosmosDB-3015?api-version=2017-05-10",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "22",
         "Content-Type": "application/json",
-        "traceparent": "00-04b6328bf4b9eb49ba783e59e9229f1b-3a6f49264ba20b45-00",
+        "traceparent": "00-ed14610241909d41a1ca705c90152320-1b6fc922cfe96b49-00",
         "User-Agent": [
           "azsdk-net-ResourceManager.CosmosDB.Tests/1.0.0-alpha.20200915.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
         ],
-        "x-ms-client-request-id": "9d79404b4d31445c241cc7a3e5326c24",
+        "x-ms-client-request-id": "261747b91717a80442a346acc6d36c30",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -24,19 +24,19 @@
         "Cache-Control": "no-cache",
         "Content-Length": "195",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 15 Sep 2020 20:02:31 GMT",
+        "Date": "Tue, 15 Sep 2020 22:37:00 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "639dc53d-0579-465a-93b0-0bf1a5960d75",
+        "x-ms-correlation-request-id": "d1dd4048-ba0a-49f3-b8b1-656cb1b91ad1",
         "x-ms-ratelimit-remaining-subscription-writes": "1193",
-        "x-ms-request-id": "639dc53d-0579-465a-93b0-0bf1a5960d75",
-        "x-ms-routing-request-id": "WESTUS:20200915T200231Z:639dc53d-0579-465a-93b0-0bf1a5960d75"
+        "x-ms-request-id": "d1dd4048-ba0a-49f3-b8b1-656cb1b91ad1",
+        "x-ms-routing-request-id": "WESTUS:20200915T223700Z:d1dd4048-ba0a-49f3-b8b1-656cb1b91ad1"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-5382",
-        "name": "Default-CosmosDB-5382",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-3015",
+        "name": "Default-CosmosDB-3015",
         "location": "westus",
         "properties": {
           "provisioningState": "Succeeded"
@@ -52,7 +52,7 @@
           "azsdk-net-ResourceManager.CosmosDB/1.0.0-alpha.20200915.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
         ],
-        "x-ms-client-request-id": "652e9c25633df7637b797f8821b4c914",
+        "x-ms-client-request-id": "6c2c457a35e8e72b5152c98f4da21fe9",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -62,16 +62,16 @@
         "Content-Length": "137222",
         "Content-Location": "https://management.documents.azure.com:450/providers/Microsoft.DocumentDB/operations?api-version=2020-04-01",
         "Content-Type": "application/json",
-        "Date": "Tue, 15 Sep 2020 20:02:33 GMT",
+        "Date": "Tue, 15 Sep 2020 22:37:02 GMT",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "78a6f522-4f6b-4a2e-934d-4420c9cb8398",
+        "x-ms-correlation-request-id": "488c0258-3599-4f4e-b02f-0566b8af9d32",
         "x-ms-gatewayversion": "version=2.11.0",
         "x-ms-ratelimit-remaining-tenant-reads": "11998",
-        "x-ms-request-id": "78a6f522-4f6b-4a2e-934d-4420c9cb8398",
-        "x-ms-routing-request-id": "WESTUS:20200915T200233Z:78a6f522-4f6b-4a2e-934d-4420c9cb8398"
+        "x-ms-request-id": "488c0258-3599-4f4e-b02f-0566b8af9d32",
+        "x-ms-routing-request-id": "WESTUS:20200915T223702Z:488c0258-3599-4f4e-b02f-0566b8af9d32"
       },
       "ResponseBody": {
         "value": [
@@ -5831,7 +5831,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "330372063",
+    "RandomSeed": "1395370130",
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
 }
