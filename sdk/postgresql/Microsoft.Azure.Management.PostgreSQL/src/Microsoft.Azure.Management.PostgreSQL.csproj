@@ -11,8 +11,9 @@
 		<PackageTags>PostgreSQL;Azure Database for PostgreSQL;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-        This is a release of the Azure Database for PostgreSQL SDK.
-      ]]>
+				This is a public release of the Azure Database for PostgreSQL SDK. This release includes management libraries for managing 
+        New deployment type called Flexible-Servers (refer aka.ms/postgresflexibleserver for more info)
+		]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
