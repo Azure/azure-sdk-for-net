@@ -1,18 +1,18 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-Dns-6699/providers/Microsoft.Network/dnsZones/azure.ameredmond.dns/MX/mx_record?api-version=2018-05-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-Dns-4027/providers/Microsoft.Network/dnsZones/azure.ameredmond.dns/MX/mx_record?api-version=2018-05-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "162",
         "Content-Type": "application/json",
-        "traceparent": "00-8f0edddb4d29724c8c380f100fec83e1-e18c71ff46f9114a-00",
+        "traceparent": "00-6031febf77b9bd488f0b6e9266bdce28-8d68a8dae6b90543-00",
         "User-Agent": [
           "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20200915.1",
           "(.NET Core 4.6.29130.01; Linux 4.19.104-microsoft-standard #1 SMP Wed Feb 19 06:37:35 UTC 2020)"
         ],
-        "x-ms-client-request-id": "fbb0be144542e82be798f4a0a137abaa",
+        "x-ms-client-request-id": "ead8e70d6db0500ee03e30d78d70459a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -38,22 +38,22 @@
         "Cache-Control": "private",
         "Content-Length": "533",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 15 Sep 2020 22:35:54 GMT",
-        "ETag": "fa4e7087-1028-4499-aff0-8bbd172622f5",
+        "Date": "Tue, 15 Sep 2020 22:49:20 GMT",
+        "ETag": "b8ec2a88-4d0c-4c1b-ab0f-990e8dfdff3d",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "ef326785-72cb-4de8-8b94-2ce61d612eb6",
+        "x-ms-correlation-request-id": "435c8bfc-4054-4ee7-81c1-1c0d9e25089f",
         "x-ms-ratelimit-remaining-subscription-resource-requests": "11999",
-        "x-ms-request-id": "fbb0be14-4542-e82b-e798-f4a0a137abaa",
-        "x-ms-routing-request-id": "WESTUS2:20200915T223555Z:ef326785-72cb-4de8-8b94-2ce61d612eb6",
+        "x-ms-request-id": "ead8e70d-6db0-500e-e03e-30d78d70459a",
+        "x-ms-routing-request-id": "WESTUS2:20200915T224920Z:435c8bfc-4054-4ee7-81c1-1c0d9e25089f",
         "X-Powered-By": "ASP.NET"
       },
-      "ResponseBody": "{\u0022id\u0022:\u0022\\/subscriptions\\/db1ab6f0-4769-4b27-930e-01e2ef9c123c\\/resourceGroups\\/Default-Dns-6699\\/providers\\/Microsoft.Network\\/dnszones\\/azure.ameredmond.dns\\/MX\\/mx_record\u0022,\u0022name\u0022:\u0022mx_record\u0022,\u0022type\u0022:\u0022Microsoft.Network\\/dnszones\\/MX\u0022,\u0022etag\u0022:\u0022fa4e7087-1028-4499-aff0-8bbd172622f5\u0022,\u0022properties\u0022:{\u0022metadata\u0022:{\u0022tag1\u0022:\u0022value1\u0022},\u0022fqdn\u0022:\u0022mx_record.azure.ameredmond.dns.\u0022,\u0022TTL\u0022:60,\u0022MXRecords\u0022:[{\u0022exchange\u0022:\u0022mail1.scsfsm.com\u0022,\u0022preference\u0022:1},{\u0022exchange\u0022:\u0022mail2.scsfsm.com\u0022,\u0022preference\u0022:2}],\u0022targetResource\u0022:{},\u0022provisioningState\u0022:\u0022Succeeded\u0022}}"
+      "ResponseBody": "{\u0022id\u0022:\u0022\\/subscriptions\\/db1ab6f0-4769-4b27-930e-01e2ef9c123c\\/resourceGroups\\/Default-Dns-4027\\/providers\\/Microsoft.Network\\/dnszones\\/azure.ameredmond.dns\\/MX\\/mx_record\u0022,\u0022name\u0022:\u0022mx_record\u0022,\u0022type\u0022:\u0022Microsoft.Network\\/dnszones\\/MX\u0022,\u0022etag\u0022:\u0022b8ec2a88-4d0c-4c1b-ab0f-990e8dfdff3d\u0022,\u0022properties\u0022:{\u0022metadata\u0022:{\u0022tag1\u0022:\u0022value1\u0022},\u0022fqdn\u0022:\u0022mx_record.azure.ameredmond.dns.\u0022,\u0022TTL\u0022:60,\u0022MXRecords\u0022:[{\u0022exchange\u0022:\u0022mail1.scsfsm.com\u0022,\u0022preference\u0022:1},{\u0022exchange\u0022:\u0022mail2.scsfsm.com\u0022,\u0022preference\u0022:2}],\u0022targetResource\u0022:{},\u0022provisioningState\u0022:\u0022Succeeded\u0022}}"
     }
   ],
   "Variables": {
-    "RandomSeed": "870962374",
+    "RandomSeed": "192488102",
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
 }

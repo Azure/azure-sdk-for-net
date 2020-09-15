@@ -91,22 +91,37 @@ namespace Azure.ResourceManager.TestFramework
 
         protected abstract void InitializeClients();
 
-        protected virtual Task OnOneTimeSetupAsync()
+        protected virtual Task OnOneTimeSetupBaseAsync()
+        {
+            return Task.FromResult<object>(null);
+        }
+        protected virtual Task OnOneTimeSetupScenarioAsync()
+        {
+            return Task.FromResult<object>(null);
+        }
+        protected virtual Task OnSetupBaseAsync()
+        {
+            return Task.FromResult<object>(null);
+        }
+        protected virtual Task OnSetupScenarioAsync()
+        {
+            return Task.FromResult<object>(null);
+        }
+        protected virtual Task OnOneTimeTearDownBaseAsync()
+        {
+            return Task.FromResult<object>(null);
+        }
+        protected virtual Task OnOneTimeTearDownScenarioAsync()
         {
             return Task.FromResult<object>(null);
         }
 
-        protected virtual Task OnSetupAsync()
+        protected virtual Task OnTearDownBaseAsync()
         {
             return Task.FromResult<object>(null);
         }
 
-        protected virtual Task OnOneTimeTearDownAsync()
-        {
-            return Task.FromResult<object>(null);
-        }
-
-        protected virtual Task OnTearDownAsync()
+        protected virtual Task OnTearDownScenarioAsync()
         {
             return Task.FromResult<object>(null);
         }
@@ -121,7 +136,8 @@ namespace Azure.ResourceManager.TestFramework
             Recording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher);
             TestEnvironment.SetRecording(Recording);
             InitializeClients();
-            OnOneTimeSetupAsync();
+            OnOneTimeSetupBaseAsync();
+            OnOneTimeSetupScenarioAsync();
         }
 
         [OneTimeTearDown]
@@ -131,7 +147,8 @@ namespace Azure.ResourceManager.TestFramework
             await CleanupResourceGroupsAsync();
             Logger?.Dispose();
             Logger = null;
-            await OnOneTimeTearDownAsync();
+            await OnOneTimeTearDownScenarioAsync();
+            await OnOneTimeTearDownBaseAsync();
         }
 
         [SetUp]
@@ -148,7 +165,8 @@ namespace Azure.ResourceManager.TestFramework
             TestEnvironment.Mode = Mode;
             TestEnvironment.SetRecording(Recording);
             InitializeClients();
-            OnSetupAsync();
+            OnSetupBaseAsync();
+            OnOneTimeTearDownScenarioAsync();
         }
 
         [TearDown]
@@ -159,7 +177,8 @@ namespace Azure.ResourceManager.TestFramework
             save |= SaveDebugRecordingsOnFailure;
 #endif
             Recording?.Dispose(save);
-            OnTearDownAsync();
+            OnTearDownScenarioAsync();
+            OnTearDownScenarioAsync();
         }
 
         protected ResourcesManagementClient GetResourceManagementClient()
