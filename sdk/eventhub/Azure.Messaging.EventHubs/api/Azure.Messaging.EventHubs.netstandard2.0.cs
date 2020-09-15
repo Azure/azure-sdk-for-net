@@ -237,6 +237,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         public System.TimeSpan? MaximumWaitTime { get { throw null; } set { } }
         public long? OwnerLevel { get { throw null; } set { } }
         public int PrefetchCount { get { throw null; } set { } }
+        public long? PrefetchSizeInBytes { get { throw null; } set { } }
         public bool TrackLastEnqueuedEventProperties { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -268,6 +269,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         public System.TimeSpan? MaximumWaitTime { get { throw null; } set { } }
         public System.TimeSpan PartitionOwnershipExpirationInterval { get { throw null; } set { } }
         public int PrefetchCount { get { throw null; } set { } }
+        public long? PrefetchSizeInBytes { get { throw null; } set { } }
         public Azure.Messaging.EventHubs.EventHubsRetryOptions RetryOptions { get { throw null; } set { } }
         public bool TrackLastEnqueuedEventProperties { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -358,6 +360,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         public System.TimeSpan? DefaultMaximumReceiveWaitTime { get { throw null; } set { } }
         public long? OwnerLevel { get { throw null; } set { } }
         public int PrefetchCount { get { throw null; } set { } }
+        public long? PrefetchSizeInBytes { get { throw null; } set { } }
         public Azure.Messaging.EventHubs.EventHubsRetryOptions RetryOptions { get { throw null; } set { } }
         public bool TrackLastEnqueuedEventProperties { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
