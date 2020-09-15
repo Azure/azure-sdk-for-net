@@ -11,6 +11,9 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>Integer value.</summary>
         public long? ValueInteger { get; }
 
+        /// <summary> Selection mark value. </summary>
+        public SelectionMarkState? ValueSelectionMark { get; }
+
         internal FieldValue_internal(string value)
         {
             Type = FieldValueType.String;
