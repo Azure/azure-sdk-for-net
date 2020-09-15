@@ -1,4 +1,4 @@
-# Persisting the credential token cache
+# Persisting the credential TokenCache
 Many credential implementations in the Azure.Identity library have an underlying `TokenCache` which caches sensitive authentication data such as account information, access tokens, and refresh tokens. By default this `TokenCache` instance is an in memory cache which is specific to the credential instance. However, there are scenarios where an application needs to share the token cache across credentials, and persist it across executions. To accomplish this the Azure.Identity provides the `TokenCache` and `PeristantTokenCache` classes.
 
 >IMPORTANT! The `TokenCache` contains sensitive data and **MUST** be protected to prevent compromising accounts. All application decisions regarding the storage of the token cache must consider that a breach of the `TokenCache` data will fully compromise all the accounts it contains.
