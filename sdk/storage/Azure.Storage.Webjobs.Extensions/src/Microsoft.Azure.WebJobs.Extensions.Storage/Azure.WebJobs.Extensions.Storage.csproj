@@ -4,8 +4,8 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup>
-    <Version>$(ExtensionsStorageVersion)</Version>
-    <InformationalVersion>$(Version) Commit hash: $(CommitHash)</InformationalVersion>
+    <Version>5.0.0-beta.1</Version>
+    <Description>This extension adds bindings for Storage</Description>
     <AssemblyName>Microsoft.Azure.WebJobs.Extensions.Storage</AssemblyName>
     <RootNamespace>Microsoft.Azure.WebJobs.Extensions.Storage</RootNamespace>
   </PropertyGroup>  
