@@ -66,16 +66,8 @@ namespace Azure.Search.Documents.Indexes
             Uri endpoint,
             AzureKeyCredential credential,
             SearchClientOptions options)
+            : this(endpoint, (object)credential, options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            endpoint.AssertHttpsScheme(nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
-
-            options ??= new SearchClientOptions();
-            Endpoint = endpoint;
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = options.Build(credential);
-            _version = options.Version;
         }
 
         /// <summary>
