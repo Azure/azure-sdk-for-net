@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// Input definition for planned failover input properties.
+    /// Input definition for unplanned failover input properties.
     /// </summary>
     public partial class UnplannedFailoverInputProperties
     {
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// status</param>
         /// <param name="providerSpecificDetails">Provider specific
         /// settings</param>
-        public UnplannedFailoverInputProperties(string failoverDirection = default(string), string sourceSiteOperations = default(string), ProviderSpecificFailoverInput providerSpecificDetails = default(ProviderSpecificFailoverInput))
+        public UnplannedFailoverInputProperties(string failoverDirection = default(string), string sourceSiteOperations = default(string), UnplannedFailoverProviderSpecificInput providerSpecificDetails = default(UnplannedFailoverProviderSpecificInput))
         {
             FailoverDirection = failoverDirection;
             SourceSiteOperations = sourceSiteOperations;
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Gets or sets provider specific settings
         /// </summary>
         [JsonProperty(PropertyName = "providerSpecificDetails")]
-        public ProviderSpecificFailoverInput ProviderSpecificDetails { get; set; }
+        public UnplannedFailoverProviderSpecificInput ProviderSpecificDetails { get; set; }
 
     }
 }

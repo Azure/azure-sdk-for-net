@@ -13,15 +13,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// Resync provider specific input.
+    /// Provider specific unplanned failover input.
     /// </summary>
-    public partial class ResyncProviderSpecificInput
+    public partial class UnplannedFailoverProviderSpecificInput
     {
         /// <summary>
-        /// Initializes a new instance of the ResyncProviderSpecificInput
-        /// class.
+        /// Initializes a new instance of the
+        /// UnplannedFailoverProviderSpecificInput class.
         /// </summary>
-        public ResyncProviderSpecificInput()
+        public UnplannedFailoverProviderSpecificInput()
         {
             CustomInit();
         }

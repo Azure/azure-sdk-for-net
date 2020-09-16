@@ -41,15 +41,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Id.</param>
         /// <param name="logStorageAccountSasSecretName">The key vault secret
         /// name of the log storage account.</param>
-        /// <param name="diskEncryptionSetId">The DiskEncryptionSet ARM
-        /// Id.</param>
         /// <param name="seedManagedDiskId">The ARM Id of the seed managed
         /// disk.</param>
         /// <param name="targetManagedDiskId">The ARM Id of the target managed
         /// disk.</param>
         /// <param name="diskType">The disk type. Possible values include:
         /// 'Standard_LRS', 'Premium_LRS', 'StandardSSD_LRS'</param>
-        public VMwareCbtProtectedDiskDetails(string diskId = default(string), string diskName = default(string), string diskPath = default(string), string isOSDisk = default(string), long? capacityInBytes = default(long?), string logStorageAccountId = default(string), string logStorageAccountSasSecretName = default(string), string diskEncryptionSetId = default(string), string seedManagedDiskId = default(string), string targetManagedDiskId = default(string), string diskType = default(string))
+        public VMwareCbtProtectedDiskDetails(string diskId = default(string), string diskName = default(string), string diskPath = default(string), string isOSDisk = default(string), long? capacityInBytes = default(long?), string logStorageAccountId = default(string), string logStorageAccountSasSecretName = default(string), string seedManagedDiskId = default(string), string targetManagedDiskId = default(string), string diskType = default(string))
         {
             DiskId = diskId;
             DiskName = diskName;
@@ -58,7 +56,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             CapacityInBytes = capacityInBytes;
             LogStorageAccountId = logStorageAccountId;
             LogStorageAccountSasSecretName = logStorageAccountSasSecretName;
-            DiskEncryptionSetId = diskEncryptionSetId;
             SeedManagedDiskId = seedManagedDiskId;
             TargetManagedDiskId = targetManagedDiskId;
             DiskType = diskType;
@@ -111,12 +108,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "logStorageAccountSasSecretName")]
         public string LogStorageAccountSasSecretName { get; private set; }
-
-        /// <summary>
-        /// Gets the DiskEncryptionSet ARM Id.
-        /// </summary>
-        [JsonProperty(PropertyName = "diskEncryptionSetId")]
-        public string DiskEncryptionSetId { get; private set; }
 
         /// <summary>
         /// Gets the ARM Id of the seed managed disk.

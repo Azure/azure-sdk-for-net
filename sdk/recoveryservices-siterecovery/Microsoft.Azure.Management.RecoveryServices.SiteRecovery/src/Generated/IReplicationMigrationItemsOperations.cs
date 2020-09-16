@@ -215,41 +215,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </exception>
         Task<AzureOperationResponse<MigrationItem>> MigrateWithHttpMessagesAsync(string fabricName, string protectionContainerName, string migrationItemName, MigrateInput migrateInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Resynchronizes replication.
-        /// </summary>
-        /// <remarks>
-        /// The operation to resynchronize replication of an ASR migration
-        /// item.
-        /// </remarks>
-        /// <param name='fabricName'>
-        /// Fabric name.
-        /// </param>
-        /// <param name='protectionContainerName'>
-        /// Protection container name.
-        /// </param>
-        /// <param name='migrationItemName'>
-        /// Migration item name.
-        /// </param>
-        /// <param name='input'>
-        /// Resync input.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<MigrationItem>> ResyncWithHttpMessagesAsync(string fabricName, string protectionContainerName, string migrationItemName, ResyncInput input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Test migrate item.
         /// </summary>
         /// <remarks>
@@ -476,41 +441,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<MigrationItem>> BeginMigrateWithHttpMessagesAsync(string fabricName, string protectionContainerName, string migrationItemName, MigrateInput migrateInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Resynchronizes replication.
-        /// </summary>
-        /// <remarks>
-        /// The operation to resynchronize replication of an ASR migration
-        /// item.
-        /// </remarks>
-        /// <param name='fabricName'>
-        /// Fabric name.
-        /// </param>
-        /// <param name='protectionContainerName'>
-        /// Protection container name.
-        /// </param>
-        /// <param name='migrationItemName'>
-        /// Migration item name.
-        /// </param>
-        /// <param name='input'>
-        /// Resync input.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<MigrationItem>> BeginResyncWithHttpMessagesAsync(string fabricName, string protectionContainerName, string migrationItemName, ResyncInput input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Test migrate item.
         /// </summary>
