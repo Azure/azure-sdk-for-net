@@ -285,7 +285,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var identifier = "customIdentIFIER";
 
             using var scope = new AmqpConnectionScope(endpoint, eventHub, credential.Object, transport, null, identifier);
-            Assert.That(() => scope.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), 0, null, false, CancellationToken.None), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => scope.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), 0, null, null, false, CancellationToken.None), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -307,7 +307,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var identifier = "customIdentIFIER";
 
             using var scope = new AmqpConnectionScope(endpoint, eventHub, credential.Object, transport, null, identifier);
-            Assert.That(() => scope.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), 0, null, false, CancellationToken.None), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => scope.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), 0, null, null, false, CancellationToken.None), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -332,7 +332,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            Assert.That(() => scope.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), 0, null, false, cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+            Assert.That(() => scope.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), 0, null, null, false, cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
         }
 
         /// <summary>
@@ -355,7 +355,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var scope = new AmqpConnectionScope(endpoint, eventHub, credential.Object, transport, null, identifier);
             scope.Dispose();
 
-            Assert.That(() => scope.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), 0, null, false, CancellationToken.None), Throws.InstanceOf<ObjectDisposedException>());
+            Assert.That(() => scope.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), 0, null, null, false, CancellationToken.None), Throws.InstanceOf<ObjectDisposedException>());
         }
 
         /// <summary>
@@ -372,6 +372,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionId = "0";
             var ownerLevel = 95;
             var prefetchCount = 300U;
+            var prefetchSizeInBytes = 4242L;
             var trackLastEvent = false;
             var position = EventPosition.Latest;
             var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
@@ -407,6 +408,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     ItExpr.Is<EventPosition>(value => value == position),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.Is<uint>(value => value == prefetchCount),
+                    ItExpr.Is<long?>(value => value == prefetchSizeInBytes),
                     ItExpr.Is<long?>(value => value == ownerLevel),
                     ItExpr.Is<bool>(value => value == trackLastEvent),
                     ItExpr.Is<CancellationToken>(value => value == cancellationSource.Token))
@@ -421,7 +423,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(Task.CompletedTask)
                 .Verifiable();
 
-            var link = await mockScope.Object.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), prefetchCount, ownerLevel, trackLastEvent, cancellationSource.Token);
+            var link = await mockScope.Object.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), prefetchCount, prefetchSizeInBytes, ownerLevel, trackLastEvent, cancellationSource.Token);
             Assert.That(link, Is.EqualTo(mockLink), "The mock return was incorrect");
 
             mockScope.VerifyAll();
@@ -441,6 +443,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionId = "0";
             var ownerLevel = 459;
             var prefetchCount = 697U;
+            var prefetchSizeInBytes = 12342L;
             var trackLastEvent = true;
             var position = EventPosition.Latest;
             var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
@@ -485,7 +488,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     ItExpr.IsAny<TimeSpan>())
                 .Returns(Task.CompletedTask);
 
-            var link = await mockScope.Object.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), prefetchCount, ownerLevel, trackLastEvent, cancellationSource.Token);
+            var link = await mockScope.Object.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), prefetchCount, prefetchSizeInBytes, ownerLevel, trackLastEvent, cancellationSource.Token);
             Assert.That(link, Is.Not.Null, "The link produced was null");
 
             var linkSource = (Source)link.Settings.Source;
@@ -515,6 +518,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionId = "0";
             var ownerLevel = default(long?);
             var prefetchCount = 697U;
+            var prefetchSizeInBytes = 12342L;
             var trackLastEvent = false;
             var position = EventPosition.Latest;
             var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
@@ -559,7 +563,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     ItExpr.IsAny<TimeSpan>())
                 .Returns(Task.CompletedTask);
 
-            var link = await mockScope.Object.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), prefetchCount, ownerLevel, trackLastEvent, cancellationSource.Token);
+            var link = await mockScope.Object.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), prefetchCount, prefetchSizeInBytes, ownerLevel, trackLastEvent, cancellationSource.Token);
             Assert.That(link, Is.Not.Null, "The link produced was null");
             Assert.That(link.GetSettingPropertyOrDefault<long>(AmqpProperty.OwnerLevel, long.MinValue), Is.EqualTo(long.MinValue), "The owner level should have been used.");
         }
@@ -578,6 +582,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionId = "0";
             var ownerLevel = 9987;
             var prefetchCount = 697U;
+            var prefetchSizeInBytes = 12342L;
             var trackLastEvent = false;
             var position = EventPosition.Latest;
             var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
@@ -622,7 +627,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     ItExpr.IsAny<TimeSpan>())
                 .Returns(Task.CompletedTask);
 
-            var link = await mockScope.Object.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), prefetchCount, ownerLevel, trackLastEvent, cancellationSource.Token);
+            var link = await mockScope.Object.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), prefetchCount, prefetchSizeInBytes, ownerLevel, trackLastEvent, cancellationSource.Token);
             Assert.That(link, Is.Not.Null, "The link produced was null");
             Assert.That(link.Settings.DesiredCapabilities, Is.Null, "There should have not have been a set of desired capabilities created, as we're not tracking the last event.");
         }
@@ -641,6 +646,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionId = "0";
             var ownerLevel = 459;
             var prefetchCount = 697U;
+            var prefetchSizeInBytes = 12342L;
             var trackLastEvent = false;
             var position = EventPosition.Latest;
             var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
@@ -689,7 +695,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(activeLinks, Is.Not.Null, "The set of active links was null.");
             Assert.That(activeLinks.Count, Is.Zero, "There should be no active links when none have been created.");
 
-            var link = await mockScope.Object.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), prefetchCount, ownerLevel, trackLastEvent, cancellationSource.Token);
+            var link = await mockScope.Object.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), prefetchCount, prefetchSizeInBytes, ownerLevel, trackLastEvent, cancellationSource.Token);
             Assert.That(link, Is.Not.Null, "The link produced was null");
 
             Assert.That(activeLinks.Count, Is.EqualTo(1), "There should be an active link being tracked.");
@@ -778,7 +784,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     ItExpr.IsAny<TimeSpan>())
                 .Returns(Task.CompletedTask);
 
-            var link = await mockScope.Object.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), 0, null, false, cancellationSource.Token);
+            var link = await mockScope.Object.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), 0, null, null, false, cancellationSource.Token);
             Assert.That(link, Is.Not.Null, "The link produced was null");
 
             var activeLinks = GetActiveLinks(mockScope.Object);
@@ -857,7 +863,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     ItExpr.IsAny<TimeSpan>())
                 .Returns(Task.CompletedTask);
 
-            var link = await mockScope.Object.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), 0, null, false, cancellationSource.Token);
+            var link = await mockScope.Object.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), 0, null, null, false, cancellationSource.Token);
             Assert.That(link, Is.Not.Null, "The link produced was null");
 
             var activeLinks = GetActiveLinks(mockScope.Object);
@@ -1559,7 +1565,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(activeLinks, Is.Not.Null, "The set of active links was null.");
             Assert.That(activeLinks.Count, Is.Zero, "There should be no active links when none have been created.");
 
-            var producerLink = await mockScope.Object.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), 0, null, false, cancellationSource.Token);
+            var producerLink = await mockScope.Object.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), 0, null, null, false, cancellationSource.Token);
             Assert.That(producerLink, Is.Not.Null, "The producer link produced was null");
 
             var managementLink = await mockScope.Object.OpenManagementLinkAsync(TimeSpan.FromDays(1), cancellationSource.Token);
@@ -1632,7 +1638,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(managedAuthorizations, Is.Not.Null, "The set of managed authorizations was null.");
             Assert.That(managedAuthorizations.Count, Is.Zero, "There should be no managed authorizations when none have been created.");
 
-            var link = await mockScope.Object.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), 12, 555, true, cancellationSource.Token);
+            var link = await mockScope.Object.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), 12, 555, 777, true, cancellationSource.Token);
             Assert.That(link, Is.Not.Null, "The producer link produced was null");
 
             Assert.That(managedAuthorizations.Count, Is.EqualTo(1), "There should be a managed authorization being tracked.");

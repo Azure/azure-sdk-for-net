@@ -842,7 +842,8 @@ namespace Azure.Messaging.EventHubs.Tests
                                                              EventHubsRetryPolicy retryPolicy,
                                                              bool trackLastEnqueuedEventProperties = true,
                                                              long? ownerLevel = default,
-                                                             uint? prefetchCount = default)
+                                                             uint? prefetchCount = default,
+                                                             long? prefechSize = default)
             {
                 CreateConsumerCalledWith = (consumerGroup, partitionId, eventPosition, retryPolicy, trackLastEnqueuedEventProperties, ownerLevel, prefetchCount);
                 return default;

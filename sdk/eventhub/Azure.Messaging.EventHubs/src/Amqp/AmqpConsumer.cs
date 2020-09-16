@@ -121,6 +121,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
         /// <param name="eventPosition">The position of the event in the partition where the consumer should begin reading.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
+        /// <param name="prefetchSizeInBytes">The cache size of the prefetch queue. When set, the link makes a best effort to ensure prefetched messages fit into the specified size.</param>
         /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
         /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
         /// <param name="connectionScope">The AMQP connection context for operations .</param>
@@ -143,6 +144,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                             bool trackLastEnqueuedEventProperties,
                             long? ownerLevel,
                             uint? prefetchCount,
+                            long? prefetchSizeInBytes,
                             AmqpConnectionScope connectionScope,
                             AmqpMessageConverter messageConverter,
                             EventHubsRetryPolicy retryPolicy)
@@ -170,6 +172,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                         partitionId,
                         CurrentEventPosition,
                         prefetchCount ?? DefaultPrefetchCount,
+                        prefetchSizeInBytes,
                         ownerLevel,
                         trackLastEnqueuedEventProperties,
                         timeout,
@@ -382,6 +385,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="partitionId">The identifier of the Event Hub partition to which the link is bound.</param>
         /// <param name="eventStartingPosition">The place within the partition's event stream to begin consuming events.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.</param>
+        /// <param name="prefetchSizeInBytes">The cache size of the prefetch queue. When set, the link makes a best effort to ensure prefetched messages fit into the specified size.</param>
         /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
         /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
         /// <param name="timeout">The timeout to apply when creating the link.</param>
@@ -393,6 +397,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                                       string partitionId,
                                                                       EventPosition eventStartingPosition,
                                                                       uint prefetchCount,
+                                                                      long? prefetchSizeInBytes,
                                                                       long? ownerLevel,
                                                                       bool trackLastEnqueuedEventProperties,
                                                                       TimeSpan timeout,
@@ -408,6 +413,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                     eventStartingPosition,
                     timeout,
                     prefetchCount,
+                    prefetchSizeInBytes,
                     ownerLevel,
                     trackLastEnqueuedEventProperties,
                     cancellationToken).ConfigureAwait(false);

@@ -430,7 +430,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                           EventPosition eventPosition,
                                                           EventHubConnection connection,
                                                           EventProcessorOptions options) =>
-            connection.CreateTransportConsumer(consumerGroup, partitionId, eventPosition, options.RetryOptions.ToRetryPolicy(), options.TrackLastEnqueuedEventProperties, prefetchCount: (uint?)options.PrefetchCount, ownerLevel: 0);
+            connection.CreateTransportConsumer(consumerGroup, partitionId, eventPosition, options.RetryOptions.ToRetryPolicy(), options.TrackLastEnqueuedEventProperties, prefetchCount: (uint?)options.PrefetchCount, prefetchSizeInBytes: options.PrefetchSizeInBytes, ownerLevel: 0);
 
         /// <summary>
         ///   Creates a <see cref="StorageManager" /> to use for interacting with durable storage.
