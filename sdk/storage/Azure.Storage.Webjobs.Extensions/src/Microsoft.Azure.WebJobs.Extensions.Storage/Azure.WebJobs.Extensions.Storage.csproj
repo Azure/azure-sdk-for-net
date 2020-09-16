@@ -24,12 +24,6 @@
   
   <ItemGroup>
     <Compile Include="..\Microsoft.Azure.WebJobs.Host.Storage\Utility.cs" Link="Utility.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\Bindings\BindingDataPathHelper.cs" Link="Shared\BindingDataPathHelper.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\Bindings\IBindablePath.cs" Link="Shared\IBindablePath.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\Bindings\SystemBindingData.cs" Link="Shared\SystemBindingData.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\ClassPropertyAccessorFactory.cs" Link="Shared\ClassPropertyAccessorFactory.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\ClassPropertyGetter.cs" Link="Shared\ClassPropertyGetter.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\ClassPropertySetter.cs" Link="Shared\ClassPropertySetter.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Host\Constants.cs" Link="Shared\Constants.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Host\ContextAccessor.cs" Link="Shared\ContextAccessor.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Host\Converters\AsyncConverter.cs" Link="Shared\AsyncConverter.cs" />
