@@ -7,6 +7,7 @@ using Azure.Management.Resources.Models;
 using Azure.ResourceManager.Dns.Models;
 using System.Collections.Generic;
 using System.Net;
+using NUnit.Framework;
 
 namespace Azure.Management.Dns.Tests
 {
@@ -32,24 +33,22 @@ namespace Azure.Management.Dns.Tests
                 return false;
             }
 
-            if (first.Tags != null && second.Tags != null)
+            if (first.Tags == null || second.Tags == null)
             {
-                if (first.Tags.Count != second.Tags.Count)
+                return false;
+
+            }
+            if (first.Tags.Count != second.Tags.Count)
+            {
+                return false;
+            }
+            foreach (string key in first.Tags.Keys)
+            {
+                if (!second.Tags.ContainsKey(key) ||
+                    first.Tags[key] != second.Tags[key])
                 {
                     return false;
                 }
-
-                foreach (string key in first.Tags.Keys)
-                {
-                    if (!second.Tags.ContainsKey(key) ||
-                        first.Tags[key] != second.Tags[key])
-                    {
-                        return false;
-                    }
-                }
-            }
-            else{
-                return false;
             }
 
             return true;
@@ -64,12 +63,7 @@ namespace Azure.Management.Dns.Tests
                 return false;
             }
 
-            if (first != null && second != null)
-            {
-                return ignoreEtag || (first.Etag == second.Etag);
-            }
-
-            return true;
+            return ignoreEtag || (first.Etag == second.Etag);
         }
 
         public static bool AreEqual(

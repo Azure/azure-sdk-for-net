@@ -42,13 +42,23 @@ namespace Azure.ResourceManager.Dns.Models
         /// <param name="zoneType"> The type of this DNS zone (Public or Private). </param>
         /// <param name="registrationVirtualNetworks"> A list of references to virtual networks that register hostnames in this DNS zone. This is a only when ZoneType is Private. </param>
         /// <param name="resolutionVirtualNetworks"> A list of references to virtual networks that resolve records in this DNS zone. This is a only when ZoneType is Private. </param>
-        internal Zone(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, long? maxNumberOfRecordSets, long? numberOfRecordSets, IReadOnlyList<string> nameServers, ZoneType? zoneType, IList<SubResource> registrationVirtualNetworks, IList<SubResource> resolutionVirtualNetworks) : base(id, name, type, location, tags)
+        protected Zone(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, long? maxNumberOfRecordSets, long? numberOfRecordSets, IReadOnlyList<string> nameServers, ZoneType? zoneType, IList<SubResource> registrationVirtualNetworks, IList<SubResource> resolutionVirtualNetworks) : base(id, name, type, location, tags)
         {
             Etag = etag;
             MaxNumberOfRecordSets = maxNumberOfRecordSets;
             NumberOfRecordSets = numberOfRecordSets;
             NameServers = nameServers;
             ZoneType = zoneType;
+            RegistrationVirtualNetworks = registrationVirtualNetworks;
+            ResolutionVirtualNetworks = resolutionVirtualNetworks;
+        }
+
+        internal Zone(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, long? maxNumberOfRecordSets, long? numberOfRecordSets, IReadOnlyList<string> nameServers, IList<SubResource> registrationVirtualNetworks, IList<SubResource> resolutionVirtualNetworks) : base(id, name, type, location, tags)
+        {
+            Etag = etag;
+            MaxNumberOfRecordSets = maxNumberOfRecordSets;
+            NumberOfRecordSets = numberOfRecordSets;
+            NameServers = nameServers;
             RegistrationVirtualNetworks = registrationVirtualNetworks;
             ResolutionVirtualNetworks = resolutionVirtualNetworks;
         }
@@ -62,7 +72,7 @@ namespace Azure.ResourceManager.Dns.Models
         /// <summary> The name servers for this DNS zone. This is a read-only property and any attempt to set this value will be ignored. </summary>
         public IReadOnlyList<string> NameServers { get; }
         /// <summary> The type of this DNS zone (Public or Private). </summary>
-        public ZoneType? ZoneType { get; set; }
+        public ZoneType? ZoneType { get; }
         /// <summary> A list of references to virtual networks that register hostnames in this DNS zone. This is a only when ZoneType is Private. </summary>
         public IList<SubResource> RegistrationVirtualNetworks { get; }
         /// <summary> A list of references to virtual networks that resolve records in this DNS zone. This is a only when ZoneType is Private. </summary>
