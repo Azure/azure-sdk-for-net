@@ -2,69 +2,72 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Storage;
-using Microsoft.Azure.Storage.Blob;
+using Azure;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
 using Microsoft.Azure.WebJobs.Extensions.Storage;
+using BlobRequestConditions = Azure.Storage.Blobs.Models.BlobRequestConditions;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 {
     internal class BlobReceiptManager : IBlobReceiptManager
     {
         private static readonly TimeSpan LeasePeriod = TimeSpan.FromSeconds(30);
+        private readonly BlobContainerClient _blobContainerClient;
 
-        private readonly CloudBlobDirectory _directory;
-
-        public BlobReceiptManager(CloudBlobClient client)
-            : this(client.GetContainerReference(HostContainerNames.Hosts)
-                .GetDirectoryReference(HostDirectoryNames.BlobReceipts))
+        public BlobReceiptManager(BlobServiceClient client)
         {
+            this._blobContainerClient = client.GetBlobContainerClient(HostContainerNames.Hosts);
         }
 
-        private BlobReceiptManager(CloudBlobDirectory directory)
-        {
-            _directory = directory;
-        }
-
-        public CloudBlockBlob CreateReference(string hostId, string functionId, string containerName,
+        public BlockBlobClient CreateReference(string hostId, string functionId, string containerName,
             string blobName, string eTag)
         {
             // Put the ETag before the blob name to prevent ambiguity since the blob name can contain embedded slashes.
             string receiptName = String.Format(CultureInfo.InvariantCulture, "{0}/{1}/{2}/{3}/{4}", hostId, functionId,
                 eTag, containerName, blobName);
-            return _directory.SafeGetBlockBlobReference(receiptName);
+            return _blobContainerClient.SafeGetBlockBlobReference(HostDirectoryNames.BlobReceipts, receiptName);
         }
 
-        public async Task<BlobReceipt> TryReadAsync(CloudBlockBlob blob, CancellationToken cancellationToken)
+        public async Task<BlobReceipt> TryReadAsync(BlockBlobClient blob, CancellationToken cancellationToken)
         {
-            if (!await blob.TryFetchAttributesAsync(cancellationToken).ConfigureAwait(false))
+            var properties = await blob.FetchPropertiesOrNullIfNotExistAsync(cancellationToken).ConfigureAwait(false);
+            if (properties == null)
             {
                 return null;
             }
 
-            return BlobReceipt.FromMetadata(blob.Metadata);
+            return BlobReceipt.FromMetadata(properties.Metadata);
         }
 
-        public async Task<bool> TryCreateAsync(CloudBlockBlob blob, CancellationToken cancellationToken)
+        public async Task<bool> TryCreateAsync(BlockBlobClient blob, CancellationToken cancellationToken)
         {
-            BlobReceipt.Incomplete.ToMetadata(blob.Metadata);
-            AccessCondition accessCondition = new AccessCondition { IfNoneMatchETag = "*" };
+            Dictionary<string, string> metadata = new Dictionary<string, string>();
+            BlobReceipt.Incomplete.ToMetadata(metadata);
+            BlobRequestConditions accessCondition = new BlobRequestConditions { IfNoneMatch = new ETag("*") };
             bool isContainerNotFoundException = false;
 
             try
             {
-                await blob.UploadTextAsync(String.Empty,
-                    encoding: null,
-                    accessCondition: accessCondition,
-                    options: null,
-                    operationContext: null,
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
+                await blob.UploadAsync(
+                    new MemoryStream(),
+                    new BlobUploadOptions()
+                    {
+                        Conditions = accessCondition,
+                        Metadata = metadata,
+                    },
+                    cancellationToken: cancellationToken
+                    ).ConfigureAwait(false);
                 return true;
             }
-            catch (StorageException exception)
+            catch (RequestFailedException exception)
             {
                 if (exception.IsNotFoundContainerNotFound())
                 {
@@ -85,19 +88,22 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             }
 
             Debug.Assert(isContainerNotFoundException);
-            await blob.Container.CreateIfNotExistsAsync(cancellationToken).ConfigureAwait(false);
+            await _blobContainerClient.CreateIfNotExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
 
             try
             {
-                await blob.UploadTextAsync(String.Empty,
-                    encoding: null,
-                    accessCondition: accessCondition,
-                    options: null,
-                    operationContext: null,
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
+                await blob.UploadAsync(
+                    new MemoryStream(),
+                    new BlobUploadOptions()
+                    {
+                        Conditions = accessCondition,
+                        Metadata = metadata,
+                    },
+                    cancellationToken: cancellationToken
+                    ).ConfigureAwait(false);
                 return true;
             }
-            catch (StorageException exception)
+            catch (RequestFailedException exception)
             {
                 if (exception.IsConflictBlobAlreadyExists())
                 {
@@ -114,13 +120,14 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             }
         }
 
-        public async Task<string> TryAcquireLeaseAsync(CloudBlockBlob blob, CancellationToken cancellationToken)
+        public async Task<string> TryAcquireLeaseAsync(BlockBlobClient blob, CancellationToken cancellationToken)
         {
             try
             {
-                return await blob.AcquireLeaseAsync(LeasePeriod, null, cancellationToken).ConfigureAwait(false);
+                BlobLease lease = await blob.GetBlobLeaseClient().AcquireAsync(LeasePeriod, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return lease.LeaseId;
             }
-            catch (StorageException exception)
+            catch (RequestFailedException exception)
             {
                 if (exception.IsConflictLeaseAlreadyPresent())
                 {
@@ -138,20 +145,24 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             }
         }
 
-        public async Task MarkCompletedAsync(CloudBlockBlob blob, string leaseId,
+        public async Task MarkCompletedAsync(BlockBlobClient blob, string leaseId,
             CancellationToken cancellationToken)
         {
-            BlobReceipt.Complete.ToMetadata(blob.Metadata);
+            var metadata = (await blob.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Metadata;
+            BlobReceipt.Complete.ToMetadata(metadata);
 
             try
             {
                 await blob.SetMetadataAsync(
-                    accessCondition: new AccessCondition { LeaseId = leaseId },
-                    options: null,
-                    operationContext: null,
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
+                        metadata,
+                        new BlobRequestConditions()
+                        {
+                            LeaseId = leaseId,
+                        },
+                        cancellationToken: cancellationToken
+                    ).ConfigureAwait(false);
             }
-            catch (StorageException exception)
+            catch (RequestFailedException exception)
             {
                 if (exception.IsNotFoundBlobOrContainerNotFound())
                 {
@@ -168,19 +179,15 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             }
         }
 
-        public async Task ReleaseLeaseAsync(CloudBlockBlob blob, string leaseId, CancellationToken cancellationToken)
+        public async Task ReleaseLeaseAsync(BlockBlobClient blob, string leaseId, CancellationToken cancellationToken)
         {
             try
             {
                 // Note that this call returns without throwing if the lease is expired. See the table at:
                 // http://msdn.microsoft.com/en-us/library/azure/ee691972.aspx
-                await blob.ReleaseLeaseAsync(
-                    accessCondition: new AccessCondition { LeaseId = leaseId },
-                    options: null,
-                    operationContext: null,
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
+                await blob.GetBlobLeaseClient(leaseId).ReleaseAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
             }
-            catch (StorageException exception)
+            catch (RequestFailedException exception)
             {
                 if (exception.IsNotFoundBlobOrContainerNotFound())
                 {

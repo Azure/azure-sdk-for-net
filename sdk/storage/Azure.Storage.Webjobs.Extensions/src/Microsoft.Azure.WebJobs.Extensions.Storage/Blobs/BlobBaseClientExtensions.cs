@@ -4,15 +4,16 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Storage;
-using Microsoft.Azure.Storage.Blob;
+using Azure;
+using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs
 {
-    internal static class CloudBlobExtensions
+    internal static class BlobBaseClientExtensions
     {
-        public static async Task<bool> TryFetchAttributesAsync(this ICloudBlob blob,
-            CancellationToken cancellationToken)
+        public static async Task<BlobProperties> FetchPropertiesOrNullIfNotExistAsync(this BlobBaseClient blob,
+            CancellationToken cancellationToken = default)
         {
             if (blob == null)
             {
@@ -21,22 +22,22 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs
 
             try
             {
-                await blob.FetchAttributesAsync(cancellationToken).ConfigureAwait(false);
-                return true;
+                BlobProperties blobProperties = await blob.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                return blobProperties;
             }
-            catch (StorageException exception)
+            catch (RequestFailedException exception)
             {
                 // Remember specific error codes are not available for Fetch (HEAD request).
 
                 if (exception.IsNotFound())
                 {
-                    return false;
+                    return null;
                 }
                 else if (exception.IsOk())
                 {
                     // If the blob type is incorrect (block vs. page) a 200 OK is returned but the SDK throws an
                     // exception.
-                    return false;
+                    return null;
                 }
                 else
                 {

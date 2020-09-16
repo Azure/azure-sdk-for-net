@@ -4,8 +4,8 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup>
-    <Version>$(ExtensionsStorageVersion)</Version>
-    <InformationalVersion>$(Version) Commit hash: $(CommitHash)</InformationalVersion>
+    <Version>5.0.0-beta.1</Version>
+    <Description>This extension adds bindings for Storage</Description>
     <AssemblyName>Microsoft.Azure.WebJobs.Extensions.Storage</AssemblyName>
     <RootNamespace>Microsoft.Azure.WebJobs.Extensions.Storage</RootNamespace>
   </PropertyGroup>  
@@ -81,12 +81,15 @@
     <Compile Include="..\Microsoft.Azure.WebJobs.Protocols\QueueTriggerParameterDescriptor.cs" Link="Shared\QueueTriggerParameterDescriptor.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Protocols\ReadBlobParameterLog.cs" Link="Shared\ReadBlobParameterLog.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Protocols\WriteBlobParameterLog.cs" Link="Shared\WriteBlobParameterLog.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Shared.Storage\StorageExceptionExtensions.cs" Link="StorageExceptionExtensions.cs" />
-  </ItemGroup>  
+  </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Storage.Queues" VersionOverride="12.3.2"/>
-    <PackageReference Include="Microsoft.Azure.Storage.Blob" />
     <PackageReference Include="Microsoft.Azure.WebJobs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- TODO (kasobol-msft) change this to PackageReference when stable -->
+    <ProjectReference Include="..\..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
+    <ProjectReference Include="..\..\..\Azure.Storage.Queues\src\Azure.Storage.Queues.csproj" />
   </ItemGroup>
 </Project>

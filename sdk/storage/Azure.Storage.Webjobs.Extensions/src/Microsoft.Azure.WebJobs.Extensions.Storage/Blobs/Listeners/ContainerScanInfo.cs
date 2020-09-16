@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Azure.WebJobs.Host.Listeners;
-using Microsoft.Azure.Storage.Blob;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 {
@@ -16,6 +15,6 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 
         public DateTime CurrentSweepCycleLatestModified { get; set; }
 
-        public BlobContinuationToken ContinuationToken { get; set; }
+        public string ContinuationToken { get; set; }
     }
 }

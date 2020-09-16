@@ -8,8 +8,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Azure.Storage.Blob;
 using Azure.Storage.Queues;
+using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Blobs.Models;
 
 namespace Microsoft.Azure.WebJobs
 {
@@ -37,32 +38,12 @@ namespace Microsoft.Azure.WebJobs
             return builder;
         }
 
-
-        public static string DownloadText(this ICloudBlob blob)
+        public static string DownloadText(this BlobBaseClient blobClient, CancellationToken cancellationToken = default)
         {
-            if (blob == null)
-            {
-                throw new ArgumentNullException("blob");
-            }
-
-            using (Stream stream = blob.OpenReadAsync(CancellationToken.None).GetAwaiter().GetResult())
-            using (TextReader reader = new StreamReader(stream, Encoding.UTF8))
-            {
-                return reader.ReadToEnd();
-            }
-        }
-
-        public static async Task UploadEmptyPageAsync(this CloudPageBlob blob)
-        {
-            if (blob == null)
-            {
-                throw new ArgumentNullException("blob");
-            }
-
-            using (CloudBlobStream stream = await blob.OpenWriteAsync(512))
-            {
-                await stream.CommitAsync();
-            }
+            using BlobDownloadInfo blobDownloadInfo = blobClient.Download(cancellationToken);
+            using Stream stream = blobDownloadInfo.Content;
+            using StreamReader streamReader = new StreamReader(stream);
+            return streamReader.ReadToEnd();
         }
     }
 }

@@ -48,8 +48,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
 
             try
             {
-                // TODO (kasobol-msft) fix after https://github.com/Azure/azure-sdk-for-net/issues/14243 is resolved.
-                await _queue.UpdateMessageAsync(_message.MessageId, _message.PopReceipt, _message.MessageText, visibilityTimeout: _visibilityTimeout, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await _queue.UpdateMessageAsync(_message.MessageId, _message.PopReceipt, visibilityTimeout: _visibilityTimeout, cancellationToken: cancellationToken).ConfigureAwait(false);
                 // The next execution should occur after a normal delay.
                 delay = _speedupStrategy.GetNextDelay(executionSucceeded: true);
             }

@@ -8,7 +8,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Blobs.Bindings;
 using Microsoft.Azure.WebJobs.Host.Protocols;
-using Microsoft.Azure.Storage.Blob;
 using Moq;
 using Xunit;
 
@@ -22,9 +21,9 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         public void CanRead_DelegatesToInnerStreamCanRead(bool expected)
         {
             // Arrange
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             innerStreamMock.Setup(s => s.CanRead).Returns(expected);
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             // Act
@@ -40,9 +39,9 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         public void CanSeek_DelegatesToInnerStreamCanSeek(bool expected)
         {
             // Arrange
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             innerStreamMock.Setup(s => s.CanSeek).Returns(expected);
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             // Act
@@ -58,9 +57,9 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         public void CanTimeout_DelegatesToInnerStreamCanTimeout(bool expected)
         {
             // Arrange
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             innerStreamMock.Setup(s => s.CanTimeout).Returns(expected);
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             // Act
@@ -76,9 +75,9 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         public void CanWrite_DelegatesToInnerStreamCanWrite(bool expected)
         {
             // Arrange
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             innerStreamMock.Setup(s => s.CanWrite).Returns(expected);
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             // Act
@@ -93,9 +92,9 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         {
             // Arrange
             long expected = 123;
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             innerStreamMock.Setup(s => s.Length).Returns(expected);
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             // Act
@@ -110,9 +109,9 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         {
             // Arrange
             long expected = 123;
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             innerStreamMock.Setup(s => s.Position).Returns(expected);
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             // Act
@@ -127,9 +126,9 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         {
             // Arrange
             long expected = 123;
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             innerStreamMock.SetupSet(s => s.Position = expected).Verifiable();
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             // Act
@@ -144,9 +143,9 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         {
             // Arrange
             int expected = 123;
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             innerStreamMock.Setup(s => s.ReadTimeout).Returns(expected);
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             // Act
@@ -161,9 +160,9 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         {
             // Arrange
             int expected = 123;
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             innerStreamMock.SetupSet(s => s.ReadTimeout = expected).Verifiable();
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             // Act
@@ -178,9 +177,9 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         {
             // Arrange
             int expected = 123;
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             innerStreamMock.Setup(s => s.WriteTimeout).Returns(expected);
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             // Act
@@ -195,9 +194,9 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         {
             // Arrange
             int expected = 123;
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             innerStreamMock.SetupSet(s => s.WriteTimeout = expected).Verifiable();
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             // Act
@@ -208,41 +207,6 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         }
 
         [Fact]
-        public void CommitAsync_DelegatesToInnerStreamCommitAsync()
-        {
-            // Arrange
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
-            innerStreamMock
-                .Setup(m => m.CommitAsync())
-                .Verifiable();
-            CloudBlobStream innerStream = innerStreamMock.Object;
-            CloudBlobStream product = CreateProductUnderTest(innerStream);
-
-            // Act
-            product.CommitAsync();
-
-            // Assert
-            innerStreamMock.Verify();
-        }
-
-        [Fact]
-        public async Task BeginCommit_WhenInnerStreamThrows_PropogatesException()
-        {
-            // Arrange
-            Exception expectedException = new Exception();
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
-            innerStreamMock
-                .Setup(m => m.CommitAsync())
-                .Throws(expectedException);
-            CloudBlobStream innerStream = innerStreamMock.Object;
-            CloudBlobStream product = CreateProductUnderTest(innerStream);
-
-            // Act & Assert
-            Exception exception = await Assert.ThrowsAsync<Exception>(() => product.CommitAsync());
-            Assert.Same(expectedException, exception);
-        }
-
-        [Fact]
         public void BeginRead_DelegatesToInnerStreamBeginRead()
         {
             // Arrange
@@ -250,13 +214,13 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             int expectedOffset = 123;
             int expectedCount = 456;
 
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             innerStreamMock
                 .Setup(s => s.BeginRead(expectedBuffer, expectedOffset, expectedCount, It.IsAny<AsyncCallback>(),
                     It.IsAny<object>()))
                 .ReturnsUncompleted()
                 .Verifiable();
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             AsyncCallback callback = null;
@@ -274,11 +238,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         {
             // Arrange
             Exception expectedException = new Exception();
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             innerStreamMock
                 .SetupBeginRead()
                 .Throws(expectedException);
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             byte[] buffer = new byte[0];
@@ -297,11 +261,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         public void BeginRead_WhenNotYetCompleted_ReturnsUncompletedResult()
         {
             // Arrange
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             innerStreamMock
                 .SetupBeginRead()
                 .ReturnsUncompleted();
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             byte[] buffer = new byte[0];
@@ -349,14 +313,14 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
                 callbackCalled = true;
             };
 
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             innerStreamMock
                 .SetupBeginRead()
                 .ReturnsCompletedSynchronously();
             innerStreamMock
                 .SetupEndRead()
                 .Returns(-1);
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             product = CreateProductUnderTest(innerStream);
 
             byte[] buffer = new byte[0];
@@ -396,7 +360,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
                 callbackCalled = true;
             };
 
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             AsyncCompletionSource completion = new AsyncCompletionSource();
             innerStreamMock
                 .SetupBeginRead()
@@ -404,7 +368,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             innerStreamMock
                 .SetupEndRead()
                 .Returns(-1);
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             product = CreateProductUnderTest(innerStream);
 
             byte[] buffer = new byte[0];
@@ -429,7 +393,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             // Arrange
             int expectedBytesRead = 789;
 
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             AsyncCompletionSource completion = new AsyncCompletionSource();
             innerStreamMock
                 .SetupBeginRead()
@@ -438,7 +402,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
                 .Setup(s => s.EndRead(It.Is<IAsyncResult>(ar => ar == completion.AsyncResult)))
                 .Returns(expectedBytesRead)
                 .Verifiable();
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             byte[] buffer = new byte[0];
@@ -464,7 +428,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             // Arrange
             int expectedBytesRead = 789;
 
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             AsyncCompletionSource completion = new AsyncCompletionSource();
             innerStreamMock
                 .SetupBeginRead()
@@ -473,7 +437,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
                 .Setup(s => s.EndRead(It.Is<IAsyncResult>(ar => ar == completion.AsyncResult)))
                 .Returns(expectedBytesRead)
                 .Verifiable();
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             byte[] buffer = new byte[0];
@@ -505,7 +469,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         {
             // Arrange
             Exception expectedException = new Exception();
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             AsyncCompletionSource completion = new AsyncCompletionSource();
             innerStreamMock
                 .SetupBeginRead()
@@ -513,7 +477,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             innerStreamMock
                 .SetupEndRead()
                 .Throws(expectedException);
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             byte[] buffer = new byte[0];
@@ -537,13 +501,13 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             int expectedOffset = 123;
             int expectedCount = 456;
 
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             innerStreamMock
                 .Setup(s => s.BeginWrite(expectedBuffer, expectedOffset, expectedCount, It.IsAny<AsyncCallback>(),
                     It.IsAny<object>()))
                 .ReturnsUncompleted()
                 .Verifiable();
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             AsyncCallback callback = null;
@@ -561,11 +525,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         {
             // Arrange
             Exception expectedException = new Exception();
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             innerStreamMock
                 .SetupBeginWrite()
                 .Throws(expectedException);
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             byte[] buffer = new byte[0];
@@ -584,11 +548,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         public void BeginWrite_WhenNotYetCompleted_ReturnsUncompletedResult()
         {
             // Arrange
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             innerStreamMock
                 .SetupBeginWrite()
                 .ReturnsUncompleted();
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             byte[] buffer = new byte[0];
@@ -636,7 +600,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
                 callbackCalled = true;
             };
 
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             innerStreamMock
                 .Setup(s => s.BeginWrite(It.IsAny<byte[]>(), It.IsAny<int>(), It.IsAny<int>(),
                     It.IsAny<AsyncCallback>(), It.IsAny<object>()))
@@ -652,7 +616,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             });
 
             innerStreamMock.SetupEndWrite();
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             product = CreateProductUnderTest(innerStream);
 
             byte[] buffer = new byte[0];
@@ -692,13 +656,13 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
                 callbackCalled = true;
             };
 
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             AsyncCompletionSource completion = new AsyncCompletionSource();
             innerStreamMock
                 .SetupBeginWrite()
                 .ReturnsCompletingAsynchronously(completion);
             innerStreamMock.SetupEndWrite();
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             product = CreateProductUnderTest(innerStream);
 
             byte[] buffer = new byte[0];
@@ -721,7 +685,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         public void EndWrite_DelegatesToInnerStreamEndWrite()
         {
             // Arrange
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             AsyncCompletionSource completion = new AsyncCompletionSource();
             innerStreamMock
                 .SetupBeginWrite()
@@ -729,7 +693,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             innerStreamMock
                 .Setup(s => s.EndWrite(It.Is<IAsyncResult>((ar) => ar == completion.AsyncResult)))
                 .Verifiable();
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             byte[] buffer = new byte[0];
@@ -752,7 +716,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         public void EndWrite_DuringCallback_DelegatesToInnerStreamEndWrite()
         {
             // Arrange
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             AsyncCompletionSource completion = new AsyncCompletionSource();
             innerStreamMock
                 .SetupBeginWrite()
@@ -760,7 +724,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             innerStreamMock
                 .Setup(s => s.EndWrite(It.Is<IAsyncResult>((ar) => ar == completion.AsyncResult)))
                 .Verifiable();
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             byte[] buffer = new byte[0];
@@ -790,7 +754,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         {
             // Arrange
             Exception expectedException = new Exception();
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             AsyncCompletionSource completion = new AsyncCompletionSource();
             innerStreamMock
                 .SetupBeginWrite()
@@ -798,7 +762,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             innerStreamMock
                 .SetupEndWrite()
                 .Throws(expectedException);
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             byte[] buffer = new byte[0];
@@ -818,36 +782,15 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         public void Close_DelegatesToInnerStreamClose()
         {
             // Arrange
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
-            innerStreamMock
-                .Setup(s => s.CommitAsync())
-                .Returns(Task.CompletedTask);
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             innerStreamMock
                 .Setup(s => s.Close())
                 .Verifiable();
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             // Act
             product.Close();
-
-            // Assert
-            innerStreamMock.Verify();
-        }
-
-        [Fact]
-        public void Commit_DelegatesToInnerStreamCommit()
-        {
-            // Arrange
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
-            innerStreamMock
-                .Setup(s => s.CommitAsync())
-                .Verifiable();
-            CloudBlobStream innerStream = innerStreamMock.Object;
-            CloudBlobStream product = CreateProductUnderTest(innerStream);
-
-            // Act
-            product.CommitAsync();
 
             // Assert
             innerStreamMock.Verify();
@@ -862,12 +805,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             CancellationToken expectedCancellationToken = new CancellationToken(canceled: true);
             Task expectedTask = new Task(() => { });
 
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             innerStreamMock
                 .Setup(s => s.CopyToAsync(expectedDestination, expectedBufferSize, expectedCancellationToken))
                 .Returns(expectedTask)
                 .Verifiable();
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             // Act
@@ -882,11 +825,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         public void Flush_DelegatesToInnerStreamFlush()
         {
             // Arrange
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             innerStreamMock
                 .Setup(s => s.Flush())
                 .Verifiable();
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             // Act
@@ -904,12 +847,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             int expectedCount = 456;
             int expectedBytesRead = 789;
 
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             innerStreamMock
                 .Setup(s => s.Read(expectedBuffer, expectedOffset, expectedCount))
                 .Returns(expectedBytesRead)
                 .Verifiable();
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             // Act
@@ -929,12 +872,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             int expectedCount = 456;
             CancellationToken expectedCancellationToken = new CancellationToken(canceled: true);
 
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             innerStreamMock
                 .Setup(s => s.ReadAsync(expectedBuffer, expectedOffset, expectedCount, expectedCancellationToken))
                 .Returns(Task.FromResult(-1))
                 .Verifiable();
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             // Act
@@ -949,12 +892,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         {
             // Arrange
             Exception expectedException = new Exception();
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             innerStreamMock
                 .Setup(s => s.ReadAsync(It.IsAny<byte[]>(), It.IsAny<int>(), It.IsAny<int>(),
                     It.IsAny<CancellationToken>()))
                 .Throws(expectedException);
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             byte[] buffer = new byte[0];
@@ -972,13 +915,13 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         public void ReadAsync_WhenInnerStreamHasNotYetCompleted_ReturnsIncompleteTask()
         {
             // Arrange
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             TaskCompletionSource<int> taskSource = new TaskCompletionSource<int>();
             innerStreamMock
                 .Setup(s => s.ReadAsync(It.IsAny<byte[]>(), It.IsAny<int>(), It.IsAny<int>(),
                     It.IsAny<CancellationToken>()))
                 .Returns(taskSource.Task);
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             byte[] buffer = new byte[0];
@@ -999,14 +942,14 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         {
             // Arrange
             int expectedBytesRead = 789;
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             TaskCompletionSource<int> taskSource = new TaskCompletionSource<int>();
             taskSource.SetResult(expectedBytesRead);
             innerStreamMock
                 .Setup(s => s.ReadAsync(It.IsAny<byte[]>(), It.IsAny<int>(), It.IsAny<int>(),
                     It.IsAny<CancellationToken>()))
                 .Returns(taskSource.Task);
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             byte[] buffer = new byte[0];
@@ -1027,14 +970,14 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         public void ReadAsync_WhenInnerStreamHasCanceled_ReturnsCanceledTask()
         {
             // Arrange
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             TaskCompletionSource<int> taskSource = new TaskCompletionSource<int>();
             taskSource.SetCanceled();
             innerStreamMock
                 .Setup(s => s.ReadAsync(It.IsAny<byte[]>(), It.IsAny<int>(), It.IsAny<int>(),
                     It.IsAny<CancellationToken>()))
                 .Returns(taskSource.Task);
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             byte[] buffer = new byte[0];
@@ -1055,14 +998,14 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         {
             // Arrange
             Exception expectedException = new Exception();
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             TaskCompletionSource<int> taskSource = new TaskCompletionSource<int>();
             taskSource.SetException(expectedException);
             innerStreamMock
                 .Setup(s => s.ReadAsync(It.IsAny<byte[]>(), It.IsAny<int>(), It.IsAny<int>(),
                     It.IsAny<CancellationToken>()))
                 .Returns(taskSource.Task);
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             byte[] buffer = new byte[0];
@@ -1085,9 +1028,9 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         {
             // Arrange
             int expected = 123;
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             innerStreamMock.Setup(s => s.ReadByte()).Returns(expected);
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             // Act
@@ -1104,12 +1047,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             SeekOrigin expectedOrigin = SeekOrigin.End;
             long expectedPosition = 456;
 
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             innerStreamMock
                 .Setup(s => s.Seek(expectedOffset, expectedOrigin))
                 .Returns(expectedPosition)
                 .Verifiable();
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             // Act
@@ -1125,11 +1068,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         {
             long expectedValue = 123;
 
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             innerStreamMock
                 .Setup(s => s.SetLength(expectedValue))
                 .Verifiable();
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             // Act
@@ -1146,11 +1089,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             int expectedOffset = 123;
             int expectedCount = 456;
 
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             innerStreamMock
                 .Setup(s => s.Write(expectedBuffer, expectedOffset, expectedCount))
                 .Verifiable();
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             // Act
@@ -1169,12 +1112,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             int expectedCount = 456;
             CancellationToken expectedCancellationToken = new CancellationToken(canceled: true);
 
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             innerStreamMock
                 .Setup(s => s.WriteAsync(expectedBuffer, expectedOffset, expectedCount, expectedCancellationToken))
                 .Returns(Task.FromResult(-1))
                 .Verifiable();
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             // Act
@@ -1189,12 +1132,12 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         {
             // Arrange
             Exception expectedException = new Exception();
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             innerStreamMock
                 .Setup(s => s.WriteAsync(It.IsAny<byte[]>(), It.IsAny<int>(), It.IsAny<int>(),
                     It.IsAny<CancellationToken>()))
                 .Throws(expectedException);
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             byte[] buffer = new byte[0];
@@ -1212,13 +1155,13 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         public void WriteAsync_WhenInnerStreamHasNotYetCompleted_ReturnsIncompleteTask()
         {
             // Arrange
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             TaskCompletionSource<object> taskSource = new TaskCompletionSource<object>();
             innerStreamMock
                 .Setup(s => s.WriteAsync(It.IsAny<byte[]>(), It.IsAny<int>(), It.IsAny<int>(),
                     It.IsAny<CancellationToken>()))
                 .Returns(taskSource.Task);
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             byte[] buffer = new byte[0];
@@ -1238,14 +1181,14 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         public void WriteAsync_WhenInnerStreamHasCompleted_ReturnsRanToCompletionTask()
         {
             // Arrange
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             TaskCompletionSource<object> taskSource = new TaskCompletionSource<object>();
             taskSource.SetResult(null);
             innerStreamMock
                 .Setup(s => s.WriteAsync(It.IsAny<byte[]>(), It.IsAny<int>(), It.IsAny<int>(),
                     It.IsAny<CancellationToken>()))
                 .Returns(taskSource.Task);
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             byte[] buffer = new byte[0];
@@ -1265,14 +1208,14 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         public void WriteAsync_WhenInnerStreamHasCanceled_ReturnsCanceledTask()
         {
             // Arrange
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             TaskCompletionSource<int> taskSource = new TaskCompletionSource<int>();
             taskSource.SetCanceled();
             innerStreamMock
                 .Setup(s => s.WriteAsync(It.IsAny<byte[]>(), It.IsAny<int>(), It.IsAny<int>(),
                     It.IsAny<CancellationToken>()))
                 .Returns(taskSource.Task);
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             byte[] buffer = new byte[0];
@@ -1293,14 +1236,14 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         {
             // Arrange
             Exception expectedException = new Exception();
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             TaskCompletionSource<int> taskSource = new TaskCompletionSource<int>();
             taskSource.SetException(expectedException);
             innerStreamMock
                 .Setup(s => s.WriteAsync(It.IsAny<byte[]>(), It.IsAny<int>(), It.IsAny<int>(),
                     It.IsAny<CancellationToken>()))
                 .Returns(taskSource.Task);
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             byte[] buffer = new byte[0];
@@ -1323,11 +1266,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         {
             // Arrange
             byte expected = 123;
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
             innerStreamMock
                 .Setup(s => s.WriteByte(expected))
                 .Verifiable();
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Stream innerStream = innerStreamMock.Object;
             Stream product = CreateProductUnderTest(innerStream);
 
             // Act
@@ -1337,93 +1280,8 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             innerStreamMock.Verify();
         }
 
-        // Be nicer than the SDK. Return false from CanWrite when calling Write would throw.
-
         [Fact]
-        public void CanWrite_WhenCommitted_ReturnsFalse()
-        {
-            // Arrange
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
-            innerStreamMock.Setup(s => s.CanWrite).Returns(true); // Emulate SDK
-            innerStreamMock.Setup(s => s.CommitAsync()).Returns(Task.CompletedTask);
-            CloudBlobStream innerStream = innerStreamMock.Object;
-            CloudBlobStream product = CreateProductUnderTest(innerStream);
-            product.CommitAsync();
-
-            // Act
-            bool canWrite = product.CanWrite;
-
-            // Assert
-            Assert.False(canWrite);
-        }
-
-
-        [Fact]
-        public void Close_WhenNotYetCommitted_Commits()
-        {
-            // Arrange
-            bool committed = false;
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
-            innerStreamMock.Setup(s => s.Close());
-            innerStreamMock.Setup(s => s.CommitAsync())
-                .Callback(() => committed = true)
-                .Returns(Task.CompletedTask);
-            CloudBlobStream innerStream = innerStreamMock.Object;
-            CloudBlobStream product = CreateProductUnderTest(innerStream);
-
-            // Act
-            product.Close();
-
-            // Assert
-            Assert.True(committed);
-        }
-
-        [Fact]
-        public async Task Close_WhenAlreadyCommitted_DoesNotCommitAgain()
-        {
-            // Arrange
-            int commitCalls = 0;
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
-            innerStreamMock.Setup(s => s.Close());
-            innerStreamMock.Setup(s => s.CommitAsync()).Callback(() => commitCalls++)
-                .Returns(Task.CompletedTask);
-            CloudBlobStream innerStream = innerStreamMock.Object;
-            CloudBlobStream product = CreateProductUnderTest(innerStream);
-            await product.CommitAsync();
-            Assert.Equal(1, commitCalls); // Guard
-
-            // Act
-            product.Close();
-
-            // Assert
-            Assert.Equal(1, commitCalls);
-        }
-
-        [Fact]
-        public async Task Close_WhenInnerStreamCommitThrewOnPreviousCommit_DoesNotTryToCommitAgain()
-        {
-            // Arrange
-            int commitCalls = 0;
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
-            innerStreamMock.Setup(s => s.Close());
-            InvalidOperationException expectedException = new InvalidOperationException();
-            innerStreamMock.Setup(s => s.CommitAsync()).Callback(() => commitCalls++).ThrowsAsync(expectedException);
-            CloudBlobStream innerStream = innerStreamMock.Object;
-            CloudBlobStream product = CreateProductUnderTest(innerStream);
-            InvalidOperationException committedActionException = await Assert.ThrowsAsync<InvalidOperationException>(
-                () => product.CommitAsync()); // Guard
-            Assert.Same(expectedException, committedActionException); // Guard
-            Assert.Equal(1, commitCalls); // Guard
-
-            // Act
-            product.Close();
-
-            // Assert
-            Assert.Equal(1, commitCalls);
-        }
-
-        [Fact]
-        public void Commit_IfCommittedActionIsNotNull_CallsCommittedAction()
+        public async Task Commit_IfCommittedActionIsNotNull_CallsCommittedAction()
         {
             // Arrange
             Mock<IBlobCommitedAction> committedActionMock = new Mock<IBlobCommitedAction>(MockBehavior.Strict);
@@ -1433,484 +1291,29 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
                 .Verifiable();
             IBlobCommitedAction committedAction = committedActionMock.Object;
 
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
-            innerStreamMock.Setup(s => s.CommitAsync()).Returns(Task.CompletedTask);
-            CloudBlobStream innerStream = innerStreamMock.Object;
+            Mock<Stream> innerStreamMock = CreateMockInnerStream();
+            innerStreamMock.Setup(x => x.FlushAsync(It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask)
+                .Verifiable();
+            Stream innerStream = innerStreamMock.Object;
 
-            CloudBlobStream product = CreateProductUnderTest(innerStream, committedAction);
+            Stream product = CreateProductUnderTest(innerStream, committedAction);
 
             // Act
-            product.CommitAsync();
+            await product.FlushAsync();
 
             // Assert
             committedActionMock.Verify();
-        }
-
-        [Fact]
-        public void Commit_IfCommitedActionIsNull_DoesNotThrow()
-        {
-            // Arrange
-            IBlobCommitedAction committedAction = null;
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
-            innerStreamMock.Setup(s => s.CommitAsync());
-            CloudBlobStream innerStream = innerStreamMock.Object;
-            CloudBlobStream product = CreateProductUnderTest(innerStream, committedAction);
-
-            // Act & Assert
-            product.CommitAsync();
-        }
-
-        [Fact]
-        public void CommitAsync_DelegatesToInnerStreamBeginEndCommit()
-        {
-            // Arrange
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
-            innerStreamMock
-                .Setup(m => m.CommitAsync())
-                .Returns(Task.CompletedTask)
-                .Verifiable();
-            CloudBlobStream innerStream = innerStreamMock.Object;
-            WatchableCloudBlobStream product = CreateProductUnderTest(innerStream);
-
-            CancellationToken cancellationToken = CancellationToken.None;
-            Task task = product.CommitAsync(cancellationToken);
-
-            // Assert
-            innerStreamMock.Verify();
-            task.GetAwaiter().GetResult();
-        }
-
-        [Fact]
-        public async Task CommitAsync_WhenInnerStreamBeginCommitThrows_PropogatesException()
-        {
-            // Arrange
-            Exception expectedException = new Exception();
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
-            innerStreamMock
-                .Setup(m => m.CommitAsync())
-                .Throws(expectedException);
-            CloudBlobStream innerStream = innerStreamMock.Object;
-            WatchableCloudBlobStream product = CreateProductUnderTest(innerStream);
-
-            CancellationToken cancellationToken = CancellationToken.None;
-
-            // Act & Assert
-            Exception exception = await Assert.ThrowsAsync<Exception>(() => product.CommitAsync(cancellationToken));
-            Assert.Same(expectedException, exception);
-        }
-
-        [Fact]
-        public void CommitAsync_WhenInnerStreamBeginCommitHasNotYetCompleted_ReturnsIncompleteTask()
-        {
-            // Arrange
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
-            var tcs = new TaskCompletionSource<object>();
-            innerStreamMock.Setup(s => s.CommitAsync()).Returns(tcs.Task);
-            CloudBlobStream innerStream = innerStreamMock.Object;
-            WatchableCloudBlobStream product = CreateProductUnderTest(innerStream);
-
-            CancellationToken cancellationToken = CancellationToken.None;
-
-            // Act
-            Task task = product.CommitAsync(cancellationToken);
-
-            // Assert
-            Assert.NotNull(task);
-            Assert.False(task.IsCompleted);
-        }
-
-        [Fact]
-        public void CommitAsync_WhenInnerStreamBeginCommitCompletedSynchronously_ReturnsRanToCompletionTask()
-        {
-            // Arrange
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
-            innerStreamMock.Setup(s => s.CommitAsync()).Returns(Task.CompletedTask);
-
-            CloudBlobStream innerStream = innerStreamMock.Object;
-            WatchableCloudBlobStream product = CreateProductUnderTest(innerStream);
-
-            CancellationToken cancellationToken = CancellationToken.None;
-
-            // Act
-            Task task = product.CommitAsync(cancellationToken);
-
-            // Assert
-            Assert.NotNull(task);
-            Assert.Equal(TaskStatus.RanToCompletion, task.Status);
-        }
-
-
-        [Fact]
-        public void CommitAsync_WhenInnerStreamBeginCommitCompletedAsynchronously_ReturnsRanToCompletionTask()
-        {
-            // Arrange
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
-            innerStreamMock.Setup(s => s.CommitAsync()).Returns(Task.CompletedTask);
-            CloudBlobStream innerStream = innerStreamMock.Object;
-            WatchableCloudBlobStream product = CreateProductUnderTest(innerStream);
-
-            CancellationToken cancellationToken = CancellationToken.None;
-
-            Task task = product.CommitAsync(cancellationToken);
-
-            // Assert
-            Assert.NotNull(task);
-            Assert.Equal(TaskStatus.RanToCompletion, task.Status);
-        }
-
-        [Fact]
-        public void CommitAsync_WhenInnerStreamEndReadThrowsOperationCanceledException_ReturnsCanceledTask()
-        {
-            // Arrange
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
-            innerStreamMock.Setup(s => s.CommitAsync())
-                .Throws(new OperationCanceledException());
-            CloudBlobStream innerStream = innerStreamMock.Object;
-            WatchableCloudBlobStream product = CreateProductUnderTest(innerStream);
-
-            CancellationToken cancellationToken = CancellationToken.None;
-
-            // Act
-            Task task = product.CommitAsync(cancellationToken);
-
-            // Assert
-            Assert.NotNull(task);
-            Assert.Equal(TaskStatus.Canceled, task.Status);
-        }
-
-        [Fact]
-        public void CommitAsync_WhenInnerStreamEndReadThrowsNonOperationCanceledException_ReturnsFaultedTask()
-        {
-            // Arrange
-            Exception expectedException = new Exception();
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
-            innerStreamMock.Setup(m => m.CommitAsync())
-                .Returns(Task.FromException(expectedException));
-            CloudBlobStream innerStream = innerStreamMock.Object;
-            WatchableCloudBlobStream product = CreateProductUnderTest(innerStream);
-
-            CancellationToken cancellationToken = CancellationToken.None;
-
-            // Act
-            Task task = product.CommitAsync(cancellationToken);
-
-            // Assert
-            Assert.NotNull(task);
-            Assert.Equal(TaskStatus.Faulted, task.Status);
-            Assert.Same(expectedException, task.Exception.InnerException);
-        }
-
-        [Fact]
-        public void CommitAsync_IfCommittedActionIsNotNull_CallsCommittedAction()
-        {
-            // Arrange
-            CancellationToken expectedCancellationToken = new CancellationToken(canceled: true);
-            Mock<IBlobCommitedAction> committedActionMock = new Mock<IBlobCommitedAction>(MockBehavior.Strict);
-            committedActionMock
-                .Setup(a => a.ExecuteAsync(expectedCancellationToken))
-                .Returns(Task.FromResult(0))
-                .Verifiable();
-            IBlobCommitedAction committedAction = committedActionMock.Object;
-
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
-            innerStreamMock.Setup(s => s.CommitAsync()).Returns(Task.CompletedTask);
-            CloudBlobStream innerStream = innerStreamMock.Object;
-
-            WatchableCloudBlobStream product = CreateProductUnderTest(innerStream, committedAction);
-
-            // Act
-            product.CommitAsync(expectedCancellationToken).GetAwaiter().GetResult();
-
-            // Assert
-            committedActionMock.Verify();
-        }
-
-        [Fact]
-        public void CommitAsync_IfCommitedActionIsNull_DoesNotThrow()
-        {
-            // Arrange
-            IBlobCommitedAction committedAction = null;
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
-            innerStreamMock.Setup(s => s.CommitAsync()).Returns(Task.CompletedTask);
-            CloudBlobStream innerStream = innerStreamMock.Object;
-            WatchableCloudBlobStream product = CreateProductUnderTest(innerStream, committedAction);
-
-            // Act & Assert
-            product.CommitAsync(CancellationToken.None).GetAwaiter().GetResult();
-        }
-
-        [Fact]
-        public void CompleteAsync_WhenChangedAndCommitted_DoesNotCommitAgainButStillReturnsTrue()
-        {
-            // Arrange
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
-            bool committedAgain = true;
-
-            innerStreamMock.Setup(s => s.WriteByte(It.IsAny<byte>()));
-            innerStreamMock.Setup(s => s.CommitAsync())
-                .Returns(Task.CompletedTask)
-                .Callback(() => committedAgain = !committedAgain);
-            CloudBlobStream innerStream = innerStreamMock.Object;
-            WatchableCloudBlobStream product = CreateProductUnderTest(innerStream);
-
-            product.WriteByte(0x00);
-            product.CommitAsync();
-
-            CancellationToken cancellationToken = CancellationToken.None;
-
-            // Act
-            Task<bool> task = product.CompleteAsync(cancellationToken);
-
-            // Assert
-            Assert.False(committedAgain);
-            Assert.NotNull(task);
-            Assert.Equal(TaskStatus.RanToCompletion, task.Status);
-            Assert.True(task.Result);
-        }
-
-        [Fact]
-        public void CompleteAsync_WhenUnchanged_DoesNotCommitAndReturnsFalse()
-        {
-            // Arrange
-            bool committed = false;
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
-            innerStreamMock.Setup(s => s.CommitAsync())
-                .Callback(() => committed = true)
-                .Returns(Task.CompletedTask);
-            CloudBlobStream innerStream = innerStreamMock.Object;
-            WatchableCloudBlobStream product = CreateProductUnderTest(innerStream);
-
-            CancellationToken cancellationToken = CancellationToken.None;
-
-            // Act
-            Task<bool> task = product.CompleteAsync(cancellationToken);
-
-            // Assert
-            Assert.False(committed);
-            Assert.NotNull(task);
-            Assert.Equal(TaskStatus.RanToCompletion, task.Status);
-            Assert.False(task.Result);
-        }
-
-        [Fact]
-        public void CompleteAsync_AfterFlush_CommitsAndReturnsTrue()
-        {
-            // Arrange
-            bool committed = false;
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
-            innerStreamMock.Setup(s => s.Flush());
-            innerStreamMock.Setup(s => s.CommitAsync())
-                .Callback(() => committed = true)
-                .Returns(Task.CompletedTask);
-            CloudBlobStream innerStream = innerStreamMock.Object;
-            WatchableCloudBlobStream product = CreateProductUnderTest(innerStream);
-
-            product.Flush();
-
-            CancellationToken cancellationToken = CancellationToken.None;
-
-            // Act
-            Task<bool> task = product.CompleteAsync(cancellationToken);
-
-            // Assert
-            Assert.True(committed);
-            Assert.NotNull(task);
-            Assert.Equal(TaskStatus.RanToCompletion, task.Status);
-            Assert.True(task.Result);
-        }
-
-        [Fact]
-        public void CompleteAsync_AfterBeginEndFlush_CommitsAndReturnsTrue()
-        {
-            // Arrange
-            bool committed = false;
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
-            innerStreamMock.Setup(s => s.Flush());
-            innerStreamMock.Setup(s => s.CommitAsync())
-                .Callback(() => committed = true)
-                .Returns(Task.CompletedTask);
-            CloudBlobStream innerStream = innerStreamMock.Object;
-            WatchableCloudBlobStream product = CreateProductUnderTest(innerStream);
-
-            product.Flush();
-
-            CancellationToken cancellationToken = CancellationToken.None;
-
-            // Act
-            Task<bool> task = product.CompleteAsync(cancellationToken);
-
-            // Assert
-            Assert.True(committed);
-            Assert.NotNull(task);
-            Assert.Equal(TaskStatus.RanToCompletion, task.Status);
-            Assert.True(task.Result);
-        }
-
-        [Fact]
-        public void CompleteAsync_AfterFlushAsync_CommitsAndReturnsTrue()
-        {
-            // Arrange
-            bool committed = false;
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
-            innerStreamMock.Setup(s => s.Flush());
-            innerStreamMock.Setup(s => s.CommitAsync())
-                .Callback(() => committed = true)
-                .Returns(Task.CompletedTask);
-            CloudBlobStream innerStream = innerStreamMock.Object;
-            WatchableCloudBlobStream product = CreateProductUnderTest(innerStream);
-
-            product.Flush();
-
-            CancellationToken cancellationToken = CancellationToken.None;
-
-            // Act
-            Task<bool> task = product.CompleteAsync(cancellationToken);
-
-            // Assert
-            Assert.True(committed);
-            Assert.NotNull(task);
-            Assert.Equal(TaskStatus.RanToCompletion, task.Status);
-            Assert.True(task.Result);
-        }
-
-        [Fact]
-        public void CompleteAsync_AfterWrite_CommitsAndReturnsTrue()
-        {
-            // Arrange
-            bool committed = false;
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
-            innerStreamMock.Setup(s => s.Write(It.IsAny<byte[]>(), It.IsAny<int>(), It.IsAny<int>()));
-            innerStreamMock.Setup(s => s.CommitAsync())
-                .Callback(() => committed = true)
-                .Returns(Task.CompletedTask);
-            CloudBlobStream innerStream = innerStreamMock.Object;
-            WatchableCloudBlobStream product = CreateProductUnderTest(innerStream);
-
-            product.Write(new byte[] { 0x00 }, 0, 1);
-
-            CancellationToken cancellationToken = CancellationToken.None;
-
-            // Act
-            Task<bool> task = product.CompleteAsync(cancellationToken);
-
-            // Assert
-            Assert.True(committed);
-            Assert.NotNull(task);
-            Assert.Equal(TaskStatus.RanToCompletion, task.Status);
-            Assert.True(task.Result);
-        }
-
-        [Fact]
-        public void CompleteAsync_AfterBeginEndWrite_CommitsAndReturnsTrue()
-        {
-            // Arrange
-            bool committed = false;
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
-            innerStreamMock
-                .SetupBeginWrite()
-                .ReturnsCompletedSynchronously();
-            innerStreamMock.SetupEndWrite();
-            innerStreamMock.Setup(s => s.CommitAsync())
-                .Callback(() => committed = true)
-                .Returns(Task.CompletedTask);
-            CloudBlobStream innerStream = innerStreamMock.Object;
-            WatchableCloudBlobStream product = CreateProductUnderTest(innerStream);
-
-            product.EndWrite(product.BeginWrite(new byte[] { 0x00 }, 0, 1, null, null));
-
-            CancellationToken cancellationToken = CancellationToken.None;
-
-            // Act
-            Task<bool> task = product.CompleteAsync(cancellationToken);
-
-            // Assert
-            Assert.True(committed);
-            Assert.NotNull(task);
-            Assert.Equal(TaskStatus.RanToCompletion, task.Status);
-            Assert.True(task.Result);
-        }
-
-        [Fact]
-        public void CompleteAsync_AfterWriteAsync_CommitsAndReturnsTrue()
-        {
-            // Arrange
-            bool committed = false;
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
-            innerStreamMock
-                .Setup(s => s.WriteAsync(It.IsAny<byte[]>(), It.IsAny<int>(), It.IsAny<int>(),
-                    It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(0));
-            innerStreamMock.Setup(m => m.CommitAsync())
-                .Callback(() => committed = true)
-                .Returns(Task.CompletedTask);
-            CloudBlobStream innerStream = innerStreamMock.Object;
-            WatchableCloudBlobStream product = CreateProductUnderTest(innerStream);
-
-            product.WriteAsync(new byte[] { 0x00 }, 0, 1).GetAwaiter().GetResult();
-
-            CancellationToken cancellationToken = CancellationToken.None;
-
-            // Act
-            Task<bool> task = product.CompleteAsync(cancellationToken);
-
-            // Assert
-            Assert.True(committed);
-            Assert.NotNull(task);
-            Assert.Equal(TaskStatus.RanToCompletion, task.Status);
-            Assert.True(task.Result);
-        }
-
-        [Fact]
-        public void CompleteAsync_AfterWriteByte_CommitsAndReturnsTrue()
-        {
-            // Arrange
-            bool committed = false;
-            Mock<CloudBlobStream> innerStreamMock = CreateMockInnerStream();
-            innerStreamMock.Setup(s => s.WriteByte(It.IsAny<byte>()));
-            innerStreamMock
-                .Setup(m => m.CommitAsync())
-                .Returns(Task.CompletedTask)
-                .Callback(() => committed = true);
-            CloudBlobStream innerStream = innerStreamMock.Object;
-            WatchableCloudBlobStream product = CreateProductUnderTest(innerStream);
-
-            product.WriteByte(0x00);
-
-            CancellationToken cancellationToken = CancellationToken.None;
-
-            // Act
-            Task<bool> task = product.CompleteAsync(cancellationToken);
-
-            // Assert
-            Assert.True(committed);
-            Assert.NotNull(task);
-            Assert.Equal(TaskStatus.RanToCompletion, task.Status);
-            Assert.True(task.Result);
-        }
-
-        [Fact]
-        public void GetStatus_Initially_ReturnsNull()
-        {
-            // Arrange
-            using (CloudBlobStream innerStream = CreateInnerStream())
-            using (WatchableCloudBlobStream product = CreateProductUnderTest(innerStream))
-            {
-                // Act
-                ParameterLog status = product.GetStatus();
-
-                // Assert
-                Assert.Null(status);
-            }
         }
 
         [Fact]
         public async Task GetStatus_AfterCommit_ReturnsZeroBytesWritten()
         {
             // Arrange
-            using (CloudBlobStream innerStream = CreateInnerStream())
+            using (Stream innerStream = CreateInnerStream())
             using (WatchableCloudBlobStream product = CreateProductUnderTest(innerStream))
             {
-                await product.CommitAsync();
+                await product.FlushAsync();
 
                 // Act
                 ParameterLog status = product.GetStatus();
@@ -1924,7 +1327,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         public void GetStatus_AfterFlush_ReturnsZeroBytesWritten()
         {
             // Arrange
-            using (CloudBlobStream innerStream = CreateInnerStream())
+            using (Stream innerStream = CreateInnerStream())
             using (WatchableCloudBlobStream product = CreateProductUnderTest(innerStream))
             {
                 byte[] buffer = Encoding.UTF8.GetBytes("abc");
@@ -1942,7 +1345,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         public void GetStatus_AfterWrite_ReturnsBytesWritten()
         {
             // Arrange
-            using (CloudBlobStream innerStream = CreateInnerStream())
+            using (Stream innerStream = CreateInnerStream())
             using (WatchableCloudBlobStream product = CreateProductUnderTest(innerStream))
             {
                 byte[] buffer = Encoding.UTF8.GetBytes("abc");
@@ -1960,7 +1363,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         public void GetStatus_AfterWriteTwice_ReturnsTotalBytesWritten()
         {
             // Arrange
-            using (CloudBlobStream innerStream = CreateInnerStream())
+            using (Stream innerStream = CreateInnerStream())
             using (WatchableCloudBlobStream product = CreateProductUnderTest(innerStream))
             {
                 byte[] buffer = Encoding.UTF8.GetBytes("abc");
@@ -1979,7 +1382,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         public void GetStatus_AfterBeginEndWrite_ReturnsBytesWritten()
         {
             // Arrange
-            using (CloudBlobStream innerStream = CreateInnerStream())
+            using (Stream innerStream = CreateInnerStream())
             using (WatchableCloudBlobStream product = CreateProductUnderTest(innerStream))
             {
                 byte[] buffer = Encoding.UTF8.GetBytes("abc");
@@ -1997,7 +1400,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         public void GetStatus_AfterBeginEndWriteTwice_ReturnsTotalBytesWritten()
         {
             // Arrange
-            using (CloudBlobStream innerStream = CreateInnerStream())
+            using (Stream innerStream = CreateInnerStream())
             using (WatchableCloudBlobStream product = CreateProductUnderTest(innerStream))
             {
                 byte[] buffer = Encoding.UTF8.GetBytes("abc");
@@ -2016,7 +1419,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         public void GetStatus_AfterWriteAsync_ReturnsBytesWritten()
         {
             // Arrange
-            using (CloudBlobStream innerStream = CreateInnerStream())
+            using (Stream innerStream = CreateInnerStream())
             using (WatchableCloudBlobStream product = CreateProductUnderTest(innerStream))
             {
                 byte[] buffer = Encoding.UTF8.GetBytes("abc");
@@ -2034,7 +1437,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         public void GetStatus_AfterWriteAsyncTwice_ReturnsTotalBytesWritten()
         {
             // Arrange
-            using (CloudBlobStream innerStream = CreateInnerStream())
+            using (Stream innerStream = CreateInnerStream())
             using (WatchableCloudBlobStream product = CreateProductUnderTest(innerStream))
             {
                 byte[] buffer = Encoding.UTF8.GetBytes("abc");
@@ -2053,7 +1456,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         public void GetStatus_AfterWriteByte_ReturnsOneByteWritten()
         {
             // Arrange
-            using (CloudBlobStream innerStream = CreateInnerStream())
+            using (Stream innerStream = CreateInnerStream())
             using (WatchableCloudBlobStream product = CreateProductUnderTest(innerStream))
             {
                 product.WriteByte(0xff);
@@ -2070,7 +1473,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
         public void GetStatus_AfterWriteByteTwice_ReturnsTwoBytesWritten()
         {
             // Arrange
-            using (CloudBlobStream innerStream = CreateInnerStream())
+            using (Stream innerStream = CreateInnerStream())
             using (WatchableCloudBlobStream product = CreateProductUnderTest(innerStream))
             {
                 product.WriteByte(0xff);
@@ -2081,43 +1484,6 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
 
                 // Assert
                 AssertEqualStatus(2, status);
-            }
-        }
-
-        [Fact]
-        public void GetStatus_AfterCompleteAsyncWhenNotChanged_ReturnsNotWritten()
-        {
-            // Arrange
-            using (CloudBlobStream innerStream = CreateInnerStream())
-            using (WatchableCloudBlobStream product = CreateProductUnderTest(innerStream))
-            {
-                bool committed = product.CompleteAsync(CancellationToken.None).GetAwaiter().GetResult();
-                Assert.False(committed); // Guard
-
-                // Act
-                ParameterLog status = product.GetStatus();
-
-                // Assert
-                AssertNotWritten(status);
-            }
-        }
-
-        [Fact]
-        public void GetStatus_AfterCompleteAsyncWhenChanged_ReturnsBytesWritten()
-        {
-            // Arrange
-            using (CloudBlobStream innerStream = CreateInnerStream())
-            using (WatchableCloudBlobStream product = CreateProductUnderTest(innerStream))
-            {
-                product.WriteByte(0xff);
-                bool committed = product.CompleteAsync(CancellationToken.None).GetAwaiter().GetResult();
-                Assert.True(committed); // Guard
-
-                // Act
-                ParameterLog status = product.GetStatus();
-
-                // Assert
-                AssertEqualStatus(1, status);
             }
         }
 
@@ -2163,22 +1529,22 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             return new Mock<Stream>(MockBehavior.Strict).Object;
         }
 
-        private static CloudBlobStream CreateInnerStream()
+        private static Stream CreateInnerStream()
         {
-            return new FakeCloudBlobStream(new MemoryStream());
+            return new MemoryStream();
         }
 
-        private static Mock<CloudBlobStream> CreateMockInnerStream()
+        private static Mock<Stream> CreateMockInnerStream()
         {
-            return new Mock<CloudBlobStream>(MockBehavior.Strict);
+            return new Mock<Stream>(MockBehavior.Strict);
         }
 
-        private static WatchableCloudBlobStream CreateProductUnderTest(CloudBlobStream inner)
+        private static WatchableCloudBlobStream CreateProductUnderTest(Stream inner)
         {
             return CreateProductUnderTest(inner, NullBlobCommittedAction.Instance);
         }
 
-        private static WatchableCloudBlobStream CreateProductUnderTest(CloudBlobStream inner,
+        private static WatchableCloudBlobStream CreateProductUnderTest(Stream inner,
             IBlobCommitedAction committedAction)
         {
             return new WatchableCloudBlobStream(inner, committedAction);
@@ -2207,6 +1573,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             public Task ExecuteAsync(CancellationToken cancellationToken)
             {
                 return Task.FromResult(0);
+            }
+
+            public void Execute()
+            {
             }
         }
     }

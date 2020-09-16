@@ -2,18 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs.Host.Bindings;
-using Microsoft.Azure.WebJobs.Host.Indexers;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
-using Microsoft.Azure.WebJobs.Host.Triggers;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Azure.Storage;
 using Moq;
 using Newtonsoft.Json;
 using Xunit;
@@ -30,7 +22,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Bindings.Data
             this.azuriteFixture = azuriteFixture;
         }
 
-        [Fact]
+        [AzuriteFact]
         public async Task BindStringableParameter_CanInvoke()
         {
             // Arrange

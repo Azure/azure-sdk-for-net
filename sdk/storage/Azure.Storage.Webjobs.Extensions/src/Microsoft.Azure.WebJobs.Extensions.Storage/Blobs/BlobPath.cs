@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using Microsoft.Azure.Storage.Blob;
+using Azure.Storage.Blobs;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs
 {
@@ -75,8 +75,8 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs
             path = null;
             if (Uri.TryCreate(blobUrl, UriKind.Absolute, out uri))
             {
-                var blob = new CloudBlob(uri);
-                path = new BlobPath(blob.Container.Name, blob.Name); // use storage sdk to parse url
+                var blob = new BlobClient(uri);
+                path = new BlobPath(blob.BlobContainerName, blob.Name); // use storage sdk to parse url
                 return true;
             }
             return false;
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs
                 return false;
             }
 
-            if (!BlobClient.IsValidContainerName(possiblePath.ContainerName))
+            if (!BlobClientExtensions.IsValidContainerName(possiblePath.ContainerName))
             {
                 errorMessage = "Invalid container name: " + possiblePath.ContainerName;
                 path = null;
@@ -140,7 +140,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs
             // for container bindings, we allow an empty blob name/path
             string possibleErrorMessage;
             if (!(isContainerBinding && string.IsNullOrEmpty(possiblePath.BlobName)) &&
-                !BlobClient.IsValidBlobName(possiblePath.BlobName, out possibleErrorMessage))
+                !BlobClientExtensions.IsValidBlobName(possiblePath.BlobName, out possibleErrorMessage))
             {
                 errorMessage = possibleErrorMessage;
                 path = null;

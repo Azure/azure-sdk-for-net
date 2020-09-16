@@ -4,12 +4,12 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Storage.Blob;
+using Azure.Storage.Blobs.Specialized;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs
 {
     internal interface IBlobCausalityReader
     {
-        Task<Guid?> GetWriterAsync(ICloudBlob blob, CancellationToken cancellationToken);
+        Task<Guid?> GetWriterAsync(BlobBaseClient blob, CancellationToken cancellationToken);
     }
 }

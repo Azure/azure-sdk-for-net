@@ -2,16 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
-using Microsoft.Azure.Storage;
-using Microsoft.Azure.Storage.Blob;
+using System.IO;
 using Moq.Language.Flow;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
 {
     internal static class SetupOfCloudBlobStreamICancellableAsyncResultExtensions
     {
-        public static IReturnsResult<CloudBlobStream> ReturnsCompletedSynchronously(
-            this ISetup<CloudBlobStream, IAsyncResult> setup)
+        public static IReturnsResult<Stream> ReturnsCompletedSynchronously(
+            this ISetup<Stream, IAsyncResult> setup)
         {
             if (setup == null)
             {
@@ -26,25 +25,8 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
             });
         }
 
-        public static IReturnsResult<CloudBlobStream> ReturnsCompletedSynchronously(
-            this ISetup<CloudBlobStream, IAsyncResult> setup, CompletedCancellationSpy spy)
-        {
-            if (setup == null)
-            {
-                throw new ArgumentNullException(nameof(setup));
-            }
-
-            return setup.Returns<AsyncCallback, object>((callback, state) =>
-            {
-                CompletedCancellableAsyncResult result = new CompletedCancellableAsyncResult(state);
-                spy.SetAsyncResult(result);
-                InvokeCallback(callback, result);
-                return result;
-            });
-        }
-
-        public static IReturnsResult<CloudBlobStream> ReturnsUncompleted(
-            this ISetup<CloudBlobStream, IAsyncResult> setup)
+        public static IReturnsResult<Stream> ReturnsUncompleted(
+            this ISetup<Stream, IAsyncResult> setup)
         {
             if (setup == null)
             {

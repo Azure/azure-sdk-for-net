@@ -7,13 +7,11 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs.Host.Executors;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Specialized;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
-using Microsoft.Azure.Storage;
-using Microsoft.Azure.Storage.Blob;
 using Newtonsoft.Json.Linq;
 using Xunit;
 
@@ -35,8 +33,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         private const string BlobChainOutputBlobName = "blob.out";
         private const string BlobChainOutputBlobPath = BlobChainContainerName + "/" + BlobChainOutputBlobName;
 
-        private readonly CloudBlobContainer _testContainer;
-        private readonly CloudStorageAccount _storageAccount;
+        private readonly BlobContainerClient _testContainer;
+        private readonly StorageAccount _storageAccount;
         private readonly RandomNameResolver _nameResolver;
 
         private static object _syncLock = new object();
@@ -53,9 +51,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 })
                 .Build();
             var provider = host.Services.GetService<StorageAccountProvider>();
-            _storageAccount = provider.GetHost().SdkObject;
-            CloudBlobClient blobClient = _storageAccount.CreateCloudBlobClient();
-            _testContainer = blobClient.GetContainerReference(_nameResolver.ResolveInString(SingleTriggerContainerName));
+            _storageAccount = provider.GetHost();
+            var blobClient = _storageAccount.CreateBlobServiceClient();
+            _testContainer = blobClient.GetBlobContainerClient(_nameResolver.ResolveInString(SingleTriggerContainerName));
             Assert.False(_testContainer.ExistsAsync().Result);
             _testContainer.CreateAsync().Wait();
         }
@@ -166,19 +164,19 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
-        [Theory]
+        [LiveTheory]
         [InlineData("AzureWebJobsSecondaryStorage")]
         [InlineData("AzureWebJobsStorage")]
         public async Task PoisonMessage_CreatedInCorrectStorageAccount(string storageAccountSetting)
         {
-            var storageAccount = CloudStorageAccount.Parse(Environment.GetEnvironmentVariable(storageAccountSetting));
-            var blobClient = storageAccount.CreateCloudBlobClient();
+            var storageAccount = StorageAccount.NewFromConnectionString(Environment.GetEnvironmentVariable(storageAccountSetting));
+            var blobClient = storageAccount.CreateBlobServiceClient();
             var containerName = _nameResolver.ResolveInString(PoisonTestContainerName);
-            var container = blobClient.GetContainerReference(containerName);
+            var container = blobClient.GetBlobContainerClient(containerName);
             await container.CreateAsync();
 
             var blobName = Guid.NewGuid().ToString();
-            CloudBlockBlob blob = container.GetBlockBlobReference(blobName);
+            var blob = container.GetBlockBlobClient(blobName);
             await blob.UploadTextAsync("0");
 
             var prog = new Poison_Program();
@@ -196,10 +194,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
-        [Fact]
+        [LiveFact]
         public async Task BlobGetsProcessedOnlyOnce_SingleHost()
         {
-            CloudBlockBlob blob = _testContainer.GetBlockBlobReference(TestBlobName);
+            var blob = _testContainer.GetBlockBlobClient(TestBlobName);
             await blob.UploadTextAsync("0");
 
             int timeToProcess;
@@ -230,7 +228,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 var executions = loggerOutputLines.Where(p => p.Contains("Executing"));
                 Assert.Single(executions);
-                Assert.StartsWith(string.Format("Executing 'BlobGetsProcessedOnlyOnce_SingleHost_Program.SingleBlobTrigger' (Reason='New blob detected: {0}/{1}', Id=", blob.Container.Name, blob.Name), executions.Single());
+                Assert.StartsWith(string.Format("Executing 'BlobGetsProcessedOnlyOnce_SingleHost_Program.SingleBlobTrigger' (Reason='New blob detected: {0}/{1}', Id=", blob.BlobContainerName, blob.Name), executions.Single());
 
                 await host.StopAsync();
 
@@ -242,14 +240,14 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             Assert.Equal(1, prog._timesProcessed);
         } // host
 
-        [Fact]
+        [LiveFact]
         public async Task BlobChainTest()
         {
             // write the initial trigger blob to start the chain
-            var blobClient = _storageAccount.CreateCloudBlobClient();
-            var container = blobClient.GetContainerReference(_nameResolver.ResolveInString(BlobChainContainerName));
+            var blobClient = _storageAccount.CreateBlobServiceClient();
+            var container = blobClient.GetBlobContainerClient(_nameResolver.ResolveInString(BlobChainContainerName));
             await container.CreateIfNotExistsAsync();
-            CloudBlockBlob blob = container.GetBlockBlobReference(BlobChainTriggerBlobName);
+            var blob = container.GetBlockBlobClient(BlobChainTriggerBlobName);
             await blob.UploadTextAsync("0");
 
             var prog = new BlobChainTest_Program();
@@ -263,11 +261,11 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
-        [Fact]
+        [LiveFact]
         public async Task BlobGetsProcessedOnlyOnce_MultipleHosts()
         {
             await _testContainer
-                .GetBlockBlobReference(TestBlobName)
+                .GetBlockBlobClient(TestBlobName)
                 .UploadTextAsync("10");
 
             var prog = new BlobGetsProcessedOnlyOnce_SingleHost_Program();
@@ -294,10 +292,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         public void Dispose()
         {
-            CloudBlobClient blobClient = _storageAccount.CreateCloudBlobClient();
-            foreach (var testContainer in blobClient.ListContainersSegmentedAsync(TestArtifactPrefix, null).Result.Results)
+            var blobClient = _storageAccount.CreateBlobServiceClient();
+            foreach (var testContainer in blobClient.GetBlobContainers(prefix: TestArtifactPrefix))
             {
-                testContainer.DeleteAsync();
+                blobClient.GetBlobContainerClient(testContainer.Name).Delete();
             }
         }
     }

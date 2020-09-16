@@ -2,24 +2,30 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Globalization;
-using System.Text.RegularExpressions;
 using Microsoft.Azure.WebJobs.Description;
-using Microsoft.Azure.Storage;
-using Microsoft.Azure.Storage.Blob;
+using Azure.Storage.Blobs.Specialized;
+using System.Threading.Tasks;
+using System.Threading;
+using Azure.Storage.Blobs.Models;
+using System.IO;
+using System.Text;
 
 namespace Microsoft.Azure.WebJobs
 {
-    internal static class BlobClient
+    internal static class BlobClientExtensions
     {
-        public static string GetAccountName(this CloudStorageAccount account)
+        public static async Task<string> DownloadTextAsync(this BlobBaseClient blobClient, CancellationToken cancellationToken = default)
         {
-            return account.Credentials?.AccountName;
+            using BlobDownloadInfo blobDownloadInfo = await blobClient.DownloadAsync(cancellationToken).ConfigureAwait(false);
+            using Stream stream = blobDownloadInfo.Content;
+            using StreamReader streamReader = new StreamReader(stream);
+            return await streamReader.ReadToEndAsync().ConfigureAwait(false);
         }
 
-        public static string GetAccountName(this CloudBlobClient client)
+        public static async Task UploadTextAsync(this BlockBlobClient blockBlobClient, string text, CancellationToken cancellationToken = default)
         {
-            return client?.Credentials?.AccountName;
+            using Stream stream = new MemoryStream(Encoding.UTF8.GetBytes(text));
+            await blockBlobClient.UploadAsync(stream, cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         // Naming rules are here: http://msdn.microsoft.com/en-us/library/dd135715.aspx

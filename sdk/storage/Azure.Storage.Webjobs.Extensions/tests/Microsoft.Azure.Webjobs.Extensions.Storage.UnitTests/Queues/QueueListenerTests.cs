@@ -17,12 +17,12 @@ using Microsoft.Azure.WebJobs.Host.Timers;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
-using Microsoft.Azure.Storage;
 using Moq;
 using Xunit;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
 using Azure;
+using Azure.Core.TestFramework;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
 {
@@ -66,13 +66,13 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
 
         public TestFixture Fixture { get; set; }
 
-        [Fact]
+        [LiveFact]
         public void ScaleMonitor_Id_ReturnsExpectedValue()
         {
             Assert.Equal("testfunction-queuetrigger-testqueue", _listener.Descriptor.Id);
         }
 
-        [Fact]
+        [LiveFact]
         public async Task GetMetrics_ReturnsExpectedResult()
         {
             var queuesOptions = new QueuesOptions();
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             Assert.Equal(5, metrics.QueueLength);
         }
 
-        [Fact]
+        [LiveFact]
         public async Task GetMetrics_HandlesStorageExceptions()
         {
             var exception = new RequestFailedException(
@@ -127,7 +127,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             Assert.Equal("Error querying for queue scale status: Things are very wrong.", warning.FormattedMessage);
         }
 
-        [Fact]
+        [LiveFact]
         public void GetScaleStatus_NoMetrics_ReturnsVote_None()
         {
             var context = new ScaleStatusContext<QueueTriggerMetrics>
@@ -143,7 +143,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             Assert.Equal(ScaleVote.None, status.Vote);
         }
 
-        [Fact]
+        [LiveFact]
         public void GetScaleStatus_MessagesPerWorkerThresholdExceeded_ReturnsVote_ScaleOut()
         {
             var context = new ScaleStatusContext<QueueTriggerMetrics>
@@ -184,7 +184,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             Assert.Equal(ScaleVote.ScaleOut, status.Vote);
         }
 
-        [Fact]
+        [LiveFact]
         public void GetScaleStatus_QueueLengthIncreasing_ReturnsVote_ScaleOut()
         {
             var context = new ScaleStatusContext<QueueTriggerMetrics>
@@ -212,7 +212,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             Assert.Equal("Queue length is increasing for 'testqueue'", log.FormattedMessage);
         }
 
-        [Fact]
+        [LiveFact]
         public void GetScaleStatus_QueueTimeIncreasing_ReturnsVote_ScaleOut()
         {
             var context = new ScaleStatusContext<QueueTriggerMetrics>
@@ -240,7 +240,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             Assert.Equal("Queue time is increasing for 'testqueue'", log.FormattedMessage);
         }
 
-        [Fact]
+        [LiveFact]
         public void GetScaleStatus_QueueLengthDecreasing_ReturnsVote_ScaleIn()
         {
             var context = new ScaleStatusContext<QueueTriggerMetrics>
@@ -268,7 +268,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             Assert.Equal("Queue length is decreasing for 'testqueue'", log.FormattedMessage);
         }
 
-        [Fact]
+        [LiveFact]
         public void GetScaleStatus_QueueTimeDecreasing_ReturnsVote_ScaleIn()
         {
             var context = new ScaleStatusContext<QueueTriggerMetrics>
@@ -296,7 +296,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             Assert.Equal("Queue time is decreasing for 'testqueue'", log.FormattedMessage);
         }
 
-        [Fact]
+        [LiveFact]
         public void GetScaleStatus_QueueSteady_ReturnsVote_None()
         {
             var context = new ScaleStatusContext<QueueTriggerMetrics>
@@ -324,7 +324,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             Assert.Equal("Queue 'testqueue' is steady", log.FormattedMessage);
         }
 
-        [Fact]
+        [LiveFact]
         public void GetScaleStatus_QueueIdle_ReturnsVote_ScaleOut()
         {
             var context = new ScaleStatusContext<QueueTriggerMetrics>
@@ -352,7 +352,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             Assert.Equal("Queue 'testqueue' is idle", log.FormattedMessage);
         }
 
-        [Fact]
+        [LiveFact]
         public void GetScaleStatus_UnderSampleCountThreshold_ReturnsVote_None()
         {
             var context = new ScaleStatusContext<QueueTriggerMetrics>
@@ -370,7 +370,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             Assert.Equal(ScaleVote.None, status.Vote);
         }
 
-        [Fact]
+        [LiveFact]
         public async Task UpdatedQueueMessage_RetainsOriginalProperties()
         {
             QueueClient queue = Fixture.CreateNewQueue();
@@ -451,7 +451,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             Assert.Equal(0, queueProperties.ApproximateMessagesCount);
         }
 
-        [Fact]
+        [LiveFact]
         public void CreateQueueProcessor_CreatesProcessorCorrectly()
         {
             QueueClient poisonQueue = null;
@@ -520,7 +520,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             Assert.False(poisonMessageHandlerInvoked);
         }
 
-        [Fact]
+        [LiveFact]
         public async Task ProcessMessageAsync_Success()
         {
             CancellationToken cancellationToken = new CancellationToken();
@@ -532,7 +532,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             await _listener.ProcessMessageAsync(_queueMessage, TimeSpan.FromMinutes(10), cancellationToken);
         }
 
-        [Fact]
+        [LiveFact]
         public async Task GetMessages_QueueCheckThrowsTransientError_ReturnsBackoffResult()
         {
             CancellationToken cancellationToken = new CancellationToken();
@@ -552,13 +552,15 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             await result.Wait;
         }
 
-        [Fact]
+        [LiveFact]
         public async Task GetMessages_ChecksQueueExistence_UntilQueueExists()
         {
             var cancellationToken = new CancellationToken();
             bool queueExists = false;
-            _mockQueue.Setup(p => p.ExistsAsync(It.IsAny<CancellationToken>())).ReturnsAsync(() => Response.FromValue(queueExists, null));
-            _mockQueue.Setup(p => p.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), cancellationToken)).ReturnsAsync(Response.FromValue(new QueueMessage[0], null));
+            _mockQueue.Setup(p => p.ExistsAsync(It.IsAny<CancellationToken>()))
+                .ReturnsAsync(() => Response.FromValue(queueExists, new MockResponse(queueExists ? 200 : 404)));
+            _mockQueue.Setup(p => p.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), cancellationToken))
+                .ReturnsAsync(Response.FromValue(new QueueMessage[0], new MockResponse(200)));
 
             int numIterations = 5;
             int numFailedExistenceChecks = 2;
@@ -579,7 +581,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             _mockQueue.Verify(p => p.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), cancellationToken), Times.Exactly(numIterations - numFailedExistenceChecks));
         }
 
-        [Fact]
+        [LiveFact]
         public async Task GetMessages_ResetsQueueExistenceCheck_OnException()
         {
             var cancellationToken = new CancellationToken();
@@ -601,7 +603,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             _mockQueue.Verify(p => p.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), cancellationToken), Times.Exactly(5));
         }
 
-        [Fact]
+        [LiveFact]
         public async Task ProcessMessageAsync_QueueBeginProcessingMessageReturnsFalse_MessageNotProcessed()
         {
             CancellationToken cancellationToken = new CancellationToken();
@@ -610,7 +612,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             await _listener.ProcessMessageAsync(_queueMessage, TimeSpan.FromMinutes(10), cancellationToken);
         }
 
-        [Fact]
+        [LiveFact]
         public async Task ProcessMessageAsync_FunctionInvocationFails()
         {
             CancellationToken cancellationToken = new CancellationToken();

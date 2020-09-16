@@ -3,20 +3,20 @@
 
 using System;
 using System.Linq;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
-using Microsoft.Azure.Storage.Blob;
 using Microsoft.Azure.WebJobs.Host.Queues;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Xunit;
-using CloudStorageAccount = Microsoft.Azure.Storage.CloudStorageAccount;
 
 namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 {
@@ -44,8 +44,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         private static EventWaitHandle _startWaitHandle;
         private static EventWaitHandle _functionChainWaitHandle;
-        private CloudStorageAccount _storageAccount;
         private QueueServiceClient _queueServiceClient;
+        private BlobServiceClient _blobServiceClient;
         private RandomNameResolver _resolver;
 
         private static string _lastMessageId;
@@ -53,8 +53,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         public AzureStorageEndToEndTests(TestFixture fixture)
         {
-            _storageAccount = fixture.StorageAccount;
             _queueServiceClient = fixture.QueueServiceClient;
+            _blobServiceClient = fixture.BlobServiceClient;
         }
 
 #pragma warning disable xUnit1013 // Public method should be marked as test
@@ -134,7 +134,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         /// </summary>
         public static void BadMessage_CloudQueueMessage(
             [QueueTrigger(BadMessageQueue1)] QueueMessage badMessageIn,
-            [Queue(BadMessageQueue2)] out string badMessageOut, // TODO (kasobol-msft) check that QueueMessage is only in binding
+            [Queue(BadMessageQueue2)] out string badMessageOut,
 #pragma warning disable CS0618 // Type or member is obsolete
             TraceWriter log)
 #pragma warning restore CS0618 // Type or member is obsolete
@@ -161,7 +161,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
 #pragma warning restore xUnit1013 // Public method should be marked as test
 
-        [Fact]
+        [LiveFact]
         public async Task AzureStorageEndToEndFast()
         {
             await EndToEndTest(uploadBlobBeforeHostStart: true);
@@ -275,7 +275,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                         // The message is in the second queue
                         var queue2 = _queueServiceClient.GetQueueClient(_resolver.ResolveInString(BadMessageQueue2));
 
-                        RequestFailedException ex = await Assert.ThrowsAsync<RequestFailedException>( // TODO (kasobol-msft) check this exception.
+                        RequestFailedException ex = await Assert.ThrowsAsync<RequestFailedException>(
                             () => queue2.DeleteMessageAsync(_lastMessageId, _lastMessagePopReceipt));
                         Assert.Equal("MessageNotFound", ex.ErrorCode);
                     }
@@ -303,11 +303,11 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         {
             string testContainerName = _resolver.ResolveInString(ContainerName);
 
-            CloudBlobContainer container = _storageAccount.CreateCloudBlobClient().GetContainerReference(testContainerName);
+            var container = _blobServiceClient.GetBlobContainerClient(testContainerName);
             await container.CreateIfNotExistsAsync();
 
             // The test blob
-            CloudBlockBlob testBlob = container.GetBlockBlobReference(BlobName);
+            var testBlob = container.GetBlockBlobClient(BlobName);
             CustomObject testObject = new CustomObject()
             {
                 Text = "Test",
@@ -367,14 +367,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 var provider = host.Services.GetService<StorageAccountProvider>();
                 var storageAccount = provider.GetHost();
-                StorageAccount = storageAccount.SdkObject;
                 this.QueueServiceClient = storageAccount.CreateQueueServiceClient();
-            }
-
-            public CloudStorageAccount StorageAccount
-            {
-                get;
-                private set;
+                this.BlobServiceClient = storageAccount.CreateBlobServiceClient();
             }
 
             public QueueServiceClient QueueServiceClient
@@ -383,12 +377,17 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 private set;
             }
 
+            public BlobServiceClient BlobServiceClient
+            {
+                get;
+                private set;
+            }
+
             public void Dispose()
             {
-                CloudBlobClient blobClient = StorageAccount.CreateCloudBlobClient();
-                foreach (var testContainer in blobClient.ListContainersSegmentedAsync(TestArtifactsPrefix, null).Result.Results)
+                foreach (var testContainer in BlobServiceClient.GetBlobContainers(prefix: TestArtifactsPrefix))
                 {
-                    testContainer.DeleteAsync().Wait();
+                    this.BlobServiceClient.GetBlobContainerClient(testContainer.Name).Delete();
                 }
 
                 foreach (var testQueue in this.QueueServiceClient.GetQueues(prefix: TestArtifactsPrefix))

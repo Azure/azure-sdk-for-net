@@ -11,8 +11,8 @@ using Microsoft.Azure.WebJobs.Host.Queues;
 using Microsoft.Azure.WebJobs.Host.Queues.Listeners;
 using Microsoft.Azure.WebJobs.Host.Timers;
 using Microsoft.Extensions.Logging;
-using Microsoft.Azure.Storage.Blob;
 using Azure.Storage.Queues;
+using Azure.Storage.Blobs;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 {
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
         private readonly ILoggerFactory _loggerFactory;
         private readonly StorageAccount _hostAccount;
         private readonly StorageAccount _dataAccount;
-        private readonly CloudBlobContainer _container;
+        private readonly BlobContainerClient _container;
         private readonly IBlobPathSource _input;
         private readonly ITriggeredFunctionExecutor _executor;
         private readonly IHostSingletonManager _singletonManager;
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             FunctionDescriptor functionDescriptor,
             StorageAccount hostAccount,
             StorageAccount dataAccount,
-            CloudBlobContainer container,
+            BlobContainerClient container,
             IBlobPathSource input,
             ITriggeredFunctionExecutor executor,
             IHostSingletonManager singletonManager)
@@ -73,12 +73,12 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             // Note that these clients are intentionally for the storage account rather than for the dashboard account.
             // We use the storage, not dashboard, account for the blob receipt container and blob trigger queues.
             var primaryQueueClient = _hostAccount.CreateQueueServiceClient();
-            var primaryBlobClient = _hostAccount.CreateCloudBlobClient();
+            var primaryBlobClient = _hostAccount.CreateBlobServiceClient();
 
             // Important: We're using the storage account of the function target here, which is the account that the
             // function the listener is for is targeting. This is the account that will be used
             // to read the trigger blob.
-            var targetBlobClient = _dataAccount.CreateCloudBlobClient();
+            var targetBlobClient = _dataAccount.CreateBlobServiceClient();
             var targetQueueClient = _dataAccount.CreateQueueServiceClient();
 
             string hostId = await _hostIdProvider.GetHostIdAsync(cancellationToken).ConfigureAwait(false);
@@ -144,28 +144,27 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
         private async Task RegisterWithSharedBlobListenerAsync(
             string hostId,
             SharedBlobListener sharedBlobListener,
-            CloudBlobClient blobClient,
+            BlobServiceClient blobClient,
             QueueClient hostBlobTriggerQueue,
             IMessageEnqueuedWatcher messageEnqueuedWatcher,
             CancellationToken cancellationToken)
         {
-            BlobTriggerExecutor triggerExecutor = new BlobTriggerExecutor(hostId, _functionDescriptor, _input,
-                BlobETagReader.Instance, new BlobReceiptManager(blobClient),
+            BlobTriggerExecutor triggerExecutor = new BlobTriggerExecutor(hostId, _functionDescriptor, _input, new BlobReceiptManager(blobClient),
                 new BlobTriggerQueueWriter(hostBlobTriggerQueue, messageEnqueuedWatcher), _loggerFactory.CreateLogger<BlobListener>());
 
-            await sharedBlobListener.RegisterAsync(_container, triggerExecutor, cancellationToken).ConfigureAwait(false);
+            await sharedBlobListener.RegisterAsync(blobClient, _container, triggerExecutor, cancellationToken).ConfigureAwait(false);
         }
 
         private void RegisterWithSharedBlobQueueListenerAsync(
             SharedBlobQueueListener sharedBlobQueueListener,
-            CloudBlobClient blobClient,
+            BlobServiceClient blobClient,
             QueueServiceClient queueClient)
         {
             BlobQueueRegistration registration = new BlobQueueRegistration
             {
                 Executor = _executor,
-                BlobClient = blobClient,
-                QueueClient = queueClient
+                BlobServiceClient = blobClient,
+                QueueServiceClient = queueClient
             };
 
             sharedBlobQueueListener.Register(_functionDescriptor.Id, registration);

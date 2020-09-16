@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Azure.Storage;
 using Xunit;
 using Azure.Storage.Queues;
 using System.Linq;
@@ -18,12 +17,11 @@ namespace Microsoft.Azure.WebJobs.Storage.IntegrationTests
     [Trait("SecretsRequired", "true")]
     public class StorageAccountTests
     {
-        [Fact]
+        [LiveFact]
         public async Task CloudQueueCreate_IfNotExist_CreatesQueue()
         {
             // Arrange
             StorageAccount storageAccount = CreateStorageAccount();
-            CloudStorageAccount sdkAccount = storageAccount.SdkObject;
             string queueName = GetQueueName("create-queue");
 
             // Initialize using the SdkAccount directly.
@@ -54,12 +52,11 @@ namespace Microsoft.Azure.WebJobs.Storage.IntegrationTests
             }
         }
 
-        [Fact]
+        [LiveFact]
         public async Task CloudQueueAddMessage_AddsMessage()
         {
             // Arrange
             StorageAccount storageAccount = CreateStorageAccount();
-            CloudStorageAccount sdkAccount = storageAccount.SdkObject;
             string queueName = GetQueueName("add-message");
 
             // Initialize using the SdkAccount directly.

@@ -5,7 +5,6 @@ using System;
 using Microsoft.Azure.WebJobs.Extensions.Storage;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Configuration;
-using CloudStorageAccount = Microsoft.Azure.Storage.CloudStorageAccount;
 
 namespace Microsoft.Azure.WebJobs
 {
@@ -18,7 +17,6 @@ namespace Microsoft.Azure.WebJobs
     public class StorageAccountProvider
     {
         private readonly IConfiguration _configuration;
-        private readonly IDelegatingHandlerProvider _delegatingHandlerProvider;
 
         /// <summary>
         /// TODO.
@@ -27,17 +25,6 @@ namespace Microsoft.Azure.WebJobs
         public StorageAccountProvider(IConfiguration configuration)
         {
             _configuration = configuration;
-        }
-
-        /// <summary>
-        /// TODO.
-        /// </summary>
-        /// <param name="configuration"></param>
-        /// <param name="delegatingHandlerProvider"></param>
-        public StorageAccountProvider(IConfiguration configuration, IDelegatingHandlerProvider delegatingHandlerProvider)
-            : this(configuration)
-        {
-            _delegatingHandlerProvider = delegatingHandlerProvider;
         }
 
         /// <summary>
@@ -72,12 +59,7 @@ namespace Microsoft.Azure.WebJobs
                 throw new InvalidOperationException($"Storage account connection string '{IConfigurationExtensions.GetPrefixedConnectionStringName(name)}' does not exist. Make sure that it is a defined App Setting.");
             }
 
-            if (!CloudStorageAccount.TryParse(connectionString, out CloudStorageAccount cloudStorageAccount))
-            {
-                throw new InvalidOperationException($"Storage account connection string for '{IConfigurationExtensions.GetPrefixedConnectionStringName(name)}' is invalid");
-            }
-
-            return StorageAccount.New(cloudStorageAccount, connectionString, _delegatingHandlerProvider);
+            return StorageAccount.NewFromConnectionString(connectionString);
         }
 
         /// <summary>

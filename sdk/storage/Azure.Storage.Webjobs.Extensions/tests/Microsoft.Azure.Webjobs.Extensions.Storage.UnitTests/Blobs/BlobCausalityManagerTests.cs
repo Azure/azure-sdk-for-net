@@ -8,10 +8,11 @@ using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Blobs;
 using Microsoft.Azure.WebJobs.Host.Protocols;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
-using Microsoft.Azure.Storage;
-using Microsoft.Azure.Storage.Blob;
 using Moq;
 using Xunit;
+using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Blobs.Models;
+using Azure;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs
 {
@@ -45,7 +46,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs
         public void GetWriter_IfMetadataDoesNotHaveWriterProperty_ReturnsNull()
         {
             // Arrange
-            Mock<ICloudBlob> blobMock = SetupBlobMock(isFetchSuccess: true);
+            Mock<BlobBaseClient> blobMock = SetupBlobMock(isFetchSuccess: true);
 
             // Act
             Guid? writer = BlobCausalityManager.GetWriterAsync(blobMock.Object, CancellationToken.None).GetAwaiter().GetResult();
@@ -59,7 +60,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs
         public void GetWriter_IfFetchFails_ReturnsNull()
         {
             // Arrange
-            Mock<ICloudBlob> blobMock = SetupBlobMock(isFetchSuccess: false);
+            Mock<BlobBaseClient> blobMock = SetupBlobMock(isFetchSuccess: false);
 
             // Act
             Guid? writer = BlobCausalityManager.GetWriterAsync(blobMock.Object, CancellationToken.None).GetAwaiter().GetResult();
@@ -73,8 +74,9 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs
         public void GetWriter_IfMetadataPropertyIsNotGuid_ReturnsNull()
         {
             // Arrange
-            Mock<ICloudBlob> blobMock = SetupBlobMock(isFetchSuccess: true);
-            blobMock.Object.Metadata[BlobMetadataKeys.ParentId] = "abc";
+            Mock<BlobBaseClient> blobMock = SetupBlobMock(
+                isFetchSuccess: true,
+                new Dictionary<string, string>() { { BlobMetadataKeys.ParentId, "abc" } });
 
             // Act
             Guid? writer = BlobCausalityManager.GetWriterAsync(blobMock.Object, CancellationToken.None).GetAwaiter().GetResult();
@@ -89,8 +91,9 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs
         {
             // Arrange
             Guid expected = Guid.NewGuid();
-            Mock<ICloudBlob> blobMock = SetupBlobMock(isFetchSuccess: true);
-            blobMock.Object.Metadata[BlobMetadataKeys.ParentId] = expected.ToString();
+            Mock<BlobBaseClient> blobMock = SetupBlobMock(
+                isFetchSuccess: true,
+                new Dictionary<string, string>() { { BlobMetadataKeys.ParentId, expected.ToString() } });
 
             // Act
             Guid? writer = BlobCausalityManager.GetWriterAsync(blobMock.Object, CancellationToken.None).GetAwaiter().GetResult();
@@ -112,24 +115,25 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs
             Assert.Null(writer);
         }
 
-        private static Mock<ICloudBlob> SetupBlobMock(bool? isFetchSuccess = null)
+        private static Mock<BlobBaseClient> SetupBlobMock(bool? isFetchSuccess = null, Dictionary<string, string> metadata = null)
         {
-            Dictionary<string, string> metadata = new Dictionary<string, string>();
-            var blobMock = new Mock<ICloudBlob>(MockBehavior.Strict);
-            blobMock.Setup(s => s.Metadata).Returns(metadata);
+            if (metadata == null)
+            {
+                metadata = new Dictionary<string, string>();
+            }
+            var blobMock = new Mock<BlobBaseClient>(MockBehavior.Strict);
 
             if (isFetchSuccess.HasValue)
             {
-                var fetchAttributesSetup = blobMock.Setup(s => s.FetchAttributesAsync(It.IsAny<CancellationToken>()));
+                var fetchAttributesSetup = blobMock.Setup(s => s.GetPropertiesAsync(null, It.IsAny<CancellationToken>()));
                 if (isFetchSuccess.Value)
                 {
-                    fetchAttributesSetup.Returns(Task.FromResult(0));
+                    var blobProperties = BlobsModelFactory.BlobProperties(metadata: metadata);
+                    fetchAttributesSetup.Returns(Task.FromResult(Response.FromValue(blobProperties, null)));
                 }
                 else
                 {
-                    RequestResult requestResult = new RequestResult();
-                    requestResult.HttpStatusCode = 404;
-                    StorageException blobNotFoundException = new StorageException(requestResult, String.Empty, null);
+                    var blobNotFoundException = new RequestFailedException(404, string.Empty);
                     fetchAttributesSetup.Throws(blobNotFoundException);
                 }
                 fetchAttributesSetup.Verifiable();

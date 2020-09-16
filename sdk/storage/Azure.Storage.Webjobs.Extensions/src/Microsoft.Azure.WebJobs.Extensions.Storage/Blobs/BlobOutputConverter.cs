@@ -3,29 +3,29 @@
 
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Storage.Blobs.Specialized;
 using Microsoft.Azure.WebJobs.Host.Converters;
-using Microsoft.Azure.Storage.Blob;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs
 {
-    internal class BlobOutputConverter<TInput> : IAsyncObjectToTypeConverter<ICloudBlob>
+    internal class BlobOutputConverter<TInput> : IAsyncObjectToTypeConverter<BlobBaseClient>
         where TInput : class
     {
-        private readonly IAsyncConverter<TInput, ICloudBlob> _innerConverter;
+        private readonly IAsyncConverter<TInput, BlobBaseClient> _innerConverter;
 
-        public BlobOutputConverter(IAsyncConverter<TInput, ICloudBlob> innerConverter)
+        public BlobOutputConverter(IAsyncConverter<TInput, BlobBaseClient> innerConverter)
         {
             _innerConverter = innerConverter;
         }
 
-        public async Task<ConversionResult<ICloudBlob>> TryConvertAsync(object input,
+        public async Task<ConversionResult<BlobBaseClient>> TryConvertAsync(object input,
             CancellationToken cancellationToken)
         {
             TInput typedInput = input as TInput;
 
             if (typedInput == null)
             {
-                return new ConversionResult<ICloudBlob>
+                return new ConversionResult<BlobBaseClient>
                 {
                     Succeeded = false,
                     Result = null
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs
 
             var blob = await _innerConverter.ConvertAsync(typedInput, cancellationToken).ConfigureAwait(false);
 
-            return new ConversionResult<ICloudBlob>
+            return new ConversionResult<BlobBaseClient>
             {
                 Succeeded = true,
                 Result = blob

@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Blobs;
-using Microsoft.Azure.Storage.Blob;
+using Azure.Storage.Blobs.Specialized;
 
 namespace Microsoft.Azure.WebJobs
 {
@@ -22,19 +22,19 @@ namespace Microsoft.Azure.WebJobs
             BindingTemplateExtensions.ValidateContractCompatibility(path.ParameterNames, bindingDataContract);
         }
 
-        public static string GetBlobPath(this ICloudBlob blob)
+        public static string GetBlobPath(this BlobBaseClient blob)
         {
             return ToBlobPath(blob).ToString();
         }
 
-        public static BlobPath ToBlobPath(this ICloudBlob blob)
+        public static BlobPath ToBlobPath(this BlobBaseClient blob)
         {
             if (blob == null)
             {
                 throw new ArgumentNullException(nameof(blob));
             }
 
-            return new BlobPath(blob.Container.Name, blob.Name);
+            return new BlobPath(blob.BlobContainerName, blob.Name);
         }
     }
 }

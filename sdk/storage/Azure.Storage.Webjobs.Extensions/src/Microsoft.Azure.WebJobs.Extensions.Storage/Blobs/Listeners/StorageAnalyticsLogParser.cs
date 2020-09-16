@@ -11,7 +11,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Storage.Blob;
+using Azure.Storage.Blobs.Specialized;
 using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
@@ -75,45 +75,48 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
         /// Then it calls TryParseLogEntry to create a log entry out of every line of supported version and throws
         /// an exception if the parse method returns null.
         /// </remarks>
-        public async Task<IEnumerable<StorageAnalyticsLogEntry>> ParseLogAsync(ICloudBlob blob,
+        public async Task<IEnumerable<StorageAnalyticsLogEntry>> ParseLogAsync(BlobBaseClient blob,
             CancellationToken cancellationToken)
         {
             List<StorageAnalyticsLogEntry> entries = new List<StorageAnalyticsLogEntry>();
 
-            using (TextReader tr = new StreamReader(await blob.OpenReadAsync(cancellationToken).ConfigureAwait(false)))
+            using (Stream content = (await blob.DownloadAsync(cancellationToken).ConfigureAwait(false)).Value.Content)
             {
-                for (int lineNumber = 1; ; lineNumber++)
+                using (TextReader tr = new StreamReader(content))
                 {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string line = await tr.ReadLineAsync().ConfigureAwait(false);
-                    if (line == null)
+                    for (int lineNumber = 1; ; lineNumber++)
                     {
-                        break;
-                    }
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string line = await tr.ReadLineAsync().ConfigureAwait(false);
+                        if (line == null)
+                        {
+                            break;
+                        }
 
-                    Version version = TryParseVersion(line);
-                    if (version == null)
-                    {
-                        string message = String.Format(CultureInfo.CurrentCulture,
-                            "Unable to detect a version of log entry on line {1} of Storage Analytics log file '{0}'.",
-                            blob.Name, lineNumber);
-
-                        _logger.LogWarning(message);
-                    }
-
-                    if (version == supportedVersion)
-                    {
-                        StorageAnalyticsLogEntry entry = TryParseLogEntry(line);
-                        if (entry == null)
+                        Version version = TryParseVersion(line);
+                        if (version == null)
                         {
                             string message = String.Format(CultureInfo.CurrentCulture,
-                                "Unable to parse the log entry on line {1} of Storage Analytics log file '{0}'.",
+                                "Unable to detect a version of log entry on line {1} of Storage Analytics log file '{0}'.",
                                 blob.Name, lineNumber);
 
                             _logger.LogWarning(message);
                         }
 
-                        entries.Add(entry);
+                        if (version == supportedVersion)
+                        {
+                            StorageAnalyticsLogEntry entry = TryParseLogEntry(line);
+                            if (entry == null)
+                            {
+                                string message = String.Format(CultureInfo.CurrentCulture,
+                                    "Unable to parse the log entry on line {1} of Storage Analytics log file '{0}'.",
+                                    blob.Name, lineNumber);
+
+                                _logger.LogWarning(message);
+                            }
+
+                            entries.Add(entry);
+                        }
                     }
                 }
             }

@@ -25,7 +25,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             this.azuriteFixture = azuriteFixture;
         }
 
-        [Fact]
+        [AzuriteFact]
         public async Task Stop_TriggersCancellationToken()
         {
             StorageAccount account = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);

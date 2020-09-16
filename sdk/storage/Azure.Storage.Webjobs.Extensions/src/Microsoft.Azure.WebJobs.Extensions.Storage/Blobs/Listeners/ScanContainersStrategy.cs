@@ -10,8 +10,11 @@ using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Timers;
-using Microsoft.Azure.Storage;
-using Microsoft.Azure.Storage.Blob;
+using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using Azure;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 {
@@ -19,25 +22,25 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
     {
         private static readonly TimeSpan TwoSeconds = TimeSpan.FromSeconds(2);
 
-        private readonly IDictionary<CloudBlobContainer, ICollection<ITriggerExecutor<BlobTriggerExecutorContext>>> _registrations;
-        private readonly IDictionary<CloudBlobContainer, DateTime> _lastModifiedTimestamps;
-        private readonly ConcurrentQueue<ICloudBlob> _blobWrittenNotifications;
+        private readonly IDictionary<BlobContainerClient, ICollection<ITriggerExecutor<BlobTriggerExecutorContext>>> _registrations;
+        private readonly IDictionary<BlobContainerClient, DateTime> _lastModifiedTimestamps;
+        private readonly ConcurrentQueue<BlobWithContainer<BlobBaseClient>> _blobWrittenNotifications;
 
         public ScanContainersStrategy()
         {
-            _registrations = new Dictionary<CloudBlobContainer, ICollection<ITriggerExecutor<BlobTriggerExecutorContext>>>(
+            _registrations = new Dictionary<BlobContainerClient, ICollection<ITriggerExecutor<BlobTriggerExecutorContext>>>(
                 new CloudBlobContainerComparer());
-            _lastModifiedTimestamps = new Dictionary<CloudBlobContainer, DateTime>(
+            _lastModifiedTimestamps = new Dictionary<BlobContainerClient, DateTime>(
                 new CloudBlobContainerComparer());
-            _blobWrittenNotifications = new ConcurrentQueue<ICloudBlob>();
+            _blobWrittenNotifications = new ConcurrentQueue<BlobWithContainer<BlobBaseClient>>();
         }
 
-        public void Notify(ICloudBlob blobWritten)
+        public void Notify(BlobWithContainer<BlobBaseClient> blobWritten)
         {
             _blobWrittenNotifications.Enqueue(blobWritten);
         }
 
-        public Task RegisterAsync(CloudBlobContainer container, ITriggerExecutor<BlobTriggerExecutorContext> triggerExecutor,
+        public Task RegisterAsync(BlobServiceClient blobServiceClient, BlobContainerClient container, ITriggerExecutor<BlobTriggerExecutorContext> triggerExecutor,
             CancellationToken cancellationToken)
         {
             // Register and Execute are not concurrency-safe.
@@ -66,14 +69,14 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 
         public async Task<TaskSeriesCommandResult> ExecuteAsync(CancellationToken cancellationToken)
         {
-            List<ICloudBlob> failedNotifications = new List<ICloudBlob>();
+            List<BlobWithContainer<BlobBaseClient>> failedNotifications = new List<BlobWithContainer<BlobBaseClient>>();
 
             // Drain the background queue of blob written notifications.
             while (true)
             {
                 cancellationToken.ThrowIfCancellationRequested();
 
-                if (!_blobWrittenNotifications.TryDequeue(out ICloudBlob blob))
+                if (!_blobWrittenNotifications.TryDequeue(out var blob))
                 {
                     break;
                 }
@@ -81,24 +84,24 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                 await NotifyRegistrationsAsync(blob, failedNotifications, cancellationToken).ConfigureAwait(false);
             }
 
-            foreach (CloudBlobContainer container in _registrations.Keys)
+            foreach (BlobContainerClient container in _registrations.Keys)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 DateTime lastScanTimestamp = _lastModifiedTimestamps[container];
-                Tuple<IEnumerable<ICloudBlob>, DateTime> newBlobsResult = await PollNewBlobsAsync(container,
+                Tuple<IEnumerable<BlobBaseClient>, DateTime> newBlobsResult = await PollNewBlobsAsync(container,
                     lastScanTimestamp, cancellationToken).ConfigureAwait(false);
-                IEnumerable<ICloudBlob> newBlobs = newBlobsResult.Item1;
+                IEnumerable<BlobBaseClient> newBlobs = newBlobsResult.Item1;
                 _lastModifiedTimestamps[container] = newBlobsResult.Item2;
 
-                foreach (ICloudBlob newBlob in newBlobs)
+                foreach (BlobBaseClient newBlob in newBlobs)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
-                    await NotifyRegistrationsAsync(newBlob, failedNotifications, cancellationToken).ConfigureAwait(false);
+                    await NotifyRegistrationsAsync(new BlobWithContainer<BlobBaseClient>(container, newBlob), failedNotifications, cancellationToken).ConfigureAwait(false);
                 }
             }
 
             // Re-add any failed notifications for the next iteration.
-            foreach (ICloudBlob failedNotification in failedNotifications)
+            foreach (BlobWithContainer<BlobBaseClient> failedNotification in failedNotifications)
             {
                 _blobWrittenNotifications.Enqueue(failedNotification);
             }
@@ -119,18 +122,16 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
         {
         }
 
-        private async Task NotifyRegistrationsAsync(ICloudBlob blob, ICollection<ICloudBlob> failedNotifications,
+        private async Task NotifyRegistrationsAsync(BlobWithContainer<BlobBaseClient> blob, ICollection<BlobWithContainer<BlobBaseClient>> failedNotifications,
             CancellationToken cancellationToken)
         {
-            CloudBlobContainer container = blob.Container;
-
             // Blob written notifications are host-wide, so filter out things that aren't in the container list.
-            if (!_registrations.ContainsKey(container))
+            if (!_registrations.ContainsKey(blob.BlobContainerClient))
             {
                 return;
             }
 
-            foreach (ITriggerExecutor<BlobTriggerExecutorContext> registration in _registrations[container])
+            foreach (ITriggerExecutor<BlobTriggerExecutorContext> registration in _registrations[blob.BlobContainerClient])
             {
                 cancellationToken.ThrowIfCancellationRequested();
 
@@ -150,53 +151,53 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             }
         }
 
-        public static async Task<Tuple<IEnumerable<ICloudBlob>, DateTime>> PollNewBlobsAsync(
-            CloudBlobContainer container, DateTime previousTimestamp, CancellationToken cancellationToken)
+        public static async Task<Tuple<IEnumerable<BlobBaseClient>, DateTime>> PollNewBlobsAsync(
+            BlobContainerClient container, DateTime previousTimestamp, CancellationToken cancellationToken)
         {
             DateTime updatedTimestamp = previousTimestamp;
 
-            IList<IListBlobItem> currentBlobs;
+            IAsyncEnumerable<BlobItem> currentBlobs;
 
             try
             {
-                currentBlobs = (await container.ListBlobsAsync(prefix: null, useFlatBlobListing: true,
-                    cancellationToken: cancellationToken).ConfigureAwait(false)).ToList();
+                currentBlobs = container.GetBlobsAsync(cancellationToken: cancellationToken);
+
+
+                List<BlobBaseClient> newBlobs = new List<BlobBaseClient>();
+
+                // Type cast to IStorageBlob is safe due to useFlatBlobListing: true above.
+                await foreach (BlobItem currentBlob in currentBlobs.ConfigureAwait(false))
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+
+                    var properties = currentBlob.Properties;
+                    DateTime lastModifiedTimestamp = properties.LastModified.Value.UtcDateTime;
+
+                    if (lastModifiedTimestamp > updatedTimestamp)
+                    {
+                        updatedTimestamp = lastModifiedTimestamp;
+                    }
+
+                    if (lastModifiedTimestamp > previousTimestamp)
+                    {
+                        newBlobs.Add(container.GetBlobClient(currentBlob.Name));
+                    }
+                }
+
+                return new Tuple<IEnumerable<BlobBaseClient>, DateTime>(newBlobs, updatedTimestamp);
             }
-            catch (StorageException exception)
+            catch (RequestFailedException exception)
             {
                 if (exception.IsNotFound())
                 {
-                    return new Tuple<IEnumerable<ICloudBlob>, DateTime>(
-                        Enumerable.Empty<ICloudBlob>(), updatedTimestamp);
+                    return new Tuple<IEnumerable<BlobBaseClient>, DateTime>(
+                        Enumerable.Empty<BlobBaseClient>(), updatedTimestamp);
                 }
                 else
                 {
                     throw;
                 }
             }
-
-            List<ICloudBlob> newBlobs = new List<ICloudBlob>();
-
-            // Type cast to IStorageBlob is safe due to useFlatBlobListing: true above.
-            foreach (ICloudBlob currentBlob in currentBlobs)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-
-                var properties = currentBlob.Properties;
-                DateTime lastModifiedTimestamp = properties.LastModified.Value.UtcDateTime;
-
-                if (lastModifiedTimestamp > updatedTimestamp)
-                {
-                    updatedTimestamp = lastModifiedTimestamp;
-                }
-
-                if (lastModifiedTimestamp > previousTimestamp)
-                {
-                    newBlobs.Add(currentBlob);
-                }
-            }
-
-            return new Tuple<IEnumerable<ICloudBlob>, DateTime>(newBlobs, updatedTimestamp);
         }
     }
 }

@@ -6,10 +6,12 @@ using System.Globalization;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Extensions.Storage;
 using Microsoft.Azure.WebJobs.Host.Blobs.Listeners;
-using Microsoft.Azure.Storage.Blob;
 using Newtonsoft.Json.Linq;
 using Xunit;
 using Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Specialized;
+using Microsoft.Azure.WebJobs.Host.TestCommon;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
 {
@@ -22,7 +24,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             this.azuriteFixture = azuriteFixture;
         }
 
-        [Fact]
+        [AzuriteFact]
         public async Task LoadLatestScan_NoContainer_ReturnsNull()
         {
             string hostId = Guid.NewGuid().ToString();
@@ -30,7 +32,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             string containerName = Guid.NewGuid().ToString();
 
             var account = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
-            var client = account.CreateCloudBlobClient();
+            var client = account.CreateBlobServiceClient();
 
             // by default there is no table in this client
             var manager = new StorageBlobScanInfoManager(hostId, client);
@@ -40,7 +42,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             Assert.Null(result);
         }
 
-        [Fact]
+        [AzuriteFact]
         public async Task LoadLatestScan_NoBlob_ReturnsNull()
         {
             string hostId = Guid.NewGuid().ToString();
@@ -48,8 +50,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             string containerName = Guid.NewGuid().ToString();
 
             var account = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
-            var client = account.CreateCloudBlobClient();
-            var container = client.GetContainerReference(HostContainerNames.Hosts);
+            var client = account.CreateBlobServiceClient();
+            var container = client.GetBlobContainerClient(HostContainerNames.Hosts);
             await container.CreateIfNotExistsAsync();
 
             var manager = new StorageBlobScanInfoManager(hostId, client);
@@ -59,7 +61,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             Assert.Null(result);
         }
 
-        [Fact]
+        [AzuriteFact]
         public async Task LoadLatestScan_Returns_Timestamp()
         {
             string hostId = "host-" + Guid.NewGuid().ToString();
@@ -67,8 +69,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             string containerName = "container-" + Guid.NewGuid().ToString();
 
             var account = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
-            var client = account.CreateCloudBlobClient();
-            var container = client.GetContainerReference(HostContainerNames.Hosts);
+            var client = account.CreateBlobServiceClient();
+            var container = client.GetBlobContainerClient(HostContainerNames.Hosts);
             await container.CreateIfNotExistsAsync();
             DateTime now = DateTime.UtcNow;
             var blob = GetBlockBlobReference(client, hostId, storageAccountName, containerName);
@@ -81,7 +83,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             Assert.Equal(now, result);
         }
 
-        [Fact]
+        [AzuriteFact]
         public async Task UpdateLatestScan_Inserts()
         {
             string hostId = Guid.NewGuid().ToString();
@@ -89,8 +91,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             string containerName = Guid.NewGuid().ToString();
 
             var account = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
-            var client = account.CreateCloudBlobClient();
-            var container = client.GetContainerReference(HostContainerNames.Hosts);
+            var client = account.CreateBlobServiceClient();
+            var container = client.GetBlobContainerClient(HostContainerNames.Hosts);
             await container.CreateIfNotExistsAsync();
             DateTime now = DateTime.UtcNow;
 
@@ -106,7 +108,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             Assert.Equal(now, await manager.LoadLatestScanAsync(storageAccountName, containerName));
         }
 
-        [Fact]
+        [AzuriteFact]
         public async Task UpdateLatestScan_Updates()
         {
             string hostId = Guid.NewGuid().ToString();
@@ -114,8 +116,8 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             string containerName = Guid.NewGuid().ToString();
 
             var account = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
-            var client = account.CreateCloudBlobClient();
-            var container = client.GetContainerReference(HostContainerNames.Hosts);
+            var client = account.CreateBlobServiceClient();
+            var container = client.GetBlobContainerClient(HostContainerNames.Hosts);
             await container.CreateIfNotExistsAsync();
 
             DateTime now = DateTime.UtcNow;
@@ -136,13 +138,13 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             Assert.Equal(now, await manager.LoadLatestScanAsync(storageAccountName, containerName));
         }
 
-        private CloudBlockBlob GetBlockBlobReference(CloudBlobClient blobClient, string hostId, string storageAccountName, string containerName)
+        private BlockBlobClient GetBlockBlobReference(BlobServiceClient blobClient, string hostId, string storageAccountName, string containerName)
         {
             string blobScanInfoDirectoryPath = string.Format(CultureInfo.InvariantCulture, "blobscaninfo/{0}", hostId);
-            var blobScanInfoDirectory = blobClient.GetContainerReference(HostContainerNames.Hosts).GetDirectoryReference(blobScanInfoDirectoryPath);
+            var blobScanInfoDirectory = blobClient.GetBlobContainerClient(HostContainerNames.Hosts);
 
             string blobName = string.Format(CultureInfo.InvariantCulture, "{0}/{1}/scanInfo", storageAccountName, containerName);
-            return blobScanInfoDirectory.SafeGetBlockBlobReference(blobName);
+            return blobScanInfoDirectory.SafeGetBlockBlobReference(blobScanInfoDirectoryPath, blobName);
         }
     }
 }

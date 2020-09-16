@@ -106,7 +106,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                 BlobQueueRegistration registration = null;
                 if (_executor.TryGetRegistration(blobTriggerMessage.FunctionId, out registration))
                 {
-                    var poisonQueue = registration.QueueClient.GetQueueClient(HostQueueNames.BlobTriggerPoisonQueue);
+                    var poisonQueue = registration.QueueServiceClient.GetQueueClient(HostQueueNames.BlobTriggerPoisonQueue);
                     return poisonQueue;
                 }
 

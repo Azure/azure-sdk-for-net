@@ -6,6 +6,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Blobs.Listeners;
 using Microsoft.Azure.WebJobs.Host.Converters;
@@ -16,7 +19,6 @@ using Microsoft.Azure.WebJobs.Host.Queues.Listeners;
 using Microsoft.Azure.WebJobs.Host.Timers;
 using Microsoft.Azure.WebJobs.Host.Triggers;
 using Microsoft.Extensions.Logging;
-using Microsoft.Azure.Storage.Blob;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs.Triggers
 {
@@ -25,7 +27,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Triggers
         private readonly ParameterInfo _parameter;
         private readonly StorageAccount _hostAccount;
         private readonly StorageAccount _dataAccount;
-        private readonly CloudBlobClient _blobClient;
+        private readonly BlobServiceClient _blobClient;
         private readonly string _accountName;
         private readonly IBlobPathSource _path;
         private readonly IHostIdProvider _hostIdProvider;
@@ -36,7 +38,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Triggers
         private readonly SharedQueueWatcher _messageEnqueuedWatcherSetter;
         private readonly ISharedContextProvider _sharedContextProvider;
         private readonly ILoggerFactory _loggerFactory;
-        private readonly IAsyncObjectToTypeConverter<ICloudBlob> _converter;
+        private readonly IAsyncObjectToTypeConverter<BlobBaseClient> _converter;
         private readonly IReadOnlyDictionary<string, Type> _bindingDataContract;
         private readonly IHostSingletonManager _singletonManager;
 
@@ -58,8 +60,8 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Triggers
             _hostAccount = hostAccount ?? throw new ArgumentNullException(nameof(hostAccount));
             _dataAccount = dataAccount ?? throw new ArgumentNullException(nameof(dataAccount));
 
-            _blobClient = dataAccount.CreateCloudBlobClient();
-            _accountName = BlobClient.GetAccountName(_blobClient);
+            _blobClient = dataAccount.CreateBlobServiceClient();
+            _accountName = _blobClient.AccountName;
             _path = path ?? throw new ArgumentNullException(nameof(path));
             _hostIdProvider = hostIdProvider ?? throw new ArgumentNullException(nameof(hostIdProvider));
             _queueOptions = queueOptions ?? throw new ArgumentNullException(nameof(queueOptions));
@@ -78,7 +80,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Triggers
         {
             get
             {
-                return typeof(ICloudBlob);
+                return typeof(BlobBaseClient);
             }
         }
 
@@ -124,13 +126,13 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Triggers
             return contract;
         }
 
-        private IReadOnlyDictionary<string, object> CreateBindingData(ICloudBlob value)
+        private IReadOnlyDictionary<string, object> CreateBindingData(BlobBaseClient value, BlobProperties blobProperties)
         {
             var bindingData = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
             bindingData.Add("BlobTrigger", value.GetBlobPath());
             bindingData.Add("Uri", value.Uri);
-            bindingData.Add("Properties", value.Properties);
-            bindingData.Add("Metadata", value.Metadata);
+            bindingData.Add("Properties", blobProperties);
+            bindingData.Add("Metadata", blobProperties.Metadata);
 
             IReadOnlyDictionary<string, object> bindingDataFromPath = _path.CreateBindingData(value.ToBlobPath());
 
@@ -145,23 +147,25 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Triggers
             return bindingData;
         }
 
-        private static IAsyncObjectToTypeConverter<ICloudBlob> CreateConverter(CloudBlobClient client)
+        private static IAsyncObjectToTypeConverter<BlobBaseClient> CreateConverter(BlobServiceClient client)
         {
-            return new CompositeAsyncObjectToTypeConverter<ICloudBlob>(
-                new BlobOutputConverter<ICloudBlob>(new AsyncConverter<ICloudBlob, ICloudBlob>(new IdentityConverter<ICloudBlob>())),
+            return new CompositeAsyncObjectToTypeConverter<BlobBaseClient>(
+                new BlobOutputConverter<BlobBaseClient>(new AsyncConverter<BlobBaseClient, BlobBaseClient>(new IdentityConverter<BlobBaseClient>())),
                 new BlobOutputConverter<string>(new StringToCloudBlobConverter(client)));
         }
 
         public async Task<ITriggerData> BindAsync(object value, ValueBindingContext context)
         {
-            ConversionResult<ICloudBlob> conversionResult = await _converter.TryConvertAsync(value, context.CancellationToken).ConfigureAwait(false);
+            ConversionResult<BlobBaseClient> conversionResult = await _converter.TryConvertAsync(value, context.CancellationToken).ConfigureAwait(false);
 
             if (!conversionResult.Succeeded)
             {
                 throw new InvalidOperationException("Unable to convert trigger to IStorageBlob.");
             }
 
-            IReadOnlyDictionary<string, object> bindingData = CreateBindingData(conversionResult.Result);
+            BlobBaseClient blobClient = conversionResult.Result;
+            BlobProperties blobProperties = await blobClient.FetchPropertiesOrNullIfNotExistAsync(cancellationToken: context.CancellationToken).ConfigureAwait(false);
+            IReadOnlyDictionary<string, object> bindingData = CreateBindingData(blobClient, blobProperties);
 
             return new TriggerData(bindingData);
         }
@@ -173,7 +177,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Triggers
                 throw new ArgumentNullException(nameof(context));
             }
 
-            var container = _blobClient.GetContainerReference(_path.ContainerNamePattern);
+            var container = _blobClient.GetBlobContainerClient(_path.ContainerNamePattern);
 
             var factory = new BlobListenerFactory(_hostIdProvider, _queueOptions, _blobsOptions, _exceptionHandler,
                 _blobWrittenWatcherSetter, _messageEnqueuedWatcherSetter, _sharedContextProvider, _loggerFactory,

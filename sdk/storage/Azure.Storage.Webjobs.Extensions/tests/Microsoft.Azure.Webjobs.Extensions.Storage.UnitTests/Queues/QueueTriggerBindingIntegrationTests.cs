@@ -38,7 +38,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
                 null, null);
         }
 
-        [Theory]
+        [AzuriteTheory]
         [InlineData("RequestId", "4b957741-c22e-471d-9f0f-e1e8534b9cb6")]
         [InlineData("RequestReceivedTime", "8/16/2014 12:09:36 AM")]
         [InlineData("DeliveryCount", "8")]
@@ -53,7 +53,6 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             object convertedPropertyValue = parseMethod.Invoke(null, new object[] { userPropertyValue });
             userProperty.SetValue(expectedObject, convertedPropertyValue);
             string messageContent = JsonConvert.SerializeObject(expectedObject);
-            // CloudQueueMessage message = new CloudQueueMessage(messageContent); // TODO (kasobol-msft) check this.
 
             // Act
             ITriggerData data = _binding.BindAsync(messageContent, null).GetAwaiter().GetResult();

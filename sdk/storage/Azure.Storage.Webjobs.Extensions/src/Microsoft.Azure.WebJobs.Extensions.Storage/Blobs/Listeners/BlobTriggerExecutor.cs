@@ -6,7 +6,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Storage.Blob;
+using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Protocols;
@@ -23,25 +24,23 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
         private readonly FunctionDescriptor _functionDescriptor;
         private readonly IBlobPathSource _input;
         private readonly IBlobTriggerQueueWriter _queueWriter;
-        private readonly IBlobETagReader _eTagReader;
         private readonly IBlobReceiptManager _receiptManager;
         private readonly ILogger<BlobListener> _logger;
 
-        public BlobTriggerExecutor(string hostId, FunctionDescriptor functionDescriptor, IBlobPathSource input, IBlobETagReader eTagReader,
+        public BlobTriggerExecutor(string hostId, FunctionDescriptor functionDescriptor, IBlobPathSource input,
             IBlobReceiptManager receiptManager, IBlobTriggerQueueWriter queueWriter, ILogger<BlobListener> logger)
         {
             _hostId = hostId;
             _functionDescriptor = functionDescriptor;
             _input = input;
             _queueWriter = queueWriter;
-            _eTagReader = eTagReader;
             _receiptManager = receiptManager;
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task<FunctionResult> ExecuteAsync(BlobTriggerExecutorContext context, CancellationToken cancellationToken)
         {
-            ICloudBlob value = context.Blob;
+            BlobBaseClient value = context.Blob.BlobClient;
             BlobTriggerSource triggerSource = context.TriggerSource;
             string pollId = context.PollId;
 
@@ -58,7 +57,12 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             }
 
             // Next, check to see if the blob currently exists (and, if so, what the current ETag is).
-            string possibleETag = await _eTagReader.GetETagAsync(value, cancellationToken).ConfigureAwait(false);
+            BlobProperties blobProperties = await value.FetchPropertiesOrNullIfNotExistAsync(cancellationToken).ConfigureAwait(false);
+            string possibleETag = null;
+            if (blobProperties != null)
+            {
+                possibleETag = blobProperties.ETag.ToString();
+            }
 
             if (possibleETag == null)
             {
@@ -68,7 +72,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                 return new FunctionResult(true);
             }
 
-            var receiptBlob = _receiptManager.CreateReference(_hostId, _functionDescriptor.Id, value.Container.Name,
+            var receiptBlob = _receiptManager.CreateReference(_hostId, _functionDescriptor.Id, value.BlobContainerName,
                 value.Name, possibleETag);
 
             // Check for the completed receipt. If it's already there, noop.
@@ -122,8 +126,8 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                 BlobTriggerMessage message = new BlobTriggerMessage
                 {
                     FunctionId = _functionDescriptor.Id,
-                    BlobType = value.BlobType,
-                    ContainerName = value.Container.Name,
+                    BlobType = blobProperties.BlobType,
+                    ContainerName = value.BlobContainerName,
                     BlobName = value.Name,
                     ETag = possibleETag
                 };

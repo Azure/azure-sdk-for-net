@@ -6,8 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Timers;
-using Microsoft.Azure.Storage.Blob;
 using Microsoft.Extensions.Logging;
+using Azure.Storage.Blobs;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 {
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             get { return _strategy; }
         }
 
-        public Task RegisterAsync(CloudBlobContainer container, ITriggerExecutor<BlobTriggerExecutorContext> triggerExecutor,
+        public Task RegisterAsync(BlobServiceClient blobServiceClient, BlobContainerClient container, ITriggerExecutor<BlobTriggerExecutorContext> triggerExecutor,
             CancellationToken cancellationToken)
         {
             if (_started)
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                     "Registrations may not be added while the shared listener is running.");
             }
 
-            return _strategy.RegisterAsync(container, triggerExecutor, cancellationToken);
+            return _strategy.RegisterAsync(blobServiceClient, container, triggerExecutor, cancellationToken);
         }
 
         public Task EnsureAllStartedAsync(CancellationToken cancellationToken)
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
         {
             if (!account.IsDevelopmentStorageAccount())
             {
-                IBlobScanInfoManager scanInfoManager = new StorageBlobScanInfoManager(hostId, account.CreateCloudBlobClient());
+                IBlobScanInfoManager scanInfoManager = new StorageBlobScanInfoManager(hostId, account.CreateBlobServiceClient());
                 return new ScanBlobScanLogHybridPollingStrategy(scanInfoManager, exceptionHandler, logger);
             }
             else

@@ -25,10 +25,10 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests
             {
                 "Azure.Core",
                 "Azure.Storage.Queues",
-                "Microsoft.Azure.Storage.Blob",
-                "Microsoft.Azure.Storage.Common",
+                "Azure.Storage.Blobs",
                 "Microsoft.Azure.WebJobs",
                 "Microsoft.Azure.WebJobs.Host",
+                "Microsoft.Bcl.AsyncInterfaces",
                 "Microsoft.Extensions.Configuration.Abstractions",
                 "Microsoft.Extensions.DependencyInjection.Abstractions",
                 "Microsoft.Extensions.Hosting.Abstractions",
@@ -36,7 +36,8 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests
                 "Microsoft.Extensions.Options",
                 "netstandard",
                 "Newtonsoft.Json",
-                "System.ComponentModel.Annotations"
+                "System.ComponentModel.Annotations",
+                "System.Threading.Tasks.Extensions"
             }.OrderBy(n => n);
 
             var namesString = string.Concat(names.Select(n => n.ToString() + ","));

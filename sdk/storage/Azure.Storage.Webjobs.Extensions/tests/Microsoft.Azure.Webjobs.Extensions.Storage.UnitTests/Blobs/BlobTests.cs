@@ -5,11 +5,12 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Azure.Storage.Blob;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Xunit;
 using Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests;
 using Azure.Storage.Queues;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Specialized;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
@@ -27,7 +28,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             this.azuriteFixture = azuriteFixture;
         }
 
-        [Fact]
+        [AzuriteFact]
         public async Task Blob_IfBoundToCloudBlockBlob_BindsAndCreatesContainerButNotBlob()
         {
             // Act
@@ -51,15 +52,15 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             // Assert
             Assert.NotNull(result);
             Assert.Equal(BlobName, result.Name);
-            Assert.NotNull(result.Container);
-            Assert.Equal(ContainerName, result.Container.Name);
-            CloudBlobContainer container = GetContainerReference(account, ContainerName);
+            Assert.NotNull(result.BlobContainerName);
+            Assert.Equal(ContainerName, result.BlobContainerName);
+            var container = GetContainerReference(account, ContainerName);
             Assert.True(await container.ExistsAsync());
-            CloudBlockBlob blob = container.GetBlockBlobReference(BlobName);
+            var blob = container.GetBlockBlobClient(BlobName);
             Assert.False(await blob.ExistsAsync());
         }
 
-        [Fact]
+        [AzuriteFact]
         public async Task Blob_IfBoundToTextWriter_CreatesBlob()
         {
             // Arrange
@@ -73,11 +74,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             await RunTrigger(account, typeof(BindToTextWriterProgram));
 
             // Assert
-            CloudBlobContainer container = GetContainerReference(account, ContainerName);
+            var container = GetContainerReference(account, ContainerName);
             Assert.True(await container.ExistsAsync());
-            CloudBlockBlob blob = container.GetBlockBlobReference(BlobName);
+            var blob = container.GetBlockBlobClient(BlobName);
             Assert.True(await blob.ExistsAsync());
-            string content = blob.DownloadText();
+            string content = await blob.DownloadTextAsync();
             Assert.Equal(expectedContent, content);
         }
 
@@ -89,10 +90,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             return queue;
         }
 
-        private static CloudBlobContainer GetContainerReference(StorageAccount account, string containerName)
+        private static BlobContainerClient GetContainerReference(StorageAccount account, string containerName)
         {
-            var client = account.CreateCloudBlobClient();
-            return client.GetContainerReference(ContainerName);
+            var client = account.CreateBlobServiceClient();
+            return client.GetBlobContainerClient(ContainerName);
         }
 
         private static async Task RunTrigger(StorageAccount account, Type programType)
@@ -108,10 +109,10 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
         private class BindToCloudBlockBlobProgram
         {
-            public CloudBlockBlob Result { get; set; }
+            public BlockBlobClient Result { get; set; }
 
             public void Run(
-                [Blob(BlobPath)] CloudBlockBlob blob)
+                [Blob(BlobPath)] BlockBlobClient blob)
             {
                 this.Result = blob;
             }

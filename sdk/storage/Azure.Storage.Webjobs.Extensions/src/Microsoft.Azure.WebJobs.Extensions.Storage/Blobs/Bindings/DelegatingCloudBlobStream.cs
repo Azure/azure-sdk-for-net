@@ -5,16 +5,14 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Storage;
-using Microsoft.Azure.Storage.Blob;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
 {
-    internal class DelegatingCloudBlobStream : CloudBlobStream
+    internal class DelegatingCloudBlobStream : Stream
     {
-        private readonly CloudBlobStream _inner;
+        private readonly Stream _inner;
 
-        public DelegatingCloudBlobStream(CloudBlobStream inner)
+        public DelegatingCloudBlobStream(Stream inner)
         {
             _inner = inner;
         }
@@ -142,36 +140,6 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
         public override void WriteByte(byte value)
         {
             _inner.WriteByte(value);
-        }
-
-        public override Task CommitAsync()
-        {
-            return _inner.CommitAsync();
-        }
-
-        public override void Commit()
-        {
-            _inner.Commit();
-        }
-
-        public override ICancellableAsyncResult BeginCommit(AsyncCallback callback, object state)
-        {
-            return _inner.BeginCommit(callback, state);
-        }
-
-        public override void EndCommit(IAsyncResult asyncResult)
-        {
-            _inner.EndCommit(asyncResult);
-        }
-
-        public override ICancellableAsyncResult BeginFlush(AsyncCallback callback, object state)
-        {
-            return _inner.BeginFlush(callback, state);
-        }
-
-        public override void EndFlush(IAsyncResult asyncResult)
-        {
-            _inner.EndFlush(asyncResult);
         }
     }
 }
