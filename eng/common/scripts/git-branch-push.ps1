@@ -25,7 +25,10 @@ param(
     [string] $GitUrl,
 
     [Parameter(Mandatory = $false)]
-    [string] $PushArgs = ""
+    [string] $PushArgs = "",
+
+    [Parameter(Mandatory = $false)]
+    [string] $SkipCommit = $false
 )
 
 # This is necessay because of the janky git command output writing to stderr.
@@ -57,12 +60,14 @@ if ($LASTEXITCODE -ne 0)
     exit $LASTEXITCODE
 }
 
-Write-Host "git -c user.name=`"azure-sdk`" -c user.email=`"azuresdk@microsoft.com`" commit -am `"$($CommitMsg)`""
-git -c user.name="azure-sdk" -c user.email="azuresdk@microsoft.com" commit -am "$($CommitMsg)"
-if ($LASTEXITCODE -ne 0)
-{
-    Write-Error "Unable to add files and create commit LASTEXITCODE=$($LASTEXITCODE), see command output above."
-    exit $LASTEXITCODE
+if (!$SkipCommit) {
+    Write-Host "git -c user.name=`"azure-sdk`" -c user.email=`"azuresdk@microsoft.com`" commit -am `"$($CommitMsg)`""
+    git -c user.name="azure-sdk" -c user.email="azuresdk@microsoft.com" commit -am "$($CommitMsg)"
+    if ($LASTEXITCODE -ne 0)
+    {
+        Write-Error "Unable to add files and create commit LASTEXITCODE=$($LASTEXITCODE), see command output above."
+        exit $LASTEXITCODE
+    }
 }
 
 # The number of retries can be increased if necessary. In theory, the number of retries
