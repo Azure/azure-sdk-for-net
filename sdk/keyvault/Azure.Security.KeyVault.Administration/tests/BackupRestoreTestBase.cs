@@ -27,16 +27,20 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Sanitizer = new BackupRestoreRecordedTestSanitizer();
         }
 
-        private KeyVaultBackupClient GetClient(TestRecording recording = null)
+        internal KeyVaultBackupClient GetClient(TestRecording recording = null, bool isInstrumented = true)
         {
             recording ??= Recording;
 
-            return InstrumentClient
-                (new KeyVaultBackupClient(
-                    new Uri(TestEnvironment.KeyVaultUrl),
-                    TestEnvironment.Credential,
-                    recording.InstrumentClientOptions(new KeyVaultBackupClientOptions())));
-
+            var client = new KeyVaultBackupClient(
+                new Uri(TestEnvironment.KeyVaultUrl),
+                new Identity.DefaultAzureCredential(new Identity.DefaultAzureCredentialOptions { SharedTokenCacheTenantId = "f686d426-8d16-42db-81b7-ab578e110ccd", VisualStudioTenantId = "f686d426-8d16-42db-81b7-ab578e110ccd" }),
+                //TestEnvironment.Credential,
+                isInstrumented ? recording.InstrumentClientOptions(new KeyVaultBackupClientOptions()) : new KeyVaultBackupClientOptions());
+            if (isInstrumented)
+            {
+                InstrumentClient(client);
+            }
+            return client;
         }
 
 
