@@ -314,6 +314,138 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubProducerClient.ReadPartitionPublishingPropertiesAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ReadPartitionPublishingPropertiesAsyncValidatesNotClosed()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
+            var producer = new EventHubProducerClient(connectionString);
+            await producer.CloseAsync(cancellationSource.Token);
+
+            Assert.That(async () => await producer.ReadPartitionPublishingPropertiesAsync("0", cancellationSource.Token), Throws.InstanceOf<EventHubsException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubProducerClient.ReadPartitionPublishingPropertiesAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(null)]
+        [TestCase("")]
+        public void ReadPartitionPublishingPropertiesAsyncValidatesThePartition(string partitionId)
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var producer = new EventHubProducerClient(new MockConnection());
+            Assert.That(async () => await producer.ReadPartitionPublishingPropertiesAsync(partitionId, cancellationSource.Token), Throws.InstanceOf<ArgumentException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubProducerClient.ReadPartitionPublishingPropertiesAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ReadPartitionPublishingPropertiesAsyncInitializesPartitionState()
+        {
+            var expectedPartition = "5";
+            var expectedProperties = new PartitionPublishingProperties(true, 123, 456, 798);
+            var mockTransport = new Mock<TransportProducer>();
+            var connection = new MockConnection(() => mockTransport.Object);
+
+            var clientOptions = new EventHubProducerClientOptions
+            {
+                EnableIdempotentPartitions = true
+            };
+
+            clientOptions.PartitionOptions.Add("0", new PartitionPublishingOptions());
+            clientOptions.PartitionOptions.Add("1", new PartitionPublishingOptions());
+
+            clientOptions.PartitionOptions.Add(expectedPartition, new PartitionPublishingOptions
+            {
+               ProducerGroupId = 999,
+               OwnerLevel = 999,
+               StartingSequenceNumber = 999
+            });
+
+            var producer = new EventHubProducerClient(connection, clientOptions);
+
+            mockTransport
+                .Setup(transportProducer => transportProducer.ReadInitializationPublishingPropertiesAsync(It.IsAny<CancellationToken>()))
+                .ReturnsAsync(expectedProperties)
+                .Verifiable();
+
+            var partitionStateCollection = GetPartitionState(producer);
+            Assert.That(partitionStateCollection, Is.Not.Null, "The collection for partition state should have been initialized with the client.");
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            await producer.ReadPartitionPublishingPropertiesAsync(expectedPartition, cancellationSource.Token);
+
+            Assert.That(partitionStateCollection.TryGetValue(expectedPartition, out var partitionState), Is.True, "The state collection should have an entry for the partition.");
+            Assert.That(partitionState.ProducerGroupId, Is.EqualTo(expectedProperties.ProducerGroupId), "The producer group should match.");
+            Assert.That(partitionState.OwnerLevel, Is.EqualTo(expectedProperties.OwnerLevel), "The owner level should match.");
+            Assert.That(partitionState.LastPublishedSequenceNumber, Is.EqualTo(expectedProperties.LastPublishedSequenceNumber), "The sequence number should match.");
+
+            mockTransport.VerifyAll();
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubProducerClient.ReadPartitionPublishingPropertiesAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ReadPartitionPublishingPropertiesAsyncReturnsPartitionState()
+        {
+            var expectedPartition = "5";
+            var expectedProperties = new PartitionPublishingProperties(true, 123, 456, 798);
+            var mockTransport = new Mock<TransportProducer>();
+            var connection = new MockConnection(() => mockTransport.Object);
+
+            var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions
+            {
+                EnableIdempotentPartitions = true
+            });
+
+            var partitionStateCollection = GetPartitionState(producer);
+            Assert.That(partitionStateCollection, Is.Not.Null, "The collection for partition state should have been initialized with the client.");
+
+            partitionStateCollection[expectedPartition] = new PartitionPublishingState(expectedPartition)
+            {
+                ProducerGroupId = expectedProperties.ProducerGroupId,
+                OwnerLevel = expectedProperties.OwnerLevel,
+                LastPublishedSequenceNumber = expectedProperties.LastPublishedSequenceNumber
+            };
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var readProperties = await producer.ReadPartitionPublishingPropertiesAsync(expectedPartition, cancellationSource.Token);
+
+            Assert.That(readProperties, Is.Not.Null, "The read properties should have been created.");
+            Assert.That(readProperties.ProducerGroupId, Is.EqualTo(expectedProperties.ProducerGroupId), "The producer group should match.");
+            Assert.That(readProperties.OwnerLevel, Is.EqualTo(expectedProperties.OwnerLevel), "The owner level should match.");
+            Assert.That(readProperties.LastPublishedSequenceNumber, Is.EqualTo(expectedProperties.LastPublishedSequenceNumber), "The sequence number should match.");
+
+            mockTransport
+                .Verify(transportProducer => transportProducer.ReadInitializationPublishingPropertiesAsync(
+                    It.IsAny<CancellationToken>()),
+                Times.Never,
+                "Partition state should not have been initialized twice.");
+        }
+
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="EventHubProducerClient.SendAsync" />
         ///   method.
         /// </summary>
@@ -519,7 +651,9 @@ namespace Azure.Messaging.EventHubs.Tests
             (IEnumerable<EventData> calledWithEvents, SendEventOptions calledWithOptions) = transportProducer.SendCalledWith;
 
             Assert.That(calledWithEvents, Is.EquivalentTo(events), "The events should contain same elements.");
-            Assert.That(calledWithOptions, Is.SameAs(options), "The options should be the same instance");
+            Assert.That(calledWithOptions, Is.Not.SameAs(options), "The options should not be the same instance.");
+            Assert.That(calledWithOptions.PartitionId, Is.EqualTo(options.PartitionId), "The partition id of the options should match.");
+            Assert.That(calledWithOptions.PartitionKey, Is.SameAs(options.PartitionKey), "The partition key of the options should match.");
         }
 
         /// <summary>
@@ -583,7 +717,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var events = EventGenerator.CreateEvents(5).Select(item =>
             {
                item.PendingPublishSequenceNumber = 5;
-               item.CommitPublishingSequenceNumber();
+               item.CommitPublishingState();
 
                return item;
             });
@@ -1137,7 +1271,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var events = EventGenerator.CreateEvents(5).Skip(4).Select(item =>
             {
                item.PendingPublishSequenceNumber = 5;
-               item.CommitPublishingSequenceNumber();
+               item.CommitPublishingState();
 
                return item;
             });
@@ -2292,7 +2426,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var cancellationTokenSource = new CancellationTokenSource();
 
             transportProducer
-                .Setup(transportProducer => transportProducer.SendAsync(events, options, cancellationTokenSource.Token))
+                .Setup(transportProducer => transportProducer.SendAsync(events, It.Is<SendEventOptions>(paramOptions => paramOptions.PartitionId == options.PartitionId), cancellationTokenSource.Token))
                 .Throws(embeddedException);
 
             Assert.That(async () => await producerClient.SendAsync(events, options, cancellationTokenSource.Token), Throws.InstanceOf<OperationCanceledException>());
@@ -2517,7 +2651,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             public override long MaximumSizeInBytes { get; }
             public override long SizeInBytes { get; }
-            public override int? StartingPublishedSequenceNumber { get; set; }
+            public override bool ReserveSpaceForSequenceNumber { get; }
             public override int Count => Events.Count;
             public override IEnumerable<T> AsEnumerable<T>() => (IEnumerable<T>)Events;
             public override void Clear() => Events.Clear();

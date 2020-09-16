@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Microsoft.Azure.Services.AppAuthentication
 {
     /// <summary>
-    /// Gets a token using Azure VM or App Services MSI. 
+    /// Gets a token using Azure VM or App Services MSI.
     /// https://docs.microsoft.com/en-us/azure/active-directory/msi-overview
     /// </summary>
     internal class MsiAccessTokenProvider : NonInteractiveAzureServiceTokenProviderBase
@@ -40,7 +40,6 @@ namespace Microsoft.Azure.Services.AppAuthentication
                     }
                     else
                     {
-
 #if NETSTANDARD1_4 || net452 || net461
                         var httpClientHandler = new HttpClientHandler();
 #else
@@ -75,7 +74,14 @@ namespace Microsoft.Azure.Services.AppAuthentication
         private readonly string _managedIdentityClientId;
 
         // Azure Instance Metadata Service (IMDS) endpoint
-        private const string AzureVmImdsEndpoint = "http://169.254.169.254/metadata/identity/oauth2/token";
+        private const string ImdsEndpoint = "http://169.254.169.254";
+        private const string ImdsInstanceRoute = "/metadata/instance";
+        private const string ImdsTokenRoute = "/metadata/identity/oauth2/token";
+        private const string ImdsInstanceApiVersion = "2020-06-01";
+        private const string ImdsTokenApiVersion = "2019-11-01";
+
+        // Azure App Services MSI endpoint constants
+        private const string AppServicesApiVersion = "2019-08-01";
 
         // Each environment require different header
         internal const string AppServicesHeader = "X-IDENTITY-HEADER";
@@ -83,7 +89,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         internal const string ServiceFabricHeader = "secret";
 
         // Timeout for Azure IMDS probe request
-        internal const int AzureVmImdsProbeTimeoutInSeconds = 2;
+        internal const int AzureVmImdsProbeTimeoutInSeconds = 3;
         private readonly TimeSpan AzureVmImdsProbeTimeout = TimeSpan.FromSeconds(AzureVmImdsProbeTimeoutInSeconds);
 
         // Configurable timeout for MSI retry logic
@@ -136,7 +142,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
                     using (var internalTokenSource = new CancellationTokenSource())
                     using (var linkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(internalTokenSource.Token, cancellationToken))
                     {
-                        HttpRequestMessage imdsProbeRequest = new HttpRequestMessage(HttpMethod.Get, AzureVmImdsEndpoint);
+                        string probeRequestUrl = $"{ImdsEndpoint}{ImdsInstanceRoute}?api-version={ImdsInstanceApiVersion}";
+                        HttpRequestMessage imdsProbeRequest = new HttpRequestMessage(HttpMethod.Get, probeRequestUrl);
 
                         try
                         {
@@ -150,7 +157,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                             if (internalTokenSource.Token.IsCancellationRequested)
                             {
                                 throw new AzureServiceTokenProviderException(ConnectionString, resource, authority,
-                                    $"{AzureServiceTokenProviderException.ManagedServiceIdentityUsed} {AzureServiceTokenProviderException.MsiEndpointNotListening}");
+                                    $"{AzureServiceTokenProviderException.ManagedServiceIdentityUsed} {AzureServiceTokenProviderException.MetadataEndpointNotListening}");
                             }
 
                             throw;
@@ -179,11 +186,11 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 {
                     case MsiEnvironment.AppServices:
                         endpoint = msiEndpoint;
-                        apiVersion = "2019-08-01";
+                        apiVersion = AppServicesApiVersion;
                         break;
                     case MsiEnvironment.Imds:
-                        endpoint = AzureVmImdsEndpoint;
-                        apiVersion = "2018-02-01";
+                        endpoint = $"{ImdsEndpoint}{ImdsTokenRoute}";
+                        apiVersion = ImdsTokenApiVersion;
                         break;
                     case MsiEnvironment.ServiceFabric:
                         endpoint = msiEndpoint;

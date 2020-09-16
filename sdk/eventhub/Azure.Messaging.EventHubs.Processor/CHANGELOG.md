@@ -1,6 +1,14 @@
 # Release History
 
-## 5.3.0-beta.1 (Unreleased)
+## 5.3.0-beta.2 (Unreleased)
+
+## 5.3.0-beta.1 (2020-09-15)
+
+### Changes
+
+#### New Features
+
+- Introduction of an option for the various event consumers allowing the prefetch cache to be filled based on a size-based heuristic rather than a count of events.  This feature is considered a special case, helpful in scenarios where the size of events being read is not able to be known or predicted upfront and limiting resource use is valued over consistent and predictable performance.
 
 ## 5.2.0 (2020-09-08)
 
