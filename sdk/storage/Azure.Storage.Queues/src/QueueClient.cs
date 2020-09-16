@@ -1721,8 +1721,8 @@ namespace Azure.Storage.Queues
             ReceiveMessagesInternal(
                 maxMessages,
                 visibilityTimeout,
-                false, // async
                 $"{nameof(QueueClient)}.{nameof(ReceiveMessages)}",
+                false, // async
                 cancellationToken)
                 .EnsureCompleted();
 
@@ -1753,8 +1753,8 @@ namespace Azure.Storage.Queues
             await ReceiveMessagesInternal(
                 maxMessages,
                 visibilityTimeout,
-                true, // async
                 $"{nameof(QueueClient)}.{nameof(ReceiveMessages)}",
+                true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -1772,11 +1772,11 @@ namespace Azure.Storage.Queues
         /// <param name="visibilityTimeout">
         /// Optional. Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds.
         /// </param>
-        /// <param name="async">
-        /// Whether to invoke the operation asynchronously.
-        /// </param>
         /// <param name="operationName">
         /// Operation name for diagnostic logging.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/>
@@ -1787,8 +1787,8 @@ namespace Azure.Storage.Queues
         private async Task<Response<QueueMessage[]>> ReceiveMessagesInternal(
             int? maxMessages,
             TimeSpan? visibilityTimeout,
-            bool async,
             string operationName,
+            bool async,
             CancellationToken cancellationToken)
         {
             using (Pipeline.BeginLoggingScope(nameof(QueueClient)))
@@ -1923,8 +1923,8 @@ namespace Azure.Storage.Queues
             var response = await ReceiveMessagesInternal(
                 1,
                 visibilityTimeout,
-                async,
                 $"{nameof(QueueClient)}.{nameof(ReceiveMessage)}",
+                async,
                 cancellationToken).ConfigureAwait(false);
             var queueMessage = response.Value.FirstOrDefault();
             var rawResponse = response.GetRawResponse();
@@ -1993,7 +1993,7 @@ namespace Azure.Storage.Queues
             bool async,
             CancellationToken cancellationToken)
         {
-            var response = await PeekMessagesInternal(1, async, $"{nameof(QueueClient)}.{nameof(PeekMessage)}", cancellationToken).ConfigureAwait(false);
+            var response = await PeekMessagesInternal(1, $"{nameof(QueueClient)}.{nameof(PeekMessage)}", async, cancellationToken).ConfigureAwait(false);
             var message = response.Value.FirstOrDefault();
             var rawResonse = response.GetRawResponse();
             return Response.FromValue(message, rawResonse);
@@ -2023,8 +2023,8 @@ namespace Azure.Storage.Queues
             CancellationToken cancellationToken = default) =>
             PeekMessagesInternal(
                 maxMessages,
-                false, // async
                 $"{nameof(QueueClient)}.{nameof(PeekMessages)}",
+                false, // async
                 cancellationToken)
                 .EnsureCompleted();
 
@@ -2050,8 +2050,8 @@ namespace Azure.Storage.Queues
             CancellationToken cancellationToken = default) =>
             await PeekMessagesInternal(
                 maxMessages,
-                true, // async
                 $"{nameof(QueueClient)}.{nameof(PeekMessages)}",
+                true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -2066,11 +2066,11 @@ namespace Azure.Storage.Queues
         /// Optional. A nonzero integer value that specifies the number of messages to peek from the queue, up to a maximum of 32.
         /// By default, a single message is peeked from the queue with this operation.
         /// </param>
-        /// <param name="async">
-        /// Whether to invoke the operation asynchronously.
-        /// </param>
         /// <param name="operationName">
         /// Operation name for diagnostic logging.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/>
@@ -2080,8 +2080,8 @@ namespace Azure.Storage.Queues
         /// </returns>
         private async Task<Response<PeekedMessage[]>> PeekMessagesInternal(
             int? maxMessages,
-            bool async,
             string operationName,
+            bool async,
             CancellationToken cancellationToken)
         {
             using (Pipeline.BeginLoggingScope(nameof(QueueClient)))
