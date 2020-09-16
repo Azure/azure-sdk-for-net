@@ -69,6 +69,59 @@ namespace Azure.Search.Documents.Indexes
             Uri endpoint,
             AzureKeyCredential credential,
             SearchClientOptions options)
+            : this(endpoint, (object)credential, options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SearchIndexClient"/> class.
+        /// </summary>
+        /// <param name="endpoint">Required. The URI endpoint of the Search service. This is likely to be similar to "https://{search_service}.search.windows.net". The URI must use HTTPS.</param>
+        /// <param name="credential">
+        /// Required.  The token credential used to authenticate requests
+        /// against the search service.
+        /// </param>
+        /// <exception cref="ArgumentNullException">Thrown when the <paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown when the <paramref name="endpoint"/> is not using HTTPS.</exception>
+        public SearchIndexClient(Uri endpoint, TokenCredential credential) :
+            this(endpoint, credential, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SearchIndexClient"/> class.
+        /// </summary>
+        /// <param name="endpoint">Required. The URI endpoint of the Search service. This is likely to be similar to "https://{search_service}.search.windows.net". The URI must use HTTPS.</param>
+        /// <param name="credential">
+        /// Required.  The token credential used to authenticate requests
+        /// against the search service.
+        /// </param>
+        /// <param name="options">Client configuration options for connecting to Azure Cognitive Search.</param>
+        /// <exception cref="ArgumentNullException">Thrown when the <paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown when the <paramref name="endpoint"/> is not using HTTPS.</exception>
+        public SearchIndexClient(
+            Uri endpoint,
+            TokenCredential credential,
+            SearchClientOptions options)
+            : this(endpoint, (object)credential, options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SearchIndexClient"/> class.
+        /// </summary>
+        /// <param name="endpoint">Required. The URI endpoint of the Search service. This is likely to be similar to "https://{search_service}.search.windows.net". The URI must use HTTPS.</param>
+        /// <param name="credential">
+        /// Required.  A credential used to authenticate requests against the
+        /// search service.
+        /// </param>
+        /// <param name="options">Client configuration options for connecting to Azure Cognitive Search.</param>
+        /// <exception cref="ArgumentNullException">Thrown when the <paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown when the <paramref name="endpoint"/> is not using HTTPS.</exception>
+        private SearchIndexClient(
+            Uri endpoint,
+            object credential,
+            SearchClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             endpoint.AssertHttpsScheme(nameof(endpoint));

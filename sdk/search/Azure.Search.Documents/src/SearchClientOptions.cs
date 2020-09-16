@@ -65,6 +65,13 @@ namespace Azure.Search.Documents
 #endif
 
         /// <summary>
+        /// The Scope used to Authenticate with AAD.  I'm making this a
+        /// property for the moment, but it should be removed once we've
+        /// settled on a registered scope name.
+        /// </summary>
+        public string AuthenticationScope { get; set; } = "https://search.azure.com/.default";
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SearchClientOptions"/>
         /// class.
         /// </summary>
@@ -94,17 +101,39 @@ namespace Azure.Search.Documents
         /// Service.
         /// </summary>
         /// <param name="credential">
-        /// The <see cref="AzureKeyCredential"/> to authenticate requests.
+        /// The <see cref="AzureKeyCredential"/> or <see cref="TokenCredential"/>
+        /// to authenticate requests.
         /// </param>
         /// <returns>An <see cref="HttpPipeline"/> to send requests.</returns>
-        internal HttpPipeline Build(AzureKeyCredential credential)
+        internal HttpPipeline Build(object credential)
         {
             Debug.Assert(credential != null);
             return HttpPipelineBuilder.Build(
                 options: this,
-                perCallPolicies: new[] { new AzureKeyCredentialPolicy(credential, Constants.ApiKeyHeaderName) },
+                perCallPolicies: new[] { GetAuthenticationPolicy(credential) },
                 perRetryPolicies: Array.Empty<HttpPipelinePolicy>(),
                 responseClassifier: null);
+        }
+
+        /// <summary>
+        /// Get an optional authentication policy to sign Storage requests.
+        /// </summary>
+        /// <param name="credential">Optional credentials to use.</param>
+        /// <returns>An optional authentication policy.</returns>
+        private HttpPipelinePolicy GetAuthenticationPolicy(object credential = null)
+        {
+            // Use the credentials to decide on the authentication policy
+            switch (credential)
+            {
+                case AzureKeyCredential keyCredential:
+                    return new AzureKeyCredentialPolicy(keyCredential, Constants.ApiKeyHeaderName);
+                case TokenCredential tokenCredential:
+                    return new BearerTokenAuthenticationPolicy(tokenCredential, AuthenticationScope);
+                default:
+                    throw new ArgumentException(
+                        $"Cannot authenticate with {credential?.GetType().FullName ?? "null credential"}.",
+                        nameof(credential));
+            }
         }
 
         /// <summary>

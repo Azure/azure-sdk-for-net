@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using NUnit.Framework;
@@ -33,8 +34,8 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual(serviceName, service.ServiceName);
 
             Assert.Throws<ArgumentNullException>(() => new SearchIndexClient(null, new AzureKeyCredential("fake")));
-            Assert.Throws<ArgumentNullException>(() => new SearchIndexClient(endpoint, null));
-            Assert.Throws<ArgumentException>(() => new SearchIndexClient(new Uri("http://bing.com"), null));
+            Assert.Throws<ArgumentNullException>(() => new SearchIndexClient(endpoint, (AzureKeyCredential)null));
+            Assert.Throws<ArgumentException>(() => new SearchIndexClient(new Uri("http://bing.com"), (AzureKeyCredential)null));
         }
 
         [Test]
@@ -103,6 +104,21 @@ namespace Azure.Search.Documents.Tests
                 }
                 return string.Join(", ", duplicates);
             }
+        }
+
+        [Test]
+        [Ignore("Won't work until Search has AAD support")]
+        public async Task UseTokenCredential()
+        {
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+
+            SearchIndexClient client = new SearchIndexClient(
+                resources.Endpoint,
+                new DefaultAzureCredential(),
+                new SearchClientOptions { AuthenticationScope = "https://search.azure.com/.default" });
+
+            Response<SearchServiceStatistics> response = await client.GetServiceStatisticsAsync();
+            Assert.AreEqual(200, response.GetRawResponse().Status);
         }
 
         [Test]
