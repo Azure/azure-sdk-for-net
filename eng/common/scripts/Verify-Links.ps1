@@ -1,5 +1,5 @@
 param (
-  # url list to verify links. Can either be a http address or a local file request. Local file paths support md and html files.
+  # url list to verify links. Can either be a http address or a local file request. Local file paths support md and html files.	
   [string[]] $urls,
   # file that contains a set of links to ignore when verifying
   [string] $ignoreLinksFile = "$PSScriptRoot/ignore-links.txt",
@@ -17,14 +17,14 @@ param (
   [string] $branchReplaceRegex = "^(https://github.com/.*/(?:blob|tree)/)master(/.*)$",
   # the substitute branch name or SHA commit
   [string] $branchReplacementName = "",
-  # flag to allow checking against azure sdk link guidance.
+  # flag to allow checking against azure sdk link guidance. Check link guidance here: https://aka.ms/azsdk/guideline/links
   [bool] $checkLinkGuidance = $false
 )
 
 $ProgressPreference = "SilentlyContinue"; # Disable invoke-webrequest progress dialog
 # Regex of the locale keywords.
 $locale = "/en-us/"
-
+$emptyLinkMessage = "There is at least one empty link in the page. Please replace with absolute link. Check here for more infomation: https://aka.ms/azsdk/guideline/links"
 function NormalizeUrl([string]$url){
   if (Test-Path $url) {
     $url = "file://" + (Resolve-Path $url).ToString();
@@ -85,16 +85,18 @@ function ResolveUri ([System.Uri]$referralUri, [string]$link)
   $linkUri = [System.Uri]$link;
   # Our link guidelines do not allow relative links so only resolve them when we are not
   # validating links against our link guidelines (i.e. !$checkLinkGuideance)
-  if(!$checkLinkGuidance) {
-    if (!$linkUri.IsAbsoluteUri) {
+  if ($checkLinkGuidance -and !$linkUri.IsAbsoluteUri) {
+    return $linkUri
+  }
+
+  if (!$linkUri.IsAbsoluteUri) {
     # For rooted paths resolve from the baseUrl
-      if ($link.StartsWith("/")) {
-        Write-Verbose "rooturl = $rootUrl"
-        $linkUri = new-object System.Uri([System.Uri]$rootUrl, ".$link");
-      }
-      else {
-        $linkUri = new-object System.Uri($referralUri, $link);
-      }
+    if ($link.StartsWith("/")) {
+      Write-Verbose "rooturl = $rootUrl"
+      $linkUri = new-object System.Uri([System.Uri]$rootUrl, ".$link");
+    }
+    else {
+      $linkUri = new-object System.Uri($referralUri, $link);
     }
   }
 
@@ -134,6 +136,10 @@ function ParseLinks([string]$baseUri, [string]$htmlContent)
 
 function CheckLink ([System.Uri]$linkUri)
 {
+  if(!$linkUri.ToString().Trim()) {
+    LogWarning "Found Empty link. Please use absolute link instead. Check here for more infomation: https://aka.ms/azsdk/guideline/links"
+    return $false
+  }
   if ($checkedLinks.ContainsKey($linkUri)) { 
     if (!$checkedLinks[$linkUri]) {
       LogWarning "broken link $linkUri"
@@ -193,11 +199,19 @@ function CheckLink ([System.Uri]$linkUri)
     }
   }
   
-  # Check if link uri includes locale info.
-  if ($checkLinkGuidance -and ($linkUri -match $locale)) {
-    LogWarning "DO NOT include locale $locale information in links: $linkUri."
-    $linkValid = $false
+  if ($checkLinkGuidance) {
+    # Check if the url is relative links, suppress the archor link validation.
+    if (!$linkUri.IsAbsoluteUri -and !$linkUri.ToString().StartsWith("#")) {
+      LogWarning "DO NOT use relative link $linkUri. Please use absolute link instead. Check here for more infomation: https://aka.ms/azsdk/guideline/links"
+      $linkValid = $false
+    }
+     # Check if link uri includes locale info.
+    if ($linkUri -match $locale) {
+      LogWarning "DO NOT include locale $locale information in links: $linkUri. Check here for more information: https://aka.ms/azsdk/guideline/links"
+      $linkValid = $false
+    }
   }
+
   $checkedLinks[$linkUri] = $linkValid
   return $linkValid
 }
@@ -270,7 +284,6 @@ $checkedPages = @{};
 $checkedLinks = @{};
 $badLinks = @{};
 $pageUrisToCheck = new-object System.Collections.Queue
-
 foreach ($url in $urls) {
   $uri = NormalizeUrl $url  
   $pageUrisToCheck.Enqueue($uri);
@@ -286,9 +299,12 @@ while ($pageUrisToCheck.Count -ne 0)
   Write-Host "Found $($linkUris.Count) links on page $pageUri";
   $badLinksPerPage = @();
   foreach ($linkUri in $linkUris) {
-    $linkUri = ReplaceGithubLink $linkUri
-    $isLinkValid = CheckLink $linkUri
+    $replacedLink = ReplaceGithubLink $linkUri
+    $isLinkValid = CheckLink $replacedLink
     if (!$isLinkValid -and !$badLinksPerPage.Contains($linkUri)) {
+      if (!$linkUri.ToString().Trim()) {
+        $linkUri = $emptyLinkMessage
+      }
       $badLinksPerPage += $linkUri
     }
     if ($recursive -and $isLinkValid) {

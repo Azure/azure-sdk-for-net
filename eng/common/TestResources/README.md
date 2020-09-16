@@ -125,8 +125,8 @@ New-MarkdownHelp -Command .\New-TestResources.ps1 -OutputFolder . -Force
 
 PowerShell markdown documentation created with [platyPS][].
 
-  [New-TestResources.ps1]: ./New-TestResources.ps1.md
-  [Remove-TestResources.ps1]: ./Remove-TestResources.ps1.md
+  [New-TestResources.ps1]: https://github.com/Azure/azure-sdk-tools/blob/master/eng/common/TestResources/New-TestResources.ps1.md
+  [Remove-TestResources.ps1]: https://github.com/Azure/azure-sdk-tools/blob/master/eng/common/TestResources/Remove-TestResources.ps1.md
   [PowerShell]: https://github.com/PowerShell/PowerShell
   [PowerShellAz]: https://docs.microsoft.com/powershell/azure/install-az-ps
   [platyPS]: https://github.com/PowerShell/platyPS
