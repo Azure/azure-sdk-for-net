@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -353,5 +354,55 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         [JsonProperty(PropertyName = "apiVersionConstraint")]
         public ApiVersionConstraint ApiVersionConstraint { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (NotificationSenderEmail != null)
+            {
+                if (NotificationSenderEmail.Length > 100)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "NotificationSenderEmail", 100);
+                }
+            }
+            if (HostnameConfigurations != null)
+            {
+                foreach (var element in HostnameConfigurations)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+            if (VirtualNetworkConfiguration != null)
+            {
+                VirtualNetworkConfiguration.Validate();
+            }
+            if (AdditionalLocations != null)
+            {
+                foreach (var element1 in AdditionalLocations)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
+                    }
+                }
+            }
+            if (Certificates != null)
+            {
+                foreach (var element2 in Certificates)
+                {
+                    if (element2 != null)
+                    {
+                        element2.Validate();
+                    }
+                }
+            }
+        }
     }
 }

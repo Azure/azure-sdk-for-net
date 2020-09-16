@@ -57,12 +57,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// immediately after subscribing. If true, administrators must
         /// manually approve the subscription before the developer can any of
         /// the product’s APIs. Can be present only if subscriptionRequired
-        /// property is present and has a value of false.</param>
+        /// property is present and has a value of true.</param>
         /// <param name="subscriptionsLimit">Whether the number of
         /// subscriptions a user can have to this product at the same time. Set
         /// to null or omit to allow unlimited per user subscriptions. Can be
         /// present only if subscriptionRequired property is present and has a
-        /// value of false.</param>
+        /// value of true.</param>
         /// <param name="state">whether product is published or not. Published
         /// products are discoverable by users of developer portal. Non
         /// published products are visible only to administrators. Default
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// subscribing. If true, administrators must manually approve the
         /// subscription before the developer can any of the product’s APIs.
         /// Can be present only if subscriptionRequired property is present and
-        /// has a value of false.
+        /// has a value of true.
         /// </summary>
         [JsonProperty(PropertyName = "properties.approvalRequired")]
         public bool? ApprovalRequired { get; set; }
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Gets or sets whether the number of subscriptions a user can have to
         /// this product at the same time. Set to null or omit to allow
         /// unlimited per user subscriptions. Can be present only if
-        /// subscriptionRequired property is present and has a value of false.
+        /// subscriptionRequired property is present and has a value of true.
         /// </summary>
         [JsonProperty(PropertyName = "properties.subscriptionsLimit")]
         public int? SubscriptionsLimit { get; set; }
@@ -161,6 +161,28 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             if (DisplayName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "DisplayName");
+            }
+            if (Description != null)
+            {
+                if (Description.Length > 1000)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Description", 1000);
+                }
+                if (Description.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Description", 1);
+                }
+            }
+            if (DisplayName != null)
+            {
+                if (DisplayName.Length > 300)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "DisplayName", 300);
+                }
+                if (DisplayName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "DisplayName", 1);
+                }
             }
         }
     }

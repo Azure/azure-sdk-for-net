@@ -128,6 +128,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='parameters'>
         /// Create or update parameters.
         /// </param>
+        /// <param name='notify'>
+        /// Send an Email notification to the User.
+        /// </param>
         /// <param name='ifMatch'>
         /// ETag of the Entity. Not required when creating an entity, but
         /// required when updating an entity.
@@ -147,7 +150,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<UserContract,UserCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string userId, UserCreateParameters parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<UserContract,UserCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string userId, UserCreateParameters parameters, bool? notify = default(bool?), string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates the details of the user specified by its identifier.
         /// </summary>
@@ -206,6 +209,11 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='notify'>
         /// Send an Account Closed Email notification to the User.
         /// </param>
+        /// <param name='appType'>
+        /// Determines the type of application which send the create user
+        /// request. Default is legacy publisher portal. Possible values
+        /// include: 'portal', 'developerPortal'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -218,7 +226,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string userId, string ifMatch, bool? deleteSubscriptions = default(bool?), bool? notify = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string userId, string ifMatch, bool? deleteSubscriptions = default(bool?), bool? notify = default(bool?), string appType = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves a redirection URL containing an authentication token for
         /// signing a given user into the developer portal.
