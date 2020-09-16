@@ -38,10 +38,5 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs
 
             return new WatchableReadStream(rawStream);
         }
-
-        public static TextReader CreateTextReader(WatchableReadStream watchableStream)
-        {
-            return new StreamReader(watchableStream);
-        }
     }
 }

@@ -40,11 +40,6 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             _parser = new StorageAnalyticsLogParser(logger);
         }
 
-        public BlobServiceClient Client
-        {
-            get { return _blobClient; }
-        }
-
         // This will throw if the client credentials are not valid.
         public static async Task<BlobLogListener> CreateAsync(BlobServiceClient blobClient,
            IWebJobsExceptionHandler exceptionHandler, ILogger<BlobListener> logger, CancellationToken cancellationToken)

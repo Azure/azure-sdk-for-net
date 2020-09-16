@@ -8,6 +8,7 @@ using Azure.Storage.Blobs.Specialized;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs
 {
+    // TODO (kasobol-msft) unused ?
 #pragma warning disable CS0618 // Type or member is obsolete
     internal sealed class BlobWatchableDisposableValueProvider : IValueProvider, IWatchable, IDisposable
 #pragma warning restore CS0618 // Type or member is obsolete

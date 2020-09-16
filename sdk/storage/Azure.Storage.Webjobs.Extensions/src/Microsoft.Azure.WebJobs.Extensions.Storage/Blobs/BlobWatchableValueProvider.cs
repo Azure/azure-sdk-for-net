@@ -8,6 +8,7 @@ using Microsoft.Azure.WebJobs.Host.Bindings;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs
 {
+    // TODO (kasobol-msft) unused ?
 #pragma warning disable CS0618 // Type or member is obsolete
     internal sealed class BlobWatchableValueProvider : IValueProvider, IWatchable
 #pragma warning restore CS0618 // Type or member is obsolete
