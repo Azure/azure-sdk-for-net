@@ -24,7 +24,7 @@ Response<Uri> backupResult = await backupOperation.WaitForCompletionAsync();
 Uri backupBlobUri = backupResult.Value;
 ```
 
-## Checking status of a full key restore
+## Checking status of a full key restore operation
 
 Using the `KeyVaultBackupClient` and a `RestoreOperation`, you can check the status and retrieve the result of a previously started `RestoreOperation`. 
 For example the `Id` from a started operation on one client can be saved to persistent storage instead of waiting for completion immediately. 
