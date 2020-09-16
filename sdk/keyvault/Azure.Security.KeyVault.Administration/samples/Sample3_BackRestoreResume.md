@@ -3,7 +3,7 @@
 This sample demonstrates how to a check the status and get the result of previously started full key backup and restore operations in Azure Key Vault.
 To get started, you'll need a URI to an Azure Key Vault. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/README.md) for links and instructions.
 
-## Checking status of a full key backup
+## Checking status of a full key backup operation
 
 Using the `KeyVaultBackupClient` and a `BackupOperation`, you can check the status and retrieve the result of a previously started `BackupOperation`. 
 For example the `Id` from a started operation on one client can be saved to persistent storage instead of waiting for completion immediately. 
