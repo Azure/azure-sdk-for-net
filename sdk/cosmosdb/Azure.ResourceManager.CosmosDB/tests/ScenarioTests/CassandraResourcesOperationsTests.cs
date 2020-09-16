@@ -4,7 +4,6 @@
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.CosmosDB.Models;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -14,7 +13,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
     public class CassandraResourcesOperationsTests : CosmosDBManagementClientBase
     {
         protected string resourceGroupName;
-        protected string databaseAccountName = "amecassandratest" + DateTime.Now.ToString("MMddyyyyHHmmss") + "4hzd";
+        protected string databaseAccountName;
         protected string keyspaceName = "keyspaceName2510";
         protected string keyspaceName2 = "keyspaceName22510";
         protected string tableName = "tableName2510";
@@ -33,6 +32,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             {
                 InitializeClients();
                 resourceGroupName = Recording.GenerateAssetName(CosmosDBTestUtilities.ResourceGroupPrefix);
+                databaseAccountName = Recording.GenerateAssetName("amecassandratest");
                 await CosmosDBTestUtilities.TryRegisterResourceGroupAsync(ResourceGroupsOperations, CosmosDBTestUtilities.Location, resourceGroupName);
             }
         }
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         }
 
         [TestCase]
-        public async Task CassandraCRUDTestsAsync()
+        public async Task CassandraCRUDTests()
         {
             var locations = new List<Location>();
             Location loc = new Location();

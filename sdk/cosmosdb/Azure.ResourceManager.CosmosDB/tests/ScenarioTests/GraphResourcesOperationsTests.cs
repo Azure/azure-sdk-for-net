@@ -4,7 +4,6 @@
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.CosmosDB.Models;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -15,7 +14,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests.ScenarioTests
     public class GraphResourcesOperationsTests : CosmosDBManagementClientBase
     {
         protected string resourceGroupName;
-        protected string databaseAccountName = "amegraphtest" + DateTime.Now.ToString("MMddyyyyHHmmss") + "7blp";
+        protected string databaseAccountName;
         protected string databaseName = "databaseName1002";
         protected string databaseName2 = "databaseName21002";
         protected string gremlinGraphName = "gremlinGraphName1002";
@@ -35,6 +34,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests.ScenarioTests
             {
                 InitializeClients();
                 resourceGroupName = Recording.GenerateAssetName(CosmosDBTestUtilities.ResourceGroupPrefix);
+                databaseAccountName = Recording.GenerateAssetName("amegraphtest");
                 await CosmosDBTestUtilities.TryRegisterResourceGroupAsync(ResourceGroupsOperations, CosmosDBTestUtilities.Location, resourceGroupName);
             }
         }
