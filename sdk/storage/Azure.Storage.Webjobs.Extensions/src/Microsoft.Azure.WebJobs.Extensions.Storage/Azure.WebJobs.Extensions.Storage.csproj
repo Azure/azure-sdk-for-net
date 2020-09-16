@@ -26,7 +26,6 @@
     <Compile Include="..\Microsoft.Azure.WebJobs.Host.Storage\Utility.cs" Link="Utility.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Host\Bindings\BindingDataPathHelper.cs" Link="Shared\BindingDataPathHelper.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Host\Bindings\IBindablePath.cs" Link="Shared\IBindablePath.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\Bindings\Path\BindingParameterResolver.cs" Link="Shared\BindingParameterResolver.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Host\Bindings\SystemBindingData.cs" Link="Shared\SystemBindingData.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Host\ClassPropertyAccessorFactory.cs" Link="Shared\ClassPropertyAccessorFactory.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Host\ClassPropertyGetter.cs" Link="Shared\ClassPropertyGetter.cs" />
@@ -54,11 +53,6 @@
     <Compile Include="..\Microsoft.Azure.WebJobs.Host\Listeners\ISharedListener.cs" Link="Shared\ISharedListener.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Host\Listeners\ITriggerExecutor.cs" Link="Shared\ITriggerExecutor.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Host\Listeners\SharedContextProvider.cs" Link="Shared\SharedContextProvider.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\PropertyAccessorFactory.cs" Link="Shared\PropertyAccessorFactory.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\PropertyHelper.cs" Link="Shared\PropertyHelper.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\StructPropertyAccessorFactory.cs" Link="Shared\StructPropertyAccessorFactory.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\StructPropertyGetter.cs" Link="Shared\StructPropertyGetter.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\StructPropertySetter.cs" Link="Shared\StructPropertySetter.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Host\Timers\IDelayStrategy.cs" Link="Shared\IDelayStrategy.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Host\Timers\IRecurrentCommand.cs" Link="Shared\IRecurrentCommand.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Host\Timers\ITaskSeriesCommand.cs" Link="Shared\ITaskSeriesCommand.cs" />
@@ -74,7 +68,6 @@
     <Compile Include="..\Microsoft.Azure.WebJobs.Protocols\BlobMetadataKeys.cs" Link="Shared\BlobMetadataKeys.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Protocols\BlobParameterDescriptor.cs" Link="Shared\BlobParameterDescriptor.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Protocols\BlobTriggerParameterDescriptor.cs" Link="Shared\BlobTriggerParameterDescriptor.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Protocols\CloudStorageAccountParameterDescriptor.cs" Link="Shared\CloudStorageAccountParameterDescriptor.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Protocols\JsonSerialization.cs" Link="Shared\JsonSerialization.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Protocols\JsonTypeNameAttribute.cs" Link="Shared\JsonTypeNameAttribute.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Protocols\QueueParameterDescriptor.cs" Link="Shared\QueueParameterDescriptor.cs" />

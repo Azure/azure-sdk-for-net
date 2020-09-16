@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Azure.WebJobs.Storage.Common
 {
+    // TODO (kasobol-msft) see todo below before deleting this type
     internal class WebJobsStorageDelegatingHandler : DelegatingHandler
     {
         private bool _isInnerHandlerConfigured = false;
@@ -35,6 +36,7 @@ namespace Microsoft.Azure.WebJobs.Storage.Common
                     throw new InvalidOperationException("The inner handler has not been initialized by the Storage SDK.");
                 }
 
+                // TODO (kasobol-msft) find out how to cap this with V12 SDK (this is going to be pipeline configuration)
                 innerHandler.MaxConnectionsPerServer = 50;
             }
             catch (InvalidOperationException)

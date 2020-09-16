@@ -44,7 +44,7 @@ namespace Microsoft.Extensions.Hosting
 
             builder.Services.TryAddSingleton<SharedQueueWatcher>();
 
-            // $$$ Remove this, should be done via DI
+            // $$$ Remove this, should be done via DI // TODO (kasobol-msft) check this
             builder.Services.TryAddSingleton<ISharedContextProvider, SharedContextProvider>();
 
             builder.Services.TryAddSingleton<StorageAccountProvider>();

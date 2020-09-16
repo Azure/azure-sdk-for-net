@@ -10,35 +10,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)BlobMetadataKeys.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)BlobNames.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BlobParameterDescriptor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BlobTriggerParameterDescriptor.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CloudStorageAccountParameterDescriptor.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ContainerNames.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)DictionaryExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExecutionReason.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)FunctionCompletedMessage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)FunctionDescriptor.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)FunctionFailure.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)FunctionStartedMessage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)HeartbeatDescriptor.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)HostOutputMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)JsonSerialization.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)JsonTypeNameAttribute.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)JTokenExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)LocalBlobDescriptor.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ParameterDescriptor.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ParameterDisplayHints.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ParameterLog.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)PersistentQueueMessage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)PolymorphicJsonConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)QueueParameterDescriptor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)QueueTriggerParameterDescriptor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReadBlobParameterLog.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)TriggerParameterDescriptor.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)WebJobRunIdentifier.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)WebJobTypes.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)WebSitesKnownKeyNames.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WriteBlobParameterLog.cs" />
   </ItemGroup>
 </Project>
