@@ -47,13 +47,12 @@ namespace Microsoft.Azure.Management.Automanage
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Client Api Version.
+        /// The API version to use for this operation.
         /// </summary>
         public string ApiVersion { get; private set; }
 
         /// <summary>
-        /// Subscription ID which uniquely identify Microsoft Azure subscription. The
-        /// subscription ID forms part of the URI for every service call.
+        /// The ID of the target subscription.
         /// </summary>
         public string SubscriptionId { get; set; }
 
