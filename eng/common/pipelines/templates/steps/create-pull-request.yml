@@ -42,6 +42,7 @@ steps:
     echo "RepoName = $repName"
 
   displayName: Check for changes
+  condition: and(succeeded(), eq(variables['HasChanges'], ''))
   workingDirectory: ${{ parameters.WorkingDirectory }}
   ignoreLASTEXITCODE: true
 
