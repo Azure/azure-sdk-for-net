@@ -39,9 +39,6 @@
     <Compile Include="..\Microsoft.Azure.WebJobs.Host\IContextGetter.cs" Link="Shared\IContextGetter.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Host\IContextSetter.cs" Link="Shared\IContextSetter.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Host\IFactory.cs" Link="Shared\IFactory.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\IPropertyAccessorFactory.cs" Link="Shared\IPropertyAccessorFactory.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\IPropertyGetter.cs" Link="Shared\IPropertyGetter.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\IPropertySetter.cs" Link="Shared\IPropertySetter.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Host\Listeners\CompositeListener.cs" Link="Shared\CompositeListener.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Host\Listeners\ISharedContextProvider.cs" Link="Shared\ISharedContextProvider.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Host\Listeners\ISharedListener.cs" Link="Shared\ISharedListener.cs" />

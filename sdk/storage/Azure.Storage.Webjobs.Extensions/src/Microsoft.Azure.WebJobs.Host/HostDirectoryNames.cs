@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Azure.WebJobs.Host.Protocols;
-
 namespace Microsoft.Azure.WebJobs.Host
 {
     // Names of directories used only by hosts (not directly part of the protocol with the dashboard, though other parts
@@ -10,13 +8,5 @@ namespace Microsoft.Azure.WebJobs.Host
     internal static class HostDirectoryNames
     {
         public const string BlobReceipts = "blobreceipts";
-
-        public const string Heartbeats = "heartbeats";
-
-        public const string Ids = "ids";
-
-        public const string OutputLogs = "output-logs";
-
-        public const string SingletonLocks = "locks";
     }
 }

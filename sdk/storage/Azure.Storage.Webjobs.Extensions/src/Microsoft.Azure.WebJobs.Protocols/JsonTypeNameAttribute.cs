@@ -16,6 +16,7 @@ namespace Microsoft.Azure.WebJobs.Host.Protocols
 #if PUBLICPROTOCOL
     public sealed class JsonTypeNameAttribute : Attribute
 #else
+    // TODO (kasobol-msft) this doesn't seem to be relevant for .NET in the extension but might be for other langs supported by functions (see ParameterDescriptors)
     [AttributeUsage(AttributeTargets.Class)]
     internal sealed class JsonTypeNameAttribute : Attribute
 #endif
