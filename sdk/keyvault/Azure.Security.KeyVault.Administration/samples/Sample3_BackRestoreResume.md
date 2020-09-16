@@ -15,7 +15,7 @@ and check for status or wait for completion.
 KeyVaultBackupClient Client = new KeyVaultBackupClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
 
 // Construct a BackupOperation using a KeyVaultBackupClient and the Id from a previously started operation.
-BackupOperation backupOperation = new BackupOperation(Client, backupOperationId);
+BackupOperation backupOperation = new BackupOperation(client, backupOperationId);
 
 // Wait for completion of the BackupOperation.
 Response<Uri> backupResult = await backupOperation.WaitForCompletionAsync();
@@ -36,7 +36,7 @@ and check for status or wait for completion.
 KeyVaultBackupClient Client = new KeyVaultBackupClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
 
 // Construct a RestoreOperation using a KeyVaultBackupClient and the Id from a previously started operation.
-RestoreOperation restoreOperation = new RestoreOperation(Client, restoreOperationId);
+RestoreOperation restoreOperation = new RestoreOperation(client, restoreOperationId);
 
 // Wait for completion of the RestoreOperation.
 Response restoreResult = await restoreOperation.WaitForCompletionAsync();

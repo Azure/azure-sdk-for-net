@@ -14,12 +14,13 @@ namespace Azure.Security.KeyVault.Administration.Tests
         public Sample3_BackRestoreResume(bool isAsync) : base(isAsync, RecordedTestMode.Playback /* To record tests, change this argument to RecordedTestMode.Record */)
         { }
 
-        [RecordedTest]
+        [Test]
         public async Task ResumeBackupRestore()
         {
             var blobStorageUrl = TestEnvironment.StorageUri;
             var blobContainerName = BlobContainerName;
             var sasToken = "?" + SasToken;
+           // var client = Mode == RecordedTestMode.Playback ? GetClient(null, false) : Client;
             var client = GetClient(null, false);
 
             // Create a Uri with the storage container
@@ -62,7 +63,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             //@@KeyVaultBackupClient Client = new KeyVaultBackupClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
 
             // Construct a RestoreOperation using a KeyVaultBackupClient and the Id from a previously started operation.
-            RestoreOperation restoreOperation = new RestoreOperation(Client, restoreOperationId);
+            RestoreOperation restoreOperation = new RestoreOperation(client, restoreOperationId);
 
             // Wait for completion of the RestoreOperation.
             Response restoreResult = await restoreOperation.WaitForCompletionAsync();

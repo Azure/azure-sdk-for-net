@@ -33,14 +33,9 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             var client = new KeyVaultBackupClient(
                 new Uri(TestEnvironment.KeyVaultUrl),
-                new Identity.DefaultAzureCredential(new Identity.DefaultAzureCredentialOptions { SharedTokenCacheTenantId = "f686d426-8d16-42db-81b7-ab578e110ccd", VisualStudioTenantId = "f686d426-8d16-42db-81b7-ab578e110ccd" }),
-                //TestEnvironment.Credential,
-                isInstrumented ? recording.InstrumentClientOptions(new KeyVaultBackupClientOptions()) : new KeyVaultBackupClientOptions());
-            if (isInstrumented)
-            {
-                InstrumentClient(client);
-            }
-            return client;
+                TestEnvironment.Credential,
+                recording.InstrumentClientOptions(new KeyVaultBackupClientOptions()));
+            return isInstrumented ? InstrumentClient(client) : client;
         }
 
 
