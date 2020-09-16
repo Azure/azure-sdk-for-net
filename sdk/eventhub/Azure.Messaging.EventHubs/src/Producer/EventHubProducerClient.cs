@@ -46,9 +46,6 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <summary>The set of default publishing options to use when no specific options are requested.</summary>
         private static readonly SendEventOptions DefaultSendOptions = new SendEventOptions();
 
-        /// <summary>The set of default publishing options to use when no specific options are requested.</summary>
-        private static readonly CreateBatchOptions DefaultCreateBatchOptions = new CreateBatchOptions();
-
         /// <summary>Sets how long a dedicated <see cref="TransportProducer" /> would sit in memory before its <see cref="TransportProducerPool" /> would remove and close it.</summary>
         private static readonly TimeSpan PartitionProducerLifespan = TimeSpan.FromMinutes(5);
 
@@ -614,7 +611,7 @@ namespace Azure.Messaging.EventHubs.Producer
         public virtual async ValueTask<EventDataBatch> CreateBatchAsync(CreateBatchOptions options,
                                                                         CancellationToken cancellationToken = default)
         {
-            options = options?.Clone() ?? DefaultCreateBatchOptions;
+            options = options?.Clone() ?? new CreateBatchOptions();
             AssertSinglePartitionReference(options.PartitionId, options.PartitionKey);
 
             TransportEventBatch transportBatch = await PartitionProducerPool.EventHubProducer.CreateBatchAsync(options, cancellationToken).ConfigureAwait(false);
