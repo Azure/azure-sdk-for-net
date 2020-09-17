@@ -142,9 +142,9 @@ namespace Azure.Identity
             List<IAccount> filteredAccounts = accounts.Where(a =>
                 // if _username is specified it must match the account
                 (string.IsNullOrEmpty(_username) || string.Compare(a.Username, _username, StringComparison.OrdinalIgnoreCase) == 0)
-                &&
-                //if _tenantId is specified it must match the account
-                (string.IsNullOrEmpty(_tenantId) || string.Compare(a.HomeAccountId?.TenantId, _tenantId, StringComparison.OrdinalIgnoreCase) == 0)
+                //&&
+                ////if _tenantId is specified it must match the account
+                //(string.IsNullOrEmpty(_tenantId) || string.Compare(a.HomeAccountId?.TenantId, _tenantId, StringComparison.OrdinalIgnoreCase) == 0)
             ).ToList();
 
             if (filteredAccounts.Count != 1)

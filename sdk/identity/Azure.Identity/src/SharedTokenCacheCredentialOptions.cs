@@ -28,7 +28,15 @@ namespace Azure.Identity
         /// <summary>
         /// Specifies the <see cref="TokenCache"/> to be used by the credential.
         /// </summary>
-        public TokenCache TokenCache => new PersistentTokenCache();
+        public TokenCache TokenCache { get; }
 
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="tokenCache"></param>
+        public SharedTokenCacheCredentialOptions(TokenCache tokenCache = null)
+        {
+            TokenCache = tokenCache ?? new PersistentTokenCache();
+        }
     }
 }
