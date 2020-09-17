@@ -122,6 +122,11 @@ namespace Microsoft.Azure.Management.AppPlatform
         public virtual IOperations Operations { get; private set; }
 
         /// <summary>
+        /// Gets the IRuntimeVersionsOperations.
+        /// </summary>
+        public virtual IRuntimeVersionsOperations RuntimeVersions { get; private set; }
+
+        /// <summary>
         /// Gets the ISkusOperations.
         /// </summary>
         public virtual ISkusOperations Skus { get; private set; }
@@ -376,6 +381,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             CustomDomains = new CustomDomainsOperations(this);
             Deployments = new DeploymentsOperations(this);
             Operations = new Operations(this);
+            RuntimeVersions = new RuntimeVersionsOperations(this);
             Skus = new SkusOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2020-07-01";
