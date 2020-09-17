@@ -15,6 +15,7 @@ using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 
 namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 {
