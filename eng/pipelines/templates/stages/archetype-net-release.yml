@@ -34,7 +34,7 @@ stages:
                   artifact: ${{parameters.ArtifactName}}-signed
                   displayName: 'Store signed packages in ${{parameters.ArtifactName}}-signed artifact'
 
-  - ${{if and(eq(variables['Build.Reason'], 'Manual'), eq(variables['System.TeamProject'], 'internal'))}}:
+  - ${{if and(or(eq(variables['TestPipeline'], 'true'), eq(variables['Build.Reason'], 'Manual')), eq(variables['System.TeamProject'], 'internal'))}}:
     - ${{ each artifact in parameters.Artifacts }}:
       - stage: Release_${{artifact.safeName}}
         displayName: 'Release: ${{artifact.name}}'
