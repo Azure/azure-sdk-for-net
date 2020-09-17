@@ -61,8 +61,8 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                 return PartBType.Unknown;
             }
 
-            PartBType activityType;
-            PartBType constActivityType = PartBType.Unknown;
+            PartBType tempActivityType;
+            PartBType activityType = PartBType.Unknown;
             partBTags = new Dictionary<string, string>();
             partCTags = new Dictionary<string, string>();
 
@@ -83,18 +83,18 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                     continue;
                 }
 
-                if (!Part_B_Mapping.TryGetValue(entry.Key, out activityType))
+                if (!Part_B_Mapping.TryGetValue(entry.Key, out tempActivityType))
                 {
                     partCTags.Add(entry.Key, entry.Value.ToString());
                     continue;
                 }
 
-                if (constActivityType == PartBType.Unknown || constActivityType == PartBType.Net)
+                if (activityType == PartBType.Unknown || activityType == PartBType.Net)
                 {
-                    constActivityType = activityType;
+                    activityType = tempActivityType;
                 }
 
-                if (Part_B_Mapping.TryGetValue(entry.Key, out var tempActivityType) && (tempActivityType == constActivityType || tempActivityType == PartBType.Net))
+                if (tempActivityType == activityType || tempActivityType == PartBType.Net)
                 {
                     partBTags.Add(entry.Key, entry.Value.ToString());
                 }
@@ -104,7 +104,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                 }
             }
 
-            return constActivityType;
+            return activityType;
         }
     }
 }

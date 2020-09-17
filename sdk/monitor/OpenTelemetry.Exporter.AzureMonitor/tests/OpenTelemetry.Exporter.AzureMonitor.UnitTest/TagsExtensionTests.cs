@@ -174,6 +174,33 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             Assert.Equal("OpenTelemetry.Exporter.AzureMonitor.TagsExtensionTests+Test,OpenTelemetry.Exporter.AzureMonitor.TagsExtensionTests+Test,OpenTelemetry.Exporter.AzureMonitor.TagsExtensionTests+Test", PartCTags["objArray"]);
         }
 
+        [Fact]
+        public void TagObjects_Diff_DataTypes()
+        {
+            IEnumerable<KeyValuePair<string, object>> tagObjects = new Dictionary<string, object>
+            {
+                ["intKey"] = 1,
+                ["doubleKey"] = 1.1,
+                ["stringKey"] = "test",
+                ["boolKey"] = true,
+                ["objectKey"] = new Test(),
+                ["arrayKey"] = new int[] {1, 2, 3}
+            };
+
+            var activityType = tagObjects.ToAzureMonitorTags(out var partBTags, out var PartCTags);
+
+            Assert.Equal(PartBType.Unknown, activityType);
+            Assert.Empty(partBTags);
+            Assert.Equal(6, PartCTags.Count);
+
+            Assert.Equal("1", PartCTags["intKey"]);
+            Assert.Equal("1.1", PartCTags["doubleKey"]);
+            Assert.Equal("test", PartCTags["stringKey"]);
+            Assert.Equal("True", PartCTags["boolKey"]);
+            Assert.Equal("OpenTelemetry.Exporter.AzureMonitor.TagsExtensionTests+Test", PartCTags["objectKey"]);
+            Assert.Equal("1,2,3", PartCTags["arrayKey"]);
+        }
+
         private class Test
         {
             public int TestProperty { get; set; }
