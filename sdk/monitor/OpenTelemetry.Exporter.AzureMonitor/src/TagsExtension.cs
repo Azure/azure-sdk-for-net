@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace OpenTelemetry.Exporter.AzureMonitor
 {
@@ -77,5 +79,38 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             return partBTags;
         }
 
+        internal static Dictionary<string, string> ToAzureMonitorTags(this IEnumerable<KeyValuePair<string, object>> tagObjects)
+        {
+            if (tagObjects == null)
+            {
+                return null;
+            }
+
+            Dictionary<string, string> partCTags = new Dictionary<string, string>();
+
+            foreach (var entry in tagObjects)
+            {
+                if (entry.Value is Array array)
+                {
+                    StringBuilder sw = new StringBuilder();
+                    foreach (var item in array)
+                    {
+                        sw.Append(item);
+                        sw.Append(',');
+                    }
+
+                    sw.Length--;
+                    partCTags.Add(entry.Key, sw.ToString());
+
+                    continue;
+                }
+                else
+                {
+                    partCTags.Add(entry.Key, entry.Value.ToString());
+                }
+            }
+
+            return partCTags;
+        }
     }
 }

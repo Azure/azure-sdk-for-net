@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -60,6 +59,17 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             {
                 telemetryItem = GeneratePartAEnvelope(activity);
                 telemetryItem.InstrumentationKey = this.instrumentationKey;
+
+                if (activity.Events.Count() > 0)
+                {
+                    foreach (var eventData in activity.Events)
+                    {
+                        var eventTelemetryItem = telemetryItem.Clone(PartA_Name_Mapping[TelemetryType.Event], eventData.Timestamp);
+                        eventTelemetryItem.Data = GenerateTelemetryData(eventData);
+                        telemetryItems.Add(eventTelemetryItem);
+                    }
+                }
+
                 telemetryItem.Data = GenerateTelemetryData(activity);
                 telemetryItems.Add(telemetryItem);
             }
@@ -150,6 +160,20 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             return telemetry;
         }
 
+        private MonitorBase GenerateTelemetryData(ActivityEvent activityEvent)
+        {
+            MonitorBase telemetry = new MonitorBase
+            {
+                BaseType = Telemetry_Base_Type_Mapping[TelemetryType.Event]
+            };
+
+            var azEvent = new TelemetryEventData(2, activityEvent.Name);
+            telemetry.BaseData = azEvent;
+            AddPropertiesToTelemetry(azEvent.Properties, activityEvent.Tags.ToAzureMonitorTags());
+
+            return telemetry;
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static string GetHttpStatusCode(Dictionary<string, string> tags)
         {
@@ -174,10 +198,10 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             return url;
         }
 
-        private static void ExtractPropertiesFromTags(IDictionary<string, string> destination, IEnumerable<KeyValuePair<string, string>> tags)
+        private static void AddPropertiesToTelemetry(IDictionary<string, string> destination, IEnumerable<KeyValuePair<string, string>> PartCTags)
         {
             // TODO: Iterate only interested fields. Ref: https://github.com/Azure/azure-sdk-for-net/pull/14254#discussion_r470907560
-            foreach (var tag in tags.Where(item => !item.Key.StartsWith("http.", StringComparison.InvariantCulture)))
+            foreach (var tag in PartCTags)
             {
                 destination.Add(tag);
             }
