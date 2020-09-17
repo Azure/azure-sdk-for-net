@@ -2,9 +2,14 @@
 
 ## 11.2.0-preview.1 (Unreleased)
 
+### Fixed
+
+- Support deserializing null values during deserialization of skills ([#15108](https://github.com/Azure/azure-sdk-for-net/issues/15108))
+
 ## 11.1.1 (2020-08-18)
 
 ### Fixed
+
 - Bug in TaskExtensions.EnsureCompleted method that causes it to unconditionally throw an exception in the environments with synchronization context
 
 ## 11.1.0 (2020-08-11)
