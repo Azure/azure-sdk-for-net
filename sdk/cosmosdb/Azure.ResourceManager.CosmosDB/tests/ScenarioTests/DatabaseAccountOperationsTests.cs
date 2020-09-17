@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             databaseAccountCreateOrUpdateParameters.Tags.Add("key1", "value1");
             databaseAccountCreateOrUpdateParameters.Tags.Add("key2", "value2");
             databaseAccountCreateOrUpdateParameters.Kind = DatabaseAccountKind.MongoDB;
-            databaseAccountCreateOrUpdateParameters.ConsistencyPolicy = 
+            databaseAccountCreateOrUpdateParameters.ConsistencyPolicy =
                 new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness, maxStalenessPrefix, maxIntervalInSeconds);
             databaseAccountCreateOrUpdateParameters.IpRules.Add(new IpAddressOrRange("23.43.230.120"));
             databaseAccountCreateOrUpdateParameters.IsVirtualNetworkFilterEnabled = true;
@@ -67,7 +67,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccountGetResults databaseAccountGetResults1 =
                 await WaitForCompletionAsync(
                     await CosmosDBManagementClient.DatabaseAccounts.StartCreateOrUpdateAsync(resourceGroupName, databaseAccountName, databaseAccountCreateOrUpdateParameters));
-            Assert.AreEqual(200, CosmosDBManagementClient.DatabaseAccounts.CheckNameExistsAsync(databaseAccountName).Result.Status);
+            Response response = await CosmosDBManagementClient.DatabaseAccounts.CheckNameExistsAsync(databaseAccountName);
+            Assert.AreEqual(200, response.Status);
             DatabaseAccountGetResults databaseAccountGetResults2 = await CosmosDBManagementClient.DatabaseAccounts.GetAsync(resourceGroupName, databaseAccountName);
             VerifyCosmosDBAccount(databaseAccountGetResults1, databaseAccountGetResults2);
 
