@@ -1,16 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Moq;
+using OpenTelemetry.Trace;
 using System;
+using System.Diagnostics;
 using System.Reflection;
 
-using NUnit.Framework;
+using Xunit;
 
 namespace OpenTelemetry.Exporter.AzureMonitor
 {
     public class AzureMonitorTraceExporterTests
     {
-        [Test]
+        [Fact]
         public void VerifyConnectionString_CorrectlySetsEndpoint()
         {
             var testIkey = "test_ikey";
@@ -19,11 +22,11 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             var exporter = new AzureMonitorTraceExporter(new AzureMonitorExporterOptions { ConnectionString = $"InstrumentationKey={testIkey};IngestionEndpoint={testEndpoint}" });
 
             GetInternalFields(exporter, out string ikey, out string endpoint);
-            Assert.AreEqual(testIkey, ikey);
-            Assert.AreEqual(testEndpoint, endpoint);
+            Assert.Equal(testIkey, ikey);
+            Assert.Equal(testEndpoint, endpoint);
         }
 
-        [Test]
+        [Fact]
         public void VerifyConnectionString_CorrectlySetsDefaultEndpoint()
         {
             var testIkey = "test_ikey";
@@ -31,17 +34,17 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             var exporter = new AzureMonitorTraceExporter(new AzureMonitorExporterOptions { ConnectionString = $"InstrumentationKey={testIkey};" });
 
             GetInternalFields(exporter, out string ikey, out string endpoint);
-            Assert.AreEqual(testIkey, ikey);
-            Assert.AreEqual(ConnectionString.Constants.DefaultIngestionEndpoint, endpoint);
+            Assert.Equal(testIkey, ikey);
+            Assert.Equal(ConnectionString.Constants.DefaultIngestionEndpoint, endpoint);
         }
 
-        [Test]
+        [Fact]
         public void VerifyConnectionString_ThrowsExceptionWhenInvalid()
         {
             Assert.Throws<InvalidOperationException>(() => new AzureMonitorTraceExporter(new AzureMonitorExporterOptions { ConnectionString = null }));
         }
 
-        [Test]
+        [Fact]
         public void VerifyConnectionString_ThrowsExceptionWhenMissingInstrumentationKey()
         {
             var testEndpoint = "https://www.bing.com/";

@@ -36,43 +36,5 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
             }
             writer.WriteEndObject();
         }
-
-        internal static StackFrame DeserializeStackFrame(JsonElement element)
-        {
-            int level = default;
-            string method = default;
-            Optional<string> assembly = default;
-            Optional<string> fileName = default;
-            Optional<int> line = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("level"))
-                {
-                    level = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("method"))
-                {
-                    method = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("assembly"))
-                {
-                    assembly = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("fileName"))
-                {
-                    fileName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("line"))
-                {
-                    line = property.Value.GetInt32();
-                    continue;
-                }
-            }
-            return new StackFrame(level, method, assembly.Value, fileName.Value, Optional.ToNullable(line));
-        }
     }
 }

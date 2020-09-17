@@ -61,7 +61,7 @@ namespace Azure.Core.TestFramework
                         context.CurrentResult.SetResult(context.CurrentResult.ResultState,
                             "Error while trying to re-record: " + Environment.NewLine +
                             context.CurrentResult.Message + Environment.NewLine +
-                            "Original error: " + originalResult.Message, context.CurrentResult.Message);
+                            "Original error: " + originalResult.Message, context.CurrentResult.StackTrace);
                     }
 
                     // revert RecordTestMode to Playback

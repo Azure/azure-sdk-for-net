@@ -13,6 +13,7 @@ using Azure.Storage.Files.DataLake.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using System.Text.Json;
 using System.Collections.Generic;
+using Azure.Storage.Shared;
 
 namespace Azure.Storage.Files.DataLake
 {
@@ -1574,7 +1575,7 @@ namespace Azure.Storage.Files.DataLake
 
                 DataLakeDirectoryClient directoryClient = GetDirectoryClient(path);
 
-                Response<PathInfo> response = await GetDirectoryClient(path).CreateAsync(
+                Response<PathInfo> response = await directoryClient.CreateAsync(
                     httpHeaders,
                     metadata,
                     permissions,

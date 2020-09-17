@@ -3,7 +3,7 @@ Azure Key Vault is a cloud service that provides secure storage and automated ma
 
 The Azure Key Vault certificates client library enables programmatically managing certificates, offering methods to create, update, list, and delete certificates, policies, issuers, and contacts. The library also supports managing pending certificate operations and management of deleted certificates.
 
-[Source code][certificate_client_src] | [Package (NuGet)][certificate_client_nuget_package] | [API reference documentation][API_reference] | [Product documentation][keyvault_docs] | [Samples][certificate_client_samples]
+[Source code][certificate_client_src] | [Package (NuGet)][certificate_client_nuget_package] | [API reference documentation][API_reference] | [Product documentation][keyvault_docs] | [Samples][certificate_client_samples] | [Migration guide][migration_guide]
 
 ## Getting started
 
@@ -11,7 +11,7 @@ The Azure Key Vault certificates client library enables programmatically managin
 Install the Azure Key Vault certificates client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-Install-Package Azure.Security.KeyVault.Certificates -IncludePrerelease
+dotnet install Azure.Security.KeyVault.Certificates -IncludePrerelease
 ```
 
 ### Prerequisites
@@ -32,7 +32,7 @@ Client secret credential authentication is being used in this getting started se
 or other credential providers provided with the Azure SDK, you should install the Azure.Identity package:
 
 ```PowerShell
-Install-Package Azure.Identity
+dotnet install Azure.Identity
 ```
 
 #### Create/Get credentials
@@ -183,8 +183,8 @@ while (!operation.HasCompleted)
     operation.UpdateStatus();
 }
 
-DeletedCertificate secret = operation.Value;
-client.PurgeDeletedCertificate(secret.Name);
+DeletedCertificate certificate = operation.Value;
+client.PurgeDeletedCertificate(certificate.Name);
 ```
 
 ### Create a certificate asynchronously
@@ -222,8 +222,8 @@ DeleteCertificateOperation operation = await client.StartDeleteCertificateAsync(
 // You only need to wait for completion if you want to purge or recover the certificate.
 await operation.WaitForCompletionAsync();
 
-DeletedCertificate secret = operation.Value;
-await client.PurgeDeletedCertificateAsync(secret.Name);
+DeletedCertificate certificate = operation.Value;
+await client.PurgeDeletedCertificateAsync(certificate.Name);
 ```
 
 ## Troubleshooting
@@ -292,13 +292,13 @@ Several Azure Key Vault certificates client library samples are available to you
 * For Keys client library see [Keys client library][keys_client_library].
 
 ## Contributing
-See the [CONTRIBUTING.md][https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/CONTRIBUTING.md] for details on building, testing, and contributing to these libraries.
+See the [CONTRIBUTING.md][contributing] for details on building, testing, and contributing to these libraries.
 
 This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit https://cla.microsoft.com.
 
 When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
 
-This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the Code of Conduct FAQ or contact opencode@microsoft.com with any additional questions or comments.
+This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][coc_faq] or contact opencode@microsoft.com with any additional questions or comments.
 
 <!-- LINKS -->
 [certificate_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Certificates/src
@@ -311,7 +311,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [certificate_client_class]: src/CertificateClient.cs
 [soft_delete]: https://docs.microsoft.com/azure/key-vault/key-vault-ovw-soft-delete
-[azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity
+[azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity#defaultazurecredential
 [keyvault_rest]: https://docs.microsoft.com/rest/api/keyvault/
 [secrets_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Secrets
 [keys_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Keys
@@ -319,6 +319,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [get_cetificates_sample]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Certificates/samples/Sample2_GetCertificates.md
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
-[contributing]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Microsoft.Azure.KeyVault/CONTRIBUTING.md
+[contributing]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/CONTRIBUTING.md
+[coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
+[migration_guide]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Certificates/MigrationGuide.md
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fkeyvault%2FAzure.Security.KeyVault.Certificates%2FREADME.png)

@@ -2928,12 +2928,10 @@ namespace Azure.Storage.Files.Shares.Test
             // Arrange
             await using DisposingDirectory test = await GetTestDirectoryAsync();
             ShareFileClient file = test.Directory.GetFileClient(GetNewFileName());
-            Stream outputStream = await file.OpenReadAsync();
-            byte[] bytes = new byte[Constants.KB];
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                outputStream.ReadAsync(bytes, 0, Constants.KB),
+                file.OpenReadAsync(),
                 e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
 
@@ -2989,15 +2987,12 @@ namespace Azure.Storage.Files.Shares.Test
             };
 
             // Act
-            Stream outputStream = await file.OpenReadAsync(options).ConfigureAwait(false);
-            byte[] outputBytes = new byte[size];
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                outputStream.ReadAsync(outputBytes, 0, size),
+                file.OpenReadAsync(options),
                 e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/13510
         public async Task OpenReadAsync_StrangeOffsetsTest()
         {
             // Arrange
@@ -3074,7 +3069,6 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/13510
         public async Task OpenReadAsync_CopyReadStreamToAnotherStream()
         {
             // Arrange
@@ -3099,8 +3093,13 @@ namespace Azure.Storage.Files.Shares.Test
         public async Task OpenReadAsync_InvalidParameterTests()
         {
             // Arrange
-            ShareFileClient file = new ShareFileClient(new Uri("https://www.doesntmatter.com"));
-            Stream stream = await file.OpenReadAsync();
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            long size = 4 * Constants.MB;
+            byte[] exectedData = GetRandomBuffer(size);
+            ShareFileClient fileClient = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
+            await fileClient.CreateAsync(size);
+            await fileClient.UploadAsync(new MemoryStream(exectedData));
+            Stream stream = await fileClient.OpenReadAsync();
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentNullException>(

@@ -2122,6 +2122,9 @@ namespace Azure.Storage.Files.Shares
             {
                 scope.Start();
 
+                // This also makes sure that we fail fast if file doesn't exist.
+                ShareFileProperties properties = await GetPropertiesInternal(conditions: conditions, async, cancellationToken).ConfigureAwait(false);
+
                 return new LazyLoadingReadOnlyStream<ShareFileRequestConditions, ShareFileProperties>(
                     async (HttpRange range,
                     ShareFileRequestConditions conditions,
@@ -2143,6 +2146,7 @@ namespace Azure.Storage.Files.Shares
                     createRequestConditionsFunc: null,
                     async (bool async, CancellationToken cancellationToken)
                         => await GetPropertiesInternal(conditions: default, async, cancellationToken).ConfigureAwait(false),
+                    properties.ContentLength,
                     position,
                     bufferSize,
                     conditions);

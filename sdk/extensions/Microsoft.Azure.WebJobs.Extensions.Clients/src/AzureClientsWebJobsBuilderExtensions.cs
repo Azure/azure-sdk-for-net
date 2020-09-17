@@ -2,11 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Extensions.WebJobs;
+using System.Collections.Generic;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Primitives;
 
 namespace Microsoft.Extensions.Hosting
 {
@@ -29,7 +30,7 @@ namespace Microsoft.Extensions.Hosting
             }
 
             builder.Services.AddAzureClients(builder =>
-                builder.UseConfiguration(provider => provider.GetRequiredService<IConfiguration>().GetWebJobsRootConfiguration()));
+                builder.UseConfiguration(provider => new WebJobsConfiguration(provider.GetRequiredService<IConfiguration>())));
             builder.AddExtension<AzureClientsExtensionConfigProvider>();
 
             return builder;

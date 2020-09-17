@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core.Amqp;
 using Azure.Messaging.ServiceBus.Amqp;
-using Azure.Messaging.ServiceBus.Management;
+using Azure.Messaging.ServiceBus.Administration;
 
 namespace Azure.Messaging.ServiceBus
 {

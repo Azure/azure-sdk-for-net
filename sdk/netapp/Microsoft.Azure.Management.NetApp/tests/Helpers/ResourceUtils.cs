@@ -11,24 +11,32 @@ namespace NetApp.Tests.Helpers
     {
         public const long gibibyte = 1024L * 1024L * 1024L;
 
-        private const string remoteSuffix = "-RSC";
+        private const string remoteSuffix = "-R";
         public const string vnet = "sdknettestqa2vnet464";
         public const string repVnet = "sdktestqa2vnet464";
-        public const string remoteVnet = repVnet + remoteSuffix;
+        //public const string remoteVnet = repVnet + remoteSuffix;
+        public const string remoteVnet = "sdktestqa2vnet464east-R";
+        //public const string subsId = "8f38cfec-0ecd-413a-892e-2494f77a3b56";
+        //public const string subsId = "0661B131-4A11-479B-96BF-2F95ACCA2F73";
         public const string subsId = "69a75bda-882e-44d5-8431-63421204132a";
-        public const string location = "westus2stage";
-        public const string remoteLocation = "southcentralusstage";
+        public const string location = "westus2";
+        //public const string remoteLocation = "southcentralus";
+        public const string remoteLocation = "eastus";
         public const string resourceGroup = "sdk-net-test-qa2";
+        //public const string resourceGroup = "ab_sdk_test_rg";
         public const string repResourceGroup = "sdk-test-qa2";
         public const string remoteResourceGroup = repResourceGroup + remoteSuffix;
-        public const string accountName1 = "sdk-net-tests-acc-20";
-        public const string remoteAccountName1 = accountName1 + remoteSuffix;
+        public const string accountName1 = "sdk-net-tests-acc-200";
+        public const string accountName1Repl = "sdk-net-tests-acc-20b";
+        public const string remoteAccountName1 = accountName1Repl + remoteSuffix;
         public const string accountName2 = "sdk-net-tests-acc-21";
-        public const string poolName1 = "sdk-net-tests-pool-10";
-        public const string remotePoolName1 = poolName1 + remoteSuffix;
+        public const string poolName1 = "sdk-net-tests-pool-100";
+        public const string poolName1Repl = "sdk-net-tests-pool-10b";
+        public const string remotePoolName1 = poolName1Repl + remoteSuffix;
         public const string poolName2 = "sdk-net-tests-pool-11";
-        public const string volumeName1 = "sdk-net-tests-vol-1000";
-        public const string remoteVolumeName1 = volumeName1 + remoteSuffix;
+        public const string volumeName1 = "sdk-net-tests-vol-1100";
+        public const string volumeName1Repl = "sdk-net-tests-vol-1000b";
+        public const string remoteVolumeName1 = volumeName1Repl + remoteSuffix;
         public const string volumeName2 = "sdk-net-tests-vol-1001";
         public const string snapshotName1 = "sdk-net-tests-snap-10";
         public const string snapshotName2 = "sdk-net-tests-snap-11";
@@ -38,7 +46,7 @@ namespace NetApp.Tests.Helpers
             Username = "sdkuser",
             Password = "sdkpass",
             Domain = "sdkdomain",
-            Dns = "127.0.0.1",
+            Dns = "192.0.2.2",
             SmbServerName = "SDKSMBSeNa",
         };
 
@@ -47,7 +55,7 @@ namespace NetApp.Tests.Helpers
             Username = "sdkuser1",
             Password = "sdkpass1",
             Domain = "sdkdomain",
-            Dns = "127.0.0.1",
+            Dns = "192.0.2.1",
             SmbServerName = "SDKSMBSeNa",
         };
 

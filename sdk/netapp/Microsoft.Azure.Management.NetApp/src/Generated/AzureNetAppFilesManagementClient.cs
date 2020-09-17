@@ -354,7 +354,7 @@ namespace Microsoft.Azure.Management.NetApp
             Volumes = new VolumesOperations(this);
             Snapshots = new SnapshotsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-11-01";
+            ApiVersion = "2020-02-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

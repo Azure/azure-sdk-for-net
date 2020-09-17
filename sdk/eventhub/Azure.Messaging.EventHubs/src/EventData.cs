@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using Azure.Core;
 using Azure.Messaging.EventHubs.Consumer;
 
 namespace Azure.Messaging.EventHubs
@@ -17,9 +16,6 @@ namespace Azure.Messaging.EventHubs
     ///
     public class EventData
     {
-        /// <summary>The sequence number associated with publishing of the event.</summary>
-        private int? _publishedSequenceNumber = null;
-
         /// <summary>
         ///   The data associated with the event.
         /// </summary>
@@ -104,20 +100,7 @@ namespace Azure.Messaging.EventHubs
         ///   of the producer are enabled.  For example, it is used by idempotent publishing.
         /// </remarks>
         ///
-        public int? PublishedSequenceNumber
-        {
-            get => _publishedSequenceNumber;
-
-            internal set
-            {
-                if (value.HasValue)
-                {
-                    Argument.AssertAtLeast(value.Value, 0, nameof(PublishedSequenceNumber));
-                }
-
-                _publishedSequenceNumber = value;
-            }
-        }
+        public int? PublishedSequenceNumber { get; private set; }
 
         /// <summary>
         ///   The sequence number assigned to the event when it was enqueued in the associated Event Hub partition.
@@ -161,6 +144,24 @@ namespace Azure.Messaging.EventHubs
         /// </remarks>
         ///
         public string PartitionKey { get; }
+
+        /// <summary>
+        ///   The publishing sequence number assigned to the event as part of a publishing operation.
+        /// </summary>
+        ///
+        /// <value>
+        ///   The sequence number that was assigned during publishing, if the event was successfully
+        ///   published by a sequence-aware producer.  If the producer was not configured to apply
+        ///   sequence numbering or if the event has not yet been successfully published, this member
+        ///   will be <c>null</c>.
+        /// </value>
+        ///
+        /// <remarks>
+        ///   The published sequence number is only populated and relevant when certain features
+        ///   of the producer are enabled.  For example, it is used by idempotent publishing.
+        /// </remarks>
+        ///
+        internal int? PendingPublishSequenceNumber { get; set; }
 
         /// <summary>
         ///   The sequence number of the event that was last enqueued into the Event Hub partition from which this
@@ -235,6 +236,8 @@ namespace Azure.Messaging.EventHubs
         /// <param name="lastPartitionOffset">The offset that was last enqueued into the Event Hub partition.</param>
         /// <param name="lastPartitionEnqueuedTime">The date and time, in UTC, of the event that was last enqueued into the Event Hub partition.</param>
         /// <param name="lastPartitionPropertiesRetrievalTime">The date and time, in UTC, that the last event information for the Event Hub partition was retrieved from the service.</param>
+        /// <param name="publishedSequenceNumber">The publishing sequence number assigned to the event at the time it was successfully published.</param>
+        /// <param name="pendingPublishSequenceNumber">The publishing sequence number assigned to the event as part of a publishing operation.</param>
         ///
         internal EventData(ReadOnlyMemory<byte> eventBody,
                            IDictionary<string, object> properties = null,
@@ -246,7 +249,9 @@ namespace Azure.Messaging.EventHubs
                            long? lastPartitionSequenceNumber = null,
                            long? lastPartitionOffset = null,
                            DateTimeOffset? lastPartitionEnqueuedTime = null,
-                           DateTimeOffset? lastPartitionPropertiesRetrievalTime = null)
+                           DateTimeOffset? lastPartitionPropertiesRetrievalTime = null,
+                           int? publishedSequenceNumber = null,
+                           int? pendingPublishSequenceNumber = null)
         {
             Body = eventBody;
             Properties = properties ?? new Dictionary<string, object>();
@@ -255,10 +260,12 @@ namespace Azure.Messaging.EventHubs
             Offset = offset;
             EnqueuedTime = enqueuedTime;
             PartitionKey = partitionKey;
+            PendingPublishSequenceNumber = pendingPublishSequenceNumber;
             LastPartitionSequenceNumber = lastPartitionSequenceNumber;
             LastPartitionOffset = lastPartitionOffset;
             LastPartitionEnqueuedTime = lastPartitionEnqueuedTime;
             LastPartitionPropertiesRetrievalTime = lastPartitionPropertiesRetrievalTime;
+            PublishedSequenceNumber = publishedSequenceNumber;
         }
 
         /// <summary>
@@ -313,6 +320,16 @@ namespace Azure.Messaging.EventHubs
         public override string ToString() => base.ToString();
 
         /// <summary>
+        ///   Transitions the pending publishing sequence number to the published sequence number.
+        /// </summary>
+        ///
+        internal void CommitPublishingState()
+        {
+            PublishedSequenceNumber = PendingPublishSequenceNumber;
+            PendingPublishSequenceNumber = default;
+        }
+
+        /// <summary>
         ///   Creates a new copy of the current <see cref="EventData" />, cloning its attributes into a new instance.
         /// </summary>
         ///
@@ -331,7 +348,9 @@ namespace Azure.Messaging.EventHubs
                 LastPartitionSequenceNumber,
                 LastPartitionOffset,
                 LastPartitionEnqueuedTime,
-                LastPartitionPropertiesRetrievalTime
+                LastPartitionPropertiesRetrievalTime,
+                PublishedSequenceNumber,
+                PendingPublishSequenceNumber
             );
     }
 }
