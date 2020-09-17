@@ -1,6 +1,24 @@
 # Release History
-# 1.0.3-beta.11 (Unreleased)
+## 1.0.3-beta.17 (2020-09-16)
+- Package Artifacts directory restructure, attempt 7
 
+## 1.0.3-beta.16 (2020-09-15)
+- Package Artifacts directory restructure, attempt 6
+
+## 1.0.3-beta.15 (2020-09-15)
+- Package Artifacts directory restructure, attempt 5
+
+## 1.0.3-beta.14 (2020-09-14)
+- Package Artifacts directory restructure, attempt 4
+
+## 1.0.3-beta.13 (2020-09-14)
+- Package Artifacts directory restructure, attempt 3
+
+## 1.0.3-beta.12 (2020-09-11)
+- Package Artifacts directory restructure, attempt 2
+
+## 1.0.3-beta.11 (2020-09-10)
+- Package Artifacts directory restructure
 
 ## 1.0.3-beta.10 (2020-09-09)
 - Enable the master link replacement feature, attempt 3
@@ -49,6 +67,9 @@
 
 ## 1.0.3-beta.1 (2020-08-27)
 - Test new alpha beta versioning
+
+## 1.0.2-preview.17 (2020-07-24)
+- Test release pipeline
 
 ## 1.0.2-preview.15 (2020-06-29)
 - Test release pipeline
