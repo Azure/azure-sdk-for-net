@@ -62,4 +62,9 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
   </ItemGroup>
+
+  <!--Add shared storage properties-->
+  <PropertyGroup>
+    <AzureStorageWebjobsExtensionSharedSources>$(MSBuildThisFileDirectory)\Azure.Storage.Webjobs.Extensions.Common\src\Shared\</AzureStorageWebjobsExtensionSharedSources>
+  </PropertyGroup>
 </Project>

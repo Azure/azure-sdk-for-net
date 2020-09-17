@@ -35,7 +35,6 @@
     <Compile Include="..\Microsoft.Azure.WebJobs.Host\Converters\IObjectToTypeConverter.cs" Link="Shared\IObjectToTypeConverter.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Host\HostContainerNames.cs" Link="Shared\HostContainerNames.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Host\HostDirectoryNames.cs" Link="Shared\HostDirectoryNames.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\HostQueueNames.cs" Link="Shared\HostQueueNames.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Host\IContextGetter.cs" Link="Shared\IContextGetter.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Host\IContextSetter.cs" Link="Shared\IContextSetter.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Host\IFactory.cs" Link="Shared\IFactory.cs" />

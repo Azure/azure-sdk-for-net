@@ -3,8 +3,8 @@
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
 {
-    internal interface IFactory<T>
+    internal interface IContextGetter<TValue>
     {
-        T Create();
+        TValue Value { get; }
     }
 }

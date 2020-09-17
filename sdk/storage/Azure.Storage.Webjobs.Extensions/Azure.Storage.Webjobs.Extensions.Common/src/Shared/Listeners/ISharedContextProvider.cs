@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
-
-namespace Microsoft.Azure.WebJobs.Host.Listeners
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
 {
     /// <summary>
     /// Interface for providing host level state persistence.
