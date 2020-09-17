@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
         private readonly HttpMessageHandler _httpMessageHandler; // This is for unit testing
         private HttpClient _httpClient;
-        private string _msiThumbprint;
+        private string _serviceFabricMsiThumbprint;
 
         // singleton instance of HttpClient
         private HttpClient HttpClient
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
 #if !net452
                         // Service Fabric requires custom certificate validation
-                        if (!string.IsNullOrWhiteSpace(_msiThumbprint))
+                        if (!string.IsNullOrWhiteSpace(_serviceFabricMsiThumbprint))
                         {
                             httpClientHandler.ServerCertificateCustomValidationCallback = (httpRequestMessage, cert, certChain, policyErrors) =>
                             {
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
                                 // X509Certificate2.GetCertHashString() not available in .NET Core 1.4 and net452, this works for all platforms
                                 var certHashString = BitConverter.ToString(cert.GetCertHash()).Replace("-", "");
-                                return 0 == string.Compare(certHashString, _msiThumbprint, StringComparison.OrdinalIgnoreCase);
+                                return 0 == string.Compare(certHashString, _serviceFabricMsiThumbprint, StringComparison.OrdinalIgnoreCase);
                             };
                         }
 #endif
@@ -125,11 +125,11 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 // Check if App Services MSI or Service Fabric MSI are available. Both use different set of shared env vars.
                 var msiEndpoint = Environment.GetEnvironmentVariable("IDENTITY_ENDPOINT");
                 var msiHeader = Environment.GetEnvironmentVariable("IDENTITY_HEADER");
-                _msiThumbprint = Environment.GetEnvironmentVariable("IDENTITY_SERVER_THUMBPRINT"); // only in Service Fabric, needed to create HttpClient
-                var msiApiVersion = Environment.GetEnvironmentVariable("IDENTITY_API_VERSION"); // only in Service Fabric
+                _serviceFabricMsiThumbprint = Environment.GetEnvironmentVariable("IDENTITY_SERVER_THUMBPRINT"); // only in Service Fabric, needed to create HttpClient
+                var serviceFabricApiVersion = Environment.GetEnvironmentVariable("IDENTITY_API_VERSION"); // only in Service Fabric
 
                 var endpointAndHeaderAvailable = !string.IsNullOrWhiteSpace(msiEndpoint) && !string.IsNullOrWhiteSpace(msiHeader);
-                var thumbprintAndApiVersionAvailable = !string.IsNullOrWhiteSpace(_msiThumbprint) && !string.IsNullOrWhiteSpace(msiApiVersion);
+                var thumbprintAndApiVersionAvailable = !string.IsNullOrWhiteSpace(_serviceFabricMsiThumbprint) && !string.IsNullOrWhiteSpace(serviceFabricApiVersion);
 
                 if (endpointAndHeaderAvailable)
                     msiEnvironment = thumbprintAndApiVersionAvailable
@@ -178,8 +178,6 @@ namespace Microsoft.Azure.Services.AppAuthentication
                     ? $"&client_id={_managedIdentityClientId}"
                     : string.Empty;
 
-                // TODO: Service Fabric support for client_id?
-
                 // endpoint and API version dependent on environment
                 string endpoint = null, apiVersion = null;
                 switch (msiEnvironment)
@@ -194,7 +192,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                         break;
                     case MsiEnvironment.ServiceFabric:
                         endpoint = msiEndpoint;
-                        apiVersion = msiApiVersion;
+                        apiVersion = serviceFabricApiVersion;
                         break;
                 }
 

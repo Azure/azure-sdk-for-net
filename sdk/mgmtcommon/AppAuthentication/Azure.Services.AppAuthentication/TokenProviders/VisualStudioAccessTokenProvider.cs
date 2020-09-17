@@ -17,10 +17,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
     {
         // Represents the token provider file, which has information about executable to call to get token.
         private VisualStudioTokenProviderFile _visualStudioTokenProviderFile;
-        internal string _visualStudioTokenProviderFilePath = Path.Combine(EnvironmentHelper.GetEnvironmentVariable(LocalAppDataPathEnv),
-            TokenProviderFilePath);
 
-        // Allows for unit testing, by mocking IProcessManager
+        // Allows for unit testing, by mocking IProcessManager or using non-default file path for token provider file
         private readonly IProcessManager _processManager;
 
         private const string ResourceArgumentName = "--resource";
@@ -48,15 +46,18 @@ namespace Microsoft.Azure.Services.AppAuthentication
         {
             if (string.IsNullOrEmpty(EnvironmentHelper.GetEnvironmentVariable(LocalAppDataPathEnv)))
             {
-                throw new Exception(NoAppDataEnvironmentVariableError);    
+                throw new Exception(NoAppDataEnvironmentVariableError);
             }
 
-            if (!File.Exists(_visualStudioTokenProviderFilePath))
+            string tokenProviderPath = Path.Combine(EnvironmentHelper.GetEnvironmentVariable(LocalAppDataPathEnv),
+                TokenProviderFilePath);
+
+            if (!File.Exists(tokenProviderPath))
             {
-                throw new Exception($"{TokenProviderFileNotFound} \"{_visualStudioTokenProviderFilePath}\"");
+                throw new Exception($"{TokenProviderFileNotFound} \"{tokenProviderPath}\"");
             }
 
-            return VisualStudioTokenProviderFile.Parse(File.ReadAllText(_visualStudioTokenProviderFilePath));
+            return VisualStudioTokenProviderFile.Load(tokenProviderPath);
         }
 
         /// <summary>
@@ -101,7 +102,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
             if (processStartInfos.Count == 0)
             {
-                throw new Exception($"{TokenProvidersNotFound} \"{_visualStudioTokenProviderFilePath}\"");
+                throw new Exception($"{TokenProvidersNotFound} \"{visualStudioTokenProviderFile.FilePath}\"");
             }
 
             return processStartInfos;

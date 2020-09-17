@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         public VisualStudioAccessTokenProviderTests()
         {
             // Parse the Visual Studio token provider file.
-            _visualStudioTokenProviderFile = VisualStudioTokenProviderFile.Parse(File.ReadAllText(Path.Combine(Constants.TestFilesPath, "VisualStudioSingleTokenProvider.json")));
+            _visualStudioTokenProviderFile = VisualStudioTokenProviderFile.Load(Path.Combine(Constants.TestFilesPath, "VisualStudioSingleTokenProvider.json"));
 
             // This is set to a file that exists, since there is code that checks for file's existence. In reality, this would be an executable, but since
             // process manager is mocked, this will will not be run.
@@ -44,9 +44,9 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         {
             var visualStudioAccessTokenProvider = new VisualStudioAccessTokenProvider(new ProcessManager());
 
-            // set token provider file to non-existent path
-            var path = $"C:\\{Guid.NewGuid()}\\tokenprovider.json";
-            visualStudioAccessTokenProvider._visualStudioTokenProviderFilePath = path;
+            // This will ensure that the localappdata folder doesnt exist on the machine. Since VS token provider file path is added to this, the file will not exist either.
+            string path = Guid.NewGuid().ToString();
+            Environment.SetEnvironmentVariable(Constants.LocalAppDataEnv, path);
 
             var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => visualStudioAccessTokenProvider.GetAuthResultAsync(Constants.KeyVaultResourceId, Constants.TenantId)));
 
