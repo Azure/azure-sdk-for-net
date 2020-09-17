@@ -490,5 +490,47 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // Just make sure the call succeeds.
             }
         }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task DataLakeSasBuilder_LargeDirectoryDepth()
+        {
+            // Arrange
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            string fileSystemName = GetNewFileSystemName();
+
+            await using DisposingFileSystem test = await GetNewFileSystem(service: oauthService, fileSystemName: fileSystemName);
+
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient subdirectory = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient subdirectory2 = await subdirectory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient subdirectory3 = await subdirectory2.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file = await subdirectory3.CreateFileAsync(GetNewFileName());
+
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            DataLakeSasBuilder dataLakeSasBuilder = new DataLakeSasBuilder
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(1),
+                FileSystemName = test.FileSystem.Name,
+                Path = subdirectory3.Path,
+                IsDirectory = true
+            };
+
+            dataLakeSasBuilder.SetPermissions(DataLakeSasPermissions.All);
+
+            DataLakeUriBuilder dataLakeUriBuilder = new DataLakeUriBuilder(subdirectory3.Uri)
+            {
+                Sas = dataLakeSasBuilder.ToSasQueryParameters(userDelegationKey, test.FileSystem.AccountName)
+            };
+
+            DataLakeDirectoryClient sasDirectoryClient = new DataLakeDirectoryClient(dataLakeUriBuilder.ToUri(), GetOptions());
+
+            // Act
+            await sasDirectoryClient.ExistsAsync();
+        }
     }
 }
