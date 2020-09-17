@@ -321,7 +321,6 @@ namespace Azure.Storage.Files.Shares.Models
         internal FileLeaseReleaseInfo() { }
         public Azure.ETag ETag { get { throw null; } }
         public System.DateTimeOffset LastModified { get { throw null; } }
-        public int LeaseTime { get { throw null; } }
     }
     public static partial class FileModelFactory
     {
@@ -375,11 +374,6 @@ namespace Azure.Storage.Files.Shares.Models
     {
         internal PermissionInfo() { }
         public string FilePermissionKey { get { throw null; } }
-    }
-    public partial class ProtocolSettings
-    {
-        public ProtocolSettings() { }
-        public Azure.Storage.Files.Shares.Models.SmbSettings SmbSettings { get { throw null; } set { } }
     }
     public partial class ShareAccessPolicy
     {
@@ -610,7 +604,7 @@ namespace Azure.Storage.Files.Shares.Models
         public Azure.ETag ETag { get { throw null; } }
         public System.DateTimeOffset LastModified { get { throw null; } }
         public string LeaseId { get { throw null; } }
-        public int LeaseTime { get { throw null; } }
+        public int? LeaseTime { get { throw null; } }
     }
     public partial class ShareFileOpenReadOptions
     {
@@ -722,14 +716,10 @@ namespace Azure.Storage.Files.Shares.Models
     }
     public static partial class ShareModelFactory
     {
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Storage.Files.Shares.Models.FileLeaseReleaseInfo FileLeaseReleaseInfo(Azure.ETag eTag, System.DateTimeOffset lastModified) { throw null; }
-        public static Azure.Storage.Files.Shares.Models.FileLeaseReleaseInfo FileLeaseReleaseInfo(Azure.ETag eTag, System.DateTimeOffset lastModified, int leaseTime) { throw null; }
         public static Azure.Storage.Files.Shares.Models.PermissionInfo PermissionInfo(string filePermissionKey) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareFileCopyInfo ShareFileCopyInfo(Azure.ETag eTag, System.DateTimeOffset lastModified, string copyId, Azure.Storage.Files.Shares.Models.CopyStatus copyStatus) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareFileHandle ShareFileHandle(string handleId, string path, string fileId, string sessionId, string clientIp, string parentId = null, System.DateTimeOffset? openedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastReconnectedOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.Storage.Files.Shares.Models.ShareFileLease ShareFileLease(Azure.ETag eTag, System.DateTimeOffset lastModified, int leaseTime, string leaseId) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Storage.Files.Shares.Models.ShareFileLease ShareFileLease(Azure.ETag eTag, System.DateTimeOffset lastModified, string leaseId) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareFileRangeInfo ShareFileRangeInfo(System.DateTimeOffset lastModified, Azure.ETag eTag, long fileContentLength, System.Collections.Generic.IEnumerable<Azure.HttpRange> ranges) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareFileUploadInfo ShareFileUploadInfo(Azure.ETag eTag, System.DateTimeOffset lastModified, byte[] contentHash, bool isServerEncrypted) { throw null; }
@@ -769,6 +759,11 @@ namespace Azure.Storage.Files.Shares.Models
         public int? QuotaInGB { get { throw null; } }
         public int? RemainingRetentionDays { get { throw null; } }
     }
+    public partial class ShareProtocolSettings
+    {
+        public ShareProtocolSettings() { }
+        public Azure.Storage.Files.Shares.Models.ShareSmbSettings Smb { get { throw null; } set { } }
+    }
     public partial class ShareRetentionPolicy
     {
         public ShareRetentionPolicy() { }
@@ -781,13 +776,18 @@ namespace Azure.Storage.Files.Shares.Models
         public System.Collections.Generic.IList<Azure.Storage.Files.Shares.Models.ShareCorsRule> Cors { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareMetrics HourMetrics { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareMetrics MinuteMetrics { get { throw null; } set { } }
-        public Azure.Storage.Files.Shares.Models.ProtocolSettings ProtocolSettings { get { throw null; } set { } }
+        public Azure.Storage.Files.Shares.Models.ShareProtocolSettings Protocol { get { throw null; } set { } }
     }
     public partial class ShareSignedIdentifier
     {
         public ShareSignedIdentifier() { }
         public Azure.Storage.Files.Shares.Models.ShareAccessPolicy AccessPolicy { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
+    }
+    public partial class ShareSmbSettings
+    {
+        public ShareSmbSettings() { }
+        public Azure.Storage.Files.Shares.Models.SmbMultichannel Multichannel { get { throw null; } set { } }
     }
     public static partial class SharesModelFactory
     {
@@ -827,11 +827,6 @@ namespace Azure.Storage.Files.Shares.Models
     {
         public SmbMultichannel() { }
         public bool? Enabled { get { throw null; } set { } }
-    }
-    public partial class SmbSettings
-    {
-        public SmbSettings() { }
-        public Azure.Storage.Files.Shares.Models.SmbMultichannel Multichannel { get { throw null; } set { } }
     }
     public partial class StorageClosedHandlesSegment
     {

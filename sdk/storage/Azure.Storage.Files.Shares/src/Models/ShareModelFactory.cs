@@ -107,37 +107,5 @@ namespace Azure.Storage.Files.Shares.Models
                 Snapshot = snapshot,
             };
         }
-
-        /// <summary>
-        /// Creates a new FileLeaseReleaseInfo instance for mocking.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static FileLeaseReleaseInfo FileLeaseReleaseInfo(
-            Azure.ETag eTag,
-            System.DateTimeOffset lastModified)
-        {
-            return new FileLeaseReleaseInfo()
-            {
-                ETag = eTag,
-                LastModified = lastModified,
-            };
-        }
-
-        /// <summary>
-        /// Creates a new ShareFileLease instance for mocking.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ShareFileLease ShareFileLease(
-            Azure.ETag eTag,
-            System.DateTimeOffset lastModified,
-            string leaseId)
-        {
-            return new ShareFileLease()
-            {
-                ETag = eTag,
-                LastModified = lastModified,
-                LeaseId = leaseId,
-            };
-        }
     }
 }

@@ -1146,10 +1146,6 @@ namespace Azure.Storage.Files.Shares
                         {
                             _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
-                        if (response.Headers.TryGetValue("x-ms-lease-time", out _header))
-                        {
-                            _value.LeaseTime = int.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
-                        }
                         if (response.Headers.TryGetValue("x-ms-lease-id", out _header))
                         {
                             _value.LeaseId = _header;
@@ -1322,10 +1318,6 @@ namespace Azure.Storage.Files.Shares
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
                             _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
-                        }
-                        if (response.Headers.TryGetValue("x-ms-lease-time", out _header))
-                        {
-                            _value.LeaseTime = int.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
 
                         // Create the response
@@ -1502,10 +1494,6 @@ namespace Azure.Storage.Files.Shares
                         {
                             _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
-                        if (response.Headers.TryGetValue("x-ms-lease-time", out _header))
-                        {
-                            _value.LeaseTime = int.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
-                        }
                         if (response.Headers.TryGetValue("x-ms-lease-id", out _header))
                         {
                             _value.LeaseId = _header;
@@ -1678,10 +1666,6 @@ namespace Azure.Storage.Files.Shares
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
                             _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
-                        }
-                        if (response.Headers.TryGetValue("x-ms-lease-time", out _header))
-                        {
-                            _value.LeaseTime = int.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
                         if (response.Headers.TryGetValue("x-ms-lease-id", out _header))
                         {
@@ -4765,7 +4749,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
-            /// <param name="fileContentLength">Specifies the maximum size for the file, up to 1 TB.</param>
+            /// <param name="fileContentLength">Specifies the maximum size for the file, up to 4 TB.</param>
             /// <param name="fileAttributes">If specified, the provided file attributes shall be set. Default value: ‘Archive’ for file and ‘Directory’ for directory. ‘None’ can also be specified as default.</param>
             /// <param name="fileCreationTime">Creation time for the file/directory. Default value: Now.</param>
             /// <param name="fileLastWriteTime">Last write time for the file/directory. Default value: Now.</param>
@@ -4866,7 +4850,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
-            /// <param name="fileContentLength">Specifies the maximum size for the file, up to 1 TB.</param>
+            /// <param name="fileContentLength">Specifies the maximum size for the file, up to 4 TB.</param>
             /// <param name="fileAttributes">If specified, the provided file attributes shall be set. Default value: ‘Archive’ for file and ‘Directory’ for directory. ‘None’ can also be specified as default.</param>
             /// <param name="fileCreationTime">Creation time for the file/directory. Default value: Now.</param>
             /// <param name="fileLastWriteTime">Last write time for the file/directory. Default value: Now.</param>
@@ -8625,11 +8609,6 @@ namespace Azure.Storage.Files.Shares.Models
         public System.DateTimeOffset LastModified { get; internal set; }
 
         /// <summary>
-        /// Approximate time remaining in the lease period, in seconds.
-        /// </summary>
-        public int LeaseTime { get; internal set; }
-
-        /// <summary>
         /// Prevent direct instantiation of FileLeaseReleaseInfo instances.
         /// You can use ShareModelFactory.FileLeaseReleaseInfo instead.
         /// </summary>
@@ -8646,14 +8625,12 @@ namespace Azure.Storage.Files.Shares.Models
         /// </summary>
         public static FileLeaseReleaseInfo FileLeaseReleaseInfo(
             Azure.ETag eTag,
-            System.DateTimeOffset lastModified,
-            int leaseTime)
+            System.DateTimeOffset lastModified)
         {
             return new FileLeaseReleaseInfo()
             {
                 ETag = eTag,
                 LastModified = lastModified,
-                LeaseTime = leaseTime,
             };
         }
     }
@@ -9192,81 +9169,6 @@ namespace Azure.Storage.Files.Shares.Models
     }
 }
 #endregion class PermissionInfo
-
-#region class ProtocolSettings
-namespace Azure.Storage.Files.Shares.Models
-{
-    /// <summary>
-    /// Protocol settings
-    /// </summary>
-    public partial class ProtocolSettings
-    {
-        /// <summary>
-        /// Settings for SMB protocol.
-        /// </summary>
-        public Azure.Storage.Files.Shares.Models.SmbSettings SmbSettings { get; set; }
-
-        /// <summary>
-        /// Creates a new ProtocolSettings instance
-        /// </summary>
-        public ProtocolSettings()
-            : this(false)
-        {
-        }
-
-        /// <summary>
-        /// Creates a new ProtocolSettings instance
-        /// </summary>
-        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
-        internal ProtocolSettings(bool skipInitialization)
-        {
-            if (!skipInitialization)
-            {
-                SmbSettings = new Azure.Storage.Files.Shares.Models.SmbSettings();
-            }
-        }
-
-        /// <summary>
-        /// Serialize a ProtocolSettings instance as XML.
-        /// </summary>
-        /// <param name="value">The ProtocolSettings instance to serialize.</param>
-        /// <param name="name">An optional name to use for the root element instead of "ProtocolSettings".</param>
-        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
-        /// <returns>The serialized XML element.</returns>
-        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Files.Shares.Models.ProtocolSettings value, string name = "ProtocolSettings", string ns = "")
-        {
-            System.Diagnostics.Debug.Assert(value != null);
-            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
-            if (value.SmbSettings != null)
-            {
-                _element.Add(Azure.Storage.Files.Shares.Models.SmbSettings.ToXml(value.SmbSettings, "SMB", ""));
-            }
-            return _element;
-        }
-
-        /// <summary>
-        /// Deserializes XML into a new ProtocolSettings instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized ProtocolSettings instance.</returns>
-        internal static Azure.Storage.Files.Shares.Models.ProtocolSettings FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            System.Xml.Linq.XElement _child;
-            Azure.Storage.Files.Shares.Models.ProtocolSettings _value = new Azure.Storage.Files.Shares.Models.ProtocolSettings(true);
-            _child = element.Element(System.Xml.Linq.XName.Get("SMB", ""));
-            if (_child != null)
-            {
-                _value.SmbSettings = Azure.Storage.Files.Shares.Models.SmbSettings.FromXml(_child);
-            }
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Shares.Models.ProtocolSettings value);
-    }
-}
-#endregion class ProtocolSettings
 
 #region class Range
 namespace Azure.Storage.Files.Shares.Models
@@ -10515,11 +10417,6 @@ namespace Azure.Storage.Files.Shares.Models
         public System.DateTimeOffset LastModified { get; internal set; }
 
         /// <summary>
-        /// Approximate time remaining in the lease period, in seconds.
-        /// </summary>
-        public int LeaseTime { get; internal set; }
-
-        /// <summary>
         /// Uniquely identifies a file's lease
         /// </summary>
         public string LeaseId { get; internal set; }
@@ -10542,14 +10439,12 @@ namespace Azure.Storage.Files.Shares.Models
         public static ShareFileLease ShareFileLease(
             Azure.ETag eTag,
             System.DateTimeOffset lastModified,
-            int leaseTime,
             string leaseId)
         {
             return new ShareFileLease()
             {
                 ETag = eTag,
                 LastModified = lastModified,
-                LeaseTime = leaseTime,
                 LeaseId = leaseId,
             };
         }
@@ -11396,6 +11291,81 @@ namespace Azure.Storage.Files.Shares.Models
 }
 #endregion class ShareProperties
 
+#region class ShareProtocolSettings
+namespace Azure.Storage.Files.Shares.Models
+{
+    /// <summary>
+    /// Protocol settings
+    /// </summary>
+    public partial class ShareProtocolSettings
+    {
+        /// <summary>
+        /// Settings for SMB protocol.
+        /// </summary>
+        public Azure.Storage.Files.Shares.Models.ShareSmbSettings Smb { get; set; }
+
+        /// <summary>
+        /// Creates a new ShareProtocolSettings instance
+        /// </summary>
+        public ShareProtocolSettings()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new ShareProtocolSettings instance
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal ShareProtocolSettings(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                Smb = new Azure.Storage.Files.Shares.Models.ShareSmbSettings();
+            }
+        }
+
+        /// <summary>
+        /// Serialize a ShareProtocolSettings instance as XML.
+        /// </summary>
+        /// <param name="value">The ShareProtocolSettings instance to serialize.</param>
+        /// <param name="name">An optional name to use for the root element instead of "ShareProtocolSettings".</param>
+        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
+        /// <returns>The serialized XML element.</returns>
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Files.Shares.Models.ShareProtocolSettings value, string name = "ShareProtocolSettings", string ns = "")
+        {
+            System.Diagnostics.Debug.Assert(value != null);
+            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
+            if (value.Smb != null)
+            {
+                _element.Add(Azure.Storage.Files.Shares.Models.ShareSmbSettings.ToXml(value.Smb, "SMB", ""));
+            }
+            return _element;
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new ShareProtocolSettings instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized ShareProtocolSettings instance.</returns>
+        internal static Azure.Storage.Files.Shares.Models.ShareProtocolSettings FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Files.Shares.Models.ShareProtocolSettings _value = new Azure.Storage.Files.Shares.Models.ShareProtocolSettings(true);
+            _child = element.Element(System.Xml.Linq.XName.Get("SMB", ""));
+            if (_child != null)
+            {
+                _value.Smb = Azure.Storage.Files.Shares.Models.ShareSmbSettings.FromXml(_child);
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Shares.Models.ShareProtocolSettings value);
+    }
+}
+#endregion class ShareProtocolSettings
+
 #region class ShareRetentionPolicy
 namespace Azure.Storage.Files.Shares.Models
 {
@@ -11499,7 +11469,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Protocol settings
         /// </summary>
-        public Azure.Storage.Files.Shares.Models.ProtocolSettings ProtocolSettings { get; set; }
+        public Azure.Storage.Files.Shares.Models.ShareProtocolSettings Protocol { get; set; }
 
         /// <summary>
         /// Creates a new ShareServiceProperties instance
@@ -11519,7 +11489,7 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 HourMetrics = new Azure.Storage.Files.Shares.Models.ShareMetrics();
                 MinuteMetrics = new Azure.Storage.Files.Shares.Models.ShareMetrics();
-                ProtocolSettings = new Azure.Storage.Files.Shares.Models.ProtocolSettings();
+                Protocol = new Azure.Storage.Files.Shares.Models.ShareProtocolSettings();
             }
         }
 
@@ -11551,9 +11521,9 @@ namespace Azure.Storage.Files.Shares.Models
                 }
                 _element.Add(_elements);
             }
-            if (value.ProtocolSettings != null)
+            if (value.Protocol != null)
             {
-                _element.Add(Azure.Storage.Files.Shares.Models.ProtocolSettings.ToXml(value.ProtocolSettings, "ProtocolSettings", ""));
+                _element.Add(Azure.Storage.Files.Shares.Models.ShareProtocolSettings.ToXml(value.Protocol, "ProtocolSettings", ""));
             }
             return _element;
         }
@@ -11593,7 +11563,7 @@ namespace Azure.Storage.Files.Shares.Models
             _child = element.Element(System.Xml.Linq.XName.Get("ProtocolSettings", ""));
             if (_child != null)
             {
-                _value.ProtocolSettings = Azure.Storage.Files.Shares.Models.ProtocolSettings.FromXml(_child);
+                _value.Protocol = Azure.Storage.Files.Shares.Models.ShareProtocolSettings.FromXml(_child);
             }
             CustomizeFromXml(element, _value);
             return _value;
@@ -11691,6 +11661,81 @@ namespace Azure.Storage.Files.Shares.Models
     }
 }
 #endregion class ShareSignedIdentifier
+
+#region class ShareSmbSettings
+namespace Azure.Storage.Files.Shares.Models
+{
+    /// <summary>
+    /// Settings for SMB protocol.
+    /// </summary>
+    public partial class ShareSmbSettings
+    {
+        /// <summary>
+        /// Settings for SMB Multichannel.
+        /// </summary>
+        public Azure.Storage.Files.Shares.Models.SmbMultichannel Multichannel { get; set; }
+
+        /// <summary>
+        /// Creates a new ShareSmbSettings instance
+        /// </summary>
+        public ShareSmbSettings()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new ShareSmbSettings instance
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal ShareSmbSettings(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                Multichannel = new Azure.Storage.Files.Shares.Models.SmbMultichannel();
+            }
+        }
+
+        /// <summary>
+        /// Serialize a ShareSmbSettings instance as XML.
+        /// </summary>
+        /// <param name="value">The ShareSmbSettings instance to serialize.</param>
+        /// <param name="name">An optional name to use for the root element instead of "ShareSmbSettings".</param>
+        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
+        /// <returns>The serialized XML element.</returns>
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Files.Shares.Models.ShareSmbSettings value, string name = "ShareSmbSettings", string ns = "")
+        {
+            System.Diagnostics.Debug.Assert(value != null);
+            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
+            if (value.Multichannel != null)
+            {
+                _element.Add(Azure.Storage.Files.Shares.Models.SmbMultichannel.ToXml(value.Multichannel, "Multichannel", ""));
+            }
+            return _element;
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new ShareSmbSettings instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized ShareSmbSettings instance.</returns>
+        internal static Azure.Storage.Files.Shares.Models.ShareSmbSettings FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Files.Shares.Models.ShareSmbSettings _value = new Azure.Storage.Files.Shares.Models.ShareSmbSettings(true);
+            _child = element.Element(System.Xml.Linq.XName.Get("Multichannel", ""));
+            if (_child != null)
+            {
+                _value.Multichannel = Azure.Storage.Files.Shares.Models.SmbMultichannel.FromXml(_child);
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Shares.Models.ShareSmbSettings value);
+    }
+}
+#endregion class ShareSmbSettings
 
 #region class ShareSnapshotInfo
 namespace Azure.Storage.Files.Shares.Models
@@ -11985,81 +12030,6 @@ namespace Azure.Storage.Files.Shares.Models
     }
 }
 #endregion class SmbMultichannel
-
-#region class SmbSettings
-namespace Azure.Storage.Files.Shares.Models
-{
-    /// <summary>
-    /// Settings for SMB protocol.
-    /// </summary>
-    public partial class SmbSettings
-    {
-        /// <summary>
-        /// Settings for SMB Multichannel.
-        /// </summary>
-        public Azure.Storage.Files.Shares.Models.SmbMultichannel Multichannel { get; set; }
-
-        /// <summary>
-        /// Creates a new SmbSettings instance
-        /// </summary>
-        public SmbSettings()
-            : this(false)
-        {
-        }
-
-        /// <summary>
-        /// Creates a new SmbSettings instance
-        /// </summary>
-        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
-        internal SmbSettings(bool skipInitialization)
-        {
-            if (!skipInitialization)
-            {
-                Multichannel = new Azure.Storage.Files.Shares.Models.SmbMultichannel();
-            }
-        }
-
-        /// <summary>
-        /// Serialize a SmbSettings instance as XML.
-        /// </summary>
-        /// <param name="value">The SmbSettings instance to serialize.</param>
-        /// <param name="name">An optional name to use for the root element instead of "SmbSettings".</param>
-        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
-        /// <returns>The serialized XML element.</returns>
-        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Files.Shares.Models.SmbSettings value, string name = "SmbSettings", string ns = "")
-        {
-            System.Diagnostics.Debug.Assert(value != null);
-            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
-            if (value.Multichannel != null)
-            {
-                _element.Add(Azure.Storage.Files.Shares.Models.SmbMultichannel.ToXml(value.Multichannel, "Multichannel", ""));
-            }
-            return _element;
-        }
-
-        /// <summary>
-        /// Deserializes XML into a new SmbSettings instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized SmbSettings instance.</returns>
-        internal static Azure.Storage.Files.Shares.Models.SmbSettings FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            System.Xml.Linq.XElement _child;
-            Azure.Storage.Files.Shares.Models.SmbSettings _value = new Azure.Storage.Files.Shares.Models.SmbSettings(true);
-            _child = element.Element(System.Xml.Linq.XName.Get("Multichannel", ""));
-            if (_child != null)
-            {
-                _value.Multichannel = Azure.Storage.Files.Shares.Models.SmbMultichannel.FromXml(_child);
-            }
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Shares.Models.SmbSettings value);
-    }
-}
-#endregion class SmbSettings
 
 #region class StorageClosedHandlesSegment
 namespace Azure.Storage.Files.Shares.Models
