@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,6 +12,29 @@ namespace Azure.AI.TextAnalytics.Tests
     public class TextAnalyticsClientLiveTests : TextAnalyticsClientLiveTestBase
     {
         public TextAnalyticsClientLiveTests(bool isAsync) : base(isAsync) { }
+
+        [Test]
+        public async Task TextWithEmojiAndAAD()
+        {
+            var options = new TextAnalyticsClientOptions();
+            TextAnalyticsClient client = InstrumentClient(
+                new TextAnalyticsClient(
+                    new Uri(TestEnvironment.Endpoint),
+                    TestEnvironment.Credential,
+                    Recording.InstrumentClientOptions(options))
+            );
+
+
+            //TextAnalyticsClient client = GetClient();
+            string document = "👨 Microsoft the company.";
+
+            CategorizedEntityCollection entities = await client.RecognizeEntitiesAsync(document, "en");
+
+            Assert.AreEqual(1, entities.Count);
+            Assert.AreEqual("Microsoft", entities.FirstOrDefault().Text);
+            Assert.AreEqual(3, entities.FirstOrDefault().Offset);
+            Assert.AreEqual(9, entities.FirstOrDefault().Length);
+        }
 
         [Test]
         public async Task TextWithEmoji()
