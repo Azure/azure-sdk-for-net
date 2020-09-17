@@ -39,7 +39,9 @@ stages:
       - stage: Release_${{artifact.safeName}}
         displayName: 'Release: ${{artifact.name}}'
         dependsOn: Signing
-        condition: and(succeeded(), ne(variables['SetDevVersion'], 'true'), ne(variables['Skip.Release'], 'true'), ne(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net-pr'))
+        condition: >- # 1191 is the system.definitionId for 'net - template' pipeline
+          and(succeeded(), or(ne(variables['SetDevVersion'], 'true'), eq(variables['system.definitionId'], '1191')),
+          ne(variables['Skip.Release'], 'true'), ne(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net-pr'))
         jobs:
           - deployment: TagRepository
             displayName: "Create release tag"
