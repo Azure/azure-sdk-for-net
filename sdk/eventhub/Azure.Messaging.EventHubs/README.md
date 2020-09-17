@@ -198,7 +198,9 @@ When using Azure Active Directory, your principal must be assigned a role which 
 
 ## Troubleshooting
 
-### Event Hubs Exception
+### Exception handling
+
+#### Event Hubs Exception
 
 An `EventHubsException` is triggered when an operation specific to Event Hubs has encountered an issue, including both errors within the service and specific to the client.  The exception includes some contextual information to assist in understanding the context of the error and its relative severity.  These are:
 
@@ -230,9 +232,17 @@ catch (EventHubsException ex) when
 }
 ```
   
-### Other exceptions
+#### Other exceptions
 
 For detailed information about the failures represented by the `EventHubsException` and other exceptions that may occur, please refer to [Event Hubs messaging exceptions](https://docs.microsoft.com/azure/event-hubs/event-hubs-messaging-exceptions).
+
+### Logging and diagnostics
+
+The Event Hubs client library is fully instrumented for logging information at various levels of detail using the .NET `EventSource` to emit information.  Logging is performed for each operation and follows the pattern of marking the starting point of the operation, it's completion, and any exceptions encountered.  Additional information that may offer insight is also logged in the context of the associated operation.
+
+The Event Hubs client logs are available to any `EventListener` by opting into the source named "Azure-Messaging-EventHubs" or opting into all sources that have the trait "AzureEventSource".  To make capturing logs from the Azure client libraries easier, the `Azure.Core` library used by Event Hubs offers an `AzureEventSourceListener`.  More information can be found in the [Azure.Core Diagnostics sample](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md#logging).
+
+The Event Hubs client library is also instrumented for distributed tracing using Application Insights or OpenTelemetry.  More information can be found in the [Azure.Core Diagnostics sample](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md#distributed-tracing).
 
 ## Next steps
 
