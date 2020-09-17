@@ -57,6 +57,7 @@ namespace Azure.Management.Dns.Tests
                 this.resourceGroup = Recording.GenerateAssetName("Default-Dns-");
                 await Helper.TryRegisterResourceGroupAsync(ResourceGroupsOperations, this.location, this.resourceGroup);
                 var aZone = new Zone("Global");
+                aZone.ZoneType = ZoneType.Public;
                 await ZonesOperations.CreateOrUpdateAsync(this.resourceGroup, this.zoneNameForList, aZone);
                 setupRun = true;
 
@@ -117,6 +118,7 @@ namespace Azure.Management.Dns.Tests
         {
             var namespaceName = Recording.GenerateAssetName("sdk-RecordSet");
             var aZone = new Zone("Global");
+            aZone.ZoneType = ZoneType.Public;
             var zoneName = "azure.ameredmondlocal2.dns";
             await ZonesOperations.CreateOrUpdateAsync(resourceGroup, zoneName, aZone);
 
@@ -156,6 +158,7 @@ namespace Azure.Management.Dns.Tests
         {
             var namespaceName = Recording.GenerateAssetName("sdk-RecordSet");
             var aZone = new Zone("Global");
+            aZone.ZoneType = ZoneType.Public;
             var zoneName = "azure.ameredmondlocaltoptest.dns";
             await ZonesOperations.CreateOrUpdateAsync(resourceGroup, zoneName, aZone);
 
@@ -189,6 +192,7 @@ namespace Azure.Management.Dns.Tests
         {
             var namespaceName = Recording.GenerateAssetName("sdk-RecordSet");
             var aZone = new Zone("Global");
+            aZone.ZoneType = ZoneType.Public;
             var zoneName = "azure.ameredmondlocalNotoptest.dns";
             await ZonesOperations.CreateOrUpdateAsync(resourceGroup, zoneName, aZone);
 

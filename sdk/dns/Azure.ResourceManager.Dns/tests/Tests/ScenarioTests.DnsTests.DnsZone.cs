@@ -6,8 +6,7 @@ using NUnit.Framework;
 using Azure.Management.Resources;
 using Azure.ResourceManager.Dns.Models;
 using Azure.ResourceManager.Dns.Tests;
-using System;
-using System.Collections.Generic;
+
 namespace Azure.Management.Dns.Tests
 {
     [TestFixture]
@@ -64,8 +63,6 @@ namespace Azure.Management.Dns.Tests
             aZone.Tags.Add("key2", "val2");
             response = await ZonesOperations.CreateOrUpdateAsync(resourceGroup, this.defaultZoneName, aZone);
             Assert.IsTrue(Helper.AreEqual(response, aZone, ignoreEtag: true));
-            Assert.IsTrue(response.Value.ZoneType == ZoneType.Public);
-            Assert.IsTrue(String.Equals(response.Value.Name, this.defaultZoneName, StringComparison.OrdinalIgnoreCase));
             var delResponse = await ZonesOperations.StartDeleteAsync(resourceGroup, this.defaultZoneName);
             Assert.IsNotNull(delResponse);
         }
