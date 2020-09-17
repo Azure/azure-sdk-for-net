@@ -6,9 +6,6 @@
     <Version>1.0.0-beta.1</Version>
     <Description>This extension adds bindings for Storage</Description>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="..\..\src\Microsoft.Azure.WebJobs.Host\IFactory.cs" Link="Shared\IFactory.cs" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.WebJobs" />

@@ -21,50 +21,6 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
   </PropertyGroup>
-  
-  <ItemGroup>
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host.Storage\Utility.cs" Link="Utility.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\Constants.cs" Link="Shared\Constants.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\ContextAccessor.cs" Link="Shared\ContextAccessor.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\Converters\AsyncConverter.cs" Link="Shared\AsyncConverter.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\Converters\CompositeAsyncObjectToTypeConverter.cs" Link="Shared\CompositeAsyncObjectToTypeConverter.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\Converters\CompositeObjectToTypeConverter.cs" Link="Shared\CompositeObjectToTypeConverter.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\Converters\ConversionResult.cs" Link="Shared\ConversionResult.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\Converters\IAsyncObjectToTypeConverter.cs" Link="Shared\IAsyncObjectToTypeConverter.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\Converters\IdentityConverter.cs" Link="Shared\IdentityConverter.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\Converters\IObjectToTypeConverter.cs" Link="Shared\IObjectToTypeConverter.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\HostContainerNames.cs" Link="Shared\HostContainerNames.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\HostDirectoryNames.cs" Link="Shared\HostDirectoryNames.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\IContextGetter.cs" Link="Shared\IContextGetter.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\IContextSetter.cs" Link="Shared\IContextSetter.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\IFactory.cs" Link="Shared\IFactory.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\Listeners\CompositeListener.cs" Link="Shared\CompositeListener.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\Listeners\ISharedContextProvider.cs" Link="Shared\ISharedContextProvider.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\Listeners\ISharedListener.cs" Link="Shared\ISharedListener.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\Listeners\ITriggerExecutor.cs" Link="Shared\ITriggerExecutor.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\Listeners\SharedContextProvider.cs" Link="Shared\SharedContextProvider.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\Timers\IDelayStrategy.cs" Link="Shared\IDelayStrategy.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\Timers\IRecurrentCommand.cs" Link="Shared\IRecurrentCommand.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\Timers\ITaskSeriesCommand.cs" Link="Shared\ITaskSeriesCommand.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\Timers\ITaskSeriesTimer.cs" Link="Shared\ITaskSeriesTimer.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\Timers\LinearSpeedupStrategy.cs" Link="Shared\LinearSpeedupStrategy.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\Timers\RandomExtensions.cs" Link="Shared\RandomExtensions.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\Timers\RandomizedExponentialBackoffStrategy.cs" Link="Shared\RandomizedExponentialBackoffStrategy.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\Timers\RecurrentTaskSeriesCommand.cs" Link="Shared\RecurrentTaskSeriesCommand.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\Timers\TaskSeriesCommandResult.cs" Link="Shared\TaskSeriesCommandResult.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\Timers\TaskSeriesTimer.cs" Link="Shared\TaskSeriesTimer.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\Triggers\ITriggerDataArgumentBinding.cs" Link="Shared\ITriggerDataArgumentBinding.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Host\TypeUtility.cs" Link="Shared\TypeUtility.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Protocols\BlobMetadataKeys.cs" Link="Shared\BlobMetadataKeys.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Protocols\BlobParameterDescriptor.cs" Link="Shared\BlobParameterDescriptor.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Protocols\BlobTriggerParameterDescriptor.cs" Link="Shared\BlobTriggerParameterDescriptor.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Protocols\JsonSerialization.cs" Link="Shared\JsonSerialization.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Protocols\JsonTypeNameAttribute.cs" Link="Shared\JsonTypeNameAttribute.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Protocols\QueueParameterDescriptor.cs" Link="Shared\QueueParameterDescriptor.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Protocols\QueueTriggerParameterDescriptor.cs" Link="Shared\QueueTriggerParameterDescriptor.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Protocols\ReadBlobParameterLog.cs" Link="Shared\ReadBlobParameterLog.cs" />
-    <Compile Include="..\Microsoft.Azure.WebJobs.Protocols\WriteBlobParameterLog.cs" Link="Shared\WriteBlobParameterLog.cs" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.WebJobs" />
