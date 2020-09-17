@@ -35,6 +35,9 @@ namespace Data.ApplicationInsights.Tests.Events
 
             Assert.NotNull(evnt.Timestamp);
             // CustomDimensions & CustomMeasurements can be null
+            if (evnt.CustomDimensions != null && evnt.CustomDimensions.TryGetValue("ProcessId", out var value)) {
+                Assert.NotNull(value);
+            }
 
             // Operation
             if (expectedType != EventType.CustomEvents && expectedType != EventType.PageViews &&
