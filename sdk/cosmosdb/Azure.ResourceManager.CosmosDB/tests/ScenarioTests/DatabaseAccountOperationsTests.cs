@@ -16,8 +16,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
     {
         private string resourceGroupName;
         private const string databaseAccountName = "db4937";
+        private const string location = "WEST US";
         private const int maxStalenessPrefix = 300;
         private const int maxIntervalInSeconds = 1000;
+        private bool setupRun = false;
         public DatabaseAccountOperationsTests() : base(true)
         {
         }
@@ -25,29 +27,34 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [SetUp]
         public async Task ClearAndInitialize()
         {
-            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
+            if ((Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback) && !setupRun)
             {
                 InitializeClients();
                 this.resourceGroupName = Recording.GenerateAssetName(CosmosDBTestUtilities.ResourceGroupPrefix);
                 await CosmosDBTestUtilities.TryRegisterResourceGroupAsync(ResourceGroupsOperations,
                     CosmosDBTestUtilities.Location,
                     this.resourceGroupName);
+                setupRun = true;
+            }
+            else if (setupRun)
+            {
+                initNewRecord();
             }
         }
 
-        [TearDown]
+        [OneTimeTearDown]
         public async Task CleanupResourceGroup()
         {
             await CleanupResourceGroupsAsync();
         }
 
-        [TestCase]
-        public async Task DatabaseAccountCRUDTest()
+        [TestCase, Order(1)]
+        public async Task DatabaseAccountCreateAndUpdateTest()
         {
             var locations = new List<Location>();
-            locations.Add(new Location(id: null, locationName: "WEST US", documentEndpoint: null, provisioningState: null, failoverPriority: null, isZoneRedundant: false));
+            locations.Add(new Location(id: null, locationName: location, documentEndpoint: null, provisioningState: null, failoverPriority: null, isZoneRedundant: false));
             var databaseAccountCreateOrUpdateParameters = new DatabaseAccountCreateUpdateParameters(locations);
-            databaseAccountCreateOrUpdateParameters.Location = "WEST US";
+            databaseAccountCreateOrUpdateParameters.Location = location;
             databaseAccountCreateOrUpdateParameters.Tags.Add("key1", "value1");
             databaseAccountCreateOrUpdateParameters.Tags.Add("key2", "value2");
             databaseAccountCreateOrUpdateParameters.Kind = DatabaseAccountKind.MongoDB;
@@ -75,7 +82,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var failoverPolicyList = new List<FailoverPolicy>();
             failoverPolicyList.Add(new FailoverPolicy()
             {
-                LocationName = "WEST US",
+                LocationName = location,
                 FailoverPriority = 0
             });
             FailoverPolicies failoverPolicies = new FailoverPolicies(failoverPolicyList);
@@ -84,24 +91,41 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccountGetResults databaseAccountGetResults3 = await CosmosDBManagementClient.DatabaseAccounts.GetAsync(resourceGroupName, databaseAccountName);
             VerifyCosmosDBAccount(databaseAccountGetResults3, databaseAccountUpdateParameters);
             VerifyFailoverPolicies(failoverPolicyList, databaseAccountGetResults3.FailoverPolicies);
+        }
 
+        [TestCase, Order(2)]
+        public async Task DatabaseAccountListBySubscriptionTest()
+        {
             List<DatabaseAccountGetResults> databaseAccounts = await CosmosDBManagementClient.DatabaseAccounts.ListAsync().ToEnumerableAsync();
             Assert.IsNotNull(databaseAccounts);
             bool databaseAccountFound = false;
+            DatabaseAccountGetResults actualDatabaseAccount = null;
             foreach (DatabaseAccountGetResults databaseAccount in databaseAccounts)
             {
                 if (databaseAccount.Name == databaseAccountName)
                 {
                     databaseAccountFound = true;
+                    actualDatabaseAccount = databaseAccount;
                 }
             }
             Assert.AreEqual(true, databaseAccountFound);
+            DatabaseAccountGetResults expectedDatabaseAccount = await CosmosDBManagementClient.DatabaseAccounts.GetAsync(resourceGroupName, databaseAccountName);
+            VerifyCosmosDBAccount(expectedDatabaseAccount, actualDatabaseAccount);
+        }
 
-            databaseAccounts = await CosmosDBManagementClient.DatabaseAccounts.ListByResourceGroupAsync(resourceGroupName).ToEnumerableAsync();
+        [TestCase, Order(2)]
+        public async Task DatabaseAccountListByResourceGroupTest()
+        {
+            List<DatabaseAccountGetResults> databaseAccounts = await CosmosDBManagementClient.DatabaseAccounts.ListByResourceGroupAsync(resourceGroupName).ToEnumerableAsync();
             Assert.IsNotNull(databaseAccounts);
             Assert.AreEqual(1, databaseAccounts.Count);
-            VerifyCosmosDBAccount(databaseAccounts[0], databaseAccountGetResults3);
+            DatabaseAccountGetResults expectedDatabaseAccount = await CosmosDBManagementClient.DatabaseAccounts.GetAsync(resourceGroupName, databaseAccountName);
+            VerifyCosmosDBAccount(expectedDatabaseAccount, databaseAccounts[0]);
+        }
 
+        [TestCase, Order(2)]
+        public async Task DatabaseAccountListKeysAndRegenerateKeysTest()
+        {
             DatabaseAccountListKeysResult databaseAccountListKeysResult = await CosmosDBManagementClient.DatabaseAccounts.ListKeysAsync(resourceGroupName, databaseAccountName);
             Assert.IsNotNull(databaseAccountListKeysResult.PrimaryMasterKey);
             Assert.IsNotNull(databaseAccountListKeysResult.PrimaryReadonlyMasterKey);
@@ -137,14 +161,26 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreNotEqual(databaseAccountListKeysResult.PrimaryReadonlyMasterKey, databaseAccountListRegeneratedKeysResult.PrimaryReadonlyMasterKey);
             Assert.AreNotEqual(databaseAccountListKeysResult.SecondaryMasterKey, databaseAccountListRegeneratedKeysResult.SecondaryMasterKey);
             Assert.AreNotEqual(databaseAccountListKeysResult.SecondaryReadonlyMasterKey, databaseAccountListRegeneratedKeysResult.SecondaryReadonlyMasterKey);
+        }
 
+        [TestCase, Order(2)]
+        public async Task DatabaseAccountListConnectionStringsTest()
+        {
             DatabaseAccountListConnectionStringsResult databaseAccountListConnectionStringsResult =
                 await CosmosDBManagementClient.DatabaseAccounts.ListConnectionStringsAsync(resourceGroupName, databaseAccountName);
             Assert.AreEqual(4, databaseAccountListConnectionStringsResult.ConnectionStrings.Count);
+        }
 
+        [TestCase, Order(2)]
+        public async Task DatabaseAccountListUsageTest()
+        {
             List<Usage> usages = await CosmosDBManagementClient.DatabaseAccounts.ListUsagesAsync(resourceGroupName, databaseAccountName).ToEnumerableAsync();
             Assert.IsNotNull(usages);
+        }
 
+        [TestCase, Order(2)]
+        public async Task DatabaseAccountListMetricsDefinitionAndMetricsTest()
+        {
             List<MetricDefinition> metricDefinitions =
                 await CosmosDBManagementClient.DatabaseAccounts.ListMetricDefinitionsAsync(resourceGroupName, databaseAccountName).ToEnumerableAsync();
             Assert.IsNotNull(metricDefinitions);
@@ -154,9 +190,13 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.IsNotNull(metrics);
             var regionMetrics = await CosmosDBManagementClient.DatabaseAccountRegion.ListMetricsAsync(resourceGroupName, databaseAccountName, "WEST US", filter).ToEnumerableAsync();
             Assert.IsNotNull(regionMetrics);
+        }
 
+        [TestCase, Order(3)]
+        public async Task DatabaseAccountDeleteTest()
+        {
             await WaitForCompletionAsync(await CosmosDBManagementClient.DatabaseAccounts.StartDeleteAsync(resourceGroupName, databaseAccountName));
-            databaseAccounts = await CosmosDBManagementClient.DatabaseAccounts.ListByResourceGroupAsync(resourceGroupName).ToEnumerableAsync();
+            List<DatabaseAccountGetResults> databaseAccounts = await CosmosDBManagementClient.DatabaseAccounts.ListByResourceGroupAsync(resourceGroupName).ToEnumerableAsync();
             Assert.IsNotNull(databaseAccounts);
             Assert.AreEqual(0, databaseAccounts.Count);
         }

@@ -34,5 +34,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 TestEnvironment.Credential,
                 Recording.InstrumentClientOptions(new CosmosDBManagementClientOptions()));
         }
+
+        protected void initNewRecord()
+        {
+            ResourceGroupsOperations = ResourcesManagementClient.ResourceGroups;
+            CosmosDBManagementClient = GetCosmosDBManagementClient();
+        }
     }
 }
