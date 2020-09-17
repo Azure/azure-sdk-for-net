@@ -62,10 +62,13 @@ namespace Azure.ResourceManager.Dns.Models
         /// <summary> The name servers for this DNS zone. This is a read-only property and any attempt to set this value will be ignored. </summary>
         public IReadOnlyList<string> NameServers { get; }
         /// <summary> The type of this DNS zone (Public or Private). </summary>
+        [Obsolete("Private DNS is not allowed in this API anymore, use the privatedns API")]
         public ZoneType? ZoneType { get; }
         /// <summary> A list of references to virtual networks that register hostnames in this DNS zone. This is a only when ZoneType is Private. </summary>
+        [Obsolete("Private DNS is not allowed in this API anymore, use the privatedns API")]
         public IList<SubResource> RegistrationVirtualNetworks { get; }
         /// <summary> A list of references to virtual networks that resolve records in this DNS zone. This is a only when ZoneType is Private. </summary>
+        [Obsolete("Private DNS is not allowed in this API anymore, use the privatedns API")]
         public IList<SubResource> ResolutionVirtualNetworks { get; }
     }
 }
