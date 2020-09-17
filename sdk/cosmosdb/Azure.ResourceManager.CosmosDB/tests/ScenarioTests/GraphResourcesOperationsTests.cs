@@ -62,17 +62,18 @@ namespace Azure.ResourceManager.CosmosDB.Tests.ScenarioTests
 
             await WaitForCompletionAsync(await CosmosDBManagementClient.DatabaseAccounts.StartCreateOrUpdateAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters));
 
-            Task<Response> taskIsDatabaseNameExists = CosmosDBManagementClient.DatabaseAccounts.CheckNameExistsAsync(databaseAccountName);
-            Response isDatabaseNameExists = taskIsDatabaseNameExists.ConfigureAwait(false).GetAwaiter().GetResult();
-            Assert.AreEqual(200, isDatabaseNameExists.Status);
+            Response responseIsDatabaseNameExists = await CosmosDBManagementClient.DatabaseAccounts.CheckNameExistsAsync(databaseAccountName);
+            Assert.AreEqual(200, responseIsDatabaseNameExists.Status);
 
             GremlinDatabaseCreateUpdateParameters gremlinDatabaseCreateUpdateParameters = new GremlinDatabaseCreateUpdateParameters(new GremlinDatabaseResource(databaseName), new CreateUpdateOptions());
             var gremlinDatabaseResponse = await WaitForCompletionAsync(await CosmosDBManagementClient.GremlinResources.StartCreateUpdateGremlinDatabaseAsync(resourceGroupName, databaseAccountName, databaseName, gremlinDatabaseCreateUpdateParameters));
+            Assert.NotNull(gremlinDatabaseResponse);
             GremlinDatabaseGetResults gremlinDatabaseGetResults = gremlinDatabaseResponse.Value;
             Assert.NotNull(gremlinDatabaseGetResults);
             Assert.AreEqual(databaseName, gremlinDatabaseGetResults.Name);
 
             var gremlinDatabaseResponse1 = await WaitForCompletionAsync(await CosmosDBManagementClient.GremlinResources.StartCreateUpdateGremlinDatabaseAsync(resourceGroupName, databaseAccountName, databaseName, gremlinDatabaseCreateUpdateParameters));
+            Assert.NotNull(gremlinDatabaseResponse1);
             GremlinDatabaseGetResults gremlinDatabaseGetResults1 = gremlinDatabaseResponse1.Value;
             Assert.NotNull(gremlinDatabaseGetResults);
             Assert.AreEqual(databaseName, gremlinDatabaseGetResults1.Name);
@@ -81,17 +82,16 @@ namespace Azure.ResourceManager.CosmosDB.Tests.ScenarioTests
 
             GremlinDatabaseCreateUpdateParameters gremlinDatabaseCreateUpdateParameters2 = new GremlinDatabaseCreateUpdateParameters(new GremlinDatabaseResource(databaseName2), new CreateUpdateOptions(sampleThroughput, default));
             var gremlinDatabaseResponse2 = await WaitForCompletionAsync(await CosmosDBManagementClient.GremlinResources.StartCreateUpdateGremlinDatabaseAsync(resourceGroupName, databaseAccountName, databaseName2, gremlinDatabaseCreateUpdateParameters2));
+            Assert.NotNull(gremlinDatabaseResponse2);
             GremlinDatabaseGetResults gremlinDatabaseGetResults2 = gremlinDatabaseResponse2.Value;
-
             Assert.NotNull(gremlinDatabaseGetResults2);
             Assert.AreEqual(databaseName2, gremlinDatabaseGetResults2.Name);
 
-            var gremlinResponseTask = CosmosDBManagementClient.GremlinResources.ListGremlinDatabasesAsync(resourceGroupName, databaseAccountName).ToEnumerableAsync();
-            List<GremlinDatabaseGetResults> gremlinDatabases = gremlinResponseTask.ConfigureAwait(false).GetAwaiter().GetResult();
+            List<GremlinDatabaseGetResults> gremlinDatabases = await CosmosDBManagementClient.GremlinResources.ListGremlinDatabasesAsync(resourceGroupName, databaseAccountName).ToEnumerableAsync();
             Assert.NotNull(gremlinDatabases);
 
-            var throughputResponse = CosmosDBManagementClient.GremlinResources.GetGremlinDatabaseThroughputAsync(resourceGroupName, databaseAccountName, databaseName2);
-            ThroughputSettingsGetResults throughputSettingsGetResults = throughputResponse.ConfigureAwait(false).GetAwaiter().GetResult();
+            Response<ThroughputSettingsGetResults> throughputResponse = await CosmosDBManagementClient.GremlinResources.GetGremlinDatabaseThroughputAsync(resourceGroupName, databaseAccountName, databaseName2);
+            ThroughputSettingsGetResults throughputSettingsGetResults = throughputResponse.Value;
             Assert.NotNull(throughputSettingsGetResults);
             Assert.NotNull(throughputSettingsGetResults.Name);
             Assert.AreEqual(throughputSettingsGetResults.Resource.Throughput, sampleThroughput);
@@ -128,16 +128,17 @@ namespace Azure.ResourceManager.CosmosDB.Tests.ScenarioTests
 
             VerifyGremlinGraphCreation(gremlinGraphGetResults, gremlinGraphCreateUpdateParameters);
 
-            var gremlinPageableResultsTask = CosmosDBManagementClient.GremlinResources.ListGremlinGraphsAsync(resourceGroupName, databaseAccountName, databaseName).ToEnumerableAsync();
-            List<GremlinGraphGetResults> gremlinGraphs = gremlinPageableResultsTask.ConfigureAwait(false).GetAwaiter().GetResult();
+            List<GremlinGraphGetResults> gremlinGraphs = await CosmosDBManagementClient.GremlinResources.ListGremlinGraphsAsync(resourceGroupName, databaseAccountName, databaseName).ToEnumerableAsync();
             Assert.NotNull(gremlinGraphs);
+            foreach (GremlinGraphGetResults graph in gremlinGraphs) {
+                VerifyGremlinGraphCreation(graph, gremlinGraphCreateUpdateParameters);
+            }
         }
 
         private void VerifyGremlinGraphCreation(GremlinGraphGetResults gremlinGraphGetResults, GremlinGraphCreateUpdateParameters gremlinGraphCreateUpdateParameters)
         {
             Assert.AreEqual(gremlinGraphGetResults.Resource.Id, gremlinGraphCreateUpdateParameters.Resource.Id);
             Assert.AreEqual(gremlinGraphGetResults.Resource.IndexingPolicy.IndexingMode.Value.ToString().ToLower(), gremlinGraphCreateUpdateParameters.Resource.IndexingPolicy.IndexingMode.Value.ToString().ToLower());
-            //Assert.AreEqual(gremlinGraphGetResults.Resource.IndexingPolicy.ExcludedPaths, gremlinGraphCreateUpdateParameters.Resource.IndexingPolicy.ExcludedPaths);
             Assert.AreEqual(gremlinGraphGetResults.Resource.PartitionKey.Kind, gremlinGraphCreateUpdateParameters.Resource.PartitionKey.Kind);
             Assert.AreEqual(gremlinGraphGetResults.Resource.PartitionKey.Paths, gremlinGraphCreateUpdateParameters.Resource.PartitionKey.Paths);
             Assert.AreEqual(gremlinGraphGetResults.Resource.DefaultTtl, gremlinGraphCreateUpdateParameters.Resource.DefaultTtl);
