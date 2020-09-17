@@ -72,6 +72,9 @@
 # PRLabel: %Cognitive - Form Recognizer
 /sdk/formrecognizer/                            @annelo-msft @kinelski @maririos
 
+# PRLabel: %Azure Monitor
+/sdk/monitor/OpenTelemetry.*/                   @cijothomas @pakrym @reyang @rajkumar-rangaraj @TimothyMothra
+
 # Smoke tests
 /common/SmokeTests/                             @AlexGhiondea @schaabs @heaths @tg-msft @jsquire
 
