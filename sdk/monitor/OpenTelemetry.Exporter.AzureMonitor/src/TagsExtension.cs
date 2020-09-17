@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace OpenTelemetry.Exporter.AzureMonitor
 {
@@ -18,6 +20,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             [SemanticConventions.AttributeHttpStatusCode] = PartBType.Http,
             [SemanticConventions.AttributeHttpScheme] = PartBType.Http,
             [SemanticConventions.AttributeHttpHost] = PartBType.Http,
+            [SemanticConventions.AttributeHttpHostPort] = PartBType.Http,
             [SemanticConventions.AttributeHttpTarget] = PartBType.Http,
 
             [SemanticConventions.AttributeNetPeerName] = PartBType.Net,
@@ -49,33 +52,59 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             [SemanticConventions.AttributeMessagingUrl] = PartBType.Messaging
         };
 
-        internal static Dictionary<string, string> ToAzureMonitorTags(this IEnumerable<KeyValuePair<string, string>> tags, out PartBType activityType)
+        internal static PartBType ToAzureMonitorTags(this IEnumerable<KeyValuePair<string, object>> tagObjects, out Dictionary<string, string> partBTags, out Dictionary<string, string> partCTags)
         {
-            Dictionary<string, string> partBTags = new Dictionary<string, string>();
-            activityType = PartBType.Unknown;
-
-            foreach (var entry in tags)
+            if (tagObjects == null)
             {
-                // TODO: May need to store unknown to write to properties as Part C
-                if ((activityType == PartBType.Unknown || activityType == PartBType.Net) && !Part_B_Mapping.TryGetValue(entry.Key, out activityType))
+                partBTags = null;
+                partCTags = null;
+                return PartBType.Unknown;
+            }
+
+            PartBType activityType;
+            PartBType constActivityType = PartBType.Unknown;
+            partBTags = new Dictionary<string, string>();
+            partCTags = new Dictionary<string, string>();
+
+            foreach (var entry in tagObjects)
+            {
+                if (entry.Value is Array array)
                 {
-                    if (activityType == PartBType.Net)
+                    StringBuilder sw = new StringBuilder();
+                    foreach (var item in array)
                     {
-                        partBTags.Add(entry.Key, entry.Value);
-                        activityType = PartBType.Unknown;
+                        sw.Append(item);
+                        sw.Append(',');
                     }
+
+                    sw.Length--;
+                    partCTags.Add(entry.Key, sw.ToString());
 
                     continue;
                 }
 
-                if (Part_B_Mapping.TryGetValue(entry.Key, out var tempActivityType) && (tempActivityType == activityType || tempActivityType == PartBType.Net))
+                if (!Part_B_Mapping.TryGetValue(entry.Key, out activityType))
                 {
-                    partBTags.Add(entry.Key, entry.Value);
+                    partCTags.Add(entry.Key, entry.Value.ToString());
+                    continue;
+                }
+
+                if (constActivityType == PartBType.Unknown || constActivityType == PartBType.Net)
+                {
+                    constActivityType = activityType;
+                }
+
+                if (Part_B_Mapping.TryGetValue(entry.Key, out var tempActivityType) && (tempActivityType == constActivityType || tempActivityType == PartBType.Net))
+                {
+                    partBTags.Add(entry.Key, entry.Value.ToString());
+                }
+                else
+                {
+                    partCTags.Add(entry.Key, entry.Value.ToString());
                 }
             }
 
-            return partBTags;
+            return constActivityType;
         }
-
     }
 }
