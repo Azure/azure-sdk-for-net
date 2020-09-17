@@ -71,7 +71,7 @@ namespace Azure.Storage.Sas
         private string _correlationId;
 
         // sdd
-        private uint? _directoryDepth;
+        private int? _directoryDepth;
 
         // rscc
         private string _cacheControl;
@@ -220,7 +220,7 @@ namespace Azure.Storage.Sas
         /// root folder. Required when resource (sr) = d to indicate the depth of the directory.
         /// The value must be a non-negative integer.
         /// </summary>
-        public uint? DirectoryDepth => _directoryDepth ?? null;
+        public int? DirectoryDepth => _directoryDepth ?? null;
 
         /// <summary>
         /// Gets the string-to-sign, a unique string constructed from the
@@ -315,7 +315,7 @@ namespace Azure.Storage.Sas
                         _correlationId = kv.Value;
                         break;
                     case Constants.Sas.Parameters.DirectoryDepthUpper:
-                        _directoryDepth = Convert.ToUInt32(kv.Value, Constants.Base16);
+                        _directoryDepth = Convert.ToInt32(kv.Value, Constants.Base16);
                         break;
 
                     // We didn't recognize the query parameter
@@ -398,7 +398,7 @@ namespace Azure.Storage.Sas
             string authorizedAadObjectId = default,
             string unauthorizedAadObjectId = default,
             string correlationId = default,
-            uint? directoryDepth = default)
+            int? directoryDepth = default)
         {
             _version = version;
             _services = services;
@@ -494,7 +494,7 @@ namespace Azure.Storage.Sas
             string authorizedAadObjectId = default,
             string unauthorizedAadObjectId = default,
             string correlationId = default,
-            uint? directoryDepth = default) =>
+            int? directoryDepth = default) =>
             new SasQueryParameters(
                 version: version,
                 services: services,

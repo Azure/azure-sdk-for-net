@@ -192,7 +192,7 @@ namespace Azure.Storage.Sas
         /// canonicalizedresource field of the string-to-sign. This is only used for
         /// User Delegation SAS.
         /// </summary>
-        public uint? DirectoryDepth { get; set; }
+        private int? _directoryDepth { get; set; }
 
         /// <summary>
         /// Sets the permissions for a file SAS.
@@ -412,7 +412,7 @@ namespace Azure.Storage.Sas
                 authorizedAadObjectId: PreauthorizedAgentObjectId,
                 unauthorizedAadObjectId: AgentObjectId,
                 correlationId: CorrelationId,
-                directoryDepth: DirectoryDepth);
+                directoryDepth: _directoryDepth);
             return p;
         }
 
@@ -481,6 +481,16 @@ namespace Azure.Storage.Sas
                 else
                 {
                     Resource = Constants.Sas.Resource.Directory;
+                    if (!Path.Equals("/", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        Path = Path.TrimStart('/');
+                        Path = Path.TrimEnd('/');
+                        _directoryDepth = Path.Split('/').Length;
+                    }
+                    else
+                    {
+                        _directoryDepth = 0;
+                    }
                 }
             }
 
