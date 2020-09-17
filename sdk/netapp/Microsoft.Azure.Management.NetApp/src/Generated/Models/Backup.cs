@@ -14,43 +14,45 @@ namespace Microsoft.Azure.Management.NetApp.Models
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// NetApp account resource
+    /// Backup of a Volume
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class NetAppAccount : IResource
+    public partial class Backup : IResource
     {
         /// <summary>
-        /// Initializes a new instance of the NetAppAccount class.
+        /// Initializes a new instance of the Backup class.
         /// </summary>
-        public NetAppAccount()
+        public Backup()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the NetAppAccount class.
+        /// Initializes a new instance of the Backup class.
         /// </summary>
         /// <param name="location">Resource location</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
-        /// <param name="tags">Resource tags</param>
+        /// <param name="creationDate">name</param>
         /// <param name="provisioningState">Azure lifecycle management</param>
-        /// <param name="activeDirectories">Active Directories</param>
-        public NetAppAccount(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), IList<ActiveDirectory> activeDirectories = default(IList<ActiveDirectory>))
+        /// <param name="size">Size of backup</param>
+        /// <param name="label">Label for backup</param>
+        /// <param name="backupType">Type of backup adhoc or scheduled</param>
+        public Backup(string location, string id = default(string), string name = default(string), string type = default(string), System.DateTime? creationDate = default(System.DateTime?), string provisioningState = default(string), long? size = default(long?), string label = default(string), string backupType = default(string))
         {
             Location = location;
             Id = id;
             Name = name;
             Type = type;
-            Tags = tags;
+            CreationDate = creationDate;
             ProvisioningState = provisioningState;
-            ActiveDirectories = activeDirectories;
+            Size = size;
+            Label = label;
+            BackupType = backupType;
             CustomInit();
         }
 
@@ -84,10 +86,13 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets or sets resource tags
+        /// Gets name
         /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
+        /// <remarks>
+        /// The creation date of the backup
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.creationDate")]
+        public System.DateTime? CreationDate { get; private set; }
 
         /// <summary>
         /// Gets azure lifecycle management
@@ -96,10 +101,22 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets or sets active Directories
+        /// Gets size of backup
         /// </summary>
-        [JsonProperty(PropertyName = "properties.activeDirectories")]
-        public IList<ActiveDirectory> ActiveDirectories { get; set; }
+        [JsonProperty(PropertyName = "properties.size")]
+        public long? Size { get; private set; }
+
+        /// <summary>
+        /// Gets or sets label for backup
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.label")]
+        public string Label { get; set; }
+
+        /// <summary>
+        /// Gets type of backup adhoc or scheduled
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.backupType")]
+        public string BackupType { get; private set; }
 
         /// <summary>
         /// Validate the object.
@@ -112,16 +129,6 @@ namespace Microsoft.Azure.Management.NetApp.Models
             if (Location == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Location");
-            }
-            if (ActiveDirectories != null)
-            {
-                foreach (var element in ActiveDirectories)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
             }
         }
     }
