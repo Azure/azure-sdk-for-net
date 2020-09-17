@@ -301,5 +301,25 @@ namespace Microsoft.Azure.Management.Security
         /// </summary>
         IIotSensorsOperations IotSensors { get; }
 
+        /// <summary>
+        /// Gets the IDevicesForSubscriptionOperations.
+        /// </summary>
+        IDevicesForSubscriptionOperations DevicesForSubscription { get; }
+
+        /// <summary>
+        /// Gets the IDevicesForHubOperations.
+        /// </summary>
+        IDevicesForHubOperations DevicesForHub { get; }
+
+        /// <summary>
+        /// Gets the IDeviceOperations.
+        /// </summary>
+        IDeviceOperations Device { get; }
+
+        /// <summary>
+        /// Gets the IOnPremiseIotSensorsOperations.
+        /// </summary>
+        IOnPremiseIotSensorsOperations OnPremiseIotSensors { get; }
+
     }
 }

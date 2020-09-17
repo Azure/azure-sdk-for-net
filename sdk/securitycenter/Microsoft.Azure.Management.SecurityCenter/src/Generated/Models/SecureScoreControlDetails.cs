@@ -40,21 +40,28 @@ namespace Microsoft.Azure.Management.Security.Models
         /// control</param>
         /// <param name="max">Maximum score available</param>
         /// <param name="current">Current score</param>
+        /// <param name="percentage">Ratio of the current score divided by the
+        /// maximum. Rounded to 4 digits after the decimal point</param>
         /// <param name="healthyResourceCount">Number of healthy resources in
         /// the control</param>
         /// <param name="unhealthyResourceCount">Number of unhealthy resources
         /// in the control</param>
         /// <param name="notApplicableResourceCount">Number of not applicable
         /// resources in the control</param>
-        public SecureScoreControlDetails(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), int? max = default(int?), double? current = default(double?), int? healthyResourceCount = default(int?), int? unhealthyResourceCount = default(int?), int? notApplicableResourceCount = default(int?), SecureScoreControlDefinitionItem definition = default(SecureScoreControlDefinitionItem))
+        /// <param name="weight">The relative weight for this specific control
+        /// in each of your subscriptions. Used when calculating an aggregated
+        /// score for this control across all of your subscriptions.</param>
+        public SecureScoreControlDetails(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), int? max = default(int?), double? current = default(double?), double? percentage = default(double?), int? healthyResourceCount = default(int?), int? unhealthyResourceCount = default(int?), int? notApplicableResourceCount = default(int?), long? weight = default(long?), SecureScoreControlDefinitionItem definition = default(SecureScoreControlDefinitionItem))
             : base(id, name, type)
         {
             DisplayName = displayName;
             Max = max;
             Current = current;
+            Percentage = percentage;
             HealthyResourceCount = healthyResourceCount;
             UnhealthyResourceCount = unhealthyResourceCount;
             NotApplicableResourceCount = notApplicableResourceCount;
+            Weight = weight;
             Definition = definition;
             CustomInit();
         }
@@ -83,6 +90,13 @@ namespace Microsoft.Azure.Management.Security.Models
         public double? Current { get; private set; }
 
         /// <summary>
+        /// Gets ratio of the current score divided by the maximum. Rounded to
+        /// 4 digits after the decimal point
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.score.percentage")]
+        public double? Percentage { get; private set; }
+
+        /// <summary>
         /// Gets number of healthy resources in the control
         /// </summary>
         [JsonProperty(PropertyName = "properties.healthyResourceCount")]
@@ -101,6 +115,14 @@ namespace Microsoft.Azure.Management.Security.Models
         public int? NotApplicableResourceCount { get; private set; }
 
         /// <summary>
+        /// Gets the relative weight for this specific control in each of your
+        /// subscriptions. Used when calculating an aggregated score for this
+        /// control across all of your subscriptions.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.weight")]
+        public long? Weight { get; private set; }
+
+        /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "properties.definition")]
         public SecureScoreControlDefinitionItem Definition { get; set; }
@@ -113,13 +135,37 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Max < 0)
+            if (Max != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "Max", 0);
+                if (Max < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "Max", 0);
+                }
             }
-            if (Current < 0)
+            if (Current != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "Current", 0);
+                if (Current < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "Current", 0);
+                }
+            }
+            if (Percentage != null)
+            {
+                if (Percentage > 1)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "Percentage", 1);
+                }
+                if (Percentage < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "Percentage", 0);
+                }
+            }
+            if (Weight != null)
+            {
+                if (Weight < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "Weight", 0);
+                }
             }
             if (Definition != null)
             {

@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.Security.Models
     /// A custom alert rule that checks if a value (depends on the custom alert
     /// type) is within the given range.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("ThresholdCustomAlertRule")]
     public partial class ThresholdCustomAlertRule : CustomAlertRule
     {
         /// <summary>

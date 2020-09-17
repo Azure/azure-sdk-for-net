@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.Security.Models
 {
+    using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
@@ -18,6 +19,7 @@ namespace Microsoft.Azure.Management.Security.Models
     /// Login by a local user that isn't allowed. Allow list consists of login
     /// names to allow.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("LocalUserNotAllowed")]
     public partial class LocalUserNotAllowed : AllowlistCustomAlertRule
     {
         /// <summary>

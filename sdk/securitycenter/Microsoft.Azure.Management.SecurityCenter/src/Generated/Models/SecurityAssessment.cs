@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// assessment</param>
         /// <param name="additionalData">Additional data regarding the
         /// assessment</param>
-        public SecurityAssessment(ResourceDetails resourceDetails, AssessmentStatus status, string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), IDictionary<string, string> additionalData = default(IDictionary<string, string>), AssessmentLinks links = default(AssessmentLinks), SecurityAssessmentMetadataProperties metadata = default(SecurityAssessmentMetadataProperties), SecurityAssessmentPartnerData partnersData = default(SecurityAssessmentPartnerData))
+        public SecurityAssessment(AssessmentResourceDetails resourceDetails, AssessmentStatus status, string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), IDictionary<string, string> additionalData = default(IDictionary<string, string>), AssessmentLinks links = default(AssessmentLinks), SecurityAssessmentMetadataProperties metadata = default(SecurityAssessmentMetadataProperties), SecurityAssessmentPartnerData partnersData = default(SecurityAssessmentPartnerData))
             : base(id, name, type)
         {
             ResourceDetails = resourceDetails;
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceDetails")]
-        public ResourceDetails ResourceDetails { get; set; }
+        public AssessmentResourceDetails ResourceDetails { get; set; }
 
         /// <summary>
         /// Gets user friendly display name of the assessment

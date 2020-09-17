@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.Security.Models
 {
+    using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
@@ -18,6 +19,7 @@ namespace Microsoft.Azure.Management.Security.Models
     /// Outbound connection to an ip that isn't allowed. Allow list consists of
     /// ipv4 or ipv6 range in CIDR notation.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("ConnectionToIpNotAllowed")]
     public partial class ConnectionToIpNotAllowed : AllowlistCustomAlertRule
     {
         /// <summary>

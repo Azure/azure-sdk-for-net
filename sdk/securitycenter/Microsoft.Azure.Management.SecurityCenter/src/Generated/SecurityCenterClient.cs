@@ -307,6 +307,26 @@ namespace Microsoft.Azure.Management.Security
         public virtual IIotSensorsOperations IotSensors { get; private set; }
 
         /// <summary>
+        /// Gets the IDevicesForSubscriptionOperations.
+        /// </summary>
+        public virtual IDevicesForSubscriptionOperations DevicesForSubscription { get; private set; }
+
+        /// <summary>
+        /// Gets the IDevicesForHubOperations.
+        /// </summary>
+        public virtual IDevicesForHubOperations DevicesForHub { get; private set; }
+
+        /// <summary>
+        /// Gets the IDeviceOperations.
+        /// </summary>
+        public virtual IDeviceOperations Device { get; private set; }
+
+        /// <summary>
+        /// Gets the IOnPremiseIotSensorsOperations.
+        /// </summary>
+        public virtual IOnPremiseIotSensorsOperations OnPremiseIotSensors { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the SecurityCenterClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -593,6 +613,10 @@ namespace Microsoft.Azure.Management.Security
             Connectors = new ConnectorsOperations(this);
             IotDefenderSettings = new IotDefenderSettingsOperations(this);
             IotSensors = new IotSensorsOperations(this);
+            DevicesForSubscription = new DevicesForSubscriptionOperations(this);
+            DevicesForHub = new DevicesForHubOperations(this);
+            Device = new DeviceOperations(this);
+            OnPremiseIotSensors = new OnPremiseIotSensorsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
@@ -633,6 +657,8 @@ namespace Microsoft.Azure.Management.Security
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<AdditionalData>("assessedResourceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<AutomationAction>("actionType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<AutomationAction>("actionType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<AssessmentResourceDetails>("Source"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<AssessmentResourceDetails>("Source"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ResourceIdentifier>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ResourceIdentifier>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ExternalSecuritySolution>("kind"));

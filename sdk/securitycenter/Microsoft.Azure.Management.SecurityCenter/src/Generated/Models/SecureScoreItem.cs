@@ -38,14 +38,18 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="displayName">The initiative’s name</param>
         /// <param name="max">Maximum score available</param>
         /// <param name="current">Current score</param>
-        /// <param name="weight">The weight for calculation of an aggregated
-        /// score for several scopes</param>
-        public SecureScoreItem(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), int? max = default(int?), double? current = default(double?), long? weight = default(long?))
+        /// <param name="percentage">Ratio of the current score divided by the
+        /// maximum. Rounded to 4 digits after the decimal point</param>
+        /// <param name="weight">The relative weight for each subscription.
+        /// Used when calculating an aggregated secure score for multiple
+        /// subscriptions.</param>
+        public SecureScoreItem(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), int? max = default(int?), double? current = default(double?), double? percentage = default(double?), long? weight = default(long?))
             : base(id, name, type)
         {
             DisplayName = displayName;
             Max = max;
             Current = current;
+            Percentage = percentage;
             Weight = weight;
             CustomInit();
         }
@@ -74,8 +78,15 @@ namespace Microsoft.Azure.Management.Security.Models
         public double? Current { get; private set; }
 
         /// <summary>
-        /// Gets the weight for calculation of an aggregated score for several
-        /// scopes
+        /// Gets ratio of the current score divided by the maximum. Rounded to
+        /// 4 digits after the decimal point
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.score.percentage")]
+        public double? Percentage { get; private set; }
+
+        /// <summary>
+        /// Gets the relative weight for each subscription. Used when
+        /// calculating an aggregated secure score for multiple subscriptions.
         /// </summary>
         [JsonProperty(PropertyName = "properties.weight")]
         public long? Weight { get; private set; }
@@ -88,17 +99,37 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Max < 0)
+            if (Max != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "Max", 0);
+                if (Max < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "Max", 0);
+                }
             }
-            if (Current < 0)
+            if (Current != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "Current", 0);
+                if (Current < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "Current", 0);
+                }
             }
-            if (Weight < 0)
+            if (Percentage != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "Weight", 0);
+                if (Percentage > 1)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "Percentage", 1);
+                }
+                if (Percentage < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "Percentage", 0);
+                }
+            }
+            if (Weight != null)
+            {
+                if (Weight < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "Weight", 0);
+                }
             }
         }
     }
