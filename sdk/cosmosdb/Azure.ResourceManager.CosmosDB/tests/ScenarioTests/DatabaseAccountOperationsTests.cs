@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.CosmosDB.Models;
 using NUnit.Framework;
@@ -58,7 +57,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             databaseAccountCreateOrUpdateParameters.Tags.Add("key1", "value1");
             databaseAccountCreateOrUpdateParameters.Tags.Add("key2", "value2");
             databaseAccountCreateOrUpdateParameters.Kind = DatabaseAccountKind.MongoDB;
-            databaseAccountCreateOrUpdateParameters.ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness, maxStalenessPrefix, maxIntervalInSeconds);
+            databaseAccountCreateOrUpdateParameters.ConsistencyPolicy = 
+                new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness, maxStalenessPrefix, maxIntervalInSeconds);
             databaseAccountCreateOrUpdateParameters.IpRules.Add(new IpAddressOrRange("23.43.230.120"));
             databaseAccountCreateOrUpdateParameters.IsVirtualNetworkFilterEnabled = true;
             databaseAccountCreateOrUpdateParameters.EnableAutomaticFailover = false;
@@ -188,7 +188,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             string filter = "(name.value eq 'Total Requests') and timeGrain eq duration'PT5M'";
             var metrics = await CosmosDBManagementClient.DatabaseAccounts.ListMetricsAsync(resourceGroupName, databaseAccountName, filter).ToEnumerableAsync();
             Assert.IsNotNull(metrics);
-            var regionMetrics = await CosmosDBManagementClient.DatabaseAccountRegion.ListMetricsAsync(resourceGroupName, databaseAccountName, "WEST US", filter).ToEnumerableAsync();
+            var regionMetrics =
+                await CosmosDBManagementClient.DatabaseAccountRegion.ListMetricsAsync(resourceGroupName, databaseAccountName, "WEST US", filter).ToEnumerableAsync();
             Assert.IsNotNull(regionMetrics);
         }
 
