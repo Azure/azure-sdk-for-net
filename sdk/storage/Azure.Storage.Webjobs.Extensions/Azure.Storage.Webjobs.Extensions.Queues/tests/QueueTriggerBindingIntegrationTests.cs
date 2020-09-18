@@ -4,15 +4,15 @@
 using System;
 using System.Reflection;
 using Microsoft.Azure.WebJobs.Host.Queues.Triggers;
-using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Azure.WebJobs.Host.Timers;
 using Microsoft.Azure.WebJobs.Host.Triggers;
 using Microsoft.Extensions.Hosting;
 using Moq;
 using Newtonsoft.Json;
 using Xunit;
-using Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests;
 using Azure.Storage.Queues;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
+using Azure.WebJobs.Extensions.Storage.Common.Tests;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
 {
