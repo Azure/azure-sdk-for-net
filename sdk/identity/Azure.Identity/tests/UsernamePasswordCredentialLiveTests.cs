@@ -74,12 +74,12 @@ namespace Azure.Identity.Tests
             var tenantId = TestEnvironment.IdentityTenantId;
             var username = TestEnvironment.Username;
             var password = TestEnvironment.TestPassword;
-            Assert.AreEqual("aa", username);
+
             var options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
 
             var cred = InstrumentClient(new UsernamePasswordCredential(username, password, tenantId, ClientId, options));
 
-            AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" }));
+            AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { TestEnvironment.KeyvaultScope }));
 
             Assert.IsNotNull(token.Token);
         }
@@ -90,7 +90,7 @@ namespace Azure.Identity.Tests
             var tenantId = TestEnvironment.IdentityTenantId;
             var username = TestEnvironment.Username;
             var password = TestEnvironment.TestPassword;
-            Assert.AreEqual("aa", tenantId);
+
             var options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
 
             var cred = InstrumentClient(new UsernamePasswordCredential(username, password, tenantId, ClientId, options));
@@ -109,12 +109,12 @@ namespace Azure.Identity.Tests
             var tenantId = TestEnvironment.IdentityTenantId;
             var username = TestEnvironment.Username;
             var password = TestEnvironment.TestPassword;
-            Assert.AreEqual("aa", Environment.GetEnvironmentVariable("AZURE_IDENTITY_TEST_PASSWORD"));
+
             var options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
 
             var cred = InstrumentClient(new UsernamePasswordCredential(username, password, tenantId, ClientId, options));
 
-            AuthenticationRecord record = await cred.AuthenticateAsync(new TokenRequestContext(new[] { "https://vault.azure.net/.default" }));
+            AuthenticationRecord record = await cred.AuthenticateAsync(new TokenRequestContext(new[] { TestEnvironment.KeyvaultScope }));
 
             Assert.IsNotNull(record);
 
