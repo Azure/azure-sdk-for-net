@@ -13,7 +13,6 @@
       in addition to the breaking changes https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Blobs.ChangeFeed/BreakingChanges.txt
     </Description>
     <GenerateAPIListing>true</GenerateAPIListing>
-    <EnableApiCompat>false</EnableApiCompat>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="System.Text.Json" />
