@@ -30,11 +30,14 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                 ["objectKey"] = new Test(),
                 ["arrayKey"] = new int[] { 1, 2, 3 },
                 ["dateKey"] = dateTime,
-                ["dictKey"] = new Dictionary<string, object> { ["key"] = true}
+                ["nullKey"] = null,
+                ["nullArrKey"] = new string[] {"test", null},
+                ["allNullKey"] = new object[] {null, null},
+                ["dictKey"] = new Dictionary<string, object> { ["key"] = true }
             };
 
             var PartCTags = tagObjects.ToAzureMonitorTags();
-            Assert.Equal(16, PartCTags.Count);
+            Assert.Equal(18, PartCTags.Count);
 
             Assert.Equal("True", PartCTags["boolKey"]);
             Assert.Equal("27", PartCTags["byteKey"]);
@@ -51,6 +54,9 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             Assert.Equal("OpenTelemetry.Exporter.AzureMonitor.TagsExtensionTest+Test", PartCTags["objectKey"]);
             Assert.Equal("1,2,3", PartCTags["arrayKey"]);
             Assert.Equal(dateTime.ToString(), PartCTags["dateKey"]);
+            Assert.Throws<KeyNotFoundException>(() => PartCTags["nullKey"]);
+            Assert.Equal("test", PartCTags["nullArrKey"]);
+            Assert.Empty(PartCTags["allNullKey"]);
             Assert.Equal("System.Collections.Generic.Dictionary`2[System.String,System.Object]", PartCTags["dictKey"]);
         }
 

@@ -95,18 +95,28 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                     StringBuilder sw = new StringBuilder();
                     foreach (var item in array)
                     {
-                        sw.Append(item);
-                        sw.Append(',');
+                        if (item != null)
+                        {
+                            sw.Append(item);
+                            sw.Append(',');
+                        }
                     }
 
-                    sw.Length--;
+                    if (sw.Length > 0)
+                    {
+                        sw.Length--;
+                    }
+
                     partCTags.Add(entry.Key, sw.ToString());
 
                     continue;
                 }
                 else
                 {
-                    partCTags.Add(entry.Key, entry.Value.ToString());
+                    if (entry.Value != null)
+                    {
+                        partCTags.Add(entry.Key, entry.Value.ToString());
+                    }
                 }
             }
 
