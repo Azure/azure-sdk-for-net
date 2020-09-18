@@ -125,7 +125,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
                 maximumInterval = maxPollingInterval.Value;
             }
 
-            _delayStrategy = new RandomizedExponentialBackoffStrategy(QueuePollingIntervals.Minimum, maximumInterval);
+            _delayStrategy = new RandomizedExponentialBackoffStrategy(SharedQueuePollingIntervals.Minimum, maximumInterval);
 
             _scaleMonitorDescriptor = new ScaleMonitorDescriptor($"{_functionId}-QueueTrigger-{_queue.Name}".ToLower(CultureInfo.InvariantCulture));
             _shutdownCancellationTokenSource = new CancellationTokenSource();

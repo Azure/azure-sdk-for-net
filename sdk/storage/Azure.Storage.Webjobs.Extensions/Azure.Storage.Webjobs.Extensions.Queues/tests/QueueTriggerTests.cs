@@ -6,13 +6,13 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs.Host.FunctionalTests.TestDoubles;
 using Newtonsoft.Json;
 using Xunit;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
 using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
+using Microsoft.Azure.WebJobs.Host.FunctionalTests.TestDoubles;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {

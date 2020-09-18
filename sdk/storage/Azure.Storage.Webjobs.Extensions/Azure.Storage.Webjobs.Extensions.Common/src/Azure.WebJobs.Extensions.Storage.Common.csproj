@@ -15,10 +15,8 @@
     <Compile Remove="Shared\**\*.cs" />
     <!--we're defining the Shared Source in Common, but we only want to build in the files that Common names use of-->
     <Compile Include="Shared\Constants.cs" />
-    <Compile Include="Shared\QueuePollingIntervals.cs" />
     <Compile Include="Shared\RequestFailedExceptionExtensions.cs" />
     <Compile Include="Shared\StorageQueueExtensions.cs" />
-    <Compile Include="Shared\Utility.cs" />
   </ItemGroup>
 
   <ItemGroup>

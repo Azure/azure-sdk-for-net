@@ -103,7 +103,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
         {
             // Provide an upper bound on the maximum polling interval for run/abort from dashboard.
             // This ensures that if users have customized this value the Dashboard will remain responsive.
-            TimeSpan maxPollingInterval = QueuePollingIntervals.DefaultMaximum;
+            TimeSpan maxPollingInterval = SharedQueuePollingIntervals.DefaultMaximum;
 
             var wrapper = new Wrapper
             {
