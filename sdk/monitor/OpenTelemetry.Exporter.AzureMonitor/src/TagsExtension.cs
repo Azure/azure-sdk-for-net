@@ -73,34 +73,44 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                     StringBuilder sw = new StringBuilder();
                     foreach (var item in array)
                     {
-                        sw.Append(item);
-                        sw.Append(',');
+                        if (item != null)
+                        {
+                            sw.Append(item);
+                            sw.Append(',');
+                        }
                     }
 
-                    sw.Length--;
+                    if (sw.Length > 0)
+                    {
+                        sw.Length--;
+                    }
+
                     partCTags.Add(entry.Key, sw.ToString());
 
                     continue;
                 }
 
-                if (!Part_B_Mapping.TryGetValue(entry.Key, out tempActivityType))
+                if (entry.Value != null)
                 {
-                    partCTags.Add(entry.Key, entry.Value.ToString());
-                    continue;
-                }
+                    if (!Part_B_Mapping.TryGetValue(entry.Key, out tempActivityType))
+                    {
+                        partCTags.Add(entry.Key, entry.Value.ToString());
+                        continue;
+                    }
 
-                if (activityType == PartBType.Unknown || activityType == PartBType.Net)
-                {
-                    activityType = tempActivityType;
-                }
+                    if (activityType == PartBType.Unknown || activityType == PartBType.Net)
+                    {
+                        activityType = tempActivityType;
+                    }
 
-                if (tempActivityType == activityType || tempActivityType == PartBType.Net)
-                {
-                    partBTags.Add(entry.Key, entry.Value.ToString());
-                }
-                else
-                {
-                    partCTags.Add(entry.Key, entry.Value.ToString());
+                    if (tempActivityType == activityType || tempActivityType == PartBType.Net)
+                    {
+                        partBTags.Add(entry.Key, entry.Value.ToString());
+                    }
+                    else
+                    {
+                        partCTags.Add(entry.Key, entry.Value.ToString());
+                    }
                 }
             }
 

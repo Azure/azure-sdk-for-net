@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using Xunit;
 
@@ -28,6 +29,25 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             Assert.Equal(PartBType.Unknown, activityType);
             Assert.Empty(partBTags);
             Assert.Empty(PartCTags);
+        }
+
+        [Fact]
+        public void TagObjects_NullItem()
+        {
+            IEnumerable<KeyValuePair<string, object>> tagObjects = new Dictionary<string, object>
+            {
+                ["key1"] = null,
+                ["key2"] = new string[] {"test", null},
+                ["key3"] = new string[] { null, null }
+            };
+            var activityType = tagObjects.ToAzureMonitorTags(out var partBTags, out var PartCTags);
+
+            Assert.Equal(PartBType.Unknown, activityType);
+            Assert.Empty(partBTags);
+            Assert.Equal(2, PartCTags.Count);
+            Assert.Throws<KeyNotFoundException>(() => PartCTags["key1"]);
+            Assert.Equal("test", PartCTags["key2"]);
+            Assert.Equal(string.Empty, PartCTags["key3"]);
         }
 
         [Fact]
