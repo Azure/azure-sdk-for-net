@@ -34,7 +34,7 @@ namespace Azure.Storage.Sas
             string authorizedAadObjectId = default,
             string unauthorizedAadObjectId = default,
             string correlationId = default,
-            uint? directoryDepth = default) =>
+            int? directoryDepth = default) =>
             SasQueryParameters.Create(
                 version: version,
                 services: services,

@@ -92,7 +92,7 @@ namespace Azure.Storage.Sas
             string authorizedAadObjectId = default,
             string unauthorizedAadObjectId = default,
             string correlationId = default,
-            uint? directoryDepth = default)
+            int? directoryDepth = default)
             : base(
                 version: version,
                 services: services,
