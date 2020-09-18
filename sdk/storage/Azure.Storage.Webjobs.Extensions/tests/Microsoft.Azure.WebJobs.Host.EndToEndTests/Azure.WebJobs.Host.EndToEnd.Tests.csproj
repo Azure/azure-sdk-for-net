@@ -5,7 +5,6 @@
     <PublicSign>false</PublicSign>
     <DelaySign>true</DelaySign>
     <AssemblyName>Microsoft.Azure.WebJobs.Host.EndToEndTests</AssemblyName>
-    <RootNamespace>Microsoft.Azure.WebJobs.Host.EndToEndTests</RootNamespace>
     <AssemblyOriginatorKeyFile>PublicKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
