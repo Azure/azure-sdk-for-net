@@ -71,7 +71,5 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
             Assert.Equal("my-namespace.my-service", roleName);
             Assert.Equal("roleInstance_1", roleInstance);
         }
-
-
     }
 }
