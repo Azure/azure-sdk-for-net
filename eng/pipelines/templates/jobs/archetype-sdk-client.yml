@@ -61,6 +61,7 @@ jobs:
       - template: /eng/common/pipelines/templates/steps/verify-links.yml
         parameters:
           Directory: sdk/${{ parameters.ServiceDirectory }}
+          CheckLinkGuidance: $true
       - script: |
           pip install setuptools wheel
           pip install doc-warden==$(DocWardenVersion)
