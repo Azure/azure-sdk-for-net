@@ -11,9 +11,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Xunit;
-using Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
+using Azure.WebJobs.Extensions.Storage.Common.Tests;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
