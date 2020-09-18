@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.Dns.Tests
         }
         protected void initNewRecord()
         {
+            ResourcesManagementClient = this.GetResourceManagementClient();
             ResourcesOperations = ResourcesManagementClient.Resources;
             ResourceProvidersOperations = ResourcesManagementClient.Providers;
             ResourceGroupsOperations = ResourcesManagementClient.ResourceGroups;

@@ -7,7 +7,6 @@ using Azure.Management.Resources.Models;
 using Azure.ResourceManager.Dns.Models;
 using System.Collections.Generic;
 using System.Net;
-using NUnit.Framework;
 
 namespace Azure.Management.Dns.Tests
 {
@@ -28,7 +27,7 @@ namespace Azure.Management.Dns.Tests
                 return false;
             }
 
-            if (first.Location.ToLower() != second.Location.ToLower())
+            if (!String.Equals(first.Location, second.Location, StringComparison.OrdinalIgnoreCase))
             {
                 return false;
             }

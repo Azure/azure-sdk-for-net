@@ -4,13 +4,8 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Azure.Management.Resources;
-using Azure.Management.Resources.Models;
 using Azure.ResourceManager.Dns.Models;
 using Azure.ResourceManager.Dns.Tests;
-using System.Collections.Generic;
-using System;
-using Azure.Core;
-using Azure.ResourceManager.TestFramework;
 
 namespace Azure.Management.Dns.Tests
 {
@@ -38,6 +33,7 @@ namespace Azure.Management.Dns.Tests
                 InitializeClients();
                 this.resourceGroup = Recording.GenerateAssetName("Default-Dns-Zones-");
                 await Helper.TryRegisterResourceGroupAsync(ResourceGroupsOperations, this.location, this.resourceGroup);
+                setupRun = true;
 
             }
             else if (setupRun)

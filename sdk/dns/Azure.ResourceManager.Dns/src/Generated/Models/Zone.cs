@@ -61,11 +61,5 @@ namespace Azure.ResourceManager.Dns.Models
         public long? NumberOfRecordSets { get; }
         /// <summary> The name servers for this DNS zone. This is a read-only property and any attempt to set this value will be ignored. </summary>
         public IReadOnlyList<string> NameServers { get; }
-        /// <summary> The type of this DNS zone (Public or Private). </summary>
-        public ZoneType? ZoneType { get; set; }
-        /// <summary> A list of references to virtual networks that register hostnames in this DNS zone. This is a only when ZoneType is Private. </summary>
-        public IList<SubResource> RegistrationVirtualNetworks { get; }
-        /// <summary> A list of references to virtual networks that resolve records in this DNS zone. This is a only when ZoneType is Private. </summary>
-        public IList<SubResource> ResolutionVirtualNetworks { get; }
     }
 }
