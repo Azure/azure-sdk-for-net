@@ -3,6 +3,7 @@
 
 using System;
 using Microsoft.Azure.WebJobs.Extensions.Storage;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Host.Queues.Listeners;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
