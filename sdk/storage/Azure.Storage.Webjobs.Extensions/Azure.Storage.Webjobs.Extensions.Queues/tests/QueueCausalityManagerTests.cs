@@ -3,10 +3,10 @@
 
 using System;
 using Microsoft.Azure.WebJobs.Host.Queues;
-using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Newtonsoft.Json.Linq;
 using Xunit;
 using Azure.Storage.Queues.Models;
+using Azure.WebJobs.Extensions.Storage.Common.Tests;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
 {
