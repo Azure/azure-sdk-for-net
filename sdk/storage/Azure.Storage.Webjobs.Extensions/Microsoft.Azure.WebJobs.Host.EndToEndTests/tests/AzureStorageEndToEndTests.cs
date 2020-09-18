@@ -177,7 +177,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             IHost host = new HostBuilder()
                 .ConfigureDefaultTestHost<AzureStorageEndToEndTests>(b =>
                 {
-                    b.AddAzureStorage();
+                    b.AddAzureStorageBlobs().AddAzureStorageQueues();
                 })
                 .ConfigureServices(services =>
                 {
@@ -228,7 +228,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             IHost host = new HostBuilder()
                 .ConfigureDefaultTestHost<AzureStorageEndToEndTests>(b =>
                 {
-                    b.AddAzureStorage();
+                    b.AddAzureStorageBlobs().AddAzureStorageQueues();
                 })
                 .ConfigureServices(services =>
                 {
@@ -363,7 +363,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 IHost host = new HostBuilder()
                     .ConfigureDefaultTestHost<TestFixture>(b =>
                     {
-                        b.AddAzureStorage();
+                        b.AddAzureStorageBlobs().AddAzureStorageQueues();
                     })
                     .Build();
 

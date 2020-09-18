@@ -75,7 +75,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 {
                     // each test will have a unique hostId so that consecutive test run will not be affected by clean up code
                     b.UseHostId(Guid.NewGuid().ToString("N"))
-                    .AddAzureStorage()
+                    .AddAzureStorageBlobs().AddAzureStorageQueues()
                     .AddExtension<DispatchQueueTestConfig>();
                 })
                 .Build();
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 {
                     // each test will have a unique hostId so that consecutive test run will not be affected by clean up code
                     b.UseHostId(Guid.NewGuid().ToString("N"))
-                    .AddAzureStorage()
+                    .AddAzureStorageBlobs().AddAzureStorageQueues()
                     .AddExtension<DispatchQueueTestConfig>();
                 })
                 .Build();

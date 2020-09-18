@@ -36,7 +36,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             IHost host = new HostBuilder()
                .ConfigureDefaultTestHost<InstanceProgram>(prog, builder =>
                {
-                   builder.AddAzureStorage()
+                   builder.AddAzureStorageBlobs().AddAzureStorageQueues()
                    .UseStorage(account);
                })
                .Build();
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             IHost host = new HostBuilder()
                .ConfigureDefaultTestHost<InstanceAsyncProgram>(prog, builder =>
                {
-                   builder.AddAzureStorage()
+                   builder.AddAzureStorageBlobs().AddAzureStorageQueues()
                    .UseStorage(account);
                })
                .Build();

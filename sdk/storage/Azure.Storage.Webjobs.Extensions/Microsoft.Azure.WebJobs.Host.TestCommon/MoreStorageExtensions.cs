@@ -25,7 +25,7 @@ namespace Microsoft.Azure.WebJobs
 
         public static IWebJobsBuilder UseStorage(this IWebJobsBuilder builder, StorageAccount account)
         {
-            builder.AddAzureStorage();
+            builder.AddAzureStorageBlobs().AddAzureStorageQueues();
             builder.Services.Add(ServiceDescriptor.Singleton<StorageAccountProvider>(new FakeStorageAccountProvider(account)));
 
             return builder;

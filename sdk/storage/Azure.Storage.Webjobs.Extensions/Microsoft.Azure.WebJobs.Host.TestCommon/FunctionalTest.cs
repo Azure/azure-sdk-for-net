@@ -33,7 +33,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             var host = new HostBuilder()
               .ConfigureDefaultTestHost(builder =>
               {
-                  builder.AddAzureStorage()
+                  builder.AddAzureStorageBlobs().AddAzureStorageQueues()
                       .UseStorage(account)
                       .ConfigureCatchFailures(src, signalOnFirst, ignoreFailureFunctions);
 
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             var host = new HostBuilder()
                 .ConfigureDefaultTestHost(b =>
                 {
-                    b.AddAzureStorage()
+                    b.AddAzureStorageBlobs().AddAzureStorageQueues()
                     .UseStorage(account);
                 }, programType)
                 .Build();
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             var host = new HostBuilder()
                 .ConfigureDefaultTestHost(b =>
                 {
-                    b.AddAzureStorage()
+                    b.AddAzureStorageBlobs().AddAzureStorageQueues()
                     .UseStorage(account);
 
                     foreach (var extension in customExtensions)
@@ -151,7 +151,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             var host = new HostBuilder()
               .ConfigureDefaultTestHost(builder =>
               {
-                  builder.AddAzureStorage()
+                  builder.AddAzureStorageBlobs().AddAzureStorageQueues()
                   .UseStorage(account);
               }, programType)
               .Build();

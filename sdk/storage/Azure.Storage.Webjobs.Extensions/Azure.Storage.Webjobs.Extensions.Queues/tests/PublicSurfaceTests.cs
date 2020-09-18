@@ -49,6 +49,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests
 
             var expected = new[]
             {
+                "AzureStorageQueuesWebJobsStartup",
                 "QueueAttribute",
                 "QueueParameterDescriptor",
                 "QueueTriggerAttribute",

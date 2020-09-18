@@ -78,7 +78,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             IHost host = new HostBuilder()
                .ConfigureDefaultTestHost<ProgramWithStaticBadName>(builder =>
                {
-                   builder.AddAzureStorage();
+                   builder.AddAzureStorageBlobs().AddAzureStorageQueues();
                })
                .Build();
 

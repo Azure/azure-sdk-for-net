@@ -65,7 +65,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             var host = new HostBuilder()
                 .ConfigureDefaultTestHost<BindToCloudBlob2Program>(b =>
                 {
-                    b.AddAzureStorage();
+                    b.AddAzureStorageBlobs().AddAzureStorageQueues();
                 })
                 .ConfigureServices(services =>
                 {

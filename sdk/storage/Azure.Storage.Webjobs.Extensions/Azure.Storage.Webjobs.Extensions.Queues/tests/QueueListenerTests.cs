@@ -635,7 +635,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
                 IHost host = new HostBuilder()
                     .ConfigureDefaultTestHost(b =>
                     {
-                        b.AddAzureStorage();
+                        b.AddAzureStorageBlobs().AddAzureStorageQueues();
                     })
                     .Build();
 

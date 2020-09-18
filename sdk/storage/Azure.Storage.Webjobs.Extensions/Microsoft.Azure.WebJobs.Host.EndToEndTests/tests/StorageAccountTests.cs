@@ -92,7 +92,7 @@ namespace Microsoft.Azure.WebJobs.Storage.IntegrationTests
             var host = new HostBuilder()
                 .ConfigureDefaultTestHost(c =>
                 {
-                    c.AddAzureStorage();
+                    c.AddAzureStorageBlobs().AddAzureStorageQueues();
                 })
                 .Build();
 

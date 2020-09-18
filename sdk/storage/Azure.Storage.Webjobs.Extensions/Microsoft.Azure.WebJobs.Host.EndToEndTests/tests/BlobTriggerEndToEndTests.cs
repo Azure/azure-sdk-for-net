@@ -49,7 +49,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             var host = new HostBuilder()
                 .ConfigureDefaultTestHost(b =>
                 {
-                    b.AddAzureStorage();
+                    b.AddAzureStorageBlobs().AddAzureStorageQueues();
                 })
                 .Build();
             var provider = host.Services.GetService<StorageAccountProvider>();
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             return new HostBuilder()
                 .ConfigureDefaultTestHost<TProgram>(b =>
                 {
-                    b.AddAzureStorage();
+                    b.AddAzureStorageBlobs().AddAzureStorageQueues();
                     configure?.Invoke(b);
                 })
                 .ConfigureServices(services =>

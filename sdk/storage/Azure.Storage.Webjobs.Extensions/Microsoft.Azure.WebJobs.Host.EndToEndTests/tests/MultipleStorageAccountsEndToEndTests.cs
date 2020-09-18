@@ -211,7 +211,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     Host = new HostBuilder()
                         .ConfigureDefaultTestHost<MultipleStorageAccountsEndToEndTests>(b =>
                         {
-                            b.AddAzureStorage();
+                            b.AddAzureStorageBlobs().AddAzureStorageQueues();
                         })
                         .ConfigureServices(services =>
                         {

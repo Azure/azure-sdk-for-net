@@ -18,7 +18,7 @@ namespace SampleHost
                 .ConfigureWebJobs(b =>
                 {
                     b.AddAzureStorageCoreServices()
-                    .AddAzureStorage();
+                    .AddAzureStorageBlobs().AddAzureStorageQueues();
                 })
                 .ConfigureAppConfiguration(b =>
                 {

@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.WebJobs"/>
+    <PackageReference Include="Microsoft.Azure.WebJobs" />
     <PackageReference Include="Microsoft.Azure.WebJobs.Host.Storage" VersionOverride="3.0.14" />
     <PackageReference Include="Microsoft.Azure.WebJobs.Logging.ApplicationInsights" VersionOverride="3.0.14" />
     <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" VersionOverride="2.1.0" />
@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Microsoft.Azure.WebJobs.Extensions.Storage\Azure.WebJobs.Extensions.Storage.csproj" />
+    <ProjectReference Include="..\..\Azure.Storage.Webjobs.Extensions.Blobs\src\Azure.WebJobs.Extensions.Storage.Blobs.csproj" />
+    <ProjectReference Include="..\..\Azure.Storage.Webjobs.Extensions.Queues\src\Azure.WebJobs.Extensions.Storage.Queues.csproj" />
   </ItemGroup>
 </Project>
