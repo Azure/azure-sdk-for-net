@@ -9,8 +9,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{72A798
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.WebJobs.Extensions.Storage.Samples", "samples\SampleHost\Azure.WebJobs.Extensions.Storage.Samples.csproj", "{93429246-CCE9-4EB0-B94D-68522862BA79}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.WebJobs.Host.EndToEnd.Tests", "tests\Microsoft.Azure.WebJobs.Host.EndToEndTests\Azure.WebJobs.Host.EndToEnd.Tests.csproj", "{340AB554-5482-4B3D-B65F-46DFF5AF1684}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution", "Solution", "{3B089351-285A-4829-8F60-30768A7469BD}"
 	ProjectSection(SolutionItems) = preProject
 		Directory.Build.props = Directory.Build.props
@@ -43,6 +41,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.WebJobs.Host.TestComm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Common", "..\Azure.Storage.Common\src\Azure.Storage.Common.csproj", "{A90BB7A5-51D3-4966-BB8E-3D0B832497DF}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.WebJobs.Host.EndToEnd.Tests", "Microsoft.Azure.WebJobs.Host.EndToEndTests\tests\Azure.WebJobs.Host.EndToEnd.Tests.csproj", "{F1997C00-7304-481F-8002-7AB0728DB6C1}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		src\Microsoft.Azure.WebJobs.Shared.Storage\Microsoft.Azure.WebJobs.Shared.Storage.projitems*{6bed7f8a-a199-4d9d-85d1-6856ee3292c6}*SharedItemsImports = 13
@@ -57,10 +57,6 @@ Global
 		{93429246-CCE9-4EB0-B94D-68522862BA79}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93429246-CCE9-4EB0-B94D-68522862BA79}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93429246-CCE9-4EB0-B94D-68522862BA79}.Release|Any CPU.Build.0 = Release|Any CPU
-		{340AB554-5482-4B3D-B65F-46DFF5AF1684}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{340AB554-5482-4B3D-B65F-46DFF5AF1684}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{340AB554-5482-4B3D-B65F-46DFF5AF1684}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{340AB554-5482-4B3D-B65F-46DFF5AF1684}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A9733406-267C-4A53-AB07-D3A834E22153}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A9733406-267C-4A53-AB07-D3A834E22153}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9733406-267C-4A53-AB07-D3A834E22153}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -109,13 +105,16 @@ Global
 		{A90BB7A5-51D3-4966-BB8E-3D0B832497DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A90BB7A5-51D3-4966-BB8E-3D0B832497DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A90BB7A5-51D3-4966-BB8E-3D0B832497DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1997C00-7304-481F-8002-7AB0728DB6C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1997C00-7304-481F-8002-7AB0728DB6C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1997C00-7304-481F-8002-7AB0728DB6C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1997C00-7304-481F-8002-7AB0728DB6C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{93429246-CCE9-4EB0-B94D-68522862BA79} = {72A798F0-699B-4C8E-8D43-C1749661471E}
-		{340AB554-5482-4B3D-B65F-46DFF5AF1684} = {639967B0-0544-4C52-94AC-9A3D25E33256}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {371BFA14-0980-4A43-A18A-CA1C1A9CB784}
