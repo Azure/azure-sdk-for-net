@@ -1,1 +1,1 @@
-See the project [readme](../../sdk/core/Azure.Core.TestFramework/README.md).
+See the project [readme](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core.TestFramework/README.md).
