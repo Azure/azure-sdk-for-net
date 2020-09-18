@@ -5,6 +5,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Microsoft.Identity.Client;
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -35,30 +36,6 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Creates a new DeviceCodeCredential with the specified options, which will authenticate users with the specified application.
-        /// </summary>
-        /// <param name="deviceCodeCallback">The callback to be executed to display the device code to the user</param>
-        /// <param name="clientId">The client id of the application to which the users will authenticate</param>
-        /// <param name="options">The client options for the newly created DeviceCodeCredential</param>
-        public DeviceCodeCredential(Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, string clientId, TokenCredentialOptions options = default)
-            : this(deviceCodeCallback, null, clientId, options, null)
-        {
-
-        }
-
-        /// <summary>
-        /// Creates a new DeviceCodeCredential with the specified options, which will authenticate users with the specified application.
-        /// </summary>
-        /// <param name="deviceCodeCallback">The callback to be executed to display the device code to the user</param>
-        /// <param name="tenantId">The tenant id of the application to which users will authenticate.  This can be null for multi-tenanted applications.</param>
-        /// <param name="clientId">The client id of the application to which the users will authenticate</param>
-        /// <param name="options">The client options for the newly created DeviceCodeCredential</param>
-        public DeviceCodeCredential(Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, string tenantId, string clientId,  TokenCredentialOptions options = default)
-            : this(deviceCodeCallback, tenantId, clientId, options, null)
-        {
-        }
-
-        /// <summary>
         ///  Creates a new <see cref="DeviceCodeCredential"/> with the specified options, which will authenticate users using the device code flow, printing the device code message to stdout.
         /// </summary>
         /// <param name="options">The client options for the newly created <see cref="DeviceCodeCredential"/>.</param>
@@ -78,6 +55,32 @@ namespace Azure.Identity
         {
             _disableAutomaticAuthentication = options?.DisableAutomaticAuthentication ?? false;
             _record = options?.AuthenticationRecord;
+        }
+
+        /// <summary>
+        /// Creates a new DeviceCodeCredential with the specified options, which will authenticate users with the specified application.
+        /// </summary>
+        /// <param name="deviceCodeCallback">The callback to be executed to display the device code to the user</param>
+        /// <param name="clientId">The client id of the application to which the users will authenticate</param>
+        /// <param name="options">The client options for the newly created DeviceCodeCredential</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public DeviceCodeCredential(Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, string clientId, TokenCredentialOptions options = default)
+            : this(deviceCodeCallback, null, clientId, options, null)
+        {
+
+        }
+
+        /// <summary>
+        /// Creates a new DeviceCodeCredential with the specified options, which will authenticate users with the specified application.
+        /// </summary>
+        /// <param name="deviceCodeCallback">The callback to be executed to display the device code to the user</param>
+        /// <param name="tenantId">The tenant id of the application to which users will authenticate.  This can be null for multi-tenanted applications.</param>
+        /// <param name="clientId">The client id of the application to which the users will authenticate</param>
+        /// <param name="options">The client options for the newly created DeviceCodeCredential</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public DeviceCodeCredential(Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, string tenantId, string clientId,  TokenCredentialOptions options = default)
+            : this(deviceCodeCallback, tenantId, clientId, options, null)
+        {
         }
 
         internal DeviceCodeCredential(Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, string tenantId, string clientId, TokenCredentialOptions options, CredentialPipeline pipeline)

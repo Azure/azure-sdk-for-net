@@ -97,6 +97,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        [NonParallelizable]
         public async Task AuthenticateWithDeviceCodeNoCallback()
         {
             var capturedOut = new StringBuilder();
