@@ -6,11 +6,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Blobs.Listeners;
 using Microsoft.Azure.WebJobs.Host.Executors;
-using Microsoft.Azure.WebJobs.Host.Listeners;
 using Xunit;
-using Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests;
 using Azure.Storage.Blobs.Specialized;
-using Microsoft.Azure.WebJobs.Host.TestCommon;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
+using Azure.WebJobs.Extensions.Storage.Common.Tests;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
 {
