@@ -11,7 +11,7 @@ using Xunit;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests.Queues
 {
-    public class StorageWebJobsBuilderExtensionsTests
+    public class StorageQueuesWebJobsBuilderExtensionsTests
     {
         [Fact]
         public void ConfigureOptions_AppliesValuesCorrectly_Singleton()
@@ -28,7 +28,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests.Queues
 
             SingletonOptions options = TestHelpers.GetConfiguredOptions<SingletonOptions>(b =>
             {
-                b.AddAzureStorage();
+                b.AddAzureStorageQueues();
             }, values);
 
             Assert.Equal(TimeSpan.FromSeconds(22), options.LockPeriod);
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests.Queues
 
             QueuesOptions options = TestHelpers.GetConfiguredOptions<QueuesOptions>(b =>
             {
-                b.AddAzureStorage();
+                b.AddAzureStorageQueues();
             }, values);
 
             Assert.Equal(30, options.BatchSize);
@@ -61,23 +61,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests.Queues
             Assert.Equal(TimeSpan.FromSeconds(2), options.MaxPollingInterval);
             Assert.Equal(10, options.MaxDequeueCount);
             Assert.Equal(TimeSpan.FromSeconds(15), options.VisibilityTimeout);
-        }
-
-        [Fact]
-        public void ConfigureOptions_AppliesValuesCorrectly_Blobs()
-        {
-            string extensionPath = "AzureWebJobs:Extensions:Blobs";
-            var values = new Dictionary<string, string>
-            {
-                { $"{extensionPath}:CentralizedPoisonQueue", "true" },
-            };
-
-            BlobsOptions options = TestHelpers.GetConfiguredOptions<BlobsOptions>(b =>
-            {
-                b.AddAzureStorage();
-            }, values);
-
-            Assert.True(options.CentralizedPoisonQueue);
         }
     }
 }
