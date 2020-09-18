@@ -15,12 +15,13 @@ namespace Azure.ResourceManager.Dns.Models
     public partial class Zone : Resource
     {
         /// <summary> The type of this DNS zone (Public or Private). </summary>
+        [Obsolete("Private DNS is not allowed in this API anymore, use the privatedns API")]
         public ZoneType? ZoneType { get; }
         /// <summary> A list of references to virtual networks that register hostnames in this DNS zone. This is a only when ZoneType is Private. </summary>
-        [Obsolete]
+        [Obsolete("Private DNS is not allowed in this API anymore, use the privatedns API")]
         public IList<SubResource> RegistrationVirtualNetworks { get; }
         /// <summary> A list of references to virtual networks that resolve records in this DNS zone. This is a only when ZoneType is Private. </summary>
-        [Obsolete]
+        [Obsolete("Private DNS is not allowed in this API anymore, use the privatedns API")]
         public IList<SubResource> ResolutionVirtualNetworks { get; }
     }
 }
