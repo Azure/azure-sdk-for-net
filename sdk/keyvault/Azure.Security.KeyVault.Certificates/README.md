@@ -61,7 +61,7 @@ Use the [Azure CLI][azure_cli] snippet below to create/get client secret credent
 
 * Grant the above mentioned application authorization to perform certificate operations on the Azure Key Vault:
     ```PowerShell
-    az keyvault set-policy --name <your-key-vault-name> --spn $AZURE_CLIENT_ID --certificate-permissions backup delete get list create update purge
+    az keyvault set-policy --name <your-key-vault-name> --spn $Env:AZURE_CLIENT_ID --certificate-permissions backup delete get list create update purge
     ```
     > --certificate-permissions:
     > Allowed values: backup, create, delete, deleteissuers, get, getissuers, import, list, listissuers, managecontacts, manageissuers, purge, recover, restore, setissuers, update.

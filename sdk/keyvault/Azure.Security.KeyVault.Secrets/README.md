@@ -61,7 +61,7 @@ Use the [Azure CLI][azure_cli] snippet below to create/get client secret credent
     
 * Grant the above mentioned application authorization to perform secret operations on the Azure Key Vault:
     ```PowerShell
-    az keyvault set-policy --name <your-key-vault-name> --spn $AZURE_CLIENT_ID --secret-permissions backup delete get list set
+    az keyvault set-policy --name <your-key-vault-name> --spn $Env:AZURE_CLIENT_ID --secret-permissions backup delete get list set
     ```
     > --secret-permissions:
     > Accepted values: backup, delete, get, list, purge, recover, restore, set
