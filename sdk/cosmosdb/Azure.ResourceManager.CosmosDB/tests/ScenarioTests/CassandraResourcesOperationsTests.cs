@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         protected string tableName = "tableName2510";
         protected string cassandraThroughputType = "Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/throughputSettings";
         protected int sampleThroughput = 700;
+        protected bool setUpRun = false;
 
         public CassandraResourcesOperationsTests()
             : base(true)
@@ -28,23 +29,28 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [SetUp]
         public async Task ClearAndInitialize()
         {
-            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
+            if ((Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback) && !setUpRun)
             {
                 InitializeClients();
                 resourceGroupName = Recording.GenerateAssetName(CosmosDBTestUtilities.ResourceGroupPrefix);
                 databaseAccountName = Recording.GenerateAssetName("amecassandratest");
                 await CosmosDBTestUtilities.TryRegisterResourceGroupAsync(ResourceGroupsOperations, CosmosDBTestUtilities.Location, resourceGroupName);
+                setUpRun = true;
+            }
+            else if (setUpRun)
+            {
+                initNewRecord();
             }
         }
 
-        [TearDown]
+        [OneTimeTearDown]
         public async Task CleanupResourceGroup()
         {
            await CleanupResourceGroupsAsync();
         }
 
-        [TestCase]
-        public async Task CassandraCRUDTests()
+        [TestCase, Order(1)]
+        public async Task CreateDatabaseAccount()
         {
             var locations = new List<Location>();
             Location loc = new Location();
@@ -59,22 +65,23 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             databaseAccountCreateUpdateParameters.ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.Eventual);
 
             await WaitForCompletionAsync(await CosmosDBManagementClient.DatabaseAccounts.StartCreateOrUpdateAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters));
+        }
 
-            Task<Response> taskIsDatabaseNameExists = CosmosDBManagementClient.DatabaseAccounts.CheckNameExistsAsync(databaseAccountName);
-            Response isDatabaseNameExists = taskIsDatabaseNameExists.ConfigureAwait(false).GetAwaiter().GetResult();
-            Assert.AreEqual(200, isDatabaseNameExists.Status);
+        [TestCase, Order(2)]
+        public async Task CassandraKeyspaceCreateTests()
+        {
+            Response responseIsDatabaseNameExists = await CosmosDBManagementClient.DatabaseAccounts.CheckNameExistsAsync(databaseAccountName);
+            Assert.AreEqual(200, responseIsDatabaseNameExists.Status);
 
             CassandraKeyspaceCreateUpdateParameters cassandraKeyspaceCreateUpdateParameters = new CassandraKeyspaceCreateUpdateParameters(new CassandraKeyspaceResource(keyspaceName), new CreateUpdateOptions());
 
-            var cassandraKeyspaceResponse = await WaitForCompletionAsync (await CosmosDBManagementClient.CassandraResources.StartCreateUpdateCassandraKeyspaceAsync(resourceGroupName, databaseAccountName, keyspaceName, cassandraKeyspaceCreateUpdateParameters));
+            var cassandraKeyspaceResponse = await WaitForCompletionAsync(await CosmosDBManagementClient.CassandraResources.StartCreateUpdateCassandraKeyspaceAsync(resourceGroupName, databaseAccountName, keyspaceName, cassandraKeyspaceCreateUpdateParameters));
 
             CassandraKeyspaceGetResults cassandraKeyspaceGetResults = cassandraKeyspaceResponse.Value;
-
             Assert.NotNull(cassandraKeyspaceGetResults);
             Assert.AreEqual(keyspaceName, cassandraKeyspaceGetResults.Name);
 
             var cassandraKeyspaceResponse1 = await WaitForCompletionAsync(await CosmosDBManagementClient.CassandraResources.StartCreateUpdateCassandraKeyspaceAsync(resourceGroupName, databaseAccountName, keyspaceName, cassandraKeyspaceCreateUpdateParameters));
-
             CassandraKeyspaceGetResults cassandraKeyspaceGetResults1 = cassandraKeyspaceResponse1.Value;
             Assert.NotNull(cassandraKeyspaceGetResults1);
             Assert.AreEqual(keyspaceName, cassandraKeyspaceGetResults1.Name);
@@ -82,20 +89,21 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyEqualCassandraDatabases(cassandraKeyspaceGetResults, cassandraKeyspaceGetResults1);
 
             CassandraKeyspaceCreateUpdateParameters cassandraKeyspaceCreateUpdateParameters2 = new CassandraKeyspaceCreateUpdateParameters(new CassandraKeyspaceResource(keyspaceName2), new CreateUpdateOptions(sampleThroughput, default));
-
             var cassandraKeyspaceResponse2 = await WaitForCompletionAsync(await CosmosDBManagementClient.CassandraResources.StartCreateUpdateCassandraKeyspaceAsync(resourceGroupName, databaseAccountName, keyspaceName2, cassandraKeyspaceCreateUpdateParameters2));
 
             CassandraKeyspaceGetResults cassandraKeyspaceGetResults2 = cassandraKeyspaceResponse2.Value;
             Assert.NotNull(cassandraKeyspaceGetResults2);
             Assert.AreEqual(keyspaceName2, cassandraKeyspaceGetResults2.Name);
 
-            var keyspacesResponseTask = CosmosDBManagementClient.CassandraResources.ListCassandraKeyspacesAsync(resourceGroupName, databaseAccountName).ToEnumerableAsync();
-            List<CassandraKeyspaceGetResults> cassandraKeyspaces = keyspacesResponseTask.ConfigureAwait(false).GetAwaiter().GetResult();
-
+            List<CassandraKeyspaceGetResults> cassandraKeyspaces = await CosmosDBManagementClient.CassandraResources.ListCassandraKeyspacesAsync(resourceGroupName, databaseAccountName).ToEnumerableAsync();
             Assert.NotNull(cassandraKeyspaces);
+        }
 
-            var throughputResponse = CosmosDBManagementClient.CassandraResources.GetCassandraKeyspaceThroughputAsync(resourceGroupName, databaseAccountName, keyspaceName2);
-            ThroughputSettingsGetResults throughputSettingsGetResults = throughputResponse.ConfigureAwait(false).GetAwaiter().GetResult();
+        [TestCase, Order(3)]
+        public async Task CassandraThroughputTests()
+        {
+            Response<ThroughputSettingsGetResults> throughputResponse = await CosmosDBManagementClient.CassandraResources.GetCassandraKeyspaceThroughputAsync(resourceGroupName, databaseAccountName, keyspaceName2);
+            ThroughputSettingsGetResults throughputSettingsGetResults = throughputResponse.Value;
             Assert.NotNull(throughputSettingsGetResults);
             Assert.NotNull(throughputSettingsGetResults.Name);
             Assert.AreEqual(throughputSettingsGetResults.Resource.Throughput, sampleThroughput);
@@ -106,7 +114,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             //var taskResponseMigrate = migrateKeyspace.WaitForCompletionAsync();
             //var responseMigrate = taskResponseMigrate.ConfigureAwait(false).GetAwaiter().GetResult();
             //Assert.AreEqual(responseMigrate.Value.Resource.MinimumThroughput, responseMigrate.Value.Resource.Throughput);
+        }
 
+        [TestCase, Order(4)]
+        public async Task CassandraTableCRUDTests()
+        {
             CassandraSchema cassandraSchema = new CassandraSchema(new List<Column> { new Column { Name = "columnA", Type = "int" }, new Column { Name = "columnB", Type = "ascii" } }, new List<CassandraPartitionKey> { new CassandraPartitionKey { Name = "columnA" } }, new List<ClusterKey> { new ClusterKey { Name = "columnB", OrderBy = "Asc" } });
             CassandraTableResource cassandraTableResource = new CassandraTableResource(tableName, default, cassandraSchema, default);
             CassandraTableCreateUpdateParameters cassandraTableCreateUpdateParameters = new CassandraTableCreateUpdateParameters(cassandraTableResource, new CreateUpdateOptions());
@@ -117,9 +129,28 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             VerifyCassandraTableCreation(cassandraTableGetResults, cassandraTableCreateUpdateParameters);
 
-            var cassandraPageableResultsTask = CosmosDBManagementClient.CassandraResources.ListCassandraTablesAsync(resourceGroupName, databaseAccountName, keyspaceName).ToEnumerableAsync();
-            List<CassandraTableGetResults> cassandraTables = cassandraPageableResultsTask.ConfigureAwait(false).GetAwaiter().GetResult();
+            List<CassandraTableGetResults> cassandraTables = await CosmosDBManagementClient.CassandraResources.ListCassandraTablesAsync(resourceGroupName, databaseAccountName, keyspaceName).ToEnumerableAsync();
             Assert.NotNull(cassandraTables);
+        }
+
+        [TestCase, Order(5)]
+        public async Task CassandraDeleteTests()
+        {
+            List<CassandraTableGetResults> cassandraTables = await CosmosDBManagementClient.CassandraResources.ListCassandraTablesAsync(resourceGroupName, databaseAccountName, keyspaceName).ToEnumerableAsync();
+            foreach (CassandraTableGetResults cassandraTable in cassandraTables)
+            {
+                await WaitForCompletionAsync(await CosmosDBManagementClient.CassandraResources.StartDeleteCassandraTableAsync(resourceGroupName, databaseAccountName, keyspaceName, cassandraTable.Name));
+            }
+            List<CassandraTableGetResults> checkCassandraTables = await CosmosDBManagementClient.CassandraResources.ListCassandraTablesAsync(resourceGroupName, databaseAccountName, keyspaceName).ToEnumerableAsync();
+            Assert.AreEqual(checkCassandraTables.Count, 0);
+
+            List<CassandraKeyspaceGetResults> cassandraKeyspaces = await CosmosDBManagementClient.CassandraResources.ListCassandraKeyspacesAsync(resourceGroupName, databaseAccountName).ToEnumerableAsync();
+            foreach (CassandraKeyspaceGetResults cassandraKeyspace in cassandraKeyspaces)
+            {
+                await WaitForCompletionAsync(await CosmosDBManagementClient.CassandraResources.StartDeleteCassandraKeyspaceAsync(resourceGroupName, databaseAccountName, cassandraKeyspace.Name));
+            }
+            List<CassandraKeyspaceGetResults> checkCassandraKeyspaces = await CosmosDBManagementClient.CassandraResources.ListCassandraKeyspacesAsync(resourceGroupName, databaseAccountName).ToEnumerableAsync();
+            Assert.AreEqual(checkCassandraKeyspaces.Count, 0);
         }
 
         private void VerifyCassandraTableCreation(CassandraTableGetResults cassandraTableGetResults, CassandraTableCreateUpdateParameters cassandraTableCreateUpdateParameters)

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 
-namespace Azure.ResourceManager.CosmosDB.Tests.ScenarioTests
+namespace Azure.ResourceManager.CosmosDB.Tests
 {
     [TestFixture]
     public class GraphResourcesOperationsTests : CosmosDBManagementClientBase
@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests.ScenarioTests
 
         protected string graphThroughputType = "Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/throughputSettings";
         protected int sampleThroughput = 700;
+        protected bool setUpRun = false;
 
         public GraphResourcesOperationsTests()
             : base(true)
@@ -30,23 +31,28 @@ namespace Azure.ResourceManager.CosmosDB.Tests.ScenarioTests
         [SetUp]
         public async Task ClearAndInitialize()
         {
-            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
+            if ((Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback) && !setUpRun)
             {
                 InitializeClients();
                 resourceGroupName = Recording.GenerateAssetName(CosmosDBTestUtilities.ResourceGroupPrefix);
                 databaseAccountName = Recording.GenerateAssetName("amegraphtest");
                 await CosmosDBTestUtilities.TryRegisterResourceGroupAsync(ResourceGroupsOperations, CosmosDBTestUtilities.Location, resourceGroupName);
+                setUpRun = true;
+            }
+            else if (setUpRun)
+            {
+                initNewRecord();
             }
         }
 
-        [TearDown]
+        [OneTimeTearDown]
         public async Task CleanupResourceGroup()
         {
             await CleanupResourceGroupsAsync();
         }
 
-        [TestCase]
-        public async Task GraphCRUDTests()
+        [TestCase, Order(1)]
+        public async Task CreateDatabaseAccount()
         {
             var locations = new List<Location>();
             Location loc = new Location();
@@ -61,10 +67,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests.ScenarioTests
             databaseAccountCreateUpdateParameters.ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.Eventual);
 
             await WaitForCompletionAsync(await CosmosDBManagementClient.DatabaseAccounts.StartCreateOrUpdateAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters));
+        }
 
-            Response responseIsDatabaseNameExists = await CosmosDBManagementClient.DatabaseAccounts.CheckNameExistsAsync(databaseAccountName);
-            Assert.AreEqual(200, responseIsDatabaseNameExists.Status);
-
+        [TestCase, Order(2)]
+        public async Task GremlinDatabaseCRUDTests()
+        {
             GremlinDatabaseCreateUpdateParameters gremlinDatabaseCreateUpdateParameters = new GremlinDatabaseCreateUpdateParameters(new GremlinDatabaseResource(databaseName), new CreateUpdateOptions());
             var gremlinDatabaseResponse = await WaitForCompletionAsync(await CosmosDBManagementClient.GremlinResources.StartCreateUpdateGremlinDatabaseAsync(resourceGroupName, databaseAccountName, databaseName, gremlinDatabaseCreateUpdateParameters));
             Assert.NotNull(gremlinDatabaseResponse);
@@ -89,27 +96,35 @@ namespace Azure.ResourceManager.CosmosDB.Tests.ScenarioTests
 
             List<GremlinDatabaseGetResults> gremlinDatabases = await CosmosDBManagementClient.GremlinResources.ListGremlinDatabasesAsync(resourceGroupName, databaseAccountName).ToEnumerableAsync();
             Assert.NotNull(gremlinDatabases);
+        }
 
+        [TestCase, Order(3)]
+        public async Task GraphThroughputTests()
+        {
             Response<ThroughputSettingsGetResults> throughputResponse = await CosmosDBManagementClient.GremlinResources.GetGremlinDatabaseThroughputAsync(resourceGroupName, databaseAccountName, databaseName2);
             ThroughputSettingsGetResults throughputSettingsGetResults = throughputResponse.Value;
             Assert.NotNull(throughputSettingsGetResults);
             Assert.NotNull(throughputSettingsGetResults.Name);
             Assert.AreEqual(throughputSettingsGetResults.Resource.Throughput, sampleThroughput);
             Assert.AreEqual(graphThroughputType, throughputSettingsGetResults.Type);
+        }
 
+        [TestCase, Order(4)]
+        public async Task GremlinGraphCRUDTests()
+        {
             IndexingPolicy indexingPolicy = new IndexingPolicy(true, IndexingMode.Consistent, new List<IncludedPath> { new IncludedPath { Path = "/*" } }, new List<ExcludedPath> { new ExcludedPath { Path = "/pathToNotIndex/*" } }, new List<IList<CompositePath>>
+                        {
+                            new List<CompositePath>
                             {
-                                new List<CompositePath>
-                                {
-                                    new CompositePath { Path = "/orderByPath1", Order = CompositePathSortOrder.Ascending },
-                                    new CompositePath { Path = "/orderByPath2", Order = CompositePathSortOrder.Descending }
-                                },
-                                new List<CompositePath>
-                                {
-                                    new CompositePath { Path = "/orderByPath3", Order = CompositePathSortOrder.Ascending },
-                                    new CompositePath { Path = "/orderByPath4", Order = CompositePathSortOrder.Descending }
-                                }
-                            }, new List<SpatialSpec> { new SpatialSpec ( "/*", new List<SpatialType> { new SpatialType("Point") } ) });
+                                new CompositePath { Path = "/orderByPath1", Order = CompositePathSortOrder.Ascending },
+                                new CompositePath { Path = "/orderByPath2", Order = CompositePathSortOrder.Descending }
+                            },
+                            new List<CompositePath>
+                            {
+                                new CompositePath { Path = "/orderByPath3", Order = CompositePathSortOrder.Ascending },
+                                new CompositePath { Path = "/orderByPath4", Order = CompositePathSortOrder.Descending }
+                            }
+                        }, new List<SpatialSpec> { new SpatialSpec ( "/*", new List<SpatialType> { new SpatialType("Point") } ) });
 
             ContainerPartitionKey containerPartitionKey = new ContainerPartitionKey(new List<string> { "/address" }, "Hash", null);
             IList<string> paths = new List<string>() { "/testpath" };
@@ -123,6 +138,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests.ScenarioTests
             GremlinGraphCreateUpdateParameters gremlinGraphCreateUpdateParameters = new GremlinGraphCreateUpdateParameters(new GremlinGraphResource(gremlinGraphName, indexingPolicy, containerPartitionKey, -1, uniqueKeyPolicy, conflictResolutionPolicy), new CreateUpdateOptions(sampleThroughput, default));
 
             Response<GremlinGraphGetResults> gremlinResponse = await WaitForCompletionAsync(await CosmosDBManagementClient.GremlinResources.StartCreateUpdateGremlinGraphAsync(resourceGroupName, databaseAccountName, databaseName, gremlinGraphName, gremlinGraphCreateUpdateParameters));
+            Assert.NotNull(gremlinResponse);
             GremlinGraphGetResults gremlinGraphGetResults = gremlinResponse.Value;
             Assert.NotNull(gremlinGraphGetResults);
 
@@ -130,9 +146,27 @@ namespace Azure.ResourceManager.CosmosDB.Tests.ScenarioTests
 
             List<GremlinGraphGetResults> gremlinGraphs = await CosmosDBManagementClient.GremlinResources.ListGremlinGraphsAsync(resourceGroupName, databaseAccountName, databaseName).ToEnumerableAsync();
             Assert.NotNull(gremlinGraphs);
-            foreach (GremlinGraphGetResults graph in gremlinGraphs) {
-                VerifyGremlinGraphCreation(graph, gremlinGraphCreateUpdateParameters);
+        }
+
+        [TestCase, Order(5)]
+        public async Task GraphDeleteTests()
+        {
+            List<GremlinGraphGetResults> gremlinGraphs = await CosmosDBManagementClient.GremlinResources.ListGremlinGraphsAsync(resourceGroupName, databaseAccountName, databaseName).ToEnumerableAsync();
+            foreach (GremlinGraphGetResults gremlinGraph in gremlinGraphs)
+            {
+                await WaitForCompletionAsync(await CosmosDBManagementClient.GremlinResources.StartDeleteGremlinGraphAsync(resourceGroupName, databaseAccountName, databaseName, gremlinGraph.Name));
             }
+            List<GremlinGraphGetResults> checkGremlinGraphs = await CosmosDBManagementClient.GremlinResources.ListGremlinGraphsAsync(resourceGroupName, databaseAccountName, databaseName).ToEnumerableAsync();
+            Assert.AreEqual(checkGremlinGraphs.Count, 0);
+
+            List<GremlinDatabaseGetResults> gremlinDatabases = await CosmosDBManagementClient.GremlinResources.ListGremlinDatabasesAsync(resourceGroupName, databaseAccountName).ToEnumerableAsync();
+            Assert.NotNull(gremlinDatabases);
+            foreach (GremlinDatabaseGetResults gremlinDatabase in gremlinDatabases)
+            {
+                await WaitForCompletionAsync(await CosmosDBManagementClient.GremlinResources.StartDeleteGremlinDatabaseAsync(resourceGroupName, databaseAccountName, gremlinDatabase.Name));
+            }
+            List<GremlinDatabaseGetResults> checkGremlinDatabases = await CosmosDBManagementClient.GremlinResources.ListGremlinDatabasesAsync(resourceGroupName, databaseAccountName).ToEnumerableAsync();
+            Assert.AreEqual(checkGremlinDatabases.Count, 0);
         }
 
         private void VerifyGremlinGraphCreation(GremlinGraphGetResults gremlinGraphGetResults, GremlinGraphCreateUpdateParameters gremlinGraphCreateUpdateParameters)
