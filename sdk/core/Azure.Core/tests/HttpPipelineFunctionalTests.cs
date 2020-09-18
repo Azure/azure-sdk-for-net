@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Core.TestFramework;
 using Microsoft.AspNetCore.Http;
 using NUnit.Framework;
 
@@ -180,7 +181,6 @@ namespace Azure.Core.Tests
                     await requestsTcs.Task;
                 });
 
-            // Make sure we dispose things correctly and not exhaust the connection pool
             var requestCount = 50;
             List<Task> requests = new List<Task>();
             for (int i = 0; i < requestCount; i++)
@@ -189,6 +189,46 @@ namespace Azure.Core.Tests
                 message.Request.Uri.Reset(testServer.Address);
 
                 requests.Add(Task.Run(() => ExecuteRequest(message, httpPipeline)));
+            }
+
+            await Task.WhenAll(requests);
+        }
+
+        [Test]
+        [Category("Live")]
+        public async Task Opens50ParallelConnectionsLive()
+        {
+            // Running 50 sync requests on the threadpool would cause starvation
+            // and the test would take 20 sec to finish otherwise
+            ThreadPool.SetMinThreads(100, 100);
+
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(GetOptions());
+            int reqNum = 0;
+
+            TaskCompletionSource<object> requestsTcs = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+            async Task Connect()
+            {
+                using HttpMessage message = httpPipeline.CreateMessage();
+                message.Request.Uri.Reset(new Uri("https://www.microsoft.com/"));
+                message.BufferResponse = false;
+
+                await ExecuteRequest(message, httpPipeline);
+
+                if (Interlocked.Increment(ref reqNum) == 50)
+                {
+                    requestsTcs.SetResult(true);
+                }
+
+                await requestsTcs.Task;
+            }
+
+            var requestCount = 50;
+            List<Task> requests = new List<Task>();
+            for (int i = 0; i < requestCount; i++)
+            {
+
+                requests.Add(Task.Run(() => Connect()));
             }
 
             await Task.WhenAll(requests);
