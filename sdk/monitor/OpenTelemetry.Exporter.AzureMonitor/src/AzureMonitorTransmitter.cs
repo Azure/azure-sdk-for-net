@@ -98,8 +98,15 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             return telemetryItem;
         }
 
-        private static void GetRoleInfo(Resource resource, out string roleName, out string roleInstance)
+        internal static void GetRoleInfo(Resource resource, out string roleName, out string roleInstance)
         {
+            if (resource == null)
+            {
+                roleName = null;
+                roleInstance = null;
+                return;
+            }
+
             string serviceName = null;
             string serviceNamespace = null;
             roleInstance = null;
