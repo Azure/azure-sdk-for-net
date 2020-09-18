@@ -26,9 +26,10 @@ namespace Azure.Identity
         private const string NoDefaultScopeMessage = "Authenticating in this environment requires specifying a TokenRequestContext.";
 
         /// <summary>
-        /// Protected constructor for mocking
+        /// Creates a new <see cref="DeviceCodeCredential"/>, which will authenticate users using the device code flow, printing the device code message to stdout.
         /// </summary>
-        protected DeviceCodeCredential()
+        public DeviceCodeCredential() :
+            this(DefaultDeviceCodeHandler, null, null, null, null)
         {
 
         }
@@ -58,6 +59,16 @@ namespace Azure.Identity
         }
 
         /// <summary>
+        ///  Creates a new <see cref="DeviceCodeCredential"/> with the specified options, which will authenticate users using the device code flow, printing the device code message to stdout.
+        /// </summary>
+        /// <param name="options">The client options for the newly created <see cref="DeviceCodeCredential"/>.</param>
+        public DeviceCodeCredential(DeviceCodeCredentialOptions options)
+            : this(DefaultDeviceCodeHandler, options?.TenantId, options?.ClientId, options, null)
+        {
+
+        }
+
+        /// <summary>
         ///  Creates a new DeviceCodeCredential with the specified options, which will authenticate users using the device code flow.
         /// </summary>
         /// <param name="deviceCodeCallback">The callback to be executed to display the device code to the user.</param>
@@ -76,7 +87,7 @@ namespace Azure.Identity
 
         internal DeviceCodeCredential(Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, string tenantId, string clientId, TokenCredentialOptions options, CredentialPipeline pipeline, MsalPublicClient client)
         {
-            _clientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
+            _clientId = clientId ?? Constants.DeveloperSignOnClientId;
 
             _deviceCodeCallback = deviceCodeCallback ?? throw new ArgumentNullException(nameof(deviceCodeCallback));
 
@@ -222,6 +233,11 @@ namespace Azure.Identity
             return _deviceCodeCallback(new DeviceCodeInfo(deviceCode), cancellationToken);
         }
 
+        private static Task DefaultDeviceCodeHandler(DeviceCodeInfo deviceCodeInfo, CancellationToken cancellationToken)
+        {
+            Console.WriteLine(deviceCodeInfo.Message);
 
+            return Task.CompletedTask;
+        }
     }
 }

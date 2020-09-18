@@ -116,7 +116,8 @@ namespace Azure.Identity
     }
     public partial class DeviceCodeCredential : Azure.Core.TokenCredential
     {
-        protected DeviceCodeCredential() { }
+        public DeviceCodeCredential() { }
+        public DeviceCodeCredential(Azure.Identity.DeviceCodeCredentialOptions options) { }
         public DeviceCodeCredential(System.Func<Azure.Identity.DeviceCodeInfo, System.Threading.CancellationToken, System.Threading.Tasks.Task> deviceCodeCallback, Azure.Identity.DeviceCodeCredentialOptions options = null) { }
         public DeviceCodeCredential(System.Func<Azure.Identity.DeviceCodeInfo, System.Threading.CancellationToken, System.Threading.Tasks.Task> deviceCodeCallback, string clientId, Azure.Identity.TokenCredentialOptions options = null) { }
         public DeviceCodeCredential(System.Func<Azure.Identity.DeviceCodeInfo, System.Threading.CancellationToken, System.Threading.Tasks.Task> deviceCodeCallback, string tenantId, string clientId, Azure.Identity.TokenCredentialOptions options = null) { }
