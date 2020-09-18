@@ -191,6 +191,53 @@ directive:
     $.properties.endTime["x-nullable"] = true;
 ```
 
+#### Skills
+
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.EntityRecognitionSkill
+  transform: >
+    $.properties.defaultLanguageCode["x-nullable"] = true;
+
+- from: swagger-document
+  where: $.definitions.ImageAnalysisSkill
+  transform: >
+    $.properties.defaultLanguageCode["x-nullable"] = true;
+
+- from: swagger-document
+  where: $.definitions.KeyPhraseExtractionSkill
+  transform: >
+    $.properties.defaultLanguageCode["x-nullable"] = true;
+
+- from: swagger-document
+  where: $.definitions.OcrSkill
+  transform: >
+    $.properties.defaultLanguageCode["x-nullable"] = true;
+    $.properties.detectOrientation["x-nullable"] = true;
+
+- from: swagger-document
+  where: $.definitions.SentimentSkill
+  transform: >
+    $.properties.defaultLanguageCode["x-nullable"] = true;
+
+- from: swagger-document
+  where: $.definitions.SplitSkill
+  transform: >
+    $.properties.defaultLanguageCode["x-nullable"] = true;
+
+- from: swagger-document
+  where: $.definitions.TextTranslationSkill
+  transform: >
+    $.properties.defaultFromLanguageCode["x-nullable"] = true;
+
+- from: swagger-document
+  where: $.definitions.WebApiSkill
+  transform: >
+    $.properties.httpHeaders["x-nullable"] = true;
+    $.properties.timeout["x-nullable"] = true;
+```
+
 ## C# Customizations
 Shape the swagger APIs to produce the best C# API possible.  We can consider
 fixing these in the swagger files if they would benefit other languages.

@@ -21,14 +21,21 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Uri);
             if (Optional.IsCollectionDefined(HttpHeaders))
             {
-                writer.WritePropertyName("httpHeaders");
-                writer.WriteStartObject();
-                foreach (var item in HttpHeaders)
+                if (HttpHeaders != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
+                    writer.WritePropertyName("httpHeaders");
+                    writer.WriteStartObject();
+                    foreach (var item in HttpHeaders)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("httpHeaders");
+                }
             }
             if (Optional.IsDefined(HttpMethod))
             {
@@ -37,8 +44,15 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsDefined(Timeout))
             {
-                writer.WritePropertyName("timeout");
-                writer.WriteStringValue(Timeout.Value, "P");
+                if (Timeout != null)
+                {
+                    writer.WritePropertyName("timeout");
+                    writer.WriteStringValue(Timeout.Value, "P");
+                }
+                else
+                {
+                    writer.WriteNull("timeout");
+                }
             }
             if (Optional.IsDefined(BatchSize))
             {
@@ -103,7 +117,7 @@ namespace Azure.Search.Documents.Indexes.Models
             string uri = default;
             Optional<IDictionary<string, string>> httpHeaders = default;
             Optional<string> httpMethod = default;
-            Optional<TimeSpan> timeout = default;
+            Optional<TimeSpan?> timeout = default;
             Optional<int?> batchSize = default;
             Optional<int?> degreeOfParallelism = default;
             string odataType = default;
@@ -121,6 +135,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("httpHeaders"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        httpHeaders = null;
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -136,6 +155,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("timeout"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        timeout = null;
+                        continue;
+                    }
                     timeout = property.Value.GetTimeSpan("P");
                     continue;
                 }

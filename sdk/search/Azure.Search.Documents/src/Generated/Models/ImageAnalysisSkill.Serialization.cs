@@ -18,8 +18,15 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DefaultLanguageCode))
             {
-                writer.WritePropertyName("defaultLanguageCode");
-                writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
+                if (DefaultLanguageCode != null)
+                {
+                    writer.WritePropertyName("defaultLanguageCode");
+                    writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("defaultLanguageCode");
+                }
             }
             if (Optional.IsCollectionDefined(VisualFeatures))
             {
@@ -77,7 +84,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static ImageAnalysisSkill DeserializeImageAnalysisSkill(JsonElement element)
         {
-            Optional<ImageAnalysisSkillLanguage> defaultLanguageCode = default;
+            Optional<ImageAnalysisSkillLanguage?> defaultLanguageCode = default;
             Optional<IList<VisualFeature>> visualFeatures = default;
             Optional<IList<ImageDetail>> details = default;
             string odataType = default;
@@ -90,6 +97,11 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (property.NameEquals("defaultLanguageCode"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        defaultLanguageCode = null;
+                        continue;
+                    }
                     defaultLanguageCode = new ImageAnalysisSkillLanguage(property.Value.GetString());
                     continue;
                 }
