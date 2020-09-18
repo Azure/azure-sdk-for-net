@@ -429,7 +429,7 @@ directive:
 directive:
 - from: swagger-document
   where: $.parameters.Timeout
-  transform: $.description = "The The timeout parameter is expressed in seconds. For more information, see <a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations\">Setting Timeouts for Queue Service Operations.</a>";
+  transform: $.description = "The The timeout parameter is expressed in seconds. For more information, see <a href=\"https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-queue-service-operations\">Setting Timeouts for Queue Service Operations.</a>";
 ```
 
 ### Force the API version higher

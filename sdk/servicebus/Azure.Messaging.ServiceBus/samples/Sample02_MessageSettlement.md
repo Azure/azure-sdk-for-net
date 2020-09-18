@@ -1,6 +1,6 @@
 # Settling Messages
 
-This sample demonstrates how to [settle](https://docs.microsoft.com/en-us/azure/service-bus-messaging/message-transfers-locks-settlement#settling-receive-operations) received messages. Message settlement can only be used when using a receiver in [PeekLock](https://docs.microsoft.com/en-us/azure/service-bus-messaging/message-transfers-locks-settlement#peeklock) mode, which is the default behavior.
+This sample demonstrates how to [settle](https://docs.microsoft.com/azure/service-bus-messaging/message-transfers-locks-settlement#settling-receive-operations) received messages. Message settlement can only be used when using a receiver in [PeekLock](https://docs.microsoft.com/azure/service-bus-messaging/message-transfers-locks-settlement#peeklock) mode, which is the default behavior.
 
 ## Completing a message
 
@@ -72,4 +72,4 @@ ServiceBusReceivedMessage dlqMessage = await dlqReceiver.ReceiveMessageAsync();
 
 To see the full example source, see:
 
-* [Sample02_MessageSettlement.cs](../tests/Samples/Sample02_MessageSettlement.cs)
+* [Sample02_MessageSettlement.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample02_MessageSettlement.cs)

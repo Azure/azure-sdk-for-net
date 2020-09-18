@@ -45,6 +45,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 For more information see the Code of Conduct FAQ or contact opencode@microsoft.com with any additional questions or comments.
 
 <!-- LINKS -->
-[microsoft_sdk_download]: https://azure.microsoft.com/en-us/downloads/?sdk=net
+[microsoft_sdk_download]: https://azure.microsoft.com/downloads/?sdk=net
 [azure_sub]: https://azure.microsoft.com/free/
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/

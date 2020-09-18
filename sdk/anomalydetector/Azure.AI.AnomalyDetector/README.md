@@ -85,7 +85,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 <!-- LINKS -->
 [anomalydetector_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/anomalydetector/Azure.AI.AnomalyDetector/src
-[anomalydetector_docs]: https://docs.microsoft.com/en-us/azure/cognitive-services/anomaly-detector/
+[anomalydetector_docs]: https://docs.microsoft.com/azure/cognitive-services/anomaly-detector/
 [anomalydetector_refdocs]: https://azure.github.io/azure-sdk-for-net/anomalydetector.html
 [anomalydetector_nuget_package]: https://www.nuget.org/packages/Azure.AI.AnomalyDetector
 

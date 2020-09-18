@@ -24,12 +24,6 @@ jobs:
         displayName: 'Use Python 3.6'
         inputs:
           versionSpec: '3.6'
-      - template: /eng/common/pipelines/templates/steps/replace-relative-links.yml
-        parameters:
-          TargetFolder: '.'
-          RootFolder: '.'
-          BuildSHA: $(Build.SourceVersion)
-          RepoId: 'Azure/azure-sdk-for-net'
       - script: >-
           dotnet pack eng/service.proj -warnaserror
           /p:ServiceDirectory=${{parameters.ServiceToBuild}}
@@ -67,6 +61,7 @@ jobs:
       - template: /eng/common/pipelines/templates/steps/verify-links.yml
         parameters:
           Directory: sdk/${{ parameters.ServiceDirectory }}
+          CheckLinkGuidance: $true
       - script: |
           pip install setuptools wheel
           pip install doc-warden==$(DocWardenVersion)
