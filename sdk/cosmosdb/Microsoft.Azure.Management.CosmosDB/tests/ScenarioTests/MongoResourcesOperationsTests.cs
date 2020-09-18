@@ -57,18 +57,20 @@ namespace CosmosDB.Tests.ScenarioTests
                         Kind = DatabaseAccountKind.MongoDB,
                         Properties = new DefaultRequestDatabaseAccountCreateUpdateProperties
                         {
-                            Locations = new List<Location>()
-                            { new Location(locationName: location) }
+                            Locations = new List<Location>
+                            {
+                                {new Location(locationName: location) }
+                            }
                         }
                     };
 
-                   databaseAccount = cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                    databaseAccount = cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters).GetAwaiter().GetResult().Body;
                     Assert.Equal(databaseAccount.Name, databaseAccountName);
                 }
 
                 MongoDBDatabaseCreateUpdateParameters mongoDBDatabaseCreateUpdateParameters = new MongoDBDatabaseCreateUpdateParameters
                 {
-                    Resource = new MongoDBDatabaseResource {Id = databaseName},
+                    Resource = new MongoDBDatabaseResource { Id = databaseName },
                     Options = new CreateUpdateOptions()
                 };
 
@@ -120,7 +122,7 @@ namespace CosmosDB.Tests.ScenarioTests
                 IEnumerable<MongoDBCollectionGetResults> mongoDBCollections = cosmosDBManagementClient.MongoDBResources.ListMongoDBCollectionsWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName).GetAwaiter().GetResult().Body;
                 Assert.NotNull(mongoDBCollections);
 
-                foreach(MongoDBCollectionGetResults mongoDBCollection in mongoDBCollections)
+                foreach (MongoDBCollectionGetResults mongoDBCollection in mongoDBCollections)
                 {
                     cosmosDBManagementClient.MongoDBResources.DeleteMongoDBCollectionWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, mongoDBCollection.Name);
                 }
