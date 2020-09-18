@@ -33,6 +33,7 @@ namespace Azure.Management.Dns.Tests
                 InitializeClients();
                 this.resourceGroup = Recording.GenerateAssetName("Default-Dns-Zones-");
                 await Helper.TryRegisterResourceGroupAsync(ResourceGroupsOperations, this.location, this.resourceGroup);
+                setupRun = true;
 
             }
             else if (setupRun)
