@@ -68,7 +68,7 @@ jobs:
       - DisplayName: "Test on MacOS"
         OSVmImage: "macOS-10.15"
         TestTargetFramework: netcoreapp2.1
-      ${{ if eq(parameters.TestCanary, 'true') }}:          
+      - ${{ if eq(parameters.TestCanary, 'true') }}:          
         - DisplayName: "Test on Windows for .Net Framework - Canary region"
           OSVmImage: "windows-2019"
           TestTargetFramework: net461
