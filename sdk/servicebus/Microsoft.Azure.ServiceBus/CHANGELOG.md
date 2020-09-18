@@ -1,4 +1,7 @@
 # Release History
+## 5.1.0-beta.1 (Unreleased)
+
+
 ## 5.0.0 (2020-09-11)
 ### Breaking Changes
 - Setting sessionId to be same as partition key and adding validation [PR 13961](https://github.com/Azure/azure-sdk-for-net/pull/13961)
