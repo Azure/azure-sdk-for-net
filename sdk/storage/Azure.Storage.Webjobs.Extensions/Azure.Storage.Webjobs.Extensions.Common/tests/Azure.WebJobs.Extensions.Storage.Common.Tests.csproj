@@ -6,5 +6,9 @@
     <Version>1.0.0-beta.1</Version>
     <Description>This extension adds bindings for Storage</Description>
   </PropertyGroup>
-  
+
+  <ItemGroup>
+    <Compile Remove="Shared\**\*.cs" />
+    <!--we're defining the Shared Source in Common, but we only want to build in the files that Common names use of-->
+  </ItemGroup>
 </Project>
