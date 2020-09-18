@@ -1451,6 +1451,34 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetAccessControlRecursiveAsync_NetworkError()
+        {
+            string fileSystemName = GetNewFileSystemName();
+            string topDirectoryName = GetNewDirectoryName();
+            string sampleToken = Recording.Random.ToString().Substring(0, 16);
+
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+            DataLakeDirectoryClient rootDirectory = test.FileSystem.GetRootDirectoryClient();
+                await rootDirectory.SetAccessControlListAsync(ExecuteOnlyAccessControlList);
+
+            TokenCredential tokenCredential = GetOAuthCredential(TestConfigHierarchicalNamespace);
+            Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{topDirectoryName}").ToHttps();
+
+            // Create tree as AAD App
+            DataLakeDirectoryClient directory = InstrumentClient(new DataLakeDirectoryClient(uri, tokenCredential, GetNetworkErrorDataLakeConnectionOptions()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<OperationInterruptedException>(
+                directory.SetAccessControlRecursiveAsync(
+                    accessControlList: AccessControlList,
+                    progressHandler: null,
+                    continuationToken: sampleToken),
+                    e => Assert.AreEqual(e.ContinuationToken, sampleToken));
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task SetAccessControlRecursiveAsync_Error()
         {
             string fileSystemName = GetNewFileSystemName();

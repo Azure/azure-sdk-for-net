@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -78,6 +79,20 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
 
             return Recording.InstrumentClientOptions(options);
+        }
+
+        public DataLakeClientOptions GetNetworkErrorDataLakeConnectionOptions(
+            int raiseAt = default,
+            Exception raise = default,
+            Action onFault = default)
+        {
+            RequestFailedException exception = new RequestFailedException(
+                Constants.HttpStatusCode.ServerError,
+                "Simulated connection fault");
+            raise = raise ?? exception;
+            DataLakeClientOptions options = GetOptions();
+            options.AddPolicy(new FaultyDownloadPipelinePolicy(raiseAt, raise, onFault), HttpPipelinePosition.PerCall);
+            return options;
         }
 
         public DataLakeServiceClient GetServiceClientFromSharedKeyConfig(TenantConfiguration config)

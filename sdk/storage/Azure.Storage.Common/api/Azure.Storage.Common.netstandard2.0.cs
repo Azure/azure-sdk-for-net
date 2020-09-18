@@ -12,6 +12,19 @@ namespace Azure.Storage
     {
         V1_0 = 1,
     }
+    public partial class OperationInterruptedException : Azure.RequestFailedException, System.Runtime.Serialization.ISerializable
+    {
+        public OperationInterruptedException(Azure.RequestFailedException exception, string continuationToken) : base (default(string)) { }
+        public OperationInterruptedException(int status, string message) : base (default(string)) { }
+        public OperationInterruptedException(int status, string message, System.Exception innerException) : base (default(string)) { }
+        public OperationInterruptedException(int status, string message, string errorCode, System.Exception innerException) : base (default(string)) { }
+        public OperationInterruptedException(int status, string message, string errorCode, System.Exception innerException, string continuationToken) : base (default(string)) { }
+        protected OperationInterruptedException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base (default(string)) { }
+        public OperationInterruptedException(string message) : base (default(string)) { }
+        public OperationInterruptedException(string message, System.Exception innerException) : base (default(string)) { }
+        public string ContinuationToken { get { throw null; } }
+        public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+    }
     public partial class StorageSharedKeyCredential
     {
         public StorageSharedKeyCredential(string accountName, string accountKey) { }

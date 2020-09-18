@@ -2487,21 +2487,29 @@ namespace Azure.Storage.Files.DataLake
 
                         do
                         {
-                            jsonResponse =
-                                await DataLakeRestClient.Path.SetAccessControlRecursiveAsync(
-                                    clientDiagnostics: ClientDiagnostics,
-                                    pipeline: Pipeline,
-                                    resourceUri: DfsUri,
-                                    mode: mode,
-                                    maxRecords: options.BatchSize,
-                                    version: Version.ToVersionString(),
-                                    acl: accessControlList,
-                                    async: async,
-                                    continuation: continuationToken,
-                                    forceFlag: options.ContinueOnFailure ? true : (bool?)default,
-                                    cancellationToken: cancellationToken)
-                                .ConfigureAwait(false);
-
+                            try
+                            {
+                                jsonResponse =
+                                    await DataLakeRestClient.Path.SetAccessControlRecursiveAsync(
+                                        clientDiagnostics: ClientDiagnostics,
+                                        pipeline: Pipeline,
+                                        resourceUri: DfsUri,
+                                        mode: mode,
+                                        maxRecords: options.BatchSize,
+                                        version: Version.ToVersionString(),
+                                        acl: accessControlList,
+                                        async: async,
+                                        continuation: continuationToken,
+                                        forceFlag: options.ContinueOnFailure ? true : (bool?)default,
+                                        cancellationToken: cancellationToken)
+                                    .ConfigureAwait(false);
+                            }
+                            catch (RequestFailedException storageRequestFailedException)
+                            when (!string.IsNullOrEmpty(continuationToken) &&
+                                storageRequestFailedException.Status >= Constants.HttpStatusCode.ServerError)
+                            {
+                                throw new OperationInterruptedException(storageRequestFailedException, continuationToken);
+                            }
                             continuationToken = jsonResponse.Value.Continuation;
 
                             if (!string.IsNullOrEmpty(continuationToken))
@@ -2553,7 +2561,6 @@ namespace Azure.Storage.Files.DataLake
                                             jsonResponse.GetRawResponse()));
                                 }
                             }
-
                             batchesCount++;
 
                         } while (!string.IsNullOrEmpty(continuationToken)
