@@ -22,11 +22,12 @@ extends:
           STORAGE_ENDPOINT_SUFFIX: core.usgovcloudapi.net
           COSMOS_TABLES_ENDPOINT_SUFFIX: cosmos.azure.us
 
-      # # AzureChinaCloud
-      # - ServiceDirectory: tables
-      #   ScenarioName: AzureChinaCloud
-      #   SubscriptionConfiguration: $(sub-config-cn-test-resources)
-      #   EnvVars:
-      #     AZURE_AUTHORITY_HOST: https://login.chinacloudapi.cn
-      #     STORAGE_ENDPOINT_SUFFIX: core.chinacloudapi.cn
-      #     COSMOS_TABLES_ENDPOINT_SUFFIX: cosmos.azure.cn
+      # AzureChinaCloud
+      - ServiceDirectory: tables
+        ScenarioName: AzureChinaCloud
+        SubscriptionConfiguration: $(sub-config-cn-test-resources)
+        ArmTemplateParameters: "@{ cosmosdblocation = 'chinanorth2' }"
+        EnvVars:
+          AZURE_AUTHORITY_HOST: https://login.chinacloudapi.cn
+          STORAGE_ENDPOINT_SUFFIX: core.chinacloudapi.cn
+          COSMOS_TABLES_ENDPOINT_SUFFIX: cosmos.azure.cn

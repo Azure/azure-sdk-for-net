@@ -249,8 +249,6 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public void CopyModelError()
         {
-            Assert.AreEqual("Endpoint", TestEnvironment.Endpoint);
-
             var sourceClient = CreateFormTrainingClient();
             var targetClient = CreateFormTrainingClient();
             var resourceId = TestEnvironment.TargetResourceId;
@@ -264,22 +262,22 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual("1002", ex.ErrorCode);
         }
 
-        //[Test]
-        //public async Task StartCopyModelFailsWithWrongRegion()
-        //{
-        //    var sourceClient = CreateFormTrainingClient();
-        //    var targetClient = CreateFormTrainingClient();
-        //    var resourceId = TestEnvironment.TargetResourceId;
-        //    var wrongRegion = TestEnvironment.TargetResourceRegion == "westcentralus" ? "eastus2" : "westcentralus";
+        [Test]
+        public async Task StartCopyModelFailsWithWrongRegion()
+        {
+            var sourceClient = CreateFormTrainingClient();
+            var targetClient = CreateFormTrainingClient();
+            var resourceId = TestEnvironment.TargetResourceId;
+            var wrongRegion = TestEnvironment.TargetResourceRegion == "westcentralus" ? "eastus2" : "westcentralus";
 
-        //    await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
-        //    CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceId, wrongRegion);
+            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
+            CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceId, wrongRegion);
 
-        //    var operation = await sourceClient.StartCopyModelAsync(trainedModel.ModelId, targetAuth);
+            var operation = await sourceClient.StartCopyModelAsync(trainedModel.ModelId, targetAuth);
 
-        //    RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync(PollingInterval));
-        //    Assert.AreEqual("AuthorizationError", ex.ErrorCode);
-        //}
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync(PollingInterval));
+            Assert.AreEqual("AuthorizationError", ex.ErrorCode);
+        }
 
         [Test]
         public async Task GetCopyAuthorization()
