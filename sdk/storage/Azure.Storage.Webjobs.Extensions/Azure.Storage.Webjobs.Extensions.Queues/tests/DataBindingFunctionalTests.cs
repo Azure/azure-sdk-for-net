@@ -6,10 +6,10 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Hosting;
-using Moq;
 using Newtonsoft.Json;
 using Xunit;
-using Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests;
+using Azure.WebJobs.Extensions.Storage.Common.Tests;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 
 namespace Microsoft.Azure.WebJobs.Host.UnitTests.Bindings.Data
 {
