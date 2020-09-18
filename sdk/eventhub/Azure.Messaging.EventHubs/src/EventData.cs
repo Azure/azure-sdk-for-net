@@ -146,24 +146,6 @@ namespace Azure.Messaging.EventHubs
         public string PartitionKey { get; }
 
         /// <summary>
-        ///   The publishing sequence number assigned to the event as part of a publishing operation.
-        /// </summary>
-        ///
-        /// <value>
-        ///   The sequence number that was assigned during publishing, if the event was successfully
-        ///   published by a sequence-aware producer.  If the producer was not configured to apply
-        ///   sequence numbering or if the event has not yet been successfully published, this member
-        ///   will be <c>null</c>.
-        /// </value>
-        ///
-        /// <remarks>
-        ///   The published sequence number is only populated and relevant when certain features
-        ///   of the producer are enabled.  For example, it is used by idempotent publishing.
-        /// </remarks>
-        ///
-        internal int? PendingPublishSequenceNumber { get; set; }
-
-        /// <summary>
         ///   The sequence number of the event that was last enqueued into the Event Hub partition from which this
         ///   event was received.
         /// </summary>
@@ -212,6 +194,54 @@ namespace Azure.Messaging.EventHubs
         internal DateTimeOffset? LastPartitionPropertiesRetrievalTime { get; }
 
         /// <summary>
+        ///   The publishing sequence number assigned to the event as part of a publishing operation.
+        /// </summary>
+        ///
+        /// <value>
+        ///   This member is only populated while a publishing operation is taking place; once the
+        ///   operation has completed, successfully or not, the value is cleared.
+        /// </value>
+        ///
+        /// <remarks>
+        ///   The published sequence number is only populated and relevant when certain features
+        ///   of the producer are enabled.  For example, it is used by idempotent publishing.
+        /// </remarks>
+        ///
+        internal int? PendingPublishSequenceNumber { get; set; }
+
+        /// <summary>
+        ///   The producer group identifier assigned to the event as part of a publishing operation.
+        /// </summary>
+        ///
+        /// <value>
+        ///   This member is only populated while a publishing operation is taking place; once the
+        ///   operation has completed, successfully or not, the value is cleared.
+        /// </value>
+        ///
+        /// <remarks>
+        ///   The producer group identifier is only populated and relevant when certain features
+        ///   of the producer are enabled.  For example, it is used by idempotent publishing.
+        /// </remarks>
+        ///
+        internal long? PendingProducerGroupId { get; set; }
+
+        /// <summary>
+        ///   The producer owner level assigned to the event as part of a publishing operation.
+        /// </summary>
+        ///
+        /// <value>
+        ///   This member is only populated while a publishing operation is taking place; once the
+        ///   operation has completed, successfully or not, the value is cleared.
+        /// </value>
+        ///
+        /// <remarks>
+        ///   The producer group identifier is only populated and relevant when certain features
+        ///   of the producer are enabled.  For example, it is used by idempotent publishing.
+        /// </remarks>
+        ///
+        internal short? PendingProducerOwnerLevel { get; set; }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="EventData"/> class.
         /// </summary>
         ///
@@ -238,6 +268,8 @@ namespace Azure.Messaging.EventHubs
         /// <param name="lastPartitionPropertiesRetrievalTime">The date and time, in UTC, that the last event information for the Event Hub partition was retrieved from the service.</param>
         /// <param name="publishedSequenceNumber">The publishing sequence number assigned to the event at the time it was successfully published.</param>
         /// <param name="pendingPublishSequenceNumber">The publishing sequence number assigned to the event as part of a publishing operation.</param>
+        /// <param name="pendingProducerGroupId">The producer group identifier assigned to the event as part of a publishing operation.</param>
+        /// <param name="pendingOwnerLevel">The producer owner level assigned to the event as part of a publishing operation.</param>
         ///
         internal EventData(ReadOnlyMemory<byte> eventBody,
                            IDictionary<string, object> properties = null,
@@ -251,7 +283,9 @@ namespace Azure.Messaging.EventHubs
                            DateTimeOffset? lastPartitionEnqueuedTime = null,
                            DateTimeOffset? lastPartitionPropertiesRetrievalTime = null,
                            int? publishedSequenceNumber = null,
-                           int? pendingPublishSequenceNumber = null)
+                           int? pendingPublishSequenceNumber = null,
+                           long? pendingProducerGroupId = null,
+                           short? pendingOwnerLevel = null)
         {
             Body = eventBody;
             Properties = properties ?? new Dictionary<string, object>();
@@ -260,12 +294,14 @@ namespace Azure.Messaging.EventHubs
             Offset = offset;
             EnqueuedTime = enqueuedTime;
             PartitionKey = partitionKey;
-            PendingPublishSequenceNumber = pendingPublishSequenceNumber;
             LastPartitionSequenceNumber = lastPartitionSequenceNumber;
             LastPartitionOffset = lastPartitionOffset;
             LastPartitionEnqueuedTime = lastPartitionEnqueuedTime;
             LastPartitionPropertiesRetrievalTime = lastPartitionPropertiesRetrievalTime;
             PublishedSequenceNumber = publishedSequenceNumber;
+            PendingPublishSequenceNumber = pendingPublishSequenceNumber;
+            PendingProducerGroupId = pendingProducerGroupId;
+            PendingProducerOwnerLevel = pendingOwnerLevel;
         }
 
         /// <summary>
@@ -320,12 +356,23 @@ namespace Azure.Messaging.EventHubs
         public override string ToString() => base.ToString();
 
         /// <summary>
-        ///   Transitions the pending publishing sequence number to the published sequence number.
+        ///   Transitions the pending state to its permanent form.
         /// </summary>
         ///
         internal void CommitPublishingState()
         {
             PublishedSequenceNumber = PendingPublishSequenceNumber;
+            ClearPublishingState();
+        }
+
+        /// <summary>
+        ///   Clears the pending publishing state.
+        /// </summary>
+        ///
+        internal void ClearPublishingState()
+        {
+            PendingProducerGroupId = default;
+            PendingProducerOwnerLevel = default;
             PendingPublishSequenceNumber = default;
         }
 
