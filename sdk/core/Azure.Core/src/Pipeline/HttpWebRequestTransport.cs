@@ -48,6 +48,9 @@ namespace Azure.Core.Pipeline
         private async ValueTask ProcessInternal(HttpMessage message, bool async)
         {
             var request = CreateRequest(message.Request);
+
+            ServicePointHelpers.SetLimits(request.ServicePoint);
+
             using var registration = message.CancellationToken.Register(state => ((HttpWebRequest) state).Abort(), request);
             try
             {
