@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Files.DataLake.Models;
@@ -493,7 +494,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
-        public async Task DataLakeSasBuilder_LargeDirectoryDepth()
+        public async Task DataLakeSasBuilder_DirectoryDepth_Exists()
         {
             // Arrange
             DataLakeServiceClient oauthService = GetServiceClient_OAuth();
@@ -531,6 +532,49 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Act
             await sasDirectoryClient.ExistsAsync();
+        }
+
+        [Test]
+        [TestCase("/")] // Root Directory
+        [TestCase("d1")]
+        [TestCase("d1/d2/d3/d4/d5")]
+        [TestCase("/d1")]
+        [TestCase("d1/")]
+        [TestCase("/d1/")]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task DataLakeSasBuilder_DirectoryDepth(string directoryName)
+        {
+            // Arrange
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            string fileSystemName = GetNewFileSystemName();
+
+            await using DisposingFileSystem test = await GetNewFileSystem(service: oauthService, fileSystemName: fileSystemName);
+
+            DataLakeDirectoryClient directory = test.FileSystem.GetDirectoryClient(directoryName);
+
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            DataLakeSasBuilder dataLakeSasBuilder = new DataLakeSasBuilder
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(1),
+                FileSystemName = test.FileSystem.Name,
+                Path = directoryName,
+                IsDirectory = true
+            };
+
+            dataLakeSasBuilder.SetPermissions(DataLakeSasPermissions.All);
+
+            DataLakeSasQueryParameters sas = dataLakeSasBuilder.ToSasQueryParameters(userDelegationKey, test.FileSystem.AccountName);
+            int expectedDepth = directoryName.Split('/').Length;
+            if (expectedDepth > 0)
+            {
+                expectedDepth -= directoryName.ElementAt(0) == '/' ? 1 : 0;
+                expectedDepth -= directoryName.ElementAt(directoryName.Length - 1) == '/' ? 1 : 0;
+            }
+            Assert.AreEqual(expectedDepth, sas.DirectoryDepth);
         }
     }
 }
