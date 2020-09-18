@@ -1,10 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.CosmosDB.Models;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -55,7 +53,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             databaseAccountsCreateOrUpdateParameters.Capabilities.Add(new Capability("EnableTable"));
             await WaitForCompletionAsync(
                 await CosmosDBManagementClient.DatabaseAccounts.StartCreateOrUpdateAsync(resourceGroupName, databaseAccountName, databaseAccountsCreateOrUpdateParameters));
-            Assert.AreEqual(200, CosmosDBManagementClient.DatabaseAccounts.CheckNameExistsAsync(databaseAccountName).Result.Status);
+            Response response = await CosmosDBManagementClient.DatabaseAccounts.CheckNameExistsAsync(databaseAccountName);
+            Assert.AreEqual(200, response.Status);
 
             var tableCreateUpdateParameters1 = new TableCreateUpdateParameters(new TableResource(tableName), new CreateUpdateOptions());
             TableGetResults tableGetResults1 = (

@@ -100,4 +100,4 @@ await processor.StopProcessingAsync();
 
 To see the full example source, see:
 
-* [Sample05_SessionProcessor.cs](../tests/Samples/Sample05_SessionProcessor.cs)
+* [Sample05_SessionProcessor.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample05_SessionProcessor.cs)

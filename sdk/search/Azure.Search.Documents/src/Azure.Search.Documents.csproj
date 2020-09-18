@@ -16,15 +16,6 @@
     <NoWarn>$(NoWarn);AZC0007;AZC0004;AZC0001</NoWarn>
   </PropertyGroup>
 
-  <!-- Conditionally compile FieldBuilder and related source -->
-  <ItemGroup Condition="'$(UseFieldBuilder)' != 'true'">
-    <Compile Remove="Indexes\FieldBuilder.cs" />
-    <Compile Remove="Indexes\FieldBuilderIgnoreAttribute.cs" />
-    <Compile Remove="Indexes\ISearchFieldAttribute.cs" />
-    <Compile Remove="Indexes\SearchableFieldAttribute.cs" />
-    <Compile Remove="Indexes\SimpleFieldAttribute.cs" />
-  </ItemGroup>
-
   <!-- Pull in Shared Source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
