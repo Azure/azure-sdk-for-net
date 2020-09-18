@@ -212,7 +212,6 @@ namespace Azure.Core.Tests
                     }
                 });
 
-            // Make sure we dispose things correctly and not exhaust the connection pool
             var requestCount = 100;
             for (int i = 0; i < requestCount; i++)
             {
