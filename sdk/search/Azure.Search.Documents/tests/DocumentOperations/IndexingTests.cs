@@ -7,9 +7,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-#if EXPERIMENTAL_SERIALIZER
 using Azure.Core.Serialization;
-#endif
 #if EXPERIMENTAL_SPATIAL
 using Azure.Core.Spatial;
 #endif
@@ -423,16 +421,13 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual(3L, count);
         }
 
-#if EXPERIMENTAL_SERIALIZER
         [Test]
-#endif
         public async Task StaticDocumentsWithCustomSerializer()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyHotelsIndexAsync(this);
             SearchClient client = resources.GetSearchClient(
                 new SearchClientOptions()
                 {
-#if EXPERIMENTAL_SERIALIZER
                     Serializer = new JsonObjectSerializer(
                         new JsonSerializerOptions()
                         {
@@ -444,7 +439,6 @@ namespace Azure.Search.Documents.Tests
 #endif
                             }
                         })
-#endif
                 });
             UncasedHotel expected = new UncasedHotel
             {

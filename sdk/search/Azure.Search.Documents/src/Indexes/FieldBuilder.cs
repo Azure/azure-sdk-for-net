@@ -9,9 +9,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using Azure.Core;
-#if EXPERIMENTAL_SERIALIZER
 using Azure.Core.Serialization;
-#endif
 using Azure.Search.Documents.Indexes.Models;
 #if EXPERIMENTAL_SPATIAL
 using Azure.Core.Spatial;

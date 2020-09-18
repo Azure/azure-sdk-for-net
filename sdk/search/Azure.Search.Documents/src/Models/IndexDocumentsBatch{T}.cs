@@ -8,9 +8,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-#if EXPERIMENTAL_SERIALIZER
 using Azure.Core.Serialization;
-#endif
 
 #pragma warning disable SA1402 // File may only contain a single type
 
@@ -77,9 +75,7 @@ namespace Azure.Search.Documents.Models
         /// <returns>A task representing the serialization.</returns>
         internal async Task SerializeAsync(
             Utf8JsonWriter writer,
-#if EXPERIMENTAL_SERIALIZER
             ObjectSerializer serializer,
-#endif
             JsonSerializerOptions options,
             bool async,
             CancellationToken cancellationToken)
@@ -93,9 +89,7 @@ namespace Azure.Search.Documents.Models
             {
                 await action.SerializeAsync(
                     writer,
-#if EXPERIMENTAL_SERIALIZER
                     serializer,
-#endif
                     options,
                     async,
                     cancellationToken)

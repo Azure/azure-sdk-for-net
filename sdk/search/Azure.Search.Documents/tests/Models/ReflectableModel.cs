@@ -6,9 +6,6 @@ using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
-#if !EXPERIMENTAL_FIELDBUILDER
-using Azure.Search.Documents.Samples;
-#endif
 #if EXPERIMENTAL_SPATIAL
 using Azure.Core.Spatial;
 #else
@@ -24,40 +21,22 @@ namespace Azure.Search.Documents.Tests
 {
     public class ReflectableAddress
     {
-#if EXPERIMENTAL_FIELDBUILDER
         [SearchableField]
-#else
-        [IsSearchable]
-#endif
         public string City { get; set; }
 
-#if EXPERIMENTAL_FIELDBUILDER
         [SimpleField(IsFilterable = true, IsFacetable = true)]
-#else
-        [IsFilterable, IsFacetable]
-#endif
         public string Country { get; set; }
     }
 
     public class ReflectableComplexObject
     {
-#if EXPERIMENTAL_FIELDBUILDER
         [SearchableField(AnalyzerName = LexicalAnalyzerName.Values.EnMicrosoft)]
-#else
-        [IsSearchable]
-        [Analyzer("en.microsoft")]
-#endif
         public string Name { get; set; }
 
-#if EXPERIMENTAL_FIELDBUILDER
         [SimpleField(IsFilterable = true)]
-#else
-        [IsFilterable]
-#endif
         public int Rating { get; set; }
 
         // Ensure that leaf-field-specific attributes are ignored by FieldBuilder on complex fields.
-#if EXPERIMENTAL_FIELDBUILDER
         [SearchableField(
             IsFilterable = true,
             IsSortable = true,
@@ -67,17 +46,6 @@ namespace Azure.Search.Documents.Tests
             SearchAnalyzerName = LexicalAnalyzerName.Values.ZhHantLucene,
             IndexAnalyzerName = LexicalAnalyzerName.Values.ZhHantLucene,
             SynonymMapNames = new[] { "myMap" })]
-#else
-        [IsSearchable]
-        [IsFilterable]
-        [IsSortable]
-        [IsFacetable]
-        [IsRetrievable(false)]
-        [Analyzer("zh-Hant.lucene")]
-        [IndexAnalyzer("zh-Hant.lucene")]
-        [SearchAnalyzer("zh-Hant.lucene")]
-        [SynonymMaps("myMap")]
-#endif
         public ReflectableAddress Address { get; set; }
     }
 
@@ -96,80 +64,36 @@ namespace Azure.Search.Documents.Tests
 
         public DateTime TimeWithoutOffset { get; set; }
 
-#if EXPERIMENTAL_FIELDBUILDER
         [SearchableField(SynonymMapNames = new[] { "myMap" })]
-#else
-        [IsSearchable]
-        [SynonymMaps("myMap")]
-#endif
         public string Text { get; set; }
 
         public string UnsearchableText { get; set; }
 
-#if EXPERIMENTAL_FIELDBUILDER
         [SearchableField]
-#else
-        [IsSearchable]
-#endif
         public string MoreText { get; set; }
 
-#if EXPERIMENTAL_FIELDBUILDER
         [SimpleField(IsFilterable = true)]
-#else
-        [IsFilterable]
-#endif
         public string FilterableText { get; set; }
 
-#if EXPERIMENTAL_FIELDBUILDER
         [SimpleField(IsSortable = true)]
-#else
-        [IsSortable]
-#endif
         public string SortableText { get; set; }
 
-#if EXPERIMENTAL_FIELDBUILDER
         [SimpleField(IsFacetable = true)]
-#else
-        [IsFacetable]
-#endif
         public string FacetableText { get; set; }
 
-#if EXPERIMENTAL_FIELDBUILDER
         [SimpleField(IsHidden = true)]
-#else
-        [IsRetrievable(false)]
-#endif
         public string IrretrievableText { get; set; }
 
-#if EXPERIMENTAL_FIELDBUILDER
         [SimpleField(IsHidden = false)]
-#else
-        [IsRetrievable(true)]
-#endif
         public string ExplicitlyRetrievableText { get; set; }
 
-#if EXPERIMENTAL_FIELDBUILDER
         [SearchableField(AnalyzerName = LexicalAnalyzerName.Values.EnMicrosoft)]
-#else
-        [IsSearchable]
-        [Analyzer("en.microsoft")]
-#endif
         public string TextWithAnalyzer { get; set; }
 
-#if EXPERIMENTAL_FIELDBUILDER
         [SearchableField(SearchAnalyzerName = LexicalAnalyzerName.Values.EsLucene)]
-#else
-        [IsSearchable]
-        [SearchAnalyzer("es.lucene")]
-#endif
         public string TextWithSearchAnalyzer { get; set; }
 
-#if EXPERIMENTAL_FIELDBUILDER
         [SearchableField(IndexAnalyzerName = LexicalAnalyzerName.Values.Whitespace)]
-#else
-        [IsSearchable]
-        [IndexAnalyzer("whitespace")]
-#endif
         public string TextWithIndexAnalyzer { get; set; }
 
         public string[] StringArray { get; set; }
@@ -285,11 +209,7 @@ namespace Azure.Search.Documents.Tests
         public ICollection<ReflectableComplexObject> ComplexICollection { get; set; }
 
         [JsonIgnore]
-#if EXPERIMENTAL_FIELDBUILDER
         [SimpleField(IsHidden = true)]
-#else
-        [IsRetrievable(false)]
-#endif
 #pragma warning disable IDE1006 // Naming Styles
         public RecordEnum recordEnum { get; set; }
 #pragma warning restore IDE1006 // Naming Styles

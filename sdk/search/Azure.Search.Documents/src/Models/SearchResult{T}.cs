@@ -8,9 +8,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-#if EXPERIMENTAL_SERIALIZER
 using Azure.Core.Serialization;
-#endif
 
 #pragma warning disable SA1402 // File may only contain a single type
 
@@ -70,9 +68,7 @@ namespace Azure.Search.Documents.Models
         /// <returns>Deserialized SearchResults.</returns>
         internal static async Task<SearchResult<T>> DeserializeAsync(
             JsonElement element,
-#if EXPERIMENTAL_SERIALIZER
             ObjectSerializer serializer,
-#endif
             JsonSerializerOptions options,
             bool async,
             CancellationToken cancellationToken)
@@ -104,7 +100,6 @@ namespace Azure.Search.Documents.Models
             }
 
             // Deserialize the model
-#if EXPERIMENTAL_SERIALIZER
             if (serializer != null)
             {
                 using Stream stream = element.ToStream();
@@ -115,7 +110,6 @@ namespace Azure.Search.Documents.Models
             }
             else
             {
-#endif
                 T document;
                 if (async)
                 {
@@ -127,9 +121,7 @@ namespace Azure.Search.Documents.Models
                     document = JsonSerializer.Deserialize<T>(element.GetRawText(), options);
                 }
                 result.Document = document;
-#if EXPERIMENTAL_SERIALIZER
             }
-#endif
 
             return result;
         }

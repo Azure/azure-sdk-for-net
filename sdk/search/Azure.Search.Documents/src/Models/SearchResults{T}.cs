@@ -11,9 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-#if EXPERIMENTAL_SERIALIZER
 using Azure.Core.Serialization;
-#endif
 
 #pragma warning disable SA1402 // File may only contain a single type
 
@@ -167,9 +165,7 @@ namespace Azure.Search.Documents.Models
         /// <returns>Deserialized SearchResults.</returns>
         internal static async Task<SearchResults<T>> DeserializeAsync(
             Stream json,
-#if EXPERIMENTAL_SERIALIZER
             ObjectSerializer serializer,
-#endif
             bool async,
             CancellationToken cancellationToken)
         #pragma warning restore CS1572
@@ -240,9 +236,7 @@ namespace Azure.Search.Documents.Models
                     {
                         SearchResult<T> result = await SearchResult<T>.DeserializeAsync(
                             element,
-#if EXPERIMENTAL_SERIALIZER
                             serializer,
-#endif
                             defaultSerializerOptions,
                             async,
                             cancellationToken)
