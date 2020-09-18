@@ -161,8 +161,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Stora
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalTwinsClientSample", "..\..\digitaltwins\Azure.DigitalTwins.Core\samples\DigitalTwinsClientSample\DigitalTwinsClientSample.csproj", "{635AF2FC-2E5D-4335-8F8D-72F25BD61C95}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiCompat", "..\..\..\eng\ApiCompat\ApiCompat.csproj", "{EC964E8B-58ED-42B3-BCAA-740FFEFFF155}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Analytics.Synapse.AccessControl", "..\..\synapse\Azure.Analytics.Synapse.AccessControl\src\Azure.Analytics.Synapse.AccessControl.csproj", "{3B583609-3429-4231-A690-BAB60A7CFF66}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Analytics.Synapse.AccessControl.Tests", "..\..\synapse\Azure.Analytics.Synapse.AccessControl\tests\Azure.Analytics.Synapse.AccessControl.Tests.csproj", "{8833E803-A2DD-41F1-A264-7455A085AF47}"
@@ -1226,18 +1224,6 @@ Global
 		{635AF2FC-2E5D-4335-8F8D-72F25BD61C95}.Release|x64.Build.0 = Release|Any CPU
 		{635AF2FC-2E5D-4335-8F8D-72F25BD61C95}.Release|x86.ActiveCfg = Release|Any CPU
 		{635AF2FC-2E5D-4335-8F8D-72F25BD61C95}.Release|x86.Build.0 = Release|Any CPU
-		{EC964E8B-58ED-42B3-BCAA-740FFEFFF155}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EC964E8B-58ED-42B3-BCAA-740FFEFFF155}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EC964E8B-58ED-42B3-BCAA-740FFEFFF155}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{EC964E8B-58ED-42B3-BCAA-740FFEFFF155}.Debug|x64.Build.0 = Debug|Any CPU
-		{EC964E8B-58ED-42B3-BCAA-740FFEFFF155}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{EC964E8B-58ED-42B3-BCAA-740FFEFFF155}.Debug|x86.Build.0 = Debug|Any CPU
-		{EC964E8B-58ED-42B3-BCAA-740FFEFFF155}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EC964E8B-58ED-42B3-BCAA-740FFEFFF155}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EC964E8B-58ED-42B3-BCAA-740FFEFFF155}.Release|x64.ActiveCfg = Release|Any CPU
-		{EC964E8B-58ED-42B3-BCAA-740FFEFFF155}.Release|x64.Build.0 = Release|Any CPU
-		{EC964E8B-58ED-42B3-BCAA-740FFEFFF155}.Release|x86.ActiveCfg = Release|Any CPU
-		{EC964E8B-58ED-42B3-BCAA-740FFEFFF155}.Release|x86.Build.0 = Release|Any CPU
 		{3B583609-3429-4231-A690-BAB60A7CFF66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3B583609-3429-4231-A690-BAB60A7CFF66}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B583609-3429-4231-A690-BAB60A7CFF66}.Debug|x64.ActiveCfg = Debug|Any CPU
