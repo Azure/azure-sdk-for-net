@@ -317,7 +317,9 @@ ServiceBusClient client = new ServiceBusClient(fullyQualifiedNamespace, new Defa
 
 ## Troubleshooting
 
-### Service Bus Exception
+### Exception handling
+
+#### Service Bus Exception
 
 A `ServiceBusException` is triggered when an operation specific to Service Bus has encountered an issue, including both errors within the service and specific to the client.  The exception includes some contextual information to assist in understanding the context of the error and its relative severity.  These are:
 
@@ -345,11 +347,17 @@ catch (ServiceBusException ex) when
 }
 ```
 
-### Other exceptions
+#### Other exceptions
 
 For detailed information about the failures represented by the `ServiceBusException` and other exceptions that may occur, please refer to [Service Bus messaging exceptions](https://docs.microsoft.com/azure/service-bus-messaging/service-bus-messaging-exceptions).
 
-You can also easily [enable console logging](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md#logging) if you want to dig deeper into the requests you're making against the service.
+### Logging and diagnostics
+
+The Service Bus client library is fully instrumented for logging information at various levels of detail using the .NET `EventSource` to emit information.  Logging is performed for each operation and follows the pattern of marking the starting point of the operation and either it's completion or exceptions encountered.  Additional information that may offer insight is also logged in the context of the associated operation.
+
+The Service Bus client logs are available to any `EventListener` by opting into the source named "Azure-Messaging-ServiceBus" or opting into all sources that have the trait "AzureEventSource".  To make capturing logs from the Azure client libraries easier, the `Azure.Core` library used by Service Bus offers an `AzureEventSourceListener`.  More information can be found in the [Azure.Core Diagnostics sample](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md#logging).
+
+The Service Bus client library is also instrumented for distributed tracing using Application Insights or OpenTelemetry.  More information can be found in the [Azure.Core Diagnostics sample](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md#distributed-tracing).
 
 ## Next steps
 
