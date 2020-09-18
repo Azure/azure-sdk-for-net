@@ -18,7 +18,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests
         [Fact]
         public void WebJobs_Extensions_Storage_VerifyAssemblyReferences()
         {
-            var names = TestHelpers.GetAssemblyReferences(typeof(QueueTriggerAttribute).Assembly)
+            var names = TestHelpers.GetAssemblyReferences(typeof(BlobTriggerAttribute).Assembly)
                 .OrderBy(n => n);
 
             var expectedReferences = new string[]
@@ -26,12 +26,11 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests
                 "Azure.Core",
                 "Azure.Storage.Queues",
                 "Azure.Storage.Blobs",
+                "Azure.WebJobs.Extensions.Storage.Common",
                 "Microsoft.Azure.WebJobs",
                 "Microsoft.Azure.WebJobs.Host",
                 "Microsoft.Bcl.AsyncInterfaces",
-                "Microsoft.Extensions.Configuration.Abstractions",
                 "Microsoft.Extensions.DependencyInjection.Abstractions",
-                "Microsoft.Extensions.Hosting.Abstractions",
                 "Microsoft.Extensions.Logging.Abstractions",
                 "Microsoft.Extensions.Options",
                 "netstandard",
@@ -48,7 +47,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests
         [Fact]
         public void WebJobs_Extensions_Storage_VerifyPublicSurfaceArea()
         {
-            var assembly = typeof(QueueTriggerAttribute).Assembly;
+            var assembly = typeof(BlobTriggerAttribute).Assembly;
 
             var expected = new[]
             {
@@ -57,21 +56,9 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests
                 "BlobParameterDescriptor",
                 "BlobTriggerAttribute",
                 "BlobTriggerParameterDescriptor",
-                "IQueueProcessorFactory",
                 "BlobsOptions",
-                "QueuesOptions",
-                "PoisonMessageEventArgs",
-                "QueueAttribute",
                 "QueueParameterDescriptor",
-                "QueueProcessor",
-                "QueueProcessorFactoryContext",
-                "QueueTriggerAttribute",
-                "QueueTriggerParameterDescriptor",
-                "StorageWebJobsBuilderExtensions",
-                "StorageAccount",
-                "StorageAccountProvider",
-                "AzureStorageWebJobsStartup",
-                "IDelegatingHandlerProvider"
+                "StorageBlobsWebJobsBuilderExtensions"
             };
 
             TestHelpers.AssertPublicTypes(expected, assembly);
