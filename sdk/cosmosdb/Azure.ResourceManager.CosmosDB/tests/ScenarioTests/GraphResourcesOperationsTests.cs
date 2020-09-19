@@ -7,7 +7,6 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-
 namespace Azure.ResourceManager.CosmosDB.Tests
 {
     [TestFixture]
@@ -19,8 +18,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         protected string databaseName2 = "databaseName21002";
         protected string gremlinGraphName = "gremlinGraphName1002";
 
-        protected string graphThroughputType = "Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/throughputSettings";
+        protected string gremlinDatabasesThroughputType = "Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/throughputSettings";
+        protected string gremlinGraphsThroughputType = "Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/graphs/throughputSettings";
         protected int sampleThroughput = 700;
+        protected int maxThroughput = 7000;
         protected bool setUpRun = false;
 
         public GraphResourcesOperationsTests()
@@ -70,9 +71,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         }
 
         [TestCase, Order(2)]
-        public async Task GremlinDatabaseCRUDTests()
+        public async Task GremlinDatabaseCreateUpdateTests()
         {
-            GremlinDatabaseCreateUpdateParameters gremlinDatabaseCreateUpdateParameters = new GremlinDatabaseCreateUpdateParameters(new GremlinDatabaseResource(databaseName), new CreateUpdateOptions());
+            GremlinDatabaseCreateUpdateParameters gremlinDatabaseCreateUpdateParameters = new GremlinDatabaseCreateUpdateParameters(new GremlinDatabaseResource(databaseName), new CreateUpdateOptions(sampleThroughput, new AutoscaleSettings()));
             var gremlinDatabaseResponse = await WaitForCompletionAsync(await CosmosDBManagementClient.GremlinResources.StartCreateUpdateGremlinDatabaseAsync(resourceGroupName, databaseAccountName, databaseName, gremlinDatabaseCreateUpdateParameters));
             Assert.NotNull(gremlinDatabaseResponse);
             GremlinDatabaseGetResults gremlinDatabaseGetResults = gremlinDatabaseResponse.Value;
@@ -86,31 +87,51 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(databaseName, gremlinDatabaseGetResults1.Name);
 
             VerifyEqualGremlinDatabases(gremlinDatabaseGetResults, gremlinDatabaseGetResults1);
-
-            GremlinDatabaseCreateUpdateParameters gremlinDatabaseCreateUpdateParameters2 = new GremlinDatabaseCreateUpdateParameters(new GremlinDatabaseResource(databaseName2), new CreateUpdateOptions(sampleThroughput, default));
-            var gremlinDatabaseResponse2 = await WaitForCompletionAsync(await CosmosDBManagementClient.GremlinResources.StartCreateUpdateGremlinDatabaseAsync(resourceGroupName, databaseAccountName, databaseName2, gremlinDatabaseCreateUpdateParameters2));
-            Assert.NotNull(gremlinDatabaseResponse2);
-            GremlinDatabaseGetResults gremlinDatabaseGetResults2 = gremlinDatabaseResponse2.Value;
-            Assert.NotNull(gremlinDatabaseGetResults2);
-            Assert.AreEqual(databaseName2, gremlinDatabaseGetResults2.Name);
-
-            List<GremlinDatabaseGetResults> gremlinDatabases = await CosmosDBManagementClient.GremlinResources.ListGremlinDatabasesAsync(resourceGroupName, databaseAccountName).ToEnumerableAsync();
-            Assert.NotNull(gremlinDatabases);
         }
 
         [TestCase, Order(3)]
-        public async Task GraphThroughputTests()
+        public async Task GremlinDatabaseListTests()
         {
-            Response<ThroughputSettingsGetResults> throughputResponse = await CosmosDBManagementClient.GremlinResources.GetGremlinDatabaseThroughputAsync(resourceGroupName, databaseAccountName, databaseName2);
+            List<GremlinDatabaseGetResults> gremlinDatabases = await CosmosDBManagementClient.GremlinResources.ListGremlinDatabasesAsync(resourceGroupName, databaseAccountName).ToEnumerableAsync();
+            Assert.NotNull(gremlinDatabases);
+            Assert.AreEqual(gremlinDatabases.Count, 1);
+            GremlinDatabaseGetResults gremlinDatabaseGetResults = await (CosmosDBManagementClient.GremlinResources.GetGremlinDatabaseAsync(resourceGroupName, databaseAccountName, databaseName));
+            VerifyEqualGremlinDatabases(gremlinDatabases[0], gremlinDatabaseGetResults);
+        }
+
+        [TestCase, Order(3)]
+        public async Task GremlinDatabaseUpdateThroughputTests()
+        {
+            ThroughputSettingsUpdateParameters throughputSettingsUpdateParameters = new ThroughputSettingsUpdateParameters(new ThroughputSettingsResource(maxThroughput, null, null, null));
+            Response<ThroughputSettingsGetResults> throughputResponse = await WaitForCompletionAsync (await CosmosDBManagementClient.GremlinResources.StartUpdateGremlinDatabaseThroughputAsync(resourceGroupName, databaseAccountName, databaseName, throughputSettingsUpdateParameters));
             ThroughputSettingsGetResults throughputSettingsGetResults = throughputResponse.Value;
             Assert.NotNull(throughputSettingsGetResults);
             Assert.NotNull(throughputSettingsGetResults.Name);
-            Assert.AreEqual(throughputSettingsGetResults.Resource.Throughput, sampleThroughput);
-            Assert.AreEqual(graphThroughputType, throughputSettingsGetResults.Type);
+            Assert.AreEqual(throughputSettingsGetResults.Resource.Throughput, maxThroughput);
+            Assert.AreEqual(gremlinDatabasesThroughputType, throughputSettingsGetResults.Type);
         }
 
         [TestCase, Order(4)]
-        public async Task GremlinGraphCRUDTests()
+        public async Task GremlinDatabaseMigrateToAutoscaleTests()
+        {
+            ThroughputSettingsGetResults throughputSettingsGetResults = await WaitForCompletionAsync(await CosmosDBManagementClient.GremlinResources.StartMigrateGremlinDatabaseToAutoscaleAsync(resourceGroupName, databaseAccountName, databaseName));
+            Assert.IsNotNull(throughputSettingsGetResults);
+            Assert.IsNotNull(throughputSettingsGetResults.Resource.AutoscaleSettings);
+            Assert.AreEqual(maxThroughput, throughputSettingsGetResults.Resource.AutoscaleSettings.MaxThroughput);
+            Assert.AreEqual(sampleThroughput, throughputSettingsGetResults.Resource.Throughput);
+        }
+
+        [TestCase, Order(5)]
+        public async Task GremlinDatabaseMigrateToManualTests()
+        {
+            ThroughputSettingsGetResults throughputSettingsGetResults = await WaitForCompletionAsync(await CosmosDBManagementClient.GremlinResources.StartMigrateGremlinDatabaseToManualThroughputAsync(resourceGroupName, databaseAccountName, databaseName));
+            Assert.IsNotNull(throughputSettingsGetResults);
+            Assert.IsNull(throughputSettingsGetResults.Resource.AutoscaleSettings);
+            Assert.AreEqual(maxThroughput, throughputSettingsGetResults.Resource.Throughput);
+        }
+
+        [TestCase, Order(6)]
+        public async Task GremlinGraphCreateUpdateTests()
         {
             IndexingPolicy indexingPolicy = new IndexingPolicy(true, IndexingMode.Consistent, new List<IncludedPath> { new IncludedPath { Path = "/*" } }, new List<ExcludedPath> { new ExcludedPath { Path = "/pathToNotIndex/*" } }, new List<IList<CompositePath>>
                         {
@@ -135,7 +156,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             ConflictResolutionPolicy conflictResolutionPolicy = new ConflictResolutionPolicy(new ConflictResolutionMode("LastWriterWins"), "/path", "");
 
-            GremlinGraphCreateUpdateParameters gremlinGraphCreateUpdateParameters = new GremlinGraphCreateUpdateParameters(new GremlinGraphResource(gremlinGraphName, indexingPolicy, containerPartitionKey, -1, uniqueKeyPolicy, conflictResolutionPolicy), new CreateUpdateOptions(sampleThroughput, default));
+            GremlinGraphCreateUpdateParameters gremlinGraphCreateUpdateParameters = new GremlinGraphCreateUpdateParameters(new GremlinGraphResource(gremlinGraphName, indexingPolicy, containerPartitionKey, -1, uniqueKeyPolicy, conflictResolutionPolicy), new CreateUpdateOptions(sampleThroughput, new AutoscaleSettings()));
 
             Response<GremlinGraphGetResults> gremlinResponse = await WaitForCompletionAsync(await CosmosDBManagementClient.GremlinResources.StartCreateUpdateGremlinGraphAsync(resourceGroupName, databaseAccountName, databaseName, gremlinGraphName, gremlinGraphCreateUpdateParameters));
             Assert.NotNull(gremlinResponse);
@@ -148,8 +169,49 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.NotNull(gremlinGraphs);
         }
 
-        [TestCase, Order(5)]
-        public async Task GraphDeleteTests()
+        [TestCase, Order(7)]
+        public async Task GremlinGraphListTests()
+        {
+            List<GremlinGraphGetResults> gremlinGraphs = await CosmosDBManagementClient.GremlinResources.ListGremlinGraphsAsync(resourceGroupName, databaseAccountName, databaseName).ToEnumerableAsync();
+            Assert.NotNull(gremlinGraphs);
+            Assert.AreEqual(gremlinGraphs.Count, 1);
+            GremlinGraphGetResults gremlinGraphGetResults = await CosmosDBManagementClient.GremlinResources.GetGremlinGraphAsync(resourceGroupName, databaseAccountName, databaseName, gremlinGraphName);
+            VerifyEqualGremlinGraphs(gremlinGraphs[0], gremlinGraphGetResults);
+        }
+
+        [TestCase, Order(7)]
+        public async Task GremlinGraphUpdateThroughputTests()
+        {
+            ThroughputSettingsUpdateParameters throughputSettingsUpdateParameters = new ThroughputSettingsUpdateParameters(new ThroughputSettingsResource(maxThroughput, null, null, null));
+            var throughputResponse = await WaitForCompletionAsync(await CosmosDBManagementClient.GremlinResources.StartUpdateGremlinGraphThroughputAsync(resourceGroupName, databaseAccountName, databaseName, gremlinGraphName, throughputSettingsUpdateParameters));
+            ThroughputSettingsGetResults throughputSettingsGetResults = throughputResponse.Value;
+            Assert.NotNull(throughputSettingsGetResults);
+            Assert.NotNull(throughputSettingsGetResults.Name);
+            Assert.AreEqual(throughputSettingsGetResults.Resource.Throughput, maxThroughput);
+            Assert.AreEqual(gremlinGraphsThroughputType, throughputSettingsGetResults.Type);
+        }
+
+        [TestCase, Order(8)]
+        public async Task GremlinGraphMigrateToAutoscaleTests()
+        {
+            ThroughputSettingsGetResults throughputSettingsGetResults = await WaitForCompletionAsync(await CosmosDBManagementClient.GremlinResources.StartMigrateGremlinGraphToAutoscaleAsync(resourceGroupName, databaseAccountName, databaseName, gremlinGraphName));
+            Assert.IsNotNull(throughputSettingsGetResults);
+            Assert.IsNotNull(throughputSettingsGetResults.Resource.AutoscaleSettings);
+            Assert.AreEqual(maxThroughput, throughputSettingsGetResults.Resource.AutoscaleSettings.MaxThroughput);
+            Assert.AreEqual(sampleThroughput, throughputSettingsGetResults.Resource.Throughput);
+        }
+
+        [TestCase, Order(9)]
+        public async Task GremlinGraphMigrateToManualTests()
+        {
+            ThroughputSettingsGetResults throughputSettingsGetResults = await WaitForCompletionAsync(await CosmosDBManagementClient.GremlinResources.StartMigrateGremlinGraphToManualThroughputAsync(resourceGroupName, databaseAccountName, databaseName, gremlinGraphName));
+            Assert.IsNotNull(throughputSettingsGetResults);
+            Assert.IsNull(throughputSettingsGetResults.Resource.AutoscaleSettings);
+            Assert.AreEqual(maxThroughput, throughputSettingsGetResults.Resource.Throughput);
+        }
+
+        [TestCase, Order(10)]
+        public async Task GremlinGraphDeleteTests()
         {
             List<GremlinGraphGetResults> gremlinGraphs = await CosmosDBManagementClient.GremlinResources.ListGremlinGraphsAsync(resourceGroupName, databaseAccountName, databaseName).ToEnumerableAsync();
             foreach (GremlinGraphGetResults gremlinGraph in gremlinGraphs)
@@ -158,7 +220,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             }
             List<GremlinGraphGetResults> checkGremlinGraphs = await CosmosDBManagementClient.GremlinResources.ListGremlinGraphsAsync(resourceGroupName, databaseAccountName, databaseName).ToEnumerableAsync();
             Assert.AreEqual(checkGremlinGraphs.Count, 0);
+        }
 
+        [TestCase, Order(11)]
+        public async Task GremlinDatabaseDeleteTests()
+        {
             List<GremlinDatabaseGetResults> gremlinDatabases = await CosmosDBManagementClient.GremlinResources.ListGremlinDatabasesAsync(resourceGroupName, databaseAccountName).ToEnumerableAsync();
             Assert.NotNull(gremlinDatabases);
             foreach (GremlinDatabaseGetResults gremlinDatabase in gremlinDatabases)
@@ -192,6 +258,62 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(expectedValue.Resource.Rid, actualValue.Resource.Rid);
             Assert.AreEqual(expectedValue.Resource.Ts, actualValue.Resource.Ts);
             Assert.AreEqual(expectedValue.Resource.Etag, actualValue.Resource.Etag);
+        }
+
+        private void VerifyEqualGremlinGraphs(GremlinGraphGetResults expectedValue, GremlinGraphGetResults actualValue)
+        {
+            Assert.AreEqual(expectedValue.Id, actualValue.Id);
+            Assert.AreEqual(expectedValue.Name, actualValue.Name);
+            Assert.AreEqual(expectedValue.Location, actualValue.Location);
+            Assert.AreEqual(expectedValue.Tags, actualValue.Tags);
+            Assert.AreEqual(expectedValue.Type, actualValue.Type);
+
+            Assert.AreEqual(expectedValue.Options, actualValue.Options);
+
+            Assert.AreEqual(expectedValue.Resource.Id, actualValue.Resource.Id);
+            Assert.AreEqual(expectedValue.Resource.Rid, actualValue.Resource.Rid);
+            Assert.AreEqual(expectedValue.Resource.Ts, actualValue.Resource.Ts);
+            Assert.AreEqual(expectedValue.Resource.Etag, actualValue.Resource.Etag);
+
+            Assert.AreEqual(expectedValue.Resource.ConflictResolutionPolicy.ConflictResolutionPath, actualValue.Resource.ConflictResolutionPolicy.ConflictResolutionPath);
+            Assert.AreEqual(expectedValue.Resource.ConflictResolutionPolicy.ConflictResolutionPath, actualValue.Resource.ConflictResolutionPolicy.ConflictResolutionPath);
+            Assert.AreEqual(expectedValue.Resource.ConflictResolutionPolicy.Mode, actualValue.Resource.ConflictResolutionPolicy.Mode);
+
+            Assert.AreEqual(expectedValue.Resource.DefaultTtl, actualValue.Resource.DefaultTtl);
+
+            Assert.AreEqual(expectedValue.Resource.IndexingPolicy.Automatic, actualValue.Resource.IndexingPolicy.Automatic);
+
+            Assert.AreEqual(expectedValue.Resource.IndexingPolicy.IncludedPaths.Count, actualValue.Resource.IndexingPolicy.IncludedPaths.Count);
+            Assert.AreEqual(expectedValue.Resource.IndexingPolicy.IncludedPaths[0].Path, actualValue.Resource.IndexingPolicy.IncludedPaths[0].Path);
+            Assert.AreEqual(expectedValue.Resource.IndexingPolicy.IncludedPaths[0].Indexes, actualValue.Resource.IndexingPolicy.IncludedPaths[0].Indexes);
+
+            Assert.AreEqual(expectedValue.Resource.IndexingPolicy.ExcludedPaths.Count, actualValue.Resource.IndexingPolicy.ExcludedPaths.Count);
+            Assert.AreEqual(expectedValue.Resource.IndexingPolicy.ExcludedPaths[0].Path, actualValue.Resource.IndexingPolicy.ExcludedPaths[0].Path);
+
+            Assert.AreEqual(expectedValue.Resource.IndexingPolicy.CompositeIndexes.Count, actualValue.Resource.IndexingPolicy.CompositeIndexes.Count);
+            Assert.AreEqual(expectedValue.Resource.IndexingPolicy.CompositeIndexes[0].Count, actualValue.Resource.IndexingPolicy.CompositeIndexes[0].Count);
+            Assert.AreEqual(expectedValue.Resource.IndexingPolicy.CompositeIndexes[0][0].Path, actualValue.Resource.IndexingPolicy.CompositeIndexes[0][0].Path);
+            Assert.AreEqual(expectedValue.Resource.IndexingPolicy.CompositeIndexes[0][0].Order, actualValue.Resource.IndexingPolicy.CompositeIndexes[0][0].Order);
+            Assert.AreEqual(expectedValue.Resource.IndexingPolicy.CompositeIndexes[0][1].Path, actualValue.Resource.IndexingPolicy.CompositeIndexes[0][1].Path);
+            Assert.AreEqual(expectedValue.Resource.IndexingPolicy.CompositeIndexes[0][1].Order, actualValue.Resource.IndexingPolicy.CompositeIndexes[0][1].Order);
+            Assert.AreEqual(expectedValue.Resource.IndexingPolicy.CompositeIndexes[1].Count, actualValue.Resource.IndexingPolicy.CompositeIndexes[1].Count);
+            Assert.AreEqual(expectedValue.Resource.IndexingPolicy.CompositeIndexes[1][0].Path, actualValue.Resource.IndexingPolicy.CompositeIndexes[1][0].Path);
+            Assert.AreEqual(expectedValue.Resource.IndexingPolicy.CompositeIndexes[1][0].Order, actualValue.Resource.IndexingPolicy.CompositeIndexes[1][0].Order);
+            Assert.AreEqual(expectedValue.Resource.IndexingPolicy.CompositeIndexes[1][1].Path, actualValue.Resource.IndexingPolicy.CompositeIndexes[1][1].Path);
+            Assert.AreEqual(expectedValue.Resource.IndexingPolicy.CompositeIndexes[1][1].Order, actualValue.Resource.IndexingPolicy.CompositeIndexes[1][1].Order);
+
+            Assert.AreEqual(expectedValue.Resource.IndexingPolicy.IndexingMode, actualValue.Resource.IndexingPolicy.IndexingMode);
+
+            Assert.AreEqual(expectedValue.Resource.IndexingPolicy.SpatialIndexes.Count, actualValue.Resource.IndexingPolicy.SpatialIndexes.Count);
+            Assert.AreEqual(expectedValue.Resource.IndexingPolicy.SpatialIndexes[0].Path, actualValue.Resource.IndexingPolicy.SpatialIndexes[0].Path);
+            Assert.AreEqual(expectedValue.Resource.IndexingPolicy.SpatialIndexes[0].Types, actualValue.Resource.IndexingPolicy.SpatialIndexes[0].Types);
+
+            Assert.AreEqual(expectedValue.Resource.PartitionKey.Kind, actualValue.Resource.PartitionKey.Kind);
+            Assert.AreEqual(expectedValue.Resource.PartitionKey.Paths, actualValue.Resource.PartitionKey.Paths);
+            Assert.AreEqual(expectedValue.Resource.PartitionKey.Version, actualValue.Resource.PartitionKey.Version);
+
+            Assert.AreEqual(expectedValue.Resource.UniqueKeyPolicy.UniqueKeys.Count, actualValue.Resource.UniqueKeyPolicy.UniqueKeys.Count);
+            Assert.AreEqual(expectedValue.Resource.UniqueKeyPolicy.UniqueKeys[0].Paths, actualValue.Resource.UniqueKeyPolicy.UniqueKeys[0].Paths);
         }
     }
 }
