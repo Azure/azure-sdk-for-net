@@ -853,6 +853,57 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task AppendBlockAsync_InvalidStreamPosition()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var blobName = GetNewBlobName();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            await blob.CreateAsync();
+            const int blobSize = Constants.KB;
+            var data = GetRandomBuffer(blobSize);
+
+            // Act
+            using Stream stream = new MemoryStream(data);
+            stream.Position = stream.Length;
+
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                blob.AppendBlockAsync(stream),
+                e => Assert.AreEqual("content.Position must be less than content.Length. Please set content.Position to the start of the data to upload.", e.Message));
+        }
+
+        [Test]
+        public async Task AppendBlockAsync_NonZeroStreamPosition()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var blobName = GetNewBlobName();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            await blob.CreateAsync();
+            const int blobSize = Constants.KB;
+            long position = 512;
+            byte[] data = GetRandomBuffer(blobSize);
+            byte[] expectedData = new byte[blobSize - position];
+            Array.Copy(data, position, expectedData, 0, blobSize - position);
+
+            // Act
+            using Stream stream = new MemoryStream(data)
+            {
+                Position = position
+            };
+            await blob.AppendBlockAsync(stream);
+
+            // Assert
+            Response<BlobDownloadInfo> result = await blob.DownloadAsync();
+            var dataResult = new MemoryStream();
+            await result.Value.Content.CopyToAsync(dataResult);
+            Assert.AreEqual(blobSize - position, dataResult.Length);
+            TestHelper.AssertSequenceEqual(expectedData, dataResult.ToArray());
+        }
+
+        [Test]
         public async Task AppendBlockFromUriAsync_Min()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1432,6 +1483,45 @@ namespace Azure.Storage.Blobs.Test
             await stream.WriteAsync(data, 5727, 4096);
             await stream.WriteAsync(data, 9823, 6561);
             await stream.FlushAsync();
+
+            // Assert
+            Response<BlobDownloadInfo> result = await blob.DownloadAsync(new HttpRange(0, data.Length));
+            var dataResult = new MemoryStream();
+            await result.Value.Content.CopyToAsync(dataResult);
+            Assert.AreEqual(data.Length, dataResult.Length);
+            TestHelper.AssertSequenceEqual(data, dataResult.ToArray());
+        }
+
+        [Test]
+        public async Task OpenWriteAsync_NewBlob_WithUsing()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            var blobName = GetNewBlobName();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            await blob.CreateAsync();
+
+            AppendBlobOpenWriteOptions options = new AppendBlobOpenWriteOptions
+            {
+                BufferSize = Constants.KB
+            };
+
+            byte[] data = GetRandomBuffer(16 * Constants.KB);
+
+            // Act
+            using (Stream stream = await blob.OpenWriteAsync(
+                overwrite: false,
+                options))
+            {
+                await stream.WriteAsync(data, 0, 512);
+                await stream.WriteAsync(data, 512, 1024);
+                await stream.WriteAsync(data, 1536, 2048);
+                await stream.WriteAsync(data, 3584, 77);
+                await stream.WriteAsync(data, 3661, 2066);
+                await stream.WriteAsync(data, 5727, 4096);
+                await stream.WriteAsync(data, 9823, 6561);
+            }
 
             // Assert
             Response<BlobDownloadInfo> result = await blob.DownloadAsync(new HttpRange(0, data.Length));

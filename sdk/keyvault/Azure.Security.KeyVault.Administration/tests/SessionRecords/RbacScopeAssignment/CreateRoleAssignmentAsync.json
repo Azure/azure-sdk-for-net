@@ -1,12 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://eastus.clitest.managedhsm-preview.azure.net/providers/Microsoft.Authorization/roleDefinitions?api-version=7.2-preview",
+      "RequestUri": "https://eastus2.chriss-eu2.managedhsm-int.azure-int.net/providers/Microsoft.Authorization/roleDefinitions?api-version=7.2-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "User-Agent": [
-          "azsdk-net-Security.KeyVault.Administration/4.1.0-dev.20200710.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Security.KeyVault.Administration/4.0.0-dev.20200901.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "08665a931011dc0761a6b5960748e519",
         "x-ms-return-client-request-id": "true"
@@ -14,22 +15,29 @@
       "RequestBody": null,
       "StatusCode": 401,
       "ResponseHeaders": {
+        "Cache-Control": "no-cache",
         "Content-Length": "2",
-        "Content-Type": "application/json",
-        "WWW-Authenticate": "Bearer authorization=\u0022https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47\u0022, resource=\u0022https://managedhsm.azure.net\u0022",
+        "Content-Security-Policy": "default-src \u0027self\u0027",
+        "Content-Type": "application/json; charset=utf-8",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "WWW-Authenticate": "Bearer authorization=\u0022https://login.windows-ppe.net/f686d426-8d16-42db-81b7-ab578e110ccd\u0022, resource=\u0022https://managedhsm-int.azure-int.net\u0022",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "6efe8100-bb32-11ea-a6f0-0242ac120006"
+        "X-Frame-Options": "SAMEORIGIN",
+        "x-ms-build-version": "1.0.20200901-1-40187cd0-develop",
+        "x-ms-request-id": "147983c8-ec70-11ea-84e4-0242ac120003",
+        "x-ms-server-latency": "1"
       },
       "ResponseBody": "OK"
     },
     {
-      "RequestUri": "https://eastus.clitest.managedhsm-preview.azure.net/providers/Microsoft.Authorization/roleDefinitions?api-version=7.2-preview",
+      "RequestUri": "https://eastus2.chriss-eu2.managedhsm-int.azure-int.net/providers/Microsoft.Authorization/roleDefinitions?api-version=7.2-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Security.KeyVault.Administration/4.1.0-dev.20200710.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Security.KeyVault.Administration/4.0.0-dev.20200901.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "08665a931011dc0761a6b5960748e519",
         "x-ms-return-client-request-id": "true"
@@ -37,12 +45,18 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "5517",
-        "Content-Type": "application/json",
+        "Cache-Control": "no-cache",
+        "Content-Length": "6428",
+        "Content-Security-Policy": "default-src \u0027self\u0027",
+        "Content-Type": "application/json; charset=utf-8",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-keyvault-network-info": "addr=72.176.254.191",
+        "X-Frame-Options": "SAMEORIGIN",
+        "x-ms-build-version": "1.0.20200901-1-40187cd0-develop",
+        "x-ms-keyvault-network-info": "addr=70.121.15.5",
         "x-ms-keyvault-region": "EASTUS",
-        "x-ms-request-id": "6efe8100-bb32-11ea-a6f0-0242ac120006"
+        "x-ms-request-id": "147983c8-ec70-11ea-84e4-0242ac120003",
+        "x-ms-server-latency": "1"
       },
       "ResponseBody": {
         "value": [
@@ -78,13 +92,21 @@
                     "Microsoft.KeyVault/managedHsm/keys/delete",
                     "Microsoft.KeyVault/managedHsm/keys/export/action",
                     "Microsoft.KeyVault/managedHsm/keys/import/action",
-                    "Microsoft.KeyVault/managedHsm/keys/deletedKeys/delete"
+                    "Microsoft.KeyVault/managedHsm/keys/deletedKeys/delete",
+                    "Microsoft.KeyVault/managedHsm/securitydomain/download/action",
+                    "Microsoft.KeyVault/managedHsm/securitydomain/upload/action",
+                    "Microsoft.KeyVault/managedHsm/securitydomain/upload/read",
+                    "Microsoft.KeyVault/managedHsm/securitydomain/transferkey/read",
+                    "Microsoft.KeyVault/managedHsm/backup/start/action",
+                    "Microsoft.KeyVault/managedHsm/restore/start/action",
+                    "Microsoft.KeyVault/managedHsm/backup/status/action",
+                    "Microsoft.KeyVault/managedHsm/restore/status/action"
                   ],
                   "notActions": [],
                   "notDataActions": []
                 }
               ],
-              "roleName": "Azure Key Vault Managed HSM Administrator",
+              "roleName": "Managed HSM Administrator",
               "type": ""
             },
             "type": "Microsoft.Authorization/roleDefinitions"
@@ -123,7 +145,7 @@
                   "notDataActions": []
                 }
               ],
-              "roleName": "Azure Key Vault Managed HSM Crypto Officer",
+              "roleName": "Managed HSM Crypto Officer",
               "type": ""
             },
             "type": "Microsoft.Authorization/roleDefinitions"
@@ -155,7 +177,7 @@
                   "notDataActions": []
                 }
               ],
-              "roleName": "Azure Key Vault Managed HSM Crypto User",
+              "roleName": "Managed HSM Crypto User",
               "type": ""
             },
             "type": "Microsoft.Authorization/roleDefinitions"
@@ -181,7 +203,7 @@
                   "notDataActions": []
                 }
               ],
-              "roleName": "Azure Key Vault Managed HSM Policy Administrator",
+              "roleName": "Managed HSM Policy Administrator",
               "type": ""
             },
             "type": "Microsoft.Authorization/roleDefinitions"
@@ -205,7 +227,7 @@
                   "notDataActions": []
                 }
               ],
-              "roleName": "Azure Key Vault Managed HSM Crypto Auditor",
+              "roleName": "Managed HSM Crypto Auditor",
               "type": ""
             },
             "type": "Microsoft.Authorization/roleDefinitions"
@@ -230,7 +252,32 @@
                   "notDataActions": []
                 }
               ],
-              "roleName": "Azure Key Vault Managed HSM Crypto Service Encryption",
+              "roleName": "Managed HSM Crypto Service Encryption",
+              "type": ""
+            },
+            "type": "Microsoft.Authorization/roleDefinitions"
+          },
+          {
+            "id": "Microsoft.KeyVault/providers/Microsoft.Authorization/roleDefinitions/7b127d3c-77bd-4e3e-bbe0-dbb8971fa7f8",
+            "name": "7b127d3c-77bd-4e3e-bbe0-dbb8971fa7f8",
+            "properties": {
+              "assignableScopes": [
+                "/"
+              ],
+              "description": "",
+              "permissions": [
+                {
+                  "actions": [],
+                  "dataActions": [
+                    "Microsoft.KeyVault/managedHsm/backup/start/action",
+                    "Microsoft.KeyVault/managedHsm/backup/status/action",
+                    "Microsoft.KeyVault/managedHsm/keys/backup/action"
+                  ],
+                  "notActions": [],
+                  "notDataActions": []
+                }
+              ],
+              "roleName": "Managed HSM Backup",
               "type": ""
             },
             "type": "Microsoft.Authorization/roleDefinitions"
@@ -239,16 +286,17 @@
       }
     },
     {
-      "RequestUri": "https://eastus.clitest.managedhsm-preview.azure.net/keys/providers/Microsoft.Authorization/roleAssignments/e7ae2aff-eb17-4c9d-84f0-d12f7f468f16?api-version=7.2-preview",
+      "RequestUri": "https://eastus2.chriss-eu2.managedhsm-int.azure-int.net/keys/providers/Microsoft.Authorization/roleAssignments/e7ae2aff-eb17-4c9d-84f0-d12f7f468f16?api-version=7.2-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "196",
         "Content-Type": "application/json",
-        "traceparent": "00-117a275e5061a04ca3989ae6f3aaa9ab-78faed758356af42-00",
+        "traceparent": "00-7d0230bd0f42c5468b8eff77a3182bdc-4a0b792e5ba19344-00",
         "User-Agent": [
-          "azsdk-net-Security.KeyVault.Administration/4.1.0-dev.20200710.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Security.KeyVault.Administration/4.0.0-dev.20200901.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "e5e3e86e3240d4cb1aae210c06a286b3",
         "x-ms-return-client-request-id": "true"
@@ -261,12 +309,17 @@
       },
       "StatusCode": 201,
       "ResponseHeaders": {
+        "Cache-Control": "no-cache",
         "Content-Length": "402",
-        "Content-Type": "application/json",
+        "Content-Security-Policy": "default-src \u0027self\u0027",
+        "Content-Type": "application/json; charset=utf-8",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-keyvault-network-info": "addr=72.176.254.191",
+        "X-Frame-Options": "SAMEORIGIN",
+        "x-ms-keyvault-network-info": "addr=70.121.15.5",
         "x-ms-keyvault-region": "EASTUS",
-        "x-ms-request-id": "6efe8100-bb32-11ea-a6f0-0242ac120006"
+        "x-ms-request-id": "147983c8-ec70-11ea-84e4-0242ac120003",
+        "x-ms-server-latency": "293"
       },
       "ResponseBody": {
         "id": "/providers/Microsoft.Authorization/roleAssignments/e7ae2aff-eb17-4c9d-84f0-d12f7f468f16",
@@ -280,14 +333,14 @@
       }
     },
     {
-      "RequestUri": "https://eastus.clitest.managedhsm-preview.azure.net/keys/?api-version=7.1",
+      "RequestUri": "https://eastus2.chriss-eu2.managedhsm-int.azure-int.net/keys/?api-version=7.1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Type": "application/json",
         "User-Agent": [
-          "azsdk-net-Security.KeyVault.Keys/4.1.0-dev.20200710.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Security.KeyVault.Keys/4.2.0-dev.20200901.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "1ea9c044ad27be226002b1e118f10cee",
         "x-ms-return-client-request-id": "true"
@@ -295,24 +348,30 @@
       "RequestBody": null,
       "StatusCode": 401,
       "ResponseHeaders": {
-        "Content-Length": "0",
-        "Content-Type": "application/json",
-        "WWW-Authenticate": "Bearer authorization=\u0022https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47\u0022, resource=\u0022https://managedhsm.azure.net\u0022",
+        "Cache-Control": "no-cache",
+        "Content-Length": "2",
+        "Content-Security-Policy": "default-src \u0027self\u0027",
+        "Content-Type": "application/json; charset=utf-8",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "WWW-Authenticate": "Bearer authorization=\u0022https://login.windows-ppe.net/f686d426-8d16-42db-81b7-ab578e110ccd\u0022, resource=\u0022https://managedhsm-int.azure-int.net\u0022",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "6efe8100-bb32-11ea-a6f0-0242ac120006"
+        "X-Frame-Options": "SAMEORIGIN",
+        "x-ms-build-version": "1.0.20200901-1-40187cd0-develop",
+        "x-ms-request-id": "147983c8-ec70-11ea-84e4-0242ac120003",
+        "x-ms-server-latency": "0"
       },
-      "ResponseBody": []
+      "ResponseBody": "OK"
     },
     {
-      "RequestUri": "https://eastus.clitest.managedhsm-preview.azure.net/keys/?api-version=7.1",
+      "RequestUri": "https://eastus2.chriss-eu2.managedhsm-int.azure-int.net/keys/?api-version=7.1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Type": "application/json",
         "User-Agent": [
-          "azsdk-net-Security.KeyVault.Keys/4.1.0-dev.20200710.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Security.KeyVault.Keys/4.2.0-dev.20200901.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "1ea9c044ad27be226002b1e118f10cee",
         "x-ms-return-client-request-id": "true"
@@ -320,90 +379,46 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "1321",
-        "Content-Type": "application/json",
+        "Cache-Control": "no-cache",
+        "Content-Length": "249",
+        "Content-Security-Policy": "default-src \u0027self\u0027",
+        "Content-Type": "application/json; charset=utf-8",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-keyvault-network-info": "addr=72.176.254.191",
+        "X-Frame-Options": "SAMEORIGIN",
+        "x-ms-build-version": "1.0.20200901-1-40187cd0-develop",
+        "x-ms-keyvault-network-info": "addr=70.121.15.5",
         "x-ms-keyvault-region": "EASTUS",
-        "x-ms-request-id": "6efe8100-bb32-11ea-a6f0-0242ac120006"
+        "x-ms-request-id": "147983c8-ec70-11ea-84e4-0242ac120003",
+        "x-ms-server-latency": "226"
       },
       "ResponseBody": {
         "value": [
           {
             "attributes": {
-              "created": 1594281595,
+              "created": 1598977147,
               "enabled": true,
-              "exportable": true,
-              "recoverableDays": 90,
-              "recoveryLevel": "Recoverable\u002BPurgeable",
-              "updated": 1594281613
+              "exportable": false,
+              "recoverableDays": 7,
+              "recoveryLevel": "CustomizedRecoverable\u002BPurgeable",
+              "updated": 1598977147
             },
-            "kid": "https://eastus.clitest.managedhsm-preview.azure.net/keys/key-ov5x4xujjptq7dud4g4k"
-          },
-          {
-            "attributes": {
-              "created": 1594281616,
-              "enabled": true,
-              "recoverableDays": 90,
-              "recoveryLevel": "Recoverable\u002BPurgeable",
-              "updated": 1594281616
-            },
-            "kid": "https://eastus.clitest.managedhsm-preview.azure.net/keys/import-key-plain"
-          },
-          {
-            "attributes": {
-              "created": 1594281618,
-              "enabled": true,
-              "recoverableDays": 90,
-              "recoveryLevel": "Recoverable\u002BPurgeable",
-              "updated": 1594281618
-            },
-            "kid": "https://eastus.clitest.managedhsm-preview.azure.net/keys/import-key-encrypted"
-          },
-          {
-            "attributes": {
-              "created": 1594281621,
-              "enabled": true,
-              "recoverableDays": 90,
-              "recoveryLevel": "Recoverable\u002BPurgeable",
-              "updated": 1594281621
-            },
-            "kid": "https://eastus.clitest.managedhsm-preview.azure.net/keys/import-eckey-plain"
-          },
-          {
-            "attributes": {
-              "created": 1594281632,
-              "enabled": true,
-              "recoverableDays": 90,
-              "recoveryLevel": "Recoverable\u002BPurgeable",
-              "updated": 1594281632
-            },
-            "kid": "https://eastus.clitest.managedhsm-preview.azure.net/keys/key1"
-          },
-          {
-            "attributes": {
-              "created": 1594281638,
-              "enabled": true,
-              "recoverableDays": 90,
-              "recoveryLevel": "Recoverable\u002BPurgeable",
-              "updated": 1594281638
-            },
-            "kid": "https://eastus.clitest.managedhsm-preview.azure.net/keys/key2"
+            "kid": "https://eastus2.chriss-eu2.managedhsm-int.azure-int.net/keys/rsa-1"
           }
         ]
       }
     },
     {
-      "RequestUri": "https://eastus.clitest.managedhsm-preview.azure.net/keys/key-ov5x4xujjptq7dud4g4k/?api-version=7.1",
+      "RequestUri": "https://eastus2.chriss-eu2.managedhsm-int.azure-int.net/keys/rsa-1/?api-version=7.1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Type": "application/json",
-        "traceparent": "00-933d9428db373f48a626a68cccd289ed-e73388980b990b4e-00",
+        "traceparent": "00-4327c8bcc6c0e04981ef2ea652758a74-568c3cc74668304b-00",
         "User-Agent": [
-          "azsdk-net-Security.KeyVault.Keys/4.1.0-dev.20200710.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Security.KeyVault.Keys/4.2.0-dev.20200901.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "c95c890d0891619c8f92ee62eefbd6be",
         "x-ms-return-client-request-id": "true"
@@ -411,45 +426,56 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "691",
-        "Content-Type": "application/json",
+        "Cache-Control": "no-cache",
+        "Content-Length": "724",
+        "Content-Security-Policy": "default-src \u0027self\u0027",
+        "Content-Type": "application/json; charset=utf-8",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-keyvault-network-info": "addr=72.176.254.191",
+        "X-Frame-Options": "SAMEORIGIN",
+        "x-ms-build-version": "1.0.20200901-1-40187cd0-develop",
+        "x-ms-keyvault-network-info": "addr=70.121.15.5",
         "x-ms-keyvault-region": "EASTUS",
-        "x-ms-request-id": "6efe8100-bb32-11ea-a6f0-0242ac120006"
+        "x-ms-request-id": "147983c8-ec70-11ea-84e4-0242ac120003",
+        "x-ms-server-latency": "170"
       },
       "ResponseBody": {
         "attributes": {
-          "created": 1594281595,
+          "created": 1598977147,
           "enabled": true,
-          "exportable": true,
-          "recoverableDays": 90,
-          "recoveryLevel": "Recoverable\u002BPurgeable",
-          "updated": 1594281613
+          "exportable": false,
+          "recoverableDays": 7,
+          "recoveryLevel": "CustomizedRecoverable\u002BPurgeable",
+          "updated": 1598977147
         },
         "key": {
           "e": "AQAB",
           "key_ops": [
+            "verify",
+            "sign",
+            "unwrapKey",
             "decrypt",
-            "encrypt"
+            "encrypt",
+            "wrapKey"
           ],
-          "kid": "https://eastus.clitest.managedhsm-preview.azure.net/keys/key-ov5x4xujjptq7dud4g4k/0500e9c3ca0e000da3524818a2a5ae6f",
+          "kid": "https://eastus2.chriss-eu2.managedhsm-int.azure-int.net/keys/rsa-1/3f3da2c72c3a4b57150573cbd2ffa31b",
           "kty": "RSA-HSM",
-          "n": "u1mD_yqfBn_DNVa1UQkmQ9M3WFdvJrviO0urx-7rWSJ0W8EA9-px7Vhv9CN_OF-OcQ2hfgeKwXd6szM3BiGfpWK0LNDYYoqg1vJp9sxyjYcx3-PlLopyoSr1k2WKpf0o9yYJh0u0X8gs82H4NcRkokDuPbfuggHPUTkFtML7KnKs8N2d0YK79lr0RuSSE5G0_WFBxFOkHikBJROFZBPfqVST08tKJO6YYlTEJ7d0rLa5YVR43oRWiaGQbeq_no7-k0Td4QyRy6E4-nrnz_P5TvxU1gFC6av6SOjtpr_KO4M5DJ5rkOhmECjJ09398gLxMPD-2hJ6mhoWZmDEq_f2Ew"
+          "n": "nRNWZRhBVrICuRx_eoxvOXpYBrA-5VyZsz45QVZLXBTZNSMdQhTVM-B0pdIz13UN0GtevnqqbnucJvKYuP7oXIgWY6ojzh17QDQa4ib66_tWx8gXPIHb-dMJLoRWe5FsqFiTs3h1vPuuKgPVw5zPXjOaUt9tn0K8z4G2XS79U1j81T-6F3p0dwO8VIJhBVLbvr8UHzOWbn6mJD1SVKQaQxA76z9H_WCna-Pv9BlJ1Uy_at3jmRD5uavTSDEKYlw4xd1lEeBz9pKoXyQ36noV98UHaxOU9J7lOw4stKImzPMrWGF4qclfBCnGw3kXI4rO-7Z6E8Nk_bIHYNw7jDSsDQ"
         }
       }
     },
     {
-      "RequestUri": "https://eastus.clitest.managedhsm-preview.azure.net/keys/key-ov5x4xujjptq7dud4g4k/providers/Microsoft.Authorization/roleAssignments/e7ae2aff-eb17-4c9d-84f0-d12f7f468f16?api-version=7.2-preview",
+      "RequestUri": "https://eastus2.chriss-eu2.managedhsm-int.azure-int.net/keys/rsa-1/providers/Microsoft.Authorization/roleAssignments/e7ae2aff-eb17-4c9d-84f0-d12f7f468f16?api-version=7.2-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "196",
         "Content-Type": "application/json",
-        "traceparent": "00-d419f8f620b16846a3c2fea4428afb2d-7f42888d7ff30949-00",
+        "traceparent": "00-395e7af9a03abb4988b2ba1e6f1a606d-58b717c03d441640-00",
         "User-Agent": [
-          "azsdk-net-Security.KeyVault.Administration/4.1.0-dev.20200710.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Security.KeyVault.Administration/4.0.0-dev.20200901.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "4752011fc69fc0f2c624853e80eabc28",
         "x-ms-return-client-request-id": "true"
@@ -462,12 +488,17 @@
       },
       "StatusCode": 201,
       "ResponseHeaders": {
-        "Content-Length": "427",
-        "Content-Type": "application/json",
+        "Cache-Control": "no-cache",
+        "Content-Length": "408",
+        "Content-Security-Policy": "default-src \u0027self\u0027",
+        "Content-Type": "application/json; charset=utf-8",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-keyvault-network-info": "addr=72.176.254.191",
+        "X-Frame-Options": "SAMEORIGIN",
+        "x-ms-keyvault-network-info": "addr=70.121.15.5",
         "x-ms-keyvault-region": "EASTUS",
-        "x-ms-request-id": "6efe8100-bb32-11ea-a6f0-0242ac120006"
+        "x-ms-request-id": "147983c8-ec70-11ea-84e4-0242ac120003",
+        "x-ms-server-latency": "480"
       },
       "ResponseBody": {
         "id": "/providers/Microsoft.Authorization/roleAssignments/e7ae2aff-eb17-4c9d-84f0-d12f7f468f16",
@@ -475,14 +506,14 @@
         "properties": {
           "principalId": "693a17da-7022-4cdd-9d4e-4e72e4ad449d",
           "roleDefinitionId": "Microsoft.KeyVault/providers/Microsoft.Authorization/roleDefinitions/21dbd100-6940-42c2-9190-5d6cb909625b",
-          "scope": "/keys/key-ov5x4xujjptq7dud4g4k"
+          "scope": "/keys/rsa-1"
         },
         "type": "Microsoft.Authorization/roleAssignments"
       }
     }
   ],
   "Variables": {
-    "AZURE_KEYVAULT_URL": "https://eastus.clitest.managedhsm-preview.azure.net",
+    "AZURE_KEYVAULT_URL": "https://eastus2.chriss-eu2.managedhsm-int.azure-int.net",
     "CLIENT_OBJECTID": "693a17da-7022-4cdd-9d4e-4e72e4ad449d",
     "RandomSeed": "291087922"
   }

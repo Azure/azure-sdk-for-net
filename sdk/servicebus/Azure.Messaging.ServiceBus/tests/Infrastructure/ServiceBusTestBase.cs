@@ -42,7 +42,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         {
             var msg = new ServiceBusMessage(GetRandomBuffer(100))
             {
-                Label = $"test-{Guid.NewGuid()}",
+                Subject = $"test-{Guid.NewGuid()}",
                 MessageId = Guid.NewGuid().ToString()
             };
             if (sessionId != null)

@@ -11,9 +11,22 @@ namespace Azure.AI.FormRecognizer.Models
     public class FormLine : FormElement
     {
         internal FormLine(TextLine textLine, int pageNumber)
-            : base(new BoundingBox(textLine.BoundingBox), pageNumber, textLine.Text)
+            : base(new FieldBoundingBox(textLine.BoundingBox), pageNumber, textLine.Text)
         {
             Words = ConvertWords(textLine.Words, pageNumber);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FormLine"/> class.
+        /// </summary>
+        /// <param name="boundingBox">The quadrilateral bounding box that outlines the text of this element.</param>
+        /// <param name="pageNumber">The 1-based number of the page in which this element is present.</param>
+        /// <param name="text">The text of this form element.</param>
+        /// <param name="words">A list of the words that make up the line.</param>
+        internal FormLine(FieldBoundingBox boundingBox, int pageNumber, string text, IReadOnlyList<FormWord> words)
+            : base(boundingBox, pageNumber, text)
+        {
+            Words = words;
         }
 
         /// <summary>

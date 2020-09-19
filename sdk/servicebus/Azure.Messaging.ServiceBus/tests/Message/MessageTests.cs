@@ -60,13 +60,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             Assert.AreEqual(default(string), receivedMessage.ReplyToSessionId);
             Assert.AreEqual(TimeSpan.MaxValue, receivedMessage.TimeToLive);
             Assert.AreEqual(default(string), receivedMessage.CorrelationId);
-            Assert.AreEqual(default(string), receivedMessage.Label);
+            Assert.AreEqual(default(string), receivedMessage.Subject);
             Assert.AreEqual(default(string), receivedMessage.To);
             Assert.AreEqual(default(string), receivedMessage.ContentType);
             Assert.AreEqual(default(string), receivedMessage.ReplyTo);
             Assert.AreEqual(default(DateTimeOffset), receivedMessage.ScheduledEnqueueTime);
-            Assert.IsNotNull(receivedMessage.Properties);
-            Assert.IsEmpty(receivedMessage.Properties);
+            Assert.IsNotNull(receivedMessage.ApplicationProperties);
+            Assert.IsEmpty(receivedMessage.ApplicationProperties);
             Assert.AreEqual(default(Guid), receivedMessage.LockTokenGuid);
             Assert.AreEqual(default(int), receivedMessage.DeliveryCount);
             Assert.AreEqual(default(DateTimeOffset), receivedMessage.LockedUntil);
@@ -110,22 +110,22 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             Assert.AreEqual("replyToSessionId4556", receivedMessage.ReplyToSessionId);
             Assert.AreEqual(TimeSpan.FromMinutes(5).ToString(), receivedMessage.TimeToLive.ToString());
             Assert.AreEqual("correlationId8877", receivedMessage.CorrelationId);
-            Assert.AreEqual("label4523", receivedMessage.Label);
+            Assert.AreEqual("label4523", receivedMessage.Subject);
             Assert.AreEqual("to9887", receivedMessage.To);
             Assert.AreEqual("contentType0538", receivedMessage.ContentType);
             Assert.AreEqual("replyTo2598", receivedMessage.ReplyTo);
-            Assert.AreEqual(new DateTimeOffset(fixedDate, TimeSpan.FromHours(2)).ToString(), receivedMessage.ScheduledEnqueueTime.ToString());
-            Assert.IsNotNull(receivedMessage.Properties);
-            Assert.IsNotEmpty(receivedMessage.Properties);
-            Assert.AreEqual(new[]{ "42", "properties0864"}, receivedMessage.Properties.Keys);
-            Assert.AreEqual(new object[]{ 6420, "testValue"}, receivedMessage.Properties.Values);
+            Assert.AreEqual(new DateTimeOffset(fixedDate, TimeSpan.FromHours(2)).UtcDateTime, receivedMessage.ScheduledEnqueueTime.UtcDateTime);
+            Assert.IsNotNull(receivedMessage.ApplicationProperties);
+            Assert.IsNotEmpty(receivedMessage.ApplicationProperties);
+            Assert.AreEqual(new[]{ "42", "properties0864"}, receivedMessage.ApplicationProperties.Keys);
+            Assert.AreEqual(new object[]{ 6420, "testValue"}, receivedMessage.ApplicationProperties.Values);
             Assert.AreEqual("f5ae57c7-963b-4864-ae19-32b12451e5d8", receivedMessage.LockTokenGuid.ToString());
             Assert.AreEqual(4321, receivedMessage.DeliveryCount);
-            Assert.AreEqual(new DateTimeOffset(fixedDate, TimeSpan.FromMinutes(18)).ToString(), receivedMessage.LockedUntil.ToString());
+            Assert.AreEqual(new DateTimeOffset(fixedDate, TimeSpan.FromMinutes(18)).UtcDateTime, receivedMessage.LockedUntil.UtcDateTime);
             Assert.AreEqual(3456, receivedMessage.SequenceNumber);
             Assert.AreEqual("deadLetterSource5773", receivedMessage.DeadLetterSource);
             Assert.AreEqual(7632, receivedMessage.EnqueuedSequenceNumber);
-            Assert.AreEqual(new DateTimeOffset(fixedDate, TimeSpan.FromSeconds(120)).ToString(), receivedMessage.EnqueuedTime.ToString());
+            Assert.AreEqual(new DateTimeOffset(fixedDate, TimeSpan.FromSeconds(120)).UtcDateTime, receivedMessage.EnqueuedTime.UtcDateTime);
         }
     }
 }

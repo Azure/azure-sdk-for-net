@@ -22,8 +22,8 @@ namespace Microsoft.Azure.Management.Search
     public static partial class SharedPrivateLinkResourcesOperationsExtensions
     {
             /// <summary>
-            /// Creates or updates a shared private link resource managed by the Search
-            /// service in the given resource group.
+            /// Initiates the creation or update of a shared private link resource managed
+            /// by the search service in the given resource group.
             /// <see href="https://aka.ms/search-manage" />
             /// </summary>
             /// <param name='operations'>
@@ -53,8 +53,8 @@ namespace Microsoft.Azure.Management.Search
             }
 
             /// <summary>
-            /// Creates or updates a shared private link resource managed by the Search
-            /// service in the given resource group.
+            /// Initiates the creation or update of a shared private link resource managed
+            /// by the search service in the given resource group.
             /// <see href="https://aka.ms/search-manage" />
             /// </summary>
             /// <param name='operations'>
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.Search
             }
 
             /// <summary>
-            /// Gets the details of the shared private link resource managed by the Search
+            /// Gets the details of the shared private link resource managed by the search
             /// service in the given resource group.
             /// <see href="https://aka.ms/search-manage" />
             /// </summary>
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.Management.Search
             }
 
             /// <summary>
-            /// Gets the details of the shared private link resource managed by the Search
+            /// Gets the details of the shared private link resource managed by the search
             /// service in the given resource group.
             /// <see href="https://aka.ms/search-manage" />
             /// </summary>
@@ -152,7 +152,8 @@ namespace Microsoft.Azure.Management.Search
             }
 
             /// <summary>
-            /// Deletes the shared private link resource from the Search service.
+            /// Initiates the deletion of the shared private link resource from the search
+            /// service.
             /// <see href="https://aka.ms/search-manage" />
             /// </summary>
             /// <param name='operations'>
@@ -179,7 +180,8 @@ namespace Microsoft.Azure.Management.Search
             }
 
             /// <summary>
-            /// Deletes the shared private link resource from the Search service.
+            /// Initiates the deletion of the shared private link resource from the search
+            /// service.
             /// <see href="https://aka.ms/search-manage" />
             /// </summary>
             /// <param name='operations'>
@@ -260,6 +262,133 @@ namespace Microsoft.Azure.Management.Search
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Initiates the creation or update of a shared private link resource managed
+            /// by the search service in the given resource group.
+            /// <see href="https://aka.ms/search-manage" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the current subscription. You can
+            /// obtain this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='searchServiceName'>
+            /// The name of the Azure Cognitive Search service associated with the
+            /// specified resource group.
+            /// </param>
+            /// <param name='sharedPrivateLinkResourceName'>
+            /// The name of the shared private link resource managed by the Azure Cognitive
+            /// Search service within the specified resource group.
+            /// </param>
+            /// <param name='sharedPrivateLinkResource'>
+            /// The definition of the shared private link resource to create or update.
+            /// </param>
+            /// <param name='searchManagementRequestOptions'>
+            /// Additional parameters for the operation
+            /// </param>
+            public static SharedPrivateLinkResource BeginCreateOrUpdate(this ISharedPrivateLinkResourcesOperations operations, string resourceGroupName, string searchServiceName, string sharedPrivateLinkResourceName, SharedPrivateLinkResource sharedPrivateLinkResource, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions))
+            {
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, searchServiceName, sharedPrivateLinkResourceName, sharedPrivateLinkResource, searchManagementRequestOptions).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Initiates the creation or update of a shared private link resource managed
+            /// by the search service in the given resource group.
+            /// <see href="https://aka.ms/search-manage" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the current subscription. You can
+            /// obtain this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='searchServiceName'>
+            /// The name of the Azure Cognitive Search service associated with the
+            /// specified resource group.
+            /// </param>
+            /// <param name='sharedPrivateLinkResourceName'>
+            /// The name of the shared private link resource managed by the Azure Cognitive
+            /// Search service within the specified resource group.
+            /// </param>
+            /// <param name='sharedPrivateLinkResource'>
+            /// The definition of the shared private link resource to create or update.
+            /// </param>
+            /// <param name='searchManagementRequestOptions'>
+            /// Additional parameters for the operation
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SharedPrivateLinkResource> BeginCreateOrUpdateAsync(this ISharedPrivateLinkResourcesOperations operations, string resourceGroupName, string searchServiceName, string sharedPrivateLinkResourceName, SharedPrivateLinkResource sharedPrivateLinkResource, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, searchServiceName, sharedPrivateLinkResourceName, sharedPrivateLinkResource, searchManagementRequestOptions, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Initiates the deletion of the shared private link resource from the search
+            /// service.
+            /// <see href="https://aka.ms/search-manage" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the current subscription. You can
+            /// obtain this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='searchServiceName'>
+            /// The name of the Azure Cognitive Search service associated with the
+            /// specified resource group.
+            /// </param>
+            /// <param name='sharedPrivateLinkResourceName'>
+            /// The name of the shared private link resource managed by the Azure Cognitive
+            /// Search service within the specified resource group.
+            /// </param>
+            /// <param name='searchManagementRequestOptions'>
+            /// Additional parameters for the operation
+            /// </param>
+            public static void BeginDelete(this ISharedPrivateLinkResourcesOperations operations, string resourceGroupName, string searchServiceName, string sharedPrivateLinkResourceName, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions))
+            {
+                operations.BeginDeleteAsync(resourceGroupName, searchServiceName, sharedPrivateLinkResourceName, searchManagementRequestOptions).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Initiates the deletion of the shared private link resource from the search
+            /// service.
+            /// <see href="https://aka.ms/search-manage" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the current subscription. You can
+            /// obtain this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='searchServiceName'>
+            /// The name of the Azure Cognitive Search service associated with the
+            /// specified resource group.
+            /// </param>
+            /// <param name='sharedPrivateLinkResourceName'>
+            /// The name of the shared private link resource managed by the Azure Cognitive
+            /// Search service within the specified resource group.
+            /// </param>
+            /// <param name='searchManagementRequestOptions'>
+            /// Additional parameters for the operation
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDeleteAsync(this ISharedPrivateLinkResourcesOperations operations, string resourceGroupName, string searchServiceName, string sharedPrivateLinkResourceName, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, searchServiceName, sharedPrivateLinkResourceName, searchManagementRequestOptions, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

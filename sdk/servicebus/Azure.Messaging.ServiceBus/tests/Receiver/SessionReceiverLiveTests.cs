@@ -438,7 +438,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 messageEnum.Reset();
                 remainingMessages = messageCount;
-                var deadLetterReceiver = client.CreateDeadLetterReceiver(scope.QueueName);
+                var deadLetterReceiver = client.CreateReceiver(scope.QueueName, new ServiceBusReceiverOptions
+                {
+                    SubQueue = SubQueue.DeadLetter
+                });
 
                 while (remainingMessages > 0)
                 {
@@ -511,7 +514,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 messageEnum.Reset();
                 remainingMessages = messageCount;
-                var deadLetterReceiver = client.CreateDeadLetterReceiver(topicName, subscriptionName);
+                var deadLetterReceiver = client.CreateReceiver(topicName, subscriptionName, new ServiceBusReceiverOptions
+                {
+                    SubQueue = SubQueue.DeadLetter
+                });
 
                 while (remainingMessages > 0)
                 {
@@ -523,8 +529,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                         Assert.AreEqual(messageEnum.Current.SessionId, msg.SessionId);
                         Assert.IsNull(msg.DeadLetterErrorDescription);
                         Assert.IsNull(msg.DeadLetterReason);
-                        Assert.IsNotNull(msg.Properties[ServiceBusReceivedMessage.DeadLetterReasonHeader]);
-                        Assert.IsNotNull(msg.Properties[ServiceBusReceivedMessage.DeadLetterErrorDescriptionHeader]);
+                        Assert.IsNotNull(msg.ApplicationProperties[ServiceBusReceivedMessage.DeadLetterReasonHeader]);
+                        Assert.IsNotNull(msg.ApplicationProperties[ServiceBusReceivedMessage.DeadLetterErrorDescriptionHeader]);
                         await deadLetterReceiver.CompleteMessageAsync(msg.LockToken);
                     }
                 }
@@ -782,6 +788,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
                 Assert.AreEqual(message.MessageId, receivedMessage.MessageId);
                 Assert.AreEqual(message.SessionId, receivedMessage.SessionId);
+                Assert.AreEqual(message.Body.ToBytes().ToArray(), receivedMessage.Body.ToBytes().ToArray());
 
                 var sessionStateString = "Received Message From Session!";
                 var sessionState = Encoding.UTF8.GetBytes(sessionStateString);

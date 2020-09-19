@@ -1,0 +1,110 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-Dns-Zones-7921/providers/Microsoft.Network/dnsZones?$top=0\u0026api-version=2018-05-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20200918.1",
+          "(.NET Core 4.6.29017.01; Linux 4.19.128-microsoft-standard #1 SMP Tue Jun 23 12:58:10 UTC 2020)"
+        ],
+        "x-ms-client-request-id": "e3a29332c7f7b62cceb6e8dabd361dbf",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "Cache-Control": "private",
+        "Content-Length": "102",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 18 Sep 2020 19:40:12 GMT",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "7414ea9f-055c-4111-82e9-00089e7172d9",
+        "x-ms-ratelimit-remaining-subscription-resource-entities-read": "59988",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "491",
+        "x-ms-request-id": "e3a29332-c7f7-b62c-ceb6-e8dabd361dbf",
+        "x-ms-routing-request-id": "WESTUS2:20200918T194013Z:7414ea9f-055c-4111-82e9-00089e7172d9",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "code": "BadRequest",
+        "message": "Invalid $top value: \u00270\u0027. It must be a number between \u00271\u0027 and \u00271000\u0027."
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-Dns-Zones-7921/providers/Microsoft.Network/dnsZones?$top=-1\u0026api-version=2018-05-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20200918.1",
+          "(.NET Core 4.6.29017.01; Linux 4.19.128-microsoft-standard #1 SMP Tue Jun 23 12:58:10 UTC 2020)"
+        ],
+        "x-ms-client-request-id": "fcd78e94eaef888f4a4b424e5a7fa7fe",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "Cache-Control": "private",
+        "Content-Length": "103",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 18 Sep 2020 19:40:13 GMT",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "58d740f8-2b7e-4bb4-a411-a305457198e4",
+        "x-ms-ratelimit-remaining-subscription-resource-entities-read": "59988",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "490",
+        "x-ms-request-id": "fcd78e94-eaef-888f-4a4b-424e5a7fa7fe",
+        "x-ms-routing-request-id": "WESTUS2:20200918T194013Z:58d740f8-2b7e-4bb4-a411-a305457198e4",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "code": "BadRequest",
+        "message": "Invalid $top value: \u0027-1\u0027. It must be a number between \u00271\u0027 and \u00271000\u0027."
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-Dns-Zones-7921/providers/Microsoft.Network/dnsZones?$top=1000000\u0026api-version=2018-05-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20200918.1",
+          "(.NET Core 4.6.29017.01; Linux 4.19.128-microsoft-standard #1 SMP Tue Jun 23 12:58:10 UTC 2020)"
+        ],
+        "x-ms-client-request-id": "979fa7ffb14684c3a72fd2e8687f90e6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "Cache-Control": "private",
+        "Content-Length": "108",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 18 Sep 2020 19:40:13 GMT",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "8902e445-a219-4a40-9950-20f940d4beac",
+        "x-ms-ratelimit-remaining-subscription-resource-entities-read": "59988",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "489",
+        "x-ms-request-id": "979fa7ff-b146-84c3-a72f-d2e8687f90e6",
+        "x-ms-routing-request-id": "WESTUS2:20200918T194013Z:8902e445-a219-4a40-9950-20f940d4beac",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "code": "BadRequest",
+        "message": "Invalid $top value: \u00271000000\u0027. It must be a number between \u00271\u0027 and \u00271000\u0027."
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "793415161",
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

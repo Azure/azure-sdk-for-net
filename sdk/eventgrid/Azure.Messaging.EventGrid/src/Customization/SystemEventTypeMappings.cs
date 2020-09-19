@@ -99,6 +99,7 @@ namespace Azure.Messaging.EventGrid
             { EventTypes.StorageDirectoryCreatedEvent, StorageDirectoryCreatedEventData.DeserializeStorageDirectoryCreatedEventData },
             { EventTypes.StorageDirectoryDeletedEvent, StorageDirectoryDeletedEventData.DeserializeStorageDirectoryDeletedEventData },
             { EventTypes.StorageDirectoryRenamedEvent, StorageDirectoryRenamedEventData.DeserializeStorageDirectoryRenamedEventData },
+            { EventTypes.StorageLifecyclePolicyCompletedEvent, StorageLifecyclePolicyCompletedEventData.DeserializeStorageLifecyclePolicyCompletedEventData },
 
             // App Service
             { EventTypes.WebAppUpdated, WebAppUpdatedEventData.DeserializeWebAppUpdatedEventData },

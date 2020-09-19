@@ -1,5 +1,5 @@
 param (
-  # url list to verify links. Can either be a http address or a local file request. Local file paths support md and html files.
+  # url list to verify links. Can either be a http address or a local file request. Local file paths support md and html files.	
   [string[]] $urls,
   # file that contains a set of links to ignore when verifying
   [string] $ignoreLinksFile = "$PSScriptRoot/ignore-links.txt",
@@ -11,14 +11,20 @@ param (
   [string] $baseUrl = "",
   # path to the root of the site for resolving rooted relative links, defaults to host root for http and file directory for local files
   [string] $rootUrl = "",
-  # list of http status codes count as broken links. Defaults to 404. 
-  [array] $errorStatusCodes = @(404),
-  # flag to allow resolving relative paths or not
-  [bool] $resolveRelativeLinks = $true
+  # list of http status codes count as broken links. Defaults to 400, 401, 404, SocketError.HostNotFound = 11001, SocketError.NoData = 11004
+  [array] $errorStatusCodes = @(400, 401, 404, 11001, 11004),
+  # regex to check if the link needs to be replaced
+  [string] $branchReplaceRegex = "^(https://github.com/.*/(?:blob|tree)/)master(/.*)$",
+  # the substitute branch name or SHA commit
+  [string] $branchReplacementName = "",
+  # flag to allow checking against azure sdk link guidance. Check link guidance here: https://aka.ms/azsdk/guideline/links
+  [bool] $checkLinkGuidance = $false
 )
 
 $ProgressPreference = "SilentlyContinue"; # Disable invoke-webrequest progress dialog
-
+# Regex of the locale keywords.
+$locale = "/en-us/"
+$emptyLinkMessage = "There is at least one empty link in the page. Please replace with absolute link. Check here for more infomation: https://aka.ms/azsdk/guideline/links"
 function NormalizeUrl([string]$url){
   if (Test-Path $url) {
     $url = "file://" + (Resolve-Path $url).ToString();
@@ -56,6 +62,18 @@ function LogWarning
   }
 }
 
+function LogError
+{
+  if ($devOpsLogging)
+  {
+    Write-Host "##vso[task.logissue type=error]$args"
+  }
+  else
+  {
+    Write-Error "$args"
+  }
+}
+
 function ResolveUri ([System.Uri]$referralUri, [string]$link)
 {
   # If the link is mailto, skip it.
@@ -65,16 +83,20 @@ function ResolveUri ([System.Uri]$referralUri, [string]$link)
   }
 
   $linkUri = [System.Uri]$link;
-  if($resolveRelativeLinks){
-    if (!$linkUri.IsAbsoluteUri) {
+  # Our link guidelines do not allow relative links so only resolve them when we are not
+  # validating links against our link guidelines (i.e. !$checkLinkGuideance)
+  if ($checkLinkGuidance -and !$linkUri.IsAbsoluteUri) {
+    return $linkUri
+  }
+
+  if (!$linkUri.IsAbsoluteUri) {
     # For rooted paths resolve from the baseUrl
-      if ($link.StartsWith("/")) {
-        echo "rooturl = $rootUrl"
-        $linkUri = new-object System.Uri([System.Uri]$rootUrl, ".$link");
-      }
-      else {
-        $linkUri = new-object System.Uri($referralUri, $link);
-      }
+    if ($link.StartsWith("/")) {
+      Write-Verbose "rooturl = $rootUrl"
+      $linkUri = new-object System.Uri([System.Uri]$rootUrl, ".$link");
+    }
+    else {
+      $linkUri = new-object System.Uri($referralUri, $link);
     }
   }
 
@@ -114,13 +136,24 @@ function ParseLinks([string]$baseUri, [string]$htmlContent)
 
 function CheckLink ([System.Uri]$linkUri)
 {
-  if ($checkedLinks.ContainsKey($linkUri)) { return }
+  if(!$linkUri.ToString().Trim()) {
+    LogWarning "Found Empty link. Please use absolute link instead. Check here for more infomation: https://aka.ms/azsdk/guideline/links"
+    return $false
+  }
+  if ($checkedLinks.ContainsKey($linkUri)) { 
+    if (!$checkedLinks[$linkUri]) {
+      LogWarning "broken link $linkUri"
+    }
+    return $checkedLinks[$linkUri] 
+  }
 
-  Write-Verbose "Checking link $linkUri..."
+  $linkValid = $true
+  Write-Verbose "Checking link $linkUri..."  
+
   if ($linkUri.IsFile) {
     if (!(Test-Path $linkUri.LocalPath)) {
       LogWarning "Link to file does not exist $($linkUri.LocalPath)"
-      $script:badLinks += $linkUri
+      $linkValid = $false
     }
   }
   else {
@@ -145,9 +178,14 @@ function CheckLink ([System.Uri]$linkUri)
     catch {
       $statusCode = $_.Exception.Response.StatusCode.value__
 
+      if(!$statusCode) {
+        # Try to pull the error code from any inner SocketException we might hit
+        $statusCode = $_.Exception.InnerException.ErrorCode
+      }
+
       if ($statusCode -in $errorStatusCodes) {
         LogWarning "[$statusCode] broken link $linkUri"
-        $script:badLinks += $linkUri 
+        $linkValid = $false
       }
       else {
         if ($null -ne $statusCode) {
@@ -160,7 +198,30 @@ function CheckLink ([System.Uri]$linkUri)
       }
     }
   }
-  $checkedLinks[$linkUri] = $true;
+  
+  if ($checkLinkGuidance) {
+    # Check if the url is relative links, suppress the archor link validation.
+    if (!$linkUri.IsAbsoluteUri -and !$linkUri.ToString().StartsWith("#")) {
+      LogWarning "DO NOT use relative link $linkUri. Please use absolute link instead. Check here for more infomation: https://aka.ms/azsdk/guideline/links"
+      $linkValid = $false
+    }
+     # Check if link uri includes locale info.
+    if ($linkUri -match $locale) {
+      LogWarning "DO NOT include locale $locale information in links: $linkUri. Check here for more information: https://aka.ms/azsdk/guideline/links"
+      $linkValid = $false
+    }
+  }
+
+  $checkedLinks[$linkUri] = $linkValid
+  return $linkValid
+}
+
+function ReplaceGithubLink([string]$originLink) {
+  if (!$branchReplacementName) {
+    return $originLink
+  }
+  $ReplacementPattern = "`${1}$branchReplacementName`$2"
+  return $originLink -replace $branchReplaceRegex, $ReplacementPattern 
 }
 
 function GetLinks([System.Uri]$pageUri)
@@ -213,8 +274,6 @@ if ($PSVersionTable.PSVersion.Major -lt 6)
 {
   LogWarning "Some web requests will not work in versions of PS earlier then 6. You are running version $($PSVersionTable.PSVersion)."
 }
-
-$badLinks = @();
 $ignoreLinks = @();
 if (Test-Path $ignoreLinksFile)
 {
@@ -223,8 +282,8 @@ if (Test-Path $ignoreLinksFile)
 
 $checkedPages = @{};
 $checkedLinks = @{};
+$badLinks = @{};
 $pageUrisToCheck = new-object System.Collections.Queue
-
 foreach ($url in $urls) {
   $uri = NormalizeUrl $url  
   $pageUrisToCheck.Enqueue($uri);
@@ -238,18 +297,41 @@ while ($pageUrisToCheck.Count -ne 0)
 
   $linkUris = GetLinks $pageUri
   Write-Host "Found $($linkUris.Count) links on page $pageUri";
-  
+  $badLinksPerPage = @();
   foreach ($linkUri in $linkUris) {
-    CheckLink $linkUri
-    if ($recursive) {
+    $replacedLink = ReplaceGithubLink $linkUri
+    $isLinkValid = CheckLink $replacedLink
+    if (!$isLinkValid -and !$badLinksPerPage.Contains($linkUri)) {
+      if (!$linkUri.ToString().Trim()) {
+        $linkUri = $emptyLinkMessage
+      }
+      $badLinksPerPage += $linkUri
+    }
+    if ($recursive -and $isLinkValid) {
       if ($linkUri.ToString().StartsWith($baseUrl) -and !$checkedPages.ContainsKey($linkUri)) {
         $pageUrisToCheck.Enqueue($linkUri);
       }
     }
   }
+  if ($badLinksPerPage.Count -gt 0) {
+    $badLinks[$pageUri] = $badLinksPerPage
+  }
 }
 
-Write-Host "Found $($checkedLinks.Count) links with $($badLinks.Count) broken"
-$badLinks | ForEach-Object { Write-Host "  $_" }
+if ($badLinks.Count -gt 0) {
+  Write-Host "Summary of broken links:"
+}
+foreach ($pageLink in $badLinks.Keys) {
+  Write-Host "'$pageLink' has $($badLinks[$pageLink].Count) broken link(s):"
+  foreach ($brokenLink in $badLinks[$pageLink]) {
+    Write-Host "  $brokenLink"
+  }
+}
 
+if ($badLinks.Count -gt 0) {
+  LogError "Found $($checkedLinks.Count) links with $($badLinks.Count) page(s) broken."
+} 
+else {
+  Write-Host "Found $($checkedLinks.Count) links. No broken links found."
+}
 exit $badLinks.Count

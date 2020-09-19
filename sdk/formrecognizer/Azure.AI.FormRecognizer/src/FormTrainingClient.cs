@@ -40,7 +40,8 @@ namespace Azure.AI.FormRecognizer.Training
         /// can be found in the Azure Portal.
         /// </remarks>
         /// <seealso href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md#authenticate-a-form-recognizer-client"/>
-        public FormTrainingClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new FormRecognizerClientOptions())
+        public FormTrainingClient(Uri endpoint, AzureKeyCredential credential)
+            : this(endpoint, credential, new FormRecognizerClientOptions())
         {
         }
 

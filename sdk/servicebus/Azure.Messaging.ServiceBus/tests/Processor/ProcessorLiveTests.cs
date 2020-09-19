@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -41,7 +41,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     AutoComplete = autoComplete,
                     MaxReceiveWaitTime = TimeSpan.FromSeconds(30)
                 };
-                var processor = client.CreateProcessor(scope.QueueName, options);
+                await using var processor = client.CreateProcessor(scope.QueueName, options);
                 int messageCt = 0;
 
                 TaskCompletionSource<bool>[] completionSources = Enumerable
@@ -113,7 +113,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     AutoComplete = true,
                     MaxReceiveWaitTime = TimeSpan.FromSeconds(30)
                 };
-                var processor = client.CreateProcessor(scope.QueueName, options);
+                await using var processor = client.CreateProcessor(scope.QueueName, options);
                 int messageCt = 0;
 
                 TaskCompletionSource<bool>[] completionSources = Enumerable
@@ -194,7 +194,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     MaxConcurrentCalls = numThreads,
                     AutoComplete = false
                 };
-                var processor = client.CreateProcessor(scope.QueueName, options);
+                await using var processor = client.CreateProcessor(scope.QueueName, options);
                 int messageCt = 0;
 
                 TaskCompletionSource<bool>[] completionSources = Enumerable
@@ -267,7 +267,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     AutoComplete = false,
                     MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(autoLockRenewalDuration)
                 };
-                var processor = client.CreateProcessor(scope.QueueName, options);
+                await using var processor = client.CreateProcessor(scope.QueueName, options);
                 int messageCt = 0;
 
                 TaskCompletionSource<bool>[] completionSources = Enumerable
@@ -329,7 +329,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     MaxConcurrentCalls = numThreads,
                     ReceiveMode = ReceiveMode.ReceiveAndDelete
                 };
-                var processor = client.CreateProcessor(scope.QueueName, options);
+                await using var processor = client.CreateProcessor(scope.QueueName, options);
                 int messageProcessedCt = 0;
 
                 // stop processing halfway through
@@ -411,7 +411,38 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             await processor.StartProcessingAsync();
             await taskCompletionSource.Task;
             Assert.True(exceptionReceivedHandlerCalled);
-            await processor.StopProcessingAsync();
+            await processor.CloseAsync();
+
+            Assert.That(
+                async () => await processor.StartProcessingAsync(),
+                Throws.InstanceOf<ObjectDisposedException>());
+        }
+
+        [Test]
+        public async Task StartStopMultipleTimes()
+        {
+            var invalidQueueName = "nonexistentqueuename";
+            var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+            await using ServiceBusProcessor processor = client.CreateProcessor(invalidQueueName);
+            TaskCompletionSource<bool> taskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            processor.ProcessMessageAsync += eventArgs => Task.CompletedTask;
+            processor.ProcessErrorAsync += eventArgs => Task.CompletedTask;
+
+            var startTasks = new List<Task>
+            {
+                processor.StartProcessingAsync(),
+                processor.StartProcessingAsync()
+            };
+            Assert.That(
+                async () => await Task.WhenAll(startTasks),
+                Throws.InstanceOf<InvalidOperationException>());
+
+            var stopTasks = new List<Task>()
+            {
+                processor.StopProcessingAsync(),
+                processor.StopProcessingAsync()
+            };
+            Assert.DoesNotThrowAsync(async () => await Task.WhenAll(stopTasks));
         }
 
         [Test]
@@ -423,7 +454,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             {
                 await using var client = GetClient();
 
-                var processor = client.CreateProcessor(scope.QueueName);
+                await using var processor = client.CreateProcessor(scope.QueueName);
 
                 Func<ProcessMessageEventArgs, Task> eventHandler = eventArgs => Task.CompletedTask;
                 Func<ProcessErrorEventArgs, Task> errorHandler = eventArgs => Task.CompletedTask;
@@ -456,7 +487,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await using var client = GetClient();
                 var sender = client.CreateSender(scope.QueueName);
                 await sender.SendMessageAsync(GetMessage());
-                var processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
+                await using var processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
                 {
                     AutoComplete = true
                 });
@@ -495,7 +526,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await using var client = GetClient();
                 var sender = client.CreateSender(scope.QueueName);
                 await sender.SendMessageAsync(GetMessage());
-                var processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
+                await using var processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
                 {
                     AutoComplete = true
                 });

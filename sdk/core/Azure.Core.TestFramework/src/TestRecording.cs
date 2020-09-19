@@ -45,7 +45,14 @@ namespace Azure.Core.TestFramework
                     }
                     break;
                 case RecordedTestMode.Playback:
-                    _session = Load();
+                    try
+                    {
+                        _session = Load();
+                    }
+                    catch (Exception ex) when (ex is FileNotFoundException || ex is DirectoryNotFoundException)
+                    {
+                        throw new TestRecordingMismatchException(ex.Message, ex);
+                    }
                     break;
             }
         }
@@ -194,6 +201,12 @@ namespace Azure.Core.TestFramework
         public T InstrumentClientOptions<T>(T clientOptions) where T : ClientOptions
         {
             clientOptions.Transport = CreateTransport(clientOptions.Transport);
+            if (Mode == RecordedTestMode.Playback)
+            {
+                // Not making the timeout zero so retry code still goes async
+                clientOptions.Retry.Delay = TimeSpan.FromMilliseconds(10);
+                clientOptions.Retry.Mode = RetryMode.Fixed;
+            }
             return clientOptions;
         }
 
@@ -244,10 +257,10 @@ namespace Azure.Core.TestFramework
         public string GenerateId(string prefix, int maxLength)
         {
             var id = $"{prefix}{Random.Next()}";
-            return id.Length > maxLength ? id.Substring(0, maxLength): id;
+            return id.Length > maxLength ? id.Substring(0, maxLength) : id;
         }
 
-        public string GenerateAssetName(string prefix, [CallerMemberName]string callerMethodName = "testframework_failed")
+        public string GenerateAssetName(string prefix, [CallerMemberName] string callerMethodName = "testframework_failed")
         {
             if (Mode == RecordedTestMode.Playback && IsTrack1SessionRecord())
             {

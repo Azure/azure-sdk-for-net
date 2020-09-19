@@ -8,6 +8,7 @@ In the sample below, we will use a Storage account and authenticate with an endp
 
 ```C# Snippet:TablesSample1CreateClient
 // Construct a new <see cref="TableServiceClient" /> using a <see cref="TableSharedKeyCredential" />.
+
 var serviceClient = new TableServiceClient(
     new Uri(storageUri),
     new TableSharedKeyCredential(accountName, storageAccountKey));
@@ -18,10 +19,13 @@ To get a collection of tables, call `GetTables` and optionally pass in an OData 
 
 ```C# Snippet:TablesSample3QueryTables
 // Use the <see cref="TableServiceClient"> to query the service. Passing in OData filter strings is optional.
+
 Pageable<TableItem> queryTableResults = serviceClient.GetTables(filter: $"TableName eq '{tableName}'");
 
 Console.WriteLine("The following are the names of the tables in the query results:");
+
 // Iterate the <see cref="Pageable"> in order to access queried tables.
+
 foreach (TableItem table in queryTableResults)
 {
     Console.WriteLine(table.TableName);

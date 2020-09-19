@@ -35,10 +35,10 @@ eng\common\TestResources\New-TestResources.ps1 `
   -TestApplicationSecret (ConvertFrom-SecureString $sp.Secret -AsPlainText)
 ```
 
-If you are running this for a .NET project on Windows, the recommended method is to 
-add the `-OutFile` switch to the above command. This will save test environment settings 
-into a test-resources.json.env file next to test-resources.json. The file is protected via DPAPI. 
-The environment file would be scoped to the current repository directory and avoids the need to 
+If you are running this for a .NET project on Windows, the recommended method is to
+add the `-OutFile` switch to the above command. This will save test environment settings
+into a test-resources.json.env file next to test-resources.json. The file is protected via DPAPI.
+The environment file would be scoped to the current repository directory and avoids the need to
 set environment variables or restart your IDE to recognize them.
 
 Along with some log messages, this will output environment variables based on
@@ -125,8 +125,8 @@ New-MarkdownHelp -Command .\New-TestResources.ps1 -OutputFolder . -Force
 
 PowerShell markdown documentation created with [platyPS][].
 
-  [New-TestResources.ps1]: ./New-TestResources.ps1.md
-  [Remove-TestResources.ps1]: ./Remove-TestResources.ps1.md
+  [New-TestResources.ps1]: https://github.com/Azure/azure-sdk-tools/blob/master/eng/common/TestResources/New-TestResources.ps1.md
+  [Remove-TestResources.ps1]: https://github.com/Azure/azure-sdk-tools/blob/master/eng/common/TestResources/Remove-TestResources.ps1.md
   [PowerShell]: https://github.com/PowerShell/PowerShell
   [PowerShellAz]: https://docs.microsoft.com/powershell/azure/install-az-ps
   [platyPS]: https://github.com/PowerShell/platyPS

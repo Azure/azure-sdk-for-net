@@ -40,16 +40,6 @@
     <Compile Update="Samples\Sample01_HelloWorld.Data.cs" DependentUpon="Sample01_HelloWorld.cs" />
   </ItemGroup>
 
-  <!-- Conditionally compile FieldBuilder and related source -->
-  <ItemGroup Condition="'$(UseFieldBuilder)' == 'true'">
-    <Compile Remove="Samples\FieldBuilder\**" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(UseFieldBuilder)' != 'true'">
-    <Compile Remove="SearchableFieldAttributeTests.cs" />
-    <Compile Remove="SimpleFieldAttributeTests.cs" />
-    <Compile Remove="Samples\Sample2_FieldBuilder.cs" />
-  </ItemGroup>
-
   <!-- Pull in Shared Source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />

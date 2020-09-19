@@ -2,6 +2,8 @@
 
 ## 1.0.0-preview.2 (Unreleased)
 
+- Updating API version to 2020-06-01.
+- Adding new parameter called 'PublicNetworkAccess' for ConfigurationStoreUpdateParameters.
 
 ## 1.0.0-preview.1
 
