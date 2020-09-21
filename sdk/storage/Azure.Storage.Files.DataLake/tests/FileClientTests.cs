@@ -1928,6 +1928,27 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public async Task FlushDataAsync_CloseTwice()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            await file.CreateAsync();
+            var data = GetRandomBuffer(Constants.KB);
+
+            using Stream stream = new MemoryStream(data);
+            await file.AppendAsync(stream, 0);
+
+            // Act
+            await file.FlushAsync(Constants.KB, close: true);
+            Response<PathInfo> response = await file.FlushAsync(Constants.KB, close: true);
+
+            // Assert
+            AssertValidStoragePathInfo(response.Value);
+        }
+
+        [Test]
         public async Task FlushDataAsync_Conditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
