@@ -16,20 +16,22 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// A copy activity Parquet sink.
+    /// A copy activity Azure Databricks Delta Lake sink.
     /// </summary>
-    public partial class ParquetSink : CopySink
+    public partial class AzureDatabricksDeltaLakeSink : CopySink
     {
         /// <summary>
-        /// Initializes a new instance of the ParquetSink class.
+        /// Initializes a new instance of the AzureDatabricksDeltaLakeSink
+        /// class.
         /// </summary>
-        public ParquetSink()
+        public AzureDatabricksDeltaLakeSink()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ParquetSink class.
+        /// Initializes a new instance of the AzureDatabricksDeltaLakeSink
+        /// class.
         /// </summary>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
@@ -46,13 +48,15 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the sink data store. Type: integer (or
         /// Expression with resultType integer).</param>
-        /// <param name="storeSettings">Parquet store settings.</param>
-        /// <param name="formatSettings">Parquet format settings.</param>
-        public ParquetSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), StoreWriteSettings storeSettings = default(StoreWriteSettings), ParquetWriteSettings formatSettings = default(ParquetWriteSettings))
+        /// <param name="preCopyScript">SQL pre-copy script. Type: string (or
+        /// Expression with resultType string).</param>
+        /// <param name="importSettings">Azure Databricks Delta Lake import
+        /// settings.</param>
+        public AzureDatabricksDeltaLakeSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object preCopyScript = default(object), AzureDatabricksDeltaLakeImportCommand importSettings = default(AzureDatabricksDeltaLakeImportCommand))
             : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections)
         {
-            StoreSettings = storeSettings;
-            FormatSettings = formatSettings;
+            PreCopyScript = preCopyScript;
+            ImportSettings = importSettings;
             CustomInit();
         }
 
@@ -62,16 +66,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets parquet store settings.
+        /// Gets or sets SQL pre-copy script. Type: string (or Expression with
+        /// resultType string).
         /// </summary>
-        [JsonProperty(PropertyName = "storeSettings")]
-        public StoreWriteSettings StoreSettings { get; set; }
+        [JsonProperty(PropertyName = "preCopyScript")]
+        public object PreCopyScript { get; set; }
 
         /// <summary>
-        /// Gets or sets parquet format settings.
+        /// Gets or sets azure Databricks Delta Lake import settings.
         /// </summary>
-        [JsonProperty(PropertyName = "formatSettings")]
-        public ParquetWriteSettings FormatSettings { get; set; }
+        [JsonProperty(PropertyName = "importSettings")]
+        public AzureDatabricksDeltaLakeImportCommand ImportSettings { get; set; }
 
     }
 }
