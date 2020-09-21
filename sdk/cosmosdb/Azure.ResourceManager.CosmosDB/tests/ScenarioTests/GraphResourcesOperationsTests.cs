@@ -133,7 +133,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TestCase, Order(6)]
         public async Task GremlinGraphCreateUpdateTests()
         {
-            IndexingPolicy indexingPolicy = new IndexingPolicy(true, IndexingMode.Consistent, new List<IncludedPath> { new IncludedPath { Path = "/*" } }, new List<ExcludedPath> { new ExcludedPath { Path = "/pathToNotIndex/*" } }, new List<IList<CompositePath>>
+            IList<IncludedPath> includedPath = new List<IncludedPath> { new IncludedPath { Path = "/*" } };
+            IList<ExcludedPath> excludedPaths = new List<ExcludedPath> { new ExcludedPath { Path = "/pathToNotIndex/*" } };
+            IList<IList<CompositePath>> compositeIndexes = new List<IList<CompositePath>>
                         {
                             new List<CompositePath>
                             {
@@ -145,7 +147,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                                 new CompositePath { Path = "/orderByPath3", Order = CompositePathSortOrder.Ascending },
                                 new CompositePath { Path = "/orderByPath4", Order = CompositePathSortOrder.Descending }
                             }
-                        }, new List<SpatialSpec> { new SpatialSpec ( "/*", new List<SpatialType> { new SpatialType("Point") } ) });
+                        };
+            IList<SpatialSpec> spatialIndexes = new List<SpatialSpec> { new SpatialSpec("/*", new List<SpatialType> { new SpatialType("Point") }) };
+
+            IndexingPolicy indexingPolicy = new IndexingPolicy(true, IndexingMode.Consistent, includedPath, excludedPaths, compositeIndexes, spatialIndexes);
 
             ContainerPartitionKey containerPartitionKey = new ContainerPartitionKey(new List<string> { "/address" }, "Hash", null);
             IList<string> paths = new List<string>() { "/testpath" };
