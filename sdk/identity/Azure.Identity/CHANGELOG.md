@@ -1,5 +1,6 @@
 # Release History
 ## 1.3.0-alpha.999 (Unreleased)
+- For Azure PowerShell
 
 ### New Features
 - Restoring Application Authentication APIs from 1.2.0-preview.6
