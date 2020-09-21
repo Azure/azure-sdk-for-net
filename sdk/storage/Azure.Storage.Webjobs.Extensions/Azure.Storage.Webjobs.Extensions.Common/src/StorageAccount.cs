@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Net.Http;
+using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
 using Azure.Storage.Queues;
 
@@ -64,7 +66,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
         /// <returns></returns>
         public virtual BlobServiceClient CreateBlobServiceClient()
         {
-            return new BlobServiceClient(_connectionString);
+            var blobClientOptions = SkuUtility.IsDynamicSku ? new BlobClientOptions()
+            {
+                Transport = CreateTransportForDynamicSku()
+            } : default;
+            return new BlobServiceClient(_connectionString, blobClientOptions);
         }
 
         /// <summary>
@@ -73,7 +79,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
         /// <returns></returns>
         public virtual QueueServiceClient CreateQueueServiceClient()
         {
-            return new QueueServiceClient(_connectionString);
+            var queueClientOptions = SkuUtility.IsDynamicSku ? new QueueClientOptions()
+            {
+                Transport = CreateTransportForDynamicSku()
+            } : default;
+            return new QueueServiceClient(_connectionString, queueClientOptions);
+        }
+
+        private HttpPipelineTransport CreateTransportForDynamicSku()
+        {
+            return new HttpClientTransport(new HttpClient(new HttpClientHandler()
+            {
+                MaxConnectionsPerServer = 50
+            }));
         }
     }
 }

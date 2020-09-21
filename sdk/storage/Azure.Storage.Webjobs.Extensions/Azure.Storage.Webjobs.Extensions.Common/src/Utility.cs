@@ -4,10 +4,10 @@
 using System;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
-using Microsoft.Azure.WebJobs.Host;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
 {
+    // TODO (kasobol-msft) find better home for this.
     internal static class Utility
     {
         // CloudBlobDirectory has a private ctor, so we can't actually override it.

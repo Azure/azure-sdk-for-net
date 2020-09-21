@@ -2,12 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Microsoft.Azure.WebJobs.Storage
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
 {
-    internal static class CommonUtility
+    internal static class SkuUtility
     {
         private const string AzureWebsiteSku = "WEBSITE_SKU";
         private const string DynamicSku = "Dynamic";

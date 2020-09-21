@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 
-namespace Microsoft.Azure.WebJobs.Host.Queues
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
 {
     internal static class StorageQueueExtensions
     {
