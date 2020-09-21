@@ -81,7 +81,7 @@ namespace Azure.Data.SchemaRegistry
                     {
                         string value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = document.RootElement.GetString();
+                        value = document.RootElement.GetRawText();
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -109,7 +109,7 @@ namespace Azure.Data.SchemaRegistry
                     {
                         string value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = document.RootElement.GetString();
+                        value = document.RootElement.GetRawText();
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -134,8 +134,7 @@ namespace Azure.Data.SchemaRegistry
             request.Headers.Add("X-Schema-Type", xSchemaType.ToString());
             request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteStringValue(schemaContent);
+            var content = new StringRequestContent(schemaContent);
             request.Content = content;
             return message;
         }
@@ -235,8 +234,7 @@ namespace Azure.Data.SchemaRegistry
             request.Headers.Add("X-Schema-Type", xSchemaType.ToString());
             request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteStringValue(schemaContent);
+            var content = new StringRequestContent(schemaContent);
             request.Content = content;
             return message;
         }
