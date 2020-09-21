@@ -1,5 +1,5 @@
 # Release History
-## 1.3.0-alpha.999
+## 1.3.0-alpha.999 (2020-09-21)
 
 ### New Features
 - Restoring Application Authentication APIs from 1.2.0-preview.6
