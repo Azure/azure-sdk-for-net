@@ -6,7 +6,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager.CosmosDB/1.0.0-alpha.20200918.1",
+          "azsdk-net-ResourceManager.CosmosDB/1.0.0-alpha.20200921.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "bd43f87e2b186be8bd63a2d258946de3",
@@ -19,16 +19,16 @@
         "Content-Length": "1407",
         "Content-Location": "https://management.documents.azure.com:450/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-7341/providers/Microsoft.DocumentDB/databaseAccounts/amegraphtest153/gremlinDatabases/databaseName1002/graphs?api-version=2020-04-01",
         "Content-Type": "application/json",
-        "Date": "Sat, 19 Sep 2020 07:44:43 GMT",
+        "Date": "Mon, 21 Sep 2020 19:49:04 GMT",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "1c98bab0-5d87-49c5-8e67-df245b05d356",
+        "x-ms-correlation-request-id": "8e09aacf-9212-4517-8973-c252e0560fe4",
         "x-ms-gatewayversion": "version=2.11.0",
-        "x-ms-ratelimit-remaining-subscription-reads": "11948",
-        "x-ms-request-id": "1c98bab0-5d87-49c5-8e67-df245b05d356",
-        "x-ms-routing-request-id": "WESTUS:20200919T074444Z:1c98bab0-5d87-49c5-8e67-df245b05d356"
+        "x-ms-ratelimit-remaining-subscription-reads": "9914",
+        "x-ms-request-id": "8e09aacf-9212-4517-8973-c252e0560fe4",
+        "x-ms-routing-request-id": "WESTUS:20200921T194905Z:8e09aacf-9212-4517-8973-c252e0560fe4"
       },
       "ResponseBody": {
         "value": [
@@ -114,10 +114,10 @@
                   "type": "Geography"
                 },
                 "uniqueIndexReIndexingState": 0,
-                "_rid": "rZsPAMtkbJ8=",
-                "_ts": 1600501474,
-                "_self": "dbs/rZsPAA==/colls/rZsPAMtkbJ8=/",
-                "_etag": "\u002200002102-0000-0700-0000-5f65b6e20000\u0022",
+                "_rid": "CfcKAK8T59A=",
+                "_ts": 1600717736,
+                "_self": "dbs/CfcKAA==/colls/CfcKAK8T59A=/",
+                "_etag": "\u00220000f414-0000-0700-0000-5f6903a80000\u0022",
                 "_docs": "docs/",
                 "_sprocs": "sprocs/",
                 "_triggers": "triggers/",
@@ -134,9 +134,9 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-f3da07c6c4fb814cbe227f6e48b18537-f5ab4307b0911c4e-00",
+        "traceparent": "00-07a6da0370b6604fa1798a810d43bfa2-a1df6a08248f5442-00",
         "User-Agent": [
-          "azsdk-net-ResourceManager.CosmosDB/1.0.0-alpha.20200918.1",
+          "azsdk-net-ResourceManager.CosmosDB/1.0.0-alpha.20200921.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "2d43ff0decb0e419821550376bd793ea",
@@ -149,16 +149,16 @@
         "Content-Length": "1471",
         "Content-Location": "https://management.documents.azure.com:450/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-7341/providers/Microsoft.DocumentDB/databaseAccounts/amegraphtest153/gremlinDatabases/databaseName1002/graphs/gremlinGraphName1002?api-version=2020-04-01",
         "Content-Type": "application/json",
-        "Date": "Sat, 19 Sep 2020 07:44:44 GMT",
+        "Date": "Mon, 21 Sep 2020 19:49:04 GMT",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "15732727-04ca-4e75-89f1-ba45ebd3c800",
+        "x-ms-correlation-request-id": "f3ee107c-2ead-4804-9b66-b34d880d7679",
         "x-ms-gatewayversion": "version=2.11.0",
-        "x-ms-ratelimit-remaining-subscription-reads": "11947",
-        "x-ms-request-id": "15732727-04ca-4e75-89f1-ba45ebd3c800",
-        "x-ms-routing-request-id": "WESTUS:20200919T074444Z:15732727-04ca-4e75-89f1-ba45ebd3c800"
+        "x-ms-ratelimit-remaining-subscription-reads": "9913",
+        "x-ms-request-id": "f3ee107c-2ead-4804-9b66-b34d880d7679",
+        "x-ms-routing-request-id": "WESTUS:20200921T194905Z:f3ee107c-2ead-4804-9b66-b34d880d7679"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-7341/providers/Microsoft.DocumentDB/databaseAccounts/amegraphtest153/gremlinDatabases/databaseName1002/graphs/gremlinGraphName1002",
@@ -242,10 +242,10 @@
               "type": "Geography"
             },
             "uniqueIndexReIndexingState": 0,
-            "_rid": "rZsPAMtkbJ8=",
-            "_ts": 1600501474,
-            "_self": "dbs/rZsPAA==/colls/rZsPAMtkbJ8=/",
-            "_etag": "\u002200002102-0000-0700-0000-5f65b6e20000\u0022",
+            "_rid": "CfcKAK8T59A=",
+            "_ts": 1600717736,
+            "_self": "dbs/CfcKAA==/colls/CfcKAK8T59A=/",
+            "_etag": "\u00220000f414-0000-0700-0000-5f6903a80000\u0022",
             "_docs": "docs/",
             "_sprocs": "sprocs/",
             "_triggers": "triggers/",
