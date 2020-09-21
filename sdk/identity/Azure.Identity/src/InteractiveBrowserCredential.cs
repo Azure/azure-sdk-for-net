@@ -208,7 +208,7 @@ namespace Azure.Identity
         {
             AuthenticationResult result = await Client.AcquireTokenInteractiveAsync(scopes, Prompt.SelectAccount, async, cancellationToken).ConfigureAwait(false);
 
-            Record = new AuthenticationRecord(result, ClientId);
+            Record = new AuthenticationTokenRecord(result, ClientId);
 
             return new AccessToken(result.AccessToken, result.ExpiresOn);
         }
