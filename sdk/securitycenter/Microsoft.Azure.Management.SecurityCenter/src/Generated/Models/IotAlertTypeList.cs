@@ -16,23 +16,23 @@ namespace Microsoft.Azure.Management.Security.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents a list of VM/server groups and set of rules that are
-    /// Recommended by Azure Security Center to be allowed
+    /// List of alert types
     /// </summary>
-    public partial class AppWhitelistingGroups
+    public partial class IotAlertTypeList
     {
         /// <summary>
-        /// Initializes a new instance of the AppWhitelistingGroups class.
+        /// Initializes a new instance of the IotAlertTypeList class.
         /// </summary>
-        public AppWhitelistingGroups()
+        public IotAlertTypeList()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AppWhitelistingGroups class.
+        /// Initializes a new instance of the IotAlertTypeList class.
         /// </summary>
-        public AppWhitelistingGroups(IList<AppWhitelistingGroup> value = default(IList<AppWhitelistingGroup>))
+        /// <param name="value">List data</param>
+        public IotAlertTypeList(IList<IotAlertType> value = default(IList<IotAlertType>))
         {
             Value = value;
             CustomInit();
@@ -44,9 +44,10 @@ namespace Microsoft.Azure.Management.Security.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets list data
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<AppWhitelistingGroup> Value { get; set; }
+        public IList<IotAlertType> Value { get; set; }
 
     }
 }
