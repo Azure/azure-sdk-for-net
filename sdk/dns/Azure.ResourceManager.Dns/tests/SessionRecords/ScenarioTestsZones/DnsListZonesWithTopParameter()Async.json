@@ -19,7 +19,7 @@
         "location": "Global",
         "properties": {}
       },
-      "StatusCode": 201,
+      "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "private",
         "Content-Length": "542",
