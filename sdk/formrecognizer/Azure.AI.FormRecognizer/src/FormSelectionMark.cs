@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.Models
             State = selectionMark.State;
         }
 
-        internal FormSelectionMark(FieldBoundingBox boundingBox, int pageNumber, string text, float confidence, SelectionMarkState state)
+        internal FormSelectionMark(FieldBoundingBox boundingBox, int pageNumber, string text, float confidence, FormSelectionMarkState state)
             : base(boundingBox, pageNumber, text)
         {
             Confidence = confidence;
@@ -30,6 +30,6 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// Selection mark state value.
         /// </summary>
-        public SelectionMarkState State { get; }
+        public FormSelectionMarkState State { get; }
     }
 }

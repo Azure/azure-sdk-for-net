@@ -105,7 +105,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// Initializes a new instance of the <see cref="FieldValue"/> structure.
         /// </summary>
         /// <param name="value">The actual field value.</param>
-        internal FieldValue(SelectionMarkState value)
+        internal FieldValue(FormSelectionMarkState value)
             : this()
         {
             ValueType = FieldValueType.SelectionMark;
@@ -165,7 +165,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// The <see cref="FieldValueSelectionMark"/> value of this instance. Values are usually extracted from
         /// <see cref="_fieldValue"/>, so this property is exclusively used for mocking.
         /// </summary>
-        private SelectionMarkState ValueSelectionMark { get; }
+        private FormSelectionMarkState ValueSelectionMark { get; }
 
         /// <summary>
         /// Gets the value of the field as a <see cref="string"/>.
@@ -368,11 +368,11 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// Gets the value of the field as a <see cref="SelectionMarkState"/>.
+        /// Gets the value of the field as a <see cref="FormSelectionMarkState"/>.
         /// </summary>
-        /// <returns>The value of the field converted to <see cref="SelectionMarkState"/>.</returns>
+        /// <returns>The value of the field converted to <see cref="FormSelectionMarkState"/>.</returns>
         /// <exception cref="InvalidOperationException">Thrown when <see cref="ValueType"/> is not <see cref="FieldValueType.SelectionMark"/>.</exception>
-        public SelectionMarkState AsSelectionMarkState()
+        public FormSelectionMarkState AsFormSelectionMarkState()
         {
             if (ValueType != FieldValueType.SelectionMark)
             {

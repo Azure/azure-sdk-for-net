@@ -9,7 +9,7 @@ namespace Azure.AI.FormRecognizer.Models
     /// State of a selection mark.
     /// </summary>
     [CodeGenModel("SelectionMarkState")]
-    public enum SelectionMarkState
+    public enum FormSelectionMarkState
     {
         /// <summary>
         /// Value is selected.
