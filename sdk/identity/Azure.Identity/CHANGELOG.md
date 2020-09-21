@@ -1,5 +1,5 @@
 # Release History
-## 1.3.0-preview.999 (Unreleased)
+## 1.3.0-alpha.999 (Unreleased)
 
 ### New Features
 - Restoring Application Authentication APIs from 1.2.0-preview.6
