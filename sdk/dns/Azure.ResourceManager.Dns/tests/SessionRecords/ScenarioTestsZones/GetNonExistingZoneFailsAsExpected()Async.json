@@ -1,58 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/Default-Dns-Zones-9021?api-version=2017-05-10",
-      "RequestMethod": "PUT",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "Content-Length": "22",
-        "Content-Type": "application/json",
-        "traceparent": "00-4ad324b3a34e9b479bb24c7c586a673c-ee70a4294c5a1e40-00",
-        "User-Agent": [
-          "azsdk-net-ResourceManager.Dns.Tests/1.0.0-alpha.20200921.1",
-          "(.NET Core 4.6.29130.01; Linux 4.19.128-microsoft-standard #1 SMP Tue Jun 23 12:58:10 UTC 2020)"
-        ],
-        "x-ms-client-request-id": "b5d33729a26266c5fe58ac9e37ffbf57",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": {
-        "location": "West US"
-      },
-      "StatusCode": 201,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "197",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 21 Sep 2020 19:29:55 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "9d78db2a-5284-4311-9343-614c80352902",
-        "x-ms-ratelimit-remaining-subscription-writes": "1191",
-        "x-ms-request-id": "9d78db2a-5284-4311-9343-614c80352902",
-        "x-ms-routing-request-id": "WESTUS2:20200921T192955Z:9d78db2a-5284-4311-9343-614c80352902"
-      },
-      "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-Dns-Zones-9021",
-        "name": "Default-Dns-Zones-9021",
-        "location": "westus",
-        "properties": {
-          "provisioningState": "Succeeded"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-Dns-Zones-9021/providers/Microsoft.Network/dnsZones/somegibberish?api-version=2018-05-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-Dns-Zones-2966/providers/Microsoft.Network/dnsZones/somegibberish?api-version=2018-05-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-7a3a90d924dcb548895ed26137f49396-bc325835410a204c-00",
+        "traceparent": "00-d129d600068e2b4689f43387b9d648ef-552e35369f74af43-00",
         "User-Agent": [
           "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20200921.1",
           "(.NET Core 4.6.29130.01; Linux 4.19.128-microsoft-standard #1 SMP Tue Jun 23 12:58:10 UTC 2020)"
         ],
-        "x-ms-client-request-id": "da5637d1e3efea8b06a6e36a7c2fdb55",
+        "x-ms-client-request-id": "dfa2a4b17117d01ed8397203a684eb1c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -61,26 +19,26 @@
         "Cache-Control": "no-cache",
         "Content-Length": "234",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 21 Sep 2020 19:29:55 GMT",
+        "Date": "Mon, 21 Sep 2020 19:44:26 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "326464f5-e4e2-4c13-8ace-4d110b94e0eb",
+        "x-ms-correlation-request-id": "56e1d3e4-7c1a-40b1-9580-60ebac94b340",
         "x-ms-failure-cause": "gateway",
-        "x-ms-request-id": "326464f5-e4e2-4c13-8ace-4d110b94e0eb",
-        "x-ms-routing-request-id": "WESTUS2:20200921T192955Z:326464f5-e4e2-4c13-8ace-4d110b94e0eb"
+        "x-ms-request-id": "56e1d3e4-7c1a-40b1-9580-60ebac94b340",
+        "x-ms-routing-request-id": "WESTUS2:20200921T194427Z:56e1d3e4-7c1a-40b1-9580-60ebac94b340"
       },
       "ResponseBody": {
         "error": {
           "code": "ResourceNotFound",
-          "message": "The Resource \u0027Microsoft.Network/dnszones/somegibberish\u0027 under resource group \u0027Default-Dns-Zones-7921\u0027 was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix"
+          "message": "The Resource \u0027Microsoft.Network/dnszones/somegibberish\u0027 under resource group \u0027Default-Dns-Zones-2966\u0027 was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix"
         }
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "589658408",
+    "RandomSeed": "845363016",
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
 }

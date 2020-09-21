@@ -1,18 +1,18 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-Dns-3732/providers/Microsoft.Network/dnsZones/azure.ameredmond.dns/TXT/txt_record?api-version=2018-05-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-Dns-9276/providers/Microsoft.Network/dnsZones/azure.ameredmond.dns/TXT/txt_record?api-version=2018-05-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "109",
         "Content-Type": "application/json",
-        "traceparent": "00-c7805509dc6d5b41b32ba2a09df6bd28-46cb7b27e449ca4b-00",
+        "traceparent": "00-dffc9986bec4cb419ec136ee45464cc6-2584cd80f979a540-00",
         "User-Agent": [
           "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20200921.1",
           "(.NET Core 4.6.29130.01; Linux 4.19.128-microsoft-standard #1 SMP Tue Jun 23 12:58:10 UTC 2020)"
         ],
-        "x-ms-client-request-id": "ae8e6f8b641ead36c7c2ba11c21a9d44",
+        "x-ms-client-request-id": "38dc2fcbeb0f69643321caa37ec1f6f9",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -40,22 +40,22 @@
         "Cache-Control": "private",
         "Content-Length": "485",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 21 Sep 2020 19:29:02 GMT",
-        "ETag": "d4c84a3e-3822-4827-b3fd-803dd972469d",
+        "Date": "Mon, 21 Sep 2020 19:43:33 GMT",
+        "ETag": "e15063e8-0204-4edc-a58b-fc76d34d4b9b",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "8c133e9b-e156-41a8-8a2b-d6f88334d0a9",
+        "x-ms-correlation-request-id": "797d2441-24c4-4109-a7b0-6cae0ced7661",
         "x-ms-ratelimit-remaining-subscription-resource-requests": "11999",
-        "x-ms-request-id": "e39c662c-48b0-afcb-0e63-82ff67fe0017",
-        "x-ms-routing-request-id": "WESTUS2:20200921T192902Z:8c133e9b-e156-41a8-8a2b-d6f88334d0a9",
+        "x-ms-request-id": "38dc2fcb-eb0f-6964-3321-caa37ec1f6f9",
+        "x-ms-routing-request-id": "WESTUS2:20200921T194334Z:797d2441-24c4-4109-a7b0-6cae0ced7661",
         "X-Powered-By": "ASP.NET"
       },
-      "ResponseBody": "{\u0022id\u0022:\u0022\\/subscriptions\\/db1ab6f0-4769-4b27-930e-01e2ef9c123c\\/resourceGroups\\/Default-Dns-4332\\/providers\\/Microsoft.Network\\/dnszones\\/azure.ameredmond.dns\\/TXT\\/txt_record\u0022,\u0022name\u0022:\u0022txt_record\u0022,\u0022type\u0022:\u0022Microsoft.Network\\/dnszones\\/TXT\u0022,\u0022etag\u0022:\u0022d4c84a3e-3822-4827-b3fd-803dd972469d\u0022,\u0022properties\u0022:{\u0022metadata\u0022:{\u0022tag1\u0022:\u0022value1\u0022},\u0022fqdn\u0022:\u0022txt_record.azure.ameredmond.dns.\u0022,\u0022TTL\u0022:60,\u0022TXTRecords\u0022:[{\u0022value\u0022:[\u0022lorem\u0022]},{\u0022value\u0022:[\u0022ipsum\u0022]}],\u0022targetResource\u0022:{},\u0022provisioningState\u0022:\u0022Succeeded\u0022}}"
+      "ResponseBody": "{\u0022id\u0022:\u0022\\/subscriptions\\/db1ab6f0-4769-4b27-930e-01e2ef9c123c\\/resourceGroups\\/Default-Dns-9276\\/providers\\/Microsoft.Network\\/dnszones\\/azure.ameredmond.dns\\/TXT\\/txt_record\u0022,\u0022name\u0022:\u0022txt_record\u0022,\u0022type\u0022:\u0022Microsoft.Network\\/dnszones\\/TXT\u0022,\u0022etag\u0022:\u0022e15063e8-0204-4edc-a58b-fc76d34d4b9b\u0022,\u0022properties\u0022:{\u0022metadata\u0022:{\u0022tag1\u0022:\u0022value1\u0022},\u0022fqdn\u0022:\u0022txt_record.azure.ameredmond.dns.\u0022,\u0022TTL\u0022:60,\u0022TXTRecords\u0022:[{\u0022value\u0022:[\u0022lorem\u0022]},{\u0022value\u0022:[\u0022ipsum\u0022]}],\u0022targetResource\u0022:{},\u0022provisioningState\u0022:\u0022Succeeded\u0022}}"
     }
   ],
   "Variables": {
-    "RandomSeed": "184895828",
+    "RandomSeed": "509947103",
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
 }
