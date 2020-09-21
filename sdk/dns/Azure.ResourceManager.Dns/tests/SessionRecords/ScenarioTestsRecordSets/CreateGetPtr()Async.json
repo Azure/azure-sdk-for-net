@@ -7,10 +7,10 @@
         "Authorization": "Sanitized",
         "Content-Length": "131",
         "Content-Type": "application/json",
-        "traceparent": "00-bd1b63e9393cdd4790ea60c8e5a7d09a-c42fca96c4a6ac41-00",
+        "traceparent": "00-bbf3ac14e75dd74eb6f5b00180abde41-e8a81834d984524d-00",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20200917.1",
-          "(.NET Core 4.6.29017.01; Linux 4.19.128-microsoft-standard #1 SMP Tue Jun 23 12:58:10 UTC 2020)"
+          "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20200921.1",
+          "(.NET Core 4.6.29130.01; Linux 4.19.128-microsoft-standard #1 SMP Tue Jun 23 12:58:10 UTC 2020)"
         ],
         "x-ms-client-request-id": "47bcedcce65a04c28a62ed1e34c7a52a",
         "x-ms-return-client-request-id": "true"
@@ -36,18 +36,18 @@
         "Cache-Control": "private",
         "Content-Length": "507",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 17 Sep 2020 20:30:54 GMT",
-        "ETag": "a5065cde-2093-4b55-a34c-fa32a15c8ec7",
+        "Date": "Mon, 21 Sep 2020 19:29:00 GMT",
+        "ETag": "4121c1cc-fa2f-4243-9a52-1d5498c9af26",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "5b5bbdd4-1cc1-4006-9933-5092c44657d0",
+        "x-ms-correlation-request-id": "6b116775-213f-42ab-b550-0ed64005dbc6",
         "x-ms-ratelimit-remaining-subscription-resource-requests": "11999",
         "x-ms-request-id": "47bcedcc-e65a-04c2-8a62-ed1e34c7a52a",
-        "x-ms-routing-request-id": "WESTUS2:20200917T203054Z:5b5bbdd4-1cc1-4006-9933-5092c44657d0",
+        "x-ms-routing-request-id": "WESTUS2:20200921T192901Z:6b116775-213f-42ab-b550-0ed64005dbc6",
         "X-Powered-By": "ASP.NET"
       },
-      "ResponseBody": "{\u0022id\u0022:\u0022\\/subscriptions\\/db1ab6f0-4769-4b27-930e-01e2ef9c123c\\/resourceGroups\\/Default-Dns-4332\\/providers\\/Microsoft.Network\\/dnszones\\/azure.ameredmond.dns\\/PTR\\/ptr_record\u0022,\u0022name\u0022:\u0022ptr_record\u0022,\u0022type\u0022:\u0022Microsoft.Network\\/dnszones\\/PTR\u0022,\u0022etag\u0022:\u0022a5065cde-2093-4b55-a34c-fa32a15c8ec7\u0022,\u0022properties\u0022:{\u0022metadata\u0022:{\u0022tag1\u0022:\u0022value1\u0022},\u0022fqdn\u0022:\u0022ptr_record.azure.ameredmond.dns.\u0022,\u0022TTL\u0022:60,\u0022PTRRecords\u0022:[{\u0022ptrdname\u0022:\u0022www1.scsfsm.com\u0022},{\u0022ptrdname\u0022:\u0022www2.scsfsm.com\u0022}],\u0022targetResource\u0022:{},\u0022provisioningState\u0022:\u0022Succeeded\u0022}}"
+      "ResponseBody": "{\u0022id\u0022:\u0022\\/subscriptions\\/db1ab6f0-4769-4b27-930e-01e2ef9c123c\\/resourceGroups\\/Default-Dns-4332\\/providers\\/Microsoft.Network\\/dnszones\\/azure.ameredmond.dns\\/PTR\\/ptr_record\u0022,\u0022name\u0022:\u0022ptr_record\u0022,\u0022type\u0022:\u0022Microsoft.Network\\/dnszones\\/PTR\u0022,\u0022etag\u0022:\u00224121c1cc-fa2f-4243-9a52-1d5498c9af26\u0022,\u0022properties\u0022:{\u0022metadata\u0022:{\u0022tag1\u0022:\u0022value1\u0022},\u0022fqdn\u0022:\u0022ptr_record.azure.ameredmond.dns.\u0022,\u0022TTL\u0022:60,\u0022PTRRecords\u0022:[{\u0022ptrdname\u0022:\u0022www1.scsfsm.com\u0022},{\u0022ptrdname\u0022:\u0022www2.scsfsm.com\u0022}],\u0022targetResource\u0022:{},\u0022provisioningState\u0022:\u0022Succeeded\u0022}}"
     }
   ],
   "Variables": {
