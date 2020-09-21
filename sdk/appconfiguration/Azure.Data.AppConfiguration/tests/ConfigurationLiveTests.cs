@@ -431,6 +431,24 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [Test]
+        public async Task AddSettingIfNotExists_SettingExists()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            try
+            {
+                await service.AddConfigurationSettingAsync(testSetting);
+                Response<ConfigurationSetting> response = await service.AddConfigurationSettingIfNotExistsAsync(testSetting);
+                Assert.IsNull(response);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
+            }
+        }
+
+        [Test]
         public async Task AddSetting()
         {
             ConfigurationClient service = GetClient();
@@ -439,6 +457,23 @@ namespace Azure.Data.AppConfiguration.Tests
             try
             {
                 ConfigurationSetting setting = await service.AddConfigurationSettingAsync(testSetting);
+                Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting));
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
+            }
+        }
+
+        [Test]
+        public async Task AddSettingIfNotExists()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            try
+            {
+                ConfigurationSetting setting = await service.AddConfigurationSettingIfNotExistsAsync(testSetting);
                 Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting));
             }
             finally
@@ -468,6 +503,26 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [Test]
+        public async Task AddSettingIfNotExistsNoLabel()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            ConfigurationSetting testSettingNoLabel = testSetting.Clone();
+            testSettingNoLabel.Label = null;
+
+            try
+            {
+                ConfigurationSetting setting = await service.AddConfigurationSettingIfNotExistsAsync(testSettingNoLabel);
+                Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSettingNoLabel, setting));
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key));
+            }
+        }
+
+        [Test]
         public async Task AddKeyValue()
         {
             ConfigurationClient service = GetClient();
@@ -478,6 +533,27 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 string value = "my_value";
                 ConfigurationSetting setting = await service.AddConfigurationSettingAsync(key, value);
+
+                Assert.AreEqual(key, setting.Key);
+                Assert.AreEqual(value, setting.Value);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(key));
+            }
+        }
+
+        [Test]
+        public async Task AddSettingIfNotExistsKeyValue()
+        {
+            ConfigurationClient service = GetClient();
+
+            string key = GenerateKeyId("key-");
+
+            try
+            {
+                string value = "my_value";
+                ConfigurationSetting setting = await service.AddConfigurationSettingIfNotExistsAsync(key, value);
 
                 Assert.AreEqual(key, setting.Key);
                 Assert.AreEqual(value, setting.Value);

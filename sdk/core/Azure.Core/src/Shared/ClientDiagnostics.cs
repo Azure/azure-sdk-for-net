@@ -46,15 +46,14 @@ namespace Azure.Core.Pipeline
             ref IDictionary<string, string>? additionalInfo);
 
         public async ValueTask<RequestFailedException> CreateRequestFailedExceptionAsync(Response response, string? message = null, string? errorCode = null, IDictionary<string, string>? additionalInfo = null, Exception? innerException = null)
-        {
-            var content = await ReadContentAsync(response, true).ConfigureAwait(false);
-            ExtractFailureContent(content, ref message, ref errorCode, ref additionalInfo);
-            return CreateRequestFailedExceptionWithContent(response, message, content, errorCode, additionalInfo, innerException);
-        }
+            => await CreateRequestFailedExceptionAsync(response, true, message, errorCode, additionalInfo, innerException).ConfigureAwait(false);
 
         public RequestFailedException CreateRequestFailedException(Response response, string? message = null, string? errorCode = null, IDictionary<string, string>? additionalInfo = null, Exception? innerException = null)
+            => CreateRequestFailedExceptionAsync(response, false, message, errorCode, additionalInfo, innerException).EnsureCompleted();
+
+        public async ValueTask<RequestFailedException> CreateRequestFailedExceptionAsync(Response response, bool async, string? message = null, string? errorCode = null, IDictionary<string, string>? additionalInfo = null, Exception? innerException = null)
         {
-            string? content = ReadContentAsync(response, false).EnsureCompleted();
+            var content = await ReadContentAsync(response, async).ConfigureAwait(false);
             ExtractFailureContent(content, ref message, ref errorCode, ref additionalInfo);
             return CreateRequestFailedExceptionWithContent(response, message, content, errorCode, additionalInfo, innerException);
         }

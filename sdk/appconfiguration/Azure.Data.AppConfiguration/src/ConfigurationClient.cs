@@ -102,7 +102,7 @@ namespace Azure.Data.AppConfiguration
         public virtual async Task<Response<ConfigurationSetting>> AddConfigurationSettingAsync(string key, string value, string label = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
-            return await AddConfigurationSettingAsync(new ConfigurationSetting(key, value, label), cancellationToken).ConfigureAwait(false);
+            return await AddConfigurationSettingAsync(new ConfigurationSetting(key, value, label), throwIfExist: true, async: true, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace Azure.Data.AppConfiguration
         public virtual Response<ConfigurationSetting> AddConfigurationSetting(string key, string value, string label = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
-            return AddConfigurationSetting(new ConfigurationSetting(key, value, label), cancellationToken);
+            return AddConfigurationSettingAsync(new ConfigurationSetting(key, value, label), throwIfExist: true, async: false, cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
@@ -126,33 +126,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A response containing the added <see cref="ConfigurationSetting"/>.</returns>
         public virtual async Task<Response<ConfigurationSetting>> AddConfigurationSettingAsync(ConfigurationSetting setting, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(AddConfigurationSetting)}");
-            scope.AddAttribute("key", setting?.Key);
-            scope.Start();
-
-            try
-            {
-                using Request request = CreateAddRequest(setting);
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
-
-                switch (response.Status)
-                {
-                    case 200:
-                    case 201:
-                        return await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false);
-                    case 412:
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, "Setting was already present.").ConfigureAwait(false);
-                    default:
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+            => await AddConfigurationSettingAsync(setting, throwIfExist: true, async: true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Creates a <see cref="ConfigurationSetting"/> only if the setting does not already exist in the configuration store.
@@ -161,25 +135,78 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A response containing the added <see cref="ConfigurationSetting"/>.</returns>
         public virtual Response<ConfigurationSetting> AddConfigurationSetting(ConfigurationSetting setting, CancellationToken cancellationToken = default)
+            => AddConfigurationSettingAsync(setting, throwIfExist: true, async: false, cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// Creates a <see cref="ConfigurationSetting"/> if the setting, uniquely identified by key and label, does not already exist in the configuration store.
+        /// </summary>
+        /// <param name="key">The primary identifier of the configuration setting.</param>
+        /// <param name="value">The configuration setting's value.</param>
+        /// <param name="label">A label used to group this configuration setting with others.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A response containing the added <see cref="ConfigurationSetting"/>.</returns>
+        public virtual async Task<Response<ConfigurationSetting>> AddConfigurationSettingIfNotExistsAsync(string key, string value, string label = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(AddConfigurationSetting)}");
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+            return await AddConfigurationSettingAsync(new ConfigurationSetting(key, value, label), throwIfExist: false, async: true, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="ConfigurationSetting"/> if the setting, uniquely identified by key and label, does not already exist in the configuration store.
+        /// </summary>
+        /// <param name="key">The primary identifier of the configuration setting.</param>
+        /// <param name="value">The configuration setting's value.</param>
+        /// <param name="label">A label used to group this configuration setting with others.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A response containing the added <see cref="ConfigurationSetting"/>.</returns>
+        public virtual Response<ConfigurationSetting> AddConfigurationSettingIfNotExists(string key, string value, string label = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+            return AddConfigurationSettingAsync(new ConfigurationSetting(key, value, label), throwIfExist: false, async: false, cancellationToken).EnsureCompleted();
+        }
+
+        /// <summary>
+        /// Creates a <see cref="ConfigurationSetting"/> only if the setting does not already exist in the configuration store.
+        /// </summary>
+        /// <param name="setting">The <see cref="ConfigurationSetting"/> to create.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A response containing the added <see cref="ConfigurationSetting"/>.</returns>
+        public virtual async Task<Response<ConfigurationSetting>> AddConfigurationSettingIfNotExistsAsync(ConfigurationSetting setting, CancellationToken cancellationToken = default)
+            => await AddConfigurationSettingAsync(setting, throwIfExist: false, async: true, cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Creates a <see cref="ConfigurationSetting"/> only if the setting does not already exist in the configuration store.
+        /// </summary>
+        /// <param name="setting">The <see cref="ConfigurationSetting"/> to create.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A response containing the added <see cref="ConfigurationSetting"/>.</returns>
+        public virtual Response<ConfigurationSetting> AddConfigurationSettingIfNotExists(ConfigurationSetting setting, CancellationToken cancellationToken = default)
+            => AddConfigurationSettingAsync(setting, throwIfExist: false, async: false, cancellationToken).EnsureCompleted();
+
+        private async Task<Response<ConfigurationSetting>> AddConfigurationSettingAsync(ConfigurationSetting setting, bool throwIfExist, bool async, CancellationToken cancellationToken)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{(throwIfExist ? nameof(AddConfigurationSetting) : nameof(AddConfigurationSettingIfNotExists))}");
             scope.AddAttribute("key", setting?.Key);
             scope.Start();
 
             try
             {
                 using Request request = CreateAddRequest(setting);
-                Response response = _pipeline.SendRequest(request, cancellationToken);
+                Response response = async
+                    ? await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false)
+                    : _pipeline.SendRequest(request, cancellationToken);
 
                 switch (response.Status)
                 {
                     case 200:
                     case 201:
-                        return CreateResponse(response);
+                        return await CreateResponseAsync(response, async, cancellationToken).ConfigureAwait(false);
+                    case 412 when throwIfExist:
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, async, "Setting was already present.").ConfigureAwait(false);
                     case 412:
-                        throw _clientDiagnostics.CreateRequestFailedException(response, "Setting was already present.");
+                        return default;
                     default:
-                        throw _clientDiagnostics.CreateRequestFailedException(response);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, async).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -264,7 +291,7 @@ namespace Azure.Data.AppConfiguration
 
                 return response.Status switch
                 {
-                    200 => await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false),
+                    200 => await CreateResponseAsync(response, true, cancellationToken).ConfigureAwait(false),
                     409 => throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, "The setting is read only").ConfigureAwait(false),
 
                     // Throws on 412 if resource was modified.
@@ -302,7 +329,7 @@ namespace Azure.Data.AppConfiguration
 
                 return response.Status switch
                 {
-                    200 => CreateResponse(response),
+                    200 => CreateResponseAsync(response, false, cancellationToken).EnsureCompleted(),
                     409 => throw _clientDiagnostics.CreateRequestFailedException(response, "The setting is read only"),
 
                     // Throws on 412 if resource was modified.
@@ -567,7 +594,7 @@ namespace Azure.Data.AppConfiguration
 
                 return response.Status switch
                 {
-                    200 => await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false),
+                    200 => await CreateResponseAsync(response, true, cancellationToken).ConfigureAwait(false),
                     304 => CreateResourceModifiedResponse(response),
                     _ => throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false),
                 };
@@ -592,7 +619,7 @@ namespace Azure.Data.AppConfiguration
 
                 return response.Status switch
                 {
-                    200 => CreateResponse(response),
+                    200 => CreateResponseAsync(response, false, cancellationToken).EnsureCompleted(),
                     304 => CreateResourceModifiedResponse(response),
                     _ => throw _clientDiagnostics.CreateRequestFailedException(response),
                 };
@@ -900,7 +927,7 @@ namespace Azure.Data.AppConfiguration
                 switch (response.Status)
                 {
                     case 200:
-                        return CreateResponse(response);
+                        return await CreateResponseAsync(response, true, cancellationToken).ConfigureAwait(false);
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
@@ -935,7 +962,7 @@ namespace Azure.Data.AppConfiguration
                 switch (response.Status)
                 {
                     case 200:
-                        return CreateResponse(response);
+                        return CreateResponseAsync(response, false, cancellationToken).EnsureCompleted();
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(response);
                 }

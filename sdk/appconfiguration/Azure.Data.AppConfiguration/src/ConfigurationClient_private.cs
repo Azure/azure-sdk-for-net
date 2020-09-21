@@ -30,15 +30,10 @@ namespace Azure.Data.AppConfiguration
             "application/vnd.microsoft.appconfig.kv+json"
         );
 
-        private static async Task<Response<ConfigurationSetting>> CreateResponseAsync(Response response, CancellationToken cancellation)
+        private static async Task<Response<ConfigurationSetting>> CreateResponseAsync(Response response, bool async, CancellationToken cancellation)
         {
-            ConfigurationSetting result = await ConfigurationServiceSerializer.DeserializeSettingAsync(response.ContentStream, cancellation).ConfigureAwait(false);
+            ConfigurationSetting result = await ConfigurationServiceSerializer.DeserializeSettingAsync(response.ContentStream, async, cancellation).ConfigureAwait(false);
             return Response.FromValue(result, response);
-        }
-
-        private static Response<ConfigurationSetting> CreateResponse(Response response)
-        {
-            return Response.FromValue(ConfigurationServiceSerializer.DeserializeSetting(response.ContentStream), response);
         }
 
         private static Response<ConfigurationSetting> CreateResourceModifiedResponse(Response response)
