@@ -4421,7 +4421,9 @@ namespace DataFactory.Tests.JsonSamples
             ""formatSettings"": {
               ""type"": ""DelimitedTextWriteSettings"",
               ""quoteAllText"": true,
-              ""fileExtension"": "".csv""
+              ""fileExtension"": "".csv"",
+              ""maxRowsPerFile"":10,
+              ""fileNamePrefix"": ""orcSinkFile""
             }
           },
           ""validateDataConsistency"": true,
