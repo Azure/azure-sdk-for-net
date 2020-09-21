@@ -15,7 +15,7 @@ pr:
     - sdk/attestation/Microsoft.Azure.Management.Attestation
     - sdk/authorization/Microsoft.Azure.Management.Authorization
     - sdk/automation/Microsoft.Azure.Management.Automation
-    - sdk/automanage/Microsoft.Azure.Management.AutoManage
+    - sdk/automanage/Microsoft.Azure.Management.Automanage
     - sdk/avs/Microsoft.Azure.Management.Avs
     - sdk/azurestack/Microsoft.AzureStack.Management.AzureBridge.Admin
     - sdk/azurestack/Microsoft.AzureStack.Management.Backup.Admin
@@ -101,6 +101,7 @@ pr:
     - sdk/mgmtcommon/TestFramework
     - sdk/mixedreality/Microsoft.Azure.Management.MixedReality
     - sdk/monitor/Microsoft.Azure.Management.Monitor
+    - sdk/mysql/Microsoft.Azure.Management.MySQL
     - sdk/netapp/Microsoft.Azure.Management.NetApp
     - sdk/network/Microsoft.Azure.Management.Network
     - sdk/notificationhubs/Microsoft.Azure.Management.NotificationHubs

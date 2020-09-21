@@ -2929,7 +2929,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task UploadAsync_CloseAndRetainData()
+        public async Task UploadAsync_Close()
         {
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -2940,7 +2940,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileUploadOptions options = new DataLakeFileUploadOptions
             {
                 Close = true,
-                RetainUncommittedData = true
             };
 
             // Act
@@ -4323,6 +4322,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 openWriteStream.FlushAsync(),
                 e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
         }
+
         [Test]
         public async Task OpenWriteAsync_ProgressReporting()
         {
@@ -4458,6 +4458,31 @@ namespace Azure.Storage.Files.DataLake.Tests
                             options);
                     });
             }
+        }
+
+        [Test]
+        public async Task OpenWriteAsync_Close()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            await file.CreateAsync();
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+
+            DataLakeFileOpenWriteOptions options = new DataLakeFileOpenWriteOptions
+            {
+                Close = true,
+                BufferSize = 256
+            };
+
+            // Act
+            Stream openWriteStream = await file.OpenWriteAsync(
+                overwrite: false,
+                options);
+            await stream.CopyToAsync(openWriteStream);
+            await openWriteStream.FlushAsync();
         }
     }
 }

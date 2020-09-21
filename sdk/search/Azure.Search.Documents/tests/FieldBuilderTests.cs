@@ -7,9 +7,6 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
-#if !EXPERIMENTAL_FIELDBUILDER
-using Azure.Search.Documents.Samples;
-#endif
 using NUnit.Framework;
 using KeyFieldAttribute = System.ComponentModel.DataAnnotations.KeyAttribute;
 
@@ -362,7 +359,6 @@ namespace Azure.Search.Documents.Tests
         {
             var expectedFields = new SearchField[]
             {
-#if EXPERIMENTAL_FIELDBUILDER
                 new SimpleField(nameof(ModelWithNestedKey.ID), SearchFieldDataType.String) { IsKey = true },
                 new ComplexField(nameof(ModelWithNestedKey.Inner))
                 {
@@ -374,17 +370,6 @@ namespace Azure.Search.Documents.Tests
                         new SimpleField(nameof(InnerModelWithKey.OtherField), SearchFieldDataType.Int32) { IsFilterable = true },
                     }
                 }
-#else
-                new SearchField(nameof(ModelWithNestedKey.ID), SearchFieldDataType.String) { IsKey = true },
-                new SearchField(nameof(ModelWithNestedKey.Inner), SearchFieldDataType.Complex)
-                {
-                    Fields =
-                    {
-                        new SearchField(nameof(InnerModelWithKey.InnerID), SearchFieldDataType.String),
-                        new SearchField(nameof(InnerModelWithKey.OtherField), SearchFieldDataType.Int32) { IsFilterable = true },
-                    }
-                }
-#endif
             };
 
             IList<SearchField> actualFields = BuildForType(typeof(ModelWithNestedKey));
@@ -397,7 +382,6 @@ namespace Azure.Search.Documents.Tests
         {
             var expectedFields = new SearchField[]
             {
-#if EXPERIMENTAL_FIELDBUILDER
                 new SimpleField(nameof(ModelWithNestedKey.ID), SearchFieldDataType.String) { IsKey = true },
                 new ComplexField(nameof(ModelWithNestedKey.Inner), collection: true)
                 {
@@ -407,16 +391,6 @@ namespace Azure.Search.Documents.Tests
                         new SimpleField(nameof(InnerModelWithIgnoredProperties.OtherField), SearchFieldDataType.Int32) { IsFilterable = true },
                     }
                 }
-#else
-                new SearchField(nameof(ModelWithNestedKey.ID), SearchFieldDataType.String) { IsKey = true },
-                new SearchField(nameof(ModelWithNestedKey.Inner), SearchFieldDataType.Collection(SearchFieldDataType.Complex))
-                {
-                    Fields =
-                    {
-                        new SearchField(nameof(InnerModelWithIgnoredProperties.OtherField), SearchFieldDataType.Int32) { IsFilterable = true },
-                    }
-                }
-#endif
             };
 
             IList<SearchField> actualFields = BuildForType(typeof(ModelWithIgnoredProperties));
@@ -474,11 +448,7 @@ namespace Azure.Search.Documents.Tests
             from tuple in testData
             select (type, tuple.dataType, tuple.fieldName);
 
-#if EXPERIMENTAL_FIELDBUILDER
         private static IList<SearchField> BuildForType(Type modelType) => new FieldBuilder().Build(modelType);
-#else
-        private static IList<SearchField> BuildForType(Type modelType) => FieldBuilder.BuildForType(modelType);
-#endif
 
         private enum Direction
         {
@@ -547,11 +517,7 @@ namespace Azure.Search.Documents.Tests
             [KeyField]
             public string ID { get; set; }
 
-#if EXPERIMENTAL_FIELDBUILDER
             [SearchableField(IsFilterable = true, IsSortable = true, IsFacetable = true)]
-#else
-            [IsFilterable, IsSearchable, IsSortable, IsFacetable]
-#endif
             public Direction Direction { get; set; }
         }
 
@@ -560,11 +526,7 @@ namespace Azure.Search.Documents.Tests
             [KeyField]
             public string ID { get; set; }
 
-#if EXPERIMENTAL_FIELDBUILDER
             [SimpleField(IsFilterable = true)]
-#else
-            [IsFilterable]
-#endif
             public decimal Price { get; set; }
         }
 
@@ -573,11 +535,7 @@ namespace Azure.Search.Documents.Tests
             [KeyField]
             public string ID { get; set; }
 
-#if EXPERIMENTAL_FIELDBUILDER
             [SimpleField(IsFilterable = true)]
-#else
-            [IsFilterable]
-#endif
             public IEnumerable<byte> Buffer { get; set; }
         }
 
@@ -586,11 +544,7 @@ namespace Azure.Search.Documents.Tests
             [KeyField]
             public string ID { get; set; }
 
-#if EXPERIMENTAL_FIELDBUILDER
             [SimpleField(IsFilterable = true)]
-#else
-            [IsFilterable]
-#endif
             public ICollection<char> Buffer { get; set; }
         }
 
@@ -599,11 +553,7 @@ namespace Azure.Search.Documents.Tests
             [KeyField]
             public string InnerID { get; set; }
 
-#if EXPERIMENTAL_FIELDBUILDER
             [SimpleField(IsFilterable = true)]
-#else
-            [IsFilterable]
-#endif
             public int OtherField { get; set; }
         }
 
@@ -617,11 +567,7 @@ namespace Azure.Search.Documents.Tests
 
         private class InnerModelWithIgnoredProperties
         {
-#if EXPERIMENTAL_FIELDBUILDER
             [SimpleField(IsFilterable = true)]
-#else
-            [IsFilterable]
-#endif
             public int OtherField { get; set; }
 
             [JsonIgnore]

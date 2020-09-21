@@ -115,19 +115,19 @@ namespace Azure.Storage.Files.Shares.Test
             ShareServiceProperties properties = propertiesResponse.Value;
 
             // Assert
-            Assert.IsFalse(properties.ProtocolSettings.SmbSettings.Multichannel.Enabled);
+            Assert.IsFalse(properties.Protocol.Smb.Multichannel.Enabled);
 
             // Act
-            properties.ProtocolSettings.SmbSettings.Multichannel.Enabled = true;
+            properties.Protocol.Smb.Multichannel.Enabled = true;
             await service.SetPropertiesAsync(properties);
             propertiesResponse = await service.GetPropertiesAsync();
             properties = propertiesResponse.Value;
 
             // Assert
-            Assert.IsTrue(properties.ProtocolSettings.SmbSettings.Multichannel.Enabled);
+            Assert.IsTrue(properties.Protocol.Smb.Multichannel.Enabled);
 
             // Cleanup
-            properties.ProtocolSettings.SmbSettings.Multichannel.Enabled = false;
+            properties.Protocol.Smb.Multichannel.Enabled = false;
             await service.SetPropertiesAsync(properties);
         }
 

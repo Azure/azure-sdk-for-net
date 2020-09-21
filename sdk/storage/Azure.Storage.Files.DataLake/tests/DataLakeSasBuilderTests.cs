@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Files.DataLake.Models;
@@ -212,15 +213,13 @@ namespace Azure.Storage.Files.DataLake.Tests
                 startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
 
-            // Set the Resource = "d" and the DirectoryDepth = 1
             DataLakeSasBuilder dataLakeSasBuilder = new DataLakeSasBuilder
             {
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(1),
                 FileSystemName = test.FileSystem.Name,
                 Path = directory.Path,
-                IsDirectory = true,
-                DirectoryDepth = 1
+                IsDirectory = true
             };
 
             dataLakeSasBuilder.SetPermissions(DataLakeSasPermissions.All);
@@ -261,8 +260,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 ExpiresOn = Recording.UtcNow.AddHours(1),
                 FileSystemName = test.FileSystem.Name,
                 Path = directory.Path,
-                IsDirectory = true,
-                DirectoryDepth = 1
+                IsDirectory = true
             };
 
             dataLakeSasBuilder.SetPermissions(DataLakeSasPermissions.All);
@@ -278,49 +276,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 // Just make sure the call succeeds.
             }
-        }
-
-        [Test]
-        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
-        public async Task DataLakeSasBuilder_DirectoryDepth_Error()
-        {
-            // Arrange
-            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
-            string fileSystemName = GetNewFileSystemName();
-            string directoryName = GetNewDirectoryName();
-
-            await using DisposingFileSystem test = await GetNewFileSystem(service: oauthService, fileSystemName: fileSystemName);
-
-            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
-            DataLakeFileClient file = await directory.CreateFileAsync(GetNewFileName());
-
-            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
-
-            DataLakeSasBuilder dataLakeSasBuilder = new DataLakeSasBuilder
-            {
-                StartsOn = Recording.UtcNow.AddHours(-1),
-                ExpiresOn = Recording.UtcNow.AddHours(1),
-                FileSystemName = test.FileSystem.Name,
-                Path = directory.Path,
-                IsDirectory = true,
-                DirectoryDepth = 5 // Set the incorrect number of Directory Depth
-            };
-
-            dataLakeSasBuilder.SetPermissions(DataLakeSasPermissions.All);
-
-            DataLakeUriBuilder dataLakeUriBuilder = new DataLakeUriBuilder(directory.Uri)
-            {
-                Sas = dataLakeSasBuilder.ToSasQueryParameters(userDelegationKey, test.FileSystem.AccountName)
-            };
-
-            DataLakeDirectoryClient sasDirectoryClient = new DataLakeDirectoryClient(dataLakeUriBuilder.ToUri(), GetOptions());
-
-            // Act
-            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                sasDirectoryClient.ExistsAsync(),
-                e => Assert.IsNotNull(e.ErrorCode));
         }
 
         [Test]
@@ -535,6 +490,91 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 // Just make sure the call succeeds.
             }
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task DataLakeSasBuilder_DirectoryDepth_Exists()
+        {
+            // Arrange
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            string fileSystemName = GetNewFileSystemName();
+
+            await using DisposingFileSystem test = await GetNewFileSystem(service: oauthService, fileSystemName: fileSystemName);
+
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient subdirectory = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient subdirectory2 = await subdirectory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient subdirectory3 = await subdirectory2.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file = await subdirectory3.CreateFileAsync(GetNewFileName());
+
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            DataLakeSasBuilder dataLakeSasBuilder = new DataLakeSasBuilder
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(1),
+                FileSystemName = test.FileSystem.Name,
+                Path = subdirectory3.Path,
+                IsDirectory = true
+            };
+
+            dataLakeSasBuilder.SetPermissions(DataLakeSasPermissions.All);
+
+            DataLakeUriBuilder dataLakeUriBuilder = new DataLakeUriBuilder(subdirectory3.Uri)
+            {
+                Sas = dataLakeSasBuilder.ToSasQueryParameters(userDelegationKey, test.FileSystem.AccountName)
+            };
+
+            DataLakeDirectoryClient sasDirectoryClient = new DataLakeDirectoryClient(dataLakeUriBuilder.ToUri(), GetOptions());
+
+            // Act
+            await sasDirectoryClient.ExistsAsync();
+        }
+
+        [Test]
+        [TestCase("/")] // Root Directory
+        [TestCase("d1")]
+        [TestCase("d1/d2/d3/d4/d5")]
+        [TestCase("/d1")]
+        [TestCase("d1/")]
+        [TestCase("/d1/")]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task DataLakeSasBuilder_DirectoryDepth(string directoryName)
+        {
+            // Arrange
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            string fileSystemName = GetNewFileSystemName();
+
+            await using DisposingFileSystem test = await GetNewFileSystem(service: oauthService, fileSystemName: fileSystemName);
+
+            DataLakeDirectoryClient directory = test.FileSystem.GetDirectoryClient(directoryName);
+
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            DataLakeSasBuilder dataLakeSasBuilder = new DataLakeSasBuilder
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(1),
+                FileSystemName = test.FileSystem.Name,
+                Path = directoryName,
+                IsDirectory = true
+            };
+
+            dataLakeSasBuilder.SetPermissions(DataLakeSasPermissions.All);
+
+            DataLakeSasQueryParameters sas = dataLakeSasBuilder.ToSasQueryParameters(userDelegationKey, test.FileSystem.AccountName);
+            int expectedDepth = directoryName.Split('/').Length;
+            if (expectedDepth > 0)
+            {
+                expectedDepth -= directoryName.ElementAt(0) == '/' ? 1 : 0;
+                expectedDepth -= directoryName.ElementAt(directoryName.Length - 1) == '/' ? 1 : 0;
+            }
+            Assert.AreEqual(expectedDepth, sas.DirectoryDepth);
         }
     }
 }
