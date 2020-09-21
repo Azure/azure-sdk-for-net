@@ -184,7 +184,6 @@ namespace Azure.Core.Tests
 
             Guid batchGuid = Guid.NewGuid();
             var content = new MultipartContent(Mixed, $"batch_{batchGuid}");
-            content.ApplyToRequest(request);
 
             Guid changesetGuid = Guid.NewGuid();
             var changeset = new MultipartContent(Mixed, $"changeset_{changesetGuid}");
@@ -228,7 +227,7 @@ namespace Azure.Core.Tests
             patchReq.Content = RequestContent.Create(Encoding.UTF8.GetBytes(patchBody));
             changeset.Add(new RequestRequestContent(patchReq), new Dictionary<string, string> { { HttpHeader.Names.ContentType, "application/http" }, { cteHeaderName, Binary } });
 
-            request.Content = content;
+            content.ApplyToRequest(request);
             var memStream = new MemoryStream();
             await content.WriteToAsync(memStream, default);
             memStream.Position = 0;

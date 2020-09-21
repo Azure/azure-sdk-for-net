@@ -77,6 +77,7 @@ namespace Azure.Storage
             Func<HttpRange, TRequestConditions, bool, bool, CancellationToken, Task<Response<IDownloadedContent>>> downloadInternalFunc,
             Func<ETag?, TRequestConditions> createRequestConditionsFunc,
             Func<bool, CancellationToken, Task<Response<TProperties>>> getPropertiesFunc,
+            long initialLenght,
             long position = 0,
             int? bufferSize = default,
             TRequestConditions requestConditions = default)
@@ -90,7 +91,7 @@ namespace Azure.Storage
             _bufferPosition = 0;
             _bufferLength = 0;
             _requestConditions = requestConditions;
-            _length = -1;
+            _length = initialLenght;
             _allowBlobModifications = !(_requestConditions == null && _createRequestConditionsFunc != null);
         }
 

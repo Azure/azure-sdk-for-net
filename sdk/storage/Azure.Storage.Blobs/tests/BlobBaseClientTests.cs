@@ -20,6 +20,8 @@ using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using Moq;
+using Moq.Protected;
 using NUnit.Framework;
 using TestConstants = Azure.Storage.Test.TestConstants;
 
@@ -1020,12 +1022,10 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync();
             BlobClient blobClient = test.Container.GetBlobClient(GetNewBlobName());
-            Stream outputStream = await blobClient.OpenReadAsync();
-            byte[] bytes = new byte[Constants.KB];
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                outputStream.ReadAsync(bytes, 0, Constants.KB),
+                blobClient.OpenReadAsync(),
                 e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
         }
 
@@ -1035,9 +1035,9 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             int size = Constants.KB;
             var garbageLeaseId = GetGarbageLeaseId();
+            await using DisposingContainer test = await GetTestContainerAsync();
             foreach (AccessConditionParameters parameters in AccessConditions_Data)
             {
-                await using DisposingContainer test = await GetTestContainerAsync();
                 var data = GetRandomBuffer(size);
                 BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
                 using Stream stream = new MemoryStream(data);
@@ -1096,13 +1096,11 @@ namespace Azure.Storage.Blobs.Test
                 };
 
                 // Act
-                Stream outputStream = await blob.OpenReadAsync(options).ConfigureAwait(false);
-                byte[] outputBytes = new byte[size];
 
                 await TestHelper.CatchAsync<Exception>(
                     async () =>
                     {
-                        var _ = await outputStream.ReadAsync(outputBytes, 0, size);
+                        var _ = await blob.OpenReadAsync(options).ConfigureAwait(false);
                     });
             }
         }
@@ -1295,9 +1293,14 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task OpenReadAsync_InvalidParameterTests()
         {
+            int size = Constants.KB;
+            await using DisposingContainer test = await GetTestContainerAsync();
+
             // Arrange
-            BlobClient blobClient = new BlobClient(new Uri("https://www.doesntmatter.com"));
-            Stream stream = await blobClient.OpenReadAsync();
+            var data = GetRandomBuffer(size);
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            await blob.UploadAsync(new MemoryStream(data));
+            Stream stream = await blob.OpenReadAsync();
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentNullException>(
@@ -5553,6 +5556,23 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(blobName, blobUriBuilder.BlobName);
             Assert.AreEqual(versionId, blobUriBuilder.VersionId);
             Assert.AreEqual(versionUri, blobUriBuilder.ToUri());
+        }
+
+        [Test]
+        public void CanMockBlobLeaseClientRetrieval()
+        {
+            // Arrange
+            string leaseId = "leaseId";
+            Mock<BlobBaseClient> blobBaseClientMock = new Mock<BlobBaseClient>();
+            Mock<BlobLeaseClient> blobLeaseClientMock = new Mock<BlobLeaseClient>();
+            blobBaseClientMock.Protected().Setup<BlobLeaseClient>("GetBlobLeaseClientCore", leaseId).Returns(blobLeaseClientMock.Object);
+
+            // Act
+            var blobLeaseClient = blobBaseClientMock.Object.GetBlobLeaseClient(leaseId);
+
+            // Assert
+            Assert.IsNotNull(blobLeaseClient);
+            Assert.AreSame(blobLeaseClientMock.Object, blobLeaseClient);
         }
 
         private async Task<BlobBaseClient> GetNewBlobClient(BlobContainerClient container, string blobName = default)

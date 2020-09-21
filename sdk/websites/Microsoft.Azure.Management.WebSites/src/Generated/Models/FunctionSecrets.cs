@@ -10,16 +10,13 @@
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Function secrets.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class FunctionSecrets : ProxyOnlyResource
+    public partial class FunctionSecrets
     {
         /// <summary>
         /// Initializes a new instance of the FunctionSecrets class.
@@ -32,14 +29,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the FunctionSecrets class.
         /// </summary>
-        /// <param name="id">Resource Id.</param>
-        /// <param name="name">Resource Name.</param>
-        /// <param name="kind">Kind of resource.</param>
-        /// <param name="type">Resource type.</param>
         /// <param name="key">Secret key.</param>
         /// <param name="triggerUrl">Trigger URL.</param>
-        public FunctionSecrets(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string key = default(string), string triggerUrl = default(string))
-            : base(id, name, kind, type)
+        public FunctionSecrets(string key = default(string), string triggerUrl = default(string))
         {
             Key = key;
             TriggerUrl = triggerUrl;
@@ -54,13 +46,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Gets or sets secret key.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.key")]
+        [JsonProperty(PropertyName = "key")]
         public string Key { get; set; }
 
         /// <summary>
         /// Gets or sets trigger URL.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.trigger_url")]
+        [JsonProperty(PropertyName = "trigger_url")]
         public string TriggerUrl { get; set; }
 
     }

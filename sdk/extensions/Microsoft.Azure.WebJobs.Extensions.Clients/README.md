@@ -24,7 +24,7 @@ public static class Function1
     [FunctionName("Function1")]
     public static IActionResult Run(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
-        [AzureClient("StorageConnection")] BlobServiceClient client)
+        [AzureClient("MyStorageConnection")] BlobServiceClient client)
     {
         return new OkObjectResult(client.GetBlobContainers().ToArray());
     }
@@ -33,21 +33,29 @@ public static class Function1
 
 The connection name should correspond to a configuration section with a connection string or a set of connection parameters that correspond to a client constructor.
 
-For example to construct a BlobClient using a connection string use the following configuration:
+For example to construct a `BlobServiceClient` using a connection string use the following configuration:
 
 ```json
 {
-  "StorageConnection": "UseDevelopmentStorage=true"
+    "IsEncrypted": false,
+    "Values": {
+        "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+        "MyStorageConnection": "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;QueueEndpoint=http://127.0.0.1:10001/devstoreaccount1;",
+        "FUNCTIONS_WORKER_RUNTIME": "dotnet"
+    }
 }
 ```
 
-To construct a client using a `blobUri`:
+To construct a client using a `serviceUri`:
 
 ```json
 {
-  "StorageConnection": {
-    "blobUri": "https://{storage_account}.blob.core.windows.net/"
-  }
+    "IsEncrypted": false,
+    "Values": {
+        "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+        "MyStorageConnection__serviceUri": "http://127.0.0.1:10000/devstoreaccount1/container/blob",
+        "FUNCTIONS_WORKER_RUNTIME": "dotnet"
+    }
 }
 ```
 

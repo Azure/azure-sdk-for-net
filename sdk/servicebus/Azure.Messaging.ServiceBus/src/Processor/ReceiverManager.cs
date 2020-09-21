@@ -69,7 +69,8 @@ namespace Azure.Messaging.ServiceBus
         }
 
         public virtual async Task CloseReceiverIfNeeded(
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            bool forceClose = false)
         {
             try
             {
@@ -169,7 +170,17 @@ namespace Azure.Messaging.ServiceBus
 
                 errorSource = ServiceBusErrorSource.UserCallback;
 
-                await OnMessageHandler(message, cancellationToken).ConfigureAwait(false);
+                try
+                {
+                    ServiceBusEventSource.Log.ProcessorMessageHandlerStart(_identifier, message.SequenceNumber);
+                    await OnMessageHandler(message, cancellationToken).ConfigureAwait(false);
+                    ServiceBusEventSource.Log.ProcessorMessageHandlerComplete(_identifier, message.SequenceNumber);
+                }
+                catch (Exception ex)
+                {
+                    ServiceBusEventSource.Log.ProcessorMessageHandlerException(_identifier, message.SequenceNumber, ex.ToString());
+                    throw;
+                }
 
                 if (Receiver.ReceiveMode == ReceiveMode.PeekLock &&
                     _processorOptions.AutoComplete &&
@@ -269,7 +280,7 @@ namespace Azure.Messaging.ServiceBus
                     TimeSpan delay = CalculateRenewDelay(message.LockedUntil);
 
                     await Task.Delay(delay, cancellationToken).ConfigureAwait(false);
-                    if (Receiver.IsDisposed)
+                    if (Receiver.IsClosed)
                     {
                         break;
                     }

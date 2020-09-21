@@ -3073,6 +3073,44 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task OpenWriteAsync_NewBlob_WithUsing()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 16 * Constants.KB);
+
+            PageBlobOpenWriteOptions options = new PageBlobOpenWriteOptions
+            {
+                BufferSize = Constants.KB
+            };
+
+            byte[] data = GetRandomBuffer(16 * Constants.KB);
+
+            // Act
+            using (Stream stream = await blob.OpenWriteAsync(
+                overwrite: false,
+                position: 0,
+                options: options))
+            {
+                await stream.WriteAsync(data, 0, 512);
+                await stream.WriteAsync(data, 512, 1024);
+                await stream.WriteAsync(data, 1536, 2048);
+                await stream.WriteAsync(data, 3584, 77);
+                await stream.WriteAsync(data, 3661, 2066);
+                await stream.WriteAsync(data, 5727, 4096);
+                await stream.WriteAsync(data, 9823, 6561);
+            }
+
+            // Assert
+            Response<BlobDownloadInfo> result = await blob.DownloadAsync(new HttpRange(0, data.Length));
+            var dataResult = new MemoryStream();
+            await result.Value.Content.CopyToAsync(dataResult);
+            Assert.AreEqual(data.Length, dataResult.Length);
+            TestHelper.AssertSequenceEqual(data, dataResult.ToArray());
+        }
+
+        [Test]
         public async Task OpenWriteAsync_UpdateExistingBlob()
         {
             // Arrange

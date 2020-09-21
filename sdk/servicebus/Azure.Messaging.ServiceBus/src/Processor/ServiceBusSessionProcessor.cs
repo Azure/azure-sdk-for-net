@@ -7,7 +7,10 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Amqp;
 using Azure.Messaging.ServiceBus.Plugins;
+using Microsoft.Azure.Amqp;
+using Microsoft.Azure.Amqp.Framing;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -19,7 +22,7 @@ namespace Azure.Messaging.ServiceBus
     /// property. The error handler is specified with the <see cref="ProcessErrorAsync"/> property.
     /// To start processing after the handlers have been specified, call <see cref="StartProcessingAsync"/>.
     /// </summary>
-    public class ServiceBusSessionProcessor
+    public class ServiceBusSessionProcessor : IAsyncDisposable
     {
         private readonly ServiceBusProcessor _innerProcessor;
 
@@ -43,6 +46,15 @@ namespace Azure.Messaging.ServiceBus
 
         /// <inheritdoc cref="ServiceBusProcessor.AutoComplete"/>
         public bool AutoComplete => _innerProcessor.AutoComplete;
+
+        /// <summary>
+        ///   Indicates whether or not this <see cref="ServiceBusSessionProcessor"/> has been closed.
+        /// </summary>
+        ///
+        /// <value>
+        ///   <c>true</c> if the processor is closed; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsClosed => _innerProcessor.IsClosed;
 
         /// <summary>
         /// Gets the maximum duration within which the session lock will be
@@ -209,5 +221,23 @@ namespace Azure.Messaging.ServiceBus
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
+
+        /// <summary>
+        ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusSessionProcessor" />.
+        /// </summary>
+        /// <param name="closeMode">The mode indicating what should happen to the link when closing.</param>
+        /// <param name="cancellationToken"> An optional<see cref="CancellationToken"/> instance to signal the
+        /// request to cancel the operation.</param>
+        public virtual async Task CloseAsync(
+            LinkCloseMode closeMode = LinkCloseMode.Detach,
+            CancellationToken cancellationToken = default) =>
+            await _innerProcessor.CloseAsync(closeMode).ConfigureAwait(false);
+
+        /// <summary>
+        ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusSessionProcessor" />.
+        ///   This is equivalent to calling <see cref="CloseAsync"/> with the default <see cref="LinkCloseMode"/>.
+        /// </summary>
+        public async ValueTask DisposeAsync() =>
+            await CloseAsync().ConfigureAwait(false);
     }
 }
