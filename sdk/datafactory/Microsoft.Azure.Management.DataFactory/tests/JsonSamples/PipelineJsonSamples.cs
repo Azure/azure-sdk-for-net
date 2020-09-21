@@ -4422,7 +4422,7 @@ namespace DataFactory.Tests.JsonSamples
               ""type"": ""DelimitedTextWriteSettings"",
               ""quoteAllText"": true,
               ""fileExtension"": "".csv"",
-              ""maxRowsPerFile"":10,
+              ""maxRowsPerFile"": 10,
               ""fileNamePrefix"": ""orcSinkFile""
             }
           },
