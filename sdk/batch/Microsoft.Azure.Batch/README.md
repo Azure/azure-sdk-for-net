@@ -50,7 +50,7 @@ Once you have added and updated the required files in `Tools\ObjectModelCodeGene
 
 ## Running the end to end tests
 A full end to end test pass takes 20-40 minutes.
-The following environment variables must be set for the the end to end tests to work - it is recommended to set up a script which sets these all so that it can easily be reused later:
+The following environment variables must be set for the the end to end tests to work - it is recommended to set up a script which sets these all so that it can easily be reused later (windows users can find a powershell script [here](https://gist.github.com/paterasMSFT/7ccb198929be332bd460f447e47c8bc8) to use as a template):
 
 1. `MABOM_BatchAccountEndpoint`: The endpoint for your Batch account, i.e. `https://<account>.<region>.batch.azure.com`
 2. `MABOM_BatchAccountSubscriptionId`: The subscription id that your Batch and Storage accounts are in. Please note your storage account and your Batch account need to be in the same subscription.
