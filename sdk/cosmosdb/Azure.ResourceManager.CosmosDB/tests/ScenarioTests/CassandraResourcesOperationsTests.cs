@@ -141,7 +141,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TestCase, Order(6)]
         public async Task CassandraTableCreateUpdateTests()
         {
-            CassandraSchema cassandraSchema = new CassandraSchema(new List<Column> { new Column { Name = "columnA", Type = "int" }, new Column { Name = "columnB", Type = "ascii" } }, new List<CassandraPartitionKey> { new CassandraPartitionKey { Name = "columnA" } }, new List<ClusterKey> { new ClusterKey { Name = "columnB", OrderBy = "Asc" } });
+            IList<Column> columns = new List<Column> { new Column { Name = "columnA", Type = "int" }, new Column { Name = "columnB", Type = "ascii" } };
+            IList<CassandraPartitionKey> partitionKeys = new List<CassandraPartitionKey> { new CassandraPartitionKey { Name = "columnA" } };
+            IList<ClusterKey> clusterKeys = new List<ClusterKey> { new ClusterKey { Name = "columnB", OrderBy = "Asc" } };
+            CassandraSchema cassandraSchema = new CassandraSchema(columns, partitionKeys, clusterKeys);
             CassandraTableResource cassandraTableResource = new CassandraTableResource(tableName, default, cassandraSchema, default);
             CassandraTableCreateUpdateParameters cassandraTableCreateUpdateParameters = new CassandraTableCreateUpdateParameters(cassandraTableResource, new CreateUpdateOptions(sampleThroughput, new AutoscaleSettings()));
 
