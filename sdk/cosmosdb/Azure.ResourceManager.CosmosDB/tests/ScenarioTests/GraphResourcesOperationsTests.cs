@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         protected string resourceGroupName;
         protected string databaseAccountName;
         protected string databaseName = "databaseName1002";
-        protected string databaseName2 = "databaseName21002";
         protected string gremlinGraphName = "gremlinGraphName1002";
 
         protected string gremlinDatabasesThroughputType = "Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/throughputSettings";
@@ -160,8 +159,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             UniqueKeyPolicy uniqueKeyPolicy = new UniqueKeyPolicy(uniqueKeys);
 
             ConflictResolutionPolicy conflictResolutionPolicy = new ConflictResolutionPolicy(new ConflictResolutionMode("LastWriterWins"), "/path", "");
+            CreateUpdateOptions createUpdateOptions = new CreateUpdateOptions(sampleThroughput, new AutoscaleSettings());
 
-            GremlinGraphCreateUpdateParameters gremlinGraphCreateUpdateParameters = new GremlinGraphCreateUpdateParameters(new GremlinGraphResource(gremlinGraphName, indexingPolicy, containerPartitionKey, -1, uniqueKeyPolicy, conflictResolutionPolicy), new CreateUpdateOptions(sampleThroughput, new AutoscaleSettings()));
+            GremlinGraphCreateUpdateParameters gremlinGraphCreateUpdateParameters = new GremlinGraphCreateUpdateParameters(new GremlinGraphResource(gremlinGraphName, indexingPolicy, containerPartitionKey, -1, uniqueKeyPolicy, conflictResolutionPolicy), createUpdateOptions);
 
             Response<GremlinGraphGetResults> gremlinResponse = await WaitForCompletionAsync(await CosmosDBManagementClient.GremlinResources.StartCreateUpdateGremlinGraphAsync(resourceGroupName, databaseAccountName, databaseName, gremlinGraphName, gremlinGraphCreateUpdateParameters));
             Assert.NotNull(gremlinResponse);
