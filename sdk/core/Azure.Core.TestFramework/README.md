@@ -406,4 +406,4 @@ To download and unpack all artifacts use the `Download-DevOpsRecordings.ps1` scr
 
 The `Download-DevOpsRecordings.ps1` would wait for active runs to finish before retrieving artifacts unless `-NoWait` switch is used.
 
-**NOTE:** these scripts require being signed in with Azure CLI (https://docs.microsoft.com/en-us/cli/azure/authenticate-azure-cli?view=azure-cli-latest) and access to the internal DevOps project (https://dev.azure.com/azure-sdk/internal/) 
+**NOTE:** these scripts require being signed in with Azure CLI (https://docs.microsoft.com/cli/azure/authenticate-azure-cli?view=azure-cli-latest) and access to the internal DevOps project (https://dev.azure.com/azure-sdk/internal/) 

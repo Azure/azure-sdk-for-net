@@ -197,7 +197,7 @@ It is passed as to the ARM
 template as 'testApplicationOid'
 
 For more information on the relationship between AAD Applications and Service
-Principals see: https://docs.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals
+Principals see: https://docs.microsoft.com/azure/active-directory/develop/app-objects-and-service-principals
 
 ```yaml
 Type: String
@@ -457,6 +457,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-
-[Remove-TestResources.ps1]()
-

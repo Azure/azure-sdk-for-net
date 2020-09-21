@@ -8,6 +8,7 @@ $EngScriptsDir = Join-Path $EngDir "scripts"
 . (Join-Path $EngCommonScriptsDir SemVer.ps1)
 . (Join-Path $EngCommonScriptsDir ChangeLog-Operations.ps1)
 . (Join-Path $EngCommonScriptsDir Package-Properties.ps1)
+. (Join-Path $EngCommonScriptsDir logging.ps1)
 
 # Setting expected from common languages settings
 $Language = "Unknown"
@@ -20,7 +21,7 @@ $EngScriptsLanguageSettings = Join-path $EngScriptsDir "Language-Settings.ps1"
 if (Test-Path $EngScriptsLanguageSettings) {
   . $EngScriptsLanguageSettings
 }
-If ($LanguageShort -eq $null)
+if (-not $LanguageShort)
 {
   $LangaugeShort = $Language
 }
