@@ -279,6 +279,15 @@ To update the CHANGELOG, version and release tracking information use the `.\eng
 
 The syntax is `.\eng\scripts\Prepare-Release.ps1 <package_name>`. The script would ask you for a new version or `NA` if you are not releasing in this cycle.
 
+If you are releasing out-of-band please use the `-ReleaseDate` parameter to specify the release data. `ReleaseDate` should be in `yyyy-MM-dd` format.
+
+Example invocations:
+
+```powershell
+.\eng\scripts\Prepare-Release.ps1 Azure.Core
+.\eng\scripts\Prepare-Release.ps1 Azure.Core -ReleaseDate 2020-10-01
+```
+
 ## On-boarding New Libraries
 
 ### Project Structure
