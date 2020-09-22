@@ -49,7 +49,7 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
                 tempDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
                 Directory.CreateDirectory(tempDirectory);
                 process = new Process();
-                process.StartInfo.FileName = "node.exe";
+                process.StartInfo.FileName = "node";
                 process.StartInfo.Arguments = $"{azuriteScriptLocation} -l {tempDirectory}";
                 process.StartInfo.EnvironmentVariables.Add("AZURITE_ACCOUNTS", $"{string.Join(";", accountsList)}");
                 process.StartInfo.UseShellExecute = false;
