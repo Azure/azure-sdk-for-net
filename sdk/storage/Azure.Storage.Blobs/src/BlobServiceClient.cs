@@ -143,7 +143,7 @@ namespace Azure.Storage.Blobs
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
         ///
-        /// For more information, <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">Configure Azure Storage connection strings</see>
+        /// For more information, <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">Configure Azure Storage connection strings</see>.
         /// </param>
         public BlobServiceClient(string connectionString)
             : this(connectionString, null)
@@ -161,7 +161,7 @@ namespace Azure.Storage.Blobs
         ///
         /// For more information,
         /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
-        /// Configure Azure Storage connection strings</see>
+        /// Configure Azure Storage connection strings</see>.
         /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline

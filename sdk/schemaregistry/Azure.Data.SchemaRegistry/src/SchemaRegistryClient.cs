@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -175,7 +176,9 @@ namespace Azure.Data.SchemaRegistry
             try
             {
                 var response = await RestClient.GetByIdAsync(schemaId, cancellationToken).ConfigureAwait(false);
-                var properties = new SchemaProperties(response.Value, response.Headers.Location, response.Headers.XSchemaType, response.Headers.XSchemaId, response.Headers.XSchemaVersion);
+                using var reader = new StreamReader(response.Value);
+                var content = await reader.ReadToEndAsync().ConfigureAwait(false);
+                var properties = new SchemaProperties(content, response.Headers.Location, response.Headers.XSchemaType, response.Headers.XSchemaId, response.Headers.XSchemaVersion);
                 return Response.FromValue(properties, response);
             }
             catch (Exception e)
@@ -198,7 +201,9 @@ namespace Azure.Data.SchemaRegistry
             try
             {
                 var response = RestClient.GetById(schemaId, cancellationToken);
-                var properties = new SchemaProperties(response.Value, response.Headers.Location, response.Headers.XSchemaType, response.Headers.XSchemaId, response.Headers.XSchemaVersion);
+                using var reader = new StreamReader(response.Value);
+                var content = reader.ReadToEnd();
+                var properties = new SchemaProperties(content, response.Headers.Location, response.Headers.XSchemaType, response.Headers.XSchemaId, response.Headers.XSchemaVersion);
                 return Response.FromValue(properties, response);
             }
             catch (Exception e)
