@@ -8,12 +8,12 @@ using System.IO;
 
 namespace Microsoft.Spatial.NewtonsoftJson.Tests
 {
-    public class GeographyPointConverterTests
+    public class NewtonsoftJsonGeographyPointConverterTests
     {
         [Test]
         public void CanConvert()
         {
-            GeographyPointConverter converter = new GeographyPointConverter();
+            NewtonsoftJsonGeographyPointConverter converter = new NewtonsoftJsonGeographyPointConverter();
             Assert.IsTrue(converter.CanConvert(typeof(GeographyPoint)));
         }
 
@@ -21,7 +21,7 @@ namespace Microsoft.Spatial.NewtonsoftJson.Tests
         public void ReadJson()
         {
             JsonSerializer serializer = JsonSerializer.CreateDefault();
-            serializer.Converters.Add(new GeographyPointConverter());
+            serializer.Converters.Add(new NewtonsoftJsonGeographyPointConverter());
 
             using StringReader reader = new StringReader(@"{""type"":""Point"",""coordinates"":[-121.726906,46.879967]}");
             using JsonReader jsonReader = new JsonTextReader(reader);
@@ -37,7 +37,7 @@ namespace Microsoft.Spatial.NewtonsoftJson.Tests
             GeographyPoint point = GeographyPoint.Create(46.879967, -121.726906);
 
             JsonSerializer serializer = JsonSerializer.CreateDefault();
-            serializer.Converters.Add(new GeographyPointConverter());
+            serializer.Converters.Add(new NewtonsoftJsonGeographyPointConverter());
 
             using StringWriter writer = new StringWriter();
             serializer.Serialize(writer, point);

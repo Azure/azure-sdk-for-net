@@ -9,7 +9,7 @@ namespace Microsoft.Spatial.Serialization
     /// <summary>
     /// Converts between <see cref="GeographyPoint" /> objects and Geo-JSON points.
     /// </summary>
-    public class GeographyPointConverter : JsonConverter
+    public class NewtonsoftJsonGeographyPointConverter : JsonConverter
     {
         /// <inheritdoc/>
         public override bool CanConvert(Type objectType) =>
