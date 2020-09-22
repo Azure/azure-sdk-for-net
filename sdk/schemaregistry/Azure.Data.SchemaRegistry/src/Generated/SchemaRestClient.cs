@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -65,7 +66,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="schemaId"> References specific schema in registry namespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<string, SchemaGetByIdHeaders>> GetByIdAsync(string schemaId, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<Stream, SchemaGetByIdHeaders>> GetByIdAsync(string schemaId, CancellationToken cancellationToken = default)
         {
             if (schemaId == null)
             {
@@ -79,9 +80,7 @@ namespace Azure.Data.SchemaRegistry
             {
                 case 200:
                     {
-                        string value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = document.RootElement.GetString();
+                        var value = message.ExtractResponseContent();
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -93,7 +92,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="schemaId"> References specific schema in registry namespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaId"/> is null. </exception>
-        public ResponseWithHeaders<string, SchemaGetByIdHeaders> GetById(string schemaId, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<Stream, SchemaGetByIdHeaders> GetById(string schemaId, CancellationToken cancellationToken = default)
         {
             if (schemaId == null)
             {
@@ -107,9 +106,7 @@ namespace Azure.Data.SchemaRegistry
             {
                 case 200:
                     {
-                        string value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = document.RootElement.GetString();
+                        var value = message.ExtractResponseContent();
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -132,11 +129,9 @@ namespace Azure.Data.SchemaRegistry
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("X-Schema-Type", xSchemaType.ToString());
-            request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Content-Type", "text/plain");
             request.Headers.Add("Accept", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteStringValue(schemaContent);
-            request.Content = content;
+            request.Content = new StringRequestContent(schemaContent);
             return message;
         }
 
@@ -233,11 +228,9 @@ namespace Azure.Data.SchemaRegistry
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("X-Schema-Type", xSchemaType.ToString());
-            request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Content-Type", "text/plain");
             request.Headers.Add("Accept", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteStringValue(schemaContent);
-            request.Content = content;
+            request.Content = new StringRequestContent(schemaContent);
             return message;
         }
 
