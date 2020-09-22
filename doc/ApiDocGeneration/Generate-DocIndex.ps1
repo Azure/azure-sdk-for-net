@@ -31,7 +31,7 @@ $ServiceMapping = @{
     "edgegateway"="Edge Gateway";
     "eventgrid"="Event Grid"; "eventhub"="Event Hub"; "extensions" = "Extensions"
     "frontdoor"="Front Door"; "graphrbac"="Active Directory";
-    "formrecognizer" "Form Recognizer";
+    "formrecognizer" = "Form Recognizer";
     "guestconfiguration"="Guest Configuration"; "hdinsight"="HDInsight";
     "healthcareapis"="Healthcare APIs"; "hybridcompute"="Hybrid Cloud";
     "hybriddatamanager"="Hybrid Datamanager"; "identity"="Identity";
