@@ -15,7 +15,7 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
     /// - Starts Azurite process
     /// - Tears down Azurite process after test class is run
     /// It requires Azurite V3. See instalation insturctions here https://github.com/Azure/Azurite.
-    /// After installing Azuirte define env variable AzureWebJobsStorageAzuriteLocation that points to azurite.js (e.g. C:\Users\kasobol.REDMOND\AppData\Roaming\npm\node_modules\azurite\dist\src\azurite.js)
+    /// After installing Azuirte define env variable AZURE_AZURITE_LOCATION that points to azurite.js (e.g. C:\Users\kasobol.REDMOND\AppData\Roaming\npm\node_modules\azurite\dist\src\azurite.js)
     /// NodeJS installation is also required and node.exe should be in the $PATH.
     ///
     /// The lifecycle of this class is managed by XUnit, see https://xunit.net/docs/shared-context.
@@ -23,7 +23,7 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
     public class AzuriteFixture : IDisposable
     {
         private const int AccountPoolSize = 50;
-        private const string AzuriteLocationKey = "AzureWebJobsStorageAzuriteLocation";
+        private const string AzuriteLocationKey = "AZURE_AZURITE_LOCATION";
         private string tempDirectory;
         private Process process;
         private Queue<AzuriteAccount> accounts = new Queue<AzuriteAccount>();
