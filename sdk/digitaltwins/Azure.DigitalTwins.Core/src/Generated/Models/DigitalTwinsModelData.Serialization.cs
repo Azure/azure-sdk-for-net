@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
 {
-    public partial class ModelData
+    public partial class DigitalTwinsModelData
     {
     }
 }

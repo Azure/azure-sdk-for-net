@@ -171,8 +171,8 @@ namespace Azure.DigitalTwins.Core.Samples
 
                 #region Snippet:DigitalTwinsSampleGetModels
 
-                AsyncPageable<ModelData> allModels = client.GetModelsAsync();
-                await foreach (ModelData model in allModels)
+                AsyncPageable<DigitalTwinsModelData> allModels = client.GetModelsAsync();
+                await foreach (DigitalTwinsModelData model in allModels)
                 {
                     Console.WriteLine($"Retrieved model '{model.Id}', " +
                         $"display name '{model.DisplayName["en"]}', " +

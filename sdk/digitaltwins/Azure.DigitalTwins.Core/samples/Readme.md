@@ -62,11 +62,11 @@ Console.WriteLine($"Created models '{componentModelId}' and '{sampleModelId}'.")
 
 ### List models
 
-Using `GetModelsAsync`, all created models are returned as `AsyncPageable<ModelData>`.
+Using `GetModelsAsync`, all created models are returned as `AsyncPageable<DigitalTwinsModelData>`.
 
 ```C# Snippet:DigitalTwinsSampleGetModels
-AsyncPageable<ModelData> allModels = client.GetModelsAsync();
-await foreach (ModelData model in allModels)
+AsyncPageable<DigitalTwinsModelData> allModels = client.GetModelsAsync();
+await foreach (DigitalTwinsModelData model in allModels)
 {
     Console.WriteLine($"Retrieved model '{model.Id}', " +
         $"display name '{model.DisplayName["en"]}', " +
@@ -78,7 +78,7 @@ await foreach (ModelData model in allModels)
 Use `GetModelAsync` with model's unique identifier to get a specific model.
 
 ```C# Snippet:DigitalTwinsSampleGetModel
-Response<ModelData> sampleModelResponse = await client.GetModelAsync(sampleModelId);
+Response<DigitalTwinsModelData> sampleModelResponse = await client.GetModelAsync(sampleModelId);
 Console.WriteLine($"Retrieved model '{sampleModelResponse.Value.Id}'.");
 ```
 

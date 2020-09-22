@@ -49,7 +49,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 // update twin
                 string updateTwin = TestAssetsHelper.GetRoomTwinUpdatePayload();
 
-                var requestOptions = new RequestOptions
+                var requestOptions = new DigitalTwinsRequestOptions
                 {
                     IfMatch = "*"
                 };

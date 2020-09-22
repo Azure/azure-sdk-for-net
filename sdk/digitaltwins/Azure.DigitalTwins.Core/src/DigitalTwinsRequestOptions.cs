@@ -6,7 +6,7 @@ namespace Azure.DigitalTwins.Core
     /// <summary>
     /// General request options that are applicable, but optional, for many APIs.
     /// </summary>
-    public class RequestOptions
+    public class DigitalTwinsRequestOptions
     {
         /// <summary>
         /// A string representing a weak ETag for the entity that this request performs an operation against, as per RFC7232.
