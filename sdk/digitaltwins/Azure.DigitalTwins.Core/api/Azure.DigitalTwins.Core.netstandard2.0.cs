@@ -156,9 +156,9 @@ namespace Azure.DigitalTwins.Core.Serialization
         [System.Text.Json.Serialization.JsonExtensionDataAttribute]
         public System.Collections.Generic.IDictionary<string, object> WriteableProperties { get { throw null; } }
     }
-    public partial class DigitalTwinsModelProperties
+    public partial class ModelProperties
     {
-        public DigitalTwinsModelProperties() { }
+        public ModelProperties() { }
         [System.Text.Json.Serialization.JsonExtensionDataAttribute]
         public System.Collections.Generic.IDictionary<string, object> CustomProperties { get { throw null; } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("$metadata")]

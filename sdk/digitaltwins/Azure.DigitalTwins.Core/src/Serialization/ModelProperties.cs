@@ -12,7 +12,7 @@ namespace Azure.DigitalTwins.Core.Serialization
     /// <remarks>
     /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
     /// </remarks>
-    public class DigitalTwinsModelProperties
+    public class ModelProperties
     {
         /// <summary>
         /// Information about the model a component conforms to. This field is present on every digital twin.

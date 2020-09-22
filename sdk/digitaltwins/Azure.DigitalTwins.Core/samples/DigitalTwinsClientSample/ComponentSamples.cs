@@ -61,7 +61,7 @@ namespace Azure.DigitalTwins.Core.Samples
                     // component
                     {
                         "Component1",
-                        new DigitalTwinsModelProperties
+                        new ModelProperties
                         {
                             // component properties
                             CustomProperties =

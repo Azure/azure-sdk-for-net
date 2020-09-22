@@ -139,7 +139,7 @@ var basicTwin = new BasicDigitalTwin
         // component
         {
             "Component1",
-            new DigitalTwinsModelProperties
+            new ModelProperties
             {
                 // component properties
                 CustomProperties =
