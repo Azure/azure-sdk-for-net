@@ -33,6 +33,25 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string AzureDatabricksDeltaLakeLinkedService = @"
+{
+    name: ""Test-Windows-Azure-DatabricksDeltaLake-linkedService"",
+    properties:
+    {
+        type: ""AzureDatabricksDeltaLake"",
+        typeProperties:
+        {
+          domain: ""https://westeurope.azuredatabricks.net/"",
+          clusterId: ""0714-063833-cleat653"",
+          accessToken: {
+             type: ""SecureString"",
+             value: ""mykey""
+          }
+        }
+    }
+}";
+
+        [JsonSample]
         public const string AzureStorageLinkedService = @"
 {
     name: ""Test-Windows-Azure-storage-account-linkedService"",
