@@ -1,0 +1,28 @@
+
+trigger:
+  branches:
+    include:
+    - master
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/communication/
+
+pr:
+  branches:
+    include:
+    - master
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/communication/
+
+extends:
+  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    ServiceDirectory: communication
+    ArtifactName: packages
+    Artifacts:

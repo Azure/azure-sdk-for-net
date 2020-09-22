@@ -72,6 +72,9 @@
 # PRLabel: %Cognitive - Form Recognizer
 /sdk/formrecognizer/                            @annelo-msft @kinelski @maririos
 
+# PRLabel: %Monitor - Exporter
+/sdk/monitor/OpenTelemetry.*/                   @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra
+
 # Smoke tests
 /common/SmokeTests/                             @AlexGhiondea @schaabs @heaths @tg-msft @jsquire
 
