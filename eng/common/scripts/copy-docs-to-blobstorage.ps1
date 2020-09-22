@@ -9,8 +9,7 @@ param (
   $ExitOnError=1,
   $UploadLatest=1,
   $PublicArtifactLocation = "",
-  $RepoReplaceRegex = "(https://github.com/.*/(?:blob|tree)/)master",
-  $WorkingDirectory
+  $RepoReplaceRegex = "(https://github.com/.*/(?:blob|tree)/)master"
 )
 . (Join-Path $PSScriptRoot artifact-metadata-parsing.ps1)
 
@@ -278,11 +277,11 @@ if ($Language -eq "dotnet")
     Expand-Archive -LiteralPath $PublishedDocs[0].FullName -DestinationPath $DocsStagingDir
     $pkgProperties = ParseNugetPackage -pkg $PublishedPkgs[0].FullName -workingDirectory $TempDir
 
-    Write-Host "Start Upload for $($pkgProperties.Tag)"
+    Write-Host "Start Upload for $($pkgProperties.ReleaseTag)"
     Write-Host "DocDir $($DocsStagingDir)"
     Write-Host "PkgName $($pkgProperties.PackageId)"
     Write-Host "DocVersion $($pkgProperties.PackageVersion)"
-    Upload-Blobs -DocDir "$($DocsStagingDir)" -PkgName $pkgProperties.PackageId -DocVersion $pkgProperties.PackageVersion -ReleaseTag $pkgProperties.Tag
+    Upload-Blobs -DocDir "$($DocsStagingDir)" -PkgName $pkgProperties.PackageId -DocVersion $pkgProperties.PackageVersion -ReleaseTag $pkgProperties.ReleaseTag
 }
 
 if ($Language -eq "python")
