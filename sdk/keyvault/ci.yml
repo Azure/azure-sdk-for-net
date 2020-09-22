@@ -27,6 +27,8 @@ extends:
     ServiceDirectory: keyvault
     ArtifactName: packages
     Artifacts:
+    - name: Azure.Security.KeyVault.Administration
+      safeName: AzureSecurityKeyVaultAdministration
     - name: Azure.Security.KeyVault.Certificates
       safeName: AzureSecurityKeyVaultCertificates
     - name: Azure.Security.KeyVault.Keys

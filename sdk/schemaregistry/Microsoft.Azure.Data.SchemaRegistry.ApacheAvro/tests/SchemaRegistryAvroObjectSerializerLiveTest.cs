@@ -28,7 +28,6 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
                 Recording.InstrumentClientOptions(new SchemaRegistryClientOptions())
             ));
 
-        [Ignore("The recording keeping the entire schema content string literally (including surround quotes and backslashes) causing playback to fail.")]
         [Test]
         public async Task CanSerializeAndDeserialize()
         {
@@ -48,7 +47,6 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             Assert.AreEqual(42, readEmployee.Age);
         }
 
-        [Ignore("The recording keeping the entire schema content string literally (including surround quotes and backslashes) causing playback to fail.")]
         [Test]
         public async Task CanSerializeAndDeserializeGenericRecord()
         {

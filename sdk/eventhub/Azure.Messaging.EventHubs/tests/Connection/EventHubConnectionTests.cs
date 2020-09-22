@@ -572,13 +572,18 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var transportClient = new ObservableTransportClientMock();
             var client = new InjectableTransportClientMock(transportClient, "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake");
-            var options = new EventHubProducerClientOptions { RetryOptions = new EventHubsRetryOptions { MaximumRetries = 6, TryTimeout = TimeSpan.FromMinutes(4) } };
+            var options = new EventHubProducerClientOptions { EnableIdempotentPartitions = true, RetryOptions = new EventHubsRetryOptions { MaximumRetries = 6, TryTimeout = TimeSpan.FromMinutes(4) } };
+            var expectedFeatures = options.CreateFeatureFlags();
+            var expectedPartitionOptions = new PartitionPublishingOptions { ProducerGroupId = 123 };
             var expectedRetry = options.RetryOptions.ToRetryPolicy();
 
-            client.CreateTransportProducer(null, expectedRetry);
+            client.CreateTransportProducer(null, expectedFeatures, expectedPartitionOptions, expectedRetry);
 
             Assert.That(transportClient.CreateProducerCalledWith, Is.Not.Null, "The producer options should have been set.");
             Assert.That(transportClient.CreateProducerCalledWith.PartitionId, Is.Null, "There should have been no partition specified.");
+            Assert.That(transportClient.CreateProducerCalledWith.Features, Is.EqualTo(expectedFeatures), "The features should match.");
+            Assert.That(transportClient.CreateProducerCalledWith.PartitionOptions, Is.Not.Null, "The partition options should have been specified.");
+            Assert.That(transportClient.CreateProducerCalledWith.PartitionOptions, Is.SameAs(expectedPartitionOptions), "The partition options should match.");
             Assert.That(transportClient.CreateProducerCalledWith.RetryPolicy, Is.Not.Null, "The retry policy should have been specified.");
             Assert.That(transportClient.CreateProducerCalledWith.RetryPolicy, Is.SameAs(expectedRetry), "The retry policies should match.");
         }
@@ -802,7 +807,7 @@ namespace Azure.Messaging.EventHubs.Tests
         private class ObservableTransportClientMock : TransportClient
         {
             public (string ConsumerGroup, string Partition, EventPosition Position, EventHubsRetryPolicy RetryPolicy, bool TrackLastEnqueued, long? OwnerLevel, uint? Prefetch) CreateConsumerCalledWith;
-            public (string PartitionId, EventHubsRetryPolicy RetryPolicy) CreateProducerCalledWith;
+            public (string PartitionId, TransportProducerFeatures Features, PartitionPublishingOptions PartitionOptions, EventHubsRetryPolicy RetryPolicy) CreateProducerCalledWith;
             public string GetPartitionPropertiesCalledForId;
             public bool WasGetPropertiesCalled;
             public bool WasCloseCalled;
@@ -823,9 +828,11 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             public override TransportProducer CreateProducer(string partitionId,
+                                                             TransportProducerFeatures requestedFeatures,
+                                                             PartitionPublishingOptions partitionOptions,
                                                              EventHubsRetryPolicy retryPolicy)
             {
-                CreateProducerCalledWith = (partitionId, retryPolicy);
+                CreateProducerCalledWith = (partitionId, requestedFeatures, partitionOptions, retryPolicy);
                 return default;
             }
 
@@ -835,7 +842,8 @@ namespace Azure.Messaging.EventHubs.Tests
                                                              EventHubsRetryPolicy retryPolicy,
                                                              bool trackLastEnqueuedEventProperties = true,
                                                              long? ownerLevel = default,
-                                                             uint? prefetchCount = default)
+                                                             uint? prefetchCount = default,
+                                                             long? prefechSize = default)
             {
                 CreateConsumerCalledWith = (consumerGroup, partitionId, eventPosition, retryPolicy, trackLastEnqueuedEventProperties, ownerLevel, prefetchCount);
                 return default;
