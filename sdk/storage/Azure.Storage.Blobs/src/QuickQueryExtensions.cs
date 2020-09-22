@@ -32,9 +32,8 @@ namespace Azure.Storage.Blobs
             serialization.Format.JsonTextConfiguration = default;
             serialization.Format.ArrowConfiguration = default;
 
-            if (textConfiguration.GetType() == typeof(BlobQueryCsvTextOptions))
+            if (textConfiguration is BlobQueryCsvTextOptions cvsTextConfiguration)
             {
-                BlobQueryCsvTextOptions cvsTextConfiguration = textConfiguration as BlobQueryCsvTextOptions;
                 serialization.Format.Type = QueryFormatType.Delimited;
                 serialization.Format.DelimitedTextConfiguration = new DelimitedTextConfigurationInternal
                 {
@@ -45,23 +44,21 @@ namespace Azure.Storage.Blobs
                     HeadersPresent = cvsTextConfiguration.HasHeaders
                 };
             }
-            else if (textConfiguration.GetType() == typeof(BlobQueryJsonTextOptions))
+            else if (textConfiguration is BlobQueryJsonTextOptions jsonTextConfiguration)
             {
-                BlobQueryJsonTextOptions jsonTextConfiguration = textConfiguration as BlobQueryJsonTextOptions;
                 serialization.Format.Type = QueryFormatType.Json;
                 serialization.Format.JsonTextConfiguration = new JsonTextConfigurationInternal
                 {
                     RecordSeparator = jsonTextConfiguration.RecordSeparator?.ToString(CultureInfo.InvariantCulture)
                 };
             }
-            else if (textConfiguration.GetType() == typeof(BlobQueryArrowOptions))
+            else if (textConfiguration is BlobQueryArrowOptions arrowConfiguration)
             {
                 if (isInput)
                 {
                     throw new ArgumentException($"{nameof(BlobQueryArrowOptions)} can only be used for output serialization.");
                 }
 
-                BlobQueryArrowOptions arrowConfiguration = textConfiguration as BlobQueryArrowOptions;
                 serialization.Format.Type = QueryFormatType.Arrow;
                 serialization.Format.ArrowConfiguration = new ArrowTextConfigurationInternal
                 {
