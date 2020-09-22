@@ -192,7 +192,7 @@ namespace Azure.Storage.Sas
         /// canonicalizedresource field of the string-to-sign. This is only used for
         /// User Delegation SAS.
         /// </summary>
-        private int? _directoryDepth { get; set; }
+        private int? _directoryDepth;
 
         /// <summary>
         /// Sets the permissions for a file SAS.
