@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
+using System.Net.Sockets;
 using System.Text;
 
 namespace Azure.WebJobs.Extensions.Storage.Common.Tests
@@ -34,12 +36,16 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
             var azuriteLocation = Environment.GetEnvironmentVariable(AzuriteLocationKey);
             if (!string.IsNullOrWhiteSpace(azuriteLocation))
             {
+                int blobsPort = FindFreeTcpPort();
+                int queuesPort = FindFreeTcpPort();
                 for (int i = 0; i < AccountPoolSize; i++)
                 {
                     var account = new AzuriteAccount()
                     {
                         Name = Guid.NewGuid().ToString(),
                         Key = System.Convert.ToBase64String(Encoding.UTF8.GetBytes(Guid.NewGuid().ToString())),
+                        BlobsPort = blobsPort,
+                        QueuesPort = queuesPort,
                     };
                     accounts.Enqueue(account);
                     accountsList.Add($"{account.Name}:{account.Key}");
@@ -50,7 +56,7 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
                 Directory.CreateDirectory(tempDirectory);
                 process = new Process();
                 process.StartInfo.FileName = "node";
-                process.StartInfo.Arguments = $"{azuriteScriptLocation} -l {tempDirectory}";
+                process.StartInfo.Arguments = $"{azuriteScriptLocation} -l {tempDirectory} --blobPort {blobsPort} --queuePort {queuesPort}";
                 process.StartInfo.EnvironmentVariables.Add("AZURITE_ACCOUNTS", $"{string.Join(";", accountsList)}");
                 process.StartInfo.UseShellExecute = false;
                 process.StartInfo.RedirectStandardOutput = true;
@@ -65,6 +71,15 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
                 process.Start();
                 process.BeginOutputReadLine();
             }
+        }
+
+        private static int FindFreeTcpPort()
+        {
+            TcpListener l = new TcpListener(IPAddress.Loopback, 0);
+            l.Start();
+            int port = ((IPEndPoint)l.LocalEndpoint).Port;
+            l.Stop();
+            return port;
         }
 
         public AzuriteAccount GetAccount()
@@ -93,9 +108,13 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
         public string Name { get; set; }
         public string Key { get; set; }
 
+        public int BlobsPort { get; set; }
+
+        public int QueuesPort { get; set; }
+
         public string ConnectionString { get
             {
-                return $"DefaultEndpointsProtocol=http;AccountName={Name};AccountKey={Key};BlobEndpoint=http://127.0.0.1:10000/{Name};QueueEndpoint=http://127.0.0.1:10001/{Name};";
+                return $"DefaultEndpointsProtocol=http;AccountName={Name};AccountKey={Key};BlobEndpoint=http://127.0.0.1:{BlobsPort}/{Name};QueueEndpoint=http://127.0.0.1:{QueuesPort}/{Name};";
             }
         }
     }
