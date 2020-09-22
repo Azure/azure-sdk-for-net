@@ -1,6 +1,9 @@
 # Release History
 
 ## 1.0.0-preview.4 (Unreleased)
+
+### Breaking changes
+
 -Renamed model type "ModelData" to "DigitalTwinsModelData"
 -Renamed model type "ModelProperties" to "DigitalTwinsModelProperties"
 -Renamed model type "RequestOptions" to "DigitalTwinsRequestOptions"
