@@ -941,7 +941,7 @@ namespace Azure.DigitalTwins.Core
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleGetModels">
         /// AsyncPageable&lt;ModelData&gt; allModels = client.GetModelsAsync();
-        /// await foreach (ModelData model in allModels)
+        /// await foreach (DigitalTwinsModelData model in allModels)
         /// {
         ///     Console.WriteLine($&quot;Retrieved model &apos;{model.Id}&apos;, &quot; +
         ///         $&quot;display name &apos;{model.DisplayName[&quot;en&quot;]}&apos;, &quot; +

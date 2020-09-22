@@ -31,7 +31,7 @@ namespace Azure.DigitalTwins.Core.Serialization
     ///         // component
     ///         {
     ///             &quot;Component1&quot;,
-    ///             new ModelProperties
+    ///             new DigitalTwinsModelProperties
     ///             {
     ///                 // component properties
     ///                 CustomProperties =
