@@ -1,5 +1,8 @@
 # Release History
 
+## 1.0.0-beta.2 (Unreleased)
+
+
 ## 1.0.0-beta.1 (2020-09-22)
 This is the first release of Azure Communication Services for chat. For more information, please see the README. <!-- and [documentation](https://review.docs.microsoft.com/en-us/azure/project-spool/quickstarts/chat/get-started?branch=pr-en-us-104477&pivots=programming-language-csharp). -->
 
