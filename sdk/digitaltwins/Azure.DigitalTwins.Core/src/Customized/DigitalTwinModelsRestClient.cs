@@ -34,7 +34,7 @@ namespace Azure.DigitalTwins.Core
                             List<DigitalTwinsModelData> array = new List<DigitalTwinsModelData>(document.RootElement.GetArrayLength());
                             foreach (JsonElement item in document.RootElement.EnumerateArray())
                             {
-                                array.Add(DigitalTwinsModelData.DeserializeModelData(item));
+                                array.Add(DigitalTwinsModelData.DeserializeDigitalTwinsModelData(item));
                             }
                             value = array;
                             return Response.FromValue(value, message.Response);
@@ -70,7 +70,7 @@ namespace Azure.DigitalTwins.Core
                             List<DigitalTwinsModelData> array = new List<DigitalTwinsModelData>(document.RootElement.GetArrayLength());
                             foreach (JsonElement item in document.RootElement.EnumerateArray())
                             {
-                                array.Add(DigitalTwinsModelData.DeserializeModelData(item));
+                                array.Add(DigitalTwinsModelData.DeserializeDigitalTwinsModelData(item));
                             }
                             value = array;
                             return Response.FromValue(value, message.Response);

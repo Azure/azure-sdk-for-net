@@ -13,7 +13,7 @@ namespace Azure.DigitalTwins.Core
         // This class definition overrides deserialization implementation in order to turn the **object** type definitions for displayName and description into
         // dictionaries, as defined in swagger comments.
 
-        internal static DigitalTwinsModelData DeserializeModelData(JsonElement element)
+        internal static DigitalTwinsModelData DeserializeDigitalTwinsModelData(JsonElement element)
         {
             Dictionary<string, string> displayName = default;
             Dictionary<string, string> description = default;
