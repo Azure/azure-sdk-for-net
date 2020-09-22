@@ -10,8 +10,10 @@
 
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
-    using System.Collections.Generic;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// A copy activity tabular translator.
@@ -33,36 +35,41 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// message are deserialized this collection</param>
         /// <param name="columnMappings">Column mappings. Example: "UserId:
         /// MyUserId, Group: MyGroup, Name: MyName" Type: string (or Expression
-        /// with resultType string).</param>
+        /// with resultType string). This property will be retired. Please use
+        /// mappings property.</param>
         /// <param name="schemaMapping">The schema mapping to map between
         /// tabular data and hierarchical data. Example: {"Column1":
         /// "$.Column1", "Column2": "$.Column2.Property1", "Column3":
         /// "$.Column2.Property2"}. Type: object (or Expression with resultType
-        /// object).</param>
+        /// object). This property will be retired. Please use mappings
+        /// property.</param>
         /// <param name="collectionReference">The JSON Path of the Nested Array
         /// that is going to do cross-apply. Type: object (or Expression with
         /// resultType object).</param>
+        /// <param name="mapComplexValuesToString">Whether to map complex
+        /// (array and object) values to simple strings in json format. Type:
+        /// boolean (or Expression with resultType boolean).</param>
         /// <param name="mappings">Column mappings with logical types.
-        /// Tabular->tabular example: [{\"source\":{\"name\":\"CustomerName\",
-        /// \"type\":\"String\"},\"sink\":{\"name\":\"ClientName\",\"type\":\"
-        /// String\"}},{\"source\":{\"name\":\"CustomerAddress\",\"type\":\"
-        /// String\"},\"sink\":{\"name\":\"ClientAddress\",\"type\":\"String\"}}].
-        /// Hierarchical->tabular example: [{\"source\":{\"path\":\"$.CustomerName\",
-        /// \"type\":\"String\"},\"sink\":{\"name\":\"ClientName\",\"type\":\"String\"}},
-        /// {\"source\":{\"path\":\"$.CustomerAddress\",\"type\":\"String\"},\"sink\":
-        /// {\"name\":\"ClientAddress\",\"type\":\"String\"}}]. Type: object 
-        /// (or Expression with resultType object).</param>
-        /// <param name="typeConversion">Whether to enable the advanced type conversion
-        /// feature in the Copy activity. Type: boolean (or Expression with resultType
-        /// boolean).</param>
-        /// <param name="typeConversionSettings">Type conversion settings</param>
-        public TabularTranslator(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object columnMappings = default(object), object schemaMapping = default(object), object collectionReference = default(object), object mappings = default(object), object typeConversion = default(object), TypeConversionSettings typeConversionSettings = default(TypeConversionSettings))
+        /// Tabular-&gt;tabular example:
+        /// [{"source":{"name":"CustomerName","type":"String"},"sink":{"name":"ClientName","type":"String"}},{"source":{"name":"CustomerAddress","type":"String"},"sink":{"name":"ClientAddress","type":"String"}}].
+        /// Hierarchical-&gt;tabular example:
+        /// [{"source":{"path":"$.CustomerName","type":"String"},"sink":{"name":"ClientName","type":"String"}},{"source":{"path":"$.CustomerAddress","type":"String"},"sink":{"name":"ClientAddress","type":"String"}}].
+        /// Type: object (or Expression with resultType object).</param>
+        /// <param name="typeConversion">Whether to enable the advanced type
+        /// conversion feature in the Copy activity. Type: boolean (or
+        /// Expression with resultType boolean).</param>
+        /// <param name="typeConversionSettings">Type conversion
+        /// settings</param>
+        public TabularTranslator(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object columnMappings = default(object), object schemaMapping = default(object), object collectionReference = default(object), object mapComplexValuesToString = default(object), object mappings = default(object), object typeConversion = default(object), TypeConversionSettings typeConversionSettings = default(TypeConversionSettings))
             : base(additionalProperties)
         {
             ColumnMappings = columnMappings;
             SchemaMapping = schemaMapping;
             CollectionReference = collectionReference;
+            MapComplexValuesToString = mapComplexValuesToString;
             Mappings = mappings;
+            TypeConversion = typeConversion;
+            TypeConversionSettings = typeConversionSettings;
             CustomInit();
         }
 
@@ -72,9 +79,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets column mappings. Example: "UserId: MyUserId, Group: 
+        /// Gets or sets column mappings. Example: "UserId: MyUserId, Group:
         /// MyGroup, Name: MyName" Type: string (or Expression with resultType
-        /// string).
+        /// string). This property will be retired. Please use mappings
+        /// property.
         /// </summary>
         [JsonProperty(PropertyName = "columnMappings")]
         public object ColumnMappings { get; set; }
@@ -83,7 +91,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets the schema mapping to map between tabular data and
         /// hierarchical data. Example: {"Column1": "$.Column1", "Column2":
         /// "$.Column2.Property1", "Column3": "$.Column2.Property2"}. Type:
-        /// object (or Expression with resultType object).
+        /// object (or Expression with resultType object). This property will
+        /// be retired. Please use mappings property.
         /// </summary>
         [JsonProperty(PropertyName = "schemaMapping")]
         public object SchemaMapping { get; set; }
@@ -96,31 +105,37 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public object CollectionReference { get; set; }
 
         /// <summary>
-        /// Gets or sets the column mappings with logical types.
-        /// Tabular->tabular example: [{\"source\":{\"name\":\"CustomerName\",
-        /// \"type\":\"String\"},\"sink\":{\"name\":\"ClientName\",\"type\":\"
-        /// String\"}},{\"source\":{\"name\":\"CustomerAddress\",\"type\":\"
-        /// String\"},\"sink\":{\"name\":\"ClientAddress\",\"type\":\"String\"}}].
-        /// Hierarchical->tabular example: [{\"source\":{\"path\":\"$.CustomerName\",
-        /// \"type\":\"String\"},\"sink\":{\"name\":\"ClientName\",\"type\":\"String\"}},
-        /// {\"source\":{\"path\":\"$.CustomerAddress\",\"type\":\"String\"},\"sink\":
-        /// {\"name\":\"ClientAddress\",\"type\":\"String\"}}]. Type: object 
-        /// (or Expression with resultType object).
+        /// Gets or sets whether to map complex (array and object) values to
+        /// simple strings in json format. Type: boolean (or Expression with
+        /// resultType boolean).
+        /// </summary>
+        [JsonProperty(PropertyName = "mapComplexValuesToString")]
+        public object MapComplexValuesToString { get; set; }
+
+        /// <summary>
+        /// Gets or sets column mappings with logical types.
+        /// Tabular-&amp;gt;tabular example:
+        /// [{"source":{"name":"CustomerName","type":"String"},"sink":{"name":"ClientName","type":"String"}},{"source":{"name":"CustomerAddress","type":"String"},"sink":{"name":"ClientAddress","type":"String"}}].
+        /// Hierarchical-&amp;gt;tabular example:
+        /// [{"source":{"path":"$.CustomerName","type":"String"},"sink":{"name":"ClientName","type":"String"}},{"source":{"path":"$.CustomerAddress","type":"String"},"sink":{"name":"ClientAddress","type":"String"}}].
+        /// Type: object (or Expression with resultType object).
         /// </summary>
         [JsonProperty(PropertyName = "mappings")]
         public object Mappings { get; set; }
 
         /// <summary>
-        /// Gets or sets typeConversion indicating whether to enable the advanced type conversion
-        /// feature in the Copy activity. Type: boolean (or Expression with resultType boolean).
+        /// Gets or sets whether to enable the advanced type conversion feature
+        /// in the Copy activity. Type: boolean (or Expression with resultType
+        /// boolean).
         /// </summary>
         [JsonProperty(PropertyName = "typeConversion")]
         public object TypeConversion { get; set; }
 
         /// <summary>
-        /// Gets or sets typeConversionSettings.
+        /// Gets or sets type conversion settings
         /// </summary>
         [JsonProperty(PropertyName = "typeConversionSettings")]
         public TypeConversionSettings TypeConversionSettings { get; set; }
+
     }
 }
