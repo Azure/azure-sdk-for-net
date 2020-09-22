@@ -4,8 +4,11 @@ steps:
       command: custom
       customCommand: install --prefix $(Agent.TempDirectory)/azurite azurite
     displayName: Install Azurite
-    env:
-      AzureWebJobsStorageAzuriteLocation: $(Agent.TempDirectory)
+  - task: PowerShell@2
+    displayName: Add Azurite location as environment variable
+    inputs:
+      targetType: 'inline'
+      script: Write-Host "##vso[task.setvariable variable=AzureWebJobsStorageAzuriteLocation;]$(Agent.TempDirectory)"
   - task: Bash@3
     inputs:
       targetType: 'inline'
