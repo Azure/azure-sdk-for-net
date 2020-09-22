@@ -4,12 +4,13 @@
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/Default-Dns-Zones-9848?api-version=2017-05-10",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "22",
         "Content-Type": "application/json",
-        "traceparent": "00-6bb819085d18fb4493075ea0148bc7d7-a5b1004ccf5ade47-00",
+        "traceparent": "00-5fb945f56c79a54eaac4b8b880ddafe9-65195f2f99b9614b-00",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Dns.Tests/1.0.0-alpha.20200921.1",
+          "azsdk-net-ResourceManager.Dns.Tests/1.0.0-alpha.20200922.1",
           "(.NET Core 4.6.29130.01; Linux 4.19.128-microsoft-standard #1 SMP Tue Jun 23 12:58:10 UTC 2020)"
         ],
         "x-ms-client-request-id": "e45afed0326834e755947e2310e6cfae",
@@ -18,20 +19,20 @@
       "RequestBody": {
         "location": "West US"
       },
-      "StatusCode": 201,
+      "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "197",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 21 Sep 2020 20:00:55 GMT",
+        "Date": "Tue, 22 Sep 2020 22:40:13 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "2af08e60-508f-4fbe-badc-9a799a5284bf",
+        "x-ms-correlation-request-id": "b6a5a16a-67a2-4638-989a-98d5aa0a6096",
         "x-ms-ratelimit-remaining-subscription-writes": "1198",
-        "x-ms-request-id": "2af08e60-508f-4fbe-badc-9a799a5284bf",
-        "x-ms-routing-request-id": "WESTUS2:20200921T200055Z:2af08e60-508f-4fbe-badc-9a799a5284bf"
+        "x-ms-request-id": "b6a5a16a-67a2-4638-989a-98d5aa0a6096",
+        "x-ms-routing-request-id": "WESTUS2:20200922T224013Z:b6a5a16a-67a2-4638-989a-98d5aa0a6096"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-Dns-Zones-9848",
@@ -49,9 +50,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "62",
         "Content-Type": "application/json",
-        "traceparent": "00-7f7c47318968a24c839312f0fd09d295-e2d36714e455df4d-00",
+        "traceparent": "00-dabb05314e37314399cf6a335388efc3-a08eb16b5aa21445-00",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20200921.1",
+          "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20200922.1",
           "(.NET Core 4.6.29130.01; Linux 4.19.128-microsoft-standard #1 SMP Tue Jun 23 12:58:10 UTC 2020)"
         ],
         "x-ms-client-request-id": "992ca16ee9be0a532db2bac38a574e60",
@@ -69,27 +70,27 @@
         "Cache-Control": "private",
         "Content-Length": "561",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 21 Sep 2020 20:00:56 GMT",
-        "ETag": "00000002-0000-0000-0fb4-47eb5190d601",
+        "Date": "Tue, 22 Sep 2020 22:40:15 GMT",
+        "ETag": "00000002-0000-0000-52ff-8d563191d601",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "b22ea236-fe48-49e1-b05e-b8026ec395b1",
+        "x-ms-correlation-request-id": "8547a8c4-1b5c-41cd-a5be-354667fce554",
         "x-ms-ratelimit-remaining-subscription-resource-requests": "11995",
         "x-ms-request-id": "992ca16e-e9be-0a53-2db2-bac38a574e60",
-        "x-ms-routing-request-id": "WESTUS2:20200921T200057Z:b22ea236-fe48-49e1-b05e-b8026ec395b1",
+        "x-ms-routing-request-id": "WESTUS2:20200922T224015Z:8547a8c4-1b5c-41cd-a5be-354667fce554",
         "X-Powered-By": "ASP.NET"
       },
-      "ResponseBody": "{\u0022id\u0022:\u0022\\/subscriptions\\/db1ab6f0-4769-4b27-930e-01e2ef9c123c\\/resourceGroups\\/default-dns-zones-9848\\/providers\\/Microsoft.Network\\/dnszones\\/azure.ameredmond.dns\u0022,\u0022name\u0022:\u0022azure.ameredmond.dns\u0022,\u0022type\u0022:\u0022Microsoft.Network\\/dnszones\u0022,\u0022etag\u0022:\u002200000002-0000-0000-0fb4-47eb5190d601\u0022,\u0022location\u0022:\u0022global\u0022,\u0022tags\u0022:{\u0022key1\u0022:\u0022value1\u0022},\u0022properties\u0022:{\u0022maxNumberOfRecordSets\u0022:10000,\u0022maxNumberOfRecordsPerRecordSet\u0022:null,\u0022nameServers\u0022:[\u0022ns1-09.azure-dns.com.\u0022,\u0022ns2-09.azure-dns.net.\u0022,\u0022ns3-09.azure-dns.org.\u0022,\u0022ns4-09.azure-dns.info.\u0022],\u0022numberOfRecordSets\u0022:2,\u0022zoneType\u0022:\u0022Public\u0022}}"
+      "ResponseBody": "{\u0022id\u0022:\u0022\\/subscriptions\\/db1ab6f0-4769-4b27-930e-01e2ef9c123c\\/resourceGroups\\/default-dns-zones-9848\\/providers\\/Microsoft.Network\\/dnszones\\/azure.ameredmond.dns\u0022,\u0022name\u0022:\u0022azure.ameredmond.dns\u0022,\u0022type\u0022:\u0022Microsoft.Network\\/dnszones\u0022,\u0022etag\u0022:\u002200000002-0000-0000-52ff-8d563191d601\u0022,\u0022location\u0022:\u0022global\u0022,\u0022tags\u0022:{\u0022key1\u0022:\u0022value1\u0022},\u0022properties\u0022:{\u0022maxNumberOfRecordSets\u0022:10000,\u0022maxNumberOfRecordsPerRecordSet\u0022:null,\u0022nameServers\u0022:[\u0022ns1-09.azure-dns.com.\u0022,\u0022ns2-09.azure-dns.net.\u0022,\u0022ns3-09.azure-dns.org.\u0022,\u0022ns4-09.azure-dns.info.\u0022],\u0022numberOfRecordSets\u0022:2,\u0022zoneType\u0022:\u0022Public\u0022}}"
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-Dns-Zones-9848/providers/Microsoft.Network/dnsZones/azure.ameredmond.dns?api-version=2018-05-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-63e2cb53c0bde54eb2b954886950cc3e-3669b777dda7f949-00",
+        "traceparent": "00-82a96fa7f2a96e47b8bc36af10790432-ac08d88052ae8c49-00",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20200921.1",
+          "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20200922.1",
           "(.NET Core 4.6.29130.01; Linux 4.19.128-microsoft-standard #1 SMP Tue Jun 23 12:58:10 UTC 2020)"
         ],
         "x-ms-client-request-id": "531748fad23e287e8a1e9340f093a9e3",
@@ -101,18 +102,18 @@
         "Cache-Control": "private",
         "Content-Length": "561",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 21 Sep 2020 20:00:56 GMT",
-        "ETag": "00000002-0000-0000-0fb4-47eb5190d601",
+        "Date": "Tue, 22 Sep 2020 22:40:15 GMT",
+        "ETag": "00000002-0000-0000-52ff-8d563191d601",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "f3ace1be-ee2a-4d51-8f77-6dd284ba00a5",
+        "x-ms-correlation-request-id": "99bf6ed1-a3ff-4d65-aca0-b827461ad17f",
         "x-ms-ratelimit-remaining-subscription-resource-requests": "499",
         "x-ms-request-id": "531748fa-d23e-287e-8a1e-9340f093a9e3",
-        "x-ms-routing-request-id": "WESTUS2:20200921T200057Z:f3ace1be-ee2a-4d51-8f77-6dd284ba00a5",
+        "x-ms-routing-request-id": "WESTUS2:20200922T224015Z:99bf6ed1-a3ff-4d65-aca0-b827461ad17f",
         "X-Powered-By": "ASP.NET"
       },
-      "ResponseBody": "{\u0022id\u0022:\u0022\\/subscriptions\\/db1ab6f0-4769-4b27-930e-01e2ef9c123c\\/resourceGroups\\/default-dns-zones-9848\\/providers\\/Microsoft.Network\\/dnszones\\/azure.ameredmond.dns\u0022,\u0022name\u0022:\u0022azure.ameredmond.dns\u0022,\u0022type\u0022:\u0022Microsoft.Network\\/dnszones\u0022,\u0022etag\u0022:\u002200000002-0000-0000-0fb4-47eb5190d601\u0022,\u0022location\u0022:\u0022global\u0022,\u0022tags\u0022:{\u0022key1\u0022:\u0022value1\u0022},\u0022properties\u0022:{\u0022maxNumberOfRecordSets\u0022:10000,\u0022maxNumberOfRecordsPerRecordSet\u0022:null,\u0022nameServers\u0022:[\u0022ns1-09.azure-dns.com.\u0022,\u0022ns2-09.azure-dns.net.\u0022,\u0022ns3-09.azure-dns.org.\u0022,\u0022ns4-09.azure-dns.info.\u0022],\u0022numberOfRecordSets\u0022:2,\u0022zoneType\u0022:\u0022Public\u0022}}"
+      "ResponseBody": "{\u0022id\u0022:\u0022\\/subscriptions\\/db1ab6f0-4769-4b27-930e-01e2ef9c123c\\/resourceGroups\\/default-dns-zones-9848\\/providers\\/Microsoft.Network\\/dnszones\\/azure.ameredmond.dns\u0022,\u0022name\u0022:\u0022azure.ameredmond.dns\u0022,\u0022type\u0022:\u0022Microsoft.Network\\/dnszones\u0022,\u0022etag\u0022:\u002200000002-0000-0000-52ff-8d563191d601\u0022,\u0022location\u0022:\u0022global\u0022,\u0022tags\u0022:{\u0022key1\u0022:\u0022value1\u0022},\u0022properties\u0022:{\u0022maxNumberOfRecordSets\u0022:10000,\u0022maxNumberOfRecordsPerRecordSet\u0022:null,\u0022nameServers\u0022:[\u0022ns1-09.azure-dns.com.\u0022,\u0022ns2-09.azure-dns.net.\u0022,\u0022ns3-09.azure-dns.org.\u0022,\u0022ns4-09.azure-dns.info.\u0022],\u0022numberOfRecordSets\u0022:2,\u0022zoneType\u0022:\u0022Public\u0022}}"
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-Dns-Zones-9848/providers/Microsoft.Network/dnsZones/azure.ameredmond.dns?api-version=2018-05-01",
@@ -121,16 +122,16 @@
         "Authorization": "Sanitized",
         "Content-Length": "144",
         "Content-Type": "application/json",
-        "traceparent": "00-1b7202b1c408d142be03c1ecec7b924b-f4502c3ccbc29345-00",
+        "traceparent": "00-bb94d2022ab78043bd49303c5b855aa2-448f6a511987cc48-00",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20200921.1",
+          "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20200922.1",
           "(.NET Core 4.6.29130.01; Linux 4.19.128-microsoft-standard #1 SMP Tue Jun 23 12:58:10 UTC 2020)"
         ],
         "x-ms-client-request-id": "9344ee0ed5b5141106d93a7f2c71cb3c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "etag": "00000002-0000-0000-0fb4-47eb5190d601",
+        "etag": "00000002-0000-0000-52ff-8d563191d601",
         "location": "global",
         "tags": {
           "key1": "new_tag_1",
@@ -145,27 +146,27 @@
         "Cache-Control": "private",
         "Content-Length": "578",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 21 Sep 2020 20:00:58 GMT",
-        "ETag": "00000003-0000-0000-0fb4-47eb5190d601",
+        "Date": "Tue, 22 Sep 2020 22:40:16 GMT",
+        "ETag": "00000003-0000-0000-52ff-8d563191d601",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "a3372e3c-2dee-4261-91d1-aca080796573",
+        "x-ms-correlation-request-id": "2cceff4e-4263-45f2-bf8e-9f9e3f9c3a1a",
         "x-ms-ratelimit-remaining-subscription-resource-requests": "11994",
         "x-ms-request-id": "9344ee0e-d5b5-1411-06d9-3a7f2c71cb3c",
-        "x-ms-routing-request-id": "WESTUS2:20200921T200058Z:a3372e3c-2dee-4261-91d1-aca080796573",
+        "x-ms-routing-request-id": "WESTUS2:20200922T224016Z:2cceff4e-4263-45f2-bf8e-9f9e3f9c3a1a",
         "X-Powered-By": "ASP.NET"
       },
-      "ResponseBody": "{\u0022id\u0022:\u0022\\/subscriptions\\/db1ab6f0-4769-4b27-930e-01e2ef9c123c\\/resourceGroups\\/default-dns-zones-9848\\/providers\\/Microsoft.Network\\/dnszones\\/azure.ameredmond.dns\u0022,\u0022name\u0022:\u0022azure.ameredmond.dns\u0022,\u0022type\u0022:\u0022Microsoft.Network\\/dnszones\u0022,\u0022etag\u0022:\u002200000003-0000-0000-0fb4-47eb5190d601\u0022,\u0022location\u0022:\u0022global\u0022,\u0022tags\u0022:{\u0022key1\u0022:\u0022new_tag_1\u0022,\u0022key2\u0022:\u0022val2\u0022},\u0022properties\u0022:{\u0022maxNumberOfRecordSets\u0022:10000,\u0022maxNumberOfRecordsPerRecordSet\u0022:null,\u0022nameServers\u0022:[\u0022ns1-09.azure-dns.com.\u0022,\u0022ns2-09.azure-dns.net.\u0022,\u0022ns3-09.azure-dns.org.\u0022,\u0022ns4-09.azure-dns.info.\u0022],\u0022numberOfRecordSets\u0022:2,\u0022zoneType\u0022:\u0022Public\u0022}}"
+      "ResponseBody": "{\u0022id\u0022:\u0022\\/subscriptions\\/db1ab6f0-4769-4b27-930e-01e2ef9c123c\\/resourceGroups\\/default-dns-zones-9848\\/providers\\/Microsoft.Network\\/dnszones\\/azure.ameredmond.dns\u0022,\u0022name\u0022:\u0022azure.ameredmond.dns\u0022,\u0022type\u0022:\u0022Microsoft.Network\\/dnszones\u0022,\u0022etag\u0022:\u002200000003-0000-0000-52ff-8d563191d601\u0022,\u0022location\u0022:\u0022global\u0022,\u0022tags\u0022:{\u0022key1\u0022:\u0022new_tag_1\u0022,\u0022key2\u0022:\u0022val2\u0022},\u0022properties\u0022:{\u0022maxNumberOfRecordSets\u0022:10000,\u0022maxNumberOfRecordsPerRecordSet\u0022:null,\u0022nameServers\u0022:[\u0022ns1-09.azure-dns.com.\u0022,\u0022ns2-09.azure-dns.net.\u0022,\u0022ns3-09.azure-dns.org.\u0022,\u0022ns4-09.azure-dns.info.\u0022],\u0022numberOfRecordSets\u0022:2,\u0022zoneType\u0022:\u0022Public\u0022}}"
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-Dns-Zones-9848/providers/Microsoft.Network/dnsZones/azure.ameredmond.dns?api-version=2018-05-01",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-441d0b8bbcb0e440b1cf0a08da13926a-ce60d06f59ddcd49-00",
+        "traceparent": "00-d70ba944fb4fe442a3dc99921316dcd9-a9f3573a02fd7045-00",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20200921.1",
+          "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20200922.1",
           "(.NET Core 4.6.29130.01; Linux 4.19.128-microsoft-standard #1 SMP Tue Jun 23 12:58:10 UTC 2020)"
         ],
         "x-ms-client-request-id": "9e15c2305bb79c9823030e9f5613199a",
@@ -174,30 +175,30 @@
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com:443/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-dns-zones-9848/providers/Microsoft.Network/dnsOperationStatuses/delzone6373631525944301405e09bf4e?api-version=2018-05-01",
+        "Azure-AsyncOperation": "https://management.azure.com:443/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-dns-zones-9848/providers/Microsoft.Network/dnsOperationStatuses/delzone637364112168100284705d9238?api-version=2018-05-01",
         "Cache-Control": "private",
         "Content-Length": "0",
-        "Date": "Mon, 21 Sep 2020 20:00:58 GMT",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-dns-zones-9848/providers/Microsoft.Network/dnsOperationResults/delzone6373631525944301405e09bf4e?api-version=2018-05-01",
+        "Date": "Tue, 22 Sep 2020 22:40:16 GMT",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-dns-zones-9848/providers/Microsoft.Network/dnsOperationResults/delzone637364112168100284705d9238?api-version=2018-05-01",
         "Retry-After": "3",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "7cb6a528-fb61-4d25-a227-2b5c95852146",
+        "x-ms-correlation-request-id": "e9041324-aaeb-4d2c-b917-9cfb34f99c01",
         "x-ms-ratelimit-remaining-subscription-resource-requests": "11996",
         "x-ms-request-id": "9e15c230-5bb7-9c98-2303-0e9f5613199a",
-        "x-ms-routing-request-id": "WESTUS2:20200921T200059Z:7cb6a528-fb61-4d25-a227-2b5c95852146",
+        "x-ms-routing-request-id": "WESTUS2:20200922T224017Z:e9041324-aaeb-4d2c-b917-9cfb34f99c01",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-dns-zones-9848/providers/Microsoft.Network/dnsOperationStatuses/delzone6373631525944301405e09bf4e?api-version=2018-05-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-dns-zones-9848/providers/Microsoft.Network/dnsOperationStatuses/delzone637364112168100284705d9238?api-version=2018-05-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20200921.1",
+          "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20200922.1",
           "(.NET Core 4.6.29130.01; Linux 4.19.128-microsoft-standard #1 SMP Tue Jun 23 12:58:10 UTC 2020)"
         ],
         "x-ms-client-request-id": "2e0f57530b7db32b56a870b1c771bef2",
@@ -206,20 +207,20 @@
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com:443/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-dns-zones-9848/providers/Microsoft.Network/dnsOperationStatuses/delzone6373631525944301405e09bf4e?api-version=2018-05-01",
+        "Azure-AsyncOperation": "https://management.azure.com:443/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-dns-zones-9848/providers/Microsoft.Network/dnsOperationStatuses/delzone637364112168100284705d9238?api-version=2018-05-01",
         "Cache-Control": "private",
         "Content-Length": "23",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 21 Sep 2020 20:00:59 GMT",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-dns-zones-9848/providers/Microsoft.Network/dnsOperationResults/delzone6373631525944301405e09bf4e?api-version=2018-05-01",
+        "Date": "Tue, 22 Sep 2020 22:40:17 GMT",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-dns-zones-9848/providers/Microsoft.Network/dnsOperationResults/delzone637364112168100284705d9238?api-version=2018-05-01",
         "Retry-After": "3",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "263f0c8a-9a63-462a-87d4-8de412710330",
+        "x-ms-correlation-request-id": "5cd221ca-ed33-4f1a-b994-af8dfabd0a77",
         "x-ms-ratelimit-remaining-subscription-resource-requests": "499",
         "x-ms-request-id": "2e0f5753-0b7d-b32b-56a8-70b1c771bef2",
-        "x-ms-routing-request-id": "WESTUS2:20200921T200059Z:263f0c8a-9a63-462a-87d4-8de412710330",
+        "x-ms-routing-request-id": "WESTUS2:20200922T224017Z:5cd221ca-ed33-4f1a-b994-af8dfabd0a77",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -227,12 +228,12 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-dns-zones-9848/providers/Microsoft.Network/dnsOperationStatuses/delzone6373631525944301405e09bf4e?api-version=2018-05-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-dns-zones-9848/providers/Microsoft.Network/dnsOperationStatuses/delzone637364112168100284705d9238?api-version=2018-05-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20200921.1",
+          "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20200922.1",
           "(.NET Core 4.6.29130.01; Linux 4.19.128-microsoft-standard #1 SMP Tue Jun 23 12:58:10 UTC 2020)"
         ],
         "x-ms-client-request-id": "5576a0bf2fbc752816f067b40d330424",
@@ -241,20 +242,20 @@
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com:443/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-dns-zones-9848/providers/Microsoft.Network/dnsOperationStatuses/delzone6373631525944301405e09bf4e?api-version=2018-05-01",
+        "Azure-AsyncOperation": "https://management.azure.com:443/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-dns-zones-9848/providers/Microsoft.Network/dnsOperationStatuses/delzone637364112168100284705d9238?api-version=2018-05-01",
         "Cache-Control": "private",
         "Content-Length": "23",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 21 Sep 2020 20:01:00 GMT",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-dns-zones-9848/providers/Microsoft.Network/dnsOperationResults/delzone6373631525944301405e09bf4e?api-version=2018-05-01",
+        "Date": "Tue, 22 Sep 2020 22:40:18 GMT",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-dns-zones-9848/providers/Microsoft.Network/dnsOperationResults/delzone637364112168100284705d9238?api-version=2018-05-01",
         "Retry-After": "3",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "8f023bb6-75eb-4454-a236-630543cf1a1a",
+        "x-ms-correlation-request-id": "b5f94305-f54b-4737-aa06-5fc53782a516",
         "x-ms-ratelimit-remaining-subscription-resource-requests": "498",
         "x-ms-request-id": "5576a0bf-2fbc-7528-16f0-67b40d330424",
-        "x-ms-routing-request-id": "WESTUS2:20200921T200101Z:8f023bb6-75eb-4454-a236-630543cf1a1a",
+        "x-ms-routing-request-id": "WESTUS2:20200922T224018Z:b5f94305-f54b-4737-aa06-5fc53782a516",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -262,12 +263,12 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-dns-zones-9848/providers/Microsoft.Network/dnsOperationStatuses/delzone6373631525944301405e09bf4e?api-version=2018-05-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/default-dns-zones-9848/providers/Microsoft.Network/dnsOperationStatuses/delzone637364112168100284705d9238?api-version=2018-05-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20200921.1",
+          "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20200922.1",
           "(.NET Core 4.6.29130.01; Linux 4.19.128-microsoft-standard #1 SMP Tue Jun 23 12:58:10 UTC 2020)"
         ],
         "x-ms-client-request-id": "ff4cf507eb03fe1dab01456b4afa5dc5",
@@ -279,14 +280,14 @@
         "Cache-Control": "private",
         "Content-Length": "22",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 21 Sep 2020 20:01:01 GMT",
+        "Date": "Tue, 22 Sep 2020 22:40:19 GMT",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "b0da1688-5e46-4823-a636-b8fd1b081e5b",
+        "x-ms-correlation-request-id": "98273907-8bc6-429e-be83-0bb5c613c37b",
         "x-ms-ratelimit-remaining-subscription-resource-requests": "497",
         "x-ms-request-id": "ff4cf507-eb03-fe1d-ab01-456b4afa5dc5",
-        "x-ms-routing-request-id": "WESTUS2:20200921T200102Z:b0da1688-5e46-4823-a636-b8fd1b081e5b",
+        "x-ms-routing-request-id": "WESTUS2:20200922T224019Z:98273907-8bc6-429e-be83-0bb5c613c37b",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
