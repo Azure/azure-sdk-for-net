@@ -109,7 +109,7 @@ namespace Azure.Storage.Blobs
                 content: quickQueryResult.Body,
                 copyCompletionTime: quickQueryResult.CopyCompletionTime);
 
-        internal static List<ArrowFieldInternal> ToArrowSchemaInternal(this List<BlobQueryArrowField> schema)
+        internal static IList<ArrowFieldInternal> ToArrowSchemaInternal(this IList<BlobQueryArrowField> schema)
         {
             if (schema == null)
             {
