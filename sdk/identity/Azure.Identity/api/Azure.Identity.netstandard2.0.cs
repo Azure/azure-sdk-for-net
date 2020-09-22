@@ -215,7 +215,8 @@ namespace Azure.Identity
     }
     public partial class SharedTokenCacheCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
-        public SharedTokenCacheCredentialOptions(Azure.Identity.TokenCache tokenCache = null) { }
+        public SharedTokenCacheCredentialOptions() { }
+        public SharedTokenCacheCredentialOptions(Azure.Identity.TokenCache tokenCache) { }
         public Azure.Identity.AuthenticationRecord AuthenticationRecord { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
         public Azure.Identity.TokenCache TokenCache { get { throw null; } }

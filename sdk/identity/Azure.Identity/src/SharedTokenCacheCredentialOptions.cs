@@ -31,10 +31,17 @@ namespace Azure.Identity
         public TokenCache TokenCache { get; }
 
         /// <summary>
-        /// constructor
+        /// SharedTokenCacheCredentialOptions
+        /// </summary>
+        public SharedTokenCacheCredentialOptions()
+            :this(null)
+        { }
+
+        /// <summary>
+        /// SharedTokenCacheCredentialOptions
         /// </summary>
         /// <param name="tokenCache"></param>
-        public SharedTokenCacheCredentialOptions(TokenCache tokenCache = null)
+        public SharedTokenCacheCredentialOptions(TokenCache tokenCache)
         {
             TokenCache = tokenCache ?? new PersistentTokenCache();
         }
