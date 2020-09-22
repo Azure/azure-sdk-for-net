@@ -4,6 +4,8 @@
 
 - Updating API version to 2020-06-01.
 - Adding new parameter called 'PublicNetworkAccess' for ConfigurationStoreUpdateParameters.
+- Accept header added to all requests.
+- Collections are now always initialized and collection properties are readonly by default.
 
 ## 1.0.0-preview.1
 
