@@ -367,24 +367,24 @@ namespace Azure.Storage.Files.DataLake
                 return null;
             }
 
-            if (textConfiguration.GetType() == typeof(DataLakeQueryJsonTextOptions))
+            if (textConfiguration is DataLakeQueryJsonTextOptions dataLakeQueryJsonTexasOptions)
             {
-                return ((DataLakeQueryJsonTextOptions)textConfiguration).ToBlobQueryJsonTextConfiguration();
+                return dataLakeQueryJsonTexasOptions.ToBlobQueryJsonTextConfiguration();
             }
 
-            if (textConfiguration.GetType() == typeof(DataLakeQueryCsvTextOptions))
+            if (textConfiguration is DataLakeQueryCsvTextOptions dataLakeQueryCsvTextOptions)
             {
-                return ((DataLakeQueryCsvTextOptions)textConfiguration).ToBlobQueryCsvTextConfiguration();
+                return dataLakeQueryCsvTextOptions.ToBlobQueryCsvTextConfiguration();
             }
 
-            if (textConfiguration.GetType() == typeof(DataLakeQueryArrowOptions))
+            if (textConfiguration is DataLakeQueryArrowOptions dataLakeQueryArrowOptions)
             {
                 if (isInput)
                 {
                     throw new ArgumentException($"{nameof(DataLakeQueryArrowOptions)} can only be used for output serialization.");
                 }
 
-                return ((DataLakeQueryArrowOptions)textConfiguration).ToBlobQueryArrowOptions();
+                return dataLakeQueryArrowOptions.ToBlobQueryArrowOptions();
             }
 
             throw new ArgumentException("Invalid text configuration type");
