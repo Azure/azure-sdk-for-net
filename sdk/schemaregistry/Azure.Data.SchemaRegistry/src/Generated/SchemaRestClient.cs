@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -66,7 +65,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="schemaId"> References specific schema in registry namespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<Stream, SchemaGetByIdHeaders>> GetByIdAsync(string schemaId, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<string, SchemaGetByIdHeaders>> GetByIdAsync(string schemaId, CancellationToken cancellationToken = default)
         {
             if (schemaId == null)
             {
@@ -80,7 +79,9 @@ namespace Azure.Data.SchemaRegistry
             {
                 case 200:
                     {
-                        var value = message.ExtractResponseContent();
+                        string value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = document.RootElement.GetString();
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -92,7 +93,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="schemaId"> References specific schema in registry namespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaId"/> is null. </exception>
-        public ResponseWithHeaders<Stream, SchemaGetByIdHeaders> GetById(string schemaId, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<string, SchemaGetByIdHeaders> GetById(string schemaId, CancellationToken cancellationToken = default)
         {
             if (schemaId == null)
             {
@@ -106,7 +107,9 @@ namespace Azure.Data.SchemaRegistry
             {
                 case 200:
                     {
-                        var value = message.ExtractResponseContent();
+                        string value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = document.RootElement.GetString();
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
