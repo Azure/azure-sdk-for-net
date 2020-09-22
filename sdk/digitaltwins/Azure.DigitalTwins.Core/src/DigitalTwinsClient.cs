@@ -940,7 +940,7 @@ namespace Azure.DigitalTwins.Core
         /// </exception>
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleGetModels">
-        /// AsyncPageable&lt;ModelData&gt; allModels = client.GetModelsAsync();
+        /// AsyncPageable&lt;DigitalTwinsModelData&gt; allModels = client.GetModelsAsync();
         /// await foreach (DigitalTwinsModelData model in allModels)
         /// {
         ///     Console.WriteLine($&quot;Retrieved model &apos;{model.Id}&apos;, &quot; +
@@ -1058,7 +1058,7 @@ namespace Azure.DigitalTwins.Core
         /// </exception>
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleGetModel">
-        /// Response&lt;ModelData&gt; sampleModelResponse = await client.GetModelAsync(sampleModelId);
+        /// Response&lt;DigitalTwinsModelData&gt; sampleModelResponse = await client.GetModelAsync(sampleModelId);
         /// Console.WriteLine($&quot;Retrieved model &apos;{sampleModelResponse.Value.Id}&apos;.&quot;);
         /// </code>
         /// </example>
