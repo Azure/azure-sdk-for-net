@@ -1,5 +1,8 @@
 # Release History
 
+## 1.0.0-beta.2 (Unreleased)
+
+
 ## 1.0.0-beta.1 (2020-09-22)
 This package contains common code for Azure Communication Service libraries. For more information, please see the README.
 
