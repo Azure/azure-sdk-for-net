@@ -19,9 +19,15 @@ namespace StreamAnalytics.Tests
         public const string RestOnlyResourceIdFormat = ResourceIdFormat + "/{4}/{5}";
         public static readonly string StreamingJobFullResourceType = string.Format(CultureInfo.InvariantCulture, "{0}/{1}",
             ResourceProviderNamespace, StreamingJobResourceType);
+        public static readonly string ClusterFullResourceType = string.Format(CultureInfo.InvariantCulture, "{0}/{1}",
+            ResourceProviderNamespace, ClusterResourceType);
+        public static readonly string PrivateEndpointFullResourceType = string.Format(CultureInfo.InvariantCulture, "{0}/{1}/{2}",
+            ResourceProviderNamespace, ClusterResourceType, PrivateEndpointResourceType);
         public static readonly string RestOnlyResourceTypeFormat = StreamingJobFullResourceType + "/{0}";
         public const string ResourceProviderNamespace = "Microsoft.StreamAnalytics";
         public const string StreamingJobResourceType = "streamingjobs";
+        public const string ClusterResourceType = "clusters";
+        public const string PrivateEndpointResourceType = "privateEndpoints";
         public const string InputsResourceType = "inputs";
         public const string TransformationResourceType = "transformations";
         public const string FunctionsResourceType = "functions";
@@ -88,6 +94,16 @@ namespace StreamAnalytics.Tests
             return string.Format(CultureInfo.InvariantCulture, ResourceIdFormat, subscriptionId, resourceGroupName, StreamingJobResourceType, resourceName);
         }
 
+        public static string GetClusterResourceId(string subscriptionId, string resourceGroupName, string resourceName)
+        {
+            return string.Format(CultureInfo.InvariantCulture, ResourceIdFormat, subscriptionId, resourceGroupName, ClusterResourceType, resourceName);
+        }
+
+        public static string GetPrivateEndpointResourceId(string subscriptionId, string resourceGroupName, string resourceName, string privateEndpointName)
+        {
+            return string.Format(CultureInfo.InvariantCulture, ResourceIdFormat, subscriptionId, resourceGroupName, ClusterResourceType, resourceName, PrivateEndpointResourceType, privateEndpointName);
+        }
+
         public static string GetRestOnlyResourceId(string subscriptionId, string resourceGroupName, string resourceName, string resourceType,
             string restOnlyResourceName)
         {
@@ -111,9 +127,9 @@ namespace StreamAnalytics.Tests
                         { "key3", "value3" }
                     },
                 Location = TestHelper.DefaultLocation,
-                Sku = new Sku()
+                Sku = new StreamingJobSku()
                 {
-                    Name = SkuName.Standard
+                    Name = StreamingJobSkuName.Standard
                 }
             };
         }
