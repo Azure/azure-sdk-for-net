@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Globalization;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Threading;
@@ -57,6 +58,7 @@ namespace Azure.Data.SchemaRegistry
         private const string RegisterSchemaScopeName = "SchemaRegistryClient.RegisterSchema";
         private const string GetSchemaIdScopeName = "SchemaRegistryClient.GetSchemaId";
         private const string GetSchemaScopeName = "SchemaRegistryClient.GetSchema";
+        private const string JsonStringMask = "\"{0}\"";
 
         /// <summary>
         /// Registers a schema with the SchemaRegistry service.
@@ -73,7 +75,7 @@ namespace Azure.Data.SchemaRegistry
             scope.Start();
             try
             {
-                var jsonStringSchemaContent = $"\"{JsonEncodedText.Encode(schemaContent, JavaScriptEncoder.UnsafeRelaxedJsonEscaping)}\"";
+                var jsonStringSchemaContent = string.Format(CultureInfo.InvariantCulture, JsonStringMask, JsonEncodedText.Encode(schemaContent, JavaScriptEncoder.UnsafeRelaxedJsonEscaping));
                 var response = await RestClient.RegisterAsync(groupName, schemaName, serializationType, jsonStringSchemaContent, cancellationToken).ConfigureAwait(false);
                 var properties = new SchemaProperties(schemaContent, response.Headers.Location, response.Headers.XSchemaType, response.Headers.XSchemaId, response.Headers.XSchemaVersion);
                 return Response.FromValue(properties, response);
@@ -102,7 +104,7 @@ namespace Azure.Data.SchemaRegistry
             scope.Start();
             try
             {
-                var jsonStringSchemaContent = $"\"{JsonEncodedText.Encode(schemaContent, JavaScriptEncoder.UnsafeRelaxedJsonEscaping)}\"";
+                var jsonStringSchemaContent = string.Format(CultureInfo.InvariantCulture, JsonStringMask, JsonEncodedText.Encode(schemaContent, JavaScriptEncoder.UnsafeRelaxedJsonEscaping));
                 var response = RestClient.Register(groupName, schemaName, serializationType, jsonStringSchemaContent, cancellationToken);
                 var properties = new SchemaProperties(schemaContent, response.Headers.Location, response.Headers.XSchemaType, response.Headers.XSchemaId, response.Headers.XSchemaVersion);
                 return Response.FromValue(properties, response);
@@ -129,7 +131,7 @@ namespace Azure.Data.SchemaRegistry
             scope.Start();
             try
             {
-                var jsonStringSchemaContent = $"\"{JsonEncodedText.Encode(schemaContent, JavaScriptEncoder.UnsafeRelaxedJsonEscaping)}\"";
+                var jsonStringSchemaContent = string.Format(CultureInfo.InvariantCulture, JsonStringMask, JsonEncodedText.Encode(schemaContent, JavaScriptEncoder.UnsafeRelaxedJsonEscaping));
                 var response = await RestClient.QueryIdByContentAsync(groupName, schemaName, serializationType, jsonStringSchemaContent, cancellationToken).ConfigureAwait(false);
                 var properties = new SchemaProperties(schemaContent, response.Headers.Location, response.Headers.XSchemaType, response.Headers.XSchemaId, response.Headers.XSchemaVersion);
                 return Response.FromValue(properties, response);
@@ -156,7 +158,7 @@ namespace Azure.Data.SchemaRegistry
             scope.Start();
             try
             {
-                var jsonStringSchemaContent = $"\"{JsonEncodedText.Encode(schemaContent, JavaScriptEncoder.UnsafeRelaxedJsonEscaping)}\"";
+                var jsonStringSchemaContent = string.Format(CultureInfo.InvariantCulture, JsonStringMask, JsonEncodedText.Encode(schemaContent, JavaScriptEncoder.UnsafeRelaxedJsonEscaping));
                 var response = RestClient.QueryIdByContent(groupName, schemaName, serializationType, jsonStringSchemaContent, cancellationToken);
                 var properties = new SchemaProperties(schemaContent, response.Headers.Location, response.Headers.XSchemaType, response.Headers.XSchemaId, response.Headers.XSchemaVersion);
                 return Response.FromValue(properties, response);
