@@ -273,7 +273,13 @@ To consume the a dev package set the exact version in your project or to consume
 </Project>
 ```
 
-# On-boarding New Libraries
+## Preparing to a release of the new library
+
+To update the CHANGELOG, version and release tracking information use the `.\eng\scripts\Prepare-Release.ps1` script.
+
+The syntax is `.\eng\scripts\Prepare-Release.ps1 <package_name>`. The script would ask you for a new version or `NA` if you are not releasing in this cycle.
+
+## On-boarding New Libraries
 
 ### Project Structure
 
@@ -346,7 +352,7 @@ If you are adding a new service directory, ensure that it is mapped to a friendl
 8. Copy existing generate.ps1 file from another service and update the `ResourceProvider` name that is applicable to your SDK. Resource provider refers to the relative path of your REST spec directory in Azure-Rest-Api-Specs repository
    During SDK generation, this path helps to locate the REST API spec from the `https://github.com/Azure/azure-rest-api-specs`
 
-# On-boarding New generated code library
+## On-boarding New generated code library
 
 1. Make a copy of `/sdk/template/Azure.Template` in you appropriate service directory and rename projects to `Azure.Management.*` for management libraries or `Azure.*` (e.g.  `sdk/storage/Azure.Management.Storage` or `sdk/storage/Azure.Storage.Blobs`)
 2. Modify `autorest.md` to point to you Swagger file or central README.md file. E.g.
