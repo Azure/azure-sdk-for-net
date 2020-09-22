@@ -4,3 +4,5 @@ steps:
       command: custom
       customCommand: install --prefix $(Agent.TempDirectory)/azurite azurite
     displayName: Install Azurite
+    env:
+      AzureWebJobsStorageAzuriteLocation: $(Agent.TempDirectory)
