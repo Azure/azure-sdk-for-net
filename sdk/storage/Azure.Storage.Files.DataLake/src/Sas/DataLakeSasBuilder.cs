@@ -483,9 +483,7 @@ namespace Azure.Storage.Sas
                     Resource = Constants.Sas.Resource.Directory;
                     if (!Path.Equals("/", StringComparison.InvariantCultureIgnoreCase))
                     {
-                        Path = Path.TrimStart('/');
-                        Path = Path.TrimEnd('/');
-                        _directoryDepth = Path.Split('/').Length;
+                        _directoryDepth = Path.Trim('/').Split('/').Length;
                     }
                     else
                     {
