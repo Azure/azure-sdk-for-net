@@ -1,0 +1,3 @@
+steps:
+  - script: npm install -g azurite
+    displayName: Install Azurite

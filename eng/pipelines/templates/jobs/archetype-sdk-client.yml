@@ -129,6 +129,7 @@ jobs:
       vmImage: "$(OSVmImage)"
     steps:
       - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
+      - template: /eng/common/pipelines/templates/steps/azurite-install.yml
       - script: >-
           dotnet test eng/service.proj --filter TestCategory!=Live --framework $(TestTargetFramework)
           --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
