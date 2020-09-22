@@ -1,3 +1,7 @@
+parameters:
+- name: TestSetupSteps
+  type: stepList
+  default: []
 jobs:
   - job: Build
     variables:
@@ -129,7 +133,9 @@ jobs:
       vmImage: "$(OSVmImage)"
     steps:
       - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
-      - template: /eng/common/pipelines/templates/steps/azurite-install.yml
+      - ${{ each step in parameters.TestSetupSteps }}:
+        - ${{ each pair in step }}:
+            ${{ pair.key }}: ${{ pair.value }}
       - script: >-
           dotnet test eng/service.proj --filter TestCategory!=Live --framework $(TestTargetFramework)
           --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
