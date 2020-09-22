@@ -11,3 +11,9 @@
 ### Bug fixes
 
 - Change the factory class name from MediaServicesEdgeClientFactory to LiveVideoAnalyticsEdgeClientFactory to be consistent with product name.
+
+## 1.0.4-preview.1 (2020-09-18)
+
+### New features
+
+- Added two new processor, Cognitive services vision extension and GRPC extension.

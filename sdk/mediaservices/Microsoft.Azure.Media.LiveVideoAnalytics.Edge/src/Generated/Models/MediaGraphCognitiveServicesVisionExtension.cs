@@ -16,24 +16,25 @@ namespace Microsoft.Azure.Media.LiveVideoAnalytics.Edge.Models
     using System.Linq;
 
     /// <summary>
-    /// A processor that allows the media graph to send video frames (mostly at
-    /// low frame rates e.g. &lt;5 fps) to an external inference container over
-    /// an HTTP-based RESTful API. Inference results are relayed to downstream
-    /// nodes.
+    /// A processor that allows the media graph to send video frames to a
+    /// Cognitive Services Vision extension. Inference results are relayed to
+    /// downstream nodes.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("#Microsoft.Media.MediaGraphHttpExtension")]
-    public partial class MediaGraphHttpExtension : MediaGraphExtensionProcessorBase
+    [Newtonsoft.Json.JsonObject("#Microsoft.Media.MediaGraphCognitiveServicesVisionExtension")]
+    public partial class MediaGraphCognitiveServicesVisionExtension : MediaGraphExtensionProcessorBase
     {
         /// <summary>
-        /// Initializes a new instance of the MediaGraphHttpExtension class.
+        /// Initializes a new instance of the
+        /// MediaGraphCognitiveServicesVisionExtension class.
         /// </summary>
-        public MediaGraphHttpExtension()
+        public MediaGraphCognitiveServicesVisionExtension()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the MediaGraphHttpExtension class.
+        /// Initializes a new instance of the
+        /// MediaGraphCognitiveServicesVisionExtension class.
         /// </summary>
         /// <param name="name">The name for this processor node.</param>
         /// <param name="inputs">An array of the names of the other nodes in
@@ -43,7 +44,7 @@ namespace Microsoft.Azure.Media.LiveVideoAnalytics.Edge.Models
         /// connect.</param>
         /// <param name="image">Describes the parameters of the image that is
         /// sent as input to the endpoint.</param>
-        public MediaGraphHttpExtension(string name, IList<MediaGraphNodeInput> inputs, MediaGraphEndpoint endpoint = default(MediaGraphEndpoint), MediaGraphImage image = default(MediaGraphImage))
+        public MediaGraphCognitiveServicesVisionExtension(string name, IList<MediaGraphNodeInput> inputs, MediaGraphEndpoint endpoint = default(MediaGraphEndpoint), MediaGraphImage image = default(MediaGraphImage))
             : base(name, inputs, endpoint, image)
         {
             CustomInit();
