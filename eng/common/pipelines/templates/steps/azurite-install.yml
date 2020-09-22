@@ -8,7 +8,7 @@ steps:
     displayName: Add Azurite location as environment variable
     inputs:
       targetType: 'inline'
-      script: Write-Host "##vso[task.setvariable variable=Azure.Azurite.Location;]$(Agent.TempDirectory)"
+      script: Write-Host "##vso[task.setvariable variable=Azure.Azurite.Location;]$(Agent.TempDirectory)/azurite"
   - task: Bash@3
     inputs:
       targetType: 'inline'

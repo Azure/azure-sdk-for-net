@@ -45,11 +45,12 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
                     accountsList.Add($"{account.Name}:{account.Key}");
                 }
 
+                var azuriteScriptLocation = Path.Combine(azuriteLocation, "node_modules/azurite/dist/src/azurite.js");
                 tempDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
                 Directory.CreateDirectory(tempDirectory);
                 process = new Process();
                 process.StartInfo.FileName = "node.exe";
-                process.StartInfo.Arguments = $"{azuriteLocation} -l {tempDirectory}";
+                process.StartInfo.Arguments = $"{azuriteScriptLocation} -l {tempDirectory}";
                 process.StartInfo.EnvironmentVariables.Add("AZURITE_ACCOUNTS", $"{string.Join(";", accountsList)}");
                 process.StartInfo.UseShellExecute = false;
                 process.StartInfo.RedirectStandardOutput = true;
