@@ -542,7 +542,6 @@ directive:
   transform: >
     $.get.responses["200"]["x-az-response-name"] = "ShareFileRangeInfoInternal";
     $.get.responses["200"]["x-az-public"] = false;
-    $.get.responses["200"]["x-az-response-schema-name"] = "Ranges";
 ```
 
 ### /{shareName}/{directory}/{fileName}?comp=copy
@@ -763,6 +762,24 @@ directive:
   where: $.definitions
   transform: >
     $.Range["x-az-public"] = false;
+```
+
+### Hide RangeList
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.RangeList["x-az-public"] = false;
+```
+
+### Hide ClearRange
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.ClearRange["x-az-public"] = false;
 ```
 
 ### /{shareName}/{directory}/{fileName}?comp=lease&acquire

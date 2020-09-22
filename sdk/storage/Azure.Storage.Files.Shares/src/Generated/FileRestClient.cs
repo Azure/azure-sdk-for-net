@@ -7517,11 +7517,7 @@ namespace Azure.Storage.Files.Shares
                         // Create the result
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.Shares.Models.ShareFileRangeInfoInternal _value = new Azure.Storage.Files.Shares.Models.ShareFileRangeInfoInternal();
-                        _value.Ranges =
-                            System.Linq.Enumerable.ToList(
-                                System.Linq.Enumerable.Select(
-                                    _xml.Element(System.Xml.Linq.XName.Get("Ranges", "")).Elements(System.Xml.Linq.XName.Get("Range", "")),
-                                    Azure.Storage.Files.Shares.Models.Range.FromXml));
+                        _value.Body = Azure.Storage.Files.Shares.Models.RangeList.FromXml(_xml.Root);
 
                         // Get response headers
                         string _header;
@@ -8309,6 +8305,59 @@ namespace Azure.Storage.Files.Shares.Models
     }
 }
 #endregion class BrokenLease
+
+#region class ClearRange
+namespace Azure.Storage.Files.Shares.Models
+{
+    /// <summary>
+    /// ClearRange
+    /// </summary>
+    internal partial class ClearRange
+    {
+        /// <summary>
+        /// Start
+        /// </summary>
+        public long Start { get; internal set; }
+
+        /// <summary>
+        /// End
+        /// </summary>
+        public long End { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of ClearRange instances.
+        /// You can use ShareModelFactory.ClearRange instead.
+        /// </summary>
+        internal ClearRange() { }
+
+        /// <summary>
+        /// Deserializes XML into a new ClearRange instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized ClearRange instance.</returns>
+        internal static Azure.Storage.Files.Shares.Models.ClearRange FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Files.Shares.Models.ClearRange _value = new Azure.Storage.Files.Shares.Models.ClearRange();
+            _child = element.Element(System.Xml.Linq.XName.Get("Start", ""));
+            if (_child != null)
+            {
+                _value.Start = long.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("End", ""));
+            if (_child != null)
+            {
+                _value.End = long.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Shares.Models.ClearRange value);
+    }
+}
+#endregion class ClearRange
 
 #region enum CopyStatus
 namespace Azure.Storage.Files.Shares.Models
@@ -9222,6 +9271,71 @@ namespace Azure.Storage.Files.Shares.Models
     }
 }
 #endregion class Range
+
+#region class RangeList
+namespace Azure.Storage.Files.Shares.Models
+{
+    /// <summary>
+    /// the list of pages
+    /// </summary>
+    internal partial class RangeList
+    {
+        /// <summary>
+        /// Ranges
+        /// </summary>
+        public System.Collections.Generic.IEnumerable<Azure.Storage.Files.Shares.Models.Range> Ranges { get; internal set; }
+
+        /// <summary>
+        /// ClearRanges
+        /// </summary>
+        public System.Collections.Generic.IEnumerable<Azure.Storage.Files.Shares.Models.ClearRange> ClearRanges { get; internal set; }
+
+        /// <summary>
+        /// Creates a new RangeList instance
+        /// </summary>
+        public RangeList()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new RangeList instance
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal RangeList(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                Ranges = new System.Collections.Generic.List<Azure.Storage.Files.Shares.Models.Range>();
+                ClearRanges = new System.Collections.Generic.List<Azure.Storage.Files.Shares.Models.ClearRange>();
+            }
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new RangeList instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized RangeList instance.</returns>
+        internal static Azure.Storage.Files.Shares.Models.RangeList FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            Azure.Storage.Files.Shares.Models.RangeList _value = new Azure.Storage.Files.Shares.Models.RangeList(true);
+            _value.Ranges = System.Linq.Enumerable.ToList(
+                System.Linq.Enumerable.Select(
+                    element.Elements(System.Xml.Linq.XName.Get("Range", "")),
+                    e => Azure.Storage.Files.Shares.Models.Range.FromXml(e)));
+            _value.ClearRanges = System.Linq.Enumerable.ToList(
+                System.Linq.Enumerable.Select(
+                    element.Elements(System.Xml.Linq.XName.Get("ClearRange", "")),
+                    e => Azure.Storage.Files.Shares.Models.ClearRange.FromXml(e)));
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Shares.Models.RangeList value);
+    }
+}
+#endregion class RangeList
 
 #region class RawStorageDirectoryInfo
 namespace Azure.Storage.Files.Shares.Models
@@ -10476,16 +10590,16 @@ namespace Azure.Storage.Files.Shares.Models
         public long FileContentLength { get; internal set; }
 
         /// <summary>
-        /// A list of non-overlapping valid ranges, sorted by increasing address range.
+        /// the list of pages
         /// </summary>
-        public System.Collections.Generic.IEnumerable<Azure.Storage.Files.Shares.Models.Range> Ranges { get; internal set; }
+        public Azure.Storage.Files.Shares.Models.RangeList Body { get; internal set; }
 
         /// <summary>
         /// Creates a new ShareFileRangeInfoInternal instance
         /// </summary>
         public ShareFileRangeInfoInternal()
         {
-            Ranges = new System.Collections.Generic.List<Azure.Storage.Files.Shares.Models.Range>();
+            Body = new Azure.Storage.Files.Shares.Models.RangeList();
         }
     }
 }
