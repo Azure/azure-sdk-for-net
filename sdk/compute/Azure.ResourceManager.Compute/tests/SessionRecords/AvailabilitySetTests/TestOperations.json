@@ -4,7 +4,6 @@
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourcegroups/crptestar1512_1?api-version=2017-05-10",
       "RequestMethod": "PUT",
       "RequestHeaders": {
-        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "78",
         "Content-Type": "application/json",
@@ -52,7 +51,6 @@
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar1512_1/providers/Microsoft.Compute/availabilitySets/invalidfdud5059?api-version=2019-12-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
-        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "105",
         "Content-Type": "application/json",
@@ -108,7 +106,6 @@
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar1512_1/providers/Microsoft.Compute/availabilitySets/invalidfdud5059?api-version=2019-12-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
-        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "105",
         "Content-Type": "application/json",
@@ -164,7 +161,6 @@
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar1512_1/providers/Microsoft.Compute/availabilitySets/invalidfdud5059?api-version=2019-12-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
-        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "135",
         "Content-Type": "application/json",
@@ -221,7 +217,6 @@
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar1512_1/providers/Microsoft.Compute/availabilitySets/invalidfdud5059?api-version=2019-12-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
-        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "136",
         "Content-Type": "application/json",
@@ -278,7 +273,6 @@
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar1512_1/providers/Microsoft.Compute/availabilitySets/asdefaultvalues1370?api-version=2019-12-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
-        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "77",
         "Content-Type": "application/json",
@@ -342,7 +336,6 @@
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar1512_1/providers/Microsoft.Compute/availabilitySets?api-version=2019-12-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-ResourceManager.Compute/1.0.0-dev.20200615.1",
@@ -402,7 +395,6 @@
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar1512_1/providers/Microsoft.Compute/availabilitySets/asdefaultvalues1370?api-version=2019-12-01",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
-        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "76",
         "Content-Type": "application/json",
@@ -467,7 +459,6 @@
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar1512_1/providers/Microsoft.Compute/availabilitySets/asdefaultvalues1370?api-version=2019-12-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-ResourceManager.Compute/1.0.0-dev.20200615.1",
@@ -524,7 +515,6 @@
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar1512_1/providers/Microsoft.Compute/availabilitySets/asdefaultvalues1370/vmSizes?api-version=2019-12-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-ResourceManager.Compute/1.0.0-dev.20200615.1",
@@ -3089,7 +3079,6 @@
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar1512_1/providers/Microsoft.Compute/availabilitySets/asnondefault3947?api-version=2019-12-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
-        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "135",
         "Content-Type": "application/json",
@@ -3156,7 +3145,6 @@
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar1512_1/providers/Microsoft.Compute/availabilitySets/asnondefault3947?api-version=2019-12-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-ResourceManager.Compute/1.0.0-dev.20200615.1",
@@ -3212,7 +3200,6 @@
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar1512_1/providers/Microsoft.Compute/availabilitySets/asnondefault3947/vmSizes?api-version=2019-12-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-ResourceManager.Compute/1.0.0-dev.20200615.1",
@@ -5777,7 +5764,6 @@
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar1512_1/providers/Microsoft.Compute/availabilitySets/asdefaultvalues986_1?api-version=2019-12-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
-        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "79",
         "Content-Type": "application/json",
@@ -5841,7 +5827,6 @@
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourcegroups/crptestar1512_2?api-version=2017-05-10",
       "RequestMethod": "PUT",
       "RequestHeaders": {
-        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "78",
         "Content-Type": "application/json",
@@ -5889,7 +5874,6 @@
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar1512_2/providers/Microsoft.Compute/availabilitySets/asdefaultvalues986_2?api-version=2019-12-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
-        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "79",
         "Content-Type": "application/json",
@@ -5953,7 +5937,6 @@
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/availabilitySets?api-version=2019-12-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-ResourceManager.Compute/1.0.0-dev.20200615.1",
@@ -6042,7 +6025,6 @@
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/availabilitySets?api-version=2019-12-01\u0026$expand=virtualMachines%2F%24ref",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-ResourceManager.Compute/1.0.0-dev.20200615.1",
@@ -6134,7 +6116,6 @@
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar1512_1/providers/Microsoft.Compute/availabilitySets/asdefaultvalues986_1?api-version=2019-12-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-ResourceManager.Compute/1.0.0-dev.20200615.1",
@@ -6190,7 +6171,6 @@
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar1512_1/providers/Microsoft.Compute/availabilitySets/asdefaultvalues986_1/vmSizes?api-version=2019-12-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-ResourceManager.Compute/1.0.0-dev.20200615.1",
@@ -8755,7 +8735,6 @@
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar1512_2/providers/Microsoft.Compute/availabilitySets/asdefaultvalues986_2?api-version=2019-12-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-ResourceManager.Compute/1.0.0-dev.20200615.1",
@@ -8811,7 +8790,6 @@
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar1512_2/providers/Microsoft.Compute/availabilitySets/asdefaultvalues986_2/vmSizes?api-version=2019-12-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-ResourceManager.Compute/1.0.0-dev.20200615.1",
