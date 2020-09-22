@@ -8,7 +8,7 @@ namespace Azure.DigitalTwins.Core.Serialization
 {
     /// <summary>
     /// An optional, helper class for deserializing a digital twin.
-    /// The $metadata class on a <see cref="BasicDigitalTwin"/> and <see cref="ModelProperties"/>.
+    /// The $metadata class on a <see cref="BasicDigitalTwin"/> and <see cref="DigitalTwinsModelProperties"/>.
     /// </summary>
     /// <remarks>
     /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.

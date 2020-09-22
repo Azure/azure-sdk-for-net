@@ -950,9 +950,9 @@ namespace Azure.DigitalTwins.Core
         /// }
         /// </code>
         /// </example>
-        public virtual AsyncPageable<ModelData> GetModelsAsync(IEnumerable<string> dependenciesFor = default, bool includeModelDefinition = false, GetModelsOptions options = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DigitalTwinsModelData> GetModelsAsync(IEnumerable<string> dependenciesFor = default, bool includeModelDefinition = false, GetModelsOptions options = default, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ModelData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<DigitalTwinsModelData>> FirstPageFunc(int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinModelsClient.List");
                 scope.Start();
@@ -968,7 +968,7 @@ namespace Azure.DigitalTwins.Core
                 }
             }
 
-            async Task<Page<ModelData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<DigitalTwinsModelData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinModelsClient.List");
                 scope.Start();
@@ -1004,9 +1004,9 @@ namespace Azure.DigitalTwins.Core
         /// <seealso cref="GetModelsAsync(IEnumerable{string}, bool, GetModelsOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Pageable<ModelData> GetModels(IEnumerable<string> dependenciesFor = default, bool includeModelDefinition = false, GetModelsOptions options = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<DigitalTwinsModelData> GetModels(IEnumerable<string> dependenciesFor = default, bool includeModelDefinition = false, GetModelsOptions options = default, CancellationToken cancellationToken = default)
         {
-            Page<ModelData> FirstPageFunc(int? pageSizeHint)
+            Page<DigitalTwinsModelData> FirstPageFunc(int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinModelsClient.List");
                 scope.Start();
@@ -1022,7 +1022,7 @@ namespace Azure.DigitalTwins.Core
                 }
             }
 
-            Page<ModelData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<DigitalTwinsModelData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinModelsClient.List");
                 scope.Start();
@@ -1062,7 +1062,7 @@ namespace Azure.DigitalTwins.Core
         /// Console.WriteLine($&quot;Retrieved model &apos;{sampleModelResponse.Value.Id}&apos;.&quot;);
         /// </code>
         /// </example>
-        public virtual Task<Response<ModelData>> GetModelAsync(string modelId, CancellationToken cancellationToken = default)
+        public virtual Task<Response<DigitalTwinsModelData>> GetModelAsync(string modelId, CancellationToken cancellationToken = default)
         {
             // The GetModel API will include the model definition in its response by default.
             return _dtModelsRestClient.GetByIdAsync(modelId, IncludeModelDefinition, cancellationToken);
@@ -1086,7 +1086,7 @@ namespace Azure.DigitalTwins.Core
         /// <seealso cref="GetModelAsync(string, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response<ModelData> GetModel(string modelId, CancellationToken cancellationToken = default)
+        public virtual Response<DigitalTwinsModelData> GetModel(string modelId, CancellationToken cancellationToken = default)
         {
             // The GetModel API will include the model definition in its response by default.
             return _dtModelsRestClient.GetById(modelId, IncludeModelDefinition, cancellationToken);
@@ -1188,9 +1188,9 @@ namespace Azure.DigitalTwins.Core
         /// Console.WriteLine($&quot;Created models &apos;{componentModelId}&apos; and &apos;{sampleModelId}&apos;.&quot;);
         /// </code>
         /// </example>
-        public virtual async Task<Response<ModelData[]>> CreateModelsAsync(IEnumerable<string> models, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DigitalTwinsModelData[]>> CreateModelsAsync(IEnumerable<string> models, CancellationToken cancellationToken = default)
         {
-            Response<IReadOnlyList<ModelData>> response = await _dtModelsRestClient.AddAsync(models, cancellationToken).ConfigureAwait(false);
+            Response<IReadOnlyList<DigitalTwinsModelData>> response = await _dtModelsRestClient.AddAsync(models, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(response.Value.ToArray(), response.GetRawResponse());
         }
 
@@ -1217,9 +1217,9 @@ namespace Azure.DigitalTwins.Core
         /// <seealso cref="CreateModelsAsync(IEnumerable{string}, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response<ModelData[]> CreateModels(IEnumerable<string> models, CancellationToken cancellationToken = default)
+        public virtual Response<DigitalTwinsModelData[]> CreateModels(IEnumerable<string> models, CancellationToken cancellationToken = default)
         {
-            Response<IReadOnlyList<ModelData>> response = _dtModelsRestClient.Add(models, cancellationToken);
+            Response<IReadOnlyList<DigitalTwinsModelData>> response = _dtModelsRestClient.Add(models, cancellationToken);
             return Response.FromValue(response.Value.ToArray(), response.GetRawResponse());
         }
 

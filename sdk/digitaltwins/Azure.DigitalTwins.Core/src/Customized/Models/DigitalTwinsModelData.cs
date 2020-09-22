@@ -8,10 +8,10 @@ using Azure.Core;
 namespace Azure.DigitalTwins.Core
 {
     [CodeGenModel("ModelData")]
-    public partial class ModelData
+    public partial class DigitalTwinsModelData
     {
         // This class declaration makes the generated class of the same name declare Model as a **string** rather than an **object**.
-        // It also changes the namespace.
+        // It also changes the namespace and renames the type from "ModelData" to "DigitalTwinsModelData"
         // Do not remove.
 
         /// <summary>
@@ -23,7 +23,7 @@ namespace Azure.DigitalTwins.Core
 
 #pragma warning disable CA1801 // Remove unused parameter
 
-        private ModelData(string id)
+        private DigitalTwinsModelData(string id)
         {
         }
 
