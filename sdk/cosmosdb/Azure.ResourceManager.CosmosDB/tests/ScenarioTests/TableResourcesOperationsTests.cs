@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyTables(tableGetResults, tables[0]);
         }
 
-        [TestCase, Order(3)]
+        [TestCase, Order(2)]
         public async Task TableMigrateToAutoscaleTest()
         {
             ThroughputSettingsGetResults throughputSettingsGetResults = await WaitForCompletionAsync(
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(defaultThroughput, throughputSettingsGetResults.Resource.Throughput);
         }
 
-        [TestCase, Order(4)]
+        [TestCase, Order(3)]
         public async Task TableMigrateToManualThroughputTest()
         {
             ThroughputSettingsGetResults throughputSettingsGetResults = await WaitForCompletionAsync(
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(defaultMaxThroughput, throughputSettingsGetResults.Resource.Throughput);
         }
 
-        [TestCase, Order(5)]
+        [TestCase, Order(4)]
         public async Task TableUpdateThroughputTest()
         {
             ThroughputSettingsGetResults throughputSettingsGetResults = await WaitForCompletionAsync(
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(defaultThroughput, throughputSettingsGetResults.Resource.Throughput);
         }
 
-        [TestCase, Order(6)]
+        [TestCase, Order(5)]
         public async Task TableDeleteTest()
         {
             await WaitForCompletionAsync(await CosmosDBManagementClient.TableResources.StartDeleteTableAsync(resourceGroupName, databaseAccountName, tableName));
