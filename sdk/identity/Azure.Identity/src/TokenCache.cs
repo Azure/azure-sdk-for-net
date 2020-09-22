@@ -55,12 +55,18 @@ namespace Azure.Identity
             _data = data;
             _lastUpdated = DateTimeOffset.UtcNow;
             _cacheAccessMap = new ConditionalWeakTable<object, CacheTimestamp>();
+            LoadFromMemory = true;
         }
 
         /// <summary>
         /// An event notifying the subscriber that the underlying <see cref="TokenCache"/> has been updated. This event can be handled to persist the updated cache data.
         /// </summary>
         public event Func<TokenCacheUpdatedArgs, Task> Updated;
+
+        /// <summary>
+        /// Specifies whether the cache should reload from memory before the cache is accessed.
+        /// </summary>
+        internal bool LoadFromMemory { get; set; }
 
         /// <summary>
         /// Serializes the <see cref="TokenCache"/> to the specified <see cref="Stream"/>.
@@ -178,17 +184,20 @@ namespace Azure.Identity
                 throw new ObjectDisposedException(nameof(TokenCache));
             }
 
-            await _lock.WaitAsync().ConfigureAwait(false);
-
-            try
+            if (LoadFromMemory)
             {
-                args.TokenCache.DeserializeMsalV3(_data, true);
+                await _lock.WaitAsync().ConfigureAwait(false);
 
-                _cacheAccessMap.GetOrCreateValue(args.TokenCache).Update();
-            }
-            finally
-            {
-                _lock.Release();
+                try
+                {
+                    args.TokenCache.DeserializeMsalV3(_data, true);
+
+                    _cacheAccessMap.GetOrCreateValue(args.TokenCache).Update();
+                }
+                finally
+                {
+                    _lock.Release();
+                }
             }
         }
 

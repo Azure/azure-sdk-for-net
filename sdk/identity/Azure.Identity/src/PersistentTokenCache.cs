@@ -27,10 +27,9 @@ namespace Azure.Identity
         /// <summary>
         /// Creation.
         /// </summary>
-        /// <param name="allowUnencryptedStorage"></param>
-        public PersistentTokenCache(bool allowUnencryptedStorage = true)
+        public PersistentTokenCache()
+            : this(null)
         {
-            _allowUnencryptedStorage = allowUnencryptedStorage;
         }
 
         /// <summary>
@@ -42,6 +41,8 @@ namespace Azure.Identity
             _allowUnencryptedStorage = options?.AllowUnencryptedStorage ?? false;
 
             _name = options?.Name;
+
+            LoadFromMemory = false;
         }
 
         internal override async Task RegisterCache(bool async, ITokenCache tokenCache, CancellationToken cancellationToken)
