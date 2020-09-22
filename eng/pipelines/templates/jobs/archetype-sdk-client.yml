@@ -1,7 +1,3 @@
-parameters:
-- name: TestSetupSteps
-  type: stepList
-  default: []
 jobs:
   - job: Build
     variables:
