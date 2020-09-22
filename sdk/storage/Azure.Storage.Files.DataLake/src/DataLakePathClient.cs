@@ -2158,8 +2158,8 @@ namespace Azure.Storage.Files.DataLake
                 progressHandler,
                 PathSetAccessControlRecursiveMode.Set,
                 options,
-                false, // async
                 continuationToken,
+                async: false,
                 cancellationToken)
                 .EnsureCompleted();
         }
@@ -2207,8 +2207,8 @@ namespace Azure.Storage.Files.DataLake
                 progressHandler,
                 PathSetAccessControlRecursiveMode.Set,
                 options,
-                true, // async
                 continuationToken,
+                async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
         }
@@ -2256,8 +2256,8 @@ namespace Azure.Storage.Files.DataLake
                 progressHandler,
                 PathSetAccessControlRecursiveMode.Modify,
                 options,
-                false, // async
                 continuationToken,
+                async: false,
                 cancellationToken)
                 .EnsureCompleted();
         }
@@ -2305,8 +2305,8 @@ namespace Azure.Storage.Files.DataLake
                 progressHandler,
                 PathSetAccessControlRecursiveMode.Modify,
                 options,
-                true, // async
                 continuationToken,
+                async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
         }
@@ -2354,8 +2354,8 @@ namespace Azure.Storage.Files.DataLake
                 progressHandler,
                 PathSetAccessControlRecursiveMode.Remove,
                 options,
-                false, // async
                 continuationToken,
+                async: false,
                 cancellationToken)
                 .EnsureCompleted();
         }
@@ -2403,8 +2403,8 @@ namespace Azure.Storage.Files.DataLake
                 progressHandler,
                 PathSetAccessControlRecursiveMode.Remove,
                 options,
-                true, // async
                 continuationToken,
+                async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
         }
@@ -2433,11 +2433,11 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="options">
         /// Optional <see cref="AccessControlChangeOptions"/> with additional controls.
         /// </param>
-        /// <param name="async">
-        /// Whether to invoke the operation asynchronously.
-        /// </param>
         /// <param name="continuationToken">
         /// Optional continuation token that can be used to resume previously stopped operation.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -2457,8 +2457,8 @@ namespace Azure.Storage.Files.DataLake
             IProgress<Response<AccessControlChanges>> progressHandler,
             PathSetAccessControlRecursiveMode mode,
             AccessControlChangeOptions options,
-            bool async,
             string continuationToken,
+            bool async,
             CancellationToken cancellationToken)
         {
             DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
