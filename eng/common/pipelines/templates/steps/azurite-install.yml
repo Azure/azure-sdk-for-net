@@ -1,3 +1,6 @@
 steps:
-  - script: npm install -g azurite
+  - task: Npm@1
+    inputs:
+      command: custom
+      customCommand: install --prefix $(Agent.TempDirectory)/azurite azurite
     displayName: Install Azurite
