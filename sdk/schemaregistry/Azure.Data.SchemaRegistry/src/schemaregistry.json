@@ -80,8 +80,7 @@
               }
             },
             "schema": {
-              "type": "object",
-              "format": "binary"
+              "type": "string"
             }
           },
           "default": {
