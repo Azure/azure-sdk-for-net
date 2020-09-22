@@ -59,7 +59,6 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", "2019-10-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(deploymentScript);
             request.Content = content;
@@ -148,7 +147,6 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", "2019-10-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            request.Headers.Add("Accept", "application/json");
             if (deploymentScript != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -239,7 +237,6 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(scriptName, true);
             uri.AppendQuery("api-version", "2019-10-01-preview", true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -322,7 +319,6 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(scriptName, true);
             uri.AppendQuery("api-version", "2019-10-01-preview", true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -394,7 +390,6 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/providers/Microsoft.Resources/deploymentScripts", false);
             uri.AppendQuery("api-version", "2019-10-01-preview", true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -454,7 +449,6 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/logs", false);
             uri.AppendQuery("api-version", "2019-10-01-preview", true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -542,7 +536,6 @@ namespace Azure.ResourceManager.Resources
                 uri.AppendQuery("tail", tail.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -626,7 +619,6 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/providers/Microsoft.Resources/deploymentScripts", false);
             uri.AppendQuery("api-version", "2019-10-01-preview", true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -693,7 +685,6 @@ namespace Azure.ResourceManager.Resources
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -760,7 +751,6 @@ namespace Azure.ResourceManager.Resources
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
