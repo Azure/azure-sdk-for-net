@@ -10,42 +10,46 @@
 
 namespace Microsoft.Azure.Media.LiveVideoAnalytics.Edge.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// A processor that allows the media graph to send video frames (mostly at
-    /// low frame rates e.g. &lt;5 fps) to an external inference container over
-    /// an HTTP-based RESTful API. Inference results are relayed to downstream
-    /// nodes.
+    /// A processor that allows the media graph to send video frames to an
+    /// external inference container over a gRPC connection. This can be done
+    /// using shared memory (for high frame rates), or over the network.
+    /// Inference results are relayed to downstream nodes.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("#Microsoft.Media.MediaGraphHttpExtension")]
-    public partial class MediaGraphHttpExtension : MediaGraphExtensionProcessorBase
+    [Newtonsoft.Json.JsonObject("#Microsoft.Media.MediaGraphGrpcExtension")]
+    public partial class MediaGraphGrpcExtension : MediaGraphExtensionProcessorBase
     {
         /// <summary>
-        /// Initializes a new instance of the MediaGraphHttpExtension class.
+        /// Initializes a new instance of the MediaGraphGrpcExtension class.
         /// </summary>
-        public MediaGraphHttpExtension()
+        public MediaGraphGrpcExtension()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the MediaGraphHttpExtension class.
+        /// Initializes a new instance of the MediaGraphGrpcExtension class.
         /// </summary>
         /// <param name="name">The name for this processor node.</param>
         /// <param name="inputs">An array of the names of the other nodes in
         /// the media graph, the outputs of which are used as input for this
         /// processor node.</param>
+        /// <param name="dataTransfer">How media should be transferred to the
+        /// inferencing engine.</param>
         /// <param name="endpoint">Endpoint to which this processor should
         /// connect.</param>
         /// <param name="image">Describes the parameters of the image that is
         /// sent as input to the endpoint.</param>
-        public MediaGraphHttpExtension(string name, IList<MediaGraphNodeInput> inputs, MediaGraphEndpoint endpoint = default(MediaGraphEndpoint), MediaGraphImage image = default(MediaGraphImage))
+        public MediaGraphGrpcExtension(string name, IList<MediaGraphNodeInput> inputs, MediaGraphGrpcExtensionDataTransfer dataTransfer, MediaGraphEndpoint endpoint = default(MediaGraphEndpoint), MediaGraphImage image = default(MediaGraphImage))
             : base(name, inputs, endpoint, image)
         {
+            DataTransfer = dataTransfer;
             CustomInit();
         }
 
@@ -55,14 +59,29 @@ namespace Microsoft.Azure.Media.LiveVideoAnalytics.Edge.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets how media should be transferred to the inferencing
+        /// engine.
+        /// </summary>
+        [JsonProperty(PropertyName = "dataTransfer")]
+        public MediaGraphGrpcExtensionDataTransfer DataTransfer { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public override void Validate()
         {
             base.Validate();
+            if (DataTransfer == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "DataTransfer");
+            }
+            if (DataTransfer != null)
+            {
+                DataTransfer.Validate();
+            }
         }
     }
 }

@@ -2,12 +2,12 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Media.LiveVideoAnalytics.Edge</PackageId>
     <Description>Provides developers with libraries for managing Live video analytics edge module using direct methods</Description>
-    <Version>1.0.0-preview.2</Version>
+    <Version>1.0.4-preview.1</Version>
     <AssemblyName>Microsoft.Azure.Media.LiveVideoAnalytics.Edge</AssemblyName>
     <PackageTags>Azure Media Live Video Analytics;Live Video Analytics;LVA;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        Fix the factory class name.
+        Added two new processor, Cognitive services vision extension and GRPC extension.
             ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
