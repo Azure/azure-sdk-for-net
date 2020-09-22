@@ -4,22 +4,17 @@
 namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
-    /// The set of options that can be specified when calling the training method
+    /// The set of options that can be specified when calling the create composed model method
     /// to configure the behavior of the request.
     /// </summary>
-    public class TrainingOptions
+    public class CreateComposedModelOptions
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="TrainingOptions"/> class.
+        /// Initializes a new instance of the <see cref="CreateComposedModelOptions"/> class.
         /// </summary>
-        public TrainingOptions()
+        public CreateComposedModelOptions()
         {
         }
-
-        /// <summary>
-        /// Filter to apply to the documents in the source path for training.
-        /// </summary>
-        public TrainingFileFilter TrainingFileFilter { get; set; }
 
         /// <summary>
         /// Optional user defined displayed model name.

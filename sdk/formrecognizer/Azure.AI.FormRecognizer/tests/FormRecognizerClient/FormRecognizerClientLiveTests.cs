@@ -413,11 +413,16 @@ namespace Azure.AI.FormRecognizer.Tests
 
             Assert.NotNull(form);
 
+            ValidatePrebuiltForm(
+                form,
+                includeFieldElements: true,
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 1);
+
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the receipt. We are not testing the service here, but the SDK.
 
             Assert.AreEqual("prebuilt:receipt", form.FormType);
-
             Assert.AreEqual(1, form.PageRange.FirstPageNumber);
             Assert.AreEqual(1, form.PageRange.LastPageNumber);
 
@@ -518,6 +523,12 @@ namespace Azure.AI.FormRecognizer.Tests
             var form = operation.Value.Single();
 
             Assert.NotNull(form);
+
+            ValidatePrebuiltForm(
+                form,
+                includeFieldElements: true,
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 1);
 
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the receipt. We are not testing the service here, but the SDK.
@@ -631,8 +642,11 @@ namespace Azure.AI.FormRecognizer.Tests
 
                 Assert.NotNull(recognizedForm);
 
-                ValidateRecognizedForm(recognizedForm, includeFieldElements: true,
-                    expectedFirstPageNumber: expectedPageNumber, expectedLastPageNumber: expectedPageNumber);
+                ValidatePrebuiltForm(
+                    recognizedForm,
+                    includeFieldElements: true,
+                    expectedFirstPageNumber: expectedPageNumber,
+                    expectedLastPageNumber: expectedPageNumber);
 
                 // Basic sanity test to make sure pages are ordered correctly.
 
@@ -667,8 +681,11 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var blankForm = recognizedForms.Single();
 
-            ValidateRecognizedForm(blankForm, includeFieldElements: true,
-                expectedFirstPageNumber: 1, expectedLastPageNumber: 1);
+            ValidatePrebuiltForm(
+                blankForm,
+                includeFieldElements: true,
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 1);
 
             Assert.AreEqual(0, blankForm.Fields.Count);
 
@@ -702,8 +719,11 @@ namespace Azure.AI.FormRecognizer.Tests
 
                 Assert.NotNull(recognizedForm);
 
-                ValidateRecognizedForm(recognizedForm, includeFieldElements: true,
-                    expectedFirstPageNumber: expectedPageNumber, expectedLastPageNumber: expectedPageNumber);
+                ValidatePrebuiltForm(
+                    recognizedForm,
+                    includeFieldElements: true,
+                    expectedFirstPageNumber: expectedPageNumber,
+                    expectedLastPageNumber: expectedPageNumber);
 
                 // Basic sanity test to make sure pages are ordered correctly.
 
@@ -793,12 +813,18 @@ namespace Azure.AI.FormRecognizer.Tests
 
             RecognizedForm form = operation.Value.Single();
 
-            ValidateRecognizedForm(form, includeFieldElements: includeFieldElements,
-                expectedFirstPageNumber: 1, expectedLastPageNumber: 1);
+            ValidateModelWithLabelsForm(
+                form,
+                trainedModel.ModelId,
+                includeFieldElements: includeFieldElements,
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 1,
+                isComposedModel: false);
 
             // Testing that we shuffle things around correctly so checking only once per property.
 
             Assert.IsNotEmpty(form.FormType);
+            Assert.IsTrue(form.FormTypeConfidence.HasValue);
             Assert.AreEqual(1, form.Pages.Count);
             Assert.AreEqual(2200, form.Pages[0].Height);
             Assert.AreEqual(1, form.Pages[0].PageNumber);
@@ -841,8 +867,13 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var recognizedForm = recognizedForms.Single();
 
-            ValidateRecognizedForm(recognizedForm, includeFieldElements: true,
-                expectedFirstPageNumber: 1, expectedLastPageNumber: 2);
+            ValidateModelWithLabelsForm(
+                recognizedForm,
+                trainedModel.ModelId,
+                includeFieldElements: true,
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 2,
+                isComposedModel: false);
 
             // Check some values to make sure that fields from both pages are being populated.
 
@@ -885,8 +916,13 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var recognizedForm = recognizedForms.Single();
 
-            ValidateRecognizedForm(recognizedForm, includeFieldElements: true,
-                expectedFirstPageNumber: 1, expectedLastPageNumber: 1);
+            ValidateModelWithLabelsForm(
+                recognizedForm,
+                trainedModel.ModelId,
+                includeFieldElements: true,
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 1,
+                isComposedModel: false);
 
             var blankPage = recognizedForm.Pages.Single();
 
@@ -923,8 +959,13 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var recognizedForm = recognizedForms.Single();
 
-            ValidateRecognizedForm(recognizedForm, includeFieldElements: true,
-                expectedFirstPageNumber: 1, expectedLastPageNumber: 3);
+            ValidateModelWithLabelsForm(
+                recognizedForm,
+                trainedModel.ModelId,
+                includeFieldElements: true,
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 3,
+                isComposedModel: false);
 
             for (int pageIndex = 0; pageIndex < recognizedForm.Pages.Count; pageIndex++)
             {
@@ -1009,12 +1050,17 @@ namespace Azure.AI.FormRecognizer.Tests
 
             RecognizedForm form = operation.Value.Single();
 
-            ValidateRecognizedForm(form, includeFieldElements: includeFieldElements,
-                expectedFirstPageNumber: 1, expectedLastPageNumber: 1);
+            ValidateModelWithNoLabelsForm(
+                form,
+                trainedModel.ModelId,
+                includeFieldElements: includeFieldElements,
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 1);
 
             //testing that we shuffle things around correctly so checking only once per property
 
             Assert.AreEqual("form-0", form.FormType);
+            Assert.IsFalse(form.FormTypeConfidence.HasValue);
             Assert.AreEqual(1, form.Pages.Count);
             Assert.AreEqual(2200, form.Pages[0].Height);
             Assert.AreEqual(1, form.Pages[0].PageNumber);
@@ -1066,8 +1112,12 @@ namespace Azure.AI.FormRecognizer.Tests
                 var recognizedForm = recognizedForms[formIndex];
                 var expectedPageNumber = formIndex + 1;
 
-                ValidateRecognizedForm(recognizedForm, includeFieldElements: true,
-                    expectedFirstPageNumber: expectedPageNumber, expectedLastPageNumber: expectedPageNumber);
+                ValidateModelWithNoLabelsForm(
+                    recognizedForm,
+                    trainedModel.ModelId,
+                    includeFieldElements: true,
+                    expectedFirstPageNumber: expectedPageNumber,
+                    expectedLastPageNumber: expectedPageNumber);
 
                 // Basic sanity test to make sure pages are ordered correctly.
 
@@ -1101,8 +1151,12 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var blankForm = recognizedForms.Single();
 
-            ValidateRecognizedForm(blankForm, includeFieldElements: true,
-                expectedFirstPageNumber: 1, expectedLastPageNumber: 1);
+            ValidateModelWithNoLabelsForm(
+                blankForm,
+                trainedModel.ModelId,
+                includeFieldElements: true,
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 1);
 
             Assert.AreEqual(0, blankForm.Fields.Count);
 
@@ -1146,8 +1200,12 @@ namespace Azure.AI.FormRecognizer.Tests
                 var recognizedForm = recognizedForms[formIndex];
                 var expectedPageNumber = formIndex + 1;
 
-                ValidateRecognizedForm(recognizedForm, includeFieldElements: true,
-                    expectedFirstPageNumber: expectedPageNumber, expectedLastPageNumber: expectedPageNumber);
+                ValidateModelWithNoLabelsForm(
+                    recognizedForm,
+                    trainedModel.ModelId,
+                    includeFieldElements: true,
+                    expectedFirstPageNumber: expectedPageNumber,
+                    expectedLastPageNumber: expectedPageNumber);
 
                 // Basic sanity test to make sure pages are ordered correctly.
 
@@ -1303,9 +1361,42 @@ namespace Azure.AI.FormRecognizer.Tests
             }
         }
 
-        private void ValidateRecognizedForm(RecognizedForm recognizedForm, bool includeFieldElements, int expectedFirstPageNumber, int expectedLastPageNumber)
+        private void ValidatePrebuiltForm(RecognizedForm recognizedForm, bool includeFieldElements, int expectedFirstPageNumber, int expectedLastPageNumber)
         {
             Assert.NotNull(recognizedForm.FormType);
+            Assert.IsTrue(recognizedForm.FormTypeConfidence.HasValue);
+            Assert.AreEqual(1.0f, recognizedForm.FormTypeConfidence.Value);
+            Assert.IsNull(recognizedForm.ModelId);
+
+            ValidateRecognizedForm(recognizedForm, includeFieldElements, expectedFirstPageNumber, expectedLastPageNumber);
+        }
+
+        private void ValidateModelWithNoLabelsForm(RecognizedForm recognizedForm, string modelId, bool includeFieldElements, int expectedFirstPageNumber, int expectedLastPageNumber)
+        {
+            Assert.NotNull(recognizedForm.FormType);
+            Assert.IsFalse(recognizedForm.FormTypeConfidence.HasValue);
+            Assert.IsNotNull(recognizedForm.ModelId);
+            Assert.AreEqual(modelId, recognizedForm.ModelId);
+
+            ValidateRecognizedForm(recognizedForm, includeFieldElements, expectedFirstPageNumber, expectedLastPageNumber);
+        }
+
+        private void ValidateModelWithLabelsForm(RecognizedForm recognizedForm, string modelId, bool includeFieldElements, int expectedFirstPageNumber, int expectedLastPageNumber, bool isComposedModel)
+        {
+            Assert.NotNull(recognizedForm.FormType);
+            Assert.IsTrue(recognizedForm.FormTypeConfidence.HasValue);
+            Assert.IsNotNull(recognizedForm.ModelId);
+
+            if (!isComposedModel)
+                Assert.AreEqual(modelId, recognizedForm.ModelId);
+            else
+                Assert.AreNotEqual(modelId, recognizedForm.ModelId);
+
+            ValidateRecognizedForm(recognizedForm, includeFieldElements, expectedFirstPageNumber, expectedLastPageNumber);
+        }
+
+        private void ValidateRecognizedForm(RecognizedForm recognizedForm, bool includeFieldElements, int expectedFirstPageNumber, int expectedLastPageNumber)
+        {
             Assert.AreEqual(expectedFirstPageNumber, recognizedForm.PageRange.FirstPageNumber);
             Assert.AreEqual(expectedLastPageNumber, recognizedForm.PageRange.LastPageNumber);
 
