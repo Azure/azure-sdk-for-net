@@ -2479,10 +2479,12 @@ namespace Azure.Storage.Files.DataLake
                     {
                         Response<PathSetAccessControlRecursiveResult> jsonResponse = null;
                         string lastContinuationToken = null;
+
                         int directoriesSuccessfulCount = 0;
                         int filesSuccessfulCount = 0;
                         int failureCount = 0;
                         int batchesCount = 0;
+
                         do
                         {
                             jsonResponse =
@@ -2501,19 +2503,24 @@ namespace Azure.Storage.Files.DataLake
                                 .ConfigureAwait(false);
 
                             continuationToken = jsonResponse.Value.Continuation;
+
                             if (!string.IsNullOrEmpty(continuationToken))
                             {
                                 lastContinuationToken = continuationToken;
                             }
-                            using (var document = JsonDocument.Parse(jsonResponse.Value.Body))
+
+                            using (JsonDocument document = JsonDocument.Parse(jsonResponse.Value.Body))
                             {
-                                var response = document.RootElement.DeserializeSetAccessControlRecursiveResponse();
+                                SetAccessControlRecursiveResponse response = document.RootElement.DeserializeSetAccessControlRecursiveResponse();
+
                                 int currentDirectoriesSuccessfulCount = response.DirectoriesSuccessful ?? 0;
                                 int currentFilesSuccessfulCount = response.FilesSuccessful ?? 0;
                                 int currentFailureCount = response.FailureCount ?? 0;
+
                                 directoriesSuccessfulCount += currentDirectoriesSuccessfulCount;
                                 filesSuccessfulCount += currentFilesSuccessfulCount;
                                 failureCount += currentFailureCount;
+
                                 if (progressHandler != null)
                                 {
                                     var failedEntries = response.FailedEntries
@@ -2523,43 +2530,49 @@ namespace Azure.Storage.Files.DataLake
                                             IsDirectory = failedEntry.Type.Equals("DIRECTORY", StringComparison.InvariantCultureIgnoreCase),
                                             ErrorMessage = failedEntry.ErrorMessage,
                                         }).ToList();
-                                    progressHandler.Report(Response.FromValue(new AccessControlChanges()
-                                    {
-                                        BatchCounters = new AccessControlChangeCounters()
-                                        {
-                                            ChangedDirectoriesCount = currentDirectoriesSuccessfulCount,
-                                            ChangedFilesCount = currentFilesSuccessfulCount,
-                                            FailedChangesCount = currentFailureCount,
-                                        },
-                                        AggregateCounters = new AccessControlChangeCounters()
-                                        {
-                                            ChangedDirectoriesCount = directoriesSuccessfulCount,
-                                            ChangedFilesCount = filesSuccessfulCount,
-                                            FailedChangesCount = failureCount,
-                                        },
-                                        BatchFailures = failedEntries,
-                                        ContinuationToken = lastContinuationToken,
-                                    },
-                                        jsonResponse.GetRawResponse()));
+
+                                    progressHandler.Report(
+                                        Response.FromValue(
+                                            new AccessControlChanges()
+                                            {
+                                                BatchCounters = new AccessControlChangeCounters()
+                                                {
+                                                    ChangedDirectoriesCount = currentDirectoriesSuccessfulCount,
+                                                    ChangedFilesCount = currentFilesSuccessfulCount,
+                                                    FailedChangesCount = currentFailureCount,
+                                                },
+                                                AggregateCounters = new AccessControlChangeCounters()
+                                                {
+                                                    ChangedDirectoriesCount = directoriesSuccessfulCount,
+                                                    ChangedFilesCount = filesSuccessfulCount,
+                                                    FailedChangesCount = failureCount,
+                                                },
+                                                BatchFailures = failedEntries,
+                                                ContinuationToken = lastContinuationToken,
+                                            },
+                                            jsonResponse.GetRawResponse()));
                                 }
                             }
 
                             batchesCount++;
+
                         } while (!string.IsNullOrEmpty(continuationToken)
                             && (!options.MaxBatches.HasValue || batchesCount < options.MaxBatches.Value));
-                        return Response.FromValue(new AccessControlChangeResult()
-                        {
-                            Counters = new AccessControlChangeCounters()
+
+                        return Response.FromValue(
+                            new AccessControlChangeResult()
                             {
-                                ChangedDirectoriesCount = directoriesSuccessfulCount,
-                                ChangedFilesCount = filesSuccessfulCount,
-                                FailedChangesCount = failureCount,
+                                Counters = new AccessControlChangeCounters()
+                                {
+                                    ChangedDirectoriesCount = directoriesSuccessfulCount,
+                                    ChangedFilesCount = filesSuccessfulCount,
+                                    FailedChangesCount = failureCount,
+                                },
+                                ContinuationToken =
+                                    (failureCount > 0) && !options.ContinueOnFailure
+                                        ? lastContinuationToken
+                                        : continuationToken,
                             },
-                            ContinuationToken =
-                                (failureCount > 0) && !options.ContinueOnFailure
-                                ? lastContinuationToken
-                                : continuationToken,
-                        },
                             jsonResponse.GetRawResponse());
                     }
                     catch (Exception ex)
