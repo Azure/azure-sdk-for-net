@@ -80,6 +80,7 @@ namespace Azure.Analytics.Synapse.Tests.AccessControl
         }
 
         [Test]
+        [Ignore("live test")]
         public async Task TesGetCallerRoleAssignments()
         {
             IEnumerable<string> expectedRoleIds = (await AccessControlClient.GetRoleDefinitionsAsync().ToEnumerableAsync())

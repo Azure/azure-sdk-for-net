@@ -4,6 +4,7 @@
 using System.Threading.Tasks;
 using Azure.Analytics.Synapse.Artifacts;
 using Azure.Analytics.Synapse.Artifacts.Models;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Analytics.Synapse.Tests.Artifacts
@@ -39,7 +40,8 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
         [Test]
         public async Task TestCreateDataset()
         {
-            var operation = await DatasetClient.StartCreateOrUpdateDatasetAsync("MyDataset", new DatasetResource(new Dataset(new LinkedServiceReference(LinkedServiceReferenceType.LinkedServiceReference, "testsynapseworkspace-WorkspaceDefaultStorage"))));
+            string workspaceName = TestEnvironment.WorkspaceUrl.Split('.')[0].Split('/')[2];
+            var operation = await DatasetClient.StartCreateOrUpdateDatasetAsync("MyDataset", new DatasetResource(new Dataset(new LinkedServiceReference(LinkedServiceReferenceType.LinkedServiceReference, workspaceName + "-WorkspaceDefaultStorage"))));
             while (!operation.HasValue)
             {
                 operation.UpdateStatus();

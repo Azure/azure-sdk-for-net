@@ -9,6 +9,15 @@
                 "description": "The base resource name."
             }
         },
+        "tenantId": {
+            "type": "string"
+        },
+        "testApplicationId": {
+            "type": "string"
+        },
+        "testApplicationSecret": {
+            "type": "string"
+        },
         "workspacePrefix": {
             "type": "String",
             "defaultValue": "workspace"
@@ -112,21 +121,70 @@
             "type": "Bool",
             "defaultValue": true
         },
-        "userObjectId": {
-            "type": "String",
-            "defaultValue": "164eb094-74a5-4af7-993a-4ebbd40d8763"
-        },
         "setSbdcRbacOnStorageAccount": {
             "defaultValue": false,
             "type": "Bool"
+        },
+        "sparkPoolPrefix": {
+            "type": "String",
+            "defaultValue": "sparkpool"
+        },
+        "tags": {
+            "defaultValue": {},
+            "type": "Object"
+        },
+        "autoScaleEnabled": {
+            "type": "Bool",
+            "defaultValue": true
+        },
+        "autoScaleMinNodeCount": {
+            "defaultValue": 3,
+            "type": "Int"
+        },
+        "autoScaleMaxNodeCount": {
+            "defaultValue": 40,
+            "type": "Int"
+        },
+        "nodeCount": {
+            "defaultValue": 3,
+            "type": "Int"
+        },
+        "nodeSizeFamily": {
+            "type": "String",
+            "defaultValue": "MemoryOptimized"
+        },
+        "nodeSize": {
+            "type": "String",
+            "defaultValue": "Small"
+        },
+        "autoPauseEnabled": {
+            "type": "Bool",
+            "defaultValue": true
+        },
+        "autoPauseDelayInMinutes": {
+            "defaultValue": 15,
+            "type": "Int"
+        },
+        "sparkVersion": {
+            "type": "String",
+            "defaultValue": "2.4"
+        },
+        "libraryRequirementsFilename": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        "libraryRequirementsContent": {
+            "defaultValue": "",
+            "type": "String"
         }
     },
     "variables": {
-        "uniqueWorkspaceName": "[concat(parameters('workspacePrefix'), uniqueString(resourceGroup().id))]",
-        "uniqueDataLakeStorageAccountName": "[concat(parameters('defaultDataLakeStorageAccountNamePrefix'), uniqueString(resourceGroup().id))]",
-        "uniqueDataLakeStorageFilesystemName": "[concat(parameters('defaultDataLakeStorageFilesystemNamePrefix'), uniqueString(resourceGroup().id))]",
+        "uniqueWorkspaceName": "[concat(parameters('workspacePrefix'), parameters('baseName'))]",
+        "uniqueDataLakeStorageAccountName": "[concat(parameters('defaultDataLakeStorageAccountNamePrefix'), parameters('baseName'))]",
+        "uniqueDataLakeStorageFilesystemName": "[concat(parameters('defaultDataLakeStorageFilesystemNamePrefix'), parameters('baseName'))]",
         "storageBlobDataContributorRoleID": "ba92f5b4-2d11-453d-a403-e96b0029c9fe",
-        "defaultDataLakeStorageAccountUrl": "[concat('https://', variables('uniqueDataLakeStorageAccountName'), '.dfs.core.windows.net')]"
+        "defaultDataLakeStorageAccountUrl": "[concat('https://', variables('uniqueDataLakeStorageAccountName'), '.dfs.core.windows.net')]",
+        "uniqueSparkPoolName": "[concat(parameters('sparkPoolPrefix'), parameters('baseName'))]"
     },
     "resources": [
         {
@@ -213,11 +271,11 @@
                             "condition": "[parameters('setSbdcRbacOnStorageAccount')]",
                             "type": "Microsoft.Storage/storageAccounts/providers/roleAssignments",
                             "apiVersion": "2018-09-01-preview",
-                            "name": "[concat(variables('uniqueDataLakeStorageAccountName'), '/Microsoft.Authorization/',  guid(concat(resourceGroup().id, '/', variables('storageBlobDataContributorRoleID'), '/', parameters('userObjectId'), '/', parameters('storageRoleUniqueId'))))]",
+                            "name": "[concat(variables('uniqueDataLakeStorageAccountName'), '/Microsoft.Authorization/',  guid(concat(resourceGroup().id, '/', variables('storageBlobDataContributorRoleID'), '/', parameters('testApplicationId'), '/', parameters('storageRoleUniqueId'))))]",
                             "properties": {
                                 "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('storageBlobDataContributorRoleID'))]",
-                                "principalId": "[parameters('userObjectId')]",
-                                "principalType": "User"
+                                "principalId": "[parameters('testApplicationId')]",
+                                "principalType": "App"
                             }
                         }
                     ]
@@ -284,7 +342,62 @@
             "subscriptionId": "[parameters('storageSubscriptionID')]",
             "resourceGroup": "[parameters('storageResourceGroupName')]",
             "condition": "[parameters('isNewFileSystemOnly')]"
+        },
+        {
+            "type": "Microsoft.Synapse/workspaces/bigDataPools",
+            "apiVersion": "2019-06-01-preview",
+            "name": "[concat(variables('uniqueWorkspaceName'), '/', variables('uniqueSparkPoolName'))]",
+            "location": "[parameters('location')]",
+            "tags": "[parameters('tags')]",
+            "properties": {
+                "nodeCount": "[parameters('nodeCount')]",
+                "nodeSizeFamily": "[parameters('nodeSizeFamily')]",
+                "nodeSize": "[parameters('nodeSize')]",
+                "autoScale": {
+                    "enabled": "[parameters('autoScaleEnabled')]",
+                    "minNodeCount": "[parameters('autoScaleMinNodeCount')]",
+                    "maxNodeCount": "[parameters('autoScaleMaxNodeCount')]"
+                },
+                "autoPause": {
+                    "enabled": "[parameters('autoPauseEnabled')]",
+                    "delayInMinutes": "[parameters('autoPauseDelayInMinutes')]"
+                },
+                "sparkVersion": "[parameters('sparkVersion')]",
+                "libraryRequirements": {
+                    "filename": "[parameters('libraryRequirementsFilename')]",
+                    "content": "[parameters('libraryRequirementsContent')]"
+                }
+            }
         }
     ],
-    "outputs": {}
+    "outputs": {
+        "TENANT_ID": {
+            "type": "string",
+            "value": "[parameters('tenantId')]"
+        },
+        "CLIENT_ID": {
+            "type": "string",
+            "value": "[parameters('testApplicationId')]"
+        },
+        "CLIENT_SECRET": {
+            "type": "string",
+            "value": "[parameters('testApplicationSecret')]"
+        },
+        "AZURE_SYNAPSE_WORKSPACE_URL": {
+            "type": "string",
+            "value": "[concat('https://', variables('uniqueWorkspaceName'), '.dev.azuresynapse.net')]"
+        },
+        "AZURE_SYNAPSE_SPARK_POOL_NAME": {
+            "type": "string",
+            "value": "[variables('uniqueSparkPoolName')]"
+        },
+        "AZURE_STORAGE_ACCOUNT_NAME": {
+            "type": "string",
+            "value": "[variables('uniqueDataLakeStorageAccountName')]"
+        },
+        "AZURE_STORAGE_FILE_SYSTEM_NAME": {
+            "type": "string",
+            "value": "[variables('uniqueDataLakeStorageFilesystemName')]"
+        }
+    }
 }
