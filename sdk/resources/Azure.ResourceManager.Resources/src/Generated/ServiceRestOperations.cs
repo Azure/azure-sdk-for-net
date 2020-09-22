@@ -45,7 +45,6 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/providers/Microsoft.Features/operations", false);
             uri.AppendQuery("api-version", "2015-12-01", true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
@@ -98,7 +97,6 @@ namespace Azure.ResourceManager.Resources
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 

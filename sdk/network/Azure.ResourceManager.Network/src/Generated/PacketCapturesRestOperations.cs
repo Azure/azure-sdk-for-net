@@ -61,7 +61,6 @@ namespace Azure.ResourceManager.Network
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -159,7 +158,6 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(packetCaptureName, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -254,7 +252,6 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(packetCaptureName, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -342,7 +339,6 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/stop", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -430,7 +426,6 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/queryStatus", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -516,7 +511,6 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/packetCaptures", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

@@ -47,7 +47,6 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/locations", false);
             uri.AppendQuery("api-version", "2019-11-01", true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -116,7 +115,6 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(subscriptionId, true);
             uri.AppendQuery("api-version", "2019-11-01", true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -184,7 +182,6 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath("/subscriptions", false);
             uri.AppendQuery("api-version", "2019-11-01", true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -237,7 +234,6 @@ namespace Azure.ResourceManager.Resources
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

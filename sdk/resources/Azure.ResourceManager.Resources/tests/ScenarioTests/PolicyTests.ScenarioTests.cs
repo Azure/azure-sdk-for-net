@@ -385,8 +385,7 @@ namespace Policy.Tests
             // clean up everything
             await PolicyAssignmentsOperations.DeleteAsync("/" + assignmentScope, assignment.Name);
             await PolicyDefinitionsOperations.DeleteAsync(policyDefinition.Name);
-            // No need to manual delete
-            //await WaitForCompletionAsync(await ResourceGroupsOperations.StartDeleteAsync(resourceGroupName));
+            await WaitForCompletionAsync(await ResourceGroupsOperations.StartDeleteAsync(resourceGroupName));
         }
 
         [Test]
@@ -430,8 +429,7 @@ namespace Policy.Tests
             // clean up everything
             await PolicyAssignmentsOperations.DeleteAsync(assignmentScope, assignment.Name);
             await PolicyDefinitionsOperations.DeleteAsync(policyDefinition.Name);
-            // No need to manual delete
-            //await WaitForCompletionAsync(await ResourceGroupsOperations.StartDeleteAsync(resourceGroupName));
+            await WaitForCompletionAsync(await ResourceGroupsOperations.StartDeleteAsync(resourceGroupName));
         }
 
         //No Track2 ManagementGroup

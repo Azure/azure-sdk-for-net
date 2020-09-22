@@ -20,8 +20,6 @@ namespace ResourceGroups.Tests
         {
         }
 
-        public const string SKIP_TEARDOWN = "SkipTearDown";
-
         [SetUp]
         public void ClearChallengeCacheforRecord()
         {
@@ -33,21 +31,10 @@ namespace ResourceGroups.Tests
             }
         }
 
-        private static bool CheckForSkipTearDown()
-        {
-            var categories = TestContext.CurrentContext.Test?.Properties["Category"];
-
-            bool skipTearDown = categories != null && categories.Contains("SkipTearDown");
-            return skipTearDown;
-        }
-
         [TearDown]
         public async Task CleanupResourceGroup()
         {
-            if (!CheckForSkipTearDown())
-            {
-                await CleanupResourceGroupsAsync();
-            }
+            await CleanupResourceGroupsAsync();
         }
 
         private const string DefaultLocation = "South Central US";
@@ -91,7 +78,6 @@ namespace ResourceGroups.Tests
         }
 
         [Test]
-        [Category(SKIP_TEARDOWN)]
         public async Task DeleteResourceGroupRemovesGroup()
         {
             var resourceGroupName = Recording.GenerateAssetName("csmrg");
