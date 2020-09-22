@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using Azure.Storage.Blobs.Models;
 
@@ -62,7 +63,7 @@ namespace Azure.Storage.Blobs
                 serialization.Format.Type = QueryFormatType.Arrow;
                 serialization.Format.ArrowConfiguration = new ArrowTextConfigurationInternal
                 {
-                    Schema = arrowConfiguration.Schema.ToArrowSchemaInternal()
+                    Schema = arrowConfiguration.Schema?.Select(ToArrowFieldInternal).ToList()
                 };
             }
             else
@@ -105,23 +106,6 @@ namespace Azure.Storage.Blobs
                 metadata: quickQueryResult.Metadata,
                 content: quickQueryResult.Body,
                 copyCompletionTime: quickQueryResult.CopyCompletionTime);
-
-        internal static IList<ArrowFieldInternal> ToArrowSchemaInternal(this IList<BlobQueryArrowField> schema)
-        {
-            if (schema == null)
-            {
-                return null;
-            }
-
-            List<ArrowFieldInternal> arrowFields = new List<ArrowFieldInternal>();
-
-            foreach (BlobQueryArrowField field in schema)
-            {
-                arrowFields.Add(field.ToArrowFieldInternal());
-            }
-
-            return arrowFields;
-        }
 
         internal static ArrowFieldInternal ToArrowFieldInternal(this BlobQueryArrowField blobQueryArrowField)
         {
