@@ -418,15 +418,15 @@ namespace Azure.Storage.Files.DataLake
             };
         }
 
-        internal static List<BlobQueryArrowField> ToBlobQueryArrowFields(this List<DataLakeQueryArrowField> arrowFields)
+        internal static IList<BlobQueryArrowField> ToBlobQueryArrowFields(this IList<DataLakeQueryArrowField> arrowFields)
         {
             if (arrowFields == null)
             {
                 return null;
             }
 
-            List<BlobQueryArrowField> blobQueryArrowFields = new List<BlobQueryArrowField>();
-            arrowFields.ForEach(r => blobQueryArrowFields.Add(r.ToBlobQueryArrowField()));
+            IList<BlobQueryArrowField> blobQueryArrowFields = new List<BlobQueryArrowField>();
+            arrowFields.ToList().ForEach(r => blobQueryArrowFields.Add(r.ToBlobQueryArrowField()));
 
             return blobQueryArrowFields;
         }

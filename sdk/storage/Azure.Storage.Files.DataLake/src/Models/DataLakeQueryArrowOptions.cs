@@ -16,7 +16,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// List of <see cref="DataLakeQueryArrowField"/> describing the schema of the data.
         /// </summary>
 #pragma warning disable CA2227 // Collection properties should be read only
-        public List<DataLakeQueryArrowField> Schema { get; set; }
+        public IList<DataLakeQueryArrowField> Schema { get; set; } = new List<DataLakeQueryArrowField>();
 #pragma warning restore CA2227 // Collection properties should be read only
     }
 }
