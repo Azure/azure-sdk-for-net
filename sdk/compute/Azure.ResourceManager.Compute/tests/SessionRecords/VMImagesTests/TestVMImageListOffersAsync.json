@@ -4,11 +4,12 @@
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/southeastasia/publishers/MicrosoftWindowsServer/artifacttypes/vmimage/offers?api-version=2019-12-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-6af7ce486b297c4a9ceed2e4ab603633-e8d9a09924a4854c-00",
+        "traceparent": "00-3548052708df084ca5ea1b9e8cdaf92c-334617eaa891e248-00",
         "User-Agent": [
-          "azsdk-net-Management.Compute/1.0.0-dev.20200608.1",
-          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20200910.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "a22f304b25dd33431003c4c9ceb73700",
         "x-ms-return-client-request-id": "true"
@@ -17,9 +18,9 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "5756",
+        "Content-Length": "6372",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 08 Jun 2020 10:58:39 GMT",
+        "Date": "Thu, 10 Sep 2020 10:42:48 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -29,11 +30,11 @@
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "a22f304b25dd33431003c4c9ceb73700",
-        "x-ms-correlation-request-id": "97d3615e-3427-4dbc-9a75-e32ada61fd9e",
-        "x-ms-ratelimit-remaining-subscription-reads": "9211",
-        "x-ms-request-id": "0710ae6a-4ac4-4184-98ae-678ec19e7db2",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20200608T105839Z:97d3615e-3427-4dbc-9a75-e32ada61fd9e",
-        "x-ms-served-by": "9fc414ea-410e-4600-9f7c-71bc36416f3f_132350705073767747"
+        "x-ms-correlation-request-id": "6f0ab929-9da6-4459-aeb1-5af81ddc9b97",
+        "x-ms-ratelimit-remaining-subscription-reads": "8531",
+        "x-ms-request-id": "53e0f72f-dc00-4cd6-b3b2-3b3f55693537",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20200910T104249Z:6f0ab929-9da6-4459-aeb1-5af81ddc9b97",
+        "x-ms-served-by": "9fc414ea-410e-4600-9f7c-71bc36416f3f_132271489610820216"
       },
       "ResponseBody": [
         "[\r\n",
@@ -41,6 +42,11 @@
         "    \u0022location\u0022: \u0022southeastasia\u0022,\r\n",
         "    \u0022name\u0022: \u002219h1gen2servertest\u0022,\r\n",
         "    \u0022id\u0022: \u0022/Subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/19h1gen2servertest\u0022\r\n",
+        "  },\r\n",
+        "  {\r\n",
+        "    \u0022location\u0022: \u0022southeastasia\u0022,\r\n",
+        "    \u0022name\u0022: \u0022microsoftserveroperatingsystems-previews\u0022,\r\n",
+        "    \u0022id\u0022: \u0022/Subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/microsoftserveroperatingsystems-previews\u0022\r\n",
         "  },\r\n",
         "  {\r\n",
         "    \u0022location\u0022: \u0022southeastasia\u0022,\r\n",
@@ -121,6 +127,11 @@
         "    \u0022location\u0022: \u0022southeastasia\u0022,\r\n",
         "    \u0022name\u0022: \u0022windowsserver-gen2preview\u0022,\r\n",
         "    \u0022id\u0022: \u0022/Subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/windowsserver-gen2preview\u0022\r\n",
+        "  },\r\n",
+        "  {\r\n",
+        "    \u0022location\u0022: \u0022southeastasia\u0022,\r\n",
+        "    \u0022name\u0022: \u0022windowsserver-previewtest\u0022,\r\n",
+        "    \u0022id\u0022: \u0022/Subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/windowsserver-previewtest\u0022\r\n",
         "  },\r\n",
         "  {\r\n",
         "    \u0022location\u0022: \u0022southeastasia\u0022,\r\n",

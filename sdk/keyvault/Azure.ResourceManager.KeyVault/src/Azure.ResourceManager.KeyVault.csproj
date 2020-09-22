@@ -9,7 +9,6 @@
     <PackageTags>azure;management;keyvault</PackageTags>
     <!-- TODO: Temp workaround. Should be fixed prio release  -->
     <NoWarn>$(NoWarn);AZC0001;AZC0008;</NoWarn>
-    <TemporaryUsePreviousGeneratorVersion>true</TemporaryUsePreviousGeneratorVersion>
   </PropertyGroup>
 </Project>
 

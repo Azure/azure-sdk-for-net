@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.DigitalTwins
             uri.AppendPath("/endpoints", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -150,6 +151,7 @@ namespace Azure.ResourceManager.DigitalTwins
             uri.AppendPath(endpointName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -245,6 +247,7 @@ namespace Azure.ResourceManager.DigitalTwins
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var model = new DigitalTwinsEndpointResource()
             {
                 Properties = properties
@@ -340,6 +343,7 @@ namespace Azure.ResourceManager.DigitalTwins
             uri.AppendPath(endpointName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -420,6 +424,7 @@ namespace Azure.ResourceManager.DigitalTwins
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

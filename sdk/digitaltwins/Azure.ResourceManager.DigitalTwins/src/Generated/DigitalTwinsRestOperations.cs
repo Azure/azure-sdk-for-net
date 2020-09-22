@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.DigitalTwins
             uri.AppendPath(resourceName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -149,6 +150,7 @@ namespace Azure.ResourceManager.DigitalTwins
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(digitalTwinsCreate);
             request.Content = content;
@@ -237,6 +239,7 @@ namespace Azure.ResourceManager.DigitalTwins
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             DigitalTwinsPatchDescription digitalTwinsPatchDescription = new DigitalTwinsPatchDescription();
             foreach (var value in tags)
             {
@@ -322,6 +325,7 @@ namespace Azure.ResourceManager.DigitalTwins
             uri.AppendPath(resourceName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -395,6 +399,7 @@ namespace Azure.ResourceManager.DigitalTwins
             uri.AppendPath("/providers/Microsoft.DigitalTwins/digitalTwinsInstances", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -452,6 +457,7 @@ namespace Azure.ResourceManager.DigitalTwins
             uri.AppendPath("/providers/Microsoft.DigitalTwins/digitalTwinsInstances", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -524,6 +530,7 @@ namespace Azure.ResourceManager.DigitalTwins
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var model = new CheckNameRequest(name);
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
@@ -604,6 +611,7 @@ namespace Azure.ResourceManager.DigitalTwins
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -670,6 +678,7 @@ namespace Azure.ResourceManager.DigitalTwins
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

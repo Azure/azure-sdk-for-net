@@ -4,6 +4,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourcegroups/galleryPsTestRg8950?api-version=2017-05-10",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "22",
         "Content-Type": "application/json",
@@ -46,6 +47,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/galleryPsTestRg8950/providers/Microsoft.Compute/galleries/galleryPsTestGallery1449?api-version=2019-12-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "90",
         "Content-Type": "application/json",
@@ -201,6 +203,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/galleryPsTestRg8950/providers/Microsoft.Compute/galleries/galleryPsTestGallery1449/images/galleryPsTestGalleryImage6022?api-version=2019-12-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "208",
         "Content-Type": "application/json",
@@ -373,6 +376,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/galleryPsTestRg8950/providers/Microsoft.Compute/galleries/galleryPsTestGallery1449/images/galleryPsTestGalleryImage6022?api-version=2019-12-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "traceparent": "00-e45a694b9f0cd647b02ef50c31d3cf45-5399634730910540-00",
         "User-Agent": [
@@ -430,6 +434,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/galleryPsTestRg8950/providers/Microsoft.Compute/galleries/galleryPsTestGallery1449/images/galleryPsTestGalleryImage6022?api-version=2019-12-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "190",
         "Content-Type": "application/json",
@@ -602,6 +607,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/galleryPsTestRg8950/providers/Microsoft.Compute/galleries/galleryPsTestGallery1449/images/galleryPsTestGalleryImage6022?api-version=2019-12-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "traceparent": "00-53ee90a3f7d5b34286d847ab2e5667c6-9f7ef2fd78776440-00",
         "User-Agent": [
@@ -659,6 +665,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/galleryPsTestRg8950/providers/Microsoft.Compute/galleries/galleryPsTestGallery1449/images?api-version=2019-12-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Management.Compute/1.0.0-dev.20200604.1",
@@ -745,6 +752,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/galleryPsTestRg8950/providers/Microsoft.Compute/galleries/galleryPsTestGallery1449/images/galleryPsTestGalleryImage6022?api-version=2019-12-01",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "traceparent": "00-3a5bd3d256cf104a969cb11000a05bad-2f6b0d42eb03b747-00",
         "User-Agent": [
@@ -828,6 +836,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/galleryPsTestRg8950/providers/Microsoft.Compute/galleries/galleryPsTestGallery1449/images?api-version=2019-12-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Management.Compute/1.0.0-dev.20200604.1",
@@ -895,6 +904,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/galleryPsTestRg8950/providers/Microsoft.Compute/galleries/galleryPsTestGallery1449?api-version=2019-12-01",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "traceparent": "00-026e2de2728a7c4d8fe42f19a86dea4a-b09813c3e2ddaf4a-00",
         "User-Agent": [
