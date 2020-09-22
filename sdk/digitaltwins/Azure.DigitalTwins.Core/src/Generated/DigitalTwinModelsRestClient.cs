@@ -154,7 +154,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="includeModelDefinition"> When true the model definition will be returned as part of the result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async Task<Response<ModelData>> GetByIdAsync(string id, bool? includeModelDefinition = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DigitalTwinsModelData>> GetByIdAsync(string id, bool? includeModelDefinition = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -167,9 +167,9 @@ namespace Azure.DigitalTwins.Core
             {
                 case 200:
                     {
-                        ModelData value = default;
+                        DigitalTwinsModelData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ModelData.DeserializeModelData(document.RootElement);
+                        value = DigitalTwinsModelData.DeserializeDigitalTwinsModelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -187,7 +187,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="includeModelDefinition"> When true the model definition will be returned as part of the result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public Response<ModelData> GetById(string id, bool? includeModelDefinition = null, CancellationToken cancellationToken = default)
+        public Response<DigitalTwinsModelData> GetById(string id, bool? includeModelDefinition = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -200,9 +200,9 @@ namespace Azure.DigitalTwins.Core
             {
                 case 200:
                     {
-                        ModelData value = default;
+                        DigitalTwinsModelData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ModelData.DeserializeModelData(document.RootElement);
+                        value = DigitalTwinsModelData.DeserializeDigitalTwinsModelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
