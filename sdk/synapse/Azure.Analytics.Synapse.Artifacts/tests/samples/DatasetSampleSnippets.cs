@@ -32,8 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
         public void CreateDataset()
         {
             #region Snippet:CreateDataset
-            string workspaceName = TestEnvironment.WorkspaceUrl.Split('.')[0].Split('/')[2];
-            var operation = DatasetClient.StartCreateOrUpdateDataset("MyDataset", new DatasetResource(new Dataset(new LinkedServiceReference(LinkedServiceReferenceType.LinkedServiceReference, workspaceName + "-WorkspaceDefaultStorage"))));
+            DatasetCreateOrUpdateDatasetOperation operation = DatasetClient.StartCreateOrUpdateDataset("MyDataset", new DatasetResource(new Dataset(new LinkedServiceReference(LinkedServiceReferenceType.LinkedServiceReference, TestEnvironment.WorkspaceName + "-WorkspaceDefaultStorage"))));
             DatasetResource dataset = operation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
             #endregion
         }

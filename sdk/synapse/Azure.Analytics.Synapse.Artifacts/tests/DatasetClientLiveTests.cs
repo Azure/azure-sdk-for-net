@@ -40,24 +40,23 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
         [Test]
         public async Task TestCreateDataset()
         {
-            string workspaceName = TestEnvironment.WorkspaceUrl.Split('.')[0].Split('/')[2];
-            var operation = await DatasetClient.StartCreateOrUpdateDatasetAsync("MyDataset", new DatasetResource(new Dataset(new LinkedServiceReference(LinkedServiceReferenceType.LinkedServiceReference, workspaceName + "-WorkspaceDefaultStorage"))));
-            while (!operation.HasValue)
-            {
-                operation.UpdateStatus();
-            }
-            Assert.AreEqual("MyDataset", operation.Value.Name);
+            string datasetName = Recording.GenerateName("Dataset");
+            DatasetCreateOrUpdateDatasetOperation operation = await DatasetClient.StartCreateOrUpdateDatasetAsync(datasetName, new DatasetResource(new Dataset(new LinkedServiceReference(LinkedServiceReferenceType.LinkedServiceReference, TestEnvironment.WorkspaceName + "-WorkspaceDefaultStorage"))));
+            DatasetResource dataset = operation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
+            Assert.AreEqual(datasetName, dataset.Name);
         }
 
         [Test]
         public async Task TestDeleteDataset()
         {
-            var operation = await DatasetClient.StartDeleteDatasetAsync("MyDataset");
-            while (!operation.HasValue)
-            {
-                operation.UpdateStatus();
-            }
-            Assert.AreEqual(200, operation.Value.Status);
+            string datasetName = Recording.GenerateName("Dataset");
+
+            DatasetCreateOrUpdateDatasetOperation createOperation = await DatasetClient.StartCreateOrUpdateDatasetAsync(datasetName, new DatasetResource(new Dataset(new LinkedServiceReference(LinkedServiceReferenceType.LinkedServiceReference, TestEnvironment.WorkspaceName + "-WorkspaceDefaultStorage"))));
+            createOperation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
+
+            DatasetDeleteDatasetOperation deleteOperation = await DatasetClient.StartDeleteDatasetAsync(datasetName);
+            Response response = deleteOperation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
+            Assert.AreEqual(200, response.Status);
         }
     }
 }

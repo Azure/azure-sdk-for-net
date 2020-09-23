@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Analytics.Synapse.Artifacts.Models;
 using NUnit.Framework;
 
@@ -38,23 +39,23 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
         [Test]
         public async Task TestCreateLinkedService()
         {
-            var operation = await LinkedServiceClient.StartCreateOrUpdateLinkedServiceAsync("MyLinkedService", new LinkedServiceResource(new AzureDataLakeStoreLinkedService("adl://test.azuredatalakestore.net/")));
-            while (!operation.HasValue)
-            {
-                operation.UpdateStatus();
-            }
-            Assert.AreEqual("MyLinkedService", operation.Value.Name);
+            string linkedServiceName = Recording.GenerateName("LinkedSercive");
+            LinkedServiceCreateOrUpdateLinkedServiceOperation operation = await LinkedServiceClient.StartCreateOrUpdateLinkedServiceAsync(linkedServiceName, new LinkedServiceResource(new AzureDataLakeStoreLinkedService("adl://test.azuredatalakestore.net/")));
+            LinkedServiceResource linkedService = operation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
+            Assert.AreEqual(linkedServiceName, linkedService.Name);
         }
 
         [Test]
         public async Task TestDeleteLinkedService()
         {
-            var operation = await LinkedServiceClient.StartDeleteLinkedServiceAsync("MyLinkedService");
-            while (!operation.HasValue)
-            {
-                operation.UpdateStatus();
-            }
-            Assert.AreEqual(200, operation.Value.Status);
+            string linkedServiceName = Recording.GenerateName("LinkedSercive");
+
+            LinkedServiceCreateOrUpdateLinkedServiceOperation createOperation = await LinkedServiceClient.StartCreateOrUpdateLinkedServiceAsync(linkedServiceName, new LinkedServiceResource(new AzureDataLakeStoreLinkedService("adl://test.azuredatalakestore.net/")));
+            createOperation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
+
+            LinkedServiceDeleteLinkedServiceOperation deleteOperation = await LinkedServiceClient.StartDeleteLinkedServiceAsync(linkedServiceName);
+            Response response = deleteOperation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
+            Assert.AreEqual(200, response.Status);
         }
     }
 }

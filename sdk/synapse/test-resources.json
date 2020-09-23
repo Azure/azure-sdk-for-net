@@ -9,14 +9,11 @@
                 "description": "The base resource name."
             }
         },
-        "tenantId": {
-            "type": "string"
-        },
-        "testApplicationId": {
-            "type": "string"
-        },
-        "testApplicationSecret": {
-            "type": "string"
+        "testApplicationOid": {
+            "type": "string",
+            "metadata": {
+                "description": "The principal to assign the role to. This is application object id."
+            }
         },
         "workspacePrefix": {
             "type": "String",
@@ -271,10 +268,10 @@
                             "condition": "[parameters('setSbdcRbacOnStorageAccount')]",
                             "type": "Microsoft.Storage/storageAccounts/providers/roleAssignments",
                             "apiVersion": "2018-09-01-preview",
-                            "name": "[concat(variables('uniqueDataLakeStorageAccountName'), '/Microsoft.Authorization/',  guid(concat(resourceGroup().id, '/', variables('storageBlobDataContributorRoleID'), '/', parameters('testApplicationId'), '/', parameters('storageRoleUniqueId'))))]",
+                            "name": "[concat(variables('uniqueDataLakeStorageAccountName'), '/Microsoft.Authorization/',  guid(concat(resourceGroup().id, '/', variables('storageBlobDataContributorRoleID'), '/', parameters('testApplicationOid'), '/', parameters('storageRoleUniqueId'))))]",
                             "properties": {
                                 "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('storageBlobDataContributorRoleID'))]",
-                                "principalId": "[parameters('testApplicationId')]",
+                                "principalId": "[parameters('testApplicationOid')]",
                                 "principalType": "App"
                             }
                         }
@@ -371,18 +368,6 @@
         }
     ],
     "outputs": {
-        "TENANT_ID": {
-            "type": "string",
-            "value": "[parameters('tenantId')]"
-        },
-        "CLIENT_ID": {
-            "type": "string",
-            "value": "[parameters('testApplicationId')]"
-        },
-        "CLIENT_SECRET": {
-            "type": "string",
-            "value": "[parameters('testApplicationSecret')]"
-        },
         "AZURE_SYNAPSE_WORKSPACE_URL": {
             "type": "string",
             "value": "[concat('https://', variables('uniqueWorkspaceName'), '.dev.azuresynapse.net')]"

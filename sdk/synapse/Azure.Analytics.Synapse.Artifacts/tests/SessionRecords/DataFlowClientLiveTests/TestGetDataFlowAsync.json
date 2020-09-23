@@ -1,14 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/dataflows?api-version=2019-06-01-preview",
+      "RequestUri": "https://workspaceywlive.dev.azuresynapse.net/dataflows?api-version=2019-06-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200826.1",
-          "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-alpha.20200923.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "0e77f33cbf700f7fbc5ec5a213c7b644",
         "x-ms-return-client-request-id": "true"
@@ -16,21 +16,30 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "321",
+        "Content-Length": "649",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Aug 2020 03:37:20 GMT",
+        "Date": "Wed, 23 Sep 2020 08:55:49 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "x-ms-client-request-id": "0e77f33cbf700f7fbc5ec5a213c7b644",
-        "x-ms-request-id": "9941b56f-d6cb-41d9-aee3-3228f18e3bf7"
+        "x-ms-request-id": "47c399af-4fef-4ae8-8634-ebe4647ee113"
       },
       "ResponseBody": {
         "value": [
           {
-            "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/dataflows/MyDataFlow",
-            "name": "MyDataFlow",
+            "id": "/subscriptions/7f31cba8-b597-4129-b158-8f21a7395bd0/resourceGroups/rg-ywlive/providers/Microsoft.Synapse/workspaces/workspaceywlive/dataflows/DataFlow2017017383",
+            "name": "DataFlow2017017383",
             "type": "Microsoft.Synapse/workspaces/dataflows",
-            "etag": "0500adc8-0000-0100-0000-5f45d8e80000",
+            "etag": "77004854-0000-0800-0000-5f6b0d800000",
+            "properties": {
+              "type": null
+            }
+          },
+          {
+            "id": "/subscriptions/7f31cba8-b597-4129-b158-8f21a7395bd0/resourceGroups/rg-ywlive/providers/Microsoft.Synapse/workspaces/workspaceywlive/dataflows/DataFlow1566215546",
+            "name": "DataFlow1566215546",
+            "type": "Microsoft.Synapse/workspaces/dataflows",
+            "etag": "77005d57-0000-0800-0000-5f6b0d8b0000",
             "properties": {
               "type": null
             }
@@ -39,15 +48,15 @@
       }
     },
     {
-      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/dataflows/MyDataFlow?api-version=2019-06-01-preview",
+      "RequestUri": "https://workspaceywlive.dev.azuresynapse.net/dataflows/DataFlow2017017383?api-version=2019-06-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-060b037c0b80ca49b50b89973e015e63-463f3ee384f9e14a-00",
+        "traceparent": "00-f91d80618539d24c823af5f4dde82e20-67d6f2e8c088354c-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-dev.20200826.1",
-          "(.NET Framework 4.8.4200.0; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-alpha.20200923.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "910299dd1c4d8c35b96dd1487ed72400",
         "x-ms-return-client-request-id": "true"
@@ -56,9 +65,9 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "309",
+        "Content-Length": "318",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Aug 2020 03:37:21 GMT",
+        "Date": "Wed, 23 Sep 2020 08:55:50 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -68,23 +77,67 @@
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "910299dd1c4d8c35b96dd1487ed72400",
-        "x-ms-correlation-request-id": "f23e6188-283e-4df1-b138-367734f5b6f2",
-        "x-ms-request-id": "772a8eb4-b2e2-4250-b62b-a56829ffa407",
+        "x-ms-correlation-request-id": "a9da0853-bea9-4b66-a5be-77baa30845ea",
+        "x-ms-request-id": "e2ccbf01-f279-4f11-8e8b-1cdca6ba35a1",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
-        "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/dataflows/MyDataFlow",
-        "name": "MyDataFlow",
+        "id": "/subscriptions/7f31cba8-b597-4129-b158-8f21a7395bd0/resourceGroups/rg-ywlive/providers/Microsoft.Synapse/workspaces/workspaceywlive/dataflows/DataFlow2017017383",
+        "name": "DataFlow2017017383",
         "type": "Microsoft.Synapse/workspaces/dataflows",
         "properties": {
           "type": null
         },
-        "etag": "0500adc8-0000-0100-0000-5f45d8e80000"
+        "etag": "77004854-0000-0800-0000-5f6b0d800000"
+      }
+    },
+    {
+      "RequestUri": "https://workspaceywlive.dev.azuresynapse.net/dataflows/DataFlow1566215546?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-620c21976213e144b4af8f8bd80952c9-34010f302fd88a4f-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-alpha.20200923.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "62af7815ac8d08d09c0ced7320f6a226",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "318",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 23 Sep 2020 08:55:50 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-IIS/10.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "62af7815ac8d08d09c0ced7320f6a226",
+        "x-ms-correlation-request-id": "58fbda5d-0df0-40ca-85f2-a4fdea9becbb",
+        "x-ms-request-id": "2f135112-789d-43b7-93cd-cc1cc01a18e6",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/7f31cba8-b597-4129-b158-8f21a7395bd0/resourceGroups/rg-ywlive/providers/Microsoft.Synapse/workspaces/workspaceywlive/dataflows/DataFlow1566215546",
+        "name": "DataFlow1566215546",
+        "type": "Microsoft.Synapse/workspaces/dataflows",
+        "properties": {
+          "type": null
+        },
+        "etag": "77005d57-0000-0800-0000-5f6b0d8b0000"
       }
     }
   ],
   "Variables": {
-    "AZURE_SYNAPSE_WORKSPACE_URL": "https://testsynapseworkspace.dev.azuresynapse.net",
+    "AZURE_SYNAPSE_WORKSPACE_URL": "https://workspaceywlive.dev.azuresynapse.net",
     "RandomSeed": "1722251516"
   }
 }

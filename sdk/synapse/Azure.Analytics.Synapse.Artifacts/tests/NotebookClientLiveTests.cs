@@ -50,23 +50,32 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
                 nbformatMinor: 2,
                 new List<NotebookCell>()
             );
-            var operation = await NotebookClient.StartCreateOrUpdateNotebookAsync("MyNotebook", new NotebookResource(notebook));
-            while (!operation.HasValue)
-            {
-                operation.UpdateStatus();
-            }
-            Assert.AreEqual("MyNotebook", operation.Value.Name);
+            string notebookName = Recording.GenerateName("Notebook");
+            NotebookCreateOrUpdateNotebookOperation operation = await NotebookClient.StartCreateOrUpdateNotebookAsync(notebookName, new NotebookResource(notebook));
+            NotebookResource notebookResource = operation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
+            Assert.AreEqual(notebookName, notebookResource.Name);
         }
 
         [Test]
         public async Task TestDeleteNotebook()
         {
-            var operation = await NotebookClient.StartDeleteNotebookAsync("MyNotebook");
-            while (!operation.HasValue)
-            {
-                operation.UpdateStatus();
-            }
-            Assert.AreEqual(200, operation.Value.Status);
+            string notebookName = Recording.GenerateName("Notebook");
+
+            Notebook notebook = new Notebook(
+                new NotebookMetadata
+                {
+                    LanguageInfo = new NotebookLanguageInfo(name: "Python")
+                },
+                nbformat: 4,
+                nbformatMinor: 2,
+                new List<NotebookCell>()
+            );
+            NotebookCreateOrUpdateNotebookOperation createOperation = await NotebookClient.StartCreateOrUpdateNotebookAsync(notebookName, new NotebookResource(notebook));
+            createOperation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
+
+            NotebookDeleteNotebookOperation deleteOperation = await NotebookClient.StartDeleteNotebookAsync(notebookName);
+            Response response = deleteOperation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
+            Assert.AreEqual(200, response.Status);
         }
     }
 }
