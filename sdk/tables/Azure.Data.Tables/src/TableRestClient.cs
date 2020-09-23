@@ -70,6 +70,7 @@ namespace Azure.Data.Tables
                         var responses = await Multipart.ParseAsync(
                             message.Response.ContentStream,
                             message.Response.Headers.ContentType,
+                            false,
                             true,
                             cancellationToken).ConfigureAwait(false);
 
@@ -104,6 +105,7 @@ namespace Azure.Data.Tables
                         var responses = Multipart.ParseAsync(
                             message.Response.ContentStream,
                             message.Response.Headers.ContentType,
+                            false,
                             false,
                             cancellationToken).EnsureCompleted();
 

@@ -105,7 +105,7 @@ namespace Azure.Core.Tests
         public async Task ParseBatchChangesetResponse(string batchResponse)
         {
             var stream = MakeStream(batchResponse);
-            var responses = await Multipart.ParseAsync(stream, ContentType, true, default);
+            var responses = await Multipart.ParseAsync(stream, ContentType, false, true, default);
 
             Assert.That(responses, Is.Not.Null);
             Assert.That(responses.Length, Is.EqualTo(1));
@@ -131,7 +131,7 @@ namespace Azure.Core.Tests
         public async Task ParseBatchResponse()
         {
             var stream = MakeStream(BlobBatchResponse);
-            var responses = await Multipart.ParseAsync(stream, ContentType, true, default);
+            var responses = await Multipart.ParseAsync(stream, ContentType, true, true, default);
 
             Assert.That(responses, Is.Not.Null);
             Assert.That(responses.Length, Is.EqualTo(3));
