@@ -6,7 +6,7 @@ namespace Azure.Storage.Files.DataLake.Models
     /// <summary>
     /// AccessControlChangeOptions contain knobs used to customize recursive Access Control operations.
     /// </summary>
-    public struct AccessControlChangeOptions
+    public class AccessControlChangeOptions
     {
         /// <summary>
         /// Optional. If data set size exceeds batch size then operation will be split into multiple requests so that progress can be tracked.
@@ -25,6 +25,6 @@ namespace Azure.Storage.Files.DataLake.Models
         /// Optional. If set to false, the operation will terminate quickly on encountering user failures. If true, the operation will ignore
         /// user failures and proceed with the operation on other sub-entities of the directory.
         /// </summary>
-        public bool ContinueOnFailure { get; set; }
+        public bool? ContinueOnFailure { get; set; }
     }
 }

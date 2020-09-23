@@ -2493,12 +2493,12 @@ namespace Azure.Storage.Files.DataLake
                                     pipeline: Pipeline,
                                     resourceUri: DfsUri,
                                     mode: mode,
-                                    maxRecords: options.BatchSize,
+                                    maxRecords: options?.BatchSize,
                                     version: Version.ToVersionString(),
                                     acl: accessControlList,
                                     async: async,
                                     continuation: continuationToken,
-                                    forceFlag: options.ContinueOnFailure ? true : (bool?)default,
+                                    forceFlag: options?.ContinueOnFailure,
                                     cancellationToken: cancellationToken)
                                 .ConfigureAwait(false);
 
@@ -2569,7 +2569,7 @@ namespace Azure.Storage.Files.DataLake
                                     FailedChangesCount = failureCount,
                                 },
                                 ContinuationToken =
-                                    (failureCount > 0) && !options.ContinueOnFailure
+                                    (failureCount > 0) && !(options?.ContinueOnFailure == true)
                                         ? lastContinuationToken
                                         : continuationToken,
                             },
