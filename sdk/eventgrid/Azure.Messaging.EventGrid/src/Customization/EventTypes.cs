@@ -19,6 +19,18 @@ namespace Azure.Messaging.EventGrid
         public const string AppConfigurationKeyValueDeletedEvent = "Microsoft.AppConfiguration.KeyValueDeleted";
         public const string AppConfigurationKeyValueModifiedEvent = "Microsoft.AppConfiguration.KeyValueModified";
 
+        // Communication events
+        public const string ACSChatMemberAddedToThreadWithUserEvent = "Microsoft.Communication.ChatMemberAddedToThreadWithUser";
+        public const string ACSChatMemberRemovedFromThreadWithUserEvent = "Microsoft.Communication.ChatMemberRemovedFromThreadWithUser";
+        public const string ACSChatMessageDeletedEvent = "Microsoft.Communication.ChatMessageDeleted";
+        public const string ACSChatMessageEditedEvent = "Microsoft.Communication.ChatMessageEdited";
+        public const string ACSChatMessageReceivedEvent = "Microsoft.Communication.ChatMessageReceived";
+        public const string ACSChatThreadCreatedWithUserEvent = "Microsoft.Communication.ChatThreadCreatedWithUser";
+        public const string ACSChatThreadPropertiesUpdatedPerUserEvent = "Microsoft.Communication.ChatThreadPropertiesUpdatedPerUser";
+        public const string ACSChatThreadWithUserDeletedEvent = "Microsoft.Communication.ChatThreadWithUserDeleted";
+        public const string ACSSMSDeliveryReportReceivedEvent = "Microsoft.Communication.SMSDeliveryReportReceived";
+        public const string ACSSMSReceivedEvent= "Microsoft.Communication.SMSReceived";
+
         // ContainerRegistry events
         public const string ContainerRegistryImagePushedEvent = "Microsoft.ContainerRegistry.ImagePushed";
         public const string ContainerRegistryImageDeletedEvent = "Microsoft.ContainerRegistry.ImageDeleted";
