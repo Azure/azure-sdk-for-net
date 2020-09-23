@@ -51,7 +51,7 @@ namespace Azure.Storage.Files.Shares.Models
 
             // convert from internal Range type to HttpRange
             List<HttpRange> ranges = new List<HttpRange>();
-            foreach (Range range in rangesInfoInternal.Body.Ranges)
+            foreach (FileRange range in rangesInfoInternal.Body.Ranges)
             {
                 ranges.Add(new HttpRange(range.Start, range.End - range.Start + 1));
             }

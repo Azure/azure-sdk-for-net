@@ -4,7 +4,7 @@
 ## Configuration
 ``` yaml
 # Generate file storage
-input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/storage-dataplane-preview/specification/storage/data-plane/Microsoft.FileStorage/preview/2020-02-10/file.json
+input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/storage-dataplane-preview/specification/storage/data-plane/Microsoft.FileStorage/preview/2019-12-12/file.json
 output-folder: ../src/Generated
 clear-output-folder: false
 
@@ -755,22 +755,22 @@ directive:
     $.put.parameters[3]["x-ms-enum"].name = "ShareFileRangeWriteType";
 ```
 
-### Hide ranges
+### Hide FileRange
 ``` yaml
 directive:
 - from: swagger-document
   where: $.definitions
   transform: >
-    $.Range["x-az-public"] = false;
+    $.FileRange["x-az-public"] = false;
 ```
 
-### Hide RangeList
+### Hide ShareFileRangeList
 ``` yaml
 directive:
 - from: swagger-document
   where: $.definitions
   transform: >
-    $.RangeList["x-az-public"] = false;
+    $.ShareFileRangeList["x-az-public"] = false;
 ```
 
 ### Hide ClearRange
