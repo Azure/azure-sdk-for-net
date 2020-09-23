@@ -6849,8 +6849,7 @@ namespace DataFactory.Tests.JsonSamples
                         },
                         writeBatchSize: 1000,
                         writeBatchTimeout: ""01:00:00"",
-                        compressionType: ""gzip"",
-                        wrapRequestJsonInAnObject: true,
+                        httpCompressionType: ""gzip""
                     },
                     translator:
                     {
