@@ -44,7 +44,7 @@ Create a Cosmos DB account `MyCosmosDBDatabaseAccount` in resource group `MyReso
 in the subscription `MySubscription` and a table named `MyTableName` in the account.
 
 ```
-az cosmosdb create --name MyCosmosDBDatabaseAccount --resource-group MyResourceGroup --subscription MySubscription
+az cosmosdb create --name MyCosmosDBDatabaseAccount --capabilities EnableTable --resource-group MyResourceGroup --subscription MySubscription
 
 az cosmosdb table create --name MyTableName --resource-group MyResourceGroup --account-name MyCosmosDBDatabaseAccount
 ```
