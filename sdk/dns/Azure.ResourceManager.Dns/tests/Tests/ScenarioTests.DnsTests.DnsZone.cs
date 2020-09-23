@@ -64,8 +64,8 @@ namespace Azure.Management.Dns.Tests
             aZone.Tags.Add("key2", "val2");
             response = await ZonesOperations.CreateOrUpdateAsync(resourceGroup, this.defaultZoneName, aZone);
             Assert.IsTrue(Helper.AreEqual(response, aZone, ignoreEtag: true));
-            var delResponse = await ZonesOperations.StartDeleteAsync(resourceGroup, this.defaultZoneName);
-            Assert.IsNotNull(delResponse);
+            var delResponse = await this.WaitForCompletionAsync(await ZonesOperations.StartDeleteAsync(resourceGroup, this.defaultZoneName));
+            Assert.AreEqual(delResponse.Value.Status, 200);
         }
 
         [TestCase]
