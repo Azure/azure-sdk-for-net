@@ -26,7 +26,8 @@ await sender.SendMessageAsync(message);
 
 // create a session receiver that we can use to receive the message. Since we don't specify a
 // particular session, we will get the next available session from the service.
-ServiceBusSessionReceiver receiver = await client.CreateSessionReceiverAsync(queueName);
+ServiceBusSessionReceiver receiver = client.CreateSessionReceiver(queueName);
+await receiver.AcceptSessionAsync();
 
 // the received message is a different type as it contains some service set properties
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
@@ -44,12 +45,8 @@ byte[] state = await receiver.GetSessionStateAsync();
 
 ```C# Snippet:ServiceBusReceiveFromSpecificSession
 // create a receiver specifying a particular session
-ServiceBusSessionReceiver receiver = await client.CreateSessionReceiverAsync(
-    queueName,
-    new ServiceBusSessionReceiverOptions
-    {
-        SessionId = "Session2"
-    });
+ServiceBusSessionReceiver receiver = client.CreateSessionReceiver(queueName);
+await receiver.AcceptSessionAsync("Session2");
 
 // the received message is a different type as it contains some service set properties
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();

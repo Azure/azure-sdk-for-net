@@ -321,6 +321,10 @@ namespace Azure.Messaging.ServiceBus
         /// Creates a <see cref="ServiceBusSessionReceiver"/> instance that can be used for receiving
         /// and settling messages from a specific session-enabled subscription. It uses <see cref="ReceiveMode"/> to specify
         /// how messages are received. Defaults to PeekLock mode. The <see cref="ReceiveMode"/> is set in <see cref="ServiceBusReceiverOptions"/>.
+        /// In order to initialize the session receiver,
+        /// <see cref="ServiceBusSessionReceiver.AcceptSessionAsync(CancellationToken)"/> or
+        /// <see cref="ServiceBusSessionReceiver.AcceptSessionAsync(string, CancellationToken)"/>
+        /// must be called.
         /// </summary>
         ///
         /// <param name="topicName">The topic to create a <see cref="ServiceBusSessionReceiver"/> for.</param>
@@ -328,12 +332,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="options">The set of <see cref="ServiceBusReceiverOptions"/> to use for configuring the
         /// <see cref="ServiceBusSessionReceiver"/>.</param>
         ///
-        /// <remarks>Because this is establishing a session lock, this method performs a service call. If the
-        /// sessionId parameter is not specified, and there are no available messages in the queue, this will
-        /// throw a <see cref="ServiceBusException"/> with <see cref="ServiceBusException.Reason"/> of <see cref="ServiceBusFailureReason.ServiceTimeout"/>.
-        /// </remarks>
-        ///
-        /// <returns>A <see cref="ServiceBusSessionReceiver"/> scoped to the specified queue and a specific session.</returns>
+        /// <returns>A <see cref="ServiceBusSessionReceiver"/> scoped to the specified subscription.</returns>
         public virtual ServiceBusSessionReceiver CreateSessionReceiver(
             string topicName,
             string subscriptionName,
@@ -350,20 +349,19 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         /// Creates a <see cref="ServiceBusSessionReceiver"/> instance that can be used for receiving
-        /// and settling messages from a specific session-enabled subscription. It uses <see cref="ReceiveMode"/> to specify
+        /// and settling messages from a specific session-enabled queue. It uses <see cref="ReceiveMode"/> to specify
         /// how messages are received. Defaults to PeekLock mode. The <see cref="ReceiveMode"/> is set in <see cref="ServiceBusReceiverOptions"/>.
+        /// In order to initialize the session receiver,
+        /// <see cref="ServiceBusSessionReceiver.AcceptSessionAsync(CancellationToken)"/> or
+        /// <see cref="ServiceBusSessionReceiver.AcceptSessionAsync(string, CancellationToken)"/>
+        /// must be called.
         /// </summary>
         ///
-        /// <param name="queueName">The topic to create a <see cref="ServiceBusSessionReceiver"/> for.</param>
+        /// <param name="queueName">The session-enabled queue to create a <see cref="ServiceBusSessionReceiver"/> for.</param>
         /// <param name="options">The set of <see cref="ServiceBusReceiverOptions"/> to use for configuring the
         /// <see cref="ServiceBusSessionReceiver"/>.</param>
         ///
-        /// <remarks>Because this is establishing a session lock, this method performs a service call. If the
-        /// sessionId parameter is not specified, and there are no available messages in the queue, this will
-        /// throw a <see cref="ServiceBusException"/> with <see cref="ServiceBusException.Reason"/> of <see cref="ServiceBusFailureReason.ServiceTimeout"/>.
-        /// </remarks>
-        ///
-        /// <returns>A <see cref="ServiceBusSessionReceiver"/> scoped to the specified queue and a specific session.</returns>
+        /// <returns>A <see cref="ServiceBusSessionReceiver"/> scoped to the specified subscription.</returns>
         public virtual ServiceBusSessionReceiver CreateSessionReceiver(
             string queueName,
             ServiceBusSessionReceiverOptions options = default)

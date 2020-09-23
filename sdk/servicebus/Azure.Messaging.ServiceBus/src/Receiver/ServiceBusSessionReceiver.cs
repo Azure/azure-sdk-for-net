@@ -45,18 +45,18 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///
+        /// Accepts the next available session that can be processed by the receiver.
+        /// If no sessions are available, this will
+        /// throw a <see cref="ServiceBusException"/> with <see cref="ServiceBusException.Reason"/> of <see cref="ServiceBusFailureReason.ServiceTimeout"/>.
         /// </summary>
-        /// <returns></returns>
         public async Task AcceptSessionAsync(CancellationToken cancellationToken = default)
         {
             await OpenSessionReceiverLinkAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        ///
+        /// Attempts to accept the specified session that can be processed by the receiver.
         /// </summary>
-        /// <returns></returns>
         public async Task AcceptSessionAsync(string sessionId, CancellationToken cancellationToken = default)
         {
             await OpenSessionReceiverLinkAsync(sessionId, cancellationToken).ConfigureAwait(false);

@@ -691,7 +691,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 // If another receiver accepts the session after the lock is lost, we expect a SessionCannotBeLocked error,
                 // when we try to receive again with our initial receiver.
                 ServiceBusSessionReceiver secondReceiver = client.CreateSessionReceiver(scope.QueueName);
-                await secondReceiver.AcceptSessionAsync(isSessionSpecified ? sessionId : null);
+                await secondReceiver.AcceptSessionAsync(sessionId);
 
                 try
                 {
