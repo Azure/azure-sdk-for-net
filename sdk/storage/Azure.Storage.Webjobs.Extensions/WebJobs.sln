@@ -3,12 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{639967B0-0544-4C52-94AC-9A3D25E33256}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{72A798F0-699B-4C8E-8D43-C1749661471E}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.WebJobs.Extensions.Storage.Samples", "samples\SampleHost\Azure.WebJobs.Extensions.Storage.Samples.csproj", "{93429246-CCE9-4EB0-B94D-68522862BA79}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution", "Solution", "{3B089351-285A-4829-8F60-30768A7469BD}"
 	ProjectSection(SolutionItems) = preProject
 		Directory.Build.props = Directory.Build.props
@@ -39,16 +33,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Common", "..\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.WebJobs.Host.EndToEnd.Tests", "Microsoft.Azure.WebJobs.Host.EndToEndTests\tests\Azure.WebJobs.Host.EndToEnd.Tests.csproj", "{F1997C00-7304-481F-8002-7AB0728DB6C1}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Webjobs.Extensions.Samples", "Azure.Storage.Webjobs.Extensions.Samples\Azure.Storage.Webjobs.Extensions.Samples.csproj", "{0425DF36-E0F1-419A-8B07-E01DE249D066}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{93429246-CCE9-4EB0-B94D-68522862BA79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{93429246-CCE9-4EB0-B94D-68522862BA79}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{93429246-CCE9-4EB0-B94D-68522862BA79}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{93429246-CCE9-4EB0-B94D-68522862BA79}.Release|Any CPU.Build.0 = Release|Any CPU
 		{381280A1-D5E6-4A69-8255-9FC532E4A588}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{381280A1-D5E6-4A69-8255-9FC532E4A588}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{381280A1-D5E6-4A69-8255-9FC532E4A588}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -97,12 +89,13 @@ Global
 		{F1997C00-7304-481F-8002-7AB0728DB6C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1997C00-7304-481F-8002-7AB0728DB6C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1997C00-7304-481F-8002-7AB0728DB6C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0425DF36-E0F1-419A-8B07-E01DE249D066}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0425DF36-E0F1-419A-8B07-E01DE249D066}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0425DF36-E0F1-419A-8B07-E01DE249D066}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0425DF36-E0F1-419A-8B07-E01DE249D066}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{93429246-CCE9-4EB0-B94D-68522862BA79} = {72A798F0-699B-4C8E-8D43-C1749661471E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {371BFA14-0980-4A43-A18A-CA1C1A9CB784}
