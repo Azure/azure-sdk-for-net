@@ -14,27 +14,28 @@ namespace Microsoft.Azure.Management.Security.Models
     using System.Linq;
 
     /// <summary>
-    /// Factors that increase our confidence that the alert is a true positive
+    /// For a non-Azure machine that is not connected directly to the internet,
+    /// specify a proxy server that the non-Azure machine can use.
     /// </summary>
-    public partial class AlertConfidenceReason
+    public partial class ProxyServerProperties
     {
         /// <summary>
-        /// Initializes a new instance of the AlertConfidenceReason class.
+        /// Initializes a new instance of the ProxyServerProperties class.
         /// </summary>
-        public AlertConfidenceReason()
+        public ProxyServerProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AlertConfidenceReason class.
+        /// Initializes a new instance of the ProxyServerProperties class.
         /// </summary>
-        /// <param name="type">Type of confidence factor</param>
-        /// <param name="reason">description of the confidence reason</param>
-        public AlertConfidenceReason(string type = default(string), string reason = default(string))
+        /// <param name="ip">Proxy server IP</param>
+        /// <param name="port">Proxy server port</param>
+        public ProxyServerProperties(string ip = default(string), string port = default(string))
         {
-            Type = type;
-            Reason = reason;
+            Ip = ip;
+            Port = port;
             CustomInit();
         }
 
@@ -44,16 +45,16 @@ namespace Microsoft.Azure.Management.Security.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets type of confidence factor
+        /// Gets or sets proxy server IP
         /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
+        [JsonProperty(PropertyName = "ip")]
+        public string Ip { get; set; }
 
         /// <summary>
-        /// Gets description of the confidence reason
+        /// Gets or sets proxy server port
         /// </summary>
-        [JsonProperty(PropertyName = "reason")]
-        public string Reason { get; private set; }
+        [JsonProperty(PropertyName = "port")]
+        public string Port { get; set; }
 
     }
 }
