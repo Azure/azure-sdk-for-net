@@ -745,7 +745,7 @@ namespace Azure.Storage.Blobs.Models
     public partial class BlobQueryArrowOptions : Azure.Storage.Blobs.Models.BlobQueryTextOptions
     {
         public BlobQueryArrowOptions() { }
-        public System.Collections.Generic.List<Azure.Storage.Blobs.Models.BlobQueryArrowField> Schema { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Storage.Blobs.Models.BlobQueryArrowField> Schema { get { throw null; } set { } }
     }
     public partial class BlobQueryCsvTextOptions : Azure.Storage.Blobs.Models.BlobQueryTextOptions
     {

@@ -14,7 +14,7 @@ namespace Azure.Storage.Blobs.Models
         /// List of <see cref="BlobQueryArrowField"/> describing the schema of the data.
         /// </summary>
 #pragma warning disable CA2227 // Collection properties should be read only
-        public List<BlobQueryArrowField> Schema { get; set; }
+        public IList<BlobQueryArrowField> Schema { get; set; } = new List<BlobQueryArrowField>();
 #pragma warning restore CA2227 // Collection properties should be read only
     }
 }

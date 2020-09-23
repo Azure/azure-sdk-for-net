@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using Azure.Storage.Blobs.Models;
 
@@ -32,9 +33,8 @@ namespace Azure.Storage.Blobs
             serialization.Format.JsonTextConfiguration = default;
             serialization.Format.ArrowConfiguration = default;
 
-            if (textConfiguration.GetType() == typeof(BlobQueryCsvTextOptions))
+            if (textConfiguration is BlobQueryCsvTextOptions cvsTextConfiguration)
             {
-                BlobQueryCsvTextOptions cvsTextConfiguration = textConfiguration as BlobQueryCsvTextOptions;
                 serialization.Format.Type = QueryFormatType.Delimited;
                 serialization.Format.DelimitedTextConfiguration = new DelimitedTextConfigurationInternal
                 {
@@ -45,27 +45,25 @@ namespace Azure.Storage.Blobs
                     HeadersPresent = cvsTextConfiguration.HasHeaders
                 };
             }
-            else if (textConfiguration.GetType() == typeof(BlobQueryJsonTextOptions))
+            else if (textConfiguration is BlobQueryJsonTextOptions jsonTextConfiguration)
             {
-                BlobQueryJsonTextOptions jsonTextConfiguration = textConfiguration as BlobQueryJsonTextOptions;
                 serialization.Format.Type = QueryFormatType.Json;
                 serialization.Format.JsonTextConfiguration = new JsonTextConfigurationInternal
                 {
                     RecordSeparator = jsonTextConfiguration.RecordSeparator?.ToString(CultureInfo.InvariantCulture)
                 };
             }
-            else if (textConfiguration.GetType() == typeof(BlobQueryArrowOptions))
+            else if (textConfiguration is BlobQueryArrowOptions arrowConfiguration)
             {
                 if (isInput)
                 {
                     throw new ArgumentException($"{nameof(BlobQueryArrowOptions)} can only be used for output serialization.");
                 }
 
-                BlobQueryArrowOptions arrowConfiguration = textConfiguration as BlobQueryArrowOptions;
                 serialization.Format.Type = QueryFormatType.Arrow;
                 serialization.Format.ArrowConfiguration = new ArrowTextConfigurationInternal
                 {
-                    Schema = arrowConfiguration.Schema.ToArrowSchemaInternal()
+                    Schema = arrowConfiguration.Schema?.Select(ToArrowFieldInternal).ToList()
                 };
             }
             else
@@ -108,23 +106,6 @@ namespace Azure.Storage.Blobs
                 metadata: quickQueryResult.Metadata,
                 content: quickQueryResult.Body,
                 copyCompletionTime: quickQueryResult.CopyCompletionTime);
-
-        internal static List<ArrowFieldInternal> ToArrowSchemaInternal(this List<BlobQueryArrowField> schema)
-        {
-            if (schema == null)
-            {
-                return null;
-            }
-
-            List<ArrowFieldInternal> arrowFields = new List<ArrowFieldInternal>();
-
-            foreach (BlobQueryArrowField field in schema)
-            {
-                arrowFields.Add(field.ToArrowFieldInternal());
-            }
-
-            return arrowFields;
-        }
 
         internal static ArrowFieldInternal ToArrowFieldInternal(this BlobQueryArrowField blobQueryArrowField)
         {
