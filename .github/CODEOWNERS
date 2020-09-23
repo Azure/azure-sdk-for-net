@@ -26,6 +26,9 @@
 # PRLabel: %Batch
 /sdk/batch/                                     @bgklein @xingwu1 
 
+# PRLabel: %Communication
+/sdk/communication/                             @RezaJooyandeh @DominikMe
+
 /sdk/cognitiveservices/language.textanalytics/  @assafi 
 /sdk/cognitiveservices/vision.computervision/   @toothache
 /sdk/cognitiveservices/vision.face/             @TFR258 
