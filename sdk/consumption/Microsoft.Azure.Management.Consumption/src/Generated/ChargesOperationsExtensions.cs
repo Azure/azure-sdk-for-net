@@ -29,15 +29,30 @@ namespace Microsoft.Azure.Management.Consumption
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// The scope associated with usage details operations. This includes
+            /// The scope associated with charges operations. This includes
             /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}'
-            /// for Department scope and
+            /// for Department scope, and
             /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}'
             /// for EnrollmentAccount scope. For department and enrollment accounts, you
             /// can also add billing period to the scope using
             /// '/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'. For e.g.
             /// to specify billing period at department scope use
-            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'.
+            /// Also, Modern Commerce Account scopes are
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for
+            /// billingAccount scope,
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
+            /// for billingProfile scope,
+            /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/invoiceSections/{invoiceSectionId}'
+            /// for invoiceSection scope, and
+            /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}'
+            /// specific for partners.
+            /// </param>
+            /// <param name='startDate'>
+            /// Start date
+            /// </param>
+            /// <param name='endDate'>
+            /// End date
             /// </param>
             /// <param name='filter'>
             /// May be used to filter charges by properties/usageEnd (Utc time),
@@ -46,9 +61,15 @@ namespace Microsoft.Azure.Management.Consumption
             /// Tag filter is a key value pair string where key and value is separated by a
             /// colon (:).
             /// </param>
-            public static ChargeSummary ListByScope(this IChargesOperations operations, string scope, string filter = default(string))
+            /// <param name='apply'>
+            /// May be used to group charges for billingAccount scope by
+            /// properties/billingProfileId, properties/invoiceSectionId,
+            /// properties/customerId (specific for Partner Led), or for billingProfile
+            /// scope by properties/invoiceSectionId.
+            /// </param>
+            public static ChargesListResult List(this IChargesOperations operations, string scope, string startDate = default(string), string endDate = default(string), string filter = default(string), string apply = default(string))
             {
-                return operations.ListByScopeAsync(scope, filter).GetAwaiter().GetResult();
+                return operations.ListAsync(scope, startDate, endDate, filter, apply).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -59,15 +80,30 @@ namespace Microsoft.Azure.Management.Consumption
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// The scope associated with usage details operations. This includes
+            /// The scope associated with charges operations. This includes
             /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}'
-            /// for Department scope and
+            /// for Department scope, and
             /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}'
             /// for EnrollmentAccount scope. For department and enrollment accounts, you
             /// can also add billing period to the scope using
             /// '/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'. For e.g.
             /// to specify billing period at department scope use
-            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'.
+            /// Also, Modern Commerce Account scopes are
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for
+            /// billingAccount scope,
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
+            /// for billingProfile scope,
+            /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/invoiceSections/{invoiceSectionId}'
+            /// for invoiceSection scope, and
+            /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}'
+            /// specific for partners.
+            /// </param>
+            /// <param name='startDate'>
+            /// Start date
+            /// </param>
+            /// <param name='endDate'>
+            /// End date
             /// </param>
             /// <param name='filter'>
             /// May be used to filter charges by properties/usageEnd (Utc time),
@@ -76,12 +112,18 @@ namespace Microsoft.Azure.Management.Consumption
             /// Tag filter is a key value pair string where key and value is separated by a
             /// colon (:).
             /// </param>
+            /// <param name='apply'>
+            /// May be used to group charges for billingAccount scope by
+            /// properties/billingProfileId, properties/invoiceSectionId,
+            /// properties/customerId (specific for Partner Led), or for billingProfile
+            /// scope by properties/invoiceSectionId.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ChargeSummary> ListByScopeAsync(this IChargesOperations operations, string scope, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ChargesListResult> ListAsync(this IChargesOperations operations, string scope, string startDate = default(string), string endDate = default(string), string filter = default(string), string apply = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByScopeWithHttpMessagesAsync(scope, filter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(scope, startDate, endDate, filter, apply, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

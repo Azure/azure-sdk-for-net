@@ -28,13 +28,29 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='filter'>
-            /// May be used to filter reservationRecommendations by properties/scope and
-            /// properties/lookBackPeriod.
+            /// <param name='scope'>
+            /// The scope associated with reservation recommendations operations. This
+            /// includes '/subscriptions/{subscriptionId}/' for subscription scope,
+            /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for
+            /// resource group scope,
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for
+            /// BillingAccount scope, and
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
+            /// for billingProfile scope
             /// </param>
-            public static IPage<ReservationRecommendation> List(this IReservationRecommendationsOperations operations, string filter = default(string))
+            /// <param name='filter'>
+            /// May be used to filter reservationRecommendations by: properties/scope with
+            /// allowed values ['Single', 'Shared'] and default value 'Single';
+            /// properties/resourceType with allowed values ['VirtualMachines',
+            /// 'SQLDatabases', 'PostgreSQL', 'ManagedDisk', 'MySQL', 'RedHat', 'MariaDB',
+            /// 'RedisCache', 'CosmosDB', 'SqlDataWarehouse', 'SUSELinux', 'AppService',
+            /// 'BlockBlob', 'AzureDataExplorer', 'VMwareCloudSimple'] and default value
+            /// 'VirtualMachines'; and properties/lookBackPeriod with allowed values
+            /// ['Last7Days', 'Last30Days', 'Last60Days'] and default value 'Last7Days'.
+            /// </param>
+            public static IPage<ReservationRecommendation> List(this IReservationRecommendationsOperations operations, string scope, string filter = default(string))
             {
-                return operations.ListAsync(filter).GetAwaiter().GetResult();
+                return operations.ListAsync(scope, filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -44,16 +60,32 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='scope'>
+            /// The scope associated with reservation recommendations operations. This
+            /// includes '/subscriptions/{subscriptionId}/' for subscription scope,
+            /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for
+            /// resource group scope,
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for
+            /// BillingAccount scope, and
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
+            /// for billingProfile scope
+            /// </param>
             /// <param name='filter'>
-            /// May be used to filter reservationRecommendations by properties/scope and
-            /// properties/lookBackPeriod.
+            /// May be used to filter reservationRecommendations by: properties/scope with
+            /// allowed values ['Single', 'Shared'] and default value 'Single';
+            /// properties/resourceType with allowed values ['VirtualMachines',
+            /// 'SQLDatabases', 'PostgreSQL', 'ManagedDisk', 'MySQL', 'RedHat', 'MariaDB',
+            /// 'RedisCache', 'CosmosDB', 'SqlDataWarehouse', 'SUSELinux', 'AppService',
+            /// 'BlockBlob', 'AzureDataExplorer', 'VMwareCloudSimple'] and default value
+            /// 'VirtualMachines'; and properties/lookBackPeriod with allowed values
+            /// ['Last7Days', 'Last30Days', 'Last60Days'] and default value 'Last7Days'.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ReservationRecommendation>> ListAsync(this IReservationRecommendationsOperations operations, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ReservationRecommendation>> ListAsync(this IReservationRecommendationsOperations operations, string scope, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(filter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(scope, filter, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
