@@ -186,6 +186,15 @@ foreach (TableEntity qEntity in queryResultsFilter)
 Console.WriteLine($"The query returned {queryResultsFilter.Count()} entities.");
 ```
 
+If you prefer LINQ style query expressions, we can query the table using that syntax as well.
+
+```C# Snippet:TablesSample4QueryEntitiesExpression
+// Use the <see cref="TableClient"> to query the table using a filter expression.
+
+double priceCutOff = 6.00;
+Pageable<OfficeSupplyEntity> queryResultsLINQ = tableClient.Query<OfficeSupplyEntity>(ent => ent.Price >= priceCutOff);
+```
+
 ### Delete table entities
 
 If we no longer need our new table entity, it can be deleted.

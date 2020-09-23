@@ -81,7 +81,6 @@ namespace Azure.Core
                 return null;
             }
             var headers = await ReadHeadersAsync(cancellationToken).ConfigureAwait(false);
-            _boundary.ExpectLeadingCrlf = true;
             _currentStream = new MultipartReaderStream(_stream, _boundary) { LengthLimit = BodyLengthLimit };
             long? baseStreamOffset = _stream.CanSeek ? (long?)_stream.Position : null;
             return new MultipartSection() { Headers = headers, Body = _currentStream, BaseStreamOffset = baseStreamOffset };
