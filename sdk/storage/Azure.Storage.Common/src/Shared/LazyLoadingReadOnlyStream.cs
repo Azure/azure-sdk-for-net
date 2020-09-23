@@ -56,7 +56,7 @@ namespace Azure.Storage
         /// <summary>
         /// Indicated the user has called Seek() since the last Read() call, and the new position is outside _buffer.
         /// </summary>
-        private bool _seeked;
+        private bool _bufferInvalidated;
 
         /// <summary>
         /// Request conditions to send on the download requests.
@@ -98,7 +98,7 @@ namespace Azure.Storage
             _requestConditions = requestConditions;
             _length = initialLenght;
             _allowBlobModifications = !(_requestConditions == null && _createRequestConditionsFunc != null);
-            _seeked = false;
+            _bufferInvalidated = false;
         }
 
         public override int Read(byte[] buffer, int offset, int count)
@@ -142,14 +142,14 @@ namespace Azure.Storage
 
             }
 
-            if (_bufferPosition == 0 || _bufferPosition == _bufferLength || _seeked)
+            if (_bufferPosition == 0 || _bufferPosition == _bufferLength || _bufferInvalidated)
             {
                 int lastDownloadedBytes = await DownloadInternal(async, cancellationToken).ConfigureAwait(false);
                 if (lastDownloadedBytes == 0)
                 {
                     return 0;
                 }
-                _seeked = false;
+                _bufferInvalidated = false;
             }
 
             int remainingBytesInBuffer = _bufferLength - _bufferPosition;
@@ -341,7 +341,7 @@ namespace Azure.Storage
                 if (_allowBlobModifications)
                 {
                     _position = newPosition;
-                    _seeked = true;
+                    _bufferInvalidated = true;
                     return newPosition;
                 }
                 else
@@ -371,7 +371,7 @@ namespace Azure.Storage
             }
 
             // newPosition is outside of _buffer, we will need to re-download.
-            _seeked = true;
+            _bufferInvalidated = true;
             _position = newPosition;
             return newPosition;
         }
