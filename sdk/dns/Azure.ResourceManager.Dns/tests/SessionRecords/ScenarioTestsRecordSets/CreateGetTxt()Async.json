@@ -7,7 +7,7 @@
         "Authorization": "Sanitized",
         "Content-Length": "109",
         "Content-Type": "application/json",
-        "traceparent": "00-aa4e40b8a6bde740aa2f41734d7a3a77-9fbf260723c35249-00",
+        "traceparent": "00-b9f92161804daf49a676f0288ec973eb-ef3d558d04804d41-00",
         "User-Agent": [
           "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20200922.1",
           "(.NET Core 4.6.29130.01; Linux 4.19.128-microsoft-standard #1 SMP Tue Jun 23 12:58:10 UTC 2020)"
@@ -40,18 +40,18 @@
         "Cache-Control": "private",
         "Content-Length": "485",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 22 Sep 2020 22:39:49 GMT",
-        "ETag": "2d7dbd92-8143-4a59-b08c-ea3c9de97c1e",
+        "Date": "Wed, 23 Sep 2020 00:14:42 GMT",
+        "ETag": "89b29bb9-4da9-4a46-991e-94abdcf1e25c",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "a315de50-acb2-40d9-958e-ce622b721bbe",
+        "x-ms-correlation-request-id": "d2b70dfa-2c92-49fd-a780-b5d06b9e1a38",
         "x-ms-ratelimit-remaining-subscription-resource-requests": "11999",
         "x-ms-request-id": "de55435a-4b01-441f-0134-1f936664d6da",
-        "x-ms-routing-request-id": "WESTUS2:20200922T223950Z:a315de50-acb2-40d9-958e-ce622b721bbe",
+        "x-ms-routing-request-id": "WESTUS2:20200923T001443Z:d2b70dfa-2c92-49fd-a780-b5d06b9e1a38",
         "X-Powered-By": "ASP.NET"
       },
-      "ResponseBody": "{\u0022id\u0022:\u0022\\/subscriptions\\/db1ab6f0-4769-4b27-930e-01e2ef9c123c\\/resourceGroups\\/Default-Dns-9382\\/providers\\/Microsoft.Network\\/dnszones\\/azure.ameredmond.dns\\/TXT\\/txt_record\u0022,\u0022name\u0022:\u0022txt_record\u0022,\u0022type\u0022:\u0022Microsoft.Network\\/dnszones\\/TXT\u0022,\u0022etag\u0022:\u00222d7dbd92-8143-4a59-b08c-ea3c9de97c1e\u0022,\u0022properties\u0022:{\u0022metadata\u0022:{\u0022tag1\u0022:\u0022value1\u0022},\u0022fqdn\u0022:\u0022txt_record.azure.ameredmond.dns.\u0022,\u0022TTL\u0022:60,\u0022TXTRecords\u0022:[{\u0022value\u0022:[\u0022lorem\u0022]},{\u0022value\u0022:[\u0022ipsum\u0022]}],\u0022targetResource\u0022:{},\u0022provisioningState\u0022:\u0022Succeeded\u0022}}"
+      "ResponseBody": "{\u0022id\u0022:\u0022\\/subscriptions\\/db1ab6f0-4769-4b27-930e-01e2ef9c123c\\/resourceGroups\\/Default-Dns-9382\\/providers\\/Microsoft.Network\\/dnszones\\/azure.ameredmond.dns\\/TXT\\/txt_record\u0022,\u0022name\u0022:\u0022txt_record\u0022,\u0022type\u0022:\u0022Microsoft.Network\\/dnszones\\/TXT\u0022,\u0022etag\u0022:\u002289b29bb9-4da9-4a46-991e-94abdcf1e25c\u0022,\u0022properties\u0022:{\u0022metadata\u0022:{\u0022tag1\u0022:\u0022value1\u0022},\u0022fqdn\u0022:\u0022txt_record.azure.ameredmond.dns.\u0022,\u0022TTL\u0022:60,\u0022TXTRecords\u0022:[{\u0022value\u0022:[\u0022lorem\u0022]},{\u0022value\u0022:[\u0022ipsum\u0022]}],\u0022targetResource\u0022:{},\u0022provisioningState\u0022:\u0022Succeeded\u0022}}"
     }
   ],
   "Variables": {
