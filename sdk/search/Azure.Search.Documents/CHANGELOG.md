@@ -6,6 +6,10 @@
 
 - Support deserializing null values during deserialization of skills ([#15108](https://github.com/Azure/azure-sdk-for-net/issues/15108))
 
+### Added
+
+- Add support to `FieldBuilder` to define search fields for `Microsoft.Spatial` types without an explicit assembly dependency.
+
 ## 11.1.1 (2020-08-18)
 
 ### Fixed
