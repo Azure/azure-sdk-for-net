@@ -74,6 +74,113 @@ namespace Azure.Messaging.EventGrid
 }
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    public partial class ACSChatEventBaseProperties
+    {
+        internal ACSChatEventBaseProperties() { }
+        public string RecipientId { get { throw null; } }
+        public string ThreadId { get { throw null; } }
+        public string TransactionId { get { throw null; } }
+    }
+    public partial class ACSChatMemberAddedToThreadWithUserEventData : Azure.Messaging.EventGrid.SystemEvents.ACSChatThreadEventBaseProperties
+    {
+        internal ACSChatMemberAddedToThreadWithUserEventData() { }
+        public string AddedBy { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.ACSChatThreadMemberProperties MemberAdded { get { throw null; } }
+        public System.DateTimeOffset? Time { get { throw null; } }
+    }
+    public partial class ACSChatMemberRemovedFromThreadWithUserEventData : Azure.Messaging.EventGrid.SystemEvents.ACSChatThreadEventBaseProperties
+    {
+        internal ACSChatMemberRemovedFromThreadWithUserEventData() { }
+        public Azure.Messaging.EventGrid.SystemEvents.ACSChatThreadMemberProperties MemberRemoved { get { throw null; } }
+        public string RemovedBy { get { throw null; } }
+        public System.DateTimeOffset? Time { get { throw null; } }
+    }
+    public partial class ACSChatMessageDeletedEventData : Azure.Messaging.EventGrid.SystemEvents.ACSChatMessageEventBaseProperties
+    {
+        internal ACSChatMessageDeletedEventData() { }
+        public System.DateTimeOffset? DeleteTime { get { throw null; } }
+    }
+    public partial class ACSChatMessageEditedEventData : Azure.Messaging.EventGrid.SystemEvents.ACSChatMessageEventBaseProperties
+    {
+        internal ACSChatMessageEditedEventData() { }
+        public System.DateTimeOffset? EditTime { get { throw null; } }
+        public string MessageBody { get { throw null; } }
+    }
+    public partial class ACSChatMessageEventBaseProperties : Azure.Messaging.EventGrid.SystemEvents.ACSChatEventBaseProperties
+    {
+        internal ACSChatMessageEventBaseProperties() { }
+        public System.DateTimeOffset? ComposeTime { get { throw null; } }
+        public string MessageId { get { throw null; } }
+        public string SenderDisplayName { get { throw null; } }
+        public string SenderId { get { throw null; } }
+        public string Type { get { throw null; } }
+        public int? Version { get { throw null; } }
+    }
+    public partial class ACSChatMessageReceivedEventData : Azure.Messaging.EventGrid.SystemEvents.ACSChatMessageEventBaseProperties
+    {
+        internal ACSChatMessageReceivedEventData() { }
+        public string MessageBody { get { throw null; } }
+    }
+    public partial class ACSChatThreadCreatedWithUserEventData : Azure.Messaging.EventGrid.SystemEvents.ACSChatThreadEventBaseProperties
+    {
+        internal ACSChatThreadCreatedWithUserEventData() { }
+        public string CreatedBy { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventGrid.SystemEvents.ACSChatThreadMemberProperties> Members { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, object> Properties { get { throw null; } }
+    }
+    public partial class ACSChatThreadEventBaseProperties : Azure.Messaging.EventGrid.SystemEvents.ACSChatEventBaseProperties
+    {
+        internal ACSChatThreadEventBaseProperties() { }
+        public System.DateTimeOffset? CreateTime { get { throw null; } }
+        public int? Version { get { throw null; } }
+    }
+    public partial class ACSChatThreadMemberProperties
+    {
+        internal ACSChatThreadMemberProperties() { }
+        public string DisplayName { get { throw null; } }
+        public string MemberId { get { throw null; } }
+    }
+    public partial class ACSChatThreadPropertiesUpdatedPerUserEventData : Azure.Messaging.EventGrid.SystemEvents.ACSChatThreadEventBaseProperties
+    {
+        internal ACSChatThreadPropertiesUpdatedPerUserEventData() { }
+        public string EditedBy { get { throw null; } }
+        public System.DateTimeOffset? EditTime { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, object> Properties { get { throw null; } }
+    }
+    public partial class ACSChatThreadWithUserDeletedEventData : Azure.Messaging.EventGrid.SystemEvents.ACSChatThreadEventBaseProperties
+    {
+        internal ACSChatThreadWithUserDeletedEventData() { }
+        public string DeletedBy { get { throw null; } }
+        public System.DateTimeOffset? DeleteTime { get { throw null; } }
+    }
+    public partial class AcssmsDeliveryAttemptProperties
+    {
+        internal AcssmsDeliveryAttemptProperties() { }
+        public int? SegmentsFailed { get { throw null; } }
+        public int? SegmentsSucceeded { get { throw null; } }
+        public System.DateTimeOffset? Timestamp { get { throw null; } }
+    }
+    public partial class AcssmsDeliveryReportReceivedEventData : Azure.Messaging.EventGrid.SystemEvents.AcssmsEventBaseProperties
+    {
+        internal AcssmsDeliveryReportReceivedEventData() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventGrid.SystemEvents.AcssmsDeliveryAttemptProperties> DeliveryAttempts { get { throw null; } }
+        public string DeliveryStatus { get { throw null; } }
+        public string DeliveryStatusDetails { get { throw null; } }
+        public System.DateTimeOffset? ReceivedTimestamp { get { throw null; } }
+    }
+    public partial class AcssmsEventBaseProperties
+    {
+        internal AcssmsEventBaseProperties() { }
+        public string From { get { throw null; } }
+        public string MessageId { get { throw null; } }
+        public string To { get { throw null; } }
+    }
+    public partial class AcssmsReceivedEventData : Azure.Messaging.EventGrid.SystemEvents.AcssmsEventBaseProperties
+    {
+        internal AcssmsReceivedEventData() { }
+        public string Message { get { throw null; } }
+        public System.DateTimeOffset? ReceivedTimestamp { get { throw null; } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AppAction : System.IEquatable<Azure.Messaging.EventGrid.SystemEvents.AppAction>
     {

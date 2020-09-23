@@ -1,6 +1,9 @@
 # Release History
-## 4.0.0-beta.2 (Unreleased)
+## 4.0.0-beta.2 (2020-09-23)
 
+### Added
+
+- Added support for system events sent by the Azure Communication Services.
 
 ## 4.0.0-beta.1 (2020-09-08)
 This is the first preview of the Azure Event Grid client library that follows the [.NET Azure SDK Design Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html). This library is not a drop-in replacement for `Microsoft.Azure.EventGrid`, as code changes would be required to use the new library.
