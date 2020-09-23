@@ -154,5 +154,14 @@ namespace Azure.Core
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, Resources.InvalidFullyQualifiedNamespace, argumentValue), argumentName);
             }
         }
+
+
+        internal static void AssertSessionAccepted(bool isSessionReceiver, string sessionId)
+        {
+            if (isSessionReceiver && sessionId == null)
+            {
+                throw new InvalidOperationException("AcceptSessionAsync must be called before attempting this operation.");
+            }
+        }
     }
 }
