@@ -1,16 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-7867/providers/Microsoft.DocumentDB/databaseAccounts/db4937/listConnectionStrings?api-version=2020-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937/listConnectionStrings?api-version=2020-04-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-219f497dc3f4ca4ca053a7e4caa7ef5a-a4bd4a30f8a12c40-00",
+        "traceparent": "00-fd334ac6c2da0b498c46aad682d524fb-a3e906f3442a344e-00",
         "User-Agent": [
           "azsdk-net-ResourceManager.CosmosDB/1.0.0-alpha.20200922.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
         ],
-        "x-ms-client-request-id": "19ed1a13456878d9646f39dab7a8894e",
+        "x-ms-client-request-id": "87db1cc323804702f83192319db1897d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -19,33 +20,33 @@
         "Cache-Control": "no-store, no-cache",
         "Content-Length": "1015",
         "Content-Type": "application/json",
-        "Date": "Wed, 23 Sep 2020 01:03:06 GMT",
+        "Date": "Wed, 23 Sep 2020 03:09:04 GMT",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "df27722c-2f90-4d4c-841f-b150a353e635",
+        "x-ms-correlation-request-id": "7591d5bf-3365-4281-b575-0116a7c2fe46",
         "x-ms-gatewayversion": "version=2.11.0",
         "x-ms-ratelimit-remaining-subscription-writes": "1190",
-        "x-ms-request-id": "df27722c-2f90-4d4c-841f-b150a353e635",
-        "x-ms-routing-request-id": "WESTUS2:20200923T010306Z:df27722c-2f90-4d4c-841f-b150a353e635"
+        "x-ms-request-id": "7591d5bf-3365-4281-b575-0116a7c2fe46",
+        "x-ms-routing-request-id": "WESTUS2:20200923T030905Z:7591d5bf-3365-4281-b575-0116a7c2fe46"
       },
       "ResponseBody": {
         "connectionStrings": [
           {
-            "connectionString": "mongodb://db4937:7stPouUHfn2PucqXrqVCJCJUEDvdwh6lVbX5qCJFJXdkdFomya41NpH1bvApcwyoacdPAMJbGVuJFbeOBR8CNA==@db4937.documents.azure.com:10255/?ssl=true\u0026replicaSet=globaldb",
+            "connectionString": "mongodb://db4937:hAbQlWP6kCPOBR6M1M2Qp87397GtVN5OaJvyljJG9BMCO87D7GIftyJPrwXyo4TRFwpxXEhjvJd5wvlUdOkelg==@db4937.documents.azure.com:10255/?ssl=true\u0026replicaSet=globaldb",
             "description": "Primary MongoDB Connection String"
           },
           {
-            "connectionString": "mongodb://db4937:FUpaHYMDnBiREleh0HrYpB6lsAuNct0KdTTwjkRlcaRKha5XnJz71UwcEB84DoSEYkf5pm5bRJyPTOxZ9C3AXQ==@db4937.documents.azure.com:10255/?ssl=true\u0026replicaSet=globaldb",
+            "connectionString": "mongodb://db4937:DvUIbjU3CKLnVXGhcWkg4mGpbxOZcytdkpr0lx1JSAN0uNAA9FZ6qEbSvh2Z7rA37Tasllqu8nfsFFg5dtcLdg==@db4937.documents.azure.com:10255/?ssl=true\u0026replicaSet=globaldb",
             "description": "Secondary MongoDB Connection String"
           },
           {
-            "connectionString": "mongodb://db4937:CItowUYMCyuS7sbbiCxSsTbbvPHE8n8NiZEM9LJygPt6gVB2mLGIgNakaKL4JL9DbwDA8Dnk78pDJ6UDvMjW3g==@db4937.documents.azure.com:10255/?ssl=true\u0026replicaSet=globaldb",
+            "connectionString": "mongodb://db4937:4n2r1mORrcb9CxFIUT10fk5vc3GFDXTUOVYe7EM7UpjKDl23m2wBqpXJiM4g3xwcShKWKqYr4Of5XUQGk6nz8g==@db4937.documents.azure.com:10255/?ssl=true\u0026replicaSet=globaldb",
             "description": "Primary Read-Only MongoDB Connection String"
           },
           {
-            "connectionString": "mongodb://db4937:2QfcWNNSvYjSGUmCl6DLGAZaDl7qTTY2AGFiG6dBuvusF3wcOEehj1haeUMXioFX0ktqdjq4v0NgSdNdgxKJrQ==@db4937.documents.azure.com:10255/?ssl=true\u0026replicaSet=globaldb",
+            "connectionString": "mongodb://db4937:X6VG6GqfRNpKGrZzyHamFW75pwHRQFhSDJXUfX4gRGrsVgXJj8MSKphZnO5mjGGd4rREa1GcD1Z0UuRTkaBsJw==@db4937.documents.azure.com:10255/?ssl=true\u0026replicaSet=globaldb",
             "description": "Secondary Read-Only MongoDB Connection String"
           }
         ]
@@ -53,6 +54,6 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1090134948"
+    "RandomSeed": "925581393"
   }
 }
