@@ -347,7 +347,7 @@ namespace Azure.Storage
                 else
                 {
                     throw new ArgumentException(
-                        $"{nameof(newPosition)} exceeds known blob or file length.  This condition is not allowed with allowBlobModifications == false.");
+                        "You cannot seek past the end of a stream created by OpenReadStream that does not allow modifications to the underlying blob or file.");
                 }
             }
 

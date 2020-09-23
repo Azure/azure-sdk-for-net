@@ -1387,7 +1387,7 @@ namespace Azure.Storage.Blobs.Test
             Stream outputStream = await blob.OpenReadAsync().ConfigureAwait(false);
             TestHelper.AssertExpectedException<ArgumentException>(
                 () => outputStream.Seek(1025, SeekOrigin.Begin),
-                new ArgumentException("newPosition exceeds known blob or file length.  This condition is not allowed with allowBlobModifications == false."));
+                new ArgumentException("You cannot seek past the end of a stream created by OpenReadStream that does not allow modifications to the underlying blob or file."));
         }
 
         [Test]
