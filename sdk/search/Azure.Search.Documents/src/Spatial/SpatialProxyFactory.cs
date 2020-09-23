@@ -8,16 +8,16 @@ using System.Reflection;
 namespace Azure.Search.Documents
 {
     /// <summary>
-    /// Creates <see cref="GeometryAdapter"/> instances from unknown objects.
+    /// Creates <see cref="GeometryProxy"/> instances from unknown objects.
     /// </summary>
-    internal static class GeometryFactory
+    internal static class SpatialProxyFactory
     {
         private const string Name = "Microsoft.Spatial";
 
-        private static readonly IReadOnlyDictionary<string, Func<object, GeometryAdapter>> s_types =
-            new Dictionary<string, Func<object, GeometryAdapter>>(StringComparer.OrdinalIgnoreCase)
+        private static readonly IReadOnlyDictionary<string, Func<object, GeometryProxy>> s_types =
+            new Dictionary<string, Func<object, GeometryProxy>>(StringComparer.OrdinalIgnoreCase)
             {
-                ["Microsoft.Spatial.GeometryPoint"] = value => new GeometryPointAdapter(value),
+                ["Microsoft.Spatial.GeometryPoint"] = value => new GeometryPointProxy(value),
             };
 
         /// <summary>
@@ -38,13 +38,13 @@ namespace Azure.Search.Documents
         }
 
         /// <summary>
-        /// Creates a <see cref="GeometryAdapter"/> from the given <paramref name="value"/> if supported.
+        /// Creates a <see cref="GeometryProxy"/> from the given <paramref name="value"/> if supported.
         /// <seealso cref="CanCreate(Type)"/>
         /// </summary>
-        /// <param name="value">The value to adapter.</param>
-        /// <returns>A <see cref="GeometryAdapter"/> from the given <paramref name="value"/> if supported, or null if <paramref name="value"/> is null.</returns>
+        /// <param name="value">The value to proxy.</param>
+        /// <returns>A <see cref="GeometryProxy"/> from the given <paramref name="value"/> if supported, or null if <paramref name="value"/> is null.</returns>
         /// <exception cref="NotSupportedException">The <paramref name="value"/> type is not supported.</exception>
-        public static GeometryAdapter Create(object value)
+        public static GeometryProxy Create(object value)
         {
             if (value is null)
             {
@@ -52,7 +52,7 @@ namespace Azure.Search.Documents
             }
 
             Type type = value.GetType();
-            if (IsAssembly(type) && s_types.TryGetValue(type.FullName, out Func<object, GeometryAdapter> factory))
+            if (IsAssembly(type) && s_types.TryGetValue(type.FullName, out Func<object, GeometryProxy> factory))
             {
                 return factory(value);
             }

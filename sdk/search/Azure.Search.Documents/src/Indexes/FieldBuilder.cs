@@ -226,7 +226,7 @@ namespace Azure.Search.Documents.Indexes
             {
                 return DataTypeInfo.Simple(searchFieldDataType);
             }
-            else if (GeometryFactory.CanCreate(propertyType))
+            else if (SpatialProxyFactory.CanCreate(propertyType))
             {
                 return DataTypeInfo.Simple(SearchFieldDataType.GeographyPoint);
             }
@@ -370,7 +370,7 @@ namespace Azure.Search.Documents.Indexes
                     !type.IsEnum &&
                     !s_unsupportedTypes.Contains(type) &&
                     !s_primitiveTypeMap.ContainsKey(type) &&
-                    !GeometryFactory.CanCreate(type) &&
+                    !SpatialProxyFactory.CanCreate(type) &&
                     !typeof(IEnumerable).IsAssignableFrom(type))
                 {
                     const BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;

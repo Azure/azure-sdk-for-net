@@ -7,25 +7,25 @@ using System.Reflection;
 namespace Azure.Search.Documents
 {
     /// <summary>
-    /// Adapter for a Microsoft.Spatial.Geometry class.
+    /// Proxy for a Microsoft.Spatial.Geometry class.
     /// </summary>
-    internal abstract class GeometryAdapter
+    internal abstract class GeometryProxy
     {
         private readonly Type _type;
 
         /// <summary>
-        /// Creates a new instance of the <see cref="GeometryAdapter"/> class.
+        /// Creates a new instance of the <see cref="GeometryProxy"/> class.
         /// </summary>
-        /// <param name="value">The Microsoft.Spatial.Geometry object to adapt. This is assumed to derive from a Microsoft.Spatial.Geometry class.</param>
+        /// <param name="value">The Microsoft.Spatial.Geometry object to proxy. This is assumed to derive from a Microsoft.Spatial.Geometry class.</param>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is null.</exception>
-        public GeometryAdapter(object value)
+        public GeometryProxy(object value)
         {
             Value = value ?? throw new ArgumentNullException(nameof(value));
             _type = value.GetType();
         }
 
         /// <summary>
-        /// Gets the original value passed into the adapter.
+        /// Gets the original value passed into the proxy.
         /// </summary>
         public object Value { get; }
 

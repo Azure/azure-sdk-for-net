@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests.Spatial
 {
-    public class GeometryFactoryTests
+    public class SpatialProxyFactoryTests
     {
         [TestCase(null, false)]
         [TestCase(typeof(object), false)]
@@ -16,18 +16,18 @@ namespace Azure.Search.Documents.Tests.Spatial
         [TestCase(typeof(GeographyPoint), false)]
         [TestCase(typeof(GeometryPoint), true)]
         public void CanCreate(Type type, bool expected) =>
-            Assert.AreEqual(expected, GeometryFactory.CanCreate(type));
+            Assert.AreEqual(expected, SpatialProxyFactory.CanCreate(type));
 
 
         [Test]
         public void CreateNull() =>
-            Assert.IsNull(GeometryFactory.Create(null));
+            Assert.IsNull(SpatialProxyFactory.Create(null));
 
         [Test]
         public void CreateGeometryPoint()
         {
             GeometryPoint point = GeometryPoint.Create(1.0, 2.0, 3.0);
-            GeometryPointAdapter adapter = new GeometryPointAdapter(point);
+            GeometryPointProxy adapter = new GeometryPointProxy(point);
 
             Assert.AreSame(point, adapter.Value);
             Assert.AreEqual(1.0, adapter.X);
@@ -38,7 +38,7 @@ namespace Azure.Search.Documents.Tests.Spatial
 
         [TestCaseSource(nameof(CreateThrowsData))]
         public void CreateThrows(object value) =>
-            Assert.Throws<NotSupportedException>(() => GeometryFactory.Create(value));
+            Assert.Throws<NotSupportedException>(() => SpatialProxyFactory.Create(value));
 
         private static IEnumerable CreateThrowsData => new[]
         {

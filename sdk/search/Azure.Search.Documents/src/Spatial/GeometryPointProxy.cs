@@ -7,9 +7,9 @@ using System.Reflection;
 namespace Azure.Search.Documents
 {
     /// <summary>
-    /// Adapter for a Microsoft.Spatial.GeometryPoint class.
+    /// Proxy for a Microsoft.Spatial.GeometryPoint class.
     /// </summary>
-    internal class GeometryPointAdapter : GeometryAdapter
+    internal class GeometryPointProxy : GeometryProxy
     {
         private PropertyInfo _x;
         private PropertyInfo _y;
@@ -17,11 +17,11 @@ namespace Azure.Search.Documents
         private PropertyInfo _m;
 
         /// <summary>
-        /// Creates a new instance of the <see cref="GeometryPointAdapter"/> class.
+        /// Creates a new instance of the <see cref="GeometryPointProxy"/> class.
         /// </summary>
-        /// <param name="value">The Microsoft.Spatial.GeometryPoint object to adapt.</param>
+        /// <param name="value">The Microsoft.Spatial.GeometryPoint object to proxy.</param>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is null.</exception>
-        public GeometryPointAdapter(object value) : base(value)
+        public GeometryPointProxy(object value) : base(value)
         {
         }
 
