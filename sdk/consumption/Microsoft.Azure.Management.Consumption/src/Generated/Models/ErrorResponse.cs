@@ -16,6 +16,15 @@ namespace Microsoft.Azure.Management.Consumption.Models
     /// <summary>
     /// Error response indicates that the service is not able to process the
     /// incoming request. The reason is provided in the error message.
+    ///
+    /// Some Error responses:
+    ///
+    /// * 429 TooManyRequests - Request is throttled. Retry after waiting for
+    /// the time specified in the
+    /// "x-ms-ratelimit-microsoft.consumption-retry-after" header.
+    ///
+    /// * 503 ServiceUnavailable - Service is temporarily unavailable. Retry
+    /// after waiting for the time specified in the "Retry-After" header.
     /// </summary>
     public partial class ErrorResponse
     {
