@@ -27,13 +27,50 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
         {
             var expResponse = CreateDiagnosticSettings();
             var mockResponse = new MockResponse((int)HttpStatusCode.OK);
-            mockResponse.SetContent(string.Concat("{ \"value\":", expResponse.ToJson(), "}"));
+            var content = @"
+        {
+                'id': null,
+            'name': 'DiagSetName',
+            'type': null,
+            'properties': {
+                    'storageAccountId': '/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.storage/storageaccounts/sa1',
+                'serviceBusRuleId': '/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.servicebus/namespaces/ns1/authorizationRules/authrule',
+                'eventHubAuthorizationRuleId': null,
+                'eventHubName': null,
+                'metrics': [
+                    {
+                        'timeGrain': 'PT1M',
+                        'category': null,
+                        'enabled': true,
+                        'retentionPolicy': {
+                            'enabled': true,
+                            'days': 90
+                        }
+                }
+                ],
+                'logs': [
+                    {
+                        'category': null,
+                        'enabled': true,
+                        'retentionPolicy': {
+                            'enabled': true,
+                            'days': 90
+                        }
+                    }
+                ],
+                'workspaceId': 'wsId',
+                'logAnalyticsDestinationType': null
+            }
+        }
+".Replace("'", "\"");
+            mockResponse.SetContent(content);
+            //mockResponse.SetContent(string.Concat("{ \"value\":", expResponse.ToJson(), "}"));
             var mockTransport = new MockTransport(mockResponse);
             var insightsClient = GetInsightsManagementClient(mockTransport);
             var parameters = CreateDiagnosticSettingsParams();
 
             DiagnosticSettingsResource response = await insightsClient.DiagnosticSettings.CreateOrUpdateAsync(ResourceUri, DiagSetName, parameters);
-            Assert.AreEqual(expResponse, response);
+            AreEqual(expResponse, response);
         }
 
         [Test]
@@ -41,11 +78,48 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
         {
             var expResponse = CreateDiagnosticSettings();
             var mockResponse = new MockResponse((int)HttpStatusCode.OK);
-            mockResponse.SetContent(string.Concat("{ \"value\":", expResponse.ToJson(), "}"));
+            var content = @"
+        {
+                'id': null,
+            'name': 'DiagSetName',
+            'type': null,
+            'properties': {
+                    'storageAccountId': '/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.storage/storageaccounts/sa1',
+                'serviceBusRuleId': '/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.servicebus/namespaces/ns1/authorizationRules/authrule',
+                'eventHubAuthorizationRuleId': null,
+                'eventHubName': null,
+                'metrics': [
+                    {
+                        'timeGrain': 'PT1M',
+                        'category': null,
+                        'enabled': true,
+                        'retentionPolicy': {
+                            'enabled': true,
+                            'days': 90
+                        }
+                }
+                ],
+                'logs': [
+                    {
+                        'category': null,
+                        'enabled': true,
+                        'retentionPolicy': {
+                            'enabled': true,
+                            'days': 90
+                        }
+                    }
+                ],
+                'workspaceId': 'wsId',
+                'logAnalyticsDestinationType': null
+            }
+        }
+".Replace("'", "\"");
+            mockResponse.SetContent(content);
+            //mockResponse.SetContent(string.Concat("{ \"value\":", expResponse.ToJson(), "}"));
             var mockTransport = new MockTransport(mockResponse);
             var insightsClient = GetInsightsManagementClient(mockTransport);
             DiagnosticSettingsResource actualResponse = await insightsClient.DiagnosticSettings.GetAsync(ResourceUri,DiagSetName);
-            Assert.AreEqual(expResponse, actualResponse);
+            AreEqual(expResponse, actualResponse);
         }
 
         private static DiagnosticSettingsResource CreateDiagnosticSettingsParams()
@@ -89,5 +163,83 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
                 }, "wsId", null
                 );
         }
+
+        private static void AreEqual(DiagnosticSettingsResource exp, DiagnosticSettingsResource act)
+        {
+            if (exp == act)
+            {
+                return;
+            }
+
+            if (exp == null)
+            {
+                Assert.Null(act);
+            }
+
+            Assert.False(act == null, "Actual value can't be null");
+
+            CompareLists(exp.Logs, act.Logs);
+            CompareLists(exp.Metrics, act.Metrics);
+
+            Assert.AreEqual(exp.StorageAccountId, act.StorageAccountId);
+            Assert.AreEqual(exp.WorkspaceId, act.WorkspaceId);
+            Assert.AreEqual(exp.ServiceBusRuleId, act.ServiceBusRuleId);
+        }
+
+        private static void Compare<T>(T exp, T act)
+        {
+            Type t = typeof(T);
+            if (t == typeof(LogSettings))
+            {
+                Compare(exp as LogSettings, act as LogSettings);
+            }
+            else if (t == typeof(LogSettings))
+            {
+                Compare(exp as MetricSettings, act as MetricSettings);
+            }
+        }
+
+        private static void Compare(LogSettings exp, LogSettings act)
+        {
+            Assert.AreEqual(exp.Enabled, act.Enabled);
+            Assert.AreEqual(exp.Category, act.Category);
+            Compare(exp.RetentionPolicy, act.RetentionPolicy);
+        }
+
+        private static void Compare(RetentionPolicy exp, RetentionPolicy act)
+        {
+            Assert.AreEqual(exp.Enabled, act.Enabled);
+            Assert.AreEqual(exp.Days, act.Days);
+        }
+
+        private static void CompareLists<T>(IList<T> exp, IList<T> act)
+        {
+            if (exp == act)
+            {
+                return;
+            }
+
+            if (exp == null)
+            {
+                Assert.Null(act);
+            }
+
+            Assert.False(act == null, "Actual value can't be null");
+
+            for (int i = 0; i < exp.Count; i++)
+            {
+                if (i >= act.Count)
+                {
+                    Assert.AreEqual(exp.Count, act.Count);
+                }
+
+                T cat1 = exp[i];
+                T cat2 = act[i];
+                Compare<T>(cat1, cat2);
+            }
+
+            Assert.AreEqual(exp.Count, act.Count);
+        }
+
     }
 }
