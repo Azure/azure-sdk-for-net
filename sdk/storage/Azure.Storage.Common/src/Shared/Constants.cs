@@ -551,7 +551,7 @@ namespace Azure.Storage
         internal static class HttpStatusCode
         {
             internal const int NotFound = 404;
-            internal const int ServerError = 500;
+            internal static readonly int[] s_retriableCodes = { 408, 429, 500, 502, 503, 504 };
         }
     }
 }

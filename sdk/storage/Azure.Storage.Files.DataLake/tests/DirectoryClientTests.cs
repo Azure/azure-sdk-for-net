@@ -1466,10 +1466,12 @@ namespace Azure.Storage.Files.DataLake.Tests
             Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{topDirectoryName}").ToHttps();
 
             // Create tree as AAD App
-            DataLakeDirectoryClient directory = InstrumentClient(new DataLakeDirectoryClient(uri, tokenCredential, GetNetworkErrorDataLakeConnectionOptions()));
+            DataLakeClientOptions options = GetFaultyDataLakeConnectionOptions(
+                raise: new RequestFailedException((int)HttpStatusCode.InternalServerError, "Internal Server Interuption"));
+            DataLakeDirectoryClient directory = InstrumentClient(new DataLakeDirectoryClient(uri, tokenCredential, options));
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<OperationInterruptedException>(
+            await TestHelper.AssertExpectedExceptionAsync<DataLakeAclChangeFailedException>(
                 directory.SetAccessControlRecursiveAsync(
                     accessControlList: AccessControlList,
                     progressHandler: null,

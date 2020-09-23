@@ -2142,7 +2142,9 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="Response{AccessControlChangeResult}"/> that contains summary stats of the operation.
         /// </returns>
         /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if the operation fails or is
+        /// interrupted. See <see cref="DataLakeAclChangeFailedException.ContinuationToken"/> to continue
+        /// the operation once ready to continue. Otherwise a <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<AccessControlChangeResult> SetAccessControlRecursive(
@@ -2191,7 +2193,9 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="Response{AccessControlChangeResult}"/> that contains summary stats of the operation.
         /// </returns>
         /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if the operation fails or is
+        /// interrupted. See <see cref="DataLakeAclChangeFailedException.ContinuationToken"/> to continue
+        /// the operation once ready to continue. Otherwise a <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<AccessControlChangeResult>> SetAccessControlRecursiveAsync(
@@ -2240,7 +2244,9 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="Response{AccessControlChangeResult}"/> that contains summary stats of the operation.
         /// </returns>
         /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if the operation fails or is
+        /// interrupted. See <see cref="DataLakeAclChangeFailedException.ContinuationToken"/> to continue
+        /// the operation once ready to continue. Otherwise a <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<AccessControlChangeResult> UpdateAccessControlRecursive(
@@ -2289,7 +2295,9 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="Response{AccessControlChangeResult}"/> that contains summary stats of the operation.
         /// </returns>
         /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if the operation fails or is
+        /// interrupted. See <see cref="DataLakeAclChangeFailedException.ContinuationToken"/> to continue
+        /// the operation once ready to continue. Otherwise a <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<AccessControlChangeResult>> UpdateAccessControlRecursiveAsync(
@@ -2338,7 +2346,9 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="Response{AccessControlChangeResult}"/> that contains summary stats of the operation.
         /// </returns>
         /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if the operation fails or is
+        /// interrupted. See <see cref="DataLakeAclChangeFailedException.ContinuationToken"/> to continue
+        /// the operation once ready to continue. Otherwise a <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual Response<AccessControlChangeResult> RemoveAccessControlRecursive(
@@ -2387,7 +2397,9 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="Response{AccessControlChangeResult}"/> that contains summary stats of the operation.
         /// </returns>
         /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if the operation fails or is
+        /// interrupted. See <see cref="DataLakeAclChangeFailedException.ContinuationToken"/> to continue
+        /// the operation once ready to continue. Otherwise a <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<AccessControlChangeResult>> RemoveAccessControlRecursiveAsync(
@@ -2448,7 +2460,9 @@ namespace Azure.Storage.Files.DataLake
         /// path.
         /// </returns>
         /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if the operation fails or is
+        /// interrupted. See <see cref="DataLakeAclChangeFailedException.ContinuationToken"/> to continue
+        /// the operation once ready to continue. Otherwise a <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<AccessControlChangeResult>> SetAccessControlRecursiveInternal(
@@ -2506,9 +2520,9 @@ namespace Azure.Storage.Files.DataLake
                             }
                             catch (RequestFailedException storageRequestFailedException)
                             when (!string.IsNullOrEmpty(continuationToken) &&
-                                storageRequestFailedException.Status >= Constants.HttpStatusCode.ServerError)
+                                Constants.HttpStatusCode.s_retriableCodes.Contains(storageRequestFailedException.Status) )
                             {
-                                throw new OperationInterruptedException(storageRequestFailedException, continuationToken);
+                                throw new DataLakeAclChangeFailedException(storageRequestFailedException, continuationToken);
                             }
                             continuationToken = jsonResponse.Value.Continuation;
 
