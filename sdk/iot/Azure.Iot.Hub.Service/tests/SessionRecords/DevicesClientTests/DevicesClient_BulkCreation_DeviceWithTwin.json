@@ -4,12 +4,13 @@
       "RequestUri": "https://FakeHost.net/devices?api-version=2020-03-13",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "1204",
         "Content-Type": "application/json",
         "User-Agent": [
-          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200728.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200901.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "7016712d2594db6f1014befd36d0ff37",
         "x-ms-return-client-request-id": "true"
@@ -19,10 +20,10 @@
       "ResponseHeaders": {
         "Content-Length": "47",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Jul 2020 22:17:07 GMT",
+        "Date": "Tue, 01 Sep 2020 20:58:35 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "3b8d99c1-9eb0-4508-b2c0-f2f631c942e2"
+        "x-ms-request-id": "c5d93a78-80ae-47e6-b851-1fc27f816de5"
       },
       "ResponseBody": {
         "isSuccessful": true,
@@ -34,10 +35,11 @@
       "RequestUri": "https://FakeHost.net/twins/bulkDeviceWithTwin1109223729?api-version=2020-03-13",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200728.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200901.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "8f73cdcfa527500eb6b9e2f677fe22e6",
         "x-ms-return-client-request-id": "true"
@@ -47,15 +49,15 @@
       "ResponseHeaders": {
         "Content-Length": "690",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Jul 2020 22:17:07 GMT",
+        "Date": "Tue, 01 Sep 2020 20:58:35 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "b72f6367-9304-42c7-a04b-1ed9ebe59dea"
+        "x-ms-request-id": "e27d15ec-6cf4-4445-aeff-66bdf57eaaca"
       },
       "ResponseBody": {
         "deviceId": "bulkDeviceWithTwin1109223729",
         "etag": "AAAAAAAAAAE=",
-        "deviceEtag": "NzU1ODEwODYz",
+        "deviceEtag": "NTg2MjIyODE1",
         "status": "enabled",
         "statusUpdateTime": "0001-01-01T00:00:00Z",
         "connectionState": "Disconnected",
@@ -82,7 +84,7 @@
           },
           "reported": {
             "$metadata": {
-              "$lastUpdated": "2020-07-28T22:17:07.1922974Z"
+              "$lastUpdated": "2020-09-01T20:58:35.6787186Z"
             },
             "$version": 1
           }
@@ -96,12 +98,13 @@
       "RequestUri": "https://FakeHost.net/devices?api-version=2020-03-13",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "594",
         "Content-Type": "application/json",
         "User-Agent": [
-          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200728.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200901.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "d533497f83be7a264a2956613633f386",
         "x-ms-return-client-request-id": "true"
@@ -111,10 +114,10 @@
       "ResponseHeaders": {
         "Content-Length": "47",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Jul 2020 22:17:07 GMT",
+        "Date": "Tue, 01 Sep 2020 20:58:35 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "2801b166-5b85-4d49-9d71-486f5a0b562c"
+        "x-ms-request-id": "e3676554-ebf8-4285-805a-f9fca70e79f1"
       },
       "ResponseBody": {
         "isSuccessful": true,
@@ -124,7 +127,7 @@
     }
   ],
   "Variables": {
-    "IOT_HUB_CONNECTION_STRING": "HostName=FakeHost.net;SharedAccessKeyName=iothubowner;SharedAccessKey=Kg==;",
+    "IOT_HUB_CONNECTION_STRING": "HostName=FakeHost.net;SharedAccessKeyName=iothubowner;SharedAccessKey=Kg==",
     "RandomSeed": "1405471046"
   }
 }

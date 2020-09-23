@@ -23,14 +23,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<AvailableProvidersListCountry> array = new List<AvailableProvidersListCountry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(AvailableProvidersListCountry.DeserializeAvailableProvidersListCountry(item));
-                        }
+                        array.Add(AvailableProvidersListCountry.DeserializeAvailableProvidersListCountry(item));
                     }
                     countries = array;
                     continue;

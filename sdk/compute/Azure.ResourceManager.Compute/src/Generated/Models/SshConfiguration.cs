@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of SshConfiguration. </summary>
         public SshConfiguration()
         {
+            PublicKeys = new ChangeTrackingList<SshPublicKey>();
         }
 
         /// <summary> Initializes a new instance of SshConfiguration. </summary>
@@ -25,6 +27,6 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The list of SSH public keys used to authenticate with linux based VMs. </summary>
-        public IList<SshPublicKey> PublicKeys { get; set; }
+        public IList<SshPublicKey> PublicKeys { get; }
     }
 }

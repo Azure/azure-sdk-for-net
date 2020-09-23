@@ -1415,16 +1415,15 @@ directive:
   transform: >
     $["x-ms-client-name"] = "BlobAccessPolicy";
     $.xml = {"name": "AccessPolicy"};
-    $.properties.StartsOn = $.properties.Start;
-    $.properties.StartsOn.xml = { "name": "Start"};
+    $.properties.PolicyStartsOn = $.properties.Start;
+    $.properties.PolicyStartsOn.xml = { "name": "Start"};
     delete $.properties.Start;
-    $.properties.ExpiresOn = $.properties.Expiry;
-    $.properties.ExpiresOn.xml = { "name": "Expiry"};
+    $.properties.PolicyExpiresOn = $.properties.Expiry;
+    $.properties.PolicyExpiresOn.xml = { "name": "Expiry"};
     delete $.properties.Expiry;
     $.properties.Permissions = $.properties.Permission;
     $.properties.Permissions.xml = { "name": "Permission"};
     delete $.properties.Permission;
-    $.required = ["StartsOn", "ExpiresOn", "Permissions"];
 ```
 
 ### /{containerName}/{blob}?comp=query

@@ -7,15 +7,15 @@
 		<PackageId>Microsoft.Azure.Management.Subscription</PackageId>
 		<Description>Provides subscription management capabilities for Microsoft Azure.</Description>
 		<AssemblyName>Microsoft.Azure.Management.Subscription</AssemblyName>
-		<Version>1.1.4-preview</Version>
-		<PackageTags>Microsoft Azure Subscription;</PackageTags>
+		<Version>1.1.5</Version>
+		<PackageTags>Microsoft Alias Subscription;</PackageTags>
 		<PackageReleaseNotes>
             <![CDATA[
                 Breaking changes:
-                * This is the preview release of Microsoft.Subscription
+                * This is the new release of Microsoft.Subscription
                 * SDK structure has been updated to make it more consistent and user-friendly:
-                  1. CreateSubscriptionInEnrollmentAccount and CreateSubscription APIs have been moved to Subscription from SubscriptionFactory.
-                  2. CreateCspsubscription API is now supported to allow CSP subscription creation
+								  1. Put Subscription Alias Api has been added to support subscription creation
+                  2. Post CreateSubscription APIs have been removed as new subscription alias API provides the same functionality.
             ]]>
      </PackageReleaseNotes>
 	</PropertyGroup>

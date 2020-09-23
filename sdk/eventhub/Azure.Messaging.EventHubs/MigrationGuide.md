@@ -1,4 +1,4 @@
-﻿# Guide for migrating to Azure.Messaging.EventHubs from Microsoft.Azure.EventHubs
+# Guide for migrating to Azure.Messaging.EventHubs from Microsoft.Azure.EventHubs
 
 This guide is intended to assist in the migration to version 5 of the Event Hubs client library from version 4.  It will focus on side-by-side comparisons for similar operations between the v5 packages, [`Azure.Messaging.EventHubs`](https://www.nuget.org/packages/Azure.Messaging.EventHubs/) and [`Azure.Messaging.EventHubs.Processor`](https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor/)  and their v4 equivalents, [`Microsoft.Azure.EventHubs`](https://www.nuget.org/packages/Microsoft.Azure.EventHubs/) and [`Microsoft.Azure.EventHubs.Processor`](https://www.nuget.org/packages/Microsoft.Azure.EventHubs.Processor/).
 
@@ -92,7 +92,7 @@ The v4 client allowed for sending a single event or an enumerable of events, whi
 
 | In v4                                          | Equivalent in v5                                                 | Sample |
 |------------------------------------------------|------------------------------------------------------------------|--------|
-| `PartitionReceiver.ReceiveAsync()` or `PartitionReceiver.SetReceiveHandler()`                      | `EventHubConsumerClient.ReadEventsFromPartitionAsync()`                               | [Read events](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample09_ReadEventsFromAKnownPosition.cs) |
+| `PartitionReceiver.ReceiveAsync()` or `PartitionReceiver.SetReceiveHandler()`                      | `EventHubConsumerClient.ReadEventsFromPartitionAsync()`                               | [Read events from a known position](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample10_ReadEventsFromAKnownPosition.cs) |
 | `new EventProcessorHost()`                           | `new EventProcessorClient(blobContainerClient, ...)`               | [Basic Event Processing](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample03_BasicEventProcessing.cs) |
 
 ## Migration samples
@@ -104,7 +104,7 @@ In v4, events could be published to a single partition using `PartitionSender`. 
 In v5, this has been consolidated into a more efficient SendAsync(EventDataBatch) method. Batching merges information from multiple events into a single publish message, reducing the amount of network communication needed vs publishing events one at a time. Events are published to a specific partition when partition id is set in [`CreateBatchOptions`](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.producer.createbatchoptions?view=azure-dotnet) before calling [`CreateBatchAsync(CreateBatchOptions)`](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.producer.eventhubproducerclient.createbatchasync?view=azure-dotnet#Azure_Messaging_EventHubs_Producer_EventHubProducerClient_CreateBatchAsync_Azure_Messaging_EventHubs_Producer_CreateBatchOptions_System_Threading_CancellationToken_).
 
 The code below assumes all events fit into a single batch. For more complete example, see sample: [Publish events
-to specific partition](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample06_PublishAnEventBatchToASpecificPartition.cs).
+to specific partition](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample07_PublishAnEventBatchToASpecificPartition.cs).
 
 In v4:
 ```csharp
@@ -285,7 +285,7 @@ await using (var consumer = new EventHubConsumerClient(consumerGroup, connection
 }
 ```
 
-See [`ReadEvents.cs`](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample09_ReadEventsFromAKnownPosition.cs) for a sample program demonstrating this.
+See [`ReadEventsFromAKnownPosition.cs`](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample10_ReadEventsFromAKnownPosition.cs) for a sample program demonstrating this.
 
 ### Migrating code from `EventProcessorHost` to `EventProcessorClient` for reading events
 
@@ -401,7 +401,7 @@ For v5, the `EventProcessorClient` will use a default starting position to read 
 
 Because the nature of legacy checkpoint data cannot be assumed due to custom storage provider support, the example uses a static set of checkpoint data for illustration.  The format of this sample data matches that used by the default Azure Storage checkpoint manager of the `EventProcessorHost` for the body of the Blob holding checkpoint data.  
 
-Reading Azure Storage data is not within the scope of this example, but details may be found in the Azure Storage documentation, see: [Quickstart: Azure Blob storage client library v12 for .NET](https://docs.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-dotnet).
+Reading Azure Storage data is not within the scope of this example, but details may be found in the Azure Storage documentation, see: [Quickstart: Azure Blob storage client library v12 for .NET](https://docs.microsoft.com/azure/storage/blobs/storage-quickstart-blobs-dotnet).
 
 ```csharp
 public static async Task Main(string[] args)

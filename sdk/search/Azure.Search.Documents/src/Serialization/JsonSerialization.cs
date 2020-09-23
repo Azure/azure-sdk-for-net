@@ -9,8 +9,8 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Serialization;
 #if EXPERIMENTAL_SPATIAL
 using Azure.Core.Spatial;
 #endif
@@ -347,9 +347,7 @@ namespace Azure.Search.Documents
         /// <returns>A deserialized object.</returns>
         public static async Task<T> DeserializeAsync<T>(
             this Stream json,
-#if EXPERIMENTAL_SERIALIZER
             ObjectSerializer serializer,
-#endif
             bool async,
             CancellationToken cancellationToken)
         #pragma warning restore CS1572
@@ -358,14 +356,12 @@ namespace Azure.Search.Documents
             {
                 return default;
             }
-#if EXPERIMENTAL_SERIALIZER
             else if (serializer != null)
             {
                 return async ?
-                    (T)await serializer.DeserializeAsync(json, typeof(T)).ConfigureAwait(false) :
-                    (T)serializer.Deserialize(json, typeof(T));
+                    (T)await serializer.DeserializeAsync(json, typeof(T), cancellationToken).ConfigureAwait(false) :
+                    (T)serializer.Deserialize(json, typeof(T), cancellationToken);
             }
-#endif
             else if (async)
             {
                 return await JsonSerializer.DeserializeAsync<T>(

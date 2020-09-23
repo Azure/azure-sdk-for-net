@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -16,6 +17,8 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="defaultAction"> Specifies the default action of allow or deny when no other rules match. </param>
         public NetworkRuleSet(DefaultAction defaultAction)
         {
+            VirtualNetworkRules = new ChangeTrackingList<VirtualNetworkRule>();
+            IpRules = new ChangeTrackingList<IPRule>();
             DefaultAction = defaultAction;
         }
 
@@ -35,9 +38,9 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Specifies whether traffic is bypassed for Logging/Metrics/AzureServices. Possible values are any combination of Logging|Metrics|AzureServices (For example, &quot;Logging, Metrics&quot;), or None to bypass none of those traffics. </summary>
         public Bypass? Bypass { get; set; }
         /// <summary> Sets the virtual network rules. </summary>
-        public IList<VirtualNetworkRule> VirtualNetworkRules { get; set; }
+        public IList<VirtualNetworkRule> VirtualNetworkRules { get; }
         /// <summary> Sets the IP ACL rules. </summary>
-        public IList<IPRule> IpRules { get; set; }
+        public IList<IPRule> IpRules { get; }
         /// <summary> Specifies the default action of allow or deny when no other rules match. </summary>
         public DefaultAction DefaultAction { get; set; }
     }

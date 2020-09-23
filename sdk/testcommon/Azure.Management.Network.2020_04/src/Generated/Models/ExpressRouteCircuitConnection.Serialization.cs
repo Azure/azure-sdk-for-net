@@ -15,62 +15,42 @@ namespace Azure.Management.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Etag != null)
-            {
-                writer.WritePropertyName("etag");
-                writer.WriteStringValue(Etag);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (ExpressRouteCircuitPeering != null)
+            if (Optional.IsDefined(ExpressRouteCircuitPeering))
             {
                 writer.WritePropertyName("expressRouteCircuitPeering");
                 writer.WriteObjectValue(ExpressRouteCircuitPeering);
             }
-            if (PeerExpressRouteCircuitPeering != null)
+            if (Optional.IsDefined(PeerExpressRouteCircuitPeering))
             {
                 writer.WritePropertyName("peerExpressRouteCircuitPeering");
                 writer.WriteObjectValue(PeerExpressRouteCircuitPeering);
             }
-            if (AddressPrefix != null)
+            if (Optional.IsDefined(AddressPrefix))
             {
                 writer.WritePropertyName("addressPrefix");
                 writer.WriteStringValue(AddressPrefix);
             }
-            if (AuthorizationKey != null)
+            if (Optional.IsDefined(AuthorizationKey))
             {
                 writer.WritePropertyName("authorizationKey");
                 writer.WriteStringValue(AuthorizationKey);
             }
-            if (Ipv6CircuitConnectionConfig != null)
+            if (Optional.IsDefined(Ipv6CircuitConnectionConfig))
             {
                 writer.WritePropertyName("ipv6CircuitConnectionConfig");
                 writer.WriteObjectValue(Ipv6CircuitConnectionConfig);
-            }
-            if (CircuitConnectionStatus != null)
-            {
-                writer.WritePropertyName("circuitConnectionStatus");
-                writer.WriteStringValue(CircuitConnectionStatus.Value.ToString());
-            }
-            if (ProvisioningState != null)
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -78,52 +58,36 @@ namespace Azure.Management.Network.Models
 
         internal static ExpressRouteCircuitConnection DeserializeExpressRouteCircuitConnection(JsonElement element)
         {
-            string name = default;
-            string etag = default;
-            string type = default;
-            string id = default;
-            SubResource expressRouteCircuitPeering = default;
-            SubResource peerExpressRouteCircuitPeering = default;
-            string addressPrefix = default;
-            string authorizationKey = default;
-            Ipv6CircuitConnectionConfig ipv6CircuitConnectionConfig = default;
-            CircuitConnectionStatus? circuitConnectionStatus = default;
-            ProvisioningState? provisioningState = default;
+            Optional<string> name = default;
+            Optional<string> etag = default;
+            Optional<string> type = default;
+            Optional<string> id = default;
+            Optional<SubResource> expressRouteCircuitPeering = default;
+            Optional<SubResource> peerExpressRouteCircuitPeering = default;
+            Optional<string> addressPrefix = default;
+            Optional<string> authorizationKey = default;
+            Optional<Ipv6CircuitConnectionConfig> ipv6CircuitConnectionConfig = default;
+            Optional<CircuitConnectionStatus> circuitConnectionStatus = default;
+            Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
@@ -133,64 +97,36 @@ namespace Azure.Management.Network.Models
                     {
                         if (property0.NameEquals("expressRouteCircuitPeering"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             expressRouteCircuitPeering = DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("peerExpressRouteCircuitPeering"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             peerExpressRouteCircuitPeering = DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("addressPrefix"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             addressPrefix = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("authorizationKey"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             authorizationKey = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("ipv6CircuitConnectionConfig"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             ipv6CircuitConnectionConfig = Ipv6CircuitConnectionConfig.DeserializeIpv6CircuitConnectionConfig(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("circuitConnectionStatus"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             circuitConnectionStatus = new CircuitConnectionStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
@@ -198,7 +134,7 @@ namespace Azure.Management.Network.Models
                     continue;
                 }
             }
-            return new ExpressRouteCircuitConnection(id, name, etag, type, expressRouteCircuitPeering, peerExpressRouteCircuitPeering, addressPrefix, authorizationKey, ipv6CircuitConnectionConfig, circuitConnectionStatus, provisioningState);
+            return new ExpressRouteCircuitConnection(id.Value, name.Value, etag.Value, type.Value, expressRouteCircuitPeering.Value, peerExpressRouteCircuitPeering.Value, addressPrefix.Value, authorizationKey.Value, ipv6CircuitConnectionConfig.Value, Optional.ToNullable(circuitConnectionStatus), Optional.ToNullable(provisioningState));
         }
     }
 }

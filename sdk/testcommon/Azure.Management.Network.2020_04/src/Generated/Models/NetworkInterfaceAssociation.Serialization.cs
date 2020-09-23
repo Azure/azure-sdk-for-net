@@ -15,42 +15,27 @@ namespace Azure.Management.Network.Models
     {
         internal static NetworkInterfaceAssociation DeserializeNetworkInterfaceAssociation(JsonElement element)
         {
-            string id = default;
-            IReadOnlyList<SecurityRule> securityRules = default;
+            Optional<string> id = default;
+            Optional<IReadOnlyList<SecurityRule>> securityRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("securityRules"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<SecurityRule> array = new List<SecurityRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(SecurityRule.DeserializeSecurityRule(item));
-                        }
+                        array.Add(SecurityRule.DeserializeSecurityRule(item));
                     }
                     securityRules = array;
                     continue;
                 }
             }
-            return new NetworkInterfaceAssociation(id, securityRules);
+            return new NetworkInterfaceAssociation(id.Value, Optional.ToList(securityRules));
         }
     }
 }

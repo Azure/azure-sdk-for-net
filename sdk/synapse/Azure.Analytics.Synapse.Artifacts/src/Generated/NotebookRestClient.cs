@@ -56,6 +56,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath("/notebooks", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -109,6 +110,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath("/notebooks/summary", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -168,6 +170,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 request.Headers.Add("If-Match", ifMatch);
             }
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(notebook);
             request.Content = content;
@@ -180,7 +183,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="ifMatch"> ETag of the Note book entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="notebookName"/> or <paramref name="notebook"/> is null. </exception>
-        public async Task<Response<NotebookResource>> CreateOrUpdateNotebookAsync(string notebookName, NotebookResource notebook, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateNotebookAsync(string notebookName, NotebookResource notebook, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (notebookName == null)
             {
@@ -196,12 +199,8 @@ namespace Azure.Analytics.Synapse.Artifacts
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        NotebookResource value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NotebookResource.DeserializeNotebookResource(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 202:
+                    return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -213,7 +212,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="ifMatch"> ETag of the Note book entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="notebookName"/> or <paramref name="notebook"/> is null. </exception>
-        public Response<NotebookResource> CreateOrUpdateNotebook(string notebookName, NotebookResource notebook, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdateNotebook(string notebookName, NotebookResource notebook, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (notebookName == null)
             {
@@ -229,12 +228,8 @@ namespace Azure.Analytics.Synapse.Artifacts
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        NotebookResource value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NotebookResource.DeserializeNotebookResource(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 202:
+                    return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -255,6 +250,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             {
                 request.Headers.Add("If-None-Match", ifNoneMatch);
             }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -329,6 +325,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath(notebookName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -348,6 +345,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             switch (message.Response.Status)
             {
                 case 200:
+                case 202:
                 case 204:
                     return message.Response;
                 default:
@@ -371,6 +369,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             switch (message.Response.Status)
             {
                 case 200:
+                case 202:
                 case 204:
                     return message.Response;
                 default:
@@ -387,6 +386,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendRaw(endpoint, false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -453,6 +453,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendRaw(endpoint, false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is the next generation Azure Event Hubs .NET Standard Event Processor Host library. For more information about Event Hubs, see https://azure.microsoft.com/en-us/services/event-hubs/</Description>
-    <Version>4.2.1</Version>
+    <Description>This is the legacy Azure Event Hubs .NET Standard Event Processor Host library. To view releases for the current generation of the Azure client libraries for .NET, please see: https://aka.ms/azsdk/releases.  For more information about Event Hubs, see https://azure.microsoft.com/en-us/services/event-hubs/</Description>
+    <Version>4.3.1</Version>
     <PackageTags>Azure;Event Hubs;EventHubs;.NET;AMQP;IoT;Event Processor Host</PackageTags>
     <PackageReleaseNotes>https://github.com/Azure/azure-sdk-for-net/releases</PackageReleaseNotes>
     <DocumentationFile>$(OutputPath)$(TargetFramework)\Microsoft.Azure.EventHubs.Processor.xml</DocumentationFile>
@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.KeyVault.Core" />
-    <PackageReference Include="WindowsAzure.Storage" />
+    <PackageReference Include="Microsoft.Azure.Storage.Blob" />
     <PackageReference Include="Newtonsoft.Json" />
   </ItemGroup>
 </Project>

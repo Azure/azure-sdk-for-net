@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -16,41 +15,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of GalleryImageUpdate. </summary>
         public GalleryImageUpdate()
         {
-        }
-
-        /// <summary> Initializes a new instance of GalleryImageUpdate. </summary>
-        /// <param name="id"> Resource Id. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="description"> The description of this gallery Image Definition resource. This property is updatable. </param>
-        /// <param name="eula"> The Eula agreement for the gallery Image Definition. </param>
-        /// <param name="privacyStatementUri"> The privacy statement uri. </param>
-        /// <param name="releaseNoteUri"> The release note uri. </param>
-        /// <param name="osType"> This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**. </param>
-        /// <param name="osState"> This property allows the user to specify whether the virtual machines created under this image are &apos;Generalized&apos; or &apos;Specialized&apos;. </param>
-        /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </param>
-        /// <param name="endOfLifeDate"> The end of life date of the gallery Image Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
-        /// <param name="identifier"> This is the gallery Image Definition identifier. </param>
-        /// <param name="recommended"> The properties describe the recommended machine configuration for this Image Definition. These properties are updatable. </param>
-        /// <param name="disallowed"> Describes the disallowed disk types. </param>
-        /// <param name="purchasePlan"> Describes the gallery Image Definition purchase plan. This is used by marketplace images. </param>
-        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        internal GalleryImageUpdate(string id, string name, string type, IDictionary<string, string> tags, string description, string eula, string privacyStatementUri, string releaseNoteUri, OperatingSystemTypes? osType, OperatingSystemStateTypes? osState, HyperVGeneration? hyperVGeneration, DateTimeOffset? endOfLifeDate, GalleryImageIdentifier identifier, RecommendedMachineConfiguration recommended, Disallowed disallowed, ImagePurchasePlan purchasePlan, GalleryImagePropertiesProvisioningState? provisioningState) : base(id, name, type, tags)
-        {
-            Description = description;
-            Eula = eula;
-            PrivacyStatementUri = privacyStatementUri;
-            ReleaseNoteUri = releaseNoteUri;
-            OsType = osType;
-            OsState = osState;
-            HyperVGeneration = hyperVGeneration;
-            EndOfLifeDate = endOfLifeDate;
-            Identifier = identifier;
-            Recommended = recommended;
-            Disallowed = disallowed;
-            PurchasePlan = purchasePlan;
-            ProvisioningState = provisioningState;
         }
 
         /// <summary> The description of this gallery Image Definition resource. This property is updatable. </summary>

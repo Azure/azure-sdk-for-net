@@ -11,7 +11,8 @@
 		<PackageTags>Microsoft Azure Synapse Management;Synapse;Synapse Management</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
- Support SQL DW Gen3
+ - Support SQL DW Gen3
+ - Support long running operation in integration runtime
       ]]>
 		</PackageReleaseNotes>
     

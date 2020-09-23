@@ -105,5 +105,55 @@ namespace Azure.Storage.Blobs.ChangeFeed.Samples
             }
             #endregion
         }
+
+        /// <summary>
+        /// You can use the change feed cursor to periodically poll for new events.
+        /// </summary>
+        [Test]
+        public async Task ChangeFeedPollForEventsWithCursor()
+        {
+            // Get a connection string to our Azure Storage account.
+            string connectionString = ConnectionString;
+
+            // Get a new change feed client.
+            BlobChangeFeedClient changeFeedClient = new BlobChangeFeedClient(connectionString);
+            List<BlobChangeFeedEvent> changeFeedEvents = new List<BlobChangeFeedEvent>();
+
+            #region Snippet:SampleSnippetsChangeFeed_PollForEventsWithCursor
+            // Create the start time.  The change feed client will round start time down to
+            // the nearest hour if you provide DateTimeOffsets
+            // with minutes and seconds.
+            DateTimeOffset startTime = DateTimeOffset.Now;
+
+            // Create polling interval.
+            TimeSpan pollingInterval = TimeSpan.FromMinutes(5);
+
+            // Get initial set of events.
+            IAsyncEnumerable<Page<BlobChangeFeedEvent>> pages = changeFeedClient.GetChangesAsync(start: startTime).AsPages();
+
+            string continuationToken = null;
+            while (true)
+            {
+                await foreach (Page<BlobChangeFeedEvent> page in pages)
+                {
+                    foreach (BlobChangeFeedEvent changeFeedEvent in page.Values)
+                    {
+                        changeFeedEvents.Add(changeFeedEvent);
+                    }
+
+                    // Get the change feed continuation token.  The continuation token is not required to get each page of events,
+                    // it is intended to be saved and used to resume iterating at a later date.
+                    // For the purpose of actively listening to events the continuation token from last page is used.
+                    continuationToken = page.ContinuationToken;
+                }
+
+                // Wait before processing next batch of events.
+                await Task.Delay(pollingInterval);
+
+                // Resume from last continuation token and fetch latest set of events.
+                pages = changeFeedClient.GetChangesAsync(continuationToken).AsPages();
+            }
+            #endregion
+        }
     }
 }

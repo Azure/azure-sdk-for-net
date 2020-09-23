@@ -54,27 +54,13 @@ namespace Azure.Management.Network
         NetworkSecurityGroup IOperationSource<NetworkSecurityGroup>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return NetworkSecurityGroup.DeserializeNetworkSecurityGroup(document.RootElement);
-            }
+            return NetworkSecurityGroup.DeserializeNetworkSecurityGroup(document.RootElement);
         }
 
         async ValueTask<NetworkSecurityGroup> IOperationSource<NetworkSecurityGroup>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return NetworkSecurityGroup.DeserializeNetworkSecurityGroup(document.RootElement);
-            }
+            return NetworkSecurityGroup.DeserializeNetworkSecurityGroup(document.RootElement);
         }
     }
 }

@@ -39,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             SqlConnection currentConnection = default;
             Optional<SqlScriptMetadata> metadata = default;
             IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("query"))
@@ -57,7 +57,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     metadata = SqlScriptMetadata.DeserializeSqlScriptMetadata(property.Value);
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;

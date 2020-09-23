@@ -15,62 +15,39 @@ namespace Azure.Management.Resources.Models
     {
         internal static Provider DeserializeProvider(JsonElement element)
         {
-            string id = default;
-            string @namespace = default;
-            string registrationState = default;
-            IReadOnlyList<ProviderResourceType> resourceTypes = default;
+            Optional<string> id = default;
+            Optional<string> @namespace = default;
+            Optional<string> registrationState = default;
+            Optional<IReadOnlyList<ProviderResourceType>> resourceTypes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("namespace"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     @namespace = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("registrationState"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     registrationState = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("resourceTypes"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ProviderResourceType> array = new List<ProviderResourceType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ProviderResourceType.DeserializeProviderResourceType(item));
-                        }
+                        array.Add(ProviderResourceType.DeserializeProviderResourceType(item));
                     }
                     resourceTypes = array;
                     continue;
                 }
             }
-            return new Provider(id, @namespace, registrationState, resourceTypes);
+            return new Provider(id.Value, @namespace.Value, registrationState.Value, Optional.ToList(resourceTypes));
         }
     }
 }

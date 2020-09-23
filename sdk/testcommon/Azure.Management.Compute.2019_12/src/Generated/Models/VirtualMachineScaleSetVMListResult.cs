@@ -16,6 +16,7 @@ namespace Azure.Management.Compute.Models
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetVMListResult. </summary>
         /// <param name="value"> The list of virtual machine scale sets VMs. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal VirtualMachineScaleSetVMListResult(IEnumerable<VirtualMachineScaleSetVM> value)
         {
             if (value == null)
@@ -23,7 +24,7 @@ namespace Azure.Management.Compute.Models
                 throw new ArgumentNullException(nameof(value));
             }
 
-            Value = value.ToArray();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetVMListResult. </summary>
@@ -31,7 +32,7 @@ namespace Azure.Management.Compute.Models
         /// <param name="nextLink"> The uri to fetch the next page of Virtual Machine Scale Set VMs. Call ListNext() with this to fetch the next page of VMSS VMs. </param>
         internal VirtualMachineScaleSetVMListResult(IReadOnlyList<VirtualMachineScaleSetVM> value, string nextLink)
         {
-            Value = value ?? new List<VirtualMachineScaleSetVM>();
+            Value = value;
             NextLink = nextLink;
         }
 

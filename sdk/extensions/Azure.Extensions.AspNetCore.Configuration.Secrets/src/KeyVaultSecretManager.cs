@@ -8,7 +8,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
 {
     /// <summary>
     /// Default implementation of <see cref="KeyVaultSecretManager"/> that loads all secrets
-    /// and replaces '--' with ':" in key names.
+    /// and replaces '--' with ':' in key names.
     /// </summary>
     public class KeyVaultSecretManager
     {

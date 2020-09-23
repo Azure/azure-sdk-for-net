@@ -20,7 +20,7 @@ namespace Azure.Data.Tables.Samples
             string accountName = StorageAccountName;
             string storageAccountKey = PrimaryStorageAccountKey;
             string tableName = "OfficeSupplies5p2";
-            string partitionKey = "somePartition";
+            string partitionKey = "Stationery";
             string rowKey = "A1";
 
             var serviceClient = new TableServiceClient(
@@ -28,64 +28,43 @@ namespace Azure.Data.Tables.Samples
                 new TableSharedKeyCredential(accountName, storageAccountKey));
 
             await serviceClient.CreateTableAsync(tableName);
+            var tableClient = serviceClient.GetTableClient(tableName);
 
-            try
+            #region Snippet:TablesSample5UpsertEntity
+            var entity = new TableEntity(partitionKey, rowKey)
             {
-                #region Snippet:TablesSample5UpsertEntityAsync
-                // Get a reference to the <see cref="TableClient" /> of the table.
-                var client = serviceClient.GetTableClient(tableName);
+                {"Product", "Markers" },
+                {"Price", 5.00 },
+                {"Brand", "myCompany" }
+            };
 
-                // Make an entity.
-                var entity = new Dictionary<string, object>
-                {
-                    {"PartitionKey", partitionKey },
-                    {"RowKey", rowKey },
-                    {"Product", "Markers" },
-                    {"Price", 5.00 },
-                    {"Brand", "myCompany" }
-                };
+            // Entity doesn't exist in table, so invoking UpsertEntity will simply insert the entity.
+            await tableClient.UpsertEntityAsync(entity);
+            #endregion
 
-                // Entity doesn't exist in table, so invoking UpsertEntity will simply insert the entity.
-                await client.UpsertEntityAsync(entity);
+            #region Snippet:TablesSample5UpsertWithReplace
+            // Delete an entity property.
+            entity.Remove("Brand");
 
-                // Delete an entity property.
-                entity.Remove("Brand");
+            // Entity does exist in the table, so invoking UpsertEntity will update using the given UpdateMode, which defaults to Merge if not given.
+            // Since UpdateMode.Replace was passed, the existing entity will be replaced and delete the "Brand" property.
+            await tableClient.UpsertEntityAsync(entity, TableUpdateMode.Replace);
+            #endregion
 
-                // Entity does exist in the table, so invoking UpsertEntity will update using the given UpdateMode (which defaults to Merge if not given).
-                // Since UpdateMode.Replace was passed, the existing entity will be replaced and delete the "Brand" property.
-                await client.UpsertEntityAsync(entity, TableUpdateMode.Replace);
-                #endregion
+            #region Snippet:TablesSample5UpdateEntityAsync
+            // Get the entity to update.
+            TableEntity qEntity = await tableClient.GetEntityAsync<TableEntity>(partitionKey, rowKey);
+            qEntity["Price"] = 7.00;
 
+            // Since no UpdateMode was passed, the request will default to Merge.
+            await tableClient.UpdateEntityAsync(qEntity, qEntity.ETag);
 
-                #region Snippet:TablesSample5UpdateEntityAsync
-                // Query for entities to update.
-                AsyncPageable<IDictionary<string, object>> queryResultsBefore = client.QueryAsync();
+            TableEntity updatedEntity = await tableClient.GetEntityAsync<TableEntity>(partitionKey, rowKey);
+            Console.WriteLine($"'Price' before updating: ${entity.GetDouble("Price")}");
+            Console.WriteLine($"'Price' after updating: ${updatedEntity.GetDouble("Price")}");
+            #endregion
 
-                await foreach (IDictionary<string, object> qEntity in queryResultsBefore)
-                {
-                    // Changing property of entity.
-                    qEntity["Price"] = 7.00;
-
-                    // Extract ETag from the entity.
-                    string eTag = qEntity["odata.etag"] as string;
-
-                    // Updating to changed entity using its generated eTag.
-                    // Since no UpdateMode was passed, the request will default to Merge.
-                    await client.UpdateEntityAsync(qEntity, eTag);
-                }
-                #endregion
-
-                AsyncPageable<IDictionary<string, object>> queryResultsAfter = client.QueryAsync();
-                await foreach (IDictionary<string, object> qEntity in queryResultsAfter)
-                {
-                    Console.WriteLine($"'Price' before updating: ${entity["Price"]}");
-                    Console.WriteLine($"'Price' after updating: ${qEntity["Price"]}");
-                }
-            }
-            finally
-            {
-                await serviceClient.DeleteTableAsync(tableName);
-            }
+            await serviceClient.DeleteTableAsync(tableName);
         }
     }
 }

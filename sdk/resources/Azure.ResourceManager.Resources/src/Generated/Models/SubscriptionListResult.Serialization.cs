@@ -15,27 +15,16 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static SubscriptionListResult DeserializeSubscriptionListResult(JsonElement element)
         {
-            IReadOnlyList<Subscription> value = default;
+            Optional<IReadOnlyList<Subscription>> value = default;
             string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<Subscription> array = new List<Subscription>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(Subscription.DeserializeSubscription(item));
-                        }
+                        array.Add(Subscription.DeserializeSubscription(item));
                     }
                     value = array;
                     continue;
@@ -46,7 +35,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new SubscriptionListResult(value, nextLink);
+            return new SubscriptionListResult(Optional.ToList(value), nextLink);
         }
     }
 }

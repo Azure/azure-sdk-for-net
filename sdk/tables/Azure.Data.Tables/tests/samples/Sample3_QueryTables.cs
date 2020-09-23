@@ -19,39 +19,29 @@ namespace Azure.Data.Tables.Samples
             string accountName = StorageAccountName;
             string storageAccountKey = PrimaryStorageAccountKey;
             string tableName = "OfficeSupplies3p1";
-            char label = 'A';
 
             var serviceClient = new TableServiceClient(
                 new Uri(storageUri),
                 new TableSharedKeyCredential(accountName, storageAccountKey));
 
-            for (int i = 0; i < 10; i++)
-            {
-                serviceClient.CreateTable(tableName + (char)(label + i));
-            }
+            serviceClient.CreateTable(tableName);
 
-            try
-            {
-                #region Snippet:TablesSample3QueryTables
-                // Use the <see cref="TableServiceClient"> to query the service. Passing in OData filter strings is optional.
-                Pageable<TableItem> queryTableResults = serviceClient.GetTables(filter: $"TableName gt '{tableName + (char)(label + 4)}'");
+            #region Snippet:TablesSample3QueryTables
+            // Use the <see cref="TableServiceClient"> to query the service. Passing in OData filter strings is optional.
 
-                Console.WriteLine("The following are the names of the tables in the query results:");
+            Pageable<TableItem> queryTableResults = serviceClient.GetTables(filter: $"TableName eq '{tableName}'");
 
-                // Iterate the <see cref="Pageable"> in order to access queried tables.
-                foreach (TableItem table in queryTableResults)
-                {
-                    Console.WriteLine(table.TableName);
-                }
-                #endregion
-            }
-            finally
+            Console.WriteLine("The following are the names of the tables in the query results:");
+
+            // Iterate the <see cref="Pageable"> in order to access queried tables.
+
+            foreach (TableItem table in queryTableResults)
             {
-                for (int i = 0; i < 10; i++)
-                {
-                    serviceClient.DeleteTable(tableName + (char)(label + i));
-                }
+                Console.WriteLine(table.TableName);
             }
+            #endregion
+
+            serviceClient.DeleteTable(tableName);
         }
     }
 }

@@ -1,4 +1,14 @@
 # Release History
+## 5.1.0-beta.1 (Unreleased)
+
+
+## 5.0.0 (2020-09-11)
+### Breaking Changes
+- Setting sessionId to be same as partition key and adding validation [PR 13961](https://github.com/Azure/azure-sdk-for-net/pull/13961)
+
+### Improvements
+- Enable a way to Unregister Message Handler and Session Handler [PR 14021](https://github.com/Azure/azure-sdk-for-net/pull/14021)
+- Documentation: Add `SendAsync` warning for partition entities when batching is enabled [PR 14021](https://github.com/Azure/azure-sdk-for-net/pull/11028)
 
 ## 4.1.3 (2020-04-17)
 - Add `GetQueuesRuntimeInfoAsync`, `GetTopicsRuntimeInfoAsync` and `GetSubscriptionsRuntimeInfoAsync` to `ManagementClient` to allow retrieval of batched entity runtime information. [PR 10261](https://github.com/Azure/azure-sdk-for-net/pull/10261)

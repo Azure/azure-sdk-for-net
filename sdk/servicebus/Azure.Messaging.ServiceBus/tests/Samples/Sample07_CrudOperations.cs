@@ -3,7 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Messaging.ServiceBus.Management;
+using Azure.Messaging.ServiceBus.Administration;
 using Moq;
 using NUnit.Framework;
 
@@ -22,7 +22,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 #region Snippet:CreateQueue
                 //@@ string connectionString = "<connection_string>";
                 //@@ string queueName = "<queue_name>";
-                var client = new ServiceBusManagementClient(connectionString);
+                var client = new ServiceBusAdministrationClient(connectionString);
                 var options = new CreateQueueOptions(queueName)
                 {
                     AutoDeleteOnIdle = TimeSpan.FromDays(7),
@@ -51,7 +51,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             }
             finally
             {
-                await new ServiceBusManagementClient(connectionString).DeleteQueueAsync(queueName);
+                await new ServiceBusAdministrationClient(connectionString).DeleteQueueAsync(queueName);
             }
         }
 
@@ -60,7 +60,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         {
             string queueName = Guid.NewGuid().ToString("D").Substring(0, 8);
             string connectionString = TestEnvironment.ServiceBusConnectionString;
-            var client = new ServiceBusManagementClient(connectionString);
+            var client = new ServiceBusAdministrationClient(connectionString);
             var qd = new CreateQueueOptions(queueName);
             await client.CreateQueueAsync(qd);
 
@@ -78,7 +78,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             Assert.That(
                   async () =>
                   await client.GetQueueAsync(queueName),
-                  Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessagingEntityNotFound));
+                  Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound));
         }
 
 
@@ -88,7 +88,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             string topicName = Guid.NewGuid().ToString("D").Substring(0, 8);
             string subscriptionName = Guid.NewGuid().ToString("D").Substring(0, 8);
             string connectionString = TestEnvironment.ServiceBusConnectionString;
-            var client = new ServiceBusManagementClient(connectionString);
+            var client = new ServiceBusAdministrationClient(connectionString);
 
             try
             {
@@ -139,7 +139,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             string topicName = Guid.NewGuid().ToString("D").Substring(0, 8);
             string subscriptionName = Guid.NewGuid().ToString("D").Substring(0, 8);
             string connectionString = TestEnvironment.ServiceBusConnectionString;
-            var client = new ServiceBusManagementClient(connectionString);
+            var client = new ServiceBusAdministrationClient(connectionString);
             var topicOptions = new CreateTopicOptions(topicName);
             var subscriptionOptions = new CreateSubscriptionOptions(topicName, subscriptionName);
             await client.CreateTopicAsync(topicOptions);
@@ -170,7 +170,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             Assert.That(
                   async () =>
                   await client.GetSubscriptionAsync(topicName, subscriptionName),
-                  Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessagingEntityNotFound));
+                  Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound));
 
             #region Snippet:DeleteTopic
             await client.DeleteTopicAsync(topicName);
@@ -178,7 +178,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             Assert.That(
                   async () =>
                   await client.GetTopicAsync(topicName),
-                  Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessagingEntityNotFound));
+                  Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound));
         }
     }
 }

@@ -3,7 +3,7 @@ Azure Key Vault is a cloud service that provides secure storage of keys for encr
 
 The Azure Key Vault keys library client supports RSA keys and Elliptic Curve (EC) keys, each with corresponding support in hardware security modules (HSM). It offers operations to create, retrieve, update, delete, purge, backup, restore, and list the keys and its versions.
 
-[Source code][key_client_src] | [Package (NuGet)][key_client_nuget_package] | [API reference documentation][API_reference] | [Product documentation][keyvault_docs] | [Samples][key_client_samples]
+[Source code][key_client_src] | [Package (NuGet)][key_client_nuget_package] | [API reference documentation][API_reference] | [Product documentation][keyvault_docs] | [Samples][key_client_samples] | [Migration guide][migration_guide]
 
 ## Getting started
 
@@ -11,7 +11,7 @@ The Azure Key Vault keys library client supports RSA keys and Elliptic Curve (EC
 Install the Azure Key Vault keys client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-Install-Package Azure.Security.KeyVault.Keys
+dotnet install Azure.Security.KeyVault.Keys
 ```
 
 ### Prerequisites
@@ -32,7 +32,7 @@ Client secret credential authentication is being used in this getting started se
 or other credential providers provided with the Azure SDK, you should install the Azure.Identity package:
 
 ```PowerShell
-Install-Package Azure.Identity
+dotnet install Azure.Identity
 ```
 
 #### Create/Get credentials
@@ -61,7 +61,7 @@ Use the [Azure CLI][azure_cli] snippet below to create/get client secret credent
 
 * Grant the above mentioned application authorization to perform key operations on the Azure Key Vault:
     ```PowerShell
-    az keyvault set-policy --name <your-key-vault-name> --spn $AZURE_CLIENT_ID --key-permissions backup delete get list create encrypt decrypt update
+    az keyvault set-policy --name <your-key-vault-name> --spn $Env:AZURE_CLIENT_ID --key-permissions backup delete get list create encrypt decrypt update
     ```
     > --key-permissions:
     > Accepted values: backup, create, decrypt, delete, encrypt, get, import, list, purge, recover, restore, sign, unwrapKey, update, verify, wrapKey
@@ -90,7 +90,7 @@ key = client.GetKey("key-name");
 Once you've created a `KeyVaultKey` in the Azure Key Vault, you can also create the [CryptographyClient][crypto_client_class]:
 
 ```C# Snippet:CreateCryptographyClient
-// Create a new certificate client using the default credential from Azure.Identity using environment variables previously set,
+// Create a new cryptography client using the default credential from Azure.Identity using environment variables previously set,
 // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
 var cryptoClient = new CryptographyClient(keyId: key.Id, credential: new DefaultAzureCredential());
 ```
@@ -375,7 +375,7 @@ This project welcomes contributions and suggestions. Most contributions require 
 
 When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
 
-This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the Code of Conduct FAQ or contact opencode@microsoft.com with any additional questions or comments.
+This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][coc_faq] or contact opencode@microsoft.com with any additional questions or comments.
 
 <!-- LINKS -->
 [API_reference]: https://docs.microsoft.com/dotnet/api/azure.security.keyvault.keys
@@ -401,7 +401,9 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [nuget]: https://www.nuget.org/
 [secrets_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Secrets
 [soft_delete]: https://docs.microsoft.com/azure/key-vault/key-vault-ovw-soft-delete
-[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
-[contributing]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Microsoft.Azure.KeyVault/CONTRIBUTING.md
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md#defaultazurecredential
+[contributing]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/CONTRIBUTING.md
+[coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
+[migration_guide]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Keys/MigrationGuide.md
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fkeyvault%2FAzure.Security.KeyVault.Keys%2FREADME.png)

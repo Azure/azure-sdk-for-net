@@ -99,7 +99,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     await GetNoRetryClient().CreateSessionReceiverAsync(
                         scope.QueueName,
                         options),
-                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.SessionCannotBeLocked));
+                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.SessionCannotBeLocked));
             }
         }
 
@@ -438,7 +438,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 messageEnum.Reset();
                 remainingMessages = messageCount;
-                var deadLetterReceiver = client.CreateDeadLetterReceiver(scope.QueueName);
+                var deadLetterReceiver = client.CreateReceiver(scope.QueueName, new ServiceBusReceiverOptions
+                {
+                    SubQueue = SubQueue.DeadLetter
+                });
 
                 while (remainingMessages > 0)
                 {
@@ -511,7 +514,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 messageEnum.Reset();
                 remainingMessages = messageCount;
-                var deadLetterReceiver = client.CreateDeadLetterReceiver(topicName, subscriptionName);
+                var deadLetterReceiver = client.CreateReceiver(topicName, subscriptionName, new ServiceBusReceiverOptions
+                {
+                    SubQueue = SubQueue.DeadLetter
+                });
 
                 while (remainingMessages > 0)
                 {
@@ -523,8 +529,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                         Assert.AreEqual(messageEnum.Current.SessionId, msg.SessionId);
                         Assert.IsNull(msg.DeadLetterErrorDescription);
                         Assert.IsNull(msg.DeadLetterReason);
-                        Assert.IsNotNull(msg.Properties[ServiceBusReceivedMessage.DeadLetterReasonHeader]);
-                        Assert.IsNotNull(msg.Properties[ServiceBusReceivedMessage.DeadLetterErrorDescriptionHeader]);
+                        Assert.IsNotNull(msg.ApplicationProperties[ServiceBusReceivedMessage.DeadLetterReasonHeader]);
+                        Assert.IsNotNull(msg.ApplicationProperties[ServiceBusReceivedMessage.DeadLetterErrorDescriptionHeader]);
                         await deadLetterReceiver.CompleteMessageAsync(msg.LockToken);
                     }
                 }
@@ -677,7 +683,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 // to the case of reconnecting a regular non-session link and getting a MessageLockLost error.
                 Assert.That(
                     async() => await receiver.CompleteMessageAsync(firstMessage),
-                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.SessionLockLost));
+                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.SessionLockLost));
                 await Task.Delay((receiver.SessionLockedUntil - DateTime.UtcNow) + TimeSpan.FromSeconds(5));
 
                 // If another receiver accepts the session after the lock is lost, we expect a SessionCannotBeLocked error,
@@ -693,7 +699,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 {
                     await receiver.ReceiveMessageAsync();
                 }
-                catch (ServiceBusException ex) when (ex.Reason == ServiceBusException.FailureReason.SessionCannotBeLocked)
+                catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.SessionCannotBeLocked)
                 {
                     return;
                 }
@@ -731,7 +737,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     await client.CreateSessionReceiverAsync(scope.QueueName, options);
                 }
                 catch (ServiceBusException ex)
-                when (ex.Reason == ServiceBusException.FailureReason.SessionCannotBeLocked)
+                when (ex.Reason == ServiceBusFailureReason.SessionCannotBeLocked)
                 {
                     return;
                 }
@@ -782,6 +788,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
                 Assert.AreEqual(message.MessageId, receivedMessage.MessageId);
                 Assert.AreEqual(message.SessionId, receivedMessage.SessionId);
+                Assert.AreEqual(message.Body.ToBytes().ToArray(), receivedMessage.Body.ToBytes().ToArray());
 
                 var sessionStateString = "Received Message From Session!";
                 var sessionState = Encoding.UTF8.GetBytes(sessionStateString);

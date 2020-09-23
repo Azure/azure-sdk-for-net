@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of StorageProfile. </summary>
         public StorageProfile()
         {
+            DataDisks = new ChangeTrackingList<DataDisk>();
         }
 
         /// <summary> Initializes a new instance of StorageProfile. </summary>
@@ -33,6 +35,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies information about the operating system disk used by the virtual machine. &lt;br&gt;&lt;br&gt; For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-about-disks-vhds?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json). </summary>
         public OSDisk OsDisk { get; set; }
         /// <summary> Specifies the parameters that are used to add a data disk to a virtual machine. &lt;br&gt;&lt;br&gt; For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-about-disks-vhds?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json). </summary>
-        public IList<DataDisk> DataDisks { get; set; }
+        public IList<DataDisk> DataDisks { get; }
     }
 }

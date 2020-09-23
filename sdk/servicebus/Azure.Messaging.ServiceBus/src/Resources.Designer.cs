@@ -358,6 +358,15 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The message processor is not currently running. It needs to be started before it can be stopped..
+        /// </summary>
+        internal static string MessageProcessorIsNotRunning {
+            get {
+                return ResourceManager.GetString("MessageProcessorIsNotRunning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The message (id:{0}, size:{1} bytes) is larger than is currently allowed ({2} bytes)..
         /// </summary>
         internal static string MessageSizeExceeded {
@@ -588,6 +597,17 @@ namespace Azure.Messaging.ServiceBus {
         internal static string UnsupportedTransportEventType {
             get {
                 return ResourceManager.GetString("UnsupportedTransportEventType", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The authorization for a connection string may specifiy a shared key or precomputed shared access signature, but not both.  Please verify that your connection string does not have the `SharedAccessSignature` token if you are passing the  `SharedKeyName` and `SharedKey`..
+        /// </summary>
+        internal static string OnlyOneSharedAccessAuthorizationMayBeSpecified
+        {
+            get
+            {
+                return ResourceManager.GetString("OnlyOneSharedAccessAuthorizationMayBeSpecified", resourceCulture);
             }
         }
     }

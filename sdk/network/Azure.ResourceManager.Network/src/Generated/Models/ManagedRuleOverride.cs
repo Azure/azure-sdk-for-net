@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         /// <summary> Initializes a new instance of ManagedRuleOverride. </summary>
         /// <param name="ruleId"> Identifier for the managed rule. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
         public ManagedRuleOverride(string ruleId)
         {
             if (ruleId == null)
@@ -22,13 +23,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             RuleId = ruleId;
-            State = "Disabled";
         }
 
         /// <summary> Initializes a new instance of ManagedRuleOverride. </summary>
         /// <param name="ruleId"> Identifier for the managed rule. </param>
         /// <param name="state"> The state of the managed rule. Defaults to Disabled if not specified. </param>
-        internal ManagedRuleOverride(string ruleId, string state)
+        internal ManagedRuleOverride(string ruleId, ManagedRuleEnabledState? state)
         {
             RuleId = ruleId;
             State = state;
@@ -37,6 +37,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Identifier for the managed rule. </summary>
         public string RuleId { get; set; }
         /// <summary> The state of the managed rule. Defaults to Disabled if not specified. </summary>
-        public string State { get; set; }
+        public ManagedRuleEnabledState? State { get; set; }
     }
 }

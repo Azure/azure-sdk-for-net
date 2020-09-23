@@ -152,6 +152,14 @@ directive:
 ``` yaml
 directive:
   from: swagger-document
+  where: $.definitions.SearchIndexerStatus
+  transform: >
+    $.properties.lastResult["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
   where: $.definitions.TextTranslationSkill
   transform: >
     $.properties.suggestedFrom["x-nullable"] = true;
@@ -181,6 +189,53 @@ directive:
   where: $.definitions.IndexerExecutionResult
   transform: >
     $.properties.endTime["x-nullable"] = true;
+```
+
+#### Skills
+
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.EntityRecognitionSkill
+  transform: >
+    $.properties.defaultLanguageCode["x-nullable"] = true;
+
+- from: swagger-document
+  where: $.definitions.ImageAnalysisSkill
+  transform: >
+    $.properties.defaultLanguageCode["x-nullable"] = true;
+
+- from: swagger-document
+  where: $.definitions.KeyPhraseExtractionSkill
+  transform: >
+    $.properties.defaultLanguageCode["x-nullable"] = true;
+
+- from: swagger-document
+  where: $.definitions.OcrSkill
+  transform: >
+    $.properties.defaultLanguageCode["x-nullable"] = true;
+    $.properties.detectOrientation["x-nullable"] = true;
+
+- from: swagger-document
+  where: $.definitions.SentimentSkill
+  transform: >
+    $.properties.defaultLanguageCode["x-nullable"] = true;
+
+- from: swagger-document
+  where: $.definitions.SplitSkill
+  transform: >
+    $.properties.defaultLanguageCode["x-nullable"] = true;
+
+- from: swagger-document
+  where: $.definitions.TextTranslationSkill
+  transform: >
+    $.properties.defaultFromLanguageCode["x-nullable"] = true;
+
+- from: swagger-document
+  where: $.definitions.WebApiSkill
+  transform: >
+    $.properties.httpHeaders["x-nullable"] = true;
+    $.properties.timeout["x-nullable"] = true;
 ```
 
 ## C# Customizations

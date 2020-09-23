@@ -15,45 +15,27 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (PrincipalId != null)
-            {
-                writer.WritePropertyName("principalId");
-                writer.WriteStringValue(PrincipalId);
-            }
-            if (ClientId != null)
-            {
-                writer.WritePropertyName("clientId");
-                writer.WriteStringValue(ClientId);
-            }
             writer.WriteEndObject();
         }
 
         internal static Components1H8M3EpSchemasVirtualmachineidentityPropertiesUserassignedidentitiesAdditionalproperties DeserializeComponents1H8M3EpSchemasVirtualmachineidentityPropertiesUserassignedidentitiesAdditionalproperties(JsonElement element)
         {
-            string principalId = default;
-            string clientId = default;
+            Optional<string> principalId = default;
+            Optional<string> clientId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     principalId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("clientId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     clientId = property.Value.GetString();
                     continue;
                 }
             }
-            return new Components1H8M3EpSchemasVirtualmachineidentityPropertiesUserassignedidentitiesAdditionalproperties(principalId, clientId);
+            return new Components1H8M3EpSchemasVirtualmachineidentityPropertiesUserassignedidentitiesAdditionalproperties(principalId.Value, clientId.Value);
         }
     }
 }

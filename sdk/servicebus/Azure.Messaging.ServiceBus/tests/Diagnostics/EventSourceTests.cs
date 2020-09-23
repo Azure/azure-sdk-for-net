@@ -1266,65 +1266,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 Times.Once);
         }
 
-        [Test]
-        public async Task StopProcessingExceptionLogsEvents()
-        {
-            var mockLogger = new Mock<ServiceBusEventSource>();
-            var mockTransportReceiver = new Mock<TransportReceiver>();
-            var mockConnection = GetMockConnection(mockTransportReceiver);
-            mockTransportReceiver.Setup(
-                transportReceiver => transportReceiver.ReceiveMessagesAsync(
-                    1,
-                    It.IsAny<TimeSpan?>(),
-                    It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult((IReadOnlyList<ServiceBusReceivedMessage>)
-                new List<ServiceBusReceivedMessage>
-                {
-                    new ServiceBusReceivedMessage
-                    {
-                        LockTokenGuid = Guid.NewGuid()
-                    }
-                }));
-            var processor = new ServiceBusProcessor(mockConnection.Object, "queueName", false, new ServiceBusPlugin[] { }, new ServiceBusProcessorOptions
-            {
-                AutoComplete = false,
-                MaxAutoLockRenewalDuration = TimeSpan.Zero
-            })
-            {
-                Logger = mockLogger.Object
-            };
-            processor.ProcessErrorAsync += ExceptionHandler;
-            processor.ProcessMessageAsync += MessageHandler;
-
-            async Task MessageHandler(ProcessMessageEventArgs arg)
-            {
-                // simulate IO
-                await Task.Delay(1000);
-            }
-
-            await processor.StartProcessingAsync();
-            var cts = new CancellationTokenSource();
-            cts.Cancel();
-            Assert.That(
-                async () => await processor.StopProcessingAsync(cts.Token),
-                Throws.InstanceOf<TaskCanceledException>());
-
-            mockLogger
-                .Verify(
-                    log => log.StopProcessingStart(
-                        processor.Identifier),
-                Times.Once);
-            mockLogger
-                .Verify(
-                    log => log.StopProcessingException(
-                        processor.Identifier,
-                        It.IsAny<string>()),
-                Times.Once);
-
-            // actually stop processing
-            await processor.StopProcessingAsync();
-        }
-
         private Mock<ServiceBusConnection> GetMockConnection(Mock<TransportReceiver> mockTransportReceiver)
         {
             var mockConnection = new Mock<ServiceBusConnection>();

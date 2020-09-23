@@ -15,90 +15,58 @@ namespace Azure.Management.Resources.Models
     {
         internal static DeploymentOperationProperties DeserializeDeploymentOperationProperties(JsonElement element)
         {
-            string provisioningState = default;
-            DateTimeOffset? timestamp = default;
-            string serviceRequestId = default;
-            string statusCode = default;
-            object statusMessage = default;
-            TargetResource targetResource = default;
-            HttpMessage request = default;
-            HttpMessage response = default;
+            Optional<string> provisioningState = default;
+            Optional<DateTimeOffset> timestamp = default;
+            Optional<string> serviceRequestId = default;
+            Optional<string> statusCode = default;
+            Optional<object> statusMessage = default;
+            Optional<TargetResource> targetResource = default;
+            Optional<HttpMessage> request = default;
+            Optional<HttpMessage> response = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     provisioningState = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("timestamp"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("serviceRequestId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     serviceRequestId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("statusCode"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     statusCode = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("statusMessage"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     statusMessage = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("targetResource"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     targetResource = TargetResource.DeserializeTargetResource(property.Value);
                     continue;
                 }
                 if (property.NameEquals("request"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     request = HttpMessage.DeserializeHttpMessage(property.Value);
                     continue;
                 }
                 if (property.NameEquals("response"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     response = HttpMessage.DeserializeHttpMessage(property.Value);
                     continue;
                 }
             }
-            return new DeploymentOperationProperties(provisioningState, timestamp, serviceRequestId, statusCode, statusMessage, targetResource, request, response);
+            return new DeploymentOperationProperties(provisioningState.Value, Optional.ToNullable(timestamp), serviceRequestId.Value, statusCode.Value, statusMessage.Value, targetResource.Value, request.Value, response.Value);
         }
     }
 }

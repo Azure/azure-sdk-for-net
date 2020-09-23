@@ -239,10 +239,11 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="consumerGroup">The name of the consumer group in the context of which events should be received.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition from which events should be received.</param>
         /// <param name="eventPosition">The position of the event in the partition where the link should be filtered to.</param>
+        /// <param name="timeout">The timeout to apply when creating the link.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.</param>
+        /// <param name="prefetchSizeInBytes">The cache size of the prefetch queue. When set, the link makes a best effort to ensure prefetched messages fit into the specified size.</param>
         /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
         /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
-        /// <param name="timeout">The timeout to apply when creating the link.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A link for use with consumer operations.</returns>
@@ -252,6 +253,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                                            EventPosition eventPosition,
                                                                            TimeSpan timeout,
                                                                            uint prefetchCount,
+                                                                           long? prefetchSizeInBytes,
                                                                            long? ownerLevel,
                                                                            bool trackLastEnqueuedEventProperties,
                                                                            CancellationToken cancellationToken)
@@ -273,6 +275,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                 eventPosition,
                 timeout.CalculateRemaining(stopWatch.GetElapsedTime()),
                 prefetchCount,
+                prefetchSizeInBytes,
                 ownerLevel,
                 trackLastEnqueuedEventProperties,
                 cancellationToken
@@ -460,6 +463,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="endpoint">The fully qualified endpoint to open the link for.</param>
         /// <param name="eventPosition">The position of the event in the partition where the link should be filtered to.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.</param>
+        /// <param name="prefetchSizeInBytes">The cache size of the prefetch queue. When set, the link makes a best effort to ensure prefetched messages fit into the specified size.</param>
         /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
         /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
         /// <param name="timeout">The timeout to apply when creating the link.</param>
@@ -472,6 +476,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                                                  EventPosition eventPosition,
                                                                                  TimeSpan timeout,
                                                                                  uint prefetchCount,
+                                                                                 long? prefetchSizeInBytes,
                                                                                  long? ownerLevel,
                                                                                  bool trackLastEnqueuedEventProperties,
                                                                                  CancellationToken cancellationToken)
@@ -510,7 +515,8 @@ namespace Azure.Messaging.EventHubs.Amqp
                     AutoSendFlow = prefetchCount > 0,
                     SettleType = SettleMode.SettleOnSend,
                     Source = new Source { Address = endpoint.AbsolutePath, FilterSet = filters },
-                    Target = new Target { Address = Guid.NewGuid().ToString() }
+                    Target = new Target { Address = Guid.NewGuid().ToString() },
+                    TotalCacheSizeInBytes = prefetchSizeInBytes
                 };
 
                 linkSettings.AddProperty(AmqpProperty.EntityType, (int)AmqpProperty.Entity.ConsumerGroup);
@@ -854,18 +860,26 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///   credentials.
         /// </remarks>
         ///
-        protected virtual Task<DateTime> RequestAuthorizationUsingCbsAsync(AmqpConnection connection,
-                                                                           CbsTokenProvider tokenProvider,
-                                                                           Uri endpoint,
-                                                                           string audience,
-                                                                           string resource,
-                                                                           string[] requiredClaims,
-                                                                           TimeSpan timeout)
+        protected virtual async Task<DateTime> RequestAuthorizationUsingCbsAsync(AmqpConnection connection,
+                                                                                 CbsTokenProvider tokenProvider,
+                                                                                 Uri endpoint,
+                                                                                 string audience,
+                                                                                 string resource,
+                                                                                 string[] requiredClaims,
+                                                                                 TimeSpan timeout)
         {
             try
             {
+                // If the connection is in the process of closing, then do not attempt to authorize but consider it an
+                // unexpected scenario that should be treated as transient.
+
+                if (connection.IsClosing())
+                {
+                     throw new EventHubsException(true, EventHubName, Resources.UnknownCommunicationException, EventHubsException.FailureReason.ServiceCommunicationProblem);
+                }
+
                 var authLink = connection.Extensions.Find<AmqpCbsLink>();
-                return authLink.SendTokenAsync(TokenProvider, endpoint, audience, resource, requiredClaims, timeout);
+                return await authLink.SendTokenAsync(TokenProvider, endpoint, audience, resource, requiredClaims, timeout).ConfigureAwait(false);
             }
             catch (Exception ex) when ((ex is ObjectDisposedException) || (ex is OperationCanceledException))
             {

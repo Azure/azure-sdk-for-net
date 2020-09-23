@@ -41,6 +41,13 @@ namespace Azure.Messaging.ServiceBus.Core
         public string SharedAccessKey { get; }
 
         /// <summary>
+        ///   The value of the fully-formed shared access signature, either for the Service Bus
+        ///   namespace or the Service Bus entity.
+        /// </summary>
+        ///
+        public string SharedAccessSignature { get; }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="ConnectionStringProperties"/> structure.
         /// </summary>
         ///
@@ -48,17 +55,20 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <param name="entityName">The name of the specific Service Bus entity under the namespace.</param>
         /// <param name="sharedAccessKeyName">The name of the shared access key, to use authorization.</param>
         /// <param name="sharedAccessKey">The shared access key to use for authorization.</param>
+        /// <param name="sharedAccessSignature">The precomputed shared access signature to use for authorization.</param>
         ///
         public ConnectionStringProperties(
             Uri endpoint,
             string entityName,
             string sharedAccessKeyName,
-            string sharedAccessKey)
+            string sharedAccessKey,
+            string sharedAccessSignature)
         {
             Endpoint = endpoint;
             EntityPath = entityName;
             SharedAccessKeyName = sharedAccessKeyName;
             SharedAccessKey = sharedAccessKey;
+            SharedAccessSignature = sharedAccessSignature;
         }
     }
 }

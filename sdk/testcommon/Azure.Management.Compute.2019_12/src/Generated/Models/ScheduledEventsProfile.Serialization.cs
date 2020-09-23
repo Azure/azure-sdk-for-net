@@ -15,7 +15,7 @@ namespace Azure.Management.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (TerminateNotificationProfile != null)
+            if (Optional.IsDefined(TerminateNotificationProfile))
             {
                 writer.WritePropertyName("terminateNotificationProfile");
                 writer.WriteObjectValue(TerminateNotificationProfile);
@@ -25,20 +25,16 @@ namespace Azure.Management.Compute.Models
 
         internal static ScheduledEventsProfile DeserializeScheduledEventsProfile(JsonElement element)
         {
-            TerminateNotificationProfile terminateNotificationProfile = default;
+            Optional<TerminateNotificationProfile> terminateNotificationProfile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("terminateNotificationProfile"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     terminateNotificationProfile = TerminateNotificationProfile.DeserializeTerminateNotificationProfile(property.Value);
                     continue;
                 }
             }
-            return new ScheduledEventsProfile(terminateNotificationProfile);
+            return new ScheduledEventsProfile(terminateNotificationProfile.Value);
         }
     }
 }

@@ -54,27 +54,13 @@ namespace Azure.Management.Network
         ApplicationGatewayBackendHealth IOperationSource<ApplicationGatewayBackendHealth>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return ApplicationGatewayBackendHealth.DeserializeApplicationGatewayBackendHealth(document.RootElement);
-            }
+            return ApplicationGatewayBackendHealth.DeserializeApplicationGatewayBackendHealth(document.RootElement);
         }
 
         async ValueTask<ApplicationGatewayBackendHealth> IOperationSource<ApplicationGatewayBackendHealth>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            if (document.RootElement.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            else
-            {
-                return ApplicationGatewayBackendHealth.DeserializeApplicationGatewayBackendHealth(document.RootElement);
-            }
+            return ApplicationGatewayBackendHealth.DeserializeApplicationGatewayBackendHealth(document.RootElement);
         }
     }
 }

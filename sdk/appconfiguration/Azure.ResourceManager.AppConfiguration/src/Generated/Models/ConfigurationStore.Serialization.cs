@@ -17,31 +17,16 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
                 writer.WriteObjectValue(Identity);
             }
             writer.WritePropertyName("sku");
             writer.WriteObjectValue(Sku);
-            if (Id != null)
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
-            if (Tags != null)
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -54,37 +39,12 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (ProvisioningState != null)
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (CreationDate != null)
-            {
-                writer.WritePropertyName("creationDate");
-                writer.WriteStringValue(CreationDate.Value, "O");
-            }
-            if (Endpoint != null)
-            {
-                writer.WritePropertyName("endpoint");
-                writer.WriteStringValue(Endpoint);
-            }
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption");
                 writer.WriteObjectValue(Encryption);
             }
-            if (PrivateEndpointConnections != null)
-            {
-                writer.WritePropertyName("privateEndpointConnections");
-                writer.WriteStartArray();
-                foreach (var item in PrivateEndpointConnections)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (PublicNetworkAccess != null)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess");
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
@@ -95,27 +55,23 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         internal static ConfigurationStore DeserializeConfigurationStore(JsonElement element)
         {
-            ResourceIdentity identity = default;
+            Optional<ResourceIdentity> identity = default;
             Sku sku = default;
-            string id = default;
-            string name = default;
-            string type = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
             string location = default;
-            IDictionary<string, string> tags = default;
-            ProvisioningState? provisioningState = default;
-            DateTimeOffset? creationDate = default;
-            string endpoint = default;
-            EncryptionProperties encryption = default;
-            IList<PrivateEndpointConnectionReference> privateEndpointConnections = default;
-            PublicNetworkAccess? publicNetworkAccess = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<DateTimeOffset> creationDate = default;
+            Optional<string> endpoint = default;
+            Optional<EncryptionProperties> encryption = default;
+            Optional<IReadOnlyList<PrivateEndpointConnectionReference>> privateEndpointConnections = default;
+            Optional<PublicNetworkAccess> publicNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     identity = ResourceIdentity.DeserializeResourceIdentity(property.Value);
                     continue;
                 }
@@ -126,28 +82,16 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
@@ -158,21 +102,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
                     continue;
@@ -183,37 +116,21 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     {
                         if (property0.NameEquals("provisioningState"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("creationDate"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             creationDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("endpoint"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             endpoint = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("encryption"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             encryption = EncryptionProperties.DeserializeEncryptionProperties(property0.Value);
                             continue;
                         }
@@ -221,29 +138,19 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                privateEndpointConnections = null;
                                 continue;
                             }
                             List<PrivateEndpointConnectionReference> array = new List<PrivateEndpointConnectionReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(PrivateEndpointConnectionReference.DeserializePrivateEndpointConnectionReference(item));
-                                }
+                                array.Add(PrivateEndpointConnectionReference.DeserializePrivateEndpointConnectionReference(item));
                             }
                             privateEndpointConnections = array;
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
@@ -251,7 +158,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     continue;
                 }
             }
-            return new ConfigurationStore(id, name, type, location, tags, identity, sku, provisioningState, creationDate, endpoint, encryption, privateEndpointConnections, publicNetworkAccess);
+            return new ConfigurationStore(id.Value, name.Value, type.Value, location, Optional.ToDictionary(tags), identity.Value, sku, Optional.ToNullable(provisioningState), Optional.ToNullable(creationDate), endpoint.Value, encryption.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess));
         }
     }
 }

@@ -11,7 +11,6 @@ using System.IO;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,9 +34,6 @@ namespace Azure.Identity
         /// </summary>
         internal string ClientId { get; }
 
-        /// <summary>
-        /// Gets an object which can provide the X509 Certificate of the service principal.
-        /// </summary>
         internal IX509Certificate2Provider ClientCertificateProvider { get; }
 
         private readonly MsalConfidentialClient _client;
@@ -80,11 +76,9 @@ namespace Azure.Identity
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientCertificatePath">The path to a file which contains both the client certificate and private key.</param>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
-        internal ClientCertificateCredential(string tenantId, string clientId, string clientCertificatePath, ClientCertificateCredentialOptions options)
+        public ClientCertificateCredential(string tenantId, string clientId, string clientCertificatePath, ClientCertificateCredentialOptions options)
             : this(tenantId, clientId, clientCertificatePath, options, null, null)
-
-        {
-        }
+        { }
 
         /// <summary>
         /// Creates an instance of the ClientCertificateCredential with the details needed to authenticate against Azure Active Directory with the specified certificate.
@@ -105,10 +99,7 @@ namespace Azure.Identity
         /// <param name="clientCertificate">The authentication X509 Certificate of the service principal</param>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
         public ClientCertificateCredential(string tenantId, string clientId, X509Certificate2 clientCertificate, TokenCredentialOptions options)
-            : this(tenantId, clientId, clientCertificate, options, null, null)
-
-        {
-        }
+            : this(tenantId, clientId, clientCertificate, options, null, null) {}
 
         /// <summary>
         /// Creates an instance of the ClientCertificateCredential with the details needed to authenticate against Azure Active Directory with the specified certificate.
@@ -117,7 +108,7 @@ namespace Azure.Identity
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientCertificate">The authentication X509 Certificate of the service principal</param>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
-        internal ClientCertificateCredential(string tenantId, string clientId, X509Certificate2 clientCertificate, ClientCertificateCredentialOptions options)
+        public ClientCertificateCredential(string tenantId, string clientId, X509Certificate2 clientCertificate, ClientCertificateCredentialOptions options)
             : this(tenantId, clientId, clientCertificate, options, null, null)
         {
         }
@@ -142,7 +133,7 @@ namespace Azure.Identity
 
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
 
-            _client = client ?? new MsalConfidentialClient(_pipeline, tenantId, clientId, certificateProvider, options as ITokenCacheOptions);
+            _client = client ?? new MsalConfidentialClient(_pipeline, tenantId, clientId, certificateProvider, (options as ClientCertificateCredentialOptions)?.IncludeX5CCliamHeader ?? false, options as ITokenCacheOptions);
         }
 
         /// <summary>

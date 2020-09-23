@@ -513,12 +513,6 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK.",
-            "schema": {
-              "type": "object"
-            }
-          },
           "204": {
             "description": "No Content."
           }

@@ -28,7 +28,7 @@ namespace Azure.Management.Network
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public AvailableServiceAliasesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -63,6 +63,7 @@ namespace Azure.Management.Network
         /// <summary> Gets all available service aliases for this subscription in this region. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public async Task<Response<AvailableServiceAliasesResult>> ListAsync(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -78,14 +79,7 @@ namespace Azure.Management.Network
                     {
                         AvailableServiceAliasesResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AvailableServiceAliasesResult.DeserializeAvailableServiceAliasesResult(document.RootElement);
-                        }
+                        value = AvailableServiceAliasesResult.DeserializeAvailableServiceAliasesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -96,6 +90,7 @@ namespace Azure.Management.Network
         /// <summary> Gets all available service aliases for this subscription in this region. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public Response<AvailableServiceAliasesResult> List(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
@@ -111,14 +106,7 @@ namespace Azure.Management.Network
                     {
                         AvailableServiceAliasesResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AvailableServiceAliasesResult.DeserializeAvailableServiceAliasesResult(document.RootElement);
-                        }
+                        value = AvailableServiceAliasesResult.DeserializeAvailableServiceAliasesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -149,6 +137,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="location"/> is null. </exception>
         public async Task<Response<AvailableServiceAliasesResult>> ListByResourceGroupAsync(string resourceGroupName, string location, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -168,14 +157,7 @@ namespace Azure.Management.Network
                     {
                         AvailableServiceAliasesResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AvailableServiceAliasesResult.DeserializeAvailableServiceAliasesResult(document.RootElement);
-                        }
+                        value = AvailableServiceAliasesResult.DeserializeAvailableServiceAliasesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -187,6 +169,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="location"/> is null. </exception>
         public Response<AvailableServiceAliasesResult> ListByResourceGroup(string resourceGroupName, string location, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -206,14 +189,7 @@ namespace Azure.Management.Network
                     {
                         AvailableServiceAliasesResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AvailableServiceAliasesResult.DeserializeAvailableServiceAliasesResult(document.RootElement);
-                        }
+                        value = AvailableServiceAliasesResult.DeserializeAvailableServiceAliasesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -237,6 +213,7 @@ namespace Azure.Management.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="location"/> is null. </exception>
         public async Task<Response<AvailableServiceAliasesResult>> ListNextPageAsync(string nextLink, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -256,14 +233,7 @@ namespace Azure.Management.Network
                     {
                         AvailableServiceAliasesResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AvailableServiceAliasesResult.DeserializeAvailableServiceAliasesResult(document.RootElement);
-                        }
+                        value = AvailableServiceAliasesResult.DeserializeAvailableServiceAliasesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -275,6 +245,7 @@ namespace Azure.Management.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="location"/> is null. </exception>
         public Response<AvailableServiceAliasesResult> ListNextPage(string nextLink, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -294,14 +265,7 @@ namespace Azure.Management.Network
                     {
                         AvailableServiceAliasesResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AvailableServiceAliasesResult.DeserializeAvailableServiceAliasesResult(document.RootElement);
-                        }
+                        value = AvailableServiceAliasesResult.DeserializeAvailableServiceAliasesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -326,6 +290,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="location"/> is null. </exception>
         public async Task<Response<AvailableServiceAliasesResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -349,14 +314,7 @@ namespace Azure.Management.Network
                     {
                         AvailableServiceAliasesResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AvailableServiceAliasesResult.DeserializeAvailableServiceAliasesResult(document.RootElement);
-                        }
+                        value = AvailableServiceAliasesResult.DeserializeAvailableServiceAliasesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -369,6 +327,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="location"/> is null. </exception>
         public Response<AvailableServiceAliasesResult> ListByResourceGroupNextPage(string nextLink, string resourceGroupName, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -392,14 +351,7 @@ namespace Azure.Management.Network
                     {
                         AvailableServiceAliasesResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = AvailableServiceAliasesResult.DeserializeAvailableServiceAliasesResult(document.RootElement);
-                        }
+                        value = AvailableServiceAliasesResult.DeserializeAvailableServiceAliasesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

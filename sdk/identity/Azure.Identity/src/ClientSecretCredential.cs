@@ -60,7 +60,7 @@ namespace Azure.Identity
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientSecret">A client secret that was generated for the App Registration used to authenticate the client.</param>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
-        internal ClientSecretCredential(string tenantId, string clientId, string clientSecret, ClientSecretCredentialOptions options)
+        public ClientSecretCredential(string tenantId, string clientId, string clientSecret, ClientSecretCredentialOptions options)
             : this(tenantId, clientId, clientSecret, options, null, null)
         {
         }
@@ -89,7 +89,6 @@ namespace Azure.Identity
 
             _client = client ?? new MsalConfidentialClient(_pipeline, tenantId, clientId, clientSecret, options as ITokenCacheOptions);
         }
-
 
         /// <summary>
         /// Obtains a token from the Azure Active Directory service, using the specified client secret to authenticate. This method is called by Azure SDK clients. It isn't intended for use in application code.
