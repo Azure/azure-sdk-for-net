@@ -61,11 +61,12 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <summary>
         /// Opens an AMQP link for use with receiver operations.
         /// </summary>
+        /// <param name="sessionId"></param>
         ///
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        public abstract Task OpenLinkAsync(CancellationToken cancellationToken);
+        public abstract Task AcceptSessionAsync(string sessionId = default, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Completes a <see cref="ServiceBusReceivedMessage"/>. This will delete the message from the service.

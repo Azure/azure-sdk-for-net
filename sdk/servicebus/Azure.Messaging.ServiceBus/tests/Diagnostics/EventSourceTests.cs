@@ -988,6 +988,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             {
                 Logger = mockLogger.Object
             };
+            mockTransportReceiver.Setup(
+                transportReceiver => transportReceiver.SessionId)
+                .Returns("SessionId");
 
             await receiver.RenewSessionLockAsync();
 
@@ -1014,6 +1017,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 transportReceiver => transportReceiver.RenewSessionLockAsync(
                     It.IsAny<CancellationToken>()))
                 .Throws(new Exception());
+            mockTransportReceiver.Setup(
+                transportReceiver => transportReceiver.SessionId)
+                .Returns("SessionId");
             var receiver = new ServiceBusSessionReceiver(
                 mockConnection.Object,
                 "queueName",
@@ -1046,6 +1052,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         {
             var mockLogger = new Mock<ServiceBusEventSource>();
             var mockTransportReceiver = new Mock<TransportReceiver>();
+            mockTransportReceiver.Setup(
+                transportReceiver => transportReceiver.SessionId)
+                .Returns("SessionId");
             var mockConnection = GetMockConnection(mockTransportReceiver);
             var receiver = new ServiceBusSessionReceiver(
                 mockConnection.Object,
@@ -1081,13 +1090,16 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 transportReceiver => transportReceiver.GetStateAsync(
                     It.IsAny<CancellationToken>()))
                 .Throws(new Exception());
+            mockTransportReceiver.Setup(
+                transportReceiver => transportReceiver.SessionId)
+                .Returns("SessionId");
             var receiver = new ServiceBusSessionReceiver(
                 mockConnection.Object,
                 "queueName",
                 new ServiceBusPlugin[] { },
                 new ServiceBusSessionReceiverOptions())
             {
-                Logger = mockLogger.Object
+                Logger = mockLogger.Object,
             };
 
             Assert.That(
@@ -1113,6 +1125,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         {
             var mockLogger = new Mock<ServiceBusEventSource>();
             var mockTransportReceiver = new Mock<TransportReceiver>();
+            mockTransportReceiver.Setup(
+                transportReceiver => transportReceiver.SessionId)
+                .Returns("SessionId");
             var mockConnection = GetMockConnection(mockTransportReceiver);
             var receiver = new ServiceBusSessionReceiver(
                 mockConnection.Object,
@@ -1149,6 +1164,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     It.IsAny<byte[]>(),
                     It.IsAny<CancellationToken>()))
                 .Throws(new Exception());
+            mockTransportReceiver.Setup(
+                transportReceiver => transportReceiver.SessionId)
+                .Returns("SessionId");
             var receiver = new ServiceBusSessionReceiver(
                 mockConnection.Object,
                 "queueName",
@@ -1278,7 +1296,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     It.IsAny<ServiceBusRetryPolicy>(),
                     It.IsAny<ReceiveMode>(),
                     It.IsAny<uint>(),
-                    It.IsAny<string>(),
                     It.IsAny<string>(),
                     It.IsAny<bool>()))
                 .Returns(mockTransportReceiver.Object);

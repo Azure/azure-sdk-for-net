@@ -319,38 +319,6 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         /// Creates a <see cref="ServiceBusSessionReceiver"/> instance that can be used for receiving
-        /// and settling messages from a specific session-enabled queue. It uses <see cref="ReceiveMode"/> to specify
-        /// how messages are received. Defaults to PeekLock mode. The <see cref="ReceiveMode"/> is set in <see cref="ServiceBusReceiverOptions"/>.
-        /// </summary>
-        ///
-        /// <param name="queueName">The session-enabled queue to create a <see cref="ServiceBusSessionReceiver"/> for.</param>
-        /// <param name="options">The set of <see cref="ServiceBusReceiverOptions"/> to use for configuring the
-        /// <see cref="ServiceBusSessionReceiver"/>.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <remarks>Because this is establishing a session lock, this method performs a service call. If the
-        /// sessionId parameter is not specified, and there are no available messages in the queue, this will
-        /// throw a <see cref="ServiceBusException"/> with <see cref="ServiceBusException.Reason"/> of <see cref="ServiceBusFailureReason.ServiceTimeout"/>.
-        /// </remarks>
-        ///
-        /// <returns>A <see cref="ServiceBusSessionReceiver"/> scoped to the specified queue and a specific session.</returns>
-        public virtual async Task<ServiceBusSessionReceiver> CreateSessionReceiverAsync(
-            string queueName,
-            ServiceBusSessionReceiverOptions options = default,
-            CancellationToken cancellationToken = default)
-        {
-            ValidateEntityName(queueName);
-
-            return await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
-                entityPath: queueName,
-                connection: Connection,
-                plugins: Plugins,
-                options: options,
-                cancellationToken: cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Creates a <see cref="ServiceBusSessionReceiver"/> instance that can be used for receiving
         /// and settling messages from a specific session-enabled subscription. It uses <see cref="ReceiveMode"/> to specify
         /// how messages are received. Defaults to PeekLock mode. The <see cref="ReceiveMode"/> is set in <see cref="ServiceBusReceiverOptions"/>.
         /// </summary>
@@ -359,7 +327,6 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="subscriptionName">The session-enabled subscription to create a <see cref="ServiceBusSessionReceiver"/> for.</param>
         /// <param name="options">The set of <see cref="ServiceBusReceiverOptions"/> to use for configuring the
         /// <see cref="ServiceBusSessionReceiver"/>.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <remarks>Because this is establishing a session lock, this method performs a service call. If the
         /// sessionId parameter is not specified, and there are no available messages in the queue, this will
@@ -367,20 +334,47 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         ///
         /// <returns>A <see cref="ServiceBusSessionReceiver"/> scoped to the specified queue and a specific session.</returns>
-        public virtual async Task<ServiceBusSessionReceiver> CreateSessionReceiverAsync(
+        public virtual ServiceBusSessionReceiver CreateSessionReceiver(
             string topicName,
             string subscriptionName,
-            ServiceBusSessionReceiverOptions options = default,
-            CancellationToken cancellationToken = default)
+            ServiceBusSessionReceiverOptions options = default)
         {
             ValidateEntityName(topicName);
 
-            return await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
+            return ServiceBusSessionReceiver.CreateSessionReceiver(
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 connection: Connection,
                 plugins: Plugins,
-                options: options,
-                cancellationToken: cancellationToken).ConfigureAwait(false);
+                options: options);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="ServiceBusSessionReceiver"/> instance that can be used for receiving
+        /// and settling messages from a specific session-enabled subscription. It uses <see cref="ReceiveMode"/> to specify
+        /// how messages are received. Defaults to PeekLock mode. The <see cref="ReceiveMode"/> is set in <see cref="ServiceBusReceiverOptions"/>.
+        /// </summary>
+        ///
+        /// <param name="queueName">The topic to create a <see cref="ServiceBusSessionReceiver"/> for.</param>
+        /// <param name="options">The set of <see cref="ServiceBusReceiverOptions"/> to use for configuring the
+        /// <see cref="ServiceBusSessionReceiver"/>.</param>
+        ///
+        /// <remarks>Because this is establishing a session lock, this method performs a service call. If the
+        /// sessionId parameter is not specified, and there are no available messages in the queue, this will
+        /// throw a <see cref="ServiceBusException"/> with <see cref="ServiceBusException.Reason"/> of <see cref="ServiceBusFailureReason.ServiceTimeout"/>.
+        /// </remarks>
+        ///
+        /// <returns>A <see cref="ServiceBusSessionReceiver"/> scoped to the specified queue and a specific session.</returns>
+        public virtual ServiceBusSessionReceiver CreateSessionReceiver(
+            string queueName,
+            ServiceBusSessionReceiverOptions options = default)
+        {
+            ValidateEntityName(queueName);
+
+            return ServiceBusSessionReceiver.CreateSessionReceiver(
+                entityPath: queueName,
+                connection: Connection,
+                plugins: Plugins,
+                options: options);
         }
 
         /// <summary>

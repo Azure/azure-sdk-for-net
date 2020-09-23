@@ -31,6 +31,11 @@ namespace Azure.Messaging.ServiceBus
         public string FullyQualifiedNamespace => _connection.FullyQualifiedNamespace;
 
         /// <summary>
+        ///
+        /// </summary>
+        internal string SessionId => _innerReceiver.SessionId;
+
+        /// <summary>
         /// The path of the Service Bus entity that the receiver is connected to, specific to the
         /// Service Bus namespace that contains it.
         /// </summary>
@@ -121,16 +126,12 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="isSessionEntity"></param>
         /// <param name="plugins">The plugins to apply to incoming messages.</param>
         /// <param name="options">A set of options to apply when configuring the consumer.</param>
-        /// <param name="sessionId">An optional session Id to scope the receiver to. If not specified,
-        /// the next available session returned from the service will be used.</param>
-        ///
         internal ServiceBusReceiver(
             ServiceBusConnection connection,
             string entityPath,
             bool isSessionEntity,
             IList<ServiceBusPlugin> plugins,
-            ServiceBusReceiverOptions options,
-            string sessionId = default)
+            ServiceBusReceiverOptions options)
         {
             Type type = GetType();
             Logger.ClientCreateStart(type, connection?.FullyQualifiedNamespace, entityPath);
@@ -167,7 +168,6 @@ namespace Azure.Messaging.ServiceBus
                     receiveMode: ReceiveMode,
                     prefetchCount: (uint)PrefetchCount,
                     identifier: Identifier,
-                    sessionId: sessionId,
                     isSessionReceiver: IsSessionReceiver);
                 _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
                 _plugins = plugins;
@@ -238,6 +238,7 @@ namespace Azure.Messaging.ServiceBus
         {
             Argument.AssertAtLeast(maxMessages, 1, nameof(maxMessages));
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
+            Argument.AssertSessionAccepted(IsSessionReceiver, SessionId);
             if (maxWaitTime.HasValue)
             {
                 Argument.AssertPositive(maxWaitTime.Value, nameof(maxWaitTime));
@@ -423,6 +424,8 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken)
         {
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
+            Argument.AssertSessionAccepted(IsSessionReceiver, SessionId);
+
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.PeekMessageStart(Identifier, sequenceNumber, maxMessages);
             using DiagnosticScope scope = ScopeFactory.CreateScope(
@@ -450,16 +453,6 @@ namespace Azure.Messaging.ServiceBus
             scope.SetMessageData(messages);
             return messages;
         }
-
-        /// <summary>
-        /// Opens an AMQP link for use with receiver operations.
-        /// </summary>
-        ///
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        internal async Task OpenLinkAsync(CancellationToken cancellationToken) =>
-            await InnerReceiver.OpenLinkAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Completes a <see cref="ServiceBusReceivedMessage"/>. This will delete the message from the service.
@@ -502,6 +495,8 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
             Argument.AssertNotNullOrEmpty(lockToken, nameof(lockToken));
             ThrowIfNotPeekLockMode();
+            Argument.AssertSessionAccepted(IsSessionReceiver, SessionId);
+
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.CompleteMessageStart(
                 Identifier,
@@ -578,6 +573,8 @@ namespace Azure.Messaging.ServiceBus
             ThrowIfLockTokenIsEmpty(lockToken);
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
             ThrowIfNotPeekLockMode();
+            Argument.AssertSessionAccepted(IsSessionReceiver, SessionId);
+
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.AbandonMessageStart(Identifier, 1, lockToken);
             using DiagnosticScope scope = ScopeFactory.CreateScope(
@@ -737,6 +734,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             ThrowIfLockTokenIsEmpty(lockToken);
+            Argument.AssertSessionAccepted(IsSessionReceiver, SessionId);
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ThrowIfNotPeekLockMode();
@@ -818,6 +816,8 @@ namespace Azure.Messaging.ServiceBus
         {
             ThrowIfLockTokenIsEmpty(lockToken);
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
+            Argument.AssertSessionAccepted(IsSessionReceiver, SessionId);
+
             ThrowIfNotPeekLockMode();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.DeferMessageStart(Identifier, 1, lockToken);
@@ -899,6 +899,7 @@ namespace Azure.Messaging.ServiceBus
         {
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
             Argument.AssertNotNullOrEmpty(sequenceNumbers, nameof(sequenceNumbers));
+            Argument.AssertSessionAccepted(IsSessionReceiver, SessionId);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             var sequenceNumbersList = sequenceNumbers.ToList();
 
@@ -970,6 +971,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             ThrowIfLockTokenIsEmpty(lockToken);
+            Argument.AssertSessionAccepted(IsSessionReceiver, SessionId);
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
             ThrowIfNotPeekLockMode();
             ThrowIfSessionReceiver();

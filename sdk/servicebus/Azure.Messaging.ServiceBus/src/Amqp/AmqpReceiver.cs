@@ -100,7 +100,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="connectionScope">The AMQP connection context for operations .</param>
         /// <param name="retryPolicy">The retry policy to consider when an operation fails.</param>
         /// <param name="identifier"></param>
-        /// <param name="sessionId"></param>
         /// <param name="isSessionReceiver"></param>
         ///
         /// <remarks>
@@ -118,7 +117,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             AmqpConnectionScope connectionScope,
             ServiceBusRetryPolicy retryPolicy,
             string identifier,
-            string sessionId,
             bool isSessionReceiver)
         {
             Argument.AssertNotNullOrEmpty(entityPath, nameof(entityPath));
@@ -132,7 +130,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             _receiveMode = receiveMode;
             _identifier = identifier;
             _requestResponseLockedMessages = new ConcurrentExpiringSet<Guid>();
-            SessionId = sessionId;
 
             _receiveLink = new FaultTolerantAmqpObject<ReceivingAmqpLink>(
                 timeout =>
@@ -185,21 +182,21 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         new DateTime(lockedUntilUtcTicks, DateTimeKind.Utc)
                         : DateTime.MinValue;
 
-                        var source = (Source)link.Settings.Source;
-                        if (!source.FilterSet.TryGetValue<string>(AmqpClientConstants.SessionFilterName, out var tempSessionId))
-                        {
-                            link.Session.SafeClose();
-                            throw new ServiceBusException(true, Resources.SessionFilterMissing);
-                        }
+                    var source = (Source)link.Settings.Source;
+                    if (!source.FilterSet.TryGetValue<string>(AmqpClientConstants.SessionFilterName, out var tempSessionId))
+                    {
+                        link.Session.SafeClose();
+                        throw new ServiceBusException(true, Resources.SessionFilterMissing);
+                    }
 
-                        if (string.IsNullOrWhiteSpace(tempSessionId))
-                        {
-                            link.Session.SafeClose();
-                            throw new ServiceBusException(true, Resources.AmqpFieldSessionId);
-                        }
-                        // This will only have changed if sessionId was left blank when constructing the session
-                        // receiver.
-                        SessionId = tempSessionId;
+                    if (string.IsNullOrWhiteSpace(tempSessionId))
+                    {
+                        link.Session.SafeClose();
+                        throw new ServiceBusException(true, Resources.AmqpFieldSessionId);
+                    }
+                    // This will only have changed if sessionId was left blank when constructing the session
+                    // receiver.
+                    SessionId = tempSessionId;
                 }
                 ServiceBusEventSource.Log.CreateReceiveLinkComplete(_identifier, SessionId);
                 link.Closed += OnReceiverLinkClosed;
@@ -1279,13 +1276,15 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>
         /// Opens an AMQP link for use with receiver operations.
         /// </summary>
+        /// <param name="sessionId"></param>
         ///
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        public override async Task OpenLinkAsync(CancellationToken cancellationToken)
+        public override async Task AcceptSessionAsync(string sessionId = default, CancellationToken cancellationToken = default)
         {
             ReceivingAmqpLink link = null;
+            SessionId = sessionId;
             await _retryPolicy.RunOperation(
                async (timeout) =>
                link = await _receiveLink.GetOrCreateAsync(timeout).ConfigureAwait(false),

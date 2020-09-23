@@ -34,7 +34,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                     ts.Complete();
                 }
 
-                ServiceBusReceiver receiver = sessionEnabled ? await client.CreateSessionReceiverAsync(scope.QueueName) : client.CreateReceiver(scope.QueueName);
+                ServiceBusReceiver receiver = sessionEnabled ?
+                                    client.CreateSessionReceiver(scope.QueueName)
+                                    : client.CreateReceiver(scope.QueueName);
+
+                if (sessionEnabled)
+                {
+                    await (receiver as ServiceBusSessionReceiver).AcceptSessionAsync("sessionId");
+                }
 
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 
@@ -61,7 +68,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                     ts.Complete();
                 }
 
-                ServiceBusReceiver receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
+                ServiceBusSessionReceiver receiver = client.CreateSessionReceiver(scope.QueueName);
+                await receiver.AcceptSessionAsync();
 
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 
@@ -69,7 +77,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 Assert.AreEqual(message1.Body.ToString(), receivedMessage.Body.ToString());
                 await receiver.CompleteMessageAsync(receivedMessage);
 
-                receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
+                receiver = client.CreateSessionReceiver(scope.QueueName);
+                await receiver.AcceptSessionAsync();
                 receivedMessage = await receiver.ReceiveMessageAsync();
 
                 Assert.NotNull(receivedMessage);
@@ -93,9 +102,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                     await sender.SendMessageAsync(message1);
                     await sender.ScheduleMessageAsync(message2, DateTimeOffset.UtcNow.AddMinutes(1));
                 }
+                var receiver = GetNoRetryClient().CreateSessionReceiver(scope.QueueName);
                 Assert.That(
                     async () =>
-                    await GetNoRetryClient().CreateSessionReceiverAsync(scope.QueueName), Throws.InstanceOf<ServiceBusException>()
+                    await receiver.AcceptSessionAsync(), Throws.InstanceOf<ServiceBusException>()
                     .And.Property(nameof(ServiceBusException.Reason))
                     .EqualTo(ServiceBusFailureReason.ServiceTimeout));
             };
@@ -169,13 +179,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 }
 
                 ServiceBusReceiver receiver = sessionEnabled ?
-                    await client.CreateSessionReceiverAsync(
-                        scope.QueueName,
-                        new ServiceBusSessionReceiverOptions
-                        {
-                            SessionId = "sessionId"
-                        })
+                    client.CreateSessionReceiver(scope.QueueName)
                     : client.CreateReceiver(scope.QueueName);
+
+                if (sessionEnabled)
+                {
+                    await (receiver as ServiceBusSessionReceiver).AcceptSessionAsync("sessionId");
+                }
 
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(5));
 
@@ -201,8 +211,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                     partitioned ? "sessionId" : null);
                 await sender.SendMessageAsync(message);
 
-                ServiceBusReceiver receiver = sessionEnabled ? await client.CreateSessionReceiverAsync(scope.QueueName) : client.CreateReceiver(scope.QueueName);
+                ServiceBusReceiver receiver = sessionEnabled ? client.CreateSessionReceiver(scope.QueueName) : client.CreateReceiver(scope.QueueName);
 
+                if (sessionEnabled)
+                {
+                    await (receiver as ServiceBusSessionReceiver).AcceptSessionAsync();
+                }
                 var receivedMessage = await receiver.ReceiveMessageAsync();
                 Assert.NotNull(receivedMessage);
                 Assert.AreEqual(

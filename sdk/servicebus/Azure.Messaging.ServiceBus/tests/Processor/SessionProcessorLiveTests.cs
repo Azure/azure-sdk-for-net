@@ -404,12 +404,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 // only do this assertion when we complete the message ourselves,
                 // otherwise the message completion may have been cancelled if it didn't finish
                 // before calling StopProcessingAsync.
-
+                var receiver = GetNoRetryClient().CreateSessionReceiver(scope.QueueName);
 
                 if (!autoComplete)
                 {
-                    Assert.That(async () =>
-                        await GetNoRetryClient().CreateSessionReceiverAsync(scope.QueueName),
+                    Assert.That(
+                        async () => await receiver.AcceptSessionAsync(),
                         Throws.Exception);
                 }
             }
@@ -776,8 +776,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await processor.StartProcessingAsync();
                 await tcs.Task;
                 await processor.StopProcessingAsync();
+                var receiver = GetNoRetryClient().CreateSessionReceiver(scope.QueueName);
                 Assert.That(
-                    async () => await GetNoRetryClient().CreateSessionReceiverAsync(scope.QueueName),
+                    async () => await receiver.AcceptSessionAsync(),
                     Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.ServiceTimeout));
             }
         }
@@ -843,15 +844,17 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 if (settleMethod == "" || settleMethod == "Abandon")
                 {
-                    var receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
+                    var receiver = client.CreateSessionReceiver(scope.QueueName);
+                    await receiver.AcceptSessionAsync();
                     var msg = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(5));
                     Assert.IsNotNull(msg);
                 }
                 else
                 {
+                    var receiver = GetNoRetryClient().CreateSessionReceiver(scope.QueueName);
                     try
                     {
-                        await GetNoRetryClient().CreateSessionReceiverAsync(scope.QueueName);
+                        await receiver.AcceptSessionAsync();
                     }
                     catch (ServiceBusException ex)
                     when (ex.Reason == ServiceBusFailureReason.ServiceTimeout ||
@@ -1246,12 +1249,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 if (errorSource == ServiceBusErrorSource.AcceptMessageSession)
                 {
-                    var receiver = await client.CreateSessionReceiverAsync(
-                        scope.QueueName,
-                        new ServiceBusSessionReceiverOptions
-                        {
-                            SessionId = sessionId
-                        });
+                    var receiver = client.CreateSessionReceiver(scope.QueueName);
+                    await receiver.AcceptSessionAsync(sessionId);
                 }
 
                 sessions.TryAdd(sessionId, true);
@@ -1366,13 +1365,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                                 await Task.Delay(delayDuration);
                                 // lock the session so we can trigger
                                 // an error on the processor receive
-                                await client.CreateSessionReceiverAsync(
-                                    scope.QueueName,
-                                    new ServiceBusSessionReceiverOptions
-                                    {
-                                        SessionId = args.SessionId
-                                    },
-                                    args.CancellationToken);
+                                var receiver = client.CreateSessionReceiver(scope.QueueName);
+                                await receiver.AcceptSessionAsync(args.SessionId);
                                 break;
                             case ServiceBusErrorSource.UserCallback:
                                 await Task.Delay(delayDuration);
@@ -1601,11 +1595,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await processor.StopProcessingAsync();
                 Assert.IsFalse(processor.IsClosed);
                 Assert.IsFalse(processor.IsProcessing);
-
+                var receiver = GetNoRetryClient().CreateSessionReceiver(scope.QueueName);
                 Assert.That(
-                    async () => await GetNoRetryClient().CreateSessionReceiverAsync(
-                        scope.QueueName,
-                        new ServiceBusSessionReceiverOptions { SessionId = "sessionId" }),
+                    async () => await receiver.AcceptSessionAsync("sessionId"),
                     Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).
                     EqualTo(ServiceBusFailureReason.SessionCannotBeLocked));
 
@@ -1621,11 +1613,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await processor.DisposeAsync();
                 Assert.IsTrue(processor.IsClosed);
                 await sender.SendMessageAsync(GetMessage("sessionId"));
-                var receiver = await client.CreateSessionReceiverAsync(scope.QueueName, new ServiceBusSessionReceiverOptions
-                {
-                    SessionId = "sessionId"
-                });
-                var msg = await receiver.ReceiveMessageAsync();
+                var receiver2 = client.CreateSessionReceiver(scope.QueueName);
+                await receiver2.AcceptSessionAsync();
+                var msg = await receiver2.ReceiveMessageAsync();
                 Assert.IsNotNull(msg);
 
                 Assert.That(

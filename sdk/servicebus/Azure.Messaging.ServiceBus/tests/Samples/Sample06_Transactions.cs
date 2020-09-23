@@ -58,7 +58,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 ServiceBusSender sender = client.CreateSender(queueName);
 
                 await sender.SendMessageAsync(new ServiceBusMessage("my message") { SessionId = "sessionId" });
-                ServiceBusSessionReceiver receiver = await client.CreateSessionReceiverAsync(queueName);
+                ServiceBusSessionReceiver receiver = client.CreateSessionReceiver(queueName);
+                await receiver.AcceptSessionAsync();
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 
                 var state = Encoding.UTF8.GetBytes("some state");

@@ -49,7 +49,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                 prefetchCount: 0,
                 connectionScope: Mock.Of<AmqpConnectionScope>(),
                 retryPolicy: Mock.Of<ServiceBusRetryPolicy>(),
-                sessionId: default,
                 identifier: "someIdentifier",
                 isSessionReceiver: default),
                 Throws.InstanceOf<ArgumentException>());
@@ -69,7 +68,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                 connectionScope: null,
                 retryPolicy: Mock.Of<ServiceBusRetryPolicy>(),
                 identifier: "someIdentifier",
-                sessionId: default,
                 isSessionReceiver: default),
             Throws.InstanceOf<ArgumentNullException>());
         }
@@ -88,7 +86,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                 connectionScope: Mock.Of<AmqpConnectionScope>(),
                 retryPolicy: null,
                 identifier: "someIdentifier",
-                sessionId: default,
                 isSessionReceiver: default),
             Throws.InstanceOf<ArgumentNullException>());
         }
@@ -145,7 +142,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             var mockCredential = new Mock<TokenCredential>();
             var mockScope = new Mock<AmqpConnectionScope>();
             uint prefetchCount = 0;
-            var sessionId = "sessionId";
             bool isSession = true;
 
             using var cancellationSource = new CancellationTokenSource();
@@ -165,7 +161,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                    It.IsAny<CancellationToken>()))
                .Throws(retriableException);
 
-            var receiver = new AmqpReceiver(entityName, ReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", sessionId, isSession);
+            var receiver = new AmqpReceiver(entityName, ReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", isSession);
             Assert.That(async () => await receiver.ReceiveMessagesAsync(
                 100,
                 default,
@@ -199,7 +195,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             var mockCredential = new Mock<TokenCredential>();
             var mockScope = new Mock<AmqpConnectionScope>();
             uint prefetchCount = 0;
-            var sessionId = "sessionId";
             bool isSession = true;
 
             using var cancellationSource = new CancellationTokenSource();
@@ -219,7 +214,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                    It.IsAny<CancellationToken>()))
                .Throws(retriableException);
 
-            var receiver = new AmqpReceiver(entityName, ReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", sessionId, isSession);
+            var receiver = new AmqpReceiver(entityName, ReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", isSession);
             Assert.That(async () => await receiver.ReceiveMessagesAsync(
                 100,
                 default,
@@ -261,7 +256,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             var mockCredential = new Mock<TokenCredential>();
             var mockScope = new Mock<AmqpConnectionScope>();
             uint prefetchCount = 0;
-            var sessionId = "sessionId";
             bool isSession = true;
 
             using var cancellationSource = new CancellationTokenSource();
@@ -282,7 +276,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                .Throws(retriableException);
 
 
-            var receiver = new AmqpReceiver(entityName, ReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", sessionId, isSession);
+            var receiver = new AmqpReceiver(entityName, ReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", isSession);
             Assert.That(async () => await receiver.ReceiveMessagesAsync(
                 100,
                 default,
@@ -319,7 +313,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             var mockCredential = new Mock<TokenCredential>();
             var mockScope = new Mock<AmqpConnectionScope>();
             uint prefetchCount = 0;
-            var sessionId = "sessionId";
             bool isSession = true;
 
             using var cancellationSource = new CancellationTokenSource();
@@ -339,7 +332,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                    It.IsAny<CancellationToken>()))
                .Throws(exception);
 
-            var receiver = new AmqpReceiver(entityName, ReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", sessionId, isSession);
+            var receiver = new AmqpReceiver(entityName, ReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", isSession);
             Assert.That(async () => await receiver.ReceiveMessagesAsync(
                 100,
                 default,
@@ -373,7 +366,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             var mockCredential = new Mock<TokenCredential>();
             var mockScope = new Mock<AmqpConnectionScope>();
             uint prefetchCount = 0;
-            var sessionId = "sessionId";
             bool isSession = true;
 
             using var cancellationSource = new CancellationTokenSource();
@@ -393,7 +385,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                    It.IsAny<CancellationToken>()))
                .Throws(exception);
 
-            var receiver = new AmqpReceiver(entityName, ReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", sessionId, isSession);
+            var receiver = new AmqpReceiver(entityName, ReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", isSession);
             Assert.That(async () => await receiver.ReceiveMessagesAsync(
                 100,
                 default,
@@ -426,7 +418,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             var mockCredential = new Mock<TokenCredential>();
             var mockScope = new Mock<AmqpConnectionScope>();
             uint prefetchCount = 0;
-            var sessionId = "sessionId";
             bool isSession = true;
 
             using var cancellationSource = new CancellationTokenSource();
@@ -446,7 +437,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                    It.IsAny<CancellationToken>()))
                .Throws(exception);
 
-            var receiver = new AmqpReceiver(entityName, ReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", sessionId, isSession);
+            var receiver = new AmqpReceiver(entityName, ReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", isSession);
             Assert.That(async () => await receiver.ReceiveMessagesAsync(
                 100,
                 default,
@@ -472,7 +463,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                 Mock.Of<AmqpConnectionScope>(),
                 Mock.Of<ServiceBusRetryPolicy>(),
                 "someIdentifier",
-                default,
                 default);
     }
 }

@@ -112,12 +112,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 msg.To = "to";
                 await sender.SendMessageAsync(msg);
 
-                var receiver = await client.CreateSessionReceiverAsync(
+                var receiver = client.CreateSessionReceiver(
                     scope.QueueName,
                     new ServiceBusSessionReceiverOptions
                     {
                         ReceiveMode = ReceiveMode.ReceiveAndDelete
                     });
+                await receiver.AcceptSessionAsync();
                 var received = await receiver.ReceiveMessageAsync();
                 AssertMessagesEqual(msg, received);
                 var toSend = new ServiceBusMessage(received);

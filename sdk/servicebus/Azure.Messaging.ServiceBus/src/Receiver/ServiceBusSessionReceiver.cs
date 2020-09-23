@@ -16,54 +16,68 @@ namespace Azure.Messaging.ServiceBus
     /// <summary>
     /// The <see cref="ServiceBusSessionReceiver" /> is responsible for receiving <see cref="ServiceBusReceivedMessage" />
     ///  and settling messages from session-enabled Queues and Subscriptions. It is constructed by calling
-    ///  <see cref="ServiceBusClient.CreateSessionReceiverAsync(string, string, ServiceBusSessionReceiverOptions, CancellationToken)"/>.
+    ///  <see cref="ServiceBusClient.CreateSessionReceiver(string, string, ServiceBusSessionReceiverOptions)"/>.
     /// </summary>
     public class ServiceBusSessionReceiver : ServiceBusReceiver
     {
         /// <summary>
         /// The Session Id associated with the receiver.
         /// </summary>
-        public string SessionId => InnerReceiver.SessionId;
+        public new string SessionId => InnerReceiver.SessionId;
 
         /// <summary>
         /// Gets the <see cref="DateTimeOffset"/> that the receiver's session is locked until.
         /// </summary>
         public DateTimeOffset SessionLockedUntil => InnerReceiver.SessionLockedUntil;
 
-        /// <summary>
-        /// Creates a session receiver which can be used to interact with all messages with the same sessionId.
-        /// </summary>
-        ///
-        /// <param name="entityPath">The name of the specific queue to associate the receiver with.</param>
-        /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
-        /// <param name="plugins">The set of plugins to apply to incoming messages.</param>
-        /// <param name="options">A set of options to apply when configuring the receiver.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        ///<returns>Returns a new instance of the <see cref="ServiceBusSessionReceiver"/> class.</returns>
-        internal static async Task<ServiceBusSessionReceiver> CreateSessionReceiverAsync(
+        internal static ServiceBusSessionReceiver CreateSessionReceiver(
             string entityPath,
             ServiceBusConnection connection,
             IList<ServiceBusPlugin> plugins,
-            ServiceBusSessionReceiverOptions options = default,
-            CancellationToken cancellationToken = default)
+            ServiceBusSessionReceiverOptions options = default)
         {
             var receiver = new ServiceBusSessionReceiver(
                 connection: connection,
                 entityPath: entityPath,
                 plugins: plugins,
                 options: options);
-            try
-            {
-                await receiver.OpenLinkAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                receiver.Logger.ClientCreateException(typeof(ServiceBusSessionReceiver), receiver.FullyQualifiedNamespace, entityPath, ex);
-                throw;
-            }
-            receiver.Logger.ClientCreateComplete(typeof(ServiceBusSessionReceiver), receiver.Identifier);
             return receiver;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
+        public async Task AcceptSessionAsync(CancellationToken cancellationToken = default)
+        {
+            await OpenSessionReceiverLinkAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
+        public async Task AcceptSessionAsync(string sessionId, CancellationToken cancellationToken = default)
+        {
+            await OpenSessionReceiverLinkAsync(sessionId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Opens an AMQP link for use with receiver operations.
+        /// </summary>
+        /// <param name="sessionId"></param>
+        ///
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        internal async Task OpenSessionReceiverLinkAsync(string sessionId = default, CancellationToken cancellationToken = default)
+        {
+            if (SessionId != null)
+            {
+                throw new InvalidOperationException("A session has already been accepted for this receiver." +
+                    "To accept another session, create a new session receiver");
+            }
+            await InnerReceiver.AcceptSessionAsync(sessionId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -79,7 +93,7 @@ namespace Azure.Messaging.ServiceBus
             string entityPath,
             IList<ServiceBusPlugin> plugins,
             ServiceBusSessionReceiverOptions options) :
-            base(connection, entityPath, true, plugins, options?.ToReceiverOptions(), options?.SessionId)
+            base(connection, entityPath, true, plugins, options?.ToReceiverOptions())
         {
         }
 
@@ -99,6 +113,8 @@ namespace Azure.Messaging.ServiceBus
         public virtual async Task<byte[]> GetSessionStateAsync(CancellationToken cancellationToken = default)
         {
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSessionReceiver));
+            Argument.AssertSessionAccepted(IsSessionReceiver, SessionId);
+
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.GetSessionStateStart(Identifier, SessionId);
             using DiagnosticScope scope = ScopeFactory.CreateScope(
@@ -138,6 +154,8 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSessionReceiver));
+            Argument.AssertSessionAccepted(IsSessionReceiver, SessionId);
+
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.SetSessionStateStart(Identifier, SessionId);
             using DiagnosticScope scope = ScopeFactory.CreateScope(
@@ -178,6 +196,8 @@ namespace Azure.Messaging.ServiceBus
         public virtual async Task RenewSessionLockAsync(CancellationToken cancellationToken = default)
         {
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSessionReceiver));
+            Argument.AssertSessionAccepted(true, SessionId);
+
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.RenewSessionLockStart(Identifier, SessionId);
             using DiagnosticScope scope = ScopeFactory.CreateScope(

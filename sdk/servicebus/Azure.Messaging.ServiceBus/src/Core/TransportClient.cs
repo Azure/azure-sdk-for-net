@@ -60,7 +60,6 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <param name="receiveMode">The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
         /// <param name="identifier"></param>
-        /// <param name="sessionId"></param>
         /// <param name="isSessionReceiver"></param>
         ///
         /// <returns>A <see cref="TransportReceiver" /> configured in the requested manner.</returns>
@@ -71,7 +70,6 @@ namespace Azure.Messaging.ServiceBus.Core
             ReceiveMode receiveMode,
             uint prefetchCount,
             string identifier,
-            string sessionId,
             bool isSessionReceiver);
 
         /// <summary>

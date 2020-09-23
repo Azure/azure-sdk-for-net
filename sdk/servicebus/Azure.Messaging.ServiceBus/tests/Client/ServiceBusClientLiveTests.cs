@@ -66,7 +66,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 }
                 else
                 {
-                    receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
+                    receiver = client.CreateSessionReceiver(scope.QueueName);
+                    await (receiver as ServiceBusSessionReceiver).AcceptSessionAsync();
                 }
                 var receivedMessage = await receiver.ReceiveMessageAsync().ConfigureAwait(false);
                 Assert.AreEqual(message.Body.ToString(), receivedMessage.Body.ToString());
@@ -81,10 +82,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 }
                 else
                 {
-                    Assert.ThrowsAsync<ObjectDisposedException>(async () => await client.CreateSessionReceiverAsync(scope.QueueName));
-                    Assert.ThrowsAsync<ObjectDisposedException>(async () => await client.CreateSessionReceiverAsync(
-                        scope.QueueName,
-                        new ServiceBusSessionReceiverOptions { SessionId = "sessionId" }));
+                    Assert.Throws<ObjectDisposedException>(() => client.CreateSessionReceiver(scope.QueueName));
+                    Assert.Throws<ObjectDisposedException>(() => client.CreateSessionReceiver(scope.QueueName));
                 }
                 Assert.Throws<ObjectDisposedException>(() => client.CreateProcessor(scope.QueueName));
             }
@@ -110,7 +109,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 }
                 else
                 {
-                    receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
+                    receiver = client.CreateSessionReceiver(scope.QueueName);
+                    await (receiver as ServiceBusSessionReceiver).AcceptSessionAsync();
                 }
                 var receivedMessage = await receiver.ReceiveMessageAsync().ConfigureAwait(false);
                 Assert.AreEqual(message.Body.ToString(), receivedMessage.Body.ToString());
@@ -125,7 +125,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 {
                     // close old receiver so we can get session lock
                     await receiver.DisposeAsync();
-                    await client.CreateSessionReceiverAsync(scope.QueueName);
+                    var receiver2 = client.CreateSessionReceiver(scope.QueueName);
+                    await receiver2.AcceptSessionAsync();
                 }
                 client.CreateProcessor(scope.QueueName);
             }

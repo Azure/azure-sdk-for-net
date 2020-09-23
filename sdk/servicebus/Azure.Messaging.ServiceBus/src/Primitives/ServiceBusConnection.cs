@@ -215,7 +215,6 @@ namespace Azure.Messaging.ServiceBus
             ReceiveMode receiveMode,
             uint prefetchCount,
             string identifier,
-            string sessionId = default,
             bool isSessionReceiver = default) =>
                 _innerClient.CreateReceiver(
                     entityPath,
@@ -223,7 +222,6 @@ namespace Azure.Messaging.ServiceBus
                     receiveMode,
                     prefetchCount,
                     identifier,
-                    sessionId,
                     isSessionReceiver);
 
         internal virtual TransportRuleManager CreateTransportRuleManager(
