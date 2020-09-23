@@ -17,7 +17,10 @@ namespace Azure.Search.Documents
         private static readonly IReadOnlyDictionary<string, Func<object, GeometryProxy>> s_types =
             new Dictionary<string, Func<object, GeometryProxy>>(StringComparer.OrdinalIgnoreCase)
             {
+                ["Microsoft.Spatial.GeometryLineString"] = value => new GeometryLineStringProxy(value),
                 ["Microsoft.Spatial.GeometryPoint"] = value => new GeometryPointProxy(value),
+                ["Microsoft.Spatial.GeometryPolygon"] = value => new GeometryPolygonProxy(value),
+                ["Microsoft.Spatial.GeometryPosition"] = value => new GeometryPositionProxy(value),
             };
 
         /// <summary>
@@ -32,9 +35,7 @@ namespace Azure.Search.Documents
                 return false;
             }
 
-            // TODO: Should we compare the public key token as well, or is that too restrictive or unnecessarily slow?
-            return IsAssembly(type)
-                && s_types.ContainsKey(type.FullName);
+            return TryGetFactory(type, out _);
         }
 
         /// <summary>
@@ -52,7 +53,7 @@ namespace Azure.Search.Documents
             }
 
             Type type = value.GetType();
-            if (IsAssembly(type) && s_types.TryGetValue(type.FullName, out Func<object, GeometryProxy> factory))
+            if (TryGetFactory(type, out Func<object, GeometryProxy> factory))
             {
                 return factory(value);
             }
@@ -60,10 +61,25 @@ namespace Azure.Search.Documents
             throw new NotSupportedException($"Type {value.GetType()} is not supported");
         }
 
-        private static bool IsAssembly(Type type)
+        private static bool TryGetFactory(Type type, out Func<object, GeometryProxy> factory)
         {
+            // TODO: Should we compare the public key token as well, or is that too restrictive or unnecessarily slow?
             AssemblyName assemblyName = type.Assembly.GetName();
-            return string.Equals(assemblyName.Name, Name, StringComparison.OrdinalIgnoreCase);
+            if (string.Equals(assemblyName.Name, Name, StringComparison.OrdinalIgnoreCase))
+            {
+                while (type != typeof(object))
+                {
+                    if (s_types.TryGetValue(type.FullName, out factory))
+                    {
+                        return true;
+                    }
+
+                    type = type.BaseType;
+                }
+            }
+
+            factory = null;
+            return false;
         }
     }
 }

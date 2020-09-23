@@ -7,19 +7,19 @@ using System.Reflection;
 namespace Azure.Search.Documents
 {
     /// <summary>
-    /// Proxy for a Microsoft.Spatial.GeometryPoint class.
+    /// Proxy for a Microsoft.Spatial.GeometryPosition class.
     /// </summary>
-    internal class GeometryPointProxy : GeometryProxy
+    internal class GeometryPositionProxy : GeometryProxy
     {
         private static PropertyInfo s_xProperty;
         private static PropertyInfo s_yProperty;
 
         /// <summary>
-        /// Creates a new instance of the <see cref="GeometryPointProxy"/> class.
+        /// Creates a new instance of the <see cref="GeometryPositionProxy"/> class.
         /// </summary>
         /// <param name="value">The Microsoft.Spatial.GeometryPoint object to proxy.</param>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is null.</exception>
-        public GeometryPointProxy(object value) : base(value)
+        public GeometryPositionProxy(object value) : base(value)
         {
         }
 

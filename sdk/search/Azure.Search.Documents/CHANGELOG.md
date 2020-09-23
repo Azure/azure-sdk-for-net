@@ -9,6 +9,7 @@
 ### Added
 
 - Add support to `FieldBuilder` to define search fields for `Microsoft.Spatial` types without an explicit assembly dependency.
+- Add support to `SearchFilter` to encode geometric types from `Microsoft.Spatial` without an explicit assembly dependency.
 
 ## 11.1.1 (2020-08-18)
 
