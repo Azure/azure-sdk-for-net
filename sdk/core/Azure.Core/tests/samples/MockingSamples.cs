@@ -37,5 +37,38 @@ namespace Azure.Core.Samples
 
             Assert.NotNull(secret);
         }
+
+        [Test]
+        public void ClientMockWithPageable()
+        {
+            #region Snippet:ClientMockWithPageable
+            // Create a client mock
+            var mock = new Mock<SecretClient>();
+
+            // Create a Page
+            var deletedValue = SecretModelFactory.DeletedSecret(
+                SecretModelFactory.SecretProperties(new Uri("http://example.com"))
+            );
+            var pageValues = new[] { deletedValue };
+            var page = Page<DeletedSecret>.FromValues(pageValues, default, new Mock<Response>().Object);
+
+            // Create a mock for the Pageable
+            var pageableMock = new Mock<Pageable<DeletedSecret>> { CallBase = true };
+
+            // Setup AsPages method in the Pageable mock
+            pageableMock.Setup(c => c.AsPages(It.IsAny<string>(), default))
+                .Returns(new[] { page });
+
+            // Setup client method that returns Pageable
+            mock.Setup(c => c.GetDeletedSecrets(default))
+                .Returns(pageableMock.Object);
+
+            // Use the client mock
+            SecretClient client = mock.Object;
+            DeletedSecret deletedSecret = client.GetDeletedSecrets().First();
+            #endregion
+
+            Assert.AreEqual(deletedSecret, deletedValue);
+        }
     }
 }
