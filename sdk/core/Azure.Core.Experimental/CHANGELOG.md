@@ -1,5 +1,10 @@
 # Release History
 
+## 0.1.0-preview.6 (Unreleased)
+
+### Breaking Changes
+- `BinaryData`: Change return type of `FromObjectAsync` from `Task<T>` to `ValueTask<T>`
+
 ## 0.1.0-preview.5 (2020-09-03)
 
 ### Added

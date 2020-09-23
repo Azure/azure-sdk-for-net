@@ -46,6 +46,27 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string AzureDatabricksDeltaLakeTable = @"
+{
+    name: ""AzureDatabricksDeltaLakeDataset"",
+    properties:
+    {
+        type: ""AzureDatabricksDeltaLakeDataset"",
+        linkedServiceName: 
+        {  
+            referenceName : ""ls"",
+            type : ""LinkedServiceReference""
+        },
+        typeProperties:
+        {            
+             ""table"": ""test"",
+             ""database"": ""default""
+        }
+    }
+}
+";
+
+        [JsonSample]
         public const string AzureTable = @"
 {
     name: ""TableWithLatency"",
