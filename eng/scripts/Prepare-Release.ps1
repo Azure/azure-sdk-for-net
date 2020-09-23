@@ -180,7 +180,7 @@ else
     Write-Host "No released version, library type $libraryType" -ForegroundColor Green
 }
 
-$newVersion = Read-Host -Prompt "Input the new version, NA if you are not releasing or press Enter to use use current project version '$currentProjectVersion'"
+$newVersion = Read-Host -Prompt "Input the new version, NA if you are not releasing, or press Enter to use use current project version '$currentProjectVersion'"
 $releasing = $true
 
 if (!$newVersion)
