@@ -387,7 +387,7 @@ namespace Azure.Storage
                 case SeekOrigin.End:
                     if (_allowBlobModifications)
                     {
-                        throw new ArgumentException($"Cannot {nameof(Seek)} with {nameof(SeekOrigin)}.{nameof(SeekOrigin.End)} on a growing blob or file.");
+                        throw new ArgumentException($"Cannot {nameof(Seek)} with {nameof(SeekOrigin)}.{nameof(SeekOrigin.End)} on a growing blob or file.  Call Stream.Seek(Stream.Length, SeekOrigin.Begin) to get to the end of known data.");
                     }
                     else
                     {
