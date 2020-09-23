@@ -31,7 +31,7 @@ KeyVaultSecret secret = client.GetSecret("Name");
 
 For methods that return instances of `Pageable` or `AsyncPageable`, `Mock` can be used to create an instance of type that is derived from these classes:
 
-```C# Snippet:ClientMock
+```C# Snippet:ClientMockWithPageable
 // Create a client mock
 var mock = new Mock<SecretClient>();
 
