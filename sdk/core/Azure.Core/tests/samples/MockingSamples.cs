@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using Azure.Security.KeyVault.Secrets;
 using Moq;
 using NUnit.Framework;
