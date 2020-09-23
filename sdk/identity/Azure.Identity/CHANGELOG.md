@@ -1,6 +1,9 @@
 # Release History
 ## 1.3.0-beta.2 (Unreleased)
 
+### New Features
+- Update `DeviceCodeCredential` to output device code information and authentication instructions in the console, in the case no `deviceCodeCallback` is specified.
+
 
 ## 1.3.0-beta.1 (2020-09-11)
 
