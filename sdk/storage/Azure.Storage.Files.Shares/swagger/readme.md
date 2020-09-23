@@ -542,7 +542,6 @@ directive:
   transform: >
     $.get.responses["200"]["x-az-response-name"] = "ShareFileRangeInfoInternal";
     $.get.responses["200"]["x-az-public"] = false;
-    $.get.responses["200"]["x-az-response-schema-name"] = "Ranges";
 ```
 
 ### /{shareName}/{directory}/{fileName}?comp=copy
@@ -756,13 +755,31 @@ directive:
     $.put.parameters[3]["x-ms-enum"].name = "ShareFileRangeWriteType";
 ```
 
-### Hide ranges
+### Hide FileRange
 ``` yaml
 directive:
 - from: swagger-document
   where: $.definitions
   transform: >
-    $.Range["x-az-public"] = false;
+    $.FileRange["x-az-public"] = false;
+```
+
+### Hide ShareFileRangeList
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.ShareFileRangeList["x-az-public"] = false;
+```
+
+### Hide ClearRange
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.ClearRange["x-az-public"] = false;
 ```
 
 ### /{shareName}/{directory}/{fileName}?comp=lease&acquire

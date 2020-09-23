@@ -649,6 +649,7 @@ namespace Azure.Storage.Files.Shares.Models
     public partial class ShareFileRangeInfo
     {
         internal ShareFileRangeInfo() { }
+        public System.Collections.Generic.IEnumerable<Azure.HttpRange> ClearRanges { get { throw null; } }
         public Azure.ETag ETag { get { throw null; } }
         public long FileContentLength { get { throw null; } }
         public System.DateTimeOffset LastModified { get { throw null; } }
