@@ -59,6 +59,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/notebookWorkspaces", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -143,6 +144,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath(notebookWorkspaceName.ToString(), true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -230,6 +232,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(notebookCreateUpdateParameters);
             request.Content = content;
@@ -319,6 +322,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath(notebookWorkspaceName.ToString(), true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -398,6 +402,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/listConnectionInfo", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -485,6 +490,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/regenerateAuthToken", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -564,6 +570,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/start", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

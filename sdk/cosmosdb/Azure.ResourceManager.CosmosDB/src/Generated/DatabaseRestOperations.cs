@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendQuery("api-version", "2020-04-01", true);
             uri.AppendQuery("$filter", filter, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -171,6 +172,7 @@ namespace Azure.ResourceManager.CosmosDB
                 uri.AppendQuery("$filter", filter, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -268,6 +270,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/metricDefinitions", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Communication.Models
         }
 
         /// <summary> Initializes a new instance of OperationStatus. </summary>
-        /// <param name="id"> Fully qualified ID for the operationstatus. </param>
+        /// <param name="id"> The operation Id. </param>
         /// <param name="status"> Provisioning state of the resource. </param>
         /// <param name="startTime"> The start time of the operation. </param>
         /// <param name="endTime"> The end time of the operation. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Communication.Models
             Error = error;
         }
 
-        /// <summary> Fully qualified ID for the operationstatus. </summary>
+        /// <summary> The operation Id. </summary>
         public string Id { get; }
         /// <summary> Provisioning state of the resource. </summary>
         public Status? Status { get; }

@@ -5,6 +5,5 @@
     <Description>Azure management client SDK for Azure resource provider Microsoft.Storage</Description>
     <PackageTags>azure;management;storage</PackageTags>
     <NoWarn>$(NoWarn);AZC0008</NoWarn>
-    <TemporaryUsePreviousGeneratorVersion>true</TemporaryUsePreviousGeneratorVersion>
   </PropertyGroup>
 </Project>

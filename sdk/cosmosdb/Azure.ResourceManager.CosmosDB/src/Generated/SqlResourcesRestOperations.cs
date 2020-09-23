@@ -59,6 +59,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/sqlDatabases", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -143,6 +144,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath(databaseName, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -238,6 +240,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(createUpdateSqlDatabaseParameters);
             request.Content = content;
@@ -424,6 +427,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/throughputSettings/default", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -520,6 +524,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(updateThroughputParameters);
             request.Content = content;
@@ -620,6 +625,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/throughputSettings/default/migrateToAutoscale", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -707,6 +713,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/throughputSettings/default/migrateToManualThroughput", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -794,6 +801,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/containers", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -890,6 +898,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath(containerName, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -997,6 +1006,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(createUpdateSqlContainerParameters);
             request.Content = content;
@@ -1207,6 +1217,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/throughputSettings/default", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1315,6 +1326,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(updateThroughputParameters);
             request.Content = content;
@@ -1427,6 +1439,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/throughputSettings/default/migrateToAutoscale", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1526,6 +1539,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/throughputSettings/default/migrateToManualThroughput", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1625,6 +1639,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/storedProcedures", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1733,6 +1748,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath(storedProcedureName, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1852,6 +1868,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(createUpdateSqlStoredProcedureParameters);
             request.Content = content;
@@ -2084,6 +2101,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/userDefinedFunctions", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -2192,6 +2210,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath(userDefinedFunctionName, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -2311,6 +2330,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(createUpdateSqlUserDefinedFunctionParameters);
             request.Content = content;
@@ -2543,6 +2563,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/triggers", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -2651,6 +2672,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath(triggerName, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -2770,6 +2792,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(createUpdateSqlTriggerParameters);
             request.Content = content;
