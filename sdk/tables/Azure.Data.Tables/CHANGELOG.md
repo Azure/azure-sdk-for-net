@@ -2,6 +2,10 @@
 
 ## 3.0.0-beta.2 (Unreleased)
 
+### Added
+
+- Implemented batch operations
+
 ### Changed
 
 - `TableClient`'s `GetEntity` method now exposes the `select` query option to allow for more efficient existence checks for a table entity
