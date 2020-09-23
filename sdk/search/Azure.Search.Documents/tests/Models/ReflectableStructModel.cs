@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 #if EXPERIMENTAL_SPATIAL
-using Azure.Core.Spatial;
+using Azure.Core.GeoJson;
 #else
 using Microsoft.Spatial;
 #endif
@@ -109,7 +109,7 @@ namespace Azure.Search.Documents.Tests
         public int? NullableInt { get; set; }
 
 #if EXPERIMENTAL_SPATIAL
-        public PointGeometry GeographyPoint { get; set; }
+        public GeoPoint GeographyPoint { get; set; }
 #else
         public GeographyPoint GeographyPoint { get; set; }
 #endif
@@ -175,15 +175,15 @@ namespace Azure.Search.Documents.Tests
         public ICollection<DateTimeOffset> DateTimeOffsetICollection { get; set; }
 
 #if EXPERIMENTAL_SPATIAL
-        public PointGeometry[] GeographyPointArray { get; set; }
+        public GeoPoint[] GeographyPointArray { get; set; }
 
-        public IList<PointGeometry> GeographyPointIList { get; set; }
+        public IList<GeoPoint> GeographyPointIList { get; set; }
 
-        public List<PointGeometry> GeographyPointList { get; set; }
+        public List<GeoPoint> GeographyPointList { get; set; }
 
-        public IEnumerable<PointGeometry> GeographyPointIEnumerable { get; set; }
+        public IEnumerable<GeoPoint> GeographyPointIEnumerable { get; set; }
 
-        public ICollection<PointGeometry> GeographyPointICollection { get; set; }
+        public ICollection<GeoPoint> GeographyPointICollection { get; set; }
 #else
         public GeographyPoint[] GeographyPointArray { get; set; }
 

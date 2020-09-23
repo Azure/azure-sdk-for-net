@@ -6,7 +6,7 @@ using System.Globalization;
 using System.Text;
 #if EXPERIMENTAL_SPATIAL
 using Azure.Core;
-using Azure.Core.Spatial;
+using Azure.Core.GeoJson;
 #endif
 
 namespace Azure.Search.Documents
@@ -76,12 +76,12 @@ namespace Azure.Search.Documents
 
 #if EXPERIMENTAL_SPATIAL
                     // Points
-                    GeometryPosition x => EncodeGeometry(x),
-                    PointGeometry x => EncodeGeometry(x),
+                    GeoPosition x => EncodeGeometry(x),
+                    GeoPoint x => EncodeGeometry(x),
 
                     // Polygons
-                    LineGeometry x => EncodeGeometry(x),
-                    PolygonGeometry x => EncodeGeometry(x),
+                    GeoLine x => EncodeGeometry(x),
+                    GeoPolygon x => EncodeGeometry(x),
 #endif
 
                     // Text
@@ -124,11 +124,11 @@ namespace Azure.Search.Documents
 
 #if EXPERIMENTAL_SPATIAL
         /// <summary>
-        /// Convert a <see cref="GeometryPosition"/> to an OData value.
+        /// Convert a <see cref="GeoPosition"/> to an OData value.
         /// </summary>
         /// <param name="position">The position.</param>
         /// <returns>The OData representation of the position.</returns>
-        private static string EncodeGeometry(GeometryPosition position)
+        private static string EncodeGeometry(GeoPosition position)
         {
             const int maxLength =
                 19 +       // "geography'POINT( )'".Length
@@ -146,38 +146,38 @@ namespace Azure.Search.Documents
         }
 
         /// <summary>
-        /// Convert a <see cref="PointGeometry"/> to an OData value.
+        /// Convert a <see cref="GeoPoint"/> to an OData value.
         /// </summary>
         /// <param name="point">The point.</param>
         /// <returns>The OData representation of the point.</returns>
-        private static string EncodeGeometry(PointGeometry point)
+        private static string EncodeGeometry(GeoPoint point)
         {
             Argument.AssertNotNull(point, nameof(point));
             return EncodeGeometry(point.Position);
         }
 
         /// <summary>
-        /// Convert a <see cref="LineGeometry"/> forming a polygon to an OData
+        /// Convert a <see cref="GeoLine"/> forming a polygon to an OData
         /// value.  A LineGeometry must have at least four
-        /// <see cref="LineGeometry.Positions"/> and the first and last must
+        /// <see cref="GeoLine.Positions"/> and the first and last must
         /// match to form a searchable polygon.
         /// </summary>
         /// <param name="line">The line forming a polygon.</param>
         /// <returns>The OData representation of the line.</returns>
-        private static string EncodeGeometry(LineGeometry line)
+        private static string EncodeGeometry(GeoLine line)
         {
             Argument.AssertNotNull(line, nameof(line));
             Argument.AssertNotNull(line.Positions, $"{nameof(line)}.{nameof(line.Positions)}");
             if (line.Positions.Count < 4)
             {
                 throw new ArgumentException(
-                    $"A {nameof(LineGeometry)} must have at least four {nameof(LineGeometry.Positions)} to form a searchable polygon.",
+                    $"A {nameof(GeoLine)} must have at least four {nameof(GeoLine.Positions)} to form a searchable polygon.",
                     $"{nameof(line)}.{nameof(line.Positions)}");
             }
             else if (line.Positions[0] != line.Positions[line.Positions.Count - 1])
             {
                 throw new ArgumentException(
-                    $"A {nameof(LineGeometry)} must have matching first and last {nameof(LineGeometry.Positions)} to form a searchable polygon.",
+                    $"A {nameof(GeoLine)} must have matching first and last {nameof(GeoLine.Positions)} to form a searchable polygon.",
                     $"{nameof(line)}.{nameof(line.Positions)}");
             }
 
@@ -186,7 +186,7 @@ namespace Azure.Search.Documents
             StringBuilder odata = new StringBuilder();
             odata.Append("geography'POLYGON((");
             bool first = true;
-            foreach (GeometryPosition position in line.Positions)
+            foreach (GeoPosition position in line.Positions)
             {
                 if (!first) { odata.Append(","); }
                 first = false;
@@ -199,20 +199,20 @@ namespace Azure.Search.Documents
         }
 
         /// <summary>
-        /// Convert a <see cref="PolygonGeometry"/> to an OData value.  A
-        /// PolygonGeometry must have exactly one <see cref="PolygonGeometry.Rings"/>
+        /// Convert a <see cref="GeoPolygon"/> to an OData value.  A
+        /// PolygonGeometry must have exactly one <see cref="GeoPolygon.Rings"/>
         /// to form a searchable polygon.
         /// </summary>
         /// <param name="polygon">The polygon.</param>
         /// <returns>The OData representation of the polygon.</returns>
-        private static string EncodeGeometry(PolygonGeometry polygon)
+        private static string EncodeGeometry(GeoPolygon polygon)
         {
             Argument.AssertNotNull(polygon, nameof(polygon));
             Argument.AssertNotNull(polygon.Rings, $"{nameof(polygon)}.{nameof(polygon.Rings)}");
             if (polygon.Rings.Count != 1)
             {
                 throw new ArgumentException(
-                    $"A {nameof(PolygonGeometry)} must have exactly one {nameof(PolygonGeometry.Rings)} to form a searchable polygon.",
+                    $"A {nameof(GeoPolygon)} must have exactly one {nameof(GeoPolygon.Rings)} to form a searchable polygon.",
                     $"{nameof(polygon)}.{nameof(polygon.Rings)}");
             }
             return EncodeGeometry(polygon.Rings[0]);

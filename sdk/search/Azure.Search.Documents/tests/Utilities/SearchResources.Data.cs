@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 using Azure.Search.Documents.Models;
 using Azure.Search.Documents.Indexes.Models;
 #if EXPERIMENTAL_SPATIAL
-using Azure.Core.Spatial;
+using Azure.Core.GeoJson;
 #else
 using System.Text.Json;
 using System.Collections.Generic;
@@ -326,7 +326,7 @@ namespace Azure.Search.Documents.Tests
 
 #if EXPERIMENTAL_SPATIAL
         [JsonPropertyName("location")]
-        public PointGeometry Location { get; set; }
+        public GeoPoint Location { get; set; }
 #else
         [JsonPropertyName("location")]
         [JsonConverter(typeof(GeographyPointConverter))]
@@ -503,7 +503,7 @@ namespace Azure.Search.Documents.Tests
         public DateTimeOffset? LastRenovationDate { get; set; }
         public int? Rating { get; set; }
 #if EXPERIMENTAL_SPATIAL
-        public PointGeometry Location { get; set; }
+        public GeoPoint Location { get; set; }
 #else
         [JsonConverter(typeof(GeographyPointConverter))]
         public GeographyPoint Location { get; set; } = null;

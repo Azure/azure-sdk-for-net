@@ -12,7 +12,7 @@ using Azure.Core;
 using Azure.Core.Serialization;
 using Azure.Search.Documents.Indexes.Models;
 #if EXPERIMENTAL_SPATIAL
-using Azure.Core.Spatial;
+using Azure.Core.GeoJson;
 #endif
 
 namespace Azure.Search.Documents.Indexes
@@ -36,7 +36,7 @@ namespace Azure.Search.Documents.Indexes
                     [typeof(DateTime)] = SearchFieldDataType.DateTimeOffset,
                     [typeof(DateTimeOffset)] = SearchFieldDataType.DateTimeOffset,
 #if EXPERIMENTAL_SPATIAL
-                    [typeof(PointGeometry)] = SearchFieldDataType.GeographyPoint,
+                    [typeof(GeoPoint)] = SearchFieldDataType.GeographyPoint,
 #endif
                 });
 
