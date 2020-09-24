@@ -7,15 +7,13 @@
 		<PackageId>Microsoft.Azure.Management.Sql</PackageId>
 		<Description>Azure SQL Management SDK library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Sql</AssemblyName>
-		<Version>1.44.0-preview</Version>
+		<Version>1.44.2-preview</Version>
 		<PackageTags>Microsoft Azure SQL Management;SQL;SQL Management;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
 New features:
-- Added auto complete restore and last backup name parameters for Azure SQL Managed Database
-- Added support for Azure Active Directory only authentication for Azure SQL DB
-- Azure SQL Managed Instance create, update and drop API version 2020-02-02-preview
-- Azure SQL Managed Instance storageAccountType to API version 2020-02-02-preview
+- Azure SQL Databases support for backup storage redundancy
+- Azure SQL Import Export support for network isolation.
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

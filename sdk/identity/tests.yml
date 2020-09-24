@@ -8,7 +8,7 @@ extends:
       OSVmImage: "ubuntu-18.04"
       TestTargetFramework: netcoreapp2.1
       Container:
-        image: 'azsdkengsys.azurecr.io/dotnet/ubuntu_netcore2_keyring:504600'
+        image: 'azsdkengsys.azurecr.io/dotnet/ubuntu_netcore_keyring:523386'
         endpoint: 'azsdkengsys'
         options: -ti --cap-add=IPC_LOCK
       PreSteps:
@@ -24,9 +24,11 @@ extends:
       - pwsh: |
           [System.Convert]::FromBase64String($env:PFX_CONTENTS) | Set-Content -Path $(Agent.TempDirectory)/test.pfx -AsByteStream
           Set-Content -Path $(Agent.TempDirectory)/test.pem -Value $env:PEM_CONTENTS
+          [System.Convert]::FromBase64String($env:SNI_CONTENTS) | Set-Content -Path $(Agent.TempDirectory)/testsni.pfx -AsByteStream
         env:
           PFX_CONTENTS: $(net-identity-spcert-pfx)
           PEM_CONTENTS: $(net-identity-spcert-pem)
+          SNI_CONTENTS: $(net-identity-spcert-sni)
     EnvVars:
       AZURE_IDENTITY_TEST_TENANTID: $(net-identity-tenantid)
       AZURE_IDENTITY_TEST_USERNAME: $(net-identity-username)
@@ -36,3 +38,4 @@ extends:
       IDENTITY_SP_CLIENT_SECRET: $(net-identity-sp-clientsecret)
       IDENTITY_SP_CERT_PFX: $(Agent.TempDirectory)/test.pfx
       IDENTITY_SP_CERT_PEM: $(Agent.TempDirectory)/test.pem
+      IDENTITY_SP_CERT_SNI: $(Agent.TempDirectory)/testsni.pfx

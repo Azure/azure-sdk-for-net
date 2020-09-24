@@ -45,15 +45,23 @@ namespace Azure.Core.TestFramework
                 // Check the result
                 if (IsTestFailedWithRecordingMismatch(context))
                 {
+                    var originalResult = context.CurrentResult;
                     context.CurrentResult = context.CurrentTest.MakeTestResult();
                     // Run the test again after setting the RecordedTestMode to Record
                     SetRecordMode(context.TestObject as RecordedTestBase, RecordedTestMode.Record);
                     context.CurrentResult = innerCommand.Execute(context);
 
-                    // If the recording succeeded, set a warning result.
-                    if (!IsTestFailedWithRecordingMismatch(context))
+                    // If the recording succeeded, set an error result.
+                    if (context.CurrentResult.ResultState.Status == TestStatus.Passed)
                     {
-                        context.CurrentResult.SetResult(ResultState.Error, "Test failed playback, but was successfully re-recorded (it should pass if re-run). Please copy updated recording to SessionFiles.");
+                        context.CurrentResult.SetResult(ResultState.Error, "Test failed playback, but was successfully re-recorded (it should pass if re-run). Please copy updated recordings to SessionFiles using `dotnet msbuild /t:UpdateSessionRecords`.");
+                    }
+                    else
+                    {
+                        context.CurrentResult.SetResult(context.CurrentResult.ResultState,
+                            "Error while trying to re-record: " + Environment.NewLine +
+                            context.CurrentResult.Message + Environment.NewLine +
+                            "Original error: " + originalResult.Message, context.CurrentResult.StackTrace);
                     }
 
                     // revert RecordTestMode to Playback
@@ -71,7 +79,7 @@ namespace Azure.Core.TestFramework
                     _ => true
                 };
 
-                return failed && context.CurrentResult.Message.StartsWith(typeof(TestRecordingMismatchException).FullName);
+                return failed && context.CurrentResult.Message.Contains(typeof(TestRecordingMismatchException).FullName);
             }
         }
 

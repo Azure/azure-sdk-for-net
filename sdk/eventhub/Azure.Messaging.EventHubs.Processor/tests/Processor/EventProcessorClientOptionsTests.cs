@@ -32,6 +32,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 MaximumWaitTime = TimeSpan.FromMinutes(65),
                 CacheEventCount = 1,
                 PrefetchCount = 0,
+                PrefetchSizeInBytes = 200,
                 RetryOptions = new EventHubsRetryOptions { TryTimeout = TimeSpan.FromMinutes(1), Delay = TimeSpan.FromMinutes(4) },
                 ConnectionOptions = new EventHubConnectionOptions { TransportType = EventHubsTransportType.AmqpWebSockets }
             };
@@ -46,6 +47,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(clone.MaximumWaitTime, Is.EqualTo(options.MaximumWaitTime), "The maximum wait time of the clone should match.");
             Assert.That(clone.CacheEventCount, Is.EqualTo(options.CacheEventCount), "The event cache size of the clone should match.");
             Assert.That(clone.PrefetchCount, Is.EqualTo(options.PrefetchCount), "The prefetch count of the clone should match.");
+            Assert.That(clone.PrefetchSizeInBytes, Is.EqualTo(options.PrefetchSizeInBytes), "The prefetch byte size of the clone should match.");
             Assert.That(clone.ConnectionOptions.TransportType, Is.EqualTo(options.ConnectionOptions.TransportType), "The connection options of the clone should copy properties.");
             Assert.That(clone.ConnectionOptions, Is.Not.SameAs(options.ConnectionOptions), "The connection options of the clone should be a copy, not the same instance.");
             Assert.That(clone.RetryOptions.IsEquivalentTo(options.RetryOptions), Is.True, "The retry options of the clone should be considered equal.");
@@ -111,6 +113,39 @@ namespace Azure.Messaging.EventHubs.Tests
         public void PrefetchCountAllowsZero()
         {
             Assert.That(() => new EventProcessorClientOptions { PrefetchCount = 0 }, Throws.Nothing);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClientOptions.PrefetchSizeInBytes" />
+        ///   property.
+        /// </summary>
+        ///
+        [Test]
+        public void PrefetchSizeInBytesIsValidated()
+        {
+            Assert.That(() => new EventProcessorClientOptions { PrefetchSizeInBytes = -1 }, Throws.InstanceOf<ArgumentException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClientOptions.PrefetchSizeInBytes" />
+        ///   property.
+        /// </summary>
+        ///
+        [Test]
+        public void PrefetchSizeInBytesAllowsZero()
+        {
+            Assert.That(() => new EventProcessorClientOptions { PrefetchSizeInBytes = 0 }, Throws.Nothing);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClientOptions.PrefetchSizeInBytes" />
+        ///   property.
+        /// </summary>
+        ///
+        [Test]
+        public void PrefetchSizeInBytesAllowsNull()
+        {
+            Assert.That(() => new EventProcessorClientOptions { PrefetchSizeInBytes = null }, Throws.Nothing);
         }
 
         /// <summary>

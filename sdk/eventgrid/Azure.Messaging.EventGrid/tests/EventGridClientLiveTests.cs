@@ -82,7 +82,7 @@ namespace Azure.Messaging.EventGrid.Tests
             {
                 eventsList.Add(
                     new EventGridEvent(
-                        BinaryData.Serialize(new TestPayload("name", i)),
+                        BinaryData.FromObject(new TestPayload("name", i)),
                         $"Subject-{i}",
                         "Microsoft.MockPublisher.TestEvent",
                         "1.0")
@@ -276,7 +276,7 @@ namespace Azure.Messaging.EventGrid.Tests
                 CloudEvent cloudEvent = new CloudEvent(
                     "record",
                     "Microsoft.MockPublisher.TestEvent",
-                    "{\"property1\": \"abc\",  \"property2\": \"123\"}")
+                    JsonDocument.Parse("{\"property1\": \"abc\",  \"property2\": 123}").RootElement)
                 {
                     Id = Recording.Random.NewGuid().ToString(),
                     Subject = $"Subject-{i}",

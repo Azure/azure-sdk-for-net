@@ -22,18 +22,16 @@ namespace Azure.Messaging.EventGrid
         public static EventGridEvent ToEventGridEvent(this BinaryData binaryData)
         {
             // Deserialize JsonElement to single event, parse event envelope properties
-            JsonDocument requestDocument = JsonDocument.Parse(binaryData.Bytes);
+            JsonDocument requestDocument = JsonDocument.Parse(binaryData.ToBytes());
             EventGridEventInternal egEventInternal = EventGridEventInternal.DeserializeEventGridEventInternal(requestDocument.RootElement);
 
-            EventGridEvent egEvent = new EventGridEvent()
-            {
-                Subject = egEventInternal.Subject,
-                EventType = egEventInternal.EventType,
-                DataVersion = egEventInternal.DataVersion,
-                Id = egEventInternal.Id,
-                EventTime = egEventInternal.EventTime,
-                SerializedData = egEventInternal.Data
-            };
+            EventGridEvent egEvent = new EventGridEvent(
+                    egEventInternal.Data,
+                    egEventInternal.Subject,
+                    egEventInternal.EventType,
+                    egEventInternal.DataVersion,
+                    egEventInternal.EventTime,
+                    egEventInternal.Id);
 
             return egEvent;
         }
@@ -46,7 +44,7 @@ namespace Azure.Messaging.EventGrid
         public static CloudEvent ToCloudEvent(this BinaryData binaryData)
         {
             // Deserialize JsonElement to single event, parse event envelope properties
-            JsonDocument requestDocument = JsonDocument.Parse(binaryData.Bytes);
+            JsonDocument requestDocument = JsonDocument.Parse(binaryData.ToBytes());
             CloudEventInternal cloudEventInternal = CloudEventInternal.DeserializeCloudEventInternal(requestDocument.RootElement);
 
             // Case where Data and Type are null - cannot pass null Type into CloudEvent constructor
@@ -56,17 +54,15 @@ namespace Azure.Messaging.EventGrid
             }
 
             CloudEvent cloudEvent = new CloudEvent(
-                cloudEventInternal.Source,
-                cloudEventInternal.Type)
-            {
-                Id = cloudEventInternal.Id,
-                Time = cloudEventInternal.Time,
-                DataBase64 = cloudEventInternal.DataBase64,
-                DataSchema = cloudEventInternal.Dataschema,
-                DataContentType = cloudEventInternal.Datacontenttype,
-                Subject = cloudEventInternal.Subject,
-                SerializedData = cloudEventInternal.Data
-            };
+                    cloudEventInternal.Id,
+                    cloudEventInternal.Source,
+                    cloudEventInternal.Type,
+                    cloudEventInternal.Time,
+                    cloudEventInternal.Dataschema,
+                    cloudEventInternal.Datacontenttype,
+                    cloudEventInternal.Subject,
+                    cloudEventInternal.Data,
+                    cloudEventInternal.DataBase64);
 
             if (cloudEventInternal.AdditionalProperties != null)
             {

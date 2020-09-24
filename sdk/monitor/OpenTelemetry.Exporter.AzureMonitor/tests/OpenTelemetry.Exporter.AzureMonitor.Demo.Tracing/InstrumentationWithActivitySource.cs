@@ -60,10 +60,11 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
                             foreach (var headerKey in headerKeys)
                             {
                                 string headerValue = context.Request.Headers[headerKey];
-                                activity?.AddTag($"http.header.{headerKey}", headerValue);
+                                activity?.SetTag($"http.header.{headerKey}", headerValue);
                             }
 
-                            activity?.AddTag("http.url", context.Request.Url.AbsolutePath);
+                            activity?.SetTag("http.url", context.Request.Url.AbsolutePath);
+                            activity?.SetTag("http.host", context.Request.Url.Host);
 
                             string requestContent;
                             using (var childSpan = source.StartActivity("ReadStream", ActivityKind.Consumer))
@@ -73,8 +74,8 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
                                 childSpan.AddEvent(new ActivityEvent("StreamReader.ReadToEnd"));
                             }
 
-                            activity?.AddTag("request.content", requestContent);
-                            activity?.AddTag("request.length", requestContent.Length.ToString(CultureInfo.InvariantCulture));
+                            activity?.SetTag("request.content", requestContent);
+                            activity?.SetTag("request.length", requestContent.Length.ToString(CultureInfo.InvariantCulture));
 
                             var echo = Encoding.UTF8.GetBytes("echo: " + requestContent);
                             context.Response.ContentEncoding = Encoding.UTF8;
@@ -126,22 +127,22 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
 #pragma warning restore CA2234 // Pass system uri objects instead of strings
                                 activity?.AddEvent(new ActivityEvent("PostAsync:Ended"));
 
-                                activity?.AddTag("http.url", url);
-                                activity?.AddTag("http.status_code", $"{response.StatusCode:D}");
+                                activity?.SetTag("http.url", url);
+                                activity?.SetTag("http.status_code", $"{response.StatusCode:D}");
 
                                 var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                                activity?.AddTag("response.content", responseContent);
-                                activity?.AddTag("response.length", responseContent.Length.ToString(CultureInfo.InvariantCulture));
+                                activity?.SetTag("response.content", responseContent);
+                                activity?.SetTag("response.length", responseContent.Length.ToString(CultureInfo.InvariantCulture));
 
                                 foreach (var header in response.Headers)
                                 {
                                     if (header.Value is IEnumerable<object> enumerable)
                                     {
-                                        activity?.AddTag($"http.header.{header.Key}", string.Join(",", enumerable));
+                                        activity?.SetTag($"http.header.{header.Key}", string.Join(",", enumerable));
                                     }
                                     else
                                     {
-                                        activity?.AddTag($"http.header.{header.Key}", header.Value.ToString());
+                                        activity?.SetTag($"http.header.{header.Key}", header.Value.ToString());
                                     }
                                 }
                             }

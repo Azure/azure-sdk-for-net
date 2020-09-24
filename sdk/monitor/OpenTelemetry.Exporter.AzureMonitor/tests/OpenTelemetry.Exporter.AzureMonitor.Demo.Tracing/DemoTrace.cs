@@ -11,12 +11,13 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
 
         public static void Main()
         {
-            OpenTelemetry.Sdk.CreateTracerProvider(builder => builder
-                                .AddActivitySource("Samples.SampleServer")
-                                .AddActivitySource("Samples.SampleClient")
-                                .UseAzureMonitorTraceExporter(o => {
-                                    o.ConnectionString = "ConnectionString";
-                                }));
+            using var tracerProvider = OpenTelemetry.Sdk.CreateTracerProviderBuilder()
+                .AddSource("Samples.SampleServer")
+                .AddSource("Samples.SampleClient")
+                .AddAzureMonitorTraceExporter(o => {
+                    o.ConnectionString = $"InstrumentationKey=Ikey;";
+                })
+                .Build();
 
             using (var sample = new InstrumentationWithActivitySource())
             {

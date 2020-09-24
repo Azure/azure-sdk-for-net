@@ -6,19 +6,12 @@
 
 // TODO: Remove when https://github.com/Azure/azure-sdk-for-net/issues/11166 is completed.
 using Azure.Search.Documents.Indexes;
-#if !EXPERIMENTAL_FIELDBUILDER
-using Azure.Search.Documents.Samples;
-#endif
 
 namespace Azure.Search.Documents.Tests
 {
     public class RecursiveModel
     {
-#if EXPERIMENTAL_FIELDBUILDER
         [SimpleField(IsFilterable = true)]
-#else
-        [IsFilterable]
-#endif
         public int Data { get; set; }
 
         // This is to test that FieldBuilder gracefully fails on recursive models.
@@ -27,11 +20,7 @@ namespace Azure.Search.Documents.Tests
 
     public class OtherRecursiveModel
     {
-#if EXPERIMENTAL_FIELDBUILDER
         [SimpleField(IsFilterable = true, IsFacetable = true)]
-#else
-        [IsFilterable, IsFacetable]
-#endif
         public double Data { get; set; }
 
         public RecursiveModel RecursiveReference { get; set; }

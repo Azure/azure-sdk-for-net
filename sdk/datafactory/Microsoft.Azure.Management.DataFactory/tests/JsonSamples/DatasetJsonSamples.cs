@@ -46,6 +46,27 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string AzureDatabricksDeltaLakeTable = @"
+{
+    name: ""AzureDatabricksDeltaLakeDataset"",
+    properties:
+    {
+        type: ""AzureDatabricksDeltaLakeDataset"",
+        linkedServiceName: 
+        {  
+            referenceName : ""ls"",
+            type : ""LinkedServiceReference""
+        },
+        typeProperties:
+        {            
+             ""table"": ""test"",
+             ""database"": ""default""
+        }
+    }
+}
+";
+
+        [JsonSample]
         public const string AzureTable = @"
 {
     name: ""TableWithLatency"",
@@ -1254,6 +1275,31 @@ namespace DataFactory.Tests.JsonSamples
       ""compression"": {
         ""type"": ""Deflate"",
         ""level"": ""Fastest""
+      }
+    }
+  }
+}";
+
+        [JsonSample]
+        public const string BinaryWithTarGZipDataset = @"
+{
+  ""name"": ""BinaryDataset"",
+  ""properties"": {
+    ""type"": ""Binary"",
+    ""linkedServiceName"": {
+      ""referenceName"": ""AzureBlobStorageLinkedService"",
+      ""type"": ""LinkedServiceReference""
+    },
+    ""typeProperties"": {
+      ""location"": {
+        ""type"": ""AzureBlobStorageLocation"",
+        ""container"": ""ContainerName"",
+        ""folderPath"": ""dataflow/test/input"",
+        ""fileName"": ""testTgz01""
+      },
+      ""compression"": {
+        ""type"": ""TarGZip"",
+        ""level"": ""Optimal""
       }
     }
   }

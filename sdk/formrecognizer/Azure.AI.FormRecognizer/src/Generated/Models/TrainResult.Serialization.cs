@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.FormRecognizer.Training;
@@ -19,6 +20,7 @@ namespace Azure.AI.FormRecognizer.Models
             IReadOnlyList<TrainingDocumentInfo> trainingDocuments = default;
             Optional<IReadOnlyList<CustomFormModelField>> fields = default;
             Optional<float> averageModelAccuracy = default;
+            Optional<Guid> modelId = default;
             Optional<IReadOnlyList<FormRecognizerError>> errors = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -47,6 +49,11 @@ namespace Azure.AI.FormRecognizer.Models
                     averageModelAccuracy = property.Value.GetSingle();
                     continue;
                 }
+                if (property.NameEquals("modelId"))
+                {
+                    modelId = property.Value.GetGuid();
+                    continue;
+                }
                 if (property.NameEquals("errors"))
                 {
                     List<FormRecognizerError> array = new List<FormRecognizerError>();
@@ -58,7 +65,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new TrainResult(trainingDocuments, Optional.ToList(fields), Optional.ToNullable(averageModelAccuracy), Optional.ToList(errors));
+            return new TrainResult(trainingDocuments, Optional.ToList(fields), Optional.ToNullable(averageModelAccuracy), Optional.ToNullable(modelId), Optional.ToList(errors));
         }
     }
 }

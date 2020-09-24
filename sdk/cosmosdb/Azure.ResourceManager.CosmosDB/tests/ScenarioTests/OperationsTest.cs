@@ -10,7 +10,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
     [TestFixture]
     public class OperationsTest : CosmosDBManagementClientBase
     {
-        private string resourceGroupName;
         public OperationsTest()
             : base(true)
         {
@@ -22,12 +21,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
                 InitializeClients();
-                this.resourceGroupName = Recording.GenerateAssetName(CosmosDBTestUtilities.resourceGroupPrefix);
-                TestContext.Progress.WriteLine("//////////////////OperationsTests/////////////////////////////");
-                TestContext.Progress.WriteLine(this.resourceGroupName);
                 await CosmosDBTestUtilities.TryRegisterResourceGroupAsync(ResourceGroupsOperations,
-                    CosmosDBTestUtilities.location,
-                    this.resourceGroupName);
+                    CosmosDBTestUtilities.Location,
+                    Recording.GenerateAssetName(CosmosDBTestUtilities.ResourceGroupPrefix));
             }
         }
 
@@ -40,8 +36,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TestCase]
         public async Task ListOperationsTest()
         {
-            CosmosDBManagementClient cosmosDBMgmtClient = GetCosmosDBManagementClient();
-            var operations = cosmosDBMgmtClient.Operations.ListAsync();
+            var operations = CosmosDBManagementClient.Operations.ListAsync();
             Assert.NotNull(operations);
             Assert.IsNotEmpty(await operations.ToEnumerableAsync());
         }

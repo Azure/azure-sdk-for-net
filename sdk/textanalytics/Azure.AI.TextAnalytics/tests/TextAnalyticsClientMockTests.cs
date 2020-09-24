@@ -423,6 +423,120 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
+        public async Task AnalyzeSentimentOpinionInOtherSentence()
+        {
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
+                {
+                    ""documents"": [
+                        {
+                            ""id"": ""1"",
+                            ""sentiment"": ""positive"",
+                            ""confidenceScores"": {
+                                ""positive"": 0.5,
+                                ""neutral"": 0.0,
+                                ""negative"": 0.5
+                            },
+                            ""sentences"": [
+                                {
+                                    ""sentiment"": ""positive"",
+                                    ""confidenceScores"": {
+                                        ""positive"": 1.0,
+                                        ""neutral"": 0.0,
+                                        ""negative"": 0.0
+                                    },
+                                    ""offset"": 0,
+                                    ""length"": 30,
+                                    ""text"": ""The park was clean."",
+                                    ""aspects"": [
+                                        {
+                                            ""sentiment"": ""positive"",
+                                            ""confidenceScores"": {
+                                                ""positive"": 1.0,
+                                                ""negative"": 0.0
+                                            },
+                                            ""offset"": 4,
+                                            ""length"": 4,
+                                            ""text"": ""park"",
+                                            ""relations"": [
+                                                {
+                                                    ""relationType"": ""opinion"",
+                                                    ""ref"": ""#/documents/0/sentences/0/opinions/0""
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    ""opinions"": [
+                                        {
+                                            ""sentiment"": ""positive"",
+                                            ""confidenceScores"": {
+                                                ""positive"": 1.0,
+                                                ""negative"": 0.0
+                                            },
+                                            ""offset"": 13,
+                                            ""length"": 5,
+                                            ""text"": ""clean"",
+                                            ""isNegated"": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    ""sentiment"": ""positive"",
+                                    ""confidenceScores"": {
+                                        ""positive"": 0.0,
+                                        ""neutral"": 0.0,
+                                        ""negative"": 1.0
+                                    },
+                                    ""offset"": 31,
+                                    ""length"": 23,
+                                    ""text"": ""It was clean."",
+                                    ""aspects"": [
+                                        {
+                                            ""sentiment"": ""positive"",
+                                            ""confidenceScores"": {
+                                                ""positive"": 0.0,
+                                                ""negative"": 1.0
+                                            },
+                                            ""offset"": 35,
+                                            ""length"": 4,
+                                            ""text"": ""park"",
+                                            ""relations"": [
+                                                {
+                                                    ""relationType"": ""opinion"",
+                                                    ""ref"": ""#/documents/0/sentences/0/opinions/0""
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    ""opinions"": []
+                                }
+                            ],
+                            ""warnings"": []
+                        }
+                    ],
+                    ""errors"": [],
+                    ""modelVersion"": ""2020-04-01""
+                }"));
+
+            var mockResponse = new MockResponse(200);
+            mockResponse.ContentStream = stream;
+
+            var mockTransport = new MockTransport(new[] { mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            DocumentSentiment response = await client.AnalyzeSentimentAsync("The park was clean. It was clean.");
+
+            MinedOpinion minedOpinionS1 = response.Sentences.ElementAt(0).MinedOpinions.FirstOrDefault();
+            Assert.AreEqual("park", minedOpinionS1.Aspect.Text);
+            Assert.AreEqual(TextSentiment.Positive, minedOpinionS1.Aspect.Sentiment);
+            Assert.AreEqual("clean", minedOpinionS1.Opinions.FirstOrDefault().Text);
+
+            MinedOpinion minedOpinionS2 = response.Sentences.ElementAt(1).MinedOpinions.FirstOrDefault();
+            Assert.AreEqual("park", minedOpinionS2.Aspect.Text);
+            Assert.AreEqual(TextSentiment.Positive, minedOpinionS2.Aspect.Sentiment);
+            Assert.AreEqual("clean", minedOpinionS2.Opinions.FirstOrDefault().Text);
+        }
+
+        [Test]
         public async Task RecognizeEntitiesNullCategory()
         {
             using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"

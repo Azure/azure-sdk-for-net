@@ -72,6 +72,21 @@ namespace Azure.Messaging.EventHubs.Core
                                                                         CancellationToken cancellationToken);
 
         /// <summary>
+        ///   Reads the set of partition publishing properties active for this producer at the time it was initialized.
+        /// </summary>
+        ///
+        /// <param name="cancellationToken">The cancellation token to consider when creating the link.</param>
+        ///
+        /// <returns>The set of <see cref="PartitionPublishingProperties" /> observed when the producer was initialized.</returns>
+        ///
+        /// <remarks>
+        ///   It is important to note that these properties are a snapshot of the service state at the time when the
+        ///   producer was initialized; they do not necessarily represent the current state of the service.
+        /// </remarks>
+        ///
+        public abstract ValueTask<PartitionPublishingProperties> ReadInitializationPublishingPropertiesAsync(CancellationToken cancellationToken);
+
+        /// <summary>
         ///   Closes the connection to the transport producer instance.
         /// </summary>
         ///

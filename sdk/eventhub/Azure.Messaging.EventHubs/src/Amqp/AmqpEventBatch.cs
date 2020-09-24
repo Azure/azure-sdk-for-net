@@ -52,16 +52,17 @@ namespace Azure.Messaging.EventHubs.Amqp
         public override long SizeInBytes => _sizeBytes;
 
         /// <summary>
-        ///   The publishing sequence number assigned to the first event in the batch at the time
-        ///   the batch was successfully published.
+        ///   A flag that indicates whether space should be reserved for a publishing
+        ///   sequence number when the event size is measured.  If <c>false</c>, a sequence
+        ///   number is not used in size calculations.
         /// </summary>
         ///
         /// <remarks>
-        ///   The starting published sequence number is only populated and relevant when certain features
+        ///   The sequence number is only populated and relevant when certain features
         ///   of the producer are enabled.  For example, it is used by idempotent publishing.
         /// </remarks>
         ///
-        public override int? StartingPublishedSequenceNumber { get; set; }
+        public override bool ReserveSpaceForSequenceNumber { get; }
 
         /// <summary>
         ///   The count of events contained in the batch.
@@ -93,9 +94,11 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <param name="messageConverter">The converter to use for translating <see cref="EventData" /> into the corresponding AMQP message.</param>
         /// <param name="options">The set of options to apply to the batch.</param>
+        /// <param name="reserveSpaceForSequenceNumber">A flag that indicates whether space should be reserved for a publishing sequence number when the event size is measured.  If <c>false</c>, a sequence number is not used in size calculations.</param>
         ///
         public AmqpEventBatch(AmqpMessageConverter messageConverter,
-                              CreateBatchOptions options)
+                              CreateBatchOptions options,
+                              bool reserveSpaceForSequenceNumber)
         {
             Argument.AssertNotNull(messageConverter, nameof(messageConverter));
             Argument.AssertNotNull(options, nameof(options));
@@ -104,13 +107,13 @@ namespace Azure.Messaging.EventHubs.Amqp
             MessageConverter = messageConverter;
             Options = options;
             MaximumSizeInBytes = options.MaximumSizeInBytes.Value;
+            ReserveSpaceForSequenceNumber = reserveSpaceForSequenceNumber;
 
             // Initialize the size by reserving space for the batch envelope.
 
             using AmqpMessage envelope = messageConverter.CreateBatchFromEvents(Enumerable.Empty<EventData>(), options.PartitionKey);
             ReservedSize = envelope.SerializedMessageSize;
             _sizeBytes = ReservedSize;
-
         }
 
         /// <summary>
@@ -127,7 +130,12 @@ namespace Azure.Messaging.EventHubs.Amqp
             Argument.AssertNotNull(eventData, nameof(eventData));
             Argument.AssertNotDisposed(_disposed, nameof(EventDataBatch));
 
-            AmqpMessage eventMessage = MessageConverter.CreateMessageFromEvent(eventData, Options.PartitionKey);
+            if (ReserveSpaceForSequenceNumber)
+            {
+                eventData.PendingPublishSequenceNumber = int.MaxValue;
+            }
+
+            var eventMessage = MessageConverter.CreateMessageFromEvent(eventData, Options.PartitionKey);
 
             try
             {
@@ -152,6 +160,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             }
             finally
             {
+                eventData.PendingPublishSequenceNumber = default;
                 eventMessage?.Dispose();
             }
         }

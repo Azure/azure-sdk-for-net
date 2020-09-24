@@ -105,9 +105,9 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         internal const int ManagementSerializedExceptionEvent = 42;
         internal const int RunOperationExceptionEvent = 43;
 
-        internal const int ClientDisposeStartEvent = 44;
-        internal const int ClientDisposeCompleteEvent = 45;
-        internal const int ClientDisposeExceptionEvent = 46;
+        internal const int ClientCloseStartEvent = 44;
+        internal const int ClientCloseCompleteEvent = 45;
+        internal const int ClientCloseExceptionEvent = 46;
 
         internal const int RenewSessionLockStartEvent = 47;
         internal const int RenewSessionLockCompleteEvent = 48;
@@ -181,6 +181,10 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         internal const int MaxMessagesExceedsPrefetchEvent = 99;
         internal const int SendLinkClosedEvent = 100;
         internal const int ManagementLinkClosedEvent = 101;
+
+        internal const int ProcessorMessageHandlerStartEvent = 102;
+        internal const int ProcessorMessageHandlerCompleteEvent = 103;
+        internal const int ProcessorMessageHandlerExceptionEvent = 104;
 
         #endregion
         // add new event numbers here incrementing from previous
@@ -743,6 +747,33 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             }
         }
 
+        [Event(ProcessorMessageHandlerStartEvent, Level = EventLevel.Informational, Message = "{0}: User message handler start: Message: SequenceNumber: {1}")]
+        public void ProcessorMessageHandlerStart(string identifier, long sequenceNumber)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(ProcessorMessageHandlerStartEvent, identifier, sequenceNumber);
+            }
+        }
+
+        [Event(ProcessorMessageHandlerCompleteEvent, Level = EventLevel.Informational, Message = "{0}: User message handler complete: Message: SequenceNumber: {1}")]
+        public void ProcessorMessageHandlerComplete(string identifier, long sequenceNumber)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(ProcessorMessageHandlerCompleteEvent, identifier, sequenceNumber);
+            }
+        }
+
+        [Event(ProcessorMessageHandlerExceptionEvent, Level = EventLevel.Error, Message = "{0}: User message handler complete: Message: SequenceNumber: {1}, Exception: {2}")]
+        public void ProcessorMessageHandlerException(string identifier, long sequenceNumber, string exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(ProcessorMessageHandlerExceptionEvent, identifier, sequenceNumber, exception);
+            }
+        }
+
         #endregion region
 
         #region Rule management
@@ -992,12 +1023,12 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             }
         }
 
-        [Event(CreateReceiveLinkCompleteEvent, Level = EventLevel.Informational, Message = "Receive link created for Identifier: {0}.")]
-        public virtual void CreateReceiveLinkComplete(string identifier)
+        [Event(CreateReceiveLinkCompleteEvent, Level = EventLevel.Informational, Message = "Receive link created for Identifier: {0}. Session Id: {1}")]
+        public virtual void CreateReceiveLinkComplete(string identifier, string sessionId)
         {
             if (IsEnabled())
             {
-                WriteEvent(CreateReceiveLinkCompleteEvent, identifier);
+                WriteEvent(CreateReceiveLinkCompleteEvent, identifier, sessionId);
             }
         }
 
@@ -1185,31 +1216,31 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <summary>
         ///   Indicates that a client is closing, which may correspond to
         ///   a <see cref="ServiceBusClient" />, <see cref="ServiceBusSender" />,
-        ///   or <see cref="ServiceBusReceiver"/>.
+        ///   <see cref="ServiceBusReceiver"/>, or a <see cref="ServiceBusProcessor"/>.
         /// </summary>
         ///
         /// <param name="clientType">The type of client being closed.</param>
         /// <param name="identifier">An identifier to associate with the client.</param>
         ///
         [NonEvent]
-        public virtual void ClientDisposeStart(
+        public virtual void ClientCloseStart(
             Type clientType,
             string identifier)
         {
             if (IsEnabled())
             {
-                ClientDisposeStartCore(clientType.Name, identifier ?? string.Empty);
+                ClientCloseStartCore(clientType.Name, identifier ?? string.Empty);
             }
         }
 
-        [Event(ClientDisposeStartEvent, Level = EventLevel.Verbose, Message = "Closing a {0} (Identifier '{1}').")]
-        public virtual void ClientDisposeStartCore(
+        [Event(ClientCloseStartEvent, Level = EventLevel.Verbose, Message = "Closing a {0} (Identifier '{1}').")]
+        public virtual void ClientCloseStartCore(
             string clientType,
             string identifier)
         {
             if (IsEnabled())
             {
-                WriteEvent(ClientDisposeStartEvent, clientType, identifier);
+                WriteEvent(ClientCloseStartEvent, clientType, identifier);
             }
         }
 
@@ -1222,24 +1253,24 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <param name="identifier">An identifier to associate with the client.</param>
         ///
         [NonEvent]
-        public virtual void ClientDisposeComplete(
+        public virtual void ClientCloseComplete(
             Type clientType,
             string identifier)
         {
             if (IsEnabled())
             {
-                ClientDisposeCompleteCore(clientType.Name, identifier ?? string.Empty);
+                ClientCloseCompleteCore(clientType.Name, identifier ?? string.Empty);
             }
         }
 
-        [Event(ClientDisposeCompleteEvent, Level = EventLevel.Verbose, Message = "A {0} has been closed (Identifier '{1}').")]
-        public virtual void ClientDisposeCompleteCore(
+        [Event(ClientCloseCompleteEvent, Level = EventLevel.Verbose, Message = "A {0} has been closed (Identifier '{1}').")]
+        public virtual void ClientCloseCompleteCore(
             string clientType,
             string identifier)
         {
             if (IsEnabled())
             {
-                WriteEvent(ClientDisposeCompleteEvent, clientType, identifier);
+                WriteEvent(ClientCloseCompleteEvent, clientType, identifier);
             }
         }
 
@@ -1253,26 +1284,26 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <param name="exception">The message for the exception that occurred.</param>
         ///
         [NonEvent]
-        public virtual void ClientDisposeException(
+        public virtual void ClientCloseException(
             Type clientType,
             string identifier,
             Exception exception)
         {
             if (IsEnabled())
             {
-                ClientDisposeExceptionCore(clientType.Name, identifier ?? string.Empty, exception.ToString());
+                ClientCloseExceptionCore(clientType.Name, identifier ?? string.Empty, exception.ToString());
             }
         }
 
-        [Event(ClientDisposeExceptionEvent, Level = EventLevel.Error, Message = "An exception occurred while closing a {0} (Identifier '{1}'). Error Message: '{2}'")]
-        public virtual void ClientDisposeExceptionCore(
+        [Event(ClientCloseExceptionEvent, Level = EventLevel.Error, Message = "An exception occurred while closing a {0} (Identifier '{1}'). Error Message: '{2}'")]
+        public virtual void ClientCloseExceptionCore(
             string clientType,
             string identifier,
             string exception)
         {
             if (IsEnabled())
             {
-                WriteEvent(ClientDisposeExceptionEvent, clientType, identifier, exception);
+                WriteEvent(ClientCloseExceptionEvent, clientType, identifier, exception);
             }
         }
         #endregion
