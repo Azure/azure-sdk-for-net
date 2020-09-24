@@ -89,6 +89,9 @@ namespace Azure.Search.Documents
                     char x => Quote(x.ToString(formatProvider)),
                     StringBuilder x => Quote(x.ToString()),
 
+                    // Microsoft.Spatial types
+                    object x when SpatialProxyFactory.TryCreate(x, out GeometryProxy proxy) => proxy.ToString(),
+
                     // Everything else
                     object x => throw new ArgumentException(
                         $"Unable to convert argument {i} from type {x.GetType()} to an OData literal.")
@@ -128,22 +131,8 @@ namespace Azure.Search.Documents
         /// </summary>
         /// <param name="position">The position.</param>
         /// <returns>The OData representation of the position.</returns>
-        private static string EncodeGeometry(GeoPosition position)
-        {
-            const int maxLength =
-                19 +       // "geography'POINT( )'".Length
-                2 *        // Lat and Long each have:
-                   (15 +   //     Maximum precision for a double (without G17)
-                     1 +   //     Optional decimal point
-                     1);   //     Optional negative sign
-            StringBuilder odata = new StringBuilder(maxLength);
-            odata.Append("geography'POINT(");
-            odata.Append(JsonSerialization.Double(position.Longitude, CultureInfo.InvariantCulture));
-            odata.Append(" ");
-            odata.Append(JsonSerialization.Double(position.Latitude, CultureInfo.InvariantCulture));
-            odata.Append(")'");
-            return odata.ToString();
-        }
+        private static string EncodeGeometry(GeoPosition position) =>
+            SpatialFormatter.EncodePoint(position.Longitude, position.Latitude);
 
         /// <summary>
         /// Convert a <see cref="GeoPoint"/> to an OData value.
@@ -164,39 +153,8 @@ namespace Azure.Search.Documents
         /// </summary>
         /// <param name="line">The line forming a polygon.</param>
         /// <returns>The OData representation of the line.</returns>
-        private static string EncodeGeometry(GeoLine line)
-        {
-            Argument.AssertNotNull(line, nameof(line));
-            Argument.AssertNotNull(line.Positions, $"{nameof(line)}.{nameof(line.Positions)}");
-            if (line.Positions.Count < 4)
-            {
-                throw new ArgumentException(
-                    $"A {nameof(GeoLine)} must have at least four {nameof(GeoLine.Positions)} to form a searchable polygon.",
-                    $"{nameof(line)}.{nameof(line.Positions)}");
-            }
-            else if (line.Positions[0] != line.Positions[line.Positions.Count - 1])
-            {
-                throw new ArgumentException(
-                    $"A {nameof(GeoLine)} must have matching first and last {nameof(GeoLine.Positions)} to form a searchable polygon.",
-                    $"{nameof(line)}.{nameof(line.Positions)}");
-            }
-
-            Argument.AssertInRange(line.Positions?.Count ?? 0, 4, int.MaxValue, $"{nameof(line)}.{nameof(line.Positions)}");
-
-            StringBuilder odata = new StringBuilder();
-            odata.Append("geography'POLYGON((");
-            bool first = true;
-            foreach (GeoPosition position in line.Positions)
-            {
-                if (!first) { odata.Append(","); }
-                first = false;
-                odata.Append(JsonSerialization.Double(position.Longitude, CultureInfo.InvariantCulture));
-                odata.Append(" ");
-                odata.Append(JsonSerialization.Double(position.Latitude, CultureInfo.InvariantCulture));
-            }
-            odata.Append("))'");
-            return odata.ToString();
-        }
+        private static string EncodeGeometry(GeoLine line) =>
+            SpatialFormatter.EncodePolygon(line);
 
         /// <summary>
         /// Convert a <see cref="GeoPolygon"/> to an OData value.  A
@@ -205,18 +163,8 @@ namespace Azure.Search.Documents
         /// </summary>
         /// <param name="polygon">The polygon.</param>
         /// <returns>The OData representation of the polygon.</returns>
-        private static string EncodeGeometry(GeoPolygon polygon)
-        {
-            Argument.AssertNotNull(polygon, nameof(polygon));
-            Argument.AssertNotNull(polygon.Rings, $"{nameof(polygon)}.{nameof(polygon.Rings)}");
-            if (polygon.Rings.Count != 1)
-            {
-                throw new ArgumentException(
-                    $"A {nameof(GeoPolygon)} must have exactly one {nameof(GeoPolygon.Rings)} to form a searchable polygon.",
-                    $"{nameof(polygon)}.{nameof(polygon.Rings)}");
-            }
-            return EncodeGeometry(polygon.Rings[0]);
-        }
+        private static string EncodeGeometry(GeoPolygon polygon) =>
+            SpatialFormatter.EncodePolygon(polygon);
 #endif
     }
 }

@@ -32,5 +32,8 @@ namespace Azure.Search.Documents
         /// Gets the longitude.
         /// </summary>
         public double Y => GetPropertyValue<double>(ref s_yProperty, nameof(Y));
+
+        /// <inheritdoc/>
+        public override string ToString() => SpatialFormatter.EncodePoint(Y, X);
     }
 }

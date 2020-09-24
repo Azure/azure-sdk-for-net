@@ -33,5 +33,8 @@ namespace Azure.Search.Documents
                 ref _rings,
                 nameof(Rings),
                 value => new GeometryLineStringProxy(value));
+
+        /// <inheritdoc/>
+        public override string ToString() => SpatialFormatter.EncodePolygon(this);
     }
 }

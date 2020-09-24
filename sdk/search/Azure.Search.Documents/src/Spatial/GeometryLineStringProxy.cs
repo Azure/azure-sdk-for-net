@@ -33,5 +33,8 @@ namespace Azure.Search.Documents
                 ref _points,
                 nameof(Points),
                 value => new GeometryPointProxy(value));
+
+        /// <inheritdoc/>
+        public override string ToString() => SpatialFormatter.EncodePolygon(this);
     }
 }

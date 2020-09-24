@@ -52,13 +52,35 @@ namespace Azure.Search.Documents
                 return null;
             }
 
-            Type type = value.GetType();
-            if (TryGetFactory(type, out Func<object, GeometryProxy> factory))
+            if (TryCreate(value, out GeometryProxy proxy))
             {
-                return factory(value);
+                return proxy;
             }
 
             throw new NotSupportedException($"Type {value.GetType()} is not supported");
+        }
+
+        /// <summary>
+        /// Attempts to creates a <see cref="GeometryProxy"/> from the given <paramref name="value"/> if supported.
+        /// <seealso cref="CanCreate(Type)"/>
+        /// </summary>
+        /// <param name="value">The value to proxy.</param>
+        /// <param name="proxy">The proxied value if supported.</param>
+        /// <returns>True if the <paramref name="value"/> could be proxied; otherwise, false.</returns>
+        internal static bool TryCreate(object value, out GeometryProxy proxy)
+        {
+            if (value is { })
+            {
+                Type type = value.GetType();
+                if (TryGetFactory(type, out Func<object, GeometryProxy> factory))
+                {
+                    proxy = factory(value);
+                    return true;
+                }
+            }
+
+            proxy = null;
+            return false;
         }
 
         private static bool TryGetFactory(Type type, out Func<object, GeometryProxy> factory)

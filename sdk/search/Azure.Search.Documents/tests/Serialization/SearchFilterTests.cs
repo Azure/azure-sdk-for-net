@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
 using System.Text;
 #if EXPERIMENTAL_SPATIAL
 using Azure.Core.GeoJson;
 #endif
+using Microsoft.Spatial;
 using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
@@ -189,6 +191,91 @@ namespace Azure.Search.Documents.Tests
                 $"{new GeoPolygon(new[] { line, line })}"));
         }
 #endif
+
+        [TestCaseSource(nameof(GetMicrosoftSpatialPointsData))]
+        public void MicrosoftSpatialPoints(string filter) =>
+            Assert.AreEqual("geo.distance(geography'POINT(2 3)', Foo) < 3", filter);
+
+        private static IEnumerable GetMicrosoftSpatialPointsData()
+        {
+            // Microsoft.Spatial uses (x, y) which is reversed from (longitude, latitude).
+            GeometryPosition position = new GeometryPosition(3.0, 2.0);
+
+            yield return new TestCaseData(SearchFilter.Create($"geo.distance({position}, Foo) < 3"));
+            yield return new TestCaseData(SearchFilter.Create($"geo.distance({new GeometryPosition(3.0, 2.0, 5.0, default)}, Foo) < 3"));
+            yield return new TestCaseData(SearchFilter.Create($"geo.distance({GeometryPoint.Create(position.X, position.Y)}, Foo) < 3"));
+        }
+
+        [TestCaseSource(nameof(GetMicrosoftSpatialPolygonsData))]
+        public string MicrosoftSpatialPolygons(object geometry) =>
+            SearchFilter.Create($"geo.intersects(Foo, {geometry})");
+
+        private static IEnumerable GetMicrosoftSpatialPolygonsData()
+        {
+            // Microsoft.Spatial uses (x, y) which is reversed from (longitude, latitude).
+            GeometryLineString line = GeometryFactory
+                .LineString(0, 0)
+                .LineTo(1, 0)
+                .LineTo(1, 1)
+                .LineTo(0, 0);
+
+            yield return new TestCaseData(line).Returns("geo.intersects(Foo, geography'POLYGON((0 0,0 1,1 1,0 0))')");
+
+            GeometryPolygon polygon = GeometryFactory
+                .Polygon()
+                .Ring(0, 0)
+                .LineTo(1, 0)
+                .LineTo(1, 1)
+                .LineTo(0, 0);
+
+            yield return new TestCaseData(polygon).Returns("geo.intersects(Foo, geography'POLYGON((0 0,0 1,1 1,0 0))')");
+        }
+
+        [TestCaseSource(nameof(GetMicrosoftSpatialPolygonsThrowsData))]
+        public void MicrosoftSpatialPolygonsThrows(object geometry, string expectedException)
+        {
+            ArgumentException ex = Assert.Throws<ArgumentException>(() => SearchFilter.Create($"{geometry}"));
+            StringAssert.StartsWith(expectedException, ex.Message);
+        }
+
+        private static IEnumerable GetMicrosoftSpatialPolygonsThrowsData()
+        {
+            // Require >= 4 points.
+            GeometryLineString line = GeometryFactory
+                .LineString(0, 0)
+                .LineTo(1, 1);
+
+            yield return new TestCaseData(
+                line,
+                "A GeometryLineString must have at least four Points to form a searchable polygon.");
+
+            // Requires that first and last points are the same.
+            line = GeometryFactory
+                .LineString(0, 0)
+                .LineTo(0, 0)
+                .LineTo(0, 0)
+                .LineTo(1, 1);
+
+            yield return new TestCaseData(
+                line,
+                "A GeometryLineString must have matching first and last Points to form a searchable polygon.");
+
+            // Require that polygons define exactly 1 ring.
+            GeometryPolygon polygon = GeometryFactory
+                .Polygon()
+                .Ring(0, 0)
+                .LineTo(1, 0)
+                .LineTo(1, 1)
+                .LineTo(0, 0)
+                .Ring(2, 2)
+                .LineTo(3, 2)
+                .LineTo(3, 3)
+                .LineTo(2, 2);
+
+            yield return new TestCaseData(
+                polygon,
+                "A GeometryPolygon must have exactly one Rings to form a searchable polygon.");
+        }
 
         [Test]
         public void OtherThrows()

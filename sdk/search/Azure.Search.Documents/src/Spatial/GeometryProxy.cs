@@ -31,6 +31,12 @@ namespace Azure.Search.Documents
         public object Value { get; }
 
         /// <summary>
+        /// Returns an OData filter representation of the underlying Microsoft.Spatial.Geometry object.
+        /// </summary>
+        /// <returns></returns>
+        public abstract override string ToString();
+
+        /// <summary>
         /// Gets the value of the named property.
         /// </summary>
         /// <typeparam name="T">The type of property to get.</typeparam>
