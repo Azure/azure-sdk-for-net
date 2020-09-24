@@ -1,6 +1,6 @@
 # Release History
 
-## 11.2.0-preview.1 (Unreleased)
+## 11.2.0-beta.1 (2020-10-06)
 
 ### Fixed
 
