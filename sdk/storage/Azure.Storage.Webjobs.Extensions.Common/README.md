@@ -1,4 +1,4 @@
-# Azure WebJobs Storage client library for .NET
+# Azure WebJobs Storage Common client library for .NET
 
 TODO
 

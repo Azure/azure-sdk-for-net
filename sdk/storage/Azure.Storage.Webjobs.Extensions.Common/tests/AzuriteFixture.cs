@@ -5,8 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Net;
-using System.Net.Sockets;
 using System.Text;
 
 namespace Azure.WebJobs.Extensions.Storage.Common.Tests
@@ -17,7 +15,7 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
     /// - Starts Azurite process
     /// - Tears down Azurite process after test class is run
     /// It requires Azurite V3. See instalation insturctions here https://github.com/Azure/Azurite.
-    /// After installing Azuirte define env variable AZURE_AZURITE_LOCATION that points to azurite.js (e.g. C:\Users\kasobol.REDMOND\AppData\Roaming\npm\node_modules\azurite\dist\src\azurite.js)
+    /// After installing Azuirte define env variable AzureWebJobsStorageAzuriteLocation that points to azurite.js (e.g. C:\Users\kasobol.REDMOND\AppData\Roaming\npm\node_modules\azurite\dist\src\azurite.js)
     /// NodeJS installation is also required and node.exe should be in the $PATH.
     ///
     /// The lifecycle of this class is managed by XUnit, see https://xunit.net/docs/shared-context.
@@ -25,7 +23,7 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
     public class AzuriteFixture : IDisposable
     {
         private const int AccountPoolSize = 50;
-        private const string AzuriteLocationKey = "AZURE_AZURITE_LOCATION";
+        private const string AzuriteLocationKey = "AzureWebJobsStorageAzuriteLocation";
         private string tempDirectory;
         private Process process;
         private Queue<AzuriteAccount> accounts = new Queue<AzuriteAccount>();
@@ -36,27 +34,22 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
             var azuriteLocation = Environment.GetEnvironmentVariable(AzuriteLocationKey);
             if (!string.IsNullOrWhiteSpace(azuriteLocation))
             {
-                int blobsPort = FindFreeTcpPort();
-                int queuesPort = FindFreeTcpPort();
                 for (int i = 0; i < AccountPoolSize; i++)
                 {
                     var account = new AzuriteAccount()
                     {
                         Name = Guid.NewGuid().ToString(),
                         Key = System.Convert.ToBase64String(Encoding.UTF8.GetBytes(Guid.NewGuid().ToString())),
-                        BlobsPort = blobsPort,
-                        QueuesPort = queuesPort,
                     };
                     accounts.Enqueue(account);
                     accountsList.Add($"{account.Name}:{account.Key}");
                 }
 
-                var azuriteScriptLocation = Path.Combine(azuriteLocation, "node_modules/azurite/dist/src/azurite.js");
                 tempDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
                 Directory.CreateDirectory(tempDirectory);
                 process = new Process();
-                process.StartInfo.FileName = "node";
-                process.StartInfo.Arguments = $"{azuriteScriptLocation} -l {tempDirectory} --blobPort {blobsPort} --queuePort {queuesPort}";
+                process.StartInfo.FileName = "node.exe";
+                process.StartInfo.Arguments = $"{azuriteLocation} -l {tempDirectory}";
                 process.StartInfo.EnvironmentVariables.Add("AZURITE_ACCOUNTS", $"{string.Join(";", accountsList)}");
                 process.StartInfo.UseShellExecute = false;
                 process.StartInfo.RedirectStandardOutput = true;
@@ -71,15 +64,6 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
                 process.Start();
                 process.BeginOutputReadLine();
             }
-        }
-
-        private static int FindFreeTcpPort()
-        {
-            TcpListener l = new TcpListener(IPAddress.Loopback, 0);
-            l.Start();
-            int port = ((IPEndPoint)l.LocalEndpoint).Port;
-            l.Stop();
-            return port;
         }
 
         public AzuriteAccount GetAccount()
@@ -108,13 +92,9 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
         public string Name { get; set; }
         public string Key { get; set; }
 
-        public int BlobsPort { get; set; }
-
-        public int QueuesPort { get; set; }
-
         public string ConnectionString { get
             {
-                return $"DefaultEndpointsProtocol=http;AccountName={Name};AccountKey={Key};BlobEndpoint=http://127.0.0.1:{BlobsPort}/{Name};QueueEndpoint=http://127.0.0.1:{QueuesPort}/{Name};";
+                return $"DefaultEndpointsProtocol=http;AccountName={Name};AccountKey={Key};BlobEndpoint=http://127.0.0.1:10000/{Name};QueueEndpoint=http://127.0.0.1:10001/{Name};";
             }
         }
     }
