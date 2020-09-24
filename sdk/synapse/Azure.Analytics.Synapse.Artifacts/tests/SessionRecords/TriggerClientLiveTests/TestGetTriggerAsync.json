@@ -18,11 +18,11 @@
       "ResponseHeaders": {
         "Content-Length": "697",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 23 Sep 2020 08:58:22 GMT",
+        "Date": "Thu, 24 Sep 2020 06:24:35 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "x-ms-client-request-id": "a4eb13e827d1a729e656409d1478d4de",
-        "x-ms-request-id": "7c1e858f-f41a-4560-9dc2-0f04b90a3d59"
+        "x-ms-request-id": "87b03574-e18e-4d7b-8d73-3ec91c3d3902"
       },
       "ResponseBody": {
         "value": [
@@ -30,7 +30,7 @@
             "id": "/subscriptions/7f31cba8-b597-4129-b158-8f21a7395bd0/resourceGroups/rg-ywlive/providers/Microsoft.Synapse/workspaces/workspaceywlive/triggers/Trigger277322190",
             "name": "Trigger277322190",
             "type": "Microsoft.Synapse/workspaces/triggers",
-            "etag": "7700a968-0000-0800-0000-5f6b0e160000",
+            "etag": "91006ff5-0000-0800-0000-5f6c3b8d0000",
             "properties": {
               "type": "Trigger",
               "runtimeState": "Stopped"
@@ -40,7 +40,7 @@
             "id": "/subscriptions/7f31cba8-b597-4129-b158-8f21a7395bd0/resourceGroups/rg-ywlive/providers/Microsoft.Synapse/workspaces/workspaceywlive/triggers/Trigger533902365",
             "name": "Trigger533902365",
             "type": "Microsoft.Synapse/workspaces/triggers",
-            "etag": "77006c6a-0000-0800-0000-5f6b0e230000",
+            "etag": "91006df6-0000-0800-0000-5f6c3b9a0000",
             "properties": {
               "type": "Trigger",
               "runtimeState": "Stopped"
@@ -55,7 +55,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-38f079436693ac44af8ef19f2480a3ac-36cae325536a5a4e-00",
+        "traceparent": "00-7060ac9a8b11de408dfa9750e16d2770-a10a367734309d41-00",
         "User-Agent": [
           "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-alpha.20200923.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
@@ -69,7 +69,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "342",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 23 Sep 2020 08:58:23 GMT",
+        "Date": "Thu, 24 Sep 2020 06:24:36 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -79,8 +79,8 @@
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "2f3942e86ee846bb014ad74c0701d99c",
-        "x-ms-correlation-request-id": "c6a6422f-a315-462a-9da2-a31a4a5a6179",
-        "x-ms-request-id": "a7322834-9e1c-4498-8f14-2345a3121212",
+        "x-ms-correlation-request-id": "e4206caf-d2ac-4d54-9f87-b200b6226270",
+        "x-ms-request-id": "3e28d16d-4507-47e2-ac0e-69c2138677e7",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -91,7 +91,7 @@
           "type": "Trigger",
           "runtimeState": "Stopped"
         },
-        "etag": "7700a968-0000-0800-0000-5f6b0e160000"
+        "etag": "91006ff5-0000-0800-0000-5f6c3b8d0000"
       }
     },
     {
@@ -100,7 +100,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-c5a6562de074f54dbfd494d258f2f1f4-68ae19fbd190764b-00",
+        "traceparent": "00-3a96eab38d3bd34aad7dd6939ab056f7-214da46e59e70148-00",
         "User-Agent": [
           "azsdk-net-Analytics.Synapse.Artifacts/1.0.0-alpha.20200923.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
@@ -114,7 +114,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "342",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 23 Sep 2020 08:58:23 GMT",
+        "Date": "Thu, 24 Sep 2020 06:24:36 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -124,8 +124,8 @@
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "21b738ca8f9f99a0a29e069dc70e4fc1",
-        "x-ms-correlation-request-id": "e63d3302-f835-4591-976a-4d18789d4937",
-        "x-ms-request-id": "a27f327b-d95e-4276-af2f-f74b3fc6a5a1",
+        "x-ms-correlation-request-id": "213476e0-7bb6-491d-9dc8-fc1ac6ad1bf0",
+        "x-ms-request-id": "aa4aa6c0-5e50-40b5-9391-a32f47165572",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -136,7 +136,7 @@
           "type": "Trigger",
           "runtimeState": "Stopped"
         },
-        "etag": "77006c6a-0000-0800-0000-5f6b0e230000"
+        "etag": "91006df6-0000-0800-0000-5f6c3b9a0000"
       }
     }
   ],

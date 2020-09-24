@@ -52,7 +52,7 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
             );
             string notebookName = Recording.GenerateName("Notebook");
             NotebookCreateOrUpdateNotebookOperation operation = await NotebookClient.StartCreateOrUpdateNotebookAsync(notebookName, new NotebookResource(notebook));
-            NotebookResource notebookResource = operation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
+            NotebookResource notebookResource = await operation.WaitForCompletionAsync();
             Assert.AreEqual(notebookName, notebookResource.Name);
         }
 
@@ -71,10 +71,10 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
                 new List<NotebookCell>()
             );
             NotebookCreateOrUpdateNotebookOperation createOperation = await NotebookClient.StartCreateOrUpdateNotebookAsync(notebookName, new NotebookResource(notebook));
-            createOperation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
+            await createOperation.WaitForCompletionAsync();
 
             NotebookDeleteNotebookOperation deleteOperation = await NotebookClient.StartDeleteNotebookAsync(notebookName);
-            Response response = deleteOperation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
+            Response response = await deleteOperation.WaitForCompletionAsync();
             Assert.AreEqual(200, response.Status);
         }
     }

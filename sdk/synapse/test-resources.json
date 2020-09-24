@@ -124,7 +124,7 @@
         },
         "sparkPoolPrefix": {
             "type": "String",
-            "defaultValue": "sparkpool"
+            "defaultValue": "spark"
         },
         "tags": {
             "defaultValue": {},

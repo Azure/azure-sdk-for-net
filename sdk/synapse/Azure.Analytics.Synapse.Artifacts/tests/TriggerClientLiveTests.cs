@@ -41,7 +41,7 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
         {
             string triggerName = Recording.GenerateName("Trigger");
             TriggerCreateOrUpdateTriggerOperation operation = await TriggerClient.StartCreateOrUpdateTriggerAsync(triggerName, new TriggerResource(new Trigger()));
-            TriggerResource trigger = operation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
+            TriggerResource trigger = await operation.WaitForCompletionAsync();
             Assert.AreEqual(triggerName, trigger.Name);
         }
 
@@ -51,10 +51,10 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
             string triggerName = Recording.GenerateName("Trigger");
 
             TriggerCreateOrUpdateTriggerOperation createOperation = await TriggerClient.StartCreateOrUpdateTriggerAsync(triggerName, new TriggerResource(new Trigger()));
-            createOperation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
+            await createOperation.WaitForCompletionAsync();
 
             TriggerDeleteTriggerOperation deleteOperation = await TriggerClient.StartDeleteTriggerAsync(triggerName);
-            Response response = deleteOperation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
+            Response response = await deleteOperation.WaitForCompletionAsync();
             Assert.AreEqual(200, response.Status);
         }
     }
