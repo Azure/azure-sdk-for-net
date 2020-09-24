@@ -229,11 +229,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             if (pendingSequenceNumber.HasValue)
             {
-                Assert.That(message.MessageAnnotations.Map[AmqpProperty.PublishedSequenceNumber], Is.EqualTo(eventData.PendingPublishSequenceNumber.Value), "The publishing sequence number should have been set.");
+                Assert.That(message.MessageAnnotations.Map[AmqpProperty.ProducerSequenceNumber], Is.EqualTo(eventData.PendingPublishSequenceNumber.Value), "The publishing sequence number should have been set.");
             }
             else
             {
-                Assert.That(message.MessageAnnotations.Map.Any(item => item.Key.ToString() == AmqpProperty.PublishedSequenceNumber.Value), Is.False, "The publishing sequence number should not have been set.");
+                Assert.That(message.MessageAnnotations.Map.Any(item => item.Key.ToString() == AmqpProperty.ProducerSequenceNumber.Value), Is.False, "The publishing sequence number should not have been set.");
             }
 
             if (pendingGroupId.HasValue)

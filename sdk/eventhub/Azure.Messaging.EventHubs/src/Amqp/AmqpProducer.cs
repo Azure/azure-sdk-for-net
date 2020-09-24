@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Runtime.CompilerServices;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -568,7 +567,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                 {
                     var producerGroup = link.ExtractSettingPropertyValueOrDefault(AmqpProperty.ProducerGroupId, default(long?));
                     var ownerLevel = link.ExtractSettingPropertyValueOrDefault(AmqpProperty.ProducerOwnerLevel, default(short?));
-                    var sequence = link.ExtractSettingPropertyValueOrDefault(AmqpProperty.SequenceNumber, default(int?));
+                    var sequence = link.ExtractSettingPropertyValueOrDefault(AmqpProperty.ProducerSequenceNumber, default(int?));
 
                     // Once the properties are initialized, clear the starting sequence number to ensure that the current
                     // sequence tracked by the service is used should the link need to be recreated; this avoids the need for
