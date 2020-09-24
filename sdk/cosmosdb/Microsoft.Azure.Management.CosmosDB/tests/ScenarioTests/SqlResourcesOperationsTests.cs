@@ -327,11 +327,39 @@ namespace CosmosDB.Tests.ScenarioTests
                 Assert.Equal(roleDefinitionId2, sqlRoleDefinitionGetResults3.Name);
                 VerifyCreateUpdateRoleDefinition(sqlRoleDefinitionCreateUpdateParameters2, sqlRoleDefinitionGetResults3);
 
+                SqlRoleDefinitionCreateUpdateParameters sqlRoleDefinitionCreateUpdateParameters3 = new SqlRoleDefinitionCreateUpdateParameters
+                {
+                    RoleName = "roleName3",
+                    Type = RoleDefinitionType.CustomRole,
+                    AssignableScopes = new List<string>
+                    {
+                        string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.DocumentDB/databaseAccounts/{2}", cosmosDBManagementClient.SubscriptionId, resourceGroupName, databaseAccountName)
+                    },
+                    Permissions = new List<Permission>
+                    {
+                        new Permission
+                        {
+                            DataActions = new List<string>
+                            {
+                                "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/create",
+                                "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/delete",
+                                "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/replace"
+                            }
+                        }
+                    }
+                };
+
+                SqlRoleDefinitionGetResults sqlRoleDefinitionGetResults4 = cosmosDBManagementClient.SqlResources.CreateUpdateSqlRoleDefinitionWithHttpMessagesAsync(roleDefinitionId, resourceGroupName, databaseAccountName2, sqlRoleDefinitionCreateUpdateParameters3).GetAwaiter().GetResult().Body;
+                Assert.NotNull(sqlRoleDefinitionGetResults4);
+                Assert.Equal(roleDefinitionId, sqlRoleDefinitionGetResults4.Name);
+                VerifyCreateUpdateRoleDefinition(sqlRoleDefinitionCreateUpdateParameters3, sqlRoleDefinitionGetResults4);
 
                 IEnumerable<SqlRoleDefinitionGetResults> sqlRoleDefinitions = cosmosDBManagementClient.SqlResources.ListSqlRoleDefinitionsWithHttpMessagesAsync(resourceGroupName, databaseAccountName2).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlRoleDefinitions);
-                VerifyEqualSqlRoleDefinitions(sqlRoleDefinitionGetResults2, sqlRoleDefinitions.ToList()[0]);
-                VerifyEqualSqlRoleDefinitions(sqlRoleDefinitionGetResults3, sqlRoleDefinitions.ToList()[1]);
+                foreach (SqlRoleDefinitionGetResults sqlRoleDefinition in sqlRoleDefinitions)
+                {
+                    VerifyEqualSqlRoleDefinitions(sqlRoleDefinition.Name == sqlRoleDefinitionGetResults3.Name ? sqlRoleDefinitionGetResults3 : sqlRoleDefinitionGetResults4, sqlRoleDefinition);
+                }
 
                 SqlRoleAssignmentCreateUpdateParameters sqlRoleAssignmentCreateUpdateParameters = new SqlRoleAssignmentCreateUpdateParameters
                 {
@@ -365,8 +393,10 @@ namespace CosmosDB.Tests.ScenarioTests
 
                 IEnumerable<SqlRoleAssignmentGetResults> sqlRoleAssignments = cosmosDBManagementClient.SqlResources.ListSqlRoleAssignmentsWithHttpMessagesAsync(resourceGroupName, databaseAccountName2).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlRoleAssignments);
-                VerifyEqualSqlRoleAssignments(sqlRoleAssignmentGetResults3, sqlRoleAssignments.ToList()[0]);
-                VerifyEqualSqlRoleAssignments(sqlRoleAssignmentGetResults, sqlRoleAssignments.ToList()[1]);
+                foreach (SqlRoleAssignmentGetResults sqlRoleAssignment in sqlRoleAssignments)
+                {
+                    VerifyEqualSqlRoleAssignments(sqlRoleAssignment.Name == sqlRoleAssignmentGetResults.Name ? sqlRoleAssignmentGetResults : sqlRoleAssignmentGetResults3, sqlRoleAssignment);
+                }
 
                 foreach (SqlRoleAssignmentGetResults sqlRoleAssignment in sqlRoleAssignments)
                 {
