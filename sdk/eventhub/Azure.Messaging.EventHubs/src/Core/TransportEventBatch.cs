@@ -31,17 +31,10 @@ namespace Azure.Messaging.EventHubs.Core
         public abstract long SizeInBytes { get; }
 
         /// <summary>
-        ///   A flag that indicates whether space should be reserved for a publishing
-        ///   sequence number when the event size is measured.  If <c>false</c>, a sequence
-        ///   number is not used in size calculations.
+        ///   The flags specifying the set of special transport features that have been opted-into.
         /// </summary>
         ///
-        /// <remarks>
-        ///   The sequence number is only populated and relevant when certain features
-        ///   of the producer are enabled.  For example, it is used by idempotent publishing.
-        /// </remarks>
-        ///
-        public abstract bool ReserveSpaceForSequenceNumber { get; }
+        public abstract TransportProducerFeatures ActiveFeatures { get; }
 
         /// <summary>
         ///   The count of events contained in the batch.

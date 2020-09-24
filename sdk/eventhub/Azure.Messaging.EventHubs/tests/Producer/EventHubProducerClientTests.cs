@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -13,7 +12,6 @@ using Azure.Core;
 using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Producer;
-using Microsoft.Azure.Amqp;
 using Moq;
 using NUnit.Framework;
 
@@ -2651,7 +2649,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             public override long MaximumSizeInBytes { get; }
             public override long SizeInBytes { get; }
-            public override bool ReserveSpaceForSequenceNumber { get; }
+            public override TransportProducerFeatures ActiveFeatures { get; }
             public override int Count => Events.Count;
             public override IEnumerable<T> AsEnumerable<T>() => (IEnumerable<T>)Events;
             public override void Clear() => Events.Clear();

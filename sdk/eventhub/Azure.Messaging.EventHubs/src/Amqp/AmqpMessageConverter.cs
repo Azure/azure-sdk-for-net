@@ -325,6 +325,21 @@ namespace Azure.Messaging.EventHubs.Amqp
                 message.MessageAnnotations.Map[AmqpProperty.PartitionKey] = partitionKey;
             }
 
+            if (source.PendingPublishSequenceNumber.HasValue)
+            {
+                message.MessageAnnotations.Map[AmqpProperty.PublishedSequenceNumber] = source.PendingPublishSequenceNumber;
+            }
+
+            if (source.PendingProducerGroupId.HasValue)
+            {
+                message.MessageAnnotations.Map[AmqpProperty.ProducerGroupId] = source.PendingProducerGroupId;
+            }
+
+            if (source.PendingProducerOwnerLevel.HasValue)
+            {
+                message.MessageAnnotations.Map[AmqpProperty.ProducerOwnerLevel] = source.PendingProducerOwnerLevel;
+            }
+
             return message;
         }
 

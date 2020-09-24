@@ -14,6 +14,7 @@ using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
+using Azure.Messaging.EventHubs.Producer;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
 using Microsoft.Azure.Amqp.Framing;
@@ -294,12 +295,16 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the Event Hub partition to which the link should be bound; if unbound, <c>null</c>.</param>
+        /// <param name="features">The set of features which are active for the producer requesting the link.</param>
+        /// <param name="options">The set of options to consider when creating the link.</param>
         /// <param name="timeout">The timeout to apply when creating the link.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A link for use with producer operations.</returns>
         ///
         public virtual async Task<SendingAmqpLink> OpenProducerLinkAsync(string partitionId,
+                                                                         TransportProducerFeatures features,
+                                                                         PartitionPublishingOptions options,
                                                                          TimeSpan timeout,
                                                                          CancellationToken cancellationToken)
         {
@@ -312,7 +317,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             var connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            var link = await CreateSendingLinkAsync(connection, producerEndpoint, timeout.CalculateRemaining(stopWatch.GetElapsedTime()), cancellationToken).ConfigureAwait(false);
+            var link = await CreateSendingLinkAsync(connection, producerEndpoint, features, options, timeout.CalculateRemaining(stopWatch.GetElapsedTime()), cancellationToken).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             await OpenAmqpObjectAsync(link, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
@@ -523,7 +528,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                 if (ownerLevel.HasValue)
                 {
-                    linkSettings.AddProperty(AmqpProperty.OwnerLevel, ownerLevel.Value);
+                    linkSettings.AddProperty(AmqpProperty.ConsumerOwnerLevel, ownerLevel.Value);
                 }
 
                 if (trackLastEnqueuedEventProperties)
@@ -578,6 +583,8 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <param name="connection">The active and opened AMQP connection to use for this link.</param>
         /// <param name="endpoint">The fully qualified endpoint to open the link for.</param>
+        /// <param name="features">The set of features which are active for the producer requesting the link.</param>
+        /// <param name="options">The set of options to consider when creating the link.</param>
         /// <param name="timeout">The timeout to apply when creating the link.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
@@ -585,6 +592,8 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         protected virtual async Task<SendingAmqpLink> CreateSendingLinkAsync(AmqpConnection connection,
                                                                              Uri endpoint,
+                                                                             TransportProducerFeatures features,
+                                                                             PartitionPublishingOptions options,
                                                                              TimeSpan timeout,
                                                                              CancellationToken cancellationToken)
         {
@@ -622,6 +631,22 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                 linkSettings.AddProperty(AmqpProperty.Timeout, (uint)timeout.CalculateRemaining(stopWatch.GetElapsedTime()).TotalMilliseconds);
                 linkSettings.AddProperty(AmqpProperty.EntityType, (int)AmqpProperty.Entity.EventHub);
+
+                if ((features & TransportProducerFeatures.IdempotentPublishing) != 0)
+                {
+                    linkSettings.DesiredCapabilities ??= new Multiple<AmqpSymbol>();
+                    linkSettings.DesiredCapabilities.Add(AmqpProperty.EnableIdempotentPublishing);
+                }
+
+                // These values must either all be specified or none.  It is valid for an individual value to be null to signal the
+                // service to supply the value, so long as the key is present.
+
+                if ((options.ProducerGroupId.HasValue) || (options.OwnerLevel.HasValue) || (options.StartingSequenceNumber.HasValue))
+                {
+                    linkSettings.AddProperty(AmqpProperty.ProducerGroupId, options.ProducerGroupId);
+                    linkSettings.AddProperty(AmqpProperty.ProducerOwnerLevel, options.OwnerLevel);
+                    linkSettings.AddProperty(AmqpProperty.PublishedSequenceNumber, options.StartingSequenceNumber);
+                }
 
                 var link = new SendingAmqpLink(linkSettings);
                 linkSettings.LinkName = $"{ Id };{ connection.Identifier }:{ session.Identifier }:{ link.Identifier }";

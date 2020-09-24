@@ -60,6 +60,27 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///  The set of test cases for optional idempotent publishing properties.
+        /// </summary>
+        ///
+        public static IEnumerable<object[]> IdempotentPropertyTestCases()
+        {
+            // The values represent the test arguments:
+            //   - Pending Sequence Number (int?)
+            //   - Pending Producer Group Id (long?)
+            //   - Pending Owner Level (short?)
+
+            yield return new object[] { (int?)123, (long?)456, (short?)789 };
+            yield return new object[] { null, (long?)456, (short?)789 };
+            yield return new object[] { (int?)123, null, (short?)789 };
+            yield return new object[] { (int?)123, (long?)456, null };
+            yield return new object[] { (int?)123, null, null };
+            yield return new object[] { null, (long?)456, null };
+            yield return new object[] { null, null, (short?)789 };
+            yield return new object[] { null, null, null };
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="AmqpMessageConverter.CreateMessageFromEvent" />
         ///   method.
         /// </summary>
@@ -179,6 +200,58 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 Assert.That(containsValue, Is.True, $"The message properties did not contain: [{ property }]");
                 Assert.That(value, Is.EqualTo(eventData.Properties[property]), $"The property value did not match for: [{ property }]");
+            }
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpMessageConverter.CreateMessageFromEvent" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCaseSource(nameof(IdempotentPropertyTestCases))]
+        public void CreateMessageFromEventPopulatesIdempotentAnnotations(int? pendingSequenceNumber,
+                                                                         long? pendingGroupId,
+                                                                         short? pendingOwnerLevel)
+        {
+            var eventData = new EventData(new byte[] { 0x11, 0x22, 0x33 });
+            eventData.PendingPublishSequenceNumber = pendingSequenceNumber;
+            eventData.PendingProducerGroupId = pendingGroupId;
+            eventData.PendingProducerOwnerLevel = pendingOwnerLevel;
+
+            using AmqpMessage message = new AmqpMessageConverter().CreateMessageFromEvent(eventData);
+
+            Assert.That(message, Is.Not.Null, "The AMQP message should have been created.");
+            Assert.That(message.DataBody, Is.Not.Null, "The AMQP message should a body.");
+            Assert.That(message.MessageAnnotations, Is.Not.Null, "The AMQP message annotations should be present.");
+
+            // Each annotation should only be present if a value was assigned.
+
+            if (pendingSequenceNumber.HasValue)
+            {
+                Assert.That(message.MessageAnnotations.Map[AmqpProperty.PublishedSequenceNumber], Is.EqualTo(eventData.PendingPublishSequenceNumber.Value), "The publishing sequence number should have been set.");
+            }
+            else
+            {
+                Assert.That(message.MessageAnnotations.Map.Any(item => item.Key.ToString() == AmqpProperty.PublishedSequenceNumber.Value), Is.False, "The publishing sequence number should not have been set.");
+            }
+
+            if (pendingGroupId.HasValue)
+            {
+                Assert.That(message.MessageAnnotations.Map[AmqpProperty.ProducerGroupId], Is.EqualTo(eventData.PendingProducerGroupId.Value), "The producer group should have been set.");
+            }
+            else
+            {
+                Assert.That(message.MessageAnnotations.Map.Any(item => item.Key.ToString() == AmqpProperty.ProducerGroupId.Value), Is.False, "The producer group should not have been set.");
+            }
+
+            if (pendingOwnerLevel.HasValue)
+            {
+                Assert.That(message.MessageAnnotations.Map[AmqpProperty.ProducerOwnerLevel], Is.EqualTo(eventData.PendingProducerOwnerLevel.Value), "The producer owner level should have been set.");
+            }
+            else
+            {
+                Assert.That(message.MessageAnnotations.Map.Any(item => item.Key.ToString() == AmqpProperty.ProducerOwnerLevel.Value), Is.False, "The producer owner level should not have been set.");
             }
         }
 

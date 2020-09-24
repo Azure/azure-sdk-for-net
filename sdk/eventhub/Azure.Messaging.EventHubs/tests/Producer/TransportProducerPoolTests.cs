@@ -382,7 +382,7 @@ namespace Azure.Messaging.EventHubs.Tests
             public override long MaximumSizeInBytes { get; }
             public override long SizeInBytes { get; }
             public override int Count { get; }
-            public override bool ReserveSpaceForSequenceNumber { get; }
+            public override TransportProducerFeatures ActiveFeatures { get; }
             public override bool TryAdd(EventData eventData) => throw new NotImplementedException();
             public override IEnumerable<T> AsEnumerable<T>() => throw new NotImplementedException();
             public override void Dispose() => throw new NotImplementedException();

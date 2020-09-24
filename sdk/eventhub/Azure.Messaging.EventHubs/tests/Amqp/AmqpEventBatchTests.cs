@@ -6,11 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Azure.Messaging.EventHubs.Amqp;
+using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Producer;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Framing;
 using Moq;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 
 namespace Azure.Messaging.EventHubs.Tests
 {
@@ -145,13 +147,15 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public void TryAddHonorsTheMeasureSequenceNumber(bool measureSequenceNumber)
+        [TestCase(TransportProducerFeatures.None)]
+        [TestCase(TransportProducerFeatures.IdempotentPublishing)]
+        public void TryAddHonorStatefulFeatures(byte activeFeatures)
         {
             var maximumSize = 50;
             var batchEnvelopeSize = 0;
             var capturedSequence = default(int?);
+            var capturedGroupId = default(long?);
+            var capturedOwnerLevel = default(short?);
             var options = new CreateBatchOptions { MaximumSizeInBytes = maximumSize };
             var mockEnvelope = new Mock<AmqpMessage>();
             var mockEvent = new Mock<AmqpMessage>();
@@ -163,6 +167,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 CreateMessageFromEventHandler = (_e, _p) =>
                 {
                     capturedSequence = _e.PendingPublishSequenceNumber;
+                    capturedGroupId = _e.PendingProducerGroupId;
+                    capturedOwnerLevel = _e.PendingProducerOwnerLevel;
                     return mockEvent.Object;
                 }
             };
@@ -175,14 +181,17 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(message => message.SerializedMessageSize)
                 .Returns(maximumSize);
 
-            var batch = new AmqpEventBatch(mockConverter, options, measureSequenceNumber);
+            var batch = new AmqpEventBatch(mockConverter, options, (TransportProducerFeatures)activeFeatures);
             batch.TryAdd(EventGenerator.CreateEvents(1).Single());
 
-            var expectationConstraint = (measureSequenceNumber)
-                ? Is.Not.Null
-                : Is.Null;
+            NullConstraint generateConstraint() =>
+                ((TransportProducerFeatures)activeFeatures == TransportProducerFeatures.None)
+                    ? Is.Null
+                    : Is.Not.Null;
 
-            Assert.That(capturedSequence, expectationConstraint);
+            Assert.That(capturedSequence, generateConstraint(), "The sequence was not set as expected.");
+            Assert.That(capturedGroupId, generateConstraint(), "The group identifier was not set as expected.");
+            Assert.That(capturedOwnerLevel, generateConstraint(), "The owner level was not set as expected.");
         }
 
         /// <summary>
@@ -191,7 +200,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void TryAddRemovesTheMeasureSequenceNumber()
+        public void TryAddResetsPublishingState()
         {
             var maximumSize = 50;
             var batchEnvelopeSize = 0;
@@ -219,10 +228,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(message => message.SerializedMessageSize)
                 .Returns(maximumSize);
 
-            var batch = new AmqpEventBatch(mockConverter, options, true);
+            var batch = new AmqpEventBatch(mockConverter, options, TransportProducerFeatures.IdempotentPublishing);
             batch.TryAdd(EventGenerator.CreateEvents(1).Single());
 
-            Assert.That(capturedEvent.PublishedSequenceNumber, Is.Null);
+            Assert.That(capturedEvent.PublishedSequenceNumber, Is.Null, "The final sequence should not have been set.");
+            Assert.That(capturedEvent.PendingPublishSequenceNumber, Is.Null, "The pending sequence was not cleared.");
+            Assert.That(capturedEvent.PendingProducerGroupId, Is.Null, "The group identifier was not cleared.");
+            Assert.That(capturedEvent.PendingProducerOwnerLevel, Is.Null, "The owner level was not cleared.");
         }
 
         /// <summary>
