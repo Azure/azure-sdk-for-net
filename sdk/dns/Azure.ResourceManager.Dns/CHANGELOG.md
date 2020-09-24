@@ -1,4 +1,5 @@
 # Release History
+- Accept header added to all requests.
 
 ## 1.0.0-preview.1 (Unreleased)
 
