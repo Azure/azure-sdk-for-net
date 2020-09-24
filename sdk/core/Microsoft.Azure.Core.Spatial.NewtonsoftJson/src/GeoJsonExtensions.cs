@@ -27,32 +27,6 @@ namespace Azure.Core.Serialization
         private static readonly IEnumerable<string> TypeAndProperties = new[] { Type, Properties };
 
         /// <summary>
-        /// Determines whether the given <see cref="JObject" /> is a valid Geo-JSON point.
-        /// </summary>
-        /// <param name="obj">The JSON object to test.</param>
-        /// <returns><c>true</c> if the JSON object is not null and is a valid Geo-JSON point, <c>false</c> otherwise.</returns>
-        public static bool IsGeoJsonPoint(this JObject obj) =>
-            obj?.IsValid(
-                requiredProperties: TypeAndCoordinates,
-                isPropertyValid: property =>
-                {
-                    switch (property.Name)
-                    {
-                        case Type:
-                            return property.Value.IsString(Point);
-
-                        case Coordinates:
-                            return AreCoordinates(property.Value);
-
-                        case Crs:
-                            return property.Value is JObject possibleCrs && IsCrs(possibleCrs);
-
-                        default:
-                            return false;
-                    }
-                }) ?? false;
-
-        /// <summary>
         /// Reads a Geo-JSON point into a <see cref="GeographyPoint" /> instance, or throws
         /// <see cref="JsonSerializationException" /> if the reader is not positioned on the
         /// beginning of a valid Geo-JSON point.
@@ -121,24 +95,6 @@ namespace Azure.Core.Serialization
                 requiredProperties: NameOnly,
                 readProperty: (r, _) => r.ExpectAndAdvance(JsonToken.String, WorldGeodeticSystem1984));
 
-        private static bool IsCrs(JObject possibleCrs) =>
-            possibleCrs.IsValid(
-                requiredProperties: TypeAndProperties,
-                isPropertyValid: property =>
-                {
-                    switch (property.Name)
-                    {
-                        case Type:
-                            return property.Value.IsString(Name);
-
-                        case Properties:
-                            return property.Value is JObject possibleProperties && IsCrsProperties(possibleProperties);
-
-                        default:
-                            return false;
-                    }
-                });
-
         private static void ReadCrs(JsonReader crsReader) =>
             crsReader.ReadObjectAndAdvance(
                 requiredProperties: TypeAndProperties,
@@ -155,9 +111,6 @@ namespace Azure.Core.Serialization
                             break;
                     }
                 });
-
-        private static bool AreCoordinates(JToken possibleCoordinates) =>
-            possibleCoordinates is JArray array && array.Count == 2 && array[0].IsNumber() && array[1].IsNumber();
 
         private static GeographyPoint ReadCoordinates(JsonReader coordinatesReader)
         {

@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using Azure.Core;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -52,17 +51,6 @@ namespace Azure.Core.Serialization
             Advance(reader);
             return result;
         }
-
-        /// <summary>
-        /// Asserts that the given JSON reader is positioned on a token with the expected type. Optionally asserts
-        /// that the value of the token matches a given expected value. If any of the assertions fail, this method
-        /// throws a JsonSerializationException.
-        /// </summary>
-        /// <param name="reader">The JSON reader.</param>
-        /// <param name="expectedToken">The JSON token on which the reader is expected to be positioned.</param>
-        /// <param name="expectedValues">Optional; The expected possible values of the current JSON token.</param>
-        public static void Expect(this JsonReader reader, JsonToken expectedToken, params object[] expectedValues) =>
-            Expect<object>(reader, expectedToken, expectedValues);
 
         /// <summary>
         /// Asserts that the given JSON reader is positioned on a token with the expected type and retrieves the
