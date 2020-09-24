@@ -343,6 +343,7 @@ namespace CosmosDB.Tests.ScenarioTests
                 SqlRoleAssignmentGetResults sqlRoleAssignmentGetResults = cosmosDBManagementClient.SqlResources.CreateUpdateSqlRoleAssignmentWithHttpMessagesAsync(roleAssignmentId, resourceGroupName, databaseAccountName2, sqlRoleAssignmentCreateUpdateParameters).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlRoleAssignmentGetResults);
                 Assert.Equal(roleAssignmentId, sqlRoleAssignmentGetResults.Name);
+                VerifyCreateUpdateRoleAssignment(sqlRoleAssignmentCreateUpdateParameters, sqlRoleAssignmentGetResults);
 
                 SqlRoleAssignmentGetResults sqlRoleAssignmentGetResults2 = cosmosDBManagementClient.SqlResources.GetSqlRoleAssignmentWithHttpMessagesAsync(roleAssignmentId, resourceGroupName, databaseAccountName2).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlRoleAssignmentGetResults2);
@@ -360,6 +361,7 @@ namespace CosmosDB.Tests.ScenarioTests
                 SqlRoleAssignmentGetResults sqlRoleAssignmentGetResults3 = cosmosDBManagementClient.SqlResources.CreateUpdateSqlRoleAssignmentWithHttpMessagesAsync(roleAssignmentId2, resourceGroupName, databaseAccountName2, sqlRoleAssignmentCreateUpdateParameters2).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlRoleAssignmentGetResults3);
                 Assert.Equal(roleAssignmentId2, sqlRoleAssignmentGetResults3.Name);
+                VerifyCreateUpdateRoleAssignment(sqlRoleAssignmentCreateUpdateParameters2, sqlRoleAssignmentGetResults3);
 
                 IEnumerable<SqlRoleAssignmentGetResults> sqlRoleAssignments = cosmosDBManagementClient.SqlResources.ListSqlRoleAssignmentsWithHttpMessagesAsync(resourceGroupName, databaseAccountName2).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlRoleAssignments);
@@ -431,6 +433,13 @@ namespace CosmosDB.Tests.ScenarioTests
             Assert.Equal(expectedValue.Type, actualValue.Type);
             Assert.Equal(expectedValue.Scope, actualValue.Scope);
             Assert.Equal(expectedValue.PrincipalId, actualValue.PrincipalId);
+        }
+
+        private void VerifyCreateUpdateRoleAssignment(SqlRoleAssignmentCreateUpdateParameters sqlRoleAssignmentCreateUpdateParameters, SqlRoleAssignmentGetResults sqlRoleAssignmentGetResults)
+        {
+            Assert.Equal(sqlRoleAssignmentCreateUpdateParameters.RoleDefinitionId, sqlRoleAssignmentGetResults.RoleDefinitionId);
+            Assert.Equal(sqlRoleAssignmentCreateUpdateParameters.Scope, sqlRoleAssignmentGetResults.Scope);
+            Assert.Equal(sqlRoleAssignmentCreateUpdateParameters.PrincipalId, sqlRoleAssignmentGetResults.PrincipalId);
         }
     }
 }
