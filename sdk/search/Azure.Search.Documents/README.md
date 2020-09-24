@@ -43,7 +43,7 @@ Use the Azure.Search.Documents client library to:
 Install the Azure Cognitive Search client library for .NET with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Search.Documents
+dotnet add package Azure.Search.Documents --version 11.2.0-beta.1
 ```
 
 ### Prerequisites
@@ -128,9 +128,8 @@ foreach (SearchResult<SearchDocument> result in response.GetResults())
 }
 ```
 
-You can paste that into a new console app,
-[install the Azure.Search.Documents package](#install-the-package), add a
-`using Azure.Search.Documents;` statement, and then hit F5 to run.
+You can paste that into a new console app, install the Azure.Search.Documents
+package, add a `using Azure.Search.Documents;` statement, and then hit F5 to run.
 
 ## Key concepts
 
