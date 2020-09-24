@@ -14,10 +14,16 @@ namespace Azure.Messaging.EventHubs
     internal static class AmqpProperty
     {
         /// <summary>
-        ///   The owner level (a.k.a. epoch) to associate with a link.
+        ///   The owner level (a.k.a. epoch) to associate with a receiver link.
         /// </summary>
         ///
-        public static AmqpSymbol OwnerLevel { get; } = AmqpConstants.Vendor + ":epoch";
+        public static AmqpSymbol ConsumerOwnerLevel { get; } = AmqpConstants.Vendor + ":epoch";
+
+        /// <summary>
+        ///   The owner level (a.k.a. epoch) to associate with a sending link.
+        /// </summary>
+        ///
+        public static AmqpSymbol ProducerOwnerLevel { get; } = AmqpConstants.Vendor + ":producer-epoch";
 
         /// <summary>
         ///   The type of Event Hubs entity to associate with a link.
@@ -30,6 +36,24 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         public static AmqpSymbol TrackLastEnqueuedEventProperties { get; } = AmqpConstants.Vendor + ":enable-receiver-runtime-metric";
+
+        /// <summary>
+        ///   The capability for opting-into idempotent publishing.
+        /// </summary>
+        ///
+        public static AmqpSymbol EnableIdempotentPublishing { get; } = AmqpConstants.Vendor + ":idempotent-producer";
+
+        /// <summary>
+        ///   The identifier of the producer group to associate with a producer.
+        /// </summary>
+        ///
+        public static AmqpSymbol ProducerGroupId { get; } = AmqpConstants.Vendor + ":producer-sequence-number";
+
+        /// <summary>
+        ///   The sequence number assigned by a producer to an event when it was published.
+        /// </summary>
+        ///
+        public static AmqpSymbol PublishedSequenceNumber { get; } = AmqpConstants.Vendor + ":producer-id";
 
         /// <summary>
         ///   The timeout to associate with a link.
