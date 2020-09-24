@@ -57,11 +57,10 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
 }
 ".Replace("'", "\"");
             mockResponse.SetContent(content);
-            //mockResponse.SetContent(string.Concat("{ \"value\":", expectedMetricDefinitionCollection.ToJson(), "}"));
             var mockTransport = new MockTransport(mockResponse);
             var insightsClient = GetInsightsManagementClient(mockTransport);
             var actualMetricDefinitions = await insightsClient.MetricDefinitions.ListAsync(resourceUri: ResourceUri, cancellationToken: new CancellationToken()).ToEnumerableAsync();
-            AreEqual(expectedMetricDefinitionCollection, actualMetricDefinitions.ToList<MetricDefinition>());
+            AreEqual(expectedMetricDefinitionCollection, actualMetricDefinitions);
         }
 
         [Test]
@@ -72,11 +71,29 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
             mockResponse.SetContent(string.Concat("{ \"value\":", expectedMetricCollection.ToJson(), "}"));
             var mockTransport = new MockTransport(mockResponse);
             var insightsClient = GetInsightsManagementClient(mockTransport);
-            //var filterString = new Microsoft.Rest.Azure.OData.ODataQuery<Metric>("timeGrain eq duration'PT1M' and startTime eq 2014-01-01T06:00:00Z and endTime eq 2014-01-10T06:00:00Z");
-            var actualMetrics = (await insightsClient.Metrics.ListAsync(resourceUri: ResourceUri,cancellationToken: CancellationToken.None)).Value;
+            var actualMetrics = (await insightsClient.Metrics.ListAsync(resourceUri: ResourceUri,cancellationToken: CancellationToken.None)).Value.Value;
 
-            //need to do
-            //Assert.AreEqual(expectedMetricCollection, actualMetrics.ToList<Metric>());
+            AreEqual(expectedMetricCollection, actualMetrics.ToList<Metric>());
+        }
+
+        private void AreEqual(IList<Metric> exp, IList<Metric> act)
+        {
+            if (exp != null)
+            {
+                for (int i = 0; i < exp.Count; i++)
+                {
+                    AreEqual(exp[i], act[i]);
+                }
+            }
+        }
+
+        private void AreEqual(Metric exp, Metric act)
+        {
+            if (exp != null)
+            {
+                AreEqual(exp.Name, act.Name);
+                Assert.AreEqual(exp.Unit, act.Unit);
+            }
         }
 
         private IList<Metric> GetMetricCollection(string resourceId)

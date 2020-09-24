@@ -17,9 +17,6 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
     [AsyncOnly]
     public class AlertsTests : InsightsManagementClientMockedBase
     {
-        //private static readonly string RuleName = "r1";
-        //private static readonly string IncidentName = "i1";
-
         public AlertsTests(bool isAsync)
             : base(isAsync)
         { }
@@ -38,7 +35,6 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
         {
             AlertRuleResource expectedParameters = GetCreateOrUpdateRuleParameter();
             var mockResponse = new MockResponse((int)HttpStatusCode.OK);
-            //var serializedObject = expectedParameters.ToJson();
             var content = @"{
                     'namePropertiesName': 'name1',
                     'id': null,
@@ -73,7 +69,6 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
             var mockTransport = new MockTransport(mockResponse);
             var insightsClient = GetInsightsManagementClient(mockTransport);
             var result = (await insightsClient.AlertRules.CreateOrUpdateAsync(resourceGroupName: "rg1", ruleName: expectedParameters.Name, parameters: expectedParameters)).Value;
-            //var result = (await AlertRulesOperations.CreateOrUpdateAsync(resourceGroupName: "rg1", ruleName: expectedParameters.Name, parameters: expectedParameters)).Value;
             AreEqual(expectedParameters, result);
         }
 
@@ -174,7 +169,6 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
                 actions: actions,
                 condition: new RuleCondition(null, new RuleDataSource()
                 {
-                    //MetricName = "CPUPercentage",
                     ResourceUri = "resourceUri"
                 }),
                 description: "description",
@@ -267,7 +261,6 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
                     actions: actions,
                     condition: new RuleCondition(null, new RuleDataSource()
                     {
-                    //MetricName = "CPUPercentage",
                        ResourceUri = "resourceUri"
                     }),
                     description: "description1",
@@ -292,7 +285,6 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
                 Assert.AreEqual(exp.IsEnabled, act.IsEnabled);
                 AreEqual(exp.Condition, act.Condition);
                 AreEqual(exp.Actions, act.Actions);
-                //Assert.Equal(exp.LastUpdatedTime, act.LastUpdatedTime);
             }
         }
 

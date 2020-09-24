@@ -245,7 +245,6 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
         {
             if (exp != null)
             {
-                //Assert.AreEqual(exp.DefaultProperty, act.DefaultProperty);
                 Assert.AreEqual(exp.Maximum, act.Maximum);
                 Assert.AreEqual(exp.Minimum, act.Minimum);
             }
