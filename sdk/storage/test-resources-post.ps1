@@ -151,7 +151,6 @@ $content =
       <TableServiceSecondaryEndpoint>https://$PremiumFileAccountName-secondary.table.core.windows.net</TableServiceSecondaryEndpoint>
     </TenantConfiguration>
   </TenantConfigurations>
-  </TenantConfigurations>
   <KeyVaultConfigurations>
     <KeyVaultConfiguration>
       <VaultName>ClientsideEncryptionKeyvault</VaultName>
