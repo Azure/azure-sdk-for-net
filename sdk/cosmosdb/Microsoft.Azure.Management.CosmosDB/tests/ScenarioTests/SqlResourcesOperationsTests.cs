@@ -7,6 +7,7 @@ using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Management.CosmosDB.Models;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CosmosDB.Tests.ScenarioTests
 {
@@ -270,7 +271,9 @@ namespace CosmosDB.Tests.ScenarioTests
                     Type = RoleDefinitionType.CustomRole,
                     AssignableScopes = new List<string>
                     {
-                        string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.DocumentDB/databaseAccounts/{2}", cosmosDBManagementClient.SubscriptionId, resourceGroupName, databaseAccountName)
+                        string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.DocumentDB/databaseAccounts/{2}", cosmosDBManagementClient.SubscriptionId, resourceGroupName, databaseAccountName),
+                        string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.DocumentDB/databaseAccounts/{2}", cosmosDBManagementClient.SubscriptionId, resourceGroupName, databaseAccountName2),
+
                     },
                     Permissions = new List<Permission>
                     {
@@ -279,9 +282,7 @@ namespace CosmosDB.Tests.ScenarioTests
                             DataActions = new List<string>
                             {
                                 "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/create",
-                                "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/read",
-                                "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/delete",
-                                "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/replace"
+                                "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/read"
                             }
                         }
                     }
@@ -290,6 +291,7 @@ namespace CosmosDB.Tests.ScenarioTests
                 SqlRoleDefinitionGetResults sqlRoleDefinitionGetResults = cosmosDBManagementClient.SqlResources.CreateUpdateSqlRoleDefinitionWithHttpMessagesAsync(roleDefinitionId, resourceGroupName, databaseAccountName2, sqlRoleDefinitionCreateUpdateParameters).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlRoleDefinitionGetResults);
                 Assert.Equal(roleDefinitionId, sqlRoleDefinitionGetResults.Name);
+                VerifyCreateUpdateRoleDefinition(sqlRoleDefinitionCreateUpdateParameters, sqlRoleDefinitionGetResults);
 
                 SqlRoleDefinitionGetResults sqlRoleDefinitionGetResults2 = cosmosDBManagementClient.SqlResources.GetSqlRoleDefinitionWithHttpMessagesAsync(roleDefinitionId, resourceGroupName, databaseAccountName2).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlRoleDefinitionGetResults2);
@@ -323,9 +325,13 @@ namespace CosmosDB.Tests.ScenarioTests
                 SqlRoleDefinitionGetResults sqlRoleDefinitionGetResults3 = cosmosDBManagementClient.SqlResources.CreateUpdateSqlRoleDefinitionWithHttpMessagesAsync(roleDefinitionId2, resourceGroupName, databaseAccountName2, sqlRoleDefinitionCreateUpdateParameters2).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlRoleDefinitionGetResults3);
                 Assert.Equal(roleDefinitionId2, sqlRoleDefinitionGetResults3.Name);
+                VerifyCreateUpdateRoleDefinition(sqlRoleDefinitionCreateUpdateParameters2, sqlRoleDefinitionGetResults3);
+
 
                 IEnumerable<SqlRoleDefinitionGetResults> sqlRoleDefinitions = cosmosDBManagementClient.SqlResources.ListSqlRoleDefinitionsWithHttpMessagesAsync(resourceGroupName, databaseAccountName2).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlRoleDefinitions);
+                VerifyEqualSqlRoleDefinitions(sqlRoleDefinitionGetResults2, sqlRoleDefinitions.ToList()[0]);
+                VerifyEqualSqlRoleDefinitions(sqlRoleDefinitionGetResults3, sqlRoleDefinitions.ToList()[1]);
 
                 SqlRoleAssignmentCreateUpdateParameters sqlRoleAssignmentCreateUpdateParameters = new SqlRoleAssignmentCreateUpdateParameters
                 {
@@ -356,6 +362,9 @@ namespace CosmosDB.Tests.ScenarioTests
                 Assert.Equal(roleAssignmentId2, sqlRoleAssignmentGetResults3.Name);
 
                 IEnumerable<SqlRoleAssignmentGetResults> sqlRoleAssignments = cosmosDBManagementClient.SqlResources.ListSqlRoleAssignmentsWithHttpMessagesAsync(resourceGroupName, databaseAccountName2).GetAwaiter().GetResult().Body;
+                Assert.NotNull(sqlRoleAssignments);
+                VerifyEqualSqlRoleAssignments(sqlRoleAssignmentGetResults3, sqlRoleAssignments.ToList()[0]);
+                VerifyEqualSqlRoleAssignments(sqlRoleAssignmentGetResults, sqlRoleAssignments.ToList()[1]);
 
                 foreach (SqlRoleAssignmentGetResults sqlRoleAssignment in sqlRoleAssignments)
                 {
@@ -401,6 +410,17 @@ namespace CosmosDB.Tests.ScenarioTests
             {
                 Assert.Equal(expectedValue.Permissions[i].DataActions.Count, actualValue.Permissions[i].DataActions.Count);
                 Assert.Equal(expectedValue.Permissions[i].NotDataActions.Count, actualValue.Permissions[i].NotDataActions.Count);
+            }
+        }
+
+        private void VerifyCreateUpdateRoleDefinition(SqlRoleDefinitionCreateUpdateParameters sqlRoleDefinitionCreateUpdateParameters, SqlRoleDefinitionGetResults sqlRoleDefinitionGetResults)
+        {
+            Assert.Equal(sqlRoleDefinitionCreateUpdateParameters.RoleName, sqlRoleDefinitionGetResults.RoleName);
+            Assert.Equal(sqlRoleDefinitionCreateUpdateParameters.AssignableScopes.Count, sqlRoleDefinitionGetResults.AssignableScopes.Count);
+            Assert.Equal(sqlRoleDefinitionCreateUpdateParameters.Permissions.Count, sqlRoleDefinitionGetResults.Permissions.Count);
+            for (int i = 0; i < sqlRoleDefinitionCreateUpdateParameters.Permissions.Count; i++)
+            {
+                Assert.Equal(sqlRoleDefinitionCreateUpdateParameters.Permissions[i].DataActions.Count, sqlRoleDefinitionGetResults.Permissions[i].DataActions.Count);
             }
         }
 
