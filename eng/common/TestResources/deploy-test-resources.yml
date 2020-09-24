@@ -36,5 +36,5 @@ steps:
         @subscriptionConfiguration `
         -CI `
         -Force `
-        -Verbose
+        -Verbose | Out-Null
     displayName: Deploy test resources
