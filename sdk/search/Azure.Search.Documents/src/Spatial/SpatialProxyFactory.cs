@@ -14,6 +14,9 @@ namespace Azure.Search.Documents
     {
         private const string Name = "Microsoft.Spatial";
 
+        // TODO: When GeoJson is built into Azure.Core, change these proxies to adapter for GeoJson types.
+        // https://github.com/Azure/azure-sdk-for-net/issues/13319
+
         private static readonly IReadOnlyDictionary<string, Func<object, GeometryProxy>> s_types =
             new Dictionary<string, Func<object, GeometryProxy>>(StringComparer.OrdinalIgnoreCase)
             {

@@ -5,7 +5,9 @@ using System;
 using System.Globalization;
 using System.Text;
 using Azure.Core;
+#if EXPERIMENTAL_SPATIAL
 using Azure.Core.GeoJson;
+#endif
 
 namespace Azure.Search.Documents
 {
