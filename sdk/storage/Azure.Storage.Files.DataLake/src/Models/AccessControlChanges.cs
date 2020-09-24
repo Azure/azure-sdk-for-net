@@ -13,7 +13,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// An enumerable of path entries that failed to update Access Control List within single batch.
         /// </summary>
-        public IEnumerable<AccessControlChangeFailure> BatchFailures { get; internal set; }
+        public AccessControlChangeFailure[] BatchFailures { get; internal set; }
 
         /// <summary>
         /// A <see cref="AccessControlChangeCounters"/> that contains counts of paths changed within single batch.

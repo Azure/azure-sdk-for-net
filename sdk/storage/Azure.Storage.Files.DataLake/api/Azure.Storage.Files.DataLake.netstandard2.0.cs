@@ -331,7 +331,7 @@ namespace Azure.Storage.Files.DataLake.Models
         private int _dummyPrimitive;
         public Azure.Storage.Files.DataLake.Models.AccessControlChangeCounters AggregateCounters { get { throw null; } }
         public Azure.Storage.Files.DataLake.Models.AccessControlChangeCounters BatchCounters { get { throw null; } }
-        public System.Collections.Generic.IEnumerable<Azure.Storage.Files.DataLake.Models.AccessControlChangeFailure> BatchFailures { get { throw null; } }
+        public Azure.Storage.Files.DataLake.Models.AccessControlChangeFailure[] BatchFailures { get { throw null; } }
         public string ContinuationToken { get { throw null; } }
     }
     public enum AccessControlType

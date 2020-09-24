@@ -2547,7 +2547,7 @@ namespace Azure.Storage.Files.DataLake
                                                     ChangedFilesCount = filesSuccessfulCount,
                                                     FailedChangesCount = failureCount,
                                                 },
-                                                BatchFailures = failedEntries,
+                                                BatchFailures = failedEntries.ToArray(),
                                                 ContinuationToken = lastContinuationToken,
                                             },
                                             jsonResponse.GetRawResponse()));
