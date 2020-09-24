@@ -24,6 +24,9 @@ parameters:
 - name: TargetDocRepoName
   type: string
   default: azure-docs-sdk-dotnet
+- name: TestPipeline
+  type: boolean
+  default: false
 
 stages:
   - stage: Build
@@ -36,7 +39,7 @@ stages:
         ArtifactName: packages
 
   # The Prerelease and Release stages are conditioned on whether we are building a pull request and the branch.
-  - ${{if and(or(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['TestPipeline'], 'true')), eq(variables['System.TeamProject'], 'internal'))}}:
+  - ${{if and(or(ne(variables['Build.Reason'], 'PullRequest'), eq(parameters.TestPipeline, 'true')), eq(variables['System.TeamProject'], 'internal'))}}:
     - template: archetype-net-release.yml
       parameters:
         ServiceDirectory: ${{parameters.ServiceDirectory}}
@@ -45,3 +48,4 @@ stages:
         ArtifactName: packages
         TargetDocRepoOwner: ${{parameters.TargetDocRepoOwner}}
         TargetDocRepoName: ${{parameters.TargetDocRepoName}} 
+        TestPipeline: ${{parameters.TestPipeline}}
