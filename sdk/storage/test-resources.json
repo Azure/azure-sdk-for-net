@@ -192,8 +192,12 @@
             "name": "[concat(variables('softDeleteAccountName'), '/default')]",
             "properties": {
                 "deleteRetentionPolicy": {
-                      "enabled": true,
-                      "days": 1
+                    "enabled": true,
+                    "days": 1
+                },
+                "containerDeleteRetentionPolicy": {
+                    "enabled": true,
+                    "days": 1
                 }
             },
             "dependsOn": [
