@@ -133,7 +133,7 @@ or contact [opencode@microsoft.com][coc_contact] with any
 additional questions or comments.
 
 <!-- LINKS -->
-[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Blobs.ChangeFeed/src
+[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Blobs.ChangeFeed/src/
 [package]: https://www.nuget.org/packages/Azure.Storage.Blobs.ChangeFeed/
 [product_docs]: https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-change-feed
 [azure_sub]: https://azure.microsoft.com/free/
