@@ -8,7 +8,6 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Insights.Models;
-using Insights.Tests.Helpers;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Insights.Tests.BasicTests
@@ -64,7 +63,6 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
         }
 ".Replace("'", "\"");
             mockResponse.SetContent(content);
-            //mockResponse.SetContent(string.Concat("{ \"value\":", expResponse.ToJson(), "}"));
             var mockTransport = new MockTransport(mockResponse);
             var insightsClient = GetInsightsManagementClient(mockTransport);
             var parameters = CreateDiagnosticSettingsParams();
@@ -115,7 +113,6 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
         }
 ".Replace("'", "\"");
             mockResponse.SetContent(content);
-            //mockResponse.SetContent(string.Concat("{ \"value\":", expResponse.ToJson(), "}"));
             var mockTransport = new MockTransport(mockResponse);
             var insightsClient = GetInsightsManagementClient(mockTransport);
             DiagnosticSettingsResource actualResponse = await insightsClient.DiagnosticSettings.GetAsync(ResourceUri,DiagSetName);
