@@ -16,10 +16,10 @@ namespace Azure.Identity
         private readonly TokenRequestContext _context;
         private readonly IScopeHandler _scopeHandler;
 
-        public CredentialDiagnosticScope(string name, TokenRequestContext context, IScopeHandler scopeHandler)
+        public CredentialDiagnosticScope(ClientDiagnostics diagnostics, string name, TokenRequestContext context, IScopeHandler scopeHandler)
         {
             _name = name;
-            _scope = scopeHandler.CreateScope(name);
+            _scope = scopeHandler.CreateScope(diagnostics, name);
             _context = context;
             _scopeHandler = scopeHandler;
         }

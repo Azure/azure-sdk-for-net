@@ -99,6 +99,7 @@ namespace Azure.Messaging.EventGrid
         public const string StorageDirectoryCreatedEvent = "Microsoft.Storage.DirectoryCreated";
         public const string StorageDirectoryDeletedEvent = "Microsoft.Storage.DirectoryDeleted";
         public const string StorageDirectoryRenamedEvent = "Microsoft.Storage.DirectoryRenamed";
+        public const string StorageLifecyclePolicyCompletedEvent = "Microsoft.Storage.LifecyclePolicyCompleted";
 
         // App Service
         public const string WebAppUpdated = "Microsoft.Web.AppUpdated";

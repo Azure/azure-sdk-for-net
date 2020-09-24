@@ -14,6 +14,8 @@ namespace Azure.Identity
         public static string ClientSecret => Environment.GetEnvironmentVariable("AZURE_CLIENT_SECRET");
         public static string ClientCertificatePath => Environment.GetEnvironmentVariable("AZURE_CLIENT_CERTIFICATE_PATH");
 
+        public static string IdentityEndpoint => Environment.GetEnvironmentVariable("IDENTITY_ENDPOINT");
+        public static string IdentityHeader => Environment.GetEnvironmentVariable("IDENTITY_HEADER");
         public static string MsiEndpoint => Environment.GetEnvironmentVariable("MSI_ENDPOINT");
         public static string MsiSecret => Environment.GetEnvironmentVariable("MSI_SECRET");
 

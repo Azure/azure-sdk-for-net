@@ -312,12 +312,14 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         public DataLakeFileOpenWriteOptions() { }
         public long? BufferSize { get { throw null; } set { } }
+        public bool? Close { get { throw null; } set { } }
         public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions OpenConditions { get { throw null; } set { } }
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
     }
     public partial class DataLakeFileUploadOptions
     {
         public DataLakeFileUploadOptions() { }
+        public bool? Close { get { throw null; } set { } }
         public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
         public Azure.Storage.Files.DataLake.Models.PathHttpHeaders HttpHeaders { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }

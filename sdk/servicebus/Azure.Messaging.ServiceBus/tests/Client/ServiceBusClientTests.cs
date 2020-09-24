@@ -119,9 +119,26 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
         [TestCase("SharedAccessKeyName=[value];SharedAccessKey=[value];EntityPath=[value]")]
         [TestCase("Endpoint=value.com;SharedAccessKey=[value];EntityPath=[value]")]
         [TestCase("Endpoint=value.com;SharedAccessKeyName=[value];EntityPath=[value]")]
-        public void ConstructorValidatesConnectionString(string connectionString)
+        [TestCase("HostName=value.azure-devices.net;SharedAccessKeyName=[value];SharedAccessKey=[value]")]
+        [TestCase("HostName=value.azure-devices.net;SharedAccessKeyName=[value];SharedAccessKey=[value];EntityPath=[value]")]
+        [TestCase("HostName=value.azure-devices.net;SharedAccessKeyName=[value];SharedAccessSignature=[sas];EntityPath=[value]")]
+        [TestCase("HostName=value.azure-devices.net;SharedAccessKey=[value];SharedAccessSignature=[sas];EntityPath=[value]")]
+        public void ConstructorValidatesConnectionStringForMissingInformation(string connectionString)
         {
-            Assert.That(() => new ServiceBusClient(connectionString), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new ServiceBusClient(connectionString), Throws.ArgumentException.And.Message.StartsWith(Resources.MissingConnectionInformation));
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="ServiceBusClient" />
+        ///    constructor.
+        /// </summary>
+        ///
+        [Test]
+
+        [TestCase("Endpoint=value.azure-devices.net;SharedAccessKeyName=[value];SharedAccessKey=[value];SharedAccessSignature=[sas]")]
+        public void ConstructorValidatesConnectionStringForDuplicateAuthorization(string connectionString)
+        {
+            Assert.That(() => new ServiceBusClient(connectionString), Throws.ArgumentException.And.Message.StartsWith(Resources.OnlyOneSharedAccessAuthorizationMayBeSpecified));
         }
 
         /// <summary>
@@ -240,7 +257,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
             ServiceBusClient client = new ServiceBusClient(fakeConnection);
             Assert.AreEqual("not-real.servicebus.windows.net", client.FullyQualifiedNamespace);
             Assert.IsNotNull(client.Identifier);
-            Assert.IsFalse(client.IsDisposed);
+            Assert.IsFalse(client.IsClosed);
         }
 
         /// <summary>

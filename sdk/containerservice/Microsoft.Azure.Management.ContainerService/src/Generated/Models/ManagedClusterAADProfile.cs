@@ -10,8 +10,9 @@
 
 namespace Microsoft.Azure.Management.ContainerService.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -30,6 +31,11 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// <summary>
         /// Initializes a new instance of the ManagedClusterAADProfile class.
         /// </summary>
+        /// <param name="managed">Whether to enable managed AAD.</param>
+        /// <param name="enableAzureRBAC">Whether to enable Azure RBAC for
+        /// Kubernetes authorization.</param>
+        /// <param name="adminGroupObjectIDs">AAD group object IDs that will
+        /// have admin role of the cluster.</param>
         /// <param name="clientAppID">The client AAD application ID.</param>
         /// <param name="serverAppID">The server AAD application ID.</param>
         /// <param name="serverAppSecret">The server AAD application
@@ -37,8 +43,11 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// <param name="tenantID">The AAD tenant ID to use for authentication.
         /// If not specified, will use the tenant of the deployment
         /// subscription.</param>
-        public ManagedClusterAADProfile(string clientAppID, string serverAppID, string serverAppSecret = default(string), string tenantID = default(string))
+        public ManagedClusterAADProfile(bool? managed = default(bool?), bool? enableAzureRBAC = default(bool?), IList<string> adminGroupObjectIDs = default(IList<string>), string clientAppID = default(string), string serverAppID = default(string), string serverAppSecret = default(string), string tenantID = default(string))
         {
+            Managed = managed;
+            EnableAzureRBAC = enableAzureRBAC;
+            AdminGroupObjectIDs = adminGroupObjectIDs;
             ClientAppID = clientAppID;
             ServerAppID = serverAppID;
             ServerAppSecret = serverAppSecret;
@@ -50,6 +59,26 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets whether to enable managed AAD.
+        /// </summary>
+        [JsonProperty(PropertyName = "managed")]
+        public bool? Managed { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether to enable Azure RBAC for Kubernetes
+        /// authorization.
+        /// </summary>
+        [JsonProperty(PropertyName = "enableAzureRBAC")]
+        public bool? EnableAzureRBAC { get; set; }
+
+        /// <summary>
+        /// Gets or sets AAD group object IDs that will have admin role of the
+        /// cluster.
+        /// </summary>
+        [JsonProperty(PropertyName = "adminGroupObjectIDs")]
+        public IList<string> AdminGroupObjectIDs { get; set; }
 
         /// <summary>
         /// Gets or sets the client AAD application ID.
@@ -76,22 +105,5 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         [JsonProperty(PropertyName = "tenantID")]
         public string TenantID { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (ClientAppID == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ClientAppID");
-            }
-            if (ServerAppID == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ServerAppID");
-            }
-        }
     }
 }

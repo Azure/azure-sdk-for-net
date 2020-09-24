@@ -16,15 +16,15 @@ using Azure.Messaging.ServiceBus.Plugins;
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    /// The <see cref="ServiceBusProcessor"/> provides an abstraction around a set of <see cref="ServiceBusReceiver"/> that
-    /// allows using an event based model for processing received <see cref="ServiceBusReceivedMessage" />. It is constructed by calling
-    /// <see cref="ServiceBusClient.CreateProcessor(string, ServiceBusProcessorOptions)"/>.
+    /// The <see cref="ServiceBusProcessor"/> provides an abstraction around a set of <see cref="ServiceBusReceiver"/>
+    /// that allows using an event based model for processing received <see cref="ServiceBusReceivedMessage" />.
+    /// It is constructed by calling <see cref="ServiceBusClient.CreateProcessor(string, ServiceBusProcessorOptions)"/>.
     /// The message handler is specified with the <see cref="ProcessMessageAsync"/>
     /// property. The error handler is specified with the <see cref="ProcessErrorAsync"/> property.
     /// To start processing after the handlers have been specified, call <see cref="StartProcessingAsync"/>.
     /// </summary>
 #pragma warning disable CA1001 // Types that own disposable fields should be disposable
-    public class ServiceBusProcessor
+    public class ServiceBusProcessor : IAsyncDisposable
 #pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
         private Func<ProcessMessageEventArgs, Task> _processMessageAsync;
@@ -144,6 +144,22 @@ namespace Azure.Messaging.ServiceBus
         internal ServiceBusEventSource Logger { get; set; } = ServiceBusEventSource.Log;
         internal int MaxConcurrentSessions { get; }
         internal int MaxConcurrentCallsPerSession { get; }
+
+        /// <summary>
+        ///   Indicates whether or not this <see cref="ServiceBusProcessor"/> has been closed.
+        /// </summary>
+        ///
+        /// <value>
+        /// <c>true</c> if the processor is closed; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsClosed
+        {
+            get => _closed;
+            private set => _closed = value;
+        }
+
+        /// <summary>Indicates whether or not this instance has been closed.</summary>
+        private volatile bool _closed = false;
 
         private readonly string[] _sessionIds;
         private readonly EntityScopeFactory _scopeFactory;
@@ -434,6 +450,7 @@ namespace Azure.Messaging.ServiceBus
         public virtual async Task StartProcessingAsync(
             CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusProcessor));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             bool releaseGuard = false;
             try
@@ -486,6 +503,12 @@ namespace Azure.Messaging.ServiceBus
 
         private void InitializeReceiverManagers()
         {
+            if (_receiverManagers.Count > 0)
+            {
+                // already initialized - this can happen if stopping and then restarting
+                return;
+            }
+
             if (IsSessionProcessor)
             {
                 var numReceivers = _sessionIds.Length > 0 ? _sessionIds.Length : MaxConcurrentSessions;
@@ -559,8 +582,9 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         /// Signals the processor to stop processing messaging. Should this method be
-        /// called while the processor is not running, an
-        /// <see cref="InvalidOperationException"/> is thrown.
+        /// called while the processor is not running, no action is taken. This method
+        /// will not close the underlying receivers, but will cause the receivers to stop
+        /// receiving. To close the underlying receivers, <see cref="CloseAsync"/> should be called.
         /// </summary>
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to
@@ -599,17 +623,6 @@ namespace Azure.Messaging.ServiceBus
 
                     ActiveReceiveTask.Dispose();
                     ActiveReceiveTask = null;
-
-                    foreach (ReceiverManager receiverManager in _receiverManagers)
-                    {
-                        await receiverManager.CloseReceiverIfNeeded(
-                            cancellationToken)
-                            .ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    throw new InvalidOperationException(Resources.MessageProcessorIsNotRunning);
                 }
             }
             catch (Exception exception)
@@ -707,5 +720,37 @@ namespace Azure.Messaging.ServiceBus
                 throw new InvalidOperationException(Resources.RunningMessageProcessorCannotPerformOperation);
             }
         }
+
+        /// <summary>
+        ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusProcessor" />.
+        /// </summary>
+        /// <param name="closeMode">The mode indicating what should happen to the link when closing.</param>
+        /// <param name="cancellationToken"> An optional<see cref="CancellationToken"/> instance to signal the
+        /// request to cancel the operation.</param>
+        public virtual async Task CloseAsync(
+            LinkCloseMode closeMode = LinkCloseMode.Detach,
+            CancellationToken cancellationToken = default)
+        {
+            IsClosed = true;
+
+            if (IsProcessing)
+            {
+                await StopProcessingAsync(cancellationToken).ConfigureAwait(false);
+            }
+            foreach (ReceiverManager receiverManager in _receiverManagers)
+            {
+                await receiverManager.CloseReceiverIfNeeded(
+                    cancellationToken,
+                    forceClose: true)
+                    .ConfigureAwait(false);
+            }
+        }
+
+        /// <summary>
+        ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusProcessor" />.
+        ///   This is equivalent to calling <see cref="CloseAsync"/> with the default <see cref="LinkCloseMode"/>.
+        /// </summary>
+        public async ValueTask DisposeAsync() =>
+            await CloseAsync().ConfigureAwait(false);
     }
 }

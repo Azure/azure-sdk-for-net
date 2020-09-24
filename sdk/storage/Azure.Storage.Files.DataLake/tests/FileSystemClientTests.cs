@@ -1808,6 +1808,18 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public void DataLakeAccessPolicyNullStartsOnExpiresOnTest()
+        {
+            DataLakeAccessPolicy accessPolicy = new DataLakeAccessPolicy()
+            {
+                Permissions = "rw"
+            };
+
+            Assert.AreEqual(new DateTimeOffset(), accessPolicy.StartsOn);
+            Assert.AreEqual(new DateTimeOffset(), accessPolicy.ExpiresOn);
+        }
+
+        [Test]
         [TestCase("!'();[]@&%=+$,#äÄöÖüÜß;")]
         [TestCase("%21%27%28%29%3B%5B%5D%40%26%25%3D%2B%24%2C%23äÄöÖüÜß%3B")]
         [TestCase("my cool directory")]
