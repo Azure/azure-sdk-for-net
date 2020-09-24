@@ -6,68 +6,68 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "283",
-        "Content-Type": "application/json",
+        "Content-Length": "163",
+        "Content-Type": "text/plain",
         "User-Agent": [
-          "azsdk-net-Data.SchemaRegistry/1.0.0-alpha.20200903.1",
+          "azsdk-net-Data.SchemaRegistry/1.0.0-alpha.20200922.1",
           "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.19041 )"
         ],
-        "x-ms-client-request-id": "29665161b7b0e47e8e47525f0cf322fd",
+        "x-ms-client-request-id": "9ba13199bb118cee931fd241601cb425",
         "x-ms-return-client-request-id": "true",
         "X-Schema-Type": "avro"
       },
-      "RequestBody": "{\u0022type\u0022:\u0022record\u0022,\u0022name\u0022:\u0022Employee\u0022,\u0022namespace\u0022:\u0022TestSchema\u0022,\u0022fields\u0022:[{\u0022name\u0022:\u0022Name\u0022,\u0022type\u0022:\u0022string\u0022},{\u0022name\u0022:\u0022Age\u0022,\u0022type\u0022:\u0022int\u0022}]}",
+      "RequestBody": "\u0022{\\\u0022type\\\u0022:\\\u0022record\\\u0022,\\\u0022name\\\u0022:\\\u0022Employee\\\u0022,\\\u0022namespace\\\u0022:\\\u0022TestSchema\\\u0022,\\\u0022fields\\\u0022:[{\\\u0022name\\\u0022:\\\u0022Name\\\u0022,\\\u0022type\\\u0022:\\\u0022string\\\u0022},{\\\u0022name\\\u0022:\\\u0022Age\\\u0022,\\\u0022type\\\u0022:\\\u0022int\\\u0022}]}\u0022",
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Fri, 04 Sep 2020 04:17:18 GMT",
+        "Date": "Tue, 22 Sep 2020 19:37:36 GMT",
         "Location": "https://sr-playground.servicebus.windows.net/$schemagroups/miyanni_srgroup/schemas/TestSchema.Employee/versions/1?api-version=2017-04",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000",
         "Transfer-Encoding": "chunked",
-        "X-Schema-Id": "34fa96c2ac67489da0df6d4a245265a7",
-        "X-Schema-Id-Location": "https://sr-playground.servicebus.windows.net:443/$schemagroups/getschemabyid/34fa96c2ac67489da0df6d4a245265a7?api-version=2017-04",
+        "X-Schema-Id": "aa62dc0cb1e14885bc3284009de5d0bc",
+        "X-Schema-Id-Location": "https://sr-playground.servicebus.windows.net:443/$schemagroups/getschemabyid/aa62dc0cb1e14885bc3284009de5d0bc?api-version=2017-04",
         "X-Schema-Type": "Avro",
         "X-Schema-Version": "1",
         "X-Schema-Versions-Location": "https://sr-playground.servicebus.windows.net:443/$schemagroups/miyanni_srgroup/schemas/TestSchema.Employee/versions?api-version=2017-04"
       },
       "ResponseBody": {
-        "id": "34fa96c2ac67489da0df6d4a245265a7"
+        "id": "aa62dc0cb1e14885bc3284009de5d0bc"
       }
     },
     {
-      "RequestUri": "https://sr-playground.servicebus.windows.net/$schemagroups/getSchemaById/34fa96c2ac67489da0df6d4a245265a7?api-version=2017-04",
+      "RequestUri": "https://sr-playground.servicebus.windows.net/$schemagroups/getSchemaById/aa62dc0cb1e14885bc3284009de5d0bc?api-version=2017-04",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Data.SchemaRegistry/1.0.0-alpha.20200903.1",
+          "azsdk-net-Data.SchemaRegistry/1.0.0-alpha.20200922.1",
           "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.19041 )"
         ],
-        "x-ms-client-request-id": "6a2d0bdc0bba5cc6479100de284925b6",
+        "x-ms-client-request-id": "fa6e728278df4a3f9923106cdf43fd7f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Fri, 04 Sep 2020 04:17:18 GMT",
+        "Date": "Tue, 22 Sep 2020 19:37:38 GMT",
         "Location": "https://sr-playground.servicebus.windows.net/$schemagroups/miyanni_srgroup/schemas/TestSchema.Employee/versions/1?api-version=2017-04",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000",
         "Transfer-Encoding": "chunked",
-        "X-Schema-Id": "34fa96c2ac67489da0df6d4a245265a7",
-        "X-Schema-Id-Location": "https://sr-playground.servicebus.windows.net:443/$schemagroups/getschemabyid/34fa96c2ac67489da0df6d4a245265a7?api-version=2017-04",
+        "X-Schema-Id": "aa62dc0cb1e14885bc3284009de5d0bc",
+        "X-Schema-Id-Location": "https://sr-playground.servicebus.windows.net:443/$schemagroups/getschemabyid/aa62dc0cb1e14885bc3284009de5d0bc?api-version=2017-04",
         "X-Schema-Type": "Avro",
         "X-Schema-Version": "1",
         "X-Schema-Versions-Location": "https://sr-playground.servicebus.windows.net:443/$schemagroups/miyanni_srgroup/schemas/TestSchema.Employee/versions?api-version=2017-04"
       },
-      "ResponseBody": "{\u0022type\u0022:\u0022record\u0022,\u0022name\u0022:\u0022Employee\u0022,\u0022namespace\u0022:\u0022TestSchema\u0022,\u0022fields\u0022:[{\u0022name\u0022:\u0022Name\u0022,\u0022type\u0022:\u0022string\u0022},{\u0022name\u0022:\u0022Age\u0022,\u0022type\u0022:\u0022int\u0022}]}"
+      "ResponseBody": "\u0022{\\\u0022type\\\u0022:\\\u0022record\\\u0022,\\\u0022name\\\u0022:\\\u0022Employee\\\u0022,\\\u0022namespace\\\u0022:\\\u0022TestSchema\\\u0022,\\\u0022fields\\\u0022:[{\\\u0022name\\\u0022:\\\u0022Name\\\u0022,\\\u0022type\\\u0022:\\\u0022string\\\u0022},{\\\u0022name\\\u0022:\\\u0022Age\\\u0022,\\\u0022type\\\u0022:\\\u0022int\\\u0022}]}\u0022"
     }
   ],
   "Variables": {
-    "RandomSeed": "1337710688",
+    "RandomSeed": "403326279",
     "SCHEMAREGISTRY_URL": "sr-playground.servicebus.windows.net"
   }
 }

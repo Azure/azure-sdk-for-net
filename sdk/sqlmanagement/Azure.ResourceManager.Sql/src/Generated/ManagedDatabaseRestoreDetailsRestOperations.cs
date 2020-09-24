@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(restoreDetailsName.ToString(), true);
             uri.AppendQuery("api-version", "2020-02-02-preview", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

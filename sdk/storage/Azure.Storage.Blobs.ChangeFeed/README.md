@@ -135,7 +135,7 @@ additional questions or comments.
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Blobs.ChangeFeed/src
 [package]: https://www.nuget.org/packages/Azure.Storage.Blobs.ChangeFeed/
-[product_docs]: https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-change-feed
+[product_docs]: https://docs.microsoft.com/azure/storage/blobs/storage-blob-change-feed
 [azure_sub]: https://azure.microsoft.com/free/
 [nuget]: https://www.nuget.org/
 [storage_account_docs]: https://docs.microsoft.com/azure/storage/common/storage-account-overview
@@ -145,8 +145,8 @@ additional questions or comments.
 [authenticating_with_blobs]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Blobs/samples/Sample02_Auth.cs
 [RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/src/RequestFailedException.cs
 [error_codes]: https://docs.microsoft.com/rest/api/storageservices/blob-service-error-codes
-[samples]: samples/
-[storage_contrib]: ../CONTRIBUTING.md
+[samples]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Blobs.ChangeFeed/samples/
+[storage_contrib]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/CONTRIBUTING.md
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
