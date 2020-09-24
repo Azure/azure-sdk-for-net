@@ -11,8 +11,25 @@ namespace Azure.ResourceManager.Insights.Tests
     {
         protected static readonly string RgName = "rg1";
 
-        protected InsightsManagementClientBase(bool isAsync) : base(isAsync) { }
+        protected InsightsManagementClientBase(bool isAsync)
+            : base(isAsync)
+        { }
 
-        protected InsightsManagementClientBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) { }
+        public AlertRulesOperations AlertRulesOperations { get; set; }
+        public AlertRuleIncidentsOperations AlertRuleIncidentsOperations { get; set; }
+
+        protected void InitializeBase()
+        {
+            var InsightsManagementClient = GetInsightsManagementClient();
+            AlertRulesOperations = InsightsManagementClient.AlertRules;
+            AlertRuleIncidentsOperations = InsightsManagementClient.AlertRuleIncidents;
+        }
+
+        internal InsightsManagementClient GetInsightsManagementClient()
+        {
+            return CreateClient<InsightsManagementClient>(this.TestEnvironment.SubscriptionId,
+                TestEnvironment.Credential,
+                Recording.InstrumentClientOptions(new InsightsManagementClientOptions()));
+        }
     }
 }
