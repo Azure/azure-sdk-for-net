@@ -1108,7 +1108,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             AccessControlChangeResult result = await directory.SetAccessControlRecursiveAsync(
                 AccessControlList,
-                progressHandler: null,
                 options: options);
 
             // Assert
@@ -1131,25 +1130,23 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
             DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
             DataLakeFileClient file4 = await directory.CreateFileAsync(GetNewFileName());
-
-            AccessControlChangeOptions options = new AccessControlChangeOptions()
-            {
-                BatchSize = 2
-            };
-
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
             AccessControlChanges intermediateResult = default;
+            AccessControlChangeOptions options = new AccessControlChangeOptions()
+            {
+                BatchSize = 2,
+                ProgressHandler = new Progress<Response<AccessControlChanges>>(x =>
+                {
+                    intermediateResult = x;
+                    cancellationTokenSource.Cancel();
+                })
+            };
 
             // Act
             try
             {
                 await directory.SetAccessControlRecursiveAsync(
                     AccessControlList,
-                    new Progress<Response<AccessControlChanges>>(x =>
-                    {
-                        intermediateResult = x;
-                        cancellationTokenSource.Cancel();
-                    }),
                     options: options,
                     cancellationToken: cancellationTokenSource.Token);
             }
@@ -1158,9 +1155,10 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // skip
             }
 
+            options.ProgressHandler = null;
+
             AccessControlChangeResult result = await directory.SetAccessControlRecursiveAsync(
                 AccessControlList,
-                progressHandler: null,
                 continuationToken: intermediateResult.ContinuationToken,
                 options: options);
 
@@ -1188,13 +1186,13 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             AccessControlChangeOptions options = new AccessControlChangeOptions()
             {
-                BatchSize = 2
+                BatchSize = 2,
+                ProgressHandler = progress
             };
 
             // Act
             AccessControlChangeResult result = await directory.SetAccessControlRecursiveAsync(
                 AccessControlList,
-                progress,
                 options: options);
 
             // Assert
@@ -1244,7 +1242,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 result = await directory.SetAccessControlRecursiveAsync(
                     AccessControlList,
-                    progressHandler: null,
                     continuationToken: result.ContinuationToken,
                     options);
                 changedDirectoriesCount += result.Counters.ChangedDirectoriesCount;
@@ -1309,7 +1306,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             AccessControlChangeResult result = await subownerDirectoryClient.SetAccessControlRecursiveAsync(
                 accessControlList: AccessControlList,
-                progressHandler: progress);
+                options: new AccessControlChangeOptions() { ProgressHandler = progress });
 
             // Assert
             Assert.AreEqual(1, result.Counters.FailedChangesCount);
@@ -1377,7 +1374,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             AccessControlChangeResult result = await subownerDirectoryClient.SetAccessControlRecursiveAsync(
                 accessControlList: AccessControlList,
-                progressHandler: null,
                 options: options);
 
             // Assert
@@ -1442,14 +1438,18 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Sas = GetNewDataLakeSasCredentialsOwner(fileSystemName, subowner, userDelegationKey, test.FileSystem.AccountName)
             };
 
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            AccessControlChanges intermediateResult = default;
             AccessControlChangeOptions options = new AccessControlChangeOptions()
             {
                 BatchSize = 2,
-                ContinueOnFailure = true
+                ContinueOnFailure = true,
+                ProgressHandler = new Progress<Response<AccessControlChanges>>(x =>
+                {
+                    intermediateResult = x;
+                    cancellationTokenSource.Cancel();
+                })
             };
-
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-            AccessControlChanges intermediateResult = default;
 
             // Create DirectoryClient with the SAS that the owner only has access to
             DataLakeDirectoryClient subownerDirectoryClient = new DataLakeDirectoryClient(dataLakeUriBuilderOwner1.ToUri(), GetOptions());
@@ -1459,11 +1459,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 await subownerDirectoryClient.SetAccessControlRecursiveAsync(
                     accessControlList: AccessControlList,
-                    progressHandler: new Progress<Response<AccessControlChanges>>(x =>
-                    {
-                        intermediateResult = x;
-                        cancellationTokenSource.Cancel();
-                    }),
                     options: options,
                     cancellationToken: cancellationTokenSource.Token);
             }
@@ -1475,10 +1470,12 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Assert
             Assert.IsNotNull(intermediateResult.ContinuationToken);
 
+            // Arrange
+            options.ProgressHandler = null;
+
             // Act
             AccessControlChangeResult result = await subownerDirectoryClient.SetAccessControlRecursiveAsync(
                 accessControlList: AccessControlList,
-                progressHandler: null,
                 options: options,
                 continuationToken: intermediateResult.ContinuationToken);
 
@@ -1514,7 +1511,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             await TestHelper.AssertExpectedExceptionAsync<DataLakeAclChangeFailedException>(
                 directory.SetAccessControlRecursiveAsync(
                     accessControlList: AccessControlList,
-                    progressHandler: null,
                     continuationToken: sampleToken),
                     e => Assert.AreEqual(e.ContinuationToken, sampleToken));
         }
@@ -1545,7 +1541,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             await TestHelper.AssertExpectedExceptionAsync<DataLakeAclChangeFailedException>(
                 directory.SetAccessControlRecursiveAsync(
                     accessControlList: AccessControlList,
-                    progressHandler: null,
                     continuationToken: sampleToken,
                     cancellationToken: cancellationTokenSource.Token),
                     e => Assert.AreEqual(e.ContinuationToken, sampleToken));
@@ -1568,10 +1563,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeDirectoryClient directory = InstrumentClient(new DataLakeDirectoryClient(uri, tokenCredential, GetOptions()));
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<DataLakeAclChangeFailedException>(
-                directory.SetAccessControlRecursiveAsync(
-                    accessControlList: AccessControlList,
-                    progressHandler: null),
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                directory.SetAccessControlRecursiveAsync(accessControlList: AccessControlList),
                     e => { });
         }
 
@@ -1619,7 +1612,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             AccessControlChangeResult result = await directory.UpdateAccessControlRecursiveAsync(
                 accessControlList: AccessControlList,
-                progressHandler: null,
                 options: options);
 
             // Assert
@@ -1643,24 +1635,23 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
             DataLakeFileClient file4 = await directory.CreateFileAsync(GetNewFileName());
 
-            AccessControlChangeOptions options = new AccessControlChangeOptions()
-            {
-                BatchSize = 2
-            };
-
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
             AccessControlChanges intermediateResult = default;
+            AccessControlChangeOptions options = new AccessControlChangeOptions()
+            {
+                BatchSize = 2,
+                ProgressHandler = new Progress<Response<AccessControlChanges>>(x =>
+                {
+                    intermediateResult = x;
+                    cancellationTokenSource.Cancel();
+                })
+            };
 
             // Act
             try
             {
                 await directory.UpdateAccessControlRecursiveAsync(
                     AccessControlList,
-                    new Progress<Response<AccessControlChanges>>(x =>
-                    {
-                        intermediateResult = x;
-                        cancellationTokenSource.Cancel();
-                    }),
                     options: options,
                     cancellationToken: cancellationTokenSource.Token);
             }
@@ -1669,9 +1660,9 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // skip
             }
 
+            options.ProgressHandler = null;
             AccessControlChangeResult result = await directory.UpdateAccessControlRecursiveAsync(
                 AccessControlList,
-                progressHandler: null,
                 intermediateResult.ContinuationToken,
                 options);
 
@@ -1699,13 +1690,13 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             AccessControlChangeOptions options = new AccessControlChangeOptions()
             {
-                BatchSize = 2
+                BatchSize = 2,
+                ProgressHandler = progress
             };
 
             // Act
             AccessControlChangeResult result = await directory.UpdateAccessControlRecursiveAsync(
                 AccessControlList,
-                progress,
                 options: options);
 
             // Assert
@@ -1755,7 +1746,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 result = await directory.UpdateAccessControlRecursiveAsync(
                     AccessControlList,
-                    progressHandler: null,
                     result.ContinuationToken,
                     options);
                 changedDirectoriesCount += result.Counters.ChangedDirectoriesCount;
@@ -1817,6 +1807,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
 
             InMemoryAccessControlRecursiveChangeProgress progress = new InMemoryAccessControlRecursiveChangeProgress();
+            AccessControlChangeOptions options = new AccessControlChangeOptions()
+            {
+                ProgressHandler = progress
+            };
 
             // Create DirectoryClient with the SAS that the owner only has access to
             DataLakeDirectoryClient subownerDirectoryClient = new DataLakeDirectoryClient(dataLakeUriBuilderOwner1.ToUri(), GetOptions());
@@ -1824,7 +1818,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             AccessControlChangeResult result = await subownerDirectoryClient.UpdateAccessControlRecursiveAsync(
                 accessControlList: AccessControlList,
-                progressHandler: progress);
+                options: options);
 
             // Assert
             Assert.AreEqual(1, result.Counters.FailedChangesCount);
@@ -1892,7 +1886,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             AccessControlChangeResult result = await subownerDirectoryClient.UpdateAccessControlRecursiveAsync(
                 accessControlList: AccessControlList,
-                progressHandler: null,
                 options: options);
 
             // Assert
@@ -1957,14 +1950,18 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Sas = GetNewDataLakeSasCredentialsOwner(fileSystemName, subowner, userDelegationKey, test.FileSystem.AccountName)
             };
 
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            AccessControlChanges intermediateResult = default;
             AccessControlChangeOptions options = new AccessControlChangeOptions()
             {
                 BatchSize = 2,
-                ContinueOnFailure = true
+                ContinueOnFailure = true,
+                ProgressHandler = new Progress<Response<AccessControlChanges>>(x =>
+                {
+                    intermediateResult = x;
+                    cancellationTokenSource.Cancel();
+                })
             };
-
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-            AccessControlChanges intermediateResult = default;
 
             // Create DirectoryClient with the SAS that the owner only has access to
             DataLakeDirectoryClient subownerDirectoryClient = new DataLakeDirectoryClient(dataLakeUriBuilderOwner1.ToUri(), GetOptions());
@@ -1974,11 +1971,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 await subownerDirectoryClient.UpdateAccessControlRecursiveAsync(
                     accessControlList: AccessControlList,
-                    progressHandler: new Progress<Response<AccessControlChanges>>(x =>
-                    {
-                        intermediateResult = x;
-                        cancellationTokenSource.Cancel();
-                    }),
                     options: options,
                     cancellationToken: cancellationTokenSource.Token);
             }
@@ -1990,10 +1982,12 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Assert
             Assert.IsNotNull(intermediateResult.ContinuationToken);
 
+            // Arrange
+            options.ProgressHandler = null;
+
             // Act
             AccessControlChangeResult result = await subownerDirectoryClient.UpdateAccessControlRecursiveAsync(
                 accessControlList: AccessControlList,
-                progressHandler: null,
                 options: options,
                 continuationToken: intermediateResult.ContinuationToken);
 
@@ -2029,7 +2023,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             await TestHelper.AssertExpectedExceptionAsync<DataLakeAclChangeFailedException>(
                 directory.UpdateAccessControlRecursiveAsync(
                     accessControlList: AccessControlList,
-                    progressHandler: null,
                     continuationToken: sampleToken),
                     e => Assert.AreEqual(e.ContinuationToken, sampleToken));
         }
@@ -2060,7 +2053,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             await TestHelper.AssertExpectedExceptionAsync<DataLakeAclChangeFailedException>(
                 directory.UpdateAccessControlRecursiveAsync(
                     accessControlList: AccessControlList,
-                    progressHandler: null,
                     continuationToken: sampleToken,
                     cancellationToken: cancellationTokenSource.Token),
                     e => Assert.AreEqual(e.ContinuationToken, sampleToken));
@@ -2085,8 +2077,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<DataLakeAclChangeFailedException>(
                 directory.UpdateAccessControlRecursiveAsync(
-                    accessControlList: AccessControlList,
-                    progressHandler: null),
+                    accessControlList: AccessControlList),
                     e => { });
         }
 
@@ -2134,7 +2125,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             AccessControlChangeResult result = await directory.RemoveAccessControlRecursiveAsync(
                 RemoveAccessControlList,
-                progressHandler: null,
                 options: options);
 
             // Assert
@@ -2158,24 +2148,23 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
             DataLakeFileClient file4 = await directory.CreateFileAsync(GetNewFileName());
 
-            AccessControlChangeOptions options = new AccessControlChangeOptions()
-            {
-                BatchSize = 2
-            };
-
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
             AccessControlChanges intermediateResult = default;
+            AccessControlChangeOptions options = new AccessControlChangeOptions()
+            {
+                BatchSize = 2,
+                ProgressHandler = new Progress<Response<AccessControlChanges>>(x =>
+                {
+                    intermediateResult = x;
+                    cancellationTokenSource.Cancel();
+                })
+            };
 
             // Act
             try
             {
                 await directory.RemoveAccessControlRecursiveAsync(
                     RemoveAccessControlList,
-                    new Progress<Response<AccessControlChanges>>(x =>
-                    {
-                        intermediateResult = x;
-                        cancellationTokenSource.Cancel();
-                    }),
                     options: options,
                     cancellationToken: cancellationTokenSource.Token);
             }
@@ -2184,9 +2173,10 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // skip
             }
 
+            options.ProgressHandler = null;
+
             AccessControlChangeResult result = await directory.RemoveAccessControlRecursiveAsync(
                 RemoveAccessControlList,
-                progressHandler: null,
                 intermediateResult.ContinuationToken,
                 options);
 
@@ -2214,13 +2204,13 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             AccessControlChangeOptions options = new AccessControlChangeOptions()
             {
-                BatchSize = 2
+                BatchSize = 2,
+                ProgressHandler = progress
             };
 
             // Act
             AccessControlChangeResult result = await directory.RemoveAccessControlRecursiveAsync(
                 RemoveAccessControlList,
-                progress,
                 options: options);
 
             // Assert
@@ -2270,7 +2260,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 result = await directory.RemoveAccessControlRecursiveAsync(
                     RemoveAccessControlList,
-                    progressHandler: null,
                     result.ContinuationToken,
                     options);
                 changedDirectoriesCount += result.Counters.ChangedDirectoriesCount;
@@ -2337,7 +2326,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             AccessControlChangeResult result = await subownerDirectoryClient.RemoveAccessControlRecursiveAsync(
                 accessControlList: RemoveAccessControlList,
-                progressHandler: progress);
+                options: new AccessControlChangeOptions() { ProgressHandler = progress });
 
             // Assert
             Assert.AreEqual(1, result.Counters.FailedChangesCount);
@@ -2405,7 +2394,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             AccessControlChangeResult result = await subownerDirectoryClient.RemoveAccessControlRecursiveAsync(
                 accessControlList: RemoveAccessControlList,
-                progressHandler: null,
                 options: options);
 
             // Assert
@@ -2470,28 +2458,26 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Sas = GetNewDataLakeSasCredentialsOwner(fileSystemName, subowner, userDelegationKey, test.FileSystem.AccountName)
             };
 
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            AccessControlChanges intermediateResult = default;
             AccessControlChangeOptions options = new AccessControlChangeOptions()
             {
                 BatchSize = 2,
-                ContinueOnFailure = true
+                ContinueOnFailure = true,
+                ProgressHandler = new Progress<Response<AccessControlChanges>>(x =>
+                {
+                    intermediateResult = x;
+                    cancellationTokenSource.Cancel();
+                })
             };
-
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-            AccessControlChanges intermediateResult = default;
 
             // Create DirectoryClient with the SAS that the owner only has access to
             DataLakeDirectoryClient subownerDirectoryClient = new DataLakeDirectoryClient(dataLakeUriBuilderOwner1.ToUri(), GetOptions());
-
             // Act
             try
             {
                 await subownerDirectoryClient.RemoveAccessControlRecursiveAsync(
                     accessControlList: RemoveAccessControlList,
-                    progressHandler: new Progress<Response<AccessControlChanges>>(x =>
-                    {
-                        intermediateResult = x;
-                        cancellationTokenSource.Cancel();
-                    }),
                     options: options,
                     cancellationToken: cancellationTokenSource.Token);
             }
@@ -2503,10 +2489,12 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Assert
             Assert.IsNotNull(intermediateResult.ContinuationToken);
 
+            // Arrange
+            options.ProgressHandler = null;
+
             // Act
             AccessControlChangeResult result = await subownerDirectoryClient.RemoveAccessControlRecursiveAsync(
                 accessControlList: RemoveAccessControlList,
-                progressHandler: null,
                 options: options,
                 continuationToken: intermediateResult.ContinuationToken);
 
@@ -2542,7 +2530,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             await TestHelper.AssertExpectedExceptionAsync<DataLakeAclChangeFailedException>(
                 directory.RemoveAccessControlRecursiveAsync(
                     accessControlList: RemoveAccessControlList,
-                    progressHandler: null,
                     continuationToken: sampleToken),
                     e => Assert.AreEqual(e.ContinuationToken, sampleToken));
         }
@@ -2573,7 +2560,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             await TestHelper.AssertExpectedExceptionAsync<DataLakeAclChangeFailedException>(
                 directory.RemoveAccessControlRecursiveAsync(
                     accessControlList: RemoveAccessControlList,
-                    progressHandler: null,
                     continuationToken: sampleToken,
                     cancellationToken: cancellationTokenSource.Token),
                     e => Assert.AreEqual(e.ContinuationToken, sampleToken));
@@ -2598,8 +2584,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<DataLakeAclChangeFailedException>(
                 directory.RemoveAccessControlRecursiveAsync(
-                    accessControlList: RemoveAccessControlList,
-                    progressHandler: null),
+                    accessControlList: RemoveAccessControlList),
                     e => { });
         }
 

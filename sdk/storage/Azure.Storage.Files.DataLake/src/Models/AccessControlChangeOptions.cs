@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
@@ -26,5 +28,11 @@ namespace Azure.Storage.Files.DataLake.Models
         /// user failures and proceed with the operation on other sub-entities of the directory.
         /// </summary>
         public bool? ContinueOnFailure { get; set; }
+
+        /// <summary>
+        /// Optional. <see cref="Progress{AccessControlChanges}"/> callback where caller can track progress of the operation
+        /// as well as collect paths that failed to change Access Control.
+        /// </summary>
+        public IProgress<Response<AccessControlChanges>> ProgressHandler { get; set; }
     }
 }
