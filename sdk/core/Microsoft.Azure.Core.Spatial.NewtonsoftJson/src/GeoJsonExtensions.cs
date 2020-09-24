@@ -2,10 +2,11 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using Microsoft.Spatial;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Microsoft.Spatial.Serialization
+namespace Azure.Core.Serialization
 {
     /// <summary>
     /// Defines extension methods for various JSON.NET types that make it easier to recognize and read Geo-JSON.

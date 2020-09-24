@@ -1,7 +1,8 @@
-# Newtonsoft.Json implementation for Microsoft.Spatial library for .NET
+# Newtonsoft.Json support for Microsoft.Spatial library for .NET
 
-Microsoft.Spatial contains classes and methods that facilitate geography and geometry spatial operations.
-This library contains implementations dependent on Newtonsoft.Json, aka JSON.NET, for use with Microsoft.Spatial.
+The [Microsoft.Spatial package][microsoft_spatial_package] contains classes and methods that support geographic and geometric operations.
+This library contains converters dependent on the [Newtonsoft.Json package][newtonsoft_json_package] for use with Microsoft.Spatial
+when using the Azure SDK for .NET.
 
 ## Getting started
 
@@ -47,3 +48,5 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
+[microsoft_spatial_package]: https://www.nuget.org/packages/Microsoft.Spatial/
+[newtonsoft_json_package]: https://www.nuget.org/packages/Newtonsoft.Json/

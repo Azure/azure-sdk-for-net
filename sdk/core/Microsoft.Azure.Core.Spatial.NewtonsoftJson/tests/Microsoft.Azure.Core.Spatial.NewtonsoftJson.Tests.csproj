@@ -8,7 +8,7 @@
 
   <!-- Reference the Client Library -->
   <ItemGroup>
-    <ProjectReference Include="..\src\Microsoft.Spatial.NewtonsoftJson.csproj" />
+    <ProjectReference Include="..\src\Microsoft.Azure.Core.Spatial.NewtonsoftJson.csproj" />
   </ItemGroup>
 
   <!-- Add Test References -->

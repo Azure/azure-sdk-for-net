@@ -2,9 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using Microsoft.Spatial;
 using Newtonsoft.Json;
 
-namespace Microsoft.Spatial.Serialization
+namespace Azure.Core.Serialization
 {
     /// <summary>
     /// Converts between <see cref="GeographyPoint" /> objects and Geo-JSON points.

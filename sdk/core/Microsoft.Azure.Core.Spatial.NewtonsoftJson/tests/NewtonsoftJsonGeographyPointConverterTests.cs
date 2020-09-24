@@ -1,12 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Spatial.Serialization;
+using System.IO;
+using Azure.Core.Serialization;
+using Microsoft.Spatial;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using System.IO;
 
-namespace Microsoft.Spatial.NewtonsoftJson.Tests
+namespace Microsoft.Azure.Core.Spatial.NewtonsoftJson.Tests
 {
     public class NewtonsoftJsonGeographyPointConverterTests
     {

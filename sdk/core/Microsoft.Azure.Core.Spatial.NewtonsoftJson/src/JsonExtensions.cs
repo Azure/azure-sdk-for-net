@@ -9,7 +9,7 @@ using Azure.Core;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Microsoft.Spatial.Serialization
+namespace Azure.Core.Serialization
 {
     /// <summary>
     /// Defines extension methods for various JSON.NET types that make it easier to implement a custom JsonConverter.

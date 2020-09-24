@@ -1,15 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>Implementation of Microsoft.Spatial serialization and type discovery for Newtonsoft.Json</Description>
-    <AssemblyTitle>Microsoft.Spatial serialization for Newtonsoft.Json</AssemblyTitle>
-    <RootNamespace>Microsoft.Spatial.Serialization</RootNamespace>
+    <AssemblyTitle>Newtonsoft.Json support for the Microsoft.Spatial library</AssemblyTitle>
+    <Description>This library contains converters dependent on the Newtonsoft.Json package for use with Microsoft.Spatial when using the Azure SDK for .NET.</Description>
+    <RootNamespace>Azure.Core.Serialization</RootNamespace>
     <Version>1.0.0-preview.1</Version>
-    <PackageTags>Microsoft Spatial Newtonsoft Json</PackageTags>
+    <PackageTags>Microsoft Azure SDK Spatial Newtonsoft Json</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
   </PropertyGroup>
 
-  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
+  <Import Project="..\..\Azure.Core\src\Azure.Core.props" />
   <ItemGroup>
     <PackageReference Include="Microsoft.Spatial" />
     <PackageReference Include="Newtonsoft.Json" />
