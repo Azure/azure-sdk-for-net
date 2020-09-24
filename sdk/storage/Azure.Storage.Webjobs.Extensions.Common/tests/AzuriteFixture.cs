@@ -23,7 +23,7 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
     public class AzuriteFixture : IDisposable
     {
         private const int AccountPoolSize = 50;
-        private const string AzuriteLocationKey = "AzureWebJobsStorageAzuriteLocation";
+        private const string AzuriteLocationKey = "AZURE_AZURITE_LOCATION";
         private string tempDirectory;
         private Process process;
         private Queue<AzuriteAccount> accounts = new Queue<AzuriteAccount>();
