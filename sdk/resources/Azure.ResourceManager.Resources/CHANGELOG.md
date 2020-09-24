@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-preview.2 (Unreleased)
+## 1.0.0-preview.2 (2020-09-23)
 
 - Accept header added to all requests.
 - Collections are now always initialized and collection properties are readonly by default.
