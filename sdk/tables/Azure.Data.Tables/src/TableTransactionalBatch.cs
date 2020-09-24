@@ -1,9 +1,10 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -12,7 +13,7 @@ using Azure.Data.Tables.Models;
 
 namespace Azure.Data.Tables
 {
-    internal class TablesBatch
+    public partial class TableTransactionalBatch
     {
         private readonly TableRestClient _tableOperations;
         private readonly TableRestClient _batchOperations;
@@ -24,15 +25,16 @@ namespace Azure.Data.Tables
         internal MultipartContent _batch;
         internal Guid _batchGuid = default;
         internal Guid _changesetGuid = default;
-        internal ConcurrentDictionary<string, HttpMessage> _addMessages = new ConcurrentDictionary<string, HttpMessage>();
+        internal ConcurrentDictionary<string, (HttpMessage Message, RequestType RequestType)> _requestLookup = new ConcurrentDictionary<string, (HttpMessage Message, RequestType RequestType)>();
+        internal ConcurrentQueue<(string RowKey, HttpMessage HttpMessage)> _requestMessages = new ConcurrentQueue<(string RowKey, HttpMessage HttpMessage)>();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TablesBatch"/> class.
+        /// Initializes a new instance of the <see cref="TableTransactionalBatch"/> class.
         /// </summary>
         /// <param name="table"></param>
         /// <param name="tableOperations"></param>
         /// <param name="format"></param>
-        internal TablesBatch(string table, TableRestClient tableOperations, OdataMetadataFormat format)
+        internal TableTransactionalBatch(string table, TableRestClient tableOperations, OdataMetadataFormat format)
         {
             _table = table;
             _tableOperations = tableOperations;
@@ -44,9 +46,9 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TablesBatch"/> class for mocking.
+        /// Initializes a new instance of the <see cref="TableTransactionalBatch"/> class for mocking.
         /// </summary>
-        protected TablesBatch()
+        protected TableTransactionalBatch()
         { }
 
         /// <summary>
@@ -82,20 +84,24 @@ namespace Azure.Data.Tables
         /// <param name="entity"></param>
         public virtual void AddEntity<T>(T entity) where T : class, ITableEntity, new()
         {
-            _addMessages[entity.RowKey] = _batchOperations.AddInsertEntityRequest(
-                _changeset,
+            var message = _batchOperations.CreateInsertEntityRequest(
                 _table,
                 null,
                 null,
                 _returnNoContent,
                 tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                 queryOptions: new QueryOptions() { Format = _format });
+
+            AddMessage(entity.RowKey, message, RequestType.Create);
         }
 
+        /// <summary>
+        /// Add an UpdateEntity request to the batch.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
         public virtual void UpdateEntity<T>(T entity, ETag ifMatch, TableUpdateMode mode = TableUpdateMode.Merge) where T : class, ITableEntity, new()
         {
-            _batchOperations.AddUpdateEntityRequest(
-                _changeset,
+            var message = _batchOperations.CreateUpdateEntityRequest(
                 _table,
                 entity.PartitionKey,
                 entity.RowKey,
@@ -104,12 +110,19 @@ namespace Azure.Data.Tables
                 ifMatch.ToString(),
                 tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                 queryOptions: new QueryOptions() { Format = _format });
+
+            AddMessage(entity.RowKey, message, RequestType.Update);
         }
 
+        /// <summary>
+        /// Add a DeleteEntity request to the batch.
+        /// </summary>
+        /// <param name="partitionKey"></param>
+        /// <param name="rowKey"></param>
+        /// <param name="ifMatch"></param>
         public virtual void DeleteEntity(string partitionKey, string rowKey, ETag ifMatch = default)
         {
-            _batchOperations.AddDeleteEntityRequest(
-                _changeset,
+            var message = _batchOperations.CreateDeleteEntityRequest(
                 _table,
                 partitionKey,
                 rowKey,
@@ -117,6 +130,8 @@ namespace Azure.Data.Tables
                 null,
                 null,
                 queryOptions: new QueryOptions() { Format = _format });
+
+            AddMessage(rowKey, message, RequestType.Delete);
         }
 
         /// <summary>
@@ -124,13 +139,23 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response<List<Response>>> SubmitBatchAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TableBatchResponse>> SubmitBatchAsync(CancellationToken cancellationToken = default)
         {
+            var messageList = BuildOrderedBatchRequests();
+
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(SubmitBatch)}");
             scope.Start();
             try
             {
-                return await _tableOperations.SendBatchRequestAsync(_tableOperations.CreateBatchRequest(_batch, null, null), cancellationToken).ConfigureAwait(false);
+                var request = _tableOperations.CreateBatchRequest(_batch, null, null);
+                var response = await _tableOperations.SendBatchRequestAsync(request, cancellationToken).ConfigureAwait(false);
+
+                for (int i = 0; i < response.Value.Count; i++)
+                {
+                    messageList[i].HttpMessage.Response = response.Value[i];
+                }
+
+                return Response.FromValue(new TableBatchResponse(_requestLookup), response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -144,19 +169,49 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public virtual Response<List<Response>> SubmitBatch<T>(CancellationToken cancellationToken = default)
+        public virtual Response<TableBatchResponse> SubmitBatch<T>(CancellationToken cancellationToken = default)
         {
+            var messageList = BuildOrderedBatchRequests();
+
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(SubmitBatch)}");
             scope.Start();
             try
             {
-                return _tableOperations.SendBatchRequest(_tableOperations.CreateBatchRequest(_batch, null, null), cancellationToken);
+                var request = _tableOperations.CreateBatchRequest(_batch, null, null);
+                var response = _tableOperations.SendBatchRequest(request, cancellationToken);
+
+                for (int i = 0; i < response.Value.Count; i++)
+                {
+                    messageList[i].HttpMessage.Response = response.Value[i];
+                }
+
+                return Response.FromValue(new TableBatchResponse(_requestLookup), response.GetRawResponse());
             }
             catch (Exception ex)
             {
                 scope.Failed(ex);
                 throw;
             }
+        }
+
+        private bool AddMessage(string rowKey, HttpMessage message, RequestType requestType)
+        {
+            if (_requestLookup.TryAdd(rowKey, (message, requestType)))
+            {
+                _requestMessages.Enqueue((rowKey, message));
+                return true;
+            }
+            throw new InvalidOperationException("Each entity can only be represented once per batch.");
+        }
+
+        private List<(string RowKey, HttpMessage HttpMessage)> BuildOrderedBatchRequests()
+        {
+            var orderedList = _requestMessages.ToList();
+            foreach (var item in orderedList)
+            {
+                _changeset.AddContent(new RequestRequestContent(item.HttpMessage.Request));
+            }
+            return orderedList;
         }
 
         /// <summary>

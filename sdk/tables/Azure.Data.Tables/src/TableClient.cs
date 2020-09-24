@@ -979,13 +979,13 @@ namespace Azure.Data.Tables
         public static string CreateQueryFilter<T>(Expression<Func<T, bool>> filter) => Bind(filter);
 
         /// <summary>
-        /// Create a <see cref="TablesBatch" /> for the given partitionkey value.
+        /// Create a <see cref="TableTransactionalBatch" /> for the given partitionkey value.
         /// </summary>
         /// <param name="partitionKey">The partitionKey context for the batch.</param>
         /// <returns></returns>
-        internal virtual TablesBatch CreateBatch(string partitionKey)
+        public virtual TableTransactionalBatch CreateTransactionalBatch(string partitionKey)
         {
-            return new TablesBatch(_table, _tableOperations, _format);
+            return new TableTransactionalBatch(_table, _tableOperations, _format);
         }
 
         internal static string Bind(Expression expression)

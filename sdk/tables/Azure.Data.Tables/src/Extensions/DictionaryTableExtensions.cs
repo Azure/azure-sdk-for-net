@@ -104,7 +104,7 @@ namespace Azure.Data.Tables
                 entity[annotation] = typeAnnotationsWithKeys[annotation].typeAnnotation switch
                 {
                     TableConstants.Odata.EdmBinary => Convert.FromBase64String(entity[annotation] as string),
-                    TableConstants.Odata.EdmDateTime => DateTime.Parse(entity[annotation] as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind),
+                    TableConstants.Odata.EdmDateTime => DateTimeOffset.Parse(entity[annotation] as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind),
                     TableConstants.Odata.EdmGuid => Guid.Parse(entity[annotation] as string),
                     TableConstants.Odata.EdmInt64 => long.Parse(entity[annotation] as string, CultureInfo.InvariantCulture),
                     _ => throw new NotSupportedException("Not supported type " + typeAnnotationsWithKeys[annotation])
@@ -112,6 +112,13 @@ namespace Azure.Data.Tables
 
                 // Remove the type annotation property from the dictionary.
                 entity.Remove(typeAnnotationsWithKeys[annotation].annotationKey);
+            }
+
+            // The Timestamp property is not annotated, since it is a known system property
+            // so we must cast it without a type annotation
+            if (entity.TryGetValue(TableConstants.PropertyNames.TimeStamp, out var value) && value is string)
+            {
+                entity[TableConstants.PropertyNames.TimeStamp] = DateTimeOffset.Parse(entity[TableConstants.PropertyNames.TimeStamp] as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
             }
         }
 
