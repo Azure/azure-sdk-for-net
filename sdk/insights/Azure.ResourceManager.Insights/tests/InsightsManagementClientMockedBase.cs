@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
@@ -14,18 +15,18 @@ namespace Azure.ResourceManager.Insights.Tests
 {
     public class InsightsManagementClientMockedBase : InsightsManagementClientBase
     {
-        protected InsightsManagementClientMockedBase(bool isAsync) : base(isAsync) { }
+        protected InsightsManagementClientMockedBase(bool isAsync) : base(isAsync, RecordedTestMode.Live) { }
 
-
-        public InsightsManagementClient GetInsightsManagementClient(HttpPipelineTransport transport)
+        internal override InsightsManagementClient GetInsightsManagementClient(string expectedJson)
         {
-            InsightsManagementClientOptions options = new InsightsManagementClientOptions();
-            options.Transport = transport;
-
-            return CreateClient<InsightsManagementClient>(
-                TestEnvironment.SubscriptionId,
-                new TestCredential(), options);
+            var mockResponse = new MockResponse((int)HttpStatusCode.OK);
+            mockResponse.SetContent(expectedJson);
+            var mockTransport = new MockTransport(mockResponse);
+            InsightsManagementClientOptions insightsManagementClientOptions = new InsightsManagementClientOptions();
+            insightsManagementClientOptions.Transport = mockTransport;
+            return new InsightsManagementClient(Guid.NewGuid().ToString(), new DefaultAzureCredential(), insightsManagementClientOptions);
         }
+
         protected static void AreEqual(IList<string> exp, IList<string> act)
         {
             if (exp != null)

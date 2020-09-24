@@ -25,46 +25,43 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
         public async Task LogProfiles_PutTest()
         {
             var expResponse = CreateDiagnosticSettings();
-            var mockResponse = new MockResponse((int)HttpStatusCode.OK);
             var content = @"
-        {
-                'id': null,
-            'name': 'DiagSetName',
-            'type': null,
-            'properties': {
-                    'storageAccountId': '/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.storage/storageaccounts/sa1',
-                'serviceBusRuleId': '/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.servicebus/namespaces/ns1/authorizationRules/authrule',
-                'eventHubAuthorizationRuleId': null,
-                'eventHubName': null,
-                'metrics': [
-                    {
-                        'timeGrain': 'PT1M',
-                        'category': null,
-                        'enabled': true,
-                        'retentionPolicy': {
-                            'enabled': true,
-                            'days': 90
+                {
+                        'id': null,
+                    'name': 'DiagSetName',
+                    'type': null,
+                    'properties': {
+                            'storageAccountId': '/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.storage/storageaccounts/sa1',
+                        'serviceBusRuleId': '/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.servicebus/namespaces/ns1/authorizationRules/authrule',
+                        'eventHubAuthorizationRuleId': null,
+                        'eventHubName': null,
+                        'metrics': [
+                            {
+                                'timeGrain': 'PT1M',
+                                'category': null,
+                                'enabled': true,
+                                'retentionPolicy': {
+                                    'enabled': true,
+                                    'days': 90
+                                }
                         }
-                }
-                ],
-                'logs': [
-                    {
-                        'category': null,
-                        'enabled': true,
-                        'retentionPolicy': {
-                            'enabled': true,
-                            'days': 90
-                        }
+                        ],
+                        'logs': [
+                            {
+                                'category': null,
+                                'enabled': true,
+                                'retentionPolicy': {
+                                    'enabled': true,
+                                    'days': 90
+                                }
+                            }
+                        ],
+                        'workspaceId': 'wsId',
+                        'logAnalyticsDestinationType': null
                     }
-                ],
-                'workspaceId': 'wsId',
-                'logAnalyticsDestinationType': null
-            }
-        }
-".Replace("'", "\"");
-            mockResponse.SetContent(content);
-            var mockTransport = new MockTransport(mockResponse);
-            var insightsClient = GetInsightsManagementClient(mockTransport);
+                }
+        ".Replace("'", "\"");
+            var insightsClient = GetInsightsManagementClient(content);
             var parameters = CreateDiagnosticSettingsParams();
 
             DiagnosticSettingsResource response = await insightsClient.DiagnosticSettings.CreateOrUpdateAsync(ResourceUri, DiagSetName, parameters);
@@ -77,44 +74,42 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
             var expResponse = CreateDiagnosticSettings();
             var mockResponse = new MockResponse((int)HttpStatusCode.OK);
             var content = @"
-        {
-                'id': null,
-            'name': 'DiagSetName',
-            'type': null,
-            'properties': {
-                    'storageAccountId': '/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.storage/storageaccounts/sa1',
-                'serviceBusRuleId': '/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.servicebus/namespaces/ns1/authorizationRules/authrule',
-                'eventHubAuthorizationRuleId': null,
-                'eventHubName': null,
-                'metrics': [
-                    {
-                        'timeGrain': 'PT1M',
-                        'category': null,
-                        'enabled': true,
-                        'retentionPolicy': {
-                            'enabled': true,
-                            'days': 90
+                        {
+                                'id': null,
+                            'name': 'DiagSetName',
+                            'type': null,
+                            'properties': {
+                                    'storageAccountId': '/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.storage/storageaccounts/sa1',
+                                'serviceBusRuleId': '/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.servicebus/namespaces/ns1/authorizationRules/authrule',
+                                'eventHubAuthorizationRuleId': null,
+                                'eventHubName': null,
+                                'metrics': [
+                                    {
+                                        'timeGrain': 'PT1M',
+                                        'category': null,
+                                        'enabled': true,
+                                        'retentionPolicy': {
+                                            'enabled': true,
+                                            'days': 90
+                                        }
+                                }
+                                ],
+                                'logs': [
+                                    {
+                                        'category': null,
+                                        'enabled': true,
+                                        'retentionPolicy': {
+                                            'enabled': true,
+                                            'days': 90
+                                        }
+                                    }
+                                ],
+                                'workspaceId': 'wsId',
+                                'logAnalyticsDestinationType': null
+                            }
                         }
-                }
-                ],
-                'logs': [
-                    {
-                        'category': null,
-                        'enabled': true,
-                        'retentionPolicy': {
-                            'enabled': true,
-                            'days': 90
-                        }
-                    }
-                ],
-                'workspaceId': 'wsId',
-                'logAnalyticsDestinationType': null
-            }
-        }
-".Replace("'", "\"");
-            mockResponse.SetContent(content);
-            var mockTransport = new MockTransport(mockResponse);
-            var insightsClient = GetInsightsManagementClient(mockTransport);
+                ".Replace("'", "\"");
+            var insightsClient = GetInsightsManagementClient(content);
             DiagnosticSettingsResource actualResponse = await insightsClient.DiagnosticSettings.GetAsync(ResourceUri,DiagSetName);
             AreEqual(expResponse, actualResponse);
         }

@@ -7,7 +7,6 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Insights.Models;
-using Insights.Tests.Helpers;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Insights.Tests.BasicTests
@@ -23,74 +22,71 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
         public async Task CreateOrUpdateSettingTest()
         {
             AutoscaleSettingResource expResponse = CreateAutoscaleSetting(location: "East US", resourceUri: ResourceUri, metricName: "CpuPercentage");
-            var mockResponse = new MockResponse((int)HttpStatusCode.OK);
             var content = @"{
-    'properties': {
-        'profiles': [
-            {
-                'name': 'Profile2',
-                'capacity': {
-                    'minimum': '1',
-                    'maximum': '100',
-                    'default': '1'
-                },
-                'rules': [
-                    {
-                        'metricTrigger': {
-                            'metricName': 'CpuPercentage',
-                            'metricNamespace': null,
-                            'metricResourceUri': '/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.web/serverFarms/DefaultServerFarm',
-                            'timeGrain': 'PT1M',
-                            'statistic': 'Average',
-                            'timeWindow': 'PT1H',
-                            'timeAggregation': 'Maximum',
-                            'operator': 'Equals',
-                            'threshold': 80.0,
-                            'dimensions': []
-                        },
-                        'scaleAction': {
-                            'direction': 'Increase',
-                            'type': 'ChangeCount',
-                            'value': '10',
-                            'cooldown': 'PT20M'
-                        }
-                    }
-                ],
-                'fixedDate': {
-                    'timeZone': null,
-                    'start': '2014-04-15T21:06:11.7882792+00:00',
-                    'end': '2014-04-16T21:06:11.7882792+00:00'
-                },
-                'recurrence': {
-                    'frequency': 'Week',
-                    'schedule': {
-                        'timeZone': 'UTC-11',
-                        'days': [
-                            'Monday'
+                    'properties': {
+                        'profiles': [
+                            {
+                                'name': 'Profile2',
+                                'capacity': {
+                                    'minimum': '1',
+                                    'maximum': '100',
+                                    'default': '1'
+                                },
+                                'rules': [
+                                    {
+                                        'metricTrigger': {
+                                            'metricName': 'CpuPercentage',
+                                            'metricNamespace': null,
+                                            'metricResourceUri': '/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.web/serverFarms/DefaultServerFarm',
+                                            'timeGrain': 'PT1M',
+                                            'statistic': 'Average',
+                                            'timeWindow': 'PT1H',
+                                            'timeAggregation': 'Maximum',
+                                            'operator': 'Equals',
+                                            'threshold': 80.0,
+                                            'dimensions': []
+                                        },
+                                        'scaleAction': {
+                                            'direction': 'Increase',
+                                            'type': 'ChangeCount',
+                                            'value': '10',
+                                            'cooldown': 'PT20M'
+                                        }
+                                    }
+                                ],
+                                'fixedDate': {
+                                    'timeZone': null,
+                                    'start': '2014-04-15T21:06:11.7882792+00:00',
+                                    'end': '2014-04-16T21:06:11.7882792+00:00'
+                                },
+                                'recurrence': {
+                                    'frequency': 'Week',
+                                    'schedule': {
+                                        'timeZone': 'UTC-11',
+                                        'days': [
+                                            'Monday'
+                                        ],
+                                        'hours': [
+                                            0
+                                        ],
+                                        'minutes': [
+                                            10
+                                        ]
+                                    }
+                                }
+                            }
                         ],
-                        'hours': [
-                            0
-                        ],
-                        'minutes': [
-                            10
-                        ]
-                    }
-                }
-            }
-        ],
-        'notifications': [],
-        'enabled': true,
-        'targetResourceUri': '/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.web/serverFarms/DefaultServerFarm'
-    },
-    'id': null,
-    'name': 'setting1',
-    'type': null,
-    'location': '',
-    'tags': {}
-}".Replace("'", "\"");
-            mockResponse.SetContent(content);
-            var mockTransport = new MockTransport(mockResponse);
-            var insightsClient = GetInsightsManagementClient(mockTransport);
+                        'notifications': [],
+                        'enabled': true,
+                        'targetResourceUri': '/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.web/serverFarms/DefaultServerFarm'
+                    },
+                    'id': null,
+                    'name': 'setting1',
+                    'type': null,
+                    'location': '',
+                    'tags': {}
+                }".Replace("'", "\"");
+            var insightsClient = GetInsightsManagementClient(content);
             var actualResponse = (await insightsClient.AutoscaleSettings.CreateOrUpdateAsync(resourceGroupName: "resourceGroup1", autoscaleSettingName: "setting1", parameters: expResponse)).Value;
             AreEqual(expResponse, actualResponse);
         }
@@ -100,75 +96,72 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
         public async Task Autoscale_GetSetting()
         {
             var expResponse = CreateAutoscaleSetting(ResourceUri, "CpuPercentage", string.Empty);
-            var mockResponse = new MockResponse((int)HttpStatusCode.OK);
             var content = @"{
-    'properties': {
-        'profiles': [
-            {
-                'name': 'Profile2',
-                'capacity': {
-                    'minimum': '1',
-                    'maximum': '100',
-                    'default': '1'
-                },
-                'rules': [
-                    {
-                        'metricTrigger': {
-                            'metricName': '',
-                            'metricNamespace': null,
-                            'metricResourceUri': 'CpuPercentage',
-                            'timeGrain': 'PT1M',
-                            'statistic': 'Average',
-                            'timeWindow': 'PT1H',
-                            'timeAggregation': 'Maximum',
-                            'operator': 'Equals',
-                            'threshold': 80.0,
-                            'dimensions': []
-                        },
-                        'scaleAction': {
-                            'direction': 'Increase',
-                            'type': 'ChangeCount',
-                            'value': '10',
-                            'cooldown': 'PT20M'
+                'properties': {
+                    'profiles': [
+                        {
+                            'name': 'Profile2',
+                            'capacity': {
+                                'minimum': '1',
+                                'maximum': '100',
+                                'default': '1'
+                            },
+                            'rules': [
+                                {
+                                    'metricTrigger': {
+                                        'metricName': '',
+                                        'metricNamespace': null,
+                                        'metricResourceUri': 'CpuPercentage',
+                                        'timeGrain': 'PT1M',
+                                        'statistic': 'Average',
+                                        'timeWindow': 'PT1H',
+                                        'timeAggregation': 'Maximum',
+                                        'operator': 'Equals',
+                                        'threshold': 80.0,
+                                        'dimensions': []
+                                    },
+                                    'scaleAction': {
+                                        'direction': 'Increase',
+                                        'type': 'ChangeCount',
+                                        'value': '10',
+                                        'cooldown': 'PT20M'
+                                    }
+                                }
+                            ],
+                            'fixedDate': {
+                                'timeZone': null,
+                                'start': '2014-04-15T21:06:11.7882792+00:00',
+                                'end': '2014-04-16T21:06:11.7882792+00:00'
+                            },
+                            'recurrence': {
+                                'frequency': 'Week',
+                                'schedule': {
+                                    'timeZone': 'UTC-11',
+                                    'days': [
+                                        'Monday'
+                                    ],
+                                    'hours': [
+                                        0
+                                    ],
+                                    'minutes': [
+                                        10
+                                    ]
+                                }
+                            }
                         }
-                    }
-                ],
-                'fixedDate': {
-                    'timeZone': null,
-                    'start': '2014-04-15T21:06:11.7882792+00:00',
-                    'end': '2014-04-16T21:06:11.7882792+00:00'
+                    ],
+                    'notifications': [],
+                    'enabled': true,
+                    'targetResourceUri': 'CpuPercentage'
                 },
-                'recurrence': {
-                    'frequency': 'Week',
-                    'schedule': {
-                        'timeZone': 'UTC-11',
-                        'days': [
-                            'Monday'
-                        ],
-                        'hours': [
-                            0
-                        ],
-                        'minutes': [
-                            10
-                        ]
-                    }
-                }
+                'id': null,
+                'name': 'setting1',
+                'type': null,
+                'location': '',
+                'tags': {}
             }
-        ],
-        'notifications': [],
-        'enabled': true,
-        'targetResourceUri': 'CpuPercentage'
-    },
-    'id': null,
-    'name': 'setting1',
-    'type': null,
-    'location': '',
-    'tags': {}
-}
-            ".Replace("'", "\"");
-            mockResponse.SetContent(content);
-            var mockTransport = new MockTransport(mockResponse);
-            var insightsClient = GetInsightsManagementClient(mockTransport);
+                        ".Replace("'", "\"");
+            var insightsClient = GetInsightsManagementClient(content);
             AutoscaleSettingResource actualResponse =(await insightsClient.AutoscaleSettings.GetAsync(resourceGroupName: "resourceGroup1", autoscaleSettingName: "setting1")).Value;
             AreEqual(expResponse, actualResponse);
         }

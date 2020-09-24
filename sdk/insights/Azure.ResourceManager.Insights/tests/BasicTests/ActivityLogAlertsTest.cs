@@ -6,6 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Insights.Models;
+using Insights.Tests.Helpers;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Insights.Tests.BasicTests
@@ -30,7 +31,6 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
         public async Task ActivityLogAlertsCreateOrUpdateTest()
         {
             var expectActivityLogAlertResource = GetActivityLogAlertResource();
-            var mockResponse = new MockResponse((int)HttpStatusCode.OK);
             var content = @"
                     {
                         'id': 'Id',
@@ -52,9 +52,7 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
                         }
                     }
                     ".Replace("'", "\"");
-            mockResponse.SetContent(content);
-            var mockTransport = new MockTransport(mockResponse);
-            var insightsClient = GetInsightsManagementClient(mockTransport);
+            var insightsClient = GetInsightsManagementClient(content);
             var result = (await insightsClient.ActivityLogAlerts.CreateOrUpdateAsync("rg1", "activityLog1", expectActivityLogAlertResource)).Value;
             AreEqual(expectActivityLogAlertResource, result);
         }
@@ -72,8 +70,7 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
         public async Task ActivityLogAlertsDeleteTest()
         {
             var mockResponse = new MockResponse((int)HttpStatusCode.OK);
-            var mockTransport = new MockTransport(mockResponse);
-            var insightsClient = GetInsightsManagementClient(mockTransport);
+            var insightsClient = GetInsightsManagementClient(mockResponse.ToJson());
             await insightsClient.ActivityLogAlerts.DeleteAsync("rg1", "activityLog1");
         }
 
@@ -81,7 +78,6 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
         public async Task ActivityLogAlertsGetTest()
         {
             var expectActivityLogAlertResource = GetActivityLogAlertResource();
-            var mockResponse = new MockResponse((int)HttpStatusCode.OK);
             var content = @"
                     {
                         'id': 'Id',
@@ -103,9 +99,7 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
                         }
                     }
                     ".Replace("'", "\"");
-            mockResponse.SetContent(content);
-            var mockTransport = new MockTransport(mockResponse);
-            var insightsClient = GetInsightsManagementClient(mockTransport);
+            var insightsClient = GetInsightsManagementClient(content);
             var result = await insightsClient.ActivityLogAlerts.GetAsync("rg1", "activityLog1");
             AreEqual(expectActivityLogAlertResource, result);
         }
@@ -114,10 +108,9 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
         public async Task ActivityLogAlertsListByResourceGroupTest()
         {
             var ActivityLogAlertResourceList = new List<ActivityLogAlertResource>() { GetActivityLogAlertResource() };
-            var mockResponse = new MockResponse((int)HttpStatusCode.OK);
             var content = @"{
-'value':[
-{
+                    'value':[
+                    {
                         'id': 'Id',
                         'name': 'Name',
                         'type': 'Type',
@@ -136,11 +129,9 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
                             'description': 'Description'
                         }
                     }
-]
-}".Replace("'", "\"");
-            mockResponse.SetContent(content);
-            var mockTransport = new MockTransport(mockResponse);
-            var insightsClient = GetInsightsManagementClient(mockTransport);
+                ]
+                }".Replace("'", "\"");
+            var insightsClient = GetInsightsManagementClient(content);
             var result = await insightsClient.ActivityLogAlerts.ListByResourceGroupAsync("rg1").ToEnumerableAsync();
             AreEqual(ActivityLogAlertResourceList, result);
         }
@@ -159,8 +150,8 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
             var ActivityLogAlertResourceList = new List<ActivityLogAlertResource>() { GetActivityLogAlertResource() };
             var mockResponse = new MockResponse((int)HttpStatusCode.OK);
             var content = @"{
-'value':[
-{
+                    'value':[
+                    {
                         'id': 'Id',
                         'name': 'Name',
                         'type': 'Type',
@@ -179,11 +170,9 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
                             'description': 'Description'
                         }
                     }
-]
-}".Replace("'", "\"");
-            mockResponse.SetContent(content);
-            var mockTransport = new MockTransport(mockResponse);
-            var insightsClient = GetInsightsManagementClient(mockTransport);
+                ]
+                }".Replace("'", "\"");
+            var insightsClient = GetInsightsManagementClient(content);
             var result = await insightsClient.ActivityLogAlerts.ListBySubscriptionIdAsync().ToEnumerableAsync();
             AreEqual(ActivityLogAlertResourceList, result);
         }

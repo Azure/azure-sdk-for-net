@@ -6,6 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Insights.Models;
+using Insights.Tests.Helpers;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Insights.Tests.BasicTests
@@ -41,7 +42,6 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
                                                               new List<LogicAppReceiver>(),
                                                               new List<AzureFunctionReceiver>(),
                                                               new List<ArmRoleReceiver>());
-            var mockResponse = new MockResponse((int)HttpStatusCode.OK);
             var content = @"{
                             'id': 'ONE',
                             'name': 'Name',
@@ -80,9 +80,7 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
                             
                         }
             ".Replace("'", "\"");
-            mockResponse.SetContent(content);
-            var mockTransport = new MockTransport(mockResponse);
-            var insightsClient = GetInsightsManagementClient(mockTransport);
+            var insightsClient = GetInsightsManagementClient(content);
             var result = (await insightsClient.ActionGroups.CreateOrUpdateAsync("rg1","actGroup1", actionGroupResource)).Value;
             AreEqual(actionGroupResource, result);
         }
@@ -133,8 +131,7 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
         public async Task ActionGroupsDeleteTest()
         {
             var mockResponse = new MockResponse((int)HttpStatusCode.OK);
-            var mockTransport = new MockTransport(mockResponse);
-            var insightsClient = GetInsightsManagementClient(mockTransport);
+            var insightsClient = GetInsightsManagementClient(mockResponse.ToJson());
             await insightsClient.ActionGroups.DeleteAsync("rg1", "actGroup1");
         }
 
@@ -153,7 +150,6 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
                                                   new List<LogicAppReceiver>(),
                                                   new List<AzureFunctionReceiver>(),
                                                   new List<ArmRoleReceiver>());
-            var mockResponse = new MockResponse((int)HttpStatusCode.OK);
             var content = @"{
                             'id': 'ONE',
                             'name': 'Name',
@@ -192,9 +188,7 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
                             
                         }
             ".Replace("'", "\"");
-            mockResponse.SetContent(content);
-            var mockTransport = new MockTransport(mockResponse);
-            var insightsClient = GetInsightsManagementClient(mockTransport);
+            var insightsClient = GetInsightsManagementClient(content);
             var result = (await insightsClient.ActionGroups.GetAsync("rg1", "actGroup1")).Value;
             AreEqual(actionGroupResource,result);
         }
@@ -214,7 +208,6 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
                                                   new List<LogicAppReceiver>(),
                                                   new List<AzureFunctionReceiver>(),
                                                   new List<ArmRoleReceiver>())};
-            var mockResponse = new MockResponse((int)HttpStatusCode.OK);
             var content = @"{
                             'value':[{
                             'id': 'ONE',
@@ -254,9 +247,7 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
                             }]
                         }
             ".Replace("'", "\"");
-            mockResponse.SetContent(content);
-            var mockTransport = new MockTransport(mockResponse);
-            var insightsClient = GetInsightsManagementClient(mockTransport);
+            var insightsClient = GetInsightsManagementClient(content);
             var result = await insightsClient.ActionGroups.ListByResourceGroupAsync("rg1").ToEnumerableAsync();
             AreEqual(exceptionResourcesList, result);
         }
@@ -276,7 +267,6 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
                                                   new List<LogicAppReceiver>(),
                                                   new List<AzureFunctionReceiver>(),
                                                   new List<ArmRoleReceiver>())};
-            var mockResponse = new MockResponse((int)HttpStatusCode.OK);
             var content = @"{
                             'value':[{
                             'id': 'ONE',
@@ -316,9 +306,7 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
                             }]
                         }
             ".Replace("'", "\"");
-            mockResponse.SetContent(content);
-            var mockTransport = new MockTransport(mockResponse);
-            var insightsClient = GetInsightsManagementClient(mockTransport);
+            var insightsClient = GetInsightsManagementClient(content);
             var result = await insightsClient.ActionGroups.ListBySubscriptionIdAsync().ToEnumerableAsync();
             AreEqual(exceptionResourcesList, result);
         }

@@ -3,11 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Insights.Models;
-using Insights.Tests.Helpers;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Insights.Tests.BasicTests
@@ -46,8 +44,6 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
                                             new LocalizableString("substatus"),
                                             DateTime.Parse("2014-05-20T13:14:20.7882792Z"),DateTime.Parse("2014-05-20T13:14:20.7882792Z"),"subscriptionId","tenantId"
                                             ) };
-            var xx = EventDataList.ToJson();
-            var mockResponse = new MockResponse((int)HttpStatusCode.OK);
             var content = @"
                     {
                         'value':[
@@ -110,10 +106,8 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
                                 'tenantId': 'tenantId'
                             }
                         ]
-}".Replace("'", "\"");
-            mockResponse.SetContent(content);
-            var mockTransport = new MockTransport(mockResponse);
-            var insightsClient = GetInsightsManagementClient(mockTransport);
+                    }".Replace("'", "\"");
+            var insightsClient = GetInsightsManagementClient(content);
             var result = await insightsClient.ActivityLogs.ListAsync("filter").ToEnumerableAsync();
             AreEqual(EventDataList, result);
         }

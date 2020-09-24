@@ -28,37 +28,34 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
         public async Task GetMetricDefinitionsTest()
         {
             IList<MetricDefinition> expectedMetricDefinitionCollection = GetMetricDefinitionCollection(ResourceUri);
-            var mockResponse = new MockResponse((int)HttpStatusCode.OK);
             var content = @"
-{
-   'value':
-    [
-        {
-            'isDimensionRequired': true,
-            'resourceId': '/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.web/serverFarms/DefaultServerFarm',
-            'namespace': null,
-            'name': {
-                    'value': 'CpuPercentage',
-                'localizedValue': 'CPU Percentage'
-            },
-            'unit': 'Bytes',
-            'primaryAggregationType': 'Average',
-            'supportedAggregationTypes': [],
-            'metricAvailabilities': [
                 {
-                    'timeGrain': 'PT10M',
-                    'retention': 'P30D'
+                   'value':
+                    [
+                        {
+                            'isDimensionRequired': true,
+                            'resourceId': '/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.web/serverFarms/DefaultServerFarm',
+                            'namespace': null,
+                            'name': {
+                                    'value': 'CpuPercentage',
+                                'localizedValue': 'CPU Percentage'
+                            },
+                            'unit': 'Bytes',
+                            'primaryAggregationType': 'Average',
+                            'supportedAggregationTypes': [],
+                            'metricAvailabilities': [
+                                {
+                                    'timeGrain': 'PT10M',
+                                    'retention': 'P30D'
+                                }
+                            ],
+                            'id': null,
+                            'dimensions': []
+                        }
+                    ]
                 }
-            ],
-            'id': null,
-            'dimensions': []
-        }
-    ]
-}
-".Replace("'", "\"");
-            mockResponse.SetContent(content);
-            var mockTransport = new MockTransport(mockResponse);
-            var insightsClient = GetInsightsManagementClient(mockTransport);
+                ".Replace("'", "\"");
+            var insightsClient = GetInsightsManagementClient(content);
             var actualMetricDefinitions = await insightsClient.MetricDefinitions.ListAsync(resourceUri: ResourceUri, cancellationToken: new CancellationToken()).ToEnumerableAsync();
             AreEqual(expectedMetricDefinitionCollection, actualMetricDefinitions);
         }
@@ -67,10 +64,8 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
         public async Task GetMetricsTest()
         {
             IList<Metric> expectedMetricCollection = GetMetricCollection(ResourceUri);
-            var mockResponse = new MockResponse((int)HttpStatusCode.OK);
-            mockResponse.SetContent(string.Concat("{ \"value\":", expectedMetricCollection.ToJson(), "}"));
-            var mockTransport = new MockTransport(mockResponse);
-            var insightsClient = GetInsightsManagementClient(mockTransport);
+            var content = string.Concat("{ \"value\":", expectedMetricCollection.ToJson(), "}");
+            var insightsClient = GetInsightsManagementClient(content);
             var actualMetrics = (await insightsClient.Metrics.ListAsync(resourceUri: ResourceUri,cancellationToken: CancellationToken.None)).Value.Value;
 
             AreEqual(expectedMetricCollection, actualMetrics.ToList<Metric>());
