@@ -11,7 +11,7 @@ class PackageProps
 
     PackageProps([string]$name, [string]$version, [string]$directoryPath, [string]$serviceDirectory)
     {
-        $this.Initialize($name, $version, $directoryPath, $serviceDirectory)
+        $this.Initialize($name, $version, $directoryPath, $serviceDirectory, "")
     }
 
     PackageProps([string]$name, [string]$version, [string]$directoryPath, [string]$serviceDirectory, [string]$group = "")
@@ -23,14 +23,15 @@ class PackageProps
         [string]$name,
         [string]$version,
         [string]$directoryPath,
-        [string]$serviceDirectory
+        [string]$serviceDirectory,
+        [string]$group
     )
     {
         $this.Name = $name
         $this.Version = $version
         $this.DirectoryPath = $directoryPath
         $this.ServiceDirectory = $serviceDirectory
-
+        $this.Group = $group
         if (Test-Path (Join-Path $directoryPath "README.md"))
         {
             $this.ReadMePath = Join-Path $directoryPath "README.md"
@@ -49,20 +50,9 @@ class PackageProps
             $this.ChangeLogPath = $null
         }
     }
-
-    hidden [void]Initialize(
-        [string]$name,
-        [string]$version,
-        [string]$directoryPath,
-        [string]$serviceDirectory,
-        [string]$group
-    )
-    {
-        $this.Initialize($name, $version, $directoryPath, $serviceDirectory)
-        $this.Group = $group
-    }
 }
 
+Import-Module powershell-yaml
 # Takes package name and service Name
 # Returns important properties of the package as related to the language repo
 # Returns a PS Object with properties @ { pkgName, pkgVersion, pkgDirectoryPath, pkgReadMePath, pkgChangeLogPath }
@@ -77,7 +67,6 @@ function Get-PkgProperties
         [string]$ServiceDirectory
     )
 
-    $pkgDirectoryPath = $null
     $serviceDirectoryPath = Join-Path $RepoRoot "sdk" $ServiceDirectory
     if (!(Test-Path $serviceDirectoryPath))
     {
@@ -110,7 +99,7 @@ function Get-PkgProperties
 # Takes ServiceName and Repo Root Directory
 # Returns important properties for each package in the specified service, or entire repo if the serviceName is not specified
 # Returns an Table of service key to array values of PS Object with properties @ { pkgName, pkgVersion, pkgDirectoryPath, pkgReadMePath, pkgChangeLogPath }
-function Get-AllPkgProperties ([string]$ServiceDirectory = $null)
+function Get-AllPkgProperties ([string]$ServiceDirectory = $null, [bool]$includeMgmt = $true)
 {
     $pkgPropsResult = @()
 
@@ -120,38 +109,76 @@ function Get-AllPkgProperties ([string]$ServiceDirectory = $null)
         foreach ($dir in (Get-ChildItem $searchDir -Directory))
         {
             $serviceDir = Join-Path $searchDir $dir.Name
+            $ciFiles = fetchCiFiles -serviceDirectory $serviceDir -includeincludeMgmtPkg $includeMgmt
 
-            if (Test-Path (Join-Path $serviceDir "ci.yml"))
+            foreach ($ciFile in $ciFiles)
             {
-                $activePkgList = Get-PkgListFromYml -ciYmlPath (Join-Path $serviceDir "ci.yml")
-                if ($activePkgList -ne $null)
-                {
-                    $pkgPropsResult = Operate-OnPackages -activePkgList $activePkgList -ServiceDirectory $dir.Name -pkgPropsResult $pkgPropsResult
-                }
+                $pkgPropsResult = Operate-OnPackages -ciFilePath $ciFile -ServiceDirectory $dir.Name -pkgPropsResult $pkgPropsResult
             }
         }
     } 
     else
     {
         $serviceDir = Join-Path $RepoRoot "sdk" $ServiceDirectory
-        if (Test-Path (Join-Path $serviceDir "ci.yml"))
-        {
-            $activePkgList = Get-PkgListFromYml -ciYmlPath (Join-Path $serviceDir "ci.yml")
-            if ($activePkgList -ne $null)
-            {
-                $pkgPropsResult = Operate-OnPackages -activePkgList $activePkgList -ServiceDirectory $ServiceDirectory -pkgPropsResult $pkgPropsResult
-            }
+        $ciFiles = fetchCiFiles -serviceDirectory $serviceDir -includeincludeMgmtPkg $includeMgmt
+        foreach ($ciFile in $ciFiles) {
+            $pkgPropsResult = Operate-OnPackages -ciFilePath $ciFile -ServiceDirectory $ServiceDirectory -pkgPropsResult $pkgPropsResult
         }
     }
 
     return $pkgPropsResult
 }
 
-function Operate-OnPackages ($activePkgList, $ServiceDirectory, [Array]$pkgPropsResult)
+function GetMetaData($lang){
+    switch ($lang) {
+      "java" {
+        $metadataUri = "https://raw.githubusercontent.com/Azure/azure-sdk/master/_data/releases/latest/java-packages.csv"
+        break
+      }
+      ".net" {
+        $metadataUri = "https://raw.githubusercontent.com/Azure/azure-sdk/master/_data/releases/latest/dotnet-packages.csv"
+        break
+      }
+      "python" {
+        $metadataUri = "https://raw.githubusercontent.com/Azure/azure-sdk/master/_data/releases/latest/python-packages.csv"
+        break
+      }
+      "javascript" {
+        $metadataUri = "https://raw.githubusercontent.com/Azure/azure-sdk/master/_data/releases/latest/js-packages.csv"
+        break
+      }
+      default {
+        Write-Host "Unrecognized Language: $language"
+        exit(1)
+      }
+    }
+  
+    $metadataResponse = Invoke-RestMethod -Uri $metadataUri -method "GET" -MaximumRetryCount 3 -RetryIntervalSec 10 | ConvertFrom-Csv
+  
+    return $metadataResponse
+}
+
+function fetchCiFiles([string]$serviceDirectory, [bool]$includeMgmtPkg) {
+    # We'd better to display artifacts based on the order of ci.yml, ci.data.yml and ci.mgmt.yml.
+    $ciFiles = @()
+    if (Test-Path (Join-Path $serviceDirectory ci.yml)) {
+        $ciFiles += (Join-Path $serviceDirectory ci.yml)
+    }
+    if (Test-Path (Join-Path $serviceDirectory ci.data.yml)) {
+        $ciFiles += (Join-Path $serviceDirectory ci.data.yml)
+    }
+    if ($includeMgmt -and (Test-Path (Join-Path $serviceDirectory ci.mgmt.yml))) {
+        $includeMgmtPkg += (Join-Path $serviceDirectory ci.mgmt.yml)
+    }
+    return $ciFiles
+}
+
+function Operate-OnPackages ($ciFilePath, $ServiceDirectory, [Array]$pkgPropsResult)
 {
-    foreach ($pkg in $activePkgList)
+    $activePkgList = Get-PkgListFromYml -ciYmlPath $ciFilePath
+    foreach ($pkg in $activePkgList.name)
     {
-        $pkgProps = Get-PkgProperties -PackageName $pkg["name"] -ServiceDirectory $ServiceDirectory
+        $pkgProps = Get-PkgProperties -PackageName $pkg -ServiceDirectory $ServiceDirectory
         $pkgPropsResult += $pkgProps
     }
     return $pkgPropsResult
@@ -161,7 +188,7 @@ function Get-PkgListFromYml ($ciYmlPath)
 {
     $ProgressPreference = "SilentlyContinue"
     Register-PSRepository -Default -ErrorAction:SilentlyContinue
-    Install-Module -Name powershell-yaml -RequiredVersion 0.4.1 -Force -Scope CurrentUser
+    # Install-Module -Name powershell-yaml -RequiredVersion 0.4.1 -Force -Scope CurrentUser
     $ciYmlContent = Get-Content $ciYmlPath -Raw
     $ciYmlObj = ConvertFrom-Yaml $ciYmlContent -Ordered
     if ($ciYmlObj.Contains("stages"))

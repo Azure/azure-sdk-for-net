@@ -81,11 +81,15 @@ $(function () {
     });
 })
 
-function httpGetAsync(targetUrl, callback) {
+function httpGetAsync(targetUrl, callback, callbackOnNotFound) {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function () {
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
             callback(xmlHttp.responseText);
+        }
+        else if (xmlHttp.status == 404) {
+            callbackOnNotFound()
+        }
     }
     xmlHttp.open("GET", targetUrl, true); // true for asynchronous 
     xmlHttp.send(null);
@@ -123,6 +127,8 @@ function populateOptions(selector, packageName) {
             window.location.href = url.join('/')
         });
 
+    }, function() {
+        $(selector).hide()
     })
 }
 
