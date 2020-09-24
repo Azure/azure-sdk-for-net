@@ -2518,11 +2518,13 @@ namespace Azure.Storage.Files.DataLake
                                         cancellationToken: cancellationToken)
                                     .ConfigureAwait(false);
                             }
-                            catch (RequestFailedException storageRequestFailedException)
-                            when (!string.IsNullOrEmpty(continuationToken) &&
-                                Constants.HttpStatusCode.s_retriableCodes.Contains(storageRequestFailedException.Status) )
+                            catch (RequestFailedException exception)
                             {
-                                throw new DataLakeAclChangeFailedException(storageRequestFailedException, continuationToken);
+                                throw DataLakeErrors.ChangeAclRequestFailed(exception, continuationToken);
+                            }
+                            catch (Exception exception)
+                            {
+                                throw DataLakeErrors.ChangeAclFailed(exception, continuationToken);
                             }
                             continuationToken = jsonResponse.Value.Continuation;
 
