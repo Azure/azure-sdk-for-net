@@ -1,0 +1,139 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System.Collections.Generic;
+using System.Text.Json;
+using Azure.Core.Serialization;
+using Microsoft.Spatial;
+using NUnit.Framework;
+
+namespace Microsoft.Azure.Core.Spatial.Tests.Serialization
+{
+    public class GeographyPointConverterTests
+    {
+        [Test]
+        public void CanConvert()
+        {
+            GeographyPointConverter converter = new GeographyPointConverter();
+            Assert.IsTrue(converter.CanConvert(typeof(GeographyPoint)));
+        }
+
+        [Test]
+        public void Read()
+        {
+            JsonSerializerOptions options = new JsonSerializerOptions
+            {
+                Converters =
+                {
+                    new GeographyPointConverter(),
+                },
+            };
+
+            GeographyPoint point = JsonSerializer.Deserialize<GeographyPoint>(@"{""type"":""Point"",""coordinates"":[-121.726906,46.879967]}", options);
+
+            Assert.AreEqual(point.Latitude, 46.879967);
+            Assert.AreEqual(point.Longitude, -121.726906);
+        }
+
+        [Test]
+        public void ReadMore()
+        {
+            JsonSerializerOptions options = new JsonSerializerOptions
+            {
+                Converters =
+                {
+                    new GeographyPointConverter(),
+                },
+            };
+
+            GeographyPoint point = JsonSerializer.Deserialize<GeographyPoint>(@"{""type"":""Point"",""coordinates"":[-121.726906,46.879967,2541.118],""crs"":{""type"":""name"",""properties"":{""name"":""EPSG:4326""}}}", options);
+
+            Assert.AreEqual(point.Latitude, 46.879967);
+            Assert.AreEqual(point.Longitude, -121.726906);
+
+            // Not currently supported.
+            Assert.IsNull(point.Z);
+        }
+
+        [Test]
+        public void ReadIntegers()
+        {
+            JsonSerializerOptions options = new JsonSerializerOptions
+            {
+                Converters =
+                {
+                    new GeographyPointConverter(),
+                },
+            };
+
+            GeographyPoint point = JsonSerializer.Deserialize<GeographyPoint>(@"{""type"":""Point"",""coordinates"":[-121,46]}", options);
+
+            Assert.AreEqual(point.Latitude, 46.0);
+            Assert.AreEqual(point.Longitude, -121.0);
+        }
+
+        [Test]
+        public void ReadCaseInsensitive()
+        {
+            JsonSerializerOptions options = new JsonSerializerOptions
+            {
+                Converters =
+                {
+                    new GeographyPointConverter(),
+                },
+                PropertyNameCaseInsensitive = true,
+            };
+
+            GeographyPoint point = JsonSerializer.Deserialize<GeographyPoint>(@"{""Type"":""point"",""Coordinates"":[-121.726906,46.879967]}", options);
+
+            Assert.AreEqual(point.Latitude, 46.879967);
+            Assert.AreEqual(point.Longitude, -121.726906);
+        }
+
+        [TestCaseSource(nameof(ReadBadJsonData))]
+        public void ReadBadJson(string json, string expectedExceptionMessage)
+        {
+            JsonSerializerOptions options = new JsonSerializerOptions
+            {
+                Converters =
+                {
+                    new GeographyPointConverter(),
+                },
+            };
+
+            JsonException expectedException = Assert.Throws<JsonException>(() => JsonSerializer.Deserialize<GeographyPoint>(json, options));
+            Assert.AreEqual(expectedExceptionMessage, expectedException.Message);
+        }
+
+        private static IEnumerable<TestCaseData> ReadBadJsonData => new[]
+        {
+            new TestCaseData(@"[]", $"Deserialization failed. Expected token: '{nameof(JsonTokenType.StartObject)}'."),
+            new TestCaseData(@"{}", $"Deserialization of {nameof(GeographyPoint)} failed. Expected geographic type: 'Point'."),
+            new TestCaseData(@"{""type"":""Polygon""}", $"Deserialization of {nameof(GeographyPoint)} failed. Expected geographic type: 'Point'."),
+            new TestCaseData(@"{""Type"":""Point""}", $"Deserialization of {nameof(GeographyPoint)} failed. Expected geographic type: 'Point'."),
+            new TestCaseData(@"{""type"":""Point"",""coordinates"":-121.726906}", $"Deserialization failed. Expected token: '{nameof(JsonTokenType.StartArray)}'."),
+            new TestCaseData(@"{""type"":""Point"",""coordinates"":[]}", $"Deserialization failed. Expected token: '{nameof(JsonTokenType.Number)}'."),
+            new TestCaseData(@"{""type"":""Point"",""coordinates"":[""foo""]}", $"Deserialization failed. Expected token: '{nameof(JsonTokenType.Number)}'."),
+            new TestCaseData(@"{""type"":""Point"",""coordinates"":[-121.726906]}", $"Deserialization failed. Expected token: '{nameof(JsonTokenType.Number)}'."),
+        };
+
+        [Test]
+        public void Write()
+        {
+            GeographyPoint point = GeographyPoint.Create(46.879967, -121.726906);
+
+            JsonSerializerOptions options = new JsonSerializerOptions
+            {
+                Converters =
+                {
+                    new GeographyPointConverter(),
+                },
+            };
+
+            string json = JsonSerializer.Serialize(point, options);
+
+            // Use regex comparison since double precision can be slight off.
+            StringAssert.IsMatch(@"\{""type\"":""Point"",""coordinates"":\[-121\.72690\d+,46\.87996\d+\]\}", json);
+        }
+    }
+}
