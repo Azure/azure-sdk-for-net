@@ -128,9 +128,8 @@ foreach (SearchResult<SearchDocument> result in response.GetResults())
 }
 ```
 
-You can paste that into a new console app,
-[install the Azure.Search.Documents package](#install-the-package), add a
-`using Azure.Search.Documents;` statement, and then hit F5 to run.
+You can paste that into a new console app, install the Azure.Search.Documents
+package, add a `using Azure.Search.Documents;` statement, and then hit F5 to run.
 
 ## Key concepts
 
