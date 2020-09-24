@@ -9,11 +9,11 @@ using Azure.Core;
 
 namespace Azure.Data.Tables.Models
 {
-    public partial class TablesBatchResponse
+    public partial class TableBatchResponse
     {
         internal IDictionary<string, (HttpMessage Message, RequestType RequestType)> _requestLookup;
 
-        internal TablesBatchResponse(ConcurrentDictionary<string, (HttpMessage Message, RequestType RequestType)> requestLookup)
+        internal TableBatchResponse(ConcurrentDictionary<string, (HttpMessage Message, RequestType RequestType)> requestLookup)
         {
             _requestLookup = requestLookup;
         }

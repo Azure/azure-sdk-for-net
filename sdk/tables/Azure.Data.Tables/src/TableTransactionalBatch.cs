@@ -13,7 +13,7 @@ using Azure.Data.Tables.Models;
 
 namespace Azure.Data.Tables
 {
-    public partial class TablesTransactionalBatch
+    public partial class TableTransactionalBatch
     {
         private readonly TableRestClient _tableOperations;
         private readonly TableRestClient _batchOperations;
@@ -29,12 +29,12 @@ namespace Azure.Data.Tables
         internal ConcurrentQueue<(string RowKey, HttpMessage HttpMessage)> _requestMessages = new ConcurrentQueue<(string RowKey, HttpMessage HttpMessage)>();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TablesTransactionalBatch"/> class.
+        /// Initializes a new instance of the <see cref="TableTransactionalBatch"/> class.
         /// </summary>
         /// <param name="table"></param>
         /// <param name="tableOperations"></param>
         /// <param name="format"></param>
-        internal TablesTransactionalBatch(string table, TableRestClient tableOperations, OdataMetadataFormat format)
+        internal TableTransactionalBatch(string table, TableRestClient tableOperations, OdataMetadataFormat format)
         {
             _table = table;
             _tableOperations = tableOperations;
@@ -46,9 +46,9 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TablesTransactionalBatch"/> class for mocking.
+        /// Initializes a new instance of the <see cref="TableTransactionalBatch"/> class for mocking.
         /// </summary>
-        protected TablesTransactionalBatch()
+        protected TableTransactionalBatch()
         { }
 
         /// <summary>
@@ -92,8 +92,7 @@ namespace Azure.Data.Tables
                 tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                 queryOptions: new QueryOptions() { Format = _format });
 
-            _requestMessages.Enqueue((entity.RowKey, message));
-            _requestLookup[entity.RowKey] = (message, RequestType.Create);
+            AddMessage(entity.RowKey, message, RequestType.Create);
         }
 
         /// <summary>
@@ -112,8 +111,7 @@ namespace Azure.Data.Tables
                 tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                 queryOptions: new QueryOptions() { Format = _format });
 
-            _requestMessages.Enqueue((entity.RowKey, message));
-            _requestLookup[entity.RowKey] = (message, RequestType.Update);
+            AddMessage(entity.RowKey, message, RequestType.Update);
         }
 
         /// <summary>
@@ -133,8 +131,7 @@ namespace Azure.Data.Tables
                 null,
                 queryOptions: new QueryOptions() { Format = _format });
 
-            _requestMessages.Enqueue((rowKey, message));
-            _requestLookup[rowKey] = (message, RequestType.Delete);
+            AddMessage(rowKey, message, RequestType.Delete);
         }
 
         /// <summary>
@@ -142,7 +139,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response<TablesBatchResponse>> SubmitBatchAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TableBatchResponse>> SubmitBatchAsync(CancellationToken cancellationToken = default)
         {
             var messageList = BuildOrderedBatchRequests();
 
@@ -158,7 +155,7 @@ namespace Azure.Data.Tables
                     messageList[i].HttpMessage.Response = response.Value[i];
                 }
 
-                return Response.FromValue(new TablesBatchResponse(_requestLookup), response.GetRawResponse());
+                return Response.FromValue(new TableBatchResponse(_requestLookup), response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -172,7 +169,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public virtual Response<TablesBatchResponse> SubmitBatch<T>(CancellationToken cancellationToken = default)
+        public virtual Response<TableBatchResponse> SubmitBatch<T>(CancellationToken cancellationToken = default)
         {
             var messageList = BuildOrderedBatchRequests();
 
@@ -188,13 +185,23 @@ namespace Azure.Data.Tables
                     messageList[i].HttpMessage.Response = response.Value[i];
                 }
 
-                return Response.FromValue(new TablesBatchResponse(_requestLookup), response.GetRawResponse());
+                return Response.FromValue(new TableBatchResponse(_requestLookup), response.GetRawResponse());
             }
             catch (Exception ex)
             {
                 scope.Failed(ex);
                 throw;
             }
+        }
+
+        private bool AddMessage(string rowKey, HttpMessage message, RequestType requestType)
+        {
+            if (_requestLookup.TryAdd(rowKey, (message, requestType)))
+            {
+                _requestMessages.Enqueue((rowKey, message));
+                return true;
+            }
+            throw new InvalidOperationException("Each entity can only be represented once per batch.");
         }
 
         private List<(string RowKey, HttpMessage HttpMessage)> BuildOrderedBatchRequests()

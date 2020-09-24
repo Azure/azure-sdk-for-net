@@ -988,7 +988,7 @@ namespace Azure.Data.Tables.Tests
 
             // Add the entities to the batch.
             batch.AddEntities(entitiesToCreate);
-            TablesBatchResponse response = await batch.SubmitBatchAsync().ConfigureAwait(false);
+            TableBatchResponse response = await batch.SubmitBatchAsync().ConfigureAwait(false);
 
             foreach (var entity in entitiesToCreate)
             {
@@ -1019,7 +1019,7 @@ namespace Azure.Data.Tables.Tests
             await client.AddEntityAsync(entitiesToCreate[1]).ConfigureAwait(false);
 
             // Create the batch.
-            TablesTransactionalBatch batch = client.CreateTransactionalBatch(entitiesToCreate[0].PartitionKey);
+            TableTransactionalBatch batch = client.CreateTransactionalBatch(entitiesToCreate[0].PartitionKey);
 
             batch.SetBatchGuids(Recording.Random.NewGuid(), Recording.Random.NewGuid());
 
@@ -1036,7 +1036,7 @@ namespace Azure.Data.Tables.Tests
             var entityToDelete = entitiesToCreate[1];
             batch.DeleteEntity(entityToDelete.PartitionKey, entityToDelete.RowKey, ETag.All);
 
-            TablesBatchResponse response = await batch.SubmitBatchAsync().ConfigureAwait(false);
+            TableBatchResponse response = await batch.SubmitBatchAsync().ConfigureAwait(false);
 
             foreach (var entity in entitiesToCreate)
             {

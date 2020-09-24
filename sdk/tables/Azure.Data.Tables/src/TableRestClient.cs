@@ -70,8 +70,8 @@ namespace Azure.Data.Tables
                         var responses = await Multipart.ParseAsync(
                             message.Response.ContentStream,
                             message.Response.Headers.ContentType,
-                            false,
-                            true,
+                            expectBoundariesWithCRLF: false,
+                            async: true,
                             cancellationToken).ConfigureAwait(false);
 
                         if (responses.Length == 1 && responses.Any(r => r.Status >= 400))
@@ -105,9 +105,14 @@ namespace Azure.Data.Tables
                         var responses = Multipart.ParseAsync(
                             message.Response.ContentStream,
                             message.Response.Headers.ContentType,
-                            false,
-                            false,
+                            expectBoundariesWithCRLF: false,
+                            async: false,
                             cancellationToken).EnsureCompleted();
+
+                        if (responses.Length == 1 && responses.Any(r => r.Status >= 400))
+                        {
+                            throw _clientDiagnostics.CreateRequestFailedException(responses[0]);
+                        }
 
                         return Response.FromValue(responses.ToList(), message.Response);
                     }
