@@ -18,27 +18,30 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// ORC dataset.
+    /// The MongoDB Atlas database dataset.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("Orc")]
+    [Newtonsoft.Json.JsonObject("MongoDbAtlasCollection")]
     [Rest.Serialization.JsonTransformation]
-    public partial class OrcDataset : Dataset
+    public partial class MongoDbAtlasCollectionDataset : Dataset
     {
         /// <summary>
-        /// Initializes a new instance of the OrcDataset class.
+        /// Initializes a new instance of the MongoDbAtlasCollectionDataset
+        /// class.
         /// </summary>
-        public OrcDataset()
+        public MongoDbAtlasCollectionDataset()
         {
             LinkedServiceName = new LinkedServiceReference();
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the OrcDataset class.
+        /// Initializes a new instance of the MongoDbAtlasCollectionDataset
+        /// class.
         /// </summary>
         /// <param name="linkedServiceName">Linked service reference.</param>
-        /// <param name="location">The location of the ORC data
-        /// storage.</param>
+        /// <param name="collection">The collection name of the MongoDB Atlas
+        /// database. Type: string (or Expression with resultType
+        /// string).</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="description">Dataset description.</param>
@@ -53,13 +56,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// describing the Dataset.</param>
         /// <param name="folder">The folder that this Dataset is in. If not
         /// specified, Dataset will appear at the root level.</param>
-        /// <param name="orcCompressionCodec">Possible values include: 'none',
-        /// 'zlib', 'snappy', 'lzo'</param>
-        public OrcDataset(LinkedServiceReference linkedServiceName, DatasetLocation location, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), object schema = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder), string orcCompressionCodec = default(string))
+        public MongoDbAtlasCollectionDataset(LinkedServiceReference linkedServiceName, object collection, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), object schema = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder))
             : base(linkedServiceName, additionalProperties, description, structure, schema, parameters, annotations, folder)
         {
-            Location = location;
-            OrcCompressionCodec = orcCompressionCodec;
+            Collection = collection;
             CustomInit();
         }
 
@@ -69,17 +69,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the location of the ORC data storage.
+        /// Gets or sets the collection name of the MongoDB Atlas database.
+        /// Type: string (or Expression with resultType string).
         /// </summary>
-        [JsonProperty(PropertyName = "typeProperties.location")]
-        public DatasetLocation Location { get; set; }
-
-        /// <summary>
-        /// Gets or sets possible values include: 'none', 'zlib', 'snappy',
-        /// 'lzo'
-        /// </summary>
-        [JsonProperty(PropertyName = "typeProperties.orcCompressionCodec")]
-        public string OrcCompressionCodec { get; set; }
+        [JsonProperty(PropertyName = "typeProperties.collection")]
+        public object Collection { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -90,9 +84,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public override void Validate()
         {
             base.Validate();
-            if (Location == null)
+            if (Collection == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Collection");
             }
         }
     }
