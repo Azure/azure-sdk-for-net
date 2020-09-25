@@ -17,16 +17,16 @@ namespace Azure.Messaging.EventHubs
     public class EventData
     {
         /// <summary>
-        /// The data associated with the event, in binary form.
+        /// The data associated with the event, in <see cref="BinaryData" /> form.
         /// </summary>
-        public BinaryData BodyAsBinary { get; }
+        public BinaryData BodyAsBinaryData { get; }
 
         /// <summary>
         ///   The data associated with the event.
         /// </summary>
         ///
         /// <remarks>
-        ///   If the means for deserializaing the raw data is not apparent to consumers, a
+        ///   If the means for deserializing the raw data is not apparent to consumers, a
         ///   common technique is to make use of <see cref="EventData.Properties" /> to associate serialization hints
         ///   as an aid to consumers who wish to deserialize the binary data.
         /// </remarks>
@@ -35,7 +35,7 @@ namespace Azure.Messaging.EventHubs
         ///
         public ReadOnlyMemory<byte> Body
         {
-            get => BodyAsBinary.ToBytes();
+            get => BodyAsBinaryData.ToBytes();
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Azure.Messaging.EventHubs
         ///
         public Stream BodyAsStream
         {
-            get => new MemoryStream(Body.ToArray());
+            get => BodyAsBinaryData.ToStream();
         }
 
         /// <summary>
@@ -306,7 +306,7 @@ namespace Azure.Messaging.EventHubs
                            int? publishedSequenceNumber = null,
                            int? pendingPublishSequenceNumber = null)
         {
-            BodyAsBinary = eventBody;
+            BodyAsBinaryData = eventBody;
             Properties = properties ?? new Dictionary<string, object>();
             SystemProperties = systemProperties ?? new Dictionary<string, object>();
             SequenceNumber = sequenceNumber;
@@ -391,7 +391,7 @@ namespace Azure.Messaging.EventHubs
         internal EventData Clone() =>
             new EventData
             (
-                BodyAsBinary,
+                BodyAsBinaryData,
                 new Dictionary<string, object>(Properties),
                 SystemProperties,
                 SequenceNumber,
