@@ -21,7 +21,6 @@ using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 
 namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 {
-    [Trait("SecretsRequired", "true")]
     public class QueueProcessorTests : IClassFixture<QueueProcessorTests.TestFixture>
     {
         private QueueServiceClient _queueServiceClient;

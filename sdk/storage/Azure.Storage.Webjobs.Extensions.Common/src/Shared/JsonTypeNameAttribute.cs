@@ -3,23 +3,15 @@
 
 using System;
 
-#if PUBLICPROTOCOL
-namespace Microsoft.Azure.WebJobs.Protocols
-#else
 namespace Microsoft.Azure.WebJobs.Host.Protocols
-#endif
 {
     /// <summary>
     /// Provides a key to use in place of the .NET type name when deserializing polymorphic objects using
     /// <see cref="PolymorphicJsonConverter"/>.
     /// </summary>
-#if PUBLICPROTOCOL
-    public sealed class JsonTypeNameAttribute : Attribute
-#else
     // TODO (kasobol-msft) this doesn't seem to be relevant for .NET in the extension but might be for other langs supported by functions (see ParameterDescriptors)
     [AttributeUsage(AttributeTargets.Class)]
     internal sealed class JsonTypeNameAttribute : Attribute
-#endif
     {
         private readonly string _typeName;
 

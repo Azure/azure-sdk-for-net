@@ -12,8 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="$(AzureStorageWebjobsExtensionSharedSources)\*.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureStorageWebjobsExtensionSharedSources)\*\*.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureStorageWebjobsExtensionSharedSources)\**\*.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
   
   <ItemGroup>

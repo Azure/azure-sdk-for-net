@@ -23,7 +23,7 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
 
             if (items.Count == 0)
             {
-                yield return new TestPage<T>(new List<T>());
+                yield return Page<T>.FromValues(new List<T>(), null, null);
                 yield break;
             }
 
@@ -42,7 +42,7 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
                 {
                     token = (i + 1).ToString(CultureInfo.InvariantCulture);
                 }
-                yield return new TestPage<T>(pages[i], token);
+                yield return Page<T>.FromValues(pages[i], token, null);
             }
         }
 

@@ -5,10 +5,6 @@
   <PropertyGroup>
     <Version>1.0.0-beta.1</Version>
     <Description>This extension adds bindings for Storage</Description>
-    <IsPackable>false</IsPackable>
-    <PublicSign>false</PublicSign>
-    <DelaySign>true</DelaySign>
-    <AssemblyOriginatorKeyFile>PublicKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup>

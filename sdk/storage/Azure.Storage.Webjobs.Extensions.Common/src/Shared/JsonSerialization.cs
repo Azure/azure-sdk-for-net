@@ -6,18 +6,10 @@ using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-#if PUBLICPROTOCOL
-namespace Microsoft.Azure.WebJobs.Protocols
-#else
 namespace Microsoft.Azure.WebJobs.Host.Protocols
-#endif
 {
     /// <summary>Provides the standard <see cref="JsonSerializerSettings"/> used by protocol data.</summary>
-#if PUBLICPROTOCOL
-    public static class JsonSerialization
-#else
     internal static class JsonSerialization
-#endif
     {
         private static readonly JsonSerializerSettings JsonSerializerSettings = new JsonSerializerSettings
         {
