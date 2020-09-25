@@ -1,6 +1,5 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-#if NETCOREAPP
 
 using System.Threading.Tasks;
 using Azure.Messaging.EventGrid;
@@ -27,5 +26,3 @@ namespace Azure.Extensions.WebJobs.Sample
     }
     #endregion
 }
-
-#endif
