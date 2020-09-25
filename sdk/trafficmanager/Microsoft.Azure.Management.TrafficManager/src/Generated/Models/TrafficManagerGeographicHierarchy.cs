@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
         /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Network/trafficmanagerProfiles.</param>
+        /// Microsoft.Network/trafficManagerProfiles.</param>
         /// <param name="geographicHierarchy">The region at the root of the
         /// hierarchy from all the regions in the hierarchy can be
         /// retrieved.</param>

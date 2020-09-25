@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
         /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Network/trafficmanagerProfiles.</param>
+        /// Microsoft.Network/trafficManagerProfiles.</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="location">The Azure Region where the resource
         /// lives</param>
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         /// 'Enabled', 'Disabled'</param>
         /// <param name="maxReturn">Maximum number of endpoints to be returned
         /// for MultiValue routing type.</param>
-        public Profile(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), ProfileStatus? profileStatus = default(ProfileStatus?), TrafficRoutingMethod? trafficRoutingMethod = default(TrafficRoutingMethod?), DnsConfig dnsConfig = default(DnsConfig), MonitorConfig monitorConfig = default(MonitorConfig), IList<Endpoint> endpoints = default(IList<Endpoint>), TrafficViewEnrollmentStatus? trafficViewEnrollmentStatus = default(TrafficViewEnrollmentStatus?), long? maxReturn = default(long?))
+        public Profile(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), string profileStatus = default(string), string trafficRoutingMethod = default(string), DnsConfig dnsConfig = default(DnsConfig), MonitorConfig monitorConfig = default(MonitorConfig), IList<Endpoint> endpoints = default(IList<Endpoint>), string trafficViewEnrollmentStatus = default(string), long? maxReturn = default(long?))
             : base(id, name, type, tags, location)
         {
             ProfileStatus = profileStatus;
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         /// values include: 'Enabled', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.profileStatus")]
-        public ProfileStatus? ProfileStatus { get; set; }
+        public string ProfileStatus { get; set; }
 
         /// <summary>
         /// Gets or sets the traffic routing method of the Traffic Manager
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         /// 'Weighted', 'Geographic', 'MultiValue', 'Subnet'
         /// </summary>
         [JsonProperty(PropertyName = "properties.trafficRoutingMethod")]
-        public TrafficRoutingMethod? TrafficRoutingMethod { get; set; }
+        public string TrafficRoutingMethod { get; set; }
 
         /// <summary>
         /// Gets or sets the DNS settings of the Traffic Manager profile.
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         /// 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.trafficViewEnrollmentStatus")]
-        public TrafficViewEnrollmentStatus? TrafficViewEnrollmentStatus { get; set; }
+        public string TrafficViewEnrollmentStatus { get; set; }
 
         /// <summary>
         /// Gets or sets maximum number of endpoints to be returned for
