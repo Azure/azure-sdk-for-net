@@ -11,9 +11,8 @@
     <PackageTags>management;cosmosdb;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        Updating with the apiVersion 2020-04-01 azure-rest-api-specs.
-        This patch includes Migration support from autoscale to manual throughput and vice versa.
-        It also introduces AnalyticalStorageTTL param for SQL Containers and Cors rules in DatabaseAccount properties.
+        Updating with the apiVersion 2020-06-01-preview azure-rest-api-specs.
+        This is for the private preview of Point in Time Restore and Role Based Access Control.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
