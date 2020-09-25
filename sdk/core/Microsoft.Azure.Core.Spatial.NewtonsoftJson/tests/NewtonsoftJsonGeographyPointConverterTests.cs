@@ -94,8 +94,10 @@ namespace Microsoft.Azure.Core.Spatial.NewtonsoftJson.Tests
         {
             new TestCaseData(@"[]", $"Deserialization failed. Expected token: '{nameof(JsonToken.StartObject)}'"),
             new TestCaseData(@"{}", $"Deserialization failed. Could not find required 'type' property."),
+            new TestCaseData(@"{""type"":""point""}", $"Deserialization failed. Expected value(s): 'Point'. Actual: 'point'"),
             new TestCaseData(@"{""type"":""Polygon""}", $"Deserialization failed. Expected value(s): 'Point'. Actual: 'Polygon'"),
             new TestCaseData(@"{""Type"":""Point""}", $"Deserialization failed. Expected value(s): 'type, coordinates, crs'. Actual: 'Type'"),
+            new TestCaseData(@"{""type"":""Point"",""Coordinates"":[-121.726906,46.879967]}", $"Deserialization failed. Expected value(s): 'type, coordinates, crs'. Actual: 'Coordinates'"),
             new TestCaseData(@"{""type"":""Point"",""coordinates"":-121.726906}", $"Deserialization failed. Expected token: '{nameof(JsonToken.StartArray)}'"),
             new TestCaseData(@"{""type"":""Point"",""coordinates"":[]}", $"Deserialization failed. Expected token: '{nameof(JsonToken.Float)}'"),
             new TestCaseData(@"{""type"":""Point"",""coordinates"":[""foo""]}", $"Deserialization failed. Expected token: '{nameof(JsonToken.Float)}'"),

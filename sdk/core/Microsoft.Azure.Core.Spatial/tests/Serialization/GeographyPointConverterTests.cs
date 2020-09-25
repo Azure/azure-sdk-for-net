@@ -72,24 +72,6 @@ namespace Microsoft.Azure.Core.Spatial.Tests.Serialization
             Assert.AreEqual(-121.0, point.Longitude);
         }
 
-        [Test]
-        public void ReadCaseInsensitive()
-        {
-            JsonSerializerOptions options = new JsonSerializerOptions
-            {
-                Converters =
-                {
-                    new GeographyPointConverter(),
-                },
-                PropertyNameCaseInsensitive = true,
-            };
-
-            GeographyPoint point = JsonSerializer.Deserialize<GeographyPoint>(@"{""Type"":""point"",""Coordinates"":[-121.726906,46.879967]}", options);
-
-            Assert.AreEqual(46.879967, point.Latitude);
-            Assert.AreEqual(-121.726906, point.Longitude);
-        }
-
         [TestCaseSource(nameof(ReadBadJsonData))]
         public void ReadBadJson(string json, string expectedExceptionMessage)
         {
@@ -109,8 +91,10 @@ namespace Microsoft.Azure.Core.Spatial.Tests.Serialization
         {
             new TestCaseData(@"[]", $"Deserialization failed. Expected token: '{nameof(JsonTokenType.StartObject)}'."),
             new TestCaseData(@"{}", $"Deserialization of {nameof(GeographyPoint)} failed. Expected geographic type: 'Point'."),
+            new TestCaseData(@"{""type"":""point""}", $"Deserialization of {nameof(GeographyPoint)} failed. Expected geographic type: 'Point'."),
             new TestCaseData(@"{""type"":""Polygon""}", $"Deserialization of {nameof(GeographyPoint)} failed. Expected geographic type: 'Point'."),
             new TestCaseData(@"{""Type"":""Point""}", $"Deserialization of {nameof(GeographyPoint)} failed. Expected geographic type: 'Point'."),
+            new TestCaseData(@"{""type"":""Point"",""Coordinates"":[-121.726906,46.879967,2541.118]}", $"Deserialization of {nameof(GeographyPoint)} failed. Expected both longitude and latitude."),
             new TestCaseData(@"{""type"":""Point"",""coordinates"":-121.726906}", $"Deserialization failed. Expected token: '{nameof(JsonTokenType.StartArray)}'."),
             new TestCaseData(@"{""type"":""Point"",""coordinates"":[]}", $"Deserialization failed. Expected token: '{nameof(JsonTokenType.Number)}'."),
             new TestCaseData(@"{""type"":""Point"",""coordinates"":[""foo""]}", $"Deserialization failed. Expected token: '{nameof(JsonTokenType.Number)}'."),

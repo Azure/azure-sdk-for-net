@@ -40,12 +40,12 @@ namespace Azure.Core.Serialization
                 string propertyName = reader.GetString();
 
                 reader.Read();
-                if (string.Equals(TypePropertyName, propertyName, options.GetStringComparisonOrDefault()))
+                if (string.Equals(TypePropertyName, propertyName, StringComparison.Ordinal))
                 {
                     reader.Expect(JsonTokenType.String);
                     type = reader.GetString();
                 }
-                else if (string.Equals(CoordinatesPropertyName, propertyName, options.GetStringComparisonOrDefault()))
+                else if (string.Equals(CoordinatesPropertyName, propertyName, StringComparison.Ordinal))
                 {
                     reader.Expect(JsonTokenType.StartArray);
 
@@ -71,7 +71,7 @@ namespace Azure.Core.Serialization
                 }
             }
 
-            if (!string.Equals(PointTypeName, type, StringComparison.OrdinalIgnoreCase))
+            if (!string.Equals(PointTypeName, type, StringComparison.Ordinal))
             {
                 throw new JsonException($"Deserialization of {nameof(GeographyPoint)} failed. Expected geographic type: '{PointTypeName}'.");
             }

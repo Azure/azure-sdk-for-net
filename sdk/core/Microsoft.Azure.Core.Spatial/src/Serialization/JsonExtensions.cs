@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Text.Json;
 
 namespace Azure.Core.Serialization
@@ -26,19 +25,5 @@ namespace Azure.Core.Serialization
                 throw new JsonException($"Deserialization failed. Expected token: '{expectedTokenType}'.");
             }
         }
-
-        /// <summary>
-        /// Gets a <see cref="StringComparison"/> given the optional <see cref="JsonSerializerOptions"/>.
-        /// The default is <see cref="StringComparison.Ordinal"/>.
-        /// </summary>
-        /// <param name="options">Optional <see cref="JsonSerializerOptions"/> to read <see cref="JsonSerializerOptions.PropertyNameCaseInsensitive"/>.</param>
-        /// <returns>
-        /// <see cref="StringComparison.OrdinalIgnoreCase"/> if <paramref name="options"/> is non-null and <see cref="JsonSerializerOptions.PropertyNameCaseInsensitive"/> is true;
-        /// otherwise, <see cref="StringComparison.Ordinal"/>.</returns>
-        public static StringComparison GetStringComparisonOrDefault(
-            this JsonSerializerOptions options) =>
-            options?.PropertyNameCaseInsensitive ?? false
-            ? StringComparison.OrdinalIgnoreCase
-            : StringComparison.Ordinal;
     }
 }
