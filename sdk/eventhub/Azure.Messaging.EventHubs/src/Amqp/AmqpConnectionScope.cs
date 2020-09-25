@@ -533,10 +533,8 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                 if (trackLastEnqueuedEventProperties)
                 {
-                    linkSettings.DesiredCapabilities = new Multiple<AmqpSymbol>(new List<AmqpSymbol>
-                    {
-                        AmqpProperty.TrackLastEnqueuedEventProperties
-                    });
+                    linkSettings.DesiredCapabilities ??= new Multiple<AmqpSymbol>();
+                    linkSettings.DesiredCapabilities.Add(AmqpProperty.TrackLastEnqueuedEventProperties);
                 }
 
                 var link = new ReceivingAmqpLink(linkSettings);
@@ -583,7 +581,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <param name="connection">The active and opened AMQP connection to use for this link.</param>
         /// <param name="endpoint">The fully qualified endpoint to open the link for.</param>
-        /// <param name="features">The set of features which are active for the producer requesting the link.</param>
+        /// <param name="features">The set of features which are active for the producer for which the link is being created.</param>
         /// <param name="options">The set of options to consider when creating the link.</param>
         /// <param name="timeout">The timeout to apply when creating the link.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
@@ -638,14 +636,14 @@ namespace Azure.Messaging.EventHubs.Amqp
                     linkSettings.DesiredCapabilities.Add(AmqpProperty.EnableIdempotentPublishing);
                 }
 
-                // These values must either all be specified or none.  It is valid for an individual value to be null to signal the
-                // service to supply the value, so long as the key is present.
+                // If any of the options have a value, the entire set must be specified for the link settings.  For any options that did not have a
+                // value, specifying null will signal the service to generate the value.
 
                 if ((options.ProducerGroupId.HasValue) || (options.OwnerLevel.HasValue) || (options.StartingSequenceNumber.HasValue))
                 {
                     linkSettings.AddProperty(AmqpProperty.ProducerGroupId, options.ProducerGroupId);
                     linkSettings.AddProperty(AmqpProperty.ProducerOwnerLevel, options.OwnerLevel);
-                    linkSettings.AddProperty(AmqpProperty.PublishedSequenceNumber, options.StartingSequenceNumber);
+                    linkSettings.AddProperty(AmqpProperty.ProducerSequenceNumber, options.StartingSequenceNumber);
                 }
 
                 var link = new SendingAmqpLink(linkSettings);

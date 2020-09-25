@@ -47,13 +47,13 @@ namespace Azure.Messaging.EventHubs
         ///   The identifier of the producer group to associate with a producer.
         /// </summary>
         ///
-        public static AmqpSymbol ProducerGroupId { get; } = AmqpConstants.Vendor + ":producer-sequence-number";
+        public static AmqpSymbol ProducerGroupId { get; } = AmqpConstants.Vendor + ":producer-id";
 
         /// <summary>
         ///   The sequence number assigned by a producer to an event when it was published.
         /// </summary>
         ///
-        public static AmqpSymbol PublishedSequenceNumber { get; } = AmqpConstants.Vendor + ":producer-id";
+        public static AmqpSymbol ProducerSequenceNumber { get; } = AmqpConstants.Vendor + ":producer-sequence-number";
 
         /// <summary>
         ///   The timeout to associate with a link.

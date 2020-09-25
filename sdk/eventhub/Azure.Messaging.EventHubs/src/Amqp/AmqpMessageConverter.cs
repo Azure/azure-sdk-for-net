@@ -327,7 +327,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             if (source.PendingPublishSequenceNumber.HasValue)
             {
-                message.MessageAnnotations.Map[AmqpProperty.PublishedSequenceNumber] = source.PendingPublishSequenceNumber;
+                message.MessageAnnotations.Map[AmqpProperty.ProducerSequenceNumber] = source.PendingPublishSequenceNumber;
             }
 
             if (source.PendingProducerGroupId.HasValue)

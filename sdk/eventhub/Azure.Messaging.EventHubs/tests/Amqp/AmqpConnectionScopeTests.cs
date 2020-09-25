@@ -1128,7 +1128,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.EntityType.ToString()), Is.True, "There should be an entity type specified.");
             Assert.That(link.Settings.Properties[AmqpProperty.ProducerGroupId], Is.EqualTo(options.ProducerGroupId), "The producer group should have been set.");
             Assert.That(link.Settings.Properties[AmqpProperty.ProducerOwnerLevel], Is.EqualTo(options.OwnerLevel), "The owner level should have been set.");
-            Assert.That(link.Settings.Properties[AmqpProperty.PublishedSequenceNumber], Is.EqualTo(options.StartingSequenceNumber), "The published sequence number should have been set.");
+            Assert.That(link.Settings.Properties[AmqpProperty.ProducerSequenceNumber], Is.EqualTo(options.StartingSequenceNumber), "The published sequence number should have been set.");
         }
 
         /// <summary>
@@ -1195,7 +1195,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.EntityType.ToString()), Is.True, "There should be an entity type specified.");
             Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.ProducerGroupId.ToString()), Is.False, "The producer group should not have been set.");
             Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.ProducerOwnerLevel.ToString()), Is.False, "The owner level should not have been set.");
-            Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.PublishedSequenceNumber.ToString()), Is.False, "The published sequence number should not have been set.");
+            Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.ProducerSequenceNumber.ToString()), Is.False, "The published sequence number should not have been set.");
         }
 
         /// <summary>
@@ -1262,7 +1262,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.EntityType.ToString()), Is.True, "There should be an entity type specified.");
             Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.ProducerGroupId.ToString()), Is.True, "The producer group should have been set.");
             Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.ProducerOwnerLevel.ToString()), Is.True, "The owner level should have been set.");
-            Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.PublishedSequenceNumber.ToString()), Is.True, "The published sequence number should have been set.");
+            Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.ProducerSequenceNumber.ToString()), Is.True, "The published sequence number should have been set.");
         }
 
         /// <summary>
@@ -1335,7 +1335,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.EntityType.ToString()), Is.True, "There should be an entity type specified.");
             Assert.That(link.Settings.Properties[AmqpProperty.ProducerGroupId], Is.EqualTo(options.ProducerGroupId), "The producer group should have been set.");
             Assert.That(link.Settings.Properties[AmqpProperty.ProducerOwnerLevel], Is.EqualTo(options.OwnerLevel), "The owner level should have been set.");
-            Assert.That(link.Settings.Properties[AmqpProperty.PublishedSequenceNumber], Is.EqualTo(options.StartingSequenceNumber), "The published sequence number should have been set.");
+            Assert.That(link.Settings.Properties[AmqpProperty.ProducerSequenceNumber], Is.EqualTo(options.StartingSequenceNumber), "The published sequence number should have been set.");
         }
 
         /// <summary>

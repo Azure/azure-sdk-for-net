@@ -401,8 +401,8 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <returns>The set of information about the publishing state of the requested partition, within the context of this producer.</returns>
         ///
-        public virtual async Task<PartitionPublishingProperties> ReadPartitionPublishingPropertiesAsync(string partitionId,
-                                                                                                        CancellationToken cancellationToken = default)
+        public virtual async Task<PartitionPublishingProperties> GetPartitionPublishingPropertiesAsync(string partitionId,
+                                                                                                       CancellationToken cancellationToken = default)
         {
             Argument.AssertNotClosed(IsClosed, nameof(EventHubProducerClient));
             Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
@@ -566,9 +566,9 @@ namespace Azure.Messaging.EventHubs.Producer
                 return;
             }
 
-            var sendTask = (!Options.EnableIdempotentPartitions)
-                ? SendInternalAsync(eventBatch, cancellationToken)
-                : SendIdempotentAsync(eventBatch, cancellationToken);
+            var sendTask = (Options.EnableIdempotentPartitions)
+                ? SendIdempotentAsync(eventBatch, cancellationToken)
+                : SendInternalAsync(eventBatch, cancellationToken);
 
             await sendTask.ConfigureAwait(false);
         }
