@@ -20,7 +20,7 @@ namespace Azure.Core.TestFramework
     /// We create an instance in SearchTestBase when we want to log test
     /// output.
     /// </summary>
-    internal class TestLogger : IDisposable
+    public class TestLogger : IDisposable
     {
         /// <summary>
         /// EventSource listener for AzureSDK events.
