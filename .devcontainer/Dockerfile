@@ -42,7 +42,7 @@ RUN apt-get update \
     && ([ "${COMMON_SCRIPT_SHA}" = "dev-mode" ] || (echo "${COMMON_SCRIPT_SHA} */tmp/common-setup.sh" | sha256sum -c -)) \
     && /bin/bash /tmp/common-setup.sh "${INSTALL_ZSH}" "${USERNAME}" "${USER_UID}" "${USER_GID}" "${UPGRADE_PACKAGES}" \
     #
-    # [Optional] Install Node.js for ASP.NET Core Web Applicationss
+    # [Optional] Install Node.js for ASP.NET Core Web Applications
     && if [ "$INSTALL_NODE" = "true" ]; then \
         curl -sSL ${NODE_SCRIPT_SOURCE} -o /tmp/node-setup.sh \
         && ([ "${NODE_SCRIPT_SHA}" = "dev-mode" ] || (echo "${COMMON_SCRIPT_SHA} */tmp/node-setup.sh" | sha256sum -c -)) \
