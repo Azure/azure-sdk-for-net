@@ -81,7 +81,7 @@ Please refer to [Monitor Azure Functions](https://docs.microsoft.com/azure/azure
 
 ## Next steps
 
-Read the [introduction to Azure Function](https://docs.microsoft.com/en-us/azure/azure-functions/functions-overview) or [creating an Azure Function guide](https://docs.microsoft.com/azure/azure-functions/functions-create-first-azure-function).
+Read the [introduction to Azure Function](https://docs.microsoft.com/azure/azure-functions/functions-overview) or [creating an Azure Function guide](https://docs.microsoft.com/azure/azure-functions/functions-create-first-azure-function).
 
 ## Contributing
 
