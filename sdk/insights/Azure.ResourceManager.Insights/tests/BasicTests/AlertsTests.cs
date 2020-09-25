@@ -4,9 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Insights.Models;
+using Azure.ResourceManager.Insights.Tests.Helpers;
 using Insights.Tests.Helpers;
 using NUnit.Framework;
 
@@ -32,6 +34,7 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
         public async Task CreateOrUpdateRuleTest()
         {
             AlertRuleResource expectedParameters = GetCreateOrUpdateRuleParameter();
+            var mockResponse = new MockResponse((int)HttpStatusCode.OK);
             var content = @"{
                     'namePropertiesName': 'name1',
                     'id': null,
@@ -62,7 +65,9 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
                     }
                 }
             ".Replace("'", "\"");
-            var insightsClient = GetInsightsManagementClient(content);
+            mockResponse.SetContent(content);
+            var mockTransport = new MockTransport(mockResponse);
+            var insightsClient = GetInsightsManagementClient(mockTransport);
             var result = (await insightsClient.AlertRules.CreateOrUpdateAsync(resourceGroupName: "rg1", ruleName: expectedParameters.Name, parameters: expectedParameters)).Value;
             AreEqual(expectedParameters, result);
         }
@@ -71,8 +76,13 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
         public async Task GetIncidentTest()
         {
             var expectedIncident = GetIncidents().First();
+
             var serializedObject = expectedIncident.ToJson();
-            var insightsClient = GetInsightsManagementClient(serializedObject);
+
+            var mockResponse = new MockResponse((int)HttpStatusCode.OK);
+            mockResponse.SetContent(serializedObject);
+            var mockTransport = new MockTransport(mockResponse);
+            var insightsClient = GetInsightsManagementClient(mockTransport);
             var actualIncident = (await insightsClient.AlertRuleIncidents.GetAsync(
                 resourceGroupName: "rg1",
                 ruleName: "r1",
@@ -123,8 +133,10 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
                     ruleName: "r1"
                     )
             };
-            var content = string.Concat("{ \"value\":", expectedIncidentsResponse.ToJson(), "}");
-            var insightsClient = GetInsightsManagementClient(content);
+            var mockResponse = new MockResponse((int)HttpStatusCode.OK);
+            mockResponse.SetContent(string.Concat("{ \"value\":", expectedIncidentsResponse.ToJson(), "}"));
+            var mockTransport = new MockTransport(mockResponse);
+            var insightsClient = GetInsightsManagementClient(mockTransport);
             var actualIncidents = await insightsClient.AlertRuleIncidents.ListByAlertRuleAsync(
                 resourceGroupName: "rg1",
                 ruleName: "r1").ToEnumerableAsync();
@@ -173,6 +185,7 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
         public async Task ListRulesTest()
         {
             var expResponse = GetRuleResourceCollection();
+            var mockResponse = new MockResponse((int)HttpStatusCode.OK);
             var content = @"{
                             'value': [
                                 {
@@ -207,7 +220,9 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
                             ]
                         }
             ".Replace("'", "\"");
-            var insightsClient = GetInsightsManagementClient(content);
+            mockResponse.SetContent(content);
+            var mockTransport = new MockTransport(mockResponse);
+            var insightsClient = GetInsightsManagementClient(mockTransport);
 
             var actualResponse = await insightsClient.AlertRules.ListByResourceGroupAsync("rg1").ToEnumerableAsync();
 

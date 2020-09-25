@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -26,6 +27,7 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
         public async Task LogProfiles_CreateOrUpdateTest()
         {
             LogProfileResource expResponse = CreateLogProfile();
+            var mockResponse = new MockResponse((int)HttpStatusCode.OK);
             var content = @"
                     {
                         'id': null,
@@ -52,7 +54,9 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
                             }
                     }
                     ".Replace("'", "\"");
-            var insightsClient = GetInsightsManagementClient(content);
+            mockResponse.SetContent(content);
+            var mockTransport = new MockTransport(mockResponse);
+            var insightsClient = GetInsightsManagementClient(mockTransport);
             var parameters = CreateLogProfileParams();
             LogProfileResource actualResponse = (await insightsClient.LogProfiles.CreateOrUpdateAsync(logProfileName: DefaultName, parameters: parameters)).Value;
             AreEqual(expResponse, actualResponse);
@@ -61,8 +65,10 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
         [Test]
         public async Task LogProfiles_DeleteTest()
         {
+            LogProfileResource expResponse = CreateLogProfile();
             var mockResponse = new MockResponse((int)HttpStatusCode.OK);
-            var insightsClient = GetInsightsManagementClient(mockResponse.ToJson());
+            var mockTransport = new MockTransport(mockResponse);
+            var insightsClient = GetInsightsManagementClient(mockTransport);
 
             await insightsClient.LogProfiles.DeleteAsync(logProfileName: DefaultName);
         }
@@ -71,6 +77,7 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
         public async Task LogProfiles_GetTest()
         {
             var expResponse = CreateLogProfile();
+            var mockResponse = new MockResponse((int)HttpStatusCode.OK);
             var content = @"
                     {
                         'id': null,
@@ -97,7 +104,9 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
                             }
                     }
                     ".Replace("'", "\"");
-            var insightsClient = GetInsightsManagementClient(content);
+            mockResponse.SetContent(content);
+            var mockTransport = new MockTransport(mockResponse);
+            var insightsClient = GetInsightsManagementClient(mockTransport);
             LogProfileResource actualResponse = await insightsClient.LogProfiles.GetAsync(logProfileName: DefaultName);
             AreEqual(expResponse, actualResponse);
         }
@@ -110,6 +119,7 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
             {
                 logProfile
             };
+            var mockResponse = new MockResponse((int)HttpStatusCode.OK);
             var content = @"
                     {
                 'value':[
@@ -139,7 +149,9 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
                         }]
                     }
                     ".Replace("'", "\"");
-            var insightsClient = GetInsightsManagementClient(content);
+            mockResponse.SetContent(content);
+            var mockTransport = new MockTransport(mockResponse);
+            var insightsClient = GetInsightsManagementClient(mockTransport);
 
             IList<LogProfileResource> actualResponse = await insightsClient.LogProfiles.ListAsync().ToEnumerableAsync();
 

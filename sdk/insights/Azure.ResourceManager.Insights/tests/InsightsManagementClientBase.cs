@@ -12,8 +12,8 @@ namespace Azure.ResourceManager.Insights.Tests
     {
         protected static readonly string RgName = "rg1";
 
-        protected InsightsManagementClientBase(bool isAsync, RecordedTestMode mode)
-            : base(isAsync, mode)
+        protected InsightsManagementClientBase(bool isAsync)
+            : base(isAsync)
         { }
 
         public AlertRulesOperations AlertRulesOperations { get; set; }
@@ -33,9 +33,7 @@ namespace Azure.ResourceManager.Insights.Tests
             options.AddPolicy(CleanupPolicy, HttpPipelinePosition.PerCall);
 
             return CreateClient<InsightsManagementClient>(
-                TestEnvironment.SubscriptionId,
-                TestEnvironment.Credential,
-                options);
+                TestEnvironment.SubscriptionId, TestEnvironment.Credential,options);
         }
     }
 }
