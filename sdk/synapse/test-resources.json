@@ -345,6 +345,9 @@
             "apiVersion": "2019-06-01-preview",
             "name": "[concat(variables('uniqueWorkspaceName'), '/', variables('uniqueSparkPoolName'))]",
             "location": "[parameters('location')]",
+            "dependsOn": [
+                "[concat('Microsoft.Synapse/workspaces/', variables('uniqueWorkspaceName'))]"
+            ],
             "tags": "[parameters('tags')]",
             "properties": {
                 "nodeCount": "[parameters('nodeCount')]",
