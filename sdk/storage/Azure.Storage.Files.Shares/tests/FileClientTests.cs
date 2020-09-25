@@ -1929,7 +1929,6 @@ namespace Azure.Storage.Files.Shares.Test
             using Stream stream = new MemoryStream(data);
             HttpRange range = new HttpRange(Constants.KB, Constants.KB);
             await file.UploadRangeAsync(
-                   writeType: ShareFileRangeWriteType.Update,
                    range: range,
                    content: stream);
 
@@ -1938,9 +1937,11 @@ namespace Azure.Storage.Files.Shares.Test
             stream.Position = 0;
             HttpRange range2 = new HttpRange(3 * Constants.KB, Constants.KB);
             await file.UploadRangeAsync(
-                   writeType: ShareFileRangeWriteType.Update,
                    range: range2,
                    content: stream);
+
+            HttpRange range3 = new HttpRange(0, 512);
+            await file.ClearRangeAsync(range3);
 
             Response<ShareSnapshotInfo> snapshotResponse1 = await test.Share.CreateSnapshotAsync();
 
@@ -1956,6 +1957,8 @@ namespace Azure.Storage.Files.Shares.Test
             // Assert
             Assert.AreEqual(1, response.Value.Ranges.Count());
             Assert.AreEqual(range2, response.Value.Ranges.First());
+            Assert.AreEqual(1, response.Value.ClearRanges.Count());
+            Assert.AreEqual(range3, response.Value.ClearRanges.First());
         }
 
         [Test]
