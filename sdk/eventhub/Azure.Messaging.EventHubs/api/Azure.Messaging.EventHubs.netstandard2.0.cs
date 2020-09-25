@@ -2,9 +2,11 @@ namespace Azure.Messaging.EventHubs
 {
     public partial class EventData
     {
+        public EventData(Azure.BinaryData eventBody) { }
         public EventData(System.ReadOnlyMemory<byte> eventBody) { }
         protected EventData(System.ReadOnlyMemory<byte> eventBody, System.Collections.Generic.IDictionary<string, object> properties = null, System.Collections.Generic.IReadOnlyDictionary<string, object> systemProperties = null, long sequenceNumber = (long)-9223372036854775808, long offset = (long)-9223372036854775808, System.DateTimeOffset enqueuedTime = default(System.DateTimeOffset), string partitionKey = null) { }
         public System.ReadOnlyMemory<byte> Body { get { throw null; } }
+        public Azure.BinaryData BodyAsBinaryData { get { throw null; } }
         public System.IO.Stream BodyAsStream { get { throw null; } }
         public System.DateTimeOffset EnqueuedTime { get { throw null; } }
         public long Offset { get { throw null; } }
@@ -467,7 +469,7 @@ namespace Azure.Messaging.EventHubs.Producer
         public override int GetHashCode() { throw null; }
         public virtual System.Threading.Tasks.Task<string[]> GetPartitionIdsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Messaging.EventHubs.PartitionProperties> GetPartitionPropertiesAsync(string partitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Messaging.EventHubs.Producer.PartitionPublishingProperties> ReadPartitionPublishingPropertiesAsync(string partitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Messaging.EventHubs.Producer.PartitionPublishingProperties> GetPartitionPublishingPropertiesAsync(string partitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task SendAsync(Azure.Messaging.EventHubs.Producer.EventDataBatch eventBatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task SendAsync(System.Collections.Generic.IEnumerable<Azure.Messaging.EventHubs.EventData> eventSet, Azure.Messaging.EventHubs.Producer.SendEventOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task SendAsync(System.Collections.Generic.IEnumerable<Azure.Messaging.EventHubs.EventData> eventSet, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
