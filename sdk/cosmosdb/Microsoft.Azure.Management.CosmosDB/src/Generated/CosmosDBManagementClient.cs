@@ -21,9 +21,6 @@ namespace Microsoft.Azure.Management.CosmosDB
     using System.Net;
     using System.Net.Http;
 
-    /// <summary>
-    /// Azure Cosmos DB Database Service Resource Provider REST API
-    /// </summary>
     public partial class CosmosDBManagementClient : ServiceClient<CosmosDBManagementClient>, ICosmosDBManagementClient, IAzureClient
     {
         /// <summary>
@@ -158,6 +155,11 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Gets the IGremlinResourcesOperations.
         /// </summary>
         public virtual IGremlinResourcesOperations GremlinResources { get; private set; }
+
+        /// <summary>
+        /// Gets the IRestorableDatabaseAccountsOperations.
+        /// </summary>
+        public virtual IRestorableDatabaseAccountsOperations RestorableDatabaseAccounts { get; private set; }
 
         /// <summary>
         /// Gets the INotebookWorkspacesOperations.
@@ -433,6 +435,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             TableResources = new TableResourcesOperations(this);
             CassandraResources = new CassandraResourcesOperations(this);
             GremlinResources = new GremlinResourcesOperations(this);
+            RestorableDatabaseAccounts = new RestorableDatabaseAccountsOperations(this);
             NotebookWorkspaces = new NotebookWorkspacesOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
@@ -466,6 +469,10 @@ namespace Microsoft.Azure.Management.CosmosDB
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<BackupPolicy>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<BackupPolicy>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DatabaseAccountCreateUpdateProperties>("createMode"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DatabaseAccountCreateUpdateProperties>("createMode"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
