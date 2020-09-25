@@ -310,7 +310,8 @@ namespace Azure.Messaging.EventHubs.Samples
         {
             PrintSamples(samples);
 
-            for (int i = 0; i < ExtraOptionsForSamples.Length; i++)
+            // TODO: The -1 removes displaying the SchemaRegistry scenarios. See: https://github.com/Azure/azure-sdk-for-net/issues/15463
+            for (int i = 0; i < ExtraOptionsForSamples.Length - 1; i++)
             {
                 Console.WriteLine($"{ samples.Count + i + 1 }) { ExtraOptionsForSamples[i] }");
                 Console.WriteLine();
