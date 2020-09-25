@@ -53,11 +53,6 @@ namespace Microsoft.Azure.Management.Billing
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Azure Subscription ID.
-        /// </summary>
-        public string SubscriptionId1 { get; set; }
-
-        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
