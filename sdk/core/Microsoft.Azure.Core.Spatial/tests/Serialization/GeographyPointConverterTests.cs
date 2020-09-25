@@ -31,8 +31,8 @@ namespace Microsoft.Azure.Core.Spatial.Tests.Serialization
 
             GeographyPoint point = JsonSerializer.Deserialize<GeographyPoint>(@"{""type"":""Point"",""coordinates"":[-121.726906,46.879967]}", options);
 
-            Assert.AreEqual(point.Latitude, 46.879967);
-            Assert.AreEqual(point.Longitude, -121.726906);
+            Assert.AreEqual(46.879967, point.Latitude);
+            Assert.AreEqual(-121.726906, point.Longitude);
         }
 
         [Test]
@@ -48,8 +48,8 @@ namespace Microsoft.Azure.Core.Spatial.Tests.Serialization
 
             GeographyPoint point = JsonSerializer.Deserialize<GeographyPoint>(@"{""type"":""Point"",""coordinates"":[-121.726906,46.879967,2541.118],""crs"":{""type"":""name"",""properties"":{""name"":""EPSG:4326""}}}", options);
 
-            Assert.AreEqual(point.Latitude, 46.879967);
-            Assert.AreEqual(point.Longitude, -121.726906);
+            Assert.AreEqual(46.879967, point.Latitude);
+            Assert.AreEqual(-121.726906, point.Longitude);
 
             // Not currently supported.
             Assert.IsNull(point.Z);
@@ -68,8 +68,8 @@ namespace Microsoft.Azure.Core.Spatial.Tests.Serialization
 
             GeographyPoint point = JsonSerializer.Deserialize<GeographyPoint>(@"{""type"":""Point"",""coordinates"":[-121,46]}", options);
 
-            Assert.AreEqual(point.Latitude, 46.0);
-            Assert.AreEqual(point.Longitude, -121.0);
+            Assert.AreEqual(46.0, point.Latitude);
+            Assert.AreEqual(-121.0, point.Longitude);
         }
 
         [Test]
@@ -86,8 +86,8 @@ namespace Microsoft.Azure.Core.Spatial.Tests.Serialization
 
             GeographyPoint point = JsonSerializer.Deserialize<GeographyPoint>(@"{""Type"":""point"",""Coordinates"":[-121.726906,46.879967]}", options);
 
-            Assert.AreEqual(point.Latitude, 46.879967);
-            Assert.AreEqual(point.Longitude, -121.726906);
+            Assert.AreEqual(46.879967, point.Latitude);
+            Assert.AreEqual(-121.726906, point.Longitude);
         }
 
         [TestCaseSource(nameof(ReadBadJsonData))]
