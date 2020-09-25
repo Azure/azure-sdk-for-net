@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="annotations">List of tags that can be used for
         /// describing the linked service.</param>
         /// <param name="accessToken">The API access token that can be used to
-        /// access Shopify’s data. The token won't expire if it is offline
+        /// access Shopify���s data. The token won't expire if it is offline
         /// mode.</param>
         /// <param name="useEncryptedEndpoints">Specifies whether the data
         /// source endpoints are encrypted using HTTPS. The default value is
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 
         /// <summary>
         /// Gets or sets the API access token that can be used to access
-        /// Shopify’s data. The token won't expire if it is offline mode.
+        /// Shopify���s data. The token won't expire if it is offline mode.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.accessToken")]
         public SecretBase AccessToken { get; set; }
