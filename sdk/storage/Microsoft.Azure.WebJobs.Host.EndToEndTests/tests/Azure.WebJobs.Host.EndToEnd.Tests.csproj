@@ -4,6 +4,7 @@
     <DelaySign>true</DelaySign>
     <AssemblyName>Microsoft.Azure.WebJobs.Host.EndToEndTests</AssemblyName>
     <AssemblyOriginatorKeyFile>PublicKey.snk</AssemblyOriginatorKeyFile>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
