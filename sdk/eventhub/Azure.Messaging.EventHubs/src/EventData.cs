@@ -31,7 +31,6 @@ namespace Azure.Messaging.EventHubs
         ///
         public ReadOnlyMemory<byte> Body => BodyAsBinaryData.ToBytes();
 
-
         /// <summary>
         ///   The <see cref="Body" /> data associated with the event, in <see cref="BinaryData" /> form, providing support
         ///   for a variety of data transformations and <see cref="ObjectSerializer" /> integration.

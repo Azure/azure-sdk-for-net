@@ -12,6 +12,7 @@ using Microsoft.Azure.Amqp;
 using Moq;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
+
 using FramingData = Microsoft.Azure.Amqp.Framing.Data;
 
 namespace Azure.Messaging.EventHubs.Tests
