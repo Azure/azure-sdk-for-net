@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.TestFramework;
 
@@ -25,11 +26,16 @@ namespace Azure.ResourceManager.Insights.Tests
             AlertRuleIncidentsOperations = InsightsManagementClient.AlertRuleIncidents;
         }
 
-        internal virtual InsightsManagementClient GetInsightsManagementClient(string expectedJson = null)
+        protected InsightsManagementClient GetInsightsManagementClient()
         {
-            return CreateClient<InsightsManagementClient>(this.TestEnvironment.SubscriptionId,
+            var options = Recording.InstrumentClientOptions(new InsightsManagementClientOptions());
+            CleanupPolicy = new ResourceGroupCleanupPolicy();
+            options.AddPolicy(CleanupPolicy, HttpPipelinePosition.PerCall);
+
+            return CreateClient<InsightsManagementClient>(
+                TestEnvironment.SubscriptionId,
                 TestEnvironment.Credential,
-                Recording.InstrumentClientOptions(new InsightsManagementClientOptions()));
+                options);
         }
     }
 }
