@@ -53,6 +53,7 @@ namespace Azure.ResourceManager.Insights
                 uri.AppendQuery("$select", select, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -109,6 +110,7 @@ namespace Azure.ResourceManager.Insights
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

@@ -116,6 +116,7 @@ namespace Azure.ResourceManager.Insights
             uri.AppendPath(logProfileName, true);
             uri.AppendQuery("api-version", "2016-03-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -187,6 +188,7 @@ namespace Azure.ResourceManager.Insights
             uri.AppendQuery("api-version", "2016-03-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -271,6 +273,7 @@ namespace Azure.ResourceManager.Insights
             uri.AppendQuery("api-version", "2016-03-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(logProfilesResource);
             request.Content = content;
@@ -353,6 +356,7 @@ namespace Azure.ResourceManager.Insights
             uri.AppendPath("/providers/microsoft.insights/logprofiles", false);
             uri.AppendQuery("api-version", "2016-03-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

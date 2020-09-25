@@ -59,6 +59,7 @@ namespace Azure.ResourceManager.Insights
             uri.AppendQuery("api-version", "2017-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(activityLogAlert);
             request.Content = content;
@@ -156,6 +157,7 @@ namespace Azure.ResourceManager.Insights
             uri.AppendPath(activityLogAlertName, true);
             uri.AppendQuery("api-version", "2017-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -238,6 +240,7 @@ namespace Azure.ResourceManager.Insights
             uri.AppendPath(activityLogAlertName, true);
             uri.AppendQuery("api-version", "2017-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -313,6 +316,7 @@ namespace Azure.ResourceManager.Insights
             uri.AppendQuery("api-version", "2017-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(activityLogAlertPatch);
             request.Content = content;
@@ -405,6 +409,7 @@ namespace Azure.ResourceManager.Insights
             uri.AppendPath("/providers/microsoft.insights/activityLogAlerts", false);
             uri.AppendQuery("api-version", "2017-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -462,6 +467,7 @@ namespace Azure.ResourceManager.Insights
             uri.AppendPath("/providers/microsoft.insights/activityLogAlerts", false);
             uri.AppendQuery("api-version", "2017-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

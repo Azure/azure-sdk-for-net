@@ -51,6 +51,7 @@ namespace Azure.ResourceManager.Insights
                 uri.AppendQuery("metricnamespace", metricnamespace, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

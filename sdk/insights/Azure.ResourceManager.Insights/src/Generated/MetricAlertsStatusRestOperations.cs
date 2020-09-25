@@ -59,6 +59,7 @@ namespace Azure.ResourceManager.Insights
             uri.AppendPath("/status", false);
             uri.AppendQuery("api-version", "2018-03-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -143,6 +144,7 @@ namespace Azure.ResourceManager.Insights
             uri.AppendPath(statusName, true);
             uri.AppendQuery("api-version", "2018-03-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

@@ -57,6 +57,7 @@ namespace Azure.ResourceManager.Insights
             uri.AppendPath("/providers/microsoft.insights/autoscalesettings", false);
             uri.AppendQuery("api-version", "2015-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -130,6 +131,7 @@ namespace Azure.ResourceManager.Insights
             uri.AppendQuery("api-version", "2015-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -227,6 +229,7 @@ namespace Azure.ResourceManager.Insights
             uri.AppendPath(autoscaleSettingName, true);
             uri.AppendQuery("api-version", "2015-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -301,6 +304,7 @@ namespace Azure.ResourceManager.Insights
             uri.AppendPath(autoscaleSettingName, true);
             uri.AppendQuery("api-version", "2015-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -384,6 +388,7 @@ namespace Azure.ResourceManager.Insights
             uri.AppendQuery("api-version", "2015-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(autoscaleSettingResource);
             request.Content = content;
@@ -476,6 +481,7 @@ namespace Azure.ResourceManager.Insights
             uri.AppendPath("/providers/microsoft.insights/autoscalesettings", false);
             uri.AppendQuery("api-version", "2015-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -528,6 +534,7 @@ namespace Azure.ResourceManager.Insights
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -604,6 +611,7 @@ namespace Azure.ResourceManager.Insights
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

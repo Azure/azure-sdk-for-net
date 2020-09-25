@@ -47,6 +47,7 @@ namespace Azure.ResourceManager.Insights
             uri.AppendPath("/providers/Microsoft.Insights/vmInsightsOnboardingStatuses/default", false);
             uri.AppendQuery("api-version", "2018-11-27-preview", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
