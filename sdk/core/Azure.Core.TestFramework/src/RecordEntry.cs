@@ -190,7 +190,7 @@ namespace Azure.Core.TestFramework
                     // so if the root is an array we can't write it directly
                     // fallback to generic string writing. Also, if the root is a string
                     // we don't want to write it directly, as this would make matching
-                    // not won't work in libraries that allow passing JSON as a string.
+                    // not work in libraries that allow passing JSON as a string.
                     if (document.RootElement.ValueKind != JsonValueKind.Array &&
                         document.RootElement.ValueKind != JsonValueKind.String)
                     {

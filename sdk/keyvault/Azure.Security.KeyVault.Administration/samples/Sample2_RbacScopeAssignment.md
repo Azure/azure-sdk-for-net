@@ -1,7 +1,7 @@
 # Creating a Role Assignment for Specific Scopes
 
 By default role assignments apply to the global scope. It is also possible to be more specific by applying an assignment to the all keys scope or a specific `KeyVaultKey`.
-For information about interacting with a `KeyVaultKey` with a `KeyClient`, see the [Key Client README](../../Azure.Security.KeyVault.Keys/README.md) for links and instructions.
+For information about interacting with a `KeyVaultKey` with a `KeyClient`, see the [Key Client README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Keys/README.md) for links and instructions.
 
 ## Assigning a Role to the All Keys Scope
 

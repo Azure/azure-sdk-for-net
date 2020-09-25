@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Microsoft.Azure.Services.AppAuthentication
 {
     /// <summary>
-    /// Gets a token using Azure VM or App Services MSI. 
+    /// Gets a token using Azure VM or App Services MSI.
     /// https://docs.microsoft.com/en-us/azure/active-directory/msi-overview
     /// </summary>
     internal class MsiAccessTokenProvider : NonInteractiveAzureServiceTokenProviderBase
@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         // This client ID can be specified in the constructor to specify a specific managed identity to use (e.g. user-assigned identity)
         private readonly string _managedIdentityClientId;
 
-        // HttpClient is intended to be instantiated once and re-used throughout the life of an application. 
+        // HttpClient is intended to be instantiated once and re-used throughout the life of an application.
 #if NETSTANDARD1_4 || net452 || net461
         private static readonly HttpClient DefaultHttpClient = new HttpClient();
 #else
@@ -29,10 +29,14 @@ namespace Microsoft.Azure.Services.AppAuthentication
 #endif
 
         // Azure Instance Metadata Service (IMDS) endpoint
-        private const string AzureVmImdsEndpoint = "http://169.254.169.254/metadata/identity/oauth2/token";
+        private const string AzureVmImdsEndpoint = "http://169.254.169.254";
+        private const string ImdsInstanceRoute = "/metadata/instance";
+        private const string ImdsTokenRoute = "/metadata/identity/oauth2/token";
+        private const string ImdsInstanceApiVersion = "2020-06-01";
+        private const string ImdsTokenApiVersion = "2019-11-01";
 
         // Timeout for Azure IMDS probe request
-        internal const int AzureVmImdsProbeTimeoutInSeconds = 2;
+        internal const int AzureVmImdsProbeTimeoutInSeconds = 3;
         internal readonly TimeSpan AzureVmImdsProbeTimeout = TimeSpan.FromSeconds(AzureVmImdsProbeTimeoutInSeconds);
 
         // Configurable timeout for MSI retry logic
@@ -61,12 +65,12 @@ namespace Microsoft.Azure.Services.AppAuthentication
         public override async Task<AppAuthenticationResult> GetAuthResultAsync(string resource, string authority,
             CancellationToken cancellationToken = default)
         {
-            // Use the httpClient specified in the constructor. If it was not specified in the constructor, use the default httpClient. 
+            // Use the httpClient specified in the constructor. If it was not specified in the constructor, use the default httpClient.
             HttpClient httpClient = _httpClient ?? DefaultHttpClient;
 
             try
             {
-                // Check if App Services MSI is available. If both these environment variables are set, then it is. 
+                // Check if App Services MSI is available. If both these environment variables are set, then it is.
                 string msiEndpoint = Environment.GetEnvironmentVariable("IDENTITY_ENDPOINT");
                 string msiHeader = Environment.GetEnvironmentVariable("IDENTITY_HEADER");
                 var isAppServicesMsiAvailable = !string.IsNullOrWhiteSpace(msiEndpoint) && !string.IsNullOrWhiteSpace(msiHeader);
@@ -77,7 +81,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
                     using (var internalTokenSource = new CancellationTokenSource())
                     using (var linkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(internalTokenSource.Token, cancellationToken))
                     {
-                        HttpRequestMessage imdsProbeRequest = new HttpRequestMessage(HttpMethod.Get, AzureVmImdsEndpoint);
+                        string probeRequestUrl = $"{AzureVmImdsEndpoint}{ImdsInstanceRoute}?api-version={ImdsInstanceApiVersion}";
+                        HttpRequestMessage imdsProbeRequest = new HttpRequestMessage(HttpMethod.Get, probeRequestUrl);
 
                         try
                         {
@@ -90,7 +95,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                             if (internalTokenSource.Token.IsCancellationRequested)
                             {
                                 throw new AzureServiceTokenProviderException(ConnectionString, resource, authority,
-                                    $"{AzureServiceTokenProviderException.ManagedServiceIdentityUsed} {AzureServiceTokenProviderException.MsiEndpointNotListening}");
+                                    $"{AzureServiceTokenProviderException.ManagedServiceIdentityUsed} {AzureServiceTokenProviderException.MetadataEndpointNotListening}");
                             }
 
                             throw;
@@ -106,7 +111,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 // Craft request as per the MSI protocol
                 var requestUrl = isAppServicesMsiAvailable
                     ? $"{msiEndpoint}?resource={resource}{clientIdParameter}&api-version=2019-08-01"
-                    : $"{AzureVmImdsEndpoint}?resource={resource}{clientIdParameter}&api-version=2018-02-01";
+                    : $"{AzureVmImdsEndpoint}{ImdsTokenRoute}?resource={resource}{clientIdParameter}&api-version={ImdsTokenApiVersion}";
 
                 Func<HttpRequestMessage> getRequestMessage = () =>
                 {
@@ -153,7 +158,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                         PrincipalUsed.AppId = token.AppId;
                         PrincipalUsed.TenantId = token.TenantId;
                     }
-                    
+
                     return AppAuthenticationResult.Create(tokenResponse);
                 }
 

@@ -1,6 +1,25 @@
 # Release History
 
-## 7.0.0-preview.7 (Unreleased)
+## 7.0.0-preview.8 (Unreleased)
+
+
+## 7.0.0-preview.7 (2020-09-10)
+
+### Added
+- Added AmqpMessage property on `ServiceBusMessage` and `ServiceBusReceivedMessage` that gives full access to underlying AMQP details.
+- Added explicit Close methods on `ServiceBusReceiver`, `ServiceBusSessionReceiver`, `ServiceBusSender`, `ServiceBusProcessor`, and `ServiceBusSessionProcessor`.
+
+### Breaking Changes
+- Renamed `ServiceBusManagementClient` to `ServiceBusAdministrationClient`.
+- Renamed `ServiceBusManagementClientOptions` to `ServiceBusAdministrationClientOptions`.
+- Renamed `IsDisposed` to `IsClosed` on `ServiceBusSender`, `ServiceBusReceiver`, and `ServiceBusSessionReceiver`.
+- Made `ServiceBusProcessor` and `ServiceBusSessionProcessor` implement `IAsyncDisposable`
+- Removed public constructors for `QueueProperties` and `RuleProperties`.
+- Added `version` parameter to `ServiceBusAdministrationClientOptions` constructor.
+- Removed `CreateDeadLetterReceiver` methods in favor of new `SubQueue` property on `ServiceBusReceiverOptions`.
+- Made `EntityNameFormatter` internal.
+- Made settlement methods on `ProcessMessageEventArgs` and `ProcessSessionMessageEventArgs` virtual for mocking.
+- Made all Create methods on `ServiceBusClient` virtual for mocking.
 
 ## 7.0.0-preview.6 (2020-08-18)
 

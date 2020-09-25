@@ -41,7 +41,7 @@ The simpliest way is to use the [Azure portal][azure_portal] and navigate to you
 
 Once you have the Azure resource credentials and the Event Hubs namespace hostname, you can create the [SchemaRegistryClient][schema_registry_client]. You'll also need the [Azure.Identity][azure_identity] package to create the credential.
 
-```C# Snippet:CreateSchemaRegistryClient2
+```C# Snippet:SchemaRegistryAvroCreateSchemaRegistryClient
 string endpoint = "<event_hubs_namespace_hostname>";
 var credentials = new ClientSecretCredential(
     "<tenant_id>",
@@ -85,14 +85,14 @@ The following shows examples of what is available through the SchemaRegistryAvro
 
 Details on generating a class using the Apache Avro library can be found in the [Avro C# Documentation][avro_csharp_documentation].
 
-* [Serialize](#register-a-schema)
-* [Deserialize](#retrieve-a-schema-id)
+* [Serialize](#serialize)
+* [Deserialize](#deserialize)
 
 ### Serialize
 
 Register a schema to be stored in the Azure Schema Registry.
 
-```C# Snippet:Serialize
+```C# Snippet:SchemaRegistryAvroSerialize
 var employee = new Employee { Age = 42, Name = "John Doe" };
 string groupName = "<schema_group_name>";
 
@@ -105,7 +105,7 @@ serializer.Serialize(memoryStream, employee, typeof(Employee), CancellationToken
 
 Retrieve a previously registered schema ID from the Azure Schema Registry.
 
-```C# Snippet:Deserialize
+```C# Snippet:SchemaRegistryAvroDeserialize
 string groupName = "<schema_group_name>";
 
 var serializer = new SchemaRegistryAvroObjectSerializer(client, groupName, new SchemaRegistryAvroObjectSerializerOptions { AutoRegisterSchemas = true });
@@ -133,11 +133,11 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 <!-- LINKS -->
 [nuget]: https://www.nuget.org/
-[event_hubs_namespace]: https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-about
-[azure_powershell]: https://docs.microsoft.com/en-us/powershell/azure/
-[create_event_hubs_namespace]: https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-quickstart-powershell#create-an-event-hubs-namespace
+[event_hubs_namespace]: https://docs.microsoft.com/azure/event-hubs/event-hubs-about
+[azure_powershell]: https://docs.microsoft.com/powershell/azure/
+[create_event_hubs_namespace]: https://docs.microsoft.com/azure/event-hubs/event-hubs-quickstart-powershell#create-an-event-hubs-namespace
 [quickstart_guide]: https://github.com/Azure/azure-sdk-for-net/blob/master/doc/mgmt_preview_quickstart.md
-[schema_registry_client]: ../Azure.Data.SchemaRegistry/src/SchemaRegistryClient.cs
+[schema_registry_client]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/schemaregistry/Azure.Data.SchemaRegistry/src/SchemaRegistryClient.cs
 [azure_portal]: https://ms.portal.azure.com/
 [schema_properties]: src/SchemaProperties.cs
 [azure_identity]: https://www.nuget.org/packages/Azure.Identity
@@ -146,8 +146,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [email_opencode]: mailto:opencode@microsoft.com
 [object_serializer]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/src/Serialization/ObjectSerializer.cs
-[schema_registry_avro_serializer]: src/SchemaRegistryAvroObjectSerializer.cs
-[employee]: tests\Models\Employee.cs
+[schema_registry_avro_serializer]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/schemaregistry/Microsoft.Azure.Data.SchemaRegistry.ApacheAvro/src/SchemaRegistryAvroObjectSerializer.cs
+[employee]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/schemaregistry/Microsoft.Azure.Data.SchemaRegistry.ApacheAvro/tests/Models/Employee.cs
 [avro_csharp_documentation]: https://avro.apache.org/docs/current/api/csharp/html/index.html
 [apache_avro_library]: https://www.nuget.org/packages/Apache.Avro/
 [generic_record]: https://avro.apache.org/docs/current/api/csharp/html/classAvro_1_1Generic_1_1GenericRecord.html
