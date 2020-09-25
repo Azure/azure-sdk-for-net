@@ -29,10 +29,8 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <seealso cref="EventData.Properties" />
         ///
-        public ReadOnlyMemory<byte> Body
-        {
-            get => BodyAsBinaryData.ToBytes();
-        }
+        public ReadOnlyMemory<byte> Body => BodyAsBinaryData.ToBytes();
+
 
         /// <summary>
         ///   The <see cref="Body" /> data associated with the event, in <see cref="BinaryData" /> form, providing support
@@ -59,10 +57,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <seealso cref="EventData.Properties" />
         ///
-        public Stream BodyAsStream
-        {
-            get => BodyAsBinaryData.ToStream();
-        }
+        public Stream BodyAsStream => BodyAsBinaryData.ToStream();
 
         /// <summary>
         ///   The set of free-form event properties which may be used for passing metadata associated with the event body
