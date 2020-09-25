@@ -30,6 +30,8 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             MsiAppServicesFailure,
             MsiAzureVmSuccess,
             MsiUserAssignedIdentityAzureVmSuccess,
+            MsiServiceFabricSuccess,
+            MsiUserAssignedIdentityServiceFabricSuccess,
             MsiAppJsonParseFailure,
             MsiMissingToken,
             MsiAppServicesIncorrectRequest,
@@ -96,6 +98,11 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
                     break;
 
                 case MsiTestType.MsiAppServicesSuccess:
+                    if (!request.Headers.Contains(MsiAccessTokenProvider.AppServicesHeader))
+                    {
+                        throw new Exception("Did not see expected header for App Services MSI");
+                    }
+
                     responseMessage = new HttpResponseMessage
                     {
                         Content = new StringContent(TokenHelper.GetMsiAppServicesTokenResponse(),
@@ -105,6 +112,12 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
                     break;
 
                 case MsiTestType.MsiAzureVmSuccess:
+                    // don't throw on first request (probe)
+                    if (HitCount > 1 && !request.Headers.Contains(MsiAccessTokenProvider.AzureVMImdsHeader))
+                    {
+                        throw new Exception("Did not see expected header for Azure VM IMDS");
+                    }
+
                     responseMessage = new HttpResponseMessage
                     {
                         Content = new StringContent(TokenHelper.GetMsiAzureVmTokenResponse(),
@@ -113,7 +126,27 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
                     };
                     break;
 
+                case MsiTestType.MsiServiceFabricSuccess:
+                    if (!request.Headers.Contains(MsiAccessTokenProvider.ServiceFabricHeader))
+                    {
+                        throw new Exception("Did not see expected header for Service Fabric MSI");
+                    }
+
+                    responseMessage = new HttpResponseMessage
+                    {
+                        // Service Fabric response similar to IMDS
+                        Content = new StringContent(TokenHelper.GetMsiAzureVmTokenResponse(),
+                            Encoding.UTF8,
+                            Constants.JsonContentType)
+                    };
+                    break;
+
                 case MsiTestType.MsiUserAssignedIdentityAppServicesSuccess:
+                    if (!request.Headers.Contains(MsiAccessTokenProvider.AppServicesHeader))
+                    {
+                        throw new Exception("Did not see expected header for App Services MSI");
+                    }
+
                     responseMessage = new HttpResponseMessage
                     {
                         Content = new StringContent(TokenHelper.GetManagedIdentityAppServicesTokenResponse(),
@@ -123,8 +156,29 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
                     break;
 
                 case MsiTestType.MsiUserAssignedIdentityAzureVmSuccess:
+                    // don't throw on first request (probe)
+                    if (HitCount > 1 && !request.Headers.Contains(MsiAccessTokenProvider.AzureVMImdsHeader))
+                    {
+                        throw new Exception("Did not see expected header for Azure VM IMDS");
+                    }
+
                     responseMessage = new HttpResponseMessage
                     {
+                        Content = new StringContent(TokenHelper.GetManagedIdentityAzureVmTokenResponse(),
+                            Encoding.UTF8,
+                            Constants.JsonContentType)
+                    };
+                    break;
+
+                case MsiTestType.MsiUserAssignedIdentityServiceFabricSuccess:
+                    if (!request.Headers.Contains(MsiAccessTokenProvider.ServiceFabricHeader))
+                    {
+                        throw new Exception("Did not see expected header for Service Fabric MSI");
+                    }
+
+                    responseMessage = new HttpResponseMessage
+                    {
+                        // Service Fabric response similar to IMDS
                         Content = new StringContent(TokenHelper.GetManagedIdentityAzureVmTokenResponse(),
                             Encoding.UTF8,
                             Constants.JsonContentType)
