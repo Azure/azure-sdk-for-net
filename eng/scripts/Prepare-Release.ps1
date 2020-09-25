@@ -119,7 +119,7 @@ catch
     $existing = @()
 }
 
-$libraryType = "Preview";
+$libraryType = "Beta";
 $latestVersion = $null;
 foreach ($existingVersion in $existing.versions)
 {
