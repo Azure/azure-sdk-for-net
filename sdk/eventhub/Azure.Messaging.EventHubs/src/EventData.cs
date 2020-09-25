@@ -288,22 +288,22 @@ namespace Azure.Messaging.EventHubs
         /// <param name="pendingOwnerLevel">The producer owner level assigned to the event as part of a publishing operation.</param>
         ///
         internal EventData(ReadOnlyMemory<byte> eventBody,
-            IDictionary<string, object> properties = null,
-            IReadOnlyDictionary<string, object> systemProperties = null,
-            long sequenceNumber = long.MinValue,
-            long offset = long.MinValue,
-            DateTimeOffset enqueuedTime = default,
-            string partitionKey = null,
-            long? lastPartitionSequenceNumber = null,
-            long? lastPartitionOffset = null,
-            DateTimeOffset? lastPartitionEnqueuedTime = null,
-            DateTimeOffset? lastPartitionPropertiesRetrievalTime = null,
-            int? publishedSequenceNumber = null,
-            int? pendingPublishSequenceNumber = null,
-            long? pendingProducerGroupId = null,
-            short? pendingOwnerLevel = null) : this(new BinaryData(eventBody), properties, systemProperties, sequenceNumber, offset, enqueuedTime, partitionKey,
-                lastPartitionSequenceNumber, lastPartitionOffset, lastPartitionEnqueuedTime, lastPartitionPropertiesRetrievalTime, publishedSequenceNumber, pendingPublishSequenceNumber,
-                pendingProducerGroupId, pendingOwnerLevel)
+                           IDictionary<string, object> properties = null,
+                           IReadOnlyDictionary<string, object> systemProperties = null,
+                           long sequenceNumber = long.MinValue,
+                           long offset = long.MinValue,
+                           DateTimeOffset enqueuedTime = default,
+                           string partitionKey = null,
+                           long? lastPartitionSequenceNumber = null,
+                           long? lastPartitionOffset = null,
+                           DateTimeOffset? lastPartitionEnqueuedTime = null,
+                           DateTimeOffset? lastPartitionPropertiesRetrievalTime = null,
+                           int? publishedSequenceNumber = null,
+                           int? pendingPublishSequenceNumber = null,
+                           long? pendingProducerGroupId = null,
+                           short? pendingOwnerLevel = null) : this(new BinaryData(eventBody), properties, systemProperties, sequenceNumber, offset, enqueuedTime, partitionKey,
+                           lastPartitionSequenceNumber, lastPartitionOffset, lastPartitionEnqueuedTime, lastPartitionPropertiesRetrievalTime, publishedSequenceNumber, pendingPublishSequenceNumber,
+                           pendingProducerGroupId, pendingOwnerLevel)
         {
         }
 
