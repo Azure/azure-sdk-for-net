@@ -2142,10 +2142,11 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="Response{AccessControlChangeResult}"/> that contains summary stats of the operation.
         /// </returns>
         /// <remarks>
-        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if the operation fails or is
-        /// interrupted. See <see cref="DataLakeAclChangeFailedException.ContinuationToken"/> to continue
-        /// the operation once ready to continue. Otherwise a <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
+        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if a request to
+        /// storage throws a <see cref="RequestFailedException"/> or <see cref="Exception"/>.
+        ///
+        /// Otherwise if a failure occurs outside the request, the respective <see cref="Exception"/>
+        /// type will be thrown if a failure occurs.
         /// </remarks>
         public virtual Response<AccessControlChangeResult> SetAccessControlRecursive(
             IList<PathAccessControlItem> accessControlList,
@@ -2193,10 +2194,11 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="Response{AccessControlChangeResult}"/> that contains summary stats of the operation.
         /// </returns>
         /// <remarks>
-        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if the operation fails or is
-        /// interrupted. See <see cref="DataLakeAclChangeFailedException.ContinuationToken"/> to continue
-        /// the operation once ready to continue. Otherwise a <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
+        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if a request to
+        /// storage throws a <see cref="RequestFailedException"/> or <see cref="Exception"/>.
+        ///
+        /// Otherwise if a failure occurs outside the request, the respective <see cref="Exception"/>
+        /// type will be thrown if a failure occurs.
         /// </remarks>
         public virtual async Task<Response<AccessControlChangeResult>> SetAccessControlRecursiveAsync(
             IList<PathAccessControlItem> accessControlList,
@@ -2244,10 +2246,11 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="Response{AccessControlChangeResult}"/> that contains summary stats of the operation.
         /// </returns>
         /// <remarks>
-        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if the operation fails or is
-        /// interrupted. See <see cref="DataLakeAclChangeFailedException.ContinuationToken"/> to continue
-        /// the operation once ready to continue. Otherwise a <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
+        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if a request to
+        /// storage throws a <see cref="RequestFailedException"/> or <see cref="Exception"/>.
+        ///
+        /// Otherwise if a failure occurs outside the request, the respective <see cref="Exception"/>
+        /// type will be thrown if a failure occurs.
         /// </remarks>
         public virtual Response<AccessControlChangeResult> UpdateAccessControlRecursive(
             IList<PathAccessControlItem> accessControlList,
@@ -2295,10 +2298,11 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="Response{AccessControlChangeResult}"/> that contains summary stats of the operation.
         /// </returns>
         /// <remarks>
-        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if the operation fails or is
-        /// interrupted. See <see cref="DataLakeAclChangeFailedException.ContinuationToken"/> to continue
-        /// the operation once ready to continue. Otherwise a <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
+        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if a request to
+        /// storage throws a <see cref="RequestFailedException"/> or <see cref="Exception"/>.
+        ///
+        /// Otherwise if a failure occurs outside the request, the respective <see cref="Exception"/>
+        /// type will be thrown if a failure occurs.
         /// </remarks>
         public virtual async Task<Response<AccessControlChangeResult>> UpdateAccessControlRecursiveAsync(
             IList<PathAccessControlItem> accessControlList,
@@ -2346,10 +2350,11 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="Response{AccessControlChangeResult}"/> that contains summary stats of the operation.
         /// </returns>
         /// <remarks>
-        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if the operation fails or is
-        /// interrupted. See <see cref="DataLakeAclChangeFailedException.ContinuationToken"/> to continue
-        /// the operation once ready to continue. Otherwise a <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
+        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if a request to
+        /// storage throws a <see cref="RequestFailedException"/> or <see cref="Exception"/>.
+        ///
+        /// Otherwise if a failure occurs outside the request, the respective <see cref="Exception"/>
+        /// type will be thrown if a failure occurs.
         /// </remarks>
         public virtual Response<AccessControlChangeResult> RemoveAccessControlRecursive(
             IList<RemovePathAccessControlItem> accessControlList,
@@ -2397,10 +2402,11 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="Response{AccessControlChangeResult}"/> that contains summary stats of the operation.
         /// </returns>
         /// <remarks>
-        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if the operation fails or is
-        /// interrupted. See <see cref="DataLakeAclChangeFailedException.ContinuationToken"/> to continue
-        /// the operation once ready to continue. Otherwise a <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
+        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if a request to
+        /// storage throws a <see cref="RequestFailedException"/> or <see cref="Exception"/>.
+        ///
+        /// Otherwise if a failure occurs outside the request, the respective <see cref="Exception"/>
+        /// type will be thrown if a failure occurs.
         /// </remarks>
         public virtual async Task<Response<AccessControlChangeResult>> RemoveAccessControlRecursiveAsync(
             IList<RemovePathAccessControlItem> accessControlList,
@@ -2460,10 +2466,11 @@ namespace Azure.Storage.Files.DataLake
         /// path.
         /// </returns>
         /// <remarks>
-        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if the operation fails or is
-        /// interrupted. See <see cref="DataLakeAclChangeFailedException.ContinuationToken"/> to continue
-        /// the operation once ready to continue. Otherwise a <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
+        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if a request to
+        /// storage throws a <see cref="RequestFailedException"/> or <see cref="Exception"/>.
+        ///
+        /// Otherwise if a failure occurs outside the request, the respective <see cref="Exception"/>
+        /// type will be thrown if a failure occurs.
         /// </remarks>
         private async Task<Response<AccessControlChangeResult>> SetAccessControlRecursiveInternal(
             string operationName,
