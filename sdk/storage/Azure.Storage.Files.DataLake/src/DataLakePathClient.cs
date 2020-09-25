@@ -2464,6 +2464,7 @@ namespace Azure.Storage.Files.DataLake
                         int filesSuccessfulCount = 0;
                         int failureCount = 0;
                         int batchesCount = 0;
+                        AccessControlChangeFailure[] batchFailures = default;
 
                         do
                         {
@@ -2511,6 +2512,18 @@ namespace Azure.Storage.Files.DataLake
                                 filesSuccessfulCount += currentFilesSuccessfulCount;
                                 failureCount += currentFailureCount;
 
+                                if ((options?.RetrieveBatchFailures == true) &&
+                                    ((options?.ContinueOnFailure.GetValueOrDefault(false) == false) ||
+                                    ((batchFailures == default) && (options?.ContinueOnFailure == true))))
+                                {
+                                    batchFailures = response.FailedEntries
+                                    .Select(failedEntry => new AccessControlChangeFailure()
+                                    {
+                                        Name = failedEntry.Name,
+                                        IsDirectory = failedEntry.Type.Equals("DIRECTORY", StringComparison.InvariantCultureIgnoreCase),
+                                        ErrorMessage = failedEntry.ErrorMessage,
+                                    }).ToArray();
+                                }
                                 if (options?.ProgressHandler != null)
                                 {
                                     var failedEntries = response.FailedEntries

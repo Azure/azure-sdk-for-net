@@ -34,5 +34,14 @@ namespace Azure.Storage.Files.DataLake.Models
         /// as well as collect paths that failed to change Access Control.
         /// </summary>
         public IProgress<Response<AccessControlChanges>> ProgressHandler { get; set; }
+
+        /// <summary>
+        /// Optional. If set to true and the operation contains failures, the operation will populate the result,
+        /// <see cref="AccessControlChangeResult.BatchFailures"/>, with a batch of failures.
+        /// If <see cref="ContinueOnFailure"/> is set to true, the first batch of failures will be populated in
+        /// result, otherwise the last batch of failures will be set.
+        /// This will default to false.
+        /// </summary>
+        public bool? RetrieveBatchFailures { get; set; }
     }
 }
