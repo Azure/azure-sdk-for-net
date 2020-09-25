@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using Azure.Core.Serialization;
 using Azure.Messaging.EventHubs.Consumer;
 
 namespace Azure.Messaging.EventHubs
@@ -16,11 +17,6 @@ namespace Azure.Messaging.EventHubs
     ///
     public class EventData
     {
-        /// <summary>
-        /// The data associated with the event, in <see cref="BinaryData" /> form.
-        /// </summary>
-        public BinaryData BodyAsBinaryData { get; }
-
         /// <summary>
         ///   The data associated with the event.
         /// </summary>
@@ -37,6 +33,13 @@ namespace Azure.Messaging.EventHubs
         {
             get => BodyAsBinaryData.ToBytes();
         }
+
+        /// <summary>
+        ///   The <see cref="Body" /> data associated with the event, in <see cref="BinaryData" /> form, providing support
+        ///   for a variety of data transformations and <see cref="ObjectSerializer" /> integration.
+        /// </summary>
+        ///
+        public BinaryData BodyAsBinaryData { get; }
 
         /// <summary>
         ///   The data associated with the event, in stream form.
