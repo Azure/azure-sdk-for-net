@@ -35,7 +35,7 @@ az eventgrid topic key list --name <your-resource-name> --resource-group <your-r
 
 ### Using Event Grid binding
 
-Please follow the [binding tutorial](https://docs.microsoft.com/azure/azure-functions/functions-bindings-event-grid-trigger?tabs) to lean about using this extension for publishing EventGrid events.
+Please follow the [binding tutorial](https://docs.microsoft.com/azure/azure-functions/functions-bindings-event-grid-trigger?tabs) to learn about using this extension for publishing EventGrid events.
 
 ### Using Event Grid trigger
 
