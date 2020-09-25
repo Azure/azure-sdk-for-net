@@ -2,11 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Net;
-using System.Text;
 using Azure.Core.Pipeline;
-using Azure.Core.TestFramework;
-using Azure.Identity;
 using Azure.ResourceManager.Insights.Models;
 using NUnit.Framework;
 

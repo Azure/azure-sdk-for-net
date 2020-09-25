@@ -7,7 +7,6 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Insights.Models;
-using Insights.Tests.Helpers;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Insights.Tests.BasicTests
