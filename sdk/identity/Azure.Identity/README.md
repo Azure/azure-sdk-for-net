@@ -196,7 +196,6 @@ try
 catch (AuthenticationFailedException e)
 {
     Console.WriteLine($"Authentication Failed. {e.Message}");
-    return null;
 }
 ```
 
@@ -250,7 +249,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 <!-- LINKS -->
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/
-[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity
+[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity/src
 [package]: https://www.nuget.org/packages/Azure.Identity
 [aad_doc]: https://docs.microsoft.com/azure/active-directory/
 [aad_err_doc]: https://docs.microsoft.com/azure/active-directory/develop/reference-aadsts-error-codes
