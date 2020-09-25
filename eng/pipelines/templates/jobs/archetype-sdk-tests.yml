@@ -29,6 +29,9 @@ parameters:
 - name: TestCanary
   type: boolean
   default: false
+- name: ResourceGroupLocationCanary
+  type: string
+  default: "centraluseuap"
 - name: ServiceDirectory
   type: string
   default: not-specified
@@ -73,7 +76,7 @@ jobs:
           OSVmImage: "windows-2019"
           TestTargetFramework: net461
           SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)            
-          Location: centraluseuap
+          Location: ${{ parameters.ResourceGroupLocationCanary }}
       - DisplayName: "Record on Windows for NetCoreApp"
         OSVmImage: "windows-2019"
         TestMode: Record
