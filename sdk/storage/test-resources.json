@@ -25,6 +25,7 @@
         "authorizationApiVersion": "2018-09-01-preview",
         "blobDataContributorRoleId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/ba92f5b4-2d11-453d-a403-e96b0029c9fe')]",
         "contributorRoleId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c')]",
+        "blobDataOwnerRoleId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/b7e6dc6d-f1e8-4753-8033-0f276bb0955b')]",
         "primaryAccountName": "[concat(parameters('baseName'), 'prim')]",
         "secondaryAccountName": "[concat(parameters('baseName'), 'sec')]",
         "premiumAccountName": "[concat(parameters('baseName'), 'prem')]",
@@ -74,6 +75,18 @@
             ],
             "properties": {
                 "roleDefinitionId": "[variables('contributorRoleId')]",
+                "principalId": "[parameters('testApplicationOid')]"
+            }
+        },
+        {
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "[variables('authorizationApiVersion')]",
+            "name": "[guid(concat('blobDataOwnerRoleId', variables('primaryAccountName')))]",
+            "dependsOn": [
+                "[variables('primaryAccountName')]"
+            ],
+            "properties": {
+                "roleDefinitionId": "[variables('blobDataOwnerRoleId')]",
                 "principalId": "[parameters('testApplicationOid')]"
             }
         },
