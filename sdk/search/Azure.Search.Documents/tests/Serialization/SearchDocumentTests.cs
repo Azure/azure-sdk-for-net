@@ -545,9 +545,9 @@ namespace Azure.Search.Documents.Tests
                     }));
 
 #if EXPERIMENTAL_SPATIAL
-        [TestCaseSource(nameof(PointValues))]
-        public void GetPoints(TestValue<GeoPoint> test) => test.Check((d, n) => d.GetPoint(n));
-        private static TestValue<GeoPoint>[] PointValues =>
+        [TestCaseSource(nameof(GeoPointValues))]
+        public void GetGeoPoints(TestValue<GeoPoint> test) => test.Check((d, n) => d.GetPoint(n));
+        private static TestValue<GeoPoint>[] GeoPointValues =>
             new[]
             {
                 TestValue<GeoPoint>.Exact(
@@ -570,9 +570,9 @@ namespace Azure.Search.Documents.Tests
                 TestValue<GeoPoint>.Fail("0.5")
             };
 
-        [TestCaseSource(nameof(PointCollectionValues))]
-        public void GetPointCollections(TestValue<IReadOnlyList<GeoPoint>> test) => test.Check((d, n) => d.GetPointCollection(n));
-        private static TestValue<IReadOnlyList<GeoPoint>>[] PointCollectionValues =>
+        [TestCaseSource(nameof(GeoPointCollectionValues))]
+        public void GetGeoPointCollections(TestValue<IReadOnlyList<GeoPoint>> test) => test.Check((d, n) => d.GetPointCollection(n));
+        private static TestValue<IReadOnlyList<GeoPoint>>[] GeoPointCollectionValues =>
             GetCollectionValues(
                 TestValue<IReadOnlyList<GeoPoint>>.Exact(
                     "[{\"type\":\"Point\",\"coordinates\":[0, 1]}]",

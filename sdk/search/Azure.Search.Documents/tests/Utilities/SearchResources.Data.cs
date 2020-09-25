@@ -2,17 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Search.Documents.Models;
-using Azure.Search.Documents.Indexes.Models;
 #if EXPERIMENTAL_SPATIAL
 using Azure.Core.GeoJson;
-#else
-using System.Text.Json;
-using System.Collections.Generic;
-using Microsoft.Spatial;
 #endif
+using Azure.Search.Documents.Models;
+using Azure.Search.Documents.Indexes.Models;
+using Microsoft.Spatial;
 
 #pragma warning disable SA1402 // File may only contain a single type
 
@@ -329,8 +328,8 @@ namespace Azure.Search.Documents.Tests
         public GeoPoint Location { get; set; }
 #else
         [JsonPropertyName("location")]
-        [JsonConverter(typeof(GeographyPointConverter))]
-        public GeographyPoint Location { get; set; }
+        [JsonConverter(typeof(GeometryPointConverter))]
+        public GeometryPoint Location { get; set; }
 #endif
 
         [JsonPropertyName("address")]
@@ -373,7 +372,7 @@ namespace Azure.Search.Documents.Tests
 #if EXPERIMENTAL_SPATIAL
                 $"Location: [{Location?.Position.Longitude ?? 0}, {Location?.Position.Latitude ?? 0}]; " +
 #else
-                $"Location: [{Location?.Longitude ?? 0}, {Location?.Latitude ?? 0}]; " +
+                $"Location: [{Location?.Y ?? 0}, {Location?.X ?? 0}]; " +
 #endif
                 $"Address: {{ {Address} }}; Rooms: [{string.Join("; ", Rooms?.Select(FormatRoom) ?? new string[0])}]";
         }
@@ -394,7 +393,7 @@ namespace Azure.Search.Documents.Tests
 #if EXPERIMENTAL_SPATIAL
                 ["location"] = Location,
 #else
-                ["location"] = GeographyPointConverter.AsDocument(Location),
+                ["location"] = GeometryPointConverter.AsDocument(Location),
 #endif
                 ["address"] = Address?.AsDocument(),
                 // With no elements to infer the type during deserialization, we must assume object[].
@@ -402,14 +401,14 @@ namespace Azure.Search.Documents.Tests
             };
     }
 
-#if !EXPERIMENTAL_SPATIAL
     /// <summary>
-    /// Convert GeographyPoints to System.Text.Json or SearchDocument
+    /// Convert GeometryPoints to System.Text.Json or SearchDocument
     /// representations.
     /// </summary>
-    internal class GeographyPointConverter : JsonConverter<GeographyPoint>
+    internal class GeometryPointConverter : JsonConverter<GeometryPoint>
     {
-        public override GeographyPoint Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        // TODO: Replace with Microsoft.Azure.Core.Spatial when completed: https://github.com/Azure/azure-sdk-for-net/issues/15431
+        public override GeometryPoint Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             if (reader.TokenType == JsonTokenType.StartObject)
             {
@@ -452,29 +451,29 @@ namespace Azure.Search.Documents.Tests
 
                 if (type == "Point" && longitude != null && latitude != null)
                 {
-                    return GeographyPoint.Create(latitude.Value, longitude.Value);
+                    return GeometryPoint.Create(latitude.Value, longitude.Value);
                 }
             }
 
             throw new JsonException();
         }
 
-        public override void Write(Utf8JsonWriter writer, GeographyPoint value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, GeometryPoint value, JsonSerializerOptions options)
         {
             writer.WriteStartObject();
             writer.WriteString("type", "Point");
             writer.WritePropertyName("coordinates");
             writer.WriteStartArray();
-            writer.WriteNumberValue(value.Longitude);
-            writer.WriteNumberValue(value.Latitude);
+            writer.WriteNumberValue(value.Y);
+            writer.WriteNumberValue(value.X);
             writer.WriteEndArray();
             writer.WriteEndObject();
         }
 
-        public static SearchDocument AsDocument(GeographyPoint value)
+        public static SearchDocument AsDocument(GeometryPoint value)
         {
             if (value == null) { return null; }
-            List<double> coords = new List<double> { value.Longitude, value.Latitude };
+            List<double> coords = new List<double> { value.Y, value.X };
             if (value.Z != null)
             {
                 coords.Add(value.Z.Value);
@@ -486,7 +485,6 @@ namespace Azure.Search.Documents.Tests
             };
         }
     }
-#endif
 
     // Same structure as Hotel, but without attributes that change to camelCase
     internal class UncasedHotel
@@ -505,8 +503,8 @@ namespace Azure.Search.Documents.Tests
 #if EXPERIMENTAL_SPATIAL
         public GeoPoint Location { get; set; }
 #else
-        [JsonConverter(typeof(GeographyPointConverter))]
-        public GeographyPoint Location { get; set; } = null;
+        [JsonConverter(typeof(GeometryPointConverter))]
+        public GeometryPoint Location { get; set; } = null;
 #endif
         public HotelAddress Address { get; set; }
         public HotelRoom[] Rooms { get; set; } = new HotelRoom[] { };

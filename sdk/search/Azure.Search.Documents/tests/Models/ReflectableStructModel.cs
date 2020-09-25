@@ -8,9 +8,8 @@ using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 #if EXPERIMENTAL_SPATIAL
 using Azure.Core.GeoJson;
-#else
-using Microsoft.Spatial;
 #endif
+using Microsoft.Spatial;
 using KeyFieldAttribute = System.ComponentModel.DataAnnotations.KeyAttribute;
 
 #pragma warning disable SA1402 // File may only contain a single type
@@ -109,10 +108,10 @@ namespace Azure.Search.Documents.Tests
         public int? NullableInt { get; set; }
 
 #if EXPERIMENTAL_SPATIAL
-        public GeoPoint GeographyPoint { get; set; }
-#else
-        public GeographyPoint GeographyPoint { get; set; }
+        public GeoPoint GeoPoint { get; set; }
 #endif
+
+        public GeometryPoint GeometryPoint { get; set; }
 
         public int[] IntArray { get; set; }
 
@@ -175,26 +174,26 @@ namespace Azure.Search.Documents.Tests
         public ICollection<DateTimeOffset> DateTimeOffsetICollection { get; set; }
 
 #if EXPERIMENTAL_SPATIAL
-        public GeoPoint[] GeographyPointArray { get; set; }
+        public GeoPoint[] GeoPointArray { get; set; }
 
-        public IList<GeoPoint> GeographyPointIList { get; set; }
+        public IList<GeoPoint> GeoPointIList { get; set; }
 
-        public List<GeoPoint> GeographyPointList { get; set; }
+        public List<GeoPoint> GeoPointList { get; set; }
 
-        public IEnumerable<GeoPoint> GeographyPointIEnumerable { get; set; }
+        public IEnumerable<GeoPoint> GeoPointIEnumerable { get; set; }
 
-        public ICollection<GeoPoint> GeographyPointICollection { get; set; }
-#else
-        public GeographyPoint[] GeographyPointArray { get; set; }
-
-        public IList<GeographyPoint> GeographyPointIList { get; set; }
-
-        public List<GeographyPoint> GeographyPointList { get; set; }
-
-        public IEnumerable<GeographyPoint> GeographyPointIEnumerable { get; set; }
-
-        public ICollection<GeographyPoint> GeographyPointICollection { get; set; }
+        public ICollection<GeoPoint> GeoPointICollection { get; set; }
 #endif
+
+        public GeometryPoint[] GeometryPointArray { get; set; }
+
+        public IList<GeometryPoint> GeometryPointIList { get; set; }
+
+        public List<GeometryPoint> GeometryPointList { get; set; }
+
+        public IEnumerable<GeometryPoint> GeometryPointIEnumerable { get; set; }
+
+        public ICollection<GeometryPoint> GeometryPointICollection { get; set; }
 
         public ReflectableComplexStruct? Complex { get; set; }
 

@@ -66,8 +66,9 @@ namespace Azure.Search.Documents.Tests
                     (SearchFieldDataType.DateTimeOffset, nameof(ReflectableModel.Time)),
                     (SearchFieldDataType.DateTimeOffset, nameof(ReflectableModel.TimeWithoutOffset)),
 #if EXPERIMENTAL_SPATIAL
-                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeographyPoint))
+                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeoPoint)),
 #endif
+                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeometryPoint)),
                 };
 
                 (SearchFieldDataType, string)[] primitivePropertyTestData =
@@ -122,12 +123,17 @@ namespace Azure.Search.Documents.Tests
                     (SearchFieldDataType.DateTimeOffset, nameof(ReflectableModel.DateTimeOffsetList)),
                     (SearchFieldDataType.DateTimeOffset, nameof(ReflectableModel.DateTimeOffsetICollection)),
 #if EXPERIMENTAL_SPATIAL
-                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeographyPointArray)),
-                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeographyPointIList)),
-                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeographyPointIEnumerable)),
-                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeographyPointList)),
-                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeographyPointICollection)),
+                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeoPointArray)),
+                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeoPointIList)),
+                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeoPointIEnumerable)),
+                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeoPointList)),
+                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeoPointICollection)),
 #endif
+                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeometryPointArray)),
+                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeometryPointIList)),
+                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeometryPointIEnumerable)),
+                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeometryPointList)),
+                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeometryPointICollection)),
                     (SearchFieldDataType.Complex, nameof(ReflectableModel.ComplexArray)),
                     (SearchFieldDataType.Complex, nameof(ReflectableModel.ComplexIList)),
                     (SearchFieldDataType.Complex, nameof(ReflectableModel.ComplexIEnumerable)),

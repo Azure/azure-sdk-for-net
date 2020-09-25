@@ -168,12 +168,12 @@ namespace Azure.Search.Documents.Tests
         public static GeoPoint CreateDynamicPoint(double longitude, double latitude) =>
             CreatePoint(longitude, latitude);
 #else
-        public static GeographyPoint CreatePoint(double longitude, double latitude) =>
-            // Note: GeographyPoint takes latitude first, unlike GeoPoint
-            GeographyPoint.Create(latitude, longitude);
+        public static GeometryPoint CreatePoint(double longitude, double latitude) =>
+            // Note: GeometryPoint takes latitude first, unlike GeoPoint
+            GeometryPoint.Create(latitude, longitude);
 
         public static SearchDocument CreateDynamicPoint(double longitude, double latitude) =>
-            GeographyPointConverter.AsDocument(CreatePoint(longitude, latitude));
+            GeometryPointConverter.AsDocument(CreatePoint(longitude, latitude));
 #endif
     }
 }
