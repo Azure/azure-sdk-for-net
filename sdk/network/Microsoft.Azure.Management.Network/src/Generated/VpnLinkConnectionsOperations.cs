@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Network
         /// gateway vpn connection.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The resource group name of the VpnGateway.
+        /// The resource group name of the vpn gateway.
         /// </param>
         /// <param name='gatewayName'>
         /// The name of the gateway.
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "connectionName");
             }
-            string apiVersion = "2020-05-01";
+            string apiVersion = "2020-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

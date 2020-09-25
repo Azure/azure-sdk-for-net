@@ -18,13 +18,13 @@ namespace Azure.AI.FormRecognizer.Models
             Confidence = field.Confidence;
             Name = name;
 
-            BoundingBox labelBoundingBox = field.Key.BoundingBox == null ? default : new BoundingBox(field.Key.BoundingBox);
+            FieldBoundingBox labelBoundingBox = field.Key.BoundingBox == null ? default : new FieldBoundingBox(field.Key.BoundingBox);
             IReadOnlyList<FormElement> labelFormElement = field.Key.Elements != null
                 ? ConvertTextReferences(field.Key.Elements, readResults)
                 : new List<FormElement>();
             LabelData = new FieldData(labelBoundingBox, pageNumber, field.Key.Text, labelFormElement);
 
-            BoundingBox valueBoundingBox = field.Value.BoundingBox == null ? default : new BoundingBox(field.Value.BoundingBox);
+            FieldBoundingBox valueBoundingBox = field.Value.BoundingBox == null ? default : new FieldBoundingBox(field.Value.BoundingBox);
             IReadOnlyList<FormElement> valueFormElement = field.Value.Elements != null
                 ? ConvertTextReferences(field.Value.Elements, readResults)
                 : new List<FormElement>();
@@ -54,7 +54,7 @@ namespace Azure.AI.FormRecognizer.Models
                 IReadOnlyList<FormElement> fieldElements = ConvertTextReferences(fieldValue.Elements, readResults);
 
                 // TODO: FormEnum<T> ?
-                BoundingBox boundingBox = new BoundingBox(fieldValue.BoundingBox);
+                FieldBoundingBox boundingBox = new FieldBoundingBox(fieldValue.BoundingBox);
 
                 ValueData = new FieldData(boundingBox, fieldValue.Page.Value, fieldValue.Text, fieldElements);
             }

@@ -66,6 +66,7 @@ namespace Azure.Graph.Rbac
             }
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -124,6 +125,7 @@ namespace Azure.Graph.Rbac
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (body != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -188,6 +190,7 @@ namespace Azure.Graph.Rbac
             uri.AppendPath(objectId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
@@ -245,9 +248,10 @@ namespace Azure.Graph.Rbac
             uri.AppendPath("/", false);
             uri.AppendPath(tenantID, true);
             uri.AppendPath("/", false);
-            uri.AppendRaw(nextLink, false);
+            uri.AppendRawNextLink(nextLink, false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
@@ -314,6 +318,7 @@ namespace Azure.Graph.Rbac
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 

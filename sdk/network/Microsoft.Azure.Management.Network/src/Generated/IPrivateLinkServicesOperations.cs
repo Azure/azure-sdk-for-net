@@ -445,6 +445,60 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse> BeginDeletePrivateEndpointConnectionWithHttpMessagesAsync(string resourceGroupName, string serviceName, string peConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Checks whether the subscription is visible to private link service.
+        /// </summary>
+        /// <param name='location'>
+        /// The location of the domain name.
+        /// </param>
+        /// <param name='parameters'>
+        /// The request body of CheckPrivateLinkService API call.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<PrivateLinkServiceVisibility>> BeginCheckPrivateLinkServiceVisibilityWithHttpMessagesAsync(string location, CheckPrivateLinkServiceVisibilityRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Checks whether the subscription is visible to private link service
+        /// in the specified resource group.
+        /// </summary>
+        /// <param name='location'>
+        /// The location of the domain name.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='parameters'>
+        /// The request body of CheckPrivateLinkService API call.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<PrivateLinkServiceVisibility>> BeginCheckPrivateLinkServiceVisibilityByResourceGroupWithHttpMessagesAsync(string location, string resourceGroupName, CheckPrivateLinkServiceVisibilityRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Gets all private link services in a resource group.
         /// </summary>
         /// <param name='nextPageLink'>

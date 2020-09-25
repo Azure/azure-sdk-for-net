@@ -9,7 +9,7 @@ namespace Azure.AI.FormRecognizer.Models
     public class FormWord : FormElement
     {
         internal FormWord(TextWord textWord, int pageNumber)
-            : base(new BoundingBox(textWord.BoundingBox), pageNumber, textWord.Text)
+            : base(new FieldBoundingBox(textWord.BoundingBox), pageNumber, textWord.Text)
         {
             Confidence = textWord.Confidence ?? Constants.DefaultConfidenceValue;
         }
@@ -21,7 +21,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="pageNumber">The 1-based number of the page in which this element is present.</param>
         /// <param name="text">The text of this form element.</param>
         /// <param name="confidence">Measures the degree of certainty of the recognition result.</param>
-        internal FormWord(BoundingBox boundingBox, int pageNumber, string text, float confidence)
+        internal FormWord(FieldBoundingBox boundingBox, int pageNumber, string text, float confidence)
             : base(boundingBox, pageNumber, text)
         {
             Confidence = confidence;

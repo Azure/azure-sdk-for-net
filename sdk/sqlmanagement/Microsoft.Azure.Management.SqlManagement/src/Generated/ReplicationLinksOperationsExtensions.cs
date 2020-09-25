@@ -235,6 +235,63 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
+            /// Deletes a database replication link in forced or friendly way.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database that has the replication link to be failed over.
+            /// </param>
+            /// <param name='linkId'>
+            /// The ID of the replication link to be failed over.
+            /// </param>
+            /// <param name='parameters'>
+            /// The required parameters for unlinking replication link.
+            /// </param>
+            public static void Unlink(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId, UnlinkParameters parameters)
+            {
+                operations.UnlinkAsync(resourceGroupName, serverName, databaseName, linkId, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes a database replication link in forced or friendly way.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database that has the replication link to be failed over.
+            /// </param>
+            /// <param name='linkId'>
+            /// The ID of the replication link to be failed over.
+            /// </param>
+            /// <param name='parameters'>
+            /// The required parameters for unlinking replication link.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task UnlinkAsync(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId, UnlinkParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.UnlinkWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, linkId, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Lists a database's replication links.
             /// </summary>
             /// <param name='operations'>
@@ -386,6 +443,63 @@ namespace Microsoft.Azure.Management.Sql
             public static async Task BeginFailoverAllowDataLossAsync(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginFailoverAllowDataLossWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, linkId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Deletes a database replication link in forced or friendly way.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database that has the replication link to be failed over.
+            /// </param>
+            /// <param name='linkId'>
+            /// The ID of the replication link to be failed over.
+            /// </param>
+            /// <param name='parameters'>
+            /// The required parameters for unlinking replication link.
+            /// </param>
+            public static void BeginUnlink(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId, UnlinkParameters parameters)
+            {
+                operations.BeginUnlinkAsync(resourceGroupName, serverName, databaseName, linkId, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes a database replication link in forced or friendly way.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database that has the replication link to be failed over.
+            /// </param>
+            /// <param name='linkId'>
+            /// The ID of the replication link to be failed over.
+            /// </param>
+            /// <param name='parameters'>
+            /// The required parameters for unlinking replication link.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginUnlinkAsync(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId, UnlinkParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginUnlinkWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, linkId, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

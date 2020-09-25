@@ -8,6 +8,8 @@
 
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.8.0" />
+    <PackageReference Include="Microsoft.Azure.Storage.Blob" Version="11.2.2" />
+    <PackageReference Include="Microsoft.Azure.Storage.Common" Version="11.2.2" />
   </ItemGroup>
 
   <ItemGroup>

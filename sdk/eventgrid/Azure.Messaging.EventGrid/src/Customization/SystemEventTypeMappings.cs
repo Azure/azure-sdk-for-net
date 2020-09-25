@@ -19,6 +19,18 @@ namespace Azure.Messaging.EventGrid
             { EventTypes.AppConfigurationKeyValueDeletedEvent, AppConfigurationKeyValueDeletedEventData.DeserializeAppConfigurationKeyValueDeletedEventData },
             { EventTypes.AppConfigurationKeyValueModifiedEvent, AppConfigurationKeyValueModifiedEventData.DeserializeAppConfigurationKeyValueModifiedEventData },
 
+            // Communication events
+            { EventTypes.ACSChatMemberAddedToThreadWithUserEvent, ACSChatMemberAddedToThreadWithUserEventData.DeserializeACSChatMemberAddedToThreadWithUserEventData },
+            { EventTypes.ACSChatMemberRemovedFromThreadWithUserEvent, ACSChatMemberRemovedFromThreadWithUserEventData.DeserializeACSChatMemberRemovedFromThreadWithUserEventData },
+            { EventTypes.ACSChatMessageDeletedEvent, ACSChatMessageDeletedEventData.DeserializeACSChatMessageDeletedEventData },
+            { EventTypes.ACSChatMessageEditedEvent, ACSChatMessageEditedEventData.DeserializeACSChatMessageEditedEventData },
+            { EventTypes.ACSChatMessageReceivedEvent, ACSChatMessageReceivedEventData.DeserializeACSChatMessageReceivedEventData },
+            { EventTypes.ACSChatThreadCreatedWithUserEvent,  ACSChatThreadCreatedWithUserEventData.DeserializeACSChatThreadCreatedWithUserEventData },
+            { EventTypes.ACSChatThreadPropertiesUpdatedPerUserEvent, ACSChatThreadPropertiesUpdatedPerUserEventData.DeserializeACSChatThreadPropertiesUpdatedPerUserEventData },
+            { EventTypes.ACSChatThreadWithUserDeletedEvent, ACSChatThreadWithUserDeletedEventData.DeserializeACSChatThreadWithUserDeletedEventData },
+            { EventTypes.ACSSMSDeliveryReportReceivedEvent, AcssmsDeliveryReportReceivedEventData.DeserializeAcssmsDeliveryReportReceivedEventData },
+            { EventTypes.ACSSMSReceivedEvent, AcssmsReceivedEventData.DeserializeAcssmsReceivedEventData },
+
             // ContainerRegistry events
             { EventTypes.ContainerRegistryImagePushedEvent, ContainerRegistryImagePushedEventData.DeserializeContainerRegistryImagePushedEventData },
             { EventTypes.ContainerRegistryImageDeletedEvent, ContainerRegistryImageDeletedEventData.DeserializeContainerRegistryImageDeletedEventData },
@@ -99,6 +111,7 @@ namespace Azure.Messaging.EventGrid
             { EventTypes.StorageDirectoryCreatedEvent, StorageDirectoryCreatedEventData.DeserializeStorageDirectoryCreatedEventData },
             { EventTypes.StorageDirectoryDeletedEvent, StorageDirectoryDeletedEventData.DeserializeStorageDirectoryDeletedEventData },
             { EventTypes.StorageDirectoryRenamedEvent, StorageDirectoryRenamedEventData.DeserializeStorageDirectoryRenamedEventData },
+            { EventTypes.StorageLifecyclePolicyCompletedEvent, StorageLifecyclePolicyCompletedEventData.DeserializeStorageLifecyclePolicyCompletedEventData },
 
             // App Service
             { EventTypes.WebAppUpdated, WebAppUpdatedEventData.DeserializeWebAppUpdatedEventData },

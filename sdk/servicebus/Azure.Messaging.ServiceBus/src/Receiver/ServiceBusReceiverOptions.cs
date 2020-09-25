@@ -13,7 +13,7 @@ namespace Azure.Messaging.ServiceBus
     public class ServiceBusReceiverOptions
     {
         /// <summary>
-        /// The number of messages that will be eagerly requested from Queues or Subscriptions and queued locally without regard to
+        /// Gets or sets the number of messages that will be eagerly requested from Queues or Subscriptions and queued locally without regard to
         /// whether the receiver is actively receiving, intended to help maximize throughput by allowing the receiver to receive
         /// from a local cache rather than waiting on a service request.
         /// </summary>
@@ -32,9 +32,14 @@ namespace Azure.Messaging.ServiceBus
         private int _prefetchCount = 0;
 
         /// <summary>
-        /// The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.
+        /// Gets or sets the <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.
         /// </summary>
         public ReceiveMode ReceiveMode { get; set; } = ReceiveMode.PeekLock;
+
+        /// <summary>
+        /// Gets or sets the subqueue to connect the receiver to. By default, the receiver will not connect to a subqueue.
+        /// </summary>
+        public SubQueue SubQueue { get; set; } = SubQueue.None;
 
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -73,7 +78,8 @@ namespace Azure.Messaging.ServiceBus
             new ServiceBusReceiverOptions
             {
                 ReceiveMode = ReceiveMode,
-                PrefetchCount = PrefetchCount
+                PrefetchCount = PrefetchCount,
+                SubQueue = SubQueue
             };
     }
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
-using Azure.Messaging.ServiceBus.Management;
+using Azure.Messaging.ServiceBus.Administration;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -214,18 +214,18 @@ namespace Azure.Messaging.ServiceBus
         {
             IsDisposed = true;
 
-            ServiceBusEventSource.Log.ClientDisposeStart(typeof(ServiceBusRuleManager), Identifier);
+            ServiceBusEventSource.Log.ClientCloseStart(typeof(ServiceBusRuleManager), Identifier);
             try
             {
                 await InnerRuleManager.CloseAsync(CancellationToken.None).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
-                ServiceBusEventSource.Log.ClientDisposeException(typeof(ServiceBusRuleManager), Identifier, ex);
+                ServiceBusEventSource.Log.ClientCloseException(typeof(ServiceBusRuleManager), Identifier, ex);
                 throw;
             }
 
-            ServiceBusEventSource.Log.ClientDisposeComplete(typeof(ServiceBusRuleManager), Identifier);
+            ServiceBusEventSource.Log.ClientCloseComplete(typeof(ServiceBusRuleManager), Identifier);
         }
 
         /// <summary>

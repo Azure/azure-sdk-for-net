@@ -235,7 +235,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 foreach (var msg in msgs)
                 {
                     var seq = await sender.ScheduleMessageAsync(msg, DateTimeOffset.UtcNow.AddMinutes(1));
-                    Assert.IsNotNull(msg.Properties[DiagnosticProperty.DiagnosticIdAttribute]);
+                    Assert.IsNotNull(msg.ApplicationProperties[DiagnosticProperty.DiagnosticIdAttribute]);
 
                     (string Key, object Value, DiagnosticListener) startMessage = _listener.Events.Dequeue();
                     Activity messageActivity = (Activity)startMessage.Value;
@@ -391,7 +391,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             IList<Activity> messageActivities = new List<Activity>();
             foreach (var msg in msgs)
             {
-                Assert.IsNotNull(msg.Properties[DiagnosticProperty.DiagnosticIdAttribute]);
+                Assert.IsNotNull(msg.ApplicationProperties[DiagnosticProperty.DiagnosticIdAttribute]);
                 (string Key, object Value, DiagnosticListener) startMessage = _listener.Events.Dequeue();
                 messageActivities.Add((Activity)startMessage.Value);
                 AssertCommonTags((Activity)startMessage.Value, sender.EntityPath, sender.FullyQualifiedNamespace);

@@ -13,8 +13,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
 {
-// TODO: Uncomment after release
-#if false && NETFRAMEWORK
+#if NETFRAMEWORK
     /// <summary>
     /// The <see cref="HttpWebRequest"/> based <see cref="HttpPipelineTransport"/> implementation.
     /// </summary>
@@ -49,6 +48,9 @@ namespace Azure.Core.Pipeline
         private async ValueTask ProcessInternal(HttpMessage message, bool async)
         {
             var request = CreateRequest(message.Request);
+
+            ServicePointHelpers.SetLimits(request.ServicePoint);
+
             using var registration = message.CancellationToken.Register(state => ((HttpWebRequest) state).Abort(), request);
             try
             {

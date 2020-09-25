@@ -16,7 +16,7 @@ namespace Azure.AI.FormRecognizer.Tests
     public class FormRecognizerModelFactoryTests
     {
         /// <summary>
-        /// Assists in <see cref="BoundingBox"/> creation.
+        /// Assists in <see cref="FieldBoundingBox"/> creation.
         /// </summary>
         private readonly IReadOnlyList<PointF> ListOfPoints = new List<PointF>() { new PointF(3.1415f, 1.6180f), new PointF(6.6740f, 8.9876f) };
 
@@ -33,9 +33,9 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        public void FormRecognizerModelFactoryCanInstantiateBoundingBox()
+        public void FormRecognizerModelFactoryCanInstantiateFieldBoundingBox()
         {
-            var boundingBox = FormRecognizerModelFactory.BoundingBox(ListOfPoints);
+            var boundingBox = FormRecognizerModelFactory.FieldBoundingBox(ListOfPoints);
 
             CollectionAssert.AreEqual(ListOfPoints, boundingBox.Points);
         }
@@ -43,7 +43,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public void FormRecognizerModelFactoryInstantiatesEmptyBoundingBoxWhenPointsListIsNull()
         {
-            var boundingBox = FormRecognizerModelFactory.BoundingBox(null);
+            var boundingBox = FormRecognizerModelFactory.FieldBoundingBox(null);
 
             Assert.IsNotNull(boundingBox.Points);
             Assert.IsEmpty(boundingBox.Points);
@@ -130,7 +130,7 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             var formElement = new FormWord(default, default, default, default);
 
-            var boundingBox = new BoundingBox(ListOfPoints);
+            var boundingBox = new FieldBoundingBox(ListOfPoints);
             var pageNumber = 109;
             var text = "Poincare";
             var fieldElements = new List<FormElement>() { formElement };
@@ -325,7 +325,7 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             var formWord = new FormWord(default, default, default, default);
 
-            var boundingBox = new BoundingBox(ListOfPoints);
+            var boundingBox = new FieldBoundingBox(ListOfPoints);
             var pageNumber = 389;
             var text = "Bhaskara";
             var words = new List<FormWord>() { formWord };
@@ -427,7 +427,7 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             var formElement = new FormWord(default, default, default, default);
 
-            var boundingBox = new BoundingBox(ListOfPoints);
+            var boundingBox = new FieldBoundingBox(ListOfPoints);
             var pageNumber = 139;
             var text = "Leibniz";
             var columnIndex = 151;
@@ -458,7 +458,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public void FormRecognizerModelFactoryCanInstantiateFormWord()
         {
-            var boundingBox = new BoundingBox(ListOfPoints);
+            var boundingBox = new FieldBoundingBox(ListOfPoints);
             var pageNumber = 113;
             var text = "Newton";
             var confidence = 0.1602f;

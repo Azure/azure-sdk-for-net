@@ -32,7 +32,7 @@
     <IntermediateOutputPath Condition="'$(PlatformName)' == 'AnyCPU'">$(BaseIntermediateOutputPath)$(Configuration)\</IntermediateOutputPath>
     <IntermediateOutputPath Condition="'$(PlatformName)' != 'AnyCPU'">$(BaseIntermediateOutputPath)$(PlatformName)\$(Configuration)\</IntermediateOutputPath>
 
-    <PackageOutputPath>$(ArtifactsPackagesDir)</PackageOutputPath>
+    <PackageOutputPath>$(ArtifactsPackagesDir)/$(MSBuildProjectName)</PackageOutputPath>
   </PropertyGroup>
 
   <Import Project="$(RepoEngPath)\mgmt\Directory.Build.Mgmt.props" Condition="'$(IsDataPlaneProject)' != 'true'" />

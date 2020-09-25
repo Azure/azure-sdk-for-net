@@ -19,7 +19,7 @@ namespace Azure.Data.Tables
         private readonly TableRestClient _tableOperations;
         private readonly ServiceRestClient _serviceOperations;
         private readonly ServiceRestClient _secondaryServiceOperations;
-        private readonly OdataMetadataFormat _format = OdataMetadataFormat.ApplicationJsonOdataFullmetadata;
+        private readonly OdataMetadataFormat _format = OdataMetadataFormat.ApplicationJsonOdataMinimalmetadata;
         private readonly string _version;
         internal readonly bool _isPremiumEndpoint;
 
@@ -32,6 +32,22 @@ namespace Azure.Data.Tables
         /// </param>
         public TableServiceClient(Uri endpoint)
                 : this(endpoint, options: null)
+        { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TableServiceClient"/>.
+        /// </summary>
+        /// <param name="connectionString">
+        /// A connection string includes the authentication information
+        /// required for your application to access data in an Azure Storage
+        /// account at runtime.
+        ///
+        /// For more information,
+        /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
+        /// Configure Azure Storage connection strings</see>.
+        /// </param>
+        public TableServiceClient(string connectionString)
+            : this(connectionString, options: null)
         { }
 
         /// <summary>
@@ -82,6 +98,46 @@ namespace Azure.Data.Tables
             : this(endpoint, new TableSharedKeyPipelinePolicy(credential), options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TableServiceClient"/>.
+        /// </summary>
+        /// <param name="connectionString">
+        /// A connection string includes the authentication information
+        /// required for your application to access data in an Azure Storage
+        /// account at runtime.
+        ///
+        /// For more information,
+        /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
+        /// Configure Azure Storage connection strings</see>.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
+        /// </param>
+        public TableServiceClient(string connectionString, TableClientOptions options = null)
+        {
+            Argument.AssertNotNull(connectionString, nameof(connectionString));
+
+            TableConnectionString connString = TableConnectionString.Parse(connectionString);
+
+            options ??= new TableClientOptions();
+            var endpointString = connString.TableStorageUri.PrimaryUri.ToString();
+            var secondaryEndpoint = connString.TableStorageUri.PrimaryUri?.ToString() ?? endpointString.Insert(endpointString.IndexOf('.'), "-secondary");
+
+            TableSharedKeyPipelinePolicy policy = connString.Credentials switch
+            {
+                TableSharedKeyCredential credential => new TableSharedKeyPipelinePolicy(credential),
+                _ => default
+            };
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, policy);
+
+            _diagnostics = new ClientDiagnostics(options);
+            _tableOperations = new TableRestClient(_diagnostics, pipeline, endpointString);
+            _serviceOperations = new ServiceRestClient(_diagnostics, pipeline, endpointString);
+            _secondaryServiceOperations = new ServiceRestClient(_diagnostics, pipeline, secondaryEndpoint);
+            _version = options.VersionString;
+            _isPremiumEndpoint = IsPremiumEndpoint(connString.TableStorageUri.PrimaryUri);
         }
 
         internal TableServiceClient(Uri endpoint, TableSharedKeyPipelinePolicy policy, TableClientOptions options)
