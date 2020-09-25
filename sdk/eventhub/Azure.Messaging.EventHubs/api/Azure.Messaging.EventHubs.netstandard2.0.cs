@@ -2,9 +2,11 @@ namespace Azure.Messaging.EventHubs
 {
     public partial class EventData
     {
+        public EventData(Azure.BinaryData eventBody) { }
         public EventData(System.ReadOnlyMemory<byte> eventBody) { }
         protected EventData(System.ReadOnlyMemory<byte> eventBody, System.Collections.Generic.IDictionary<string, object> properties = null, System.Collections.Generic.IReadOnlyDictionary<string, object> systemProperties = null, long sequenceNumber = (long)-9223372036854775808, long offset = (long)-9223372036854775808, System.DateTimeOffset enqueuedTime = default(System.DateTimeOffset), string partitionKey = null) { }
         public System.ReadOnlyMemory<byte> Body { get { throw null; } }
+        public Azure.BinaryData BodyAsBinaryData { get { throw null; } }
         public System.IO.Stream BodyAsStream { get { throw null; } }
         public System.DateTimeOffset EnqueuedTime { get { throw null; } }
         public long Offset { get { throw null; } }

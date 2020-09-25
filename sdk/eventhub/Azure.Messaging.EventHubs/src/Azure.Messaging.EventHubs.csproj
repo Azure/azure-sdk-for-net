@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Azure Event Hubs is a highly scalable publish-subscribe service that can ingest millions of events per second and stream them to multiple consumers.  This client library allows for both publishing and consuming events using Azure Event Hubs. For more information about Event Hubs, see https://azure.microsoft.com/en-us/services/event-hubs/</Description>
     <Version>5.3.0-beta.1</Version>
@@ -13,6 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- Note: The Experimental package usage is for beta releases only -->
+    <PackageReference Include="Azure.Core.Experimental" />
     <PackageReference Include="Microsoft.Azure.Amqp" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" />
     <PackageReference Include="System.Reflection.TypeExtensions" />
@@ -54,6 +56,4 @@
     </EmbeddedResource>
   </ItemGroup>
 
-  <!-- Import the Azure.Core reference -->
-  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
 </Project>
