@@ -1,11 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <DelaySign>true</DelaySign>
     <AssemblyName>Microsoft.Azure.WebJobs.Host.TestCommon</AssemblyName>
     <RootNamespace>Microsoft.Azure.WebJobs.Host.TestCommon</RootNamespace>
     <AssemblyOriginatorKeyFile>PublicKey.snk</AssemblyOriginatorKeyFile>
     <IsPackable>false</IsPackable>
+    <PublicSign>false</PublicSign>
+    <DelaySign>true</DelaySign>
   </PropertyGroup>
 
   <ItemGroup>
