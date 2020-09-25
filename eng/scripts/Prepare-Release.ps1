@@ -154,7 +154,7 @@ $month = $ParsedReleaseDate.ToString("MMMM")
 Write-Host
 Write-Host "Assuming release is in $month with release date $releaseDateString" -ForegroundColor Green
 
-$libraryType = "Preview";
+$libraryType = "Beta";
 $latestVersion = $null;
 foreach ($existingVersion in $existing.versions)
 {
