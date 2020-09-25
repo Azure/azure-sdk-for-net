@@ -111,7 +111,7 @@ namespace Azure.Search.Documents.Tests
         public GeoPoint GeoPoint { get; set; }
 #endif
 
-        public GeometryPoint GeometryPoint { get; set; }
+        public GeographyPoint GeographyPoint { get; set; }
 
         public int[] IntArray { get; set; }
 
@@ -185,15 +185,15 @@ namespace Azure.Search.Documents.Tests
         public ICollection<GeoPoint> GeoPointICollection { get; set; }
 #endif
 
-        public GeometryPoint[] GeometryPointArray { get; set; }
+        public GeographyPoint[] GeographyPointArray { get; set; }
 
-        public IList<GeometryPoint> GeometryPointIList { get; set; }
+        public IList<GeographyPoint> GeographyPointIList { get; set; }
 
-        public List<GeometryPoint> GeometryPointList { get; set; }
+        public List<GeographyPoint> GeographyPointList { get; set; }
 
-        public IEnumerable<GeometryPoint> GeometryPointIEnumerable { get; set; }
+        public IEnumerable<GeographyPoint> GeographyPointIEnumerable { get; set; }
 
-        public ICollection<GeometryPoint> GeometryPointICollection { get; set; }
+        public ICollection<GeographyPoint> GeographyPointICollection { get; set; }
 
         public ReflectableComplexStruct? Complex { get; set; }
 

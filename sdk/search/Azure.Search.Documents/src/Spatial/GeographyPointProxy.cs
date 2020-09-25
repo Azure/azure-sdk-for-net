@@ -7,39 +7,39 @@ using System.Reflection;
 namespace Azure.Search.Documents
 {
     /// <summary>
-    /// Proxy for a Microsoft.Spatial.GeometryPoint class.
+    /// Proxy for a Microsoft.Spatial.GeographyPoint class.
     /// </summary>
-    internal class GeometryPointProxy : GeometryProxy, IEquatable<GeometryPointProxy>
+    internal class GeographyPointProxy : GeographyProxy, IEquatable<GeographyPointProxy>
     {
-        private static PropertyInfo s_xProperty;
-        private static PropertyInfo s_yProperty;
+        private static PropertyInfo s_latitudeProperty;
+        private static PropertyInfo s_longitudeProperty;
 
         /// <summary>
-        /// Creates a new instance of the <see cref="GeometryPointProxy"/> class.
+        /// Creates a new instance of the <see cref="GeographyPointProxy"/> class.
         /// </summary>
-        /// <param name="value">The Microsoft.Spatial.GeometryPoint object to proxy.</param>
+        /// <param name="value">The Microsoft.Spatial.GeographyPoint object to proxy.</param>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is null.</exception>
-        public GeometryPointProxy(object value) : base(value)
+        public GeographyPointProxy(object value) : base(value)
         {
         }
 
         /// <summary>
         /// Gets the latitude.
         /// </summary>
-        public double X => GetPropertyValue<double>(ref s_xProperty, nameof(X));
+        public double Latitude => GetPropertyValue<double>(ref s_latitudeProperty, nameof(Latitude));
 
         /// <summary>
         /// Gets the longitude.
         /// </summary>
-        public double Y => GetPropertyValue<double>(ref s_yProperty, nameof(Y));
+        public double Longitude => GetPropertyValue<double>(ref s_longitudeProperty, nameof(Longitude));
 
         /// <summary>
         /// Determines whether the <paramref name="left"/> has the same values as the <paramref name="right"/> value.
         /// </summary>
-        /// <param name="left">The first <see cref="GeometryPointProxy"/> to compare.</param>
-        /// <param name="right">The second <see cref="GeometryPointProxy"/> to compare.</param>
+        /// <param name="left">The first <see cref="GeographyPointProxy"/> to compare.</param>
+        /// <param name="right">The second <see cref="GeographyPointProxy"/> to compare.</param>
         /// <returns><c>true</c> if the <paramref name="left"/> has the same values as the <paramref name="right"/> value; otherwise, <c>false</c>.</returns>
-        public static bool operator ==(GeometryPointProxy left, GeometryPointProxy right)
+        public static bool operator ==(GeographyPointProxy left, GeographyPointProxy right)
         {
             if (left is null)
             {
@@ -52,10 +52,10 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Determines whether the <paramref name="left"/> has the same values as the <paramref name="right"/> value.
         /// </summary>
-        /// <param name="left">The first <see cref="GeometryPointProxy"/> to compare.</param>
-        /// <param name="right">The second <see cref="GeometryPointProxy"/> to compare.</param>
+        /// <param name="left">The first <see cref="GeographyPointProxy"/> to compare.</param>
+        /// <param name="right">The second <see cref="GeographyPointProxy"/> to compare.</param>
         /// <returns><c>true</c> if the <paramref name="left"/> has the same values as the <paramref name="right"/> value; otherwise, <c>false</c>.</returns>
-        public static bool operator !=(GeometryPointProxy left, GeometryPointProxy right)
+        public static bool operator !=(GeographyPointProxy left, GeographyPointProxy right)
         {
             if (left is null)
             {
@@ -66,15 +66,15 @@ namespace Azure.Search.Documents
         }
 
         /// <inheritdoc/>
-        public bool Equals(GeometryPointProxy other) => Value.Equals(other?.Value);
+        public bool Equals(GeographyPointProxy other) => Value.Equals(other?.Value);
 
         /// <inheritdoc/>
-        public override bool Equals(object obj) => Equals(obj as GeometryPointProxy);
+        public override bool Equals(object obj) => Equals(obj as GeographyPointProxy);
 
         /// <inheritdoc/>
         public override int GetHashCode() => Value?.GetHashCode() ?? 0;
 
         /// <inheritdoc/>
-        public override string ToString() => SpatialFormatter.EncodePoint(Y, X);
+        public override string ToString() => SpatialFormatter.EncodePoint(Longitude, Latitude);
     }
 }

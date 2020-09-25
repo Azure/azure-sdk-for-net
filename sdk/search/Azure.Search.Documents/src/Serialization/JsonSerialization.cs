@@ -162,7 +162,7 @@ namespace Azure.Search.Documents
                         double longitude = coords[0];
                         double latitude = coords[1];
                         double? altitude = coords.Length == 3 ? (double?)coords[2] : null;
-                        // TODO: Should we also pull in other PointGeometry properties?
+                        // TODO: Should we also pull in other PointGeography properties?
                         return new GeoPoint(new GeoPosition(longitude, latitude, altitude));
                     }
 #endif

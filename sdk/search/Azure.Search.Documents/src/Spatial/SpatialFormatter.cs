@@ -12,7 +12,7 @@ using Azure.Core.GeoJson;
 namespace Azure.Search.Documents
 {
     /// <summary>
-    /// Encodes geometry from both Azure.Core and Microsoft.Spatial for use in OData filters.
+    /// Encodes geographic data from both Azure.Core and Microsoft.Spatial for use in OData filters.
     /// </summary>
     internal static class SpatialFormatter
     {
@@ -120,11 +120,11 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Encodes a polygon for use in OData filters.
         /// </summary>
-        /// <param name="line">The <see cref="GeometryLineStringProxy"/> to encode.</param>
+        /// <param name="line">The <see cref="GeographyLineStringProxy"/> to encode.</param>
         /// <returns>The OData filter-encoded POLYGON string.</returns>
         /// <exception cref="ArgumentException">The <paramref name="line"/> has fewer than 4 points, or the first and last points do not match.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="line"/> or <see cref="GeometryLineStringProxy.Points"/> is null.</exception>
-        public static string EncodePolygon(GeometryLineStringProxy line)
+        /// <exception cref="ArgumentNullException"><paramref name="line"/> or <see cref="GeographyLineStringProxy.Points"/> is null.</exception>
+        public static string EncodePolygon(GeographyLineStringProxy line)
         {
             Argument.AssertNotNull(line, nameof(line));
             Argument.AssertNotNull(line.Points, $"{nameof(line)}.{nameof(line.Points)}");
@@ -132,20 +132,20 @@ namespace Azure.Search.Documents
             if (line.Points.Count < 4)
             {
                 throw new ArgumentException(
-                    $"A GeometryLineString must have at least four Points to form a searchable polygon.",
+                    $"A GeographyLineString must have at least four Points to form a searchable polygon.",
                     $"{nameof(line)}.{nameof(line.Points)}");
             }
             else if (line.Points[0] != line.Points[line.Points.Count - 1])
             {
                 throw new ArgumentException(
-                    $"A GeometryLineString must have matching first and last Points to form a searchable polygon.",
+                    $"A GeographyLineString must have matching first and last Points to form a searchable polygon.",
                     $"{nameof(line)}.{nameof(line.Points)}");
             }
 
             StringBuilder odata = new StringBuilder("geography'POLYGON((");
 
             bool first = true;
-            foreach (GeometryPointProxy point in line.Points)
+            foreach (GeographyPointProxy point in line.Points)
             {
                 if (!first)
                 {
@@ -156,9 +156,9 @@ namespace Azure.Search.Documents
                     first = false;
                 }
 
-                odata.Append(JsonSerialization.Double(point.Y, CultureInfo.InvariantCulture))
+                odata.Append(JsonSerialization.Double(point.Longitude, CultureInfo.InvariantCulture))
                     .Append(" ")
-                    .Append(JsonSerialization.Double(point.X, CultureInfo.InvariantCulture));
+                    .Append(JsonSerialization.Double(point.Latitude, CultureInfo.InvariantCulture));
             }
 
             return odata
@@ -168,12 +168,12 @@ namespace Azure.Search.Documents
 
         /// <summary>
         /// Encodes a polygon for use in OData filters.
-        /// <seealso cref="EncodePolygon(GeometryLineStringProxy)"/>
+        /// <seealso cref="EncodePolygon(GeographyLineStringProxy)"/>
         /// </summary>
-        /// <param name="polygon">The <see cref="GeometryPolygonProxy"/> to encode.</param>
+        /// <param name="polygon">The <see cref="GeographyPolygonProxy"/> to encode.</param>
         /// <returns>The OData filter-encoded POLYGON string.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="polygon"/> or <see cref="GeometryPolygonProxy.Rings"/> is null.</exception>
-        public static string EncodePolygon(GeometryPolygonProxy polygon)
+        /// <exception cref="ArgumentNullException"><paramref name="polygon"/> or <see cref="GeographyPolygonProxy.Rings"/> is null.</exception>
+        public static string EncodePolygon(GeographyPolygonProxy polygon)
         {
             Argument.AssertNotNull(polygon, nameof(polygon));
             Argument.AssertNotNull(polygon.Rings, $"{nameof(polygon)}.{nameof(polygon.Rings)}");
@@ -181,7 +181,7 @@ namespace Azure.Search.Documents
             if (polygon.Rings.Count != 1)
             {
                 throw new ArgumentException(
-                    $"A GeometryPolygon must have exactly one Rings to form a searchable polygon.",
+                    $"A GeographyPolygon must have exactly one Rings to form a searchable polygon.",
                     $"{nameof(polygon)}.{nameof(polygon.Rings)}");
             }
 

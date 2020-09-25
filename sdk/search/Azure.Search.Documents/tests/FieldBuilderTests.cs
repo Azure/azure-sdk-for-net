@@ -68,7 +68,7 @@ namespace Azure.Search.Documents.Tests
 #if EXPERIMENTAL_SPATIAL
                     (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeoPoint)),
 #endif
-                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeometryPoint)),
+                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeographyPoint)),
                 };
 
                 (SearchFieldDataType, string)[] primitivePropertyTestData =
@@ -129,11 +129,11 @@ namespace Azure.Search.Documents.Tests
                     (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeoPointList)),
                     (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeoPointICollection)),
 #endif
-                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeometryPointArray)),
-                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeometryPointIList)),
-                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeometryPointIEnumerable)),
-                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeometryPointList)),
-                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeometryPointICollection)),
+                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeographyPointArray)),
+                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeographyPointIList)),
+                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeographyPointIEnumerable)),
+                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeographyPointList)),
+                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeographyPointICollection)),
                     (SearchFieldDataType.Complex, nameof(ReflectableModel.ComplexArray)),
                     (SearchFieldDataType.Complex, nameof(ReflectableModel.ComplexIList)),
                     (SearchFieldDataType.Complex, nameof(ReflectableModel.ComplexIEnumerable)),

@@ -328,8 +328,8 @@ namespace Azure.Search.Documents.Tests
         public GeoPoint Location { get; set; }
 #else
         [JsonPropertyName("location")]
-        [JsonConverter(typeof(GeometryPointConverter))]
-        public GeometryPoint Location { get; set; }
+        [JsonConverter(typeof(GeographyPointConverter))]
+        public GeographyPoint Location { get; set; }
 #endif
 
         [JsonPropertyName("address")]
@@ -372,7 +372,7 @@ namespace Azure.Search.Documents.Tests
 #if EXPERIMENTAL_SPATIAL
                 $"Location: [{Location?.Position.Longitude ?? 0}, {Location?.Position.Latitude ?? 0}]; " +
 #else
-                $"Location: [{Location?.Y ?? 0}, {Location?.X ?? 0}]; " +
+                $"Location: [{Location?.Longitude ?? 0}, {Location?.Latitude ?? 0}]; " +
 #endif
                 $"Address: {{ {Address} }}; Rooms: [{string.Join("; ", Rooms?.Select(FormatRoom) ?? new string[0])}]";
         }
@@ -393,7 +393,7 @@ namespace Azure.Search.Documents.Tests
 #if EXPERIMENTAL_SPATIAL
                 ["location"] = Location,
 #else
-                ["location"] = GeometryPointConverter.AsDocument(Location),
+                ["location"] = GeographyPointConverter.AsDocument(Location),
 #endif
                 ["address"] = Address?.AsDocument(),
                 // With no elements to infer the type during deserialization, we must assume object[].
@@ -402,13 +402,13 @@ namespace Azure.Search.Documents.Tests
     }
 
     /// <summary>
-    /// Convert GeometryPoints to System.Text.Json or SearchDocument
+    /// Convert GeographyPoints to System.Text.Json or SearchDocument
     /// representations.
     /// </summary>
-    internal class GeometryPointConverter : JsonConverter<GeometryPoint>
+    internal class GeographyPointConverter : JsonConverter<GeographyPoint>
     {
         // TODO: Replace with Microsoft.Azure.Core.Spatial when completed: https://github.com/Azure/azure-sdk-for-net/issues/15431
-        public override GeometryPoint Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override GeographyPoint Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             if (reader.TokenType == JsonTokenType.StartObject)
             {
@@ -451,29 +451,29 @@ namespace Azure.Search.Documents.Tests
 
                 if (type == "Point" && longitude != null && latitude != null)
                 {
-                    return GeometryPoint.Create(latitude.Value, longitude.Value);
+                    return GeographyPoint.Create(latitude.Value, longitude.Value);
                 }
             }
 
             throw new JsonException();
         }
 
-        public override void Write(Utf8JsonWriter writer, GeometryPoint value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, GeographyPoint value, JsonSerializerOptions options)
         {
             writer.WriteStartObject();
             writer.WriteString("type", "Point");
             writer.WritePropertyName("coordinates");
             writer.WriteStartArray();
-            writer.WriteNumberValue(value.Y);
-            writer.WriteNumberValue(value.X);
+            writer.WriteNumberValue(value.Longitude);
+            writer.WriteNumberValue(value.Latitude);
             writer.WriteEndArray();
             writer.WriteEndObject();
         }
 
-        public static SearchDocument AsDocument(GeometryPoint value)
+        public static SearchDocument AsDocument(GeographyPoint value)
         {
             if (value == null) { return null; }
-            List<double> coords = new List<double> { value.Y, value.X };
+            List<double> coords = new List<double> { value.Longitude, value.Latitude };
             if (value.Z != null)
             {
                 coords.Add(value.Z.Value);
@@ -503,8 +503,8 @@ namespace Azure.Search.Documents.Tests
 #if EXPERIMENTAL_SPATIAL
         public GeoPoint Location { get; set; }
 #else
-        [JsonConverter(typeof(GeometryPointConverter))]
-        public GeometryPoint Location { get; set; } = null;
+        [JsonConverter(typeof(GeographyPointConverter))]
+        public GeographyPoint Location { get; set; } = null;
 #endif
         public HotelAddress Address { get; set; }
         public HotelRoom[] Rooms { get; set; } = new HotelRoom[] { };

@@ -167,7 +167,7 @@ namespace Azure.Search.Documents.Tests
                 AssertEqual(ePt.Position, aPt.Position, path != null ? $"{path}.{nameof(GeoPoint.Position)}" : nameof(GeoPoint.Position));
             }
 #endif
-            else if (expected is GeometryPoint eGpt && actual is GeometryPoint aGpt)
+            else if (expected is GeographyPoint eGpt && actual is GeographyPoint aGpt)
             {
                 AssertEqual(eGpt, aGpt, path);
             }

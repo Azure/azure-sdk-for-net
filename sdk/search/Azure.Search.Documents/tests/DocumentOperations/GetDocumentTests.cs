@@ -54,7 +54,7 @@ namespace Azure.Search.Documents.Tests
                         if (!subFields.Any() ||
                             (subFields.Contains("type") && subDoc.GetString("type") == "Point"))
                         {
-                            // Ignore empty documents or GeometryPoints represented as documents
+                            // Ignore empty documents or GeographyPoints represented as documents
                             selected.Add(field);
                         }
                         else
@@ -613,7 +613,7 @@ namespace Azure.Search.Documents.Tests
                     ["Doubles"] = new double[] { double.NegativeInfinity, 0.0, 2.78, double.NaN, 3.14, double.PositiveInfinity },
                     ["Ints"] = new int[] { 1, 2, 3, 4, -13, 5, 0 },
                     ["Longs"] = new long[] { -9_999_999_999_999_999L, 832_372_345_832_523L },
-                    ["Points"] = new GeometryPoint[]
+                    ["Points"] = new GeographyPoint[]
                     {
                         TestExtensions.CreatePoint(49, -123),
                         TestExtensions.CreatePoint(47, -121)
@@ -637,7 +637,7 @@ namespace Azure.Search.Documents.Tests
                     ["Doubles"] = new object[] { "-INF", 0.0, 2.78, "NaN", 3.14, "INF" },
                     ["Ints"] = new long[] { 1L, 2L, 3L, 4L, -13L, 5L, 0L },
                     ["Longs"] = new long[] { -9_999_999_999_999_999L, 832_372_345_832_523L },
-                    ["Points"] = new GeometryPoint[]
+                    ["Points"] = new GeographyPoint[]
                     {
                         TestExtensions.CreatePoint(49, -123),
                         TestExtensions.CreatePoint(47, -121)
@@ -678,7 +678,7 @@ namespace Azure.Search.Documents.Tests
                     ["Doubles"] = new double[0],
                     ["Ints"] = new int[0],
                     ["Longs"] = new long[0],
-                    ["Points"] = new GeometryPoint[0],
+                    ["Points"] = new GeographyPoint[0],
                     ["Strings"] = new string[0]
                 };
 
@@ -718,7 +718,7 @@ namespace Azure.Search.Documents.Tests
 
             public long[] Longs { get; set; }
 
-            public GeometryPoint[] Points { get; set; }
+            public GeographyPoint[] Points { get; set; }
 
             public string[] Strings { get; set; }
 

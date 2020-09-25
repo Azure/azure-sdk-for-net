@@ -8,18 +8,18 @@ using System.Reflection;
 namespace Azure.Search.Documents
 {
     /// <summary>
-    /// Proxy for a Microsoft.Spatial.Geometry class.
+    /// Proxy for a Microsoft.Spatial.Geography class.
     /// </summary>
-    internal abstract class GeometryProxy
+    internal abstract class GeographyProxy
     {
         private readonly Type _type;
 
         /// <summary>
-        /// Creates a new instance of the <see cref="GeometryProxy"/> class.
+        /// Creates a new instance of the <see cref="GeographyProxy"/> class.
         /// </summary>
-        /// <param name="value">The Microsoft.Spatial.Geometry object to proxy. This is assumed to derive from a Microsoft.Spatial.Geometry class.</param>
+        /// <param name="value">The Microsoft.Spatial.Geography object to proxy. This is assumed to derive from a Microsoft.Spatial.Geography class.</param>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is null.</exception>
-        public GeometryProxy(object value)
+        public GeographyProxy(object value)
         {
             Value = value ?? throw new ArgumentNullException(nameof(value));
             _type = value.GetType();
@@ -31,7 +31,7 @@ namespace Azure.Search.Documents
         public object Value { get; }
 
         /// <summary>
-        /// Returns an OData filter representation of the underlying Microsoft.Spatial.Geometry object.
+        /// Returns an OData filter representation of the underlying Microsoft.Spatial.Geography object.
         /// </summary>
         /// <returns></returns>
         public abstract override string ToString();
@@ -68,7 +68,7 @@ namespace Azure.Search.Documents
             ref IReadOnlyList<T> proxies,
             string name,
             Func<object, T> factory)
-            where T : GeometryProxy
+            where T : GeographyProxy
         {
             if (proxies is null)
             {

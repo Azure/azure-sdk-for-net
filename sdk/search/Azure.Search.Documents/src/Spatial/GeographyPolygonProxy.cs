@@ -8,31 +8,31 @@ using System.Reflection;
 namespace Azure.Search.Documents
 {
     /// <summary>
-    /// Proxy for a Microsoft.Spatial.GeometryPolygon class.
+    /// Proxy for a Microsoft.Spatial.GeographyPolygon class.
     /// </summary>
-    internal class GeometryPolygonProxy : GeometryProxy
+    internal class GeographyPolygonProxy : GeographyProxy
     {
         private static PropertyInfo s_ringsProperty;
-        private IReadOnlyList<GeometryLineStringProxy> _rings;
+        private IReadOnlyList<GeographyLineStringProxy> _rings;
 
         /// <summary>
-        /// Creates a new instance of the <see cref="GeometryPolygonProxy"/> class.
+        /// Creates a new instance of the <see cref="GeographyPolygonProxy"/> class.
         /// </summary>
-        /// <param name="value">The Microsoft.Spatial.GeometryPolygon object to proxy.</param>
+        /// <param name="value">The Microsoft.Spatial.GeographyPolygon object to proxy.</param>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is null.</exception>
-        public GeometryPolygonProxy(object value) : base(value)
+        public GeographyPolygonProxy(object value) : base(value)
         {
         }
 
         /// <summary>
         /// Gets the collection of rings.
         /// </summary>
-        public IReadOnlyList<GeometryLineStringProxy> Rings =>
+        public IReadOnlyList<GeographyLineStringProxy> Rings =>
             GetCollectionPropertyValue(
                 ref s_ringsProperty,
                 ref _rings,
                 nameof(Rings),
-                value => new GeometryLineStringProxy(value));
+                value => new GeographyLineStringProxy(value));
 
         /// <inheritdoc/>
         public override string ToString() => SpatialFormatter.EncodePolygon(this);

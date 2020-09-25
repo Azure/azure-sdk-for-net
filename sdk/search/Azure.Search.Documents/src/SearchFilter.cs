@@ -76,12 +76,12 @@ namespace Azure.Search.Documents
 
 #if EXPERIMENTAL_SPATIAL
                     // Points
-                    GeoPosition x => EncodeGeometry(x),
-                    GeoPoint x => EncodeGeometry(x),
+                    GeoPosition x => EncodeGeography(x),
+                    GeoPoint x => EncodeGeography(x),
 
                     // Polygons
-                    GeoLine x => EncodeGeometry(x),
-                    GeoPolygon x => EncodeGeometry(x),
+                    GeoLine x => EncodeGeography(x),
+                    GeoPolygon x => EncodeGeography(x),
 #endif
 
                     // Text
@@ -90,7 +90,7 @@ namespace Azure.Search.Documents
                     StringBuilder x => Quote(x.ToString()),
 
                     // Microsoft.Spatial types
-                    object x when SpatialProxyFactory.TryCreate(x, out GeometryProxy proxy) => proxy.ToString(),
+                    object x when SpatialProxyFactory.TryCreate(x, out GeographyProxy proxy) => proxy.ToString(),
 
                     // Everything else
                     object x => throw new ArgumentException(
@@ -131,7 +131,7 @@ namespace Azure.Search.Documents
         /// </summary>
         /// <param name="position">The position.</param>
         /// <returns>The OData representation of the position.</returns>
-        private static string EncodeGeometry(GeoPosition position) =>
+        private static string EncodeGeography(GeoPosition position) =>
             SpatialFormatter.EncodePoint(position.Longitude, position.Latitude);
 
         /// <summary>
@@ -139,31 +139,31 @@ namespace Azure.Search.Documents
         /// </summary>
         /// <param name="point">The point.</param>
         /// <returns>The OData representation of the point.</returns>
-        private static string EncodeGeometry(GeoPoint point)
+        private static string EncodeGeography(GeoPoint point)
         {
             Argument.AssertNotNull(point, nameof(point));
-            return EncodeGeometry(point.Position);
+            return EncodeGeography(point.Position);
         }
 
         /// <summary>
         /// Convert a <see cref="GeoLine"/> forming a polygon to an OData
-        /// value.  A LineGeometry must have at least four
+        /// value.  A GeoLine must have at least four
         /// <see cref="GeoLine.Positions"/> and the first and last must
         /// match to form a searchable polygon.
         /// </summary>
         /// <param name="line">The line forming a polygon.</param>
         /// <returns>The OData representation of the line.</returns>
-        private static string EncodeGeometry(GeoLine line) =>
+        private static string EncodeGeography(GeoLine line) =>
             SpatialFormatter.EncodePolygon(line);
 
         /// <summary>
         /// Convert a <see cref="GeoPolygon"/> to an OData value.  A
-        /// PolygonGeometry must have exactly one <see cref="GeoPolygon.Rings"/>
+        /// GeoPolygon must have exactly one <see cref="GeoPolygon.Rings"/>
         /// to form a searchable polygon.
         /// </summary>
         /// <param name="polygon">The polygon.</param>
         /// <returns>The OData representation of the polygon.</returns>
-        private static string EncodeGeometry(GeoPolygon polygon) =>
+        private static string EncodeGeography(GeoPolygon polygon) =>
             SpatialFormatter.EncodePolygon(polygon);
 #endif
     }

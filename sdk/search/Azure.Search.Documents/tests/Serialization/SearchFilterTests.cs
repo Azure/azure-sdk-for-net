@@ -198,22 +198,19 @@ namespace Azure.Search.Documents.Tests
 
         private static IEnumerable GetMicrosoftSpatialPointsData()
         {
-            // Microsoft.Spatial uses (x, y) which is reversed from (longitude, latitude).
-            GeometryPosition position = new GeometryPosition(3.0, 2.0);
+            GeographyPoint point = GeographyPoint.Create(3.0, 2.0);
 
-            yield return new TestCaseData(SearchFilter.Create($"geo.distance({position}, Foo) < 3"));
-            yield return new TestCaseData(SearchFilter.Create($"geo.distance({new GeometryPosition(3.0, 2.0, 5.0, default)}, Foo) < 3"));
-            yield return new TestCaseData(SearchFilter.Create($"geo.distance({GeometryPoint.Create(position.X, position.Y)}, Foo) < 3"));
+            yield return new TestCaseData(SearchFilter.Create($"geo.distance({point}, Foo) < 3"));
+            yield return new TestCaseData(SearchFilter.Create($"geo.distance({GeographyPoint.Create(3.0, 2.0, 5.0)}, Foo) < 3"));
         }
 
         [TestCaseSource(nameof(GetMicrosoftSpatialPolygonsData))]
-        public string MicrosoftSpatialPolygons(object geometry) =>
-            SearchFilter.Create($"geo.intersects(Foo, {geometry})");
+        public string MicrosoftSpatialPolygons(object geography) =>
+            SearchFilter.Create($"geo.intersects(Foo, {geography})");
 
         private static IEnumerable GetMicrosoftSpatialPolygonsData()
         {
-            // Microsoft.Spatial uses (x, y) which is reversed from (longitude, latitude).
-            GeometryLineString line = GeometryFactory
+            GeographyLineString line = GeographyFactory
                 .LineString(0, 0)
                 .LineTo(1, 0)
                 .LineTo(1, 1)
@@ -221,7 +218,7 @@ namespace Azure.Search.Documents.Tests
 
             yield return new TestCaseData(line).Returns("geo.intersects(Foo, geography'POLYGON((0 0,0 1,1 1,0 0))')");
 
-            GeometryPolygon polygon = GeometryFactory
+            GeographyPolygon polygon = GeographyFactory
                 .Polygon()
                 .Ring(0, 0)
                 .LineTo(1, 0)
@@ -232,25 +229,25 @@ namespace Azure.Search.Documents.Tests
         }
 
         [TestCaseSource(nameof(GetMicrosoftSpatialPolygonsThrowsData))]
-        public void MicrosoftSpatialPolygonsThrows(object geometry, string expectedException)
+        public void MicrosoftSpatialPolygonsThrows(object geography, string expectedException)
         {
-            ArgumentException ex = Assert.Throws<ArgumentException>(() => SearchFilter.Create($"{geometry}"));
+            ArgumentException ex = Assert.Throws<ArgumentException>(() => SearchFilter.Create($"{geography}"));
             StringAssert.StartsWith(expectedException, ex.Message);
         }
 
         private static IEnumerable GetMicrosoftSpatialPolygonsThrowsData()
         {
             // Require >= 4 points.
-            GeometryLineString line = GeometryFactory
+            GeographyLineString line = GeographyFactory
                 .LineString(0, 0)
                 .LineTo(1, 1);
 
             yield return new TestCaseData(
                 line,
-                "A GeometryLineString must have at least four Points to form a searchable polygon.");
+                "A GeographyLineString must have at least four Points to form a searchable polygon.");
 
             // Requires that first and last points are the same.
-            line = GeometryFactory
+            line = GeographyFactory
                 .LineString(0, 0)
                 .LineTo(0, 0)
                 .LineTo(0, 0)
@@ -258,23 +255,23 @@ namespace Azure.Search.Documents.Tests
 
             yield return new TestCaseData(
                 line,
-                "A GeometryLineString must have matching first and last Points to form a searchable polygon.");
+                "A GeographyLineString must have matching first and last Points to form a searchable polygon.");
 
             // Require that polygons define exactly 1 ring.
-            GeometryPolygon polygon = GeometryFactory
+           GeographyPolygon polygon = GeographyFactory
                 .Polygon()
                 .Ring(0, 0)
-                .LineTo(1, 0)
+                .LineTo(0, 1)
                 .LineTo(1, 1)
                 .LineTo(0, 0)
                 .Ring(2, 2)
-                .LineTo(3, 2)
+                .LineTo(2, 3)
                 .LineTo(3, 3)
                 .LineTo(2, 2);
 
             yield return new TestCaseData(
                 polygon,
-                "A GeometryPolygon must have exactly one Rings to form a searchable polygon.");
+                "A GeographyPolygon must have exactly one Rings to form a searchable polygon.");
         }
 
         [Test]

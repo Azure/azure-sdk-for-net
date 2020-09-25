@@ -13,82 +13,70 @@ namespace Azure.Search.Documents.Tests.Spatial
         [TestCase(null, false)]
         [TestCase(typeof(object), false)]
         [TestCase(typeof(int), false)]
-        [TestCase(typeof(GeographyPoint), false)]
-        [TestCase(typeof(GeometryPoint), true)]
+        [TestCase(typeof(GeographyPoint), true)]
+        [TestCase(typeof(GeometryPoint), false)]
         [TestCase(typeof(GeographyPosition), false)]
-        [TestCase(typeof(GeometryPosition), true)]
-        [TestCase(typeof(GeographyPolygon), false)]
-        [TestCase(typeof(GeometryPolygon), true)]
-        [TestCase(typeof(GeographyLineString), false)]
-        [TestCase(typeof(GeometryLineString), true)]
+        [TestCase(typeof(GeometryPosition), false)]
+        [TestCase(typeof(GeographyPolygon), true)]
+        [TestCase(typeof(GeometryPolygon), false)]
+        [TestCase(typeof(GeographyLineString), true)]
+        [TestCase(typeof(GeometryLineString), false)]
         public void CanCreate(Type type, bool expected) =>
             Assert.AreEqual(expected, SpatialProxyFactory.CanCreate(type));
-
 
         [Test]
         public void CreateNull() =>
             Assert.IsNull(SpatialProxyFactory.Create(null));
 
         [Test]
-        public void CreateGeometryPoint()
+        public void CreateGeographyPoint()
         {
-            GeometryPoint point = GeometryFactory.Point(1.0, 2.0);
-            GeometryPointProxy proxy = new GeometryPointProxy(point);
+            GeographyPoint point = GeographyFactory.Point(1.0, 2.0);
+            GeographyPointProxy proxy = new GeographyPointProxy(point);
 
             Assert.AreSame(point, proxy.Value);
-            Assert.AreEqual(1.0, proxy.X);
-            Assert.AreEqual(2.0, proxy.Y);
+            Assert.AreEqual(1.0, proxy.Latitude);
+            Assert.AreEqual(2.0, proxy.Longitude);
         }
 
         [Test]
-        public void CreateGeometryPosition()
+        public void CreateGeographyPolygon()
         {
-            GeometryPosition position = new GeometryPosition(1.0, 2.0);
-            GeometryPositionProxy proxy = new GeometryPositionProxy(position);
-
-            Assert.AreSame(position, proxy.Value);
-            Assert.AreEqual(1.0, proxy.X);
-            Assert.AreEqual(2.0, proxy.Y);
-        }
-
-        [Test]
-        public void CreateGeometryPolygon()
-        {
-            GeometryPolygon polygon = GeometryFactory
+            GeographyPolygon polygon = GeographyFactory
                 .Polygon()
                 .Ring(0.0, 0.0)
                 .LineTo(1.0, 0.0)
                 .LineTo(1.0, 1.0)
                 .LineTo(0.0, 1.0)
                 .LineTo(0.0, 0.0);
-            GeometryPolygonProxy proxy = new GeometryPolygonProxy(polygon);
+            GeographyPolygonProxy proxy = new GeographyPolygonProxy(polygon);
 
             Assert.AreSame(polygon, proxy.Value);
             Assert.AreEqual(1, proxy.Rings.Count);
 
-            GeometryLineString line0 = polygon.Rings[0];
-            GeometryLineStringProxy proxyLine0 = proxy.Rings[0];
+            GeographyLineString line0 = polygon.Rings[0];
+            GeographyLineStringProxy proxyLine0 = proxy.Rings[0];
             Assert.AreSame(line0, proxyLine0.Value);
             Assert.AreEqual(5, line0.Points.Count);
             Assert.AreEqual(line0.Points.Count, proxyLine0.Points.Count);
 
             for (int i = 0; i < line0.Points.Count; i++)
             {
-                Assert.AreEqual(line0.Points[i].X, proxyLine0.Points[i].X);
-                Assert.AreEqual(line0.Points[i].Y, proxyLine0.Points[i].Y);
+                Assert.AreEqual(line0.Points[i].Latitude, proxyLine0.Points[i].Latitude);
+                Assert.AreEqual(line0.Points[i].Longitude, proxyLine0.Points[i].Longitude);
             }
         }
 
         [Test]
-        public void CreateGeometryLineString()
+        public void CreateGeographyLineString()
         {
-            GeometryLineString line = GeometryFactory
+            GeographyLineString line = GeographyFactory
                 .LineString(0.0, 0.0)
                 .LineTo(1.0, 0.0)
                 .LineTo(1.0, 1.0)
                 .LineTo(0.0, 1.0)
                 .LineTo(0.0, 0.0);
-            GeometryLineStringProxy proxy = new GeometryLineStringProxy(line);
+            GeographyLineStringProxy proxy = new GeographyLineStringProxy(line);
 
             Assert.AreSame(line, proxy.Value);
             Assert.AreEqual(5, line.Points.Count);
@@ -96,8 +84,8 @@ namespace Azure.Search.Documents.Tests.Spatial
 
             for (int i = 0; i < line.Points.Count; i++)
             {
-                Assert.AreEqual(line.Points[i].X, proxy.Points[i].X);
-                Assert.AreEqual(line.Points[i].Y, proxy.Points[i].Y);
+                Assert.AreEqual(line.Points[i].Latitude, proxy.Points[i].Latitude);
+                Assert.AreEqual(line.Points[i].Longitude, proxy.Points[i].Longitude);
             }
         }
 
@@ -109,16 +97,16 @@ namespace Azure.Search.Documents.Tests.Spatial
         {
             new TestCaseData(new object()),
             new TestCaseData(1),
-            new TestCaseData(GeographyFactory.Point(1.0, 2.0)),
-            new TestCaseData(new GeographyPosition(1.0, 2.0)),
-            new TestCaseData(GeometryFactory
+            new TestCaseData(GeometryFactory.Point(1.0, 2.0)),
+            new TestCaseData(new GeometryPosition(1.0, 2.0)),
+            new TestCaseData(GeographyFactory
                 .Polygon()
                 .Ring(0.0, 0.0)
                 .LineTo(1.0, 0.0)
                 .LineTo(1.0, 1.0)
                 .LineTo(0.0, 1.0)
                 .LineTo(0.0, 0.0)),
-            new TestCaseData(GeometryFactory
+            new TestCaseData(GeographyFactory
                 .LineString(0.0, 0.0)
                 .LineTo(1.0, 0.0)
                 .LineTo(1.0, 1.0)

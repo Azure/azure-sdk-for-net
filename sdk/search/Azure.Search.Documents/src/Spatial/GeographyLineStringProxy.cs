@@ -8,31 +8,31 @@ using System.Reflection;
 namespace Azure.Search.Documents
 {
     /// <summary>
-    /// Proxy for a Microsoft.Spatial.GeometryLineString class.
+    /// Proxy for a Microsoft.Spatial.GeographyLineString class.
     /// </summary>
-    internal class GeometryLineStringProxy : GeometryProxy
+    internal class GeographyLineStringProxy : GeographyProxy
     {
         private static PropertyInfo s_pointsProperty;
-        private IReadOnlyList<GeometryPointProxy> _points;
+        private IReadOnlyList<GeographyPointProxy> _points;
 
         /// <summary>
-        /// Creates a new instance of the <see cref="GeometryLineStringProxy"/> class.
+        /// Creates a new instance of the <see cref="GeographyLineStringProxy"/> class.
         /// </summary>
-        /// <param name="value">The Microsoft.Spatial.GeometryLineString object to proxy.</param>
+        /// <param name="value">The Microsoft.Spatial.GeographyLineString object to proxy.</param>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is null.</exception>
-        public GeometryLineStringProxy(object value) : base(value)
+        public GeographyLineStringProxy(object value) : base(value)
         {
         }
 
         /// <summary>
         /// Gets the point collection.
         /// </summary>
-        public IReadOnlyList<GeometryPointProxy> Points =>
+        public IReadOnlyList<GeographyPointProxy> Points =>
             GetCollectionPropertyValue(
                 ref s_pointsProperty,
                 ref _points,
                 nameof(Points),
-                value => new GeometryPointProxy(value));
+                value => new GeographyPointProxy(value));
 
         /// <inheritdoc/>
         public override string ToString() => SpatialFormatter.EncodePolygon(this);
