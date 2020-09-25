@@ -17,7 +17,7 @@ namespace Azure.Extensions.WebJobs.Sample
         [FunctionName("EventGridBindingFunction")]
         public static async Task<IActionResult> RunAsync(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
-            [EventGrid(TopicEndpointUri = "EventGridCOnnection", TopicKeySetting = "Key")] IAsyncCollector<EventGridEvent> eventCollector)
+            [EventGrid(TopicEndpointUri = "EventGridEndpoint", TopicKeySetting = "EventGridKey")] IAsyncCollector<EventGridEvent> eventCollector)
         {
             EventGridEvent e = new EventGridEvent(await req.ReadAsStringAsync(), "IncomingRequest", "IncomingRequest", "1.0.0");
             await eventCollector.AddAsync(e);
