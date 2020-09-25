@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// </param>
             /// <param name='dataSourceType'>
             /// Linked storage accounts type. Possible values include: 'CustomLogs',
-            /// 'AzureWatson'
+            /// 'AzureWatson', 'Query', 'Alerts'
             /// </param>
             /// <param name='storageAccountIds'>
             /// Linked storage accounts resources ids.
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// </param>
             /// <param name='dataSourceType'>
             /// Linked storage accounts type. Possible values include: 'CustomLogs',
-            /// 'AzureWatson'
+            /// 'AzureWatson', 'Query', 'Alerts'
             /// </param>
             /// <param name='storageAccountIds'>
             /// Linked storage accounts resources ids.
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// </param>
             /// <param name='dataSourceType'>
             /// Linked storage accounts type. Possible values include: 'CustomLogs',
-            /// 'AzureWatson'
+            /// 'AzureWatson', 'Query', 'Alerts'
             /// </param>
             public static void Delete(this ILinkedStorageAccountsOperations operations, string resourceGroupName, string workspaceName, DataSourceType dataSourceType)
             {
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// </param>
             /// <param name='dataSourceType'>
             /// Linked storage accounts type. Possible values include: 'CustomLogs',
-            /// 'AzureWatson'
+            /// 'AzureWatson', 'Query', 'Alerts'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -141,7 +141,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// </param>
             /// <param name='dataSourceType'>
             /// Linked storage accounts type. Possible values include: 'CustomLogs',
-            /// 'AzureWatson'
+            /// 'AzureWatson', 'Query', 'Alerts'
             /// </param>
             public static LinkedStorageAccountsResource Get(this ILinkedStorageAccountsOperations operations, string resourceGroupName, string workspaceName, DataSourceType dataSourceType)
             {
@@ -163,7 +163,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// </param>
             /// <param name='dataSourceType'>
             /// Linked storage accounts type. Possible values include: 'CustomLogs',
-            /// 'AzureWatson'
+            /// 'AzureWatson', 'Query', 'Alerts'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
