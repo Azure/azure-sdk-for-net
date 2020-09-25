@@ -3,7 +3,6 @@
 
 using System;
 using System.Globalization;
-using Microsoft.Azure.WebJobs.Extensions.Storage;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Host.Queues.Listeners;
 using Microsoft.Azure.WebJobs.Hosting;
@@ -37,7 +36,7 @@ namespace Microsoft.Azure.WebJobs.Host
         public QueuesOptions()
         {
             _newBatchThreshold = -1;
-            _processorCount = Utility.GetProcessorCount();
+            _processorCount = SharedUtility.GetProcessorCount();
         }
 
         /// <summary>
