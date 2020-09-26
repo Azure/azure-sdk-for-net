@@ -9,6 +9,8 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+
+using Azure;
 using Azure.Core.Pipeline;
 
 using OpenTelemetry.Exporter.AzureMonitor.ConnectionString;
@@ -44,6 +46,9 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
             options = exporterOptions;
             serviceRestClient = new ServiceRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), endpoint: ingestionEndpoint);
+
+            // Here a configuration can be used to change the behavior of transmitting telemetry to the ingestion service.
+            this.OnTrackAsync = exporterOptions.OnTrackAsync ?? this.TrackAsync;
         }
 
         internal async ValueTask<int> AddBatchActivityAsync(Batch<Activity> batchActivity, bool async, CancellationToken cancellationToken)
@@ -68,16 +73,32 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
             if (async)
             {
-                response = await this.serviceRestClient.TrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false);
+                response = await this.OnTrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false);
             }
             else
             {
-                response = this.serviceRestClient.TrackAsync(telemetryItems, cancellationToken).Result;
+                response = this.OnTrackAsync(telemetryItems, cancellationToken).Result;
             }
 
             // TODO: Handle exception, check telemetryItems has items
             return response.Value.ItemsAccepted.GetValueOrDefault();
         }
+
+        /// <summary>
+        /// In a normal configuration, this is expected to invoke the serviceRestClient and transmit telemetry to the ingestion service.
+        /// This property can be changed to override the behavior of transmitting telemetry.
+        /// This can be used for Unit Testing to capture telemetry that would have been transmitted.
+        /// </summary>
+        internal Func<IEnumerable<TelemetryItem>, CancellationToken, Task<Response<TrackResponse>>> OnTrackAsync { private get; set; }
+
+        /// <summary>
+        /// This method exists to proxy the <see cref="serviceRestClient" />.
+        /// </summary>
+        /// <param name="telemetryItems"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        private Task<Azure.Response<TrackResponse>> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, CancellationToken cancellationToken)
+            => this.serviceRestClient.TrackAsync(telemetryItems, cancellationToken);
 
         private static TelemetryItem GeneratePartAEnvelope(Activity activity)
         {
