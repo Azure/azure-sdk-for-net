@@ -33,9 +33,12 @@ namespace OpenTelemetry.Exporter.AzureMonitor.IntegrationTests
             // Assert
             response.EnsureSuccessStatusCode();
 
+            // TODO: HOW TO REMOVE THE WAIT.
+            Task.Delay(5000).Wait();
+
             Assert.True(this.factory.TelemetryItems.Any(), "telemetry not captured");
 
-            // TODO: EVALUATE TELEMETRY ITEMS
+            // TODO: EVALUATE TELEMETRY ITEMS: REQUEST TELEMETRY SHOULD CONTAIN testNumber FROM ABOVE
             Skip.If(true, "work in progress.");
         }
     }

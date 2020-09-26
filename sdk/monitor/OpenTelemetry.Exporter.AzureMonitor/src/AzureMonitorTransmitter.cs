@@ -81,7 +81,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             }
 
             // TODO: Handle exception, check telemetryItems has items
-            return response.Value.ItemsAccepted.GetValueOrDefault();
+            return response?.Value.ItemsAccepted.GetValueOrDefault() ?? default(int);
         }
 
         /// <summary>
