@@ -30,7 +30,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.IntegrationTests
         {
             // Arrange
             var client = this.factory.CreateClient();
-            var request = new Uri(client.BaseAddress, $"api/statuscode/{(int)httpStatusCode}");
+            var request = new Uri(client.BaseAddress, $"api/home/statuscode/{(int)httpStatusCode}");
 
             // Act
             var response = await client.GetAsync(request);
