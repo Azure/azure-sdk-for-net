@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
@@ -25,19 +26,24 @@ namespace OpenTelemetry.Exporter.AzureMonitor.IntegrationTests
     public class OpenTelemetryWebApplicationFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup : class
     {
         public ConcurrentBag<TelemetryItem> TelemetryItems = new ConcurrentBag<TelemetryItem>();
+        public AzureMonitorTraceExporter AzureMonitorTraceExporter;
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
+            AzureMonitorTraceExporter exporter = null;
+
             builder.ConfigureServices(services =>
             {
                 services.AddOpenTelemetryTracing((builder) => builder
-                    .AddAspNetCoreInstrumentation()
-                    .AddHttpClientInstrumentation()
-                    .AddAzureMonitorTraceExporter(options =>
-                    {
-                        options.ConnectionString = AzureMonitorExporterOptions.EmptyConnectionString;
-                        options.OnTrackAsync = this.OnTrackAsync;
-                    }));
+                        .AddAspNetCoreInstrumentation()
+                        .AddHttpClientInstrumentation()
+                        .AddAzureMonitorTraceExporter(out exporter, options =>
+                        {
+                            options.ConnectionString = AzureMonitorExporterOptions.EmptyConnectionString;
+                            options.OnTrackAsync = this.OnTrackAsync;
+                        }));
+
+                this.AzureMonitorTraceExporter = exporter;
             });
         }
 

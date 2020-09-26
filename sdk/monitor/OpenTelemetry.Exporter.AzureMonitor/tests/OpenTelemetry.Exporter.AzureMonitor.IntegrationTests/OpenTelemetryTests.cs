@@ -36,6 +36,9 @@ namespace OpenTelemetry.Exporter.AzureMonitor.IntegrationTests
             // TODO: HOW TO REMOVE THE WAIT?
             Task.Delay(5000).Wait();
 
+            // I'M TRYING TO CALL SHUTDOWN TO GUARENTEE THAT THE EXPORTER IS FLUSHED WITHOUT NEEDING A WAIT.
+            //this.factory.AzureMonitorTraceExporter.Shutdown();
+
             Assert.True(this.factory.TelemetryItems.Any(), "telemetry not captured");
 
             var item = this.factory.TelemetryItems.Single();
