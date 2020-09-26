@@ -11,8 +11,15 @@ namespace OpenTelemetry.Exporter.AzureMonitor.IntegrationTests.WebApp.Controller
     [ApiController]
     public class HomeController : ControllerBase
     {
-        // GET api/home
-        [HttpGet]
-        public ActionResult Get() => StatusCode((int)HttpStatusCode.OK);
+#pragma warning disable IDE0060 // Remove unused parameter
+        /// <summary>
+        /// This URI will always return 200.
+        /// </summary>
+        /// <param name="id">Set this value to a random value and use this value to distinguish requests in any unit tests.</param>
+        /// <returns></returns>
+        // GET api/home/{id?}
+        [HttpGet("{id?}")]
+        public ActionResult<string> Get(int id = 0) => StatusCode((int)HttpStatusCode.OK);
+#pragma warning restore IDE0060 // Remove unused parameter
     }
 }

@@ -38,16 +38,5 @@ namespace OpenTelemetry.Exporter.AzureMonitor.IntegrationTests
             // Assert
             Assert.Equal(httpStatusCode, response.StatusCode);
         }
-
-        [Fact]
-        public void ProofOfConcept()
-        {
-            Assert.True(true);
-
-            //services.AddOpenTelemetryTracing((builder) => builder
-            //            .AddAspNetCoreInstrumentation()
-            //            .AddHttpClientInstrumentation()
-            //            .AddConsoleExporter());
-        }
     }
 }

@@ -159,5 +159,14 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
             Assert.Equal(expectedIngestionEndpoint, endpoint);
             Assert.Equal(expectedInstrumentationKey, ikey);
         }
+
+        [Fact]
+        public void VerifyDefaultValue()
+        {
+            RunTest(
+                connectionString: AzureMonitorExporterOptions.EmptyConnectionString,
+                expectedInstrumentationKey: "00000000-0000-0000-0000-000000000000",
+                expectedIngestionEndpoint: Constants.DefaultIngestionEndpoint);
+        }
     }
 }

@@ -17,14 +17,20 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" VersionOverride="2.1.1" />
 
+    <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" VersionOverride="0.6.0-beta.1" />
+    <PackageReference Include="OpenTelemetry.Extensions.Hosting" VersionOverride="0.6.0-beta.1" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.Http" VersionOverride="0.6.0-beta.1" />
+
     <PackageReference Include="xunit" />
-    <PackageReference Include="xunit.runner.visualstudio" >
+    <PackageReference Include="xunit.runner.visualstudio">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Xunit.SkippableFact" VersionOverride="1.4.13" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\OpenTelemetry.Exporter.AzureMonitor.csproj" />
     <ProjectReference Include="..\OpenTelemetry.Exporter.AzureMonitor.IntegrationTests.WebApp\OpenTelemetry.Exporter.AzureMonitor.IntegrationTests.WebApp.csproj" />
   </ItemGroup>
 
