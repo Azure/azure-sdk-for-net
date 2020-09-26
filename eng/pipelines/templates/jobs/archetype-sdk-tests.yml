@@ -72,9 +72,9 @@ jobs:
         OSVmImage: "macOS-10.15"
         TestTargetFramework: netcoreapp2.1
       - ${{ if eq(parameters.TestCanary, 'true') }}:          
-        - DisplayName: "Test on Windows for .Net Framework - Canary region"
+        - DisplayName: "Test on Windows for NetCoreApp - Canary region"
           OSVmImage: "windows-2019"
-          TestTargetFramework: net461
+          TestTargetFramework: netcoreapp2.1
           SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)            
           Location: ${{ parameters.ResourceGroupLocationCanary }}
       - DisplayName: "Record on Windows for NetCoreApp"
