@@ -29,12 +29,11 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the LogSpecification class.
         /// </summary>
-        public LogSpecification(string name = default(string), string displayName = default(string), string blobDuration = default(string), string logFilterPattern = default(string))
+        public LogSpecification(string name = default(string), string displayName = default(string), string blobDuration = default(string))
         {
             Name = name;
             DisplayName = displayName;
             BlobDuration = blobDuration;
-            LogFilterPattern = logFilterPattern;
             CustomInit();
         }
 
@@ -57,11 +56,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "blobDuration")]
         public string BlobDuration { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "logFilterPattern")]
-        public string LogFilterPattern { get; set; }
 
     }
 }
