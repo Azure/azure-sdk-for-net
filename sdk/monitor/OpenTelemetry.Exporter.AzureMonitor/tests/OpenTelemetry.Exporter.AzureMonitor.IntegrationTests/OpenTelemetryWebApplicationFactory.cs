@@ -16,7 +16,7 @@ using OpenTelemetry.Trace;
 namespace OpenTelemetry.Exporter.AzureMonitor.IntegrationTests
 {
     /// <summary>
-    /// THIS IS A WORK IN PROGRESS
+    /// THIS IS A WORK IN PROGRESS.
     /// </summary>
     /// <remarks>
     /// https://github.com/open-telemetry/opentelemetry-dotnet/tree/master/src/OpenTelemetry.Instrumentation.AspNetCore

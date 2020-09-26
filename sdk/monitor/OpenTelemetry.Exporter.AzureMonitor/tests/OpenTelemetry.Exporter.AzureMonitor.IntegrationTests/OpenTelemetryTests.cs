@@ -33,11 +33,10 @@ namespace OpenTelemetry.Exporter.AzureMonitor.IntegrationTests
             // Assert
             response.EnsureSuccessStatusCode();
 
+            Assert.True(this.factory.TelemetryItems.Any(), "telemetry not captured");
+
             // TODO: EVALUATE TELEMETRY ITEMS
-            this.factory.TelemetryItems.Count();
-
             Skip.If(true, "work in progress.");
-
         }
     }
 }
