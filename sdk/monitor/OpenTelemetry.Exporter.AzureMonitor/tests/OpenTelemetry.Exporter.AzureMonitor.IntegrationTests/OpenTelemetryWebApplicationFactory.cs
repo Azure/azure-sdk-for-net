@@ -36,19 +36,19 @@ namespace OpenTelemetry.Exporter.AzureMonitor.IntegrationTests
                     .AddAzureMonitorTraceExporter(options =>
                     {
                         options.ConnectionString = AzureMonitorExporterOptions.EmptyConnectionString;
-                        //options.OnTrackAsync = this.OnTrackAsync;
+                        options.OnTrackAsync = this.OnTrackAsync;
                     }));
             });
         }
 
-        //private Task<Azure.Response<TrackResponse>> OnTrackAsync(IEnumerable<TelemetryItem> telemetryItems, CancellationToken cancellationToken)
-        //{
-        //    foreach (var telemetryItem in telemetryItems)
-        //    {
-        //        this.TelemetryItems.Add(telemetryItem);
-        //    }
+        private Task<Azure.Response<TrackResponse>> OnTrackAsync(IEnumerable<TelemetryItem> telemetryItems, CancellationToken cancellationToken)
+        {
+            foreach (var telemetryItem in telemetryItems)
+            {
+                this.TelemetryItems.Add(telemetryItem);
+            }
 
-        //    //return null;
-        //}
+            return null;
+        }
     }
 }

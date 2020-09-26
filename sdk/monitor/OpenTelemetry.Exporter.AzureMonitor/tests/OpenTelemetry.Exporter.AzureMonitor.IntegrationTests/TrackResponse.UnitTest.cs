@@ -14,11 +14,11 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Models
     /// <summary>
     /// This class is to create an empty TaskRespones 
     /// </summary>
-    public partial class TrackResponse
-    {
-        public TrackResponse()
-        {
+    //public partial class TrackResponse
+    //{
+    //    public TrackResponse()
+    //    {
 
-        }
-    }
+    //    }
+    //}
 }
