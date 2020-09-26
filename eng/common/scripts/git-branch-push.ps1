@@ -69,6 +69,9 @@ if (!$SkipCommit) {
         exit $LASTEXITCODE
     }
 }
+else {
+    Write-Host "Skipped applying commit"
+}
 
 # The number of retries can be increased if necessary. In theory, the number of retries
 # should be the max number of libraries in the largest pipeline -1 as everything except
