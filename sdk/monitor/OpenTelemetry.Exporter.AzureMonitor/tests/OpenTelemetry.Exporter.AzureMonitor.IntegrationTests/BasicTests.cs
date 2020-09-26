@@ -2,10 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
+using System.Net;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -14,6 +11,9 @@ using Xunit;
 
 namespace OpenTelemetry.Exporter.AzureMonitor.IntegrationTests
 {
+    /// <summary>
+    /// These tests are to verify that the IntegrationTests work (i.e. Tests app can talk to WebApp).
+    /// </summary>
     public class BasicTests : IClassFixture<WebApplicationFactory<WebApp.Startup>>
     {
         private readonly WebApplicationFactory<WebApp.Startup> factory;
@@ -23,33 +23,31 @@ namespace OpenTelemetry.Exporter.AzureMonitor.IntegrationTests
             this.factory = factory;
         }
 
-        [Fact]
-        public async Task VerifyRequestSuccess()
+        [Theory]
+        [InlineData(HttpStatusCode.OK)]
+        [InlineData(HttpStatusCode.BadRequest)]
+        public async Task VerifyRequest(HttpStatusCode httpStatusCode)
         {
             // Arrange
             var client = this.factory.CreateClient();
-            var request = new Uri(client.BaseAddress, "api/values");
+            var request = new Uri(client.BaseAddress, $"api/statuscode/{(int)httpStatusCode}");
 
             // Act
             var response = await client.GetAsync(request);
 
             // Assert
-            response.EnsureSuccessStatusCode();
-            Assert.True(true);
+            Assert.Equal(httpStatusCode, response.StatusCode);
         }
 
         [Fact]
-        public async Task VerifyRequestFail()
+        public void ProofOfConcept()
         {
-            // Arrange
-            var client = this.factory.CreateClient();
-            var request = new Uri(client.BaseAddress, "api/fail");
+            Assert.True(true);
 
-            // Act
-            var response = await client.GetAsync(request);
-
-            // Assert
-            Assert.Throws<HttpRequestException>(() => response.EnsureSuccessStatusCode());
+            //services.AddOpenTelemetryTracing((builder) => builder
+            //            .AddAspNetCoreInstrumentation()
+            //            .AddHttpClientInstrumentation()
+            //            .AddConsoleExporter());
         }
     }
 }
