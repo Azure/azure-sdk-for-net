@@ -23,6 +23,9 @@
 # PRLabel: %App Configuration
 /sdk/appconfiguration/                          @annelo-msft @AlexanderSher
 
+/sdk/applicationinsights/Microsoft.Azure.App*/  @divya-jay @geneh @alongafni
+/sdk/operationalinsights/Microsoft.Azure.Ope*/  @divya-jay @geneh @alongafni
+
 # PRLabel: %Batch
 /sdk/batch/                                     @bgklein @xingwu1 
 
