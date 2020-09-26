@@ -21,11 +21,11 @@ namespace OpenTelemetry.Exporter.AzureMonitor.IntegrationTests
         [SkippableFact]
         public async Task ProofOfConcept()
         {
-            string testNumber = "123456";
+            string testValue = Guid.NewGuid().ToString();
 
             // Arrange
             var client = this.factory.CreateClient();
-            var request = new Uri(client.BaseAddress, $"api/home/{testNumber}");
+            var request = new Uri(client.BaseAddress, $"api/home/{testValue}");
 
             // Act
             var response = await client.GetAsync(request);
@@ -43,7 +43,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.IntegrationTests
 
             var item = this.factory.TelemetryItems.Single();
             var baseData = (Models.RequestData)item.Data.BaseData;
-            Assert.True(baseData.Url.EndsWith(testNumber), "it is expected that the recorded TelemetryItem matches the value of testNumber.");
+            Assert.True(baseData.Url.EndsWith(testValue), "it is expected that the recorded TelemetryItem matches the value of testValue.");
 
             Skip.If(true, "work in progress.");
         }

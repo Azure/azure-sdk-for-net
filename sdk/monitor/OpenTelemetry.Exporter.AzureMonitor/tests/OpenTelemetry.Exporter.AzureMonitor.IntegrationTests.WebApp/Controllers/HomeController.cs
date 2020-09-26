@@ -22,7 +22,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.IntegrationTests.WebApp.Controller
         /// <param name="id">Set this value to a random value and use this value to distinguish requests in any unit tests.</param>
         /// <returns></returns>
         [HttpGet("{id?}")]
-        public ActionResult<string> Get(int id = 0) => StatusCode((int)HttpStatusCode.OK);
+        public ActionResult<string> Get(string id = null) => StatusCode((int)HttpStatusCode.OK);
 #pragma warning restore IDE0060 // Remove unused parameter
 
         /// <summary>
