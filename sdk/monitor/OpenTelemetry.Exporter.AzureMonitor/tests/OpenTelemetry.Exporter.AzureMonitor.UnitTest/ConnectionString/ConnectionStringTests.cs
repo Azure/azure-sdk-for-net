@@ -11,7 +11,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
     /// </summary>
     public class ConnectionStringTests
     {
-[Fact]
+        [Fact]
         public void TestParse()
         {
             var test = Azure.Core.ConnectionString.Parse("key1=value1;key2=value2;key3=value3");

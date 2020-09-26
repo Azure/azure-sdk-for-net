@@ -161,7 +161,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.ConnectionString
         }
 
         [Fact]
-        public void VerifyDefaultValue()
+        public void VerifyEmptyValue()
         {
             RunTest(
                 connectionString: AzureMonitorExporterOptions.EmptyConnectionString,

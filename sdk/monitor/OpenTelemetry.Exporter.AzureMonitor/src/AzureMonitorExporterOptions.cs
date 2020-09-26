@@ -30,8 +30,11 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
         public string StorageFolder { get; set; }
 
-        public bool Test { get; set; }
-
+        /// <summary>
+        /// This property can be used to change the behavior of the <see cref="AzureMonitorTraceExporter"/>.
+        /// This will divert any <see cref="TelemetryItem"/> from the Ingestion Service.
+        /// This is provided for testing.
+        /// </summary>
         public Func<IEnumerable<TelemetryItem>, CancellationToken, Task<Response<TrackResponse>>> OnTrackAsync { get; set; } = null;
     }
 }
