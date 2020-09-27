@@ -1,0 +1,32 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://workspaceywlive.dev.azuresynapse.net/rbac/getMyAssignedRoles?api-version=2020-02-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-41ce0de0f8c8254182ffaf0f2e33d29e-8efe94f7a3d1014f-00",
+        "User-Agent": "azsdk-net-Analytics.Synapse.AccessControl/1.0.0-alpha.20200921.1 (.NET Framework 4.8.4220.0; Microsoft Windows 10.0.19041 )",
+        "x-ms-client-request-id": "c902f621f4ac819ad7f6077256007e93",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "40",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 22 Sep 2020 05:40:45 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-client-request-id": "c902f621f4ac819ad7f6077256007e93",
+        "x-ms-request-id": "fe8e62cc-41bb-4b30-969f-30e5a3d98ebe"
+      },
+      "ResponseBody": "[\u00226e4bf58a-b8e1-4cc3-bbf9-d73143322b78\u0022]"
+    }
+  ],
+  "Variables": {
+    "AZURE_SYNAPSE_WORKSPACE_URL": "https://workspaceywlive.dev.azuresynapse.net",
+    "RandomSeed": "149921157"
+  }
+}

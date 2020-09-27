@@ -17,5 +17,18 @@ namespace Azure.Analytics.Synapse.Tests
         public string StorageAccountName => GetRecordedVariable("AZURE_STORAGE_ACCOUNT_NAME");
         public string StorageFileSystemName => GetRecordedVariable("AZURE_STORAGE_FILE_SYSTEM_NAME");
         public string PrincipalId => GetRecordedVariable("AZURE_SYNAPSE_PRINCIPAL_ID");
+
+        private string _workspaceName;
+        public string WorkspaceName
+        {
+            get
+            {
+                if (_workspaceName == null)
+                {
+                    _workspaceName = WorkspaceUrl.Split('.')[0].Split('/')[2];
+                }
+                return _workspaceName;
+            }
+        }
     }
 }

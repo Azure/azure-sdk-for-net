@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Analytics.Synapse.Artifacts.Models;
 using NUnit.Framework;
 
@@ -38,23 +39,23 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
         [Test]
         public async Task TestCreatePipeline()
         {
-            var operation = await PipelineClient.StartCreateOrUpdatePipelineAsync("MyPipeline", new PipelineResource());
-            while (!operation.HasValue)
-            {
-                operation.UpdateStatus();
-            }
-            Assert.AreEqual("MyPipeline", operation.Value.Name);
+            string pipelineName = Recording.GenerateName("Pipeline");
+            PipelineCreateOrUpdatePipelineOperation operation = await PipelineClient.StartCreateOrUpdatePipelineAsync(pipelineName, new PipelineResource());
+            PipelineResource pipeline = await operation.WaitForCompletionAsync();
+            Assert.AreEqual(pipelineName, pipeline.Name);
         }
 
         [Test]
         public async Task TestDeletePipeline()
         {
-            var operation = await PipelineClient.StartDeletePipelineAsync("MyPipeline");
-            while (!operation.HasValue)
-            {
-                operation.UpdateStatus();
-            }
-            Assert.AreEqual(200, operation.Value.Status);
+            string pipelineName = Recording.GenerateName("Pipeline");
+
+            PipelineCreateOrUpdatePipelineOperation createOperation = await PipelineClient.StartCreateOrUpdatePipelineAsync(pipelineName, new PipelineResource());
+            await createOperation.WaitForCompletionAsync();
+
+            PipelineDeletePipelineOperation deleteOperation = await PipelineClient.StartDeletePipelineAsync(pipelineName);
+            Response response = await deleteOperation.WaitForCompletionAsync();
+            Assert.AreEqual(200, response.Status);
         }
     }
 }
