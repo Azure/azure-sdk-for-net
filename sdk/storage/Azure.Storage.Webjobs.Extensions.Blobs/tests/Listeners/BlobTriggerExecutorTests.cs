@@ -39,7 +39,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             _logger = loggerFactory.CreateLogger<BlobListener>();
         }
 
-        [AzuriteFact]
+        [Fact]
         public void ExecuteAsync_IfBlobDoesNotMatchPattern_ReturnsSuccessfulResult()
         {
             // Arrange
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             Assert.True(!string.IsNullOrWhiteSpace(logMessage.GetStateValue<string>("{OriginalFormat}")));
         }
 
-        [AzuriteFact]
+        [Fact]
         public void ExecuteAsync_IfBlobDoesNotExist_ReturnsSuccessfulResult()
         {
             // Arrange
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             Assert.True(!string.IsNullOrWhiteSpace(logMessage.GetStateValue<string>("{OriginalFormat}")));
         }
 
-        [AzuriteFact]
+        [Fact]
         public void ExecuteAsync_IfCompletedBlobReceiptExists_ReturnsSuccessfulResult()
         {
             // Arrange
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             Assert.True(!string.IsNullOrWhiteSpace(logMessage.GetStateValue<string>("{OriginalFormat}")));
         }
 
-        [AzuriteFact]
+        [Fact]
         public void ExecuteAsync_IfIncompleteBlobReceiptExists_TriesToAcquireLease()
         {
             // Arrange
@@ -162,7 +162,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             mock.Verify();
         }
 
-        [AzuriteFact]
+        [Fact]
         public void ExecuteAsync_IfBlobReceiptDoesNotExist_TriesToCreateReceipt()
         {
             // Arrange
@@ -187,7 +187,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             mock.Verify();
         }
 
-        [AzuriteFact]
+        [Fact]
         public void ExecuteAsync_IfTryCreateReceiptFails_ReturnsUnsuccessfulResult()
         {
             // Arrange
@@ -210,7 +210,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             Assert.False(task.Result.Succeeded);
         }
 
-        [AzuriteFact]
+        [Fact]
         public void ExecuteAsync_IfTryCreateReceiptSucceeds_TriesToAcquireLease()
         {
             // Arrange
@@ -237,7 +237,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             mock.Verify();
         }
 
-        [AzuriteFact]
+        [Fact]
         public void ExecuteAsync_IfTryAcquireLeaseFails_ReturnsFailureResult()
         {
             // Arrange
@@ -260,7 +260,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             Assert.False(task.Result.Succeeded);
         }
 
-        [AzuriteFact]
+        [Fact]
         public void ExecuteAsync_IfTryAcquireLeaseSucceeds_ReadsLatestReceipt()
         {
             // Arrange
@@ -291,7 +291,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             Assert.Equal(2, calls);
         }
 
-        [AzuriteFact]
+        [Fact]
         public void ExecuteAsync_IfLeasedReceiptBecameCompleted_ReleasesLeaseAndReturnsSuccessResult()
         {
             // Arrange
@@ -325,7 +325,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             Assert.True(task.Result.Succeeded);
         }
 
-        [AzuriteFact]
+        [Fact]
         public void ExecuteAsync_IfEnqueueAsyncThrows_ReleasesLease()
         {
             // Arrange
@@ -364,7 +364,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             Assert.Same(expectedException, exception);
         }
 
-        [AzuriteFact]
+        [Fact]
         public void ExecuteAsync_IfLeasedIncompleteReceipt_EnqueuesMessageMarksCompletedReleasesLeaseAndReturnsSuccessResult()
         {
             // Arrange

@@ -39,7 +39,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task TestGenericSucceeds()
         {
             var account = CreateFakeStorageAccount();
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
 
-        [AzuriteFact]
+        [Fact]
         public void Catch_Bad_Name_At_IndexTime()
         {
             IHost host = new HostBuilder()
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task Catch_Bad_Name_At_Runtime()
         {
             var nameResolver = new FakeNameResolver().Add("key", "1");
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         }
 
         // The presence of { } defers validation until runtime. Even if there are illegal chars known at index time!
-        [AzuriteFact]
+        [Fact]
         public async Task Catch_Bad_Name_At_Runtime_With_Illegal_Static_Chars()
         {
             var nameResolver = new FakeNameResolver().Add("key", "$"); // Illegal
@@ -183,7 +183,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task InvokeWithBindingData()
         {
             // Verify that queue binding pattern has uppercase letters in it. These get normalized to lowercase.
@@ -244,7 +244,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task InvokeWithCompoundBindingData()
         {
             // Verify that queue binding pattern has uppercase letters in it. These get normalized to lowercase.
@@ -357,7 +357,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
 
-        [AzuriteFact]
+        [Fact]
         public void Fails_BindingContract_Mismatch()
         {
             // Verify that indexing fails if the [Queue] trigger needs binding data that's not present.
@@ -383,7 +383,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
 
-        [AzuriteFact]
+        [Fact]
         public void Fails_Cant_Bind_To_Object()
         {
             var account = CreateFakeStorageAccount();
@@ -399,7 +399,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 "Object element types are not supported.");
         }
 
-        [AzuriteTheory]
+        [Theory]
         [InlineData(typeof(int), "System.Int32")]
         [InlineData(typeof(DateTime), "System.DateTime")]
         [InlineData(typeof(IEnumerable<string>), "System.Collections.Generic.IEnumerable`1[System.String]")] // Should use ICollector<string> instead
@@ -431,7 +431,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 "Can't bind Queue to type '" + typeName + "'.");
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task Queue_IfBoundToCloudQueue_BindsAndCreatesQueue()
         {
             // Arrange
@@ -451,7 +451,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.True(await queue.ExistsAsync());
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task Queue_IfBoundToICollectorCloudQueueMessage_AddEnqueuesMessage()
         {
             // Arrange

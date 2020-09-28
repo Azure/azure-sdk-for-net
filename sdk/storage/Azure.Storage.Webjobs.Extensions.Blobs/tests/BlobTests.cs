@@ -29,7 +29,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             this.azuriteFixture = azuriteFixture;
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task Blob_IfBoundToCloudBlockBlob_BindsAndCreatesContainerButNotBlob()
         {
             // Act
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.False(await blob.ExistsAsync());
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task Blob_IfBoundToTextWriter_CreatesBlob()
         {
             // Arrange

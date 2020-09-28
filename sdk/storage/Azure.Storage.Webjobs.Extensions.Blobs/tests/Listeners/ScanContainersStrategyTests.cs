@@ -23,7 +23,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
             this.azuriteFixture = azuriteFixture;
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task TestBlobListener()
         {
             const string containerName = "container";

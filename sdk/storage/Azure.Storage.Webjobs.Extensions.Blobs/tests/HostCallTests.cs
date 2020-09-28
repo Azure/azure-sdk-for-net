@@ -37,7 +37,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             this.azuriteFixture = azuriteFixture;
         }
 
-        [AzuriteTheory]
+        [Theory]
         [InlineData("FuncWithString")]
         [InlineData("FuncWithTextReader")]
         [InlineData("FuncWithStreamRead")]
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.False(await blob.ExistsAsync());
         }
 
-        [AzuriteTheory]
+        [Theory]
         [InlineData("FuncWithOutString")]
         [InlineData("FuncWithStreamWriteNoop")]
         [InlineData("FuncWithTextWriter")]
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.True(await blob.ExistsAsync());
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task BlobTrigger_IfHasUnboundParameter_CanCall()
         {
             // Arrange
@@ -115,7 +115,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.True(guid != Guid.Empty, "Blob is missing causality information");
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task Blob_IfBoundToCloudBlockBlob_CanCall()
         {
             // Arrange
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             await CallAsync(account, typeof(BlobProgram), "BindToCloudBlockBlob");
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task Blob_IfBoundToString_CanCall()
         {
             // Arrange
@@ -144,7 +144,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             await CallAsync(account, typeof(BlobProgram), "BindToString");
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task Blob_IfCopiedViaString_CanCall()
         {
             // Arrange
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(expectedContent, outputContent);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task BlobTrigger_IfCopiedViaTextReaderTextWriter_CanCall()
         {
             // Arrange
@@ -192,7 +192,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(expectedContent, outputContent);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task BlobTrigger_IfBoundToICloudBlob_CanCallWithBlockBlob()
         {
             // Arrange
@@ -218,7 +218,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.IsType<BlockBlobClient>(result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task BlobTrigger_IfBoundToICloudBlob_CanCallWithPageBlob()
         {
             // Arrange
@@ -244,7 +244,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.IsType<PageBlobClient>(result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task BlobTrigger_IfBoundToICloudBlobAndTriggerArgumentIsMissing_CallThrows()
         {
             // Arrange
@@ -258,7 +258,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal("Missing value for trigger parameter 'blob'.", exception.Message);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task BlobTrigger_IfBoundToCloudBlockBlob_CanCall()
         {
             // Arrange
@@ -283,7 +283,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.NotNull(result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task BlobTrigger_IfBoundToCloudBLockBlobAndTriggerArgumentIsMissing_CallThrows()
         {
             // Arrange
@@ -307,7 +307,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task BlobTrigger_IfBoundToCloudPageBlob_CanCall()
         {
             // Arrange
@@ -332,7 +332,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.NotNull(result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task BlobTrigger_IfBoundToCloudPageBlobAndTriggerArgumentIsMissing_CallThrows()
         {
             // Arrange
@@ -356,7 +356,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task BlobTrigger_IfBoundToCloudAppendBlob_CanCall()
         {
             // Arrange
@@ -381,7 +381,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.NotNull(result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task BlobTrigger_IfBoundToCloudAppendBlobAndTriggerArgumentIsMissing_CallThrows()
         {
             // Arrange
@@ -405,7 +405,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task Int32Argument_CanCallViaStringParse()
         {
             // Arrange
@@ -433,7 +433,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task Binder_IfBindingBlobToTextWriter_CanCall()
         {
             // Arrange
@@ -461,7 +461,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task BlobTrigger_IfCopiedViaPoco_CanCall()
         {
             // Arrange

@@ -36,7 +36,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             this.azuriteFixture = azuriteFixture;
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task Int32Argument_CanCallViaStringParse()
         {
             // Arrange
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task Queue_IfBoundToOutPoco_CanCall()
         {
             var account = CreateFakeStorageAccount();
@@ -77,19 +77,19 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             AssertMessageSent(new PocoMessage { Value = "15" }, queue);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task Queue_IfBoundToICollectorPoco_CanCall()
         {
             await TestEnqueueMultiplePocoMessages("BindToICollectorPoco");
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task Queue_IfBoundToIAsyncCollectorPoco_CanCall()
         {
             await TestEnqueueMultiplePocoMessages("BindToIAsyncCollectorPoco");
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task Queue_IfBoundToIAsyncCollectorByteArray_CanCall()
         {
             var account = CreateFakeStorageAccount();
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal("test3", sortedMessages[2].MessageText);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task Queue_IfBoundToICollectorByteArray_CanCall() // TODO (kasobol-msft) revisit when BinaryData is in SDK
         {
             var account = CreateFakeStorageAccount();
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal("test3", sortedMessages[2].MessageText);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task Queue_IfBoundToIAsyncCollectorInt_NotSupported()
         {
             StorageAccount account = CreateFakeStorageAccount();
@@ -166,7 +166,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             AssertEqual(new PocoMessage { Value = "30" }, thirdMessage);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task Queue_IfBoundToIAsyncCollector_AddEnqueuesImmediately()
         {
             // Arrange
@@ -176,7 +176,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             await CallAsync(account, typeof(QueueProgram), "BindToIAsyncCollectorEnqueuesImmediately");
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task Queue_IfBoundToCloudQueue_CanCall()
         {
             // Arrange
@@ -191,7 +191,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(QueueName, result.Name);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task Queue_IfBoundToCloudQueueAndQueueIsMissing_Creates()
         {
             // Arrange
@@ -217,7 +217,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
 
-        [AzuriteTheory]
+        [Theory]
         [InlineData("FuncWithOutCloudQueueMessage", TestQueueMessage)]
         [InlineData("FuncWithOutByteArray", TestQueueMessage)]
         [InlineData("FuncWithOutString", TestQueueMessage)]
@@ -236,7 +236,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             AssertMessageSent(expectedMessage, queue);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task Queue_IfBoundToOutPocoAndQueueIsMissing_CreatesAndSends()
         {
             // Arrange
@@ -251,7 +251,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             AssertMessageSent(new PocoMessage { Value = TestQueueMessage }, queue);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task Queue_IfBoundToOutStructAndQueueIsMissing_CreatesAndSends()
         {
             // Arrange
@@ -266,7 +266,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             AssertMessageSent(new StructMessage { Value = TestQueueMessage }, queue);
         }
 
-        [AzuriteTheory]
+        [Theory]
         [InlineData("FuncWithOutCloudQueueMessageNull")]
         [InlineData("FuncWithOutByteArrayNull")]
         [InlineData("FuncWithOutStringNull")]

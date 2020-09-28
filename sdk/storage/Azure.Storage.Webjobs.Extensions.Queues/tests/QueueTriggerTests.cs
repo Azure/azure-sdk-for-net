@@ -48,7 +48,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             await queue.SendMessageAsync(message);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_IfBoundToCloudQueueMessage_Binds()
         {
             // Arrange
@@ -65,14 +65,14 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(expectedGuid, result.MessageText);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_IfBoundToString_Binds()
         {
             string expectedContent = Guid.NewGuid().ToString();
             await TestBindToString(expectedContent);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_IfBoundToStringAndMessageIsEmpty_Binds()
         {
             await TestBindToString(string.Empty);
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             await TestBindToByteArray(expectedContent);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_IfBoundToByteArrayAndMessageIsEmpty_Binds()
         {
             byte[] expectedContent = new byte[0];
@@ -151,14 +151,14 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(expectedContent, result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_IfBoundToPoco_Binds()
         {
             Poco expectedContent = new Poco { Value = "abc" };
             await TestBindToPoco(expectedContent);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_IfBoundToPocoAndMessageIsJsonNull_Binds()
         {
             Poco expectedContent = null;
@@ -194,7 +194,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             AssertEqual(expected.Child, actual.Child);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_IfBoundToPocoAndMessageIsNotJson_DoesNotBind()
         {
             // Arrange
@@ -221,7 +221,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(expectedInnerMessage, actual);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_IfBoundToPocoAndMessageIsIncompatibleJson_DoesNotBind()
         {
             // Arrange
@@ -248,7 +248,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(expectedInnerMessage, actual);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_IfBoundToPocoStruct_Binds()
         {
             // Arrange
@@ -266,7 +266,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(expectedContent, result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_IfMessageIsString_ProvidesQueueTriggerBindingData()
         {
             // Arrange
@@ -283,7 +283,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(expectedQueueTrigger, result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_IfMessageIsUtf8ByteArray_ProvidesQueueTriggerBindingData()
         {
             // Arrange
@@ -322,7 +322,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal("Binding data does not contain expected value 'queueTrigger'.", innerException.Message);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_ProvidesDequeueCountBindingData()
         {
             // Arrange
@@ -339,7 +339,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(1, result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_ProvidesExpirationTimeBindingData()
         {
             // Arrange
@@ -356,7 +356,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(0, (int)DateTimeOffset.Now.AddDays(7).Subtract(result).TotalDays);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_ProvidesIdBindingData()
         {
             // Arrange
@@ -374,7 +374,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.NotEmpty(result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_ProvidesInsertionTimeBindingData()
         {
             // Arrange
@@ -389,7 +389,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(0, (int)DateTimeOffset.Now.Subtract(result).TotalHours);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_ProvidesNextVisibleTimeBindingData()
         {
             // Arrange
@@ -404,7 +404,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(0, (int)DateTimeOffset.Now.Subtract(result).TotalHours);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_ProvidesPopReceiptBindingData()
         {
             // Arrange
@@ -420,7 +420,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.NotEmpty(result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_ProvidesPocoStructPropertyBindingData()
         {
             // Arrange
@@ -440,7 +440,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(expectedInt32Value, result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_ProvidesPocoComplexPropertyBindingData()
         {
             // Arrange
@@ -464,7 +464,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             AssertEqual(expectedChild, result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_IfBindingAlwaysFails_MovesToPoisonQueue()
         {
             // Arrange
@@ -481,7 +481,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(expectedContents, result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task QueueTrigger_IfDequeueCountReachesMaxDequeueCount_MovesToPoisonQueue()
         {
             try
@@ -509,7 +509,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task CallQueueTrigger_IfArgumentIsCloudQueueMessage_Binds()
         {
             // Arrange
@@ -523,7 +523,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Same(expectedMessage, result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task CallQueueTrigger_IfArgumentIsString_Binds()
         {
             // Arrange
@@ -538,7 +538,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(expectedContents, result.MessageText);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task CallQueueTrigger_IfArgumentIsIStorageQueueMessage_Binds()
         {
             // Arrange
@@ -552,7 +552,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Same(expectedMessage, result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task CallQueueTrigger_ProvidesDequeueCountBindingData()
         {
             // Arrange
@@ -567,7 +567,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(expectedDequeueCount, result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task CallQueueTrigger_ProvidesExpirationTimeBindingData()
         {
             // Arrange
@@ -583,7 +583,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(expectedExpirationTime, result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task CallQueueTrigger_IfExpirationTimeIsNull_ProvidesMaxValueExpirationTimeBindingData()
         {
             // Arrange
@@ -599,7 +599,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(DateTimeOffset.MaxValue, result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task CallQueueTrigger_ProvidesIdBindingData()
         {
             // Arrange
@@ -614,7 +614,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Same(expectedId, result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task CallQueueTrigger_ProvidesInsertionTimeBindingData()
         {
             // Arrange
@@ -630,7 +630,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(expectedInsertionTime, result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task CallQueueTrigger_IfInsertionTimeIsNull_ProvidesUtcNowInsertionTimeBindingData()
         {
             // Arrange
@@ -647,7 +647,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(TimeSpan.Zero, result.Offset);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task CallQueueTrigger_ProvidesNextVisibleTimeBindingData()
         {
             // Arrange
@@ -663,7 +663,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(expectedNextVisibleTime, result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task CallQueueTrigger_IfNextVisibleTimeIsNull_ProvidesMaxValueNextVisibleTimeBindingData()
         {
             // Arrange
@@ -679,7 +679,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.Equal(DateTimeOffset.MaxValue, result);
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task CallQueueTrigger_ProvidesPopReceiptBindingData()
         {
             // Arrange
