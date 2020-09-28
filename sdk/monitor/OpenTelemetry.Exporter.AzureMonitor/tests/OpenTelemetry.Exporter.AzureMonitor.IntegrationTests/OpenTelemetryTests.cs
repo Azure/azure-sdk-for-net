@@ -33,10 +33,11 @@ namespace OpenTelemetry.Exporter.AzureMonitor.IntegrationTests
             // Assert
             response.EnsureSuccessStatusCode();
 
-            // TODO: HOW TO REMOVE THE WAIT?
+            // TODO: HOW TO REMOVE THE WAIT? CAN THE EXPORTER BE FLUSHED?
             Task.Delay(5000).Wait();
 
-            // I'M TRYING TO CALL SHUTDOWN TO GUARENTEE THAT THE EXPORTER IS FLUSHED WITHOUT NEEDING A WAIT.
+            /// TODO: I'M TRYING TO CALL SHUTDOWN TO GUARENTEE THAT THE EXPORTER IS FLUSHED WITHOUT NEEDING A WAIT.
+            /// Raj said that the Shutdown method is being removed from OpenTelemetry SDK.
             //this.factory.AzureMonitorTraceExporter.Shutdown();
 
             Assert.True(this.factory.TelemetryItems.Any(), "telemetry not captured");

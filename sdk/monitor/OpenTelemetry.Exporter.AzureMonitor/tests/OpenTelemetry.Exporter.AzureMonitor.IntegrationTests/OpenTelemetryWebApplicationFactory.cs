@@ -54,7 +54,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.IntegrationTests
                 this.TelemetryItems.Add(telemetryItem);
             }
 
-            /// TODO: IT WOULD BE USEFUL TO RETURN A VALID TrackResponse OBJECT HERE. THIS COULD BE USED TO STUB BEHAVIORFROM THE INGESTION SERVICE.
+            /// TODO: IT WOULD BE USEFUL TO RETURN A VALID TrackResponse OBJECT HERE. THIS COULD BE USED TO STUB BEHAVIOR FROM THE INGESTION SERVICE.
             /// I WAS ABLE TO CREATE A DEFAULT TrackResonse OBJECT, BUT COULDN'T DO THE SAME FOR Azure.Response. NEEDS MORE WORK.
             return null;
         }

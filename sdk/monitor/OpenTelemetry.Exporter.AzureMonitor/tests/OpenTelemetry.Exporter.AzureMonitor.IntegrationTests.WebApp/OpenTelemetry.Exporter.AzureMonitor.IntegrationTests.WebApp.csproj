@@ -12,14 +12,9 @@
     <RequiredTargetFrameworks>netcoreapp2.1</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\" />
-  </ItemGroup>
-
+  
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
-
   </ItemGroup>
 
 </Project>
