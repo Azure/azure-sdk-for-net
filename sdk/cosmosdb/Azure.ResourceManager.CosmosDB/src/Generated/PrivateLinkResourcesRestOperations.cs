@@ -59,6 +59,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/privateLinkResources", false);
             uri.AppendQuery("api-version", "2019-08-01-preview", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -143,6 +144,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath(groupName, true);
             uri.AppendQuery("api-version", "2019-08-01-preview", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

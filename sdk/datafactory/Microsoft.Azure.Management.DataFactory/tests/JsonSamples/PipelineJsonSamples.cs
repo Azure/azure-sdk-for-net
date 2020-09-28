@@ -9,6 +9,53 @@ namespace DataFactory.Tests.JsonSamples
     public class PipelineJsonSamples : JsonSampleCollection<PipelineJsonSamples>
     {
         [JsonSample]
+        public const string AzureDatabricksDeltaLakeCopyActivity = @"
+{
+  ""name"": ""ExampleCopyActivity"",
+  ""properties"": {
+    ""activities"": [
+      {
+        ""name"": ""MyActivity"",
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""AzureDatabricksDeltaLakeSource"",
+            ""query"": ""abc"",
+            ""exportSettings"": {
+               ""type"": ""AzureDatabricksDeltaLakeExportCommand"",
+               ""dateFormat"": ""xxx"",
+               ""timestampFormat"": ""xxx""
+             }
+          },
+          ""sink"": {
+            ""type"": ""AzureDatabricksDeltaLakeSink"",
+            ""preCopyScript"": ""123"",
+            ""importSettings"": {
+               ""type"": ""AzureDatabricksDeltaLakeImportCommand"",
+               ""dateFormat"": ""xxx"",
+               ""timestampFormat"": ""xxx""
+             }
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""exampleSourceDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""exampleSinkDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ]
+      }
+    ]
+  }
+}
+";
+
+        [JsonSample]
         public const string CopyActivity = @"
 {
   ""name"": ""MyPipeline"",
@@ -4374,7 +4421,9 @@ namespace DataFactory.Tests.JsonSamples
             ""formatSettings"": {
               ""type"": ""DelimitedTextWriteSettings"",
               ""quoteAllText"": true,
-              ""fileExtension"": "".csv""
+              ""fileExtension"": "".csv"",
+              ""maxRowsPerFile"": 10,
+              ""fileNamePrefix"": ""orcSinkFile""
             }
           },
           ""validateDataConsistency"": true,

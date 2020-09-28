@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.Sql
             }
             uri.AppendQuery("api-version", "2018-06-01-preview", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

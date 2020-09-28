@@ -1,13 +1,13 @@
 # Azure Event Grid client library for .NET
 
-Azure Event Grid allows you to easily build applications with event-based architectures. The Event Grid service fully manages all routing of events from any source, to any destination, for any application. Azure service events and custom events can be published directly to the service, where the events can then be filtered and sent to various recipients, such as built-in handlers or custom webhooks. To learn more about Azure Event Grid: [What is Event Grid?](https://docs.microsoft.com/en-us/azure/event-grid/overview)
+Azure Event Grid allows you to easily build applications with event-based architectures. The Event Grid service fully manages all routing of events from any source, to any destination, for any application. Azure service events and custom events can be published directly to the service, where the events can then be filtered and sent to various recipients, such as built-in handlers or custom webhooks. To learn more about Azure Event Grid: [What is Event Grid?](https://docs.microsoft.com/azure/event-grid/overview)
 
 Use the client library for Azure Event Grid to:
 - Publish events to the Event Grid service using the Event Grid Event, Cloud Event 1.0, or custom schemas
 - Consume events that have been delivered to event handlers
 - Generate SAS tokens to authenticate the client publishing events to Azure Event Grid topics
 
-  [Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventgrid/Azure.Messaging.EventGrid) | [Package (NuGet)]() | [API reference documentation](https://azure.github.io/azure-sdk-for-net/eventgrid.html) | [Product documentation](https://docs.microsoft.com/en-us/azure/event-grid/) | [Samples](samples)
+  [Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventgrid/Azure.Messaging.EventGrid/src) | [Package (NuGet)](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventgrid/Azure.Messaging.EventGrid/) | [API reference documentation](https://azure.github.io/azure-sdk-for-net/eventgrid.html) | [Product documentation](https://docs.microsoft.com/azure/event-grid/) | [Samples](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventgrid/Azure.Messaging.EventGrid/samples)
 
 ## Getting started
 
@@ -21,7 +21,7 @@ dotnet add package Azure.Messaging.EventGrid --version 4.0.0-beta.1
 
 ### Prerequisites
 
-You must have an [Azure subscription](https://azure.microsoft.com/free/) and an Azure resource group with a custom Event Grid topic or domain. Follow this [step-by-step tutorial](https://docs.microsoft.com/en-us/azure/event-grid/custom-event-quickstart-portal) to register the Event Grid resource provider and create Event Grid topics using the [Azure portal](https://portal.azure.com/). There is a [similar tutorial](https://docs.microsoft.com/en-us/azure/event-grid/custom-event-quickstart) using [Azure CLI](https://docs.microsoft.com/cli/azure).
+You must have an [Azure subscription](https://azure.microsoft.com/free/) and an Azure resource group with a custom Event Grid topic or domain. Follow this [step-by-step tutorial](https://docs.microsoft.com/azure/event-grid/custom-event-quickstart-portal) to register the Event Grid resource provider and create Event Grid topics using the [Azure portal](https://portal.azure.com/). There is a [similar tutorial](https://docs.microsoft.com/azure/event-grid/custom-event-quickstart) using [Azure CLI](https://docs.microsoft.com/cli/azure).
 
 ### Authenticate the Client
 
@@ -33,7 +33,7 @@ You can find the endpoint for your Event Grid topic either in the [Azure Portal]
 az eventgrid topic show --name <your-resource-name> --resource-group <your-resource-group-name> --query "endpoint"
 ```
 
-The access key can also be found through the [portal](https://docs.microsoft.com/en-us/azure/event-grid/get-access-keys), or by using the Azure CLI snippet below:
+The access key can also be found through the [portal](https://docs.microsoft.com/azure/event-grid/get-access-keys), or by using the Azure CLI snippet below:
 ```bash
 az eventgrid topic key list --name <your-resource-name> --resource-group <your-resource-group-name> --query "key1"
 ```
@@ -62,7 +62,7 @@ EventGridPublisherClient client = new EventGridPublisherClient(
 
 ## Key concepts
 
-For information about general Event Grid concepts: [Concepts in Azure Event Grid](https://docs.microsoft.com/en-us/azure/event-grid/concepts).
+For information about general Event Grid concepts: [Concepts in Azure Event Grid](https://docs.microsoft.com/azure/event-grid/concepts).
 
 ### EventGridPublisherClient
 A **publisher** sends events to the Event Grid service. Microsoft publishes events for several Azure services. You can publish events from your own application using the `EventGridPublisherClient`.
@@ -71,10 +71,10 @@ A **publisher** sends events to the Event Grid service. Microsoft publishes even
 An **event** is the smallest amount of information that fully describes something that happened in the system. Event Grid supports multiple schemas for encoding events. When a custom topic or domain is created, you specify the schema that will be used when publishing events.
 
 #### Event Grid schema
-While you may configure your topic to use a custom schema, it is more common to use the already-defined Event Grid schema. See the specifications and requirements [here](https://docs.microsoft.com/en-us/azure/event-grid/event-schema).
+While you may configure your topic to use a custom schema, it is more common to use the already-defined Event Grid schema. See the specifications and requirements [here](https://docs.microsoft.com/azure/event-grid/event-schema).
 
 #### CloudEvents v1.0 schema
-Another option is to use the CloudEvents v1.0 schema. [CloudEvents](https://cloudevents.io/) is a Cloud Native Computing Foundation project which produces a specification for describing event data in a common way. The service summary of CloudEvents can be found [here](https://docs.microsoft.com/en-us/azure/event-grid/cloud-event-schema).
+Another option is to use the CloudEvents v1.0 schema. [CloudEvents](https://cloudevents.io/) is a Cloud Native Computing Foundation project which produces a specification for describing event data in a common way. The service summary of CloudEvents can be found [here](https://docs.microsoft.com/azure/event-grid/cloud-event-schema).
 
 Regardless of what schema your topic or domain is configured to use, `EventGridPublisherClient` will be used to publish events to it. Use the `SendEvents` or `SendEventsAsync` method for publishing.
 
@@ -152,9 +152,9 @@ await client.SendEventsAsync(eventsList);
 ```
 
 ### Receiving and Deserializing Events
-There are several different Azure services that act as [event handlers](https://docs.microsoft.com/en-us/azure/event-grid/event-handlers).
+There are several different Azure services that act as [event handlers](https://docs.microsoft.com/azure/event-grid/event-handlers).
 
-Note: if using Webhooks for event delivery of the *Event Grid schema*, Event Grid requires you to prove ownership of your Webhook endpoint before it starts delivering events to that endpoint. At the time of event subscription creation, Event Grid sends a subscription validation event to your endpoint, as seen below. Learn more about completing the handshake here: [Webhook event delivery](https://docs.microsoft.com/en-us/azure/event-grid/webhook-event-delivery). For the *CloudEvents schema*, the service validates the connection using the HTTP options method. Learn more here: [CloudEvents validation](https://github.com/cloudevents/spec/blob/v1.0/http-webhook.md#4-abuse-protection).
+Note: if using Webhooks for event delivery of the *Event Grid schema*, Event Grid requires you to prove ownership of your Webhook endpoint before it starts delivering events to that endpoint. At the time of event subscription creation, Event Grid sends a subscription validation event to your endpoint, as seen below. Learn more about completing the handshake here: [Webhook event delivery](https://docs.microsoft.com/azure/event-grid/webhook-event-delivery). For the *CloudEvents schema*, the service validates the connection using the HTTP options method. Learn more here: [CloudEvents validation](https://github.com/cloudevents/spec/blob/v1.0/http-webhook.md#4-abuse-protection).
 
 Once events are delivered to the event handler, parse the JSON payload into list of events.
 
@@ -222,7 +222,7 @@ foreach (EventGridEvent egEvent in egEvents)
 ## Troubleshooting
 
 ### Service Responses
-`SendEvents()` returns a HTTP response code from the service. A `RequestFailedException` is thrown as a service response for any unsuccessful requests. The exception contains information about what response code was returned from the service.
+`SendEvents()` returns an HTTP response code from the service. A `RequestFailedException` is thrown as a service response for any unsuccessful requests. The exception contains information about what response code was returned from the service.
 
 ### Deserializing Event Data
 - If the event data is not valid JSON, a `JsonException` will be thrown during `Parse`.
@@ -233,7 +233,7 @@ You can also easily [enable console logging](https://github.com/Azure/azure-sdk-
 
 ## Next steps
 
-View more samples here for common usages of the Event Grid client library: [Event Grid Samples](samples).
+View more https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventgrid/Azure.Messaging.EventGrid/samples here for common usages of the Event Grid client library: [Event Grid Samples](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventgrid/Azure.Messaging.EventGrid/samples).
 
 ## Contributing
 
