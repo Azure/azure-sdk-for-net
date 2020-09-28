@@ -383,6 +383,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
+        [Ignore("Need to get an approved file to test")]
         public async Task StartRecognizeContentWithSelectionMarks()
         {
             var client = CreateFormRecognizerClient();
@@ -865,6 +866,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         [TestCase(true)]
         [TestCase(false)]
+        [Ignore("Need to get an approved file to test")]
         public async Task StartRecognizeCustomFormsWithLabelsAndSelectionMarks(bool includeFieldElements)
         {
             var client = CreateFormRecognizerClient();
@@ -891,12 +893,11 @@ namespace Azure.AI.FormRecognizer.Tests
 
             // Testing that we shuffle things around correctly so checking only once per property.
             Assert.IsNotEmpty(form.FormType);
-            Assert.AreEqual(1, form.Pages.Count);
             Assert.IsNotNull(form.Fields);
             var name = "Checkbox_Paramedic Subscription_Amount Enclosed";
             Assert.IsNotNull(form.Fields[name]);
             Assert.AreEqual(FieldValueType.SelectionMark, form.Fields[name].Value.ValueType);
-            Assert.AreEqual("selected", form.Fields[name].ValueData.Text);
+            Assert.AreEqual("Selected", form.Fields[name].ValueData.Text);
         }
 
         [Test]
@@ -1399,6 +1400,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.NotNull(selectionMark.BoundingBox.Points);
                 Assert.AreEqual(4, selectionMark.BoundingBox.Points.Length);
                 Assert.NotNull(selectionMark.Text);
+                Assert.That(selectionMark.Text, Is.EqualTo("Selected").Or.EqualTo("Unselected"));
                 Assert.NotNull(selectionMark.State);
                 Assert.That(selectionMark.Confidence, Is.GreaterThanOrEqualTo(0.0).Within(0.01));
                 Assert.That(selectionMark.Confidence, Is.LessThanOrEqualTo(1.0).Within(0.01));

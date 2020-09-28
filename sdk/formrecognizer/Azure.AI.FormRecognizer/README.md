@@ -137,7 +137,7 @@ The following section provides several code snippets illustrating common pattern
 * [Manage Custom Models Synchronously](#manage-custom-models-synchronously)
 
 ### Recognize Content
-Recognize text, table, and and selection marks like radio buttons and check boxes data, along with their bounding box coordinates, from documents.
+Recognize text, tables, and selection marks like radio buttons and check boxes data, along with their bounding box coordinates, from documents.
 
 ```C# Snippet:FormRecognizerSampleRecognizeContentFromUri
 FormPageCollection formPages = await client.StartRecognizeContentFromUriAsync(invoiceUri).WaitForCompletionAsync();

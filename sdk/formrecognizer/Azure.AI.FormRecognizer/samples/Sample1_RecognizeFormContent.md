@@ -1,6 +1,6 @@
 # Recognize form content
 
-This sample demonstrates how to recognize tables, lines, words, and selection marks like radio buttons and check boxes in forms documents in documents, without the need to train a model.
+This sample demonstrates how to recognize tables, lines, words, and selection marks like radio buttons and check boxes in forms documents, without the need to train a model.
 
 To get started you'll need a Cognitive Services resource or a Form Recognizer resource.  See [README][README] for prerequisites and instructions.
 
