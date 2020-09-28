@@ -203,7 +203,7 @@
                                                                         Version = version,
                                                                 }
                                                             },
-                                                            MaxTasksPerNode = 4
+                                                            TaskSlotsPerNode = 4
                                                          }
                                                     }
                                                   }

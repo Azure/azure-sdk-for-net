@@ -336,6 +336,17 @@
         "UnboundAccess": "read,write"
       },
       "Value": null
+    },
+    {
+      "Key": {
+        "Type": "int?",
+        "Name": "RequiredSlots",
+        "SummaryComment": "The number of scheduling slots that the Task required to run.",
+        "RemarksComment": "The default is 1. A Task can only be scheduled to run on a compute node if the node has enough free scheduling slots available. For multi-instance Tasks, this must be 1.",
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write"
+      },
+      "Value": null
     }
   ]
 }
