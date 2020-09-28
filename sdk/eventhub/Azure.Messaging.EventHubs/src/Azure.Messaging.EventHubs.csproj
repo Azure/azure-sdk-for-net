@@ -22,12 +22,8 @@
     <PackageReference Include="System.Threading.Tasks.Extensions" />
   </ItemGroup>
 
-  <!--
-    The following Azure.Core reference should be restored when v5.3.0 is released for GA and
-    the reference to Azure.Core.Experimental is removed
-  -->
   <!-- Import the Azure.Core reference -->
-  <!-- Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" / -->
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
 
   <!-- Import Event Hubs shared source -->
   <Import Project="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.EventHubs.Shared\src\Azure.Messaging.EventHubs.Shared.Core.projitems" Label="Core" />
