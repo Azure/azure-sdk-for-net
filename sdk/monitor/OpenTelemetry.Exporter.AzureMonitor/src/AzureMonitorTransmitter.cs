@@ -84,7 +84,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         private static TelemetryItem GeneratePartAEnvelope(Activity activity)
         {
             TelemetryItem telemetryItem = new TelemetryItem(PartA_Name_Mapping[activity.GetTelemetryType()], activity.StartTimeUtc);
-            GetRoleInfo(activity.GetResource(), out var roleName, out var roleInstance);
+            ExtractRoleInfo(activity.GetResource(), out var roleName, out var roleInstance);
             telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()] = roleName;
             telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = roleInstance;
             telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()] = activity.TraceId.ToHexString();
@@ -98,7 +98,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             return telemetryItem;
         }
 
-        internal static void GetRoleInfo(Resource resource, out string roleName, out string roleInstance)
+        internal static void ExtractRoleInfo(Resource resource, out string roleName, out string roleInstance)
         {
             if (resource == null)
             {

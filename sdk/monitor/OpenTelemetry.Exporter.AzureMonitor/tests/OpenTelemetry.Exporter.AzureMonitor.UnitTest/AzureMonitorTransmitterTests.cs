@@ -9,65 +9,65 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
     public class AzureMonitorTransmitterTests
     {
         [Fact]
-        public void GetRoleInfo_NullResource()
+        public void ExtractRoleInfo_NullResource()
         {
-            AzureMonitorTransmitter.GetRoleInfo(null, out var roleName, out var roleInstance);
+            AzureMonitorTransmitter.ExtractRoleInfo(null, out var roleName, out var roleInstance);
             Assert.Null(roleName);
             Assert.Null(roleInstance);
         }
 
         [Fact]
-        public void GetRoleInfo_Empty()
+        public void ExtractRoleInfo_Empty()
         {
             var resource = OpenTelemetry.Resources.Resources.CreateServiceResource(null);
-            AzureMonitorTransmitter.GetRoleInfo(resource, out var roleName, out var roleInstance);
+            AzureMonitorTransmitter.ExtractRoleInfo(resource, out var roleName, out var roleInstance);
             Assert.Null(roleName);
             Assert.Null(roleInstance);
         }
 
         [Fact]
-        public void GetRoleInfo_ServiceName()
+        public void ExtractRoleInfo_ServiceName()
         {
             var resource = OpenTelemetry.Resources.Resources.CreateServiceResource("my-service");
-            AzureMonitorTransmitter.GetRoleInfo(resource, out var roleName, out var roleInstance);
+            AzureMonitorTransmitter.ExtractRoleInfo(resource, out var roleName, out var roleInstance);
             Assert.Equal("my-service", roleName);
             Assert.True(Guid.TryParse(roleInstance, out var guid));
         }
 
         [Fact]
-        public void GetRoleInfo_ServiceInstance()
+        public void ExtractRoleInfo_ServiceInstance()
         {
             var resource = OpenTelemetry.Resources.Resources.CreateServiceResource(null, "roleInstance_1");
-            AzureMonitorTransmitter.GetRoleInfo(resource, out var roleName, out var roleInstance);
+            AzureMonitorTransmitter.ExtractRoleInfo(resource, out var roleName, out var roleInstance);
             Assert.Empty(resource.Attributes);
             Assert.Null(roleName);
             Assert.Null(roleInstance);
         }
 
         [Fact]
-        public void GetRoleInfo_ServiceNamespace()
+        public void ExtractRoleInfo_ServiceNamespace()
         {
             var resource = OpenTelemetry.Resources.Resources.CreateServiceResource(null, null, "my-namespace");
-            AzureMonitorTransmitter.GetRoleInfo(resource, out var roleName, out var roleInstance);
+            AzureMonitorTransmitter.ExtractRoleInfo(resource, out var roleName, out var roleInstance);
             Assert.Empty(resource.Attributes);
             Assert.Null(roleName);
             Assert.Null(roleInstance);
         }
 
         [Fact]
-        public void GetRoleInfo_ServiceNameAndInstance()
+        public void ExtractRoleInfo_ServiceNameAndInstance()
         {
             var resource = OpenTelemetry.Resources.Resources.CreateServiceResource("my-service", "roleInstance_1");
-            AzureMonitorTransmitter.GetRoleInfo(resource, out var roleName, out var roleInstance);
+            AzureMonitorTransmitter.ExtractRoleInfo(resource, out var roleName, out var roleInstance);
             Assert.Equal("my-service", roleName);
             Assert.Equal("roleInstance_1", roleInstance);
         }
 
         [Fact]
-        public void GetRoleInfo_ServiceNameAndInstanceAndNamespace()
+        public void ExtractRoleInfo_ServiceNameAndInstanceAndNamespace()
         {
             var resource = OpenTelemetry.Resources.Resources.CreateServiceResource("my-service", "roleInstance_1", "my-namespace");
-            AzureMonitorTransmitter.GetRoleInfo(resource, out var roleName, out var roleInstance);
+            AzureMonitorTransmitter.ExtractRoleInfo(resource, out var roleName, out var roleInstance);
             Assert.Equal("my-namespace.my-service", roleName);
             Assert.Equal("roleInstance_1", roleInstance);
         }
