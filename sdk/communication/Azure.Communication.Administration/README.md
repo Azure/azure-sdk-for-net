@@ -5,7 +5,7 @@ Identity client: 2020-07-20-preview2
 
 Azure Communication Administration is managing tokens and phone numbers for Azure Communication Services.
 
- <!--[Source code][source]| [Package (NuGet)][package] | [API reference documentation][docs] | [REST API documentation][rest_docs] | [Product documentation][product_docs] -->
+[Source code][source] | [Package (NuGet)][package] | [Product documentation][product_docs]
 
 ## Getting started
 
@@ -17,11 +17,9 @@ dotnet add package Azure.Communication.Administration --version 1.0.0-beta.1
 ```
 
 ### Prerequisites
-You need an [Azure subscription][azure_sub] and a Communication Service resource to use this package.
-<!--[Communication Service Resource][communication_resource_docs]-->
+You need an [Azure subscription][azure_sub] and a [Communication Service Resource][communication_resource_docs] to use this package.
 
-<!--To create a new Communication Service, you can use the [Azure Portal][communication_resource_create_portal],
-[Azure PowerShell][communication_resource_create_ps], or the [Azure CLI][communication_resource_create_cli].-->
+To create a new Communication Service, you can use the [Azure Portal][communication_resource_create_portal] or the [.NET management client library][communication_resource_create_net].
 
 <!--
 Here's an example using the Azure CLI:
@@ -76,7 +74,7 @@ Response deleteResponse = client.DeleteUser(user);
 ```
 
 ## Troubleshooting
-All User token service operations will throw a [RequestFailedException][RequestFailedException] on failure.
+All User token service operations will throw a RequestFailedException on failure.
 
 ```C# Snippet:CommunicationIdentityClient_Troubleshooting
 // Get a connection string to our Azure Communication resource.
@@ -94,7 +92,7 @@ catch (RequestFailedException ex)
 ```
 
 ## Next steps
-<!--* [Read more about Communication user access tokens][user_access_token]-->
+[Read more about Communication user access tokens][user_access_token]
 
 ## Contributing
 This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit [cla.microsoft.com][cla].
@@ -104,18 +102,16 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 <!-- LINKS -->
 [azure_sub]: https://azure.microsoft.com/free/
 [azure_portal]: https://portal.azure.com
-[source]: ../Azure.Communication.Common/src
+[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/communication/Azure.Communication.Administration/src
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [coc_contact]: mailto:opencode@microsoft.com
-<!-- TODO: [package]: https://www.nuget.org/packages/Azure.Communication.Common/ -->
-<!-- TODO: [rest_docs]:  -->
-[product_docs]: https://review.docs.microsoft.com/en-us/azure/project-spool/overview?branch=pr-en-us-104477
+[package]: https://www.nuget.org/packages/Azure.Communication.Administration
+[product_docs]: https://docs.microsoft.com/azure/communication-services/overview
 [nuget]: https://www.nuget.org/
-[user_access_token]: https://review.docs.microsoft.com/en-us/azure/project-spool/concepts/authentication?branch=pr-en-us-104477
-[communication_resource_docs]: https://review.docs.microsoft.com/en-us/azure/project-spool/quickstarts/get-started?branch=pr-en-us-104477
-[communication_resource_create_portal]: https://review.docs.microsoft.com/en-us/azure/project-spool/quickstarts/create-a-communication-resource?branch=pr-en-us-104477
-[communication_resource_create_ps]: https://review.docs.microsoft.com/en-us/azure/project-spool/quickstarts/create-a-communication-resource?branch=pr-en-us-104477
-[communication_resource_create_cli]: https://review.docs.microsoft.com/en-us/azure/project-spool/quickstarts/create-a-communication-resource?branch=pr-en-us-104477
+[user_access_token]: https://docs.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-csharp
+[communication_resource_docs]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
+[communication_resource_create_portal]:  https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
+[communication_resource_create_net]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-net
 
