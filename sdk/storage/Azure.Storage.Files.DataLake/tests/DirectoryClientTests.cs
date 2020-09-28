@@ -708,10 +708,11 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task RenameAsync_DestinationSpecialCharacters(string destDirectoryName)
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
+            string endpointSuffix = Environment.GetEnvironmentVariable("STORAGE_ENDPOINT_SUFFIX") ?? Constants.ConnectionStrings.DefaultEndpointSuffix;
 
             // Arrange
             DataLakeDirectoryClient sourceDirectory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
-            Uri expectedDestDirectoryUri = new Uri($"https://{test.FileSystem.AccountName}.dfs.core.windows.net/{test.FileSystem.Name}/{Uri.EscapeDataString(destDirectoryName)}");
+            Uri expectedDestDirectoryUri = new Uri($"https://{test.FileSystem.AccountName}.dfs.{endpointSuffix}/{test.FileSystem.Name}/{Uri.EscapeDataString(destDirectoryName)}");
 
             // Act
             DataLakeDirectoryClient destDirectory = await sourceDirectory.RenameAsync(destinationPath: destDirectoryName);
@@ -731,11 +732,12 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task RenameAsync_SourceSpecialCharacters(string sourceDirectoryName)
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
+            string endpointSuffix = Environment.GetEnvironmentVariable("STORAGE_ENDPOINT_SUFFIX") ?? Constants.ConnectionStrings.DefaultEndpointSuffix;
 
             // Arrange
             string destDirectoryName = GetNewDirectoryName();
             DataLakeDirectoryClient sourceDirectory = await test.FileSystem.CreateDirectoryAsync(sourceDirectoryName);
-            Uri expectedDestDirectoryUri = new Uri($"https://{test.FileSystem.AccountName}.dfs.core.windows.net/{test.FileSystem.Name}/{destDirectoryName}");
+            Uri expectedDestDirectoryUri = new Uri($"https://{test.FileSystem.AccountName}.dfs.{endpointSuffix}/{test.FileSystem.Name}/{destDirectoryName}");
 
             // Act
             DataLakeDirectoryClient destDirectory = await sourceDirectory.RenameAsync(destinationPath: destDirectoryName);
