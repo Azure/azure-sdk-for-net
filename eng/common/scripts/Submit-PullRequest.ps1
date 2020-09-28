@@ -31,7 +31,7 @@ param(
   [string]$RepoName,
 
   [Parameter(Mandatory = $true)]
-  [string]$BaseBranch,
+  [string]$BaseBranch = "master",
 
   [Parameter(Mandatory = $true)]
   [string]$PROwner,
