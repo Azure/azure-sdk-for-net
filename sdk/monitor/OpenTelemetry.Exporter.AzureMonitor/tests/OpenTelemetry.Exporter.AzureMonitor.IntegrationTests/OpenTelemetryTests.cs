@@ -18,7 +18,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.IntegrationTests
             this.factory = factory;
         }
 
-        [SkippableFact]
+        [Fact]
         public async Task ProofOfConcept()
         {
             string testValue = Guid.NewGuid().ToString();
@@ -30,23 +30,16 @@ namespace OpenTelemetry.Exporter.AzureMonitor.IntegrationTests
             // Act
             var response = await client.GetAsync(request);
 
-            // Assert
+            // Shutdown
             response.EnsureSuccessStatusCode();
+            this.factory.ForceFlush();
 
-            // TODO: HOW TO REMOVE THE WAIT? CAN THE EXPORTER BE FLUSHED?
-            Task.Delay(5000).Wait();
-
-            /// TODO: I'M TRYING TO CALL SHUTDOWN TO GUARENTEE THAT THE EXPORTER IS FLUSHED WITHOUT NEEDING A WAIT.
-            /// Raj said that the Shutdown method is being removed from OpenTelemetry SDK.
-            //this.factory.AzureMonitorTraceExporter.Shutdown();
-
+            // Assert
             Assert.True(this.factory.TelemetryItems.Any(), "telemetry not captured");
 
             var item = this.factory.TelemetryItems.Single();
             var baseData = (Models.RequestData)item.Data.BaseData;
             Assert.True(baseData.Url.EndsWith(testValue), "it is expected that the recorded TelemetryItem matches the value of testValue.");
-
-            Skip.If(true, "work in progress.");
         }
     }
 }

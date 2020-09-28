@@ -27,9 +27,9 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         /// </summary>
         /// <param name="builder"><see cref="TracerProviderBuilder"/> builder to use.</param>
         /// <param name="configure">Exporter configuration options.</param>
-        /// <param name="exporter">WORK IN PROGRESS.</param>
+        /// <param name="processor">WORK IN PROGRESS.</param>
         /// <returns>The instance of <see cref="TracerProviderBuilder"/> to chain the calls.</returns>
-        public static TracerProviderBuilder AddAzureMonitorTraceExporter(this TracerProviderBuilder builder, out AzureMonitorTraceExporter exporter, Action<AzureMonitorExporterOptions> configure = null)
+        public static TracerProviderBuilder AddAzureMonitorTraceExporter(this TracerProviderBuilder builder, out ActivityProcessor processor, Action<AzureMonitorExporterOptions> configure)
         {
             if (builder == null)
             {
@@ -40,8 +40,8 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             configure?.Invoke(options);
 
             // TODO: Pick Simple vs Batching based on AzureMonitorExporterOptions
-            exporter = new AzureMonitorTraceExporter(options);
-            return builder.AddProcessor(new BatchExportActivityProcessor(exporter));
+            processor = new BatchExportActivityProcessor(new AzureMonitorTraceExporter(options));
+            return builder.AddProcessor(processor);
         }
     }
 }

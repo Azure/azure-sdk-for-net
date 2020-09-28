@@ -26,24 +26,20 @@ namespace OpenTelemetry.Exporter.AzureMonitor.IntegrationTests
     public class OpenTelemetryWebApplicationFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup : class
     {
         public ConcurrentBag<TelemetryItem> TelemetryItems = new ConcurrentBag<TelemetryItem>();
-        public AzureMonitorTraceExporter AzureMonitorTraceExporter;
+        public ActivityProcessor ActivityProcessor;
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
-            AzureMonitorTraceExporter exporter = null;
-
             builder.ConfigureServices(services =>
             {
                 services.AddOpenTelemetryTracing((builder) => builder
                         .AddAspNetCoreInstrumentation()
                         .AddHttpClientInstrumentation()
-                        .AddAzureMonitorTraceExporter(out exporter, options =>
+                        .AddAzureMonitorTraceExporter(out this.ActivityProcessor, options =>
                         {
                             options.ConnectionString = AzureMonitorExporterOptions.EmptyConnectionString;
                             options.OnTrackAsync = this.OnTrackAsync;
                         }));
-
-                this.AzureMonitorTraceExporter = exporter;
             });
         }
 
@@ -58,5 +54,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.IntegrationTests
             /// I WAS ABLE TO CREATE A DEFAULT TrackResonse OBJECT, BUT COULDN'T DO THE SAME FOR Azure.Response. NEEDS MORE WORK.
             return null;
         }
+
+        public void ForceFlush() => this.ActivityProcessor.ForceFlush();
     }
 }
