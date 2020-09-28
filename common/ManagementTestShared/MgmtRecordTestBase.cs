@@ -4,11 +4,7 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
-#if RESOURCES_RP
-using Azure.ResourceManager.Resources;
-#else
 using Azure.Management.Resources;
-#endif
 using System;
 
 using System.Collections.Generic;
@@ -93,43 +89,27 @@ namespace Azure.ResourceManager.TestFramework
 
         protected abstract void InitializeClients();
 
-        protected virtual Task OnOneTimeSetupBaseAsync()
+        protected virtual Task OnOneTimeSetupAsync()
         {
             return Task.FromResult<object>(null);
         }
-        protected virtual Task OnOneTimeSetupScenarioAsync()
-        {
-            return Task.FromResult<object>(null);
-        }
-        protected virtual Task OnSetupBaseAsync()
-        {
-            return Task.FromResult<object>(null);
-        }
-        protected virtual Task OnSetupScenarioAsync()
-        {
-            return Task.FromResult<object>(null);
-        }
-        protected virtual Task OnOneTimeTearDownBaseAsync()
-        {
-            return Task.FromResult<object>(null);
-        }
-        protected virtual Task OnOneTimeTearDownScenarioAsync()
+        protected virtual Task OnSetupAsync()
         {
             return Task.FromResult<object>(null);
         }
 
-        protected virtual Task OnTearDownBaseAsync()
+        protected virtual Task OnOneTimeTearDownAsync()
         {
             return Task.FromResult<object>(null);
         }
 
-        protected virtual Task OnTearDownScenarioAsync()
+        protected virtual Task OnTearDownAsync()
         {
             return Task.FromResult<object>(null);
         }
 
         [OneTimeSetUp]
-        public void RunOneTimeSetup()
+        private void RunOneTimeSetup()
         {
             if (Mode == RecordedTestMode.Live || Debugger.IsAttached)
             {
@@ -138,23 +118,21 @@ namespace Azure.ResourceManager.TestFramework
             Recording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher);
             TestEnvironment.SetRecording(Recording);
             InitializeClients();
-            OnOneTimeSetupBaseAsync();
-            OnOneTimeSetupScenarioAsync();
+            OnOneTimeSetupAsync();
         }
 
         [OneTimeTearDown]
-        public async Task RunOneTimeTearDown()
+        private async Task RunOneTimeTearDown()
         {
             StopTestRecording();
             await CleanupResourceGroupsAsync();
             Logger?.Dispose();
             Logger = null;
-            await OnOneTimeTearDownScenarioAsync();
-            await OnOneTimeTearDownBaseAsync();
+            await OnOneTimeTearDownAsync();
         }
 
         [SetUp]
-        public void StartTestRecording()
+        private void StartTestRecording()
         {
             StopTestRecording();
             TestContext.TestAdapter test = TestContext.CurrentContext.Test;
@@ -167,20 +145,18 @@ namespace Azure.ResourceManager.TestFramework
             TestEnvironment.Mode = Mode;
             TestEnvironment.SetRecording(Recording);
             InitializeClients();
-            OnSetupBaseAsync();
-            OnOneTimeTearDownScenarioAsync();
+            OnSetupAsync();
         }
 
         [TearDown]
-        public void StopTestRecording()
+        private void StopTestRecording()
         {
             bool save = TestContext.CurrentContext.Result.FailCount == 0;
 #if DEBUG
             save |= SaveDebugRecordingsOnFailure;
 #endif
             Recording?.Dispose(save);
-            OnTearDownScenarioAsync();
-            OnTearDownScenarioAsync();
+            OnTearDownAsync();
         }
 
         protected ResourcesManagementClient GetResourceManagementClient()

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Dns.Tests
         {
 
         }
-        protected override sealed async Task OnOneTimeSetupBaseAsync()
+        protected override async Task OnOneTimeSetupAsync()
         {
             location = "West US";
             InitializeClients();
