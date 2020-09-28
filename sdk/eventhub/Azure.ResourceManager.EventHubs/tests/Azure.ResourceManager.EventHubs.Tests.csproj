@@ -8,5 +8,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.ResourceManager.Resources" />
+    <PackageReference Include="Azure.ResourceManager.Storage" />
+    <PackageReference Include="Azure.ResourceManager.Network" />
   </ItemGroup>
 </Project>

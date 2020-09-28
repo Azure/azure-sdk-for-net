@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.EventHubs.Tests;
-
+using Azure.ResourceManager.Storage.Models;
 using NUnit.Framework;
 
 namespace Azure.Management.EventHub.Tests
@@ -41,6 +41,19 @@ namespace Azure.Management.EventHub.Tests
             var location = GetLocation();
             var resourceGroup = Recording.GenerateAssetName(Helper.ResourceGroupPrefix);
             await Helper.TryRegisterResourceGroupAsync(ResourceGroupsOperations,location.Result, resourceGroup);
+
+            // Prepare Storage Account
+            var accountName = Recording.GenerateAssetName("sdktestaccount");
+            var storageAccountCreateParameters = new StorageAccountCreateParameters(
+                    new ResourceManager.Storage.Models.Sku("Standard_LRS"),
+                    Kind.StorageV2,
+                    "eastus2"
+                    ) {
+                        AccessTier = AccessTier.Hot
+                    };
+            await WaitForCompletionAsync(await StorageManagementClient.StorageAccounts.StartCreateAsync(resourceGroup, accountName, storageAccountCreateParameters));
+
+            // Create NameSpace
             var namespaceName = Recording.GenerateAssetName(Helper.NamespacePrefix);
             var createNamespaceResponse = await NamespacesOperations.StartCreateOrUpdateAsync(resourceGroup, namespaceName,
                 new EHNamespace()
@@ -54,7 +67,6 @@ namespace Azure.Management.EventHub.Tests
             DelayInTest(5);
             // Create Eventhub
             var eventhubName = Recording.GenerateAssetName(Helper.EventHubPrefix);
-            //You Need to create a storage account first --Youri 8.5.2020
             var createEventhubResponse = await EventHubsOperations.CreateOrUpdateAsync(resourceGroup, namespaceName, eventhubName,
                 new Eventhub()
                 {
@@ -72,7 +84,7 @@ namespace Azure.Management.EventHub.Tests
                             Name = "EventHubArchive.AzureBlockBlob",
                             BlobContainer = "container",
                             ArchiveNameFormat = "{Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}",
-                            StorageAccountResourceId = "/subscriptions/" + SubscriptionId + "/resourcegroups/"+resourceGroup+"/providers/Microsoft.Storage/storageAccounts/testingsdkeventhub88"
+                            StorageAccountResourceId = "/subscriptions/" + SubscriptionId + "/resourcegroups/" + resourceGroup + "/providers/Microsoft.Storage/storageAccounts/" + accountName
                         },
                         SkipEmptyArchives = true
                     }
