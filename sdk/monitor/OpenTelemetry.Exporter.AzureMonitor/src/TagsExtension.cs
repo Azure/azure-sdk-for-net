@@ -73,6 +73,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                     StringBuilder sw = new StringBuilder();
                     foreach (var item in array)
                     {
+                        // TODO: Consider changing it to JSon array.
                         if (item != null)
                         {
                             sw.Append(item);
