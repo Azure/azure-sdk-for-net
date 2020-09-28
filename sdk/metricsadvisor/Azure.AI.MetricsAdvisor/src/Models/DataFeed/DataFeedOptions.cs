@@ -1,12 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
+    /// A set of options configuring the behavior of a <see cref="DataFeed"/>.
     /// </summary>
     public class DataFeedOptions
     {
@@ -34,23 +36,33 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary>
+        /// A description about the <see cref="DataFeed"/>.
         /// </summary>
         public string FeedDescription { get; set; }
 
         /// <summary>
+        /// TODODOCS.
         /// </summary>
         public AccessMode? AccessMode { get; set; }
 
         /// <summary>
+        /// Configures the behavior of this <see cref="DataFeed"/> for rolling-up the ingested data
+        /// before detecting anomalies.
         /// </summary>
         public DataFeedRollupSettings RollupSettings { get; set; }
 
         /// <summary>
+        /// Configures the behavior of this <see cref="DataFeed"/> when dealing with missing points
+        /// in the data ingested from the data source.
         /// </summary>
         public DataFeedMissingDataPointFillSettings MissingDataPointFillSettings { get; set; }
 
         /// <summary>
+        /// The emails of this data feed's administrators. Administrators have total control over a
+        /// data feed, being allowed to update, delete or pause them. They also have access to the
+        /// credentials used to authenticate to the data source.
         /// </summary>
+        /// <exception cref="ArgumentNullException"><see cref="Administrators"/> is null.</exception>
         public IList<string> Administrators
         {
             get => _administrators;
@@ -62,7 +74,10 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary>
+        /// The emails of this data feed's viewers. Viewers have read-only access to a data feed, and
+        /// do not have access to the credentials used to authenticate to the data source.
         /// </summary>
+        /// <exception cref="ArgumentNullException"><see cref="Viewers"/> is null.</exception>
         public IList<string> Viewers
         {
             get => _viewers;

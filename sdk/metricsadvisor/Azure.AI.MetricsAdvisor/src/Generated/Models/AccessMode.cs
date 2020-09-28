@@ -24,11 +24,6 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         private const string PrivateValue = "Private";
         private const string PublicValue = "Public";
-
-        /// <summary> Private. </summary>
-        public static AccessMode Private { get; } = new AccessMode(PrivateValue);
-        /// <summary> Public. </summary>
-        public static AccessMode Public { get; } = new AccessMode(PublicValue);
         /// <summary> Determines if two <see cref="AccessMode"/> values are the same. </summary>
         public static bool operator ==(AccessMode left, AccessMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AccessMode"/> values are not the same. </summary>

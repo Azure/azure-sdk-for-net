@@ -232,7 +232,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
             Argument.AssertNotNull(dataSource, nameof(dataSource));
             Argument.AssertNotNull(dataFeedGranularity, nameof(dataFeedGranularity));
             Argument.AssertNotNull(dataFeedSchema, nameof(dataFeedSchema));
-            Argument.AssertNotNullOrEmpty(dataFeedSchema.MetricColumns, $"{nameof(dataFeedSchema)}.{nameof(dataFeedSchema.MetricColumns)}");
             Argument.AssertNotNull(dataFeedIngestionSettings, nameof(dataFeedIngestionSettings));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateDataFeed)}");
@@ -270,7 +269,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
             Argument.AssertNotNull(dataSource, nameof(dataSource));
             Argument.AssertNotNull(dataFeedGranularity, nameof(dataFeedGranularity));
             Argument.AssertNotNull(dataFeedSchema, nameof(dataFeedSchema));
-            Argument.AssertNotNullOrEmpty(dataFeedSchema.MetricColumns, $"{nameof(dataFeedSchema)}.{nameof(dataFeedSchema.MetricColumns)}");
             Argument.AssertNotNull(dataFeedIngestionSettings, nameof(dataFeedIngestionSettings));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateDataFeed)}");
