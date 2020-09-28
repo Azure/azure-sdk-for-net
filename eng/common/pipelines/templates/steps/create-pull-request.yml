@@ -62,7 +62,7 @@ steps:
       -CommitMsg "${{ parameters.CommitMsg }}"
       -GitUrl "https://$(azuresdk-github-pat)@github.com/${{ parameters.PROwner }}/$(RepoNameWithoutOwner).git"
       -PushArgs "${{ parameters.PushArgs }}"
-      -SkipCommit "${{parameters.SkipCheckingForChanges}}"
+      -SkipCommit $${{parameters.SkipCheckingForChanges}}
 
 - task: PowerShell@2
   displayName: Create pull request
