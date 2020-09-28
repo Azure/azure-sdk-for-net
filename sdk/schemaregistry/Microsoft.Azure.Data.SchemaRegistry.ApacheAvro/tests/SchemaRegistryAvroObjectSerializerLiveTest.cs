@@ -29,6 +29,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             ));
 
         [Test]
+        [PlaybackOnly("Service not provisioned to all regions yet.")]
         public async Task CanSerializeAndDeserialize()
         {
             var client = CreateClient();
@@ -48,6 +49,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
         }
 
         [Test]
+        [PlaybackOnly("Service not provisioned to all regions yet.")]
         public async Task CanSerializeAndDeserializeGenericRecord()
         {
             var client = CreateClient();
@@ -69,6 +71,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
         }
 
         [Test]
+        [PlaybackOnly("Service not provisioned to all regions yet.")]
         public async Task CannotSerializeUnsupportedType()
         {
             var client = CreateClient();
@@ -82,6 +85,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
         }
 
         [Test]
+        [PlaybackOnly("Service not provisioned to all regions yet.")]
         public async Task CannotDeserializeUnsupportedType()
         {
             var client = CreateClient();

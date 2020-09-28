@@ -11,6 +11,7 @@ using TestSchema;
 
 namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests.Samples
 {
+    [Ignore("Only verifying that the sample builds")]
     public class Sample01_ReadmeSnippets : SamplesBase<SchemaRegistryClientTestEnvironment>
     {
         [Ignore("Only verifying that the sample builds")]
