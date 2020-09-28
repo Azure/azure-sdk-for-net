@@ -33,6 +33,7 @@ directive:
       }
     }
 
+title: EventGridClient
 input-file:
     -  https://github.com/ellismg/azure-rest-api-specs/blob/4bb5b76cb8401896b15f1be3fdaac6bd5d299b17/specification/eventgrid/data-plane/Microsoft.EventGrid/stable/2018-01-01/EventGrid.json
     -  https://github.com/Azure/azure-rest-api-specs/blob/3e974736d767fd714b4fb0570aa352e774582ecd/specification/eventgrid/data-plane/Microsoft.Storage/stable/2018-01-01/Storage.json
