@@ -4,31 +4,31 @@ extends:
   template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests-multiple.yml
   parameters:
     jobs:
-      # # Azure Cloud
-      # - ServiceDirectory: eventhub
-      #   MaxParallel: 6
-      #   TimeoutInMinutes: 120
-      #   ScenarioName: AzureCloud
-      #   SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
-      #   ArmTemplateParameters: "@{ storageEndpointSuffix = 'core.windows.net' }"
-      #   EnvVars:
-      #     AZURE_AUTHORITY_HOST: https://login.microsoftonline.com/
-      #     SERVICE_MANAGEMENT_URL: https://management.core.windows.net/
-      #     STORAGE_ENDPOINT_SUFFIX: core.windows.net
-      #     RESOURCE_MANAGER_URL: https://management.azure.com/
+      # Azure Cloud
+      - ServiceDirectory: eventhub
+        MaxParallel: 6
+        TimeoutInMinutes: 120
+        ScenarioName: AzureCloud
+        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+        ArmTemplateParameters: "@{ storageEndpointSuffix = 'core.windows.net' }"
+        EnvVars:
+          AZURE_AUTHORITY_HOST: https://login.microsoftonline.com/
+          SERVICE_MANAGEMENT_URL: https://management.core.windows.net/
+          STORAGE_ENDPOINT_SUFFIX: core.windows.net
+          RESOURCE_MANAGER_URL: https://management.azure.com/
 
-      # # AzureUSGovernment
-      # - ServiceDirectory: eventhub
-      #   MaxParallel: 6
-      #   TimeoutInMinutes: 120
-      #   ScenarioName: AzureUSGovernment
-      #   SubscriptionConfiguration: $(sub-config-gov-test-resources)
-      #   ArmTemplateParameters: "@{ storageEndpointSuffix = 'core.usgovcloudapi.net' }"
-      #   EnvVars:
-      #     AZURE_AUTHORITY_HOST: https://login.microsoftonline.us/
-      #     SERVICE_MANAGEMENT_URL: https://management.core.usgovcloudapi.net/
-      #     STORAGE_ENDPOINT_SUFFIX: core.usgovcloudapi.net
-      #     RESOURCE_MANAGER_URL: https://management.usgovcloudapi.net/
+      # AzureUSGovernment
+      - ServiceDirectory: eventhub
+        MaxParallel: 6
+        TimeoutInMinutes: 120
+        ScenarioName: AzureUSGovernment
+        SubscriptionConfiguration: $(sub-config-gov-test-resources)
+        ArmTemplateParameters: "@{ storageEndpointSuffix = 'core.usgovcloudapi.net' }"
+        EnvVars:
+          AZURE_AUTHORITY_HOST: https://login.microsoftonline.us/
+          SERVICE_MANAGEMENT_URL: https://management.core.usgovcloudapi.net/
+          STORAGE_ENDPOINT_SUFFIX: core.usgovcloudapi.net
+          RESOURCE_MANAGER_URL: https://management.usgovcloudapi.net/
 
       # AzureChinaCloud
       - ServiceDirectory: eventhub
