@@ -2142,8 +2142,11 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="Response{AccessControlChangeResult}"/> that contains summary stats of the operation.
         /// </returns>
         /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
+        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if a request to
+        /// storage throws a <see cref="RequestFailedException"/> or <see cref="Exception"/>.
+        ///
+        /// Otherwise if a failure occurs outside the request, the respective <see cref="Exception"/>
+        /// type will be thrown if a failure occurs.
         /// </remarks>
         public virtual Response<AccessControlChangeResult> SetAccessControlRecursive(
             IList<PathAccessControlItem> accessControlList,
@@ -2191,8 +2194,11 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="Response{AccessControlChangeResult}"/> that contains summary stats of the operation.
         /// </returns>
         /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
+        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if a request to
+        /// storage throws a <see cref="RequestFailedException"/> or <see cref="Exception"/>.
+        ///
+        /// Otherwise if a failure occurs outside the request, the respective <see cref="Exception"/>
+        /// type will be thrown if a failure occurs.
         /// </remarks>
         public virtual async Task<Response<AccessControlChangeResult>> SetAccessControlRecursiveAsync(
             IList<PathAccessControlItem> accessControlList,
@@ -2240,8 +2246,11 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="Response{AccessControlChangeResult}"/> that contains summary stats of the operation.
         /// </returns>
         /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
+        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if a request to
+        /// storage throws a <see cref="RequestFailedException"/> or <see cref="Exception"/>.
+        ///
+        /// Otherwise if a failure occurs outside the request, the respective <see cref="Exception"/>
+        /// type will be thrown if a failure occurs.
         /// </remarks>
         public virtual Response<AccessControlChangeResult> UpdateAccessControlRecursive(
             IList<PathAccessControlItem> accessControlList,
@@ -2289,8 +2298,11 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="Response{AccessControlChangeResult}"/> that contains summary stats of the operation.
         /// </returns>
         /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
+        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if a request to
+        /// storage throws a <see cref="RequestFailedException"/> or <see cref="Exception"/>.
+        ///
+        /// Otherwise if a failure occurs outside the request, the respective <see cref="Exception"/>
+        /// type will be thrown if a failure occurs.
         /// </remarks>
         public virtual async Task<Response<AccessControlChangeResult>> UpdateAccessControlRecursiveAsync(
             IList<PathAccessControlItem> accessControlList,
@@ -2338,8 +2350,11 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="Response{AccessControlChangeResult}"/> that contains summary stats of the operation.
         /// </returns>
         /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
+        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if a request to
+        /// storage throws a <see cref="RequestFailedException"/> or <see cref="Exception"/>.
+        ///
+        /// Otherwise if a failure occurs outside the request, the respective <see cref="Exception"/>
+        /// type will be thrown if a failure occurs.
         /// </remarks>
         public virtual Response<AccessControlChangeResult> RemoveAccessControlRecursive(
             IList<RemovePathAccessControlItem> accessControlList,
@@ -2387,8 +2402,11 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="Response{AccessControlChangeResult}"/> that contains summary stats of the operation.
         /// </returns>
         /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
+        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if a request to
+        /// storage throws a <see cref="RequestFailedException"/> or <see cref="Exception"/>.
+        ///
+        /// Otherwise if a failure occurs outside the request, the respective <see cref="Exception"/>
+        /// type will be thrown if a failure occurs.
         /// </remarks>
         public virtual async Task<Response<AccessControlChangeResult>> RemoveAccessControlRecursiveAsync(
             IList<RemovePathAccessControlItem> accessControlList,
@@ -2448,8 +2466,11 @@ namespace Azure.Storage.Files.DataLake
         /// path.
         /// </returns>
         /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
+        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if a request to
+        /// storage throws a <see cref="RequestFailedException"/> or <see cref="Exception"/>.
+        ///
+        /// Otherwise if a failure occurs outside the request, the respective <see cref="Exception"/>
+        /// type will be thrown if a failure occurs.
         /// </remarks>
         private async Task<Response<AccessControlChangeResult>> SetAccessControlRecursiveInternal(
             string operationName,
@@ -2487,21 +2508,31 @@ namespace Azure.Storage.Files.DataLake
 
                         do
                         {
-                            jsonResponse =
-                                await DataLakeRestClient.Path.SetAccessControlRecursiveAsync(
-                                    clientDiagnostics: ClientDiagnostics,
-                                    pipeline: Pipeline,
-                                    resourceUri: DfsUri,
-                                    mode: mode,
-                                    maxRecords: options?.BatchSize,
-                                    version: Version.ToVersionString(),
-                                    acl: accessControlList,
-                                    async: async,
-                                    continuation: continuationToken,
-                                    forceFlag: options?.ContinueOnFailure,
-                                    cancellationToken: cancellationToken)
-                                .ConfigureAwait(false);
-
+                            try
+                            {
+                                jsonResponse =
+                                    await DataLakeRestClient.Path.SetAccessControlRecursiveAsync(
+                                        clientDiagnostics: ClientDiagnostics,
+                                        pipeline: Pipeline,
+                                        resourceUri: DfsUri,
+                                        mode: mode,
+                                        maxRecords: options?.BatchSize,
+                                        version: Version.ToVersionString(),
+                                        acl: accessControlList,
+                                        async: async,
+                                        continuation: continuationToken,
+                                        forceFlag: options?.ContinueOnFailure,
+                                        cancellationToken: cancellationToken)
+                                    .ConfigureAwait(false);
+                            }
+                            catch (RequestFailedException exception)
+                            {
+                                throw DataLakeErrors.ChangeAclRequestFailed(exception, continuationToken);
+                            }
+                            catch (Exception exception)
+                            {
+                                throw DataLakeErrors.ChangeAclFailed(exception, continuationToken);
+                            }
                             continuationToken = jsonResponse.Value.Continuation;
 
                             if (!string.IsNullOrEmpty(continuationToken))
@@ -2553,7 +2584,6 @@ namespace Azure.Storage.Files.DataLake
                                             jsonResponse.GetRawResponse()));
                                 }
                             }
-
                             batchesCount++;
 
                         } while (!string.IsNullOrEmpty(continuationToken)

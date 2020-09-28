@@ -359,6 +359,14 @@ namespace Azure.Storage.Files.DataLake.Models
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.DateTimeOffset StartsOn { get { throw null; } set { } }
     }
+    public partial class DataLakeAclChangeFailedException : System.Exception, System.Runtime.Serialization.ISerializable
+    {
+        protected DataLakeAclChangeFailedException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+        public DataLakeAclChangeFailedException(string message, Azure.RequestFailedException exception, string continuationToken) { }
+        public DataLakeAclChangeFailedException(string message, System.Exception exception, string continuationToken) { }
+        public string ContinuationToken { get { throw null; } }
+        public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+    }
     public enum DataLakeFileExpirationOrigin
     {
         CreationTime = 0,

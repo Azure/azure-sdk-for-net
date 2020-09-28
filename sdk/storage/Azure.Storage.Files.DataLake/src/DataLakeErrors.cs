@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Azure.Storage.Files.DataLake.Models;
 
 namespace Azure.Storage.Files.DataLake
 {
@@ -38,5 +39,25 @@ namespace Azure.Storage.Files.DataLake
 
         public static ArgumentException RolePermissionsSymbolicInvalidLength(string s)
             => new ArgumentException($"Role permission must be 3 characters.  Value is \"{s}\"");
+
+        public static DataLakeAclChangeFailedException ChangeAclRequestFailed(RequestFailedException exception, string continuationToken)
+            => new DataLakeAclChangeFailedException(
+                $"An error occurred while recursively changing the access control list. " +
+                $"See the {nameof(exception.InnerException)} of type {exception.GetType().FullName} " +
+                $"with {nameof(exception.Status)}={exception.Status} and " +
+                $"{nameof(exception.ErrorCode)}={exception.ErrorCode} for more information.  " +
+                $"You can resume changing the access control list using " +
+                $"{nameof(DataLakeAclChangeFailedException.ContinuationToken)}={continuationToken} " +
+                $"after addressing the error.",
+                exception,
+                continuationToken);
+
+        public static DataLakeAclChangeFailedException ChangeAclFailed(Exception exception, string continuationToken)
+            => new DataLakeAclChangeFailedException(
+                $"An error occurred while recursively changing the access control list. See the {nameof(exception.InnerException)} " +
+                $"of type {exception.GetType().FullName} for more information. You can resume changing the access control list using " +
+                $"{nameof(DataLakeAclChangeFailedException.ContinuationToken)}={continuationToken} after addressing the error.",
+                exception,
+                continuationToken);
     }
 }
