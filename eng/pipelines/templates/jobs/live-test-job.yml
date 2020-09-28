@@ -54,19 +54,24 @@ jobs:
         Linux:
           OSVmImage: "ubuntu-18.04"
           TestTargetFramework: netcoreapp2.1
+          DotNetCoreRuntimeVersion: "2.1.22"
         Windows_NetCoreApp:
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
+          DotNetCoreRuntimeVersion: 2.1.22
         Windows_NetCoreApp_ProjectReferences:
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
           ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
+          DotNetCoreRuntimeVersion: 2.1.22
         Windows_NetFramework:
           OSVmImage: "windows-2019"
           TestTargetFramework: net461
+          DotNetCoreRuntimeVersion: 2.1.22
         MacOs:
           OSVmImage: "macOS-10.15"
           TestTargetFramework: netcoreapp2.1
+          DotNetCoreRuntimeVersion: 2.1.22
     pool:
       vmImage: "$(OSVmImage)"
 
@@ -78,13 +83,13 @@ jobs:
       - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
 
       - task: UseDotNet@2
-        displayName: "Use .NET Core runtime $(DotNetCoreRuntimeVersion)"
+        displayName: "Use .NET Core runtime ($(DotNetCoreRuntimeVersion))"
         inputs:
           packageType: runtime
           version: "$(DotNetCoreRuntimeVersion)"
 
       - task: UseDotNet@2
-        displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
+        displayName: "Use .NET Core sdk ($(DotNetCoreSDKVersion))"
         inputs:
           packageType: sdk
           version: "$(DotNetCoreSDKVersion)"
