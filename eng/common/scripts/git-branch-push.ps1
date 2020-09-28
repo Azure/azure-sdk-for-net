@@ -28,7 +28,7 @@ param(
     [string] $PushArgs = "",
 
     [Parameter(Mandatory = $false)]
-    [string] $SkipCommit = $false
+    [boolean] $SkipCommit = $false
 )
 
 # This is necessay because of the janky git command output writing to stderr.
