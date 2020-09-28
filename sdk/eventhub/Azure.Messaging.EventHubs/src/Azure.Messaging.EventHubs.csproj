@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Azure Event Hubs is a highly scalable publish-subscribe service that can ingest millions of events per second and stream them to multiple consumers.  This client library allows for both publishing and consuming events using Azure Event Hubs. For more information about Event Hubs, see https://azure.microsoft.com/en-us/services/event-hubs/</Description>
-    <Version>5.3.0-beta.2</Version>
+    <Version>5.3.0-beta.3</Version>
     <ApiCompatVersion>5.2.0</ApiCompatVersion>
     <PackageTags>Azure;Event Hubs;EventHubs;.NET;AMQP;IoT;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
@@ -13,15 +13,21 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!-- Note: The Experimental package usage is for beta releases only -->
-    <PackageReference Include="Azure.Core.Experimental" />
+    <PackageReference Include="Azure.Core.Experimental" /><!-- This package will be removed when v5.3.0 is released for GA -->
     <PackageReference Include="Microsoft.Azure.Amqp" />
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" />
     <PackageReference Include="System.Reflection.TypeExtensions" />
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
     <PackageReference Include="System.Threading.Channels" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
   </ItemGroup>
+
+  <!--
+    The following Azure.Core reference should be restored when v5.3.0 is released for GA and
+    the reference to Azure.Core.Experimental is removed
+  -->
+  <!-- Import the Azure.Core reference -->
+  <!-- Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" / -->
 
   <!-- Import Event Hubs shared source -->
   <Import Project="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.EventHubs.Shared\src\Azure.Messaging.EventHubs.Shared.Core.projitems" Label="Core" />
@@ -55,5 +61,4 @@
       <CustomToolNamespace>Azure.Messaging.EventHubs</CustomToolNamespace>
     </EmbeddedResource>
   </ItemGroup>
-
 </Project>
