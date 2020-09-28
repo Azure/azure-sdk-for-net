@@ -101,7 +101,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         private MonitorBase GenerateTelemetryData(Activity activity)
         {
             var telemetryType = activity.GetTelemetryType();
-            var tags = activity.Tags.ToAzureMonitorTags(out var activityType);
+            var activityType = activity.TagObjects.ToAzureMonitorTags(out var partBTags, out var PartCTags);
             MonitorBase telemetry = new MonitorBase
             {
                 BaseType = Telemetry_Base_Type_Mapping[telemetryType]
@@ -109,8 +109,8 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
             if (telemetryType == TelemetryType.Request)
             {
-                var url = activity.Kind == ActivityKind.Server ? UrlHelper.GetUrl(tags) : GetMessagingUrl(tags);
-                var statusCode = GetHttpStatusCode(tags);
+                var url = activity.Kind == ActivityKind.Server ? UrlHelper.GetUrl(partBTags) : GetMessagingUrl(partBTags);
+                var statusCode = GetHttpStatusCode(partBTags);
                 var success = GetSuccessFromHttpStatusCode(statusCode);
                 var request = new RequestData(2, activity.Context.SpanId.ToHexString(), activity.Duration.ToString("c", CultureInfo.InvariantCulture), success, statusCode)
                 {
@@ -136,9 +136,9 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 
                 if (activityType == PartBType.Http)
                 {
-                    dependency.Data = UrlHelper.GetUrl(tags);
+                    dependency.Data = UrlHelper.GetUrl(partBTags);
                     dependency.Type = "HTTP"; // TODO: Parse for storage / SB.
-                    var statusCode = GetHttpStatusCode(tags);
+                    var statusCode = GetHttpStatusCode(partBTags);
                     dependency.ResultCode = statusCode;
                     dependency.Success = GetSuccessFromHttpStatusCode(statusCode);
                 }
