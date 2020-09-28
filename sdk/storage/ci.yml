@@ -43,3 +43,5 @@ extends:
       safeName: AzureStorageBlobsChangeFeed
     - name: Azure.ResourceManager.Storage
       safeName: AzureResourceManagerStorage
+    TestSetupSteps:
+    - template: /sdk/storage/tests-install-azurite.yml
