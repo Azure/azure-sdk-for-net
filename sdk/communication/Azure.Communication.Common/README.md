@@ -2,7 +2,7 @@
 
 This package contains common code for Azure Communication Service libraries.
 
-<!-- [Source code][source] | [Package (NuGet)][package] | [Product documentation][product_docs] -->
+[Source code][source] | [Package (NuGet)][package] | [Product documentation][product_docs]
 ## Getting started
 
 ### Install the package
@@ -13,11 +13,9 @@ dotnet add package Azure.Communication.Common --version 1.0.0-beta.1
 ```
 
 ### Prerequisites
-You need an [Azure subscription][azure_sub] and a Communication Service resource to use this package.
-<!--[Communication Service Resource][communication_resource_docs]-->
+You need an [Azure subscription][azure_sub] and a [Communication Service Resource][communication_resource_docs] to use this package.
 
-<!--To create a new Communication Service, you can use the [Azure Portal][communication_resource_create_portal],
-[Azure PowerShell][communication_resource_create_ps], or the [Azure CLI][communication_resource_create_cli].-->
+To create a new Communication Service, you can use the [Azure Portal][communication_resource_create_portal] or the [.NET management client library][communication_resource_create_net].
 
 <!--
 Here's an example using the Azure CLI:
@@ -80,7 +78,7 @@ The proactive refreshing failures happen in a background thread and to avoid cra
 All the other failures will happen during your request using other clients such as chat where you can catch the exception using `RequestFailedException`.
 
 ## Next steps
-* [Read more about Communication user access tokens][user_access_token]
+[Read more about Communication user access tokens][user_access_token]
 
 ## Contributing
 This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit [cla.microsoft.com][cla].
@@ -93,12 +91,13 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [coc_contact]: mailto:opencode@microsoft.com
 [azure_sub]: https://azure.microsoft.com/free/
-[source]: src
-<!-- TODO: [package]: https://www.nuget.org/packages/Azure.Communication.Common/ -->
-<!-- TODO: [product_docs]: -->
+[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/communication/Azure.Communication.Common/src
+[package]: https://www.nuget.org/packages/Azure.Communication.Common/
+[product_docs]: https://docs.microsoft.com/azure/communication-services/overview
 [nuget]: https://www.nuget.org/
-<!-- [user_access_token]: -->
-<!-- [communication_resource_docs]:  -->
-<!-- [communication_resource_create_portal]:  -->
-<!-- [communication_resource_create_ps]:  -->
-<!-- [communication_resource_create_cli]:  -->
+[user_access_token]: https://docs.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-csharp
+[communication_resource_docs]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
+[communication_resource_create_portal]:  https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
+[communication_resource_create_net]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-net
+
+
