@@ -30,17 +30,18 @@ namespace OpenTelemetry.Exporter.AzureMonitor.IntegrationTests
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
-            builder.ConfigureServices(services =>
+            this.ActivityProcessor = new BatchExportActivityProcessor(new AzureMonitorTraceExporter(new AzureMonitorExporterOptions
             {
+                ConnectionString = AzureMonitorExporterOptions.EmptyConnectionString,
+                OnTrackAsync = this.OnTrackAsync,
+            }));
+
+            builder.ConfigureServices(services =>
                 services.AddOpenTelemetryTracing((builder) => builder
                         .AddAspNetCoreInstrumentation()
                         .AddHttpClientInstrumentation()
-                        .AddAzureMonitorTraceExporter(out this.ActivityProcessor, options =>
-                        {
-                            options.ConnectionString = AzureMonitorExporterOptions.EmptyConnectionString;
-                            options.OnTrackAsync = this.OnTrackAsync;
-                        }));
-            });
+                        //.AddAzureMonitorTraceExporter
+                        .AddProcessor(this.ActivityProcessor)));
         }
 
         private Task<Azure.Response<TrackResponse>> OnTrackAsync(IEnumerable<TelemetryItem> telemetryItems, CancellationToken cancellationToken)
