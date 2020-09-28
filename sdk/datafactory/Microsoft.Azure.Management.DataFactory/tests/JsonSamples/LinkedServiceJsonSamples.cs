@@ -2035,7 +2035,7 @@ namespace DataFactory.Tests.JsonSamples
         typeProperties: {
             connectionString: {
                 type: ""SecureString"",
-                value: ""mongodb+srv://admstest:123@admstest.kjmlk.azure.mongodb.net/admin?retryWrites=true&w=majority""
+                value: ""some connection string""
             },
             database: ""ComponentTest""
         }
