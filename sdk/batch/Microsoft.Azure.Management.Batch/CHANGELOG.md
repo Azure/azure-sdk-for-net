@@ -5,14 +5,14 @@
 - This version targets REST API version 2020-09-01.
 
 ### Features
-- Added `BatchAccountIdentity` property on `BatchAccount` for enabling system assigned identity when `Microsoft.KeyVault` is specified as the `BatchAccount` encryption property.
+- **[Breaking]** The property `MaxTasksPerNode` on `Pool` has been replaced with `TaskSlotsPerNode` to allow tasks to be created which utilize more than one scheduling slot.
 
 ## 11.0.0 (2020-06-01)
 ### REST API version
 - This version targets REST API version 2020-05-01.
 
 ### Features
-- **[Breaking]** The property `MaxTasksPerNode` on `Pool` has been replaced with `TaskSlotsPerNode` to allow tasks to be created which utilize more than one scheduling slot.
+- Added `BatchAccountIdentity` property on `BatchAccount` for enabling system assigned identity when `Microsoft.KeyVault` is specified as the `BatchAccount` encryption property.
 
 ### Bug Fixes
 - **[Breaking]** Convert the `PrivateEndpointConnection` update operation to a long running operation.
