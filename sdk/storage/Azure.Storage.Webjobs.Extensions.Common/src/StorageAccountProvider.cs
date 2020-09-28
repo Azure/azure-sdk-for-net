@@ -3,6 +3,7 @@
 
 using System;
 using Microsoft.Azure.WebJobs.Host;
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
@@ -16,14 +17,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
     public class StorageAccountProvider
     {
         private readonly IConfiguration _configuration;
+        private readonly AzureComponentFactory _componentFactory;
 
         /// <summary>
         /// TODO.
         /// </summary>
         /// <param name="configuration"></param>
-        public StorageAccountProvider(IConfiguration configuration)
+        /// <param name="componentFactory"></param>
+        public StorageAccountProvider(IConfiguration configuration, AzureComponentFactory componentFactory)
         {
             _configuration = configuration;
+            _componentFactory = componentFactory;
         }
 
         /// <summary>
@@ -51,14 +55,26 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
             }
 
             // $$$ Where does validation happen?
-            string connectionString = _configuration.GetWebJobsConnectionString(name);
-            if (connectionString == null)
+            IConfigurationSection connectionSection = _configuration.GetWebJobsConnectionStringSection(name);
+            if (!connectionSection.Exists())
             {
                 // Not found
                 throw new InvalidOperationException($"Storage account connection string '{IConfigurationExtensions.GetPrefixedConnectionStringName(name)}' does not exist. Make sure that it is a defined App Setting.");
             }
 
-            return StorageAccount.NewFromConnectionString(connectionString);
+            if (!string.IsNullOrWhiteSpace(connectionSection.Value))
+            {
+                return StorageAccount.NewFromConnectionString(connectionSection.Value);
+            }
+
+            var endpoint = connectionSection["endpoint"];
+            if (string.IsNullOrWhiteSpace(endpoint))
+            {
+                // Not found
+                throw new InvalidOperationException($"Connection should have an 'endpoint' property or be a string representing a connection string.");
+            }
+
+            return new StorageAccount(new Uri(endpoint), _componentFactory.CreateCredential(connectionSection));
         }
 
         /// <summary>

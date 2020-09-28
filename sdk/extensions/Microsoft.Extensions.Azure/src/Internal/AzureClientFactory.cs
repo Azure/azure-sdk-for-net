@@ -12,7 +12,6 @@ namespace Microsoft.Extensions.Azure
         private readonly Dictionary<string, ClientRegistration<TClient>> _clientRegistrations;
 
         private readonly IServiceProvider _serviceProvider;
-        private readonly IOptionsMonitor<AzureClientsGlobalOptions> _globalOptions;
 
         private readonly IOptionsMonitor<AzureClientCredentialOptions<TClient>> _clientsOptions;
 
@@ -23,10 +22,10 @@ namespace Microsoft.Extensions.Azure
 
         public AzureClientFactory(
             IServiceProvider serviceProvider,
-            IOptionsMonitor<AzureClientsGlobalOptions> globalOptions,
             IOptionsMonitor<AzureClientCredentialOptions<TClient>> clientsOptions,
             IEnumerable<ClientRegistration<TClient>> clientRegistrations,
             IOptionsMonitor<TOptions> monitor,
+            FallbackAzureClientFactory<TClient> fallbackFactory,
             EventSourceLogForwarder logForwarder)
         {
             _clientRegistrations = new Dictionary<string, ClientRegistration<TClient>>();
@@ -36,9 +35,9 @@ namespace Microsoft.Extensions.Azure
             }
 
             _serviceProvider = serviceProvider;
-            _globalOptions = globalOptions;
             _clientsOptions = clientsOptions;
             _monitor = monitor;
+            _fallbackFactory = fallbackFactory;
             _logForwarder = logForwarder;
         }
 
@@ -48,8 +47,6 @@ namespace Microsoft.Extensions.Azure
 
             if (!_clientRegistrations.TryGetValue(name, out ClientRegistration<TClient> registration))
             {
-                _fallbackFactory ??= new FallbackAzureClientFactory<TClient>(_globalOptions, _serviceProvider, _logForwarder);
-
                 return _fallbackFactory.CreateClient(name);
             }
 

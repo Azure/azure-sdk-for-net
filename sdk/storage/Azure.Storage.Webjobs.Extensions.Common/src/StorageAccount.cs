@@ -3,9 +3,11 @@
 
 using System;
 using System.Net.Http;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
 using Azure.Storage.Queues;
+using Microsoft.Extensions.Configuration;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
 {
@@ -17,6 +19,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
     // TODO (kasobol-msft) split this between blobs and queues.
     public class StorageAccount
     {
+        private readonly Uri _endpoint;
+        private readonly TokenCredential _credential;
         private readonly string _connectionString;
 
         /// <summary>
@@ -26,6 +30,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
         public StorageAccount(string connectionString)
         {
             _connectionString = connectionString;
+        }
+
+        /// <summary>
+        /// TODO.
+        /// </summary>
+        /// <param name="endpoint"></param>
+        /// <param name="credential"></param>
+        public StorageAccount(Uri endpoint, TokenCredential credential)
+        {
+            _endpoint = endpoint;
+            _credential = credential;
         }
 
         /// <summary>
@@ -70,7 +85,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
             {
                 Transport = CreateTransportForDynamicSku()
             } : default;
-            return new BlobServiceClient(_connectionString, blobClientOptions);
+
+            if (_connectionString != null)
+            {
+                return new BlobServiceClient(_connectionString, blobClientOptions);
+            }
+
+            return new BlobServiceClient(_endpoint, _credential, blobClientOptions);
         }
 
         /// <summary>
@@ -83,7 +104,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
             {
                 Transport = CreateTransportForDynamicSku()
             } : default;
-            return new QueueServiceClient(_connectionString, queueClientOptions);
+
+            if (_connectionString != null)
+            {
+                return new QueueServiceClient(_connectionString, queueClientOptions);
+            }
+
+            return new QueueServiceClient(_endpoint, _credential, queueClientOptions);
         }
 
         private HttpPipelineTransport CreateTransportForDynamicSku()
