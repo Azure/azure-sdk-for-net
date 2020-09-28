@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-792e806e2c2c9f49a4c026f610a5f622-e77d4c1a45086644-00",
+        "traceparent": "00-f95a7bc45f360643854cfac3b412539d-388c8bacdbcee34b-00",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20200924.1",
+          "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20200928.1",
           "(.NET Core 4.6.29130.01; Linux 4.19.128-microsoft-standard #1 SMP Tue Jun 23 12:58:10 UTC 2020)"
         ],
         "x-ms-client-request-id": "8768ab2aab8761987cfb7b6550e19a48",
@@ -20,15 +20,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "228",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 24 Sep 2020 19:11:30 GMT",
+        "Date": "Mon, 28 Sep 2020 19:35:06 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "1f13c7bd-f549-4303-981d-e699e88c5be2",
+        "x-ms-correlation-request-id": "9028b324-b6a7-4389-84d7-e4711ed70b3d",
         "x-ms-failure-cause": "gateway",
-        "x-ms-request-id": "1f13c7bd-f549-4303-981d-e699e88c5be2",
-        "x-ms-routing-request-id": "WESTUS2:20200924T191131Z:1f13c7bd-f549-4303-981d-e699e88c5be2"
+        "x-ms-request-id": "9028b324-b6a7-4389-84d7-e4711ed70b3d",
+        "x-ms-routing-request-id": "WESTUS2:20200928T193507Z:9028b324-b6a7-4389-84d7-e4711ed70b3d"
       },
       "ResponseBody": {
         "error": {

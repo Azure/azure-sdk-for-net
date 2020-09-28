@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.TestFramework
         }
 
         [OneTimeSetUp]
-        private void RunOneTimeSetup()
+        protected async Task RunOneTimeSetup()
         {
             if (Mode == RecordedTestMode.Live || Debugger.IsAttached)
             {
@@ -118,13 +118,13 @@ namespace Azure.ResourceManager.TestFramework
             Recording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher);
             TestEnvironment.SetRecording(Recording);
             InitializeClients();
-            OnOneTimeSetupAsync();
+            await OnOneTimeSetupAsync();
         }
 
         [OneTimeTearDown]
-        private async Task RunOneTimeTearDown()
+        protected async Task RunOneTimeTearDown()
         {
-            StopTestRecording();
+            await StopTestRecording();
             await CleanupResourceGroupsAsync();
             Logger?.Dispose();
             Logger = null;
@@ -132,9 +132,9 @@ namespace Azure.ResourceManager.TestFramework
         }
 
         [SetUp]
-        private void StartTestRecording()
+        protected async Task StartTestRecording()
         {
-            StopTestRecording();
+            await StopTestRecording();
             TestContext.TestAdapter test = TestContext.CurrentContext.Test;
             if (Mode != RecordedTestMode.Live &&
                 test.Properties.ContainsKey("SkipRecordings"))
@@ -145,18 +145,18 @@ namespace Azure.ResourceManager.TestFramework
             TestEnvironment.Mode = Mode;
             TestEnvironment.SetRecording(Recording);
             InitializeClients();
-            OnSetupAsync();
+            await OnSetupAsync();
         }
 
         [TearDown]
-        private void StopTestRecording()
+        protected async Task StopTestRecording()
         {
             bool save = TestContext.CurrentContext.Result.FailCount == 0;
 #if DEBUG
             save |= SaveDebugRecordingsOnFailure;
 #endif
             Recording?.Dispose(save);
-            OnTearDownAsync();
+            await OnTearDownAsync();
         }
 
         protected ResourcesManagementClient GetResourceManagementClient()
