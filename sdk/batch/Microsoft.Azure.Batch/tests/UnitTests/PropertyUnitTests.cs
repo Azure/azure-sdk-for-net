@@ -687,7 +687,7 @@ namespace Azure.Batch.Unit.Tests
             this.testOutputHelper.WriteLine(e.ToString());
 
             //After GetProtocolObject, the child objects should be unreadable too
-            Assert.Throws<InvalidOperationException>(() => poolSpecification.MaxTasksPerComputeNode = 4);
+            Assert.Throws<InvalidOperationException>(() => poolSpecification.TaskSlotsPerNode = 4);
 
             //The original data should be on the protocol specification
             Assert.Equal(idPrefix, protoAutoPoolSpecification.AutoPoolIdPrefix);
