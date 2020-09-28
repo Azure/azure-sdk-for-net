@@ -11,10 +11,10 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
     {
         public AzuriteFactAttribute()
         {
-            string azuriteLocation = Environment.GetEnvironmentVariable("AzureWebJobsStorageAzuriteLocation");
+            string azuriteLocation = Environment.GetEnvironmentVariable("AZURE_AZURITE_LOCATION");
             if (string.IsNullOrWhiteSpace(azuriteLocation))
             {
-                Skip = "This test requires Azurite installed and it's location available through AzureWebJobsStorageAzuriteLocation variable";
+                Skip = "This test requires Azurite installed and it's location available through AZURE_AZURITE_LOCATION variable";
             }
         }
     }

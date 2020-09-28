@@ -29,6 +29,9 @@ parameters:
 - name: ServiceDirectory
   type: string
   default: not-specified
+- name: TestSetupSteps
+  type: stepList
+  default: []
 
 jobs:
   - ${{ each platform in parameters.Platforms }}:
@@ -54,6 +57,10 @@ jobs:
         - ${{ parameters.PreSteps }}
 
         - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
+
+        - ${{ each step in parameters.TestSetupSteps }}:
+          - ${{ each pair in step }}:
+              ${{ pair.key }}: ${{ pair.value }}
 
         - template: /eng/common/TestResources/deploy-test-resources.yml
           parameters:

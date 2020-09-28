@@ -29,6 +29,9 @@ parameters:
 - name: ServiceDirectory
   type: string
   default: not-specified
+- name: TestSetupSteps
+  type: stepList
+  default: []
 
 jobs:
 - template: archetype-sdk-tests-jobs.yml
@@ -42,6 +45,7 @@ jobs:
     Location: ${{ parameters.Location }}
     SubscriptionConfiguration: ${{ parameters.SubscriptionConfiguration }}
     ServiceDirectory: ${{ parameters.ServiceDirectory }}
+    TestSetupSteps: ${{ parameters.TestSetupSteps }}
     platforms:
       - DisplayName: "Test on Linux"
         OSVmImage: "ubuntu-18.04"

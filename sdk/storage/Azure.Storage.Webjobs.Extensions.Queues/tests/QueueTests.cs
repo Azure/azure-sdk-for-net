@@ -90,7 +90,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         private static string GetErrorMessageForBadQueueName(string value, string parameterName)
         {
             return "A queue name can contain only letters, numbers, and dash(-) characters - \"" + value + "\"" +
-                "\r\nParameter name: " + parameterName; // from ArgumentException
+                Environment.NewLine + "Parameter name: " + parameterName; // from ArgumentException
         }
 
         // Program with variable queue name containing both %% and { }.
