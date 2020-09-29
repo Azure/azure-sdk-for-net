@@ -1,9 +1,10 @@
 namespace Azure.Core.Serialization
 {
-    public partial class GeographyPointConverter : System.Text.Json.Serialization.JsonConverter<Microsoft.Spatial.GeographyPoint>
+    public partial class GeographyConverter : System.Text.Json.Serialization.JsonConverter<Microsoft.Spatial.Geography>
     {
-        public GeographyPointConverter() { }
-        public override Microsoft.Spatial.GeographyPoint Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
-        public override void Write(System.Text.Json.Utf8JsonWriter writer, Microsoft.Spatial.GeographyPoint value, System.Text.Json.JsonSerializerOptions options) { }
+        public GeographyConverter() { }
+        public override bool CanConvert(System.Type typeToConvert) { throw null; }
+        public override Microsoft.Spatial.Geography Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
+        public override void Write(System.Text.Json.Utf8JsonWriter writer, Microsoft.Spatial.Geography value, System.Text.Json.JsonSerializerOptions options) { }
     }
 }

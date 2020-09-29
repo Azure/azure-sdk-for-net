@@ -4,4 +4,4 @@
 
 ### Added
 
-- Added `NewtonsoftJsonGeographyPointConverter` to serialize `Microsoft.Spatial.GeographyPoint` objects.
+- Added `NewtonsoftJsonGeographyConverter` to serialize `Microsoft.Spatial.GeographyPoint` objects.
