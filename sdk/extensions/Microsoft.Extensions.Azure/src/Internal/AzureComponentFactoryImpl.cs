@@ -24,5 +24,20 @@ namespace Microsoft.Extensions.Azure
         {
             return ClientFactory.CreateCredential(configuration) ?? _globalOptions.CurrentValue.CredentialFactory(_serviceProvider);
         }
+
+        public override object CreateClientOptions(Type optionsType, object serviceVersion, IConfiguration configuration)
+        {
+            var options = ClientFactory.CreateClientOptions(serviceVersion, optionsType);
+
+            if (options is ClientOptions clientOptions)
+            {
+                foreach (var globalConfigureOption in _globalOptions.CurrentValue.ConfigureOptionDelegates)
+                {
+                    globalConfigureOption(clientOptions, _serviceProvider);
+                }
+            }
+            configuration?.Bind(options);
+            return options;
+        }
     }
 }

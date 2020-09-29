@@ -2,6 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Net.Http;
+using Azure.Core.Pipeline;
+using Azure.Storage.Blobs;
+using Azure.Storage.Queues;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
@@ -64,7 +68,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
 
             if (!string.IsNullOrWhiteSpace(connectionSection.Value))
             {
-                return StorageAccount.NewFromConnectionString(connectionSection.Value);
+                return new StorageAccount(
+                    new BlobServiceClient(connectionSection.Value, CreateBlobClientOptions(null)),
+                    new QueueServiceClient(connectionSection.Value, CreateQueueClientOptions(null)));
             }
 
             var endpoint = connectionSection["endpoint"];
@@ -74,7 +80,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
                 throw new InvalidOperationException($"Connection should have an 'endpoint' property or be a string representing a connection string.");
             }
 
-            return new StorageAccount(new Uri(endpoint), _componentFactory.CreateCredential(connectionSection));
+            var credential = _componentFactory.CreateCredential(connectionSection);
+            var endpointUri = new Uri(endpoint);
+            return new StorageAccount(
+                new BlobServiceClient(endpointUri, credential, CreateBlobClientOptions(connectionSection)),
+                new QueueServiceClient(endpointUri, credential, CreateQueueClientOptions(connectionSection)));
         }
 
         /// <summary>
@@ -84,6 +94,36 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
         public virtual StorageAccount GetHost()
         {
             return this.Get(null);
+        }
+
+        private BlobClientOptions CreateBlobClientOptions(IConfiguration configuration)
+        {
+            var blobClientOptions = (BlobClientOptions) _componentFactory.CreateClientOptions(typeof(BlobClientOptions), null, configuration);
+            if (SkuUtility.IsDynamicSku)
+            {
+                blobClientOptions.Transport = CreateTransportForDynamicSku();
+            }
+
+            return blobClientOptions;
+        }
+
+        private QueueClientOptions CreateQueueClientOptions(IConfiguration configuration)
+        {
+            var queueClientOptions = (QueueClientOptions) _componentFactory.CreateClientOptions(typeof(QueueClientOptions), null, configuration);
+            if (SkuUtility.IsDynamicSku)
+            {
+                queueClientOptions.Transport = CreateTransportForDynamicSku();
+            }
+
+            return queueClientOptions;
+        }
+
+        private HttpPipelineTransport CreateTransportForDynamicSku()
+        {
+            return new HttpClientTransport(new HttpClient(new HttpClientHandler()
+            {
+                MaxConnectionsPerServer = 50
+            }));
         }
     }
 }

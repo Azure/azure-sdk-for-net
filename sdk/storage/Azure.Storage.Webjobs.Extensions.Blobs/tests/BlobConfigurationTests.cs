@@ -2,11 +2,14 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Queues;
 using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Xunit;
@@ -37,6 +40,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 })
                 .ConfigureDefaultTestHost(prog, builder =>
                 {
+                    SetupAzurite(builder);
                     builder.AddAzureStorageBlobs().AddAzureStorageQueues();
                 })
                 .Build();
@@ -64,11 +68,12 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 {
                     cb.AddInMemoryCollection(new Dictionary<string, string>()
                     {
-                        {"CustomConnection_endpoint", account.ConnectionString }
+                        {"CustomConnection:endpoint", account.Endpoint }
                     });
                 })
                 .ConfigureDefaultTestHost(prog, builder =>
                 {
+                    SetupAzurite(builder);
                     builder.AddAzureStorageBlobs().AddAzureStorageQueues();
                 })
                 .Build();
@@ -85,6 +90,16 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.NotNull(result.BlobContainerName);
             Assert.False(await result.ExistsAsync());
         }
+
+        private void SetupAzurite(IWebJobsBuilder builder)
+        {
+            builder.Services.AddAzureClients(builder =>
+            {
+                builder.UseCredential(azuriteFixture.GetCredential());
+                builder.ConfigureDefaults(options => options.Transport = azuriteFixture.GetTransport());
+            });
+        }
+
 
         private class BindToCloudBlockBlobProgram
         {
