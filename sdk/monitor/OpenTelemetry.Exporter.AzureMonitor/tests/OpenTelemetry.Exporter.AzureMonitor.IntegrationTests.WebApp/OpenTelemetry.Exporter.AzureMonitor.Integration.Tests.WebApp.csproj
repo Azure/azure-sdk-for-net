@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <!-- 
   Integration tests evaluate an app's components on a broader level than unit tests. 
@@ -12,7 +12,14 @@
     <RequiredTargetFrameworks>netcoreapp2.1</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
-  
+
+  <PropertyGroup>
+    <!-- Suppressing the following warning because Microsoft.AspNetCore.Mvc.Testing is not available for net461. -->
+    <NoWarn>
+      NETSDK1005; <!-- NETSDK1005: Ensure that restore has run and that you have included 'net461' in the TargetFrameworks for your project. -->
+    </NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>

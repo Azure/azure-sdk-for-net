@@ -13,6 +13,13 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <!-- Suppressing the following warning because Microsoft.AspNetCore.Mvc.Testing is not available for net461. -->
+    <NoWarn>
+      NETSDK1005; <!-- NETSDK1005: Ensure that restore has run and that you have included 'net461' in the TargetFrameworks for your project. -->
+    </NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" VersionOverride="2.1.1" />
