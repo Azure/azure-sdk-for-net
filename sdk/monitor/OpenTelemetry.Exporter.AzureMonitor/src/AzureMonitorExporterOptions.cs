@@ -1,15 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-
-using Azure;
 using Azure.Core;
-
-using OpenTelemetry.Exporter.AzureMonitor.Models;
 
 namespace OpenTelemetry.Exporter.AzureMonitor
 {
