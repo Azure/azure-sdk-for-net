@@ -42,3 +42,5 @@ extends:
       safeName: AzureCoreExperimental
     - name: Microsoft.Azure.Core.NewtonsoftJson
       safeName: MicrosoftAzureCoreNewtonsoftJson
+    TestSetupSteps:
+    - template: /sdk/storage/tests-install-azurite.yml
