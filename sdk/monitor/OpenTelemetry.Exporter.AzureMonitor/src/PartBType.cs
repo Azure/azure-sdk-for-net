@@ -6,12 +6,13 @@ namespace OpenTelemetry.Exporter.AzureMonitor
     internal enum PartBType
     {
         Unknown,
-        Http,
+        Azure,
+        Common,
         Db,
-        Messaging,
-        Rpc,
         FaaS,
-        Net
+        Http,
+        Messaging,
+        Rpc
     };
 
 }

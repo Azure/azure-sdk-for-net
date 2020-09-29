@@ -10,7 +10,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
     internal static class SemanticConventions
     {
         // The set of constants matches the specification as of this commit.
-        // https://github.com/open-telemetry/opentelemetry-specification/tree/709293fe132709705f0e0dd4252992e87a6ec899/specification/trace/semantic_conventions
+        // https://github.com/open-telempeer.addressetry/opentelemetry-specification/tree/709293fe132709705f0e0dd4252992e87a6ec899/specification/trace/semantic_conventions
         public const string AttributeServiceName = "service.name";
         public const string AttributeServiceNamespace = "service.namespace";
         public const string AttributeServiceInstance = "service.instance.id";
@@ -134,5 +134,10 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         public const string AttributeMessagingPayloadSize = "messaging.message_payload_size_bytes";
         public const string AttributeMessagingPayloadCompressedSize = "messaging.message_payload_compressed_size_bytes";
         public const string AttributeMessagingOperation = "messaging.operation";
+
+        public const string AttributeEndpointAddress = "peer.address";
+        public const string AttributeMessageBusDestination = "message_bus.destination";
+
+        public const string AttributeAzureNameSpace = "az.namespace";
     }
 }
