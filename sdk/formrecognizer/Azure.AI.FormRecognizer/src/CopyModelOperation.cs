@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer.Training
     public class CopyModelOperation : Operation<CustomFormModelInfo>
     {
         /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
-        private readonly ServiceRestClient _serviceClient;
+        private readonly FormRecognizerRestClient _serviceClient;
 
         /// <summary>Provides tools for exception creation in case of failure.</summary>
         private readonly ClientDiagnostics _diagnostics;
@@ -115,7 +115,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="diagnostics">The client diagnostics for exception creation in case of failure.</param>
         /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
         /// <param name="targetModelId">Model ID in the target Form Recognizer resource.</param>
-        internal CopyModelOperation(ServiceRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, string targetModelId)
+        internal CopyModelOperation(FormRecognizerRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, string targetModelId)
         {
             _serviceClient = serviceClient;
             _diagnostics = diagnostics;
