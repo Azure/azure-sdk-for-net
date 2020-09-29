@@ -491,6 +491,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <param name="quotaInGB">Specifies the maximum size of the share, in gigabytes.</param>
+            /// <param name="accessTier">Specifies the access tier of the share.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
@@ -503,6 +504,7 @@ namespace Azure.Storage.Files.Shares
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 int? quotaInGB = default,
+                Azure.Storage.Files.Shares.Models.ShareAccessTier? accessTier = default,
                 bool async = true,
                 string operationName = "ShareClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
@@ -518,7 +520,8 @@ namespace Azure.Storage.Files.Shares
                         version,
                         timeout,
                         metadata,
-                        quotaInGB))
+                        quotaInGB,
+                        accessTier))
                     {
                         if (async)
                         {
@@ -556,6 +559,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <param name="quotaInGB">Specifies the maximum size of the share, in gigabytes.</param>
+            /// <param name="accessTier">Specifies the access tier of the share.</param>
             /// <returns>The Share.CreateAsync Message.</returns>
             internal static Azure.Core.HttpMessage CreateAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -563,7 +567,8 @@ namespace Azure.Storage.Files.Shares
                 string version,
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
-                int? quotaInGB = default)
+                int? quotaInGB = default,
+                Azure.Storage.Files.Shares.Models.ShareAccessTier? accessTier = default)
             {
                 // Validation
                 if (resourceUri == null)
@@ -594,6 +599,7 @@ namespace Azure.Storage.Files.Shares
                     }
                 }
                 if (quotaInGB != null) { _request.Headers.SetValue("x-ms-share-quota", quotaInGB.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+                if (accessTier != null) { _request.Headers.SetValue("x-ms-access-tier", accessTier.ToString()); }
 
                 return _message;
             }
@@ -822,6 +828,18 @@ namespace Azure.Storage.Files.Shares
                         if (response.Headers.TryGetValue("x-ms-lease-status", out _header))
                         {
                             _value.LeaseStatus = Azure.Storage.Files.Shares.FileRestClient.Serialization.ParseShareLeaseStatus(_header);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-access-tier", out _header))
+                        {
+                            _value.AccessTier = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-access-tier-change-time", out _header))
+                        {
+                            _value.AccessTierChangeTime = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-access-tier-transition-state", out _header))
+                        {
+                            _value.AccessTierTransitionState = _header;
                         }
 
                         // Create the response
@@ -2337,9 +2355,9 @@ namespace Azure.Storage.Files.Shares
             }
             #endregion Share.GetPermissionAsync
 
-            #region Share.SetQuotaAsync
+            #region Share.SetPropertiesAsync
             /// <summary>
-            /// Sets quota for the specified share.
+            /// Sets properties for the specified share.
             /// </summary>
             /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
@@ -2347,21 +2365,23 @@ namespace Azure.Storage.Files.Shares
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="quotaInGB">Specifies the maximum size of the share, in gigabytes.</param>
+            /// <param name="accessTier">Specifies the access tier of the share.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.ShareInfo}</returns>
-            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.ShareInfo>> SetQuotaAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.ShareInfo>> SetPropertiesAsync(
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string version,
                 int? timeout = default,
                 int? quotaInGB = default,
+                Azure.Storage.Files.Shares.Models.ShareAccessTier? accessTier = default,
                 string leaseId = default,
                 bool async = true,
-                string operationName = "ShareClient.SetQuota",
+                string operationName = "ShareClient.SetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -2369,12 +2389,13 @@ namespace Azure.Storage.Files.Shares
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpMessage _message = SetQuotaAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = SetPropertiesAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         version,
                         timeout,
                         quotaInGB,
+                        accessTier,
                         leaseId))
                     {
                         if (async)
@@ -2390,7 +2411,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return SetQuotaAsync_CreateResponse(clientDiagnostics, _response);
+                        return SetPropertiesAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -2405,21 +2426,23 @@ namespace Azure.Storage.Files.Shares
             }
 
             /// <summary>
-            /// Create the Share.SetQuotaAsync request.
+            /// Create the Share.SetPropertiesAsync request.
             /// </summary>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="quotaInGB">Specifies the maximum size of the share, in gigabytes.</param>
+            /// <param name="accessTier">Specifies the access tier of the share.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
-            /// <returns>The Share.SetQuotaAsync Message.</returns>
-            internal static Azure.Core.HttpMessage SetQuotaAsync_CreateMessage(
+            /// <returns>The Share.SetPropertiesAsync Message.</returns>
+            internal static Azure.Core.HttpMessage SetPropertiesAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string version,
                 int? timeout = default,
                 int? quotaInGB = default,
+                Azure.Storage.Files.Shares.Models.ShareAccessTier? accessTier = default,
                 string leaseId = default)
             {
                 // Validation
@@ -2446,18 +2469,19 @@ namespace Azure.Storage.Files.Shares
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", version);
                 if (quotaInGB != null) { _request.Headers.SetValue("x-ms-share-quota", quotaInGB.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+                if (accessTier != null) { _request.Headers.SetValue("x-ms-access-tier", accessTier.ToString()); }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
 
                 return _message;
             }
 
             /// <summary>
-            /// Create the Share.SetQuotaAsync response or throw a failure exception.
+            /// Create the Share.SetPropertiesAsync response or throw a failure exception.
             /// </summary>
             /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Share.SetQuotaAsync Azure.Response{Azure.Storage.Files.Shares.Models.ShareInfo}.</returns>
-            internal static Azure.Response<Azure.Storage.Files.Shares.Models.ShareInfo> SetQuotaAsync_CreateResponse(
+            /// <returns>The Share.SetPropertiesAsync Azure.Response{Azure.Storage.Files.Shares.Models.ShareInfo}.</returns>
+            internal static Azure.Response<Azure.Storage.Files.Shares.Models.ShareInfo> SetPropertiesAsync_CreateResponse(
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
@@ -2493,7 +2517,7 @@ namespace Azure.Storage.Files.Shares
                     }
                 }
             }
-            #endregion Share.SetQuotaAsync
+            #endregion Share.SetPropertiesAsync
 
             #region Share.SetMetadataAsync
             /// <summary>
@@ -9727,6 +9751,94 @@ namespace Azure.Storage.Files.Shares.Models
 }
 #endregion class ShareAccessPolicy
 
+#region enum strings ShareAccessTier
+namespace Azure.Storage.Files.Shares.Models
+{
+    /// <summary>
+    /// Specifies the access tier of the share.
+    /// </summary>
+    public readonly struct ShareAccessTier : System.IEquatable<ShareAccessTier>
+    {
+        /// <summary>
+        /// The ShareAccessTier value.
+        /// </summary>
+        private readonly string _value;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShareAccessTier"/> structure.
+        /// </summary>
+        /// <param name="value">The string value of the instance.</param>
+        public ShareAccessTier(string value) { _value = value ?? throw new System.ArgumentNullException(nameof(value)); }
+
+        /// <summary>
+        /// TransactionOptimized
+        /// </summary>
+        public static Azure.Storage.Files.Shares.Models.ShareAccessTier TransactionOptimized { get; } = new ShareAccessTier(@"TransactionOptimized");
+
+        /// <summary>
+        /// Hot
+        /// </summary>
+        public static Azure.Storage.Files.Shares.Models.ShareAccessTier Hot { get; } = new ShareAccessTier(@"Hot");
+
+        /// <summary>
+        /// Cool
+        /// </summary>
+        public static Azure.Storage.Files.Shares.Models.ShareAccessTier Cool { get; } = new ShareAccessTier(@"Cool");
+
+        /// <summary>
+        /// Determines if two <see cref="ShareAccessTier"/> values are the same.
+        /// </summary>
+        /// <param name="left">The first <see cref="ShareAccessTier"/> to compare.</param>
+        /// <param name="right">The second <see cref="ShareAccessTier"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are the same; otherwise, false.</returns>
+        public static bool operator ==(Azure.Storage.Files.Shares.Models.ShareAccessTier left, Azure.Storage.Files.Shares.Models.ShareAccessTier right) => left.Equals(right);
+
+        /// <summary>
+        /// Determines if two <see cref="ShareAccessTier"/> values are different.
+        /// </summary>
+        /// <param name="left">The first <see cref="ShareAccessTier"/> to compare.</param>
+        /// <param name="right">The second <see cref="ShareAccessTier"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are different; otherwise, false.</returns>
+        public static bool operator !=(Azure.Storage.Files.Shares.Models.ShareAccessTier left, Azure.Storage.Files.Shares.Models.ShareAccessTier right) => !left.Equals(right);
+
+        /// <summary>
+        /// Converts a string to a <see cref="ShareAccessTier"/>.
+        /// </summary>
+        /// <param name="value">The string value to convert.</param>
+        /// <returns>The ShareAccessTier value.</returns>
+        public static implicit operator ShareAccessTier(string value) => new Azure.Storage.Files.Shares.Models.ShareAccessTier(value);
+
+        /// <summary>
+        /// Check if two <see cref="ShareAccessTier"/> instances are equal.
+        /// </summary>
+        /// <param name="obj">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is Azure.Storage.Files.Shares.Models.ShareAccessTier other && Equals(other);
+
+        /// <summary>
+        /// Check if two <see cref="ShareAccessTier"/> instances are equal.
+        /// </summary>
+        /// <param name="other">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        public bool Equals(Azure.Storage.Files.Shares.Models.ShareAccessTier other) => string.Equals(_value, other._value, System.StringComparison.Ordinal);
+
+        /// <summary>
+        /// Get a hash code for the <see cref="ShareAccessTier"/>.
+        /// </summary>
+        /// <returns>Hash code for the ShareAccessTier.</returns>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+
+        /// <summary>
+        /// Convert the <see cref="ShareAccessTier"/> to a string.
+        /// </summary>
+        /// <returns>String representation of the ShareAccessTier.</returns>
+        public override string ToString() => _value;
+    }
+}
+#endregion enum strings ShareAccessTier
+
 #region class ShareCorsRule
 namespace Azure.Storage.Files.Shares.Models
 {
@@ -11231,6 +11343,21 @@ namespace Azure.Storage.Files.Shares.Models
         public int? RemainingRetentionDays { get; internal set; }
 
         /// <summary>
+        /// AccessTier
+        /// </summary>
+        public string AccessTier { get; internal set; }
+
+        /// <summary>
+        /// AccessTierChangeTime
+        /// </summary>
+        public System.DateTimeOffset? AccessTierChangeTime { get; internal set; }
+
+        /// <summary>
+        /// AccessTierTransitionState
+        /// </summary>
+        public string AccessTierTransitionState { get; internal set; }
+
+        /// <summary>
         /// The current lease status of the share.
         /// </summary>
         public Azure.Storage.Files.Shares.Models.ShareLeaseStatus? LeaseStatus { get; internal set; }
@@ -11325,6 +11452,21 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 _value.RemainingRetentionDays = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
+            _child = element.Element(System.Xml.Linq.XName.Get("AccessTier", ""));
+            if (_child != null)
+            {
+                _value.AccessTier = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("AccessTierChangeTime", ""));
+            if (_child != null)
+            {
+                _value.AccessTierChangeTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("AccessTierTransitionState", ""));
+            if (_child != null)
+            {
+                _value.AccessTierTransitionState = _child.Value;
+            }
             _child = element.Element(System.Xml.Linq.XName.Get("LeaseStatus", ""));
             if (_child != null && !string.IsNullOrEmpty(_child.Value))
             {
@@ -11370,14 +11512,17 @@ namespace Azure.Storage.Files.Shares.Models
         /// Creates a new ShareProperties instance for mocking.
         /// </summary>
         public static ShareProperties ShareProperties(
-            System.DateTimeOffset? deletedOn = default,
+            string accessTier = default,
             System.DateTimeOffset? lastModified = default,
             int? provisionedIops = default,
             int? provisionedIngressMBps = default,
             int? provisionedEgressMBps = default,
             System.DateTimeOffset? nextAllowedQuotaDowngradeTime = default,
-            Azure.ETag? eTag = default,
+            System.DateTimeOffset? deletedOn = default,
             int? remainingRetentionDays = default,
+            Azure.ETag? eTag = default,
+            System.DateTimeOffset? accessTierChangeTime = default,
+            string accessTierTransitionState = default,
             Azure.Storage.Files.Shares.Models.ShareLeaseStatus? leaseStatus = default,
             Azure.Storage.Files.Shares.Models.ShareLeaseState? leaseState = default,
             Azure.Storage.Files.Shares.Models.ShareLeaseDuration? leaseDuration = default,
@@ -11386,14 +11531,17 @@ namespace Azure.Storage.Files.Shares.Models
         {
             return new ShareProperties()
             {
-                DeletedOn = deletedOn,
+                AccessTier = accessTier,
                 LastModified = lastModified,
                 ProvisionedIops = provisionedIops,
                 ProvisionedIngressMBps = provisionedIngressMBps,
                 ProvisionedEgressMBps = provisionedEgressMBps,
                 NextAllowedQuotaDowngradeTime = nextAllowedQuotaDowngradeTime,
-                ETag = eTag,
+                DeletedOn = deletedOn,
                 RemainingRetentionDays = remainingRetentionDays,
+                ETag = eTag,
+                AccessTierChangeTime = accessTierChangeTime,
+                AccessTierTransitionState = accessTierTransitionState,
                 LeaseStatus = leaseStatus,
                 LeaseState = leaseState,
                 LeaseDuration = leaseDuration,

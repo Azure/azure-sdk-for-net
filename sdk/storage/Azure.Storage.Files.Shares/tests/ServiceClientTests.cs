@@ -255,6 +255,33 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task ListSharesSegmentAsync_AccessTier()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_SharedKey();
+
+            // Ensure at least one share
+            await using DisposingShare test = await GetTestShareAsync(service);
+            ShareClient share = test.Share;
+
+            await test.Share.SetAccessTierAsync(ShareAccessTier.Hot);
+
+            var shares = new List<ShareItem>();
+            await foreach (ShareItem shareItem in service.GetSharesAsync())
+            {
+                shares.Add(shareItem);
+            }
+
+            ShareItem shareItemForShare = shares.FirstOrDefault(r => r.Name == test.Share.Name);
+
+            // Assert
+            Assert.AreEqual(ShareAccessTier.Hot.ToString(), shareItemForShare.Properties.AccessTier);
+            Assert.IsNotNull(shareItemForShare.Properties.AccessTierChangeTime);
+            Assert.AreEqual("pending-from-transactionOptimized", shareItemForShare.Properties.AccessTierTransitionState);
+        }
+
+        [Test]
         public async Task ListShareSegmentAsync_Error()
         {
             // Arrange

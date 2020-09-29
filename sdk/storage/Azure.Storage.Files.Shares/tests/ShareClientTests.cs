@@ -189,6 +189,31 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task CreateAsync_AccessTier()
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+            ShareCreateOptions options = new ShareCreateOptions
+            {
+                AccessTier = ShareAccessTier.Hot
+            };
+
+            // Act
+            await share.CreateAsync(options);
+
+            // Assert
+            Response<ShareProperties> propertiesResponse = await share.GetPropertiesAsync();
+            Assert.AreEqual(ShareAccessTier.Hot.ToString(), propertiesResponse.Value.AccessTier);
+            Assert.IsNotNull(propertiesResponse.Value.AccessTierChangeTime);
+
+            // Cleanup
+            await share.DeleteAsync();
+        }
+
+        [Test]
         public async Task CreateAsync_Error()
         {
             // Arrange
@@ -1141,6 +1166,36 @@ namespace Azure.Storage.Files.Shares.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 share.CreateSnapshotAsync(),
                 e => Assert.AreEqual("ShareNotFound", e.ErrorCode));
+        }
+
+        [Test]
+        public async Task SetAccessTierAsync()
+        {
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareClient share = test.Share;
+
+            // Act
+            await share.SetAccessTierAsync(ShareAccessTier.Hot);
+
+            // Assert
+            Response<ShareProperties> response = await share.GetPropertiesAsync();
+            Assert.AreEqual(ShareAccessTier.Hot.ToString(), response.Value.AccessTier);
+            Assert.AreEqual("pending-from-transactionOptimized", response.Value.AccessTierTransitionState);
+            Assert.IsNotNull(response.Value.AccessTierChangeTime);
+        }
+
+        [Test]
+        public async Task SetAccessTierAsync_Error()
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                share.SetAccessTierAsync(ShareAccessTier.Hot),
+                e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
         }
 
         [Test]
