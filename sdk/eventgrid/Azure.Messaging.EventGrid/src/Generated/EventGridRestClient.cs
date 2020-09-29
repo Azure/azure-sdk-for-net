@@ -16,18 +16,18 @@ using Azure.Messaging.EventGrid.Models;
 
 namespace Azure.Messaging.EventGrid
 {
-    internal partial class AzureMessagingEventGridRestClient
+    internal partial class EventGridRestClient
     {
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
-        /// <summary> Initializes a new instance of AzureMessagingEventGridRestClient. </summary>
+        /// <summary> Initializes a new instance of EventGridRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public AzureMessagingEventGridRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string apiVersion = "2018-01-01")
+        public EventGridRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string apiVersion = "2018-01-01")
         {
             if (apiVersion == null)
             {

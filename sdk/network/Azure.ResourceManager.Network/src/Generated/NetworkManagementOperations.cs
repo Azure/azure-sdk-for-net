@@ -15,24 +15,24 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> The AzureResourceManagerNetwork service client. </summary>
-    public partial class AzureResourceManagerNetworkOperations
+    /// <summary> The NetworkManagement service client. </summary>
+    public partial class NetworkManagementOperations
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
-        internal AzureResourceManagerNetworkRestOperations RestClient { get; }
-        /// <summary> Initializes a new instance of AzureResourceManagerNetworkOperations for mocking. </summary>
-        protected AzureResourceManagerNetworkOperations()
+        internal NetworkManagementRestOperations RestClient { get; }
+        /// <summary> Initializes a new instance of NetworkManagementOperations for mocking. </summary>
+        protected NetworkManagementOperations()
         {
         }
-        /// <summary> Initializes a new instance of AzureResourceManagerNetworkOperations. </summary>
+        /// <summary> Initializes a new instance of NetworkManagementOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        internal AzureResourceManagerNetworkOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        internal NetworkManagementOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            RestClient = new AzureResourceManagerNetworkRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            RestClient = new NetworkManagementRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DnsNameAvailabilityResult>> CheckDnsNameAvailabilityAsync(string location, string domainNameLabel, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AzureResourceManagerNetworkOperations.CheckDnsNameAvailability");
+            using var scope = _clientDiagnostics.CreateScope("NetworkManagementOperations.CheckDnsNameAvailability");
             scope.Start();
             try
             {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DnsNameAvailabilityResult> CheckDnsNameAvailability(string location, string domainNameLabel, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AzureResourceManagerNetworkOperations.CheckDnsNameAvailability");
+            using var scope = _clientDiagnostics.CreateScope("NetworkManagementOperations.CheckDnsNameAvailability");
             scope.Start();
             try
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<VirtualWanSecurityProviders>> SupportedSecurityProvidersAsync(string resourceGroupName, string virtualWANName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AzureResourceManagerNetworkOperations.SupportedSecurityProviders");
+            using var scope = _clientDiagnostics.CreateScope("NetworkManagementOperations.SupportedSecurityProviders");
             scope.Start();
             try
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<VirtualWanSecurityProviders> SupportedSecurityProviders(string resourceGroupName, string virtualWANName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AzureResourceManagerNetworkOperations.SupportedSecurityProviders");
+            using var scope = _clientDiagnostics.CreateScope("NetworkManagementOperations.SupportedSecurityProviders");
             scope.Start();
             try
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Network
 
             async Task<Page<BastionShareableLink>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AzureResourceManagerNetworkOperations.GetBastionShareableLink");
+                using var scope = _clientDiagnostics.CreateScope("NetworkManagementOperations.GetBastionShareableLink");
                 scope.Start();
                 try
                 {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<BastionShareableLink>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AzureResourceManagerNetworkOperations.GetBastionShareableLink");
+                using var scope = _clientDiagnostics.CreateScope("NetworkManagementOperations.GetBastionShareableLink");
                 scope.Start();
                 try
                 {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Network
 
             Page<BastionShareableLink> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AzureResourceManagerNetworkOperations.GetBastionShareableLink");
+                using var scope = _clientDiagnostics.CreateScope("NetworkManagementOperations.GetBastionShareableLink");
                 scope.Start();
                 try
                 {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Network
             }
             Page<BastionShareableLink> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AzureResourceManagerNetworkOperations.GetBastionShareableLink");
+                using var scope = _clientDiagnostics.CreateScope("NetworkManagementOperations.GetBastionShareableLink");
                 scope.Start();
                 try
                 {
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Network
 
             async Task<Page<BastionSessionState>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AzureResourceManagerNetworkOperations.DisconnectActiveSessions");
+                using var scope = _clientDiagnostics.CreateScope("NetworkManagementOperations.DisconnectActiveSessions");
                 scope.Start();
                 try
                 {
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<BastionSessionState>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AzureResourceManagerNetworkOperations.DisconnectActiveSessions");
+                using var scope = _clientDiagnostics.CreateScope("NetworkManagementOperations.DisconnectActiveSessions");
                 scope.Start();
                 try
                 {
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Network
 
             Page<BastionSessionState> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AzureResourceManagerNetworkOperations.DisconnectActiveSessions");
+                using var scope = _clientDiagnostics.CreateScope("NetworkManagementOperations.DisconnectActiveSessions");
                 scope.Start();
                 try
                 {
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Network
             }
             Page<BastionSessionState> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("AzureResourceManagerNetworkOperations.DisconnectActiveSessions");
+                using var scope = _clientDiagnostics.CreateScope("NetworkManagementOperations.DisconnectActiveSessions");
                 scope.Start();
                 try
                 {
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="bslRequest"> Post request for all the Bastion Shareable Link endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="bastionHostName"/>, or <paramref name="bslRequest"/> is null. </exception>
-        public virtual async Task<AzureResourceManagerNetworkPutBastionShareableLinkOperation> StartPutBastionShareableLinkAsync(string resourceGroupName, string bastionHostName, BastionShareableLinkListRequest bslRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<NetworkManagementPutBastionShareableLinkOperation> StartPutBastionShareableLinkAsync(string resourceGroupName, string bastionHostName, BastionShareableLinkListRequest bslRequest, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -350,12 +350,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(bslRequest));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AzureResourceManagerNetworkOperations.StartPutBastionShareableLink");
+            using var scope = _clientDiagnostics.CreateScope("NetworkManagementOperations.StartPutBastionShareableLink");
             scope.Start();
             try
             {
                 var originalResponse = await RestClient.PutBastionShareableLinkAsync(resourceGroupName, bastionHostName, bslRequest, cancellationToken).ConfigureAwait(false);
-                return new AzureResourceManagerNetworkPutBastionShareableLinkOperation(_clientDiagnostics, _pipeline, RestClient.CreatePutBastionShareableLinkRequest(resourceGroupName, bastionHostName, bslRequest).Request, originalResponse, nextLink => RestClient.PutBastionShareableLinkNextPageAsync(nextLink, resourceGroupName, bastionHostName, bslRequest, cancellationToken));
+                return new NetworkManagementPutBastionShareableLinkOperation(_clientDiagnostics, _pipeline, RestClient.CreatePutBastionShareableLinkRequest(resourceGroupName, bastionHostName, bslRequest).Request, originalResponse, nextLink => RestClient.PutBastionShareableLinkNextPageAsync(nextLink, resourceGroupName, bastionHostName, bslRequest, cancellationToken));
             }
             catch (Exception e)
             {
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="bslRequest"> Post request for all the Bastion Shareable Link endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="bastionHostName"/>, or <paramref name="bslRequest"/> is null. </exception>
-        public virtual AzureResourceManagerNetworkPutBastionShareableLinkOperation StartPutBastionShareableLink(string resourceGroupName, string bastionHostName, BastionShareableLinkListRequest bslRequest, CancellationToken cancellationToken = default)
+        public virtual NetworkManagementPutBastionShareableLinkOperation StartPutBastionShareableLink(string resourceGroupName, string bastionHostName, BastionShareableLinkListRequest bslRequest, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -385,12 +385,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(bslRequest));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AzureResourceManagerNetworkOperations.StartPutBastionShareableLink");
+            using var scope = _clientDiagnostics.CreateScope("NetworkManagementOperations.StartPutBastionShareableLink");
             scope.Start();
             try
             {
                 var originalResponse = RestClient.PutBastionShareableLink(resourceGroupName, bastionHostName, bslRequest, cancellationToken);
-                return new AzureResourceManagerNetworkPutBastionShareableLinkOperation(_clientDiagnostics, _pipeline, RestClient.CreatePutBastionShareableLinkRequest(resourceGroupName, bastionHostName, bslRequest).Request, originalResponse, nextLink => RestClient.PutBastionShareableLinkNextPageAsync(nextLink, resourceGroupName, bastionHostName, bslRequest, cancellationToken));
+                return new NetworkManagementPutBastionShareableLinkOperation(_clientDiagnostics, _pipeline, RestClient.CreatePutBastionShareableLinkRequest(resourceGroupName, bastionHostName, bslRequest).Request, originalResponse, nextLink => RestClient.PutBastionShareableLinkNextPageAsync(nextLink, resourceGroupName, bastionHostName, bslRequest, cancellationToken));
             }
             catch (Exception e)
             {
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="bslRequest"> Post request for all the Bastion Shareable Link endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="bastionHostName"/>, or <paramref name="bslRequest"/> is null. </exception>
-        public virtual async Task<AzureResourceManagerNetworkDeleteBastionShareableLinkOperation> StartDeleteBastionShareableLinkAsync(string resourceGroupName, string bastionHostName, BastionShareableLinkListRequest bslRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<NetworkManagementDeleteBastionShareableLinkOperation> StartDeleteBastionShareableLinkAsync(string resourceGroupName, string bastionHostName, BastionShareableLinkListRequest bslRequest, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -420,12 +420,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(bslRequest));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AzureResourceManagerNetworkOperations.StartDeleteBastionShareableLink");
+            using var scope = _clientDiagnostics.CreateScope("NetworkManagementOperations.StartDeleteBastionShareableLink");
             scope.Start();
             try
             {
                 var originalResponse = await RestClient.DeleteBastionShareableLinkAsync(resourceGroupName, bastionHostName, bslRequest, cancellationToken).ConfigureAwait(false);
-                return new AzureResourceManagerNetworkDeleteBastionShareableLinkOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteBastionShareableLinkRequest(resourceGroupName, bastionHostName, bslRequest).Request, originalResponse);
+                return new NetworkManagementDeleteBastionShareableLinkOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteBastionShareableLinkRequest(resourceGroupName, bastionHostName, bslRequest).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="bslRequest"> Post request for all the Bastion Shareable Link endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="bastionHostName"/>, or <paramref name="bslRequest"/> is null. </exception>
-        public virtual AzureResourceManagerNetworkDeleteBastionShareableLinkOperation StartDeleteBastionShareableLink(string resourceGroupName, string bastionHostName, BastionShareableLinkListRequest bslRequest, CancellationToken cancellationToken = default)
+        public virtual NetworkManagementDeleteBastionShareableLinkOperation StartDeleteBastionShareableLink(string resourceGroupName, string bastionHostName, BastionShareableLinkListRequest bslRequest, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -455,12 +455,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(bslRequest));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AzureResourceManagerNetworkOperations.StartDeleteBastionShareableLink");
+            using var scope = _clientDiagnostics.CreateScope("NetworkManagementOperations.StartDeleteBastionShareableLink");
             scope.Start();
             try
             {
                 var originalResponse = RestClient.DeleteBastionShareableLink(resourceGroupName, bastionHostName, bslRequest, cancellationToken);
-                return new AzureResourceManagerNetworkDeleteBastionShareableLinkOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteBastionShareableLinkRequest(resourceGroupName, bastionHostName, bslRequest).Request, originalResponse);
+                return new NetworkManagementDeleteBastionShareableLinkOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteBastionShareableLinkRequest(resourceGroupName, bastionHostName, bslRequest).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="bastionHostName"> The name of the Bastion Host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="bastionHostName"/> is null. </exception>
-        public virtual async Task<AzureResourceManagerNetworkGetActiveSessionsOperation> StartGetActiveSessionsAsync(string resourceGroupName, string bastionHostName, CancellationToken cancellationToken = default)
+        public virtual async Task<NetworkManagementGetActiveSessionsOperation> StartGetActiveSessionsAsync(string resourceGroupName, string bastionHostName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -485,12 +485,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(bastionHostName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AzureResourceManagerNetworkOperations.StartGetActiveSessions");
+            using var scope = _clientDiagnostics.CreateScope("NetworkManagementOperations.StartGetActiveSessions");
             scope.Start();
             try
             {
                 var originalResponse = await RestClient.GetActiveSessionsAsync(resourceGroupName, bastionHostName, cancellationToken).ConfigureAwait(false);
-                return new AzureResourceManagerNetworkGetActiveSessionsOperation(_clientDiagnostics, _pipeline, RestClient.CreateGetActiveSessionsRequest(resourceGroupName, bastionHostName).Request, originalResponse, nextLink => RestClient.GetActiveSessionsNextPageAsync(nextLink, resourceGroupName, bastionHostName, cancellationToken));
+                return new NetworkManagementGetActiveSessionsOperation(_clientDiagnostics, _pipeline, RestClient.CreateGetActiveSessionsRequest(resourceGroupName, bastionHostName).Request, originalResponse, nextLink => RestClient.GetActiveSessionsNextPageAsync(nextLink, resourceGroupName, bastionHostName, cancellationToken));
             }
             catch (Exception e)
             {
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="bastionHostName"> The name of the Bastion Host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="bastionHostName"/> is null. </exception>
-        public virtual AzureResourceManagerNetworkGetActiveSessionsOperation StartGetActiveSessions(string resourceGroupName, string bastionHostName, CancellationToken cancellationToken = default)
+        public virtual NetworkManagementGetActiveSessionsOperation StartGetActiveSessions(string resourceGroupName, string bastionHostName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -515,12 +515,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(bastionHostName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AzureResourceManagerNetworkOperations.StartGetActiveSessions");
+            using var scope = _clientDiagnostics.CreateScope("NetworkManagementOperations.StartGetActiveSessions");
             scope.Start();
             try
             {
                 var originalResponse = RestClient.GetActiveSessions(resourceGroupName, bastionHostName, cancellationToken);
-                return new AzureResourceManagerNetworkGetActiveSessionsOperation(_clientDiagnostics, _pipeline, RestClient.CreateGetActiveSessionsRequest(resourceGroupName, bastionHostName).Request, originalResponse, nextLink => RestClient.GetActiveSessionsNextPageAsync(nextLink, resourceGroupName, bastionHostName, cancellationToken));
+                return new NetworkManagementGetActiveSessionsOperation(_clientDiagnostics, _pipeline, RestClient.CreateGetActiveSessionsRequest(resourceGroupName, bastionHostName).Request, originalResponse, nextLink => RestClient.GetActiveSessionsNextPageAsync(nextLink, resourceGroupName, bastionHostName, cancellationToken));
             }
             catch (Exception e)
             {
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="vpnClientParams"> Parameters supplied to the generate VirtualWan VPN profile generation operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualWANName"/>, or <paramref name="vpnClientParams"/> is null. </exception>
-        public virtual async Task<AzureResourceManagerNetworkGeneratevirtualwanvpnserverconfigurationvpnprofileOperation> StartGeneratevirtualwanvpnserverconfigurationvpnprofileAsync(string resourceGroupName, string virtualWANName, VirtualWanVpnProfileParameters vpnClientParams, CancellationToken cancellationToken = default)
+        public virtual async Task<NetworkManagementGeneratevirtualwanvpnserverconfigurationvpnprofileOperation> StartGeneratevirtualwanvpnserverconfigurationvpnprofileAsync(string resourceGroupName, string virtualWANName, VirtualWanVpnProfileParameters vpnClientParams, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -550,12 +550,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(vpnClientParams));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AzureResourceManagerNetworkOperations.StartGeneratevirtualwanvpnserverconfigurationvpnprofile");
+            using var scope = _clientDiagnostics.CreateScope("NetworkManagementOperations.StartGeneratevirtualwanvpnserverconfigurationvpnprofile");
             scope.Start();
             try
             {
                 var originalResponse = await RestClient.GeneratevirtualwanvpnserverconfigurationvpnprofileAsync(resourceGroupName, virtualWANName, vpnClientParams, cancellationToken).ConfigureAwait(false);
-                return new AzureResourceManagerNetworkGeneratevirtualwanvpnserverconfigurationvpnprofileOperation(_clientDiagnostics, _pipeline, RestClient.CreateGeneratevirtualwanvpnserverconfigurationvpnprofileRequest(resourceGroupName, virtualWANName, vpnClientParams).Request, originalResponse);
+                return new NetworkManagementGeneratevirtualwanvpnserverconfigurationvpnprofileOperation(_clientDiagnostics, _pipeline, RestClient.CreateGeneratevirtualwanvpnserverconfigurationvpnprofileRequest(resourceGroupName, virtualWANName, vpnClientParams).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="vpnClientParams"> Parameters supplied to the generate VirtualWan VPN profile generation operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualWANName"/>, or <paramref name="vpnClientParams"/> is null. </exception>
-        public virtual AzureResourceManagerNetworkGeneratevirtualwanvpnserverconfigurationvpnprofileOperation StartGeneratevirtualwanvpnserverconfigurationvpnprofile(string resourceGroupName, string virtualWANName, VirtualWanVpnProfileParameters vpnClientParams, CancellationToken cancellationToken = default)
+        public virtual NetworkManagementGeneratevirtualwanvpnserverconfigurationvpnprofileOperation StartGeneratevirtualwanvpnserverconfigurationvpnprofile(string resourceGroupName, string virtualWANName, VirtualWanVpnProfileParameters vpnClientParams, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -585,12 +585,12 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(vpnClientParams));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AzureResourceManagerNetworkOperations.StartGeneratevirtualwanvpnserverconfigurationvpnprofile");
+            using var scope = _clientDiagnostics.CreateScope("NetworkManagementOperations.StartGeneratevirtualwanvpnserverconfigurationvpnprofile");
             scope.Start();
             try
             {
                 var originalResponse = RestClient.Generatevirtualwanvpnserverconfigurationvpnprofile(resourceGroupName, virtualWANName, vpnClientParams, cancellationToken);
-                return new AzureResourceManagerNetworkGeneratevirtualwanvpnserverconfigurationvpnprofileOperation(_clientDiagnostics, _pipeline, RestClient.CreateGeneratevirtualwanvpnserverconfigurationvpnprofileRequest(resourceGroupName, virtualWANName, vpnClientParams).Request, originalResponse);
+                return new NetworkManagementGeneratevirtualwanvpnserverconfigurationvpnprofileOperation(_clientDiagnostics, _pipeline, RestClient.CreateGeneratevirtualwanvpnserverconfigurationvpnprofileRequest(resourceGroupName, virtualWANName, vpnClientParams).Request, originalResponse);
             }
             catch (Exception e)
             {

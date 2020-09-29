@@ -5,6 +5,6 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    [CodeGenClient("ServiceRestClient")]
+    [CodeGenClient("AzureCommunicationChatServiceRestClient")]
     internal partial class ChatRestClient { }
 }

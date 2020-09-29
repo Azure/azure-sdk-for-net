@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         public ProvidersOperations ProvidersOperations { get; set; }
         public ResourceGroupsOperations ResourceGroupsOperations { get; set; }
         public ResourcesOperations ResourcesOperations { get; set; }
-        public ServiceOperations ServiceOperations { get; set; }
+        public NetworkManagementOperations ServiceOperations { get; set; }
         public PrivateLinkServicesOperations PrivateLinkServicesOperations { get; set; }
 
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             ProvidersOperations = ResourceManagementClient.Providers;
             ResourceGroupsOperations = ResourceManagementClient.ResourceGroups;
             ResourcesOperations = ResourceManagementClient.Resources;
-            ServiceOperations = NetworkManagementClient.Service;
+            ServiceOperations = NetworkManagementClient.NetworkManagement;
             PrivateLinkServicesOperations = NetworkManagementClient.PrivateLinkServices;
         }
 

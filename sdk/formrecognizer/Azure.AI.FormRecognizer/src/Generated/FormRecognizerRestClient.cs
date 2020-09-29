@@ -17,18 +17,18 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.FormRecognizer
 {
-    internal partial class AzureAIFormRecognizerRestClient
+    internal partial class FormRecognizerRestClient
     {
         private string endpoint;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
-        /// <summary> Initializes a new instance of AzureAIFormRecognizerRestClient. </summary>
+        /// <summary> Initializes a new instance of FormRecognizerRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Supported Cognitive Services endpoints (protocol and hostname, for example: https://westus2.api.cognitive.microsoft.com). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public AzureAIFormRecognizerRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint)
+        public FormRecognizerRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint)
         {
             if (endpoint == null)
             {
@@ -62,7 +62,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="trainRequest"> Training request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trainRequest"/> is null. </exception>
-        public async Task<ResponseWithHeaders<AzureAIFormRecognizerTrainCustomModelAsyncHeaders>> TrainCustomModelAsyncAsync(TrainRequest trainRequest, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerTrainCustomModelAsyncHeaders>> TrainCustomModelAsyncAsync(TrainRequest trainRequest, CancellationToken cancellationToken = default)
         {
             if (trainRequest == null)
             {
@@ -71,7 +71,7 @@ namespace Azure.AI.FormRecognizer
 
             using var message = CreateTrainCustomModelAsyncRequest(trainRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new AzureAIFormRecognizerTrainCustomModelAsyncHeaders(message.Response);
+            var headers = new FormRecognizerTrainCustomModelAsyncHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 201:
@@ -85,7 +85,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="trainRequest"> Training request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trainRequest"/> is null. </exception>
-        public ResponseWithHeaders<AzureAIFormRecognizerTrainCustomModelAsyncHeaders> TrainCustomModelAsync(TrainRequest trainRequest, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerTrainCustomModelAsyncHeaders> TrainCustomModelAsync(TrainRequest trainRequest, CancellationToken cancellationToken = default)
         {
             if (trainRequest == null)
             {
@@ -94,7 +94,7 @@ namespace Azure.AI.FormRecognizer
 
             using var message = CreateTrainCustomModelAsyncRequest(trainRequest);
             _pipeline.Send(message, cancellationToken);
-            var headers = new AzureAIFormRecognizerTrainCustomModelAsyncHeaders(message.Response);
+            var headers = new FormRecognizerTrainCustomModelAsyncHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 201:
@@ -243,7 +243,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileStream"/> is null. </exception>
-        public async Task<ResponseWithHeaders<AzureAIFormRecognizerAnalyzeWithCustomModelHeaders>> AnalyzeWithCustomModelAsync(Guid modelId, FormContentType contentType, Stream fileStream, bool? includeTextDetails = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeWithCustomModelHeaders>> AnalyzeWithCustomModelAsync(Guid modelId, FormContentType contentType, Stream fileStream, bool? includeTextDetails = null, CancellationToken cancellationToken = default)
         {
             if (fileStream == null)
             {
@@ -252,7 +252,7 @@ namespace Azure.AI.FormRecognizer
 
             using var message = CreateAnalyzeWithCustomModelRequest(modelId, contentType, fileStream, includeTextDetails);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new AzureAIFormRecognizerAnalyzeWithCustomModelHeaders(message.Response);
+            var headers = new FormRecognizerAnalyzeWithCustomModelHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
@@ -269,7 +269,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileStream"/> is null. </exception>
-        public ResponseWithHeaders<AzureAIFormRecognizerAnalyzeWithCustomModelHeaders> AnalyzeWithCustomModel(Guid modelId, FormContentType contentType, Stream fileStream, bool? includeTextDetails = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerAnalyzeWithCustomModelHeaders> AnalyzeWithCustomModel(Guid modelId, FormContentType contentType, Stream fileStream, bool? includeTextDetails = null, CancellationToken cancellationToken = default)
         {
             if (fileStream == null)
             {
@@ -278,7 +278,7 @@ namespace Azure.AI.FormRecognizer
 
             using var message = CreateAnalyzeWithCustomModelRequest(modelId, contentType, fileStream, includeTextDetails);
             _pipeline.Send(message, cancellationToken);
-            var headers = new AzureAIFormRecognizerAnalyzeWithCustomModelHeaders(message.Response);
+            var headers = new FormRecognizerAnalyzeWithCustomModelHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
@@ -320,11 +320,11 @@ namespace Azure.AI.FormRecognizer
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<AzureAIFormRecognizerAnalyzeWithCustomModelHeaders>> AnalyzeWithCustomModelAsync(Guid modelId, bool? includeTextDetails = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeWithCustomModelHeaders>> AnalyzeWithCustomModelAsync(Guid modelId, bool? includeTextDetails = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeWithCustomModelRequest(modelId, includeTextDetails, fileStream);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new AzureAIFormRecognizerAnalyzeWithCustomModelHeaders(message.Response);
+            var headers = new FormRecognizerAnalyzeWithCustomModelHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
@@ -339,11 +339,11 @@ namespace Azure.AI.FormRecognizer
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<AzureAIFormRecognizerAnalyzeWithCustomModelHeaders> AnalyzeWithCustomModel(Guid modelId, bool? includeTextDetails = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerAnalyzeWithCustomModelHeaders> AnalyzeWithCustomModel(Guid modelId, bool? includeTextDetails = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeWithCustomModelRequest(modelId, includeTextDetails, fileStream);
             _pipeline.Send(message, cancellationToken);
-            var headers = new AzureAIFormRecognizerAnalyzeWithCustomModelHeaders(message.Response);
+            var headers = new FormRecognizerAnalyzeWithCustomModelHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
@@ -439,7 +439,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="copyRequest"> Copy request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="copyRequest"/> is null. </exception>
-        public async Task<ResponseWithHeaders<AzureAIFormRecognizerCopyCustomModelHeaders>> CopyCustomModelAsync(Guid modelId, CopyRequest copyRequest, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerCopyCustomModelHeaders>> CopyCustomModelAsync(Guid modelId, CopyRequest copyRequest, CancellationToken cancellationToken = default)
         {
             if (copyRequest == null)
             {
@@ -448,7 +448,7 @@ namespace Azure.AI.FormRecognizer
 
             using var message = CreateCopyCustomModelRequest(modelId, copyRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new AzureAIFormRecognizerCopyCustomModelHeaders(message.Response);
+            var headers = new FormRecognizerCopyCustomModelHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
@@ -463,7 +463,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="copyRequest"> Copy request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="copyRequest"/> is null. </exception>
-        public ResponseWithHeaders<AzureAIFormRecognizerCopyCustomModelHeaders> CopyCustomModel(Guid modelId, CopyRequest copyRequest, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerCopyCustomModelHeaders> CopyCustomModel(Guid modelId, CopyRequest copyRequest, CancellationToken cancellationToken = default)
         {
             if (copyRequest == null)
             {
@@ -472,7 +472,7 @@ namespace Azure.AI.FormRecognizer
 
             using var message = CreateCopyCustomModelRequest(modelId, copyRequest);
             _pipeline.Send(message, cancellationToken);
-            var headers = new AzureAIFormRecognizerCopyCustomModelHeaders(message.Response);
+            var headers = new FormRecognizerCopyCustomModelHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
@@ -559,11 +559,11 @@ namespace Azure.AI.FormRecognizer
 
         /// <summary> Generate authorization to copy a model into the target Form Recognizer resource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<CopyAuthorizationResult, AzureAIFormRecognizerGenerateModelCopyAuthorizationHeaders>> GenerateModelCopyAuthorizationAsync(CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<CopyAuthorizationResult, FormRecognizerGenerateModelCopyAuthorizationHeaders>> GenerateModelCopyAuthorizationAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGenerateModelCopyAuthorizationRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new AzureAIFormRecognizerGenerateModelCopyAuthorizationHeaders(message.Response);
+            var headers = new FormRecognizerGenerateModelCopyAuthorizationHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 201:
@@ -580,11 +580,11 @@ namespace Azure.AI.FormRecognizer
 
         /// <summary> Generate authorization to copy a model into the target Form Recognizer resource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<CopyAuthorizationResult, AzureAIFormRecognizerGenerateModelCopyAuthorizationHeaders> GenerateModelCopyAuthorization(CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<CopyAuthorizationResult, FormRecognizerGenerateModelCopyAuthorizationHeaders> GenerateModelCopyAuthorization(CancellationToken cancellationToken = default)
         {
             using var message = CreateGenerateModelCopyAuthorizationRequest();
             _pipeline.Send(message, cancellationToken);
-            var headers = new AzureAIFormRecognizerGenerateModelCopyAuthorizationHeaders(message.Response);
+            var headers = new FormRecognizerGenerateModelCopyAuthorizationHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 201:
@@ -627,7 +627,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="composeRequest"> Compose models. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="composeRequest"/> is null. </exception>
-        public async Task<ResponseWithHeaders<AzureAIFormRecognizerComposeCustomModelsAsyncHeaders>> ComposeCustomModelsAsyncAsync(ComposeRequest composeRequest, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerComposeCustomModelsAsyncHeaders>> ComposeCustomModelsAsyncAsync(ComposeRequest composeRequest, CancellationToken cancellationToken = default)
         {
             if (composeRequest == null)
             {
@@ -636,7 +636,7 @@ namespace Azure.AI.FormRecognizer
 
             using var message = CreateComposeCustomModelsAsyncRequest(composeRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new AzureAIFormRecognizerComposeCustomModelsAsyncHeaders(message.Response);
+            var headers = new FormRecognizerComposeCustomModelsAsyncHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 201:
@@ -656,7 +656,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="composeRequest"> Compose models. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="composeRequest"/> is null. </exception>
-        public ResponseWithHeaders<AzureAIFormRecognizerComposeCustomModelsAsyncHeaders> ComposeCustomModelsAsync(ComposeRequest composeRequest, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerComposeCustomModelsAsyncHeaders> ComposeCustomModelsAsync(ComposeRequest composeRequest, CancellationToken cancellationToken = default)
         {
             if (composeRequest == null)
             {
@@ -665,7 +665,7 @@ namespace Azure.AI.FormRecognizer
 
             using var message = CreateComposeCustomModelsAsyncRequest(composeRequest);
             _pipeline.Send(message, cancellationToken);
-            var headers = new AzureAIFormRecognizerComposeCustomModelsAsyncHeaders(message.Response);
+            var headers = new FormRecognizerComposeCustomModelsAsyncHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 201:
@@ -706,7 +706,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="locale"> Locale of the business card. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileStream"/> is null. </exception>
-        public async Task<ResponseWithHeaders<AzureAIFormRecognizerAnalyzeBusinessCardAsyncHeaders>> AnalyzeBusinessCardAsyncAsync(FormContentType contentType, Stream fileStream, bool? includeTextDetails = null, string locale = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeBusinessCardAsyncHeaders>> AnalyzeBusinessCardAsyncAsync(FormContentType contentType, Stream fileStream, bool? includeTextDetails = null, string locale = null, CancellationToken cancellationToken = default)
         {
             if (fileStream == null)
             {
@@ -715,7 +715,7 @@ namespace Azure.AI.FormRecognizer
 
             using var message = CreateAnalyzeBusinessCardAsyncRequest(contentType, fileStream, includeTextDetails, locale);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new AzureAIFormRecognizerAnalyzeBusinessCardAsyncHeaders(message.Response);
+            var headers = new FormRecognizerAnalyzeBusinessCardAsyncHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
@@ -732,7 +732,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="locale"> Locale of the business card. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileStream"/> is null. </exception>
-        public ResponseWithHeaders<AzureAIFormRecognizerAnalyzeBusinessCardAsyncHeaders> AnalyzeBusinessCardAsync(FormContentType contentType, Stream fileStream, bool? includeTextDetails = null, string locale = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerAnalyzeBusinessCardAsyncHeaders> AnalyzeBusinessCardAsync(FormContentType contentType, Stream fileStream, bool? includeTextDetails = null, string locale = null, CancellationToken cancellationToken = default)
         {
             if (fileStream == null)
             {
@@ -741,7 +741,7 @@ namespace Azure.AI.FormRecognizer
 
             using var message = CreateAnalyzeBusinessCardAsyncRequest(contentType, fileStream, includeTextDetails, locale);
             _pipeline.Send(message, cancellationToken);
-            var headers = new AzureAIFormRecognizerAnalyzeBusinessCardAsyncHeaders(message.Response);
+            var headers = new FormRecognizerAnalyzeBusinessCardAsyncHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
@@ -785,11 +785,11 @@ namespace Azure.AI.FormRecognizer
         /// <param name="locale"> Locale of the business card. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<AzureAIFormRecognizerAnalyzeBusinessCardAsyncHeaders>> AnalyzeBusinessCardAsyncAsync(bool? includeTextDetails = null, string locale = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeBusinessCardAsyncHeaders>> AnalyzeBusinessCardAsyncAsync(bool? includeTextDetails = null, string locale = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeBusinessCardAsyncRequest(includeTextDetails, locale, fileStream);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new AzureAIFormRecognizerAnalyzeBusinessCardAsyncHeaders(message.Response);
+            var headers = new FormRecognizerAnalyzeBusinessCardAsyncHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
@@ -804,11 +804,11 @@ namespace Azure.AI.FormRecognizer
         /// <param name="locale"> Locale of the business card. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<AzureAIFormRecognizerAnalyzeBusinessCardAsyncHeaders> AnalyzeBusinessCardAsync(bool? includeTextDetails = null, string locale = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerAnalyzeBusinessCardAsyncHeaders> AnalyzeBusinessCardAsync(bool? includeTextDetails = null, string locale = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeBusinessCardAsyncRequest(includeTextDetails, locale, fileStream);
             _pipeline.Send(message, cancellationToken);
-            var headers = new AzureAIFormRecognizerAnalyzeBusinessCardAsyncHeaders(message.Response);
+            var headers = new FormRecognizerAnalyzeBusinessCardAsyncHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
@@ -906,7 +906,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="locale"> Locale of the receipt. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileStream"/> is null. </exception>
-        public async Task<ResponseWithHeaders<AzureAIFormRecognizerAnalyzeReceiptAsyncHeaders>> AnalyzeReceiptAsyncAsync(FormContentType contentType, Stream fileStream, bool? includeTextDetails = null, string locale = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeReceiptAsyncHeaders>> AnalyzeReceiptAsyncAsync(FormContentType contentType, Stream fileStream, bool? includeTextDetails = null, string locale = null, CancellationToken cancellationToken = default)
         {
             if (fileStream == null)
             {
@@ -915,7 +915,7 @@ namespace Azure.AI.FormRecognizer
 
             using var message = CreateAnalyzeReceiptAsyncRequest(contentType, fileStream, includeTextDetails, locale);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new AzureAIFormRecognizerAnalyzeReceiptAsyncHeaders(message.Response);
+            var headers = new FormRecognizerAnalyzeReceiptAsyncHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
@@ -932,7 +932,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="locale"> Locale of the receipt. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileStream"/> is null. </exception>
-        public ResponseWithHeaders<AzureAIFormRecognizerAnalyzeReceiptAsyncHeaders> AnalyzeReceiptAsync(FormContentType contentType, Stream fileStream, bool? includeTextDetails = null, string locale = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerAnalyzeReceiptAsyncHeaders> AnalyzeReceiptAsync(FormContentType contentType, Stream fileStream, bool? includeTextDetails = null, string locale = null, CancellationToken cancellationToken = default)
         {
             if (fileStream == null)
             {
@@ -941,7 +941,7 @@ namespace Azure.AI.FormRecognizer
 
             using var message = CreateAnalyzeReceiptAsyncRequest(contentType, fileStream, includeTextDetails, locale);
             _pipeline.Send(message, cancellationToken);
-            var headers = new AzureAIFormRecognizerAnalyzeReceiptAsyncHeaders(message.Response);
+            var headers = new FormRecognizerAnalyzeReceiptAsyncHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
@@ -985,11 +985,11 @@ namespace Azure.AI.FormRecognizer
         /// <param name="locale"> Locale of the receipt. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<AzureAIFormRecognizerAnalyzeReceiptAsyncHeaders>> AnalyzeReceiptAsyncAsync(bool? includeTextDetails = null, string locale = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeReceiptAsyncHeaders>> AnalyzeReceiptAsyncAsync(bool? includeTextDetails = null, string locale = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeReceiptAsyncRequest(includeTextDetails, locale, fileStream);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new AzureAIFormRecognizerAnalyzeReceiptAsyncHeaders(message.Response);
+            var headers = new FormRecognizerAnalyzeReceiptAsyncHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
@@ -1004,11 +1004,11 @@ namespace Azure.AI.FormRecognizer
         /// <param name="locale"> Locale of the receipt. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<AzureAIFormRecognizerAnalyzeReceiptAsyncHeaders> AnalyzeReceiptAsync(bool? includeTextDetails = null, string locale = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerAnalyzeReceiptAsyncHeaders> AnalyzeReceiptAsync(bool? includeTextDetails = null, string locale = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeReceiptAsyncRequest(includeTextDetails, locale, fileStream);
             _pipeline.Send(message, cancellationToken);
-            var headers = new AzureAIFormRecognizerAnalyzeReceiptAsyncHeaders(message.Response);
+            var headers = new FormRecognizerAnalyzeReceiptAsyncHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
@@ -1096,7 +1096,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileStream"/> is null. </exception>
-        public async Task<ResponseWithHeaders<AzureAIFormRecognizerAnalyzeLayoutAsyncHeaders>> AnalyzeLayoutAsyncAsync(FormContentType contentType, Stream fileStream, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeLayoutAsyncHeaders>> AnalyzeLayoutAsyncAsync(FormContentType contentType, Stream fileStream, CancellationToken cancellationToken = default)
         {
             if (fileStream == null)
             {
@@ -1105,7 +1105,7 @@ namespace Azure.AI.FormRecognizer
 
             using var message = CreateAnalyzeLayoutAsyncRequest(contentType, fileStream);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new AzureAIFormRecognizerAnalyzeLayoutAsyncHeaders(message.Response);
+            var headers = new FormRecognizerAnalyzeLayoutAsyncHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
@@ -1120,7 +1120,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileStream"/> is null. </exception>
-        public ResponseWithHeaders<AzureAIFormRecognizerAnalyzeLayoutAsyncHeaders> AnalyzeLayoutAsync(FormContentType contentType, Stream fileStream, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerAnalyzeLayoutAsyncHeaders> AnalyzeLayoutAsync(FormContentType contentType, Stream fileStream, CancellationToken cancellationToken = default)
         {
             if (fileStream == null)
             {
@@ -1129,7 +1129,7 @@ namespace Azure.AI.FormRecognizer
 
             using var message = CreateAnalyzeLayoutAsyncRequest(contentType, fileStream);
             _pipeline.Send(message, cancellationToken);
-            var headers = new AzureAIFormRecognizerAnalyzeLayoutAsyncHeaders(message.Response);
+            var headers = new FormRecognizerAnalyzeLayoutAsyncHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
@@ -1163,11 +1163,11 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Extract text and layout information from a given document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<AzureAIFormRecognizerAnalyzeLayoutAsyncHeaders>> AnalyzeLayoutAsyncAsync(SourcePath fileStream = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeLayoutAsyncHeaders>> AnalyzeLayoutAsyncAsync(SourcePath fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeLayoutAsyncRequest(fileStream);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new AzureAIFormRecognizerAnalyzeLayoutAsyncHeaders(message.Response);
+            var headers = new FormRecognizerAnalyzeLayoutAsyncHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
@@ -1180,11 +1180,11 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Extract text and layout information from a given document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<AzureAIFormRecognizerAnalyzeLayoutAsyncHeaders> AnalyzeLayoutAsync(SourcePath fileStream = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerAnalyzeLayoutAsyncHeaders> AnalyzeLayoutAsync(SourcePath fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeLayoutAsyncRequest(fileStream);
             _pipeline.Send(message, cancellationToken);
-            var headers = new AzureAIFormRecognizerAnalyzeLayoutAsyncHeaders(message.Response);
+            var headers = new FormRecognizerAnalyzeLayoutAsyncHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:

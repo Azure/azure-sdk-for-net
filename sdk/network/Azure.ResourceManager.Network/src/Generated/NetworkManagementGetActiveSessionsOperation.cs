@@ -17,13 +17,13 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> Returns the list of currently active sessions on the Bastion. </summary>
-    public partial class AzureResourceManagerNetworkGetActiveSessionsOperation : Operation<AsyncPageable<BastionActiveSession>>, IOperationSource<AsyncPageable<BastionActiveSession>>
+    public partial class NetworkManagementGetActiveSessionsOperation : Operation<AsyncPageable<BastionActiveSession>>, IOperationSource<AsyncPageable<BastionActiveSession>>
     {
         private readonly ArmOperationHelpers<AsyncPageable<BastionActiveSession>> _operation;
         private readonly Func<string, Task<Response>> _nextPageFunc;
-        internal AzureResourceManagerNetworkGetActiveSessionsOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, Func<string, Task<Response>> nextPageFunc)
+        internal NetworkManagementGetActiveSessionsOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, Func<string, Task<Response>> nextPageFunc)
         {
-            _operation = new ArmOperationHelpers<AsyncPageable<BastionActiveSession>>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "AzureResourceManagerNetworkGetActiveSessionsOperation");
+            _operation = new ArmOperationHelpers<AsyncPageable<BastionActiveSession>>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkManagementGetActiveSessionsOperation");
             _nextPageFunc = nextPageFunc;
         }
         /// <inheritdoc />

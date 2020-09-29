@@ -14,23 +14,23 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.AnomalyDetector
 {
-    /// <summary> The AzureAIAnomalyDetector service client. </summary>
-    public partial class AzureAIAnomalyDetectorClient
+    /// <summary> The AnomalyDetector service client. </summary>
+    public partial class AnomalyDetectorClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
-        internal AzureAIAnomalyDetectorRestClient RestClient { get; }
-        /// <summary> Initializes a new instance of AzureAIAnomalyDetectorClient for mocking. </summary>
-        protected AzureAIAnomalyDetectorClient()
+        internal AnomalyDetectorRestClient RestClient { get; }
+        /// <summary> Initializes a new instance of AnomalyDetectorClient for mocking. </summary>
+        protected AnomalyDetectorClient()
         {
         }
-        /// <summary> Initializes a new instance of AzureAIAnomalyDetectorClient. </summary>
+        /// <summary> Initializes a new instance of AnomalyDetectorClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Supported Cognitive Services endpoints (protocol and hostname, for example: https://westus2.api.cognitive.microsoft.com). </param>
-        internal AzureAIAnomalyDetectorClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint)
+        internal AnomalyDetectorClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint)
         {
-            RestClient = new AzureAIAnomalyDetectorRestClient(clientDiagnostics, pipeline, endpoint);
+            RestClient = new AnomalyDetectorRestClient(clientDiagnostics, pipeline, endpoint);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -40,7 +40,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<EntireDetectResponse>> DetectEntireSeriesAsync(DetectRequest body, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AzureAIAnomalyDetectorClient.DetectEntireSeries");
+            using var scope = _clientDiagnostics.CreateScope("AnomalyDetectorClient.DetectEntireSeries");
             scope.Start();
             try
             {
@@ -58,7 +58,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<EntireDetectResponse> DetectEntireSeries(DetectRequest body, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AzureAIAnomalyDetectorClient.DetectEntireSeries");
+            using var scope = _clientDiagnostics.CreateScope("AnomalyDetectorClient.DetectEntireSeries");
             scope.Start();
             try
             {
@@ -76,7 +76,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<LastDetectResponse>> DetectLastPointAsync(DetectRequest body, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AzureAIAnomalyDetectorClient.DetectLastPoint");
+            using var scope = _clientDiagnostics.CreateScope("AnomalyDetectorClient.DetectLastPoint");
             scope.Start();
             try
             {
@@ -94,7 +94,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<LastDetectResponse> DetectLastPoint(DetectRequest body, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AzureAIAnomalyDetectorClient.DetectLastPoint");
+            using var scope = _clientDiagnostics.CreateScope("AnomalyDetectorClient.DetectLastPoint");
             scope.Start();
             try
             {
@@ -112,7 +112,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ChangePointDetectResponse>> DetectChangePointAsync(ChangePointDetectRequest body, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AzureAIAnomalyDetectorClient.DetectChangePoint");
+            using var scope = _clientDiagnostics.CreateScope("AnomalyDetectorClient.DetectChangePoint");
             scope.Start();
             try
             {
@@ -130,7 +130,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ChangePointDetectResponse> DetectChangePoint(ChangePointDetectRequest body, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("AzureAIAnomalyDetectorClient.DetectChangePoint");
+            using var scope = _clientDiagnostics.CreateScope("AnomalyDetectorClient.DetectChangePoint");
             scope.Start();
             try
             {

@@ -17,12 +17,12 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> Generates a unique VPN profile for P2S clients for VirtualWan and associated VpnServerConfiguration combination in the specified resource group. </summary>
-    public partial class AzureResourceManagerNetworkGeneratevirtualwanvpnserverconfigurationvpnprofileOperation : Operation<VpnProfileResponse>, IOperationSource<VpnProfileResponse>
+    public partial class NetworkManagementGeneratevirtualwanvpnserverconfigurationvpnprofileOperation : Operation<VpnProfileResponse>, IOperationSource<VpnProfileResponse>
     {
         private readonly ArmOperationHelpers<VpnProfileResponse> _operation;
-        internal AzureResourceManagerNetworkGeneratevirtualwanvpnserverconfigurationvpnprofileOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal NetworkManagementGeneratevirtualwanvpnserverconfigurationvpnprofileOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<VpnProfileResponse>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "AzureResourceManagerNetworkGeneratevirtualwanvpnserverconfigurationvpnprofileOperation");
+            _operation = new ArmOperationHelpers<VpnProfileResponse>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkManagementGeneratevirtualwanvpnserverconfigurationvpnprofileOperation");
         }
         /// <inheritdoc />
         public override string Id => _operation.Id;

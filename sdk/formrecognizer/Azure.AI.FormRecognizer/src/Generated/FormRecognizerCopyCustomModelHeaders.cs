@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer
 {
-    internal class AzureAIFormRecognizerAnalyzeWithCustomModelHeaders
+    internal class FormRecognizerCopyCustomModelHeaders
     {
         private readonly Response _response;
-        public AzureAIFormRecognizerAnalyzeWithCustomModelHeaders(Response response)
+        public FormRecognizerCopyCustomModelHeaders(Response response)
         {
             _response = response;
         }
-        /// <summary> URL containing the resultId used to track the progress and obtain the result of the analyze operation. </summary>
+        /// <summary> URL containing the resultId used to track the progress and obtain the result of the copy operation. </summary>
         public string OperationLocation => _response.Headers.TryGetValue("Operation-Location", out string value) ? value : null;
     }
 }

@@ -15,12 +15,12 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> Deletes the Bastion Shareable Links for all the VMs specified in the request. </summary>
-    public partial class AzureResourceManagerNetworkDeleteBastionShareableLinkOperation : Operation<Response>, IOperationSource<Response>
+    public partial class NetworkManagementDeleteBastionShareableLinkOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
-        internal AzureResourceManagerNetworkDeleteBastionShareableLinkOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal NetworkManagementDeleteBastionShareableLinkOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "AzureResourceManagerNetworkDeleteBastionShareableLinkOperation");
+            _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkManagementDeleteBastionShareableLinkOperation");
         }
         /// <inheritdoc />
         public override string Id => _operation.Id;

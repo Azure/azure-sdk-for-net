@@ -17,20 +17,20 @@ using Azure.Security.KeyVault.Storage.Models;
 
 namespace Azure.Security.KeyVault.Storage
 {
-    internal partial class AzureSecurityKeyVaultStorageRestClient
+    internal partial class ManagedStorageRestClient
     {
         private string vaultBaseUrl;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
-        /// <summary> Initializes a new instance of AzureSecurityKeyVaultStorageRestClient. </summary>
+        /// <summary> Initializes a new instance of ManagedStorageRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> or <paramref name="apiVersion"/> is null. </exception>
-        public AzureSecurityKeyVaultStorageRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string vaultBaseUrl, string apiVersion = "7.1")
+        public ManagedStorageRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string vaultBaseUrl, string apiVersion = "7.1")
         {
             if (vaultBaseUrl == null)
             {

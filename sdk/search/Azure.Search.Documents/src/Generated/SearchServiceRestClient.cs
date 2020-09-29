@@ -12,75 +12,74 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Template.Models;
+using Azure.Search.Documents.Indexes.Models;
 
-namespace Azure.Template
+namespace Azure.Search.Documents
 {
-    internal partial class AzureTemplateRestClient
+    internal partial class SearchServiceRestClient
     {
-        private string vaultBaseUrl;
+        private string endpoint;
+        private Guid? xMsClientRequestId;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
-        /// <summary> Initializes a new instance of AzureTemplateRestClient. </summary>
+        /// <summary> Initializes a new instance of SearchServiceRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="endpoint"> The endpoint URL of the search service. </param>
+        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> or <paramref name="apiVersion"/> is null. </exception>
-        public AzureTemplateRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string vaultBaseUrl, string apiVersion = "7.0")
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
+        public SearchServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, Guid? xMsClientRequestId = null, string apiVersion = "2020-06-30")
         {
-            if (vaultBaseUrl == null)
+            if (endpoint == null)
             {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
+                throw new ArgumentNullException(nameof(endpoint));
             }
             if (apiVersion == null)
             {
                 throw new ArgumentNullException(nameof(apiVersion));
             }
 
-            this.vaultBaseUrl = vaultBaseUrl;
+            this.endpoint = endpoint;
+            this.xMsClientRequestId = xMsClientRequestId;
             this.apiVersion = apiVersion;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateGetSecretRequest(string secretName)
+        internal HttpMessage CreateGetServiceStatisticsRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
-            uri.AppendPath("/secrets/", false);
-            uri.AppendPath(secretName, true);
+            uri.AppendRaw(endpoint, false);
+            uri.AppendPath("/servicestats", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
+            if (xMsClientRequestId != null)
+            {
+                request.Headers.Add("x-ms-client-request-id", xMsClientRequestId.Value);
+            }
+            request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             return message;
         }
 
-        /// <summary> The GET operation is applicable to any secret stored in Azure Key Vault. This operation requires the secrets/get permission. </summary>
-        /// <param name="secretName"> The name of the secret. </param>
+        /// <summary> Gets service level statistics for a search service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
-        public async Task<Response<SecretBundle>> GetSecretAsync(string secretName, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchServiceStatistics>> GetServiceStatisticsAsync(CancellationToken cancellationToken = default)
         {
-            if (secretName == null)
-            {
-                throw new ArgumentNullException(nameof(secretName));
-            }
-
-            using var message = CreateGetSecretRequest(secretName);
+            using var message = CreateGetServiceStatisticsRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SecretBundle value = default;
+                        SearchServiceStatistics value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SecretBundle.DeserializeSecretBundle(document.RootElement);
+                        value = SearchServiceStatistics.DeserializeSearchServiceStatistics(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -88,26 +87,19 @@ namespace Azure.Template
             }
         }
 
-        /// <summary> The GET operation is applicable to any secret stored in Azure Key Vault. This operation requires the secrets/get permission. </summary>
-        /// <param name="secretName"> The name of the secret. </param>
+        /// <summary> Gets service level statistics for a search service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
-        public Response<SecretBundle> GetSecret(string secretName, CancellationToken cancellationToken = default)
+        public Response<SearchServiceStatistics> GetServiceStatistics(CancellationToken cancellationToken = default)
         {
-            if (secretName == null)
-            {
-                throw new ArgumentNullException(nameof(secretName));
-            }
-
-            using var message = CreateGetSecretRequest(secretName);
+            using var message = CreateGetServiceStatisticsRequest();
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SecretBundle value = default;
+                        SearchServiceStatistics value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SecretBundle.DeserializeSecretBundle(document.RootElement);
+                        value = SearchServiceStatistics.DeserializeSearchServiceStatistics(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

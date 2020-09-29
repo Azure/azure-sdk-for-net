@@ -18,7 +18,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 {
     internal class AzureMonitorTransmitter
     {
-        private readonly ServiceRestClient serviceRestClient;
+        private readonly ApplicationInsightsRestClient serviceRestClient;
         private readonly AzureMonitorExporterOptions options;
         private readonly string instrumentationKey;
 
@@ -43,7 +43,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             ConnectionStringParser.GetValues(exporterOptions.ConnectionString, out this.instrumentationKey, out string ingestionEndpoint);
 
             options = exporterOptions;
-            serviceRestClient = new ServiceRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), endpoint: ingestionEndpoint);
+            serviceRestClient = new ApplicationInsightsRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), endpoint: ingestionEndpoint);
         }
 
         internal async ValueTask<int> AddBatchActivityAsync(Batch<Activity> batchActivity, bool async, CancellationToken cancellationToken)

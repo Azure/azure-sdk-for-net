@@ -17,18 +17,18 @@ using OpenTelemetry.Exporter.AzureMonitor.Models;
 
 namespace OpenTelemetry.Exporter.AzureMonitor
 {
-    internal partial class OpenTelemetryExporterAzureMonitorRestClient
+    internal partial class ApplicationInsightsRestClient
     {
         private string endpoint;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
-        /// <summary> Initializes a new instance of OpenTelemetryExporterAzureMonitorRestClient. </summary>
+        /// <summary> Initializes a new instance of ApplicationInsightsRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Breeze endpoint: https://dc.services.visualstudio.com. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public OpenTelemetryExporterAzureMonitorRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint = "https://dc.services.visualstudio.com")
+        public ApplicationInsightsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint = "https://dc.services.visualstudio.com")
         {
             if (endpoint == null)
             {

@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer
 {
-    internal class AzureAIFormRecognizerTrainCustomModelAsyncHeaders
+    internal class FormRecognizerComposeCustomModelsAsyncHeaders
     {
         private readonly Response _response;
-        public AzureAIFormRecognizerTrainCustomModelAsyncHeaders(Response response)
+        public FormRecognizerComposeCustomModelsAsyncHeaders(Response response)
         {
             _response = response;
         }
-        /// <summary> Location and ID of the model being trained. The status of model training is specified in the status property at the model location. </summary>
+        /// <summary> Location and ID of the composed model. The status of composed model is specified in the status property at the model location. </summary>
         public string Location => _response.Headers.TryGetValue("Location", out string value) ? value : null;
     }
 }

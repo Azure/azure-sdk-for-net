@@ -16,18 +16,18 @@ using Azure.Security.KeyVault.Administration.Models;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    internal partial class AzureSecurityKeyVaultAdministrationRestClient
+    internal partial class BackupRestoreRestClient
     {
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
-        /// <summary> Initializes a new instance of AzureSecurityKeyVaultAdministrationRestClient. </summary>
+        /// <summary> Initializes a new instance of BackupRestoreRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public AzureSecurityKeyVaultAdministrationRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string apiVersion = "7.2-preview")
+        public BackupRestoreRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string apiVersion = "7.2-preview")
         {
             if (apiVersion == null)
             {
