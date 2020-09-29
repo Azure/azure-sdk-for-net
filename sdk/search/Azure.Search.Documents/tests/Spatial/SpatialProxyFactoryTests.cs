@@ -25,8 +25,11 @@ namespace Azure.Search.Documents.Tests.Spatial
             Assert.AreEqual(expected, SpatialProxyFactory.CanCreate(type));
 
         [Test]
-        public void CreateNull() =>
-            Assert.IsNull(SpatialProxyFactory.Create(null));
+        public void CreateNull()
+        {
+            Assert.IsFalse(SpatialProxyFactory.TryCreate(null, out GeographyProxy proxy));
+            Assert.IsNull(proxy);
+        }
 
         [Test]
         public void CreateGeographyPoint()
@@ -89,11 +92,28 @@ namespace Azure.Search.Documents.Tests.Spatial
             }
         }
 
-        [TestCaseSource(nameof(CreateThrowsData))]
-        public void CreateThrows(object value) =>
-            Assert.Throws<NotSupportedException>(() => SpatialProxyFactory.Create(value));
+        [TestCaseSource(nameof(CreateFailsData))]
+        public void CreateFails(object value)
+        {
+            Assert.IsFalse(SpatialProxyFactory.TryCreate(value, out GeographyProxy proxy));
+            Assert.IsNull(proxy);
+        }
 
-        private static IEnumerable CreateThrowsData => new[]
+        [TestCase(null, false)]
+        [TestCase(typeof(object), false)]
+        [TestCase(typeof(int), false)]
+        [TestCase(typeof(GeographyPoint), true)]
+        [TestCase(typeof(GeometryPoint), false)]
+        [TestCase(typeof(GeographyPosition), false)]
+        [TestCase(typeof(GeometryPosition), false)]
+        [TestCase(typeof(GeographyPolygon), false)]
+        [TestCase(typeof(GeometryPolygon), false)]
+        [TestCase(typeof(GeographyLineString), false)]
+        [TestCase(typeof(GeometryLineString), false)]
+        public void IsSupportedPoint(Type type, bool expected) =>
+            Assert.AreEqual(expected, SpatialProxyFactory.IsSupportedPoint(type));
+
+        private static IEnumerable CreateFailsData => new[]
         {
             new TestCaseData(new object()),
             new TestCaseData(1),

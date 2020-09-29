@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
+using Microsoft.Spatial;
 using NUnit.Framework;
 using KeyFieldAttribute = System.ComponentModel.DataAnnotations.KeyAttribute;
 
@@ -447,6 +448,29 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual(expectedErrorMessage, e.Message);
         }
 
+        [Test]
+        public void SupportsSpecificSpatialTypes()
+        {
+            IList<SearchField> fields = new FieldBuilder().Build(typeof(ModelWithSpatialProperties));
+            foreach (SearchField field in fields)
+            {
+                switch (field.Name)
+                {
+                    case nameof(ModelWithSpatialProperties.ID):
+                        Assert.AreEqual(SearchFieldDataType.String, field.Type);
+                        break;
+
+                    case nameof(ModelWithSpatialProperties.GeographyPoint):
+                        Assert.AreEqual(SearchFieldDataType.GeographyPoint, field.Type);
+                        break;
+
+                    default:
+                        Assert.AreEqual(SearchFieldDataType.Complex, field.Type, $"Unexpected type for field '{field.Name}'");
+                        break;
+                }
+            }
+        }
+
         private static IEnumerable<(Type, SearchFieldDataType, string)> CombineTestData(
             IEnumerable<Type> modelTypes,
             IEnumerable<(SearchFieldDataType dataType, string fieldName)> testData) =>
@@ -596,6 +620,24 @@ namespace Azure.Search.Documents.Tests
             public Direction FieldBuilderIgnored { get; set; }
 
             public InnerModelWithIgnoredProperties[] Inner { get; set; }
+        }
+
+        private class ModelWithSpatialProperties
+        {
+            [SimpleField(IsKey = true)]
+            public string ID { get; set; }
+
+            public GeographyPoint GeographyPoint { get; set; }
+
+            public GeographyLineString GeographyLineString { get; set; }
+
+            public GeographyPolygon GeographyPolygon { get; set; }
+
+            public GeometryPoint GeometryPoint { get; set; }
+
+            public GeometryLineString GeometryLineString { get; set; }
+
+            public GeometryPolygon GeometryPolygon { get; set; }
         }
     }
 }
