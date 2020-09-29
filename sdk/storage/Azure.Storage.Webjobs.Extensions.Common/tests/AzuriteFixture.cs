@@ -36,7 +36,6 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
         private StringBuilder azuriteOutput = new StringBuilder();
         private int blobsPort;
         private int queuesPort;
-        private static readonly object obj = new object();
 
         public AzuriteFixture()
         {
@@ -101,13 +100,6 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
             }
             account.BlobsPort = blobsPort;
             account.QueuesPort = queuesPort;
-            lock (obj)
-            {
-                using (var writer = File.AppendText("C:\\tmp\\azurite.txt"))
-                {
-                    writer.WriteLine("azurite created");
-                }
-            }
         }
 
         private int ParseAzuritePort(string outputLine)
