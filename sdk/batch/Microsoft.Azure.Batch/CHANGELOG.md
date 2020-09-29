@@ -1,4 +1,7 @@
 # Release History
+## 14.1.0-beta.1 (Unreleased)
+
+
 ## 14.0.0 (2020-09-10)
 ### Features
 - **[Breaking]** Removed proprty `MaxTasksPerNode` on CloudPool and added property `TaskSlotsPerNode`. Using this property `CloudTasks`
