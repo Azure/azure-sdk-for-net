@@ -13,7 +13,7 @@
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
         ],
         "x-api-key": "Sanitized",
-        "x-ms-client-request-id": "8a0010be4647ee1458de7bbe77b92036",
+        "x-ms-client-request-id": "7b237c8b3bd8f69659419d1de36dcfb1",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -21,38 +21,20 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "cd9c3667-6b1e-4968-abca-78bff016f8c1",
-        "Content-Length": "826",
+        "apim-request-id": "7ecb44f6-d024-43a8-a646-f01cfbbf474f",
+        "Content-Length": "960",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 29 Sep 2020 14:21:45 GMT",
+        "Date": "Tue, 29 Sep 2020 23:42:39 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "137",
-        "X-Request-ID": "cd9c3667-6b1e-4968-abca-78bff016f8c1"
+        "x-envoy-upstream-service-time": "84",
+        "X-Request-ID": "7ecb44f6-d024-43a8-a646-f01cfbbf474f"
       },
       "ResponseBody": {
         "value": [
           {
-            "feedbackId": "3b1954b3-b053-4508-ba0f-1fd6593ddf6a",
-            "createdTime": "2020-09-28T18:13:58.252Z",
-            "userPrincipal": "foo@contoso.com",
-            "metricId": "3d48ed3e-6e6e-4391-b78f-b00dfee1e6f5",
-            "dimensionFilter": {
-              "dimension": {
-                "Dim1": "Common Lime",
-                "Dim2": "Amphibian"
-              }
-            },
-            "feedbackType": "Comment",
-            "startTime": null,
-            "endTime": null,
-            "value": {
-              "commentValue": "This is a comment"
-            }
-          },
-          {
-            "feedbackId": "2103664c-a540-410e-84a6-fb949089a9f9",
-            "createdTime": "2020-09-28T18:13:56.267Z",
+            "feedbackId": "fe12deea-858c-4af8-ad3c-35ba8acc4705",
+            "createdTime": "2020-09-29T23:42:30.188Z",
             "userPrincipal": "foo@contoso.com",
             "metricId": "3d48ed3e-6e6e-4391-b78f-b00dfee1e6f5",
             "dimensionFilter": {
@@ -61,10 +43,31 @@
                 "Dim2": "Ant"
               }
             },
-            "feedbackType": "Period",
+            "feedbackType": "Anomaly",
+            "startTime": "2020-05-29T23:42:30.253Z",
+            "endTime": "2020-09-29T23:42:30.253Z",
             "value": {
-              "periodType": "AutoDetect",
-              "periodValue": 4
+              "anomalyValue": "NotAnomaly"
+            },
+            "anomalyDetectionConfigurationId": null,
+            "anomalyDetectionConfigurationSnapshot": null
+          },
+          {
+            "feedbackId": "448bba91-d349-49ff-81ce-bf99ec9da110",
+            "createdTime": "2020-09-29T23:42:32.136Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "3d48ed3e-6e6e-4391-b78f-b00dfee1e6f5",
+            "dimensionFilter": {
+              "dimension": {
+                "Dim1": "Common Lime",
+                "Dim2": "Ant"
+              }
+            },
+            "feedbackType": "Comment",
+            "startTime": null,
+            "endTime": null,
+            "value": {
+              "commentValue": "my comment"
             }
           }
         ],
@@ -84,7 +87,7 @@
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
         ],
         "x-api-key": "Sanitized",
-        "x-ms-client-request-id": "7194a137dc3bd5f45f12ed92a9d7b514",
+        "x-ms-client-request-id": "e3a02f898255e0bc470ca58faee28018",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -92,20 +95,37 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "10872df8-d44b-43f8-97f8-da123a68dbf8",
-        "Content-Length": "997",
+        "apim-request-id": "ce336681-236e-436d-a053-d580eeab2841",
+        "Content-Length": "870",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 29 Sep 2020 14:21:45 GMT",
+        "Date": "Tue, 29 Sep 2020 23:42:39 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "140",
-        "X-Request-ID": "10872df8-d44b-43f8-97f8-da123a68dbf8"
+        "x-envoy-upstream-service-time": "76",
+        "X-Request-ID": "ce336681-236e-436d-a053-d580eeab2841"
       },
       "ResponseBody": {
         "value": [
           {
-            "feedbackId": "552ced7f-5f73-468b-80d9-dafd07f29e07",
-            "createdTime": "2020-09-28T18:13:54.582Z",
+            "feedbackId": "32a2201b-eb51-4cff-ab83-0fb10ddc937f",
+            "createdTime": "2020-09-29T23:42:31.525Z",
+            "userPrincipal": "foo@contoso.com",
+            "metricId": "3d48ed3e-6e6e-4391-b78f-b00dfee1e6f5",
+            "dimensionFilter": {
+              "dimension": {
+                "Dim1": "Common Lime",
+                "Dim2": "Ant"
+              }
+            },
+            "feedbackType": "Period",
+            "value": {
+              "periodType": "AssignValue",
+              "periodValue": 5
+            }
+          },
+          {
+            "feedbackId": "6606f969-3eb5-4649-a123-3b7427ce3071",
+            "createdTime": "2020-09-29T23:42:30.876Z",
             "userPrincipal": "foo@contoso.com",
             "metricId": "3d48ed3e-6e6e-4391-b78f-b00dfee1e6f5",
             "dimensionFilter": {
@@ -115,31 +135,11 @@
               }
             },
             "feedbackType": "ChangePoint",
-            "startTime": "2020-08-05T07:00:00Z",
-            "endTime": "2020-08-05T07:00:00Z",
+            "startTime": "2020-05-29T23:42:30.253Z",
+            "endTime": "2020-09-29T23:42:30.253Z",
             "value": {
-              "changePointValue": "ChangePoint"
+              "changePointValue": "NotChangePoint"
             }
-          },
-          {
-            "feedbackId": "23132657-ab7b-4fff-8221-b97cdbedcba4",
-            "createdTime": "2020-09-28T18:13:51.585Z",
-            "userPrincipal": "foo@contoso.com",
-            "metricId": "3d48ed3e-6e6e-4391-b78f-b00dfee1e6f5",
-            "dimensionFilter": {
-              "dimension": {
-                "Dim1": "Common Lime",
-                "Dim2": "Ant"
-              }
-            },
-            "feedbackType": "Anomaly",
-            "startTime": "2020-08-05T07:00:00Z",
-            "endTime": "2020-08-07T07:00:00Z",
-            "value": {
-              "anomalyValue": "NotAnomaly"
-            },
-            "anomalyDetectionConfigurationId": null,
-            "anomalyDetectionConfigurationSnapshot": null
           }
         ],
         "@nextLink": "https://anuchan-cg-metric-advisor.cognitiveservices.azure.com:443/metricsadvisor/v1.0/feedback/metric/query?$top=2\u0026$skip=4"
@@ -151,6 +151,6 @@
     "METRICSADVISOR_ENDPOINT_SUFFIX": null,
     "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
     "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",
-    "RandomSeed": "1890793544"
+    "RandomSeed": "701152740"
   }
 }
