@@ -2,7 +2,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
 {
     public partial class StorageAccount
     {
-        public StorageAccount(string connectionString, Azure.Storage.Blobs.BlobClientOptions.ServiceVersion? blobServiceVersion = default(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion?), Azure.Storage.Queues.QueueClientOptions.ServiceVersion? queueServiceVersion = default(Azure.Storage.Queues.QueueClientOptions.ServiceVersion?)) { }
+        public StorageAccount(Azure.Storage.Blobs.BlobServiceClient blobServiceClient, Azure.Storage.Queues.QueueServiceClient queueServiceClient) { }
         public virtual string Name { get { throw null; } }
         public virtual Azure.Storage.Blobs.BlobServiceClient CreateBlobServiceClient() { throw null; }
         public virtual Azure.Storage.Queues.QueueServiceClient CreateQueueServiceClient() { throw null; }
@@ -11,7 +11,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
     }
     public partial class StorageAccountProvider
     {
-        public StorageAccountProvider(Microsoft.Extensions.Configuration.IConfiguration configuration) { }
+        public StorageAccountProvider(Microsoft.Extensions.Configuration.IConfiguration configuration, Microsoft.Extensions.Azure.AzureComponentFactory componentFactory) { }
         public virtual Microsoft.Azure.WebJobs.Extensions.Storage.Common.StorageAccount Get(string name) { throw null; }
         public Microsoft.Azure.WebJobs.Extensions.Storage.Common.StorageAccount Get(string name, Microsoft.Azure.WebJobs.INameResolver resolver) { throw null; }
         public virtual Microsoft.Azure.WebJobs.Extensions.Storage.Common.StorageAccount GetHost() { throw null; }
