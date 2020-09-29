@@ -26,7 +26,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             ParameterInfo pi = new StubParameterInfo("parameterName", typeof(UserDataType));
             var argumentBinding = provider.TryCreate(pi);
 
-            var fakeAccount = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
+            var fakeAccount = azuriteFixture.GetAccount();
             QueueServiceClient queueServiceClient = fakeAccount.CreateQueueServiceClient();
             QueueClient queue = queueServiceClient.GetQueueClient("queueName");
 
