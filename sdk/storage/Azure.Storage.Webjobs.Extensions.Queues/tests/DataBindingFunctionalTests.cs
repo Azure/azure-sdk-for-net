@@ -22,14 +22,14 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Bindings.Data
             this.azuriteFixture = azuriteFixture;
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task BindStringableParameter_CanInvoke()
         {
             // Arrange
             var builder = new HostBuilder()
                 .ConfigureDefaultTestHost<TestFunctions>(b =>
                 {
-                    b.UseStorage(StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString));
+                    b.UseStorage(azuriteFixture.GetAccount());
                 });
 
 
