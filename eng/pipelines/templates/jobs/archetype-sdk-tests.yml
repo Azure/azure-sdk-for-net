@@ -26,6 +26,12 @@ parameters:
 - name: SubscriptionConfiguration
   type: string
   default: $(sub-config-azure-cloud-test-resources)
+- name: TestCanary
+  type: boolean
+  default: false
+- name: ResourceGroupLocationCanary
+  type: string
+  default: "centraluseuap"
 - name: ServiceDirectory
   type: string
   default: not-specified
@@ -69,6 +75,12 @@ jobs:
       - DisplayName: "Test on MacOS"
         OSVmImage: "macOS-10.15"
         TestTargetFramework: netcoreapp2.1
+      - ${{ if eq(parameters.TestCanary, 'true') }}:          
+        - DisplayName: "Test on Windows for NetCoreApp - Canary region"
+          OSVmImage: "windows-2019"
+          TestTargetFramework: netcoreapp2.1
+          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)            
+          Location: ${{ parameters.ResourceGroupLocationCanary }}
       - DisplayName: "Record on Windows for NetCoreApp"
         OSVmImage: "windows-2019"
         TestMode: Record
