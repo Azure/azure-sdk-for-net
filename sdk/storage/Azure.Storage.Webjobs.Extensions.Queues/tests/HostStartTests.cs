@@ -29,7 +29,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
                 .ConfigureDefaultTestHost<InvalidQueueNameProgram>(b =>
                 {
                     b.AddAzureStorageBlobs().AddAzureStorageQueues()
-                    .UseStorage(StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString));
+                    .UseStorage(azuriteFixture.GetAccount());
                 })
                 .Build();
 

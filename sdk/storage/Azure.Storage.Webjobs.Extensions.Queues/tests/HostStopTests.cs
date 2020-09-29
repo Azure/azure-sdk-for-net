@@ -29,7 +29,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         [Fact]
         public async Task Stop_TriggersCancellationToken()
         {
-            StorageAccount account = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
+            StorageAccount account = azuriteFixture.GetAccount();
             QueueClient queue = await CreateQueueAsync(account, QueueName);
             await queue.SendMessageAsync("ignore");
 
