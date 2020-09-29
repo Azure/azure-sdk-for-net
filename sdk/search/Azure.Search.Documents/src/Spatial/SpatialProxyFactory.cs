@@ -87,7 +87,6 @@ namespace Azure.Search.Documents
 
         private static bool TryGetFactory(Type type, out Func<object, GeographyProxy> factory)
         {
-            // TODO: Should we compare the public key token as well, or is that too restrictive or unnecessarily slow?
             AssemblyName assemblyName = type.Assembly.GetName();
             if (string.Equals(assemblyName.Name, Name, StringComparison.OrdinalIgnoreCase))
             {
