@@ -14,6 +14,7 @@ using Azure.Core.TestFramework;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
+using Azure.Storage.Tests.Shared;
 using NUnit.Framework;
 
 namespace Azure.Storage.Files.DataLake.Tests
@@ -3634,6 +3635,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.Contains(fullPathName, names);
         }
 
+        [Test]
         public async Task OpenReadAsync()
         {
             // Arrange
@@ -3652,6 +3654,36 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Assert
             Assert.AreEqual(data.Length, outputStream.Length);
             TestHelper.AssertSequenceEqual(data, outputBytes);
+        }
+
+        [Test]
+        public async Task OpenReadAsync_ArrayPool()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = test.FileSystem.GetFileClient(GetNewFileName());
+            int size = Constants.KB;
+            var data = GetRandomBuffer(size);
+            using Stream stream = new MemoryStream(data);
+            await file.UploadAsync(stream);
+
+            MockArrayPool<byte> mockArrayPool = new MockArrayPool<byte>();
+            DataLakeOpenReadOptions options = new DataLakeOpenReadOptions(allowModifications: false)
+            {
+                ArrayPool = mockArrayPool
+            };
+
+            // Act
+            Stream outputStream = await file.OpenReadAsync(options);
+            byte[] outputBytes = new byte[size];
+            await outputStream.ReadAsync(outputBytes, 0, size);
+            outputStream.Dispose();
+
+            // Assert
+            Assert.AreEqual(data.Length, outputStream.Length);
+            TestHelper.AssertSequenceEqual(data, outputBytes);
+            Assert.AreEqual(1, mockArrayPool.RentCount);
+            Assert.AreEqual(1, mockArrayPool.ReturnCount);
         }
 
         [Test]
@@ -4058,6 +4090,42 @@ namespace Azure.Storage.Files.DataLake.Tests
             await result.Value.Content.CopyToAsync(dataResult);
             Assert.AreEqual(data.Length, dataResult.Length);
             TestHelper.AssertSequenceEqual(data, dataResult.ToArray());
+        }
+
+        [Test]
+        public async Task OpenWriteAsync_ArrayPool()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            await file.CreateAsync();
+
+            MockArrayPool<byte> mockArrayPool = new MockArrayPool<byte>();
+
+            DataLakeFileOpenWriteOptions options = new DataLakeFileOpenWriteOptions
+            {
+                ArrayPool = mockArrayPool
+            };
+
+            Stream stream = await file.OpenWriteAsync(
+                overwrite: false,
+                options);
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+
+            // Act
+            await stream.WriteAsync(data, 0, Constants.KB);
+            await stream.FlushAsync();
+            stream.Dispose();
+
+            // Assert
+            Response<FileDownloadInfo> result = await file.ReadAsync();
+            var dataResult = new MemoryStream();
+            await result.Value.Content.CopyToAsync(dataResult);
+            Assert.AreEqual(data.Length, dataResult.Length);
+            TestHelper.AssertSequenceEqual(data, dataResult.ToArray());
+            Assert.AreEqual(1, mockArrayPool.RentCount);
+            Assert.AreEqual(1, mockArrayPool.ReturnCount);
         }
 
         [Test]

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Files.DataLake.Models;
@@ -22,10 +23,12 @@ namespace Azure.Storage.Files.DataLake
             long position,
             DataLakeRequestConditions conditions,
             IProgress<long> progressHandler,
-            bool? closeEvent) : base(
+            bool? closeEvent,
+            ArrayPool<byte> arrayPool) : base(
                 position,
                 bufferSize,
-                progressHandler)
+                progressHandler,
+                arrayPool: arrayPool)
         {
             ValidateBufferSize(bufferSize);
             _fileClient = fileClient;

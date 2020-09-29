@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 
 namespace Azure.Storage.Files.Shares.Models
 {
@@ -33,5 +34,10 @@ namespace Azure.Storage.Files.Shares.Models
         /// Specifies the size of the new Page Blob.
         /// </summary>
         public long? MaxSize { get; set; }
+
+        /// <summary>
+        /// Optional <see cref="ArrayPool{Byte}"/> to rent buffer from.
+        /// </summary>
+        public ArrayPool<byte> ArrayPool { get; set; }
     }
 }

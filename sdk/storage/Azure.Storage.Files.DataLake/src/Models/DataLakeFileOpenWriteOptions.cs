@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using Azure.Storage.Shared;
 
 namespace Azure.Storage.Files.DataLake.Models
@@ -39,5 +40,10 @@ namespace Azure.Storage.Files.DataLake.Models
         /// the file stream has been closed.
         /// </summary>
         public bool? Close { get; set; }
+
+        /// <summary>
+        /// Optional <see cref="ArrayPool{Byte}"/> to rent buffer from.
+        /// </summary>
+        public ArrayPool<byte> ArrayPool { get; set; }
     }
 }

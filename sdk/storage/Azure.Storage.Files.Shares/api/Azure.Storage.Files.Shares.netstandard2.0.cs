@@ -548,6 +548,7 @@ namespace Azure.Storage.Files.Shares.Models
     public partial class ShareFileOpenReadOptions
     {
         public ShareFileOpenReadOptions(bool allowModifications) { }
+        public System.Buffers.ArrayPool<byte> ArrayPool { get { throw null; } set { } }
         public int? BufferSize { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions Conditions { get { throw null; } set { } }
         public long Position { get { throw null; } set { } }
@@ -555,6 +556,7 @@ namespace Azure.Storage.Files.Shares.Models
     public partial class ShareFileOpenWriteOptions
     {
         public ShareFileOpenWriteOptions() { }
+        public System.Buffers.ArrayPool<byte> ArrayPool { get { throw null; } set { } }
         public long? BufferSize { get { throw null; } set { } }
         public long? MaxSize { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions OpenConditions { get { throw null; } set { } }

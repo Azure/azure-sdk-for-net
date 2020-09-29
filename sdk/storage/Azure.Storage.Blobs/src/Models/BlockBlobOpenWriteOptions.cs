@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using Azure.Storage.Blobs.Specialized;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
@@ -41,8 +42,13 @@ namespace Azure.Storage.Blobs.Models
         public Metadata Metadata { get; set; }
 
         /// <summary>
-        /// Options tags to set for this block blob.
+        /// Optional tags to set for this block blob.
         /// </summary>
         public Tags Tags { get; set; }
+
+        /// <summary>
+        /// Optional <see cref="ArrayPool{Byte}"/> to rent buffer from.
+        /// </summary>
+        public ArrayPool<byte> ArrayPool { get; set; }
     }
 }

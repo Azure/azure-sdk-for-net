@@ -20,6 +20,7 @@ using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using Azure.Storage.Tests.Shared;
 using Moq;
 using Moq.Protected;
 using NUnit.Framework;
@@ -945,6 +946,38 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             Assert.AreEqual(data.Length, outputStream.Length);
             TestHelper.AssertSequenceEqual(data, outputBytes);
+        }
+
+        [Test]
+        public async Task OpenReadAsync_ArrayPool()
+        {
+            int size = Constants.KB;
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var data = GetRandomBuffer(size);
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            using Stream stream = new MemoryStream(data);
+            await blob.UploadAsync(stream);
+
+            MockArrayPool<byte> mockArrayPool = new MockArrayPool<byte>();
+
+            BlobOpenReadOptions options = new BlobOpenReadOptions(allowModifications: false)
+            {
+                ArrayPool = mockArrayPool
+            };
+
+            // Act
+            Stream outputStream = await blob.OpenReadAsync(options).ConfigureAwait(false);
+            byte[] outputBytes = new byte[size];
+            await outputStream.ReadAsync(outputBytes, 0, size);
+            outputStream.Dispose();
+
+            // Assert
+            Assert.AreEqual(data.Length, outputStream.Length);
+            TestHelper.AssertSequenceEqual(data, outputBytes);
+            Assert.AreEqual(1, mockArrayPool.RentCount);
+            Assert.AreEqual(1, mockArrayPool.ReturnCount);
         }
 
         [Test]

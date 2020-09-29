@@ -73,25 +73,32 @@ namespace Azure.Storage
         /// </summary>
         private readonly Func<bool, CancellationToken, Task<Response<TProperties>>> _getPropertiesInternalFunc;
 
+        /// <summary>
+        /// ArrayPool to rent and return buffer.
+        /// </summary>
+        private readonly ArrayPool<byte> _arrayPool;
+
         public LazyLoadingReadOnlyStream(
             Func<HttpRange, TRequestConditions, bool, bool, CancellationToken, Task<Response<IDownloadedContent>>> downloadInternalFunc,
             Func<ETag?, TRequestConditions> createRequestConditionsFunc,
             Func<bool, CancellationToken, Task<Response<TProperties>>> getPropertiesFunc,
-            long initialLenght,
+            long initialLength,
             long position = 0,
             int? bufferSize = default,
-            TRequestConditions requestConditions = default)
+            TRequestConditions requestConditions = default,
+            ArrayPool<byte> arrayPool = default)
         {
             _downloadInternalFunc = downloadInternalFunc;
             _createRequestConditionsFunc = createRequestConditionsFunc;
             _getPropertiesInternalFunc = getPropertiesFunc;
             _position = position;
             _bufferSize = bufferSize ?? Constants.DefaultStreamingDownloadSize;
-            _buffer = ArrayPool<byte>.Shared.Rent(_bufferSize);
+            _arrayPool = arrayPool ?? ArrayPool<byte>.Shared;
+            _buffer = _arrayPool.Rent(_bufferSize);
             _bufferPosition = 0;
             _bufferLength = 0;
             _requestConditions = requestConditions;
-            _length = initialLenght;
+            _length = initialLength;
             _allowBlobModifications = !(_requestConditions == null && _createRequestConditionsFunc != null);
         }
 
@@ -246,7 +253,7 @@ namespace Azure.Storage
             // Return the buffer to the pool if we're called from Dispose or a finalizer
             if (_buffer != null)
             {
-                ArrayPool<byte>.Shared.Return(_buffer, clearArray: true);
+                _arrayPool.Return(_buffer, clearArray: true);
                 _buffer = null;
             }
         }

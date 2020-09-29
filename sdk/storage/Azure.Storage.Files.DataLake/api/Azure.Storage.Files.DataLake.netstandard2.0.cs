@@ -311,6 +311,7 @@ namespace Azure.Storage.Files.DataLake.Models
     public partial class DataLakeFileOpenWriteOptions
     {
         public DataLakeFileOpenWriteOptions() { }
+        public System.Buffers.ArrayPool<byte> ArrayPool { get { throw null; } set { } }
         public long? BufferSize { get { throw null; } set { } }
         public bool? Close { get { throw null; } set { } }
         public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions OpenConditions { get { throw null; } set { } }
@@ -376,6 +377,7 @@ namespace Azure.Storage.Files.DataLake.Models
     public partial class DataLakeOpenReadOptions
     {
         public DataLakeOpenReadOptions(bool allowModifications) { }
+        public System.Buffers.ArrayPool<byte> ArrayPool { get { throw null; } set { } }
         public int? BufferSize { get { throw null; } set { } }
         public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
         public long Position { get { throw null; } set { } }

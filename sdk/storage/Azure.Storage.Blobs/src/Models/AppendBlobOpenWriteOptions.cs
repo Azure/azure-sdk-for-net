@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using Azure.Storage.Blobs.Specialized;
 
 namespace Azure.Storage.Blobs.Models
@@ -27,6 +28,11 @@ namespace Azure.Storage.Blobs.Models
         /// progress updates about data transfers.
         /// </summary>
         public IProgress<long> ProgressHandler { get; set; }
+
+        /// <summary>
+        /// Optional <see cref="ArrayPool{Byte}"/> to rent buffer from.
+        /// </summary>
+        public ArrayPool<byte> ArrayPool { get; set; }
 
     }
 }

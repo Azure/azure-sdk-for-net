@@ -1897,6 +1897,7 @@ namespace Azure.Storage.Files.Shares
                 options?.Position ?? 0,
                 options?.BufferSize,
                 options?.Conditions,
+                options?.ArrayPool,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -1924,6 +1925,7 @@ namespace Azure.Storage.Files.Shares
                 options?.Position ?? 0,
                 options?.BufferSize,
                 options?.Conditions,
+                options?.ArrayPool,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -1963,6 +1965,7 @@ namespace Azure.Storage.Files.Shares
                 position,
                 bufferSize,
                 conditions,
+                arrayPool: default,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -2039,6 +2042,7 @@ namespace Azure.Storage.Files.Shares
                 position,
                 bufferSize,
                 conditions,
+                arrayPool: default,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -2095,6 +2099,9 @@ namespace Azure.Storage.Files.Shares
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions on
         /// the download of the file.
         /// </param>
+        /// <param name="arrayPool">
+        /// Optional <see cref="ArrayPool{Byte}"/> to rent buffer from.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -2112,6 +2119,7 @@ namespace Azure.Storage.Files.Shares
             long position,
             int? bufferSize,
             ShareFileRequestConditions conditions,
+            ArrayPool<byte> arrayPool,
 #pragma warning disable CA1801
             bool async,
             CancellationToken cancellationToken)
@@ -2149,7 +2157,8 @@ namespace Azure.Storage.Files.Shares
                     properties.ContentLength,
                     position,
                     bufferSize,
-                    conditions);
+                    conditions,
+                    arrayPool);
             }
             catch (Exception ex)
             {
@@ -4989,7 +4998,8 @@ namespace Azure.Storage.Files.Shares
                     bufferSize: options?.BufferSize ?? Constants.DefaultBufferSize,
                     position: position,
                     conditions: options?.OpenConditions,
-                    progressHandler: options?.ProgressHandler);
+                    progressHandler: options?.ProgressHandler,
+                    arrayPool: options?.ArrayPool);
             }
             catch (Exception ex)
             {

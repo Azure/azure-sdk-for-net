@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
@@ -1358,6 +1359,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Position ?? 0,
                 options?.BufferSize,
                 options?.Conditions,
+                options?.ArrayPool,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -1385,6 +1387,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options.Position,
                 options?.BufferSize,
                 options?.Conditions,
+                options?.ArrayPool,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -1424,6 +1427,7 @@ namespace Azure.Storage.Blobs.Specialized
                 position,
                 bufferSize,
                 conditions,
+                arrayPool: default,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -1500,6 +1504,7 @@ namespace Azure.Storage.Blobs.Specialized
                 position,
                 bufferSize,
                 conditions,
+                arrayPool: default,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -1557,6 +1562,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// the download of the blob.
         /// </param>
+        /// <param name="arrayPool">
+        /// Optional <see cref="ArrayPool{Byte}"/> to rent buffer from.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1574,6 +1582,7 @@ namespace Azure.Storage.Blobs.Specialized
             long position,
             int? bufferSize,
             BlobRequestConditions conditions,
+            ArrayPool<byte> arrayPool,
 #pragma warning disable CA1801
             bool async,
             CancellationToken cancellationToken)
@@ -1620,7 +1629,8 @@ namespace Azure.Storage.Blobs.Specialized
                         blobProperties.Value.ContentLength,
                         position,
                         bufferSize,
-                        conditions);
+                        conditions,
+                        arrayPool);
                 }
                 catch (Exception ex)
                 {

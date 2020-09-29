@@ -16,6 +16,7 @@ using Azure.Storage.Files.Shares.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using Azure.Storage.Tests.Shared;
 using BenchmarkDotNet.Toolchains.Roslyn;
 using NUnit.Framework;
 
@@ -2853,6 +2854,37 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        public async Task OpenReadAsync_ArrayPool()
+        {
+            int size = Constants.KB;
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
+
+            // Arrange
+            var data = GetRandomBuffer(size);
+            ShareFileClient file = await test.Directory.CreateFileAsync(GetNewFileName(), size);
+            using Stream stream = new MemoryStream(data);
+            await file.UploadAsync(stream);
+
+            MockArrayPool<byte> mockArrayPool = new MockArrayPool<byte>();
+            ShareFileOpenReadOptions options = new ShareFileOpenReadOptions(allowModifications: false)
+            {
+                ArrayPool = mockArrayPool
+            };
+
+            // Act
+            Stream outputStream = await file.OpenReadAsync(options).ConfigureAwait(false);
+            byte[] outputBytes = new byte[size];
+            await outputStream.ReadAsync(outputBytes, 0, size);
+            outputStream.Dispose();
+
+            // Assert
+            Assert.AreEqual(data.Length, outputStream.Length);
+            TestHelper.AssertSequenceEqual(data, outputBytes);
+            Assert.AreEqual(1, mockArrayPool.RentCount);
+            Assert.AreEqual(1, mockArrayPool.ReturnCount);
+        }
+
+        [Test]
         public async Task OpenReadAsync_BufferSize()
         {
             int size = Constants.KB;
@@ -3204,6 +3236,43 @@ namespace Azure.Storage.Files.Shares.Test
             await result.Value.Content.CopyToAsync(dataResult);
             Assert.AreEqual(data.Length, dataResult.Length);
             TestHelper.AssertSequenceEqual(data, dataResult.ToArray());
+        }
+
+        [Test]
+        public async Task OpenWriteAsync_ArrayPool()
+        {
+            // Arrange
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            ShareFileClient file = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
+            await file.CreateAsync(Constants.KB);
+
+            MockArrayPool<byte> mockArrayPool = new MockArrayPool<byte>();
+
+            ShareFileOpenWriteOptions options = new ShareFileOpenWriteOptions
+            {
+                ArrayPool = mockArrayPool
+            };
+
+            Stream stream = await file.OpenWriteAsync(
+                overwrite: false,
+                position: 0,
+                options: options);
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+
+            // Act
+            await stream.WriteAsync(data, 0, Constants.KB);
+            await stream.FlushAsync();
+            stream.Dispose();
+
+            // Assert
+            Response<ShareFileDownloadInfo> result = await file.DownloadAsync();
+            var dataResult = new MemoryStream();
+            await result.Value.Content.CopyToAsync(dataResult);
+            Assert.AreEqual(data.Length, dataResult.Length);
+            TestHelper.AssertSequenceEqual(data, dataResult.ToArray());
+            Assert.AreEqual(1, mockArrayPool.RentCount);
+            Assert.AreEqual(1, mockArrayPool.ReturnCount);
         }
 
         [Test]

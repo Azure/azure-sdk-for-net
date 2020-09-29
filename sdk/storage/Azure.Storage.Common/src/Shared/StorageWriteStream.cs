@@ -17,13 +17,14 @@ namespace Azure.Storage.Shared
         protected readonly IProgress<long> _progressHandler;
         protected readonly PooledMemoryStream _buffer;
         private bool _disposed;
-        private bool _shouldDisposeBuffer;
+        private readonly bool _shouldDisposeBuffer;
 
         protected StorageWriteStream(
             long position,
             long bufferSize,
             IProgress<long> progressHandler,
-            PooledMemoryStream buffer = null)
+            PooledMemoryStream buffer = null,
+            ArrayPool<byte> arrayPool = null)
         {
             _position = position;
             _bufferSize = bufferSize;
@@ -41,7 +42,7 @@ namespace Azure.Storage.Shared
             else
             {
                 _buffer = new PooledMemoryStream(
-                arrayPool: ArrayPool<byte>.Shared,
+                arrayPool: arrayPool ?? ArrayPool<byte>.Shared,
                 absolutePosition: 0,
                 maxArraySize: (int)Math.Min(Constants.MB, bufferSize));
                 _shouldDisposeBuffer = true;

@@ -13,6 +13,7 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using Azure.Storage.Tests.Shared;
 using NUnit.Framework;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
@@ -2297,6 +2298,42 @@ namespace Azure.Storage.Blobs.Test
             await result.Value.Content.CopyToAsync(dataResult);
             Assert.AreEqual(data.Length, dataResult.Length);
             TestHelper.AssertSequenceEqual(data, dataResult.ToArray());
+        }
+
+        [Test]
+        public async Task OpenWriteAsync_ArrayPool()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            await blob.UploadAsync(new MemoryStream(Array.Empty<byte>()));
+
+            MockArrayPool<byte> mockArrayPool = new MockArrayPool<byte>();
+
+            BlockBlobOpenWriteOptions options = new BlockBlobOpenWriteOptions
+            {
+                ArrayPool = mockArrayPool
+            };
+
+            Stream stream = await blob.OpenWriteAsync(
+                overwrite: true,
+                options);
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+
+            // Act
+            await stream.WriteAsync(data, 0, Constants.KB);
+            await stream.FlushAsync();
+            stream.Dispose();
+
+            // Assert
+            Response<BlobDownloadInfo> result = await blob.DownloadAsync(new HttpRange(0, data.Length));
+            MemoryStream dataResult = new MemoryStream();
+            await result.Value.Content.CopyToAsync(dataResult);
+            Assert.AreEqual(data.Length, dataResult.Length);
+            TestHelper.AssertSequenceEqual(data, dataResult.ToArray());
+            Assert.AreEqual(1, mockArrayPool.RentCount);
+            Assert.AreEqual(1, mockArrayPool.ReturnCount);
         }
 
         [Test]

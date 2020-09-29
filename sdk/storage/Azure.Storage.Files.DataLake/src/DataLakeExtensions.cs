@@ -420,7 +420,8 @@ namespace Azure.Storage.Files.DataLake
             {
                 BufferSize = options.BufferSize,
                 Conditions = options.Conditions.ToBlobRequestConditions(),
-                Position = options.Position
+                Position = options.Position,
+                ArrayPool = options.ArrayPool
             };
         }
     }

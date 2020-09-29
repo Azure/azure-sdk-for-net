@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.Models;
@@ -20,10 +21,12 @@ namespace Azure.Storage.Blobs
             long bufferSize,
             long position,
             AppendBlobRequestConditions conditions,
+            ArrayPool<byte> arrayPool,
             IProgress<long> progressHandler) : base(
                 position,
                 bufferSize,
-                progressHandler)
+                progressHandler,
+                arrayPool: arrayPool)
         {
             ValidateBufferSize(bufferSize);
             _appendBlobClient = appendBlobClient;

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.Models;
@@ -21,10 +22,12 @@ namespace Azure.Storage.Blobs
             long bufferSize,
             long position,
             PageBlobRequestConditions conditions,
-            IProgress<long> progressHandler) : base(
+            IProgress<long> progressHandler,
+            ArrayPool<byte> arrayPool) : base(
                 position,
                 bufferSize,
-                progressHandler)
+                progressHandler,
+                arrayPool: arrayPool)
         {
             ValidateBufferSize(bufferSize);
             ValidatePosition(position);

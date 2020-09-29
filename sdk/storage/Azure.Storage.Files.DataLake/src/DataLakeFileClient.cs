@@ -4137,7 +4137,8 @@ namespace Azure.Storage.Files.DataLake
                     position: position,
                     conditions: conditions,
                     progressHandler: options?.ProgressHandler,
-                    closeEvent: options?.Close);
+                    closeEvent: options?.Close,
+                    arrayPool: options?.ArrayPool);
             }
             catch (Exception ex)
             {

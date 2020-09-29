@@ -218,6 +218,7 @@ namespace Azure.Storage.Blobs.Models
     public partial class AppendBlobOpenWriteOptions
     {
         public AppendBlobOpenWriteOptions() { }
+        public System.Buffers.ArrayPool<byte> ArrayPool { get { throw null; } set { } }
         public long? BufferSize { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.AppendBlobRequestConditions OpenConditions { get { throw null; } set { } }
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
@@ -668,6 +669,7 @@ namespace Azure.Storage.Blobs.Models
     public partial class BlobOpenReadOptions
     {
         public BlobOpenReadOptions(bool allowModifications) { }
+        public System.Buffers.ArrayPool<byte> ArrayPool { get { throw null; } set { } }
         public int? BufferSize { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobRequestConditions Conditions { get { throw null; } set { } }
         public long Position { get { throw null; } set { } }
@@ -913,6 +915,7 @@ namespace Azure.Storage.Blobs.Models
     public partial class BlockBlobOpenWriteOptions
     {
         public BlockBlobOpenWriteOptions() { }
+        public System.Buffers.ArrayPool<byte> ArrayPool { get { throw null; } set { } }
         public long? BufferSize { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobHttpHeaders HttpHeaders { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
@@ -1062,6 +1065,7 @@ namespace Azure.Storage.Blobs.Models
     public partial class PageBlobOpenWriteOptions
     {
         public PageBlobOpenWriteOptions() { }
+        public System.Buffers.ArrayPool<byte> ArrayPool { get { throw null; } set { } }
         public long? BufferSize { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.PageBlobRequestConditions OpenConditions { get { throw null; } set { } }
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }

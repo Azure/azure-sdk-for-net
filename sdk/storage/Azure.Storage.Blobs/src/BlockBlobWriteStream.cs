@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
@@ -29,10 +30,12 @@ namespace Azure.Storage.Blobs
             IProgress<long> progressHandler,
             BlobHttpHeaders blobHttpHeaders,
             IDictionary<string, string> metadata,
-            IDictionary<string, string> tags) : base(
+            IDictionary<string, string> tags,
+            ArrayPool<byte> arrayPool) : base(
                 position,
                 bufferSize,
-                progressHandler)
+                progressHandler,
+                arrayPool: arrayPool)
         {
             ValidateBufferSize(bufferSize);
             _blockBlobClient = blockBlobClient;

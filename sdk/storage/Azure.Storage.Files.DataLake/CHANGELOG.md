@@ -7,6 +7,7 @@
 - Added Close and RetainUncommitedData to DataLakeFileUploadOptions.
 - Fixed bug where DataLakeDirectoryClient.Rename(), DataLakeFileClient.Rename(), and DataLakeFileClient.Rename() couldn't handle source paths with special characters.
 - Added DataLakeClientBuilderExtensions.
+- Added ArrayPool optional property to DataLakeFileOpenWriteOptions and DataLakeFileOpenReadOptions.
 
 ## 12.4.0 (2020-08-31)
 - Fixed bug where DataLakeFileClient.Upload() would deadlock if the content stream's position was not 0.

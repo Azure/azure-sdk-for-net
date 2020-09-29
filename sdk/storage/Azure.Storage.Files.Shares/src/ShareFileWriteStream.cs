@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Files.Shares.Models;
@@ -20,10 +21,12 @@ namespace Azure.Storage.Files.Shares
             long bufferSize,
             long position,
             ShareFileRequestConditions conditions,
-            IProgress<long> progressHandler) : base(
+            IProgress<long> progressHandler,
+            ArrayPool<byte> arrayPool) : base(
                 position,
                 bufferSize,
-                progressHandler)
+                progressHandler,
+                arrayPool: arrayPool)
         {
             ValidateBufferSize(bufferSize);
             _fileClient = fileClient;
