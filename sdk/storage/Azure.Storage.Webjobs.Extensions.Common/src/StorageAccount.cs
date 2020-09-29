@@ -18,14 +18,22 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
     public class StorageAccount
     {
         private readonly string _connectionString;
+        private readonly BlobClientOptions.ServiceVersion? _blobServiceVersion;
+        private readonly QueueClientOptions.ServiceVersion? _queueServiceVersion;
 
         /// <summary>
         /// TODO.
         /// </summary>
         /// <param name="connectionString"></param>
-        public StorageAccount(string connectionString)
+        /// <param name="blobServiceVersion"></param>
+        /// <param name="queueServiceVersion"></param>
+        public StorageAccount(string connectionString,
+            BlobClientOptions.ServiceVersion? blobServiceVersion = default,
+            QueueClientOptions.ServiceVersion? queueServiceVersion = default)
         {
             _connectionString = connectionString;
+            _blobServiceVersion = blobServiceVersion;
+            _queueServiceVersion = queueServiceVersion;
         }
 
         /// <summary>
@@ -66,10 +74,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
         /// <returns></returns>
         public virtual BlobServiceClient CreateBlobServiceClient()
         {
-            var blobClientOptions = SkuUtility.IsDynamicSku ? new BlobClientOptions()
+            var blobClientOptions = _blobServiceVersion.HasValue ? new BlobClientOptions(_blobServiceVersion.Value) : new BlobClientOptions();
+            if (SkuUtility.IsDynamicSku)
             {
-                Transport = CreateTransportForDynamicSku()
-            } : default;
+                blobClientOptions.Transport = CreateTransportForDynamicSku();
+            }
             return new BlobServiceClient(_connectionString, blobClientOptions);
         }
 
@@ -79,10 +88,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
         /// <returns></returns>
         public virtual QueueServiceClient CreateQueueServiceClient()
         {
-            var queueClientOptions = SkuUtility.IsDynamicSku ? new QueueClientOptions()
+            var queueClientOptions = _queueServiceVersion.HasValue ? new QueueClientOptions(_queueServiceVersion.Value) : new QueueClientOptions();
+            if (SkuUtility.IsDynamicSku)
             {
-                Transport = CreateTransportForDynamicSku()
-            } : default;
+                queueClientOptions.Transport = CreateTransportForDynamicSku();
+            }
             return new QueueServiceClient(_connectionString, queueClientOptions);
         }
 

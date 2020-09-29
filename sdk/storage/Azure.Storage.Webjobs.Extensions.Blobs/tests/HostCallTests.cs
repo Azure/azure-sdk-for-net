@@ -525,7 +525,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
         private StorageAccount CreateFakeStorageAccount()
         {
-            return StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
+            return azuriteFixture.GetAccount();
         }
 
         private struct CustomDataValue

@@ -2,7 +2,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
 {
     public partial class StorageAccount
     {
-        public StorageAccount(string connectionString) { }
+        public StorageAccount(string connectionString, Azure.Storage.Blobs.BlobClientOptions.ServiceVersion? blobServiceVersion = default(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion?), Azure.Storage.Queues.QueueClientOptions.ServiceVersion? queueServiceVersion = default(Azure.Storage.Queues.QueueClientOptions.ServiceVersion?)) { }
         public virtual string Name { get { throw null; } }
         public virtual Azure.Storage.Blobs.BlobServiceClient CreateBlobServiceClient() { throw null; }
         public virtual Azure.Storage.Queues.QueueServiceClient CreateQueueServiceClient() { throw null; }
