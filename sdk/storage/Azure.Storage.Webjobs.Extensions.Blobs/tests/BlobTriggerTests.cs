@@ -27,7 +27,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             this.azuriteFixture = azuriteFixture;
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task BlobTrigger_IfBoundToCloudBlob_Binds()
         {
             // Arrange
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task BlobTrigger_Binding_Metadata()
         {
             var app = new BindToCloudBlob2Program();
@@ -108,7 +108,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
         private StorageAccount CreateFakeStorageAccount()
         {
-            var account = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString);
+            var account = azuriteFixture.GetAccount();
 
             // make sure our system containers are present
             var container = CreateContainer(account, "azure-webjobs-hosts");

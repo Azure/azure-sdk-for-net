@@ -29,12 +29,11 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             this.azuriteFixture = azuriteFixture;
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task Blob_IfBoundToCloudBlockBlob_BindsAndCreatesContainerButNotBlob()
         {
             // Act
-            var azuriteAccount = azuriteFixture.GetAccount();
-            var account = StorageAccount.NewFromConnectionString(azuriteAccount.ConnectionString);
+            var account = azuriteFixture.GetAccount();
 
             var prog = new BindToCloudBlockBlobProgram();
             IHost host = new HostBuilder()
@@ -61,13 +60,12 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             Assert.False(await blob.ExistsAsync());
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task Blob_IfBoundToTextWriter_CreatesBlob()
         {
             // Arrange
             const string expectedContent = "message";
-            var azuriteAccount = azuriteFixture.GetAccount();
-            var account = StorageAccount.NewFromConnectionString(azuriteAccount.ConnectionString);
+            var account = azuriteFixture.GetAccount();
             QueueClient triggerQueue = CreateQueue(account, TriggerQueueName);
             await triggerQueue.SendMessageAsync(expectedContent);
 

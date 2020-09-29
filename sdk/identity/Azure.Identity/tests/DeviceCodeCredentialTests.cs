@@ -199,7 +199,7 @@ namespace Azure.Identity.Tests
         {
             var expectedCode = Guid.NewGuid().ToString();
 
-            var cred = InstrumentClient(new DeviceCodeCredential((code, cancelToken) => VerifyDeviceCode(code, expectedCode), new DeviceCodeCredentialOptions { DisableAutomaticAuthentication = true }));
+            var cred = InstrumentClient(new DeviceCodeCredential(new DeviceCodeCredentialOptions { DisableAutomaticAuthentication = true, DeviceCodeCallback = (code, cancelToken) => VerifyDeviceCode(code, expectedCode) }));
 
             var expTokenRequestContext = new TokenRequestContext(new string[] { "https://vault.azure.net/.default" }, Guid.NewGuid().ToString());
 

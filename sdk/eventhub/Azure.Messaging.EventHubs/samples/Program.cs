@@ -29,8 +29,18 @@ namespace Azure.Messaging.EventHubs.Samples
     ///      dotnet Azure.Messaging.EventHubs.Samples.dll `
     ///          --FullyQualifiedNamespace "{yournamespace}.servicebus.windows.net" `
     ///          --EventHub "<< YOUR_EVENT_HUB_NAME >>" `
-    ///          --TenantId " << YOUR_TENANT_ID >> " `
-    ///          --ClientId "<< YOUR_CLIENT_ID >>" `
+    ///          --Tenant "<< YOUR_TENANT_ID >>" `
+    ///          --Client "<< YOUR_CLIENT_ID >>" `
+    ///          --Secret "<< YOUR_SECRET_ID >>"
+    ///
+    ///   To run a SchemaRegistry sample extra parameters will be needed:
+    ///
+    ///      dotnet Azure.Messaging.EventHubs.Samples.dll `
+    ///          --FullyQualifiedNamespace "{yournamespace}.servicebus.windows.net" `
+    ///          --EventHub "<< YOUR_EVENT_HUB_NAME >>" `
+    ///          --SchemaGroupName "<< YOUR_SCHEMA_GROUP_NAME >>" `
+    ///          --Tenant "<< YOUR_TENANT_ID >>" `
+    ///          --Client "<< YOUR_CLIENT_ID >>" `
     ///          --Secret "<< YOUR_SECRET_ID >>"
     ///
     /// </summary>
@@ -43,7 +53,8 @@ namespace Azure.Messaging.EventHubs.Samples
         ///
         private static readonly string[] ExtraOptionsForSamples = new[]
         {
-            "Explore Identity Samples"
+            "Explore Identity Samples",
+            "Explore SchemaRegistry Samples"
         };
 
         /// <summary>
@@ -51,6 +62,15 @@ namespace Azure.Messaging.EventHubs.Samples
         /// </summary>
         ///
         private static readonly string[] ExtraOptionsForIdentitySamples = new[]
+        {
+            "Go Back"
+        };
+
+        /// <summary>
+        ///   A set of controlling option displayed to the user if they choose to explore identity samples.
+        /// </summary>
+        ///
+        private static readonly string[] ExtraOptionsForSchemaRegistrySamples = new[]
         {
             "Go Back"
         };
@@ -127,6 +147,22 @@ namespace Azure.Messaging.EventHubs.Samples
                                               parsedArgs.Client,
                                               parsedArgs.Secret);
             }
+            else if (sample is IEventHubsSchemaRegistrySample schemaRegistrySample)
+            {
+                PromptFullyQualifiedNamespaceIfMissing(parsedArgs);
+                PromptEventHubNameIfMissing(parsedArgs);
+                PromptSchemaGroupNameIfMissing(parsedArgs);
+                PromptTenantIdIfMissing(parsedArgs);
+                PromptClientIdIfMissing(parsedArgs);
+                PromptSecretIfMissing(parsedArgs);
+
+                await schemaRegistrySample.RunAsync(parsedArgs.FullyQualifiedNamespace,
+                    parsedArgs.EventHub,
+                    parsedArgs.SchemaGroupName,
+                    parsedArgs.Tenant,
+                    parsedArgs.Client,
+                    parsedArgs.Secret);
+            }
         }
 
         /// <summary>
@@ -148,19 +184,37 @@ namespace Azure.Messaging.EventHubs.Samples
             {
                 var identitySamples = LocateSamples<IEventHubsIdentitySample>();
 
-                PrintEventHubsIdentitySamples(identitySamples);
-
                 while (IsEventHubsIdentity(samples, choice))
                 {
+                    PrintEventHubsIdentitySamples(identitySamples);
                     choice = ReadSelection(identitySamples);
 
                     if (choice.HasValue && !IsGoBack(identitySamples, choice))
                     {
                         return identitySamples[choice.Value];
                     }
-                    else if (IsGoBack(identitySamples, choice))
+                    if (IsGoBack(identitySamples, choice))
                     {
-                        choice = ReadSelection(samples);
+                        return RetrieveSample();
+                    }
+                }
+            }
+            else if (IsEventHubsSchemaRegistry(samples, choice))
+            {
+                var schemaRegistrySamples = LocateSamples<IEventHubsSchemaRegistrySample>();
+
+                while (IsEventHubsSchemaRegistry(samples, choice))
+                {
+                    PrintEventHubsSchemaRegistrySamples(schemaRegistrySamples);
+                    choice = ReadSelection(schemaRegistrySamples);
+
+                    if (choice.HasValue && !IsGoBack(schemaRegistrySamples, choice))
+                    {
+                        return schemaRegistrySamples[choice.Value];
+                    }
+                    if (IsGoBack(schemaRegistrySamples, choice))
+                    {
+                        return RetrieveSample();
                     }
                 }
             }
@@ -180,11 +234,25 @@ namespace Azure.Messaging.EventHubs.Samples
         /// <param name="identitySamples">A list of identity samples</param>
         /// <param name="choice">The zero-based index referring to the option chosen from console</param>
         ///
-        /// <returns>If the user has chosed to go back in the main sample listing.</returns>
+        /// <returns>If the user has chosen to go back in the main sample listing.</returns>
         ///
         private static bool IsGoBack(IReadOnlyList<IEventHubsIdentitySample> identitySamples, int? choice)
         {
             return IsLastOption(identitySamples, ExtraOptionsForIdentitySamples.Length, choice);
+        }
+
+        /// <summary>
+        ///   It checks if an option is to go back.
+        /// </summary>
+        ///
+        /// <param name="schemaRegistrySamples">A list of SchemaRegistry samples</param>
+        /// <param name="choice">The zero-based index referring to the option chosen from console</param>
+        ///
+        /// <returns>If the user has chosen to go back in the main sample listing.</returns>
+        ///
+        private static bool IsGoBack(IReadOnlyList<IEventHubsSchemaRegistrySample> schemaRegistrySamples, int? choice)
+        {
+            return IsLastOption(schemaRegistrySamples, ExtraOptionsForSchemaRegistrySamples.Length, choice);
         }
 
         /// <summary>
@@ -197,6 +265,20 @@ namespace Azure.Messaging.EventHubs.Samples
         /// <returns>If the user has chosen to see the event hubs identity samples.</returns>
         ///
         private static bool IsEventHubsIdentity(IReadOnlyList<IEventHubsSample> samples, int? choice)
+        {
+            return IsLastOption(samples, ExtraOptionsForSamples.Length - 1, choice);
+        }
+
+        /// <summary>
+        ///   It checks if an option is to see the SchemaRegistry samples.
+        /// </summary>
+        ///
+        /// <param name="samples">A list of samples</param>
+        /// <param name="choice">The zero-based index referring to the option chosen from console</param>
+        ///
+        /// <returns>If the user has chosen to see the event hubs SchemaRegistry samples.</returns>
+        ///
+        private static bool IsEventHubsSchemaRegistry(IReadOnlyList<IEventHubsSample> samples, int? choice)
         {
             return IsLastOption(samples, ExtraOptionsForSamples.Length, choice);
         }
@@ -228,7 +310,8 @@ namespace Azure.Messaging.EventHubs.Samples
         {
             PrintSamples(samples);
 
-            for (int i = 0; i < ExtraOptionsForSamples.Length; i++)
+            // TODO: The -1 removes displaying the SchemaRegistry scenarios. See: https://github.com/Azure/azure-sdk-for-net/issues/15463
+            for (int i = 0; i < ExtraOptionsForSamples.Length - 1; i++)
             {
                 Console.WriteLine($"{ samples.Count + i + 1 }) { ExtraOptionsForSamples[i] }");
                 Console.WriteLine();
@@ -250,6 +333,25 @@ namespace Azure.Messaging.EventHubs.Samples
             for (int i = 0; i < ExtraOptionsForIdentitySamples.Length; i++)
             {
                 Console.WriteLine($"{ samples.Count + i + 1 }) { ExtraOptionsForIdentitySamples[i] }");
+                Console.WriteLine();
+            }
+
+            Console.WriteLine();
+        }
+
+        /// <summary>
+        ///   It prints to console a set of SchemaRegistry samples and controlling options.
+        /// </summary>
+        ///
+        /// <param name="samples">A list of samples to be printed</param>
+        ///
+        private static void PrintEventHubsSchemaRegistrySamples(IReadOnlyList<ISample> samples)
+        {
+            PrintSamples(samples);
+
+            for (int i = 0; i < ExtraOptionsForSchemaRegistrySamples.Length; i++)
+            {
+                Console.WriteLine($"{ samples.Count + i + 1 }) { ExtraOptionsForSchemaRegistrySamples[i] }");
                 Console.WriteLine();
             }
 
@@ -312,6 +414,25 @@ namespace Azure.Messaging.EventHubs.Samples
             {
                 Console.Write("Please provide the name of the Event Hub that you'd like to use and then press Enter: ");
                 parsedArgs.EventHub = Console.ReadLine().Trim();
+                Console.WriteLine();
+            }
+        }
+
+        /// <summary>
+        ///   Prompt the user to insert the schema group name, if not
+        ///   already passed it from command line.
+        /// </summary>
+        ///
+        /// <param name="parsedArgs">The arguments passed from console.</param>
+        ///
+        private static void PromptSchemaGroupNameIfMissing(CommandLineArguments parsedArgs)
+        {
+            // Prompt for the schema group name, if it wasn't passed.
+
+            while (string.IsNullOrEmpty(parsedArgs.SchemaGroupName))
+            {
+                Console.Write("Please provide the name of the schema group that you'd like to use and then press Enter: ");
+                parsedArgs.SchemaGroupName = Console.ReadLine().Trim();
                 Console.WriteLine();
             }
         }
@@ -441,6 +562,7 @@ namespace Azure.Messaging.EventHubs.Samples
         {
             IReadOnlyList<IEventHubsSample> eventHubSamples => ReadSelection(eventHubSamples.Count + ExtraOptionsForSamples.Length),
             IReadOnlyList<IEventHubsIdentitySample> identitySamples => ReadSelection(identitySamples.Count + ExtraOptionsForIdentitySamples.Length),
+            IReadOnlyList<IEventHubsSchemaRegistrySample> schemaRegistrySamples => ReadSelection(schemaRegistrySamples.Count + ExtraOptionsForSchemaRegistrySamples.Length),
             _ => throw new ArgumentException()
         };
 
@@ -536,6 +658,10 @@ namespace Azure.Messaging.EventHubs.Samples
                 {
                     parsedArgs.EventHub = args[index + 1].Trim();
                 }
+                else if (args[index].Equals($"{ CommandLineArguments.ArgumentPrefix }{ nameof(CommandLineArguments.SchemaGroupName) }", StringComparison.OrdinalIgnoreCase))
+                {
+                    parsedArgs.SchemaGroupName = args[index + 1].Trim();
+                }
                 else if (args[index].Equals($"{ CommandLineArguments.ArgumentPrefix }{ nameof(CommandLineArguments.Client) }", StringComparison.OrdinalIgnoreCase))
                 {
                     parsedArgs.Client = args[index + 1].Trim();
@@ -589,6 +715,9 @@ namespace Azure.Messaging.EventHubs.Samples
 
             /// <summary>The name of the Event Hub to use samples.</summary>
             public string EventHub;
+
+            /// <summary>The name of the schema group in the Schema Registry.</summary>
+            public string SchemaGroupName;
 
             /// <summary>The fully qualified Event Hubs namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c></summary>
             public string FullyQualifiedNamespace;

@@ -22,14 +22,14 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             this.azuriteFixture = azuriteFixture;
         }
 
-        [AzuriteFact]
+        [Fact]
         public async Task Queue_IfNameIsInvalid_ThrowsDuringIndexing()
         {
             IHost host = new HostBuilder()
                 .ConfigureDefaultTestHost<InvalidQueueNameProgram>(b =>
                 {
                     b.AddAzureStorageBlobs().AddAzureStorageQueues()
-                    .UseStorage(StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString));
+                    .UseStorage(azuriteFixture.GetAccount());
                 })
                 .Build();
 
