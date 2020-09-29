@@ -62,7 +62,7 @@ The following environment variables must be set for the the end to end tests to 
 8. `MABOM_StorageKey`: The key to your storage account.
 9. `MABOM_BlobEndpoint`: The blob endpoint for the storage account, i.e. `https://<account>.blob.core.windows.net`
 10. `MABOM_BatchManagementEndpoint`: The management endpoint for the tenant you are targeting. This will usually be `https://management.azure.com/`.
-11. `MABOM_AzureAuthenticationClientId`: The client ID of an AAD App Regristration with contributor access to the subscriontion you're using (#2).
+11. `MABOM_AzureAuthenticationClientId`: The client ID of an AAD App Registration with contributor access to the subscription you're using (#2).
 12. `MABOM_AzureAuthenticationClientSecret`: The secret for the App Registration (#11).
 
 If running the tests against a test tenant, you also must set:
