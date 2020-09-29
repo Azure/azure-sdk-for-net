@@ -2512,7 +2512,8 @@ namespace Azure.Storage.Files.DataLake
                                 filesSuccessfulCount += currentFilesSuccessfulCount;
                                 failureCount += currentFailureCount;
 
-                                if ((options?.RetrieveBatchFailures == true) &&
+                                if ((currentFailureCount > 0) &&
+                                    (options?.RetrieveBatchFailures == true) &&
                                     ((options?.ContinueOnFailure.GetValueOrDefault(false) == false) ||
                                     ((batchFailures == default) && (options?.ContinueOnFailure == true))))
                                 {
@@ -2574,6 +2575,7 @@ namespace Azure.Storage.Files.DataLake
                                     (failureCount > 0) && !(options?.ContinueOnFailure == true)
                                         ? lastContinuationToken
                                         : continuationToken,
+                                BatchFailures = batchFailures
                             },
                             jsonResponse.GetRawResponse());
                     }
