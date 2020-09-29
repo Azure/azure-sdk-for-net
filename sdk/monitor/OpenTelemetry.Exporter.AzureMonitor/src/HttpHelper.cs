@@ -85,5 +85,16 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         {
             return statusCode == "200" || statusCode == "Ok";
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static string GetHost(Dictionary<string, string> tags)
+        {
+            if (tags != null && tags.TryGetValue(SemanticConventions.AttributeHttpHost, out var host))
+            {
+                return host;
+            }
+
+            return null;
+        }
     }
 }

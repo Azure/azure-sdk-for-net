@@ -18,25 +18,25 @@ namespace OpenTelemetry.Exporter.AzureMonitor.HttpParsers
         /// <returns><code>true</code> if successfully parsed dependency.</returns>
         internal static bool TryParse(ref RemoteDependencyData httpDependency)
         {
-            if (httpDependency.Name.EndsWith(".svc", StringComparison.OrdinalIgnoreCase))
+            if (httpDependency.Data.EndsWith(".svc", StringComparison.OrdinalIgnoreCase))
             {
                 httpDependency.Type = RemoteDependencyConstants.WcfService;
                 return true;
             }
 
-            if (httpDependency.Name.EndsWith(".asmx", StringComparison.OrdinalIgnoreCase))
+            if (httpDependency.Data.EndsWith(".asmx", StringComparison.OrdinalIgnoreCase))
             {
                 httpDependency.Type = RemoteDependencyConstants.WebService;
                 return true;
             }
 
-            if (httpDependency.Name.IndexOf(".svc/", StringComparison.OrdinalIgnoreCase) != -1)
+            if (httpDependency.Data.IndexOf(".svc/", StringComparison.OrdinalIgnoreCase) != -1)
             {
                 httpDependency.Type = RemoteDependencyConstants.WcfService;
                 return true;
             }
 
-            if (httpDependency.Name.IndexOf(".asmx/", StringComparison.OrdinalIgnoreCase) != -1)
+            if (httpDependency.Data.IndexOf(".asmx/", StringComparison.OrdinalIgnoreCase) != -1)
             {
                 httpDependency.Type = RemoteDependencyConstants.WebService;
                 return true;

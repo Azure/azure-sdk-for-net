@@ -184,6 +184,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                 {
                     case PartBType.Http:
                         dependency.Data = HttpHelper.GetUrl(partBTags);
+                        dependency.Target = HttpHelper.GetHost(partBTags);
                         bool parsed = AzureBlobHttpParser.TryParse(ref dependency)
                                         || AzureTableHttpParser.TryParse(ref dependency)
                                         || AzureQueueHttpParser.TryParse(ref dependency)

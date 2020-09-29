@@ -295,6 +295,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             Assert.Equal("200", HttpHelper.GetHttpStatusCode(new Dictionary<string, string> { [SemanticConventions.AttributeHttpStatusCode] = "200" }));
             Assert.Equal("Ok", HttpHelper.GetHttpStatusCode(new Dictionary<string, string> { [SemanticConventions.AttributeHttpStatusCode] = "Ok" }));
             Assert.Equal("500", HttpHelper.GetHttpStatusCode(new Dictionary<string, string> { [SemanticConventions.AttributeHttpStatusCode] = "500" }));
+            Assert.Null(HttpHelper.GetHttpStatusCode(new Dictionary<string, string> { [SemanticConventions.AttributeHttpStatusCode] = null }));
         }
 
         [Fact]
@@ -302,7 +303,6 @@ namespace OpenTelemetry.Exporter.AzureMonitor
         {
             Assert.Equal("0", HttpHelper.GetHttpStatusCode(null));
             Assert.Equal("0", HttpHelper.GetHttpStatusCode(new Dictionary<string, string>()));
-            Assert.Null(HttpHelper.GetHttpStatusCode(new Dictionary<string, string> { [SemanticConventions.AttributeHttpStatusCode] = null }));
         }
 
         [Fact]
@@ -319,6 +319,15 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             Assert.False(HttpHelper.GetSuccessFromHttpStatusCode(string.Empty));
             Assert.False(HttpHelper.GetSuccessFromHttpStatusCode("500"));
             Assert.False(HttpHelper.GetSuccessFromHttpStatusCode("0"));
+        }
+
+        [Fact]
+        public void GetHostTests()
+        {
+            Assert.Equal("test", HttpHelper.GetHost(new Dictionary<string, string> { [SemanticConventions.AttributeHttpHost] = "test" }));
+            Assert.Null(HttpHelper.GetHost(new Dictionary<string, string> { [SemanticConventions.AttributeHttpHost] = null }));
+            Assert.Null(HttpHelper.GetHost(new Dictionary<string, string> ()));
+            Assert.Null(HttpHelper.GetHost(null));
         }
     }
 }

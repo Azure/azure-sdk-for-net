@@ -22,11 +22,9 @@ namespace OpenTelemetry.Exporter.AzureMonitor.HttpParsers
         /// <returns><code>true</code> if successfully parsed dependency.</returns>
         internal static bool TryParse(ref RemoteDependencyData httpDependency)
         {
-            string name = httpDependency.Name;
             string host = httpDependency.Target;
-            string url = httpDependency.Data;
 
-            if (name == null || host == null || url == null)
+            if (host == null)
             {
                 return false;
             }

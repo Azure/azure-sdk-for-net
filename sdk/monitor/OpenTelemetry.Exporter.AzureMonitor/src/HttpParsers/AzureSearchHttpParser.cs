@@ -119,6 +119,8 @@ namespace OpenTelemetry.Exporter.AzureMonitor.HttpParsers
             var operationName = GetOperationName(operation);
 
             httpDependency.Type = RemoteDependencyConstants.AzureSearch;
+            // TODO: Change the name property to set name
+            // httpDependency.Name = string.IsNullOrEmpty(operationName) ? httpDependency.Target : operationName;
 
             return true;
         }
