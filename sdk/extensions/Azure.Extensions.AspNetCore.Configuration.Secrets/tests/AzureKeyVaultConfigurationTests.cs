@@ -37,8 +37,12 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
                 foreach (var secret in page)
                 {
                     mock.Setup(client => client.GetSecretAsync(secret.Name, null, default))
-                        .Callback((string name, string label, CancellationToken token) => getSecretCallback(name))
-                        .ReturnsAsync(Response.FromValue(secret, Mock.Of<Response>()));
+                        .Returns(async (string name, string label, CancellationToken token) =>
+                        {
+                            await getSecretCallback(name);
+                            return Response.FromValue(secret, Mock.Of<Response>());
+                        }
+                    );
                 }
             }
         }
@@ -465,6 +469,46 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             // Assert
             Assert.AreEqual("Value1", provider.Get("Secret1"));
             Assert.AreEqual("Value2", provider.Get("Secret2"));
+        }
+
+        [Test]
+        public void LimitsMaxParallelism()
+        {
+            var expectedCount = 100;
+            var currentParallel = 0;
+            var maxParallel = 0;
+            var client = new Mock<SecretClient>();
+
+            // Create 10 pages of 10 secrets
+            var pages = Enumerable.Range(0, 10).Select(a =>
+                Enumerable.Range(0, 10).Select(b => CreateSecret("Secret" + (a * 10 + b), (a * 10 + b).ToString())).ToArray()
+            ).ToArray();
+
+
+            SetPages(client,
+                async (string id) =>
+                {
+                    var i = Interlocked.Increment(ref currentParallel);
+
+                    maxParallel = Math.Max(i, maxParallel);
+
+                    await Task.Delay(30);
+                    Interlocked.Decrement(ref currentParallel);
+                },
+                pages
+            );
+
+            // Act
+            var provider = new AzureKeyVaultConfigurationProvider(client.Object, new KeyVaultSecretManager());
+            provider.Load();
+
+            // Assert
+            for (int i = 0; i < expectedCount; i++)
+            {
+                Assert.AreEqual(i.ToString(), provider.Get("Secret"+i));
+            }
+
+            Assert.LessOrEqual(maxParallel, 32);
         }
 
         [Test]

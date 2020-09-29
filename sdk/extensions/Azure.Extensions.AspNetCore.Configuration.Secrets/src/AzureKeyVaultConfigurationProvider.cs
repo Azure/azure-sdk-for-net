@@ -78,7 +78,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
         {
             var secretPages = _client.GetPropertiesOfSecretsAsync();
 
-            var tasks = new List<Task<Response<KeyVaultSecret>>>();
+            using var secretLoader = new ParallelSecretLoader(_client);
             var newLoadedSecrets = new Dictionary<string, LoadedSecret>();
             var oldLoadedSecrets = Interlocked.Exchange(ref _loadedSecrets, null);
 
@@ -99,15 +99,13 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
                 }
                 else
                 {
-                    tasks.Add(_client.GetSecretAsync(secret.Name));
+                    secretLoader.Add(secret.Name);
                 }
             }
 
-            await Task.WhenAll(tasks).ConfigureAwait(false);
-
-            foreach (var task in tasks)
+            var loadedSecret = await secretLoader.WaitForAll().ConfigureAwait(false);
+            foreach (var secretBundle in loadedSecret)
             {
-                var secretBundle = task.Result;
                 newLoadedSecrets.Add(secretBundle.Value.Name, new LoadedSecret(_manager.GetKey(secretBundle), secretBundle.Value.Value, secretBundle.Value.Properties.UpdatedOn));
             }
 
@@ -115,7 +113,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
 
             // Reload is needed if we are loading secrets that were not loaded before or
             // secret that was loaded previously is not available anymore
-            if (tasks.Any() || oldLoadedSecrets?.Any() == true)
+            if (loadedSecret.Any() || oldLoadedSecrets?.Any() == true)
             {
                 SetData(_loadedSecrets, fireToken: oldLoadedSecrets != null);
             }
