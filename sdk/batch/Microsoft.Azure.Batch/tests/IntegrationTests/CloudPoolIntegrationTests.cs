@@ -103,7 +103,7 @@ namespace BatchClientIntegrationTests
                     {
                         CloudPool newPool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicatedComputeNodes: 0);
 
-                        newPool.MaxTasksPerComputeNode = 3;
+                        newPool.TaskSlotsPerNode = 3;
 
                         newPool.TaskSchedulingPolicy =
                             new TaskSchedulingPolicy(Microsoft.Azure.Batch.Common.ComputeNodeFillType.Pack);
@@ -112,7 +112,7 @@ namespace BatchClientIntegrationTests
 
                         CloudPool boundPool = batchCli.PoolOperations.GetPool(poolId);
 
-                        Assert.Equal(3, boundPool.MaxTasksPerComputeNode);
+                        Assert.Equal(3, boundPool.TaskSlotsPerNode);
                         Assert.Equal(ComputeNodeFillType.Pack, boundPool.TaskSchedulingPolicy.ComputeNodeFillType);
                     }
                     finally
@@ -131,7 +131,7 @@ namespace BatchClientIntegrationTests
                             unboundJob.PoolInformation.AutoPoolSpecification = unboundAPS;
                             unboundAPS.PoolSpecification = unboundPS;
 
-                            unboundPS.MaxTasksPerComputeNode = 3;
+                            unboundPS.TaskSlotsPerNode = 3;
                             unboundAPS.PoolSpecification.TargetDedicatedComputeNodes = 0; // don't use up compute nodes for this test
                             unboundPS.TaskSchedulingPolicy = new TaskSchedulingPolicy(Microsoft.Azure.Batch.Common.ComputeNodeFillType.Pack);
 
@@ -152,7 +152,7 @@ namespace BatchClientIntegrationTests
                         AutoPoolSpecification boundAPS = poolInformation.AutoPoolSpecification;
                         PoolSpecification boundPUS = boundAPS.PoolSpecification;
 
-                        Assert.Equal(3, boundPUS.MaxTasksPerComputeNode);
+                        Assert.Equal(3, boundPUS.TaskSlotsPerNode);
                         Assert.Equal(ComputeNodeFillType.Pack, boundPUS.TaskSchedulingPolicy.ComputeNodeFillType);
 
                         // change the props

@@ -1,0 +1,244 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "CommunicationIdentityClient",
+        "description": "Azure Communication Identity Service",
+        "contact": {
+            "email": "acsdevexdisc@microsoft.com"
+        },
+        "version": "2020-07-20-preview2"
+    },
+    "paths": {
+        "/identities": {
+            "post": {
+                "tags": [
+                    "Identity"
+                ],
+                "summary": "Create a new identity.",
+                "operationId": "CommunicationIdentity_Create",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "api-version",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK - Returns the created identity.",
+                        "schema": {
+                            "$ref": "#/definitions/CommunicationIdentity"
+                        }
+                    }
+                }
+            }
+        },
+        "/identities/{id}": {
+            "delete": {
+                "tags": [
+                    "Identity"
+                ],
+                "summary": "Delete the identity, revoke all tokens of the identity and delete all associated data.",
+                "operationId": "CommunicationIdentity_Delete",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Identifier of the identity to be deleted.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "api-version",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Success"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Identity"
+                ],
+                "summary": "Update an Identity.",
+                "operationId": "CommunicationIdentity_Update",
+                "consumes": [
+                    "application/merge-patch+json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Identifier of the identity.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "api-version",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "The properties of the identity to be updated.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/CommunicationIdentityUpdateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/identities/{id}/token": {
+            "post": {
+                "tags": [
+                    "Token"
+                ],
+                "summary": "Generate a new token for an identity.",
+                "operationId": "CommunicationIdentity_IssueToken",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Identifier of the identity to issue token for.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "api-version",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Requesting scopes for the new token.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/CommunicationTokenRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/CommunicationIdentityToken"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "CommunicationIdentity": {
+            "description": "A communication identity.",
+            "required": [
+                "id"
+            ],
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "Identifier of the identity.",
+                    "type": "string"
+                }
+            }
+        },
+        "CommunicationIdentityUpdateRequest": {
+            "type": "object",
+            "properties": {
+                "tokensValidFrom": {
+                    "format": "date-time",
+                    "description": "All tokens that are issued prior to this time will be revoked.",
+                    "type": "string"
+                }
+            }
+        },
+        "CommunicationTokenRequest": {
+            "required": [
+                "scopes"
+            ],
+            "type": "object",
+            "properties": {
+                "scopes": {
+                    "description": "List of scopes attached to the token.",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "CommunicationIdentityToken": {
+            "required": [
+                "expiresOn",
+                "id",
+                "token"
+            ],
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "Identifier of the identity owning the token.",
+                    "type": "string"
+                },
+                "token": {
+                    "description": "The token issued for the identity.",
+                    "type": "string"
+                },
+                "expiresOn": {
+                    "format": "date-time",
+                    "description": "The expiry time of the token.",
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "azure_auth": {
+            "type": "oauth2",
+            "flow": "implicit",
+            "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize",
+            "scopes": {
+                "user_impersonation": "impersonate your user account"
+            }
+        }
+    },
+    "x-ms-parameterized-host": {
+        "hostTemplate": "{endpoint}",
+        "useSchemePrefix": false,
+        "parameters": [
+            {
+                "name": "endpoint",
+                "description": "Auth and Identity endpoint",
+                "required": true,
+                "type": "string",
+                "in": "path",
+                "x-ms-skip-url-encoding": true,
+                "x-ms-parameter-location": "client"
+            }
+        ]
+    }
+}

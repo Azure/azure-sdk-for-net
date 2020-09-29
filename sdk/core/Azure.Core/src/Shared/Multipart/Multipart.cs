@@ -40,6 +40,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="batchContent">The response content.</param>
         /// <param name="batchContentType">The response content type.</param>
+        /// <param name="expectBoundariesWithCRLF">Controls whether the parser will expect all multi-part boundaries to use CRLF line breaks. This should be true unless more permissive line break parsing is required.</param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -51,6 +52,7 @@ namespace Azure.Core
         internal static async Task<Response[]> ParseAsync(
             Stream batchContent,
             string batchContentType,
+            bool expectBoundariesWithCRLF,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -69,21 +71,22 @@ namespace Azure.Core
 
             // Read through the batch body one section at a time until the
             // reader returns null
-            MultipartReader reader = new MultipartReader(batchBoundary, batchContent);
+            MultipartReader reader = new MultipartReader(batchBoundary, batchContent) { ExpectBoundariesWithCRLF = expectBoundariesWithCRLF };
             for (MultipartSection section = await reader.GetNextSectionAsync(async, cancellationToken).ConfigureAwait(false);
                 section != null;
                 section = await reader.GetNextSectionAsync(async, cancellationToken).ConfigureAwait(false))
             {
                 bool contentIdFound = true;
-                if (section.Headers.TryGetValue(HttpHeader.Names.ContentType, out string [] contentTypeValues) &&
+                if (section.Headers.TryGetValue(HttpHeader.Names.ContentType, out string[] contentTypeValues) &&
                         contentTypeValues.Length == 1 &&
                         GetBoundary(contentTypeValues[0], out string subBoundary))
                 {
-                    reader = new MultipartReader(subBoundary, section.Body);
+                    // ExpectBoundariesWithCRLF should always be true for the Body.
+                    reader = new MultipartReader(subBoundary, section.Body){ ExpectBoundariesWithCRLF = true };
                     continue;
                 }
                 // Get the Content-ID header
-                if (!section.Headers.TryGetValue(ContentIdName, out string [] contentIdValues) ||
+                if (!section.Headers.TryGetValue(ContentIdName, out string[] contentIdValues) ||
                     contentIdValues.Length != 1 ||
                     !int.TryParse(contentIdValues[0], out int contentId))
                 {
