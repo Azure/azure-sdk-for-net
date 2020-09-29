@@ -77,8 +77,8 @@ namespace Azure.Management.Network
         /// <summary> Returns an instance of BastionHostsOperations. </summary>
         public virtual BastionHostsOperations BastionHosts => new BastionHostsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Returns an instance of AzureManagementNetworkOperations. </summary>
-        public virtual AzureManagementNetworkOperations AzureManagementNetwork => new AzureManagementNetworkOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+        /// <summary> Returns an instance of NetworkManagementOperations. </summary>
+        public virtual NetworkManagementOperations NetworkManagement => new NetworkManagementOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
         /// <summary> Returns an instance of DdosCustomPoliciesOperations. </summary>
         public virtual DdosCustomPoliciesOperations DdosCustomPolicies => new DdosCustomPoliciesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);

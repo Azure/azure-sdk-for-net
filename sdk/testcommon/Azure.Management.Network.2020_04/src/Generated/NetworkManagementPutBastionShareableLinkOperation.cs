@@ -17,13 +17,13 @@ using Azure.Management.Network.Models;
 namespace Azure.Management.Network
 {
     /// <summary> Creates a Bastion Shareable Links for all the VMs specified in the request. </summary>
-    public partial class AzureManagementNetworkPutBastionShareableLinkOperation : Operation<AsyncPageable<BastionShareableLink>>, IOperationSource<AsyncPageable<BastionShareableLink>>
+    public partial class NetworkManagementPutBastionShareableLinkOperation : Operation<AsyncPageable<BastionShareableLink>>, IOperationSource<AsyncPageable<BastionShareableLink>>
     {
         private readonly ArmOperationHelpers<AsyncPageable<BastionShareableLink>> _operation;
         private readonly Func<string, Task<Response>> _nextPageFunc;
-        internal AzureManagementNetworkPutBastionShareableLinkOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, Func<string, Task<Response>> nextPageFunc)
+        internal NetworkManagementPutBastionShareableLinkOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, Func<string, Task<Response>> nextPageFunc)
         {
-            _operation = new ArmOperationHelpers<AsyncPageable<BastionShareableLink>>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "AzureManagementNetworkPutBastionShareableLinkOperation");
+            _operation = new ArmOperationHelpers<AsyncPageable<BastionShareableLink>>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkManagementPutBastionShareableLinkOperation");
             _nextPageFunc = nextPageFunc;
         }
         /// <inheritdoc />
