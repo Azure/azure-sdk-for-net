@@ -3,11 +3,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 
 namespace Azure.WebJobs.Extensions.Storage.Common.Tests
 {
@@ -30,47 +32,86 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
         private Process process;
         private Queue<AzuriteAccount> accounts = new Queue<AzuriteAccount>();
         private List<string> accountsList = new List<string>();
+        private CountdownEvent countdownEvent = new CountdownEvent(2);
+        private StringBuilder azuriteOutput = new StringBuilder();
 
         public AzuriteFixture()
         {
             var azuriteLocation = Environment.GetEnvironmentVariable(AzuriteLocationKey);
-            if (!string.IsNullOrWhiteSpace(azuriteLocation))
+            if (string.IsNullOrWhiteSpace(azuriteLocation))
             {
-                int blobsPort = FindFreeTcpPort();
-                int queuesPort = FindFreeTcpPort();
-                for (int i = 0; i < AccountPoolSize; i++)
-                {
-                    var account = new AzuriteAccount()
-                    {
-                        Name = Guid.NewGuid().ToString(),
-                        Key = System.Convert.ToBase64String(Encoding.UTF8.GetBytes(Guid.NewGuid().ToString())),
-                        BlobsPort = blobsPort,
-                        QueuesPort = queuesPort,
-                    };
-                    accounts.Enqueue(account);
-                    accountsList.Add($"{account.Name}:{account.Key}");
-                }
-
-                var azuriteScriptLocation = Path.Combine(azuriteLocation, "node_modules/azurite/dist/src/azurite.js");
-                tempDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
-                Directory.CreateDirectory(tempDirectory);
-                process = new Process();
-                process.StartInfo.FileName = "node";
-                process.StartInfo.Arguments = $"{azuriteScriptLocation} -l {tempDirectory} --blobPort {blobsPort} --queuePort {queuesPort}";
-                process.StartInfo.EnvironmentVariables.Add("AZURITE_ACCOUNTS", $"{string.Join(";", accountsList)}");
-                process.StartInfo.UseShellExecute = false;
-                process.StartInfo.RedirectStandardOutput = true;
-                process.StartInfo.RedirectStandardInput = true;
-                process.OutputDataReceived += delegate (object sender, DataReceivedEventArgs e)
-                {
-                    /* using (var sw = File.AppendText("C:\\tmp\\azurite.log.txt"))
-                    {
-                        sw.WriteLine(e.Data);
-                    }*/
-                };
-                process.Start();
-                process.BeginOutputReadLine();
+                throw new ArgumentException(ErrorMessage($"{AzuriteLocationKey} environment variable is not set"));
             }
+            var azuriteScriptLocation = Path.Combine(azuriteLocation, "node_modules/azurite/dist/src/azurite.js");
+            if (!File.Exists(azuriteScriptLocation))
+            {
+                throw new ArgumentException(ErrorMessage($"{azuriteScriptLocation} does not exist, check if {AzuriteLocationKey} is pointing to right location"));
+            }
+
+            int blobsPort = FindFreeTcpPort();
+            int queuesPort = FindFreeTcpPort();
+            for (int i = 0; i < AccountPoolSize; i++)
+            {
+                var account = new AzuriteAccount()
+                {
+                    Name = Guid.NewGuid().ToString(),
+                    Key = System.Convert.ToBase64String(Encoding.UTF8.GetBytes(Guid.NewGuid().ToString())),
+                    BlobsPort = blobsPort,
+                    QueuesPort = queuesPort,
+                };
+                accounts.Enqueue(account);
+                accountsList.Add($"{account.Name}:{account.Key}");
+            }
+
+            tempDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+            Directory.CreateDirectory(tempDirectory);
+            process = new Process();
+            process.StartInfo.FileName = "node";
+            process.StartInfo.Arguments = $"{azuriteScriptLocation} -l {tempDirectory} --blobPort {blobsPort} --queuePort {queuesPort}";
+            process.StartInfo.EnvironmentVariables.Add("AZURITE_ACCOUNTS", $"{string.Join(";", accountsList)}");
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.RedirectStandardInput = true;
+            process.OutputDataReceived += delegate (object sender, DataReceivedEventArgs e)
+            {
+                if (e.Data != null)
+                {
+                    if (e.Data.Contains("Azurite Blob service is successfully listening at"))
+                    {
+                        countdownEvent.Signal();
+                    }
+                    if (e.Data.Contains("Azurite Queue service is successfully listening at"))
+                    {
+                        countdownEvent.Signal();
+                    }
+                    if (!countdownEvent.IsSet) // stop output collection if it started successfully.
+                    {
+                        azuriteOutput.AppendLine(e.Data);
+                    }
+                }
+            };
+            try
+            {
+                process.Start();
+            } catch (Win32Exception e)
+            {
+                throw new ArgumentException(ErrorMessage("could not run NodeJS, make sure it's installed"), e);
+            }
+            process.BeginOutputReadLine();
+            var didAzuriteStart = countdownEvent.Wait(TimeSpan.FromSeconds(5));
+            if (!didAzuriteStart)
+            {
+                throw new InvalidOperationException(ErrorMessage($"azurite process could not start with following output:\n{azuriteOutput}"));
+            }
+        }
+
+        private string ErrorMessage(string specificReason)
+        {
+            return $"\nCould not run Azurite based test due to: {specificReason}.\n" +
+                "Make sure that:\n" +
+                "- NodeJS is installed and available in $PATH (i.e. 'node' command can be run in terminal)\n" +
+                "- Azurite V3 is installed via NPM (see https://github.com/Azure/Azurite for instructions)\n" +
+                $"- {AzuriteLocationKey} envorinment is set and pointing to location of directory that has 'azurite' command (i.e. run 'where azurite' in Windows CMD)\n";
         }
 
         private static int FindFreeTcpPort()

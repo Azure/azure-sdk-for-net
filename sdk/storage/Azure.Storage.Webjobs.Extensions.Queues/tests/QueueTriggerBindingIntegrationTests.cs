@@ -38,7 +38,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
                 null, null);
         }
 
-        [AzuriteTheory]
+        [Theory]
         [InlineData("RequestId", "4b957741-c22e-471d-9f0f-e1e8534b9cb6")]
         [InlineData("RequestReceivedTime", "8/16/2014 12:09:36 AM")]
         [InlineData("DeliveryCount", "8")]
