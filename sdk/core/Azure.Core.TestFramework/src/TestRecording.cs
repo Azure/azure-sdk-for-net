@@ -145,10 +145,10 @@ namespace Azure.Core.TestFramework
                             // a number of auth mechanisms are time sensitive and will require
                             // values in the present when re-recording
                             _now = DateTimeOffset.Now;
-                            _session.Variables[DateTimeOffsetNowVariableKey] = _now.Value.ToString("O"); // Use the "Round-Trip Format"
+                            _session.Variables[DateTimeOffsetNowVariableKey] = _now.Value.ToString("o"); // Use the "Round-Trip Format"
                             break;
                         case RecordedTestMode.Playback:
-                            _now = DateTimeOffset.Parse(_session.Variables[DateTimeOffsetNowVariableKey], CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
+                            _now = DateTimeOffset.Parse(_session.Variables[DateTimeOffsetNowVariableKey], null, DateTimeStyles.RoundtripKind);
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
