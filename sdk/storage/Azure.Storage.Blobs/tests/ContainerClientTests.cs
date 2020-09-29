@@ -2318,6 +2318,7 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         public async Task ListBlobsHierarchySegmentAsync_LastAccessed()
         {
             await using DisposingContainer test = await GetTestContainerAsync();

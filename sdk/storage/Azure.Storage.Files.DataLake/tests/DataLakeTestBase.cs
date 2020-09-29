@@ -344,6 +344,19 @@ namespace Azure.Storage.Files.DataLake.Tests
             return builder.ToSasQueryParameters(userDelegationKey, accountName);
         }
 
+        public DataLakeSasQueryParameters GetNewDataLakeSasCredentialsOwner(string fileSystemName, string ownerName, UserDelegationKey userDelegationKey, string accountName)
+        {
+            DataLakeSasBuilder dataLakeSasBuilder = new DataLakeSasBuilder
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(1),
+                FileSystemName = fileSystemName,
+                AgentObjectId = ownerName
+            };
+            dataLakeSasBuilder.SetPermissions(DataLakeSasPermissions.All);
+            return dataLakeSasBuilder.ToSasQueryParameters(userDelegationKey, accountName);
+        }
+
         //TODO consider removing this.
         public async Task<string> SetupPathMatchCondition(DataLakePathClient path, string match)
         {

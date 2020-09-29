@@ -76,6 +76,7 @@ namespace Azure.Storage.Files.Shares.Test
 
         [Test]
         [NonParallelizable]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         public async Task SetPropertiesAsync()
         {
             // Arrange
@@ -104,6 +105,7 @@ namespace Azure.Storage.Files.Shares.Test
 
         [Test]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_12_12)]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         [NonParallelizable]
         public async Task GetSetServicePropertiesAsync_SmbMultiChannel()
         {
