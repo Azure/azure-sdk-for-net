@@ -1,0 +1,54 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://anuchan-cg-metric-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/enrichment/anomalyDetection/configurations/59f26a57-55f7-41eb-8899-a7268d125557/incidents/013c34456c5aed901c66ca1dff0714aa-174995c5800/rootCause",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-082427c8053fc04f80ec2d4fa848bdae-069eb6a46b038a41-00",
+        "User-Agent": [
+          "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20200925.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-api-key": "Sanitized",
+        "x-ms-client-request-id": "c413227a60aed234c0ac2876e0f2c562",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "6cb74f70-1879-49cc-a269-ec9f68ce2edc",
+        "Content-Length": "143",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 25 Sep 2020 22:10:16 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "407",
+        "X-Request-ID": "6cb74f70-1879-49cc-a269-ec9f68ce2edc"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "rootCause": {
+              "dimension": {
+                "city": "Hong Kong",
+                "category": "Handmade"
+              }
+            },
+            "path": [],
+            "score": 1.0,
+            "description": "No root cause insight."
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "METRICSADVISOR_ACCOUNT_NAME": "anuchan-cg-metric-advisor",
+    "METRICSADVISOR_ENDPOINT_SUFFIX": null,
+    "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
+    "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",
+    "RandomSeed": "8087875"
+  }
+}
