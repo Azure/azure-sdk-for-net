@@ -24,9 +24,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         /// <summary>The name of the shared access key to be used for accessing an Service Bus namespace.</summary>
         public const string ServiceBusDefaultSharedAccessKey = "RootManageSharedAccessKey";
 
-        /// <summary>
-        /// A shared instance of <see cref="ServiceBusTestEnvironment"/>.
-        /// </summary>
+        /// <summary>A shared instance of <see cref="ServiceBusTestEnvironment"/>. </summary>
         public static ServiceBusTestEnvironment Instance { get; } = new ServiceBusTestEnvironment();
 
         /// <summary>The active Service Bus namespace for this test run, lazily created.</summary>
