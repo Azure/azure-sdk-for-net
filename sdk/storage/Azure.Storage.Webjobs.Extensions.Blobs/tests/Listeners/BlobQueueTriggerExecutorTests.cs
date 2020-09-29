@@ -45,7 +45,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
             _logger = loggerFactory.CreateLogger<BlobListener>();
 
             this.azuriteFixture = azuriteFixture;
-            blobServiceClient = StorageAccount.NewFromConnectionString(azuriteFixture.GetAccount().ConnectionString).CreateBlobServiceClient();
+            blobServiceClient = azuriteFixture.GetAccount().CreateBlobServiceClient();
             blobContainer = blobServiceClient.GetBlobContainerClient(TestContainerName);
             blobContainer.CreateIfNotExists();
         }
