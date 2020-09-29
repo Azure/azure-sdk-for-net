@@ -114,7 +114,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var modelIds = new List<string> { trainedModelA.ModelId, trainedModelB.ModelId };
 
-            TrainingOperation operation = await client.StartCreateComposedModelAsync(modelIds, new CreateComposedModelOptions() { DisplayName = "My composed model" });
+            CreateComposedModelOperation operation = await client.StartCreateComposedModelAsync(modelIds, new CreateComposedModelOptions() { DisplayName = "My composed model" });
             await operation.WaitForCompletionAsync(PollingInterval);
 
             Assert.IsTrue(operation.HasValue);

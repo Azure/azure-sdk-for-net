@@ -114,7 +114,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="trainingOptions">A set of options available for configuring the training request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// <para>A <see cref="TrainingOperation"/> to wait on this long-running operation. Its <see cref="TrainingOperation.Value"/> upon successful
+        /// <para>A <see cref="TrainingOperation"/> to wait on this long-running operation. Its Value upon successful
         /// completion will contain meta-data about the trained model.</para>
         /// <para>Even if training fails, a model is created in the Form Recognizer account with an "invalid" status.
         /// A <see cref="RequestFailedException"/> will be raised containing the modelId to access this invalid model.</para>
@@ -154,7 +154,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="trainingOptions">A set of options available for configuring the training request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// <para>A <see cref="TrainingOperation"/> to wait on this long-running operation. Its <see cref="TrainingOperation.Value"/> upon successful
+        /// <para>A <see cref="TrainingOperation"/> to wait on this long-running operation. Its Value upon successful
         /// completion will contain meta-data about the trained model.</para>
         /// <para>Even if training fails, a model is created in the Form Recognizer account with an "invalid" status.
         /// A <see cref="RequestFailedException"/> will be raised containing the modelId to access this invalid model.</para>
@@ -196,12 +196,12 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="createComposedModelOptions">A set of options available for configuring the create composed model request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// <para>A <see cref="TrainingOperation"/> to wait on this long-running operation. Its <see cref="TrainingOperation.Value"/> upon successful
+        /// <para>A <see cref="CreateComposedModelOperation"/> to wait on this long-running operation. Its Value upon successful
         /// completion will contain meta-data about the trained model.</para>
         /// <para>Even if operation fails, a model is created in the Form Recognizer account with an "invalid" status.
         /// A <see cref="RequestFailedException"/> will be raised containing the modelId to access this invalid model.</para>
         /// </returns>
-        public virtual TrainingOperation StartCreateComposedModel(IEnumerable<string> modelIds, CreateComposedModelOptions createComposedModelOptions = default, CancellationToken cancellationToken = default)
+        public virtual CreateComposedModelOperation StartCreateComposedModel(IEnumerable<string> modelIds, CreateComposedModelOptions createComposedModelOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(modelIds, nameof(modelIds));
             createComposedModelOptions ??= new CreateComposedModelOptions();
@@ -224,7 +224,7 @@ namespace Azure.AI.FormRecognizer.Training
                 }
 
                 ResponseWithHeaders<ServiceComposeCustomModelsAsyncHeaders> response = ServiceClient.ComposeCustomModelsAsync(composeRequest);
-                return new TrainingOperation(response.Headers.Location, ServiceClient, Diagnostics);
+                return new CreateComposedModelOperation(response.Headers.Location, ServiceClient, Diagnostics);
             }
             catch (Exception e)
             {
@@ -240,12 +240,12 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="createComposedModelOptions">A set of options available for configuring the create composed model request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// <para>A <see cref="TrainingOperation"/> to wait on this long-running operation. Its <see cref="TrainingOperation.Value"/> upon successful
+        /// <para>A <see cref="CreateComposedModelOperation"/> to wait on this long-running operation. Its Value upon successful
         /// completion will contain meta-data about the trained model.</para>
         /// <para>Even if operation fails, a model is created in the Form Recognizer account with an "invalid" status.
         /// A <see cref="RequestFailedException"/> will be raised containing the modelId to access this invalid model.</para>
         /// </returns>
-        public virtual async Task<TrainingOperation> StartCreateComposedModelAsync(IEnumerable<string> modelIds, CreateComposedModelOptions createComposedModelOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<CreateComposedModelOperation> StartCreateComposedModelAsync(IEnumerable<string> modelIds, CreateComposedModelOptions createComposedModelOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(modelIds, nameof(modelIds));
             createComposedModelOptions ??= new CreateComposedModelOptions();
@@ -268,7 +268,7 @@ namespace Azure.AI.FormRecognizer.Training
                 }
 
                 ResponseWithHeaders<ServiceComposeCustomModelsAsyncHeaders> response = await ServiceClient.ComposeCustomModelsAsyncAsync(composeRequest).ConfigureAwait(false);
-                return new TrainingOperation(response.Headers.Location, ServiceClient, Diagnostics);
+                return new CreateComposedModelOperation(response.Headers.Location, ServiceClient, Diagnostics);
             }
             catch (Exception e)
             {
