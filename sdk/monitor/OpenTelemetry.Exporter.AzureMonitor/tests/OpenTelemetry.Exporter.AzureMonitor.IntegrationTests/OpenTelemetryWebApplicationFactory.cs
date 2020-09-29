@@ -19,12 +19,15 @@ using OpenTelemetry.Trace;
 namespace OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
 {
     /// <summary>
-    /// THIS IS A WORK IN PROGRESS.
+    /// This class implements <see cref="WebApplicationFactory"/> and will configure the <see cref="IServiceCollection"/> for OpenTelemetry and the <see cref="AzureMonitorTraceExporter"/>.
+    /// Here we mock the <see cref="ServiceRestClient"/> to capture telemetry that would have been sent to the ingestion service.
+    /// We also mock the <see cref="TrackResponse"/> which would have been received from the ingestion service.
     /// </summary>
     /// <remarks>
     /// https://github.com/open-telemetry/opentelemetry-dotnet/tree/master/src/OpenTelemetry.Instrumentation.AspNetCore
+    /// NOTE: I NOTICED THIS COULD FAIL WHEN DEBUGGING WITH BREAKPOINTS. I SUSPECT THERE MAY BE A REQUEST TIMEOUT SOMEWHERE THAT AFFECTS THE RESULT.
     /// </remarks>
-    /// <typeparam name="TStartup"></typeparam>
+    /// <typeparam name="TStartup">Startup class from the application to be used during this test.</typeparam>
     public class OpenTelemetryWebApplicationFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup : class
     {
         public ConcurrentBag<TelemetryItem> TelemetryItems = new ConcurrentBag<TelemetryItem>();

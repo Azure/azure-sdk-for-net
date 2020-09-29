@@ -10,7 +10,6 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
-using Azure;
 using Azure.Core.Pipeline;
 
 using OpenTelemetry.Exporter.AzureMonitor.ConnectionString;
@@ -78,7 +77,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
             }
 
             // TODO: Handle exception, check telemetryItems has items
-            return response?.Value.ItemsAccepted.GetValueOrDefault() ?? default(int);
+            return response.Value.ItemsAccepted.GetValueOrDefault();
         }
 
         private static TelemetryItem GeneratePartAEnvelope(Activity activity)

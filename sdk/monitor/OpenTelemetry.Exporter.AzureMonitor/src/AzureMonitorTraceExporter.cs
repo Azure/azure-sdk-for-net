@@ -41,6 +41,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
                 AzureMonitorTraceExporterEventSource.Log.FailedExport(ex);
                 return ExportResult.Failure;
             }
+
         }
     }
 }
