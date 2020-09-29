@@ -8,7 +8,7 @@ using Microsoft.Extensions.Options;
 
 namespace Microsoft.Extensions.Azure
 {
-    internal abstract class AzureComponentFactoryImpl: AzureComponentFactory
+    internal class AzureComponentFactoryImpl: AzureComponentFactory
     {
         private readonly IServiceProvider _serviceProvider;
         private readonly IOptionsMonitor<AzureClientsGlobalOptions> _globalOptions;

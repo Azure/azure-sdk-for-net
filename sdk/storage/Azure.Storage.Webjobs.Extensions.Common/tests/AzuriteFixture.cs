@@ -43,9 +43,18 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
         public AzuriteFixture()
         {
             var azuriteLocation = Environment.GetEnvironmentVariable(AzuriteLocationKey);
+            var defaultPath = Path.Combine(Environment.GetEnvironmentVariable("APPDATA") ?? string.Empty, "npm");
+
             if (string.IsNullOrWhiteSpace(azuriteLocation))
             {
-                throw new ArgumentException(ErrorMessage($"{AzuriteLocationKey} environment variable is not set"));
+                if (Directory.Exists(defaultPath))
+                {
+                    azuriteLocation = defaultPath;
+                }
+                else
+                {
+                    throw new ArgumentException(ErrorMessage($"{AzuriteLocationKey} environment variable is not set and {defaultPath} doesn't exist"));
+                }
             }
             var azuriteScriptLocation = Path.Combine(azuriteLocation, "node_modules/azurite/dist/src/azurite.js");
             if (!File.Exists(azuriteScriptLocation))
@@ -72,7 +81,7 @@ namespace Azure.WebJobs.Extensions.Storage.Common.Tests
             Directory.CreateDirectory(tempDirectory);
             process = new Process();
             process.StartInfo.FileName = "node";
-            process.StartInfo.Arguments = $"{azuriteScriptLocation} -l {tempDirectory} --blobPort {blobsPort} --queuePort {queuesPort}";
+            process.StartInfo.Arguments = $"{azuriteScriptLocation} -l {tempDirectory} --blobPort {blobsPort} --queuePort {queuesPort} --oauth basic";
             process.StartInfo.EnvironmentVariables.Add("AZURITE_ACCOUNTS", $"{string.Join(";", accountsList)}");
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.RedirectStandardOutput = true;
