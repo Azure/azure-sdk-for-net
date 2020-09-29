@@ -11,7 +11,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor
 {
     /// <summary>
     /// This interface provides access to the TrackAsync method for Moq to override in our tests.
-    /// The actual <see cref="ServiceRestClient.TrackAsync(IEnumerable{TelemetryItem}, CancellationToken)"/> method is non-virtual and cannot be overridden.
+    /// The actual <see cref="ApplicationInsightsRestClient.TrackAsync(IEnumerable{TelemetryItem}, CancellationToken)"/> method is non-virtual and cannot be overridden.
     /// </summary>
     internal interface IServiceRestClient
     {
