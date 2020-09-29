@@ -12,6 +12,7 @@
 		<PackageReleaseNotes>
 <![CDATA[    
 1) Support more fields for ApiProperties.
+2) Support listing Private Network Connections.
 ]]>
 	    </PackageReleaseNotes>
 	</PropertyGroup>
