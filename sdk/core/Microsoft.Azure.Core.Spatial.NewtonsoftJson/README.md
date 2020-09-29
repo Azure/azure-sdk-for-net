@@ -1,7 +1,8 @@
-# Newtonsoft.Json support for Azure Core shared client library for .NET
+# Newtonsoft.Json support for Microsoft.Spatial library for .NET
 
-The [Azure.Core package][azure_core_package] contains types shared by all Azure SDK client libraries.
-This library contains converters dependent on the [Newtonsoft.Json package][newtonsoft_json_package] for use with Azure.Core.
+The [Microsoft.Spatial package][microsoft_spatial_package] contains classes and methods that support geographic and geometric operations.
+This library contains converters dependent on the [Newtonsoft.Json package][newtonsoft_json_package] for use with Microsoft.Spatial
+when using the Azure SDK for .NET.
 
 ## Getting started
 
@@ -45,7 +46,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fcore%2FMicrosoft.Azure.Core.NewtonsoftJson%2FREADME.png)
 
-[azure_core_package]: https://www.nuget.org/packages/Azure.Core/
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
+[microsoft_spatial_package]: https://www.nuget.org/packages/Microsoft.Spatial/
 [newtonsoft_json_package]: https://www.nuget.org/packages/Newtonsoft.Json/

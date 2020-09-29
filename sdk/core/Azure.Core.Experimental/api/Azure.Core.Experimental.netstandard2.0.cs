@@ -244,7 +244,7 @@ namespace Azure.Core.GeoJson
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct GeoPosition
+    public readonly partial struct GeoPosition : System.IEquatable<Azure.Core.GeoJson.GeoPosition>
     {
         private readonly int _dummyPrimitive;
         public GeoPosition(double longitude, double latitude) { throw null; }

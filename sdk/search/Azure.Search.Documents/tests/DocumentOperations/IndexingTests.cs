@@ -9,7 +9,7 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Azure.Core.Serialization;
 #if EXPERIMENTAL_SPATIAL
-using Azure.Core.Spatial;
+using Azure.Core.GeoJson;
 #endif
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Models;
@@ -435,7 +435,7 @@ namespace Azure.Search.Documents.Tests
                             Converters =
                             {
 #if EXPERIMENTAL_SPATIAL
-                                new GeometryJsonConverter()
+                                new GeoJsonConverter()
 #endif
                             }
                         })

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
 #if EXPERIMENTAL_SPATIAL
-using Azure.Core.Spatial;
+using Azure.Core.GeoJson;
 #endif
 using Azure.Search.Documents.Models;
 
@@ -42,7 +42,7 @@ namespace Azure.Search.Documents
             options.Converters.Add(SearchDateTimeConverter.Shared);
             options.Converters.Add(SearchDocumentConverter.Shared);
 #if EXPERIMENTAL_SPATIAL
-            options.Converters.Add(new GeometryJsonConverter());
+            options.Converters.Add(new GeoJsonConverter());
 #endif
             return options;
         }
@@ -162,8 +162,8 @@ namespace Azure.Search.Documents
                         double longitude = coords[0];
                         double latitude = coords[1];
                         double? altitude = coords.Length == 3 ? (double?)coords[2] : null;
-                        // TODO: Should we also pull in other PointGeometry properties?
-                        return new PointGeometry(new GeometryPosition(longitude, latitude, altitude));
+                        // TODO: Should we also pull in other PointGeography properties?
+                        return new GeoPoint(new GeoPosition(longitude, latitude, altitude));
                     }
 #endif
                     return dictionary;
@@ -254,8 +254,8 @@ namespace Azure.Search.Documents
                         Utf8JsonReader clone = reader;
                         try
                         {
-                            GeometryJsonConverter converter = new GeometryJsonConverter();
-                            PointGeometry point = converter.Read(ref clone, typeof(PointGeometry), options) as PointGeometry;
+                            GeoJsonConverter converter = new GeoJsonConverter();
+                            GeoPoint point = converter.Read(ref clone, typeof(GeoPoint), options) as GeoPoint;
                             if (point != null)
                             {
                                 reader = clone;

@@ -2,17 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Text.Json.Serialization;
+#if EXPERIMENTAL_SPATIAL
+using Azure.Core.GeoJson;
+#endif
 using Azure.Search.Documents.Models;
 using Azure.Search.Documents.Indexes.Models;
-#if EXPERIMENTAL_SPATIAL
-using Azure.Core.Spatial;
-#else
-using System.Text.Json;
-using System.Collections.Generic;
 using Microsoft.Spatial;
-#endif
 
 #pragma warning disable SA1402 // File may only contain a single type
 
@@ -326,7 +325,7 @@ namespace Azure.Search.Documents.Tests
 
 #if EXPERIMENTAL_SPATIAL
         [JsonPropertyName("location")]
-        public PointGeometry Location { get; set; }
+        public GeoPoint Location { get; set; }
 #else
         [JsonPropertyName("location")]
         [JsonConverter(typeof(GeographyPointConverter))]
@@ -402,13 +401,13 @@ namespace Azure.Search.Documents.Tests
             };
     }
 
-#if !EXPERIMENTAL_SPATIAL
     /// <summary>
     /// Convert GeographyPoints to System.Text.Json or SearchDocument
     /// representations.
     /// </summary>
     internal class GeographyPointConverter : JsonConverter<GeographyPoint>
     {
+        // TODO: Replace with Microsoft.Azure.Core.Spatial when completed: https://github.com/Azure/azure-sdk-for-net/issues/15431
         public override GeographyPoint Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             if (reader.TokenType == JsonTokenType.StartObject)
@@ -486,7 +485,6 @@ namespace Azure.Search.Documents.Tests
             };
         }
     }
-#endif
 
     // Same structure as Hotel, but without attributes that change to camelCase
     internal class UncasedHotel
@@ -503,7 +501,7 @@ namespace Azure.Search.Documents.Tests
         public DateTimeOffset? LastRenovationDate { get; set; }
         public int? Rating { get; set; }
 #if EXPERIMENTAL_SPATIAL
-        public PointGeometry Location { get; set; }
+        public GeoPoint Location { get; set; }
 #else
         [JsonConverter(typeof(GeographyPointConverter))]
         public GeographyPoint Location { get; set; } = null;

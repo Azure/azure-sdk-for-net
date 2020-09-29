@@ -1,20 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <AssemblyTitle>Newtonsoft.Json support for Azure Core shared client library for .NET</AssemblyTitle>
+    <AssemblyTitle>Newtonsoft.Json support for the Microsoft.Spatial library</AssemblyTitle>
+    <Description>This library contains converters dependent on the Newtonsoft.Json package for use with Microsoft.Spatial when using the Azure SDK for .NET.</Description>
     <RootNamespace>Azure.Core.Serialization</RootNamespace>
-    <Version>1.0.0-preview.2</Version>
-    <Description>This library contains converters dependent on the Newtonsoft.Json package for use with Azure.Core.</Description>
-    <PackageTags>Microsoft Azure SDK Newtonsoft Json</PackageTags>
-    <Nullable>enable</Nullable>
+    <Version>1.0.0-preview.1</Version>
+    <PackageTags>Microsoft Azure SDK Spatial Newtonsoft Json</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
   </PropertyGroup>
 
+  <Import Project="..\..\Azure.Core\src\Azure.Core.props" />
   <ItemGroup>
-    <ProjectReference Include="..\..\Azure.Core\src\Azure.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="Microsoft.Spatial" />
     <PackageReference Include="Newtonsoft.Json" />
   </ItemGroup>
 

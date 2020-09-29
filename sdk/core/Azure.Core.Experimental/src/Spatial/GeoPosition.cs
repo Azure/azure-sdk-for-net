@@ -8,7 +8,7 @@ namespace Azure.Core.GeoJson
     /// <summary>
     ///
     /// </summary>
-    public readonly struct GeoPosition
+    public readonly struct GeoPosition : IEquatable<GeoPosition>
     {
         /// <summary>
         /// Gets the altitude of the position.
