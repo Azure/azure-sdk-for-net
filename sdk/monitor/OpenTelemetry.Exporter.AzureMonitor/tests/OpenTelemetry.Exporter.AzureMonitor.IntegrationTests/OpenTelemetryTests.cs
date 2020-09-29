@@ -18,6 +18,10 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
             this.factory = factory;
         }
 
+        /// <summary>
+        /// This test validates that when an app instrumented with the AzureMonitorExporter receives an HTTP request,
+        /// A TelemetryItem is created matching that request.
+        /// </summary>
         [Fact]
         public async Task ProofOfConcept()
         {

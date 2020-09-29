@@ -30,6 +30,8 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
     /// <typeparam name="TStartup">Startup class from the application to be used during this test.</typeparam>
     public class OpenTelemetryWebApplicationFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup : class
     {
+        public const string EmptyConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
+
         public ConcurrentBag<TelemetryItem> TelemetryItems = new ConcurrentBag<TelemetryItem>();
         public ActivityProcessor ActivityProcessor;
 
@@ -37,7 +39,7 @@ namespace OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
         {
             this.ActivityProcessor = new BatchExportActivityProcessor(new AzureMonitorTraceExporter(new AzureMonitorExporterOptions
             {
-                ConnectionString = AzureMonitorExporterOptions.EmptyConnectionString,
+                ConnectionString = EmptyConnectionString,
                 ServiceRestClient = this.GetMockServiceRestClient(),
             }));
 
