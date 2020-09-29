@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,10 +11,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 
+using Moq;
+
 using OpenTelemetry.Exporter.AzureMonitor.Models;
 using OpenTelemetry.Trace;
 
-namespace OpenTelemetry.Exporter.AzureMonitor.IntegrationTests
+namespace OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
 {
     /// <summary>
     /// THIS IS A WORK IN PROGRESS.
@@ -33,29 +35,42 @@ namespace OpenTelemetry.Exporter.AzureMonitor.IntegrationTests
             this.ActivityProcessor = new BatchExportActivityProcessor(new AzureMonitorTraceExporter(new AzureMonitorExporterOptions
             {
                 ConnectionString = AzureMonitorExporterOptions.EmptyConnectionString,
-                OnTrackAsync = this.OnTrackAsync,
+                ServiceRestClient = this.GetMockServiceRestClient(),
             }));
 
             builder.ConfigureServices(services =>
                 services.AddOpenTelemetryTracing((builder) => builder
                         .AddAspNetCoreInstrumentation()
                         .AddHttpClientInstrumentation()
-                        //.AddAzureMonitorTraceExporter
                         .AddProcessor(this.ActivityProcessor)));
         }
 
-        private Task<Azure.Response<TrackResponse>> OnTrackAsync(IEnumerable<TelemetryItem> telemetryItems, CancellationToken cancellationToken)
-        {
-            foreach (var telemetryItem in telemetryItems)
-            {
-                this.TelemetryItems.Add(telemetryItem);
-            }
+        public void ForceFlush() => this.ActivityProcessor.ForceFlush();
 
-            /// TODO: IT WOULD BE USEFUL TO RETURN A VALID TrackResponse OBJECT HERE. THIS COULD BE USED TO STUB BEHAVIOR FROM THE INGESTION SERVICE.
-            /// I WAS ABLE TO CREATE A DEFAULT TrackResonse OBJECT, BUT COULDN'T DO THE SAME FOR Azure.Response. NEEDS MORE WORK.
-            return null;
+        private IServiceRestClient GetMockServiceRestClient()
+        {
+            var mockServiceRestClient = new Mock<IServiceRestClient>();
+            mockServiceRestClient
+                .Setup(x => x.TrackAsync(It.IsAny<IEnumerable<TelemetryItem>>(), It.IsAny<CancellationToken>()))
+                .Returns((IEnumerable<TelemetryItem> telemetryItems, CancellationToken cancellationToken) =>
+                {
+                    foreach (var telemetryItem in telemetryItems)
+                    {
+                        this.TelemetryItems.Add(telemetryItem);
+                    }
+
+                    return Task.FromResult(GetMockResponse(itemsReceived: telemetryItems.Count(), itemsAccepted: telemetryItems.Count(), errors: new List<TelemetryErrorDetails>()));
+                });
+
+            return mockServiceRestClient.Object;
         }
 
-        public void ForceFlush() => this.ActivityProcessor.ForceFlush();
+        private Azure.Response<TrackResponse> GetMockResponse(int itemsReceived, int itemsAccepted, List<TelemetryErrorDetails> errors)
+        {
+            var trackResponse = new TrackResponse(itemsReceived, itemsAccepted, errors);
+            var mockAzureResponse = new Mock<Azure.Response<TrackResponse>>();
+            mockAzureResponse.Setup(x => x.Value).Returns(trackResponse);
+            return mockAzureResponse.Object;
+        }
     }
 }

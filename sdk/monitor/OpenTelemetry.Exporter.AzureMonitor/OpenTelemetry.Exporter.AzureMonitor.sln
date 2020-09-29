@@ -11,9 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTelemetry.Exporter.Azur
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTelemetry.Exporter.AzureMonitor.Tests", "tests\OpenTelemetry.Exporter.AzureMonitor.UnitTest\OpenTelemetry.Exporter.AzureMonitor.Tests.csproj", "{14546496-6144-49A5-9431-09611F38D30E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTelemetry.Exporter.AzureMonitor.IntegrationTests", "tests\OpenTelemetry.Exporter.AzureMonitor.IntegrationTests\OpenTelemetry.Exporter.AzureMonitor.IntegrationTests.csproj", "{8402BDA6-35E4-4FDD-A740-D3577C9DAE60}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTelemetry.Exporter.AzureMonitor.Integration.Tests", "tests\OpenTelemetry.Exporter.AzureMonitor.IntegrationTests\OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.csproj", "{8402BDA6-35E4-4FDD-A740-D3577C9DAE60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTelemetry.Exporter.AzureMonitor.IntegrationTests.WebApp", "tests\OpenTelemetry.Exporter.AzureMonitor.IntegrationTests.WebApp\OpenTelemetry.Exporter.AzureMonitor.IntegrationTests.WebApp.csproj", "{238736B6-2A58-4965-A12F-AFAABACFEAE0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.WebApp", "tests\OpenTelemetry.Exporter.AzureMonitor.IntegrationTests.WebApp\OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.WebApp.csproj", "{238736B6-2A58-4965-A12F-AFAABACFEAE0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

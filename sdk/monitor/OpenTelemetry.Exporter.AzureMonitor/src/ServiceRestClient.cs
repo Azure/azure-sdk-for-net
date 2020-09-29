@@ -7,7 +7,7 @@ using OpenTelemetry.Exporter.AzureMonitor.Models;
 
 namespace OpenTelemetry.Exporter.AzureMonitor
 {
-    internal partial class ServiceRestClient
+    internal partial class ServiceRestClient : IServiceRestClient
     {
         internal HttpMessage CreateTrackRequest(IEnumerable<TelemetryItem> body)
         {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 using Xunit;
 
-namespace OpenTelemetry.Exporter.AzureMonitor.IntegrationTests
+namespace OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
 {
     public class OpenTelemetryTests : IClassFixture<OpenTelemetryWebApplicationFactory<WebApp.Startup>>
     {

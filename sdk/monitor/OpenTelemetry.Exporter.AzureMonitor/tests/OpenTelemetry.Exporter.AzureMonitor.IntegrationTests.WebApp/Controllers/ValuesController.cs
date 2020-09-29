@@ -1,14 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace OpenTelemetry.Exporter.AzureMonitor.IntegrationTests.WebApp.Controllers
+namespace OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.WebApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
