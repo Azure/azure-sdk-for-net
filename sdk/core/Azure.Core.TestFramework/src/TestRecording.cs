@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -147,7 +148,7 @@ namespace Azure.Core.TestFramework
                             _session.Variables[DateTimeOffsetNowVariableKey] = _now.Value.ToString("O"); // Use the "Round-Trip Format"
                             break;
                         case RecordedTestMode.Playback:
-                            _now = DateTimeOffset.Parse(_session.Variables[DateTimeOffsetNowVariableKey]);
+                            _now = DateTimeOffset.Parse(_session.Variables[DateTimeOffsetNowVariableKey], CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
